@@ -63,6 +63,21 @@ describe("Measures", () => {
             };
             expect(measure("foo").format("bar")).toMatchObject(expected);
         });
+        it("should return a measure with title", () => {
+            const expected = {
+                measure: {
+                    title: "bar",
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "foo",
+                            },
+                        },
+                    },
+                },
+            };
+            expect(measure("foo").title("bar")).toMatchObject(expected);
+        });
         it("should return a measure with a filter", () => {
             const expected = {
                 measure: {
