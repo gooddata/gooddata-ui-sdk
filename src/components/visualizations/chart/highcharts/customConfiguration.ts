@@ -1107,6 +1107,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
                     enabled: visible && !isViewByTwoAttributes,
                     margin: 10,
                     style: {
+                        textOverflow: "ellipsis",
                         color: styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },

@@ -391,4 +391,22 @@ storiesOf("Core components/BubbleChart", module)
                 />
             </div>,
         ),
-    );
+    )
+    .add("long name of X and Y axes are truncated", () => {
+        const longText =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia risus tincidunt gravida ullamcorper.";
+        return screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={(MEASURE_1 as any).alias(longText)}
+                    yAxisMeasure={(MEASURE_2 as any).alias(longText)}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        );
+    });
