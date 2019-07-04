@@ -174,6 +174,17 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.createAGGridDataSource();
     }
 
+    public componentDidMount() {
+        if (this.containerRef) {
+            this.containerRef.addEventListener("mousedown", this.preventHeaderResizerEvents);
+        }
+    }
+    public componentWillUnmount() {
+        if (this.containerRef) {
+            this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
+        }
+    }
+
     public componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
         if (
             this.props.groupRows !== nextProps.groupRows ||
@@ -251,7 +262,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     overflow: "hidden",
                 }}
                 ref={this.setContainerRef}
-                onMouseDown={this.onMouseDown}
             >
                 {tableLoadingOverlay}
                 <AgGridReact
@@ -526,7 +536,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.updateStickyRow(Math.max(event.top, 0), event.left);
     };
 
-    private onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    private preventHeaderResizerEvents = (event: Event) => {
         if (event.target && this.isHeaderResizer(event.target as HTMLElement)) {
             event.stopPropagation();
         }
