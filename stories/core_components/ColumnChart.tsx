@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { ColumnChart } from "../../src";
+import { ColumnChart, IChartConfig, VisualizationTypes } from "../../src";
 import { onErrorHandler } from "../mocks";
 import {
     ATTRIBUTE_1,
@@ -24,6 +24,9 @@ import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
 import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
 import * as HeaderPredicateFactory from "../../src/factory/HeaderPredicateFactory";
+import { wrap } from "../utils/wrap";
+import { Visualization } from "../../src/components/visualizations/Visualization";
+import { dualChartWithComputedAttribute } from "../test_data/fixtures";
 
 const wrapperStyle = { width: 800, height: 400 };
 
@@ -281,6 +284,31 @@ storiesOf("Core components/ColumnChart", module)
             </div>,
         ),
     )
+    .add("dual axis with small height", () => {
+        const chartConfig: IChartConfig = {
+            type: VisualizationTypes.COLUMN,
+            legend: {
+                enabled: true,
+                position: "right",
+            },
+            secondary_yaxis: {
+                measures: ["m2"],
+            },
+        };
+
+        const width = 872;
+        const height = 300;
+
+        return screenshotWrap(
+            wrap(
+                <div style={{ height, width }}>
+                    <Visualization config={chartConfig} {...dualChartWithComputedAttribute} />
+                </div>,
+                height + 40,
+                width + 20,
+            ),
+        );
+    })
     .add("only right axis with two measures, one attribute", () =>
         screenshotWrap(
             <div style={wrapperStyle}>

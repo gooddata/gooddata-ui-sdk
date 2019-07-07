@@ -132,13 +132,32 @@ export function adjustTicks(axis: IHighchartsAxisExtend): void {
         }
     } else {
         // reduce ticks
-        tickPositions =
-            axis.dataMin >= 0
-                ? tickPositions.slice(currentTickAmount - tickAmount)
-                : tickPositions.slice(0, tickAmount);
+        const [start, end] = getSelectionRange(axis);
+        tickPositions = tickPositions.slice(start, end);
     }
 
     axis.tickPositions = tickPositions.slice();
+}
+
+export function getSelectionRange(axis: IHighchartsAxisExtend): number[] {
+    const { tickAmount, tickPositions, dataMin, dataMax } = axis;
+    const currentTickAmount: number = tickPositions.length;
+    if (dataMin >= 0) {
+        return [currentTickAmount - tickAmount, currentTickAmount];
+    }
+    if (dataMax <= 0) {
+        return [0, tickAmount];
+    }
+
+    const zeroIndex = tickPositions.indexOf(0);
+    const firstTickToZero = Math.abs(0 - zeroIndex);
+    const lastTickToZero = currentTickAmount - 1 - zeroIndex;
+
+    // get range from furthest tick to zero
+    if (firstTickToZero <= lastTickToZero) {
+        return [0, tickAmount];
+    }
+    return [currentTickAmount - tickAmount, currentTickAmount];
 }
 
 /**
