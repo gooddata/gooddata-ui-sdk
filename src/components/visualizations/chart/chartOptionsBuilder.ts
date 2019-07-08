@@ -23,6 +23,13 @@ import {
     TERTIARY_MEASURES,
     VIEW,
 } from "../../../constants/bucketNames";
+import {
+    CHART_PADDING,
+    MAX_CHART_WIDTH,
+    TOOLTIP_COLUMN_NUMBER,
+    TOOLTIP_PADDING,
+    TOOLTIP_VALUE_PADDING,
+} from "../../../constants/tooltip";
 import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
 
 import {
@@ -721,13 +728,31 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-const renderTooltipHTML = (textData: string[][]): string => {
-    return `<table class="tt-values gd-viz-tooltip-table">${textData
+const renderTooltipHTML = (textData: string[][], chartType: string, chartWidth: number): string => {
+    let tableStyle = "";
+    let columnTitleStyle = "";
+    let columnValueStyle = "";
+
+    if (chartType && chartWidth && chartWidth < MAX_CHART_WIDTH) {
+        const chartPadding = chartType !== VisualizationTypes.TREEMAP ? 0 : CHART_PADDING;
+        const tableMaxWidth = chartWidth - TOOLTIP_PADDING - chartPadding;
+        const columnMaxWidth = tableMaxWidth / TOOLTIP_COLUMN_NUMBER;
+
+        tableStyle = ` style="max-width: ${tableMaxWidth}px;-webkit-border-horizontal-spacing: 0;"`;
+        columnTitleStyle = ` style="max-width: ${columnMaxWidth}px;"`;
+        columnValueStyle = ` style="max-width: ${columnMaxWidth - TOOLTIP_VALUE_PADDING}px;"`;
+    }
+
+    return `<table class="tt-values gd-viz-tooltip-table"${tableStyle}>${textData
         .map(
             line =>
                 `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title"${columnTitleStyle}>${
+                    line[0]
+                }</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value"${columnValueStyle}>${
+                    line[1]
+                }</td>
             </tr>`,
         )
         .join("\n")}</table>`;
@@ -735,6 +760,10 @@ const renderTooltipHTML = (textData: string[][]): string => {
 
 function isPointOnOppositeAxis(point: IPointData): boolean {
     return get(point, ["series", "yAxis", "opposite"], false);
+}
+
+function getChartWidth(point: IPointData): number {
+    return get(point, ["series", "chart", "plotWidth"], 0);
 }
 
 export function buildTooltipFactory(
@@ -771,7 +800,8 @@ export function buildTooltipFactory(
             textData[0][0] = customEscape(point.name);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -781,7 +811,7 @@ export function buildTooltipForTwoAttributesFactory(
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
-    const { separators, stackMeasuresToPercent = false } = config;
+    const { separators, stackMeasuresToPercent = false, type } = config;
 
     return (point: IPointData, percentageValue?: number): string => {
         const category: ICategory = point.category;
@@ -810,7 +840,8 @@ export function buildTooltipForTwoAttributesFactory(
             }
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -819,7 +850,7 @@ export function generateTooltipXYFn(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ) {
-    const { separators } = config;
+    const { separators, type } = config;
 
     return (point: IPointData) => {
         const textData = [];
@@ -850,7 +881,8 @@ export function generateTooltipXYFn(
             ]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -859,7 +891,7 @@ export function generateTooltipHeatmapFn(
     stackByAttribute: any,
     config: IChartConfig = {},
 ) {
-    const { separators } = config;
+    const { separators, type } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
     };
@@ -885,7 +917,8 @@ export function generateTooltipHeatmapFn(
             ]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -894,7 +927,7 @@ export function buildTooltipTreemapFactory(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
-    const { separators } = config;
+    const { separators, type } = config;
 
     return (point: IPointData) => {
         // show tooltip for leaf node only
@@ -922,7 +955,8 @@ export function buildTooltipTreemapFactory(
             textData.push([customEscape(point.category && point.category.name), formattedValue]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
