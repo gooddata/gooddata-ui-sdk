@@ -9,7 +9,11 @@ import {
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { SeriesChartTypes } from "../../../../constants/series";
-import { IDrillConfig, IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
+import {
+    IDrillConfig,
+    IDrillEventIntersectionElement,
+    IHighchartsPointObject,
+} from "../../../../interfaces/DrillEvents";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
@@ -185,6 +189,95 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe("678");
+    });
+
+    it("should remove duplicated values for heatmap", () => {
+        const drillIntersections: IDrillEventIntersectionElement[] = [
+            {
+                id: "1deea80aa5a54d1bbbc2e2de63989eef",
+                title: "Best Case",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1282",
+                    identifier: "ac3EwmqvbxcX",
+                },
+            },
+            {
+                id: "168279",
+                title: "CompuSci",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952",
+                    identifier: "label.product.id.name",
+                },
+            },
+            {
+                id: "2010",
+                title: "2010",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/324",
+                    identifier: "closed.aag81lMifn6q",
+                },
+            },
+        ];
+        const pointsWithEmptyValues: Array<Partial<IHighchartsPointObject>> = [
+            { x: 0, y: 0, value: 268.8, drillIntersection: drillIntersections },
+            { x: 0, y: 1, value: null, drillIntersection: drillIntersections },
+            {
+                x: 0,
+                y: 1,
+                value: null,
+                drillIntersection: drillIntersections,
+                ignoredInDrillEventContext: true,
+            },
+            { x: 0, y: 2, value: null, drillIntersection: drillIntersections },
+            {
+                x: 0,
+                y: 2,
+                value: null,
+                drillIntersection: drillIntersections,
+                ignoredInDrillEventContext: true,
+            },
+            { x: 0, y: 3, value: 3644, drillIntersection: drillIntersections },
+        ];
+        const pointClickWithEmptyEventData: Highcharts.DrilldownEventObject = {
+            points: pointsWithEmptyValues,
+        } as any;
+
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const target = { dispatchEvent: jest.fn() };
+
+        chartClick(
+            drillConfig,
+            pointClickWithEmptyEventData,
+            (target as any) as EventTarget,
+            VisualizationTypes.HEATMAP,
+        );
+
+        jest.runAllTimers();
+
+        expect(target.dispatchEvent).toHaveBeenCalled();
+
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.points).toEqual([
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 0,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 1,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 2,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 3,
+            },
+        ]);
     });
 
     it("should correctly handle z coordinate of point", () => {

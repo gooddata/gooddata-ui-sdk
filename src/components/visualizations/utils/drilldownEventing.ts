@@ -66,7 +66,8 @@ function composeDrillContextGroup(
     points: IHighchartsPointObject[],
     chartType: ChartType,
 ): IDrillEventContextGroup {
-    const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => {
+    const sanitizedPoints = sanitizeContextPoints(chartType, points);
+    const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
         const customProps: Partial<IDrillPoint> = isComboChart(chartType)
             ? { type: get(point, "series.type") }
             : {};
@@ -167,7 +168,8 @@ const tickLabelClickDebounce = debounce(
         chartType: ChartType,
     ): void => {
         const { afm, onFiredDrillEvent } = drillConfig;
-        const contextPoints: IDrillPoint[] = points.map((point: IHighchartsPointObject) => ({
+        const sanitizedPoints = sanitizeContextPoints(chartType, points);
+        const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => ({
             x: point.x,
             y: point.y,
             intersection: point.drillIntersection,
@@ -185,6 +187,16 @@ const tickLabelClickDebounce = debounce(
         fireEvent(onFiredDrillEvent, data, target);
     },
 );
+
+function sanitizeContextPoints(
+    chartType: ChartType,
+    points: IHighchartsPointObject[],
+): IHighchartsPointObject[] {
+    if (isHeatmap(chartType)) {
+        return points.filter((point: IHighchartsPointObject) => !point.ignoredInDrillEventContext);
+    }
+    return points;
+}
 
 export function tickLabelClick(
     drillConfig: IDrillConfig,
