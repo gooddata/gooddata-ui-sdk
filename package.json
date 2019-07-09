@@ -63,10 +63,12 @@
     "formik": "^0.11.11",
     "history": "^4.7.2",
     "html-webpack-plugin": "3.2.0",
+    "husky": "3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "isomorphic-fetch": "2.2.1",
     "jest": "24.7.1",
     "jest-junit": "3.0.0",
+    "lint-staged": "9.1.0",
     "madge": "^3.4.4",
     "moment": "2.23.0",
     "node-sass": "4.7.2",
@@ -199,6 +201,17 @@
       "js",
       "jsx",
       "json"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
