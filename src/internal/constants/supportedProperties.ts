@@ -30,7 +30,6 @@ const BAR_SECONDARY_AXIS_PROPERTIES = [
 ];
 
 export const OPTIONAL_STACKING_PROPERTIES = ["stackMeasures", "stackMeasuresToPercent"];
-export const OPTIONAL_STACKING_PROPERTIES_FOR_COMBO = ["canStackInPercent"];
 
 export const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAxis"];
 
@@ -93,7 +92,6 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_CHART_SUPPORTED_PROPERTIES,
         ...CHART_TYPE_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
-        ...OPTIONAL_STACKING_PROPERTIES_FOR_COMBO,
     ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
@@ -107,7 +105,6 @@ export const COMBO_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         ...CHART_TYPE_PROPERTIES,
         ...OPTIONAL_STACKING_PROPERTIES,
-        ...OPTIONAL_STACKING_PROPERTIES_FOR_COMBO,
     ],
 };
 

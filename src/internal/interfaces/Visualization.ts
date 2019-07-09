@@ -171,6 +171,7 @@ export interface IOptionalStacking {
     disabled?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
+    canStackInPercent?: boolean;
 }
 
 export interface IUiConfig {

@@ -53,5 +53,24 @@ describe("comboChartUiConfigHelper", () => {
                 expect(secondaryMeasureBucket.subtitle).toEqual(secondarySubtitle);
             },
         );
+
+        it.each([[true, true], [false, false]])(
+            "should set canStackInPercent as %s when dual axis is %s",
+            (expectation: boolean, dualAxis: boolean) => {
+                const refPoint = {
+                    ...refPointMock,
+                    properties: {
+                        controls: {
+                            dualAxis,
+                            primaryChartType: COLUMN,
+                            secondaryChartType: LINE,
+                        },
+                    },
+                };
+                const referencePoint = setComboChartUiConfig(refPoint, intl, VisualizationTypes.COMBO);
+                const canStackInPercent = get(referencePoint, "uiConfig.optionalStacking.canStackInPercent");
+                expect(canStackInPercent).toBe(expectation);
+            },
+        );
     });
 });
