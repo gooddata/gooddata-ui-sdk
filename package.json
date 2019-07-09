@@ -85,12 +85,14 @@
     "grunt-grizzly": "0.12.0",
     "grunt-run": "0.8.0",
     "grunt-webpack": "1.0.14",
+    "husky": "3.0.0",
     "imports-loader": "0.7.0",
     "istanbul-instrumenter-loader": "0.2.0",
     "jest": "24.1.0",
     "jest-junit": "3.0.0",
     "js-object-pretty-print": "0.2.0",
     "json-loader": "0.5.4",
+    "lint-staged": "9.1.0",
     "lodash-webpack-plugin": "0.11.0",
     "prettier": "^1.18.2",
     "ts-jest": "24.0.0",
@@ -113,5 +115,16 @@
     "qs": "^6.5.1",
     "rxjs": "^5.5.6",
     "uuid": "^3.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
