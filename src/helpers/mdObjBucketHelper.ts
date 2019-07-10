@@ -20,3 +20,12 @@ export function getBucketItems(
 export function isBucketEmpty(buckets: VisualizationObject.IBucket[], bucketName: string): boolean {
     return isEmpty(getBucketItems(buckets, bucketName));
 }
+
+export function getIdentifierFromBucketsItem(
+    bucket: VisualizationObject.IBucket[],
+    bucketLocalIdentifier: string,
+    type: string,
+): string[] {
+    const bucketItems = getBucketItems(bucket, bucketLocalIdentifier);
+    return bucketItems.map(item => get(item, [type, "localIdentifier"]));
+}

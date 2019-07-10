@@ -101,6 +101,7 @@ import { isDataOfReasonableSize } from "./highChartsCreators";
 import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
+import { setMeasuresToSecondaryAxis } from "../../../helpers/dualAxis";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -1644,7 +1645,7 @@ export function getChartOptions(
     executionResponse: Execution.IExecutionResponse,
     executionResultData: Execution.DataValue[][],
     unfilteredResultHeaderItems: Execution.IResultHeaderItem[][][],
-    config: IChartConfig,
+    chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate[],
 ): IChartOptions {
     // Future version of API will return measures alongside attributeHeaderItems
@@ -1654,6 +1655,8 @@ export function getChartOptions(
             return dimension.filter((attributeHeaders: any) => attributeHeaders[0].attributeHeaderItem);
         },
     );
+
+    const config = setMeasuresToSecondaryAxis(chartConfig);
 
     invariant(
         config && isChartSupported(config.type),

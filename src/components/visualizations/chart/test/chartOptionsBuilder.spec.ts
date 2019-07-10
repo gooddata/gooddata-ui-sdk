@@ -3270,6 +3270,7 @@ describe("chartOptionsBuilder", () => {
                         {
                             type: COMBO,
                             stackMeasuresToPercent: true,
+                            dualAxis: false,
                             mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                             stackMeasures,
                         },

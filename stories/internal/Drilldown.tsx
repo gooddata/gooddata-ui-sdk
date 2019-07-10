@@ -544,6 +544,7 @@ storiesOf("Internal/Drilldown", module)
                             onFiredDrillEvent={action("onFiredDrillEvent")}
                             config={{
                                 type: "combo",
+                                dualAxis: false,
                                 mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                             }}
                             onDataTooLarge={noop}
@@ -567,6 +568,7 @@ storiesOf("Internal/Drilldown", module)
                             onFiredDrillEvent={onFiredDrillEvent}
                             config={{
                                 type: "combo",
+                                dualAxis: false,
                                 mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                             }}
                             onDataTooLarge={noop}

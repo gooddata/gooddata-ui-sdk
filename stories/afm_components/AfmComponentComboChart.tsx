@@ -30,6 +30,7 @@ storiesOf("AFM components/ComboChart", module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     config={{
+                        dualAxis: false,
                         mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                 />
@@ -46,6 +47,7 @@ storiesOf("AFM components/ComboChart", module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     config={{
+                        dualAxis: false,
                         mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                 />
@@ -59,6 +61,7 @@ storiesOf("AFM components/ComboChart", module)
                     projectId="storybook"
                     afm={AFM_TWO_MEASURES_ONE_RENAMED_ATTRIBUTE}
                     config={{
+                        dualAxis: false,
                         colors: CUSTOM_COLORS,
                         mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
@@ -76,6 +79,7 @@ storiesOf("AFM components/ComboChart", module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{
+                        dualAxis: false,
                         mdObject: AFM_ONE_BAR_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                     onError={onErrorHandler}
@@ -92,6 +96,7 @@ storiesOf("AFM components/ComboChart", module)
                     projectId="storybook"
                     afm={AFM_ONE_MEASURE_ONE_ATTRIBUTE}
                     config={{
+                        dualAxis: false,
                         mdObject: AFM_ONE_LINE_MEASURE_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                     }}
                     onError={onErrorHandler}
@@ -111,6 +116,7 @@ storiesOf("AFM components/ComboChart", module)
                     LoadingComponent={null}
                     ErrorComponent={null}
                     config={{
+                        dualAxis: false,
                         mdObject: AFM_TWO_MEASURES_ONE_ATTRIBUTE_COMBO_MD_OBJECT,
                         ...GERMAN_SEPARATORS,
                     }}
