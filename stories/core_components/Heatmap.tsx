@@ -10,6 +10,7 @@ import {
     ATTRIBUTE_2,
     ATTRIBUTE_3,
     MEASURE_1,
+    MEASURE_1_WITH_LONG_NAME_AND_FORMAT,
     MEASURE_2,
     ATTRIBUTE_1_WITH_ALIAS,
     ATTRIBUTE_COUNTRY,
@@ -374,6 +375,21 @@ storiesOf("Core components/Heatmap", module)
                 <Heatmap
                     projectId="storybook"
                     measure={MEASURE_WITH_NULLS}
+                    columns={ATTRIBUTE_1}
+                    rows={ATTRIBUTE_2}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("tooltip for chart with small width and long names", () =>
+        screenshotWrap(
+            <div style={{ width: 400, height: 400 }}>
+                <Heatmap
+                    projectId="storybook"
+                    measure={MEASURE_1_WITH_LONG_NAME_AND_FORMAT}
                     columns={ATTRIBUTE_1}
                     rows={ATTRIBUTE_2}
                     onError={onErrorHandler}
