@@ -5,6 +5,7 @@ import {
     alignToBaseAxis,
     customAdjustTickAmount,
     getDirection,
+    getSelectionRange,
     getYAxisScore,
     MOVE_ZERO_LEFT,
     MOVE_ZERO_RIGHT,
@@ -537,6 +538,48 @@ describe("adjustTickAmount - detail", () => {
             const primaryAxis: IHighchartsAxisExtend = { tickPositions: [-2, -1, 0, 1, 2] };
             const secondaryAxis: IHighchartsAxisExtend = { tickPositions: [-3, -2, -1, 0, 1] };
             expect(getDirection(primaryAxis, secondaryAxis)).toBe(MOVE_ZERO_LEFT);
+        });
+    });
+
+    describe("getSelectionRange", () => {
+        it("should return range with data min >= 0", () => {
+            const axis: IHighchartsAxisExtend = {
+                dataMin: 10,
+                dataMax: 50,
+                tickAmount: 4,
+                tickPositions: [0, 20, 40, 60, 80],
+            };
+            expect(getSelectionRange(axis)).toEqual([1, 5]);
+        });
+
+        it("should return range with data max <= 0", () => {
+            const axis: IHighchartsAxisExtend = {
+                dataMin: -50,
+                dataMax: -10,
+                tickAmount: 4,
+                tickPositions: [-80, -60, -40, -20, 0],
+            };
+            expect(getSelectionRange(axis)).toEqual([0, 4]);
+        });
+
+        it("should return range trimmed from negative", () => {
+            const axis: IHighchartsAxisExtend = {
+                dataMin: -70,
+                dataMax: 30,
+                tickAmount: 6,
+                tickPositions: [-80, -60, -40, -20, 0, 20, 40],
+            };
+            expect(getSelectionRange(axis)).toEqual([1, 7]);
+        });
+
+        it("should return range trimmed from positive", () => {
+            const axis: IHighchartsAxisExtend = {
+                dataMin: -30,
+                dataMax: 70,
+                tickAmount: 6,
+                tickPositions: [-40, -20, 0, 20, 40, 60, 80],
+            };
+            expect(getSelectionRange(axis)).toEqual([0, 6]);
         });
     });
 });

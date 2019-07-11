@@ -605,6 +605,12 @@ export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
         .executionResult,
 };
 
+export const dualChartWithComputedAttribute: any = {
+    executionRequest: require("./dual_chart_with_computed_attribute_request.json").execution,
+    executionResponse: require("./dual_chart_with_computed_attribute_response.json").executionResponse,
+    executionResult: require("./dual_chart_with_computed_attribute_result.json").executionResult,
+};
+
 export default {
     pivotTableWithColumnAndRowAttributes,
     pivotTableWithColumnRowAttributesAndTotals,
