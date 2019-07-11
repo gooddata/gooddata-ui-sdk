@@ -259,4 +259,31 @@ storiesOf("Internal/DualAxesMinMaxConfig", module)
     })
     .add("Column should not be cut off on left axis", () => {
         return screenshotWrap(<div>{renderSupportedCharts(dataSet.sd160DataSet02)}</div>);
+    })
+    .add("Chart should be zero aligned and no columns is hidden", () => {
+        // SD-538
+        const chartConfig: IChartConfig = {
+            type: VisualizationTypes.COLUMN,
+            legend: {
+                enabled: true,
+                position: "top",
+            },
+            secondary_yaxis: {
+                measures: ["wonMetric"],
+            },
+        };
+
+        // real size causes SD-538
+        const width = 907;
+        const height = 526;
+
+        return screenshotWrap(
+            wrap(
+                <div style={{ height, width }}>
+                    <Visualization config={chartConfig} {...dataSet.leftPositiveRightMixDataset} />
+                </div>,
+                height + 40,
+                width + 20,
+            ),
+        );
     });
