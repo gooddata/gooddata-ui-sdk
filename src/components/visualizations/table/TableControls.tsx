@@ -41,7 +41,7 @@ export class TableControlsClass extends React.Component<ITableControlsProps & In
 
         return (
             <Button
-                className="button-secondary button-small"
+                className="gd-button-secondary gd-button-small"
                 onClick={this.props.onMore}
                 value={label}
                 title={label}
@@ -58,7 +58,7 @@ export class TableControlsClass extends React.Component<ITableControlsProps & In
 
         return (
             <Button
-                className="button-small button-link-dimmed"
+                className="gd-button-small gd-button-link-dimmed"
                 onClick={this.props.onLess}
                 value={label}
                 title={label}

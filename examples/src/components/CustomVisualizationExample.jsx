@@ -87,7 +87,7 @@ export class CustomVisualization extends Component {
                 </ResponsiveContainer>
                 <div>
                     <p>
-                        <button className="button button-secondary" onClick={this.toggleDisplayRawData}>
+                        <button className="gd-button gd-button-secondary" onClick={this.toggleDisplayRawData}>
                             Toggle Raw Data
                         </button>
                     </p>

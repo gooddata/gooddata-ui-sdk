@@ -56,7 +56,7 @@ export class AttributeElementsExample extends Component {
                         return (
                             <div>
                                 <button
-                                    className="button button-secondary s-show-more-filters-button"
+                                    className="gd-button gd-button-secondary s-show-more-filters-button"
                                     onClick={loadMore}
                                     disabled={isLoading || offset + count === total}
                                 >

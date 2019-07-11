@@ -54,7 +54,7 @@ describe("AttributeDropdown", () => {
     it("should render attribute title", () => {
         const attributeDisplayForm = createADF();
         const wrapper = renderComponent({ attributeDisplayForm });
-        expect(wrapper.find(".gd-attribute-filter .button-text").text()).toBe(
+        expect(wrapper.find(".gd-attribute-filter .gd-button-text").text()).toBe(
             attributeDisplayForm.meta.title,
         );
     });

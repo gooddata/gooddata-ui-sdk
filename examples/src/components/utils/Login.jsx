@@ -114,7 +114,7 @@ export const LoginFormUncontrolled = props => {
                 <div className="gd-input buttons">
                     <button
                         type="submit"
-                        className={`button button-primary button-important submit-button s-login-submit${
+                        className={`gd-button gd-button-primary gd-button-important submit-button s-login-submit${
                             isSubmitting || isLoading ? " disabled" : ""
                         }`}
                         disabled={isSubmitting || isLoading}
@@ -123,7 +123,7 @@ export const LoginFormUncontrolled = props => {
                         Sign in
                     </button>
                     <Link
-                        className="button button-link"
+                        className="gd-button gd-button-link"
                         to={{
                             pathname: "/registration",
                         }}

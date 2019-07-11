@@ -25,7 +25,7 @@ describe("DataLabelsControl", () => {
         const VISIBLE_LABEL = "show";
         const AUTO_LABEL = "auto (default)";
         const dataLabelsButtonSelector = ".s-data-labels-config .dropdown-button";
-        const dataLabelsButtonTextSelector = ".s-data-labels-config .dropdown-button .button-text";
+        const dataLabelsButtonTextSelector = ".s-data-labels-config .dropdown-button .gd-button-text";
 
         it("should render data labels control", () => {
             const wrapper = createComponent();

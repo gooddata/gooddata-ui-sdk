@@ -43,7 +43,7 @@ export class ExecuteExample extends Component {
     executeChildrenFunction = retry => ({ result, isLoading, error }) => {
         const retryButton = (
             <p>
-                <button onClick={retry} className="button button-action s-retry-button">
+                <button onClick={retry} className="gd-button gd-button-action s-retry-button">
                     Retry
                 </button>
                 &ensp;(fails every second attempt)
