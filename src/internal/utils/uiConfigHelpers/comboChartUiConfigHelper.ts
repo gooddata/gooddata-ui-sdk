@@ -28,6 +28,7 @@ import {
 } from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
 import { ChartType, VisualizationTypes } from "../../../constants/visualizationTypes";
+import { isLineChart } from "../../../components/visualizations/utils/common";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 
@@ -51,6 +52,11 @@ const VIEW_BY_ICONS = {
     [`${AREA}-${AREA}`]: areaViewIcon,
 };
 
+function setCanStackInPercent(uiConfig: IUiConfig, secondaryChartType: string, isDualAxis: boolean) {
+    const canStackInPercent = !(isDualAxis === false && isLineChart(secondaryChartType));
+    set(uiConfig, "optionalStacking.canStackInPercent", canStackInPercent);
+}
+
 export function setComboChartUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: InjectedIntl,
@@ -65,7 +71,11 @@ export function setComboChartUiConfig(
         get(referencePointConfigured, PROPERTY_CONTROLS_PRIMARY_CHART_TYPE, COLUMN),
         get(referencePointConfigured, PROPERTY_CONTROLS_SECONDARY_CHART_TYPE, LINE),
     ];
+
     const updatedUiConfig: IUiConfig = setBucketTitles(referencePointConfigured, visualizationType, intl);
+
+    const isDualAxis = get(referencePointConfigured, "properties.controls.dualAxis", true);
+    setCanStackInPercent(updatedUiConfig, chartTypes[1], isDualAxis);
 
     measureBuckets.forEach((bucket: IBucket, index: number) => {
         const type = chartTypes[index];
