@@ -219,3 +219,59 @@ describe("areNeighborsOverlapping", () => {
         },
     );
 });
+
+describe("areLabelsOverlappingColumns", () => {
+    const labels = [
+        { x: 73.25, y: 97.75, width: 37.33332824707031, height: 16 },
+        { x: 471.25, y: 77.75, width: 37.350006103515625, height: 16 },
+    ];
+    function getElementForLabel(index: number) {
+        return {
+            getBoundingClientRect: () => labels[index],
+        };
+    }
+
+    const points = [
+        { x: 73, y: 100, width: 12, height: 79 },
+        { x: 73, y: 178, width: 12, height: 83 },
+        { x: 86, y: 115, width: 12, height: 146 },
+        { x: 243, y: 67, width: 101, height: 146 },
+        { x: 243, y: 212, width: 101, height: 151 },
+        { x: 440, y: 95, width: 101, height: 268 },
+    ];
+    function getGraphicForPoint(index: number) {
+        return {
+            element: {
+                getBoundingClientRect: () => points[index],
+            },
+        };
+    }
+
+    const series = { options: { type: VisualizationTypes.COLUMN } };
+    const labelsWithOverlapColumns: IPointData[] = [
+        {
+            element: getElementForLabel(0),
+        },
+    ];
+    const pointsWithOverlapColumns: any[] = [0, 1, 2].map((value: number) => ({
+        graphic: getGraphicForPoint(value),
+        series,
+    }));
+
+    const labelsWithoutOverlapColumns: IPointData[] = [
+        {
+            element: getElementForLabel(1),
+        },
+    ];
+    const pointsWithoutOverlapColumns: any[] = [3, 4, 5].map((value: number) => ({
+        graphic: getGraphicForPoint(value),
+        series,
+    }));
+    it.each([
+        [true, labelsWithOverlapColumns, pointsWithOverlapColumns],
+        [false, labelsWithoutOverlapColumns, pointsWithoutOverlapColumns],
+    ])("should return overlap is %s", (isOverlap: number, labels: IPointData[], points: IPointData[]) => {
+        const areOverlappingColumns = autohideColumnLabels.areLabelsOverlappingColumns(labels, points);
+        expect(areOverlappingColumns).toEqual(isOverlap);
+    });
+});
