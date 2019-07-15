@@ -369,6 +369,9 @@ export function getHeatmapSeries(
                     borderWidth: 0,
                     pointPadding: 2,
                     color: nullColor,
+                    // ignoredInDrillEventContext flag is used internally, not related to Highchart
+                    // to check and remove this null-value point in drill message
+                    ignoredInDrillEventContext: true,
                 });
             } else {
                 data.push(pointData);
