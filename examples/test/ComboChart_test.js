@@ -15,5 +15,6 @@ test("Combo chart should render", async t => {
         .ok()
         .expect(chart.exists)
         .ok()
-        .expect(chart.textContent);
+        .expect(chart.textContent)
+        .ok();
 });

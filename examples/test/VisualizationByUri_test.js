@@ -16,7 +16,8 @@ async function checkRenderedChart(selector, t) {
         .ok()
         .expect(chart.exists)
         .ok()
-        .expect(chart.textContent);
+        .expect(chart.textContent)
+        .ok();
 }
 
 test("Chart visualization should render", async t => {
