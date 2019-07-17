@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import get = require("lodash/get");
 import map = require("lodash/map");
 import zip = require("lodash/zip");
 import values = require("lodash/values");
@@ -14,6 +15,7 @@ import {
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
     IAxisRangeForAxes,
+    IRectBySize,
 } from "../../helpers";
 
 import {
@@ -28,6 +30,7 @@ import {
     hasShape,
     hasLabelInside,
 } from "../../dataLabelsHelpers";
+import { VisualizationTypes } from "../../../../../../constants/visualizationTypes";
 import {
     IPointData,
     IAxisConfig,
@@ -112,7 +115,7 @@ export function isOverlappingWidth(visiblePoints: IPointData[]) {
     });
 }
 
-export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]) {
+export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]): boolean {
     return neighbors.some(labelsPair => {
         const [firstLabel, nextLabel]: IDataLabelsConfig[] = labelsPair || [];
 
@@ -127,6 +130,47 @@ export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]) {
             }
         }
         return false;
+    });
+}
+
+// Check if Total label overlapping other columns
+export function areLabelsOverlappingColumns(labels: IPointData[], visiblePoints: IPointData[]): boolean {
+    return labels.some((label: IPointData) => {
+        if (isEmpty(label)) {
+            return false;
+        }
+
+        const { x, y, width, height }: IClientRect = label.element.getBoundingClientRect();
+        const labelAttr: IRectBySize = {
+            x,
+            y,
+            width,
+            height,
+        };
+
+        return visiblePoints.some((point: IPointData) => {
+            const seriesType: string = get(point, "series.options.type");
+            if (
+                isEmpty(point) ||
+                isEmpty(point.graphic) ||
+                // supportedDualAxesChartTypes is including AREA and LINE
+                // won't hide the stacked label if it overlaps with points of AREA and LINE
+                seriesType === VisualizationTypes.AREA ||
+                seriesType === VisualizationTypes.LINE
+            ) {
+                return false;
+            }
+
+            const { x, y, width, height }: IClientRect = point.graphic.element.getBoundingClientRect();
+            const pointAttr: IRectBySize = {
+                x,
+                y,
+                width,
+                height,
+            };
+
+            return isIntersecting(pointAttr, labelAttr);
+        });
     });
 }
 
@@ -174,7 +218,11 @@ function toggleStackedLabelsForDualAxis() {
         const points = getStackLabelPointsForDualAxis(stacks);
         const labels = getLabelOrDataLabelForPoints(points);
         const neighbors = toNeighbors(labels);
-        const areOverlapping = areNeighborsOverlapping(neighbors);
+        const neighborsOverlapping = areNeighborsOverlapping(neighbors);
+
+        const areOverlapping = neighborsOverlapping
+            ? true
+            : areLabelsOverlappingColumns(labels, getDataPointsOfVisibleSeries(this));
 
         if (areOverlapping) {
             this.userOptions.stackLabelsVisibility = "hidden";

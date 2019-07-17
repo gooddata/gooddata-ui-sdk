@@ -30,6 +30,21 @@ const lineMeasure = [MEASURE_4];
 const arithmeticMeasures = [ARITHMETIC_MEASURE_SIMPLE_OPERANDS, ARITHMETIC_MEASURE_USING_ARITHMETIC];
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 
+const countryFilters = [];
+for (let index = 1; index <= 15; index++) {
+    countryFilters.push(`/gdc/md/storybook/obj/3/elements?id=${index}`);
+}
+const filtersByAttributeCountry = [
+    {
+        positiveAttributeFilter: {
+            displayForm: {
+                uri: "/gdc/md/storybook/obj/3.df",
+            },
+            in: countryFilters,
+        },
+    },
+];
+
 storiesOf("Core components/ComboChart", module)
     .add("dual axis with one column measure, one line measure, one attribute", () =>
         screenshotWrap(
@@ -319,6 +334,31 @@ storiesOf("Core components/ComboChart", module)
                                 primaryChartType: COLUMN,
                                 secondaryChartType: COLUMN,
                                 stackMeasures: true,
+                            }}
+                            onError={onErrorHandler}
+                        />
+                    </div>
+                </div>
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("stack primary measures has many data with 1 VIEW BY and chart type is COLUMN to percent", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(2)}>
+                <div key={COLUMN}>
+                    <div className="storybook-title">{`${COLUMN} - ${COLUMN}`}</div>
+                    <div style={wrapperStyle} className="screenshot-container">
+                        <ComboChart
+                            projectId="storybook"
+                            primaryMeasures={[MEASURE_1, MEASURE_3]}
+                            secondaryMeasures={secondaryMeasure}
+                            viewBy={ATTRIBUTE_COUNTRY}
+                            filters={filtersByAttributeCountry}
+                            config={{
+                                primaryChartType: COLUMN,
+                                secondaryChartType: COLUMN,
+                                stackMeasures: true,
+                                stackMeasuresToPercent: true,
                             }}
                             onError={onErrorHandler}
                         />
