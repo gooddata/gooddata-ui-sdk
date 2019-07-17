@@ -5,7 +5,13 @@ import { oneAttributeOneMeasureSortByMeasureExecutionObject } from "../../../exe
 import { createIntlMock } from "../../visualizations/utils/intlUtils";
 import noop = require("lodash/noop");
 
-import { PivotTable, PivotTableInner, IPivotTableInnerProps } from "../PivotTable";
+import {
+    PivotTable,
+    PivotTableInner,
+    IPivotTableInnerProps,
+    WATCHING_TABLE_RENDERED_INTERVAL,
+    WATCHING_TABLE_RENDERED_MAX_TIME,
+} from "../PivotTable";
 import { oneMeasureDataSource, oneAttributeOneMeasureDataSource } from "../../tests/mocks";
 import { getParsedFields } from "../pivotTable/agGridUtils";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
@@ -30,8 +36,8 @@ describe("PivotTable", () => {
         );
     }
 
-    function getTableInstance() {
-        const wrapper = renderComponent();
+    function getTableInstance(customProps: Partial<IPivotTableInnerProps> = {}) {
+        const wrapper = renderComponent(customProps);
         const table = wrapper.find(PivotTableInner);
         return table.instance() as any;
     }
@@ -136,6 +142,82 @@ describe("PivotTable", () => {
             tableInstance.onModelUpdated();
             expect(updateStickyRow).toHaveBeenCalledTimes(1);
             expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("onFirstDataRendered", () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
+        });
+
+        afterEach(() => {
+            jest.clearAllTimers();
+        });
+
+        it("should start watching table rendered", () => {
+            const table = getTableInstance();
+            table.onFirstDataRendered();
+            expect(setInterval).toHaveBeenCalledWith(
+                table.startWatchingTableRendered,
+                WATCHING_TABLE_RENDERED_INTERVAL,
+            );
+        });
+
+        it("should set timeout for watching", () => {
+            const table = getTableInstance();
+            table.onFirstDataRendered();
+            expect(setTimeout).toHaveBeenCalledWith(
+                table.stopWatchingTableRendered,
+                WATCHING_TABLE_RENDERED_MAX_TIME,
+            );
+        });
+
+        it("should stop watching with unmounted table", () => {
+            const table = getTableInstance();
+            table.containerRef = null;
+            table.watchingIntervalId = 123;
+            jest.spyOn(table, "stopWatchingTableRendered");
+
+            table.startWatchingTableRendered();
+            expect(table.stopWatchingTableRendered).toHaveBeenCalledTimes(1);
+            expect(clearInterval).toHaveBeenCalledTimes(1);
+        });
+
+        it("should call afterRender after table rendered", () => {
+            const afterRender = jest.fn();
+
+            const table = getTableInstance({ afterRender });
+            table.isTableHidden = jest.fn().mockReturnValueOnce(false);
+            table.watchingIntervalId = 123;
+            table.watchingTimeoutId = 456;
+            jest.spyOn(table, "stopWatchingTableRendered");
+
+            table.startWatchingTableRendered();
+
+            expect(table.stopWatchingTableRendered).toHaveBeenCalledTimes(1);
+
+            expect(clearInterval).toHaveBeenNthCalledWith(1, 123);
+            expect(clearTimeout).toHaveBeenNthCalledWith(1, 456);
+
+            expect(afterRender).toHaveBeenCalledTimes(1);
+        });
+
+        it("should call afterRender after timeout", () => {
+            const afterRender = jest.fn();
+
+            const table = getTableInstance({ afterRender });
+            table.watchingIntervalId = 123;
+            table.watchingTimeoutId = 456;
+
+            table.stopWatchingTableRendered();
+
+            expect(clearInterval).toHaveBeenNthCalledWith(1, 123);
+            expect(clearTimeout).toHaveBeenNthCalledWith(1, 456);
+
+            expect(table.watchingIntervalId).toBe(null);
+            expect(table.watchingTimeoutId).toBe(null);
+
+            expect(afterRender).toHaveBeenCalledTimes(1);
         });
     });
 });
