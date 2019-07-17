@@ -51,6 +51,7 @@ const BASE_TEMPLATE: any = {
     },
     drilldown: {
         activeDataLabelStyle: {
+            color: "#000",
             textDecoration: "none",
         },
         activeAxisLabelStyle: {
