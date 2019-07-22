@@ -11,6 +11,11 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.15.0"></a>
+## 2019-07-23 Version [11.15.0](https://github.com/gooddata/gooddata-js/compare/v11.14.2...v11.15.0)
+
+- new CatalogueModule public method loadItemDescriptions
+
 <a name="11.14.2"></a>
 ## 2019-07-02 Version [11.14.2](https://github.com/gooddata/gooddata-js/compare/v11.14.1...v11.14.2)
 
