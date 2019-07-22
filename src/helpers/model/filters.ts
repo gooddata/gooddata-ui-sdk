@@ -11,7 +11,7 @@ export function positiveAttributeFilter(
         positiveAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
             in: inValues,
-            textFilter,
+            ...(textFilter && { textFilter }),
         },
     };
 }
@@ -25,7 +25,7 @@ export function negativeAttributeFilter(
         negativeAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
             notIn: notInValues,
-            textFilter,
+            ...(textFilter && { textFilter }),
         },
     };
 }

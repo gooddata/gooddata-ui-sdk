@@ -47,6 +47,7 @@ import { ScatterPlot } from "./components/ScatterPlot";
 import { ComboChart } from "./components/ComboChart";
 import { FunnelChart } from "./components/FunnelChart";
 import { Heatmap } from "./components/Heatmap";
+import { withJsxExport } from "./components/withJsxExport";
 import * as ChartConfiguration from "./interfaces/Config";
 // tslint:disable-next-line:no-duplicate-imports
 import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
@@ -140,4 +141,5 @@ export {
     IHeaderPredicate,
     HeaderPredicateFactory,
     MappingHeader,
+    withJsxExport,
 };
