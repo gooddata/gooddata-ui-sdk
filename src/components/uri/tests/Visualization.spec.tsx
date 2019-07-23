@@ -267,6 +267,7 @@ describe("VisualizationWrapped", () => {
         return testUtils.delay(SLOW).then(() => {
             wrapper.update();
             expect(wrapper.find(PivotTable).length).toBe(1);
+            expect(wrapper.find(PivotTable).prop("sdk")).toEqual(sdkWithEnablePivot);
             expect(wrapper.state("type")).toEqual(VisualizationTypes.PIVOT_TABLE);
             expect(wrapper.state("dataSource")).not.toBeNull();
             expect(wrapper.state("resultSpec")).toEqual(expectedResultSpec);

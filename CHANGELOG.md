@@ -54,6 +54,10 @@ const exportConfig: VisEvents.IExtendedExportConfig = {
 };
 ```
 
+### Fixed
+
+- The Visualization component now propagates an externally provided SDK instance to the PivotTable component
+
 ## 7.0.1
 
 June 28, 2019
