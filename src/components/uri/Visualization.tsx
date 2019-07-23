@@ -264,7 +264,7 @@ export class VisualizationWrapped extends React.Component<
     }
 
     public render() {
-        const { dataSource } = this;
+        const { dataSource, sdk } = this;
         const {
             projectId,
             drillableItems,
@@ -360,7 +360,7 @@ export class VisualizationWrapped extends React.Component<
                     filtersFromProps,
                 );
                 // we do not need to pass totals={totals} because BucketPivotTable deals with changes in totals itself
-                return <PivotTableComponent {...commonProps} {...pivotBucketProps} />;
+                return <PivotTableComponent {...commonProps} {...pivotBucketProps} sdk={sdk} />;
             }
             case VisualizationTypes.HEADLINE:
                 return <HeadlineComponent {...commonProps} {...sourceProps} />;
