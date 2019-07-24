@@ -69,8 +69,8 @@ export class CatalogueModule {
         const attributesMap = get(options, "attributesMap");
         const hasBuckets = get(mdObj, "buckets") !== undefined;
         if (hasBuckets) {
-            return this.bucketItemsToExecConfig(projectId, mdObj, { attributesMap }).then(
-                (bucketItems: any) => this.loadCatalog(projectId, { ...request, bucketItems }),
+            return this.loadItemDescriptions(projectId, mdObj, attributesMap).then((bucketItems: any) =>
+                this.loadCatalog(projectId, { ...request, bucketItems }),
             );
         }
 
@@ -80,10 +80,7 @@ export class CatalogueModule {
     public loadDateDataSets(projectId: string, options: any) {
         const mdObj = get(cloneDeep(options), "bucketItems");
         const bucketItemsPromise = mdObj
-            ? this.bucketItemsToExecConfig(projectId, mdObj, {
-                  removeDateItems: true,
-                  attributesMap: get(options, "attributesMap"),
-              })
+            ? this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap"), true)
             : Promise.resolve();
 
         return bucketItemsPromise.then((bucketItems: any) => {
@@ -117,18 +114,18 @@ export class CatalogueModule {
         });
     }
 
-    private requestDateDataSets(projectId: string, dateDataSetsRequest: any) {
-        const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
-
-        return this.xhr
-            .post(uri, { data: { dateDataSetsRequest } })
-            .then(r => r.getData())
-            .then(data => data.dateDataSetsResponse);
-    }
-
-    private bucketItemsToExecConfig(projectId: string, mdObj: any, options = {}) {
+    /**
+     * ItemDescription is either URI or MAQL expression
+     * https://github.com/gooddata/gdc-bear/blob/185.4/resources/specification/md/obj.res#L284
+     *
+     * @param projectId {string}
+     * @param mdObj metadata object containing buckets, visualization class, properties etc.
+     * @param attributesMap contains map of attributes where the keys are the attributes display forms URIs
+     * @param removeDateItems {boolean} skip date items
+     */
+    public loadItemDescriptions(projectId: string, mdObj: any, attributesMap: any, removeDateItems = false) {
         return this.execution
-            .mdToExecutionDefinitionsAndColumns(projectId, mdObj, options)
+            .mdToExecutionDefinitionsAndColumns(projectId, mdObj, { attributesMap, removeDateItems })
             .then((definitionsAndColumns: any) => {
                 const definitions = get(definitionsAndColumns, "definitions");
 
@@ -145,6 +142,15 @@ export class CatalogueModule {
                     return column;
                 });
             });
+    }
+
+    private requestDateDataSets(projectId: string, dateDataSetsRequest: any) {
+        const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
+
+        return this.xhr
+            .post(uri, { data: { dateDataSetsRequest } })
+            .then(r => r.getData())
+            .then(data => data.dateDataSetsResponse);
     }
 
     private loadCatalog(projectId: string, catalogRequest: any) {
