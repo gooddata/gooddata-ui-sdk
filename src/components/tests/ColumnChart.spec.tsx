@@ -1,11 +1,26 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { shallow, ShallowWrapper } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
-import { VisualizationObject, AFM } from "@gooddata/typings";
+import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/typings";
 import { ColumnChart } from "../ColumnChart";
 import { ColumnChart as AfmColumnChart } from "../afm/ColumnChart";
-import { M1 } from "./fixtures/buckets";
+import { M1, M1WithRatio } from "./fixtures/buckets";
+import { IChartConfig } from "../../interfaces/Config";
+
+function renderChart(
+    measures: VisualizationInput.AttributeOrMeasure[],
+    config?: IChartConfig,
+): ShallowWrapper {
+    return shallow(
+        <ColumnChart
+            config={config}
+            projectId="foo"
+            measures={measures}
+            sdk={factory({ domain: "example.com" })}
+        />,
+    );
+}
 
 describe("ColumnChart", () => {
     const measure: VisualizationObject.IMeasure = {
@@ -53,9 +68,7 @@ describe("ColumnChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <ColumnChart projectId="foo" measures={[M1]} sdk={factory({ domain: "example.com" })} />,
-        );
+        const wrapper = renderChart([M1]);
         expect(wrapper.find(AfmColumnChart)).toHaveLength(1);
     });
 
@@ -127,5 +140,25 @@ describe("ColumnChart", () => {
         expect(wrapper.find(AfmColumnChart)).toHaveLength(1);
         expect(wrapper.find(AfmColumnChart).prop("afm")).toEqual(expectedAfm);
         expect(wrapper.find(AfmColumnChart).prop("resultSpec")).toEqual(expectedResultSpec);
+    });
+
+    describe("Stacking", () => {
+        const config = { stackMeasures: true, stackMeasuresToPercent: true };
+
+        it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
+            const wrapper = renderChart([M1], config);
+            expect(wrapper.find(AfmColumnChart).prop("config")).toEqual({
+                stackMeasures: true,
+                stackMeasuresToPercent: true,
+            });
+        });
+
+        it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
+            const wrapper = renderChart([M1WithRatio], config);
+            expect(wrapper.find(AfmColumnChart).prop("config")).toEqual({
+                stackMeasures: false,
+                stackMeasuresToPercent: false,
+            });
+        });
     });
 });

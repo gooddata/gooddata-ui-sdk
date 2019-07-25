@@ -10,12 +10,13 @@ import {
     getNthDimensionHeaders,
 } from "../../../helpers/executionResultHelper";
 import Menu from "../../menu/Menu";
-import { FIELD_TYPE_ATTRIBUTE, getParsedFields } from "../../../helpers/agGrid";
+import { getParsedFields } from "./agGridUtils";
 import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 import { IOnOpenedChangeParams } from "../../menu/MenuSharedTypes";
 import { AVAILABLE_TOTALS } from "../../visualizations/table/totals/utils";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import menuHelper from "./aggregationsMenuHelper";
+import { FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 
 export interface IColumnTotal {
     type: AFM.TotalType;

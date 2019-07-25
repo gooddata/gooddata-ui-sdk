@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as classNames from "classnames";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { noop } from "lodash";
+import noop = require("lodash/noop");
 
 import { ASC, DESC } from "../../../constants/sort";
 import { OnSortChangeWithDir, SortDir } from "../../../interfaces/Table";
@@ -38,7 +38,10 @@ export class TableSortBubbleContentClass extends React.Component<
 
         return (
             <div>
-                <button className="close-button button-link button-icon-only icon-cross" onClick={onClose} />
+                <button
+                    className="close-button gd-button-link gd-button-icon-only icon-cross"
+                    onClick={onClose}
+                />
                 <div className="gd-dialog-header gd-heading-3">{title}</div>
                 <FormattedMessage id="visualizations.sorting" />
                 <div className="buttons-wrap">
@@ -55,9 +58,9 @@ export class TableSortBubbleContentClass extends React.Component<
         const { activeSortDir } = this.props;
         const isDisabled = dir === activeSortDir;
         const buttonClasses = classNames(
-            "button",
-            "button-primary",
-            "button-small",
+            "gd-button",
+            "gd-button-primary",
+            "gd-button-small",
             "icon-dropdown",
             "icon-right",
             {

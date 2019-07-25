@@ -4,7 +4,8 @@ import * as PropTypes from "prop-types";
 import { SDK, factory as createSdk, IValidElementsResponse, IElement } from "@gooddata/gooddata-js";
 import { IValidElementsOptions } from "@gooddata/gooddata-js/lib/metadata";
 import { AFM } from "@gooddata/typings";
-import { get, isEqual } from "lodash";
+import get = require("lodash/get");
+import isEqual = require("lodash/isEqual");
 import { getObjectIdFromUri, setTelemetryHeaders } from "../../../helpers/utils";
 import { ErrorStates } from "../../../index";
 
@@ -62,7 +63,7 @@ const defaultChildren = ({ validElements, loadMore, isLoading, error }: IAttribu
                 to your React components.
             </p>
             <button
-                className="button button-secondary"
+                className="gd-button gd-button-secondary"
                 onClick={loadMore as any}
                 disabled={isLoading || offset + count === total}
             >

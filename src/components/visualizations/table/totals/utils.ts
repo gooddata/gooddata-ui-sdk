@@ -1,5 +1,12 @@
-// (C) 2007-2018 GoodData Corporation
-import { remove, cloneDeep, sortedUniq, clone, without, omit, sortBy, get } from "lodash";
+// (C) 2007-2019 GoodData Corporation
+import remove = require("lodash/remove");
+import cloneDeep = require("lodash/cloneDeep");
+import sortedUniq = require("lodash/sortedUniq");
+import clone = require("lodash/clone");
+import without = require("lodash/without");
+import omit = require("lodash/omit");
+import sortBy = require("lodash/sortBy");
+import get = require("lodash/get");
 import { AFM } from "@gooddata/typings";
 import { InjectedIntl } from "react-intl";
 import {
@@ -10,7 +17,7 @@ import {
 import { IIndexedTotalItem, ITotalWithData } from "../../../../interfaces/Totals";
 import { IAlignPoint, ITotalsDataSource, ITotalTypeWithTitle } from "../../../../interfaces/Table";
 
-import { getFooterHeight } from "../utils/footer";
+import { getFooterHeight } from "../utils/layout";
 
 export const AVAILABLE_TOTALS: AFM.TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 

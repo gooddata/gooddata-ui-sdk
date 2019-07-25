@@ -6,12 +6,14 @@ import { loginUsingLoginForm } from "./utils/helpers";
 async function checkRenderChart(selector, t) {
     const loading = Selector(".s-loading");
     const chart = Selector(selector);
+
+    await t.expect(loading.exists).ok();
+
     await t
-        .expect(loading.exists)
-        .ok()
         .expect(chart.exists)
         .ok()
-        .expect(chart.textContent);
+        .expect(chart.textContent)
+        .ok();
 }
 
 fixture("Basic components") // eslint-disable-line no-undef

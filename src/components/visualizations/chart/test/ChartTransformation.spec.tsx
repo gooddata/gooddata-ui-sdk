@@ -127,12 +127,12 @@ describe("ChartTransformation", () => {
                 );
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
-            it("should sanitized stack measures configuration without stackBy", () => {
+            it("should keep stack measures configuration without stackBy", () => {
                 const passedProps = createChartRendererProps(fixtures.columnChartWithMeasureViewBy, {
                     stackMeasures: true,
                     stackMeasuresToPercent: true,
                 });
-                expect(passedProps.chartOptions.stacking).toEqual("normal");
+                expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should sanitized stack measures configuration with computeRatio", () => {
                 const passedProps = createChartRendererProps(

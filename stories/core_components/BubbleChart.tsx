@@ -193,6 +193,28 @@ storiesOf("Core components/BubbleChart", module)
             </div>,
         ),
     )
+    .add("with only max config on xaxis", () =>
+        // #SD-479
+        screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={MEASURE_1}
+                    yAxisMeasure={MEASURE_2}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    config={{
+                        xaxis: {
+                            max: "500",
+                        },
+                    }}
+                />
+            </div>,
+        ),
+    )
     .add("with different legend positions", () =>
         screenshotWrap(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(5)}>
@@ -369,4 +391,22 @@ storiesOf("Core components/BubbleChart", module)
                 />
             </div>,
         ),
-    );
+    )
+    .add("long name of X and Y axes are truncated", () => {
+        const longText =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lacinia risus tincidunt gravida ullamcorper.";
+        return screenshotWrap(
+            <div style={wrapperStyle}>
+                <BubbleChart
+                    projectId="storybook"
+                    xAxisMeasure={(MEASURE_1 as any).alias(longText)}
+                    yAxisMeasure={(MEASURE_2 as any).alias(longText)}
+                    size={MEASURE_3}
+                    viewBy={ATTRIBUTE_1}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        );
+    });

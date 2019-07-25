@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
 import { Table, Model } from "@gooddata/react-components";
 
@@ -7,6 +7,7 @@ import "@gooddata/react-components/styles/css/main.css";
 import ExampleWithExport from "./utils/ExampleWithExport";
 
 import {
+    dateDataSetUri,
     projectId,
     monthDateIdentifier,
     franchiseFeesIdentifier,
@@ -67,6 +68,8 @@ export class TableExportExample extends Component {
 
         const attributes = [Model.attribute(monthDateIdentifier).localIdentifier("month")];
 
+        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+
         return (
             <ExampleWithExport>
                 {onExportReady => (
@@ -75,6 +78,7 @@ export class TableExportExample extends Component {
                             projectId={projectId}
                             measures={measures}
                             attributes={attributes}
+                            filters={filters}
                             totals={totals}
                             onExportReady={onExportReady}
                             onLoadingChanged={this.onLoadingChanged}

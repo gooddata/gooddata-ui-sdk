@@ -7,12 +7,16 @@ import { wrap } from "../utils/wrap";
 import "../../styles/scss/charts.scss";
 import {
     barChartWith4MetricsAndViewBy2Attribute,
+    barChartWith4MetricsAndViewBy2AttributeAndSomeNullDataPoint,
     chartWithTwoAttributesAndSomeNullDatapoints,
 } from "../test_data/fixtures";
 import { HeaderPredicateFactory, IChartConfig, VisualizationTypes } from "../../src";
 import { oneNegativeSideDataset } from "../test_data/chart_with_2_metrics_and_view_by_attribute";
 
-const renderSupportedCharts = (config: IChartConfig = {}) => (
+const renderSupportedCharts = (
+    config: IChartConfig = {},
+    dataSet = barChartWith4MetricsAndViewBy2Attribute,
+) => (
     <div>
         {[VisualizationTypes.COLUMN, VisualizationTypes.BAR].map(type => {
             const newConfig: IChartConfig = {
@@ -22,6 +26,10 @@ const renderSupportedCharts = (config: IChartConfig = {}) => (
                     position: "top",
                 },
                 ...config,
+            };
+            const style = {
+                height: 600,
+                width: 600,
             };
 
             if (type === VisualizationTypes.BAR) {
@@ -34,9 +42,11 @@ const renderSupportedCharts = (config: IChartConfig = {}) => (
             }
 
             return wrap(
-                <div>
-                    <Visualization config={newConfig} {...barChartWith4MetricsAndViewBy2Attribute} />
+                <div style={style}>
+                    <Visualization config={newConfig} {...dataSet} />
                 </div>,
+                610,
+                610,
             );
         })}
     </div>
@@ -231,6 +241,23 @@ storiesOf("Internal/OptionalStacking/Column, Bar, DualAxis Chart", module)
                         }}
                     />,
                 ),
+            );
+        },
+    )
+    .add(
+        "Dual axis charts with viewBy 2 attributes and 'Stack to 100%' enabled and some null data points",
+        () => {
+            const config = {
+                stackMeasuresToPercent: true,
+                ...DUAL_AXIS_CONFIG,
+            };
+            return screenshotWrap(
+                <div>
+                    {renderSupportedCharts(
+                        config,
+                        barChartWith4MetricsAndViewBy2AttributeAndSomeNullDataPoint,
+                    )}
+                </div>,
             );
         },
     );

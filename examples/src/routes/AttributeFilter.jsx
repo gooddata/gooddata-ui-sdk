@@ -3,11 +3,13 @@ import React from "react";
 
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import AttributeFilterExample from "../components/AttributeFilterExample";
+import AttributeFilterComponentExample from "../components/AttributeFilterComponentExample";
 import AttributeElementsExample from "../components/AttributeElementsExample";
+import AttributeFilterExample from "../components/AttributeFilterExample";
 
-import AttributeFilterExampleSRC from "!raw-loader!../components/AttributeFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import AttributeFilterComponentExampleSRC from "!raw-loader!../components/AttributeFilterComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import AttributeElementsExampleSRC from "!raw-loader!../components/AttributeElementsExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import AttributeFilterExampleSRC from "!raw-loader!../components/AttributeFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const AttributeFilter = () => (
     <div>
@@ -26,6 +28,17 @@ export const AttributeFilter = () => (
             Pass a custom onApply function to this component to handle what happens when the user clicks the
             Apply button.
         </p>
+        <ExampleWithSource
+            for={AttributeFilterComponentExample}
+            source={AttributeFilterComponentExampleSRC}
+        />
+
+        <hr className="separator" />
+
+        <h2>Attribute Filter Example</h2>
+
+        <p>This example shows how to add attribute filter component into a report.</p>
+
         <ExampleWithSource for={AttributeFilterExample} source={AttributeFilterExampleSRC} />
 
         <hr className="separator" />

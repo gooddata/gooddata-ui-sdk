@@ -6,6 +6,8 @@ import { Execution, VisualizationObject as VizObject } from "@gooddata/typings";
 import { MEASURES, SECONDARY_MEASURES } from "../../../../constants/bucketNames";
 import { IChartConfig, ISeriesItem } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { isLineChart } from "../../utils/common";
+import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
 export const CHART_ORDER = {
     [VisualizationTypes.AREA]: 1,
@@ -64,4 +66,34 @@ export function getComboChartSeries(
     });
 
     return updatedSeries;
+}
+
+function isAllSeriesOnLeftAxis(series: ISeriesItem[] = []): boolean {
+    return series.every((item: ISeriesItem) => item.yAxis === 0);
+}
+
+function isSomeSeriesWithLineChart(series: ISeriesItem[] = []): boolean {
+    return series.some((item: ISeriesItem) => isLineChart(item.type));
+}
+
+export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean {
+    const isAllSeriesOnLeft = isAllSeriesOnLeftAxis(series);
+    const hasLineChartType = isSomeSeriesWithLineChart(series);
+
+    return !(isAllSeriesOnLeft && hasLineChartType);
+}
+
+export function getComboChartStackingConfig(
+    config: IChartConfig,
+    series: ISeriesItem[],
+    defaultStacking: string,
+): string {
+    const { stackMeasures } = config;
+    const canStackInPercent = canComboChartBeStackedInPercent(series);
+
+    if (canStackInPercent) {
+        return defaultStacking;
+    }
+
+    return stackMeasures ? NORMAL_STACK : null;
 }

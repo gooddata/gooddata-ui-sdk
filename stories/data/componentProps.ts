@@ -14,6 +14,20 @@ import {
 export const MEASURE_1: VisualizationObject.IMeasure = measure("/gdc/md/storybook/obj/1").localIdentifier(
     "m1",
 );
+
+export const MEASURE_1_RATIO: VisualizationObject.IMeasure = measure("/gdc/md/storybook/obj/1")
+    .localIdentifier("m1")
+    .ratio();
+
+export const MEASURE_1_WITH_LONG_NAME_AND_FORMAT: VisualizationObject.IMeasure = measure(
+    "/gdc/md/storybook/obj/1",
+)
+    .alias("Very long name that could break layout")
+    .localIdentifier("m1")
+    .format(
+        "[<0][red]$#'#,## Very long value that could break layout;[<10000][blue]$#'#,## Very long value that could break layout;[>=10000][green]$#'#,## Very long value that could break layout;[=null] Very long value that could break layout",
+    );
+
 export const MEASURE_2: VisualizationObject.IMeasure = measure("/gdc/md/storybook/obj/2").localIdentifier(
     "m2",
 );

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { AFM } from "@gooddata/typings";
 import {
@@ -8,7 +8,12 @@ import {
     createDrillIntersectionElement,
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { IHighchartsChartDrilldownEvent, IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
+import { SeriesChartTypes } from "../../../../constants/series";
+import {
+    IDrillConfig,
+    IDrillEventIntersectionElement,
+    IHighchartsPointObject,
+} from "../../../../interfaces/DrillEvents";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
@@ -59,7 +64,7 @@ describe("Drilldown Eventing", () => {
             },
         ],
     };
-    const pointClickEventData = ({ point } as any) as IHighchartsChartDrilldownEvent;
+    const pointClickEventData = ({ point } as any) as Highcharts.DrilldownEventObject;
 
     it("should get clickable chart element name", () => {
         const fn = getClickableElementNameByChartType;
@@ -77,7 +82,7 @@ describe("Drilldown Eventing", () => {
     it("should call point drill context (non-group) when event.points given but null", () => {
         const drillConfig = { afm, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
-        const pointClickEventDataWithNullPoints: IHighchartsChartDrilldownEvent = {
+        const pointClickEventDataWithNullPoints: Highcharts.DrilldownEventObject = {
             ...pointClickEventData,
             points: null,
         };
@@ -184,6 +189,95 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.value).toBe("678");
+    });
+
+    it("should remove duplicated values for heatmap", () => {
+        const drillIntersections: IDrillEventIntersectionElement[] = [
+            {
+                id: "1deea80aa5a54d1bbbc2e2de63989eef",
+                title: "Best Case",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1282",
+                    identifier: "ac3EwmqvbxcX",
+                },
+            },
+            {
+                id: "168279",
+                title: "CompuSci",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952",
+                    identifier: "label.product.id.name",
+                },
+            },
+            {
+                id: "2010",
+                title: "2010",
+                header: {
+                    uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/324",
+                    identifier: "closed.aag81lMifn6q",
+                },
+            },
+        ];
+        const pointsWithEmptyValues: Array<Partial<IHighchartsPointObject>> = [
+            { x: 0, y: 0, value: 268.8, drillIntersection: drillIntersections },
+            { x: 0, y: 1, value: null, drillIntersection: drillIntersections },
+            {
+                x: 0,
+                y: 1,
+                value: null,
+                drillIntersection: drillIntersections,
+                ignoredInDrillEventContext: true,
+            },
+            { x: 0, y: 2, value: null, drillIntersection: drillIntersections },
+            {
+                x: 0,
+                y: 2,
+                value: null,
+                drillIntersection: drillIntersections,
+                ignoredInDrillEventContext: true,
+            },
+            { x: 0, y: 3, value: 3644, drillIntersection: drillIntersections },
+        ];
+        const pointClickWithEmptyEventData: Highcharts.DrilldownEventObject = {
+            points: pointsWithEmptyValues,
+        } as any;
+
+        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const target = { dispatchEvent: jest.fn() };
+
+        chartClick(
+            drillConfig,
+            pointClickWithEmptyEventData,
+            (target as any) as EventTarget,
+            VisualizationTypes.HEATMAP,
+        );
+
+        jest.runAllTimers();
+
+        expect(target.dispatchEvent).toHaveBeenCalled();
+
+        expect(target.dispatchEvent.mock.calls[0][0].detail.drillContext.points).toEqual([
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 0,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 1,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 2,
+            },
+            {
+                intersection: drillIntersections,
+                x: 0,
+                y: 3,
+            },
+        ]);
     });
 
     it("should correctly handle z coordinate of point", () => {
@@ -309,7 +403,7 @@ describe("Drilldown Eventing", () => {
         };
         const labelClickEventData = ({
             points: [clickedPoint],
-        } as any) as IHighchartsChartDrilldownEvent;
+        } as any) as Highcharts.DrilldownEventObject;
 
         chartClick(drillConfig, labelClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
 
@@ -485,7 +579,7 @@ describe("Drilldown Eventing", () => {
         it("should fire drill event (non-group) when point value is null and return empty string for value", () => {
             const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
             const target = { dispatchEvent: jest.fn() };
-            const pointClickEventDataWithPointNullValue: IHighchartsChartDrilldownEvent = {
+            const pointClickEventDataWithPointNullValue: Highcharts.DrilldownEventObject = {
                 ...pointClickEventData,
                 points: null,
             };
@@ -504,6 +598,160 @@ describe("Drilldown Eventing", () => {
             const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
             expect(drillContext.value).toEqual("");
             expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        });
+    });
+
+    describe("Drilling in Combo chart", () => {
+        const columnPoint: IHighchartsPointObject = {
+            ...point,
+            series: { type: SeriesChartTypes.COLUMN },
+        } as any;
+
+        const linePoint: IHighchartsPointObject = {
+            ...point,
+            x: 2,
+            y: 3,
+            series: { type: SeriesChartTypes.LINE },
+            drillIntersection: [
+                {
+                    id: "id4",
+                    title: "title4",
+                    header: {
+                        identifier: "identifier4",
+                        uri: "uri4",
+                    },
+                },
+                {
+                    id: "id5",
+                    title: "title5",
+                    header: {
+                        identifier: "identifier5",
+                        uri: "uri5",
+                    },
+                },
+                {
+                    id: "id6",
+                    title: "title6",
+                    header: {
+                        identifier: "identifier6",
+                        uri: "uri6",
+                    },
+                },
+            ],
+        } as any;
+
+        it("should return chart type for each point", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: columnPoint,
+                points: [columnPoint, linePoint],
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillContext).toEqual({
+                type: VisualizationTypes.COMBO,
+                element: "label",
+                points: [
+                    {
+                        x: columnPoint.x,
+                        y: columnPoint.y,
+                        intersection: columnPoint.drillIntersection,
+                        type: SeriesChartTypes.COLUMN,
+                    },
+                    {
+                        x: linePoint.x,
+                        y: linePoint.y,
+                        intersection: linePoint.drillIntersection,
+                        type: SeriesChartTypes.LINE,
+                    },
+                ],
+            });
+        });
+
+        it("should fire event on cell click and fire correct data", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: linePoint,
+                points: null,
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COMBO2);
+
+            jest.runAllTimers();
+
+            expect(target.dispatchEvent).toHaveBeenCalled();
+            expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
+                executionContext: afm,
+                drillContext: {
+                    type: VisualizationTypes.COMBO,
+                    element: "point",
+                    elementChartType: SeriesChartTypes.LINE,
+                    x: linePoint.x,
+                    y: linePoint.y,
+                    intersection: linePoint.drillIntersection,
+                },
+            });
+        });
+
+        it("should NOT add chart type for each point if it is not Combo chart", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: columnPoint,
+                points: [columnPoint],
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.COLUMN);
+
+            jest.runAllTimers();
+
+            const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
+
+            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillContext).toEqual({
+                type: VisualizationTypes.COLUMN,
+                element: "label",
+                points: [
+                    {
+                        x: columnPoint.x,
+                        y: columnPoint.y,
+                        intersection: columnPoint.drillIntersection,
+                    },
+                ],
+            });
+        });
+
+        it("should NOT add elementChartType on cell click if it is not Combo chart", () => {
+            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const target: any = { dispatchEvent: jest.fn() };
+            const pointClickEventData: Highcharts.DrilldownEventObject = {
+                point: linePoint,
+                points: null,
+            } as any;
+
+            chartClick(drillConfig, pointClickEventData, target as EventTarget, VisualizationTypes.LINE);
+
+            jest.runAllTimers();
+
+            expect(target.dispatchEvent).toHaveBeenCalled();
+            expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
+                executionContext: afm,
+                drillContext: {
+                    type: VisualizationTypes.LINE,
+                    element: "point",
+                    x: linePoint.x,
+                    y: linePoint.y,
+                    intersection: linePoint.drillIntersection,
+                },
+            });
         });
     });
 });

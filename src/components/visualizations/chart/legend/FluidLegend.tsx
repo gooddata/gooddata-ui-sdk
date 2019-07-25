@@ -45,7 +45,7 @@ export default class FluidLegend extends React.PureComponent<any, any> {
     }
 
     public renderPaging() {
-        const classes = cx("button-link", "button-icon-only", "paging-button", {
+        const classes = cx("gd-button-link", "gd-button-icon-only", "paging-button", {
             "icon-chevron-up": this.state.showAll,
             "icon-chevron-down": !this.state.showAll,
         });

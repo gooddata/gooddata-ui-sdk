@@ -7,9 +7,13 @@ import {
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
     getShapeVisiblePart,
+    getLabelStyle,
 } from "../dataLabelsHelpers";
 
 import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../../../constants/label";
+import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {
@@ -342,5 +346,39 @@ describe("dataLabelsHelpers", () => {
 
             expect(getShapeVisiblePart(shape, chart, shape.height)).toBe(20);
         });
+    });
+
+    describe("getLabelStyle", () => {
+        const CHART_TYPES = [
+            VisualizationTypes.COLUMN,
+            VisualizationTypes.BAR,
+            VisualizationTypes.LINE,
+            VisualizationTypes.COMBO2,
+        ];
+
+        it.each([null, NORMAL_STACK, PERCENT_STACK])(
+            "should return black data label for area chart although stacking is %s",
+            stacking => {
+                expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(BLACK_LABEL);
+            },
+        );
+
+        it.each(whiteDataLabelTypes)("should return white data label for %s chart", chart => {
+            expect(getLabelStyle(chart, null)).toEqual(WHITE_LABEL);
+        });
+
+        it.each(CHART_TYPES)(
+            "should return white data label if %s chart has stacking configuration",
+            chart => {
+                expect(getLabelStyle(chart, "normal")).toEqual(WHITE_LABEL);
+            },
+        );
+
+        it.each(CHART_TYPES)(
+            "should return black data label if %s chart has no stacking configuration",
+            chart => {
+                expect(getLabelStyle(chart, null)).toEqual(BLACK_LABEL);
+            },
+        );
     });
 });

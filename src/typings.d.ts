@@ -4,6 +4,11 @@ declare module "*/package.json" {
     export const version: string;
 }
 
+declare module "*.svg" {
+    const value: any;
+    export default value;
+}
+
 declare module "*.json" {
     const value: any;
     export default value;

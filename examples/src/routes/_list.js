@@ -7,6 +7,7 @@ import BasicComponents from "./BasicComponents";
 import ComboChart from "./ComboChart";
 import GlobalFilters from "./GlobalFilters";
 import Execute from "./Execute";
+import BucketExecutor from "./BucketExecutor";
 import DatePicker from "./DatePicker";
 import ResponsiveChart from "./ResponsiveChart";
 import DynamicMeasures from "./DynamicMeasures";
@@ -126,6 +127,7 @@ export const hiddenPaths = [
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
     { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
 
 export const backendInfoRoutes = [

@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
-import { noop, range } from "lodash";
+import noop = require("lodash/noop");
+import range = require("lodash/range");
 import { AFM, Execution } from "@gooddata/typings";
 
 import { withIntl } from "../../utils/intlUtils";

@@ -639,7 +639,7 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
     }
 
     .content {
-        .close-button.button-link {
+        .close-button.gd-button-link {
             position: absolute;
             top: 12px;
             right: 12px;
@@ -663,7 +663,7 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
             flex-wrap: wrap;
             margin-left: -20px;
 
-            .button {
+            .gd-button {
                 flex: 1 1 auto;
                 margin-left: 20px;
                 margin-top: 10px;
@@ -680,7 +680,7 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
             }
         }
 
-        .button.button-primary {
+        .gd-button.gd-button-primary {
             &.button-sort-asc {
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth

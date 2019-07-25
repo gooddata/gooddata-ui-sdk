@@ -1,9 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
+import get = require("lodash/get");
 import map = require("lodash/map");
 import zip = require("lodash/zip");
 import values = require("lodash/values");
 import flatten = require("lodash/flatten");
 import identity = require("lodash/identity");
+import isEmpty = require("lodash/isEmpty");
 
 import {
     isStacked,
@@ -13,6 +15,7 @@ import {
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
     IAxisRangeForAxes,
+    IRectBySize,
 } from "../../helpers";
 
 import {
@@ -25,7 +28,17 @@ import {
     showStackLabelInAxisRange,
     getShapeVisiblePart,
     hasShape,
+    hasLabelInside,
 } from "../../dataLabelsHelpers";
+import { VisualizationTypes } from "../../../../../../constants/visualizationTypes";
+import {
+    IPointData,
+    IAxisConfig,
+    ISeriesItem,
+    IStackItem,
+    IClientRect,
+    IDataLabelsConfig,
+} from "../../../../../../interfaces/Config";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
@@ -83,37 +96,81 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
         return null;
     };
 
-    const isOverlappingWidth = visiblePoints.filter(hasDataLabel).some((point: any) => {
-        const { dataLabel } = point;
-        if (dataLabel) {
-            const labelWidth = dataLabel.width + 2 * dataLabel.padding;
-            return labelWidth > point.shapeArgs.width;
-        }
-        return false;
-    });
-
-    if (isOverlappingWidth) {
+    if (isOverlappingWidth(visiblePoints)) {
         hideDataLabels(visiblePoints);
     } else {
         visiblePoints.forEach(toggleLabel);
     }
 };
 
-function areNeighborsOverlapping(neighbors: any[]) {
-    return neighbors.some(labelsPair => {
-        const [firstLabel, nextLabel]: any[] = labelsPair || [];
+export function isOverlappingWidth(visiblePoints: IPointData[]) {
+    return visiblePoints.filter(hasDataLabel).some((point: IPointData) => {
+        const { dataLabel, shapeArgs } = point;
 
-        if (firstLabel && nextLabel) {
-            if (firstLabel.alignAttr && nextLabel.alignAttr) {
-                // We need to calculate this from getBBox, because FireFox does not
-                // provide clientWidth attribute
-                const firstLabelWidth = firstLabel.element.getBBox().width;
-                const firstLabelRight = firstLabel.alignAttr.x + firstLabelWidth;
-                const nextLabelLeft = nextLabel.alignAttr.x;
+        if (dataLabel && shapeArgs) {
+            const labelWidth = dataLabel.width + 2 * dataLabel.padding;
+            return labelWidth > shapeArgs.width;
+        }
+        return false;
+    });
+}
+
+export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]): boolean {
+    return neighbors.some(labelsPair => {
+        const [firstLabel, nextLabel]: IDataLabelsConfig[] = labelsPair || [];
+
+        if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
+            const firstClientRect: IClientRect = firstLabel.element.getBoundingClientRect();
+            const nextClientRect: IClientRect = nextLabel.element.getBoundingClientRect();
+
+            if (firstClientRect && nextClientRect) {
+                const firstLabelRight = firstClientRect.right;
+                const nextLabelLeft = nextClientRect.left;
                 return firstLabelRight > nextLabelLeft;
             }
         }
         return false;
+    });
+}
+
+// Check if Total label overlapping other columns
+export function areLabelsOverlappingColumns(labels: IPointData[], visiblePoints: IPointData[]): boolean {
+    return labels.some((label: IPointData) => {
+        if (isEmpty(label)) {
+            return false;
+        }
+
+        const { x, y, width, height }: IClientRect = label.element.getBoundingClientRect();
+        const labelAttr: IRectBySize = {
+            x,
+            y,
+            width,
+            height,
+        };
+
+        return visiblePoints.some((point: IPointData) => {
+            const seriesType: string = get(point, "series.options.type");
+            if (
+                isEmpty(point) ||
+                isEmpty(point.graphic) ||
+                // supportedDualAxesChartTypes is including AREA and LINE
+                // won't hide the stacked label if it overlaps with points of AREA and LINE
+                seriesType === VisualizationTypes.AREA ||
+                seriesType === VisualizationTypes.LINE
+            ) {
+                return false;
+            }
+
+            const { x, y, width, height }: IClientRect = point.graphic.element.getBoundingClientRect();
+            const pointAttr: IRectBySize = {
+                x,
+                y,
+                width,
+                height,
+            };
+
+            return isIntersecting(pointAttr, labelAttr);
+        });
     });
 }
 
@@ -140,28 +197,39 @@ export function getStackLabelPointsForDualAxis(stacks: any[]) {
     ).filter(identity);
 }
 
-function getStackTotalGroups(yAxis: any[]) {
-    return yAxis.map((axis: any) => axis.stackTotalGroup).filter(identity);
+export function getStackTotalGroups(yAxis: IAxisConfig[]): Highcharts.SVGAttributes[] {
+    return flatten(
+        yAxis.map((axis: IAxisConfig) => {
+            if (!isEmpty(axis.stacks)) {
+                return axis.stackTotalGroup;
+            }
+            return axis.series.map((serie: ISeriesItem) => serie.dataLabelsGroup);
+        }),
+    ).filter(identity);
 }
 
 function toggleStackedLabelsForDualAxis() {
     const { yAxis } = this;
 
     const stackTotalGroups = getStackTotalGroups(yAxis);
-    const stacks = yAxis.map((axis: any) => axis.stacks);
+    const stacks = getStackItems(yAxis);
 
     if (stacks && stackTotalGroups) {
         const points = getStackLabelPointsForDualAxis(stacks);
-        const labels = points.map((point: any) => point.label);
+        const labels = getLabelOrDataLabelForPoints(points);
         const neighbors = toNeighbors(labels);
-        const areOverlapping = areNeighborsOverlapping(neighbors);
+        const neighborsOverlapping = areNeighborsOverlapping(neighbors);
+
+        const areOverlapping = neighborsOverlapping
+            ? true
+            : areLabelsOverlappingColumns(labels, getDataPointsOfVisibleSeries(this));
 
         if (areOverlapping) {
             this.userOptions.stackLabelsVisibility = "hidden";
-            stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.hide());
+            stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) => stackTotalGroup.hide());
         } else {
             this.userOptions.stackLabelsVisibility = "visible";
-            stackTotalGroups.forEach((stackTotalGroup: any) => stackTotalGroup.show());
+            stackTotalGroups.forEach((stackTotalGroup: Highcharts.SVGAttributes) => stackTotalGroup.show());
         }
     }
 }
@@ -210,7 +278,7 @@ export const autohideColumnLabels = (chart: any) => {
 
     // stack chart labels is displayed inside column
     if (isStackedChart) {
-        toggleStackedChartLabels(visiblePoints, axisRangeForAxes);
+        toggleStackedChartLabels(visiblePoints.filter(hasLabelInside), axisRangeForAxes);
     } else {
         toggleNonStackedChartLabels(visiblePoints, axisRangeForAxes, true);
     }
@@ -234,3 +302,28 @@ export const handleColumnLabelsOutsideChart = (chart: any) => {
         }
     });
 };
+
+export function getLabelOrDataLabelForPoints(points: IPointData[]): IPointData[] {
+    return points
+        .map((point: IPointData) => {
+            return point.label || point.dataLabel;
+        })
+        .filter(identity);
+}
+
+export function getStackItems(yAxis: IAxisConfig[]): IStackItem[] {
+    return flatten(
+        yAxis.map((axis: IAxisConfig) => {
+            if (!isEmpty(axis.stacks)) {
+                return axis.stacks;
+            }
+            const series = axis.series;
+            const dataLabels: IStackItem[] = series.map((serie: ISeriesItem) => {
+                return {
+                    column: { ...serie.data },
+                };
+            });
+            return dataLabels;
+        }),
+    );
+}

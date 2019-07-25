@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as classNames from "classnames";
 import * as invariant from "invariant";
-import { first, get } from "lodash";
+import first = require("lodash/first");
+import get = require("lodash/get");
 
 import { AFM } from "@gooddata/typings";
 

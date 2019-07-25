@@ -6,6 +6,9 @@ const heatmapAfmExecutions = [{
     }, {
         execution: require('./stories/test_data/heat_map_with_60_rows_mock_request.json'),
         executionResult: require('./stories/test_data/heat_map_with_60_rows_mock_result.json')
+    }, {
+        execution: require('./stories/test_data/heat_map_with_empty_cells_request.json'),
+        executionResult: require('./stories/test_data/heat_map_with_empty_cells_result.json')
     }];
 
 const pivotTableAfmExecutions = [
@@ -13,6 +16,20 @@ const pivotTableAfmExecutions = [
         execution: require("./stories/test_data/pivot_table_with_subtotals_request.json"),
         executionResponse: require("./stories/test_data/pivot_table_with_subtotals_response.json"),
         executionResult: require("./stories/test_data/pivot_table_with_subtotals_result.json"),
+    }];
+
+const pivotTableSubtotalsAfmExecutions = [
+    {
+        execution: require("./stories/test_data/pivot_table_with_subtotals_2_measures_request.json"),
+        executionResponse: require("./stories/test_data/pivot_table_with_subtotals_2_measures_response.json"),
+        executionResult: require("./stories/test_data/pivot_table_with_subtotals_2_measures_result.json"),
+    }];
+
+const pivotTableGrandtotalSubtotalAfmExecutions = [
+    {
+        execution: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_request.json"),
+        executionResponse: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_response.json"),
+        executionResult: require("./stories/test_data/pivot_table_with_grandtotal_subtotal_2_measures_result.json"),
     }];
 
 const getBaseProjectSchema = (title, identifier) => {
@@ -2194,7 +2211,9 @@ const getBaseProjectSchema = (title, identifier) => {
                 }
             },
             ...heatmapAfmExecutions,
-            ...pivotTableAfmExecutions
+            ...pivotTableAfmExecutions,
+            ...pivotTableSubtotalsAfmExecutions,
+            ...pivotTableGrandtotalSubtotalAfmExecutions,
         ],
         visualizationClasses: [{
             title: 'Table',

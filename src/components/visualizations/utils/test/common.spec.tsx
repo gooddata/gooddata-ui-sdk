@@ -6,6 +6,7 @@ import {
     unEscapeAngleBrackets,
     getAttributeElementIdFromAttributeElementUri,
     formatLegendLabel,
+    getPrimaryChartType,
 } from "../common";
 
 describe("Common utils", () => {
@@ -107,6 +108,34 @@ describe("Common utils", () => {
                     ]),
                 ).toEqual(testCase[3] as string);
             });
+        });
+    });
+
+    describe("getPrimaryChartType", () => {
+        it("should return the chart type on left y axis", () => {
+            const chartOptions = {
+                type: "line",
+                data: {
+                    series: [
+                        { type: "line", yAxis: 1 },
+                        { type: "column", yAxis: 0 },
+                        { type: "line", yAxis: 1 },
+                    ],
+                },
+            };
+
+            expect(getPrimaryChartType(chartOptions)).toEqual("column");
+        });
+
+        it("should return default chart type", () => {
+            const chartOptions = {
+                type: "column",
+                data: {
+                    series: [{ yAxis: 1 }, { yAxis: 0 }, { yAxis: 1 }],
+                },
+            };
+
+            expect(getPrimaryChartType(chartOptions)).toEqual("column");
         });
     });
 });

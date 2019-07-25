@@ -11,6 +11,7 @@ import {
     ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
+    MEASURE_1_WITH_LONG_NAME_AND_FORMAT,
     MEASURE_2,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
     ARITHMETIC_MEASURE_USING_ARITHMETIC,
@@ -256,6 +257,20 @@ storiesOf("Core components/DonutChart", module)
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
                         ARITHMETIC_MEASURE_USING_ARITHMETIC,
                     ]}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("tooltip for chart with small width and long names", () =>
+        screenshotWrap(
+            <div style={{ width: 300, height: 400 }}>
+                <DonutChart
+                    projectId="storybook"
+                    measures={[MEASURE_1_WITH_LONG_NAME_AND_FORMAT]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}

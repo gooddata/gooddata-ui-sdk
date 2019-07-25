@@ -7,6 +7,7 @@ import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import partial = require("lodash/partial");
 import throttle = require("lodash/throttle");
+import isNil = require("lodash/isNil");
 import * as cx from "classnames";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
@@ -19,7 +20,7 @@ import { IChartConfig } from "../../../interfaces/Config";
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
-    getChart(): Highcharts.ChartObject;
+    getChart(): Highcharts.Chart;
 }
 
 export interface IHighChartsRendererProps {
@@ -214,7 +215,7 @@ export default class HighChartsRenderer extends React.PureComponent<
                     legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
                 return {
                     ...item,
-                    visible,
+                    visible: isNil(item.visible) ? visible : item.visible,
                 };
             }),
         );

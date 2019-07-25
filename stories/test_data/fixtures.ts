@@ -53,6 +53,15 @@ export const barChartWith4MetricsAndViewBy2Attribute: any = {
         .executionResult,
 };
 
+export const barChartWith4MetricsAndViewBy2AttributeAndSomeNullDataPoint: any = {
+    executionRequest: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_request.json")
+        .execution,
+    executionResponse: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_response.json")
+        .executionResponse,
+    executionResult: require("../test_data/bar_chart_with_4_metrics_and_view_by_two_attributes_with_some_null_datapoints_result.json")
+        .executionResult,
+};
+
 export const chartWithTwoAttributesAndSomeNullDatapoints: any = {
     executionRequest: require("../test_data/chart_with_2_attributes_and_null_datapoints_request.json")
         .execution,
@@ -286,6 +295,13 @@ export const comboWithTwoMeasuresAndViewByAttributeMdObject: VisualizationObject
     filters: require("../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json").buckets,
     visualizationClass: require("../test_data/combo_chart_with_two_measures_view_by_attribute_md_object.json")
         .buckets,
+};
+
+export const comboWithThreeMeasuresAndViewByAttribute = barChartWith3MetricsAndViewByAttribute;
+export const comboWithThreeMeasuresAndViewByAttributeMdObject: VisualizationObject.IVisualizationObjectContent = {
+    buckets: require("../test_data/combo_chart_with_three_measures_view_by_attribute_md_object.json").buckets,
+    visualizationClass: require("../test_data/combo_chart_with_three_measures_view_by_attribute_md_object.json")
+        .visualizationClass,
 };
 
 export const tableWithSorting: any = {
@@ -575,12 +591,24 @@ export const heatmapMetricRowColumn: any = {
     executionResult: require("./heat_map_with_metric_row_column_result.json").executionResult,
 };
 
+export const heatmapEmptyCells: any = {
+    executionRequest: require("./heat_map_with_empty_cells_request.json").execution,
+    executionResponse: require("./heat_map_with_empty_cells_response.json").executionResponse,
+    executionResult: require("./heat_map_with_empty_cells_result.json").executionResult,
+};
+
 export const pivotTableWithTwoMetricsFourAttributesSubtotals = {
     executionRequest: require("./pivot_table_with_2_metrics_4_attributes_subtotals_request.json").execution,
     executionResponse: require("./pivot_table_with_2_metrics_4_attributes_subtotals_response.json")
         .executionResponse,
     executionResult: require("./pivot_table_with_2_metrics_4_attributes_subtotals_result.json")
         .executionResult,
+};
+
+export const dualChartWithComputedAttribute: any = {
+    executionRequest: require("./dual_chart_with_computed_attribute_request.json").execution,
+    executionResponse: require("./dual_chart_with_computed_attribute_response.json").executionResponse,
+    executionResult: require("./dual_chart_with_computed_attribute_result.json").executionResult,
 };
 
 export default {

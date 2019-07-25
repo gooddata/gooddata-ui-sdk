@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings";
-import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../../../../helpers/agGrid";
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { IColumnTotal } from "../AggregationsMenu";
 import { IMenuAggregationClickConfig } from "../../../../interfaces/PivotTable";
+import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../agGridConst";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {

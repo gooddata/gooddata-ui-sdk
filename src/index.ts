@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as AfmComponents from "./components/afm/afmComponents";
 import * as VisEvents from "./interfaces/Events";
 import CatalogHelper from "./helpers/CatalogHelper";
@@ -59,6 +59,7 @@ import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
 import { ICoreComponents } from "./interfaces/CoreComponents";
+import { BucketExecutor } from "./execution/BucketExecutor";
 
 /**
  * CoreComponents
@@ -92,6 +93,7 @@ export {
     ErrorStates,
     ErrorComponent,
     Execute,
+    BucketExecutor,
     generateDimensions,
     Headline,
     IBaseChartProps,

@@ -1,8 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
-import { IColorPalette } from "@gooddata/gooddata-js";
-import * as Highcharts from "highcharts";
 import * as invariant from "invariant";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
@@ -16,6 +14,7 @@ import last = require("lodash/last");
 import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
+import isNil = require("lodash/isNil");
 
 import {
     MEASURES,
@@ -24,27 +23,40 @@ import {
     TERTIARY_MEASURES,
     VIEW,
 } from "../../../constants/bucketNames";
+import {
+    CHART_PADDING,
+    MAX_CHART_WIDTH,
+    TOOLTIP_COLUMN_NUMBER,
+    TOOLTIP_PADDING,
+    TOOLTIP_VALUE_PADDING,
+} from "../../../constants/tooltip";
 import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
 
-import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../../helpers/executionResultHelper";
-import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
 import { unwrap } from "../../../helpers/utils";
+import { isBucketEmpty } from "../../../helpers/mdObjBucketHelper";
+import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
+import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
+
 import {
     IAxis,
     IChartConfig,
     IChartLimits,
-    IColorAssignment,
     ISeriesDataItem,
     ISeriesItem,
+    IPointData,
+    IPatternObject,
+    IChartOptions,
+    ISeriesItemConfig,
+    ICategory,
 } from "../../../interfaces/Config";
 import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
-import { getLighterColor } from "../utils/color";
+import { getLighterColor, GRAY, WHITE, TRANSPARENT } from "../utils/color";
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -61,7 +73,11 @@ import {
     stringifyChartTypes,
 } from "../utils/common";
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
-import { getComboChartSeries } from "./chartOptions/comboChartOptions";
+import {
+    canComboChartBeStackedInPercent,
+    getComboChartSeries,
+    getComboChartStackingConfig,
+} from "./chartOptions/comboChartOptions";
 
 import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
@@ -122,6 +138,19 @@ const unsupportedStackingTypes = [
     VisualizationTypes.BUBBLE,
 ];
 
+const nullColor: IPatternObject = {
+    pattern: {
+        path: {
+            d: "M 10 0 L 0 10 M 9 11 L 11 9 M 4 11 L 11 4 M -1 1 L 1 -1 M -1 6 L 6 -1",
+            stroke: GRAY,
+            strokeWidth: 1,
+            fill: WHITE,
+        },
+        width: 10,
+        height: 10,
+    },
+};
+
 export const supportedDualAxesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
@@ -142,29 +171,9 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
     VisualizationTypes.AREA,
+    VisualizationTypes.COMBO,
+    VisualizationTypes.COMBO2,
 ];
-
-export interface IChartOptions {
-    type?: string;
-    stacking?: any;
-    hasStackByAttribute?: boolean;
-    hasViewByAttribute?: boolean;
-    isViewByTwoAttributes?: boolean;
-    legendLayout?: string;
-    xAxes?: any;
-    yAxes?: any;
-    data?: any;
-    actions?: any;
-    grid?: any;
-    xAxisProps?: any;
-    yAxisProps?: any;
-    secondary_xAxisProps?: any;
-    secondary_yAxisProps?: any;
-    title?: any;
-    colorAxis?: Highcharts.ColorAxisOptions;
-    colorAssignments?: IColorAssignment[];
-    colorPalette?: IColorPalette;
-}
 
 export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["attributeHeader"] & {
     items: Execution.IResultAttributeHeaderItem[];
@@ -175,7 +184,7 @@ export interface IValidationResult {
     hasNegativeValue: boolean;
 }
 
-export type ITooltipFactory = (point: IPoint, percentageValue?: number) => string;
+export type ITooltipFactory = (point: IPointData, percentageValue?: number) => string;
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series.some((seriesItem: ISeriesItem) =>
@@ -277,47 +286,6 @@ export function findParentMeasureIndex(afm: AFM.IAfm, measureItemIndex: number):
     return -1;
 }
 
-export interface IPointData {
-    y: number;
-    x?: number;
-    z?: number;
-    value?: number;
-    format: string;
-    marker: {
-        enabled: boolean;
-    };
-    name?: string;
-    color?: string;
-    legendIndex?: number;
-    id?: string;
-    parent?: string;
-    drilldown?: boolean;
-    drillIntersection?: any;
-}
-
-export interface ICategoryParent {
-    name: string;
-}
-
-// since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
-export interface ICategory {
-    name: string;
-    parent?: ICategoryParent;
-}
-
-export interface IPoint {
-    x?: number;
-    y: number;
-    z?: number;
-    value?: number;
-    series: ISeriesItem;
-    category?: ICategory;
-    format?: string;
-    name?: string;
-    id?: string;
-    parent?: string;
-}
-
 export function getSeriesItemData(
     seriesItem: string[],
     seriesIndex: number,
@@ -380,23 +348,34 @@ export function getSeriesItemData(
     });
 }
 
-export interface ISeriesItemConfig {
-    color: string;
-    legendIndex: number;
-    data?: any;
-    name?: string;
-    yAxis?: number;
-    xAxis?: number;
-}
-
 export function getHeatmapSeries(
     executionResultData: Execution.DataValue[][],
     measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
 ) {
-    const data = [] as any;
-    executionResultData.forEach((rowItem: any, rowItemIndex: number) => {
-        rowItem.forEach((columnItem: any, columnItemIndex: number) => {
-            data.push({ x: columnItemIndex, y: rowItemIndex, value: parseValue(columnItem) });
+    const data: IPointData[] = [];
+    executionResultData.forEach((rowItem: Execution.DataValue[], rowItemIndex: number) => {
+        rowItem.forEach((columnItem: Execution.DataValue, columnItemIndex: number) => {
+            const value: number = parseValue(String(columnItem));
+            const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
+            if (isNil(value)) {
+                data.push({
+                    ...pointData,
+                    borderWidth: 1,
+                    borderColor: GRAY,
+                    color: TRANSPARENT,
+                });
+                data.push({
+                    ...pointData,
+                    borderWidth: 0,
+                    pointPadding: 2,
+                    color: nullColor,
+                    // ignoredInDrillEventContext flag is used internally, not related to Highchart
+                    // to check and remove this null-value point in drill message
+                    ignoredInDrillEventContext: true,
+                });
+            } else {
+                data.push(pointData);
+            }
         });
     });
 
@@ -414,21 +393,15 @@ export function getHeatmapSeries(
     ];
 }
 
-function isBucketEmpty(mdObject: VisualizationObject.IVisualizationObjectContent, bucketName: string) {
-    const bucket = get(mdObject, "buckets", []).find(bucket => bucket.localIdentifier === bucketName);
-
-    const bucketItems = get(bucket, "items", []);
-    return isEmpty(bucketItems);
-}
-
 export function getScatterPlotSeries(
     executionResultData: Execution.DataValue[][],
     stackByAttribute: any,
     mdObject: VisualizationObject.IVisualizationObjectContent,
     colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucketEmpty = isBucketEmpty(mdObject, MEASURES);
-    const secondaryMeasuresBucketEmpty = isBucketEmpty(mdObject, SECONDARY_MEASURES);
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
+    const primaryMeasuresBucketEmpty = isBucketEmpty(buckets, MEASURES);
+    const secondaryMeasuresBucketEmpty = isBucketEmpty(buckets, SECONDARY_MEASURES);
 
     const data: ISeriesDataItem[] = executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const values = seriesItem.map((value: string) => {
@@ -624,11 +597,11 @@ export function getTreemapStackedSeriesDataWithMeasures(
                 showInLegend: false,
             });
         });
-        const sortedLeafs = unsortedLeafs.sort((a: IPoint, b: IPoint) => b.value - a.value);
+        const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
 
         data = [
             ...data,
-            ...sortedLeafs.map((leaf: IPoint, seriesItemIndex: number) => ({
+            ...sortedLeafs.map((leaf: IPointData, seriesItemIndex: number) => ({
                 ...leaf,
                 color: getLighterColor(
                     colorStrategy.getColorByIndex(seriesIndex),
@@ -758,20 +731,42 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-const renderTooltipHTML = (textData: string[][]): string => {
-    return `<table class="tt-values gd-viz-tooltip-table">${textData
+const renderTooltipHTML = (textData: string[][], chartType: string, chartWidth: number): string => {
+    let tableStyle = "";
+    let columnTitleStyle = "";
+    let columnValueStyle = "";
+
+    if (chartType && chartWidth && chartWidth < MAX_CHART_WIDTH) {
+        const chartPadding = chartType !== VisualizationTypes.TREEMAP ? 0 : CHART_PADDING;
+        const tableMaxWidth = chartWidth - TOOLTIP_PADDING - chartPadding;
+        const columnMaxWidth = tableMaxWidth / TOOLTIP_COLUMN_NUMBER;
+
+        tableStyle = ` style="max-width: ${tableMaxWidth}px;-webkit-border-horizontal-spacing: 0;"`;
+        columnTitleStyle = ` style="max-width: ${columnMaxWidth}px;"`;
+        columnValueStyle = ` style="max-width: ${columnMaxWidth - TOOLTIP_VALUE_PADDING}px;"`;
+    }
+
+    return `<table class="tt-values gd-viz-tooltip-table"${tableStyle}>${textData
         .map(
             line =>
                 `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title">${line[0]}</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value">${line[1]}</td>
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title"${columnTitleStyle}>${
+                    line[0]
+                }</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value"${columnValueStyle}>${
+                    line[1]
+                }</td>
             </tr>`,
         )
         .join("\n")}</table>`;
 };
 
-function isPointOnOppositeAxis(point: IPoint): boolean {
+function isPointOnOppositeAxis(point: IPointData): boolean {
     return get(point, ["series", "yAxis", "opposite"], false);
+}
+
+function getChartWidth(point: IPointData): number {
+    return get(point, ["series", "chart", "plotWidth"], 0);
 }
 
 export function buildTooltipFactory(
@@ -782,7 +777,7 @@ export function buildTooltipFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPoint, percentageValue?: number): string => {
+    return (point: IPointData, percentageValue?: number): string => {
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
             isDualChartWithRightAxis,
@@ -808,7 +803,8 @@ export function buildTooltipFactory(
             textData[0][0] = customEscape(point.name);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -818,9 +814,9 @@ export function buildTooltipForTwoAttributesFactory(
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
-    const { separators, stackMeasuresToPercent = false } = config;
+    const { separators, stackMeasuresToPercent = false, type } = config;
 
-    return (point: IPoint, percentageValue?: number): string => {
+    return (point: IPointData, percentageValue?: number): string => {
         const category: ICategory = point.category;
 
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
@@ -847,7 +843,8 @@ export function buildTooltipForTwoAttributesFactory(
             }
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -856,9 +853,9 @@ export function generateTooltipXYFn(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ) {
-    const { separators } = config;
+    const { separators, type } = config;
 
-    return (point: IPoint) => {
+    return (point: IPointData) => {
         const textData = [];
         const name = point.name ? point.name : point.series.name;
 
@@ -887,7 +884,8 @@ export function generateTooltipXYFn(
             ]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -896,12 +894,12 @@ export function generateTooltipHeatmapFn(
     stackByAttribute: any,
     config: IChartConfig = {},
 ) {
-    const { separators } = config;
+    const { separators, type } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
     };
 
-    return (point: IPoint) => {
+    return (point: IPointData) => {
         const formattedValue = customEscape(
             formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
         );
@@ -922,7 +920,8 @@ export function generateTooltipHeatmapFn(
             ]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -931,11 +930,11 @@ export function buildTooltipTreemapFactory(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
-    const { separators } = config;
+    const { separators, type } = config;
 
-    return (point: IPoint) => {
-        if (point.id !== undefined) {
-            // no tooltip for root points
+    return (point: IPointData) => {
+        // show tooltip for leaf node only
+        if (!point.node || point.node.isLeaf === false) {
             return null;
         }
         const formattedValue = formatValueForTooltip(point.value, point.format, separators);
@@ -959,7 +958,8 @@ export function buildTooltipTreemapFactory(
             textData.push([customEscape(point.category && point.category.name), formattedValue]);
         }
 
-        return renderTooltipHTML(textData);
+        const chartWidth = getChartWidth(point);
+        return renderTooltipHTML(textData, type, chartWidth);
     };
 }
 
@@ -1268,6 +1268,7 @@ function getXAxes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
         label: config.xLabel,
         format: config.xFormat,
@@ -1276,7 +1277,7 @@ function getXAxes(
     const firstMeasureGroupItem = measureGroupItems[0];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
+        const noPrimaryMeasures = isBucketEmpty(buckets, MEASURES);
         if (noPrimaryMeasures) {
             return [
                 {
@@ -1328,6 +1329,7 @@ function getYAxes(
     stackByAttribute: any,
 ): IAxis[] {
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
 
     const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
         label: config.yLabel,
@@ -1337,7 +1339,7 @@ function getYAxes(
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const noPrimaryMeasures = isBucketEmpty(mdObject, MEASURES);
+    const noPrimaryMeasures = isBucketEmpty(buckets, MEASURES);
 
     const { measures: secondaryAxisMeasures = [] as string[] } =
         (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
@@ -1488,7 +1490,7 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: any = [],
     colorStrategy: IColorStrategy,
-): Highcharts.ColorAxisDataClass[] {
+): Highcharts.ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         get(series, "0.data", []).map((item: any) => item.value),
         null,
@@ -1562,8 +1564,10 @@ export function getTreemapAttributes(
         // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
         return getDefaultTreemapAttributes(dimensions, attributeHeaderItems);
     }
-    if (isBucketEmpty(mdObject, SEGMENT)) {
-        if (isBucketEmpty(mdObject, VIEW)) {
+
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
+    if (isBucketEmpty(buckets, SEGMENT)) {
+        if (isBucketEmpty(buckets, VIEW)) {
             return {
                 viewByAttribute: null,
                 stackByAttribute: null,
@@ -1577,7 +1581,7 @@ export function getTreemapAttributes(
             stackByAttribute: null,
         };
     }
-    if (isBucketEmpty(mdObject, VIEW)) {
+    if (isBucketEmpty(buckets, VIEW)) {
         return {
             viewByAttribute: null,
             stackByAttribute: findAttributeInDimension(
@@ -1657,6 +1661,7 @@ export function getChartOptions(
     );
 
     const { type, mdObject } = config;
+    const buckets: VisualizationObject.IBucket[] = get(mdObject, "buckets", []);
     const { dimensions } = executionResponse;
     const isViewByTwoAttributes =
         attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
@@ -1703,7 +1708,7 @@ export function getChartOptions(
 
     const gridEnabled = get(config, "grid.enabled", true);
     const stacking = getStackingConfig(stackByAttribute, config);
-    const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
+    const measureGroup = findMeasureGroupInDimensions(dimensions);
     const xAxes = getXAxes(config, measureGroup, viewByAttribute);
     const yAxes = getYAxes(config, measureGroup, stackByAttribute);
 
@@ -1769,19 +1774,25 @@ export function getChartOptions(
     );
 
     if (isComboChart(type)) {
+        const comboSeries = getComboChartSeries(config, measureGroup, series);
+        const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
         return {
             type,
             xAxes,
             yAxes,
+            stacking: getComboChartStackingConfig(config, comboSeries, stacking),
             legendLayout: config.legendLayout || "horizontal",
             actions: {
-                tooltip: buildTooltipFactory(viewByAttribute, type, config),
+                tooltip: buildTooltipFactory(viewByAttribute, type, {
+                    ...config,
+                    stackMeasuresToPercent: config.stackMeasuresToPercent && canStackInPercent,
+                }),
             },
             grid: {
                 enabled: gridEnabled,
             },
             data: {
-                series: getComboChartSeries(config, measureGroup, series),
+                series: comboSeries,
                 categories,
             },
             xAxisProps,
@@ -1799,7 +1810,7 @@ export function getChartOptions(
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null,
         ];
-        if (isBucketEmpty(mdObject, MEASURES)) {
+        if (isBucketEmpty(buckets, MEASURES)) {
             measures = [null, measureGroup.items[0] ? measureGroup.items[0] : null];
         }
 
@@ -1864,19 +1875,19 @@ export function getChartOptions(
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-        if (!isBucketEmpty(mdObject, MEASURES)) {
+        if (!isBucketEmpty(buckets, MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!isBucketEmpty(mdObject, SECONDARY_MEASURES)) {
+        if (!isBucketEmpty(buckets, SECONDARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!isBucketEmpty(mdObject, TERTIARY_MEASURES)) {
+        if (!isBucketEmpty(buckets, TERTIARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);

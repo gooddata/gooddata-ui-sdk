@@ -1,14 +1,14 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
-import { uniqueId, noop } from "lodash";
+import noop = require("lodash/noop");
+import uniqueId = require("lodash/uniqueId");
 import { Cell } from "fixed-data-table-2";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/typings";
 import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../../interfaces/MappingHeader";
 
-import { DEFAULT_FOOTER_ROW_HEIGHT, TOTALS_ADD_ROW_HEIGHT } from "../TableVisualization";
 import { getCellStyleAndFormattedValue } from "../../../../helpers/tableCell";
 import {
     getTotalsDataSource,
@@ -18,6 +18,7 @@ import {
 } from "./utils";
 import { AddTotal } from "./AddTotal";
 import { ITotalWithData, IIndexedTotalItem } from "../../../../interfaces/Totals";
+import { DEFAULT_FOOTER_ROW_HEIGHT, TOTALS_ADD_ROW_HEIGHT } from "../constants/layout";
 
 export interface ITotalCellProps {
     totalsWithData: ITotalWithData[];
@@ -199,8 +200,8 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
                     <span>
                         <span
                             className={classNames(
-                                "button-link",
-                                "button-icon-only",
+                                "gd-button-link",
+                                "gd-button-icon-only",
                                 "icon-circle-cross",
                                 "indigo-totals-disable-column-button",
                                 "s-disable-total-column",
@@ -216,8 +217,8 @@ export class TotalCellPure extends React.Component<ITotalCellProps & InjectedInt
             return (
                 <span
                     className={classNames(
-                        "button-link",
-                        "button-icon-only",
+                        "gd-button-link",
+                        "gd-button-icon-only",
                         "icon-circle-plus",
                         "indigo-totals-enable-column-button",
                         "s-enable-total-column",

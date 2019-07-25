@@ -180,6 +180,15 @@ describe("getCustomizedConfiguration", () => {
             expect(result.xAxis[0]).toEqual(expectedResult);
         });
 
+        it("should set X axis configurations with style", () => {
+            const result = getCustomizedConfiguration(chartOptions);
+            expect(result.xAxis[0].title.style).toEqual({
+                color: "#6d7680",
+                font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                textOverflow: "ellipsis",
+            });
+        });
+
         it("should enable axis label for scatter plot when x and y are not set", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
@@ -666,9 +675,28 @@ describe("getCustomizedConfiguration", () => {
         });
 
         describe("percentage data label formatter", () => {
-            it("should return empty data labels with undefined percentage", () => {
+            it("should return null with empty configuration", () => {
                 const result = percentageDataLabelFormatter.call({});
-                expect(result).toBe("");
+                expect(result).toBeNull();
+            });
+
+            it("should return default data labels format with undefined percentage", () => {
+                const getDataLabelPoint = {
+                    y: 1000,
+                    series: {
+                        chart: {
+                            yAxis: [{}],
+                        },
+                        yAxis: {
+                            opposite: true,
+                        },
+                    },
+                    point: {
+                        format: "#,##0.00",
+                    },
+                };
+                const result = percentageDataLabelFormatter.call(getDataLabelPoint);
+                expect(result).toEqual("1,000.00");
             });
 
             it("should format data labels to percentage for single axis chart implicitly", () => {
@@ -739,7 +767,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it('should not set "drillConfig" to unsupported chart type', () => {
-            const result = getCustomizedConfiguration({ type: VisualizationTypes.COMBO }, {}, drillConfig);
+            const result = getCustomizedConfiguration({ type: VisualizationTypes.LINE }, {}, drillConfig);
             expect(result.xAxis[0].drillConfig).toBeFalsy();
         });
     });

@@ -2,6 +2,7 @@
 dist-storybook
 dist
 styles/css
+styles/internal/css
 
 # Logs
 npm-debug.log*

@@ -5,7 +5,12 @@ import { Headline, Model } from "@gooddata/react-components";
 import "@gooddata/react-components/styles/css/main.css";
 
 import ExampleWithExport from "./utils/ExampleWithExport";
-import { projectId, franchiseFeesIdentifier, franchiseFeesAdRoyaltyIdentifier } from "../utils/fixtures";
+import {
+    dateDataSetUri,
+    franchiseFeesIdentifier,
+    franchiseFeesAdRoyaltyIdentifier,
+    projectId,
+} from "../utils/fixtures";
 
 export class HeadlineExportExample extends Component {
     onLoadingChanged(...params) {
@@ -23,6 +28,8 @@ export class HeadlineExportExample extends Component {
 
         const secondaryMeasure = Model.measure(franchiseFeesAdRoyaltyIdentifier).format("#,##0");
 
+        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+
         return (
             <ExampleWithExport>
                 {onExportReady => (
@@ -31,6 +38,7 @@ export class HeadlineExportExample extends Component {
                             projectId={projectId}
                             primaryMeasure={primaryMeasure}
                             secondaryMeasure={secondaryMeasure}
+                            filters={filters}
                             onExportReady={onExportReady}
                             onLoadingChanged={this.onLoadingChanged}
                             onError={this.onError}

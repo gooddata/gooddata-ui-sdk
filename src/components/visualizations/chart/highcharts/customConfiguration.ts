@@ -16,15 +16,23 @@ import pickBy = require("lodash/pickBy");
 import * as numberJS from "@gooddata/numberjs";
 
 import { styleVariables } from "../../styles/variables";
-import {
-    IChartOptions,
-    supportedDualAxesChartTypes,
-    supportedTooltipFollowPointerChartTypes,
-} from "../chartOptionsBuilder";
+import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { VisualizationTypes, ChartType } from "../../../../constants/visualizationTypes";
-import { IDataLabelsVisible, IChartConfig, IAxis } from "../../../../interfaces/Config";
+import {
+    IDataLabelsVisible,
+    IChartConfig,
+    IAxis,
+    IChartOptions,
+    ISeriesItem,
+} from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
-import { getShapeVisiblePart } from "../highcharts/dataLabelsHelpers";
+import {
+    formatAsPercent,
+    getLabelStyle,
+    getLabelsVisibilityConfig,
+    getShapeVisiblePart,
+    isInPercent,
+} from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
 import {
@@ -48,6 +56,8 @@ import {
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
+import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
+import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -91,15 +101,6 @@ function getTitleConfiguration(chartOptions: IChartOptions) {
         yAxis,
         xAxis,
     };
-}
-
-export function formatAsPercent(unit: number = 100) {
-    const val = parseFloat((this.value * unit).toPrecision(14));
-    return `${val}%`;
-}
-
-export function isInPercent(format: string = "") {
-    return format.includes("%");
 }
 
 export function formatOverlappingForParentAttribute(category: any) {
@@ -163,12 +164,13 @@ function hideOverlappedLabels(chartOptions: IChartOptions) {
 
 function getShowInPercentConfiguration(chartOptions: IChartOptions) {
     const { yAxes = [], xAxes = [] } = chartOptions;
+    const percentageFormatter = partial(formatAsPercent, 100);
 
     const xAxis = xAxes.map((axis: any) =>
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: formatAsPercent,
+                      formatter: percentageFormatter,
                   },
               }
             : {},
@@ -178,7 +180,7 @@ function getShowInPercentConfiguration(chartOptions: IChartOptions) {
         axis && isInPercent(axis.format)
             ? {
                   labels: {
-                      formatter: formatAsPercent,
+                      formatter: percentageFormatter,
                   },
               }
             : {},
@@ -354,7 +356,7 @@ function getArrowPositionForTail(defaultArrowPosition: number, point: any, chart
 
 function formatLabel(value: any, format: any, config: IChartConfig = {}) {
     // no labels for missing values
-    if (value === null) {
+    if (isNil(value)) {
         return null;
     }
 
@@ -372,15 +374,13 @@ export function percentageDataLabelFormatter(config?: IChartConfig): string {
     const isSingleAxis = get(this, "series.chart.yAxis.length", 1) === 1;
     const isPrimaryAxis = !get(this, "series.yAxis.opposite", false);
 
-    if (isNil(this.percentage)) {
-        return "";
-    }
     // only format data labels to percentage for
     //  * left or right axis on single axis chart, or
     //  * primary axis on dual axis chart
-    if (isSingleAxis || isPrimaryAxis) {
+    if (this.percentage && (isSingleAxis || isPrimaryAxis)) {
         return percentFormatter(this.percentage);
     }
+
     return labelFormatter.call(this, config);
 }
 
@@ -535,54 +535,6 @@ function getTreemapLabelsConfiguration(
     }
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): any {
-    switch (visible) {
-        case "auto":
-            return {
-                enabled: true,
-                allowOverlap: false,
-            };
-        case true:
-            return {
-                enabled: true,
-                allowOverlap: true,
-            };
-        case false:
-            return {
-                enabled: false,
-            };
-        default:
-            // keep decision on each chart for `undefined`
-            return {};
-    }
-}
-
-// types with label inside sections have white labels
-const whiteDataLabelTypes = [
-    VisualizationTypes.PIE,
-    VisualizationTypes.DONUT,
-    VisualizationTypes.TREEMAP,
-    VisualizationTypes.BUBBLE,
-];
-
-function getLabelStyle(chartOptions: IChartOptions) {
-    const { stacking, type } = chartOptions;
-    const WHITE_LABEL = {
-        color: "#ffffff",
-        textShadow: "0 0 1px #000000",
-    };
-
-    const BLACK_LABEL = {
-        color: "#000000",
-        textShadow: "none",
-    };
-
-    if (isAreaChart(type)) {
-        return BLACK_LABEL;
-    }
-    return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
-}
-
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
 
@@ -590,7 +542,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
-    const style = getLabelStyle(chartOptions);
+    const style = getLabelStyle(type, stacking);
 
     const drilldown =
         stacking || isTreemap(type)
@@ -605,9 +557,13 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
         defaultFormat: get(axis, "format"),
     }));
 
+    const series: ISeriesItem[] = get(chartOptions, "data.series", []);
+    const canStackInPercent = canComboChartBeStackedInPercent(series);
     const { stackMeasuresToPercent = false } = chartConfig || {};
+
     // only applied to bar, column, dual axis and area chart
-    const dataLabelFormatter = stackMeasuresToPercent ? percentageDataLabelFormatter : labelFormatter;
+    const dataLabelFormatter =
+        stackMeasuresToPercent && canStackInPercent ? percentageDataLabelFormatter : labelFormatter;
 
     const DEFAULT_LABELS_CONFIG = {
         formatter: partial(labelFormatter, chartConfig),
@@ -1046,6 +1002,8 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
             }
 
             const opposite = get(axis, "opposite", false);
+            const axisType: string = axis.opposite ? "secondary" : "primary";
+            const className: string = `s-highcharts-${axisType}-yaxis`;
             const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
 
             // For bar chart take x axis options
@@ -1087,6 +1045,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
                     },
                 },
                 opposite,
+                className,
                 ...maxProp,
                 ...minProp,
                 ...tickConfiguration,
@@ -1148,6 +1107,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
                     enabled: visible && !isViewByTwoAttributes,
                     margin: 10,
                     style: {
+                        textOverflow: "ellipsis",
                         color: styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
@@ -1179,6 +1139,7 @@ export function getCustomizedConfiguration(
         // should be after 'getDataConfiguration' to modify 'series'
         // and should be after 'getStackingConfiguration' to get stackLabels config
         getOptionalStackingConfiguration,
+        getZeroAlignConfiguration,
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

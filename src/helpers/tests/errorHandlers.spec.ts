@@ -28,7 +28,7 @@ async function createTypeError() {
     return new TypeError("TypeError message");
 }
 
-describe("convertErrors", async () => {
+describe("convertErrors", () => {
     it("should return RuntimeError with message when error type is not ApiResponseError", async () => {
         const e = convertErrors(await createTypeError());
 

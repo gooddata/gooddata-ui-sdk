@@ -2,6 +2,7 @@
 import range = require("lodash/range");
 import get = require("lodash/get");
 import set = require("lodash/set");
+import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
 import { findMeasureGroupInDimensions } from "../../../../helpers/executionResultHelper";
@@ -23,19 +24,15 @@ import {
     getHeatmapDataClasses,
     getTreemapAttributes,
     isDerivedMeasure,
-    IPoint,
-    IChartOptions,
     IValidationResult,
+    getHeatmapSeries,
 } from "../chartOptionsBuilder";
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
-
 import * as headerPredicateFactory from "../../../../factory/HeaderPredicateFactory";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
-
 import { PIE_CHART_LIMIT, STACK_BY_DIMENSION_INDEX } from "../constants";
-
-import { DEFAULT_COLOR_PALETTE, getLighterColor, getRgbString } from "../../utils/color";
+import { DEFAULT_COLOR_PALETTE, getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
     TreemapColorStrategy,
@@ -45,10 +42,15 @@ import {
     HeatmapColorStrategy,
     IColorStrategy,
 } from "../colorFactory";
-import { IChartConfig, IColorPaletteItem } from "../../../../interfaces/Config";
+import {
+    IChartConfig,
+    IColorPaletteItem,
+    IPointData,
+    IChartOptions,
+    IMeasuresStackConfig,
+} from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-
-export { IPoint };
+import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
@@ -76,6 +78,8 @@ function getSeriesItemDataParameters(dataSet: any, seriesIndex: any) {
 }
 
 describe("chartOptionsBuilder", () => {
+    const { COLUMN, LINE, COMBO } = VisualizationTypes;
+
     const barChartWithStackByAndViewByAttributesOptions = generateChartOptions();
 
     const barChartWith3MetricsAndViewByAttributeOptions = generateChartOptions(
@@ -108,6 +112,26 @@ describe("chartOptionsBuilder", () => {
             type: "pie",
         },
     );
+
+    const pointForSmallCharts = {
+        node: {
+            isLeaf: true,
+        },
+        value: 300,
+        x: 0,
+        y: 0,
+        series: {
+            chart: {
+                plotWidth: 200,
+            },
+            name: "name",
+            userOptions: {
+                dataLabels: {
+                    formatGD: "abcd",
+                },
+            },
+        },
+    };
 
     describe("isNegativeValueIncluded", () => {
         it("should return true if there is at least one negative value in series", () => {
@@ -1561,6 +1585,51 @@ describe("chartOptionsBuilder", () => {
                 });
             });
         });
+
+        describe("in use case of heatmap", () => {
+            const dataSet = fixtures.heatmapEmptyCells;
+            const { measureGroup } = getMVS(dataSet);
+            const executionResultData: Execution.DataValue[][] = dataSet.executionResult.data;
+            const heatmapSeries = getHeatmapSeries(executionResultData, measureGroup);
+            const heatmapDataPoints = heatmapSeries[0].data;
+            const firstEmptyCellIndex = heatmapDataPoints.findIndex(point => isNil(point.value));
+
+            it("should return only one series", () => {
+                expect(heatmapSeries.length).toBe(1);
+            });
+
+            it("should have two data points at null value", () => {
+                const nullDataCount = executionResultData.reduce(
+                    (result, data) => {
+                        result.count += data.filter(isNil).length;
+                        return result;
+                    },
+                    { count: 0 },
+                ).count;
+                const nullPointCount = heatmapSeries[0].data.map(data => data.value).filter(isNil).length;
+                expect(nullPointCount).toBe(nullDataCount * 2);
+            });
+
+            it("should first empty point have gray border", () => {
+                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
+                    firstEmptyCellIndex
+                ];
+                expect(borderColor).toEqual(GRAY);
+                expect(borderWidth).toBe(1);
+                expect(pointPadding).toBe(undefined);
+                expect(color).toBe(TRANSPARENT);
+            });
+
+            it("should second empty point have stripes inside", () => {
+                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
+                    firstEmptyCellIndex + 1
+                ];
+                expect(borderColor).toBe(undefined);
+                expect(borderWidth).toBe(0);
+                expect(pointPadding).toBe(2);
+                expect(typeof color).not.toBe("string");
+            });
+        });
     });
 
     describe("getDrillIntersection", () => {
@@ -2375,6 +2444,22 @@ describe("chartOptionsBuilder", () => {
             const tooltip = tooltipFn(pointData);
             expect(getValues(tooltip)).toEqual(["point", " 1"]);
         });
+
+        it("should generate correct tooltip for chart with small width", () => {
+            const chartConfig: IChartConfig = {
+                type: "donut",
+            };
+            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Department</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">undefined</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">name</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
+            </tr></table>`;
+
+            const tooltipFn = buildTooltipFactory(viewByAttribute, "donut", chartConfig);
+            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+        });
     });
 
     describe("buildTooltipForTwoAttributesFactory", () => {
@@ -2503,13 +2588,30 @@ describe("chartOptionsBuilder", () => {
                 ]);
             },
         );
+
+        it("should generate correct tooltip for chart with small width", () => {
+            const chartConfig: IChartConfig = {
+                type: "donut",
+            };
+            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">name</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
+            </tr></table>`;
+
+            const tooltipFn = buildTooltipForTwoAttributesFactory(
+                viewByAttribute,
+                viewByParentAttribute,
+                chartConfig,
+            );
+            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+        });
     });
 
     describe("generateTooltipXYFn", () => {
         const dataSet = fixtures.bubbleChartWith3MetricsAndAttribute;
         const { measureGroup, stackByAttribute } = getMVS(dataSet);
 
-        const point: IPoint = {
+        const point: IPointData = {
             value: 300,
             name: "point name",
             x: 10,
@@ -2608,12 +2710,41 @@ describe("chartOptionsBuilder", () => {
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
             expect(tooltipFn(pointWithoutName)).toEqual(expectedResult);
         });
+
+        it("should generate correct tooltip for chart with small width", () => {
+            const chartConfig: IChartConfig = {
+                type: "donut",
+            };
+            const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
+            const pointWithoutName = cloneDeep(point);
+            pointWithoutName.name = undefined;
+
+            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class="gd-viz-tooltip-table-row">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Sales Rep</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">name</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">_Snapshot [EOP-2]</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0.00</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;"># of Open Opps.</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Remaining Quota</td>
+                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">NaN</td>
+            </tr></table>`;
+
+            const tooltipFn = generateTooltipXYFn(measures, stackByAttribute, chartConfig);
+            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+        });
     });
 
     describe("buildTooltipTreemapFactory", () => {
-        const point: IPoint = {
+        const point: IPointData = {
             category: {
                 name: "category",
+            },
+            node: {
+                isLeaf: true,
             },
             value: 300,
             name: "point name",
@@ -2696,6 +2827,27 @@ describe("chartOptionsBuilder", () => {
 
             const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
             expect(tooltipFn(point)).toEqual(expectedResult);
+        });
+
+        it("should generate correct tooltip for chart with small width", () => {
+            const chartConfig: IChartConfig = {
+                type: "treemap",
+            };
+            const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
+            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\" style="max-width: 152px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">Department</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">Direct Sales</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">Region</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">West Coast</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">300</td>
+            </tr></table>`;
+
+            const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, chartConfig);
+            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
         });
     });
 
@@ -3067,26 +3219,26 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("in usecase of combo chart", () => {
-            it("should assign `line` type to second serie according mbObject", () => {
+            it("should assign `line` type to second series according mbObject", () => {
                 const chartOptions = generateChartOptions(fixtures.comboWithTwoMeasuresAndViewByAttribute, {
-                    type: "combo",
+                    type: COMBO,
                     mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                 });
 
-                expect(chartOptions.data.series[0].type).toBe("column");
-                expect(chartOptions.data.series[1].type).toBe("line");
+                expect(chartOptions.data.series[0].type).toBe(COLUMN);
+                expect(chartOptions.data.series[1].type).toBe(LINE);
             });
 
             it("should handle missing mbObject", () => {
                 const chartOptions = generateChartOptions(fixtures.comboWithTwoMeasuresAndViewByAttribute, {
-                    type: "combo",
+                    type: COMBO,
                 });
 
                 expect(chartOptions.data.series[0].type).toBeUndefined();
                 expect(chartOptions.data.series[1].type).toBeUndefined();
             });
 
-            it('should assign format from first measure whichs format includes a "%" sign', () => {
+            it('should assign format from first measure which format includes a "%" sign', () => {
                 const dataSet = fixtures.comboWithTwoMeasuresAndViewByAttribute;
                 const expectedPercentageFormat = "0.00 %";
                 const expectedNormalFormat = get(
@@ -3109,6 +3261,45 @@ describe("chartOptionsBuilder", () => {
                 // if measure format includes %
                 expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
+
+            it.each([[null, false], [NORMAL_STACK, true]])(
+                "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
+                (stackingValue: string, stackMeasures: boolean) => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                        {
+                            type: COMBO,
+                            stackMeasuresToPercent: true,
+                            mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                            stackMeasures,
+                        },
+                    );
+
+                    expect(chartOptions.stacking).toBe(stackingValue);
+                },
+            );
+
+            it.each([
+                [PERCENT_STACK, { stackMeasuresToPercent: true }],
+                [NORMAL_STACK, { stackMeasures: true }],
+            ])(
+                "should return %s when column+line chart is dual axis",
+                (stacking: string, stackingConfig: IMeasuresStackConfig) => {
+                    const chartOptions = generateChartOptions(
+                        fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                        {
+                            type: COMBO,
+                            mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
+                            secondary_yaxis: {
+                                measures: ["wonMetric"],
+                            },
+                            ...stackingConfig,
+                        },
+                    );
+
+                    expect(chartOptions.stacking).toBe(stacking);
+                },
+            );
         });
 
         describe("generate Y axes", () => {
@@ -3305,6 +3496,25 @@ describe("chartOptionsBuilder", () => {
                     expect(tooltipFn(point)).toEqual(expectedResult);
                 });
 
+                it("should generate correct tooltip for chart with small width", () => {
+                    const chartConfig: IChartConfig = {
+                        type: "heatmap",
+                    };
+                    const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, chartConfig);
+                    const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">stackAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">stackHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">viewAttr</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">viewHeader</td>
+            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
+                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">name</td>
+                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">abcd</td>
+            </tr></table>`;
+
+                    expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+                });
+
                 it('should display "-" for null value', () => {
                     const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)({
                         ...point,
@@ -3432,7 +3642,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
-                        const expectedDataClasses: Highcharts.ColorAxisDataClass[] = [];
+                        const expectedDataClasses: Highcharts.ColorAxisDataClassesOptions[] = [];
                         const dataClasses = getHeatmapDataClasses(series, ({} as any) as IColorStrategy);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
@@ -3696,7 +3906,7 @@ describe("chartOptionsBuilder", () => {
                     actions: { tooltip: tooltipFn },
                 } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute, {
                     stackMeasuresToPercent: true,
-                    type: VisualizationTypes.COLUMN,
+                    type: COLUMN,
                 });
 
                 const tooltip = tooltipFn(pointDataForTwoAttributes, 49.011);
@@ -3720,7 +3930,7 @@ describe("chartOptionsBuilder", () => {
                     const { stacking } = generateChartOptions(
                         fixtures.barChartWith3MetricsAndViewByAttribute,
                         {
-                            type: VisualizationTypes.COLUMN,
+                            type: COLUMN,
                             ...config,
                         },
                     );

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { SDK, factory as createSdk, DataLayer } from "@gooddata/gooddata-js";
 import * as PropTypes from "prop-types";

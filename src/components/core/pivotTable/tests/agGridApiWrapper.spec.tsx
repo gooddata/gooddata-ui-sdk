@@ -4,8 +4,8 @@ import { mount } from "enzyme";
 import { AgGridReact } from "ag-grid-react";
 
 import ApiWrapper from "../agGridApiWrapper";
-import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid";
-import { ICustomGridOptions } from "../../PivotTable";
+import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid-community";
+import { ICustomGridOptions } from "../agGridTypes";
 
 describe("agGridApiWrapper", () => {
     const firstAttributeColumnId = "a_123";
@@ -78,6 +78,33 @@ describe("agGridApiWrapper", () => {
             const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
 
             expect(typeof paginationBottomRowIndex).toEqual("number");
+        });
+
+        it("should return null when GridApi is not providing paginationProxy attribute", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy = undefined;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(null);
+        });
+
+        it("should return null when GridApi is not providing bottomRowIndex attribute", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy.bottomRowIndex = undefined;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(null);
+        });
+
+        it("should return number when GridApi return 0 as bottomRowIndex", async () => {
+            const api = await renderGridReady();
+            (api as any).paginationProxy.bottomRowIndex = 0;
+
+            const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
+
+            expect(paginationBottomRowIndex).toEqual(0);
         });
     });
 

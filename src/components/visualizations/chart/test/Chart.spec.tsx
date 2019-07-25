@@ -32,7 +32,7 @@ jest.mock("highcharts/highcharts-more", () => {
     return (H: any) => H;
 });
 
-jest.mock("highcharts-pattern-fill", () => {
+jest.mock("highcharts/modules/pattern-fill", () => {
     return (H: any) => H;
 });
 

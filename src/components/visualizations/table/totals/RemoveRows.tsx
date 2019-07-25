@@ -1,13 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
-import { noop } from "lodash";
+import noop = require("lodash/noop");
 import { VisualizationObject } from "@gooddata/typings";
 
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 
-import { TOTALS_ADD_ROW_HEIGHT } from "../TableVisualization";
 import { ITotalWithData } from "../../../../interfaces/Totals";
+import { TOTALS_ADD_ROW_HEIGHT } from "../constants/layout";
 
 const LAST_ADDED_TOTAL_ROW_HIGHLIGHT_PERIOD = 1000;
 

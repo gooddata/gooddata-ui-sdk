@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IExportConfig, IExportResponse } from "@gooddata/gooddata-js";
 import { IDrillEventCallback } from "./DrillEvents";
 import { RuntimeError } from "../errors/RuntimeError";
@@ -12,7 +12,10 @@ export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnLoadingFinish = (result: object) => void;
 export type OnFiredDrillEvent = IDrillEventCallback;
 
-export type IExportFunction = (exportConfig: IExportConfig) => Promise<IExportResponse>;
+export interface IExtendedExportConfig extends IExportConfig {
+    includeFilterContext?: boolean;
+}
+export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResponse>;
 export type OnExportReady = (exportFunction: IExportFunction) => void;
 
 export interface ILegendItem {

@@ -22,11 +22,7 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
-                test: /\.svg$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.(eot|woff|ttf)$/,
+                test: /\.(svg|eot|woff|ttf)$/,
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]'
@@ -39,7 +35,15 @@ module.exports = {
                     path.join(__dirname, '../stories'),
                     path.join(__dirname, '../src')
                 ],
-                loaders: ['awesome-typescript-loader?configFileName=./stories/tsconfig.json']
+                loaders: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                            configFile: path.join(__dirname, '../stories/tsconfig.json')
+                        },
+                    }
+                ]
             }
         ]
     },

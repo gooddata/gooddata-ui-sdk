@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { GridApi, RowNode } from "ag-grid";
+import { GridApi, RowNode } from "ag-grid-community";
 import { IGroupingProvider } from "./GroupingProvider";
-import { colIdIsSimpleAttribute, getGridIndex } from "../../../helpers/agGrid";
+import { colIdIsSimpleAttribute, getGridIndex } from "./agGridUtils";
 import ApiWrapper from "./agGridApiWrapper";
 import { getScrollbarWidth } from "../../../helpers/domUtils";
 

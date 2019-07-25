@@ -12,6 +12,7 @@ import {
     ATTRIBUTE_3,
     MEASURE_1,
     MEASURE_1_WITH_ALIAS,
+    MEASURE_1_WITH_LONG_NAME_AND_FORMAT,
     MEASURE_2,
     MEASURE_3,
     ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
@@ -384,6 +385,18 @@ storiesOf("Core components/Treemap", module)
                         ARITHMETIC_MEASURE_SIMPLE_OPERANDS,
                         ARITHMETIC_MEASURE_USING_ARITHMETIC,
                     ]}
+                    onError={onErrorHandler}
+                />
+            </div>,
+        ),
+    )
+    .add("tooltip for chart with small width and long names", () =>
+        screenshotWrap(
+            <div style={{ width: 400, height: 400 }}>
+                <Treemap
+                    projectId="storybook"
+                    measures={[MEASURE_1_WITH_LONG_NAME_AND_FORMAT]}
+                    viewBy={ATTRIBUTE_1}
                     onError={onErrorHandler}
                 />
             </div>,

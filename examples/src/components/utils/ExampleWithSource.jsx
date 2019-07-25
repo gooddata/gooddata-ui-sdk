@@ -58,7 +58,7 @@ export class ExampleWithSource extends React.Component {
                 </div>
                 <div className="source">
                     <button
-                        className={`button button-secondary button-dropdown icon-right ${iconClassName}`}
+                        className={`gd-button gd-button-secondary button-dropdown icon-right ${iconClassName}`}
                         onClick={this.toggle}
                     >
                         source code

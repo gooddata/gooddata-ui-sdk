@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IElement } from "@gooddata/gooddata-js";
-import { get } from "lodash";
+import get = require("lodash/get");
 
 // tslint:disable-next-line:max-line-length
 export const COUNTRIES = [

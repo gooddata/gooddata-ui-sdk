@@ -10,6 +10,9 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
+import { isAreaChart, isOneOfTypes } from "../../utils/common";
+import { IDataLabelsVisible } from "../../../../interfaces/Config";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../../constants/label";
 
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
@@ -34,6 +37,10 @@ export const areLabelsStacked = (chart: any) => isLabelsStackedFromYAxis(chart) 
 
 export const hasDataLabel = (point: any) => point.dataLabel;
 export const hasShape = (point: any) => point.shapeArgs;
+export const hasLabelInside = (point: any) => {
+    const verticalAlign = get(point, "dataLabel.alignOptions.verticalAlign", "");
+    return verticalAlign === "middle";
+};
 
 export const minimizeDataLabel = (point: any) => {
     const { dataLabel } = point;
@@ -121,11 +128,12 @@ export function getDataLabelAttributes(point: any): IRectBySize {
 
 export function intersectsParentLabel(point: any, points: any) {
     const pointParent = parseInt(point.parent, 10);
-    if (isNaN(pointParent)) {
+    // Highchart 7 doesn't render dataLabel at points which have null value
+    const pointLabelShape = point.dataLabel;
+    if (isNaN(pointParent) || !pointLabelShape) {
         return false;
     }
 
-    const pointLabelShape = point.dataLabel;
     const parentPoint = points[pointParent];
     const parentLabelShape = parentPoint.dataLabel;
     return isIntersecting(pointLabelShape, parentLabelShape);
@@ -148,4 +156,46 @@ export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number) {
     }
 
     return wholeSize;
+}
+
+export function getLabelStyle(type: string, stacking: string) {
+    if (isAreaChart(type)) {
+        return BLACK_LABEL;
+    }
+    return stacking || isOneOfTypes(type, whiteDataLabelTypes) ? WHITE_LABEL : BLACK_LABEL;
+}
+
+/**
+ * A callback function to format data label and `this` is required by Highchart
+ * Ref: https://api.highcharts.com/highcharts/yAxis.labels.formatter
+ */
+export function formatAsPercent(unit: number = 100): string {
+    const val = parseFloat((this.value * unit).toPrecision(14));
+    return `${val}%`;
+}
+
+export function isInPercent(format: string = ""): boolean {
+    return format.includes("%");
+}
+
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabelsOptionsObject {
+    switch (visible) {
+        case "auto":
+            return {
+                enabled: true,
+                allowOverlap: false,
+            };
+        case true:
+            return {
+                enabled: true,
+                allowOverlap: true,
+            };
+        case false:
+            return {
+                enabled: false,
+            };
+        default:
+            // keep decision on each chart for `undefined`
+            return {};
+    }
 }

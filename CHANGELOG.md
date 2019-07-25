@@ -2,7 +2,7 @@
 
 ## Supported REST API versions
 
-This table shows which version of the GoodData.UI introduced support for a particular API version.
+This table shows which version of GoodData.UI introduced support for a particular API version.
 
 The REST API versions in the table are just for your information as the values are set internally and cannot be overridden.
 
@@ -14,6 +14,49 @@ The REST API versions in the table are just for your information as the values a
 ## Unreleased/planned
 
 - We ask developers to consider using the Headline component instead of the KPI component. The KPI component may be eventually marked as deprecated in one of the next major versions.
+
+## 7.1.0
+
+### Added
+
+- Adding applied filters to an exported XLSX file by using the `includeFilterContext` property
+
+### Changed
+
+- Updated Highcharts to version `7.1.1`
+- Updated Ag-grid to community version `20.0.0`
+- Added carets `^` to versions of:
+    - React `^16.5.2`
+    - Lodash `^4.17.11`
+    - And other smaller third-party libraries
+    
+- The `IExportConfig` type is renamed to `IExtendedExportConfig` and moved to react-components
+```
+// old way
+
+import { IExportConfig } from '@gooddata/gooddata-js';
+
+const exportConfig: IExportConfig = {
+    format: XLSX,
+    mergeHeaders: true,
+    title: 'Custom Title'
+};
+
+// new way
+
+import { VisEvents } from '@gooddata/react-components';
+
+const exportConfig: VisEvents.IExtendedExportConfig = {
+    format: XLSX,
+    includeFilterContext: true,
+    mergeHeaders: true,
+    title: 'Custom Title'
+};
+```
+
+### Fixed
+
+- The Visualization component now propagates an externally provided SDK instance to the PivotTable component
 
 ## 7.0.1
 

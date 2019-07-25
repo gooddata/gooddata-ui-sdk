@@ -1,80 +1,46 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
 import {
+    BodyScrollEvent,
     ColDef,
+    ColumnResizedEvent,
     GridApi,
-    GridOptions,
     GridReadyEvent,
-    ICellRendererParams,
     IDatasource,
     SortChangedEvent,
-    ColumnResizedEvent,
-    BodyScrollEvent,
-} from "ag-grid";
+} from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { CellClassParams } from "ag-grid/dist/lib/entities/colDef";
+import { CellClassParams } from "ag-grid-community/dist/lib/entities/colDef";
 import * as classNames from "classnames";
+import * as CustomEvent from "custom-event";
 import * as invariant from "invariant";
 import * as React from "react";
-import * as CustomEvent from "custom-event";
-
-import get = require("lodash/get");
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
-import cloneDeep = require("lodash/cloneDeep");
-import sumBy = require("lodash/sumBy");
-
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 import "../../../styles/css/pivotTable.css";
 
 import { VisualizationTypes } from "../../constants/visualizationTypes";
-import {
-    assortDimensionHeaders,
-    COLUMN_ATTRIBUTE_COLUMN,
-    getRowNodeId,
-    getIdsFromUri,
-    getParsedFields,
-    ID_SEPARATOR,
-    MEASURE_COLUMN,
-    ROW_ATTRIBUTE_COLUMN,
-    ROW_TOTAL,
-    FIELD_TYPE_MEASURE,
-    FIELD_TYPE_ATTRIBUTE,
-    cellRenderer,
-} from "../../helpers/agGrid";
+
+import { getScrollbarWidth } from "../../helpers/domUtils";
 import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
 } from "../../helpers/headerPredicate";
-import {
-    getMappingHeaderIdentifier,
-    getMappingHeaderLocalIdentifier,
-    getMappingHeaderName,
-    getMappingHeaderUri,
-} from "../../helpers/mappingHeader";
 
 import {
     getCellClassNames,
     getMeasureCellFormattedValue,
     getMeasureCellStyle,
 } from "../../helpers/tableCell";
-import { IGridCellEvent, IGridHeader, IGridRow } from "../../interfaces/AGGrid";
 
-import {
-    IDrillEvent,
-    IDrillEventContextTable,
-    IDrillEventIntersectionElement,
-} from "../../interfaces/DrillEvents";
+import { IDrillEvent, IDrillEventContextTable } from "../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
-import { IMappingHeader, isMappingHeaderAttributeItem } from "../../interfaces/MappingHeader";
-import { IPivotTableConfig, IMenuAggregationClickConfig } from "../../interfaces/PivotTable";
+import { IMappingHeader } from "../../interfaces/MappingHeader";
+import { IMenuAggregationClickConfig, IPivotTableConfig } from "../../interfaces/PivotTable";
 import { IDataSourceProviderInjectedProps } from "../afm/DataSourceProvider";
 import { LoadingComponent } from "../simple/LoadingComponent";
-
-import { getMasterMeasureObjQualifier } from "../../helpers/afmHelper";
-import { getScrollbarWidth } from "../../helpers/domUtils";
-import { createDrillIntersectionElement } from "../visualizations/utils/drilldownEventing";
+import TotalsUtils, {
+    AVAILABLE_TOTALS as renderedTotalTypesOrder,
+} from "../visualizations/table/totals/utils";
 
 import { ICommonChartProps } from "./base/BaseChart";
 import { BaseVisualization } from "./base/BaseVisualization";
@@ -85,22 +51,51 @@ import {
     ILoadingInjectedProps,
     visualizationLoadingHOC,
 } from "./base/VisualizationLoadingHOC";
+import { getUpdatedColumnTotals } from "./pivotTable/aggregationsMenuHelper";
+import ApiWrapper from "./pivotTable/agGridApiWrapper";
+import {
+    COLUMN_ATTRIBUTE_COLUMN,
+    MEASURE_COLUMN,
+    ROW_ATTRIBUTE_COLUMN,
+    ROW_TOTAL,
+    ROW_SUBTOTAL,
+} from "./pivotTable/agGridConst";
+import { createAgGridDataSource } from "./pivotTable/agGridDataSource";
+import { getDrillIntersection, getDrillRowData } from "./pivotTable/agGridDrilling";
+import { getSortsFromModel, isSortedByFirstAttibute } from "./pivotTable/agGridSorting";
+import {
+    ICustomGridOptions,
+    IGridCellEvent,
+    IGridHeader,
+    IGridRow,
+    ISortModelItem,
+} from "./pivotTable/agGridTypes";
+import {
+    cellRenderer,
+    getMeasureFormat,
+    getRowNodeId,
+    getTreeLeaves,
+    indexOfTreeNode,
+    isMeasureColumnReadyToRender,
+} from "./pivotTable/agGridUtils";
 import ColumnGroupHeader from "./pivotTable/ColumnGroupHeader";
 import ColumnHeader from "./pivotTable/ColumnHeader";
 import { GroupingProviderFactory, IGroupingProvider } from "./pivotTable/GroupingProvider";
-import ApiWrapper from "./pivotTable/agGridApiWrapper";
-import { getAttributeElementIdFromAttributeElementUri } from "../visualizations/utils/common";
+import { RowLoadingElement } from "./pivotTable/RowLoadingElement";
 import {
     initStickyHeaders,
-    updateStickyHeadersPosition,
-    updateStickyHeaders,
     stickyRowExists,
+    updateStickyHeaders,
+    updateStickyHeadersPosition,
 } from "./pivotTable/stickyGroupHandler";
-import TotalsUtils, {
-    AVAILABLE_TOTALS as renderedTotalTypesOrder,
-} from "../visualizations/table/totals/utils";
-import { getAGGridDataSource } from "./pivotTable/agGridDataSource";
-import { getUpdatedColumnTotals } from "./pivotTable/aggregationsMenuHelper";
+import cloneDeep = require("lodash/cloneDeep");
+
+import get = require("lodash/get");
+import isEqual = require("lodash/isEqual");
+import noop = require("lodash/noop");
+import sumBy = require("lodash/sumBy");
+
+import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 
 export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -123,245 +118,18 @@ export interface IPivotTableState {
     sortedByFirstAttribute: boolean;
 }
 
-export interface ICustomGridOptions extends GridOptions {
-    enableMenu?: boolean;
-}
-
-const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
-const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
-
-export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
-    return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
-        const { type } = colDef;
-        // colDef without field is a utility column (e.g. top column label)
-        if (colDef.field) {
-            if (type === MEASURE_COLUMN) {
-                return [...drillRow, rowData[colDef.field]];
-            }
-            const drillItem = get(rowData, ["headerItemMap", colDef.field]);
-            if (drillItem && (type === COLUMN_ATTRIBUTE_COLUMN || type === ROW_ATTRIBUTE_COLUMN)) {
-                const drillItemUri = getMappingHeaderUri(drillItem);
-                return [
-                    ...drillRow,
-                    {
-                        // Unlike fields, drilling data should not be sanitized, because it is not used in HTML properties
-                        id: getIdsFromUri(drillItemUri, false)[1],
-                        name: rowData[colDef.field],
-                    },
-                ];
-            }
-        }
-        return drillRow;
-    }, []);
-};
-
-export const indexOfTreeNode = (
-    node: any,
-    tree: any,
-    matchNode = (nodeA: any, nodeB: any) => nodeA === nodeB,
-    getChildren = (node: any) => (node && node.children) || [],
-    indexes: number[] = [],
-): number[] => {
-    const nodes = Array.isArray(tree) ? [...tree] : [tree];
-    for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
-        const currentNode = nodes[nodeIndex];
-        // match current node
-        if (matchNode(currentNode, node)) {
-            return [...indexes, nodeIndex];
-        }
-        // check children
-        const childrenMatchIndexes = indexOfTreeNode(node, getChildren(currentNode), matchNode, getChildren, [
-            ...indexes,
-            nodeIndex,
-        ]);
-        if (childrenMatchIndexes !== null) {
-            return childrenMatchIndexes;
-        }
-    }
-    return null;
-};
-
-export const getTreeLeaves = (tree: any, getChildren = (node: any) => node && node.children) => {
-    const leaves = [];
-    const nodes = Array.isArray(tree) ? [...tree] : [tree];
-    let node;
-    let children;
-    while (
-        // tslint:disable:no-conditional-assignment ban-comma-operator
-        ((node = nodes.shift()),
-        (children = getChildren(node)),
-        (children && children.length) || (leaves.push(node) && nodes.length))
-        // tslint:enable:no-conditional-assignment ban-comma-operator
-    ) {
-        if (children) {
-            nodes.push(...children);
-        }
-    }
-    return leaves;
-};
-
-export const getSortItemByColId = (
-    execution: Execution.IExecutionResponses,
-    colId: string,
-    direction: AFM.SortDirection,
-): AFM.IMeasureSortItem | AFM.IAttributeSortItem => {
-    const { dimensions } = execution.executionResponse;
-
-    const fields = getParsedFields(colId);
-    const [lastFieldType, lastFieldId] = fields[fields.length - 1];
-
-    // search columns first when sorting in columns to use the proper header
-    // in case the same attribute is in both rows and columns
-    const searchDimensionIndex = lastFieldType === FIELD_TYPE_MEASURE ? 1 : 0;
-    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders([
-        dimensions[searchDimensionIndex],
-    ]);
-
-    if (lastFieldType === FIELD_TYPE_ATTRIBUTE) {
-        for (const header of attributeHeaders) {
-            if (getIdsFromUri(header.attributeHeader.uri)[0] === lastFieldId) {
-                return {
-                    attributeSortItem: {
-                        direction,
-                        attributeIdentifier: header.attributeHeader.localIdentifier,
-                    },
-                };
-            }
-        }
-        invariant(false, `could not find attribute header matching ${colId}`);
-    } else if (lastFieldType === FIELD_TYPE_MEASURE) {
-        const headerItem = measureHeaderItems[parseInt(lastFieldId, 10)];
-        const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
-            // first item is type which should be always 'a'
-            const [, fieldId, fieldValueId] = field;
-            const attributeHeaderMatch = attributeHeaders.find(
-                (attributeHeader: Execution.IAttributeHeader) => {
-                    return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
-                },
-            );
-            invariant(
-                attributeHeaderMatch,
-                `Could not find matching attribute header to field ${field.join(ID_SEPARATOR)}`,
-            );
-            return {
-                attributeLocatorItem: {
-                    attributeIdentifier: attributeHeaderMatch.attributeHeader.localIdentifier,
-                    element: `${attributeHeaderMatch.attributeHeader.formOf.uri}/elements?id=${fieldValueId}`,
-                },
-            };
-        });
-        return {
-            measureSortItem: {
-                direction,
-                locators: [
-                    ...attributeLocators,
-                    {
-                        measureLocatorItem: {
-                            measureIdentifier: headerItem.measureHeaderItem.localIdentifier,
-                        },
-                    },
-                ],
-            },
-        };
-    }
-    invariant(false, `could not find header matching ${colId}`);
-};
-
-export interface ISortModelItem {
-    colId: string;
-    sort: AFM.SortDirection;
-}
-
-export const getSortsFromModel = (
-    sortModel: ISortModelItem[], // AgGrid has any, but we can do better
-    execution: Execution.IExecutionResponses,
-) => {
-    return sortModel.map((sortModelItem: ISortModelItem) => {
-        const { colId, sort } = sortModelItem;
-        const sortHeader = getSortItemByColId(execution, colId, sort);
-        invariant(sortHeader, `unable to find sort item by field ${colId}`);
-        return sortHeader;
-    });
-};
-
-export const RowLoadingElement = (props: ICellRendererParams) => {
-    if (props.node.rowPinned === "top") {
-        return <span className={"gd-sticky-header-value"}>{props.formatValue(props.value)}</span>;
-    }
-
-    // rows that are still loading do not have node.id
-    // pinned rows (totals) do not have node.id as well, but we want to render them using the default renderer anyway
-    if (props.node.id !== undefined || props.node.rowPinned === "bottom") {
-        // props.value is always unformatted
-        // there is props.formattedValue, but this is null for row attributes for some reason
-        return <span className={"s-value s-loading-done"}>{props.formatValue(props.value)}</span>;
-    }
-    return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
-};
-
-export const getDrillIntersection = (
-    drillItems: IMappingHeader[],
-    afm: AFM.IAfm,
-): IDrillEventIntersectionElement[] => {
-    // Drilling needs refactoring: all '' should be replaced by null (breaking change)
-    // intersection consists of
-    //     0..1 measure
-    //     0..1 row attribute and row attribute value
-    //     0..n column attribute and column attribute values
-    return drillItems.map((drillItem: IMappingHeader) => {
-        if (isMappingHeaderAttributeItem(drillItem)) {
-            const id = getAttributeElementIdFromAttributeElementUri(drillItem.attributeHeaderItem.uri);
-            return createDrillIntersectionElement(
-                id,
-                getMappingHeaderName(drillItem),
-                getMappingHeaderUri(drillItem),
-                "",
-            );
-        }
-
-        const headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
-        const headerIdentifier = getMappingHeaderIdentifier(drillItem) || "";
-        const uriAndIdentifier = headerLocalIdentifier
-            ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
-            : null;
-
-        const headerUri = getMappingHeaderUri(drillItem) || "";
-        const uri = (uriAndIdentifier && uriAndIdentifier.uri) || headerUri;
-        const identifier = (uriAndIdentifier && uriAndIdentifier.identifier) || headerIdentifier;
-        const id = headerLocalIdentifier || headerIdentifier;
-
-        return createDrillIntersectionElement(id, getMappingHeaderName(drillItem), uri, identifier);
-    });
-};
-
-function isMeasureColumnReadyToRender(params: any, execution: Execution.IExecutionResponses): boolean {
-    return Boolean(params && params.value !== undefined && execution && execution.executionResponse);
-}
-
-function getMeasureFormat(gridHeader: IGridHeader, execution: Execution.IExecutionResponses): string {
-    const headers = execution.executionResponse.dimensions[1].headers;
-    const header = headers[headers.length - 1];
-
-    if (!Execution.isMeasureGroupHeader(header)) {
-        throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
-    }
-
-    const measureIndex = gridHeader.measureIndex;
-    return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
-}
-
 export type IPivotTableInnerProps = IPivotTableProps &
     ILoadingInjectedProps &
     IDataSourceProviderInjectedProps &
     InjectedIntlProps;
 
-interface ISortedByColumnIndexes {
-    attributes: number[];
-    all: number[];
-}
-
 const DEFAULT_ROW_HEIGHT = 28;
+const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
+const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
+/**
+ * Pivot Table react component
+ */
 export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
     public static defaultProps: Partial<IPivotTableInnerProps> = {
         ...commonDefaultProps,
@@ -404,6 +172,17 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     public componentWillMount() {
         this.createAGGridDataSource();
+    }
+
+    public componentDidMount() {
+        if (this.containerRef) {
+            this.containerRef.addEventListener("mousedown", this.preventHeaderResizerEvents);
+        }
+    }
+    public componentWillUnmount() {
+        if (this.containerRef) {
+            this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
+        }
     }
 
     public componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
@@ -455,88 +234,139 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     }
 
-    /**
-     * getCellClass returns class for drillable cells. (maybe format in the future as well)
-     */
-    public getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
-        const {
-            dataSource,
-            execution: { executionResponse },
-        } = this.props;
-        const { rowIndex } = cellClassParams;
-        const colDef = cellClassParams.colDef as IGridHeader;
-        const drillablePredicates = this.getDrillablePredicates();
-        // return none if no drillableItems are specified
+    public renderVisualization() {
+        const { desiredHeight } = this.state;
+        const gridOptions = this.createGridOptions();
 
-        const afm: AFM.IAfm = dataSource.getAfm();
+        // columnDefs are loaded with first page request. Show overlay loading before first page is available.
+        const tableLoadingOverlay = this.isTableHidden() ? (
+            <div
+                style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+            >
+                <LoadingComponent />
+            </div>
+        ) : null;
 
-        let hasDrillableHeader = false;
-        const isRowTotal = get(cellClassParams, ["data", "type", ROW_TOTAL]);
-        if (drillablePredicates.length !== 0 && !isRowTotal) {
-            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field]);
-            const headers: IMappingHeader[] = rowDrillItem
-                ? [...colDef.drillItems, rowDrillItem]
-                : colDef.drillItems;
+        const style: React.CSSProperties = {
+            height: desiredHeight || "100%",
+            position: "relative",
+            overflow: "hidden",
+        };
 
-            hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
-                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse),
-            );
-        }
-
-        const attributeId = colDef.field;
-        const isPinnedRow = cellClassParams.node.isRowPinned();
-        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeatedValue(attributeId, rowIndex);
-        const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
-        const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
-
-        return classNames(
-            classList,
-            getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
-            colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
-            colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
-            isRowTotal ? "gd-row-total" : null,
-            subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
-            hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
-            rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
+        return (
+            <div className="gd-table-component" style={style}>
+                <div
+                    className="gd-table ag-theme-balham s-pivot-table"
+                    style={style}
+                    ref={this.setContainerRef}
+                >
+                    {tableLoadingOverlay}
+                    <AgGridReact
+                        {...gridOptions}
+                        // To force Ag grid rerender because AFAIK there is no way
+                        // to tell Ag grid header cell to rerender
+                        key={this.state.agGridRerenderNumber}
+                    />
+                </div>
+            </div>
         );
+    }
+
+    //
+    //
+    //
+
+    private isTableHidden() {
+        return this.state.columnDefs.length === 0;
+    }
+
+    private forceRerender() {
+        this.setState(state => ({
+            agGridRerenderNumber: state.agGridRerenderNumber + 1,
+        }));
+    }
+
+    //
+    // getters / setters / manipulators
+    //
+
+    private setContainerRef = (container: HTMLDivElement): void => {
+        this.containerRef = container;
     };
 
-    public getHeaderClass = (classList: string) => (headerClassParams: any): string => {
-        const colDef: IGridHeader = headerClassParams.colDef;
-        const { field, measureIndex } = colDef;
-        const treeIndexes = colDef
-            ? indexOfTreeNode(
-                  colDef,
-                  this.state.columnDefs,
-                  (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field,
-              )
-            : null;
-        const colGroupIndex = treeIndexes ? treeIndexes[treeIndexes.length - 1] : null;
-        const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
-
-        return classNames(
-            classList,
-            "gd-column-group-header",
-            colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
-            colGroupIndex !== null ? `s-table-measure-column-header-group-cell-${colGroupIndex}` : null,
-            measureIndex !== null ? `s-table-measure-column-header-cell-${measureIndex}` : null,
-            !field ? "gd-column-group-header--empty" : null,
-            isFirstColumn ? "gd-column-group-header--first" : null,
-        );
+    private setGroupingProvider = (sortedByFirstAttr: boolean) => {
+        this.groupingProvider = GroupingProviderFactory.createProvider(sortedByFirstAttr);
     };
 
-    public getExecution = () => {
+    private updateGrouping = (): void => {
+        this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
+    };
+
+    private getExecutionResponse = () => {
+        return this.state.execution ? this.state.execution.executionResponse : null;
+    };
+
+    private getColumnTotals = () => {
+        return this.state.columnTotals;
+    };
+
+    private getExecution = () => {
         return this.state.execution;
     };
 
-    public createAGGridDataSource() {
+    private getGridApi = () => this.gridApi;
+
+    //
+    // working with data source
+    //
+
+    private isNewAGGridDataSourceNeeded(prevProps: IPivotTableInnerProps): boolean {
+        // cannot compare dataSource using deep equal as it stores execution promises that almost always differ
+        const dataSourceChanged =
+            this.props.dataSource.getFingerprint() !== prevProps.dataSource.getFingerprint();
+
+        const dataSourceInvalidatingPropNames = [
+            "resultSpec",
+            "getPage",
+            // drillable items need fresh execution because drillable context for row attribute is kept in rowData
+            // It could be refactored to assign drillability without execution,
+            // but it would suffer a significant performance hit
+            "drillableItems",
+        ];
+
+        const dataSourceInvalidatingPropChanged = dataSourceInvalidatingPropNames.some(
+            propKey => !isEqual(this.props[propKey], prevProps[propKey]),
+        );
+
+        return dataSourceChanged || dataSourceInvalidatingPropChanged;
+    }
+
+    private isAgGridRerenderNeeded(props: IPivotTableInnerProps, prevProps: IPivotTableInnerProps): boolean {
+        const propsRequiringAgGridRerender = [["config", "menu"]];
+        return propsRequiringAgGridRerender.some(
+            propKey => !isEqual(get(props, propKey), get(prevProps, propKey)),
+        );
+    }
+
+    private updateAGGridDataSource(): void {
+        this.createAGGridDataSource();
+        this.setGridDataSource();
+    }
+
+    private createAGGridDataSource() {
         const onSuccess = (
             execution: Execution.IExecutionResponses,
             columnDefs: IGridHeader[],
             resultSpec: AFM.IResultSpec,
         ) => {
             if (!isEqual(columnDefs, this.state.columnDefs)) {
-                const sortedByFirstAttribute = this.isSortedByFirstAttibute(columnDefs, resultSpec);
+                const sortedByFirstAttribute = isSortedByFirstAttibute(columnDefs, resultSpec);
                 this.setState({
                     columnDefs,
                     sortedByFirstAttribute,
@@ -551,7 +381,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             this.props.onDataSourceUpdateSuccess();
         };
 
-        this.agGridDataSource = getAGGridDataSource(
+        this.agGridDataSource = createAgGridDataSource(
             this.props.resultSpec,
             this.props.getPage,
             this.getExecution,
@@ -564,9 +394,18 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         );
     }
 
-    public getGridApi = () => this.gridApi;
+    private setGridDataSource() {
+        this.setState({ execution: null });
+        if (this.gridApi) {
+            this.gridApi.setDatasource(this.agGridDataSource);
+        }
+    }
 
-    public onGridReady = (params: GridReadyEvent) => {
+    //
+    // event handlers
+    //
+
+    private onGridReady = (params: GridReadyEvent) => {
         this.gridApi = params.api;
         this.setGridDataSource();
 
@@ -575,7 +414,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     };
 
-    public onModelUpdated = () => {
+    private onModelUpdated = () => {
         if (!stickyRowExists(this.gridApi)) {
             return;
         }
@@ -589,14 +428,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.updateStickyRow(scrollTop, scrollLeft);
     };
 
-    public setGridDataSource() {
-        this.setState({ execution: null });
-        if (this.gridApi) {
-            this.gridApi.setDatasource(this.agGridDataSource);
-        }
-    }
-
-    public cellClicked = (cellEvent: IGridCellEvent) => {
+    private cellClicked = (cellEvent: IGridCellEvent) => {
         const {
             onFiredDrillEvent,
             execution: { executionResponse },
@@ -606,8 +438,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
-        const type = get(cellEvent, ["colDef", "type"]);
-        if (type === ROW_TOTAL) {
+
+        const rowType = get(cellEvent, ["data", "type"], "");
+        const isRowTotal = rowType === ROW_TOTAL;
+        const isRowSubtotal = rowType === ROW_SUBTOTAL;
+
+        if (isRowTotal || isRowSubtotal) {
             return false;
         }
 
@@ -656,14 +492,14 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return false;
     };
 
-    public columnResized = (columnEvent: ColumnResizedEvent) => {
+    private columnResized = (columnEvent: ColumnResizedEvent) => {
         if (!columnEvent.finished) {
             return; // only update the height once the user is done setting the column size
         }
         this.updateDesiredHeight(this.state.execution.executionResult);
     };
 
-    public onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
+    private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
 
         this.props.pushData({
@@ -676,7 +512,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.updateGrouping();
     };
 
-    public sortChanged = (event: SortChangedEvent): void => {
+    private sortChanged = (event: SortChangedEvent): void => {
         const execution = this.getExecution();
 
         invariant(execution !== undefined, "changing sorts without prior execution cannot work");
@@ -684,7 +520,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const sortModel: ISortModelItem[] = event.columnApi
             .getAllColumns()
             .filter(col => col.getSort() !== undefined && col.getSort() !== null)
-            .map(col => ({ colId: col.getColId(), sort: col.getSort() as AFM.SortDirection }));
+            .map(col => ({
+                colId: col.getColDef().field,
+                sort: col.getSort() as AFM.SortDirection,
+            }));
 
         const sortItems = getSortsFromModel(sortModel, execution);
 
@@ -697,12 +536,22 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.updateGrouping();
     };
 
-    public onBodyScroll = (event: BodyScrollEvent) => {
+    private onBodyScroll = (event: BodyScrollEvent) => {
         this.updateStickyRow(Math.max(event.top, 0), event.left);
     };
 
-    public renderVisualization() {
-        const { columnDefs, rowData, desiredHeight } = this.state;
+    private preventHeaderResizerEvents = (event: Event) => {
+        if (event.target && this.isHeaderResizer(event.target as HTMLElement)) {
+            event.stopPropagation();
+        }
+    };
+
+    //
+    // grid options & styling
+    //
+
+    private createGridOptions = (): ICustomGridOptions => {
+        const { columnDefs, rowData } = this.state;
         const { pageSize } = this.props;
 
         const separators = get(this.props, ["config", "separators"], undefined);
@@ -715,7 +564,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             intl: this.props.intl,
         };
 
-        const gridOptions: ICustomGridOptions = {
+        return {
             // Initial data
             columnDefs,
             rowData,
@@ -725,9 +574,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     menu,
+                    enableSorting: true,
                     ...commonHeaderComponentParams,
                 },
                 minWidth: 50,
+                sortable: true,
+                resizable: true,
             },
             defaultColGroupDef: {
                 headerClass: this.getHeaderClass(null),
@@ -746,8 +598,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             suppressMovableColumns: true,
             suppressCellSelection: true,
             enableFilter: false,
-            enableColResize: true,
-            enableServerSideSorting: true,
 
             // infinite scrolling model
             rowModelType: "infinite",
@@ -830,116 +680,88 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             rowClass: "gd-table-row",
             rowHeight: DEFAULT_ROW_HEIGHT,
         };
+    };
 
-        // columnDefs are loaded with first page request. Show overlay loading before first page is available.
-        const tableLoadingOverlay = this.isTableHidden() ? (
-            <div
-                style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                }}
-            >
-                <LoadingComponent />
-            </div>
-        ) : null;
+    /**
+     * getCellClass returns class for drillable cells. (maybe format in the future as well)
+     */
+    private getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
+        const {
+            dataSource,
+            execution: { executionResponse },
+        } = this.props;
+        const { rowIndex } = cellClassParams;
+        const colDef = cellClassParams.colDef as IGridHeader;
+        const drillablePredicates = this.getDrillablePredicates();
+        // return none if no drillableItems are specified
 
-        return (
-            <div
-                className="gd-table ag-theme-balham s-pivot-table"
-                style={{
-                    height: desiredHeight || "100%",
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-                ref={this.setContainerRef}
-            >
-                {tableLoadingOverlay}
-                <AgGridReact
-                    {...gridOptions}
-                    // To force Ag grid rerender because AFAIK there is no way
-                    // to tell Ag grid header cell to rerender
-                    key={this.state.agGridRerenderNumber}
-                />
-            </div>
+        const afm: AFM.IAfm = dataSource.getAfm();
+
+        let hasDrillableHeader = false;
+
+        const rowType = get(cellClassParams, ["data", "type"], "");
+        const isRowTotal = rowType === ROW_TOTAL;
+        const isRowSubtotal = rowType === ROW_SUBTOTAL;
+
+        if (drillablePredicates.length !== 0 && !isRowTotal && !isRowSubtotal) {
+            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field]);
+            const headers: IMappingHeader[] = rowDrillItem
+                ? [...colDef.drillItems, rowDrillItem]
+                : colDef.drillItems;
+
+            hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
+                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse),
+            );
+        }
+
+        const attributeId = colDef.field;
+        const isPinnedRow = cellClassParams.node.isRowPinned();
+        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeatedValue(attributeId, rowIndex);
+        const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
+        const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
+
+        return classNames(
+            classList,
+            getCellClassNames(rowIndex, colDef.index, hasDrillableHeader),
+            colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
+            colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
+            isRowTotal ? "gd-row-total" : null,
+            subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
+            hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
+            rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
         );
-    }
+    };
 
-    private setGroupingProvider(sortedByFirstAttr: boolean) {
-        this.groupingProvider = GroupingProviderFactory.createProvider(sortedByFirstAttr);
-    }
+    private getHeaderClass = (classList: string) => (headerClassParams: any): string => {
+        const colDef: IGridHeader = headerClassParams.colDef;
+        const { field, measureIndex } = colDef;
+        const treeIndexes = colDef
+            ? indexOfTreeNode(
+                  colDef,
+                  this.state.columnDefs,
+                  (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field,
+              )
+            : null;
+        const colGroupIndex = treeIndexes ? treeIndexes[treeIndexes.length - 1] : null;
+        const isFirstColumn = treeIndexes !== null && !treeIndexes.some(index => index !== 0);
 
-    private isSortedByFirstAttibute(columnDefs: ColDef[], resultSpec: AFM.IResultSpec): boolean {
-        const sortedColumnIndexes: ISortedByColumnIndexes = columnDefs.reduce(
-            (sortStack: ISortedByColumnIndexes, columnDef: ColDef, columnIndex: number) => {
-                if (columnDef.sort) {
-                    sortStack.all.push(columnIndex);
-                    if (columnDef.type === ROW_ATTRIBUTE_COLUMN) {
-                        sortStack.attributes.push(columnIndex);
-                    }
-                }
-                return sortStack;
-            },
-            { attributes: [], all: [] },
+        return classNames(
+            classList,
+            "gd-column-group-header",
+            colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
+            colGroupIndex !== null ? `s-table-measure-column-header-group-cell-${colGroupIndex}` : null,
+            measureIndex !== null ? `s-table-measure-column-header-cell-${measureIndex}` : null,
+            !field ? "gd-column-group-header--empty" : null,
+            isFirstColumn ? "gd-column-group-header--first" : null,
         );
-
-        const sortedByFirstAttribute =
-            sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1;
-        const isSorted =
-            sortedColumnIndexes.all.length > 0 || (resultSpec.sorts && resultSpec.sorts.length > 0);
-
-        return sortedByFirstAttribute || !isSorted;
-    }
-
-    private setContainerRef = (container: HTMLDivElement): void => {
-        this.containerRef = container;
     };
 
-    private getExecutionResponse = () => {
-        return this.state.execution ? this.state.execution.executionResponse : null;
-    };
-
-    private getColumnTotals = () => {
-        return this.state.columnTotals;
-    };
+    //
+    // misc :)
+    //
 
     private getDrillablePredicates(): IHeaderPredicate[] {
         return convertDrillableItemsToPredicates(this.props.drillableItems);
-    }
-
-    private isNewAGGridDataSourceNeeded(prevProps: IPivotTableInnerProps): boolean {
-        // cannot compare dataSource using deep equal as it stores execution promises that almost always differ
-        const dataSourceChanged =
-            this.props.dataSource.getFingerprint() !== prevProps.dataSource.getFingerprint();
-
-        const dataSourceInvalidatingPropNames = [
-            "resultSpec",
-            "getPage",
-            // drillable items need fresh execution because drillable context for row attribute is kept in rowData
-            // It could be refactored to assign drillability without execution,
-            // but it would suffer a significant performance hit
-            "drillableItems",
-        ];
-
-        const dataSourceInvalidatingPropChanged = dataSourceInvalidatingPropNames.some(
-            propKey => !isEqual(this.props[propKey], prevProps[propKey]),
-        );
-
-        return dataSourceChanged || dataSourceInvalidatingPropChanged;
-    }
-
-    private isAgGridRerenderNeeded(props: IPivotTableInnerProps, prevProps: IPivotTableInnerProps): boolean {
-        const propsRequiringAgGridRerender = [["config", "menu"]];
-        return propsRequiringAgGridRerender.some(
-            propKey => !isEqual(get(props, propKey), get(prevProps, propKey)),
-        );
-    }
-
-    private updateAGGridDataSource(): void {
-        this.createAGGridDataSource();
-        this.setGridDataSource();
     }
 
     private updateStickyRow(scrollTop: number, scrollLeft: number): void {
@@ -964,7 +786,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const rowCount = executionResult.paging.total[0];
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
-        const leeway = 1; // add small room for error to avoid scrollbars that scroll one, two pixels
+
+        // add small room for error to avoid scrollbars that scroll one, two pixels
+        // increased in order to resolve issue BB-1509
+        const leeway = 2;
+
         const bodyHeight = rowCount * DEFAULT_ROW_HEIGHT + leeway;
         const footerHeight = aggregationCount * DEFAULT_ROW_HEIGHT;
 
@@ -995,18 +821,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     }
 
-    private forceRerender() {
-        this.setState(state => ({
-            agGridRerenderNumber: state.agGridRerenderNumber + 1,
-        }));
-    }
-
-    private updateGrouping() {
-        this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
-    }
-
-    private isTableHidden() {
-        return this.state.columnDefs.length === 0;
+    private isHeaderResizer(target: HTMLElement) {
+        return target.classList.contains("ag-header-cell-resize");
     }
 }
 

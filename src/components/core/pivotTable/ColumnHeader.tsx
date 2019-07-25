@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { IHeaderParams } from "ag-grid";
+import { IHeaderParams } from "ag-grid-community";
 import { AFM, Execution } from "@gooddata/typings";
 
-import { getParsedFields, COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "../../../helpers/agGrid";
+import { getParsedFields } from "./agGridUtils";
 import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
-import { IHeaderReactComp } from "ag-grid-react/lib/interfaces";
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
+import { FIELD_TYPE_ATTRIBUTE, COLUMN_ATTRIBUTE_COLUMN } from "./agGridConst";
 
 export interface IColumnHeaderProps extends IHeaderParams {
     menu?: IMenu;
@@ -24,8 +24,7 @@ export interface IColumnHeaderState {
 export const ASC: AFM.SortDirection = "asc";
 export const DESC: AFM.SortDirection = "desc";
 
-class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState>
-    implements IHeaderReactComp {
+class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderState> {
     public static propTypes = {
         menu: PropTypes.object,
         getColumnTotals: PropTypes.func,
@@ -87,7 +86,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 onSortClick={this.onSortRequested}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 menu={menu}
-                colId={column.getColId()}
+                colId={column.getColDef().field}
                 getColumnTotals={this.props.getColumnTotals}
                 getExecutionResponse={this.props.getExecutionResponse}
                 intl={this.props.intl}
@@ -96,7 +95,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     }
 
     private getFieldType() {
-        const colId = this.props.column.getColId();
+        const colId = this.props.column.getColDef().field;
         const fields = getParsedFields(colId);
         const [lastFieldType] = fields[fields.length - 1];
 

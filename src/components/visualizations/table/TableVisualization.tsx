@@ -1,9 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as classNames from "classnames";
 import { injectIntl } from "react-intl";
-import { debounce, isEqual, noop, pick, uniqueId } from "lodash";
+import debounce = require("lodash/debounce");
+import isEqual = require("lodash/isEqual");
+import noop = require("lodash/noop");
+import pick = require("lodash/pick");
+import uniqueId = require("lodash/uniqueId");
 import { Cell, CellProps, Column, Table, ColumnHeaderProps } from "fixed-data-table-2";
 import { AFM, Execution } from "@gooddata/typings";
 import { ISeparators } from "@gooddata/numberjs";
@@ -36,22 +40,20 @@ import { getCellClassNames, getCellStyleAndFormattedValue } from "../../../helpe
 import { getIntersectionForDrilling, getBackwardCompatibleRowForDrilling } from "./utils/dataTransformation";
 import { cellClick } from "../utils/drilldownEventing";
 import { createSortItem, getHeaderSortClassName, getNextSortDir } from "./utils/sort";
-import {
-    getFooterHeight,
-    getFooterPositions,
-    isFooterAtDefaultPosition,
-    isFooterAtEdgePosition,
-} from "./utils/footer";
 import { updatePosition } from "./utils/row";
 import {
     calculateArrowPosition,
+    getFooterHeight,
+    getFooterPositions,
     getHeaderClassNames,
     getHeaderPositions,
     getTooltipAlignPoints,
     getTooltipSortAlignPoints,
+    isFooterAtDefaultPosition,
+    isFooterAtEdgePosition,
     isHeaderAtDefaultPosition,
     isHeaderAtEdgePosition,
-} from "./utils/header";
+} from "./utils/layout";
 import { RemoveRows } from "./totals/RemoveRows";
 import {
     toggleCellClass,
@@ -69,16 +71,10 @@ import { TotalCell } from "./totals/TotalCell";
 import InjectedIntlProps = ReactIntl.InjectedIntlProps;
 import { IIndexedTotalItem, ITotalWithData } from "../../../interfaces/Totals";
 import { IDrillConfig } from "../../../interfaces/DrillEvents";
+import { DEFAULT_HEADER_HEIGHT, DEFAULT_ROW_HEIGHT } from "./constants/layout";
 
 const FULLSCREEN_TOOLTIP_VIEWPORT_THRESHOLD: number = 480;
 const MIN_COLUMN_WIDTH: number = 100;
-
-export const DEFAULT_HEADER_HEIGHT: number = 26;
-export const DEFAULT_ROW_HEIGHT: number = 30;
-export const DEFAULT_FOOTER_ROW_HEIGHT: number = 30;
-
-export const TOTALS_ADD_ROW_HEIGHT: number = 50;
-export const TOTALS_TYPES_DROPDOWN_WIDTH: number = 150;
 
 const DEBOUNCE_SCROLL_STOP: number = 500;
 const TOOLTIP_DISPLAY_DELAY: number = 1000;

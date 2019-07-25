@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
-import { set } from "lodash";
+import set = require("lodash/set");
 
 import { LoadingComponent, ErrorComponent } from "../../tests/mocks";
 import { Kpi, IKpiProps } from "../Kpi";

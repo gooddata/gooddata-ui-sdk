@@ -6,10 +6,7 @@ import { MEASUREGROUP } from "../constants/dimensions";
 import { VIEW, STACK, SEGMENT, TREND, ATTRIBUTE, COLUMNS, MEASURES } from "../constants/bucketNames";
 import { convertBucketsToAFM } from "../helpers/conversion";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../components/visualizations/chart/constants";
-
-function findBucketByLocalIdentifier(buckets: VisualizationObject.IBucket[], bucketName: string) {
-    return (buckets || []).find(bucket => bucket.localIdentifier === bucketName);
-}
+import { findBucketByLocalIdentifier } from "./mdObjBucketHelper";
 
 export function getDimensionTotals(bucket: VisualizationObject.IBucket): AFM.ITotalItem[] {
     const bucketTotals: VisualizationObject.IVisualizationTotal[] = get<

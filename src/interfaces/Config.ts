@@ -14,6 +14,9 @@ export type IDataLabelsVisible = string | boolean;
 
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
+    width?: number;
+    padding?: number;
+    element?: Highcharts.HTMLDOMElement | Highcharts.SVGDOMElement;
 }
 
 export interface IColorMapping {
@@ -79,6 +82,32 @@ export interface IChartConfig extends IMeasuresStackConfig {
     secondaryChartType?: VisualizationObject.VisualizationType;
 }
 
+export interface IStackLabels {
+    enabled?: boolean;
+}
+
+export interface IHighChartAxis {
+    AXIS_LINE_COLOR: string;
+    categories: string[];
+    opposite: boolean;
+    stackLabels: IStackLabels;
+    defaultFormat?: string;
+    gridLineColor?: string;
+    gridLineWidth?: number;
+    min?: number;
+    max?: number;
+    visible?: boolean;
+}
+
+export interface IYAxisConfig {
+    yAxis?: IHighChartAxis[];
+}
+
+export interface IStackMeasuresConfig {
+    series?: ISeriesItem[];
+    yAxis?: IHighChartAxis[];
+}
+
 export interface IAxisConfig {
     visible?: boolean;
     labelsEnabled?: boolean;
@@ -86,6 +115,9 @@ export interface IAxisConfig {
     min?: string;
     max?: string;
     measures?: string[];
+    stacks?: IStackItem;
+    series?: ISeriesItem[];
+    stackTotalGroup?: Highcharts.SVGAttributes;
 }
 
 export interface IAxis {
@@ -102,6 +134,11 @@ export interface ISeriesDataItem {
     name?: string;
 }
 
+export interface IStackItem {
+    column0?: Highcharts.StackItemObject[];
+    column?: ISeriesDataItem[];
+}
+
 export interface ISeriesItem {
     name?: string;
     data?: ISeriesDataItem[];
@@ -116,4 +153,99 @@ export interface ISeriesItem {
     labelKey?: string;
     stack?: number;
     stacking?: string;
+    dataLabels?: Highcharts.DataLabelsOptionsObject;
+    dataLabelsGroup?: Highcharts.SVGAttributes;
+}
+
+export interface IShapeArgsConfig {
+    width?: number;
+    heigth?: number;
+    x?: number;
+    y?: number;
+}
+
+export interface IChartOptions {
+    type?: string;
+    stacking?: any;
+    hasStackByAttribute?: boolean;
+    hasViewByAttribute?: boolean;
+    isViewByTwoAttributes?: boolean;
+    legendLayout?: string;
+    xAxes?: any;
+    yAxes?: any;
+    data?: any;
+    actions?: any;
+    grid?: any;
+    xAxisProps?: any;
+    yAxisProps?: any;
+    secondary_xAxisProps?: any;
+    secondary_yAxisProps?: any;
+    title?: any;
+    colorAxis?: Highcharts.ColorAxisOptions;
+    colorAssignments?: IColorAssignment[];
+    colorPalette?: IColorPalette;
+}
+
+export interface IPatternOptionsObject {
+    path: Highcharts.SVGAttributes;
+    width: number;
+    height: number;
+}
+export interface IPatternObject {
+    pattern: IPatternOptionsObject;
+}
+
+export interface IPointData {
+    /**
+     * Custom properties set by custom data options.
+     */
+    [property: string]: any;
+    x?: number;
+    y?: number;
+    z?: number;
+    value?: number;
+    format?: string;
+    marker?: {
+        enabled: boolean;
+    };
+    name?: string;
+    color?: string | IPatternObject;
+    legendIndex?: number;
+    id?: string;
+    parent?: string;
+    drilldown?: boolean;
+    drillIntersection?: any;
+    borderWidth?: number;
+    borderColor?: string;
+    pointPadding?: number;
+    series?: ISeriesItem;
+    category?: ICategory;
+}
+
+export interface ICategoryParent {
+    name: string;
+}
+
+// since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
+export interface ICategory {
+    name: string;
+    parent?: ICategoryParent;
+}
+
+export interface ISeriesItemConfig {
+    color: string;
+    legendIndex: number;
+    data?: any;
+    name?: string;
+    yAxis?: number;
+    xAxis?: number;
+}
+
+export interface IClientRect {
+    width?: number;
+    height?: number;
+    left?: number;
+    right?: number;
+    x?: number;
+    y?: number;
 }
