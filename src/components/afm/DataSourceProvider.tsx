@@ -134,7 +134,12 @@ export function dataSourceProvider<T>(
                 !isEqual(resultSpec, this.props.resultSpec) ||
                 projectId !== this.props.projectId
             ) {
-                this.prepareDataSource(afm);
+                this.setState(
+                    {
+                        dataSource: null,
+                    },
+                    () => this.prepareDataSource(afm),
+                );
             }
         }
 

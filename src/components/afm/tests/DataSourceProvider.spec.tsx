@@ -124,6 +124,36 @@ describe("DataSourceProvider", () => {
         });
     });
 
+    it("should NOT rerender its child with old datasource after afm change", () => {
+        const renderCounter = jest.fn();
+        class FakeTable extends React.Component<any, any> {
+            public render() {
+                renderCounter(this.props.dataSource);
+                return <div />;
+            }
+        }
+        const wrapper = createComponent(FakeTable);
+
+        const newProps: IDataSourceProviderProps = {
+            afm: { measures: [], attributes: [] },
+            projectId: "projid",
+            resultSpec: {},
+        };
+
+        return testUtils.delay().then(() => {
+            wrapper.update();
+            let table = wrapper.find(FakeTable);
+            const tableProps: IDataSourceProviderInjectedProps = table.props();
+            const oldDataSource = tableProps.dataSource;
+            expect(renderCounter).toHaveBeenCalledWith(oldDataSource);
+            renderCounter.mockClear();
+            wrapper.setProps(newProps);
+            wrapper.update();
+            table = wrapper.find(FakeTable);
+            expect(renderCounter).not.toHaveBeenCalledWith(oldDataSource);
+        });
+    });
+
     it("should recreate dataSource only once when all props change", () => {
         const wrapper = createComponent(Table);
 
