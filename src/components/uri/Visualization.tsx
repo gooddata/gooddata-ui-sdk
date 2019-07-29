@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IConvertedAFM } from "@gooddata/gooddata-js/lib/DataLayer/converters/toAfmResultSpec";
 import * as React from "react";
 import {
@@ -40,6 +40,7 @@ import { getColorMappingPredicate, getColorPaletteFromColors } from "../visualiz
 import { getCachedOrLoad } from "../../helpers/sdkCache";
 import { getFeatureFlags } from "../../helpers/featureFlags";
 import { mergeFiltersToAfm } from "../../helpers/afmHelper";
+import { _experimentalDataSourceFactory } from "./experimentalDataSource";
 import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 export { Requireable };
 
@@ -73,6 +74,12 @@ export interface IVisualizationProps extends IEvents {
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     onLegendReady?: OnLegendReady;
+    /**
+     * If specified and true, the Visualization component will use new executeVisualization API to obtain
+     * data to visualize; this functionality is experimental at the moment and is intended for GoodData internal
+     * testing and validation.
+     */
+    experimentalVisExecution?: boolean;
 }
 
 export interface IVisualizationState {
@@ -150,6 +157,7 @@ export class VisualizationWrapped extends React.Component<
         ErrorComponent,
         LoadingComponent,
         onExportReady: noop,
+        experimentalVisExecution: false,
     };
 
     private visualizationUri: string;
@@ -386,10 +394,10 @@ export class VisualizationWrapped extends React.Component<
         this.visualizationUri = visualizationUri;
         this.exportTitle = get(mdObject, "meta.title", "");
 
-        const { afm, resultSpec } = buildAfmResultSpec(mdObject.content, visualizationType, filters, locale);
+        const { afm, resultSpec } = buildAfmResultSpec(mdObject.content, visualizationType, locale);
         const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
 
-        const dataSource = await this.adapter.createDataSource(afm);
+        const dataSource = await this.createDataSource(afm, filters);
 
         return {
             type: visualizationType,
@@ -399,6 +407,31 @@ export class VisualizationWrapped extends React.Component<
             mdObject,
             featureFlags,
         };
+    }
+
+    private createDataSource(afm: AFM.IAfm, filters: AFM.FilterItem[]): Promise<IDataSource> {
+        const { projectId, experimentalVisExecution } = this.props;
+
+        if (experimentalVisExecution) {
+            /*
+             * using experimental executeVisualization endpoint allows server to apply additional security
+             * measures on what is the client allowed to see/calculate.
+             *
+             * ideally, this factory would only take project+uri+filters => that is enough for the backend.
+             *
+             * however in practice, the returned data source MUST return valid AFM as this is later retrieved from the
+             * dataSource and is used for various purposes (such as coloring the charts)
+             *
+             * We have ONE-3961 as followup to take this out of experimental mode.
+             */
+            return _experimentalDataSourceFactory(this.sdk, projectId, this.visualizationUri, afm, filters);
+        }
+
+        /*
+         * the use of data source adapter leads to calls to execute AFM; custom filters for
+         * the Visualization must be merged with AFM on the client-side
+         */
+        return this.adapter.createDataSource(mergeFiltersToAfm(afm, filters));
     }
 
     private hasExternalColorPalette() {
@@ -441,38 +474,24 @@ export class VisualizationWrapped extends React.Component<
 }
 
 /**
- * Given visualization object, type of visualization and additional filters, this function builds AFM + ResultSpec combination
+ * Given visualization object and type of visualization, this function builds AFM + ResultSpec combination
  * to be used for AFM Execution of the given vis object.
  *
  * The function ensures that any missing measure titles are filled in and that the ResultSpec matches the type of visualization.
  *
  * @param visObj content of visualization object
  * @param visType type of visualization - as recognized by SDK
- * @param filters additional filters to merge with filters stored in vis object
  * @param locale locale to use when filling missing measure titles
  */
 function buildAfmResultSpec(
     visObj: IVisualizationObjectContent,
     visType: VisType,
-    filters: AFM.FilterItem[],
     locale: Localization.ILocale,
 ): IConvertedAFM {
     const updatedVisObj = fillMissingTitles(visObj, locale);
-    const genericAfmResultSpec = buildGenericAfmResultSpec(updatedVisObj, filters);
+    const genericAfmResultSpec = toAfmResultSpec(updatedVisObj);
 
     return buildAfmResultSpecForVis(updatedVisObj, visType, genericAfmResultSpec);
-}
-
-function buildGenericAfmResultSpec(
-    visObj: IVisualizationObjectContent,
-    filters: AFM.FilterItem[],
-): IConvertedAFM {
-    const afmResultSpec = toAfmResultSpec(visObj);
-
-    return {
-        afm: mergeFiltersToAfm(afmResultSpec.afm, filters),
-        resultSpec: afmResultSpec.resultSpec,
-    };
 }
 
 function buildAfmResultSpecForVis(

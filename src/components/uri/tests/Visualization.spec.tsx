@@ -295,6 +295,27 @@ describe("VisualizationWrapped", () => {
         });
     });
 
+    it("should render with uri and experimental execution", () => {
+        const props = {
+            sdk,
+            projectId,
+            uri: CHART_URI,
+            fetchVisObject,
+            fetchVisualizationClass,
+            uriResolver,
+            intl,
+            BaseChartComponent: BaseChart,
+            experimentalVisExecution: true,
+        };
+
+        const wrapper = mount(<VisualizationWrapped {...props as any} />);
+
+        return testUtils.delay(SLOW + 1).then(() => {
+            wrapper.update();
+            expect(wrapper.find(BaseChart).length).toBe(1);
+        });
+    });
+
     it("should trigger error in case of given uri is not valid", done => {
         const errorHandler = (error: RuntimeError) => {
             expect(error.getMessage()).toEqual(ErrorStates.NOT_FOUND);
