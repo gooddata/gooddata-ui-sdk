@@ -81,6 +81,7 @@ export function getComboConfiguration(config?: IChartConfig) {
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.3,
+                stickyTracking: false,
                 states: {
                     hover: {
                         lineWidth: LINE_WIDTH + 1,
@@ -99,6 +100,7 @@ export function getComboConfiguration(config?: IChartConfig) {
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.6,
+                stickyTracking: false,
                 states: {
                     hover: {
                         lineWidth: LINE_WIDTH + 1,
