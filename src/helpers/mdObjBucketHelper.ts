@@ -2,6 +2,7 @@
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import { VisualizationObject } from "@gooddata/typings";
+import { SECONDARY_MEASURES } from "../constants/bucketNames";
 
 export function findBucketByLocalIdentifier(
     buckets: VisualizationObject.IBucket[],
@@ -21,11 +22,8 @@ export function isBucketEmpty(buckets: VisualizationObject.IBucket[], bucketName
     return isEmpty(getBucketItems(buckets, bucketName));
 }
 
-export function getIdentifierFromBucketsItem(
-    bucket: VisualizationObject.IBucket[],
-    bucketLocalIdentifier: string,
-    type: string,
-): string[] {
-    const bucketItems = getBucketItems(bucket, bucketLocalIdentifier);
-    return bucketItems.map(item => get(item, [type, "localIdentifier"]));
+export function getSecondaryIdentifierFromBucketsItem(buckets: VisualizationObject.IBucket[]): string[] {
+    return getBucketItems(buckets, SECONDARY_MEASURES).map((item: VisualizationObject.BucketItem) =>
+        get(item, "measure.localIdentifier"),
+    );
 }
