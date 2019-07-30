@@ -10,6 +10,23 @@ import { convertExecutionToJson } from "./execute-afm.convert";
 
 export const DEFAULT_LIMIT = 1000;
 
+/**
+ * This interface represents input for executeVisualization API endpoint.
+ *
+ * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
+ * in the future; location and shape of this interface WILL change when the functionality is made GA.
+ *
+ * @private
+ * @internal
+ */
+export interface IVisualizationExecution {
+    visualizationExecution: {
+        reference: string;
+        resultSpec?: AFM.IResultSpec;
+        filters?: AFM.CompatibilityFilter[];
+    };
+}
+
 export class ExecuteAfmModule {
     constructor(private xhr: XhrModule) {}
 
@@ -37,7 +54,8 @@ export class ExecuteAfmModule {
     }
 
     /**
-     * Get Response from Execution
+     * Execute AFM and return execution's response; the response describes dimensionality of the results and
+     * includes link to poll for the results.
      *
      * @method getExecutionResponse
      * @param {string} projectId - GD project identifier
@@ -56,6 +74,67 @@ export class ExecuteAfmModule {
             .then(apiResponse => apiResponse.getData())
             .then(unwrapExecutionResponse);
     }
+
+    /**
+     * Execute saved visualization and get all data.
+     *
+     * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
+     * in the future; location and shape of this interface WILL change when the functionality is made GA.
+     *
+     * @param {string} projectId - GD project identifier
+     * @param {IVisualizationExecution} visExecution - execution payload
+     *
+     * @private
+     * @internal
+     */
+    public _executeVisualization(
+        projectId: string,
+        visExecution: IVisualizationExecution,
+    ): Promise<Execution.IExecutionResponses> {
+        // We have ONE-3961 as followup to take this out of experimental mode
+
+        return this._getVisExecutionResponse(projectId, visExecution).then(
+            (executionResponse: Execution.IExecutionResponse) => {
+                return this.getExecutionResult(executionResponse.links.executionResult).then(
+                    (executionResult: Execution.IExecutionResult | null) => {
+                        return { executionResponse, executionResult };
+                    },
+                );
+            },
+        );
+    }
+
+    /**
+     *
+     * Execute visualization and return the response; the response describes dimensionality of the results and
+     * includes link to poll for the results.
+     *
+     * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
+     * in the future; location and shape of this interface WILL change when the functionality is made GA.
+     *
+     * @param {string} projectId - GD project identifier
+     * @param {IVisualizationExecution} visExecution - execution payload
+     *
+     * @private
+     * @internal
+     */
+    public _getVisExecutionResponse(
+        projectId: string,
+        visExecution: IVisualizationExecution,
+    ): Promise<Execution.IExecutionResponse> {
+        // We have ONE-3961 as followup to take this out of experimental mode
+
+        const body = createExecuteVisualizationBody(visExecution);
+
+        return this.xhr
+            .post(`/gdc/app/projects/${projectId}/executeVisualization`, { body })
+            .then(apiResponse => apiResponse.getData())
+            .then(unwrapExecutionResponse);
+    }
+
+    //
+    // working with results
+    //
 
     /**
      * Get one page of Result from Execution (with requested limit and offset)
@@ -177,6 +256,20 @@ function validateNumOfDimensions(numOfDimensions: number): void {
         numOfDimensions === 1 || numOfDimensions === 2,
         `${numOfDimensions} dimensions are not allowed. Only 1 or 2 dimensions are supported.`,
     );
+}
+
+function createExecuteVisualizationBody(visExecution: IVisualizationExecution): string {
+    const { reference, resultSpec, filters } = visExecution.visualizationExecution;
+    const resultSpecProp = resultSpec ? { resultSpec } : undefined;
+    const filtersProp = filters ? { filters } : undefined;
+
+    return JSON.stringify({
+        visualizationExecution: {
+            reference,
+            ...resultSpecProp,
+            ...filtersProp,
+        },
+    });
 }
 
 export function replaceLimitAndOffsetInUri(oldUri: string, limit: number[], offset: number[]): string {

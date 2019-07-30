@@ -15,6 +15,10 @@ import { MetadataModule } from "./metadata";
 export class ExecutionModule {
     public readonly executeAfm: ExecuteAfmModule["executeAfm"];
     public readonly getExecutionResponse: ExecuteAfmModule["getExecutionResponse"];
+
+    public readonly _executeVisualization: ExecuteAfmModule["_executeVisualization"];
+    public readonly _getVisExecutionResponse: ExecuteAfmModule["_getVisExecutionResponse"];
+
     public readonly getPartialExecutionResult: ExecuteAfmModule["getPartialExecutionResult"];
     public readonly getExecutionResult: ExecuteAfmModule["getExecutionResult"];
     private readonly executeAfmModule: ExecuteAfmModule;
@@ -25,6 +29,10 @@ export class ExecutionModule {
         this.executeAfmModule = new ExecuteAfmModule(xhr);
         this.executeAfm = this.executeAfmModule.executeAfm.bind(this.executeAfmModule);
         this.getExecutionResponse = this.executeAfmModule.getExecutionResponse.bind(this.executeAfmModule);
+        this._executeVisualization = this.executeAfmModule._executeVisualization.bind(this.executeAfmModule);
+        this._getVisExecutionResponse = this.executeAfmModule._getVisExecutionResponse.bind(
+            this.executeAfmModule,
+        );
         this.getPartialExecutionResult = this.executeAfmModule.getPartialExecutionResult.bind(
             this.executeAfmModule,
         );
