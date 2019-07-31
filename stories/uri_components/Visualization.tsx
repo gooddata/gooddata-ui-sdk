@@ -102,6 +102,20 @@ storiesOf("URI components", module)
             </div>,
         ),
     )
+    .add("table example - experimental execution", () =>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={"/gdc/md/storybook/obj/1001"}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    experimentalVisExecution={true}
+                />
+            </div>,
+        ),
+    )
     .add("table example with identifier", () =>
         screenshotWrap(
             <div style={{ width: 800, height: 400 }}>
@@ -231,6 +245,20 @@ storiesOf("URI components", module)
                     onError={onErrorHandler}
                     LoadingComponent={null}
                     ErrorComponent={null}
+                />
+            </div>,
+        ),
+    )
+    .add("chart example - experimental execution", () =>
+        screenshotWrap(
+            <div style={{ width: 800, height: 400 }}>
+                <Visualization
+                    projectId="storybook"
+                    uri={"/gdc/md/storybook/obj/1002"}
+                    onError={onErrorHandler}
+                    LoadingComponent={null}
+                    ErrorComponent={null}
+                    experimentalVisExecution={true}
                 />
             </div>,
         ),

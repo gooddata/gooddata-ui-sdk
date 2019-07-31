@@ -1,4 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+import { IConvertedAFM } from "@gooddata/gooddata-js/lib/DataLayer/converters/toAfmResultSpec";
 import * as React from "react";
 import {
     SDK,
@@ -39,6 +40,8 @@ import { getColorMappingPredicate, getColorPaletteFromColors } from "../visualiz
 import { getCachedOrLoad } from "../../helpers/sdkCache";
 import { getFeatureFlags } from "../../helpers/featureFlags";
 import { mergeFiltersToAfm } from "../../helpers/afmHelper";
+import { _experimentalDataSourceFactory } from "./experimentalDataSource";
+import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 export { Requireable };
 
 const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
@@ -71,6 +74,12 @@ export interface IVisualizationProps extends IEvents {
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     onLegendReady?: OnLegendReady;
+    /**
+     * If specified and true, the Visualization component will use new executeVisualization API to obtain
+     * data to visualize; this functionality is experimental at the moment and is intended for GoodData internal
+     * testing and validation.
+     */
+    experimentalVisExecution?: boolean;
 }
 
 export interface IVisualizationState {
@@ -148,6 +157,7 @@ export class VisualizationWrapped extends React.Component<
         ErrorComponent,
         LoadingComponent,
         onExportReady: noop,
+        experimentalVisExecution: false,
     };
 
     private visualizationUri: string;
@@ -273,8 +283,6 @@ export class VisualizationWrapped extends React.Component<
             onError,
             onLoadingChanged,
             locale,
-            config: baseConfig,
-            intl,
             BaseChartComponent,
             TableComponent,
             PivotTableComponent,
@@ -285,48 +293,14 @@ export class VisualizationWrapped extends React.Component<
             filters: filtersFromProps,
         } = this.props;
         const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
-        const mdObjectContent = mdObject && mdObject.content;
-        const properties: IPropertiesControls | undefined =
-            mdObjectContent && mdObjectContent.properties && JSON.parse(mdObjectContent.properties).controls;
-
-        const colorPalette =
-            baseConfig && baseConfig.colorPalette ? baseConfig.colorPalette : this.state.colorPalette;
-
-        const colorMapping =
-            properties && properties.colorMapping
-                ? properties.colorMapping.map(mapping => {
-                      const predicate = getColorMappingPredicate(mapping.id);
-                      return {
-                          predicate,
-                          color: mapping.color,
-                      };
-                  })
-                : undefined;
-
-        const config = {
-            ...properties,
-            colorMapping,
-            ...baseConfig,
-            colorPalette,
-            mdObject: mdObjectContent,
-        };
 
         if (error) {
-            const errorProps = this.errorMap[error.getMessage()];
-
-            return ErrorComponent ? (
-                <ErrorComponent
-                    code={error.getMessage()}
-                    message={intl.formatMessage({ id: "visualization.ErrorMessageGeneric" })}
-                    description={intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" })}
-                    {...errorProps}
-                />
-            ) : null;
-        }
-        if (isLoading || !dataSource) {
+            return this.renderError(error);
+        } else if (isLoading || !dataSource) {
             return LoadingComponent ? <LoadingComponent /> : null;
         }
 
+        const config = this.createVisualizationConfig();
         const commonProps = {
             projectId,
             drillableItems,
@@ -376,55 +350,54 @@ export class VisualizationWrapped extends React.Component<
         }
     }
 
-    public async prepareDataSources(
+    private renderError(error: RuntimeError) {
+        const { intl, ErrorComponent } = this.props;
+        const errorProps = this.errorMap[error.getMessage()];
+
+        return ErrorComponent ? (
+            <ErrorComponent
+                code={error.getMessage()}
+                message={intl.formatMessage({ id: "visualization.ErrorMessageGeneric" })}
+                description={intl.formatMessage({ id: "visualization.ErrorDescriptionGeneric" })}
+                {...errorProps}
+            />
+        ) : null;
+    }
+
+    private createVisualizationConfig(): IChartConfig {
+        const { config } = this.props;
+        const { mdObject, colorPalette } = this.state;
+        const mdObjectContent = mdObject && mdObject.content;
+
+        return mergeChartConfigWithProperties(config, mdObjectContent, colorPalette);
+    }
+
+    private async prepareDataSources(
         projectId: string,
         identifier: string,
         filters: AFM.FilterItem[] = [],
     ): Promise<IVisualizationExecInfo> {
         const { uriResolver, fetchVisObject, fetchVisualizationClass, locale, getFeatureFlags } = this.props;
 
+        // gather all essential information from backend
+
         const visualizationUri = await uriResolver(this.sdk, projectId, this.visualizationUri, identifier);
-        this.visualizationUri = visualizationUri;
-
         const mdObject = await fetchVisObject(this.sdk, visualizationUri);
-
         const visualizationClassUri: string = MdObjectHelper.getVisualizationClassUri(mdObject);
-
-        this.exportTitle = get(mdObject, "meta.title", "");
-
         const visualizationClass = await fetchVisualizationClass(this.sdk, visualizationClassUri);
-        const processedVisualizationObject = fillMissingTitles(mdObject.content, locale);
-
-        const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
-
-        const { afm: afmWithoutMergedFilters, resultSpec: resultSpecSorting } = toAfmResultSpec(
-            processedVisualizationObject,
-        );
-
-        const afm = mergeFiltersToAfm(afmWithoutMergedFilters, filters);
-
         const featureFlags = await getFeatureFlags(this.sdk, projectId);
-
         const visualizationType: VisType = await getVisualizationTypeFromVisualizationClass(
             visualizationClass,
             featureFlags,
         );
-        // keep resultSpec creation in sync with AD
-        const resultSpecWithDimensions = {
-            ...resultSpecSorting,
-            dimensions: generateDimensions(mdObject.content, visualizationType),
-        };
-        const treemapDefaultSorting = isTreemap(visualizationType)
-            ? {
-                  sorts: getDefaultTreemapSort(afm, resultSpecWithDimensions),
-              }
-            : {};
-        const resultSpec = {
-            ...resultSpecWithDimensions,
-            ...treemapDefaultSorting,
-        };
 
-        const dataSource = await this.adapter.createDataSource(afm);
+        this.visualizationUri = visualizationUri;
+        this.exportTitle = get(mdObject, "meta.title", "");
+
+        const { afm, resultSpec } = buildAfmResultSpec(mdObject.content, visualizationType, locale);
+        const mdObjectTotals = MdObjectHelper.getTotals(mdObject);
+
+        const dataSource = await this.createDataSource(afm, filters);
 
         return {
             type: visualizationType,
@@ -434,6 +407,31 @@ export class VisualizationWrapped extends React.Component<
             mdObject,
             featureFlags,
         };
+    }
+
+    private createDataSource(afm: AFM.IAfm, filters: AFM.FilterItem[]): Promise<IDataSource> {
+        const { projectId, experimentalVisExecution } = this.props;
+
+        if (experimentalVisExecution) {
+            /*
+             * using experimental executeVisualization endpoint allows server to apply additional security
+             * measures on what is the client allowed to see/calculate.
+             *
+             * ideally, this factory would only take project+uri+filters => that is enough for the backend.
+             *
+             * however in practice, the returned data source MUST return valid AFM as this is later retrieved from the
+             * dataSource and is used for various purposes (such as coloring the charts)
+             *
+             * We have ONE-3961 as followup to take this out of experimental mode.
+             */
+            return _experimentalDataSourceFactory(this.sdk, projectId, this.visualizationUri, afm, filters);
+        }
+
+        /*
+         * the use of data source adapter leads to calls to execute AFM; custom filters for
+         * the Visualization must be merged with AFM on the client-side
+         */
+        return this.adapter.createDataSource(mergeFiltersToAfm(afm, filters));
     }
 
     private hasExternalColorPalette() {
@@ -473,6 +471,96 @@ export class VisualizationWrapped extends React.Component<
             this.setState(newState, callBack);
         }
     }
+}
+
+/**
+ * Given visualization object and type of visualization, this function builds AFM + ResultSpec combination
+ * to be used for AFM Execution of the given vis object.
+ *
+ * The function ensures that any missing measure titles are filled in and that the ResultSpec matches the type of visualization.
+ *
+ * @param visObj content of visualization object
+ * @param visType type of visualization - as recognized by SDK
+ * @param locale locale to use when filling missing measure titles
+ */
+function buildAfmResultSpec(
+    visObj: IVisualizationObjectContent,
+    visType: VisType,
+    locale: Localization.ILocale,
+): IConvertedAFM {
+    const updatedVisObj = fillMissingTitles(visObj, locale);
+    const genericAfmResultSpec = toAfmResultSpec(updatedVisObj);
+
+    return buildAfmResultSpecForVis(updatedVisObj, visType, genericAfmResultSpec);
+}
+
+function buildAfmResultSpecForVis(
+    visObj: IVisualizationObjectContent,
+    visType: VisType,
+    afmResultSpec: IConvertedAFM,
+) {
+    const resultSpecWithDimensions = {
+        ...afmResultSpec.resultSpec,
+        dimensions: generateDimensions(visObj, visType),
+    };
+
+    const treemapDefaultSorting = isTreemap(visType)
+        ? {
+              sorts: getDefaultTreemapSort(afmResultSpec.afm, resultSpecWithDimensions),
+          }
+        : {};
+    const resultSpec = {
+        ...resultSpecWithDimensions,
+        ...treemapDefaultSorting,
+    };
+
+    return {
+        afm: afmResultSpec.afm,
+        resultSpec,
+    };
+}
+
+/**
+ * Given chart config and visualization object, this function will:
+ * - merge chart customization contained within vis obj properties with the provided chart config
+ * - apply chart coloring according to information in vis object properties
+ *
+ * Chart coloring will use palette included in the config; if there is no palette it will fall back to the
+ * provided palette
+ *
+ * @param config base configuration of the chart
+ * @param visObj content of visualization obtain that MAY contain properties to merge with the base configuration
+ * @param fallbackPalette color palette to fall back to in case there is no palette stored in `config`
+ * @returns new instance of IChartConfig
+ */
+function mergeChartConfigWithProperties(
+    config: IChartConfig,
+    visObj: IVisualizationObjectContent,
+    fallbackPalette: IColorPaletteItem[],
+): IChartConfig {
+    const properties: IPropertiesControls | undefined =
+        visObj && visObj.properties && JSON.parse(visObj.properties).controls;
+
+    const colorPalette = config && config.colorPalette ? config.colorPalette : fallbackPalette;
+
+    const colorMapping =
+        properties && properties.colorMapping
+            ? properties.colorMapping.map(mapping => {
+                  const predicate = getColorMappingPredicate(mapping.id);
+                  return {
+                      predicate,
+                      color: mapping.color,
+                  };
+              })
+            : undefined;
+
+    return {
+        ...properties,
+        colorMapping,
+        ...config,
+        colorPalette,
+        mdObject: visObj,
+    };
 }
 
 export const IntlVisualization = injectIntl(VisualizationWrapped);
