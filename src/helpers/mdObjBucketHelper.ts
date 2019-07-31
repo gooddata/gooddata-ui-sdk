@@ -22,7 +22,7 @@ export function isBucketEmpty(buckets: VisualizationObject.IBucket[], bucketName
     return isEmpty(getBucketItems(buckets, bucketName));
 }
 
-export function getSecondaryIdentifierFromBucketsItem(buckets: VisualizationObject.IBucket[]): string[] {
+export function getSecondaryMeasuresLocalIdentifiers(buckets: VisualizationObject.IBucket[]): string[] {
     return getBucketItems(buckets, SECONDARY_MEASURES).map((item: VisualizationObject.BucketItem) =>
         get(item, "measure.localIdentifier"),
     );

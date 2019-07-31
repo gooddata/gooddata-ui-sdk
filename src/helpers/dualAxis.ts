@@ -2,7 +2,7 @@
 import { VisualizationObject } from "@gooddata/typings";
 import get = require("lodash/get");
 import { IChartConfig } from "../interfaces/Config";
-import { getSecondaryIdentifierFromBucketsItem } from "./mdObjBucketHelper";
+import { getSecondaryMeasuresLocalIdentifiers } from "./mdObjBucketHelper";
 import { isComboChart } from "../components/visualizations/utils/common";
 import { VisType } from "../constants/visualizationTypes";
 
@@ -11,7 +11,7 @@ export function setMeasuresToSecondaryAxis(config: IChartConfig = {}): IChartCon
     const type: VisType = get(config, "type");
     const { secondary_yaxis: secondaryYAxis, ...remainConfig } = config;
     const buckets: VisualizationObject.IBucket[] = get(config, "mdObject.buckets");
-    const secondaryIdentifierMeasures: string[] = getSecondaryIdentifierFromBucketsItem(buckets);
+    const secondaryIdentifierMeasures: string[] = getSecondaryMeasuresLocalIdentifiers(buckets);
 
     if (!isComboChart(type)) {
         return config;
