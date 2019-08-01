@@ -83,13 +83,13 @@ import ColumnHeader from "./pivotTable/ColumnHeader";
 import { GroupingProviderFactory, IGroupingProvider } from "./pivotTable/GroupingProvider";
 import { RowLoadingElement } from "./pivotTable/RowLoadingElement";
 import {
-    initStickyHeaders,
+    initializeStickyRow,
+    IScrollPosition,
     stickyRowExists,
-    updateStickyHeaders,
-    updateStickyHeadersPosition,
-} from "./pivotTable/stickyGroupHandler";
+    updateStickyRowContentClasses,
+    updateStickyRowPosition,
+} from "./pivotTable/stickyRowHandler";
 import cloneDeep = require("lodash/cloneDeep");
-
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
@@ -146,8 +146,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private gridApi: GridApi;
     private containerRef: HTMLDivElement;
     private groupingProvider: IGroupingProvider;
-    private lastScrollTop: number = 0;
-    private lastScrollLeft: number = 0;
+    private lastScrollPosition: IScrollPosition = {
+        top: 0,
+        left: 0,
+    };
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -410,22 +412,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setGridDataSource();
 
         if (this.props.groupRows) {
-            initStickyHeaders(this.gridApi);
+            initializeStickyRow(this.gridApi);
         }
     };
 
     private onModelUpdated = () => {
-        if (!stickyRowExists(this.gridApi)) {
-            return;
-        }
-        if (this.props.groupRows) {
-            updateStickyHeadersPosition(this.gridApi);
-        }
-        const scrollTop = this.lastScrollTop;
-        const scrollLeft = this.lastScrollLeft;
-        this.lastScrollTop = 0;
-        this.lastScrollLeft = 0;
-        this.updateStickyRow(scrollTop, scrollLeft);
+        this.updateStickyRow();
     };
 
     private cellClicked = (cellEvent: IGridCellEvent) => {
@@ -537,7 +529,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     private onBodyScroll = (event: BodyScrollEvent) => {
-        this.updateStickyRow(Math.max(event.top, 0), event.left);
+        const scrollPosition: IScrollPosition = {
+            top: Math.max(event.top, 0),
+            left: event.left,
+        };
+        this.updateStickyRowContent(scrollPosition);
     };
 
     private preventHeaderResizerEvents = (event: Event) => {
@@ -764,21 +760,38 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return convertDrillableItemsToPredicates(this.props.drillableItems);
     }
 
-    private updateStickyRow(scrollTop: number, scrollLeft: number): void {
-        if (this.props.groupRows && this.gridApi) {
-            updateStickyHeaders(
-                scrollTop,
-                scrollLeft,
-                this.lastScrollTop,
-                this.lastScrollLeft,
+    private isStickyRowAvailable(): boolean {
+        const gridApi = this.getGridApi();
+        return this.props.groupRows && gridApi && stickyRowExists(gridApi);
+    }
+
+    private updateStickyRow(): void {
+        if (this.isStickyRowAvailable()) {
+            updateStickyRowPosition(this.getGridApi());
+
+            const scrollPosition: IScrollPosition = { ...this.lastScrollPosition };
+            this.lastScrollPosition = {
+                top: 0,
+                left: 0,
+            };
+
+            this.updateStickyRowContent(scrollPosition);
+        }
+    }
+
+    private updateStickyRowContent(scrollPosition: IScrollPosition): void {
+        if (this.isStickyRowAvailable()) {
+            updateStickyRowContentClasses(
+                scrollPosition,
+                this.lastScrollPosition,
                 DEFAULT_ROW_HEIGHT,
-                this.gridApi,
+                this.getGridApi(),
                 this.groupingProvider,
                 ApiWrapper,
             );
         }
-        this.lastScrollTop = scrollTop;
-        this.lastScrollLeft = scrollLeft;
+
+        this.lastScrollPosition = { ...scrollPosition };
     }
 
     private getTotalBodyHeight(executionResult: Execution.IExecutionResult): number {
