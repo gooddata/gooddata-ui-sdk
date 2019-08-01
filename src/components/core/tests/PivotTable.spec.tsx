@@ -15,7 +15,7 @@ import {
 import { oneMeasureDataSource, oneAttributeOneMeasureDataSource } from "../../tests/mocks";
 import { getParsedFields } from "../pivotTable/agGridUtils";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
-import * as stickyGroupHandler from "../pivotTable/stickyGroupHandler";
+import * as stickyRowHandler from "../pivotTable/stickyRowHandler";
 import agGridApiWrapper from "../pivotTable/agGridApiWrapper";
 
 const intl = createIntlMock();
@@ -110,38 +110,44 @@ describe("PivotTable", () => {
     });
 
     describe("onModelUpdated", () => {
-        let updateStickyHeadersPosition: jest.SpyInstance;
+        let updateStickyRowPosition: jest.SpyInstance;
         let getPinnedTopRowElement: jest.SpyInstance;
 
         beforeEach(() => {
             getPinnedTopRowElement = jest.spyOn(agGridApiWrapper, "getPinnedTopRowElement");
-            updateStickyHeadersPosition = jest.spyOn(stickyGroupHandler, "updateStickyHeadersPosition");
-            updateStickyHeadersPosition.mockImplementation(noop);
+            updateStickyRowPosition = jest.spyOn(stickyRowHandler, "updateStickyRowPosition");
+            updateStickyRowPosition.mockImplementation(noop);
         });
 
         afterEach(() => {
-            updateStickyHeadersPosition.mockRestore();
+            updateStickyRowPosition.mockRestore();
             getPinnedTopRowElement.mockRestore();
         });
 
         it("should not update sticky row when sticky element does not exist", () => {
             const tableInstance = getTableInstance();
-            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+            jest.spyOn(tableInstance, "getGridApi").mockImplementation(() => ({}));
+            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRowContent");
             getPinnedTopRowElement.mockImplementation(() => undefined);
 
             tableInstance.onModelUpdated();
+
             expect(updateStickyRow).toHaveBeenCalledTimes(0);
-            expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(0);
+            expect(updateStickyRowPosition).toHaveBeenCalledTimes(0);
         });
 
         it("should update sticky row when sticky element exists", () => {
             const tableInstance = getTableInstance();
-            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRow");
+
+            jest.spyOn(tableInstance, "getGridApi").mockImplementation(() => ({}));
+            const updateStickyRow = jest.spyOn(tableInstance, "updateStickyRowContent");
+            updateStickyRow.mockImplementation(noop);
             getPinnedTopRowElement.mockImplementation(() => ({}));
 
             tableInstance.onModelUpdated();
+
             expect(updateStickyRow).toHaveBeenCalledTimes(1);
-            expect(updateStickyHeadersPosition).toHaveBeenCalledTimes(1);
+            expect(updateStickyRowPosition).toHaveBeenCalledTimes(1);
         });
     });
 
