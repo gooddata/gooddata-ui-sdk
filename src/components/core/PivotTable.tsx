@@ -127,6 +127,9 @@ const DEFAULT_ROW_HEIGHT = 28;
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
+export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
+export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
+
 /**
  * Pivot Table react component
  */
@@ -148,6 +151,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private groupingProvider: IGroupingProvider;
     private lastScrollTop: number = 0;
     private lastScrollLeft: number = 0;
+
+    private watchingIntervalId: number | null;
+    private watchingTimeoutId: number | null;
 
     constructor(props: IPivotTableInnerProps) {
         super(props);
@@ -414,6 +420,41 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     };
 
+    private startWatchingTableRendered = () => {
+        const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
+        const isTableVisible = !this.isTableHidden(); // table has data and takes place of Loading icon
+        if (missingContainerRef || isTableVisible) {
+            this.stopWatchingTableRendered();
+        }
+    };
+
+    private stopWatchingTableRendered = () => {
+        clearInterval(this.watchingIntervalId);
+        this.watchingIntervalId = null;
+
+        clearTimeout(this.watchingTimeoutId);
+        this.watchingTimeoutId = null;
+
+        this.props.afterRender();
+    };
+
+    private onFirstDataRendered = () => {
+        // Since issue here is not resolved, https://github.com/ag-grid/ag-grid/issues/3263,
+        // work-around by using 'setInterval'
+        this.watchingIntervalId = window.setInterval(
+            this.startWatchingTableRendered,
+            WATCHING_TABLE_RENDERED_INTERVAL,
+        );
+
+        // after 15s, this table might or not (due to long backend execution) be rendered
+        // either way, 'afterRender' should be called to notify to KPI dashboard
+        // if KPI dashboard is in export mode, its content could be exported as much as possible even without this table
+        this.watchingTimeoutId = window.setTimeout(
+            this.stopWatchingTableRendered,
+            WATCHING_TABLE_RENDERED_MAX_TIME,
+        );
+    };
+
     private onModelUpdated = () => {
         if (!stickyRowExists(this.gridApi)) {
             return;
@@ -568,7 +609,6 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             // Initial data
             columnDefs,
             rowData,
-
             defaultColDef: {
                 cellClass: this.getCellClass(null),
                 headerComponentFramework: ColumnHeader as any,
@@ -608,6 +648,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             infiniteInitialRowCount: pageSize,
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
+            onFirstDataRendered: this.onFirstDataRendered,
             onModelUpdated: this.onModelUpdated,
             onBodyScroll: this.onBodyScroll,
 

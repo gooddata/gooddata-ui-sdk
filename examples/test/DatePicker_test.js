@@ -3,7 +3,7 @@ import { Selector } from "testcafe";
 import { config } from "./utils/config";
 import { loginUsingLoginForm } from "./utils/helpers";
 
-fixture("Detepicker")
+fixture("Datepicker")
     .page(config.url)
     .beforeEach(loginUsingLoginForm(`${config.url}/advanced/date-picker`));
 
