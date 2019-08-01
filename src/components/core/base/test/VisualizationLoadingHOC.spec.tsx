@@ -15,6 +15,7 @@ import {
     executionObjectWithTotalsDataSource,
     LoadingComponent,
     ErrorComponent,
+    twoMeasuresOneDimensionDataSource,
 } from "../../../tests/mocks";
 
 import "jest";
@@ -24,6 +25,7 @@ import {
     ILoadingInjectedProps,
     visualizationLoadingHOC,
     commonDefaultProps,
+    generateInnerComponentKey,
 } from "../VisualizationLoadingHOC";
 import { oneMeasureResponse } from "../../../../execution/fixtures/ExecuteAfm.fixtures";
 import { IDrillableItem } from "../../../../interfaces/DrillEvents";
@@ -31,6 +33,7 @@ import { IExportFunction, IExtendedExportConfig } from "../../../../interfaces/E
 import { IDataSourceProviderInjectedProps } from "../../../afm/DataSourceProvider";
 import { RuntimeError } from "../../../../errors/RuntimeError";
 import { ErrorStates } from "../../../../constants/errorStates";
+import { AFM } from "@gooddata/typings";
 
 const CSV = "csv";
 const XLSX = "xlsx";
@@ -105,6 +108,36 @@ describe("VisualizationLoadingHOC", () => {
             expect(inner.length).toBe(1);
             expect(inner.props()).toMatchObject(props);
         });
+    });
+
+    it("should reset inner component when datasource AFM has changed except nativeTotals", () => {
+        const wrapper = createComponent({
+            dataSource: twoMeasuresOneDimensionDataSource,
+        });
+
+        const innerComponent = wrapper.find(TestInnerComponent);
+        const innerComponentKey = innerComponent.key();
+
+        wrapper.setProps({
+            dataSource: executionObjectWithTotalsDataSource,
+        });
+
+        const currentInnerComponent = wrapper.find(TestInnerComponent);
+        expect(currentInnerComponent.key()).not.toEqual(innerComponentKey);
+    });
+
+    it("should NOT reset inner component when datasource AFM has not changed", () => {
+        const wrapper = createComponent();
+
+        const innerComponent = wrapper.find(TestInnerComponent);
+        const innerComponentKey = innerComponent.key();
+
+        wrapper.setProps({
+            resultSpec: { dimensions: [] },
+        });
+
+        const currentInnerComponent = wrapper.find(TestInnerComponent);
+        expect(currentInnerComponent.key()).toEqual(innerComponentKey);
     });
 
     it("should init loading automatically", () => {
@@ -555,6 +588,22 @@ describe("VisualizationLoadingHOC", () => {
                 onExportReady,
                 dataSource: oneMeasureOneDimensionDataSource,
             });
+        });
+    });
+
+    describe("generateInnerComponentKey", () => {
+        it("should generate InnerComponent key from AFM without nativeTotals", () => {
+            const afm: AFM.IAfm = {
+                measures: [],
+                attributes: [],
+                filters: [],
+                nativeTotals: [],
+            };
+
+            const key = generateInnerComponentKey(afm);
+
+            const expectedKey = 'InnerComponent-{"measures":[],"attributes":[],"filters":[]}';
+            expect(key).toEqual(expectedKey);
         });
     });
 });
