@@ -906,6 +906,7 @@ storiesOf("Internal/HighCharts/ChartTransformation", module)
                 <ChartTransformation
                     config={{
                         type: "combo",
+                        dualAxis: false,
                         mdObject: fixtures.comboWithTwoMeasuresAndViewByAttributeMdObject,
                     }}
                     {...dataSet}

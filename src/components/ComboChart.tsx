@@ -13,7 +13,6 @@ import { ICommonChartProps } from "./core/base/BaseChart";
 import { convertBucketsToAFM, convertBucketsToMdObject } from "../helpers/conversion";
 import { getResultSpec } from "../helpers/resultSpec";
 import { MEASURES, SECONDARY_MEASURES, VIEW } from "../constants/bucketNames";
-import { setMeasuresToSecondaryAxis } from "../helpers/dualAxis";
 import { sanitizeConfig, sanitizeComputeRatioOnMeasures } from "../helpers/optionalStacking/common";
 import { IChartConfig } from "../interfaces/Config";
 
@@ -124,7 +123,7 @@ function getConfiguration(buckets: VisualizationObject.IBucket[], props: IComboC
     const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures, ...secondaryMeasures];
 
     return sanitizeConfig(measuresOnPrimaryAxis, {
-        ...setMeasuresToSecondaryAxis(secondaryMeasures, config),
+        ...config,
         mdObject: convertBucketsToMdObject(buckets, filters, "local:combo"),
     });
 }

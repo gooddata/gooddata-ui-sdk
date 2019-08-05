@@ -416,6 +416,9 @@ storiesOf("URI components", module)
                     uri={"/gdc/md/storybook/obj/1011"}
                     onError={onErrorHandler}
                     LoadingComponent={null}
+                    config={{
+                        dualAxis: false,
+                    }}
                 />
             </div>,
         ),
@@ -428,6 +431,9 @@ storiesOf("URI components", module)
                     identifier="1011"
                     onError={onErrorHandler}
                     LoadingComponent={null}
+                    config={{
+                        dualAxis: false,
+                    }}
                 />
             </div>,
         ),
@@ -441,6 +447,7 @@ storiesOf("URI components", module)
                     config={{
                         primaryChartType: "line",
                         secondaryChartType: "area",
+                        dualAxis: false,
                     }}
                     onError={onErrorHandler}
                     LoadingComponent={null}
