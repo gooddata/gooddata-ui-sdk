@@ -1231,11 +1231,11 @@
     tslint-react "3.6.0"
 
 "@gooddata/typings@^2.13.2":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.16.0.tgz#fd8832d11cb816a3a8662712e6000b50f3d03c5a"
-  integrity sha512-iRglJ9wtZfMTgf8LfFt9+aJBZQKMZbl/xzJKOyfI0psAxmiFTCaCPUNzouvZbYMtIRxAKF5gLyYomJcSITWlBg==
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.13.2.tgz#f70d0f8ff18fa2d2a3a7424bf524b7c5e65dca05"
+  integrity sha512-IpwMQ6MnaNEEb0jvYrOPE3jWCTc0e6kyLuGDHr936H/Z0wqujX3v6jE8Kf74H3eQWDYf21yvl+UVFt3Zh3TIPA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "4.17.11"
 
 "@jest/console@^24.7.1":
   version "24.7.1"
