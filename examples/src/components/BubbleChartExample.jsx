@@ -24,13 +24,17 @@ export class BubbleChartExample extends Component {
     }
 
     render() {
-        const xMeasure = Model.measure(franchiseFeesIdentifier).format("#,##0");
+        const xMeasure = Model.measure(franchiseFeesIdentifier)
+            .format("#,##0")
+            .localIdentifier("franchiseFees");
 
-        const yMeasure = Model.measure(franchisedSalesIdentifier).format("#,##0");
+        const yMeasure = Model.measure(franchisedSalesIdentifier)
+            .format("#,##0")
+            .localIdentifier("franchisedSales");
 
-        const size = Model.measure(averageCheckSizeByServer);
+        const size = Model.measure(averageCheckSizeByServer).localIdentifier("averageCheckSizeByServer");
 
-        const locationResort = Model.attribute(locationResortIdentifier);
+        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
 
         return (
             <div style={{ height: 300 }} className="s-bubble-chart">

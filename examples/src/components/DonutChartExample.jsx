@@ -24,9 +24,15 @@ export class DonutChartExample extends Component {
 
     render() {
         const measures = [
-            Model.measure(franchiseFeesAdRoyaltyIdentifier).format("#,##0"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier).format("#,##0"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty).format("#,##0"),
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format("#,##0")
+                .localIdentifier("franchiseFeesAdRoyalty"),
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format("#,##0")
+                .localIdentifier("franchiseFeesInitialFranchiseFee"),
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format("#,##0")
+                .localIdentifier("franchiseFeesOngoingRoyalty"),
         ];
 
         return (
