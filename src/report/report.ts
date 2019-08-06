@@ -2,12 +2,16 @@
 import { AFM, ExecuteAFM } from "@gooddata/typings";
 import compact from "lodash/compact";
 import isArray from "lodash/isArray";
-import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "./constants/errors";
-import { convertAbsoluteDateFilter, convertRelativeDateFilter } from "./DataLayer/converters/FilterConverter";
-import { convertFilter as convertAttributeFilter } from "./execution/execute-afm.convert";
-import { IBaseExportConfig, IExportConfig, IExportResponse } from "./interfaces";
-import { handleHeadPolling, IPollingOptions } from "./util";
-import { ApiResponseError, XhrModule, ApiResponse } from "./xhr";
+import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
+import {
+    convertAbsoluteDateFilter,
+    convertRelativeDateFilter,
+} from "../DataLayer/converters/FilterConverter";
+import { convertFilter as convertAttributeFilter } from "../execution/execute-afm.convert";
+import { IBaseExportConfig, IExportConfig, IExportResponse } from "../interfaces";
+import { ApiResponseError, XhrModule, ApiResponse } from "../xhr";
+import { handleHeadPolling, IPollingOptions } from "../util";
+import { isExportFinished } from "../utils/export";
 
 interface IExtendedExportConfig extends IBaseExportConfig {
     showFilters?: ExecuteAFM.CompatibilityFilter[];
@@ -68,7 +72,7 @@ export class ReportModule {
             .post(`/gdc/internal/projects/${projectId}/exportResult`, { body: requestPayload })
             .then((response: ApiResponse) => response.getData())
             .then((data: IExportResponse) =>
-                handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, this.isDataExported, pollingOptions),
+                handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, isExportFinished, pollingOptions),
             )
             .catch(this.handleExportResultError);
     }
@@ -86,11 +90,6 @@ export class ReportModule {
         }
         return Promise.reject(error);
     };
-
-    private isDataExported(responseHeaders: Response): boolean {
-        const taskState = responseHeaders.status;
-        return taskState === 200 || taskState >= 400; // OK || ERROR
-    }
 
     private isApiResponseError(error: ApiResponseError | Error): error is ApiResponseError {
         return (error as ApiResponseError).response !== undefined;
