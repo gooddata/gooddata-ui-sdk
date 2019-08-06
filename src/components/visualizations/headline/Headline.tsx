@@ -133,7 +133,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         return (
             <div className="gd-flex-item headline-compare-section-item headline-tertiary-item s-headline-tertiary-item">
                 <div className={this.getValueWrapperClasses(formattedItem)}>{formattedItem.value}</div>
-                <div className="headline-title-wrapper s-headline-title-wrapper">{tertiaryItem.title}</div>
+                <div className="headline-title-wrapper s-headline-title-wrapper" title={tertiaryItem.title}>
+                    {tertiaryItem.title}
+                </div>
             </div>
         );
     }
@@ -159,7 +161,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 >
                     <ResponsiveText>{secondaryValue}</ResponsiveText>
                 </div>
-                <div className="headline-title-wrapper s-headline-title-wrapper">{secondaryItem.title}</div>
+                <div className="headline-title-wrapper s-headline-title-wrapper" title={secondaryItem.title}>
+                    {secondaryItem.title}
+                </div>
             </div>
         );
     }
