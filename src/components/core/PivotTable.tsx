@@ -72,6 +72,7 @@ import {
 } from "./pivotTable/agGridTypes";
 import {
     cellRenderer,
+    generateAgGridComponentKey,
     getMeasureFormat,
     getRowNodeId,
     getTreeLeaves,
@@ -279,7 +280,10 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                         {...gridOptions}
                         // To force Ag grid rerender because AFAIK there is no way
                         // to tell Ag grid header cell to rerender
-                        key={this.state.agGridRerenderNumber}
+                        key={generateAgGridComponentKey(
+                            this.props.dataSource.getAfm(),
+                            this.state.agGridRerenderNumber,
+                        )}
                     />
                 </div>
             </div>
