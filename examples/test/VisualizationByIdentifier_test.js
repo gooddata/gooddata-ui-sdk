@@ -46,13 +46,12 @@ test("Custom visualization should render", async t => {
 test("Table visualization should render", async t => {
     const table = Selector(".s-visualization-table");
     const tableHeader = Selector(
-        ".s-visualization-table .gd-column-group-header--first .s-header-cell-label",
+        ".s-visualization-table .s-table-measure-column-header-group-cell-0 .s-header-cell-label",
     );
-    await t
-        .expect(table.exists)
-        .ok()
-        .expect(tableHeader.textContent)
-        .eql("Month/Year (Date)");
+
+    await t.expect(table.exists).eql(true);
+    await t.expect(tableHeader.exists).eql(true);
+    await t.expect(tableHeader.textContent).eql("Month/Year (Date)");
 });
 
 test("Bar chart should render", async t => {
