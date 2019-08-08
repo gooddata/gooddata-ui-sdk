@@ -38,7 +38,10 @@ const attributes = [
     Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
 ];
 
-const columns = [Model.attribute(quarterDateIdentifier), Model.attribute(monthDateIdentifier)];
+const columns = [
+    Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
+    Model.attribute(monthDateIdentifier).localIdentifier("month"),
+];
 
 const totals = [
     {

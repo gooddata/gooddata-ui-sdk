@@ -29,14 +29,14 @@ export class SamePeriodColumnChartExample extends Component {
                 <ColumnChart
                     projectId={projectId}
                     measures={[
-                        Model.popMeasure("totalSales", yearDateDataSetAttributeIdentifier).alias(
-                            "$ Total Sales - SP year ago",
-                        ),
+                        Model.popMeasure("totalSales", yearDateDataSetAttributeIdentifier)
+                            .localIdentifier("totalSalesPeriod")
+                            .alias("$ Total Sales - SP year ago"),
                         Model.measure(totalSalesIdentifier)
                             .localIdentifier("totalSales")
                             .alias("$ Total Sales"),
                     ]}
-                    viewBy={Model.attribute(quarterDateIdentifier)}
+                    viewBy={Model.attribute(quarterDateIdentifier).localIdentifier("quarter")}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

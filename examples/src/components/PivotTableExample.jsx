@@ -39,23 +39,34 @@ export class PivotTableExample extends Component {
         const { withMeasures, withAttributes, withPivot, hasError, className } = this.props;
         const measures = withMeasures
             ? [
-                  Model.measure(franchiseFeesIdentifier).format("#,##0"),
-                  Model.measure(franchiseFeesAdRoyaltyIdentifier).format("#,##0"),
-                  Model.measure(franchiseFeesInitialFranchiseFeeIdentifier).format("#,##0"),
-                  Model.measure(franchiseFeesIdentifierOngoingRoyalty).format("#,##0"),
+                  Model.measure(franchiseFeesIdentifier)
+                      .format("#,##0")
+                      .localIdentifier("franchiseFees"),
+                  Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                      .format("#,##0")
+                      .localIdentifier("franchiseFeesAdRoyalty"),
+                  Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                      .format("#,##0")
+                      .localIdentifier("franchiseFeesInitialFranchiseFee"),
+                  Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                      .format("#,##0")
+                      .localIdentifier("franchiseFeesOngoingRoyalty"),
               ]
             : [];
 
         const attributes = withAttributes
             ? [
-                  Model.attribute(locationStateDisplayFormIdentifier),
-                  Model.attribute(locationNameDisplayFormIdentifier),
-                  Model.attribute(menuCategoryAttributeDFIdentifier),
+                  Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState"),
+                  Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("locationName"),
+                  Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menuCategory"),
               ]
             : [];
 
         const columns = withPivot
-            ? [Model.attribute(quarterDateIdentifier), Model.attribute(monthDateIdentifier)]
+            ? [
+                  Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
+                  Model.attribute(monthDateIdentifier).localIdentifier("month"),
+              ]
             : [];
 
         return (

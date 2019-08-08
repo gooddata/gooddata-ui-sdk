@@ -64,8 +64,10 @@ export class DynamicMeasuresExample extends Component {
         });
     }
 
-    getNewMeasureDefinition(measureItem) {
-        return Model.measure(measureItem.link).format("#,##0");
+    getNewMeasureDefinition(measureItem, index) {
+        return Model.measure(measureItem.link)
+            .format("#,##0")
+            .localIdentifier(`m${index}`);
     }
 
     render() {
@@ -129,7 +131,7 @@ export class DynamicMeasuresExample extends Component {
             const measures = selectedMeasures.map(this.getNewMeasureDefinition);
 
             if (selectedMeasures.length) {
-                const attribute = Model.attribute(monthDateIdentifier);
+                const attribute = Model.attribute(monthDateIdentifier).localIdentifier("month");
 
                 content = (
                     <div className="graph-wrapper">

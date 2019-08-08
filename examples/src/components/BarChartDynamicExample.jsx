@@ -81,9 +81,10 @@ export class BarChartDynamicExample extends Component {
 
         const amount = Model.measure(totalSalesIdentifier)
             .format("#,##0")
-            .alias("$ Total Sales");
+            .alias("$ Total Sales")
+            .localIdentifier("totalSales");
 
-        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("location_resort");
+        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
 
         const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
             menuCategoryAttributeDFIdentifier,

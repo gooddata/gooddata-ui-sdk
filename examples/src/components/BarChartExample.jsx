@@ -20,9 +20,10 @@ export class BarChartExample extends Component {
     render() {
         const amount = Model.measure(totalSalesIdentifier)
             .format("#,##0")
-            .alias("$ Total Sales");
+            .alias("$ Total Sales")
+            .localIdentifier("totalSales");
 
-        const locationResort = Model.attribute(locationResortIdentifier);
+        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
 
         return (
             <div style={{ height: 300 }} className="s-bar-chart">

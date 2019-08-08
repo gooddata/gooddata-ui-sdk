@@ -18,9 +18,13 @@ export class HeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = Model.measure(franchiseFeesIdentifier).format("#,##0");
+        const primaryMeasure = Model.measure(franchiseFeesIdentifier)
+            .format("#,##0")
+            .localIdentifier("franchiseFees");
 
-        const secondaryMeasure = Model.measure(franchiseFeesAdRoyaltyIdentifier).format("#,##0");
+        const secondaryMeasure = Model.measure(franchiseFeesAdRoyaltyIdentifier)
+            .format("#,##0")
+            .localIdentifier("franchiseFeesAdRoyalty");
 
         return (
             <div className="s-headline" style={{ display: "flex" }}>

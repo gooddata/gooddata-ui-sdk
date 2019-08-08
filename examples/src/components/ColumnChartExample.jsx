@@ -21,9 +21,10 @@ export class ColumnChartExample extends Component {
     render() {
         const totalSales = Model.measure(totalSalesIdentifier)
             .format("#,##0")
-            .alias("$ Total Sales");
+            .alias("$ Total Sales")
+            .localIdentifier("totalSales");
 
-        const month = Model.attribute(monthDateIdentifier);
+        const month = Model.attribute(monthDateIdentifier).localIdentifier("month");
 
         return (
             <div style={{ height: 300 }} className="s-column-chart">

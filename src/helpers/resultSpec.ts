@@ -7,6 +7,17 @@ import { convertBucketsToAFM } from "./conversion";
 const generateDefaultDimensionsFromBuckets = (buckets: VisualizationObject.IBucket[]) =>
     generateDefaultDimensions(convertBucketsToAFM(buckets));
 
+const copySortItem = (sortByItem: AFM.SortItem): AFM.SortItem => {
+    if (AFM.isAttributeSortItem(sortByItem)) {
+        return {
+            attributeSortItem: sortByItem.attributeSortItem,
+        };
+    }
+    return {
+        measureSortItem: sortByItem.measureSortItem,
+    };
+};
+
 export function getResultSpec(
     buckets: VisualizationObject.IBucket[],
     sortBy: AFM.SortItem[] = null,
@@ -19,7 +30,7 @@ export function getResultSpec(
     };
 
     if (sortBy && sortBy.length) {
-        resultSpec.sorts = sortBy;
+        resultSpec.sorts = sortBy.map(copySortItem);
     }
 
     return resultSpec;

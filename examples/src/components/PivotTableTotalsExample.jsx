@@ -36,11 +36,14 @@ export class PivotTableTotalsExample extends Component {
 
         const attributes = [
             Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("state"),
-            Model.attribute(locationNameDisplayFormIdentifier),
-            Model.attribute(menuCategoryAttributeDFIdentifier),
+            Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("locationName"),
+            Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
         ];
 
-        const columns = [Model.attribute(quarterDateIdentifier), Model.attribute(monthDateIdentifier)];
+        const columns = [
+            Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
+            Model.attribute(monthDateIdentifier).localIdentifier("month"),
+        ];
 
         const totals = [
             {

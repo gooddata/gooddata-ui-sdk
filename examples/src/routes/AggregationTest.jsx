@@ -19,8 +19,8 @@ const totalSales = Model.measure(totalSalesIdentifier)
     .aggregation("sum")
     .localIdentifier(totalSalesIdentifier);
 
-const locationResort = Model.attribute(locationResortIdentifier);
-const month = Model.attribute(monthDateIdentifier);
+const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+const month = Model.attribute(monthDateIdentifier).localIdentifier("month");
 
 const franchiseFeesMeasures = [
     franchiseFeesIdentifier,

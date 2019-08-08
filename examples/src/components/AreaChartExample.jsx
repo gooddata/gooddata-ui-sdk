@@ -25,14 +25,29 @@ export class AreaChartExample extends Component {
     }
 
     render() {
+        const localIdentifiers = {
+            franchiseFees: "franchiseFees",
+            franchiseFeesAdRoyalty: "franchiseFeesAdRoyalty",
+            franchiseFeesInitialFranchiseFee: "franchiseFeesInitialFranchiseFee",
+            franchiseFeesIdentifierOngoingRoyalty: "franchiseFeesIdentifierOngoingRoyalty",
+            monthDate: "monthDate",
+        };
         const measures = [
-            Model.measure(franchiseFeesIdentifier).format("#,##0"),
-            Model.measure(franchiseFeesAdRoyaltyIdentifier).format("#,##0"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier).format("#,##0"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty).format("#,##0"),
+            Model.measure(franchiseFeesIdentifier)
+                .format("#,##0")
+                .localIdentifier(localIdentifiers.franchiseFees),
+            Model.measure(franchiseFeesAdRoyaltyIdentifier)
+                .format("#,##0")
+                .localIdentifier(localIdentifiers.franchiseFeesAdRoyalty),
+            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
+                .format("#,##0")
+                .localIdentifier(localIdentifiers.franchiseFeesInitialFranchiseFee),
+            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
+                .format("#,##0")
+                .localIdentifier(localIdentifiers.franchiseFeesIdentifierOngoingRoyalty),
         ];
 
-        const viewBy = Model.attribute(monthDateIdentifier);
+        const viewBy = Model.attribute(monthDateIdentifier).localIdentifier(localIdentifiers.monthDate);
 
         return (
             <div style={{ height: 300 }} className="s-area-chart">
