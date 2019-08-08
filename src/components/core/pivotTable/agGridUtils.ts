@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ICellRendererParams } from "ag-grid-community";
+import omit = require("lodash/omit");
 import escape = require("lodash/escape");
 import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
@@ -168,4 +169,9 @@ export function getSubtotalStyles(dimension: AFM.IDimension): string[] {
 
     // Grand total (first) has no styles
     return [null, ...subtotalStyles];
+}
+
+export function generateAgGridComponentKey(afm: AFM.IAfm, rendererId: number): string {
+    const afmWithoutTotals: Partial<AFM.IAfm> = omit<AFM.IAfm>(afm, ["nativeTotals"]);
+    return `agGridKey-${JSON.stringify(afmWithoutTotals)}-${rendererId}`;
 }

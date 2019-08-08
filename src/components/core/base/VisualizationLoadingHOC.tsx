@@ -71,11 +71,6 @@ export interface IVisualizationLoadingState {
     isLoading: boolean;
 }
 
-export const generateInnerComponentKey = (afm: AFM.IAfm): string => {
-    const afmWithoutTotals: Partial<AFM.IAfm> = omit<AFM.IAfm>(afm, ["nativeTotals"]);
-    return `InnerComponent-${JSON.stringify(afmWithoutTotals)}`;
-};
-
 const defaultErrorHandler = (error: any) => {
     // if error was not placed in object, we couldnt see its properties in console (ie cause, responseText etc.)
     console.error("Error in execution:", { error }); // tslint:disable-line no-console
@@ -148,7 +143,7 @@ export function visualizationLoadingHOC<
 
         public render() {
             const { result, isLoading, error } = this.state;
-            const { intl, dataSource } = this.props;
+            const { intl } = this.props;
 
             const getPageProperty = autoExecuteDataSource
                 ? {}
@@ -162,7 +157,7 @@ export function visualizationLoadingHOC<
 
             return (
                 <InnerComponent
-                    key={generateInnerComponentKey(dataSource.getAfm())}
+                    key={"InnerComponent"}
                     {...props}
                     execution={result}
                     onDataTooLarge={this.onDataTooLarge}

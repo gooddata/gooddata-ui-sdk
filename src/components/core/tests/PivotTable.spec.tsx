@@ -12,11 +12,17 @@ import {
     WATCHING_TABLE_RENDERED_INTERVAL,
     WATCHING_TABLE_RENDERED_MAX_TIME,
 } from "../PivotTable";
-import { oneMeasureDataSource, oneAttributeOneMeasureDataSource } from "../../tests/mocks";
+import {
+    oneMeasureDataSource,
+    oneAttributeOneMeasureDataSource,
+    twoMeasuresOneDimensionDataSource,
+    executionObjectWithTotalsDataSource,
+} from "../../tests/mocks";
 import { getParsedFields } from "../pivotTable/agGridUtils";
 import { GroupingProviderFactory } from "../pivotTable/GroupingProvider";
 import * as stickyRowHandler from "../pivotTable/stickyRowHandler";
 import agGridApiWrapper from "../pivotTable/agGridApiWrapper";
+import { AgGridReact } from "ag-grid-react";
 
 const intl = createIntlMock();
 
@@ -224,6 +230,38 @@ describe("PivotTable", () => {
             expect(table.watchingTimeoutId).toBe(null);
 
             expect(afterRender).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("Reset agGridReact", () => {
+        it("should reset component when datasource AFM has changed except nativeTotals", () => {
+            const wrapper = renderComponent({
+                dataSource: twoMeasuresOneDimensionDataSource,
+            });
+
+            const agGridComponent = wrapper.find(AgGridReact);
+            const agGridComponentKey = agGridComponent.key();
+
+            wrapper.setProps({
+                dataSource: executionObjectWithTotalsDataSource,
+            });
+
+            const currentInnerComponent = wrapper.find(AgGridReact);
+            expect(currentInnerComponent.key()).not.toEqual(agGridComponentKey);
+        });
+
+        it("should NOT reset component when datasource AFM has not changed", () => {
+            const wrapper = renderComponent();
+
+            const agGridComponent = wrapper.find(AgGridReact);
+            const agGridComponentKey = agGridComponent.key();
+
+            wrapper.setProps({
+                resultSpec: { dimensions: [] },
+            });
+
+            const currentInnerComponent = wrapper.find(AgGridReact);
+            expect(currentInnerComponent.key()).toEqual(agGridComponentKey);
         });
     });
 });
