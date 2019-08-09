@@ -319,4 +319,49 @@ describe("Catalogue", () => {
                 });
         });
     });
+
+    describe("loadItemDescriptions", () => {
+        function mockedCatalogueModule(execution: any = {}) {
+            return new CatalogueModule({} as any, execution);
+        }
+
+        const loadItemDescriptionObjectsMockResult = [{ expression: "expression" }, { uri: "/uri/2" }];
+
+        const mdToExecutionDefinitionAndColumnsMock = {
+            columns: ["/uri/1", "/uri/2"],
+            definitions: [
+                {
+                    metricDefinition: {
+                        identifier: "/uri/1",
+                        expression: "expression",
+                    },
+                },
+            ],
+        };
+
+        it("should get itemDescriptionObjects and unwrap them to strings", async () => {
+            const catalogueModule = mockedCatalogueModule();
+            catalogueModule.loadItemDescriptionObjects = jest
+                .fn()
+                .mockReturnValue(Promise.resolve(loadItemDescriptionObjectsMockResult));
+
+            const result = await catalogueModule.loadItemDescriptions(projectId, {}, []);
+
+            expect(result).toEqual(["expression", "/uri/2"]);
+        });
+
+        describe("loadItemDescriptionObjects", () => {
+            it("should get columns and definitions and convert them to itemDescriptionObjects", async () => {
+                const catalogueModule = mockedCatalogueModule({
+                    mdToExecutionDefinitionsAndColumns: jest
+                        .fn()
+                        .mockReturnValue(Promise.resolve(mdToExecutionDefinitionAndColumnsMock)),
+                });
+
+                const result = await catalogueModule.loadItemDescriptionObjects(projectId, {}, []);
+
+                expect(result).toEqual(loadItemDescriptionObjectsMockResult);
+            });
+        });
+    });
 });
