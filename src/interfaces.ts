@@ -309,3 +309,13 @@ export interface IProperties {
     controls?: IPropertiesControls;
     sortItems?: AFM.SortItem[];
 }
+
+export interface IStoredItemDescription {
+    uri: string;
+}
+
+export interface IAdHocItemDescription {
+    expression: string;
+}
+
+export type ItemDescription = IStoredItemDescription | IAdHocItemDescription;
