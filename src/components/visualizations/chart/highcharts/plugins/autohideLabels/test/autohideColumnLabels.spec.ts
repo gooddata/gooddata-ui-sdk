@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
 import {
     IPointData,

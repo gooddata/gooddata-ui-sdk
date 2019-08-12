@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/typings";
+import Highcharts from "../highchartsEntryPoint";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
     getParentAttributeConfiguration,

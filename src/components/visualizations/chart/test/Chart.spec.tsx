@@ -2,7 +2,8 @@
 import * as React from "react";
 import { mount } from "enzyme";
 
-import Chart, { Highcharts } from "../Chart";
+import Highcharts from "../highcharts/highchartsEntryPoint";
+import Chart from "../Chart";
 
 jest.mock("highcharts", () => {
     return {
@@ -52,7 +53,7 @@ describe("Chart", () => {
     }
 
     it("should render highcharts", () => {
-        const spy = jest.spyOn(Highcharts, "Chart");
+        const spy = jest.spyOn(Highcharts as any, "Chart");
         const wrapper = createComponent();
         const component: any = wrapper.instance();
         expect(component.chart).toBeTruthy();

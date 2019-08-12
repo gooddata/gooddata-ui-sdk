@@ -10,6 +10,7 @@
  *  - Fix bubbles is not rendered with min/max config
  */
 import isNil = require("lodash/isNil");
+import Highcharts from "../highchartsEntryPoint";
 import { IHighchartsAxisExtend } from "../../../../../interfaces/HighchartsExtend";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
@@ -29,17 +30,17 @@ export interface IBubbleSeries extends Highcharts.Series {
     getRadii(zMin: number, zMax: number, series: Highcharts.Series): number | null;
 }
 
-export function renderBubbles(Highcharts: any) {
-    const wrap = Highcharts.wrap;
-    const pInt = Highcharts.pInt;
-    const arrayMax = Highcharts.arrayMax;
-    const arrayMin = Highcharts.arrayMin;
-    const pick = Highcharts.pick;
-    const isNumber = Highcharts.isNumber;
+export function renderBubbles(HighchartsInstance: any) {
+    const wrap = HighchartsInstance.wrap;
+    const pInt = HighchartsInstance.pInt;
+    const arrayMax = HighchartsInstance.arrayMax;
+    const arrayMin = HighchartsInstance.arrayMin;
+    const pick = HighchartsInstance.pick;
+    const isNumber = HighchartsInstance.isNumber;
 
-    if (Highcharts.seriesTypes.bubble) {
+    if (HighchartsInstance.seriesTypes.bubble) {
         // Set default size for bubbles in bubble chart where size value is not provided
-        wrap(Highcharts.seriesTypes.bubble.prototype, "getRadius", function(
+        wrap(HighchartsInstance.seriesTypes.bubble.prototype, "getRadius", function(
             proceed: any,
             zMin: number,
             zMax: number,
@@ -57,7 +58,7 @@ export function renderBubbles(Highcharts: any) {
         });
 
         // #SD-479 fix bubbles is not rendered with min/max config
-        wrap(Highcharts.Axis.prototype, "beforePadding", function(_proceed: any) {
+        wrap(HighchartsInstance.Axis.prototype, "beforePadding", function(_proceed: any) {
             const axis: IBubbleAxis = this;
             const axisLength: number = this.len;
             const chart: Highcharts.Chart = this.chart;

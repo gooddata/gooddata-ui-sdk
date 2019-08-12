@@ -15,6 +15,7 @@ import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
 import isNil = require("lodash/isNil");
+import Highcharts from "./highcharts/highchartsEntryPoint";
 
 import {
     MEASURES,
