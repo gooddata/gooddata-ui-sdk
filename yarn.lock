@@ -1127,10 +1127,10 @@
     eslint-plugin-jsx-a11y "6.0.3"
     eslint-plugin-react "7.6.1"
 
-"@gooddata/gooddata-js@^11.16.0":
-  version "11.16.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.16.0.tgz#f852439dabd55860cde69542482370bdf9d88d13"
-  integrity sha512-a3/31tDFbfD058eHmYcHtPHcVO2ZzwbOtSFrX9D0J12MCDCujXZe7zHnNS+e+3ASyJIGdhWVEu89q/K/FuTmyA==
+"@gooddata/gooddata-js@^11.17.0":
+  version "11.17.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/gooddata-js/-/gooddata-js-11.17.0.tgz#bdc3f95969e66116b0e88f23f7c28ca8c26c3594"
+  integrity sha512-ey+zzyvZYaIogIoWfslg9H88gmATi3dNRGT+dquFhXSTWqgy21zIcyr0C9l64p9PjWV1UJ3cjqd8pww1Fag/aA==
   dependencies:
     "@gooddata/typings" "^2.13.2"
     es6-promise "^3.0.2"
