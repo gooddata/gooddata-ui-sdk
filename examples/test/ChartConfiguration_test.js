@@ -7,13 +7,15 @@ fixture("Chart configuration")
     .page(config.url)
     .beforeEach(loginUsingLoginForm(`${config.url}/advanced/chart-configuration`));
 
+const tooltipCssSelector = ".gd-viz-tooltip-item .gd-viz-tooltip-value";
+
 test("should be able to change configuration of bucket component chart and render them", async t => {
     const changePaletteBtn = Selector(".s-bar-chart .s-change-palette");
     const changeLegendBtn = Selector(".s-bar-chart .s-change-legend");
     const changeSeparatorBtn = Selector(".s-bar-chart .s-change-separator");
     const legend = Selector(".s-bar-chart .viz-legend");
     const barChart = Selector(".s-bar-chart");
-    const tooltip = Selector(".gd-viz-tooltip-table-row .gd-viz-tooltip-table-value");
+    const tooltip = Selector(tooltipCssSelector);
 
     await t
         .expect(barChart.visible)
@@ -71,7 +73,7 @@ test("should be able to change configuration of visualization chart and render t
     const changeSeparatorBtn = Selector(".s-visualization-column .s-change-separator");
     const legend = Selector(".s-visualization-column .viz-legend");
     const columnChart = Selector(".s-visualization-column");
-    const tooltip = Selector(".gd-viz-tooltip-table-row .gd-viz-tooltip-table-value");
+    const tooltip = Selector(tooltipCssSelector);
 
     await t
         .hover(columnChart)
