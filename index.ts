@@ -9,3 +9,4 @@ export * from './src/VisualizationObject';
 export * from './src/VisualizationClass';
 export * from './src/Localization';
 export * from './src/DashboardLayout';
+export * from './src/DashboardExport';
