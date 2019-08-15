@@ -18,8 +18,8 @@ export namespace DashboardExport {
         dateFilter: {
             type: DateFilterType;
             granularity: ExtendedDateFilters.DateFilterGranularity;
-            from: ExtendedDateFilters.DateString | number;
-            to: ExtendedDateFilters.DateString | number;
+            from: ExtendedDateFilters.DateString;
+            to: ExtendedDateFilters.DateString;
             dataSet?: string;
             attribute?: string;
         };
