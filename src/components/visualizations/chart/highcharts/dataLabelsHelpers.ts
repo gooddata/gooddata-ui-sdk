@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import flatMap = require("lodash/flatMap");
 import get = require("lodash/get");
+import Highcharts from "./highchartsEntryPoint";
 
 import {
     isStacked,

@@ -5,6 +5,7 @@ import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
+import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../../../helpers/executionResultHelper";
 import { immutableSet } from "../../utils/common";
 import {

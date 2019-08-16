@@ -16,6 +16,7 @@ import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
 import { OnLegendReady } from "../../../interfaces/Events";
 import { IChartConfig } from "../../../interfaces/Config";
+import Highcharts from "./highcharts/highchartsEntryPoint";
 
 export const FLUID_LEGEND_THRESHOLD = 768;
 

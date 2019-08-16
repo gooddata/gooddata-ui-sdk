@@ -6,6 +6,7 @@ import values = require("lodash/values");
 import flatten = require("lodash/flatten");
 import identity = require("lodash/identity");
 import isEmpty = require("lodash/isEmpty");
+import Highcharts from "../../highchartsEntryPoint";
 
 import {
     isStacked,

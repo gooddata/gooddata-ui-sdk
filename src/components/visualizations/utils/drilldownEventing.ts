@@ -3,6 +3,7 @@ import get = require("lodash/get");
 import debounce = require("lodash/debounce");
 import * as CustomEvent from "custom-event";
 import * as invariant from "invariant";
+import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import {
     ChartElementType,
     ChartType,

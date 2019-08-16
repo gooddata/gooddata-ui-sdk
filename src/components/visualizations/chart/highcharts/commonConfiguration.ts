@@ -4,7 +4,7 @@ import invoke = require("lodash/invoke");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
-import { css } from "highcharts";
+import Highcharts from "./highchartsEntryPoint";
 import { chartClick } from "../../utils/drilldownEventing";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
@@ -24,7 +24,7 @@ export const MINIMUM_HC_SAFE_BRIGHTNESS = Number.MIN_VALUE;
 
 function handleTooltipOffScreen(renderTo: Highcharts.HTMLDOMElement) {
     // allow tooltip over the container wrapper
-    css(renderTo, { overflow: "visible" });
+    Highcharts.css(renderTo, { overflow: "visible" });
 }
 
 function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {

@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as Highcharts from "highcharts";
+import Highcharts from "../components/visualizations/chart/highcharts/highchartsEntryPoint";
 
 export type IHighchartsAxis = Partial<Highcharts.Axis> &
     Partial<Highcharts.ExtremesObject> &

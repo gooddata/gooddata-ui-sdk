@@ -9,7 +9,7 @@
 
 import isNil = require("lodash/isNil");
 import get = require("lodash/get");
-import { correctFloat, wrap, WrapProceedFunction } from "highcharts";
+import Highcharts from "../highchartsEntryPoint";
 import { IHighchartsAxisExtend } from "../../../../../interfaces/HighchartsExtend";
 import { isLineChart } from "../../../utils/common";
 
@@ -93,8 +93,8 @@ export function getDirection(
  */
 function addTick(tickPositions: number[], tickInterval: number, isAddFirst: boolean): number[] {
     const tick: number = isAddFirst
-        ? correctFloat(tickPositions[0] - tickInterval)
-        : correctFloat(tickPositions[tickPositions.length - 1] + tickInterval);
+        ? Highcharts.correctFloat(tickPositions[0] - tickInterval)
+        : Highcharts.correctFloat(tickPositions[tickPositions.length - 1] + tickInterval);
 
     return isAddFirst ? [tick, ...tickPositions] : [...tickPositions, tick];
 }
@@ -343,8 +343,10 @@ export function shouldBeHandledByHighcharts(axis: IHighchartsAxisExtend): boolea
     return yAxes.some((axis: IHighchartsAxisExtend) => axis.visible === false);
 }
 
-export const adjustTickAmount = (HighCharts: any) => {
-    wrap(HighCharts.Axis.prototype, "adjustTickAmount", function(proceed: WrapProceedFunction) {
+export const adjustTickAmount = (HighchartsInstance: any) => {
+    Highcharts.wrap(HighchartsInstance.Axis.prototype, "adjustTickAmount", function(
+        proceed: Highcharts.WrapProceedFunction,
+    ) {
         const axis = this;
 
         if (shouldBeHandledByHighcharts(axis)) {

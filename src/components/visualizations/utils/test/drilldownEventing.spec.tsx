@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { AFM } from "@gooddata/typings";
+import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
 import {
     getClickableElementNameByChartType,
     chartClick,
