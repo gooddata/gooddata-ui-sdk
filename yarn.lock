@@ -142,9 +142,9 @@
     tslint-react "3.6.0"
 
 "@gooddata/typings@^2.13.2":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.15.0.tgz#77eca8c3fcfc0786c63bee615208bf71946dffe6"
-  integrity sha512-P/KxZcSDfyqXm5+8Dev+kvRcyk3To0QHpSnOI/WNKdRXKBld2SfXBvu/zosLRes0XExDZQlh42iysgDi7CajGg==
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.17.1.tgz#b2724f4fa722f0361498d15529301c2089b5447a"
+  integrity sha512-frlT4BcskKMclqT5O+ncLZtgD3AMRNcKpPgR0Gxa4ilk8LAKxCxsdrRO4xeW9Csy1LNy5cFdYxFK1rmqg/0B6w==
   dependencies:
     lodash "^4.17.11"
 

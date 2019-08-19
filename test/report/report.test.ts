@@ -2,17 +2,17 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { AFM, ExecuteAFM } from "@gooddata/typings";
-import { ReportModule } from "../src/report";
-import { XhrModule, ApiResponseError } from "../src/xhr";
-import { IExportConfig, IExportResponse } from "../src/interfaces";
-import { mockPollingRequest } from "./helpers/polling";
+import { ReportModule } from "../../src/report/report";
+import { XhrModule, ApiResponseError } from "../../src/xhr";
+import { IExportConfig, IExportResponse } from "../../src/interfaces";
+import { mockPollingRequest, mockPollingRequestWithStatus } from "../helpers/polling";
 import {
     SUCCESS_REQUEST_STATUS,
     ACCEPTED_REQUEST_STATUS,
     BAD_REQUEST_STATUS,
     BAD_REQUEST_MESSAGE,
     ERROR_RESTRICTED_MESSAGE,
-} from "../src/constants/errors";
+} from "../../src/constants/errors";
 
 const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
 
@@ -173,9 +173,9 @@ describe("report", () => {
                 const finishedTask = { status: BAD_REQUEST_STATUS };
                 const runningTask = { status: ACCEPTED_REQUEST_STATUS, uri: createdReport };
 
-                fetchMock.mock(projectUri, finishedTask);
+                fetchMock.mock(projectUri, { uri: createdReport });
 
-                mockPollingRequest(createdReport, runningTask, finishedTask);
+                mockPollingRequestWithStatus(createdReport, runningTask, finishedTask);
 
                 const exportConfig: IExportConfig = {
                     title: "title",
@@ -185,7 +185,7 @@ describe("report", () => {
 
                 return mockedReportModule()
                     .exportResult(projectId, executionResult, exportConfig, { pollStep: 1 })
-                    .then(null, (error: Error) => expect(error.message).toEqual("Bad Request"));
+                    .then(null, (error: ApiResponseError) => expect(error.message).toEqual("Bad Request"));
             });
 
             it("should return restricted error", () => {
@@ -217,11 +217,15 @@ describe("report", () => {
             });
 
             it("should reject with 400 when resource fails", () => {
-                fetchMock.mock(projectUri, BAD_REQUEST_STATUS);
+                fetchMock.mock(projectUri, { status: BAD_REQUEST_STATUS });
 
                 return mockedReportModule()
                     .exportResult(projectId, executionResult)
-                    .then(null, (error: Error) => expect(error).toBeInstanceOf(Error));
+                    .then(null, (error: ApiResponseError) => {
+                        // error thrown in xhr.ts
+                        expect(error.response.status).toEqual(400);
+                        expect(error.message).toEqual("Bad Request");
+                    });
             });
         });
     });
