@@ -80,6 +80,45 @@ const emptyResponse: Execution.IExecutionResponses = {
     },
 };
 
+const emptyResponseWithNullData: Execution.IExecutionResponses = {
+    executionResponse: {
+        dimensions: [
+            {
+                headers: [
+                    {
+                        measureGroupHeader: {
+                            items: [
+                                {
+                                    measureHeaderItem: {
+                                        name: "Lost",
+                                        format: "$#,##0.00",
+                                        localIdentifier: "1st_measure_local_identifier",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                        identifier: "af2Ewj9Re2vK",
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        ],
+        links: {
+            // tslint:disable-next-line:max-line-length
+            executionResult:
+                "/gdc/app/projects/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/executionResults/2651138797087227392",
+        },
+    },
+    executionResult: {
+        data: [null],
+        paging: {
+            count: [1],
+            offset: [0],
+            total: [1],
+        },
+    },
+};
+
 const attributeOnlyResponse: Execution.IExecutionResponses = {
     executionResponse: {
         dimensions: [
@@ -744,6 +783,7 @@ const twoMeasuresOneDimensionResponse: Execution.IExecutionResponses = {
 export {
     emptyResponse,
     emptyResponseWithNull,
+    emptyResponseWithNullData,
     attributeOnlyResponse,
     tooLargeResponse,
     oneMeasureResponse,

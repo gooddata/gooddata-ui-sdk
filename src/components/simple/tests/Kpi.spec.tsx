@@ -11,6 +11,7 @@ import { ErrorStates } from "../../../constants/errorStates";
 import { RuntimeError } from "../../../errors/RuntimeError";
 import {
     emptyResponse,
+    emptyResponseWithNullData,
     oneMeasureOneDimensionResponse,
 } from "../../../execution/fixtures/ExecuteAfm.fixtures";
 
@@ -27,6 +28,12 @@ class DummyExecute extends React.Component<Partial<IExecuteProps>, null> {
 class DummyExecuteEmpty extends React.Component<Partial<IExecuteProps>, null> {
     public render() {
         return this.props.children({ result: emptyResponse, isLoading: false, error: null });
+    }
+}
+
+class DummyExecuteEmptyNullData extends React.Component<Partial<IExecuteProps>, null> {
+    public render() {
+        return this.props.children({ result: emptyResponseWithNullData, isLoading: false, error: null });
     }
 }
 
@@ -137,6 +144,18 @@ describe("Kpi", () => {
         const wrapper = createComponent({
             format: "[=Null][backgroundcolor=DDDDDD][red]No Value;",
             ExecuteComponent: DummyExecuteEmpty,
+        });
+        return testUtils.delay().then(() => {
+            expect(wrapper.find(".gdc-kpi").html()).toEqual(
+                '<span class="gdc-kpi"><span style="color: rgb(255, 0, 0); background-color: rgb(221, 221, 221);">No Value</span></span>',
+            ); // tslint:disable-line:max-line-length
+        });
+    });
+
+    it("should render null value in data array (RAIL-1695)", () => {
+        const wrapper = createComponent({
+            format: "[=Null][backgroundcolor=DDDDDD][red]No Value;",
+            ExecuteComponent: DummyExecuteEmptyNullData,
         });
         return testUtils.delay().then(() => {
             expect(wrapper.find(".gdc-kpi").html()).toEqual(

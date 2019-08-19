@@ -2,6 +2,7 @@
 import * as React from "react";
 import { SDK, DataLayer } from "@gooddata/gooddata-js";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import isNil = require("lodash/isNil");
 import noop = require("lodash/noop");
 import { AFM, Execution } from "@gooddata/typings";
 import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
@@ -153,7 +154,7 @@ export class KpiWrapped extends React.PureComponent<IKpiProps & InjectedIntlProp
     }
 
     private extractNumber(result: Execution.IExecutionResponses) {
-        if (isEmptyResult(result)) {
+        if (isEmptyResult(result) || isNil(result.executionResult.data[0])) {
             return "";
         }
         return parseFloat(result.executionResult.data[0].toString());
