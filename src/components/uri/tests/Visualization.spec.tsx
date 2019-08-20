@@ -11,7 +11,6 @@ import { visualizationObjects, visualizationClasses } from "../../../../__mocks_
 import { AFM, VisualizationObject, VisualizationClass } from "@gooddata/typings";
 import { Visualization, IntlVisualization, VisualizationWrapped } from "../Visualization";
 import { ErrorStates } from "../../../constants/errorStates";
-import { SortableTable } from "../../core/SortableTable";
 import { PivotTable } from "../../core/PivotTable";
 import { IntlWrapper } from "../../core/base/IntlWrapper";
 import { VisualizationTypes } from "../../../constants/visualizationTypes";
@@ -149,7 +148,7 @@ describe("VisualizationWrapped", () => {
         });
     });
 
-    it("should render SortableTable", () => {
+    it("should render PivotTable", () => {
         const props = {
             sdk,
             projectId,
@@ -199,76 +198,8 @@ describe("VisualizationWrapped", () => {
 
         return testUtils.delay(SLOW).then(() => {
             wrapper.update();
-            expect(wrapper.find(SortableTable).length).toBe(1);
-            expect(wrapper.state("type")).toEqual(VisualizationTypes.TABLE);
-            expect(wrapper.state("dataSource")).not.toBeNull();
-            expect(wrapper.state("resultSpec")).toEqual(expectedResultSpec);
-            expect(wrapper.state("totals")).toEqual(expectedTotals);
-        });
-    });
-
-    it("should render PivotTable if FF enablePivot is set", () => {
-        const sdkWithEnablePivot = {
-            ...sdk,
-            clone: () => sdkWithEnablePivot,
-            project: {
-                ...sdk.project,
-                getFeatureFlags: jest.fn(() => Promise.resolve({ enablePivot: true })),
-            },
-        };
-
-        const props = {
-            sdk: sdkWithEnablePivot,
-            projectId,
-            fetchVisObject,
-            fetchVisualizationClass,
-            uriResolver,
-            intl,
-            identifier: TABLE_IDENTIFIER,
-        };
-
-        const wrapper = mount(<VisualizationWrapped {...props as any} />);
-
-        const expectedResultSpec: AFM.IResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a1"],
-                    totals: [
-                        {
-                            attributeIdentifier: "a1",
-                            measureIdentifier: "m1",
-                            type: "avg",
-                        },
-                    ],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ],
-            sorts: [
-                {
-                    attributeSortItem: {
-                        attributeIdentifier: "a1",
-                        direction: "asc",
-                    },
-                },
-            ],
-        };
-
-        const expectedTotals: VisualizationObject.IVisualizationTotal[] = [
-            {
-                type: "avg",
-                alias: "average",
-                measureIdentifier: "m1",
-                attributeIdentifier: "a1",
-            },
-        ];
-
-        return testUtils.delay(SLOW).then(() => {
-            wrapper.update();
             expect(wrapper.find(PivotTable).length).toBe(1);
-            expect(wrapper.find(PivotTable).prop("sdk")).toEqual(sdkWithEnablePivot);
-            expect(wrapper.state("type")).toEqual(VisualizationTypes.PIVOT_TABLE);
+            expect(wrapper.state("type")).toEqual(VisualizationTypes.TABLE);
             expect(wrapper.state("dataSource")).not.toBeNull();
             expect(wrapper.state("resultSpec")).toEqual(expectedResultSpec);
             expect(wrapper.state("totals")).toEqual(expectedTotals);
@@ -341,7 +272,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: CHART_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
@@ -373,7 +304,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: TABLE_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             fetchVisObject,
             fetchVisualizationClass,
             uriResolver,
@@ -399,7 +330,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: TABLE_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             LoadingComponent,
             ErrorComponent,
             fetchVisObject,
@@ -425,7 +356,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: CHART_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             LoadingComponent,
             ErrorComponent,
             fetchVisObject,
@@ -455,7 +386,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: CHART_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             LoadingComponent,
             ErrorComponent,
             fetchVisObject,
@@ -483,7 +414,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: CHART_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             LoadingComponent,
             ErrorComponent,
             fetchVisObject,
@@ -525,7 +456,7 @@ describe("VisualizationWrapped", () => {
             projectId,
             identifier: CHART_IDENTIFIER,
             BaseChartComponent: BaseChart,
-            TableComponent: Table,
+            PivotTableComponent: Table,
             config: customConfig,
             LoadingComponent,
             ErrorComponent,
@@ -581,7 +512,7 @@ describe("VisualizationWrapped", () => {
                 projectId,
                 identifier: CHART_IDENTIFIER,
                 BaseChartComponent: BaseChart,
-                TableComponent: Table,
+                PivotTableComponent: Table,
                 config: {
                     colors: ["rgb(195, 49, 73)", "rgb(168, 194, 86)"],
                 },
@@ -617,7 +548,7 @@ describe("VisualizationWrapped", () => {
                 projectId,
                 identifier: CHART_IDENTIFIER,
                 BaseChartComponent: BaseChart,
-                TableComponent: Table,
+                PivotTableComponent: Table,
                 config: {
                     colorPalette: expectedColorPalette,
                 },

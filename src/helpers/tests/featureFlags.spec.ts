@@ -4,7 +4,7 @@ import { getFeatureFlags } from "../featureFlags";
 
 describe("getFeatureFlags", () => {
     const projectId = "project";
-    const featureFlags = { enablePivot: true };
+    const featureFlags = { featureFlag: true };
     const getSdkWithFeatureFlags = (featureFlags = {}): SDK => {
         const mutatedSdk = createSdk();
         mutatedSdk.project.getFeatureFlags = jest.fn(() => Promise.resolve(featureFlags));

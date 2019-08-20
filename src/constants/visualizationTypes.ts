@@ -6,7 +6,6 @@ export const VisualizationTypes = {
     PIE: "pie" as "pie",
     DONUT: "donut" as "donut",
     TABLE: "table" as "table",
-    PIVOT_TABLE: "pivotTable" as "pivotTable",
     HEADLINE: "headline" as "headline",
     AREA: "area" as "area",
     SCATTER: "scatter" as "scatter",
@@ -45,7 +44,7 @@ export type ChartType =
     | "pareto"
     | "alluvial";
 export type HeadlineType = "headline";
-export type TableType = "table" | "pivotTable";
+export type TableType = "table";
 export type VisType = ChartType | HeadlineType | TableType;
 
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell"; // 'cell' for heatmap

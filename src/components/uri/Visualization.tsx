@@ -18,7 +18,6 @@ import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { IntlWrapper } from "../core/base/IntlWrapper";
 import { BaseChart } from "../core/base/BaseChart";
 import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
-import { SortableTable } from "../core/SortableTable";
 import { PivotTable } from "../PivotTable";
 import { Headline } from "../core/Headline";
 import { IEvents, OnLegendReady } from "../../interfaces/Events";
@@ -68,7 +67,6 @@ export interface IVisualizationProps extends IEvents {
     ) => Promise<VisualizationClass.IVisualizationClass>;
     getFeatureFlags?: (sdk: SDK, projectId: string) => Promise<IFeatureFlags>;
     BaseChartComponent?: any;
-    TableComponent?: any;
     PivotTableComponent?: any;
     HeadlineComponent?: any;
     ErrorComponent?: React.ComponentType<IErrorProps>;
@@ -151,7 +149,6 @@ export class VisualizationWrapped extends React.Component<
         fetchVisualizationClass,
         getFeatureFlags,
         BaseChartComponent: BaseChart,
-        TableComponent: SortableTable,
         PivotTableComponent: PivotTable,
         HeadlineComponent: Headline,
         ErrorComponent,
@@ -284,7 +281,6 @@ export class VisualizationWrapped extends React.Component<
             onLoadingChanged,
             locale,
             BaseChartComponent,
-            TableComponent,
             PivotTableComponent,
             HeadlineComponent,
             LoadingComponent,
@@ -292,7 +288,7 @@ export class VisualizationWrapped extends React.Component<
             onExportReady,
             filters: filtersFromProps,
         } = this.props;
-        const { resultSpec, type, totals, error, isLoading, mdObject } = this.state;
+        const { resultSpec, type, error, isLoading, mdObject } = this.state;
 
         if (error) {
             return this.renderError(error);
@@ -321,9 +317,7 @@ export class VisualizationWrapped extends React.Component<
         };
 
         switch (type) {
-            case VisualizationTypes.TABLE:
-                return <TableComponent {...commonProps} {...sourceProps} totals={totals} />;
-            case VisualizationTypes.PIVOT_TABLE: {
+            case VisualizationTypes.TABLE: {
                 const processedVisualizationObject = {
                     ...mdObject,
                     content: fillMissingTitles(mdObject.content, locale),
@@ -388,7 +382,6 @@ export class VisualizationWrapped extends React.Component<
         const featureFlags = await getFeatureFlags(this.sdk, projectId);
         const visualizationType: VisType = await getVisualizationTypeFromVisualizationClass(
             visualizationClass,
-            featureFlags,
         );
 
         this.visualizationUri = visualizationUri;
