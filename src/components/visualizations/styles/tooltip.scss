@@ -120,6 +120,7 @@
     text-align: justify;
     margin-right: -1em;
     padding-right: 1em;
+    word-wrap: break-word;
 
     &:before {
         content: "...";
@@ -163,9 +164,11 @@
         padding: 0;
 
         &.clamp-two-line {
+            /* autoprefixer: off */
+            -webkit-box-orient: vertical;
+            /* autoprefixer: on */
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
         }
 
         &:before {
