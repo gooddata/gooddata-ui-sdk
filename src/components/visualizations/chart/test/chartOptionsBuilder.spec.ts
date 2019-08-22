@@ -79,6 +79,8 @@ function getSeriesItemDataParameters(dataSet: any, seriesIndex: any) {
 }
 
 describe("chartOptionsBuilder", () => {
+    const DEFAULT_TOOLTIP_CONTENT_WIDTH = 320;
+    const SMALL_TOOLTIP_CONTENT_WIDTH = 200;
     const { COLUMN, LINE, COMBO } = VisualizationTypes;
 
     const barChartWithStackByAndViewByAttributesOptions = generateChartOptions();
@@ -88,9 +90,16 @@ describe("chartOptionsBuilder", () => {
     );
 
     function getValues(str: string): string[] {
-        const test = />([^<]+)<\/td>/g;
-        const result = str.match(test).map((match: string) => match.slice(1, -5));
+        const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
+        const test = />([^<]+)<\/span>/g;
+        const result = strWithoutHiddenSpan.match(test).map((match: string) => match.slice(1, -7));
         return (result && result.length) >= 2 ? result : null;
+    }
+
+    function getStyleMaxWidth(str: string): string[] {
+        const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
+        const testRegex = /max-width: ([^;:]+)px;/g;
+        return strWithoutHiddenSpan.match(testRegex).map((match: string): string => match.slice(11, -3));
     }
 
     const pieAndTreemapDataSet = {
@@ -2346,32 +2355,41 @@ describe("chartOptionsBuilder", () => {
             const tooltipFn = buildTooltipFactory(viewByAttribute, "column");
 
             it("should keep &lt; and &gt; untouched (unescape -> escape)", () => {
-                const tooltip = tooltipFn({
-                    ...pointData,
-                    series: {
-                        name: "&lt;series&gt;",
+                const tooltip = tooltipFn(
+                    {
+                        ...pointData,
+                        series: {
+                            name: "&lt;series&gt;",
+                        },
                     },
-                });
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(getValues(tooltip)).toEqual(["Department", "category", "&lt;series&gt;", " 1"]);
             });
 
             it("should escape other html chars in series name and have output properly escaped", () => {
-                const tooltip = tooltipFn({
-                    ...pointData,
-                    series: {
-                        name: "\"&'&lt;",
+                const tooltip = tooltipFn(
+                    {
+                        ...pointData,
+                        series: {
+                            name: "\"&'&lt;",
+                        },
                     },
-                });
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(getValues(tooltip)).toEqual(["Department", "category", "&quot;&amp;&#39;&lt;", " 1"]);
             });
 
             it("should unescape brackets and htmlescape category", () => {
-                const tooltip = tooltipFn({
-                    ...pointData,
-                    category: {
-                        name: "&gt;\"&'&lt;",
+                const tooltip = tooltipFn(
+                    {
+                        ...pointData,
+                        category: {
+                            name: "&gt;\"&'&lt;",
+                        },
                     },
-                });
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(getValues(tooltip)).toEqual([
                     "Department",
                     "&gt;&quot;&amp;&#39;&lt;",
@@ -2411,38 +2429,38 @@ describe("chartOptionsBuilder", () => {
                 const testData = { ...pointData };
                 set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
-                const tooltip = tooltipFn(testData, 49.0111);
+                const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
                 expect(getValues(tooltip)).toEqual(["Department", "category", "series", formattedValue]);
             },
         );
 
         it("should render correct values in usecase of bar chart without attribute", () => {
             const tooltipFn = buildTooltipFactory(null, "column");
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["series", " 1"]);
         });
 
         it("should render correct values in usecase of pie chart with an attribute", () => {
             const tooltipFn = buildTooltipFactory(viewByAttribute, "pie");
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["Department", "category", "series", " 1"]);
         });
 
         it("should render correct values in usecase of pie chart with measures", () => {
             const tooltipFn = buildTooltipFactory(null, "pie");
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["point", " 1"]);
         });
 
         it("should render correct values in usecase of treemap chart with an attribute", () => {
             const tooltipFn = buildTooltipFactory(viewByAttribute, "treemap");
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["Department", "category", "series", " 1"]);
         });
 
         it("should render correct values in usecase of treemap chart with measures", () => {
             const tooltipFn = buildTooltipFactory(null, "treemap");
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["point", " 1"]);
         });
 
@@ -2450,16 +2468,19 @@ describe("chartOptionsBuilder", () => {
             const chartConfig: IChartConfig = {
                 type: "donut",
             };
-            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Department</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">undefined</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">name</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipFactory(viewByAttribute, "donut", chartConfig);
-            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+            const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
+            expect(getStyleMaxWidth(tooltip)).toEqual([
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+            ]);
         });
     });
 
@@ -2483,45 +2504,51 @@ describe("chartOptionsBuilder", () => {
 
         it("should render correct values in usecase of bar chart without attribute", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(null, null);
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["series", " 1"]);
         });
 
         it("should render correct values in usecase of bar chart with no attribute and no category", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(null, null);
-            const tooltip = tooltipFn({
-                y: 1,
-                format: "# ###",
-                name: "point",
-                series: {
-                    name: "series",
+            const tooltip = tooltipFn(
+                {
+                    y: 1,
+                    format: "# ###",
+                    name: "point",
+                    series: {
+                        name: "series",
+                    },
                 },
-            });
+                DEFAULT_TOOLTIP_CONTENT_WIDTH,
+            );
             expect(getValues(tooltip)).toEqual(["series", " 1"]);
         });
 
         it("should render correct values in usecase of bar chart with one attribute", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, null);
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
         });
 
         it("should render correct values in usecase of bar chart with one attribute and no category", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, null);
-            const tooltip = tooltipFn({
-                y: 1,
-                format: "# ###",
-                name: "point",
-                series: {
-                    name: "series",
+            const tooltip = tooltipFn(
+                {
+                    y: 1,
+                    format: "# ###",
+                    name: "point",
+                    series: {
+                        name: "series",
+                    },
                 },
-            });
+                DEFAULT_TOOLTIP_CONTENT_WIDTH,
+            );
             expect(getValues(tooltip)).toEqual(["series", " 1"]);
         });
 
         it("should render correct values in usecase of bar chart with two attributes", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute);
-            const tooltip = tooltipFn(pointData);
+            const tooltip = tooltipFn(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
             expect(getValues(tooltip)).toEqual([
                 "Department",
                 "parent category",
@@ -2534,17 +2561,20 @@ describe("chartOptionsBuilder", () => {
 
         it("should render correct values in usecase of bar chart with two attributes and no category.parent", () => {
             const tooltipFn = buildTooltipForTwoAttributesFactory(viewByAttribute, viewByParentAttribute);
-            const tooltip = tooltipFn({
-                y: 1,
-                format: "# ###",
-                name: "point",
-                category: {
-                    name: "category",
+            const tooltip = tooltipFn(
+                {
+                    y: 1,
+                    format: "# ###",
+                    name: "point",
+                    category: {
+                        name: "category",
+                    },
+                    series: {
+                        name: "series",
+                    },
                 },
-                series: {
-                    name: "series",
-                },
-            });
+                DEFAULT_TOOLTIP_CONTENT_WIDTH,
+            );
             expect(getValues(tooltip)).toEqual(["Region", "category", "series", " 1"]);
         });
 
@@ -2578,7 +2608,7 @@ describe("chartOptionsBuilder", () => {
                 const testData = { ...pointData };
                 set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
-                const tooltip = tooltipFn(testData, 49.0111);
+                const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
                 expect(getValues(tooltip)).toEqual([
                     "Department",
                     "parent category",
@@ -2594,17 +2624,14 @@ describe("chartOptionsBuilder", () => {
             const chartConfig: IChartConfig = {
                 type: "donut",
             };
-            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">name</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipForTwoAttributesFactory(
                 viewByAttribute,
                 viewByParentAttribute,
                 chartConfig,
             );
-            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+            const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
+            expect(getStyleMaxWidth(tooltip)).toEqual(["180", "180", "180", "180"]);
         });
     });
 
@@ -2629,64 +2656,50 @@ describe("chartOptionsBuilder", () => {
         };
         it("should generate valid tooltip for no measures", () => {
             const measures: any[] = [];
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
-            </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["Sales Rep", "point name"]);
         });
 
         it("should generate valid tooltip for 1 measure", () => {
             const measures = [measureGroup.items[0]];
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
-            </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["Sales Rep", "point name", "_Snapshot [EOP-2]", "10.00"]);
         });
 
         it("should generate valid tooltip for 2 measures", () => {
             const measures = [measureGroup.items[0], measureGroup.items[1]];
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
-            </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual([
+                "Sales Rep",
+                "point name",
+                "_Snapshot [EOP-2]",
+                "10.00",
+                "# of Open Opps.",
+                "20",
+            ]);
         });
 
         it("should generate valid tooltip for 3 measures", () => {
             const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">point name</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Remaining Quota</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">$30.00</td>
-            </tr></table>`;
 
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual([
+                "Sales Rep",
+                "point name",
+                "_Snapshot [EOP-2]",
+                "10.00",
+                "# of Open Opps.",
+                "20",
+                "Remaining Quota",
+                "$30.00",
+            ]);
         });
 
         it("should generate valid tooltip for point without name using name of serie", () => {
@@ -2694,22 +2707,18 @@ describe("chartOptionsBuilder", () => {
             const pointWithoutName = cloneDeep(point);
             pointWithoutName.name = undefined;
 
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Sales Rep</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">serie name</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">_Snapshot [EOP-2]</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">10.00</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\"># of Open Opps.</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">20</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Remaining Quota</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">$30.00</td>
-            </tr></table>`;
-
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
-            expect(tooltipFn(pointWithoutName)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual([
+                "Sales Rep",
+                "point name",
+                "_Snapshot [EOP-2]",
+                "10.00",
+                "# of Open Opps.",
+                "20",
+                "Remaining Quota",
+                "$30.00",
+            ]);
         });
 
         it("should generate correct tooltip for chart with small width", () => {
@@ -2720,22 +2729,18 @@ describe("chartOptionsBuilder", () => {
             const pointWithoutName = cloneDeep(point);
             pointWithoutName.name = undefined;
 
-            const expectedResult = `<table class="tt-values gd-viz-tooltip-table" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Sales Rep</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">name</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">_Snapshot [EOP-2]</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0.00</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;"># of Open Opps.</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">0</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title" style="max-width: 86px;">Remaining Quota</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value" style="max-width: 81px;">NaN</td>
-            </tr></table>`;
-
             const tooltipFn = generateTooltipXYFn(measures, stackByAttribute, chartConfig);
-            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+            const tooltip = tooltipFn(pointForSmallCharts, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual([
+                "Sales Rep",
+                "name",
+                "_Snapshot [EOP-2]",
+                "0.00",
+                "# of Open Opps.",
+                "0",
+                "Remaining Quota",
+                "NaN",
+            ]);
         });
     });
 
@@ -2761,73 +2766,52 @@ describe("chartOptionsBuilder", () => {
             },
         };
         it("should generate valid tooltip for 1 measure", () => {
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
-            </tr></table>`;
-
             const tooltipFn = buildTooltipTreemapFactory(null, null);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["category", "300"]);
         });
 
         it("should respect measure format", () => {
             const pointWithFormat = cloneDeep(point);
             pointWithFormat.format = "abcd";
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">abcd</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipTreemapFactory(null, null);
-            expect(tooltipFn(pointWithFormat)).toEqual(expectedResult);
+            const tooltip = tooltipFn(pointWithFormat, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["category", "abcd"]);
         });
 
         it("should generate valid tooltip for 1 measure and view by", () => {
             const dataSet = fixtures.treemapWithMetricAndViewByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">serie name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "serie name", "300"]);
         });
 
         it("should generate valid tooltip for 1 measure and stack by", () => {
             const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">category</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual(["Department", "Direct Sales", "category", "300"]);
         });
 
         it("should generate valid tooltip for 1 measure, view by and stack by", () => {
             const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Department</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">Direct Sales</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">Region</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">West Coast</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">serie name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">300</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute);
-            expect(tooltipFn(point)).toEqual(expectedResult);
+            const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+            expect(getValues(tooltip)).toEqual([
+                "Department",
+                "Direct Sales",
+                "Region",
+                "West Coast",
+                "serie name",
+                "300",
+            ]);
         });
 
         it("should generate correct tooltip for chart with small width", () => {
@@ -2836,19 +2820,23 @@ describe("chartOptionsBuilder", () => {
             };
             const dataSet = fixtures.treemapWithMetricViewByAndStackByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVSTreemap(dataSet);
-            const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\" style="max-width: 152px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">Department</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">Direct Sales</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">Region</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">West Coast</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 76px;">name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 71px;">300</td>
-            </tr></table>`;
 
             const tooltipFn = buildTooltipTreemapFactory(viewByAttribute, stackByAttribute, chartConfig);
-            expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+            const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
+            expect(getStyleMaxWidth(tooltip)).toEqual([
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+                "180",
+            ]);
         });
     });
 
@@ -2982,7 +2970,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -3016,7 +3004,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -3048,6 +3036,9 @@ describe("chartOptionsBuilder", () => {
             it("should assign correct tooltip function", () => {
                 const { viewByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
                 const pointData = {
+                    node: {
+                        isLeaf: true,
+                    },
                     x: 0,
                     y: 1,
                     format: "# ###",
@@ -3060,12 +3051,12 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
 
-                let expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData);
+                let expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
 
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedTooltip);
 
-                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(pointData);
+                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(pointData, undefined);
 
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTooltip);
@@ -3095,6 +3086,9 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct tooltip function", () => {
                 const pointData = {
+                    node: {
+                        isLeaf: true,
+                    },
                     y: 1,
                     format: "# ###",
                     name: "point",
@@ -3107,11 +3101,11 @@ describe("chartOptionsBuilder", () => {
                     value: 2,
                 };
 
-                const expectedPieChartTooltip = buildTooltipFactory(null, "pie")(pointData);
+                const expectedPieChartTooltip = buildTooltipFactory(null, "pie")(pointData, undefined);
                 const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
                 expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
-                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(pointData);
+                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(pointData, undefined);
                 const treemapTooltip = treemapOptions.actions.tooltip(pointData);
                 expect(treemapTooltip).toBe(expectedTreemapTooltip);
             });
@@ -3160,7 +3154,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
                 expect(tooltip).toBe(expectedTooltip);
             });
 
@@ -3178,7 +3172,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
                 const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -3484,18 +3478,16 @@ describe("chartOptionsBuilder", () => {
 
                 it("should generate correct tooltip", () => {
                     const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy);
-                    const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">stackAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">stackHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">viewAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">viewHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">abcd</td>
-            </tr></table>`;
+                    const tooltip = tooltipFn(point, DEFAULT_TOOLTIP_CONTENT_WIDTH);
 
-                    expect(tooltipFn(point)).toEqual(expectedResult);
+                    expect(getValues(tooltip)).toEqual([
+                        "stackAttr",
+                        "stackHeader",
+                        "viewAttr",
+                        "viewHeader",
+                        "name",
+                        "abcd",
+                    ]);
                 });
 
                 it("should generate correct tooltip for chart with small width", () => {
@@ -3503,37 +3495,41 @@ describe("chartOptionsBuilder", () => {
                         type: "heatmap",
                     };
                     const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, chartConfig);
-                    const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\" style="max-width: 172px;-webkit-border-horizontal-spacing: 0;"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">stackAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">stackHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">viewAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">viewHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\" style="max-width: 86px;">name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\" style="max-width: 81px;">abcd</td>
-            </tr></table>`;
+                    const tooltip = tooltipFn(pointForSmallCharts, SMALL_TOOLTIP_CONTENT_WIDTH);
 
-                    expect(tooltipFn(pointForSmallCharts)).toEqual(expectedResult);
+                    expect(getStyleMaxWidth(tooltip)).toEqual([
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                        "180",
+                    ]);
                 });
 
                 it('should display "-" for null value', () => {
-                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)({
-                        ...point,
-                        value: null,
-                    });
-                    const expectedResult = `<table class=\"tt-values gd-viz-tooltip-table\"><tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">stackAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">stackHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">viewAttr</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">viewHeader</td>
-            </tr>\n<tr class=\"gd-viz-tooltip-table-row\">
-                <td class=\"gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title\">name</td>
-                <td class=\"gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value\">-</td>
-            </tr></table>`;
+                    const tooltipValue = generateTooltipHeatmapFn(viewBy, stackBy)(
+                        {
+                            ...point,
+                            value: null,
+                        },
+                        DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                    );
 
-                    expect(tooltipValue).toEqual(expectedResult);
+                    expect(getValues(tooltipValue)).toEqual([
+                        "stackAttr",
+                        "stackHeader",
+                        "viewAttr",
+                        "viewHeader",
+                        "name",
+                        "-",
+                    ]);
                 });
             });
 
@@ -3837,7 +3833,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
 
-                const tooltip = tooltipFn(pointDataForDualAxes, 49.011);
+                const tooltip = tooltipFn(pointDataForDualAxes, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.011);
                 expect(getValues(tooltip)).toEqual(["Year created", "category", "series", " 1"]);
             });
         });
@@ -3892,7 +3888,7 @@ describe("chartOptionsBuilder", () => {
                     actions: { tooltip: tooltipFn },
                 } = generateChartOptions(fixtures.barChartWith4MetricsAndViewBy2Attribute);
 
-                const tooltip = tooltipFn(pointDataForTwoAttributes);
+                const tooltip = tooltipFn(pointDataForTwoAttributes, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                 expect(getValues(tooltip)).toEqual([
                     "Department",
                     "parent category",
@@ -3911,7 +3907,7 @@ describe("chartOptionsBuilder", () => {
                     type: COLUMN,
                 });
 
-                const tooltip = tooltipFn(pointDataForTwoAttributes, 49.011);
+                const tooltip = tooltipFn(pointDataForTwoAttributes, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.011);
                 expect(getValues(tooltip)).toEqual([
                     "Department",
                     "parent category",

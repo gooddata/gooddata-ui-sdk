@@ -15,6 +15,7 @@ import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
 import isNil = require("lodash/isNil");
+import * as cx from "classnames";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 
 import {
@@ -24,13 +25,6 @@ import {
     TERTIARY_MEASURES,
     VIEW,
 } from "../../../constants/bucketNames";
-import {
-    CHART_PADDING,
-    MAX_CHART_WIDTH,
-    TOOLTIP_COLUMN_NUMBER,
-    TOOLTIP_PADDING,
-    TOOLTIP_VALUE_PADDING,
-} from "../../../constants/tooltip";
 import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
 
 import {
@@ -103,6 +97,9 @@ import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingCon
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
 import { setMeasuresToSecondaryAxis } from "../../../helpers/dualAxis";
+import { isCssMultiLineTruncationSupported } from "../../../helpers/domUtils";
+
+const TOOLTIP_PADDING = 10;
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -186,7 +183,11 @@ export interface IValidationResult {
     hasNegativeValue: boolean;
 }
 
-export type ITooltipFactory = (point: IPointData, percentageValue?: number) => string;
+export type ITooltipFactory = (
+    point: IPointData,
+    maxTooltipContentWidth: number,
+    percentageValue?: number,
+) => string;
 
 export function isNegativeValueIncluded(series: ISeriesItem[]) {
     return series.some((seriesItem: ISeriesItem) =>
@@ -733,42 +734,39 @@ export function getSeries(
 
 export const customEscape = (str: string) => str && escape(unescape(str));
 
-const renderTooltipHTML = (textData: string[][], chartType: string, chartWidth: number): string => {
-    let tableStyle = "";
-    let columnTitleStyle = "";
-    let columnValueStyle = "";
+const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number): string => {
+    const maxItemWidth = maxTooltipContentWidth - TOOLTIP_PADDING * 2;
+    const titleMaxWidth = maxItemWidth;
+    const multiLineTruncationSupported = isCssMultiLineTruncationSupported();
+    const threeDotsWidth = 16;
+    const valueMaxWidth = multiLineTruncationSupported ? maxItemWidth : maxItemWidth - threeDotsWidth;
+    const titleStyle = `style="max-width: ${titleMaxWidth}px;"`;
+    const valueStyle = `style="max-width: ${valueMaxWidth}px;"`;
+    const itemClass = cx("gd-viz-tooltip-item", {
+        "multiline-supported": multiLineTruncationSupported,
+    });
+    const valueClass = cx("gd-viz-tooltip-value", {
+        "clamp-two-line": multiLineTruncationSupported,
+    });
 
-    if (chartType && chartWidth && chartWidth < MAX_CHART_WIDTH) {
-        const chartPadding = chartType !== VisualizationTypes.TREEMAP ? 0 : CHART_PADDING;
-        const tableMaxWidth = chartWidth - TOOLTIP_PADDING - chartPadding;
-        const columnMaxWidth = tableMaxWidth / TOOLTIP_COLUMN_NUMBER;
-
-        tableStyle = ` style="max-width: ${tableMaxWidth}px;-webkit-border-horizontal-spacing: 0;"`;
-        columnTitleStyle = ` style="max-width: ${columnMaxWidth}px;"`;
-        columnValueStyle = ` style="max-width: ${columnMaxWidth - TOOLTIP_VALUE_PADDING}px;"`;
-    }
-
-    return `<table class="tt-values gd-viz-tooltip-table"${tableStyle}>${textData
-        .map(
-            line =>
-                `<tr class="gd-viz-tooltip-table-row">
-                <td class="gd-viz-tooltip-table-cell title gd-viz-tooltip-table-title"${columnTitleStyle}>${
-                    line[0]
-                }</td>
-                <td class="gd-viz-tooltip-table-cell value gd-viz-tooltip-table-value"${columnValueStyle}>${
-                    line[1]
-                }</td>
-            </tr>`,
-        )
-        .join("\n")}</table>`;
+    return textData
+        .map((item: string[]) => {
+            // the third span is hidden, that help to have tooltip work with max-width
+            return `<div class="${itemClass}">
+                        <span class="gd-viz-tooltip-title" ${titleStyle}>${item[0]}</span>
+                        <div class="gd-viz-tooltip-value-wraper" ${titleStyle}>
+                            <span class="${valueClass}" ${valueStyle}>${item[1]}</span>
+                        </div>
+                        <div class="gd-viz-tooltip-value-wraper" ${titleStyle}>
+                            <span class="gd-viz-tooltip-value-max-content" ${valueStyle}>${item[1]}</span>
+                        </div>
+                    </div>`;
+        })
+        .join("\n");
 };
 
 function isPointOnOppositeAxis(point: IPointData): boolean {
     return get(point, ["series", "yAxis", "opposite"], false);
-}
-
-function getChartWidth(point: IPointData): number {
-    return get(point, ["series", "chart", "plotWidth"], 0);
 }
 
 export function buildTooltipFactory(
@@ -779,7 +777,7 @@ export function buildTooltipFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPointData, percentageValue?: number): string => {
+    return (point: IPointData, maxTooltipContentWidth: number, percentageValue?: number): string => {
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
             isDualChartWithRightAxis,
@@ -804,9 +802,7 @@ export function buildTooltipFactory(
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
             textData[0][0] = customEscape(point.name);
         }
-
-        const chartWidth = getChartWidth(point);
-        return renderTooltipHTML(textData, type, chartWidth);
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }
 
@@ -816,9 +812,9 @@ export function buildTooltipForTwoAttributesFactory(
     config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
-    const { separators, stackMeasuresToPercent = false, type } = config;
+    const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPointData, percentageValue?: number): string => {
+    return (point: IPointData, maxTooltipContentWidth: number, percentageValue?: number): string => {
         const category: ICategory = point.category;
 
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
@@ -845,8 +841,7 @@ export function buildTooltipForTwoAttributesFactory(
             }
         }
 
-        const chartWidth = getChartWidth(point);
-        return renderTooltipHTML(textData, type, chartWidth);
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }
 
@@ -854,10 +849,10 @@ export function generateTooltipXYFn(
     measures: any,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
-) {
-    const { separators, type } = config;
+): ITooltipFactory {
+    const { separators } = config;
 
-    return (point: IPointData) => {
+    return (point: IPointData, maxTooltipContentWidth: number): string => {
         const textData = [];
         const name = point.name ? point.name : point.series.name;
 
@@ -886,8 +881,7 @@ export function generateTooltipXYFn(
             ]);
         }
 
-        const chartWidth = getChartWidth(point);
-        return renderTooltipHTML(textData, type, chartWidth);
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }
 
@@ -895,13 +889,13 @@ export function generateTooltipHeatmapFn(
     viewByAttribute: any,
     stackByAttribute: any,
     config: IChartConfig = {},
-) {
-    const { separators, type } = config;
+): ITooltipFactory {
+    const { separators } = config;
     const formatValue = (val: number, format: string) => {
         return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
     };
 
-    return (point: IPointData) => {
+    return (point: IPointData, maxTooltipContentWidth: number): string => {
         const formattedValue = customEscape(
             formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
         );
@@ -922,8 +916,7 @@ export function generateTooltipHeatmapFn(
             ]);
         }
 
-        const chartWidth = getChartWidth(point);
-        return renderTooltipHTML(textData, type, chartWidth);
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }
 
@@ -932,9 +925,9 @@ export function buildTooltipTreemapFactory(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
-    const { separators, type } = config;
+    const { separators } = config;
 
-    return (point: IPointData) => {
+    return (point: IPointData, maxTooltipContentWidth: number) => {
         // show tooltip for leaf node only
         if (!point.node || point.node.isLeaf === false) {
             return null;
@@ -960,8 +953,7 @@ export function buildTooltipTreemapFactory(
             textData.push([customEscape(point.category && point.category.name), formattedValue]);
         }
 
-        const chartWidth = getChartWidth(point);
-        return renderTooltipHTML(textData, type, chartWidth);
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
     };
 }
 
