@@ -1,0 +1,16 @@
+---
+layout: default
+title: GoodData Javascript SDK - Tutorials
+---
+<div class="container-narrow">
+  <ul class="posts">
+    {% for post in site.posts %}
+      {% if post.categories contains 'recipe' %}
+        <div>
+          <a href="{{ site.url }}{{ post.url }}"><h3>{{ post.title }}</h3></a>
+          <div>{{ post.perex }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

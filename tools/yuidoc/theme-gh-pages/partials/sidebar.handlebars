@@ -1,0 +1,26 @@
+<div id="api-list">
+    <div id="api-tabview" class="tabview">
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul class="tabs">
+                <li><a href="#api-modules" class="category">Modules</a>
+                    <ul id="api-modules" class="apis modules">
+                    {{#allModules}}
+                        <li><a href="{{../projectRoot}}modules/{{name}}.html">{{displayName}}</a></li>
+                    {{/allModules}}
+                    </ul>
+                </li>
+                <li><a href="#api-classes" class="category">Classes</a>
+                    <ul id="api-classes" class="apis classes">
+                    {{#classes}}
+                        <li><a href="{{../projectRoot}}classes/{{name}}.html">{{displayName}}</a></li>
+                    {{/classes}}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
