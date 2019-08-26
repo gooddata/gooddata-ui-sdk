@@ -56,7 +56,7 @@ describe('ExtendedDateFilters', () => {
             ['a relative preset', relativePreset],
             ['an absolute form', absoluteForm],
             ['an absolute preset', absolutePreset]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isAllTimeDateFilter(input);
             expect(result).toEqual(false);
         });
@@ -75,7 +75,7 @@ describe('ExtendedDateFilters', () => {
             ['a relative preset', relativePreset],
             ['an absolute preset', absolutePreset],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isAbsoluteDateFilterForm(input);
             expect(result).toEqual(false);
         });
@@ -94,7 +94,7 @@ describe('ExtendedDateFilters', () => {
             ['a relative preset', relativePreset],
             ['an absolute form', absoluteForm],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isAbsoluteDateFilterPreset(input);
             expect(result).toEqual(false);
         });
@@ -113,7 +113,7 @@ describe('ExtendedDateFilters', () => {
             ['an absolute form', absoluteForm],
             ['an absolute preset', absolutePreset],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isRelativeDateFilterForm(input);
             expect(result).toEqual(false);
         });
@@ -132,7 +132,7 @@ describe('ExtendedDateFilters', () => {
             ['an absolute form', absoluteForm],
             ['an absolute preset', absolutePreset],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isRelativeDateFilterPreset(input);
             expect(result).toEqual(false);
         });
@@ -150,7 +150,7 @@ describe('ExtendedDateFilters', () => {
             ['a relative form', relativeForm],
             ['a relative preset', relativePreset],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isAbsoluteDateFilterOption(input);
             expect(result).toEqual(false);
         });
@@ -158,7 +158,7 @@ describe('ExtendedDateFilters', () => {
         it.each([
             ['an absolute form', absoluteForm],
             ['an absolute preset', absolutePreset]
-        ])('should return true when %s is tested', (_, input) => {
+        ])('should return true when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isAbsoluteDateFilterOption(input);
             expect(result).toEqual(true);
         });
@@ -171,7 +171,7 @@ describe('ExtendedDateFilters', () => {
             ['an absolute form', absoluteForm],
             ['an absolute preset', absolutePreset],
             ['an all-time filter', allTimeFilter]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isRelativeDateFilterOption(input);
             expect(result).toEqual(false);
         });
@@ -179,7 +179,7 @@ describe('ExtendedDateFilters', () => {
         it.each([
             ['a relative form', relativeForm],
             ['a relative preset', relativePreset]
-        ])('should return false when %s is tested', (_, input) => {
+        ])('should return false when %s is tested', (_: any, input: any) => {
             const result = ExtendedDateFilters.isRelativeDateFilterOption(input);
             expect(result).toEqual(true);
         });

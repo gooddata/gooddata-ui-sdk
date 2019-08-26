@@ -166,7 +166,7 @@ function getGeneratedMetricExpression(item: any, attributesMap: any) {
     const where = filter(map(getMeasureFilters(item), partial(getFilterExpression, attributesMap)), e => !!e);
 
     return `SELECT ${aggregation ? `${aggregation}([${objectUri}])` : `[${objectUri}]`}${
-        notEmpty(where) ? ` WHERE ${where.join(" AND ")}` : ""
+        notEmpty(...where) ? ` WHERE ${where.join(" AND ")}` : ""
     }`;
 }
 
@@ -185,7 +185,7 @@ function getPercentMetricExpression(category: any, attributesMap: any, measure: 
         map(getMeasureFilters(measure), partial(getFilterExpression, attributesMap)),
         e => !!e,
     );
-    const whereExpression = notEmpty(whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
+    const whereExpression = notEmpty(...whereFilters) ? ` WHERE ${whereFilters.join(" AND ")}` : "";
 
     // tslint:disable-next-line:max-line-length
     return `SELECT (${metricExpressionWithoutFilters}${whereExpression}) / (${metricExpressionWithoutFilters} BY ALL [${attributeUri}]${whereExpression})`;

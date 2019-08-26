@@ -5,16 +5,19 @@
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "scripts": {
-    "prepublish": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc",
+    "prepublish": "npm run-script build",
     "dev": "tsc --watch --noEmit",
     "test": "jest --watch",
     "test-once": "jest",
     "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
     "run-tslint": "tslint -p tsconfig.json",
-    "tslint": "yarn run-tslint -t verbose $npm_package_config_tslint",
-    "tslint-ci": "mkdir -p ./ci/results && yarn run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-    "validate": "tsc --noEmit && yarn tslint",
-    "validate-ci": "tsc --noEmit && yarn tslint-ci"
+    "tslint": "npm run-script run-tslint -t verbose $npm_package_config_tslint",
+    "tslint-ci": "mkdir -p ./ci/results && npm run-script run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+    "validate": "tsc --noEmit && npm run-script tslint",
+    "validate-ci": "tsc --noEmit && npm run-script tslint-ci",
+    "prettier-check": "prettier --check 'src/**/*.ts'",
+    "prettier-write": "prettier --write 'src/**/*.ts'"
   },
   "config": {
     "tslint": "./src/{,**/}*.ts"
@@ -60,16 +63,19 @@
     "url": "https://github.com/gooddata/gooddata-typings/issues"
   },
   "homepage": "https://github.com/gooddata/gooddata-typings#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
   "devDependencies": {
     "@gooddata/tslint-config": "^1.0.0",
     "@types/jest": "^24.0.6",
     "@types/lodash": "^4.14.121",
     "jest": "^24.7.1",
     "jest-junit": "^3.0.0",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.0.1",
-    "typescript": "^3.3.4000"
-  },
-  "dependencies": {
-    "lodash": "^4.17.11"
+    "tslint": "^5.14.0",
+    "tslint-microsoft-contrib": "^5.2.1",
+    "typescript": "3.3.4000"
   }
 }

@@ -33,7 +33,7 @@ const traverse = (obj: any, convert: StringTransformation): any => {
     } else if (isObject(obj)) {
         return Object.keys(obj).reduce(
             (result, key) => {
-                result[key] = traverse(obj[key], convert);
+                result[key] = traverse((obj as any)[key], convert);
                 return result;
             },
             {} as any,
