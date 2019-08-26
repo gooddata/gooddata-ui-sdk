@@ -1,0 +1,4 @@
+# defaults - https://github.com/gooddata/gdc-ci/blob/develop/components/client/gdc-ci.yaml
+pull-request:
+  - yarn validate-ci
+  - yarn test-ci
