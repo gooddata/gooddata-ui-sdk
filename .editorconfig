@@ -1,0 +1,11 @@
+[*.{js,jsx}]
+indent_style = space
+indent_size = 4
+
+[*.{ts,tsx}]
+indent_style = space
+indent_size = 4
+
+[*.json]
+indent_style = space
+indent_size = 2
