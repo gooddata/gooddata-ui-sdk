@@ -430,7 +430,10 @@ export class VisualizationWrapped extends React.Component<
         /*
          * the use of data source adapter leads to calls to execute AFM; custom filters for
          * the Visualization must be merged with AFM on the client-side
+         *
+         * we also need to sync the projectId to properly handle cases when projectId changes
          */
+        this.adapter.projectId = projectId;
         return this.adapter.createDataSource(mergeFiltersToAfm(afm, filters));
     }
 
