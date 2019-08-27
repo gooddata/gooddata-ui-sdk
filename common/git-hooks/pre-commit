@@ -3,16 +3,16 @@
 # exit with non-zero status after issuing an appropriate message if
 # it wants to stop the commit.
 
-COMMAND=common/temp/node_modules/.bin/pretty-quick --staged
+COMMAND="common/temp/node_modules/.bin/pretty-quick"
 
 echo --------------------------------------------
 echo Starting Git hook: pre-commit
 
-if [ -f $COMMAND ]; then
-  echo Invoking $COMMAND
-  $COMMAND
+if [[ -f ${COMMAND} ]]; then
+  echo Invoking ${COMMAND}
+  ${COMMAND} --staged
 else
-  echo Command not installed: $COMMAND
+  echo Command not installed: ${COMMAND}
 fi
 
 echo Finished Git hook: pre-commit
