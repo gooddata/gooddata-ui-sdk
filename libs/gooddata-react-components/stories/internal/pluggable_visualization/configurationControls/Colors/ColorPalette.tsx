@@ -1,21 +1,21 @@
 // (C) 2007-2019 GoodData Corporation
 
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import "../../../../../styles/internal/css/config_panel.css";
-import * as ChartConfiguration from "../../../../../src/interfaces/Config";
+import { storiesOf } from "@storybook/react";
+import * as React from "react";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../src/components/visualizations/utils/defaultColors";
 import ColorPalette from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorPalette";
 import { getLargePalette } from "../../../../../src/internal/mocks/testColorHelper";
-import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
 import { InternalIntlWrapper } from "../../../../../src/internal/utils/internalIntlProvider";
+import "../../../../../styles/internal/css/config_panel.css";
+import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
 
 storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorPalette", module)
     .add("ColorPalette", () =>
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorPalette
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("onColorSelected")}
                 />
             </InternalIntlWrapper>,
@@ -26,7 +26,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorP
             <InternalIntlWrapper>
                 <ColorPalette
                     selectedColorGuid="7"
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("onColorSelected")}
                 />
             </InternalIntlWrapper>,

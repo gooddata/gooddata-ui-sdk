@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import * as ChartConfiguration from "../../interfaces/Config";
+import { DEFAULT_COLOR_PALETTE } from "../../components/visualizations/utils/defaultColors";
 import cloneDeep = require("lodash/cloneDeep");
 
 export function getLargePalette() {
-    const largePalette = cloneDeep(ChartConfiguration.DEFAULT_COLOR_PALETTE);
+    const largePalette = cloneDeep(DEFAULT_COLOR_PALETTE);
 
-    for (let i = 0; i < ChartConfiguration.DEFAULT_COLOR_PALETTE.length; i++) {
-        const itemClon = cloneDeep(ChartConfiguration.DEFAULT_COLOR_PALETTE[i]);
+    for (let i = 0; i < DEFAULT_COLOR_PALETTE.length; i++) {
+        const itemClon = cloneDeep(DEFAULT_COLOR_PALETTE[i]);
         itemClon.guid = i + "_" + itemClon.guid;
         largePalette.push(itemClon);
     }

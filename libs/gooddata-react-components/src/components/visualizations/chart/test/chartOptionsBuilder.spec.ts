@@ -5,6 +5,7 @@ import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { Execution } from "@gooddata/typings";
+import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../../../helpers/executionResultHelper";
 import { immutableSet } from "../../utils/common";
@@ -33,7 +34,7 @@ import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./he
 import * as headerPredicateFactory from "../../../../factory/HeaderPredicateFactory";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { PIE_CHART_LIMIT, STACK_BY_DIMENSION_INDEX } from "../constants";
-import { DEFAULT_COLOR_PALETTE, getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
+import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
     TreemapColorStrategy,

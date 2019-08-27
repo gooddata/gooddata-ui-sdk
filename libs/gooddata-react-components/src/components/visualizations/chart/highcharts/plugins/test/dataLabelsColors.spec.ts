@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
-import { DEFAULT_COLOR_PALETTE, getRgbString } from "../../../../utils/color";
-import { IColorPaletteItem } from "../../../../../../interfaces/Config";
+import { getRgbString } from "../../../../utils/color";
+import { DEFAULT_COLOR_PALETTE, IColorPaletteItem } from "../../../../../../interfaces/Config";
 
 describe("dataLabelsColors", () => {
     describe("isWhiteNotContrastEnough", () => {

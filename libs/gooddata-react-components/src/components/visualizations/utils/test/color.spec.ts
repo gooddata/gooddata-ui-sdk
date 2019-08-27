@@ -4,7 +4,6 @@ import {
     getLighterColor,
     normalizeColorToRGB,
     getColorPaletteFromColors,
-    DEFAULT_COLOR_PALETTE,
     getValidColorPalette,
     getColorMappingPredicate,
 } from "../color";
@@ -14,6 +13,7 @@ import {
     attributeHeader,
     attributeHeaderItem,
 } from "../../../../factory/tests/HeaderPredicateFactory.mock";
+import { DEFAULT_COLOR_PALETTE } from "../defaultColors";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {

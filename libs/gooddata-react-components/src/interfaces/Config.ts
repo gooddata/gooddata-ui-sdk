@@ -8,7 +8,7 @@ import { VisType } from "../constants/visualizationTypes";
 import { IHeaderPredicate } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from "../components/visualizations/utils/color";
+export { DEFAULT_COLOR_PALETTE } from "../components/visualizations/utils/defaultColors";
 
 export type IDataLabelsVisible = string | boolean;
 

@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { GuidType, IColorItem } from "@gooddata/gooddata-js";
-import { getProperties, getColoredInputItems, getSearchedItems, getValidProperties } from "../colors";
-import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
+import { DEFAULT_COLOR_PALETTE } from "../../../components/visualizations/utils/defaultColors";
 import * as MappingHeader from "../../../interfaces/MappingHeader";
-import * as ChartConfiguration from "../../../interfaces/Config";
+import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
+import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
 
 describe("color utils", () => {
     const color1: IColorItem = {
@@ -174,7 +174,7 @@ describe("color utils", () => {
     describe("getColoredInputItems", () => {
         it("should return input items with valid mapping", () => {
             const colors: IColorConfiguration = {
-                colorPalette: ChartConfiguration.DEFAULT_COLOR_PALETTE,
+                colorPalette: DEFAULT_COLOR_PALETTE,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },
@@ -230,7 +230,7 @@ describe("color utils", () => {
 
         it("should return input items with valid mapping from custom color", () => {
             const colors: IColorConfiguration = {
-                colorPalette: ChartConfiguration.DEFAULT_COLOR_PALETTE,
+                colorPalette: DEFAULT_COLOR_PALETTE,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },
@@ -302,7 +302,7 @@ describe("color utils", () => {
 
         it("should return item with mapping of first color when mapping is invalid", () => {
             const colors: IColorConfiguration = {
-                colorPalette: ChartConfiguration.DEFAULT_COLOR_PALETTE,
+                colorPalette: DEFAULT_COLOR_PALETTE,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },

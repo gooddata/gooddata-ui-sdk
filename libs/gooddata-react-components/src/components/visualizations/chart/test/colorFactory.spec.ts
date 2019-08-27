@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
 import {
     TreemapColorStrategy,
     MeasureColorStrategy,
@@ -13,7 +14,7 @@ import {
 
 import { getMVS } from "./helper";
 
-import { DEFAULT_COLOR_PALETTE, HEATMAP_BLUE_COLOR_PALETTE, getRgbString } from "../../utils/color";
+import { HEATMAP_BLUE_COLOR_PALETTE, getRgbString } from "../../utils/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../../stories/data/colors";
 
 import * as fixtures from "../../../../../stories/test_data/fixtures";

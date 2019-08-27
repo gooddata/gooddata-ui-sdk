@@ -1,18 +1,18 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import { mount } from "enzyme";
-import noop = require("lodash/noop");
-import cloneDeep = require("lodash/cloneDeep");
-import * as ChartConfiguration from "../../../../../interfaces/Config";
 import { IColorItem } from "@gooddata/gooddata-js";
-
-import ColoredItemsList from "../coloredItemsList/ColoredItemsList";
-import ColorsSection, { IColorsSectionProps, COLOR_MAPPING_CHANGED } from "../ColorsSection";
+import { mount } from "enzyme";
+import * as React from "react";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../components/visualizations/utils/defaultColors";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
+import ColoredItemsList from "../coloredItemsList/ColoredItemsList";
+import ColorsSection, { COLOR_MAPPING_CHANGED, IColorsSectionProps } from "../ColorsSection";
+import cloneDeep = require("lodash/cloneDeep");
+import noop = require("lodash/noop");
+
 const colors: IColorConfiguration = {
-    colorPalette: ChartConfiguration.DEFAULT_COLOR_PALETTE,
+    colorPalette: DEFAULT_COLOR_PALETTE,
     colorAssignments: [
         {
             headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },

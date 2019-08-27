@@ -6,7 +6,7 @@ import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { barChartWith4MetricsAndViewBy2Attribute } from "../../../../../../stories/test_data/fixtures";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { MeasureColorStrategy } from "../../colorFactory";
-import { DEFAULT_COLOR_PALETTE } from "../../../utils/color";
+import { DEFAULT_COLOR_PALETTE } from "../../../utils/defaultColors";
 import * as headerPredicateFactory from "../../../../../factory/HeaderPredicateFactory";
 
 describe("getCategoriesForTwoAttributes", () => {

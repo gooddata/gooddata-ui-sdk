@@ -6,7 +6,6 @@ import uniqBy = require("lodash/uniqBy");
 import isEqual = require("lodash/isEqual");
 
 import {
-    DEFAULT_COLOR_PALETTE,
     HEATMAP_BLUE_COLOR_PALETTE,
     getLighterColorFromRGB,
     isCustomPalette,
@@ -23,6 +22,7 @@ import {
     IColorMapping,
     IColorAssignment,
     IColorPaletteItem,
+    DEFAULT_COLOR_PALETTE,
 } from "../../../interfaces/Config";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
 import { findMeasureGroupInDimensions } from "../../../helpers/executionResultHelper";

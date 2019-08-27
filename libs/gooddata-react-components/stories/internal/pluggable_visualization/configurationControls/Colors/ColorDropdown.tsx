@@ -1,24 +1,24 @@
 // (C) 2007-2019 GoodData Corporation
 
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import "../../../../../styles/internal/css/config_panel.css";
-import * as ChartConfiguration from "../../../../../src/interfaces/Config";
+import { storiesOf } from "@storybook/react";
+import * as React from "react";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../src/components/visualizations/utils/defaultColors";
 import ColorDropdown from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
 // tslint:disable-next-line:max-line-length
 import ColoredItemContent from "../../../../../src/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
 import { getLargePalette } from "../../../../../src/internal/mocks/testColorHelper";
-import { SmallScrollDecorator } from "../../../../utils/SmallScrollDecorator";
-import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
 import { InternalIntlWrapper } from "../../../../../src/internal/utils/internalIntlProvider";
+import "../../../../../styles/internal/css/config_panel.css";
+import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
+import { SmallScrollDecorator } from "../../../../utils/SmallScrollDecorator";
 
 storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorDropdown", module)
     .add("ColorDropdown", () =>
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorDropdown
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={false}
                 >
@@ -32,7 +32,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "guid", value: "4" }}
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={false}
                 >
@@ -59,7 +59,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorDropdown
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -73,7 +73,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "guid", value: "4" }}
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -87,7 +87,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "rgb", value: { r: 20, g: 178, b: 226 } }}
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -111,7 +111,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
                 <br />
                 <br />
                 <ColorDropdown
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -120,7 +120,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
                 <br />
                 <br />
                 <ColorDropdown
-                    colorPalette={ChartConfiguration.DEFAULT_COLOR_PALETTE}
+                    colorPalette={DEFAULT_COLOR_PALETTE}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
