@@ -11,6 +11,11 @@ The REST API versions in the table are just for your information as the values a
 |\>= 10.0.0|3
 |<= 9.0.1|2
 
+<a name="11.18.2"></a>
+## 2019-08-27 Version [11.18.2](https://github.com/gooddata/gooddata-js/compare/v11.18.1...v11.18.2)
+
+- use a version of @gooddata/typings that includes the Dashboard types
+
 <a name="11.18.1"></a>
 ## 2019-08-27 Version [11.18.1](https://github.com/gooddata/gooddata-js/compare/v11.18.0...v11.18.1)
 
