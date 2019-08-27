@@ -5,7 +5,6 @@ import { IColorItem, IColor } from "@gooddata/gooddata-js";
 import Highcharts from "../components/visualizations/chart/highcharts/highchartsEntryPoint";
 import { PositionType } from "../components/visualizations/typings/legend";
 import { VisType } from "../constants/visualizationTypes";
-import { IDataLabelsConfig } from "../interfaces/Config";
 import { IHeaderPredicate } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
