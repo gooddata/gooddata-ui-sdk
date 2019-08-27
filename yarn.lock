@@ -141,7 +141,7 @@
     tslint-microsoft-contrib "6.1.0"
     tslint-react "3.6.0"
 
-"@gooddata/typings@^2.13.2":
+"@gooddata/typings@^2.17.1":
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.17.1.tgz#b2724f4fa722f0361498d15529301c2089b5447a"
   integrity sha512-frlT4BcskKMclqT5O+ncLZtgD3AMRNcKpPgR0Gxa4ilk8LAKxCxsdrRO4xeW9Csy1LNy5cFdYxFK1rmqg/0B6w==
