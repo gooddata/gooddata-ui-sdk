@@ -116,10 +116,6 @@ module.exports = async (env, argv) => {
                     loaders: ["style-loader", "css-loader"],
                 },
                 {
-                    test: /.scss$/,
-                    loaders: ["style-loader", "css-loader", "sass-loader"],
-                },
-                {
                     test: /\.jsx?$/,
                     exclude: /node_modules|update-dependencies/,
                     use: {

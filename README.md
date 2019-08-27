@@ -1,5 +1,25 @@
 # GoodData.UI SDK
 
+## Status
+
+This repo is currently in cowboy development mode - tests may be failing. The `rush build` however must never fail.
+
+Here is a list of (unordered) TODOs to address before we can start thinking about the release:
+
+-  [ ] Make examples work & deploy; split live examples server into separate package
+
+  Current Status: Examples are split-off into examples/sdk-examples; they are not yet included in Rush; they may 
+  not be buildable 
+     
+-  [ ] Make releases work
+
+  Find out the right way to use Rush to create releases; initial research shows Rush is a bit flaky in
+  the area. If worst comes to worst, we may need to create our own release scripts (using release-it or
+  something like that)
+    
+-  [ ] Ensure package.json scripts are unified across projects; simplify them as needed 
+-  [ ] Remove all warnings during pnpm install
+
 ## Contributing
 
 ### Getting started

@@ -1,6 +1,0 @@
-{
-  "extends": [
-    "@gooddata/tslint-config",
-    "tslint-config-prettier"
-  ]
-}
