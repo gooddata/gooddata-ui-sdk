@@ -12,7 +12,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { IVisConstruct, IBucket, ILocale, IVisProps, IFilters } from "../../../../interfaces/Visualization";
 import SpyInstance = jest.SpyInstance;
-import { VisualizationEnvironment } from "../../../../../components/uri/Visualization";
+import { VisualizationEnvironment } from "../../../../../constants/visualizationTypes";
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { Table } from "../../../../../components/core/Table";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";

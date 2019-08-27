@@ -10,8 +10,7 @@ import { AFM, Execution, VisualizationObject, VisualizationClass } from "@goodda
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { DataLayer } from "@gooddata/gooddata-js";
 import * as VisEvents from "../../interfaces/Events";
-import { VisualizationEnvironment } from "../../components/uri/Visualization";
-import { VisualizationTypes } from "../../constants/visualizationTypes";
+import { VisualizationTypes, VisualizationEnvironment } from "../../constants/visualizationTypes";
 import {
     ILocale,
     IVisCallbacks,

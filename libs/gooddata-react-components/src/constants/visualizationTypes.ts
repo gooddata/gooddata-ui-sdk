@@ -52,3 +52,5 @@ export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell"; // 
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 export type TableElementType = "cell";
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;
+
+export type VisualizationEnvironment = "none" | "dashboards";

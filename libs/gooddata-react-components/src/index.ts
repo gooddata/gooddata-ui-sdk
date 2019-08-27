@@ -14,9 +14,9 @@ import { ICommonVisualizationProps } from "./components/core/base/VisualizationL
 import { ErrorComponent } from "./components/simple/ErrorComponent";
 import { LoadingComponent } from "./components/simple/LoadingComponent";
 import { Kpi } from "./components/simple/Kpi";
-import { Visualization, VisualizationEnvironment } from "./components/uri/Visualization";
+import { Visualization } from "./components/uri/Visualization";
 import { ErrorStates, ErrorCodes } from "./constants/errorStates";
-import { VisualizationTypes, ChartType } from "./constants/visualizationTypes";
+import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./constants/visualizationTypes";
 import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./interfaces/DrillEvents";
 import { IHeaderPredicate } from "./interfaces/HeaderPredicate";

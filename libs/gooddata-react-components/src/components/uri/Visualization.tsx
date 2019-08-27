@@ -46,8 +46,6 @@ export { Requireable };
 
 const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
 
-export type VisualizationEnvironment = "none" | "dashboards";
-
 export interface IVisualizationProps extends IEvents {
     projectId: string;
     sdk?: SDK;

@@ -10,7 +10,7 @@ import { IntlWrapper } from "./base/IntlWrapper";
 import { IntlTranslationsProvider, ITranslationsComponentProps } from "./base/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./base/utils/fixEmptyHeaderItems";
 import { TablePropTypes } from "../../proptypes/Table";
-import { VisualizationEnvironment } from "../uri/Visualization";
+import { VisualizationEnvironment } from "../../constants/visualizationTypes";
 import { IIndexedTotalItem } from "../../interfaces/Totals";
 import { convertToIndexedTotals, convertToTotals } from "../../helpers/TotalsConverter";
 import { IDataSourceProviderInjectedProps } from "../afm/DataSourceProvider";
