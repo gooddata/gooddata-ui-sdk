@@ -1,6 +1,6 @@
 {
   "name": "@gooddata/react-components",
-  "version": "7.2.0-beta.21",
+  "version": "7.2.0-beta.22",
   "description": "GoodData.UI - A powerful JavaScript library for building analytical applications",
   "main": "dist/index.js",
   "repository": "git@github.com:gooddata/gooddata-react-components.git",
