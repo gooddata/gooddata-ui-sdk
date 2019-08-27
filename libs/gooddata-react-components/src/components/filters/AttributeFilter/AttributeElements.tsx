@@ -7,7 +7,7 @@ import { AFM } from "@gooddata/typings";
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import { getObjectIdFromUri, setTelemetryHeaders } from "../../../helpers/utils";
-import { ErrorStates } from "../../../index";
+import { ErrorStates } from "../../../constants/errorStates";
 
 export interface IPaging {
     count: number;
