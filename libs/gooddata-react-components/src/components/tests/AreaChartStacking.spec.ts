@@ -1,9 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { getBucketsProps, getConfigProps } from "../areaChart";
-import { VisualizationObject } from "@gooddata/typings";
-import { IAreaChartProps } from "../../../components/AreaChart";
-import { IChartConfig } from "../../../interfaces/Config";
-import { getViewByTwoAttributes } from "../common";
+import { VisualizationObject } from "../../../../gooddata-typings/dist";
+import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
+import { IChartConfig } from "../../interfaces/Config";
+import { getViewByTwoAttributes } from "../../helpers/optionalStacking/common";
 import BucketItem = VisualizationObject.BucketItem;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
