@@ -364,11 +364,8 @@ export function generateDimensions(
     type: VisType,
 ): AFM.IDimension[] {
     switch (type) {
-        case VisualizationTypes.PIVOT_TABLE: {
-            return getPivotTableDimensions(mdObject.buckets);
-        }
         case VisualizationTypes.TABLE: {
-            return getTableDimensions(mdObject.buckets);
+            return getPivotTableDimensions(mdObject.buckets);
         }
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:

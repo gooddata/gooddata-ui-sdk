@@ -11,7 +11,6 @@ import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { DataLayer } from "@gooddata/gooddata-js";
 import * as VisEvents from "../../interfaces/Events";
 import { VisualizationEnvironment } from "../../components/uri/Visualization";
-import { VisualizationTypes } from "../../constants/visualizationTypes";
 import {
     ILocale,
     IVisCallbacks,
@@ -31,7 +30,6 @@ import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/Pluggabl
 import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggablePieChart";
 import { PluggableDonutChart } from "./pluggableVisualizations/donutChart/PluggableDonutChart";
 import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
-import { PluggableTable } from "./pluggableVisualizations/table/PluggableTable";
 import { PluggableHeadline } from "./pluggableVisualizations/headline/PluggableHeadline";
 import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
 import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
@@ -48,8 +46,7 @@ const VisualizationsCatalog = {
     area: PluggableAreaChart,
     pie: PluggablePieChart,
     donut: PluggableDonutChart,
-    table: PluggableTable,
-    pivotTable: PluggablePivotTable,
+    table: PluggablePivotTable,
     headline: PluggableHeadline,
     scatter: PluggableScatterPlot,
     bubble: PluggableBubbleChart,
@@ -184,17 +181,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             references,
             projectId,
         } = props;
-        const { enablePivot = false } = featureFlags;
 
         if (this.visualization) {
             this.visualization.unmount();
         }
 
-        let type = get(visualizationClass, "content.url", "").split(":")[1];
+        const type = get(visualizationClass, "content.url", "").split(":")[1];
 
-        if (type === VisualizationTypes.TABLE && enablePivot) {
-            type = VisualizationTypes.PIVOT_TABLE;
-        }
         const visConstructor = this.props.visualizationsCatalog[type];
 
         if (visConstructor) {
