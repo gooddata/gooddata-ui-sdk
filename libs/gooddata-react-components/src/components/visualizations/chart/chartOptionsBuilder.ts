@@ -1,22 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
-import * as invariant from "invariant";
-import cloneDeep = require("lodash/cloneDeep");
-import compact = require("lodash/compact");
-import escape = require("lodash/escape");
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-import isEmpty = require("lodash/isEmpty");
-import isEqual = require("lodash/isEqual");
-import isUndefined = require("lodash/isUndefined");
-import last = require("lodash/last");
-import range = require("lodash/range");
-import unescape = require("lodash/unescape");
-import without = require("lodash/without");
-import isNil = require("lodash/isNil");
 import * as cx from "classnames";
-import Highcharts from "./highcharts/highchartsEntryPoint";
+import * as invariant from "invariant";
 
 import {
     MEASURES,
@@ -26,32 +12,34 @@ import {
     VIEW,
 } from "../../../constants/bucketNames";
 import { VisType, VisualizationTypes } from "../../../constants/visualizationTypes";
+import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
+import { isCssMultiLineTruncationSupported } from "../../../helpers/domUtils";
+import { setMeasuresToSecondaryAxis } from "../../../helpers/dualAxis";
 
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../../helpers/executionResultHelper";
-import { unwrap } from "../../../helpers/utils";
-import { isBucketEmpty } from "../../../helpers/mdObjBucketHelper";
-import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
 import { isSomeHeaderPredicateMatched } from "../../../helpers/headerPredicate";
+import { isBucketEmpty } from "../../../helpers/mdObjBucketHelper";
+import { unwrap } from "../../../helpers/utils";
 
 import {
     IAxis,
+    ICategory,
     IChartConfig,
     IChartLimits,
+    IChartOptions,
+    IPatternObject,
+    IPointData,
     ISeriesDataItem,
     ISeriesItem,
-    IPointData,
-    IPatternObject,
-    IChartOptions,
     ISeriesItemConfig,
-    ICategory,
 } from "../../../interfaces/Config";
 import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
-import { getLighterColor, GRAY, WHITE, TRANSPARENT } from "../utils/color";
+import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
     getAttributeElementIdFromAttributeElementUri,
@@ -74,30 +62,43 @@ import {
     getComboChartStackingConfig,
 } from "./chartOptions/comboChartOptions";
 
+import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
+
 import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
     HEATMAP_DATA_POINTS_LIMIT,
+    PARENT_ATTRIBUTE_INDEX,
     PIE_CHART_LIMIT,
+    PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
     VIEW_BY_ATTRIBUTES_LIMIT,
     VIEW_BY_DIMENSION_INDEX,
-    PARENT_ATTRIBUTE_INDEX,
-    PRIMARY_ATTRIBUTE_INDEX,
 } from "./constants";
-import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
 } from "./highcharts/commonConfiguration";
-import { getChartProperties } from "./highcharts/helpers";
-import { isDataOfReasonableSize } from "./highChartsCreators";
 import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
-
-import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
-import { setMeasuresToSecondaryAxis } from "../../../helpers/dualAxis";
-import { isCssMultiLineTruncationSupported } from "../../../helpers/domUtils";
+import { getChartProperties } from "./highcharts/helpers";
+import Highcharts from "./highcharts/highchartsEntryPoint";
+import { isDataOfReasonableSize } from "./highChartsCreators";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
+import { IUnwrappedAttributeHeadersWithItems } from "./types";
+import cloneDeep = require("lodash/cloneDeep");
+import compact = require("lodash/compact");
+import escape = require("lodash/escape");
+import get = require("lodash/get");
+import includes = require("lodash/includes");
+import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
+import isNil = require("lodash/isNil");
+import isUndefined = require("lodash/isUndefined");
+import last = require("lodash/last");
+import range = require("lodash/range");
+import unescape = require("lodash/unescape");
+import without = require("lodash/without");
 
 const TOOLTIP_PADDING = 10;
 
@@ -173,10 +174,6 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
 ];
-
-export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["attributeHeader"] & {
-    items: Execution.IResultAttributeHeaderItem[];
-};
 
 export interface IValidationResult {
     dataTooLarge: boolean;

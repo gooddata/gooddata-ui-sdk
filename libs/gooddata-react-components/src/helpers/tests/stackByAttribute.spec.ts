@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { Execution, VisualizationObject } from "@gooddata/typings";
 import { getStackByAttribute } from "../stackByAttribute";
-import { IUnwrappedAttributeHeadersWithItems } from "../../components/visualizations/chart/chartOptionsBuilder";
+import { IUnwrappedAttributeHeadersWithItems } from "../../components/visualizations/chart/types";
 import { IChartConfig } from "../../interfaces/Config";
 import { VisualizationTypes } from "../../constants/visualizationTypes";
 
