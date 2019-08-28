@@ -1113,9 +1113,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.2.tgz#63985d3d8b02530e0869962f4da09142ee8e200e"
   integrity sha512-n/VQ4mbfr81aqkx/XmVicOLjviMuy02eenSdJY33SVA7S2J42EU0P1H0mOogfYedb3wXA0d/LVtBrgTSm04WEA==
 
-"@gooddata/eslint-config@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/eslint-config/-/eslint-config-0.1.0.tgz#b2eec57cd6e26733bea6cdf038c67873103902bc"
+"@gooddata/eslint-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/eslint-config/-/eslint-config-1.0.0.tgz#de4d0d78c8a2a19f708daac4894ff0d6a2bb5e6c"
+  integrity sha512-FMNac9HU6paeYgsESpVm/NsYhNX1+OsqvnrzJposnXT5Pju4Sv8kTDb0SgNvGLRz1OLZUN8/SxQhDIdWVoEu9w==
   dependencies:
     babel-eslint "8.0.1"
     eslint "4.19.1"
@@ -1125,6 +1126,7 @@
     eslint-plugin-import "2.8.0"
     eslint-plugin-jest "21.7.0"
     eslint-plugin-jsx-a11y "6.0.3"
+    eslint-plugin-no-only-tests "^2.3.1"
     eslint-plugin-react "7.6.1"
 
 "@gooddata/gooddata-js@^11.18.2":
@@ -6559,6 +6561,11 @@ eslint-plugin-jsx-a11y@6.0.3:
     damerau-levenshtein "^1.0.0"
     emoji-regex "^6.1.0"
     jsx-ast-utils "^2.0.0"
+
+eslint-plugin-no-only-tests@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-no-only-tests/-/eslint-plugin-no-only-tests-2.3.1.tgz#7b24a4df55b818d0838410aa96b24a5a4a072262"
+  integrity sha512-LzCzeQrlkNjEwUWEoGhfjz+Kgqe0080W6qC8I8eFwSMXIsr1zShuIQnRuSZc4Oi7k1vdUaNGDc+/GFvg6IHSHA==
 
 eslint-plugin-react@7.6.1:
   version "7.6.1"
