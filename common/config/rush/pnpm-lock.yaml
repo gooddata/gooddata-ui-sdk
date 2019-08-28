@@ -10,6 +10,7 @@ dependencies:
     "@microsoft/api-extractor": 7.3.8
     "@rush-temp/gooddata-js": "file:projects/gooddata-js.tgz"
     "@rush-temp/react-components": "file:projects/react-components.tgz_tslint@5.19.0+webpack@4.39.3"
+    "@rush-temp/sdk-backend-spi": "file:projects/sdk-backend-spi.tgz"
     "@rush-temp/sdk-skel-ts": "file:projects/sdk-skel-ts.tgz"
     "@rush-temp/sdk-skel-tsx": "file:projects/sdk-skel-tsx.tgz_webpack@4.39.3"
     "@rush-temp/typings": "file:projects/typings.tgz"
@@ -8673,6 +8674,9 @@ packages:
             node: ">=6"
         peerDependencies:
             jest-resolve: "*"
+        peerDependenciesMeta:
+            jest-resolve:
+                optional: true
         resolution:
             integrity: sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
     /jest-regex-util/24.9.0:
@@ -15180,6 +15184,25 @@ packages:
             integrity: sha512-ynLd86SJgOnxHrCHaOTskUVE91duLNUMRUoU+wvP2fuea1GCr77BCvxlHXxx9HY6Nh0omKjzVg1xz8Zg80Iobw==
             tarball: "file:projects/react-components.tgz"
         version: 0.0.0
+    "file:projects/sdk-backend-spi.tgz":
+        dependencies:
+            "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@types/jest": 24.0.18
+            jest: 24.9.0
+            jest-junit: 3.7.0
+            lodash: 4.17.15
+            prettier: 1.18.2
+            ts-jest: 24.0.2_jest@24.9.0
+            tslint: 5.19.0_typescript@3.3.4000
+            tslint-config-prettier: 1.18.0
+            tslint-microsoft-contrib: 5.2.1_d3d11f1f7a97248d227f511c2f3f9779
+            typescript: 3.3.4000
+        dev: false
+        name: "@rush-temp/sdk-backend-spi"
+        resolution:
+            integrity: sha512-zWAOWjdXxEEsPKlPJkPlsJij4sBaDzKgtW/8fzXauTXttPT1ShFNVaWBC61vtX0OMldft7ww7gpVmGqaTvJDnw==
+            tarball: "file:projects/sdk-backend-spi.tgz"
+        version: 0.0.0
     "file:projects/sdk-skel-ts.tgz":
         dependencies:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
@@ -15273,6 +15296,7 @@ packages:
             integrity: sha512-DA8zXQlR5yPJuGFDssuPZixUM+MEhcNu0pdn6QjFVftbqOOmysS+QhdQ/24sKGciSKIA34vd2wqhnyrtWs0Q0w==
             tarball: "file:projects/typings.tgz"
         version: 0.0.0
+registry: ""
 specifiers:
     "@babel/core": ^7.4.4
     "@gooddata/goodstrap": ^63.1.1
@@ -15285,6 +15309,7 @@ specifiers:
     "@microsoft/api-extractor": ^7.3.8
     "@rush-temp/gooddata-js": "file:./projects/gooddata-js.tgz"
     "@rush-temp/react-components": "file:./projects/react-components.tgz"
+    "@rush-temp/sdk-backend-spi": "file:./projects/sdk-backend-spi.tgz"
     "@rush-temp/sdk-skel-ts": "file:./projects/sdk-skel-ts.tgz"
     "@rush-temp/sdk-skel-tsx": "file:./projects/sdk-skel-tsx.tgz"
     "@rush-temp/typings": "file:./projects/typings.tgz"
