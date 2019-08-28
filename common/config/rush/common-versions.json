@@ -22,6 +22,8 @@
         "@microsoft/api-documenter": "^7.3.16",
         "@gooddata/tslint-config": "1.0.0",
         "tslint-config-prettier": "^1.18.0",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2"
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,
          * instead of the latest version.
