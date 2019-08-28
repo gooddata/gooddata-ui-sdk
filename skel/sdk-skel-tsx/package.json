@@ -88,9 +88,7 @@
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.ts"
         ],
-        "transform": {
-            ".(ts|tsx)": "ts-jest"
-        },
+        "preset": "ts-jest",
         "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
         "testPathIgnorePatterns": [
             ",/node_modules/",
@@ -107,12 +105,6 @@
         },
         "coverageReporters": [
             "html"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "json"
         ],
         "globals": {
             "ts-jest": {

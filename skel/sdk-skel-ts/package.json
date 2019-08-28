@@ -33,10 +33,12 @@
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.ts"
         ],
-        "transform": {
-            ".(ts)": "ts-jest"
-        },
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
+        "preset": "ts-jest",
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
+        "testPathIgnorePatterns": [
+            ",/node_modules/",
+            "/dist/"
+        ],
         "collectCoverageFrom": [
             "src/**/*.{ts}",
             "!**/*.d.ts"
@@ -44,10 +46,6 @@
         "collectCoverage": false,
         "coverageReporters": [
             "html"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "js"
         ],
         "globals": {
             "ts-jest": {
