@@ -8,7 +8,6 @@ _common-build(){
     rm -rf dist
 
     mkdir dist
-    cp -rf src/translations/ dist/translations/
 
     _build_styles
 }
