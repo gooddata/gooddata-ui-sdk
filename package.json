@@ -21,7 +21,7 @@
     "@babel/preset-env": "7.4.4",
     "@babel/preset-react": "7.0.0",
     "@babel/runtime": "7.4.4",
-    "@gooddata/eslint-config": "0.1.0",
+    "@gooddata/eslint-config": "^1.0.0",
     "@gooddata/mock-js": "^1.31.0",
     "@gooddata/test-storybook": "3.1.1",
     "@gooddata/tslint-config": "1.0.0",
