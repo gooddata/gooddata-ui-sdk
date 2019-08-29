@@ -1147,12 +1147,12 @@
     rxjs "^5.5.6"
     uuid "^3.2.1"
 
-"@gooddata/goodstrap@^63.1.1":
-  version "63.1.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-63.1.1.tgz#10d394fa3bd85f03a7803bbe4879b1d84557ee68"
-  integrity sha512-EgPmB3GfBrcv7m2LpmOsG2ErtCMrAXc6iR0toXMSp1TZJgZuKuQpPJ+gqAnG7Z5bmiBL7pqhj0KgM7+YgVSl1Q==
+"@gooddata/goodstrap@^63.2.0":
+  version "63.2.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/goodstrap/-/goodstrap-63.2.0.tgz#182312e7a4c292b2e2157bd1525e4d02d7c9e642"
+  integrity sha512-tqRRJS/RpKvY1DNMkdCn18K06Vn3jiOiJGK/LLksU6nZG7pwI4U4J/Emt/WNc+uCKdsOiQVQxFgjxwGw03/44g==
   dependencies:
-    "@gooddata/js-utils" "^3.4.0"
+    "@gooddata/js-utils" "^3.5.0"
     classnames "^2.2.6"
     custom-event "^1.0.1"
     element-closest-polyfill "^1.0.0"
@@ -1161,7 +1161,7 @@
     immutable "^3.8.1"
     invariant "^2.2.2"
     kefir "^3.7.1"
-    lodash "^4.7.11"
+    lodash "^4.17.12"
     moment "^2.23.0"
     moment-timezone "^0.5.23"
     prop-types "^15.6.0"
@@ -1177,14 +1177,13 @@
     rxjs "^5.5.6"
     tinycolor2 "^1.4.1"
 
-"@gooddata/js-utils@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.4.0.tgz#2ea216bff64b889872aacb38eb7b7f82a638b925"
-  integrity sha512-QkMVVtfhmsu0jGZFaG7Fi0ighZ3Ph9Dpgf4Uepv8XbY1pRtUDUr0JaV17RltGGud5nIQiOxJorEt4a7IJpb3YA==
+"@gooddata/js-utils@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/js-utils/-/js-utils-3.5.0.tgz#acb149d67726fb5ee7ea69f766613191dd6161fe"
+  integrity sha512-wK8u+60rUee/bsICzqAj8XjMGGb1g6dn46rq6/UjJAk6h72UffmpT66ZiKfIw5XpJRe2NMLEVwwc2GbBqnJ/YA==
   dependencies:
     js-cookie "^2.1.4"
-    lodash "4.17.11"
-    lodash-es "4.17.11"
+    lodash "^4.17.15"
 
 "@gooddata/mock-js@^1.31.0":
   version "1.32.0"
@@ -9511,8 +9510,9 @@ js-beautify@^1.8.9:
     nopt "~4.0.1"
 
 js-cookie@^2.1.4:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
 js-levenshtein@^1.1.3:
   version "1.1.6"
@@ -9995,7 +9995,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash-es@4.17.11, lodash-es@^4.17.11:
+lodash-es@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
 
@@ -10103,7 +10103,7 @@ lodash@^4.14.0, lodash@^4.17.0, lodash@^4.17.3, lodash@^4.17.5, lodash@^4.2.0, l
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
-lodash@^4.7.11:
+lodash@^4.17.12, lodash@^4.17.15, lodash@^4.7.11:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
