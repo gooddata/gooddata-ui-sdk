@@ -2,6 +2,7 @@
 import { ICellRendererParams } from "ag-grid-community";
 import omit = require("lodash/omit");
 import escape = require("lodash/escape");
+import stringify = require("json-stable-stringify");
 import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
 import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
@@ -173,5 +174,5 @@ export function getSubtotalStyles(dimension: AFM.IDimension): string[] {
 
 export function generateAgGridComponentKey(afm: AFM.IAfm, rendererId: number): string {
     const afmWithoutTotals: Partial<AFM.IAfm> = omit<AFM.IAfm>(afm, ["nativeTotals"]);
-    return `agGridKey-${JSON.stringify(afmWithoutTotals)}-${rendererId}`;
+    return `agGridKey-${stringify(afmWithoutTotals)}-${rendererId}`;
 }
