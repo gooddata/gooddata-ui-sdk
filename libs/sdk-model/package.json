@@ -1,0 +1,71 @@
+{
+    "name": "@gooddata/sdk-model",
+    "version": "1.0.0",
+    "author": "GoodData",
+    "description": "GoodData SDK TypeScript skeleton",
+    "repository": "git@github.com:lupko/gooddata-ui-sdk.git",
+    "license": "BSD-3-Clause",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{src,test}/**/*.ts"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "run-tslint": "tslint -p tsconfig.json",
+        "tslint": "npm run run-tslint -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && npm run run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
+    },
+    "jest": {
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest.setup.ts"
+        ],
+        "preset": "ts-jest",
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
+        "testPathIgnorePatterns": [
+            ",/node_modules/",
+            "/dist/"
+        ],
+        "collectCoverageFrom": [
+            "src/**/*.{ts}",
+            "!**/*.d.ts"
+        ],
+        "collectCoverage": false,
+        "coverageReporters": [
+            "html"
+        ],
+        "globals": {
+            "ts-jest": {
+                "packageJson": "package.json"
+            }
+        }
+    },
+    "dependencies": {
+        "lodash": "^4.7.11"
+    },
+    "devDependencies": {
+        "@gooddata/tslint-config": "^1.0.0",
+        "@types/jest": "^24.0.6",
+        "jest": "^24.1.0",
+        "jest-junit": "^3.0.0",
+        "prettier": "^1.18.2",
+        "ts-jest": "^24.0.0",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-microsoft-contrib": "^5.2.1",
+        "typescript": "3.3.4000"
+    }
+}

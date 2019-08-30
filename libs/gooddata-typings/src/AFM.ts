@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import isEmpty = require('lodash/isEmpty');
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * Types defined here are client-side representation of the AFM. This representation MAY differ from the
@@ -11,6 +11,8 @@ import isEmpty = require('lodash/isEmpty');
  *
  * >>> Note for developers: when you modify these structures, be sure to update gooddata-js execute-afm.convert.ts
  * with conversion of the new/updated construct to ExecuteAFM types accepted by backend.
+ *
+ * TODO: SDK8: delete this; only ExecuteAfm types are needed in the API client;
  *
  * @see ./ExecuteAFM
  */
@@ -47,7 +49,8 @@ export namespace AFM {
         format?: string;
     }
 
-    export type MeasureDefinition = ISimpleMeasureDefinition
+    export type MeasureDefinition =
+        | ISimpleMeasureDefinition
         | IArithmeticMeasureDefinition
         | IPopMeasureDefinition
         | IPreviousPeriodMeasureDefinition;
@@ -68,7 +71,7 @@ export namespace AFM {
         previousPeriodMeasure: IPreviousPeriodMeasure;
     }
 
-    export type SimpleMeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+    export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
     export interface ISimpleMeasure {
         item: ObjQualifier;
@@ -77,7 +80,7 @@ export namespace AFM {
         computeRatio?: boolean;
     }
 
-    export type ArithmeticMeasureOperator = 'sum' | 'difference' | 'multiplication' | 'ratio' | 'change';
+    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
     export interface IArithmeticMeasure {
         measureIdentifiers: Identifier[];
@@ -161,7 +164,7 @@ export namespace AFM {
         attributeIdentifier: Identifier;
     }
 
-    export type TotalType = 'sum' | 'avg' | 'max' | 'min' | 'nat' | 'med';
+    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
     export interface INativeTotalItem {
         measureIdentifier: Identifier;
@@ -174,17 +177,17 @@ export namespace AFM {
     }
 
     export type SortItem = IAttributeSortItem | IMeasureSortItem;
-    export type SortDirection = 'asc' | 'desc';
+    export type SortDirection = "asc" | "desc";
 
     export interface IAttributeSortItem {
         attributeSortItem: {
             direction: SortDirection;
             attributeIdentifier: Identifier;
-            aggregation?: 'sum';
+            aggregation?: "sum";
         };
     }
 
-    export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar' | 'area';
+    export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
 
     export interface IVisualizationStyle {
         visualizationStyle: {
@@ -193,10 +196,10 @@ export namespace AFM {
                 measure?: {
                     color: string;
                     periodOverPeriod: string;
-                }
+                };
 
-                stack?: any
-            }
+                stack?: any;
+            };
         };
     }
 
@@ -226,33 +229,40 @@ export namespace AFM {
         return !isEmpty(qualifier) && (qualifier as AFM.IObjUriQualifier).uri !== undefined;
     }
 
-    export function isObjIdentifierQualifier(qualifier: AFM.ObjQualifier): qualifier is AFM.IObjIdentifierQualifier {
+    export function isObjIdentifierQualifier(
+        qualifier: AFM.ObjQualifier,
+    ): qualifier is AFM.IObjIdentifierQualifier {
         return !isEmpty(qualifier) && (qualifier as AFM.IObjIdentifierQualifier).identifier !== undefined;
     }
 
     export function isSimpleMeasureDefinition(
-        definition: AFM.MeasureDefinition
+        definition: AFM.MeasureDefinition,
     ): definition is AFM.ISimpleMeasureDefinition {
         return !isEmpty(definition) && (definition as AFM.ISimpleMeasureDefinition).measure !== undefined;
     }
 
     export function isArithmeticMeasureDefinition(
-        definition: AFM.MeasureDefinition
+        definition: AFM.MeasureDefinition,
     ): definition is AFM.IArithmeticMeasureDefinition {
-        return !isEmpty(definition) && (definition as AFM.IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
+        return (
+            !isEmpty(definition) &&
+            (definition as AFM.IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
+        );
     }
 
     export function isPopMeasureDefinition(
-        definition: AFM.MeasureDefinition
+        definition: AFM.MeasureDefinition,
     ): definition is AFM.IPopMeasureDefinition {
         return !isEmpty(definition) && (definition as AFM.IPopMeasureDefinition).popMeasure !== undefined;
     }
 
     export function isPreviousPeriodMeasureDefinition(
-        definition: AFM.MeasureDefinition
+        definition: AFM.MeasureDefinition,
     ): definition is AFM.IPreviousPeriodMeasureDefinition {
-        return !isEmpty(definition)
-            && (definition as AFM.IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
+        return (
+            !isEmpty(definition) &&
+            (definition as AFM.IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined
+        );
     }
 
     export function isAttributeSortItem(sortItem: AFM.SortItem): sortItem is AFM.IAttributeSortItem {
@@ -283,11 +293,19 @@ export namespace AFM {
         return !isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
     }
 
-    export function isPositiveAttributeFilter(filter: AFM.CompatibilityFilter): filter is AFM.IPositiveAttributeFilter {
-        return !isEmpty(filter) && (filter as AFM.IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    export function isPositiveAttributeFilter(
+        filter: AFM.CompatibilityFilter,
+    ): filter is AFM.IPositiveAttributeFilter {
+        return (
+            !isEmpty(filter) && (filter as AFM.IPositiveAttributeFilter).positiveAttributeFilter !== undefined
+        );
     }
 
-    export function isNegativeAttributeFilter(filter: AFM.CompatibilityFilter): filter is AFM.INegativeAttributeFilter {
-        return !isEmpty(filter) && (filter as AFM.INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    export function isNegativeAttributeFilter(
+        filter: AFM.CompatibilityFilter,
+    ): filter is AFM.INegativeAttributeFilter {
+        return (
+            !isEmpty(filter) && (filter as AFM.INegativeAttributeFilter).negativeAttributeFilter !== undefined
+        );
     }
 }

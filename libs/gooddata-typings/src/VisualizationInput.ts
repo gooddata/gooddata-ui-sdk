@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { AFM } from './AFM';
-import { VisualizationObject } from './VisualizationObject';
+import { AFM } from "./AFM";
+import { VisualizationObject } from "./VisualizationObject";
 
 /**
  * This namespace implements types that are used as inputs to various visualization components.
@@ -9,6 +9,8 @@ import { VisualizationObject } from './VisualizationObject';
  * to different types. There is one notable exception: the measure & (simple) measure definition, this type
  * is redefined here to allow simple measure filters be defined as text filters; this is not possible with the
  * standard visualization object.
+ *
+ * TODO: SDK8: delete this file; it got dissipated into its own sdk-backend-model package
  */
 export namespace VisualizationInput {
     export type ObjQualifier = VisualizationObject.ObjQualifier;
@@ -21,7 +23,8 @@ export namespace VisualizationInput {
     export type IPoPMeasureDefinition = VisualizationObject.IPoPMeasureDefinition;
     export type IPreviousPeriodMeasureDefinition = VisualizationObject.IPreviousPeriodMeasureDefinition;
     export type MeasureAggregation = VisualizationObject.MeasureAggregation;
-    export type IMeasureDefinitionType = IMeasureDefinition
+    export type IMeasureDefinitionType =
+        | IMeasureDefinition
         | IArithmeticMeasureDefinition
         | IPoPMeasureDefinition
         | IPreviousPeriodMeasureDefinition;
@@ -53,7 +56,7 @@ export namespace VisualizationInput {
     export type IRelativeDateFilter = VisualizationObject.IVisualizationObjectRelativeDateFilter;
 
     export type IFilter =
-        IAbsoluteDateFilter
+        | IAbsoluteDateFilter
         | IRelativeDateFilter
         | IPositiveAttributeFilter
         | INegativeAttributeFilter;
@@ -69,7 +72,9 @@ export namespace VisualizationInput {
         return VisualizationObject.isMeasureDefinition(obj);
     }
 
-    export function isArithmeticMeasureDefinition(obj: IMeasureDefinitionType): obj is IArithmeticMeasureDefinition {
+    export function isArithmeticMeasureDefinition(
+        obj: IMeasureDefinitionType,
+    ): obj is IArithmeticMeasureDefinition {
         return VisualizationObject.isArithmeticMeasureDefinition(obj);
     }
 

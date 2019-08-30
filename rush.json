@@ -300,6 +300,11 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-model",
+            "projectFolder": "libs/sdk-model",
+            "reviewCategory": "production"
+        },
+        {
             "packageName": "@gooddata/sdk-backend-spi",
             "projectFolder": "libs/sdk-backend-spi",
             "reviewCategory": "production"
