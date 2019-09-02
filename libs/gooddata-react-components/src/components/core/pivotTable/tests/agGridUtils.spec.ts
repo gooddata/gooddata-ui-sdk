@@ -222,7 +222,7 @@ describe("generateAgGridComponentKey", () => {
 
         const key = generateAgGridComponentKey(afm, 1);
 
-        const expectedKey = 'agGridKey-{"measures":[],"attributes":[],"filters":[]}-1';
+        const expectedKey = 'agGridKey-{"attributes":[],"filters":[],"measures":[]}-1';
         expect(key).toEqual(expectedKey);
     });
 });

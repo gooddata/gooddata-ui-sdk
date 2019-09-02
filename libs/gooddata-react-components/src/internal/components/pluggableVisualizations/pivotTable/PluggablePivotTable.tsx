@@ -342,7 +342,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         ),
                     };
 
-                    setPivotTableUiConfig(referencePointDraft, this.intl, VisualizationTypes.PIVOT_TABLE);
+                    setPivotTableUiConfig(referencePointDraft, this.intl, VisualizationTypes.TABLE);
                     configurePercent(referencePointDraft, false);
                     configureOverTimeComparison(referencePointDraft);
                     Object.assign(
@@ -501,6 +501,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     protected getDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-        return generateDimensions(mdObject, VisualizationTypes.PIVOT_TABLE);
+        return generateDimensions(mdObject, VisualizationTypes.TABLE);
     }
 }

@@ -1,9 +1,4 @@
 {
-    "dashboard.bucket.measures_title.table": {
-        "value": "Measures",
-        "comment": "",
-        "limit": 0
-    },
     "dashboard.bucket.measures_title.column": {
         "value": "Measures",
         "comment": "",
@@ -164,11 +159,6 @@
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.attribute_title.table": {
-        "value": "Attributes",
-        "comment": "",
-        "limit": 0
-    },
     "dashboard.bucket.view_title.pie": {
         "value": "View by",
         "comment": "",
@@ -304,17 +294,17 @@
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.measures_title.pivotTable": {
+    "dashboard.bucket.measures_title.table": {
         "value": "Measures",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.attribute_title.pivotTable": {
+    "dashboard.bucket.attribute_title.table": {
         "value": "Rows",
         "comment": "",
         "limit": 0
     },
-    "dashboard.bucket.columns_title.pivotTable": {
+    "dashboard.bucket.columns_title.table": {
         "value": "Columns",
         "comment": "",
         "limit": 0

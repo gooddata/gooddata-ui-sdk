@@ -23,7 +23,6 @@ export const VisualizationPropType = {
     fetchVisObject: PropTypes.func,
     fetchVisualizationClass: PropTypes.func,
     BaseChartComponent: PropTypes.func,
-    TableComponent: PropTypes.func,
     LoadingComponent: PropTypes.func,
     ErrorComponent: PropTypes.func,
     onLegendReady: PropTypes.func,

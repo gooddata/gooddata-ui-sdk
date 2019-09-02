@@ -33,7 +33,6 @@ describe("getVisualizationTypeFromUrl", () => {
 });
 
 describe("getVisualizationTypeFromVisualizationClass", () => {
-    const featureFlags = {};
     const pieVisClass = {
         content: {
             url: "local:pie",
@@ -46,16 +45,6 @@ describe("getVisualizationTypeFromVisualizationClass", () => {
             title: "",
         },
     };
-    const tableVisClass = {
-        ...pieVisClass,
-        content: {
-            ...pieVisClass.content,
-            url: "local:table",
-            icon: "local:table",
-            iconSelected: "local:table_selected",
-            checksum: "local:table",
-        },
-    };
 
     afterEach(() => {
         clearSdkCache();
@@ -63,31 +52,12 @@ describe("getVisualizationTypeFromVisualizationClass", () => {
 
     it("should return correct type when url is local:pie", () => {
         const getVisualizationTypeFromUrlMock = jest.fn();
-        getVisualizationTypeFromVisualizationClass(
-            pieVisClass,
-            featureFlags,
-            getVisualizationTypeFromUrlMock,
-        );
+        getVisualizationTypeFromVisualizationClass(pieVisClass, getVisualizationTypeFromUrlMock);
         expect(getVisualizationTypeFromUrlMock).toHaveBeenCalledWith("local:pie");
     });
     it("should get url from vis. class and pass it to getVisualizationTypeFromUrl ", () => {
         const getVisualizationTypeFromUrlMock = jest.fn();
-        getVisualizationTypeFromVisualizationClass(
-            pieVisClass,
-            featureFlags,
-            getVisualizationTypeFromUrlMock,
-        );
+        getVisualizationTypeFromVisualizationClass(pieVisClass, getVisualizationTypeFromUrlMock);
         expect(getVisualizationTypeFromUrlMock).toHaveBeenCalledWith("local:pie");
-    });
-    it('should return "pivotTable" when url is local:table if enablePivot is set', async () => {
-        const type = await getVisualizationTypeFromVisualizationClass(tableVisClass, {
-            ...featureFlags,
-            enablePivot: true,
-        });
-        expect(type).toBe("pivotTable");
-    });
-    it('should return "table" when url is local:table and enablePivot is not set', async () => {
-        const type = await getVisualizationTypeFromVisualizationClass(tableVisClass, featureFlags);
-        expect(type).toBe("table");
     });
 });
