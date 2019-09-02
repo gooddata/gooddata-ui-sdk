@@ -29,18 +29,30 @@ export interface IExecutionFactory {
  * @public
  */
 export interface IPreparedExecution {
+    /**
+     * Fingerprint of this prepared execution. Each unique combination of prepared execution attributes
+     * results in an unique fingerprint - a perfect hash.
+     */
+    readonly fingerprint: string;
+
+    readonly workspace: string;
     readonly attributes: IAttribute[];
     readonly measures: IMeasure[];
     readonly filters: IFilter[];
     readonly nativeTotals: INativeTotalItem[];
+    readonly sortBy: SortItem[];
+    readonly dimensions: IDimension[];
+    readonly totals: ITotal[];
 
-    sortBy(...items: SortItem[]): IPreparedExecution;
+    withSorting(...items: SortItem[]): IPreparedExecution;
 
-    dimensions(...dim: IDimension[]): IPreparedExecution;
+    withDimensions(...dim: IDimension[]): IPreparedExecution;
 
-    totals(...totals: ITotal[]): IPreparedExecution;
+    withTotals(...totals: ITotal[]): IPreparedExecution;
 
     execute(): Promise<IExecutionResult>;
+
+    equals(other: IPreparedExecution): boolean;
 
     /**
      *

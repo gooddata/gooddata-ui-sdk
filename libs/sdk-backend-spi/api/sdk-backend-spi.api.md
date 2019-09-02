@@ -8,9 +8,11 @@ import { IAttribute } from "@gooddata/sdk-model";
 import { IBucket } from "@gooddata/sdk-model";
 import { IDimension } from "@gooddata/sdk-model";
 import { IFilter } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { IMeasure } from "@gooddata/sdk-model";
 import { INativeTotalItem } from "@gooddata/sdk-model";
 import { ITotal } from "@gooddata/sdk-model";
+import { IVisualizationClass } from "@gooddata/sdk-model";
 import { SortItem } from "@gooddata/sdk-model";
 
 // @public
@@ -20,10 +22,18 @@ export type BackendCapabilities = {
     canSortData: boolean;
     supportsElementUris: boolean;
     maxDimensions: number;
+    canExportCsv: boolean;
+    canExportXlsx: boolean;
 };
 
 // @public
 export type DataValue = null | string | number;
+
+// @public
+export type Element = {
+    readonly value: string;
+    readonly uri?: string;
+};
 
 // @public
 export interface IAnalyticalBackend {
@@ -36,7 +46,13 @@ export interface IAnalyticalBackend {
 // @public
 export interface IAnalyticalWorkspace {
     // (undocumented)
+    elements(): IElementQueryFactory;
+    // (undocumented)
     execution(): IExecutionFactory;
+    // (undocumented)
+    featureFlags(): IFeatureFlagsQuery;
+    // (undocumented)
+    metadata(): IWorkspaceMetadata;
 }
 
 // @public
@@ -54,6 +70,16 @@ export interface IAttributeHeader {
             name: string;
         };
     };
+}
+
+// @public
+export interface IBaseExportConfig {
+    // (undocumented)
+    format?: "xlsx" | "csv" | "raw";
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    title?: string;
 }
 
 // @public
@@ -81,6 +107,34 @@ export interface IDataView {
 }
 
 // @public
+export interface IElementQuery {
+    // (undocumented)
+    query(): IElementQueryResult;
+    // (undocumented)
+    withLimit(limit: number): IElementQuery;
+    // (undocumented)
+    withOffset(offset: number): IElementQuery;
+}
+
+// @public
+export interface IElementQueryFactory {
+    // (undocumented)
+    forObject(objectId: string): IElementQuery;
+}
+
+// @public
+export interface IElementQueryResult {
+    // (undocumented)
+    readonly elements: Element[];
+    // (undocumented)
+    readonly limit: number;
+    // (undocumented)
+    next(): IElementQueryResult;
+    // (undocumented)
+    readonly offset: number;
+}
+
+// @public
 export interface IExecutionFactory {
     // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter): IPreparedExecution;
@@ -95,11 +149,38 @@ export interface IExecutionResult {
     // (undocumented)
     readonly dimensions: IResultDimension[];
     // (undocumented)
+    equals(other: IExecutionResult): boolean;
+    // (undocumented)
+    export(options: IExportConfig): Promise<IExportResponse>;
     readonly id: string;
     // (undocumented)
     readAll(): Promise<IDataView>;
     // (undocumented)
     readView(offset: number[], limit: number[]): Promise<IDataView>;
+}
+
+// @public
+export interface IExportConfig extends IBaseExportConfig {
+    // (undocumented)
+    showFilters?: IFilter;
+}
+
+// @public
+export interface IExportResponse {
+    // (undocumented)
+    uri: string;
+}
+
+// @public
+export interface IFeatureFlags {
+    // (undocumented)
+    [key: string]: number | boolean | string;
+}
+
+// @public
+export interface IFeatureFlagsQuery {
+    // (undocumented)
+    query(): Promise<IFeatureFlags>;
 }
 
 // @public
@@ -133,19 +214,30 @@ export interface IPreparedExecution {
     // (undocumented)
     readonly attributes: IAttribute[];
     // (undocumented)
-    dimensions(...dim: IDimension[]): IPreparedExecution;
+    readonly dimensions: IDimension[];
+    // (undocumented)
+    equals(other: IPreparedExecution): boolean;
     // (undocumented)
     execute(): Promise<IExecutionResult>;
     // (undocumented)
     readonly filters: IFilter[];
+    readonly fingerprint: string;
     // (undocumented)
     readonly measures: IMeasure[];
     // (undocumented)
     readonly nativeTotals: INativeTotalItem[];
     // (undocumented)
-    sortBy(...items: SortItem[]): IPreparedExecution;
+    readonly sortBy: SortItem[];
     // (undocumented)
-    totals(...totals: ITotal[]): IPreparedExecution;
+    readonly totals: ITotal[];
+    // (undocumented)
+    withDimensions(...dim: IDimension[]): IPreparedExecution;
+    // (undocumented)
+    withSorting(...items: SortItem[]): IPreparedExecution;
+    // (undocumented)
+    withTotals(...totals: ITotal[]): IPreparedExecution;
+    // (undocumented)
+    readonly workspace: string;
 }
 
 // @public
@@ -193,6 +285,16 @@ export interface ITotalHeaderItem {
     totalHeaderItem: {
         name: string;
     };
+}
+
+// @public
+export interface IWorkspaceMetadata {
+    // (undocumented)
+    getInsight(id: string): Promise<IInsight>;
+    // (undocumented)
+    getVisualizationClass(id: string): Promise<IVisualizationClass>;
+    // (undocumented)
+    getVisualizationClasses(): Promise<IVisualizationClass[]>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -1,16 +1,25 @@
 // (C) 2019 GoodData Corporation
 
+import { IExportConfig, IExportResponse } from "../export";
+
 /**
  * TODO: SDK8: add docs
  * @public
  */
 export interface IExecutionResult {
+    /**
+     * Unique identifier of the execution result.
+     */
     readonly id: string;
     readonly dimensions: IResultDimension[];
 
     readAll(): Promise<IDataView>;
 
     readView(offset: number[], limit: number[]): Promise<IDataView>;
+
+    export(options: IExportConfig): Promise<IExportResponse>;
+
+    equals(other: IExecutionResult): boolean;
 }
 
 /**

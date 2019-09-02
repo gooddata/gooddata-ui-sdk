@@ -145,6 +145,22 @@ export interface IGuidColorItem {
 }
 
 // @public
+export interface IInsight {
+    // (undocumented)
+    insight: {
+        identifier: string;
+        uri?: string;
+        title: string;
+        visualizationClassIdentifier: string;
+        buckets: IBucket[];
+        filters: IFilter[];
+        totals: ITotal[];
+        sorts: SortItem;
+        properties: VisualizationProperties;
+    };
+}
+
+// @public
 export interface IMeasure {
     // (undocumented)
     measure: {
@@ -302,6 +318,21 @@ export interface ITotal {
 }
 
 // @public
+export interface IVisualizationClass {
+    // (undocumented)
+    visualizationClass: {
+        identifier: string;
+        uri?: string;
+        title: string;
+        url: string;
+        icon: string;
+        iconSelected: string;
+        checksum: string;
+        orderIndex?: number;
+    };
+}
+
+// @public
 export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
@@ -318,6 +349,11 @@ export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med";
+
+// @public
+export type VisualizationProperties = {
+    [key: string]: any;
+};
 
 // Warnings were encountered during analysis:
 //

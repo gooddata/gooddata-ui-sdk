@@ -58,4 +58,6 @@ export {
     IRGBColorItem,
 } from "./colors";
 
+export { IInsight, IVisualizationClass, VisualizationProperties } from "./insight";
+
 export { IAttribute };

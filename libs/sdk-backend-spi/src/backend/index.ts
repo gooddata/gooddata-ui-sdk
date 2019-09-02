@@ -1,6 +1,9 @@
 // (C) 2019 GoodData Corporation
 
+import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory } from "../execution";
+import { IFeatureFlagsQuery } from "../featureFlags";
+import { IWorkspaceMetadata } from "../metadata";
 
 /**
  * TODO: SDK8: add public doc
@@ -9,6 +12,7 @@ import { IExecutionFactory } from "../execution";
  */
 export interface IAnalyticalBackend {
     readonly capabilities: BackendCapabilities;
+
     workspace(id: string): IAnalyticalWorkspace;
 }
 
@@ -18,7 +22,10 @@ export interface IAnalyticalBackend {
  * @public
  */
 export interface IAnalyticalWorkspace {
+    featureFlags(): IFeatureFlagsQuery;
     execution(): IExecutionFactory;
+    elements(): IElementQueryFactory;
+    metadata(): IWorkspaceMetadata;
 }
 
 /**
@@ -51,4 +58,14 @@ export type BackendCapabilities = {
      * Indicates maximum result dimensions that the backend is able to produce.
      */
     maxDimensions: number;
+
+    /**
+     * Indicates whether backend can export data to CSV file.
+     */
+    canExportCsv: boolean;
+
+    /**
+     * Indicates whether backend can export data to Excel
+     */
+    canExportXlsx: boolean;
 };

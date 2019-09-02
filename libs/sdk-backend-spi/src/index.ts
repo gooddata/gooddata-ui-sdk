@@ -19,3 +19,11 @@ export {
     IResultTotalHeaderItem,
     ITotalHeaderItem,
 } from "./result";
+
+export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
+
+export { IWorkspaceMetadata } from "./metadata";
+
+export { IElementQueryFactory, IElementQueryResult, IElementQuery, Element } from "./elements";
+
+export { IBaseExportConfig, IExportConfig, IExportResponse } from "./export";
