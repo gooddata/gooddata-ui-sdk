@@ -9,7 +9,7 @@ import { version as pkgVersion } from "../../../package.json";
 export class ExecuteAfmAdapter implements IAdapter<Execution.IExecutionResponses> {
     private sdk: SDK;
 
-    constructor(sdk: SDK, private projectId: string) {
+    constructor(sdk: SDK, public projectId: string) {
         this.sdk = sdk.clone();
         this.sdk.config.setJsPackage("@gooddata/data-layer", pkgVersion);
     }
