@@ -18,7 +18,7 @@ export class SdkComponent extends React.Component<ISdkComponentProps> {
 }
 
 /**
- * @private
+ * @internal
  */
 export function functionInternalToThisComponent(input: string): string {
     return `Hello ${input}!`;

@@ -13,6 +13,9 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
 // @public
+export type AttributeOrMeasureOrTotal = IMeasure | IAttribute | INativeTotalItem;
+
+// @public
 export type GuidType = "guid";
 
 // @public
@@ -78,11 +81,9 @@ export interface IAttributeSortItem {
 // @public
 export interface IBucket {
     // (undocumented)
-    items: AttributeOrMeasure[];
+    items: AttributeOrMeasureOrTotal[];
     // (undocumented)
     localIdentifier?: Identifier;
-    // (undocumented)
-    totals?: ITotal[];
 }
 
 // @public
@@ -193,9 +194,10 @@ export interface IMeasureSortItem {
 // @public
 export interface INativeTotalItem {
     // (undocumented)
-    attributeIdentifiers: Identifier[];
-    // (undocumented)
-    measureIdentifier: Identifier;
+    nativeTotal: {
+        measureIdentifier: Identifier;
+        attributeIdentifiers: Identifier[];
+    };
 }
 
 // @public
@@ -315,7 +317,7 @@ export type SortDirection = "asc" | "desc";
 export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
-export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+export type TotalType = "sum" | "avg" | "max" | "min" | "med";
 
 // Warnings were encountered during analysis:
 //

@@ -12,6 +12,11 @@ export interface IAnalyticalBackend {
     workspace(id: string): IAnalyticalWorkspace;
 }
 
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
 export interface IAnalyticalWorkspace {
     execution(): IExecutionFactory;
 }

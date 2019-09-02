@@ -48,7 +48,7 @@ export interface IPreparedExecution {
      *
      * This method exists to ease migration efforts to SDK 8; it will be removed in next major release.
      *
-     * @deprecated
+     * @deprecated Migrate your code to fully use IPreparedExecution and the IExecutionResult instead
      */
     asDataSource(): any;
 }

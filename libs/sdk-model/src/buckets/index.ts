@@ -9,6 +9,12 @@ import { IMeasure } from "../measure";
  * @public
  */
 export type AttributeOrMeasure = IMeasure | IAttribute;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export type AttributeOrMeasureOrTotal = IMeasure | IAttribute | INativeTotalItem;
 
 /**

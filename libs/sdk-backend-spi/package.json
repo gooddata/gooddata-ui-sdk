@@ -17,7 +17,8 @@
     },
     "scripts": {
         "dev": "tsc --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run-script api-extractor",
+        "api-extractor": "mkdir -p api && [[ -z \"${CI}\" ]] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
@@ -59,6 +60,7 @@
     },
     "devDependencies": {
         "@gooddata/tslint-config": "^1.0.0",
+        "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^24.0.6",
         "jest": "^24.1.0",
         "jest-junit": "^3.0.0",

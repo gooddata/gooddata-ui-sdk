@@ -10158,7 +10158,7 @@ packages:
             integrity: sha512-hPW0tSoi1gJ3diSOyjFYOsYLZjnxF04psobzKA5GGGCz3fKHnLODwgdyXQq2cddYlvmT3q+ZNEBrfBdMkYPLaA==
     /nopt/3.0.6:
         dependencies:
-            abbrev: 1.1.1
+            abbrev: 1.0.9
         dev: false
         hasBin: true
         resolution:
@@ -10645,7 +10645,7 @@ packages:
     /parse-bmfont-xml/1.1.4:
         dependencies:
             xml-parse-from-string: 1.0.1
-            xml2js: 0.4.20
+            xml2js: 0.4.21
         dev: false
         resolution:
             integrity: sha512-bjnliEOmGv3y1aMEfREMBJ9tfL3WR0i0CKPj61DnSLaoxWR3nLrsQrEbCId/8rF4NyRF0cCqisSVXyQYWM+mCQ==
@@ -14898,27 +14898,27 @@ packages:
         dev: false
         resolution:
             integrity: sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
-    /xml2js/0.4.20:
+    /xml2js/0.4.21:
         dependencies:
             sax: 1.2.4
-            xmlbuilder: 10.0.0
+            xmlbuilder: 13.0.2
         dev: false
         engines:
             node: ">=8.0.0"
         resolution:
-            integrity: sha512-5+6o7cEzGZerpxm1WspA2C5ylzcvmNpyGyt8Q5GJtaMzXOmKgxNhsatXGXozHFinzT1fQVZoQIq+zgJd1QsjZA==
-    /xmlbuilder/10.0.0:
-        dev: false
-        engines:
-            node: ">=4.0"
-        resolution:
-            integrity: sha512-7RWHlmF1yU/E++BZkRQTEv8ZFAhZ+YHINUAxiZ5LQTKRQq//igpiY8rh7dJqPzgb/IzeC5jH9P7OaCERfM9DwA==
+            integrity: sha512-gHRSAYBSA1JNVbLV2l8mTpQ/zTLcNtyG4YZmNlA3pjMWTgv9swW9muK55cr3fUmSOezLTR24iPQ+FqxilTvppw==
     /xmlbuilder/10.1.1:
         dev: false
         engines:
             node: ">=4.0"
         resolution:
             integrity: sha512-OyzrcFLL/nb6fMGHbiRDuPup9ljBycsdCypwuyg5AAHvyWzGfChJpCXMG88AGTIMFhGZ9RccFN1e6lhg3hkwKg==
+    /xmlbuilder/13.0.2:
+        dev: false
+        engines:
+            node: ">=6.0"
+        resolution:
+            integrity: sha512-Eux0i2QdDYKbdbA6AM6xE4m6ZTZr4G4xF9kahI2ukSEMCzwce2eX9WlTI5J3s+NU7hpasFsr8hWIONae7LluAQ==
     /xtend/4.0.2:
         dev: false
         engines:
@@ -15192,6 +15192,7 @@ packages:
     "file:projects/sdk-backend-spi.tgz":
         dependencies:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@microsoft/api-extractor": 7.3.9
             "@types/jest": 24.0.18
             jest: 24.9.0
             jest-junit: 3.7.0
@@ -15205,12 +15206,13 @@ packages:
         dev: false
         name: "@rush-temp/sdk-backend-spi"
         resolution:
-            integrity: sha512-zWAOWjdXxEEsPKlPJkPlsJij4sBaDzKgtW/8fzXauTXttPT1ShFNVaWBC61vtX0OMldft7ww7gpVmGqaTvJDnw==
+            integrity: sha512-jQ69OPGwJ/01wyDOCI/jgm9Ix2N1/FG+2b9jdQuAAoY9ToSOTnomct6GZ1u+OJuX5FPAYCkRO7HuqX2ywxuRsw==
             tarball: "file:projects/sdk-backend-spi.tgz"
         version: 0.0.0
     "file:projects/sdk-model.tgz":
         dependencies:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@microsoft/api-extractor": 7.3.9
             "@types/jest": 24.0.18
             jest: 24.9.0
             jest-junit: 3.7.0
@@ -15224,12 +15226,13 @@ packages:
         dev: false
         name: "@rush-temp/sdk-model"
         resolution:
-            integrity: sha512-bDDD1dpyZlh40jMZF/+OqkRO3xPxZaxaWwCgge9T4sReFi9myNu4ks5F8vAvYgpHcl3dgwKKw+8UNYKN6tTnkw==
+            integrity: sha512-3Ry9zqH8l7eEMVuIRXFQx04inO2QEmmDJgvA+YRnegpGdzHLIG+Mx/20K3zlfsAu9Y0pLxzbMGs6GCBoUvEdbA==
             tarball: "file:projects/sdk-model.tgz"
         version: 0.0.0
     "file:projects/sdk-skel-ts.tgz":
         dependencies:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@microsoft/api-extractor": 7.3.9
             "@types/jest": 24.0.18
             jest: 24.9.0
             jest-junit: 3.7.0
@@ -15243,7 +15246,7 @@ packages:
         dev: false
         name: "@rush-temp/sdk-skel-ts"
         resolution:
-            integrity: sha512-8hnIy9ZY+J8uTUvnxSN1f/AVJR4N9HOmxCH15X798lZAw1HXlugULRmSO5OoY79qivlhz3f2IlwgUtMYxEnsgQ==
+            integrity: sha512-Qz7SYQ/3jvRDAftm4qjnum8YZsQA4JGFIoc6MJStrMntw/VIhc899+D/JxpAJCq8mo/QSQVmYLyK5FewDIoP9w==
             tarball: "file:projects/sdk-skel-ts.tgz"
         version: 0.0.0
     "file:projects/sdk-skel-tsx.tgz_webpack@4.39.3":
@@ -15251,6 +15254,7 @@ packages:
             "@babel/core": 7.5.5
             "@gooddata/test-storybook": 3.1.1_react-dom@16.9.0+react@16.9.0
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@microsoft/api-extractor": 7.3.9
             "@storybook/addon-actions": 5.0.11_react-dom@16.9.0
             "@storybook/addon-options": 5.0.11_react@16.9.0
             "@storybook/addons": 5.0.11
@@ -15298,7 +15302,7 @@ packages:
         peerDependencies:
             webpack: "*"
         resolution:
-            integrity: sha512-9cNl8zJyBcjohpOQxCDkSLWZUjC9aBQp7bRiFwJfSimHb4P1lxsCFs7UIQY/7TjZrgo1fmeXpOJWfEEwwj1LRg==
+            integrity: sha512-M6Q6vJkuVbRNxK80RV1wgy32WaetTSj4wMRoh5v3LglSaIOVqo+t9tcTR18/fcN9VnCg3kePl52sqc2kSY0VMw==
             tarball: "file:projects/sdk-skel-tsx.tgz"
         version: 0.0.0
     "file:projects/typings.tgz":
