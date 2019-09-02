@@ -13,6 +13,9 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
 // @public
+export type GuidType = "guid";
+
+// @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: {
@@ -83,6 +86,38 @@ export interface IBucket {
 }
 
 // @public
+export interface IColor {
+    // (undocumented)
+    b: number;
+    // (undocumented)
+    g: number;
+    // (undocumented)
+    r: number;
+}
+
+// @public
+export type IColorItem = IGuidColorItem | IRGBColorItem;
+
+// @public
+export interface IColorMappingProperty {
+    // (undocumented)
+    color: IColorItem;
+    // (undocumented)
+    id: string;
+}
+
+// @public
+export type IColorPalette = IColorPaletteItem[];
+
+// @public
+export interface IColorPaletteItem {
+    // (undocumented)
+    fill: IColor;
+    // (undocumented)
+    guid: string;
+}
+
+// @public
 export type Identifier = string;
 
 // @public
@@ -99,6 +134,14 @@ export type IFilter =
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter;
+
+// @public
+export interface IGuidColorItem {
+    // (undocumented)
+    type: GuidType;
+    // (undocumented)
+    value: string;
+}
 
 // @public
 export interface IMeasure {
@@ -237,6 +280,14 @@ export interface IResultSpec {
 }
 
 // @public
+export interface IRGBColorItem {
+    // (undocumented)
+    type: RGBType;
+    // (undocumented)
+    value: IColor;
+}
+
+// @public
 export interface ITotal {
     // (undocumented)
     alias?: string;
@@ -253,6 +304,9 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+
+// @public
+export type RGBType = "rgb";
 
 // @public
 export type SortDirection = "asc" | "desc";

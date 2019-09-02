@@ -3,6 +3,8 @@ import { AFM } from "@gooddata/typings";
 import get = require("lodash/get");
 import { AfmUtils } from "@gooddata/gooddata-js/lib/DataLayer";
 
+// TODO: SDK8: disperse these functions into sdk-model
+
 export function isDerivedMeasure(measure: AFM.IMeasure): boolean {
     return (
         AFM.isPreviousPeriodMeasureDefinition(measure.definition) ||

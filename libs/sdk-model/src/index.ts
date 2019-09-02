@@ -46,4 +46,16 @@ export {
 
 export { AttributeOrMeasure, IBucket } from "./buckets";
 
+export {
+    GuidType,
+    RGBType,
+    IColor,
+    IColorItem,
+    IColorMappingProperty,
+    IColorPalette,
+    IColorPaletteItem,
+    IGuidColorItem,
+    IRGBColorItem,
+} from "./colors";
+
 export { IAttribute };
