@@ -44,7 +44,7 @@ export {
     IPreviousPeriodDateDataSet,
 } from "./measure";
 
-export { AttributeOrMeasure, IBucket } from "./buckets";
+export { AttributeOrMeasure, AttributeOrMeasureOrTotal, IBucket } from "./buckets";
 
 export {
     GuidType,

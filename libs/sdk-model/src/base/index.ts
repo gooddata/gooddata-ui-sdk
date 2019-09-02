@@ -46,7 +46,7 @@ export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier | IObjLoca
  *
  * @public
  */
-export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+export type TotalType = "sum" | "avg" | "max" | "min" | "med";
 
 /**
  * TODO: SDK8: Add docs
@@ -66,8 +66,10 @@ export interface ITotal {
  * @public
  */
 export interface INativeTotalItem {
-    measureIdentifier: Identifier;
-    attributeIdentifiers: Identifier[];
+    nativeTotal: {
+        measureIdentifier: Identifier;
+        attributeIdentifiers: Identifier[];
+    };
 }
 
 /**

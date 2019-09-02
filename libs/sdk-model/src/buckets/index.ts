@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IAttribute } from "../attribute";
-import { Identifier, ITotal } from "../base";
+import { Identifier, INativeTotalItem } from "../base";
 import { IMeasure } from "../measure";
 
 /**
@@ -9,6 +9,7 @@ import { IMeasure } from "../measure";
  * @public
  */
 export type AttributeOrMeasure = IMeasure | IAttribute;
+export type AttributeOrMeasureOrTotal = IMeasure | IAttribute | INativeTotalItem;
 
 /**
  * TODO: SDK8: Add docs
@@ -17,6 +18,5 @@ export type AttributeOrMeasure = IMeasure | IAttribute;
  */
 export interface IBucket {
     localIdentifier?: Identifier;
-    items: AttributeOrMeasure[];
-    totals?: ITotal[];
+    items: AttributeOrMeasureOrTotal[];
 }
