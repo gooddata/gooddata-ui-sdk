@@ -102,6 +102,26 @@ npm:
 npm run-script build
 ```
 
+#### There are so many packages - where do I put my contributions?
+
+Please go ahead and familiarize yourself with the GoodData.UI SDK architecture, layering and packaging design
+which are all documented in our [Developer's Guide](docs/sdk-dev.md).
+
+If you are still in doubt, ask.
+
+#### How do I create a new package?
+
+Before proceeding, first ask yourself:
+
+-   Why does the contribution not fit into an existing package? (see [Developer's Guide](docs/sdk-dev.md))
+-   Which of the existing packages is closest fit for the contribution? Why does the contribution not fit in there? (see [Developer's Guide](docs/sdk-dev.md))
+
+Once you have answers to these questions and still feel a new package is needed, get in touch for approval before
+proceeding.
+
+After that, we have a couple of skeleton projects to bootstrap development of new SDK packages. See [skel](skel) directory for
+more information. Bear in mind the naming conventions described in the developer's guide.
+
 #### How do I publish new version of packages
 
 TODO
