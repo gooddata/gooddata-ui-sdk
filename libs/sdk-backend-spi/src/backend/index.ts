@@ -12,7 +12,7 @@ import { IWorkspaceStyling } from "../styling";
  * @public
  */
 export interface IAnalyticalBackend {
-    readonly hostname: string | null;
+    readonly hostname?: string;
     readonly capabilities: BackendCapabilities;
 
     onHostname(hostname: string): IAnalyticalBackend;
@@ -45,35 +45,40 @@ export type BackendCapabilities = {
     /**
      * Indicates whether the backend is capable to address objects using URIs
      */
-    supportsObjectUris: boolean;
+    supportsObjectUris?: boolean;
 
     /**
      * Indicates whether the backend is capable to calculate and include totals in the resulting data view.
      */
-    canCalculateTotals: boolean;
+    canCalculateTotals?: boolean;
 
     /**
      * Indicates whether the backend is capable to sort the result data view.
      */
-    canSortData: boolean;
+    canSortData?: boolean;
 
     /**
      * Indicates whether the backend can recognize attribute elements by URI.
      */
-    supportsElementUris: boolean;
+    supportsElementUris?: boolean;
 
     /**
      * Indicates maximum result dimensions that the backend is able to produce.
      */
-    maxDimensions: number;
+    maxDimensions?: number;
 
     /**
      * Indicates whether backend can export data to CSV file.
      */
-    canExportCsv: boolean;
+    canExportCsv?: boolean;
 
     /**
      * Indicates whether backend can export data to Excel
      */
-    canExportXlsx: boolean;
+    canExportXlsx?: boolean;
+
+    /**
+     * Catchall for additional capabilities
+     */
+    [key: string]: undefined | boolean | number | string;
 };

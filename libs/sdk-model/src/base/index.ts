@@ -39,7 +39,14 @@ export interface IObjLocalIdentifierQualifier {
  *
  * @public
  */
-export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier | IObjLocalIdentifierQualifier;
+export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
 
 /**
  * TODO: SDK8: Add docs
@@ -71,6 +78,13 @@ export interface INativeTotalItem {
         attributeIdentifiers: Identifier[];
     };
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type Total = ITotal | INativeTotalItem;
 
 /**
  * TODO: SDK8: Add docs

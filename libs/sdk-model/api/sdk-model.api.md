@@ -14,9 +14,6 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
 // @public
-export type AttributeOrMeasureOrTotal = IMeasure | IAttribute | INativeTotalItem;
-
-// @public
 export type GuidType = "guid";
 
 // @public
@@ -82,7 +79,7 @@ export interface IAttributeSortItem {
 // @public
 export interface IBucket {
     // (undocumented)
-    items: AttributeOrMeasureOrTotal[];
+    items: AttributeOrMeasure[];
     // (undocumented)
     localIdentifier?: Identifier;
 }
@@ -332,6 +329,12 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
+export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+
+// @public
+export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
+
+// @public
 export type RGBType = "rgb";
 
 // @public
@@ -341,6 +344,9 @@ export type SortDirection = "asc" | "desc";
 export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
+export type Total = ITotal | INativeTotalItem;
+
+// @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med";
 
 // @public
@@ -348,10 +354,6 @@ export type VisualizationProperties = {
     [key: string]: any;
 };
 
-
-// Warnings were encountered during analysis:
-// 
-// dist/filter/index.d.ts:53:9 - (ae-forgotten-export) The symbol "ObjQualifier" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

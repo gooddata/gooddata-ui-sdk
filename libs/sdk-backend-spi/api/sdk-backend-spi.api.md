@@ -4,7 +4,7 @@
 
 ```ts
 
-import { AttributeOrMeasureOrTotal } from '@gooddata/sdk-model';
+import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPaletteItem } from '@gooddata/sdk-model';
@@ -12,20 +12,20 @@ import { IDimension } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { INativeTotalItem } from '@gooddata/sdk-model';
-import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
+import { Total } from '@gooddata/sdk-model';
 
 // @public
 export type BackendCapabilities = {
-    supportsObjectUris: boolean;
-    canCalculateTotals: boolean;
-    canSortData: boolean;
-    supportsElementUris: boolean;
-    maxDimensions: number;
-    canExportCsv: boolean;
-    canExportXlsx: boolean;
+    supportsObjectUris?: boolean;
+    canCalculateTotals?: boolean;
+    canSortData?: boolean;
+    supportsElementUris?: boolean;
+    maxDimensions?: number;
+    canExportCsv?: boolean;
+    canExportXlsx?: boolean;
+    [key: string]: undefined | boolean | number | string;
 };
 
 // @public
@@ -42,7 +42,7 @@ export interface IAnalyticalBackend {
     // (undocumented)
     readonly capabilities: BackendCapabilities;
     // (undocumented)
-    readonly hostname: string | null;
+    readonly hostname?: string;
     // (undocumented)
     onHostname(hostname: string): IAnalyticalBackend;
     // (undocumented)
@@ -84,16 +84,6 @@ export interface IAttributeHeader {
             name: string;
         };
     };
-}
-
-// @public
-export interface IBaseExportConfig {
-    // (undocumented)
-    format?: "xlsx" | "csv" | "raw";
-    // (undocumented)
-    mergeHeaders?: boolean;
-    // (undocumented)
-    title?: string;
 }
 
 // @public
@@ -155,7 +145,7 @@ export interface IExecutionFactory {
     // (undocumented)
     forInsight(uri: string, filters?: IFilter): Promise<IPreparedExecution>;
     // (undocumented)
-    forItems(items: AttributeOrMeasureOrTotal[], filters?: IFilter): IPreparedExecution;
+    forItems(items: AttributeOrMeasure[], filters?: IFilter): IPreparedExecution;
 }
 
 // @public
@@ -165,7 +155,7 @@ export interface IExecutionResult {
     // (undocumented)
     equals(other: IExecutionResult): boolean;
     // (undocumented)
-    export(options: IExportConfig): Promise<IExportResponse>;
+    export(options: IExportConfig): Promise<IExportResult>;
     readonly id: string;
     // (undocumented)
     readAll(): Promise<IDataView>;
@@ -174,13 +164,19 @@ export interface IExecutionResult {
 }
 
 // @public
-export interface IExportConfig extends IBaseExportConfig {
+export interface IExportConfig {
+    // (undocumented)
+    format?: "xlsx" | "csv" | "raw";
+    // (undocumented)
+    mergeHeaders?: boolean;
     // (undocumented)
     showFilters?: IFilter;
+    // (undocumented)
+    title?: string;
 }
 
 // @public
-export interface IExportResponse {
+export interface IExportResult {
     // (undocumented)
     uri: string;
 }
@@ -239,17 +235,15 @@ export interface IPreparedExecution {
     // (undocumented)
     readonly measures: IMeasure[];
     // (undocumented)
-    readonly nativeTotals: INativeTotalItem[];
-    // (undocumented)
     readonly sortBy: SortItem[];
     // (undocumented)
-    readonly totals: ITotal[];
+    readonly totals: Total[];
     // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
     // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
     // (undocumented)
-    withTotals(...totals: ITotal[]): IPreparedExecution;
+    withTotals(...totals: Total[]): IPreparedExecution;
     // (undocumented)
     readonly workspace: string;
 }

@@ -7,9 +7,12 @@ export {
     IObjUriQualifier,
     IObjIdentifierQualifier,
     IObjLocalIdentifierQualifier,
+    ObjQualifier,
+    ObjQualifierWithLocal,
     TotalType,
     ITotal,
     INativeTotalItem,
+    Total,
     SortDirection,
     IAttributeSortItem,
     SortItem,
@@ -44,7 +47,7 @@ export {
     IPreviousPeriodDateDataSet,
 } from "./measure";
 
-export { AttributeOrMeasure, AttributeOrMeasureOrTotal, IBucket } from "./buckets";
+export { AttributeOrMeasure, IBucket } from "./buckets";
 
 export {
     GuidType,

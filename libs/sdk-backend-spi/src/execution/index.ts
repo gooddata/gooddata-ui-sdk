@@ -1,14 +1,13 @@
 // (C) 2019 GoodData Corporation
 import {
-    AttributeOrMeasureOrTotal,
+    AttributeOrMeasure,
     IAttribute,
     IBucket,
     IDimension,
     IFilter,
     IMeasure,
     SortItem,
-    INativeTotalItem,
-    ITotal,
+    Total,
 } from "@gooddata/sdk-model";
 import { IExecutionResult } from "../result";
 
@@ -17,7 +16,7 @@ import { IExecutionResult } from "../result";
  * @public
  */
 export interface IExecutionFactory {
-    forItems(items: AttributeOrMeasureOrTotal[], filters?: IFilter): IPreparedExecution;
+    forItems(items: AttributeOrMeasure[], filters?: IFilter): IPreparedExecution;
 
     forBuckets(buckets: IBucket[], filters?: IFilter): IPreparedExecution;
 
@@ -39,16 +38,15 @@ export interface IPreparedExecution {
     readonly attributes: IAttribute[];
     readonly measures: IMeasure[];
     readonly filters: IFilter[];
-    readonly nativeTotals: INativeTotalItem[];
     readonly sortBy: SortItem[];
     readonly dimensions: IDimension[];
-    readonly totals: ITotal[];
+    readonly totals: Total[];
 
     withSorting(...items: SortItem[]): IPreparedExecution;
 
     withDimensions(...dim: IDimension[]): IPreparedExecution;
 
-    withTotals(...totals: ITotal[]): IPreparedExecution;
+    withTotals(...totals: Total[]): IPreparedExecution;
 
     execute(): Promise<IExecutionResult>;
 

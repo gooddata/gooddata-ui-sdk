@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IExportConfig, IExportResponse } from "../export";
+import { IExportConfig, IExportResult } from "../export";
 
 /**
  * TODO: SDK8: add docs
@@ -17,7 +17,7 @@ export interface IExecutionResult {
 
     readView(offset: number[], limit: number[]): Promise<IDataView>;
 
-    export(options: IExportConfig): Promise<IExportResponse>;
+    export(options: IExportConfig): Promise<IExportResult>;
 
     equals(other: IExecutionResult): boolean;
 }

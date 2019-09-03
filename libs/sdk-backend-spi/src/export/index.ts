@@ -5,17 +5,10 @@ import { IFilter } from "@gooddata/sdk-model";
  * TODO: SDK8: add docs
  * @public
  */
-export interface IBaseExportConfig {
+export interface IExportConfig {
     title?: string;
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IExportConfig extends IBaseExportConfig {
     showFilters?: IFilter;
 }
 
@@ -23,6 +16,6 @@ export interface IExportConfig extends IBaseExportConfig {
  * TODO: SDK8: add docs
  * @public
  */
-export interface IExportResponse {
+export interface IExportResult {
     uri: string;
 }
