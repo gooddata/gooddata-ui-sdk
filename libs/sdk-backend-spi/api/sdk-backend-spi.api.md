@@ -7,6 +7,7 @@
 import { AttributeOrMeasureOrTotal } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -41,6 +42,14 @@ export interface IAnalyticalBackend {
     // (undocumented)
     readonly capabilities: BackendCapabilities;
     // (undocumented)
+    readonly hostname: string | null;
+    // (undocumented)
+    onHostname(hostname: string): IAnalyticalBackend;
+    // (undocumented)
+    withCredentials(username: string, password: string): IAnalyticalBackend;
+    // (undocumented)
+    withTelemetry(componentName: string, props: object): IAnalyticalBackend;
+    // (undocumented)
     workspace(id: string): IAnalyticalWorkspace;
 }
 
@@ -54,6 +63,10 @@ export interface IAnalyticalWorkspace {
     featureFlags(): IFeatureFlagsQuery;
     // (undocumented)
     metadata(): IWorkspaceMetadata;
+    // (undocumented)
+    styling(): IWorkspaceStyling;
+    // (undocumented)
+    readonly workspace: string;
 }
 
 // @public
@@ -293,6 +306,12 @@ export interface IWorkspaceMetadata {
     getVisualizationClass(id: string): Promise<IVisualizationClass>;
     // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
+}
+
+// @public
+export interface IWorkspaceStyling {
+    // (undocumented)
+    colorPalette(): Promise<IColorPaletteItem[]>;
 }
 
 

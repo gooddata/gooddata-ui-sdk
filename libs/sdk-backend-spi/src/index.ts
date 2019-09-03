@@ -27,3 +27,5 @@ export { IWorkspaceMetadata } from "./metadata";
 export { IElementQueryFactory, IElementQueryResult, IElementQuery, Element } from "./elements";
 
 export { IBaseExportConfig, IExportConfig, IExportResponse } from "./export";
+
+export { IWorkspaceStyling } from "./styling";

@@ -4,6 +4,7 @@ import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory } from "../execution";
 import { IFeatureFlagsQuery } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
+import { IWorkspaceStyling } from "../styling";
 
 /**
  * TODO: SDK8: add public doc
@@ -32,6 +33,7 @@ export interface IAnalyticalWorkspace {
     execution(): IExecutionFactory;
     elements(): IElementQueryFactory;
     metadata(): IWorkspaceMetadata;
+    styling(): IWorkspaceStyling;
 }
 
 /**
