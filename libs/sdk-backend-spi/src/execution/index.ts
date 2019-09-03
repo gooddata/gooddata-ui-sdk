@@ -9,7 +9,8 @@ import {
     SortItem,
     Total,
 } from "@gooddata/sdk-model";
-import { IExecutionResult } from "../result";
+import { IResultDimension, IResultHeaderItem, DataValue } from "./results";
+import { IExportConfig, IExportResult } from "../export";
 
 /**
  * TODO: SDK8: add docs
@@ -51,14 +52,50 @@ export interface IPreparedExecution {
     execute(): Promise<IExecutionResult>;
 
     equals(other: IPreparedExecution): boolean;
+}
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IExecutionResult {
     /**
-     *
-     * // TODO: SDK8: revisit whether this is needed
-     *
-     * This method exists to ease migration efforts to SDK 8; it will be removed in next major release.
-     *
-     * @deprecated Migrate your code to fully use IPreparedExecution and the IExecutionResult instead
+     * Unique identifier of the execution result.
      */
-    asDataSource(): any;
+    readonly id: string;
+    readonly dimensions: IResultDimension[];
+    readonly forExecution: IPreparedExecution;
+
+    readAll(): Promise<IDataView>;
+
+    readView(offset: number[], limit: number[]): Promise<IDataView>;
+
+    export(options: IExportConfig): Promise<IExportResult>;
+
+    equals(other: IExecutionResult): boolean;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IDataView {
+    readonly offset: number[];
+    readonly limit: number[];
+    readonly headerItems?: IResultHeaderItem[][][];
+    readonly data: DataValue[][] | DataValue[];
+    readonly totals?: DataValue[][][];
+
+    readonly fromResult: IExecutionResult;
+    readonly forExecution: IPreparedExecution;
+
+    next(...dims: boolean[]): Promise<IDataView | null>;
+
+    pageUp(): Promise<IDataView | null>;
+
+    pageDown(): Promise<IDataView | null>;
+
+    pageLeft(): Promise<IDataView | null>;
+
+    pageRight(): Promise<IDataView | null>;
 }

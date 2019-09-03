@@ -2,11 +2,9 @@
 
 export { IAnalyticalBackend, IAnalyticalWorkspace, BackendCapabilities } from "./backend";
 
-export { IExecutionFactory, IPreparedExecution } from "./execution";
+export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";
 
 export {
-    IExecutionResult,
-    IDataView,
     DataValue,
     IMeasureHeaderItem,
     IHeader,
@@ -18,7 +16,7 @@ export {
     IResultMeasureHeaderItem,
     IResultTotalHeaderItem,
     ITotalHeaderItem,
-} from "./result";
+} from "./execution/results";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
 

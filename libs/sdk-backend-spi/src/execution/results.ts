@@ -1,49 +1,5 @@
 // (C) 2019 GoodData Corporation
 
-import { IExportConfig, IExportResult } from "../export";
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IExecutionResult {
-    /**
-     * Unique identifier of the execution result.
-     */
-    readonly id: string;
-    readonly dimensions: IResultDimension[];
-
-    readAll(): Promise<IDataView>;
-
-    readView(offset: number[], limit: number[]): Promise<IDataView>;
-
-    export(options: IExportConfig): Promise<IExportResult>;
-
-    equals(other: IExecutionResult): boolean;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IDataView {
-    readonly offset: number[];
-    readonly limit: number[];
-    readonly headerItems?: IResultHeaderItem[][][];
-    readonly data: DataValue[][] | DataValue[];
-    readonly totals?: DataValue[][][];
-
-    next(...dims: boolean[]): Promise<IDataView | null>;
-
-    pageUp(): Promise<IDataView | null>;
-
-    pageDown(): Promise<IDataView | null>;
-
-    pageLeft(): Promise<IDataView | null>;
-
-    pageRight(): Promise<IDataView | null>;
-}
-
 /**
  * TODO: SDK8: add docs
  * @public

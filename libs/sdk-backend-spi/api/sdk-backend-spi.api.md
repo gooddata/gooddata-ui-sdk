@@ -91,6 +91,10 @@ export interface IDataView {
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
     // (undocumented)
+    readonly forExecution: IPreparedExecution;
+    // (undocumented)
+    readonly fromResult: IExecutionResult;
+    // (undocumented)
     readonly headerItems?: IResultHeaderItem[][][];
     // (undocumented)
     readonly limit: number[];
@@ -156,6 +160,8 @@ export interface IExecutionResult {
     equals(other: IExecutionResult): boolean;
     // (undocumented)
     export(options: IExportConfig): Promise<IExportResult>;
+    // (undocumented)
+    readonly forExecution: IPreparedExecution;
     readonly id: string;
     // (undocumented)
     readAll(): Promise<IDataView>;
@@ -219,8 +225,6 @@ export interface IMeasureHeaderItem {
 
 // @public
 export interface IPreparedExecution {
-    // @deprecated
-    asDataSource(): any;
     // (undocumented)
     readonly attributes: IAttribute[];
     // (undocumented)
