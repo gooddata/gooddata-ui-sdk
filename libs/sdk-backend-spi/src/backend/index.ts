@@ -11,8 +11,12 @@ import { IWorkspaceMetadata } from "../metadata";
  * @public
  */
 export interface IAnalyticalBackend {
+    readonly hostname: string | null;
     readonly capabilities: BackendCapabilities;
 
+    onHostname(hostname: string): IAnalyticalBackend;
+    withCredentials(username: string, password: string): IAnalyticalBackend;
+    withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
 }
 
@@ -22,6 +26,8 @@ export interface IAnalyticalBackend {
  * @public
  */
 export interface IAnalyticalWorkspace {
+    readonly workspace: string;
+
     featureFlags(): IFeatureFlagsQuery;
     execution(): IExecutionFactory;
     elements(): IElementQueryFactory;
