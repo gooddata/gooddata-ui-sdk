@@ -23,6 +23,7 @@ import {
     IAxis,
     IChartOptions,
     ISeriesItem,
+    INewChartConfig,
 } from "../../../../interfaces/Config";
 import { percentFormatter } from "../../../../helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
@@ -109,9 +110,7 @@ export function formatOverlappingForParentAttribute(category: any) {
 
     const finalWidth = Math.max(0, width - pixelOffset);
 
-    return `<div style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">${
-        this.value
-    }</div>`;
+    return `<div style="width: ${finalWidth}px; overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
 }
 
 export function formatOverlapping() {
@@ -1061,6 +1060,35 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
+    drillConfig?: IDrillConfig,
+) {
+    const configurators = [
+        getAxesConfiguration,
+        getTitleConfiguration,
+        getStackingConfiguration,
+        hideOverlappedLabels,
+        getShowInPercentConfiguration,
+        getDataConfiguration,
+        getTooltipConfiguration,
+        getHoverStyles,
+        getGridConfiguration,
+        getLabelsConfiguration,
+        // should be after 'getDataConfiguration' to modify 'series'
+        // and should be after 'getStackingConfiguration' to get stackLabels config
+        getOptionalStackingConfiguration,
+        getZeroAlignConfiguration,
+    ];
+
+    const commonData = configurators.reduce((config: any, configurator: any) => {
+        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig));
+    }, {});
+
+    return merge({}, commonData);
+}
+
+export function getCustomizedConfiguration2(
+    chartOptions: IChartOptions,
+    chartConfig?: INewChartConfig,
     drillConfig?: IDrillConfig,
 ) {
     const configurators = [

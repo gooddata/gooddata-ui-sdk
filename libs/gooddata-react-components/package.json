@@ -67,6 +67,8 @@
         "typescript": "3.3.4000"
     },
     "dependencies": {
+        "@gooddata/sdk-model": "^1.0.0",
+        "@gooddata/sdk-backend-spi": "^1.0.0",
         "@gooddata/gooddata-js": "^11.17.0",
         "@gooddata/goodstrap": "^63.1.1",
         "@gooddata/js-utils": "^3.4.0",

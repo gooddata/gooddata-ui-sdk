@@ -2,7 +2,15 @@
 
 export { IAnalyticalBackend, IAnalyticalWorkspace, BackendCapabilities } from "./backend";
 
-export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";
+export {
+    IExecutionFactory,
+    IPreparedExecution,
+    IExecutionResult,
+    IDataView,
+    IExecutionDefinition,
+} from "./execution";
+
+export { DataViewFacade } from "./execution/facade";
 
 export {
     DataValue,

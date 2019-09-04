@@ -45,9 +45,13 @@ export {
     MeasureAggregation,
     IPreviousPeriodMeasureDefinition,
     IPreviousPeriodDateDataSet,
+    isMeasure,
+    isMeasureDefinition,
+    isPoPMeasureDefinition,
+    isPreviousPeriodMeasure,
 } from "./measure";
 
-export { AttributeOrMeasure, IBucket } from "./buckets";
+export { AttributeOrMeasure, IBucket, isBucket, ComputeRatioRule, computeRatioRules } from "./buckets";
 
 export {
     GuidType,

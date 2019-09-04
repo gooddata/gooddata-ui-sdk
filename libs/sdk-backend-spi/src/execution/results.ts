@@ -1,5 +1,7 @@
 // (C) 2019 GoodData Corporation
 
+import isEmpty from "lodash/isEmpty";
+
 /**
  * TODO: SDK8: add docs
  * @public
@@ -115,3 +117,11 @@ export type IResultHeaderItem =
     | IResultAttributeHeaderItem
     | IResultMeasureHeaderItem
     | IResultTotalHeaderItem;
+
+//
+// Type guards
+//
+
+export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem {
+    return !isEmpty(obj) && (obj as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+}

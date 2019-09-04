@@ -2,9 +2,11 @@
 import isArray = require("lodash/isArray");
 import get = require("lodash/get");
 import set = require("lodash/set");
+import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
+import { isMeasureDefinition } from "@gooddata/sdk-model/";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
-import { IChartConfig } from "../../interfaces/Config";
+import { IChartConfig, INewChartConfig } from "../../interfaces/Config";
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
 export function getViewByTwoAttributes(
@@ -90,6 +92,26 @@ export function getSanitizedStackingConfigFromAfm(afm: AFM.IAfm, chartConfig: IC
     if (get(afm, ["measures", "length"]) === 1) {
         const { stackMeasures, stackMeasuresToPercent } = chartConfig;
         const isComputeRatio = get(afm, ["measures", "0", "definition", "measure", "computeRatio"], false);
+        return {
+            ...chartConfig,
+            stackMeasures: stackMeasures && !isComputeRatio,
+            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio,
+        };
+    }
+    return chartConfig;
+}
+
+export function getNewSanitizedStackingConfig(
+    executionDef: IExecutionDefinition,
+    chartConfig: INewChartConfig,
+): INewChartConfig {
+    if (executionDef.measures.length === 1) {
+        const { stackMeasures, stackMeasuresToPercent } = chartConfig;
+        const singleMeasure = executionDef.measures[0];
+        const isComputeRatio =
+            isMeasureDefinition(singleMeasure.measure.definition) &&
+            singleMeasure.measure.definition.measureDefinition.computeRatio;
+
         return {
             ...chartConfig,
             stackMeasures: stackMeasures && !isComputeRatio,

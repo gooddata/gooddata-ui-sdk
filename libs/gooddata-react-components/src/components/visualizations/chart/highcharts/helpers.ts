@@ -16,7 +16,7 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "../../../../constants/visualizationTypes";
 import { isBarChart } from "../../utils/common";
-import { IChartConfig, ISeriesItem, ISeriesDataItem } from "../../../../interfaces/Config";
+import { IChartConfig, ISeriesItem, ISeriesDataItem, INewChartConfig } from "../../../../interfaces/Config";
 
 export interface IRectByPoints {
     left: number;
@@ -71,6 +71,26 @@ export const isStacked = (chart: any) => {
 };
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
+    const isBarType = isBarChart(type);
+    const chartProps: any = {
+        xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },
+        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis },
+    };
+
+    const secondaryXAxisProps = isBarType ? { ...config.secondary_yaxis } : { ...config.secondary_xaxis };
+    const secondaryYAxisProps = isBarType ? { ...config.secondary_xaxis } : { ...config.secondary_yaxis };
+
+    if (!isEmpty(secondaryXAxisProps)) {
+        chartProps.secondary_xAxisProps = secondaryXAxisProps;
+    }
+    if (!isEmpty(secondaryYAxisProps)) {
+        chartProps.secondary_yAxisProps = secondaryYAxisProps;
+    }
+
+    return chartProps;
+}
+
+export function getChartProperties2(config: INewChartConfig, type: VisType) {
     const isBarType = isBarChart(type);
     const chartProps: any = {
         xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },

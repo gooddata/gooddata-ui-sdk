@@ -151,10 +151,11 @@ export interface IDataView {
 
     readonly offset: number[];
     readonly limit: number[];
-    readonly headerItems?: IResultHeaderItem[][][];
+    readonly headerItems: IResultHeaderItem[][][];
     readonly data: DataValue[][] | DataValue[];
     readonly totals?: DataValue[][][];
 
+    readonly executionDefinition: IExecutionDefinition;
     readonly fromResult: IExecutionResult;
 
     /**

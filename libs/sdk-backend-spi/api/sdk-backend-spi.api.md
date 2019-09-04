@@ -33,6 +33,61 @@ export type BackendCapabilities = {
 export type DataValue = null | string | number;
 
 // @public
+export class DataViewFacade {
+    constructor(dataView: IDataView);
+    // (undocumented)
+    afm(): {
+        attributes: {
+            localIdentifier: string;
+            displayForm: import("@gooddata/sdk-model").ObjQualifier;
+            alias?: string | undefined;
+        }[];
+        measures: {
+            localIdentifier: string;
+            definition: import("@gooddata/sdk-model").IMeasureDefinitionType;
+            alias?: string | undefined;
+            title?: string | undefined;
+            format?: string | undefined;
+        }[];
+        filters: import("@gooddata/sdk-model").IFilter[];
+    };
+    // (undocumented)
+    attributeHeaders(): IResultAttributeHeaderItem[][][];
+    // (undocumented)
+    bucket(id: string): IBucket | undefined;
+    // (undocumented)
+    bucketCount(): number;
+    // (undocumented)
+    bucketMeasures(id: string, ifNoBucket?: IMeasure[]): IMeasure[];
+    // (undocumented)
+    buckets(): IBucket[];
+    // (undocumented)
+    data(): DataValue[][] | DataValue[];
+    // (undocumented)
+    dimensions(): IResultDimension[];
+    // (undocumented)
+    fingerprint(): string;
+    // (undocumented)
+    hasAttributes(): boolean;
+    // (undocumented)
+    hasBuckets(): boolean;
+    // (undocumented)
+    hasMeasures(): boolean;
+    // (undocumented)
+    isBucketEmpty(id: string): boolean;
+    // (undocumented)
+    isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean;
+    // (undocumented)
+    masterMeasureForDerived(id: string): IMeasure | undefined;
+    // (undocumented)
+    measure(id: string): IMeasure | undefined;
+    // (undocumented)
+    measureIndex(id: string): number;
+    // (undocumented)
+    twoDimData(): DataValue[][];
+}
+
+// @public
 export type Element = {
     readonly value: string;
     readonly uri?: string;
@@ -93,11 +148,13 @@ export interface IDataView {
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
     equals(other: IDataView): boolean;
+    // (undocumented)
+    readonly executionDefinition: IExecutionDefinition;
     readonly fingerprint: string;
     // (undocumented)
     readonly fromResult: IExecutionResult;
     // (undocumented)
-    readonly headerItems?: IResultHeaderItem[][][];
+    readonly headerItems: IResultHeaderItem[][][];
     // (undocumented)
     readonly limit: number[];
     // (undocumented)
@@ -139,6 +196,26 @@ export interface IElementQueryResult {
 }
 
 // @public
+export interface IExecutionDefinition {
+    // (undocumented)
+    readonly attributes: IAttribute[];
+    // (undocumented)
+    readonly buckets: IBucket[];
+    // (undocumented)
+    readonly dimensions: IDimension[];
+    // (undocumented)
+    readonly filters: IFilter[];
+    // (undocumented)
+    readonly measures: IMeasure[];
+    // (undocumented)
+    readonly sortBy: SortItem[];
+    // (undocumented)
+    readonly totals: Total[];
+    // (undocumented)
+    readonly workspace: string;
+}
+
+// @public
 export interface IExecutionFactory {
     // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter): IPreparedExecution;
@@ -153,8 +230,6 @@ export interface IExecutionResult {
     // (undocumented)
     readonly dimensions: IResultDimension[];
     equals(other: IExecutionResult): boolean;
-    // Warning: (ae-forgotten-export) The symbol "IExecutionDefinition" needs to be exported by the entry point index.d.ts
-    // 
     // (undocumented)
     readonly executionDefinition: IExecutionDefinition;
     export(options: IExportConfig): Promise<IExportResult>;

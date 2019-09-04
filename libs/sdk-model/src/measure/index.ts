@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import isEmpty = require("lodash/isEmpty");
 import { ObjQualifier, Identifier } from "../base";
 import { IFilter } from "../filter";
 
@@ -100,4 +101,44 @@ export interface IPreviousPeriodMeasureDefinition {
 export interface IPreviousPeriodDateDataSet {
     dataSet: ObjQualifier;
     periodsAgo: number;
+}
+
+//
+// Type guards
+//
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isMeasure(obj: any): obj is IMeasure {
+    return !isEmpty(obj) && (obj as IMeasure).measure !== undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
+    return !isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
+    return !isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition {
+    return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
 }

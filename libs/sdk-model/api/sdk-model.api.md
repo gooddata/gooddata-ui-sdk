@@ -14,6 +14,19 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
 // @public
+export enum ComputeRatioRule {
+    // (undocumented)
+    ANY_MEASURE = 2,
+    // (undocumented)
+    NEVER = 0,
+    // (undocumented)
+    SINGLE_MEASURE_ONLY = 1
+}
+
+// @public
+export function computeRatioRules(items: AttributeOrMeasure[], rule?: ComputeRatioRule): AttributeOrMeasure[];
+
+// @public
 export type GuidType = "guid";
 
 // @public
@@ -294,6 +307,21 @@ export interface IRGBColorItem {
     // (undocumented)
     value: IColor;
 }
+
+// @public
+export function isBucket(obj: any): obj is IBucket;
+
+// @public
+export function isMeasure(obj: any): obj is IMeasure;
+
+// @public
+export function isMeasureDefinition(obj: any): obj is IMeasureDefinition;
+
+// @public
+export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition;
+
+// @public
+export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition;
 
 // @public
 export interface ITotal {
