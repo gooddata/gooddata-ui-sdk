@@ -25,6 +25,7 @@ export type BackendCapabilities = {
     maxDimensions?: number;
     canExportCsv?: boolean;
     canExportXlsx?: boolean;
+    canTransformExistingResult: boolean;
     [key: string]: undefined | boolean | number | string;
 };
 
@@ -88,10 +89,11 @@ export interface IAttributeHeader {
 
 // @public
 export interface IDataView {
+    advance(...dims: number[]): Promise<IDataView | null>;
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
-    // (undocumented)
-    readonly forExecution: IPreparedExecution;
+    equals(other: IDataView): boolean;
+    readonly fingerprint: string;
     // (undocumented)
     readonly fromResult: IExecutionResult;
     // (undocumented)
@@ -99,16 +101,10 @@ export interface IDataView {
     // (undocumented)
     readonly limit: number[];
     // (undocumented)
-    next(...dims: boolean[]): Promise<IDataView | null>;
-    // (undocumented)
     readonly offset: number[];
-    // (undocumented)
     pageDown(): Promise<IDataView | null>;
-    // (undocumented)
     pageLeft(): Promise<IDataView | null>;
-    // (undocumented)
     pageRight(): Promise<IDataView | null>;
-    // (undocumented)
     pageUp(): Promise<IDataView | null>;
     // (undocumented)
     readonly totals?: DataValue[][][];
@@ -156,17 +152,16 @@ export interface IExecutionFactory {
 export interface IExecutionResult {
     // (undocumented)
     readonly dimensions: IResultDimension[];
-    // (undocumented)
     equals(other: IExecutionResult): boolean;
+    // Warning: (ae-forgotten-export) The symbol "IExecutionDefinition" needs to be exported by the entry point index.d.ts
+    // 
     // (undocumented)
+    readonly executionDefinition: IExecutionDefinition;
     export(options: IExportConfig): Promise<IExportResult>;
-    // (undocumented)
-    readonly forExecution: IPreparedExecution;
-    readonly id: string;
-    // (undocumented)
+    readonly fingerprint: string;
     readAll(): Promise<IDataView>;
-    // (undocumented)
-    readView(offset: number[], limit: number[]): Promise<IDataView>;
+    readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    transform(): IPreparedExecution;
 }
 
 // @public
@@ -224,32 +219,18 @@ export interface IMeasureHeaderItem {
 }
 
 // @public
-export interface IPreparedExecution {
-    // (undocumented)
-    readonly attributes: IAttribute[];
-    // (undocumented)
-    readonly dimensions: IDimension[];
+export interface IPreparedExecution extends IExecutionDefinition {
     // (undocumented)
     equals(other: IPreparedExecution): boolean;
     // (undocumented)
     execute(): Promise<IExecutionResult>;
-    // (undocumented)
-    readonly filters: IFilter[];
     readonly fingerprint: string;
-    // (undocumented)
-    readonly measures: IMeasure[];
-    // (undocumented)
-    readonly sortBy: SortItem[];
-    // (undocumented)
-    readonly totals: Total[];
     // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
     // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
     // (undocumented)
     withTotals(...totals: Total[]): IPreparedExecution;
-    // (undocumented)
-    readonly workspace: string;
 }
 
 // @public

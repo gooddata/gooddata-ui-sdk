@@ -78,6 +78,11 @@ export type BackendCapabilities = {
     canExportXlsx?: boolean;
 
     /**
+     * Indicates whether backend can transform an existing result into a different shape / sorting / totals.
+     */
+    canTransformExistingResult: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
