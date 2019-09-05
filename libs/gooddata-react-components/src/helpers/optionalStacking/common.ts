@@ -4,8 +4,10 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import { isMeasureDefinition, AttributeOrMeasure, isMeasure } from "@gooddata/sdk-model/";
+import { IBucket } from "@gooddata/sdk-model";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
+import { MEASURES } from "../../constants/bucketNames";
 import { IChartConfig, INewChartConfig } from "../../interfaces/Config";
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
@@ -63,11 +65,9 @@ export function sanitizeConfig(
     return config;
 }
 
-export function sanitizeConfig2(
-    measures: AttributeOrMeasure[] = [],
-    config: INewChartConfig = {},
-): INewChartConfig {
-    if (measures.length === 1) {
+export function sanitizeConfig2(buckets: IBucket[] = [], config: INewChartConfig = {}): INewChartConfig {
+    const measures = buckets.find(b => b.localIdentifier === MEASURES);
+    if (measures && measures.items.length === 1) {
         const isComputeRatio = getComputeRatio2(measures[0]);
         const { stackMeasures, stackMeasuresToPercent } = config;
 

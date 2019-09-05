@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 /* tslint:disable */
 import {
     AttributeOrMeasure,
@@ -11,7 +12,7 @@ import {
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../constants/bucketNames";
 import omit = require("lodash/omit");
-import { ICommonChartProps } from "./exp/props";
+import { IChartProps, ICommonChartProps } from "./exp/props";
 import { Subtract } from "../typings/subtract";
 import { truncate } from "./exp/chartUtils";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "./visualizations/chart/constants";
@@ -26,17 +27,22 @@ export interface IBarChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IBarChartProps extends IBarChartBucketProps, ICommonChartProps {}
+export interface IBarChartProps extends IBarChartBucketProps, ICommonChartProps {
+    workspace: string;
+}
 
 type IBarChartNonBucketProps = Subtract<IBarChartProps, IBarChartBucketProps>;
 
 export function BarChart(props: IBarChartProps): JSX.Element {
+    return <CoreBarChart {...toCoreBarChartProps(props)} />;
+}
+
+export function toBuckets(props: IBarChartBucketProps): IBucket[] {
     const measures = computeRatioRules(props.measures);
     const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
     const stackBy = props.stackBy ? [props.stackBy] : [];
 
-    // @ts-ignore
-    const buckets: IBucket[] = [
+    return [
         {
             localIdentifier: MEASURES,
             items: measures,
@@ -50,6 +56,21 @@ export function BarChart(props: IBarChartProps): JSX.Element {
             items: stackBy,
         },
     ];
+}
+
+export function createExecution(buckets: IBucket[], props: IBarChartProps): IPreparedExecution {
+    const { backend, workspace } = props;
+
+    // TODO: SDK8: finish preparation of the execution.. sorts & dims
+    return backend
+        .withTelemetry("BarChart", props)
+        .workspace(workspace)
+        .execution()
+        .forBuckets(buckets, props.filters);
+}
+
+export function toCoreBarChartProps(props: IBarChartProps): IChartProps {
+    const buckets = toBuckets(props);
 
     // TODO: SDK8: can this be done without repeating the prop names?
     const newProps: IBarChartNonBucketProps = omit<IBarChartProps, keyof IBarChartBucketProps>(props, [
@@ -60,15 +81,9 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         "sortBy",
     ]);
 
-    const sanitizedConfig = sanitizeConfig2(measures, newProps.config);
-    const { backend, workspace } = props;
-    const preparedExecution = backend
-        .withTelemetry("BarChart", props)
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, props.filters);
-
-    // TODO: SDK8: finish preparation of the execution
-
-    return <CoreBarChart {...newProps} config={sanitizedConfig} execution={preparedExecution} />;
+    return {
+        ...newProps,
+        config: sanitizeConfig2(buckets, props.config),
+        execution: createExecution(buckets, props),
+    };
 }
