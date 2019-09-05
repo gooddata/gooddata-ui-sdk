@@ -1,22 +1,16 @@
 // (C) 2019 GoodData Corporation
 
-import {
-    DataViewError,
-    ExecutionError,
-    IDataView,
-    IExecutionResult,
-    IPreparedExecution,
-} from "@gooddata/sdk-backend-spi";
+import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
+import { injectIntl } from "react-intl";
+import { ErrorStates } from "../../constants/errorStates";
+import { RuntimeError } from "../../errors/RuntimeError";
 import { convertErrors } from "../../helpers/errorHandlers";
 import { ILoadingState } from "../../interfaces/Events";
 import { IntlWrapper } from "../core/base/IntlWrapper";
+import { ICommonVisualizationProps, IExecutableVisualizationProps, ILoadingInjectedProps } from "./props";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-import { ErrorStates } from "../../constants/errorStates";
-import { RuntimeError } from "../../errors/RuntimeError";
-import { injectIntl } from "react-intl";
-import { ICommonVisualizationProps, IExecutableVisualizationProps, ILoadingInjectedProps } from "./props";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -29,6 +23,8 @@ export function withEntireDataView<T extends ICommonVisualizationProps & IExecut
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
 ): React.ComponentClass<T> {
     class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {
+        public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps;
+
         private hasUnmounted: boolean = false;
 
         constructor(props: T & ILoadingInjectedProps) {
@@ -72,7 +68,7 @@ export function withEntireDataView<T extends ICommonVisualizationProps & IExecut
         }
 
         public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            if (this.isDataReloadRequired(nextProps)) {
+            if (!this.props.execution.equals(nextProps.execution)) {
                 this.initDataLoading(nextProps.execution);
             }
         }
@@ -97,10 +93,6 @@ export function withEntireDataView<T extends ICommonVisualizationProps & IExecut
             this.setState(state);
         }
 
-        private isDataReloadRequired(nextProps: Readonly<T & ILoadingInjectedProps>) {
-            return !this.props.execution.equals(nextProps.execution);
-        }
-
         private onError(error: RuntimeError, execution = this.props.execution) {
             if (this.props.execution.equals(execution)) {
                 this.setState({ error: error.getMessage(), dataView: null });
@@ -118,37 +110,30 @@ export function withEntireDataView<T extends ICommonVisualizationProps & IExecut
             this.onError(new RuntimeError(ErrorStates.NEGATIVE_VALUES));
         }
 
-        private initDataLoading(execution: IPreparedExecution) {
+        private async initDataLoading(execution: IPreparedExecution) {
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
 
-            execution
-                .execute()
-                .then((res: IExecutionResult) => {
-                    if (this.hasUnmounted) {
-                        return;
-                    }
+            try {
+                const executionResult = await execution.execute();
 
-                    this.setState({ executionResult: res });
+                if (this.hasUnmounted) {
+                    return;
+                }
 
-                    res.readAll()
-                        .then((dv: IDataView) => {
-                            if (this.hasUnmounted) {
-                                return;
-                            }
+                const dataView = await executionResult.readAll();
 
-                            this.setState({ dataView: dv });
-                            this.onLoadingChanged({ isLoading: false });
-                            // TODO: SDK8: push data
-                            // TODO: SDK8: push export function
-                        })
-                        .catch((error: DataViewError) => {
-                            this.onError(convertErrors(error));
-                        });
-                })
-                .catch((error: ExecutionError) => {
-                    this.onError(convertErrors(error));
-                });
+                if (this.hasUnmounted) {
+                    return;
+                }
+
+                this.setState({ dataView, executionResult });
+                this.onLoadingChanged({ isLoading: false });
+                // TODO: SDK8: push data
+                // TODO: SDK8: push export function
+            } catch (error) {
+                this.onError(convertErrors(error));
+            }
         }
     }
 

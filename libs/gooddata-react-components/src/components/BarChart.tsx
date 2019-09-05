@@ -1,44 +1,42 @@
-// (C) 2007-2019 GoodData Corporation
-import * as React from "react";
-import omit = require("lodash/omit");
-import { VisualizationObject, VisualizationInput } from "@gooddata/typings";
-
-import { Subtract } from "../typings/subtract";
-import { BarChart as AfmBarChart } from "./afm/BarChart";
-import { ICommonChartProps } from "./core/base/BaseChart";
-import { convertBucketsToAFM } from "../helpers/conversion";
-import { getStackingResultSpec } from "../helpers/resultSpec";
-import { MEASURES, ATTRIBUTE, STACK } from "../constants/bucketNames";
+// (C) 2019 GoodData Corporation
+/* tslint:disable */
 import {
-    getViewByTwoAttributes,
-    sanitizeConfig,
-    sanitizeComputeRatioOnMeasures,
-} from "../helpers/optionalStacking/common";
+    AttributeOrMeasure,
+    computeRatioRules,
+    IAttribute,
+    IBucket,
+    IFilter,
+    SortItem,
+} from "@gooddata/sdk-model";
+import * as React from "react";
+import { ATTRIBUTE, MEASURES, STACK } from "../constants/bucketNames";
+import omit = require("lodash/omit");
+import { ICommonChartProps } from "./exp/props";
+import { Subtract } from "../typings/subtract";
+import { truncate } from "./exp/chartUtils";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "./visualizations/chart/constants";
+import { sanitizeConfig2 } from "../helpers/optionalStacking/common";
+import { BarChart as CoreBarChart } from "./core/BarChart";
 
 export interface IBarChartBucketProps {
-    measures: VisualizationInput.AttributeOrMeasure[];
-    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
-    stackBy?: VisualizationInput.IAttribute;
-    filters?: VisualizationInput.IFilter[];
-    sortBy?: VisualizationInput.ISort[];
+    measures: AttributeOrMeasure[];
+    viewBy?: IAttribute | IAttribute[];
+    stackBy?: IAttribute;
+    filters?: IFilter[];
+    sortBy?: SortItem[];
 }
 
-export interface IBarChartProps extends ICommonChartProps, IBarChartBucketProps {
-    projectId: string;
-}
+export interface IBarChartProps extends IBarChartBucketProps, ICommonChartProps {}
 
 type IBarChartNonBucketProps = Subtract<IBarChartProps, IBarChartBucketProps>;
 
-/**
- * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
- * is a component with bucket props measures, viewBy, stackBy, filters
- */
 export function BarChart(props: IBarChartProps): JSX.Element {
-    const measures = sanitizeComputeRatioOnMeasures(props.measures);
-    const viewBy = getViewByTwoAttributes(props.viewBy); // could be one or two attributes
+    const measures = computeRatioRules(props.measures);
+    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
     const stackBy = props.stackBy ? [props.stackBy] : [];
 
-    const buckets: VisualizationObject.IBucket[] = [
+    // @ts-ignore
+    const buckets: IBucket[] = [
         {
             localIdentifier: MEASURES,
             items: measures,
@@ -53,6 +51,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         },
     ];
 
+    // TODO: SDK8: can this be done without repeating the prop names?
     const newProps: IBarChartNonBucketProps = omit<IBarChartProps, keyof IBarChartBucketProps>(props, [
         "measures",
         "viewBy",
@@ -60,15 +59,16 @@ export function BarChart(props: IBarChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-    const sanitizedConfig = sanitizeConfig(measures, newProps.config);
 
-    return (
-        <AfmBarChart
-            {...newProps}
-            config={sanitizedConfig}
-            projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
-        />
-    );
+    const sanitizedConfig = sanitizeConfig2(measures, newProps.config);
+    const { backend, workspace } = props;
+    const preparedExecution = backend
+        .withTelemetry("BarChart", props)
+        .workspace(workspace)
+        .execution()
+        .forBuckets(buckets, props.filters);
+
+    // TODO: SDK8: finish preparation of the execution
+
+    return <CoreBarChart {...newProps} config={sanitizedConfig} execution={preparedExecution} />;
 }

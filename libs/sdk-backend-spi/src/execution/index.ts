@@ -17,11 +17,11 @@ import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
  * @public
  */
 export interface IExecutionFactory {
-    forItems(items: AttributeOrMeasure[], filters?: IFilter): IPreparedExecution;
+    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 
-    forBuckets(buckets: IBucket[], filters?: IFilter): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
 
-    forInsight(uri: string, filters?: IFilter): Promise<IPreparedExecution>;
+    forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
 
 /**

@@ -237,11 +237,11 @@ export interface IExecutionDefinition {
 // @public
 export interface IExecutionFactory {
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: IFilter): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsight(uri: string, filters?: IFilter): Promise<IPreparedExecution>;
+    forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
-    forItems(items: AttributeOrMeasure[], filters?: IFilter): IPreparedExecution;
+    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }
 
 // @public

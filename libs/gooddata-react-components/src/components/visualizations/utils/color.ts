@@ -9,6 +9,7 @@ import {
     IColorMapping2,
     IColorPalette,
     IColorPaletteItem,
+    INewChartConfig,
 } from "../../../interfaces/Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../../interfaces/HeaderPredicate";
 import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
@@ -110,6 +111,14 @@ export function getRgbString(color: IColorPaletteItem): string {
 }
 
 export function getValidColorPalette(config: IChartConfig) {
+    return isEmpty(config.colorPalette)
+        ? isEmpty(config.colors)
+            ? DEFAULT_COLOR_PALETTE
+            : getColorPaletteFromColors(config.colors)
+        : config.colorPalette;
+}
+
+export function getValidColorPalette2(config: INewChartConfig) {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
             ? DEFAULT_COLOR_PALETTE

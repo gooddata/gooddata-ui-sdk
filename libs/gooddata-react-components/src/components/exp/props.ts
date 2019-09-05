@@ -1,11 +1,14 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { IChartConfig, IDrillableItem, IPushData } from "../..";
+import noop from "lodash/noop";
+import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../..";
+import { INewChartConfig } from "../../interfaces/Config";
 import {
     OnError,
     OnExportReady,
     OnFiredDrillEvent,
+    OnLegendReady,
     OnLoadingChanged,
     OnLoadingFinish,
 } from "../../interfaces/Events";
@@ -25,8 +28,8 @@ export interface ICommonChartProps extends ICommonVisualizationProps {
 }
 
 export interface ICommonVisualizationProps extends IEvents {
-    // TODO: SDK8: document change from sdk => backend
-    backend?: IAnalyticalBackend;
+    // TODO: SDK8: document change from sdk => backend; make this optional auto-retrieve from some global location
+    backend: IAnalyticalBackend;
     // TODO: SDK8: document change from project => workspace
     workspace?: string;
     locale?: string;
@@ -38,7 +41,7 @@ export interface ICommonVisualizationProps extends IEvents {
     // TODO: SDK8: possibly encapsulate in a separate object?
     ErrorComponent?: React.ComponentType<IErrorProps>;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
-    config?: IChartConfig;
+    config?: INewChartConfig;
 }
 
 export interface IEvents {
@@ -63,5 +66,40 @@ export interface ILoadingInjectedProps {
 }
 
 //
+// Base chart props
+//
+
+export interface IChartProps extends ICommonVisualizationProps, IExecutableVisualizationProps {
+    config?: INewChartConfig;
+    height?: number;
+    environment?: string;
+}
+
+export interface IBaseChartProps extends IChartProps {
+    type: ChartType;
+    visualizationComponent?: React.ComponentClass<any>; // for testing
+    onLegendReady?: OnLegendReady;
+}
+
 //
 //
+//
+
+const defaultErrorHandler = (error: any) => {
+    // if error was not placed in object, we couldnt see its properties in console (ie cause, responseText etc.)
+    console.error("Error in execution:", { error }); // tslint:disable-line no-console
+};
+
+export const defaultCommonVisProps: Partial<ICommonVisualizationProps & IExecutableVisualizationProps> = {
+    execution: undefined,
+    onError: defaultErrorHandler,
+    onLoadingChanged: noop,
+    ErrorComponent,
+    LoadingComponent,
+    afterRender: noop,
+    pushData: noop,
+    locale: "en-US",
+    drillableItems: [],
+    onExportReady: noop,
+    onFiredDrillEvent: () => true,
+};

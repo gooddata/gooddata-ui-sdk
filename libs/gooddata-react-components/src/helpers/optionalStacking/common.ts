@@ -3,7 +3,7 @@ import isArray = require("lodash/isArray");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import { isMeasureDefinition } from "@gooddata/sdk-model/";
+import { isMeasureDefinition, AttributeOrMeasure, isMeasure } from "@gooddata/sdk-model/";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
 import { IChartConfig, INewChartConfig } from "../../interfaces/Config";
@@ -63,6 +63,24 @@ export function sanitizeConfig(
     return config;
 }
 
+export function sanitizeConfig2(
+    measures: AttributeOrMeasure[] = [],
+    config: INewChartConfig = {},
+): INewChartConfig {
+    if (measures.length === 1) {
+        const isComputeRatio = getComputeRatio2(measures[0]);
+        const { stackMeasures, stackMeasuresToPercent } = config;
+
+        return {
+            ...config,
+            stackMeasures: stackMeasures && !isComputeRatio,
+            stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio,
+        };
+    }
+
+    return config;
+}
+
 function disableBucketItemComputeRatio<T extends VisualizationObject.BucketItem>(item: T): T {
     if (getComputeRatio(item)) {
         setComputeRatio(item, false);
@@ -72,6 +90,12 @@ function disableBucketItemComputeRatio<T extends VisualizationObject.BucketItem>
 
 export function getComputeRatio(bucketItem: VisualizationObject.BucketItem): boolean {
     return get(bucketItem, ["measure", "definition", "measureDefinition", "computeRatio"], false);
+}
+
+export function getComputeRatio2(bucketItem: AttributeOrMeasure): boolean {
+    return isMeasure(bucketItem) && isMeasureDefinition(bucketItem.measure.definition)
+        ? bucketItem.measure.definition.measureDefinition.computeRatio
+        : false;
 }
 
 function setComputeRatio(bucketItem: VisualizationObject.BucketItem, value: boolean) {
