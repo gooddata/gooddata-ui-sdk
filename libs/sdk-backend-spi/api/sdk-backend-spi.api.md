@@ -17,6 +17,15 @@ import { SortItem } from '@gooddata/sdk-model';
 import { Total } from '@gooddata/sdk-model';
 
 // @public
+export abstract class AnalyticalBackendError extends Error {
+    protected constructor(message: string, abeType: string, cause: Error);
+    // (undocumented)
+    readonly abeType: string;
+    // (undocumented)
+    readonly cause: Error;
+}
+
+// @public
 export type BackendCapabilities = {
     supportsObjectUris?: boolean;
     canCalculateTotals?: boolean;
@@ -31,6 +40,11 @@ export type BackendCapabilities = {
 
 // @public
 export type DataValue = null | string | number;
+
+// @public
+export class DataViewError extends AnalyticalBackendError {
+    constructor(message: string, cause: Error);
+}
 
 // @public
 export class DataViewFacade {
@@ -92,6 +106,11 @@ export type Element = {
     readonly value: string;
     readonly uri?: string;
 };
+
+// @public
+export class ExecutionError extends AnalyticalBackendError {
+    constructor(message: string, cause: Error);
+}
 
 // @public
 export interface IAnalyticalBackend {
@@ -343,6 +362,15 @@ export interface IResultTotalHeaderItem {
         type: string;
     };
 }
+
+// @public
+export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
+
+// @public
+export function isDataViewError(obj: any): obj is DataViewError;
+
+// @public
+export function isExecutionError(obj: any): obj is ExecutionError;
 
 // @public
 export interface ITotalHeaderItem {

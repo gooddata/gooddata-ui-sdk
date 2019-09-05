@@ -35,3 +35,12 @@ export { IElementQueryFactory, IElementQueryResult, IElementQuery, Element } fro
 export { IExportConfig, IExportResult } from "./export";
 
 export { IWorkspaceStyling } from "./styling";
+
+export {
+    AnalyticalBackendError,
+    DataViewError,
+    ExecutionError,
+    isAnalyticalBackendError,
+    isDataViewError,
+    isExecutionError,
+} from "./errors";

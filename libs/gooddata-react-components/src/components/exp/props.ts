@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { IChartConfig, IDrillableItem, IHeaderPredicate, IPushData } from "../..";
+import { IChartConfig, IDrillableItem, IPushData } from "../..";
 import {
     OnError,
     OnExportReady,
@@ -9,8 +9,10 @@ import {
     OnLoadingChanged,
     OnLoadingFinish,
 } from "../../interfaces/Events";
+import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
 import { IErrorProps } from "../simple/ErrorComponent";
 import { ILoadingProps } from "../simple/LoadingComponent";
+import InjectedIntl = ReactIntl.InjectedIntl;
 
 //
 // Prop types extended by the bucket components
@@ -28,7 +30,7 @@ export interface ICommonVisualizationProps extends IEvents {
     // TODO: SDK8: document change from project => workspace
     workspace?: string;
     locale?: string;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
     // TODO: SDK8: rename & move: possibly include in IEvents
     afterRender?: () => void;
     // TODO: SDK8: rename+move or remove; probably remove, address the need differently
@@ -45,6 +47,19 @@ export interface IEvents {
     onLoadingChanged?: OnLoadingChanged;
     onLoadingFinish?: OnLoadingFinish;
     onFiredDrillEvent?: OnFiredDrillEvent;
+}
+
+export interface IExecutableVisualizationProps {
+    execution: IPreparedExecution;
+}
+
+export interface ILoadingInjectedProps {
+    dataView: IDataView;
+    error?: string;
+    isLoading: boolean;
+    intl: InjectedIntl;
+    onDataTooLarge(): void;
+    onNegativeValues(): void;
 }
 
 //

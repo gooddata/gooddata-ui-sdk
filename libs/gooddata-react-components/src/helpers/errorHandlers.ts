@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import { isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
 import { Execution, VisualizationObject } from "@gooddata/typings";
 import { ApiResponseError } from "@gooddata/gooddata-js";
 import { InjectedIntl } from "react-intl";
@@ -58,7 +59,17 @@ export function generateErrorMap(intl: InjectedIntl): IErrorMap {
 }
 
 // CAREFUL: error can also be of different type than listed
-export function convertErrors(error: ApiResponseError | TypeError): RuntimeError {
+export function convertErrors(inError: ApiResponseError | TypeError): RuntimeError {
+    let error = inError;
+
+    // TODO: SDK8: revisit this after we have a more solid error handling strategy in SPI
+    // unwrap ApiResponseErrors that caused analytical backend errors
+    if (isAnalyticalBackendError(inError)) {
+        if (isApiResponseError(inError.cause)) {
+            error = inError.cause;
+        }
+    }
+
     if (!isApiResponseError(error)) {
         return new RuntimeError(error.message, error);
     }
