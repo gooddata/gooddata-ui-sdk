@@ -1,13 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IAttribute, IBucket, IFilter } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IAttribute, IFilter } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, SEGMENT, VIEW } from "../../constants/bucketNames";
-import { Subtract } from "../../typings/subtract";
 import { treemapDimensions } from "../_commons/dimensions";
-import { IChartProps, ICommonChartProps } from "../chartProps";
+import { ICommonChartProps } from "../chartProps";
 import { CoreTreemap } from "./CoreTreemap";
-import omit = require("lodash/omit");
+import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
 /*
  * TODO: SDK8: verify this chart - the dimensions and sorting may be hosed.
@@ -26,57 +24,47 @@ export interface ITreemapBucketProps {
 }
 
 export interface ITreemapProps extends ICommonChartProps, ITreemapBucketProps {
-    projectId: string;
+    workspace: string;
 }
 
-type ITreemapNonBucketProps = Subtract<ITreemapProps, ITreemapBucketProps>;
+const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = {
+    bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
+    bucketsFactory: props => {
+        return [
+            {
+                localIdentifier: MEASURES,
+                items: props.measures || [],
+            },
+            {
+                localIdentifier: VIEW,
+                items: props.viewBy ? [props.viewBy] : [],
+            },
+            {
+                localIdentifier: SEGMENT,
+                items: props.segmentBy ? [props.segmentBy] : [],
+            },
+        ];
+    },
+    executionFactory: (props, buckets) => {
+        const { backend, workspace } = props;
+
+        return backend
+            .withTelemetry("Treemap", props)
+            .workspace(workspace)
+            .execution()
+            .forBuckets(buckets, props.filters)
+            .withDimensions(treemapDimensions);
+    },
+};
+
+const getProps = getCoreChartProps(treemapDefinition);
 
 /**
  * [Treemap](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/treemap_component.html)
  * is a component with bucket props measures, viewBy, filters
  */
 export function Treemap(props: ITreemapProps): JSX.Element {
-    return <CoreTreemap {...toCoreTreemapProps(props)} />;
-}
-
-export function toCoreTreemapProps(props: ITreemapProps): IChartProps {
-    const buckets: IBucket[] = [
-        {
-            localIdentifier: MEASURES,
-            items: props.measures || [],
-        },
-        {
-            localIdentifier: VIEW,
-            items: props.viewBy ? [props.viewBy] : [],
-        },
-        {
-            localIdentifier: SEGMENT,
-            items: props.segmentBy ? [props.segmentBy] : [],
-        },
-    ];
-
-    const newProps: ITreemapNonBucketProps = omit<ITreemapProps, keyof ITreemapBucketProps>(props, [
-        "measures",
-        "viewBy",
-        "segmentBy",
-        "filters",
-    ]);
-
-    return {
-        ...newProps,
-        execution: createExecution(buckets, props),
-    };
-}
-
-export function createExecution(buckets: IBucket[], props: ITreemapProps): IPreparedExecution {
-    const { backend, workspace } = props;
-
-    return backend
-        .withTelemetry("Treemap", props)
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, props.filters)
-        .withDimensions(treemapDimensions);
+    return <CoreTreemap {...getProps(props)} />;
 }
 
 /*
