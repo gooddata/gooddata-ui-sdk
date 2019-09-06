@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { IAttribute } from "../attribute";
+import { IAttribute, isAttribute } from "../attribute";
 import { Identifier } from "../base";
 import { IMeasure, isMeasure, isMeasureDefinition } from "../measure";
 
@@ -37,6 +37,24 @@ export function isBucket(obj: any): obj is IBucket {
 //
 // Functions
 //
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketAttributes(bucket: IBucket): IAttribute[] {
+    return bucket.items.filter(isAttribute);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsAttributes(buckets: IBucket[]): IAttribute[] {
+    return buckets.map(bucketAttributes).reduce((acc, items) => acc.concat(items), []);
+}
 
 /**
  * TODO: SDK8: Add docs

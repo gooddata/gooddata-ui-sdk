@@ -321,6 +321,10 @@ export interface IPreparedExecution extends IExecutionDefinition {
     readonly fingerprint: string;
     // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
+    // Warning: (ae-forgotten-export) The symbol "DimensionGenerator" needs to be exported by the entry point index.d.ts
+    // 
+    // (undocumented)
+    withDimensions(f: DimensionGenerator): IPreparedExecution;
     // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
     // (undocumented)

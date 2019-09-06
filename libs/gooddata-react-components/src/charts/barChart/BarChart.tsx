@@ -18,6 +18,7 @@ import { truncate } from "../../components/exp/chartUtils";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
 import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
 import { CoreBarChart } from "./CoreBarChart";
+import { stackedChartDimensions } from "../dimensions";
 
 export interface IBarChartBucketProps {
     measures: AttributeOrMeasure[];
@@ -61,18 +62,18 @@ export function toBuckets(props: IBarChartBucketProps): IBucket[] {
 export function createExecution(buckets: IBucket[], props: IBarChartProps): IPreparedExecution {
     const { backend, workspace } = props;
 
-    // TODO: SDK8: finish preparation of the execution.. sorts & dims
     return backend
         .withTelemetry("BarChart", props)
         .workspace(workspace)
         .execution()
-        .forBuckets(buckets, props.filters);
+        .forBuckets(buckets, props.filters)
+        .withSorting(...props.sortBy)
+        .withDimensions(stackedChartDimensions);
 }
 
 export function toCoreBarChartProps(props: IBarChartProps): IChartProps {
     const buckets = toBuckets(props);
 
-    // TODO: SDK8: can this be done without repeating the prop names?
     const newProps: IBarChartNonBucketProps = omit<IBarChartProps, keyof IBarChartBucketProps>(props, [
         "measures",
         "viewBy",

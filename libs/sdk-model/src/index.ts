@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IAttribute } from "./attribute";
+export { IAttribute, isAttribute, attributeId } from "./attribute";
 
 export {
     Identifier,
@@ -51,7 +51,15 @@ export {
     isPreviousPeriodMeasure,
 } from "./measure";
 
-export { AttributeOrMeasure, IBucket, isBucket, ComputeRatioRule, computeRatioRules } from "./buckets";
+export {
+    AttributeOrMeasure,
+    IBucket,
+    isBucket,
+    bucketAttributes,
+    bucketsAttributes,
+    ComputeRatioRule,
+    computeRatioRules,
+} from "./buckets";
 
 export {
     GuidType,
@@ -66,5 +74,3 @@ export {
 } from "./colors";
 
 export { IInsight, IVisualizationClass, VisualizationProperties } from "./insight";
-
-export { IAttribute };

@@ -3,11 +3,11 @@ import {
     AttributeOrMeasure,
     IAttribute,
     IBucket,
-    IDimension,
     IFilter,
     IMeasure,
     SortItem,
     Total,
+    IDimension,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
@@ -24,6 +24,8 @@ export interface IExecutionFactory {
     forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
 
+export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
+
 /**
  * TODO: SDK8: add docs
  * @public
@@ -38,6 +40,7 @@ export interface IPreparedExecution extends IExecutionDefinition {
     withSorting(...items: SortItem[]): IPreparedExecution;
 
     withDimensions(...dim: IDimension[]): IPreparedExecution;
+    withDimensions(f: DimensionGenerator): IPreparedExecution;
 
     withTotals(...totals: Total[]): IPreparedExecution;
 

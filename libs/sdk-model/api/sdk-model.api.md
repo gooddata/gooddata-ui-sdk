@@ -11,7 +11,16 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
+export function attributeId(a: IAttribute): string;
+
+// @public
 export type AttributeOrMeasure = IMeasure | IAttribute;
+
+// @public
+export function bucketAttributes(bucket: IBucket): IAttribute[];
+
+// @public
+export function bucketsAttributes(buckets: IBucket[]): IAttribute[];
 
 // @public
 export enum ComputeRatioRule {
@@ -307,6 +316,9 @@ export interface IRGBColorItem {
     // (undocumented)
     value: IColor;
 }
+
+// @public
+export function isAttribute(obj: any): obj is IAttribute;
 
 // @public
 export function isBucket(obj: any): obj is IBucket;
