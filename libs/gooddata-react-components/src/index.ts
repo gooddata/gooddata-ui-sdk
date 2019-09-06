@@ -38,7 +38,7 @@ import { LineChart } from "./components/LineChart";
 import { AreaChart } from "./charts/areaChart/AreaChart";
 import { PieChart } from "./components/PieChart";
 import { Treemap } from "./components/Treemap";
-import { DonutChart } from "./components/DonutChart";
+import { DonutChart } from "./charts/donutChart/DonutChart";
 import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
 import { PivotTable } from "./components/PivotTable";
 import { Table } from "./components/Table";

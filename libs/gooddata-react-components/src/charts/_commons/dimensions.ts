@@ -58,3 +58,27 @@ export function pointyChartDimensions(buckets: IBucket[]): IDimension[] {
         },
     ];
 }
+
+export function roundChartDimensions(buckets: IBucket[]): IDimension[] {
+    const attributes = bucketsAttributes(buckets).map(attributeId);
+
+    if (attributes.length === 0) {
+        return [
+            {
+                itemIdentifiers: [],
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP],
+            },
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: [MEASUREGROUP],
+        },
+        {
+            itemIdentifiers: attributes,
+        },
+    ];
+}

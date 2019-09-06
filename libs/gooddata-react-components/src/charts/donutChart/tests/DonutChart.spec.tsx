@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 
 import { DonutChart as AfmDonutChart } from "../afm/DonutChart";
 import { DonutChart } from "../DonutChart";
-import { M1 } from "./fixtures/buckets";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("DonutChart", () => {
     it("should render with custom SDK", () => {
