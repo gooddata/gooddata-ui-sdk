@@ -125,3 +125,9 @@ more information. Bear in mind the naming conventions described in the developer
 #### How do I publish new version of packages
 
 TODO
+
+### Troubleshooting
+
+#### `rush build` gives me error TS2307: Cannot find module '@gooddata/sdk-backend-spi'.
+
+This might be caused by corrupted symlinks. Try running `rush link --force` to recreate them. After that, everything should work fine.
