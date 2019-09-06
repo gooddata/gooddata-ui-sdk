@@ -1,5 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-export { ColumnChart } from "./ColumnChart";
 export { LineChart } from "./LineChart";
 export { PieChart } from "./PieChart";
 export { DonutChart } from "./DonutChart";

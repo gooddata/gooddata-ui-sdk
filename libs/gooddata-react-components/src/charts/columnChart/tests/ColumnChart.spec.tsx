@@ -4,9 +4,9 @@ import { shallow, ShallowWrapper } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/typings";
 import { ColumnChart } from "../ColumnChart";
-import { ColumnChart as AfmColumnChart } from "../afm/ColumnChart";
-import { M1, M1WithRatio } from "./fixtures/buckets";
-import { IChartConfig } from "../../interfaces/Config";
+import { ColumnChart as AfmColumnChart } from "../../../components/afm/ColumnChart";
+import { M1, M1WithRatio } from "../../../components/tests/fixtures/buckets";
+import { IChartConfig } from "../../../interfaces/Config";
 
 function renderChart(
     measures: VisualizationInput.AttributeOrMeasure[],

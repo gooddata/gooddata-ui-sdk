@@ -33,7 +33,7 @@ import ArithmeticMeasureTitleFactory from "./factory/ArithmeticMeasureTitleFacto
 import { IDataSourceProviderInjectedProps } from "./components/afm/DataSourceProvider";
 
 import { BarChart } from "./charts/barChart/BarChart";
-import { ColumnChart } from "./components/ColumnChart";
+import { ColumnChart } from "./charts/columnChart/ColumnChart";
 import { LineChart } from "./components/LineChart";
 import { AreaChart } from "./charts/areaChart/AreaChart";
 import { PieChart } from "./components/PieChart";
