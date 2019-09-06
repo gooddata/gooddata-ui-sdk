@@ -72,10 +72,10 @@ export enum ComputeRatioRule {
  *
  * @public
  */
-export function computeRatioRules(
-    items: AttributeOrMeasure[],
+export function computeRatioRules<T extends AttributeOrMeasure>(
+    items: T[],
     rule: ComputeRatioRule = ComputeRatioRule.SINGLE_MEASURE_ONLY,
-): AttributeOrMeasure[] {
+): T[] {
     if (rule === ComputeRatioRule.ANY_MEASURE) {
         return items;
     }
@@ -89,7 +89,7 @@ export function computeRatioRules(
     return items;
 }
 
-function disableComputeRatio(item: AttributeOrMeasure): AttributeOrMeasure {
+function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
     if (
         isMeasure(item) &&
         isMeasureDefinition(item.measure.definition) &&

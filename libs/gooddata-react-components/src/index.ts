@@ -44,7 +44,7 @@ import { PivotTable } from "./components/PivotTable";
 import { Table } from "./components/Table";
 import { Headline } from "./components/Headline";
 import { ScatterPlot } from "./components/ScatterPlot";
-import { ComboChart } from "./components/ComboChart";
+import { ComboChart } from "./charts/comboChart/ComboChart";
 import { FunnelChart } from "./components/FunnelChart";
 import { Heatmap } from "./components/Heatmap";
 import { withJsxExport } from "./components/withJsxExport";

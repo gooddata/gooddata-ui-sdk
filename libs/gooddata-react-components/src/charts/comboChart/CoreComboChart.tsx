@@ -1,14 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { BaseChart, IChartProps } from "./base/BaseChart";
-import { ChartPropTypes, Requireable } from "../../proptypes/Chart";
 import { visualizationIsBetaWarning } from "../../helpers/utils";
+import { IChartProps } from "../chartProps";
+import { BaseChart } from "../../components/core/base/NewBaseChart";
 
-export { Requireable };
-
-export class ComboChart extends React.PureComponent<IChartProps, null> {
-    public static propTypes = ChartPropTypes;
-
+export class CoreComboChart extends React.PureComponent<IChartProps, null> {
     constructor(props: IChartProps) {
         super(props);
         visualizationIsBetaWarning();

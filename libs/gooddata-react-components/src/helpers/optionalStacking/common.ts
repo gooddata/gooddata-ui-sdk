@@ -2,9 +2,10 @@
 import isArray = require("lodash/isArray");
 import get = require("lodash/get");
 import set = require("lodash/set");
+import isEmpty = require("lodash/isEmpty");
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import { isMeasureDefinition, AttributeOrMeasure, isMeasure } from "@gooddata/sdk-model/";
-import { IBucket } from "@gooddata/sdk-model";
+import { isMeasureDefinition, AttributeOrMeasure, isMeasure, IMeasure } from "@gooddata/sdk-model/";
+import { IBucket, isBucket } from "@gooddata/sdk-model";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
 import { MEASURES } from "../../constants/bucketNames";
@@ -65,9 +66,22 @@ export function sanitizeConfig(
     return config;
 }
 
-export function sanitizeConfig2(buckets: IBucket[] = [], config: INewChartConfig = {}): INewChartConfig {
-    const measures = buckets.find(b => b.localIdentifier === MEASURES);
-    if (measures && measures.items.length === 1) {
+function isMeasureArray(obj: any): obj is IMeasure[] {
+    return !isEmpty(obj) && isMeasure(obj[0]);
+}
+
+export function sanitizeConfig2(
+    input: IMeasure[] | IBucket[] = [],
+    config: INewChartConfig = {},
+): INewChartConfig {
+    if (!input.length) {
+        return config;
+    }
+
+    const measuresOrBucket = isMeasureArray(input) ? input : input.find(b => b.localIdentifier === MEASURES);
+    const measures = isBucket(measuresOrBucket) ? measuresOrBucket.items : measuresOrBucket;
+
+    if (measures) {
         const isComputeRatio = getComputeRatio2(measures[0]);
         const { stackMeasures, stackMeasuresToPercent } = config;
 

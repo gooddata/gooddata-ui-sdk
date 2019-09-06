@@ -33,7 +33,7 @@ export enum ComputeRatioRule {
 }
 
 // @public
-export function computeRatioRules(items: AttributeOrMeasure[], rule?: ComputeRatioRule): AttributeOrMeasure[];
+export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
 export type GuidType = "guid";
