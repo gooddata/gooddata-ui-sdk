@@ -31,7 +31,7 @@ import { ColumnChart } from "./charts/columnChart/ColumnChart";
 import { LineChart } from "./charts/lineChart/LineChart";
 import { AreaChart } from "./charts/areaChart/AreaChart";
 import { PieChart } from "./charts/pieChart/PieChart";
-import { Treemap } from "./components/Treemap";
+import { Treemap } from "./charts/treemap/Treemap";
 import { DonutChart } from "./charts/donutChart/DonutChart";
 import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
 import { PivotTable } from "./components/PivotTable";

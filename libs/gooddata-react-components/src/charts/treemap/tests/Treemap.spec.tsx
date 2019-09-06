@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { Treemap } from "../Treemap";
-import { Treemap as AfmTreemap } from "../afm/Treemap";
-import { M1 } from "./fixtures/buckets";
+import { Treemap as AfmTreemap } from "../../../components/afm/Treemap";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("Treemap", () => {
     const measure: VisualizationObject.IMeasure = {

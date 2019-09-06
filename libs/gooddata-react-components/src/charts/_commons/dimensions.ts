@@ -118,3 +118,27 @@ export function heatmapDimensions(buckets: IBucket[]): IDimension[] {
         },
     ];
 }
+
+export function treemapDimensions(buckets: IBucket[]): IDimension[] {
+    const attributes = bucketsAttributes(buckets);
+
+    if (attributes.length === 1) {
+        return [
+            {
+                itemIdentifiers: [MEASUREGROUP],
+            },
+            {
+                itemIdentifiers: attributes.map(attributeId),
+            },
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: attributes.map(attributeId),
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP],
+        },
+    ];
+}
