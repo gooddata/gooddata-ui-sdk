@@ -1,14 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IAttribute, IBucket, IFilter, SortItem } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
 
-import { Subtract } from "../../typings/subtract";
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { IChartProps, ICommonChartProps } from "../chartProps";
+import { ICommonChartProps } from "../chartProps";
 import { CoreLineChart } from "./CoreLineChart";
-import omit = require("lodash/omit");
+import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
 export interface ILineChartBucketProps {
     measures: AttributeOrMeasure[];
@@ -22,53 +20,42 @@ export interface ILineChartProps extends ICommonChartProps, ILineChartBucketProp
     workspace: string;
 }
 
-type ILineChartNonBucketProps = Subtract<ILineChartProps, ILineChartBucketProps>;
+const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartProps> = {
+    bucketPropsKeys: ["measures", "trendBy", "segmentBy", "filters", "sortBy"],
+    bucketsFactory: props => {
+        return [
+            {
+                localIdentifier: MEASURES,
+                items: props.measures || [],
+            },
+            {
+                localIdentifier: ATTRIBUTE,
+                items: props.trendBy ? [props.trendBy] : [],
+            },
+            {
+                localIdentifier: STACK,
+                items: props.segmentBy ? [props.segmentBy] : [],
+            },
+        ];
+    },
+    executionFactory: (props, buckets) => {
+        const { backend, workspace } = props;
+
+        return backend
+            .withTelemetry("LineChart", props)
+            .workspace(workspace)
+            .execution()
+            .forBuckets(buckets, props.filters)
+            .withDimensions(stackedChartDimensions);
+    },
+};
+
+const getProps = getCoreChartProps(lineChartDefinition);
 
 /**
  * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
  * is a component with bucket props measures, trendBy, segmentBy, filters
  */
 export function LineChart(props: ILineChartProps): JSX.Element {
-    return <CoreLineChart {...toCoreLineChartProps(props)} />;
-}
-
-export function toCoreLineChartProps(props: ILineChartProps): IChartProps {
-    const buckets: IBucket[] = [
-        {
-            localIdentifier: MEASURES,
-            items: props.measures || [],
-        },
-        {
-            localIdentifier: ATTRIBUTE,
-            items: props.trendBy ? [props.trendBy] : [],
-        },
-        {
-            localIdentifier: STACK,
-            items: props.segmentBy ? [props.segmentBy] : [],
-        },
-    ];
-
-    const newProps: ILineChartNonBucketProps = omit<ILineChartProps, keyof ILineChartBucketProps>(props, [
-        "measures",
-        "trendBy",
-        "segmentBy",
-        "filters",
-        "sortBy",
-    ]);
-
-    return {
-        ...newProps,
-        execution: createExecution(buckets, props),
-    };
-}
-
-export function createExecution(buckets: IBucket[], props: ILineChartProps): IPreparedExecution {
-    const { backend, workspace } = props;
-
-    return backend
-        .withTelemetry("Heatmap", props)
-        .workspace(workspace)
-        .execution()
-        .forBuckets(buckets, props.filters)
-        .withDimensions(stackedChartDimensions);
+    return <CoreLineChart {...getProps(props)} />;
 }
