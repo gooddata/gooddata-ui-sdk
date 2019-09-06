@@ -37,7 +37,7 @@ import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
 import { PivotTable } from "./components/PivotTable";
 import { Table } from "./components/Table";
 import { Headline } from "./components/Headline";
-import { ScatterPlot } from "./components/ScatterPlot";
+import { ScatterPlot } from "./charts/scatterPlot/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
 import { FunnelChart } from "./charts/funnelChart/FunnelChart";
 import { Heatmap } from "./charts/heatmap/Heatmap";

@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { ScatterPlot } from "../ScatterPlot";
-import { ScatterPlot as AfmScatterPlot } from "../afm/ScatterPlot";
-import { M1 } from "./fixtures/buckets";
+import { ScatterPlot as AfmScatterPlot } from "../../../components/afm/ScatterPlot";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("ScatterPlot", () => {
     const measure: VisualizationObject.IMeasure = {
