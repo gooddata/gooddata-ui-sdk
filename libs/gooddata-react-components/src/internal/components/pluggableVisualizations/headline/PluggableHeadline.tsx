@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+
 import * as React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { InjectedIntl } from "react-intl";
@@ -51,14 +52,14 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
+// import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { generateDimensions } from "../../../../helpers/dimensions";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
-    private projectId: string;
+    // private projectId: string;
     private callbacks: IVisCallbacks;
     private intl: InjectedIntl;
     private locale: ILocale;
@@ -67,7 +68,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
     constructor(props: IVisConstruct) {
         super();
-        this.projectId = props.projectId;
+        //  this.projectId = props.projectId;
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
@@ -138,11 +139,12 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
+        _mdObject: VisualizationObject.IVisualizationObjectContent,
     ) {
         const { dataSource } = options;
 
         if (dataSource) {
+            /*
             const { resultSpec, locale, custom, config } = options;
             const { drillableItems } = custom;
             const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
@@ -151,10 +153,12 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 ...resultSpec,
                 dimensions: this.getDimensions(mdObject),
             };
-
+            */
+            // TODO: SDK8: headline is defunct now
             render(
+                /*
                 <CoreHeadline
-                    projectId={this.projectId}
+                    workspace={this.projectId}
                     drillableItems={drillableItems}
                     locale={locale}
                     config={config}
@@ -166,7 +170,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     onError={onError}
                     LoadingComponent={null}
                     ErrorComponent={null}
-                />,
+                />*/ null,
                 document.querySelector(this.element),
             );
         }

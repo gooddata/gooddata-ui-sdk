@@ -1,12 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from "@gooddata/typings";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import noop = require("lodash/noop");
-import { convertDrillableItemsToPredicates } from "../../../helpers/headerPredicate";
-import { IChartConfig } from "../../../interfaces/Config";
-import { IDrillableItem, IDrillEventCallback } from "../../../interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { convertDrillableItemsToPredicates2 } from "../../../helpers/headerPredicate";
+import { INewChartConfig } from "../../../interfaces/Config";
+import { IDrillableItem, IDrillEventCallback2 } from "../../../interfaces/DrillEvents";
+import { IHeaderPredicate2 } from "../../../interfaces/HeaderPredicate";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
 import {
     applyDrillableItems,
@@ -14,16 +13,14 @@ import {
     fireDrillEvent,
     getHeadlineData,
 } from "./utils/HeadlineTransformationUtils";
+import noop = require("lodash/noop");
 
 export interface IHeadlineTransformationProps {
-    executionRequest: AFM.IExecution["execution"];
-    executionResponse: Execution.IExecutionResponse;
-    executionResult: Execution.IExecutionResult;
+    dataView: IDataView;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
+    config?: INewChartConfig;
 
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    config?: IChartConfig;
-
-    onFiredDrillEvent?: IDrillEventCallback;
+    onFiredDrillEvent?: IDrillEventCallback2;
     onAfterRender?: () => void;
 }
 
@@ -46,24 +43,11 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
     }
 
     public render() {
-        const {
-            intl,
-            executionRequest,
-            executionResponse,
-            executionResult,
-            drillableItems,
-            config,
-            onAfterRender,
-        } = this.props;
+        const { intl, drillableItems, dataView, config, onAfterRender } = this.props;
 
-        const data = getHeadlineData(executionResponse, executionResult, intl);
-        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-        const dataWithUpdatedDrilling = applyDrillableItems(
-            data,
-            drillablePredicates,
-            executionRequest,
-            executionResponse,
-        );
+        const data = getHeadlineData(dataView, intl);
+        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
 
         return (
             <Headline
@@ -76,8 +60,8 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
     }
 
     private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {
-        const { onFiredDrillEvent, executionRequest, executionResponse } = this.props;
-        const drillEventData = buildDrillEventData(item, executionRequest, executionResponse);
+        const { onFiredDrillEvent, dataView } = this.props;
+        const drillEventData = buildDrillEventData(item, dataView);
 
         fireDrillEvent(onFiredDrillEvent, drillEventData, target);
     }

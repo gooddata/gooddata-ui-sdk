@@ -122,6 +122,10 @@ export type IResultHeaderItem =
 // Type guards
 //
 
+export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader {
+    return !isEmpty(obj) && (obj as IMeasureGroupHeader).measureGroupHeader !== undefined;
+}
+
 export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem {
     return !isEmpty(obj) && (obj as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
 }

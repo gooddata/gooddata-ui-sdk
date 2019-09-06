@@ -50,22 +50,6 @@ export class DataViewError extends AnalyticalBackendError {
 export class DataViewFacade {
     constructor(dataView: IDataView);
     // (undocumented)
-    afm(): {
-        attributes: {
-            localIdentifier: string;
-            displayForm: import("@gooddata/sdk-model").ObjQualifier;
-            alias?: string | undefined;
-        }[];
-        measures: {
-            localIdentifier: string;
-            definition: import("@gooddata/sdk-model").IMeasureDefinitionType;
-            alias?: string | undefined;
-            title?: string | undefined;
-            format?: string | undefined;
-        }[];
-        filters: import("@gooddata/sdk-model").IFilter[];
-    };
-    // (undocumented)
     attributeHeaders(): IResultAttributeHeaderItem[][][];
     // (undocumented)
     bucket(id: string): IBucket | undefined;
@@ -96,7 +80,15 @@ export class DataViewFacade {
     // (undocumented)
     measure(id: string): IMeasure | undefined;
     // (undocumented)
+    measureGroupHeader(): IMeasureGroupHeader | undefined;
+    // (undocumented)
+    measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined;
+    // (undocumented)
+    measureGroupHeaderItems(): IMeasureHeaderItem[];
+    // (undocumented)
     measureIndex(id: string): number;
+    // (undocumented)
+    singleDimData(): DataValue[];
     // (undocumented)
     twoDimData(): DataValue[][];
 }

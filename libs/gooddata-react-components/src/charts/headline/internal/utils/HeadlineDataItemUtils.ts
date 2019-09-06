@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
+import { INewChartConfig } from "../../../../interfaces/Config";
+import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../../../interfaces/Headlines";
 import isEmpty = require("lodash/isEmpty");
 import isNaN = require("lodash/isNaN");
-import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../../../interfaces/Headlines";
-import { IChartConfig } from "../../../../interfaces/Config";
 
 const DEFAULT_VALUE_WHEN_EMPTY = "–";
 const INVALID_VALUE = "NaN";
@@ -43,7 +43,7 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
  */
 export function formatItemValue(
     item: IHeadlineDataItem,
-    config: IChartConfig = {},
+    config: INewChartConfig = {},
 ): IFormattedHeadlineDataItem {
     const { separators } = config;
     const { label, color, backgroundColor } = formatValueToLabelWithColors(

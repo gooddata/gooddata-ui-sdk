@@ -15,6 +15,8 @@ import {
     IResultDimension,
     IResultHeaderItem,
     isResultAttributeHeaderItem,
+    IMeasureGroupHeader,
+    isMeasureGroupHeader,
 } from "./results";
 
 type BucketIndex = {
@@ -78,13 +80,13 @@ export class DataViewFacade {
     }
 
     public masterMeasureForDerived(id: string): IMeasure | undefined {
-        const maybeDerived = this.measure(id);
+        const measure = this.measure(id);
 
-        if (!maybeDerived) {
+        if (!measure) {
             return;
         }
 
-        const definition = maybeDerived.measure.definition;
+        const definition = measure.measure.definition;
 
         if (isPoPMeasureDefinition(definition)) {
             return this.measure(definition.popMeasureDefinition.measureIdentifier);
@@ -92,7 +94,7 @@ export class DataViewFacade {
             return this.measure(definition.previousPeriodMeasure.measureIdentifier);
         }
 
-        return;
+        return measure;
     }
 
     public hasMeasures(): boolean {
@@ -123,6 +125,28 @@ export class DataViewFacade {
         });
     }
 
+    public measureGroupHeader(): IMeasureGroupHeader | undefined {
+        for (const dim of this.dataView.fromResult.dimensions) {
+            const measureGroupHeader = dim.headers.find(isMeasureGroupHeader);
+
+            if (measureGroupHeader) {
+                return measureGroupHeader;
+            }
+        }
+
+        return;
+    }
+
+    public measureGroupHeaderItems(): IMeasureHeaderItem[] {
+        const header = this.measureGroupHeader();
+
+        return header ? header.measureGroupHeader.items : [];
+    }
+
+    public measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined {
+        return this.measureGroupHeaderItems().find(i => i.measureHeaderItem.localIdentifier === id);
+    }
+
     public isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean {
         return this.dataView.executionDefinition.measures.some((measure: IMeasure) => {
             if (measure.measure.localIdentifier !== measureHeader.measureHeaderItem.localIdentifier) {
@@ -143,25 +167,41 @@ export class DataViewFacade {
         return this.dataView.data;
     }
 
-    public twoDimData(): DataValue[][] {
+    public singleDimData(): DataValue[] {
         const d = this.dataView.data;
+
+        if (d === null) {
+            return [];
+        }
+
         const e = d[0];
 
-        if (d === null || e === null) {
+        if (e === null || !e) {
+            return [];
+        }
+
+        if (isArray(e)) {
+            // TODO: SDK8: switch to invariant?
+            throw new Error();
+        }
+
+        return d as DataValue[];
+    }
+
+    public twoDimData(): DataValue[][] {
+        const d = this.dataView.data;
+
+        if (d === null) {
+            return [[]];
+        }
+
+        const e = d[0];
+
+        if (e === null || !e) {
             return [[]];
         }
 
         return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
-    }
-
-    public afm() {
-        const { attributes, measures, filters } = this.dataView.executionDefinition;
-
-        return {
-            attributes: attributes.map(a => a.attribute),
-            measures: measures.map(m => m.measure),
-            filters,
-        };
     }
 
     public fingerprint() {

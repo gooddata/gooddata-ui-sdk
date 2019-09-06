@@ -1,20 +1,20 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import * as React from "react";
 import noop from "lodash/noop";
+import * as React from "react";
+import { IErrorProps } from "../components/simple/ErrorComponent";
+import { ILoadingProps } from "../components/simple/LoadingComponent";
 import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../index";
 import { INewChartConfig } from "../interfaces/Config";
 import {
     OnError,
     OnExportReady,
-    OnFiredDrillEvent,
+    OnFiredDrillEvent2,
     OnLegendReady,
     OnLoadingChanged,
     OnLoadingFinish,
 } from "../interfaces/Events";
 import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
-import { IErrorProps } from "../components/simple/ErrorComponent";
-import { ILoadingProps } from "../components/simple/LoadingComponent";
 import InjectedIntl = ReactIntl.InjectedIntl;
 
 //
@@ -49,7 +49,7 @@ export interface IEvents {
     onExportReady?: OnExportReady;
     onLoadingChanged?: OnLoadingChanged;
     onLoadingFinish?: OnLoadingFinish;
-    onFiredDrillEvent?: OnFiredDrillEvent;
+    onFiredDrillEvent?: OnFiredDrillEvent2;
 }
 
 export interface IExecutableVisualizationProps {

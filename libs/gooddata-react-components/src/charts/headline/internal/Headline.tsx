@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import * as classNames from "classnames";
-import noop = require("lodash/noop");
-import { AFM } from "@gooddata/typings";
-import { HeadlineElementType } from "../../../constants/visualizationTypes";
 import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText";
+import { AFM } from "@gooddata/typings";
+import * as classNames from "classnames";
+import * as React from "react";
+import { HeadlineElementType } from "../../../constants/visualizationTypes";
+import { INewChartConfig } from "../../../interfaces/Config";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../../../interfaces/Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
-import { IChartConfig } from "../../../interfaces/Config";
+import noop = require("lodash/noop");
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: AFM.Identifier;
@@ -22,7 +22,7 @@ export type IHeadlineFiredDrillEvent = (
 
 export interface IHeadlineVisualizationProps {
     data: IHeadlineData;
-    config?: IChartConfig;
+    config?: INewChartConfig;
     onFiredDrillEvent?: IHeadlineFiredDrillEvent;
     onAfterRender?: () => void;
 }

@@ -1,68 +1,85 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import HeadlineTransformation from "./internal/HeadlineTransformation";
+import { ErrorStates } from "../..";
 import { IntlWrapper } from "../../components/core/base/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "../../components/core/base/TranslationsProvider";
-import { fixEmptyHeaderItems } from "../../components/core/base/utils/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems2 } from "../../components/core/base/utils/fixEmptyHeaderItems";
+import { withEntireDataView } from "../../components/exp/NewLoadingHOC";
+import { IErrorProps } from "../../components/simple/ErrorComponent";
+import { ILoadingProps } from "../../components/simple/LoadingComponent";
+import { generateErrorMap, IErrorMap } from "../../helpers/errorHandlers";
 import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
-import { IDataSourceProviderInjectedProps } from "../../components/afm/DataSourceProvider";
 import {
+    defaultCommonVisProps,
+    IChartProps,
     ICommonVisualizationProps,
-    visualizationLoadingHOC,
     ILoadingInjectedProps,
-    commonDefaultProps,
-} from "../../components/core/base/VisualizationLoadingHOC";
-import { BaseVisualization } from "../../components/core/base/BaseVisualization";
+} from "../chartProps";
+import HeadlineTransformation from "./internal/HeadlineTransformation";
 
 export { Requireable };
 
-export class HeadlineStateless extends BaseVisualization<
-    ICommonVisualizationProps & ILoadingInjectedProps & IDataSourceProviderInjectedProps,
-    {}
-> {
-    public static defaultProps: Partial<ICommonVisualizationProps> = commonDefaultProps;
+type Props = IChartProps & ILoadingInjectedProps;
+export class HeadlineStateless extends React.Component<Props, {}> {
+    public static defaultProps: Partial<ICommonVisualizationProps> = defaultCommonVisProps;
 
     public static propTypes = HeadlinePropTypes;
 
+    private errorMap: IErrorMap;
+
+    constructor(props: Props) {
+        super(props);
+        this.errorMap = generateErrorMap(props.intl);
+    }
+
+    public render(): JSX.Element {
+        const { dataView, error, isLoading } = this.props;
+
+        const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
+        const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
+
+        if (error) {
+            const errorProps = this.errorMap[
+                this.errorMap.hasOwnProperty(error) ? error : ErrorStates.UNKNOWN_ERROR
+            ];
+            return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
+        }
+
+        // when in pageble mode (getPage present) never show loading (its handled by the component)
+        if (isLoading || !dataView) {
+            return LoadingComponent ? <LoadingComponent /> : null;
+        }
+
+        return this.renderVisualization();
+    }
+
     protected renderVisualization(): JSX.Element {
-        const {
-            afterRender,
-            drillableItems,
-            locale,
-            dataSource,
-            resultSpec,
-            execution,
-            onFiredDrillEvent,
-            config,
-        } = this.props;
+        const { afterRender, drillableItems, locale, dataView, onFiredDrillEvent, config } = this.props;
 
         return (
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
-                    {(props: ITranslationsComponentProps) => (
-                        <HeadlineTransformation
-                            onAfterRender={afterRender}
-                            onFiredDrillEvent={onFiredDrillEvent}
-                            drillableItems={drillableItems}
-                            config={config}
-                            executionRequest={{
-                                afm: dataSource.getAfm(),
-                                resultSpec,
-                            }}
-                            executionResponse={execution.executionResponse}
-                            executionResult={fixEmptyHeaderItems(
-                                execution.executionResult,
-                                props.emptyHeaderString,
-                            )}
-                        />
-                    )}
+                    {(props: ITranslationsComponentProps) => {
+                        // TODO: SDK8: evil; fix this conceptually
+                        fixEmptyHeaderItems2(dataView, props.emptyHeaderString);
+
+                        return (
+                            <HeadlineTransformation
+                                dataView={dataView}
+                                onAfterRender={afterRender}
+                                onFiredDrillEvent={onFiredDrillEvent}
+                                drillableItems={drillableItems}
+                                config={config}
+                            />
+                        );
+                    }}
                 </IntlTranslationsProvider>
             </IntlWrapper>
         );
     }
 }
 
-export const CoreHeadline = visualizationLoadingHOC(HeadlineStateless);
+export const CoreHeadline = withEntireDataView(HeadlineStateless);

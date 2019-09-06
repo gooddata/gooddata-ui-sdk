@@ -1,22 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IBucket, IFilter, IMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
-import omit = require("lodash/omit");
-import { VisualizationInput } from "@gooddata/typings";
-
-import { Subtract } from "../../typings/subtract";
-import { Headline as AfmHeadline } from "../../components/afm/Headline";
-import { ICommonChartProps } from "../../components/core/base/BaseChart";
-import { convertBucketsToAFM } from "../../helpers/conversion";
 import { MEASURES } from "../../constants/bucketNames";
 
+import { Subtract } from "../../typings/subtract";
+import { IChartProps, ICommonChartProps } from "../chartProps";
+import { CoreHeadline } from "./CoreHeadline";
+import omit = require("lodash/omit");
+
 export interface IHeadlineBucketProps {
-    primaryMeasure: VisualizationInput.IMeasure;
-    secondaryMeasure?: VisualizationInput.IMeasure;
-    filters?: VisualizationInput.IFilter[];
+    primaryMeasure: IMeasure;
+    secondaryMeasure?: IMeasure;
+    filters?: IFilter[];
 }
 
 export interface IHeadlineProps extends ICommonChartProps, IHeadlineBucketProps {
-    projectId: string;
+    workspace: string;
 }
 
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
@@ -26,6 +26,10 @@ type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
  * is a component with bucket props primaryMeasure, secondaryMeasure, filters
  */
 export function Headline(props: IHeadlineProps): JSX.Element {
+    return <CoreHeadline {...toCoreHeadlineProps(props)} />;
+}
+
+export function toCoreHeadlineProps(props: IHeadlineProps): IChartProps {
     const buckets = [
         {
             localIdentifier: MEASURES,
@@ -41,5 +45,19 @@ export function Headline(props: IHeadlineProps): JSX.Element {
         "filters",
     ]);
 
-    return <AfmHeadline {...newProps} afm={convertBucketsToAFM(buckets, props.filters)} />;
+    return {
+        ...newProps,
+        execution: createExecution(buckets, props),
+    };
+}
+
+function createExecution(buckets: IBucket[], props: IHeadlineProps): IPreparedExecution {
+    const { backend, workspace } = props;
+
+    return backend
+        .withTelemetry("FunnelChart", props)
+        .workspace(workspace)
+        .execution()
+        .forBuckets(buckets, props.filters)
+        .withDimensions({ itemIdentifiers: ["measureGroup"] });
 }

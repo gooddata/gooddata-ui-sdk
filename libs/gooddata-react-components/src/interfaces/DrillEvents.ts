@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import { AFM } from "@gooddata/typings";
 import Highcharts from "../components/visualizations/chart/highcharts/highchartsEntryPoint";
 import {
@@ -36,6 +37,7 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
 }
 
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
+export type IDrillEventCallback2 = (event: IDrillEvent2) => void | boolean;
 
 // Intersection element
 export interface IDrillEventIntersectionElement {
@@ -113,6 +115,11 @@ export interface IDrillEventContext {
 // IDrillEvent is a parameter of the onFiredDrillEvent is callback
 export interface IDrillEvent {
     executionContext: AFM.IAfm;
+    drillContext: IDrillEventContext;
+}
+
+export interface IDrillEvent2 {
+    dataView: IDataView;
     drillContext: IDrillEventContext;
 }
 

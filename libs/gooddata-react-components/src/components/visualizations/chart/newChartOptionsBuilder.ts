@@ -946,8 +946,10 @@ function mapDrillIntersectionElement(
     )
         ? masterMeasure.measure.definition.measureDefinition.item
         : {};
-    const uri = masterMeasureQualifier.uri || header.uri;
-    const identifier = masterMeasureQualifier.identifier || header.identifier;
+    const uri = masterMeasureQualifier.uri ? masterMeasureQualifier.uri : header.uri;
+    const identifier = masterMeasureQualifier.identifier
+        ? masterMeasureQualifier.identifier
+        : header.identifier;
 
     return createDrillIntersectionElement(localIdentifier, name, uri, identifier);
 }
