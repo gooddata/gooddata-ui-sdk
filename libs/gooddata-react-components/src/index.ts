@@ -39,7 +39,7 @@ import { AreaChart } from "./charts/areaChart/AreaChart";
 import { PieChart } from "./components/PieChart";
 import { Treemap } from "./components/Treemap";
 import { DonutChart } from "./components/DonutChart";
-import { BubbleChart } from "./components/BubbleChart";
+import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
 import { PivotTable } from "./components/PivotTable";
 import { Table } from "./components/Table";
 import { Headline } from "./components/Headline";

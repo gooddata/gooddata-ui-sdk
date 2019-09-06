@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { BubbleChart } from "../BubbleChart";
-import { BubbleChart as AfmBubbleChart } from "../afm/BubbleChart";
-import { M1 } from "./fixtures/buckets";
+import { BubbleChart as AfmBubbleChart } from "../../../components/afm/BubbleChart";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("BubbleChart", () => {
     const measure: VisualizationObject.IMeasure = {

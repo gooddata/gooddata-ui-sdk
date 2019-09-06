@@ -47,3 +47,14 @@ export function defaultDimensions(buckets: IBucket[]): IDimension[] {
 export function stackedChartDimensions(buckets: IBucket[]): IDimension[] {
     return isStackedChart(buckets) ? stackedDimensions(buckets) : defaultDimensions(buckets);
 }
+
+export function pointyChartDimensions(buckets: IBucket[]): IDimension[] {
+    return [
+        {
+            itemIdentifiers: bucketsAttributes(buckets).map(attributeId),
+        },
+        {
+            itemIdentifiers: [MEASUREGROUP],
+        },
+    ];
+}
