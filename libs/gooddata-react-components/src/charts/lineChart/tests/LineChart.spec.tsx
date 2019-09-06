@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { LineChart } from "../LineChart";
-import { LineChart as AfmLineChart } from "../afm/LineChart";
-import { M1 } from "./fixtures/buckets";
+import { LineChart as AfmLineChart } from "../../../components/afm/LineChart";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("LineChart", () => {
     const measure: VisualizationObject.IMeasure = {

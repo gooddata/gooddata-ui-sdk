@@ -28,7 +28,7 @@ import { IDataSourceProviderInjectedProps } from "./components/afm/DataSourcePro
 
 import { BarChart } from "./charts/barChart/BarChart";
 import { ColumnChart } from "./charts/columnChart/ColumnChart";
-import { LineChart } from "./components/LineChart";
+import { LineChart } from "./charts/lineChart/LineChart";
 import { AreaChart } from "./charts/areaChart/AreaChart";
 import { PieChart } from "./components/PieChart";
 import { Treemap } from "./components/Treemap";
