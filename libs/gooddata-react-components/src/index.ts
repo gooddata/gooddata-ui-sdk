@@ -4,12 +4,6 @@ import * as VisEvents from "./interfaces/Events";
 import CatalogHelper from "./helpers/CatalogHelper";
 import { isEmptyResult } from "./helpers/errorHandlers";
 import * as Model from "./helpers/model";
-import { BaseChart as CoreBaseChart, IBaseChartProps } from "./components/core/base/BaseChart";
-import { Table as CoreTable } from "./components/core/Table";
-import { Headline as CoreHeadline } from "./components/core/Headline";
-import { ScatterPlot as CoreScatterPlot } from "./components/core/ScatterPlot";
-import { FunnelChart as CoreFunnelChart } from "./components/core/FunnelChart";
-import { PivotTable as CorePivotTable, IPivotTableProps } from "./components/core/PivotTable";
 import { ICommonVisualizationProps } from "./components/core/base/VisualizationLoadingHOC";
 import { ErrorComponent } from "./components/simple/ErrorComponent";
 import { LoadingComponent } from "./components/simple/LoadingComponent";
@@ -45,7 +39,7 @@ import { Table } from "./components/Table";
 import { Headline } from "./components/Headline";
 import { ScatterPlot } from "./components/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
-import { FunnelChart } from "./components/FunnelChart";
+import { FunnelChart } from "./charts/funnelChart/FunnelChart";
 import { Heatmap } from "./components/Heatmap";
 import { withJsxExport } from "./components/withJsxExport";
 import * as ChartConfiguration from "./interfaces/Config";
@@ -59,14 +53,15 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/Ov
 import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
-import { ICoreComponents } from "./interfaces/CoreComponents";
 import { BucketExecutor } from "./execution/BucketExecutor";
 
 /**
  * CoreComponents
  * A collection of BaseChart, Headline, Table, ScatterPlot, FunnelChart
+ * TODO: SDK8: revisit
  * @internal
  */
+/*
 const CoreComponents: ICoreComponents = {
     BaseChart: CoreBaseChart,
     Headline: CoreHeadline,
@@ -75,6 +70,7 @@ const CoreComponents: ICoreComponents = {
     ScatterPlot: CoreScatterPlot,
     FunnelChart: CoreFunnelChart,
 };
+*/
 
 export {
     AfmComponents,
@@ -89,7 +85,6 @@ export {
     ScatterPlot,
     ComboChart,
     FunnelChart,
-    CoreComponents,
     ErrorCodes,
     ErrorStates,
     ErrorComponent,
@@ -97,8 +92,6 @@ export {
     BucketExecutor,
     generateDimensions,
     Headline,
-    IBaseChartProps,
-    IPivotTableProps,
     ICommonVisualizationProps,
     IDataSourceProviderInjectedProps,
     IDrillableItem,

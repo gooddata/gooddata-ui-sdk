@@ -2,9 +2,9 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 
-import { CoreDonutChart } from "../../../charts/donutChart/CoreDonutChart";
-import { BaseChart } from "../base/BaseChart";
-import { emptyDataSource } from "../../tests/mocks";
+import { CoreDonutChart } from "../CoreDonutChart";
+import { BaseChart } from "../../../components/core/base/BaseChart";
+import { emptyDataSource } from "../../../components/tests/mocks";
 
 describe("DonutChart", () => {
     it("should render BaseChart", () => {
