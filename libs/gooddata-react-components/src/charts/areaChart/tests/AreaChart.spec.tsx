@@ -6,8 +6,8 @@ import { VisualizationInput } from "@gooddata/typings";
 
 import { AreaChart as AfmAreaChart } from "../afm/AreaChart";
 import { AreaChart } from "../AreaChart";
-import { M1, M1WithRatio } from "./fixtures/buckets";
-import { IChartConfig } from "../../interfaces/Config";
+import { M1, M1WithRatio } from "../../../components/tests/fixtures/buckets";
+import { IChartConfig } from "../../../interfaces/Config";
 
 function renderChart(
     measures: VisualizationInput.AttributeOrMeasure[],

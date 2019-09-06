@@ -5,7 +5,6 @@ export { PieChart } from "./PieChart";
 export { DonutChart } from "./DonutChart";
 export { Table } from "./Table";
 export { Headline } from "./Headline";
-export { AreaChart } from "./AreaChart";
 export { Treemap } from "./Treemap";
 export { Heatmap } from "./Heatmap";
 export { ScatterPlot } from "./ScatterPlot";

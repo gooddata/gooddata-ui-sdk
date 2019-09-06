@@ -1,33 +1,36 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationInput, VisualizationObject } from "@gooddata/typings";
-import * as React from "react";
-import { IChartConfig } from "..";
-import { ATTRIBUTE, MEASURES, STACK } from "../constants/bucketNames";
-import { convertBucketsToAFM } from "../helpers/conversion";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    getViewByTwoAttributes,
-    sanitizeComputeRatioOnMeasures,
-    sanitizeConfig,
-} from "../helpers/optionalStacking/common";
-import { getStackingResultSpec } from "../helpers/resultSpec";
-import { Subtract } from "../typings/subtract";
-import { AreaChart as AfmAreaChart } from "./afm/AreaChart";
-import { ICommonChartProps } from "./core/base/BaseChart";
+    AttributeOrMeasure,
+    IAttribute,
+    IFilter,
+    SortItem,
+    IBucket,
+    computeRatioRules,
+} from "@gooddata/sdk-model";
+import * as React from "react";
+import { truncate } from "../../components/exp/chartUtils";
+import { IChartProps, ICommonChartProps } from "../../components/exp/props";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
+import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
+import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
+import { INewChartConfig } from "../../interfaces/Config";
+import { Subtract } from "../../typings/subtract";
+import { stackedChartDimensions } from "../dimensions";
+import { CoreAreaChart } from "./CoreAreaChart";
 import isNil = require("lodash/isNil");
 import omit = require("lodash/omit");
-import BucketItem = VisualizationObject.BucketItem;
-import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 
 export interface IAreaChartBucketProps {
-    measures: VisualizationInput.AttributeOrMeasure[];
-    viewBy?: VisualizationInput.IAttribute | VisualizationInput.IAttribute[];
-    stackBy?: VisualizationInput.IAttribute;
-    filters?: VisualizationInput.IFilter[];
-    sortBy?: VisualizationInput.ISort[];
+    measures: AttributeOrMeasure[];
+    viewBy?: IAttribute | IAttribute[];
+    stackBy?: IAttribute;
+    filters?: IFilter[];
+    sortBy?: SortItem[];
 }
 
 export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProps {
-    projectId: string;
+    workspace: string;
 }
 
 type IAreaChartNonBucketProps = Subtract<IAreaChartProps, IAreaChartBucketProps>;
@@ -37,13 +40,17 @@ type IAreaChartNonBucketProps = Subtract<IAreaChartProps, IAreaChartBucketProps>
  * is a component with bucket props measures, viewBy, stacksBy, filters
  */
 export function AreaChart(props: IAreaChartProps): JSX.Element {
+    return <CoreAreaChart {...toCoreAreaChartProps(props)} />;
+}
+
+export function toCoreAreaChartProps(props: IAreaChartProps): IChartProps {
     verifyBuckets(props);
 
     const { measures, viewBy, stackBy } = getBucketsProps(props);
-    const sanitizedMeasures = sanitizeComputeRatioOnMeasures(measures);
+    const sanitizedMeasures = computeRatioRules(measures);
     const configProp = getConfigProps(props);
 
-    const buckets: VisualizationObject.IBucket[] = [
+    const buckets: IBucket[] = [
         {
             localIdentifier: MEASURES,
             items: sanitizedMeasures,
@@ -65,23 +72,31 @@ export function AreaChart(props: IAreaChartProps): JSX.Element {
         "filters",
         "sortBy",
     ]);
-    const sanitizedConfig = sanitizeConfig(measures, {
+    const sanitizedConfig = sanitizeConfig2(buckets, {
         ...newProps.config,
         ...configProp,
     });
 
-    return (
-        <AfmAreaChart
-            {...newProps}
-            config={sanitizedConfig}
-            projectId={props.projectId}
-            afm={convertBucketsToAFM(buckets, props.filters)}
-            resultSpec={getStackingResultSpec(buckets, props.sortBy)}
-        />
-    );
+    return {
+        ...newProps,
+        config: sanitizedConfig,
+        execution: createExecution(buckets, props),
+    };
 }
 
-function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
+export function createExecution(buckets: IBucket[], props: IAreaChartProps): IPreparedExecution {
+    const { backend, workspace } = props;
+
+    return backend
+        .withTelemetry("AreaChart", props)
+        .workspace(workspace)
+        .execution()
+        .forBuckets(buckets, props.filters)
+        .withSorting(...props.sortBy)
+        .withDimensions(stackedChartDimensions);
+}
+
+function getStackConfiguration(config: INewChartConfig = {}): INewChartConfig {
     const { stackMeasures, stackMeasuresToPercent } = config;
     if (isNil(stackMeasures) && isNil(stackMeasuresToPercent)) {
         return config;
@@ -95,12 +110,12 @@ function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
 export function getBucketsProps(
     props: IAreaChartProps,
 ): {
-    measures: BucketItem[];
-    viewBy: IVisualizationAttribute[];
-    stackBy: IVisualizationAttribute[];
+    measures: AttributeOrMeasure[];
+    viewBy: IAttribute[];
+    stackBy: IAttribute[];
 } {
     const { measures, stackBy } = props;
-    const viewBy = getViewByTwoAttributes(props.viewBy);
+    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
 
     if (viewBy.length <= 1) {
         return {
@@ -121,8 +136,8 @@ export function getBucketsProps(
     };
 }
 
-export function getConfigProps(props: IAreaChartProps): IChartConfig {
-    const viewBy = getViewByTwoAttributes(props.viewBy);
+export function getConfigProps(props: IAreaChartProps): INewChartConfig {
+    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
     if (viewBy.length <= 1) {
         return getStackConfiguration(props.config);
     }
@@ -139,7 +154,7 @@ export function getConfigProps(props: IAreaChartProps): IChartConfig {
  * @param props
  */
 export function verifyBuckets(props: IAreaChartProps): void {
-    const viewBy = getViewByTwoAttributes(props.viewBy);
+    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
     if (viewBy.length <= 1) {
         return;
     }
