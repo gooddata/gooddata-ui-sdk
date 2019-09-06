@@ -13,7 +13,7 @@ import Menu from "../../menu/Menu";
 import { getParsedFields } from "./agGridUtils";
 import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 import { IOnOpenedChangeParams } from "../../menu/MenuSharedTypes";
-import { AVAILABLE_TOTALS } from "../../visualizations/table/totals/utils";
+import { AVAILABLE_TOTALS } from "./utils";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import menuHelper from "./aggregationsMenuHelper";
 import { FIELD_TYPE_ATTRIBUTE } from "./agGridConst";

@@ -9,7 +9,7 @@ import {
     IDataSourceProviderInjectedProps,
 } from "../DataSourceProvider";
 import { Table } from "../../tests/mocks";
-import { getNativeTotals } from "../../visualizations/table/totals/utils";
+import { getNativeTotals } from "../../core/pivotTable/utils";
 
 describe("DataSourceProvider", () => {
     const PROJECT_ID = "projid";

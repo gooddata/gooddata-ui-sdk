@@ -12,8 +12,7 @@ import { OnFiredDrillEvent } from "../../interfaces/Events";
 
 import { Execution } from "@gooddata/typings";
 
-import { isTable, isChartSupported, stringifyChartTypes } from "./utils/common";
-import { TableTransformation } from "./table/TableTransformation";
+import { isChartSupported, stringifyChartTypes } from "./utils/common";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import ChartTransformation, { IExecutionRequest, renderHighCharts } from "./chart/ChartTransformation";
 
@@ -73,20 +72,6 @@ export class Visualization extends React.Component<IVisualizationProps> {
 
     public render(): JSX.Element {
         const visType = this.props.config.type;
-
-        if (isTable(visType)) {
-            return (
-                <TableTransformation
-                    {...this.props}
-                    executionRequest={{
-                        execution: {
-                            afm: this.props.executionRequest.afm,
-                            resultSpec: this.props.executionRequest.resultSpec,
-                        },
-                    }}
-                />
-            );
-        }
 
         if (isChartSupported(visType)) {
             const {

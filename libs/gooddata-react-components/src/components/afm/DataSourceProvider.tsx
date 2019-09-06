@@ -11,7 +11,7 @@ import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../visualizations/p
 import { IDataSource } from "../../interfaces/DataSource";
 import { ISubject } from "../../helpers/async";
 import { setTelemetryHeaders } from "../../helpers/utils";
-import { getNativeTotals } from "../visualizations/table/totals/utils";
+import { getNativeTotals } from "../core/pivotTable/utils";
 
 export type IAdapterFactory = (
     sdk: SDK,

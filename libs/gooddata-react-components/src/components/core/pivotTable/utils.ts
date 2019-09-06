@@ -1,23 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
-import remove = require("lodash/remove");
 import cloneDeep = require("lodash/cloneDeep");
-import sortedUniq = require("lodash/sortedUniq");
-import clone = require("lodash/clone");
-import without = require("lodash/without");
-import omit = require("lodash/omit");
-import sortBy = require("lodash/sortBy");
 import get = require("lodash/get");
+import omit = require("lodash/omit");
+import remove = require("lodash/remove");
+import sortBy = require("lodash/sortBy");
 import { AFM } from "@gooddata/typings";
 import { InjectedIntl } from "react-intl";
 import {
+    IMappingHeader,
     isMappingHeaderAttribute,
     isMappingHeaderMeasureItem,
-    IMappingHeader,
-} from "../../../../interfaces/MappingHeader";
-import { IIndexedTotalItem, ITotalWithData } from "../../../../interfaces/Totals";
-import { IAlignPoint, ITotalsDataSource, ITotalTypeWithTitle } from "../../../../interfaces/Table";
-
-import { getFooterHeight } from "../utils/layout";
+} from "../../../interfaces/MappingHeader";
+import { ITotalsDataSource, ITotalTypeWithTitle } from "../../../interfaces/Table";
+import { IIndexedTotalItem, ITotalWithData } from "../../../interfaces/Totals";
 
 export const AVAILABLE_TOTALS: AFM.TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
 
@@ -172,105 +167,6 @@ export function addTotalsRow(totals: ITotalWithData[], totalItemTypeToAdd: AFM.T
     updatedTotals.push(total);
 
     return updatedTotals;
-}
-
-export function updateTotalsRemovePosition(
-    tableBoundingRect: ClientRect,
-    totals: ITotalWithData[],
-    isTotalsEditAllowed: boolean,
-    totalsAreVisible: boolean,
-    removeWrapper: HTMLElement,
-): void {
-    if (!isTotalsEditAllowed) {
-        return;
-    }
-
-    const translateY: number =
-        tableBoundingRect.height - getFooterHeight(totals, isTotalsEditAllowed, totalsAreVisible);
-
-    removeWrapper.style.bottom = "auto";
-    removeWrapper.style.top = `${translateY}px`;
-}
-
-export function getAddTotalDropdownAlignPoints(isLastColumn: boolean = false): IAlignPoint[] {
-    return isLastColumn
-        ? [
-              { align: "tc br", offset: { x: 30, y: -3 } }, // top right
-              { align: "bc tr", offset: { x: 30, y: 50 } }, // bottom right
-          ]
-        : [
-              { align: "tc bc", offset: { x: 0, y: -3 } }, // top center
-              { align: "bc tc", offset: { x: 0, y: 50 } }, // bottom center
-          ];
-}
-
-export function shouldShowAddTotalButton(
-    header: IMappingHeader,
-    isFirstColumn: boolean,
-    addingMoreTotalsEnabled: boolean,
-): boolean {
-    return !isFirstColumn && isMappingHeaderMeasureItem(header) && addingMoreTotalsEnabled;
-}
-
-export function getFirstMeasureIndex(headers: IMappingHeader[]): number {
-    const measureOffset = headers.findIndex(header => isMappingHeaderMeasureItem(header));
-    return measureOffset === -1 ? 0 : measureOffset;
-}
-
-export function hasTableColumnTotalEnabled(
-    outputMeasureIndexes: number[],
-    tableColumnIndex: number,
-    firstMeasureIndex: number,
-): boolean {
-    const index = tableColumnIndex - firstMeasureIndex;
-
-    return outputMeasureIndexes && outputMeasureIndexes.includes(index);
-}
-
-export function addMeasureIndex(
-    totals: ITotalWithData[],
-    headers: IMappingHeader[],
-    totalType: AFM.TotalType,
-    tableColumnIndex: number,
-): ITotalWithData[] {
-    const index: number = tableColumnIndex - getFirstMeasureIndex(headers);
-
-    return totals.map((total: ITotalWithData) => {
-        if (total.type !== totalType) {
-            return total;
-        }
-
-        const outputMeasureIndexes: number[] = clone(total.outputMeasureIndexes);
-        outputMeasureIndexes.push(index);
-        outputMeasureIndexes.sort();
-
-        return {
-            ...total,
-            outputMeasureIndexes: sortedUniq(outputMeasureIndexes),
-        };
-    });
-}
-
-export function removeMeasureIndex(
-    totals: ITotalWithData[],
-    headers: IMappingHeader[],
-    totalType: AFM.TotalType,
-    tableColumnIndex: number,
-): ITotalWithData[] {
-    const index: number = tableColumnIndex - getFirstMeasureIndex(headers);
-
-    return totals.map((total: ITotalWithData) => {
-        if (total.type !== totalType) {
-            return total;
-        }
-
-        const outputMeasureIndexes: number[] = without(total.outputMeasureIndexes, index);
-
-        return {
-            ...total,
-            outputMeasureIndexes,
-        };
-    });
 }
 
 export function getTotalsDefinition(totalsWithValues: ITotalWithData[]): IIndexedTotalItem[] {
