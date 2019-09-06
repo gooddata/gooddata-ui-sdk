@@ -1,7 +1,14 @@
 // (C) 2019 GoodData Corporation
 
-import { IBucket, IDimension, IAttribute, attributeId, bucketsAttributes } from "@gooddata/sdk-model";
-import { ATTRIBUTE, STACK } from "../../constants/bucketNames";
+import {
+    IBucket,
+    IDimension,
+    IAttribute,
+    attributeId,
+    bucketsAttributes,
+    bucketAttributes,
+} from "@gooddata/sdk-model";
+import { ATTRIBUTE, STACK, VIEW } from "../../constants/bucketNames";
 import { MEASUREGROUP } from "../../constants/dimensions";
 
 function isStackedChart(buckets: IBucket[]) {
@@ -79,6 +86,35 @@ export function roundChartDimensions(buckets: IBucket[]): IDimension[] {
         },
         {
             itemIdentifiers: attributes,
+        },
+    ];
+}
+
+export function heatmapDimensions(buckets: IBucket[]): IDimension[] {
+    const view: IBucket = buckets.find(bucket => bucket.localIdentifier === VIEW);
+    const stack: IBucket = buckets.find(bucket => bucket.localIdentifier === STACK);
+
+    const hasNoStacks = !stack || !stack.items || stack.items.length === 0;
+
+    if (hasNoStacks) {
+        return [
+            {
+                itemIdentifiers: bucketAttributes(view).map(attributeId),
+            },
+            {
+                itemIdentifiers: [MEASUREGROUP],
+            },
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: bucketAttributes(view).map(attributeId),
+        },
+        {
+            itemIdentifiers: bucketAttributes(stack)
+                .map(attributeId)
+                .concat([MEASUREGROUP]),
         },
     ];
 }

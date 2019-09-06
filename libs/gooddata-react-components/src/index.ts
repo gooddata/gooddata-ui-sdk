@@ -40,7 +40,7 @@ import { Headline } from "./components/Headline";
 import { ScatterPlot } from "./components/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
 import { FunnelChart } from "./charts/funnelChart/FunnelChart";
-import { Heatmap } from "./components/Heatmap";
+import { Heatmap } from "./charts/heatmap/Heatmap";
 import { withJsxExport } from "./components/withJsxExport";
 import * as ChartConfiguration from "./interfaces/Config";
 // tslint:disable-next-line:no-duplicate-imports
