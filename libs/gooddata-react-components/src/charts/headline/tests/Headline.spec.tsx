@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { Headline } from "../Headline";
-import { Headline as AfmHeadline } from "../afm/Headline";
-import { M1 } from "./fixtures/buckets";
+import { Headline as AfmHeadline } from "../../../components/afm/Headline";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("Headline", () => {
     const measure: VisualizationObject.IMeasure = {

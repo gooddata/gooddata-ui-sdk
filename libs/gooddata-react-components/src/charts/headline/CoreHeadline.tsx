@@ -1,18 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import HeadlineTransformation from "../visualizations/headline/HeadlineTransformation";
-import { IntlWrapper } from "./base/IntlWrapper";
-import { IntlTranslationsProvider, ITranslationsComponentProps } from "./base/TranslationsProvider";
-import { fixEmptyHeaderItems } from "./base/utils/fixEmptyHeaderItems";
+import HeadlineTransformation from "./internal/HeadlineTransformation";
+import { IntlWrapper } from "../../components/core/base/IntlWrapper";
+import {
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "../../components/core/base/TranslationsProvider";
+import { fixEmptyHeaderItems } from "../../components/core/base/utils/fixEmptyHeaderItems";
 import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
-import { IDataSourceProviderInjectedProps } from "../afm/DataSourceProvider";
+import { IDataSourceProviderInjectedProps } from "../../components/afm/DataSourceProvider";
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
     ILoadingInjectedProps,
     commonDefaultProps,
-} from "./base/VisualizationLoadingHOC";
-import { BaseVisualization } from "./base/BaseVisualization";
+} from "../../components/core/base/VisualizationLoadingHOC";
+import { BaseVisualization } from "../../components/core/base/BaseVisualization";
 
 export { Requireable };
 
@@ -62,4 +65,4 @@ export class HeadlineStateless extends BaseVisualization<
     }
 }
 
-export const Headline = visualizationLoadingHOC(HeadlineStateless);
+export const CoreHeadline = visualizationLoadingHOC(HeadlineStateless);

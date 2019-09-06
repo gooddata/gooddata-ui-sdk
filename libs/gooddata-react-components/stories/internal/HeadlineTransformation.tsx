@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 import { wrap } from "../utils/wrap";
-import HeadlineTransformation from "../../src/components/visualizations/headline/HeadlineTransformation";
+import HeadlineTransformation from "../../src/charts/headline/internal/HeadlineTransformation";
 import { headlineWithOneMeasure } from "../data/headlineExecutionFixtures";
 import "../../styles/scss/headline.scss";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";

@@ -51,7 +51,7 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-import { Headline } from "../../../../components/core/Headline";
+import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
 import { generateDimensions } from "../../../../helpers/dimensions";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
@@ -153,7 +153,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             };
 
             render(
-                <Headline
+                <CoreHeadline
                     projectId={this.projectId}
                     drillableItems={drillableItems}
                     locale={locale}

@@ -20,7 +20,7 @@ import {
 import { getMeasureItems } from "../../../../utils/bucketHelper";
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
-import { Headline } from "../../../../../components/core/Headline";
+import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
 import * as BucketNames from "../../../../../constants/bucketNames";
 
 describe("PluggableHeadline", () => {
@@ -123,7 +123,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(options, null, testMocks.emptyMdObject);
 
-            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(Headline);
+            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
             expect(reactCreateElementSpy.mock.calls[0][1]).toEqual({
                 projectId: "PROJECTID",
                 config: undefined,

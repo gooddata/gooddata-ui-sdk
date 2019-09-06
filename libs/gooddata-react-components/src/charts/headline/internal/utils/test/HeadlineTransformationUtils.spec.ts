@@ -28,7 +28,7 @@ import {
     ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT,
     SAME_MEASURE_VALUES_EXECUTION_RESULT,
 } from "../../test/fixtures/two_measures";
-import { createIntlMock } from "../../../utils/intlUtils";
+import { createIntlMock } from "../../../../../components/visualizations/utils/intlUtils";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {

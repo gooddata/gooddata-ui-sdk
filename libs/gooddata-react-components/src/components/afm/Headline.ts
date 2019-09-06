@@ -6,7 +6,7 @@ import { dataSourceProvider, IDataSourceProviderProps } from "./DataSourceProvid
 
 export { IDataSourceProviderProps };
 
-import { Headline as CoreHeadline } from "../core/Headline";
+import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 
 function generateDefaultDimensions(): AFM.IDimension[] {
     return [{ itemIdentifiers: ["measureGroup"] }];

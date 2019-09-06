@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
 import { Headline as AfmHeadline } from "../Headline";
-import { Headline } from "../../core/Headline";
+import { CoreHeadline } from "../../../charts/headline/CoreHeadline";
 import { dummyHeadlineExecuteAfmAdapterFactory } from "./utils/DummyHeadlineExecuteAfmAdapter";
 import { executionRequest } from "./utils/dummyHeadlineFixture";
 
@@ -20,7 +20,7 @@ describe("Headline", () => {
 
         return testUtils.delay().then(() => {
             wrapper.update();
-            const dimensions = wrapper.find(Headline).props().resultSpec.dimensions;
+            const dimensions = wrapper.find(CoreHeadline).props().resultSpec.dimensions;
             expect(dimensions).toEqual([
                 {
                     itemIdentifiers: ["measureGroup"],

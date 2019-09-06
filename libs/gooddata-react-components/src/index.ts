@@ -35,7 +35,7 @@ import { Treemap } from "./charts/treemap/Treemap";
 import { DonutChart } from "./charts/donutChart/DonutChart";
 import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
 import { PivotTable } from "./components/PivotTable";
-import { Headline } from "./components/Headline";
+import { Headline } from "./charts/headline/Headline";
 import { ScatterPlot } from "./charts/scatterPlot/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
 import { FunnelChart } from "./charts/funnelChart/FunnelChart";

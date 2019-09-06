@@ -3,11 +3,11 @@ import * as React from "react";
 import omit = require("lodash/omit");
 import { VisualizationInput } from "@gooddata/typings";
 
-import { Subtract } from "../typings/subtract";
-import { Headline as AfmHeadline } from "./afm/Headline";
-import { ICommonChartProps } from "./core/base/BaseChart";
-import { convertBucketsToAFM } from "../helpers/conversion";
-import { MEASURES } from "../constants/bucketNames";
+import { Subtract } from "../../typings/subtract";
+import { Headline as AfmHeadline } from "../../components/afm/Headline";
+import { ICommonChartProps } from "../../components/core/base/BaseChart";
+import { convertBucketsToAFM } from "../../helpers/conversion";
+import { MEASURES } from "../../constants/bucketNames";
 
 export interface IHeadlineBucketProps {
     primaryMeasure: VisualizationInput.IMeasure;

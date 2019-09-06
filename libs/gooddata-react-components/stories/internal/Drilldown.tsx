@@ -31,7 +31,7 @@ import {
 } from "../../src/components/visualizations/table/fixtures/arithmericMeasures";
 import { PivotTable } from "../../src";
 import { ATTRIBUTE_1, MEASURE_1, MEASURE_2, MEASURE_AM_1_2 } from "../data/componentProps";
-import HeadlineTransformation from "../../src/components/visualizations/headline/HeadlineTransformation";
+import HeadlineTransformation from "../../src/charts/headline/internal/HeadlineTransformation";
 import {
     headlineWithOneMeasure,
     headlineWithTwoMeasures,

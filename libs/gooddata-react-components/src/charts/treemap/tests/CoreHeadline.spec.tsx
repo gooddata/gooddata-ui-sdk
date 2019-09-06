@@ -2,16 +2,19 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
-import { oneMeasureOneDimensionDataSource, twoMeasuresOneDimensionDataSource } from "../../tests/mocks";
-import { Headline } from "../Headline";
-import { ICommonVisualizationProps } from "../base/VisualizationLoadingHOC";
-import HeadlineTransformation from "../../visualizations/headline/HeadlineTransformation";
-import { IDataSourceProviderInjectedProps } from "../../afm/DataSourceProvider";
+import {
+    oneMeasureOneDimensionDataSource,
+    twoMeasuresOneDimensionDataSource,
+} from "../../../components/tests/mocks";
+import { CoreHeadline } from "../../headline/CoreHeadline";
+import { ICommonVisualizationProps } from "../../../components/core/base/VisualizationLoadingHOC";
+import HeadlineTransformation from "../../headline/internal/HeadlineTransformation";
+import { IDataSourceProviderInjectedProps } from "../../../components/afm/DataSourceProvider";
 
 describe("Headline", () => {
     function createComponent(props: ICommonVisualizationProps & IDataSourceProviderInjectedProps) {
         return mount<Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps>>(
-            <Headline
+            <CoreHeadline
                 {...props}
                 afterRender={jest.fn()}
                 drillableItems={[]}

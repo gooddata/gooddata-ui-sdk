@@ -17,7 +17,7 @@ import {
 } from "../../../../interfaces/DrillEvents";
 import { VisualizationTypes, HeadlineElementType } from "../../../../constants/visualizationTypes";
 import { IHeadlineData, IHeadlineDataItem } from "../../../../interfaces/Headlines";
-import { createDrillIntersectionElement } from "../../utils/drilldownEventing";
+import { createDrillIntersectionElement } from "../../../../components/visualizations/utils/drilldownEventing";
 
 export interface IHeadlineExecutionData {
     measureHeaderItem: Execution.IMeasureHeaderItem["measureHeaderItem"];

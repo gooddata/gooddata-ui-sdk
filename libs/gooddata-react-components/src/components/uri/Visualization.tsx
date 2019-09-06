@@ -19,7 +19,7 @@ import { IntlWrapper } from "../core/base/IntlWrapper";
 import { BaseChart } from "../core/base/BaseChart";
 import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
 import { PivotTable } from "../PivotTable";
-import { Headline } from "../core/Headline";
+import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 import { IEvents, OnLegendReady } from "../../interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
 import { VisualizationTypes, VisType } from "../../constants/visualizationTypes";
@@ -148,7 +148,7 @@ export class VisualizationWrapped extends React.Component<
         getFeatureFlags,
         BaseChartComponent: BaseChart,
         PivotTableComponent: PivotTable,
-        HeadlineComponent: Headline,
+        HeadlineComponent: CoreHeadline,
         ErrorComponent,
         LoadingComponent,
         onExportReady: noop,
