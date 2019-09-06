@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { PieChart } from "../PieChart";
-import { PieChart as AfmPieChart } from "../afm/PieChart";
-import { M1 } from "./fixtures/buckets";
+import { PieChart as AfmPieChart } from "../../../components/afm/PieChart";
+import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("PieChart", () => {
     const measure: VisualizationObject.IMeasure = {
