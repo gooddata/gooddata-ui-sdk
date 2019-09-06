@@ -2,11 +2,11 @@
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IAttribute, IBucket, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
-import { IChartProps, ICommonChartProps } from "../../components/exp/props";
+import { IChartProps, ICommonChartProps } from "../chartProps";
 
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW } from "../../constants/bucketNames";
 import { Subtract } from "../../typings/subtract";
-import { pointyChartDimensions } from "../dimensions";
+import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";
 import omit = require("lodash/omit");
 

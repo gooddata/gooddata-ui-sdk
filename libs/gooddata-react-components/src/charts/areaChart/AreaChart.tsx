@@ -10,13 +10,13 @@ import {
 } from "@gooddata/sdk-model";
 import * as React from "react";
 import { truncate } from "../../components/exp/chartUtils";
-import { IChartProps, ICommonChartProps } from "../../components/exp/props";
+import { IChartProps, ICommonChartProps } from "../chartProps";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
 import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
 import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { Subtract } from "../../typings/subtract";
-import { stackedChartDimensions } from "../dimensions";
+import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
 import isNil = require("lodash/isNil");
 import omit = require("lodash/omit");

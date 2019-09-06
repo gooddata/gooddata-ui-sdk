@@ -2,8 +2,8 @@
 import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import noop from "lodash/noop";
-import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../..";
-import { INewChartConfig } from "../../interfaces/Config";
+import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../index";
+import { INewChartConfig } from "../interfaces/Config";
 import {
     OnError,
     OnExportReady,
@@ -11,10 +11,10 @@ import {
     OnLegendReady,
     OnLoadingChanged,
     OnLoadingFinish,
-} from "../../interfaces/Events";
-import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
-import { IErrorProps } from "../simple/ErrorComponent";
-import { ILoadingProps } from "../simple/LoadingComponent";
+} from "../interfaces/Events";
+import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
+import { IErrorProps } from "../components/simple/ErrorComponent";
+import { ILoadingProps } from "../components/simple/LoadingComponent";
 import InjectedIntl = ReactIntl.InjectedIntl;
 
 //

@@ -12,13 +12,13 @@ import {
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
 import omit = require("lodash/omit");
-import { IChartProps, ICommonChartProps } from "../../components/exp/props";
+import { IChartProps, ICommonChartProps } from "../chartProps";
 import { Subtract } from "../../typings/subtract";
 import { truncate } from "../../components/exp/chartUtils";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
 import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
 import { CoreBarChart } from "./CoreBarChart";
-import { stackedChartDimensions } from "../dimensions";
+import { stackedChartDimensions } from "../_commons/dimensions";
 
 export interface IBarChartBucketProps {
     measures: AttributeOrMeasure[];

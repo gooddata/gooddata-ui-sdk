@@ -8,7 +8,11 @@ import { RuntimeError } from "../../errors/RuntimeError";
 import { convertErrors } from "../../helpers/errorHandlers";
 import { ILoadingState } from "../../interfaces/Events";
 import { IntlWrapper } from "../core/base/IntlWrapper";
-import { ICommonVisualizationProps, IExecutableVisualizationProps, ILoadingInjectedProps } from "./props";
+import {
+    ICommonVisualizationProps,
+    IExecutableVisualizationProps,
+    ILoadingInjectedProps,
+} from "../../charts/chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 

@@ -3,7 +3,7 @@ import * as React from "react";
 import { ErrorStates } from "../../..";
 import { generateErrorMap, IErrorMap } from "../../../helpers/errorHandlers";
 import { withEntireDataView } from "../../exp/NewLoadingHOC";
-import { ILoadingInjectedProps, defaultCommonVisProps, IBaseChartProps } from "../../exp/props";
+import { ILoadingInjectedProps, defaultCommonVisProps, IBaseChartProps } from "../../../charts/chartProps";
 import { IErrorProps } from "../../simple/ErrorComponent";
 import { ILoadingProps } from "../../simple/LoadingComponent";
 import noop = require("lodash/noop");
