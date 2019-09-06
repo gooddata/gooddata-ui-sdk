@@ -32,7 +32,7 @@ import DerivedMeasureTitleSuffixFactory from "./factory/DerivedMeasureTitleSuffi
 import ArithmeticMeasureTitleFactory from "./factory/ArithmeticMeasureTitleFactory";
 import { IDataSourceProviderInjectedProps } from "./components/afm/DataSourceProvider";
 
-import { BarChart } from "./components/BarChart";
+import { BarChart } from "./charts/barChart/BarChart";
 import { ColumnChart } from "./components/ColumnChart";
 import { LineChart } from "./components/LineChart";
 import { AreaChart } from "./components/AreaChart";

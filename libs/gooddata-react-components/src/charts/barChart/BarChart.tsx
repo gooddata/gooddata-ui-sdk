@@ -10,14 +10,14 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import * as React from "react";
-import { ATTRIBUTE, MEASURES, STACK } from "../constants/bucketNames";
+import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
 import omit = require("lodash/omit");
-import { IChartProps, ICommonChartProps } from "./exp/props";
-import { Subtract } from "../typings/subtract";
-import { truncate } from "./exp/chartUtils";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "./visualizations/chart/constants";
-import { sanitizeConfig2 } from "../helpers/optionalStacking/common";
-import { BarChart as CoreBarChart } from "./core/BarChart";
+import { IChartProps, ICommonChartProps } from "../../components/exp/props";
+import { Subtract } from "../../typings/subtract";
+import { truncate } from "../../components/exp/chartUtils";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
+import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
+import { CoreBarChart } from "./CoreBarChart";
 
 export interface IBarChartBucketProps {
     measures: AttributeOrMeasure[];
