@@ -8,9 +8,9 @@ import noop = require("lodash/noop");
 
 import AggregationsMenu from "../../src/components/core/pivotTable/AggregationsMenu";
 import AggregationsSubMenu from "../../src/components/core/pivotTable/AggregationsSubMenu";
-import Menu from "../../src/components/menu/Menu";
-import SubMenu, { ISubMenuProps } from "../../src/components/menu/SubMenu";
-import { IOnOpenedChangeParams } from "../../src/components/menu/MenuSharedTypes";
+import Menu from "../../src/_defunct/pivotTable/menu/Menu";
+import SubMenu, { ISubMenuProps } from "../../src/_defunct/pivotTable/menu/SubMenu";
+import { IOnOpenedChangeParams } from "../../src/_defunct/pivotTable/menu/MenuSharedTypes";
 import { EXECUTION_RESPONSE_2A_3M } from "../../src/components/visualizations/table/fixtures/2attributes3measures";
 import { createIntlMock } from "../../src/components/visualizations/utils/intlUtils";
 import { IMenuAggregationClickConfig } from "../../src/interfaces/PivotTable";

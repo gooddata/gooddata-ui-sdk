@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Kpi } from "../../src/components/simple/Kpi";
+import { Kpi } from "../../src/_defunct/kpi/Kpi";
 import { GERMAN_NUMBER_FORMAT } from "../data/numberFormat";
 
 storiesOf("Core components/KPI", module)

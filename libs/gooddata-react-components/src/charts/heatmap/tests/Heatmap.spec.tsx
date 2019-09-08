@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 
-import { Heatmap as AfmHeatmap } from "../../../components/afm/Heatmap";
+import { Heatmap as AfmHeatmap } from "../../../_defunct/afm/Heatmap";
 import { Heatmap } from "../Heatmap";
 import { M1 } from "../../../components/tests/fixtures/buckets";
 

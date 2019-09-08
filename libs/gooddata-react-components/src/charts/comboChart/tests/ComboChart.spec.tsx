@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { AFM, VisualizationObject } from "@gooddata/typings";
 
-import { ComboChart as AfmComboChart } from "../../../components/afm/ComboChart";
+import { ComboChart as AfmComboChart } from "../../../_defunct/afm/ComboChart";
 import { ComboChart } from "../ComboChart";
 import { M1, M2, M3, M4 } from "../../../components/tests/fixtures/buckets";
 import { IChartConfig } from "../../../interfaces/Config";

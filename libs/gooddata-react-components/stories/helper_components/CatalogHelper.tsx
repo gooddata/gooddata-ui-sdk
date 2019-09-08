@@ -3,7 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
 import CatalogHelper from "../../src/helpers/CatalogHelper";
-import { Kpi } from "../../src/components/simple/Kpi";
+import { Kpi } from "../../src/_defunct/kpi/Kpi";
 import "../../styles/scss/charts.scss";
 
 import * as catalogJson from "../data/catalog.json";

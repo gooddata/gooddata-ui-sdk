@@ -26,7 +26,7 @@ import { PluggableLineChart } from "./pluggableVisualizations/lineChart/Pluggabl
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
 import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggablePieChart";
 import { PluggableDonutChart } from "./pluggableVisualizations/donutChart/PluggableDonutChart";
-import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
+// import { PluggablePivotTable } from "../../_defunct/internal/components/pluggableVisualizations/pivotTable/PluggablePivotTable";
 import { PluggableHeadline } from "./pluggableVisualizations/headline/PluggableHeadline";
 import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
 import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
@@ -45,7 +45,7 @@ const VisualizationsCatalog = {
     area: PluggableAreaChart,
     pie: PluggablePieChart,
     donut: PluggableDonutChart,
-    table: PluggablePivotTable,
+    // table: PluggablePivotTable,
     headline: PluggableHeadline,
     scatter: PluggableScatterPlot,
     bubble: PluggableBubbleChart,

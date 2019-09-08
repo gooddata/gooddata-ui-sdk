@@ -7,9 +7,9 @@ import {
     twoMeasuresOneDimensionDataSource,
 } from "../../../components/tests/mocks";
 import { CoreHeadline } from "../../headline/CoreHeadline";
-import { ICommonVisualizationProps } from "../../../components/core/base/VisualizationLoadingHOC";
+import { ICommonVisualizationProps } from "../../../_defunct/to_delete/VisualizationLoadingHOC";
 import HeadlineTransformation from "../../headline/internal/HeadlineTransformation";
-import { IDataSourceProviderInjectedProps } from "../../../components/afm/DataSourceProvider";
+import { IDataSourceProviderInjectedProps } from "../../../_defunct/to_delete/DataSourceProvider";
 
 describe("Headline", () => {
     function createComponent(props: ICommonVisualizationProps & IDataSourceProviderInjectedProps) {

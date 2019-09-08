@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { FunnelChart } from "../FunnelChart";
-import { FunnelChart as AfmFunnelChart } from "../../../components/afm/FunnelChart";
+import { FunnelChart as AfmFunnelChart } from "../../../_defunct/afm/FunnelChart";
 import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("FunnelChart", () => {

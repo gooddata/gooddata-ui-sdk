@@ -14,7 +14,7 @@ import {
     VisualizationTypes,
     VisualizationEnvironment,
 } from "../../../../../constants/visualizationTypes";
-import { BaseChart } from "../../../../../components/core/base/BaseChart";
+import { BaseChart } from "../../../../../_defunct/to_delete/BaseChart";
 import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 jest.mock("react-dom", () => {

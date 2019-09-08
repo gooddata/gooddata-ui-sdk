@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { Treemap } from "../Treemap";
-import { Treemap as AfmTreemap } from "../../../components/afm/Treemap";
+import { Treemap as AfmTreemap } from "../../../_defunct/afm/Treemap";
 import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("Treemap", () => {

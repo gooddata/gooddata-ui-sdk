@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { LineChart } from "../LineChart";
-import { LineChart as AfmLineChart } from "../../../components/afm/LineChart";
+import { LineChart as AfmLineChart } from "../../../_defunct/afm/LineChart";
 import { M1 } from "../../../components/tests/fixtures/buckets";
 
 describe("LineChart", () => {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreBarChart } from "../CoreBarChart";
-import { BaseChart } from "../../../components/core/base/BaseChart";
+import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
 import { emptyDataSource } from "../../../components/tests/mocks";
 
 describe("BarChart", () => {

@@ -4,7 +4,7 @@ import { shallow, ShallowWrapper } from "enzyme";
 import { factory } from "@gooddata/gooddata-js";
 import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/typings";
 import { ColumnChart } from "../ColumnChart";
-import { ColumnChart as AfmColumnChart } from "../../../components/afm/ColumnChart";
+import { ColumnChart as AfmColumnChart } from "../../../_defunct/afm/ColumnChart";
 import { M1, M1WithRatio } from "../../../components/tests/fixtures/buckets";
 import { IChartConfig } from "../../../interfaces/Config";
 

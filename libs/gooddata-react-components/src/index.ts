@@ -1,17 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-import * as AfmComponents from "./components/afm/afmComponents";
 import * as VisEvents from "./interfaces/Events";
 import CatalogHelper from "./helpers/CatalogHelper";
 import { isEmptyResult } from "./helpers/errorHandlers";
 import * as Model from "./helpers/model";
-import { ICommonVisualizationProps } from "./components/core/base/VisualizationLoadingHOC";
+import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { ErrorComponent } from "./components/simple/ErrorComponent";
 import { LoadingComponent } from "./components/simple/LoadingComponent";
-import { Kpi } from "./components/simple/Kpi";
-import { Visualization } from "./components/uri/Visualization";
+// import { Kpi } from "./_defunct/kpi/Kpi";
+// import { Visualization } from "./_defunct/uri/Visualization";
 import { ErrorStates, ErrorCodes } from "./constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./constants/visualizationTypes";
-import { Execute } from "./execution/Execute";
+// import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./interfaces/DrillEvents";
 import { IHeaderPredicate } from "./interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./interfaces/PushData";
@@ -24,7 +23,7 @@ import * as MeasureTitleHelper from "./helpers/measureTitleHelper";
 import * as SortsHelper from "./helpers/sorts";
 import DerivedMeasureTitleSuffixFactory from "./factory/DerivedMeasureTitleSuffixFactory";
 import ArithmeticMeasureTitleFactory from "./factory/ArithmeticMeasureTitleFactory";
-import { IDataSourceProviderInjectedProps } from "./components/afm/DataSourceProvider";
+// import { IDataSourceProviderInjectedProps } from "./_defunct/afm/DataSourceProvider";
 
 import { BarChart } from "./charts/barChart/BarChart";
 import { ColumnChart } from "./charts/columnChart/ColumnChart";
@@ -34,7 +33,7 @@ import { PieChart } from "./charts/pieChart/PieChart";
 import { Treemap } from "./charts/treemap/Treemap";
 import { DonutChart } from "./charts/donutChart/DonutChart";
 import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
-import { PivotTable } from "./components/PivotTable";
+// import { PivotTable } from "./_defunct/pivotTable/PivotTable";
 import { Headline } from "./charts/headline/Headline";
 import { ScatterPlot } from "./charts/scatterPlot/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
@@ -52,7 +51,7 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/Ov
 import ColorUtils from "./components/visualizations/utils/color";
 import * as HeaderPredicateFactory from "./factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
-import { BucketExecutor } from "./execution/BucketExecutor";
+// import { BucketExecutor } from "./execution/BucketExecutor";
 
 /**
  * CoreComponents
@@ -72,7 +71,6 @@ const CoreComponents: ICoreComponents = {
 */
 
 export {
-    AfmComponents,
     AttributeElements,
     AttributeFilter,
     BarChart,
@@ -87,12 +85,11 @@ export {
     ErrorCodes,
     ErrorStates,
     ErrorComponent,
-    Execute,
-    BucketExecutor,
+    // Execute,
+    // BucketExecutor,
     generateDimensions,
     Headline,
     ICommonVisualizationProps,
-    IDataSourceProviderInjectedProps,
     IDrillableItem,
     ILegendConfig,
     IChartConfig,
@@ -101,7 +98,6 @@ export {
     IPushData,
     IColorsData,
     isEmptyResult,
-    Kpi,
     LoadingComponent,
     LineChart,
     AreaChart,
@@ -117,9 +113,7 @@ export {
     ArithmeticMeasureTitleFactory,
     PropTypes,
     RuntimeError,
-    PivotTable,
     VisEvents,
-    Visualization,
     VisualizationEnvironment,
     VisualizationTypes,
     ChartTransformation,

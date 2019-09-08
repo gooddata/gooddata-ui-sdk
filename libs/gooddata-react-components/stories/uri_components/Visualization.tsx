@@ -5,7 +5,7 @@ import { action } from "@storybook/addon-actions";
 import { AFM } from "@gooddata/typings";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Visualization, IVisualizationProps } from "../../src/components/uri/Visualization";
+import { Visualization, IVisualizationProps } from "../../src/_defunct/uri/Visualization";
 import { CUSTOM_COLORS } from "../data/colors";
 import { onErrorHandler } from "../mocks";
 import "../../styles/scss/charts.scss";

@@ -7,7 +7,7 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 
 import { BarChart, Headline, PivotTable, Table } from "../../src";
-import { Visualization } from "../../src/components/uri/Visualization";
+import { Visualization } from "../../src/_defunct/uri/Visualization";
 import { IExportFunction, IExtendedExportConfig, OnExportReady } from "../../src/interfaces/Events";
 
 import { onErrorHandler } from "../mocks";

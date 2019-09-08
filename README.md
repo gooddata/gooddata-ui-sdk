@@ -18,9 +18,22 @@ the area. If worst comes to worst, we may need to create our own release scripts
 something like that)
 
 -   [ ] Ensure package.json scripts are unified across projects; simplify them as needed
--   [ ] Remove all warnings during pnpm install
 
 -   [ ] There are a bunch of `TODO: SDK8` comments in different parts of the code; all these should be addressed
+
+    -   They are mostly to add docs for public APIs
+
+-   [ ] A couple of components are now in defunct state; they have been moved to src/\_defunct directory which
+        excluded from package build; these should be addressed and here's how:
+    -   to_delete: delete - easy once all the other crap is fixed
+    -   execution: delete BucketExecutor; update Execute to work with model and backend-spi; easy
+    -   kpi: update after changes in Execute; easy
+    -   pivotTable: mayhem; loading hoc should not be used at all; CorePivotTable works with IPreparedExecution
+        directly. ag grid data source uses DataView, does paging on its own. this will be the biggest change; there
+        will be a lot of type-checking breaking but these should be trivial changes (types in backend-spi are +-
+        the same)
+    -   uri: somewhat tricky in how the IPreparedExecution will be created but otherwise should be fairly
+        straightforward
 
 ## Contributing
 

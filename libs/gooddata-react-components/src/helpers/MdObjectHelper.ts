@@ -6,7 +6,7 @@ import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "..";
 import { ATTRIBUTE, MEASURES, COLUMNS } from "../constants/bucketNames";
 import IMeasure = VisualizationObject.IMeasure;
 import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
-import { IPivotTableBucketProps } from "../components/PivotTable";
+import { IPivotTableBucketProps } from "../_defunct/pivotTable/PivotTable";
 import { mergeFiltersToAfm } from "./afmHelper";
 
 function getTotals(
