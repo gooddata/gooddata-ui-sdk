@@ -6,7 +6,12 @@ import forEach = require("lodash/forEach");
 import { InjectedIntl } from "react-intl";
 
 import * as BucketNames from "../../../constants/bucketNames";
-import { IExtendedReferencePoint, IBucket, IUiConfig, IBucketUiConfig } from "../../interfaces/Visualization";
+import {
+    IExtendedReferencePoint,
+    IBucketOfFun,
+    IUiConfig,
+    IBucketUiConfig,
+} from "../../interfaces/Visualization";
 
 import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -21,10 +26,10 @@ import * as treemapViewIcon from "../../assets/treemap/bucket-title-view.svg";
 import * as treemapSegmentIcon from "../../assets/treemap/bucket-title-segment.svg";
 
 function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: InjectedIntl) {
-    const buckets: IBucket[] = get(referencePoint, BUCKETS);
+    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
     const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
 
-    forEach(buckets, (bucket: IBucket) => {
+    forEach(buckets, (bucket: IBucketOfFun) => {
         const localIdentifier: string = get(bucket, "localIdentifier", "");
         const bucketUiConfig: IBucketUiConfig = get(updatedUiConfig, [BUCKETS, localIdentifier]);
 
@@ -63,7 +68,7 @@ export function setTreemapUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucket[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
 
     const measuresCanAddItems = !hasOneCategory(buckets) || hasNoMeasures(buckets);
     const viewCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);

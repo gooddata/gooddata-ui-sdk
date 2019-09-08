@@ -6,7 +6,12 @@ import forEach = require("lodash/forEach");
 import { InjectedIntl } from "react-intl";
 
 import * as BucketNames from "../../../constants/bucketNames";
-import { IExtendedReferencePoint, IBucket, IUiConfig, IBucketUiConfig } from "../../interfaces/Visualization";
+import {
+    IExtendedReferencePoint,
+    IBucketOfFun,
+    IUiConfig,
+    IBucketUiConfig,
+} from "../../interfaces/Visualization";
 
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -22,10 +27,10 @@ import * as lineSegmentIcon from "../../assets/line/bucket-title-segment.svg";
 import { hasColorMapping } from "../propertiesHelper";
 
 function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: InjectedIntl) {
-    const buckets: IBucket[] = get(referencePoint, BUCKETS);
+    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
     const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
 
-    forEach(buckets, (bucket: IBucket) => {
+    forEach(buckets, (bucket: IBucketOfFun) => {
         const localIdentifier: string = get(bucket, "localIdentifier", "");
         const bucketUiConfig: IBucketUiConfig = get(updatedUiConfig, [BUCKETS, localIdentifier]);
 
@@ -58,7 +63,7 @@ export function setLineChartUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucket[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
 
     const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacks(buckets);
     const segmentCanAddItems =

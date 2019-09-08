@@ -42,7 +42,7 @@ import {
     IUiConfig,
     IExtendedReferencePoint,
     IFilters,
-    IBucket,
+    IBucketOfFun,
 } from "../../interfaces/Visualization";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
@@ -1310,7 +1310,7 @@ describe("findDerivedBucketItem", () => {
 
 describe("hasDerivedBucketItems", () => {
     it("should return false when there is no derived bucket item for the master measure across buckets", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: [referencePointMocks.masterMeasureItems[0]],
@@ -1329,7 +1329,7 @@ describe("hasDerivedBucketItems", () => {
     });
 
     it("should return true when there is a derived bucket item for the master measure in the same bucket", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: [
@@ -1351,7 +1351,7 @@ describe("hasDerivedBucketItems", () => {
     });
 
     it("should return true when there is a derived bucket item for the master measure in another bucket", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: [referencePointMocks.masterMeasureItems[0]],
@@ -1449,7 +1449,7 @@ describe("noColumnsAndHasOneMeasure", () => {
 
 describe("removeDuplicateBucketItems", () => {
     it("should return buckets with duplicate bucketItems filtered out", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [{ localIdentifier: "A" }, { localIdentifier: "B" }],
@@ -1517,7 +1517,7 @@ describe("removeDuplicateBucketItems", () => {
 
 describe("getFirstValidMeasure", () => {
     it("should return null when there is no valid measure", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [],
@@ -1539,7 +1539,7 @@ describe("getFirstValidMeasure", () => {
     });
 
     it("should return first measure if available", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "attributes",
                 items: [
@@ -1568,7 +1568,7 @@ describe("getFirstValidMeasure", () => {
     });
 
     it("should skip invalid arithmetic measures", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "attributes",
                 items: [
@@ -1611,7 +1611,7 @@ describe("getFirstValidMeasure", () => {
 
 describe("getItemsFromBuckets", () => {
     it("should return buckets items from buckets matching identifiers", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [{ localIdentifier: "A" }, { localIdentifier: "B" }],
@@ -1642,7 +1642,7 @@ describe("getItemsFromBuckets", () => {
 
 describe("limitNumberOfBucketItems", () => {
     it("should do simple limiting across buckets", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -1722,7 +1722,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should always add measures together with their dependencies", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -1824,7 +1824,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should check indirect dependencies of derived measures", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -1891,7 +1891,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should check indirect dependencies of arithmetic measures", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -1957,7 +1957,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should place incomplete AM counting only set operand dependencies", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -2019,7 +2019,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should place incomplete AM counting only operand dependencies still in the buckets", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -2085,7 +2085,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should try to place derived measure when the parameter preferMasterDerivedPairs is set to true", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -2141,7 +2141,7 @@ describe("limitNumberOfBucketItems", () => {
         "should place just the master when preferMasterDerivedPairs is set to true " +
             "but there is no place for derived",
         () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -2196,7 +2196,7 @@ describe("limitNumberOfBucketItems", () => {
         "should place just the master when preferMasterDerivedPairs is set to true " +
             "but there is no place for derived",
         () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -2251,7 +2251,7 @@ describe("limitNumberOfBucketItems", () => {
         "should place AM with it's operands which are both the same when there is a place " +
             "for only two measures",
         () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -2296,7 +2296,7 @@ describe("limitNumberOfBucketItems", () => {
     );
 
     it("should fit AMs correctly when more of them use the same measure as an argument", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -2340,7 +2340,7 @@ describe("limitNumberOfBucketItems", () => {
     });
 
     it("should try to take measures one per bucket when possible - simple case", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [
@@ -2397,7 +2397,7 @@ describe("limitNumberOfBucketItems", () => {
         "should try to take measures one per bucket when possible " +
             "- case with arithmetic measures across buckets",
         () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -2462,7 +2462,7 @@ describe("limitNumberOfBucketItems", () => {
     );
 
     it("should fallback to global limiting when it's not possible to place one measure per bucket", () => {
-        const buckets: IBucket[] = [
+        const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [

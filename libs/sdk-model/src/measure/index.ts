@@ -19,10 +19,10 @@ export type IMeasureDefinitionType =
  *
  * @public
  */
-export interface IMeasure {
+export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> {
     measure: {
         localIdentifier: Identifier;
-        definition: IMeasureDefinitionType;
+        definition: T;
         alias?: string;
         title?: string;
         format?: string;
@@ -104,6 +104,23 @@ export interface IPreviousPeriodDateDataSet {
 }
 
 //
+//
+//
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type MeasurePredicate = (measure: IMeasure) => boolean;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const anyMeasure: MeasurePredicate = _ => true;
+
+//
 // Type guards
 //
 
@@ -141,4 +158,17 @@ export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
  */
 export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition {
     return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
+}
+
+//
+// Functions
+//
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function measureId(measure: IMeasure): string {
+    return measure.measure.localIdentifier;
 }

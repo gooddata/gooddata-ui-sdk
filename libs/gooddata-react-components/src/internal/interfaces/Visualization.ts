@@ -1,12 +1,14 @@
 // (C) 2019 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
-import { DataLayer } from "@gooddata/gooddata-js";
 import { ISeparators } from "@gooddata/numberjs";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { OverTimeComparisonType } from "../../interfaces/OverTimeComparison";
 import { ChartType, VisualizationEnvironment } from "../../constants/visualizationTypes";
 import { IColorPalette } from "../../interfaces/Config";
 import * as VisEvents from "../../interfaces/Events";
+import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";
+import { VisualizationObject } from "@gooddata/typings";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi/src";
 
 export type ILocale =
     | "en-US"
@@ -24,6 +26,7 @@ export interface IFeatureFlags {
 }
 
 export interface IVisConstruct {
+    backend: IAnalyticalBackend;
     projectId: string;
     element: string;
     configPanelElement: string;
@@ -31,8 +34,7 @@ export interface IVisConstruct {
     environment?: VisualizationEnvironment;
     locale?: ILocale;
     featureFlags?: IFeatureFlags;
-    visualizationProperties?: IVisualizationProperties;
-    references?: IReferences;
+    visualizationProperties: VisualizationProperties;
 }
 
 export interface ICustomProps {
@@ -47,8 +49,6 @@ export interface IDimensions {
 }
 
 export interface IVisProps {
-    dataSource: DataLayer.DataSource.IDataSource<Execution.IExecutionResponses>;
-    resultSpec: AFM.IResultSpec;
     dimensions: IDimensions;
     custom: ICustomProps;
     locale?: ILocale;
@@ -111,7 +111,11 @@ export interface IFiltersBucketItem extends IBucketItem {
     autoCreated?: boolean;
 }
 
-export interface IBucket {
+// TODO: SDK8: rename this :) the original name IBucket conflicted with what we have in model;
+// TODO: SDK8: vis object types should not be used here
+// this interface and all the other similar interface (bucket item, filters etc) are specifically used
+// in the reference point
+export interface IBucketOfFun {
     localIdentifier: string;
     items: IBucketItem[];
     totals?: VisualizationObject.IVisualizationTotal[];
@@ -192,7 +196,7 @@ export interface IVisualizationProperties {
 }
 
 export interface IReferencePoint {
-    buckets: IBucket[];
+    buckets: IBucketOfFun[];
     filters: IFilters;
     properties?: IVisualizationProperties; // properties are under plugvis creator's control
 }
@@ -202,7 +206,7 @@ export interface IReferences {
 }
 
 export interface IExtendedReferencePoint {
-    buckets: IBucket[];
+    buckets: IBucketOfFun[];
     filters: IFilters;
     properties?: IVisualizationProperties; // properties are under plugvis creator's control
     uiConfig: IUiConfig;
@@ -210,12 +214,7 @@ export interface IExtendedReferencePoint {
 
 export interface IVisualization {
     // visualizationProperties are used for visualization configuration
-    update(
-        props: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-        references: IReferences,
-    ): void;
+    update(props: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void;
 
     unmount(): void;
 

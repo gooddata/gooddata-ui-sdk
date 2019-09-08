@@ -5,7 +5,7 @@ import get = require("lodash/get");
 import { InjectedIntl } from "react-intl";
 
 import * as BucketNames from "../../../constants/bucketNames";
-import { IBucket, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
+import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
 import { getBucketsByNames, setBucketTitles } from "../bucketHelper";
@@ -63,7 +63,7 @@ export function setComboChartUiConfig(
     visualizationType: ChartType,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const measureBuckets: IBucket[] = getBucketsByNames(get(referencePointConfigured, BUCKETS), [
+    const measureBuckets: IBucketOfFun[] = getBucketsByNames(get(referencePointConfigured, BUCKETS), [
         BucketNames.MEASURES,
         BucketNames.SECONDARY_MEASURES,
     ]);
@@ -77,7 +77,7 @@ export function setComboChartUiConfig(
     const isDualAxis = get(referencePointConfigured, "properties.controls.dualAxis", true);
     setCanStackInPercent(updatedUiConfig, chartTypes[1], isDualAxis);
 
-    measureBuckets.forEach((bucket: IBucket, index: number) => {
+    measureBuckets.forEach((bucket: IBucketOfFun, index: number) => {
         const type = chartTypes[index];
         const localIdentifier: string = get(bucket, "localIdentifier", "");
         const subtitle = getTranslation(`dashboard.bucket.combo.subtitle.${type}`, intl);

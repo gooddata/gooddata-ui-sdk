@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import { VisualizationObject } from "@gooddata/typings";
-import { ILocale, IVisProps, IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { ILocale, IVisProps, IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import * as BucketNames from "../../../../../constants/bucketNames";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
@@ -339,7 +339,7 @@ describe("PluggableBaseChart", () => {
         async () => {
             const baseChart = createComponent();
 
-            const expectedBuckets: IBucket[] = referencePointMocks.oneMetricReferencePoint.buckets;
+            const expectedBuckets: IBucketOfFun[] = referencePointMocks.oneMetricReferencePoint.buckets;
             const expectedFilters: IFilters = {
                 localIdentifier: "filters",
                 items: [],
@@ -361,7 +361,7 @@ describe("PluggableBaseChart", () => {
     it("should return ref. point with multiple metrics and one category and filter for this category", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items,
@@ -397,7 +397,7 @@ describe("PluggableBaseChart", () => {
 
     it("should return reference point with one metric and date and attribute", async () => {
         const baseChart = createComponent();
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0].items,
@@ -429,7 +429,7 @@ describe("PluggableBaseChart", () => {
     it("should return reference point with one metric and only one category and stack", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.simpleStackedReferencePoint.buckets[0].items,
@@ -467,7 +467,7 @@ describe("PluggableBaseChart", () => {
         async () => {
             const baseChart = createComponent();
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -501,7 +501,7 @@ describe("PluggableBaseChart", () => {
             "when single measure with comparison is applied and date not first or second attribute",
         async () => {
             const baseChart = createComponent();
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[0].items[0]],
@@ -527,7 +527,7 @@ describe("PluggableBaseChart", () => {
     it("should return reference point with multiple metrics from multiple metrics buckets", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -567,7 +567,7 @@ describe("PluggableBaseChart", () => {
     it("should return reference point with one metric, one category, second category as stack, valid filters", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items,
@@ -607,7 +607,7 @@ describe("PluggableBaseChart", () => {
     it("should return reference point without Date in stacks", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.dateAsSecondCategoryReferencePoint.buckets[0].items,
@@ -640,7 +640,7 @@ describe("PluggableBaseChart", () => {
 
     it("should handle wrong order of buckets in reference point", async () => {
         const baseChart = createComponent();
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.wrongBucketsOrderReferencePoint.buckets[0].items,
@@ -674,7 +674,7 @@ describe("PluggableBaseChart", () => {
     it("should use second non-date attribute when switching to chart with [attribute, date, attribute]", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleAttributesReferencePoint.buckets[0].items,
@@ -708,7 +708,7 @@ describe("PluggableBaseChart", () => {
     it("should cut out measures tail when getting nM 0Vb 1Sb", async () => {
         const baseChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items.slice(

@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
-import get = require("lodash/get");
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import * as classNames from "classnames";
@@ -13,18 +12,19 @@ import ConfigSection from "../configurationControls/ConfigSection";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
-import { hasAttribute } from "../../utils/mdObjectHelper";
 import {
-    SHOW_DELAY_DEFAULT,
-    HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
+    HIDE_DELAY_DEFAULT,
+    SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble";
+import { insightHasAttributes } from "@gooddata/sdk-model";
+import get = require("lodash/get");
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled() {
-        const { mdObject, isError, isLoading } = this.props;
-        const measures = mdObject && getMeasuresFromMdObject(mdObject);
+        const { insight, isError, isLoading } = this.props;
+        const measures = getMeasuresFromMdObject(insight);
         return !measures || measures.length < 1 || isError || isLoading;
     }
 
@@ -128,12 +128,12 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
 
     private areDataLabelsDisabled() {
         const isDisabled = super.isControlDisabled();
-        return isDisabled || !hasAttribute(this.props.mdObject);
+        return isDisabled || !insightHasAttributes(this.props.insight);
     }
 
     private isDataLabelsWarningShown() {
         const isDisabled = super.isControlDisabled();
-        return !isDisabled && !hasAttribute(this.props.mdObject);
+        return !isDisabled && !insightHasAttributes(this.props.insight);
     }
 
     private getBubbleClassNames() {

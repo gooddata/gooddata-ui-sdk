@@ -4,7 +4,7 @@ import { PluggablePieChart } from "../PluggablePieChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 describe("PluggablePieChart", () => {
@@ -32,7 +32,7 @@ describe("PluggablePieChart", () => {
     it("should return reference point with only one metric and one category and only valid filters", async () => {
         const pieChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -68,7 +68,7 @@ describe("PluggablePieChart", () => {
     it("should return reference point with multiple metrics and no category", async () => {
         const pieChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
@@ -98,7 +98,7 @@ describe("PluggablePieChart", () => {
     it("should return reference point with one metric and no category", async () => {
         const pieChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,
@@ -128,7 +128,7 @@ describe("PluggablePieChart", () => {
     it("should return reference point with one metric and one attribute from stack", async () => {
         const pieChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricOneStackReferencePoint.buckets[0].items.slice(0, 1),
@@ -163,7 +163,7 @@ describe("PluggablePieChart", () => {
 
             const extendedReferencePoint = await pieChart.getExtendedReferencePoint(originalRefPoint);
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [originalRefPoint.buckets[0].items[1]],

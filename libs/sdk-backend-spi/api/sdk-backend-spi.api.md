@@ -231,6 +231,8 @@ export interface IExecutionFactory {
     // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
+    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
     forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;

@@ -107,7 +107,7 @@ export class PluggablePieChart extends PluggableBaseChart {
                     locale={this.locale}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    mdObject={this.mdObject}
+                    insight={this.insight}
                     pushData={this.handlePushData}
                     colors={this.colors}
                     type={this.type}

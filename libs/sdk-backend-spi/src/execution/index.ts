@@ -8,6 +8,7 @@ import {
     SortItem,
     Total,
     IDimension,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
@@ -20,6 +21,8 @@ export interface IExecutionFactory {
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+
+    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
 
     forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }

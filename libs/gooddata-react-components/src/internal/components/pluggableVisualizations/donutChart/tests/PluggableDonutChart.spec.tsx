@@ -4,7 +4,7 @@ import { PluggableDonutChart } from "../PluggableDonutChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 
 describe("PluggableDonutChart", () => {
     const defaultProps = {
@@ -34,7 +34,7 @@ describe("PluggableDonutChart", () => {
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -70,7 +70,7 @@ describe("PluggableDonutChart", () => {
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
@@ -96,7 +96,7 @@ describe("PluggableDonutChart", () => {
     it("should return reference point with one metric and no category", async () => {
         const donutChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,
@@ -131,7 +131,7 @@ describe("PluggableDonutChart", () => {
 
             const extendedReferencePoint = await donutChart.getExtendedReferencePoint(originalRefPoint);
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [originalRefPoint.buckets[0].items[1]],

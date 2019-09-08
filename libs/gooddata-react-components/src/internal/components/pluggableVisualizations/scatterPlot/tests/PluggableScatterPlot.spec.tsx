@@ -4,7 +4,7 @@ import { PluggableScatterPlot } from "../PluggableScatterPlot";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 
 describe("PluggableScatterPlot", () => {
     const defaultProps = {
@@ -30,7 +30,7 @@ describe("PluggableScatterPlot", () => {
     it("should return reference point with primary and secondary measure, one category and only valid filters", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -73,7 +73,7 @@ describe("PluggableScatterPlot", () => {
     it("should return reference point with two measures and no attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items.slice(
@@ -113,7 +113,7 @@ describe("PluggableScatterPlot", () => {
     it("should return reference point with one secondary measure and one attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [],
@@ -153,7 +153,7 @@ describe("PluggableScatterPlot", () => {
     it("should return reference point with primary measure and one attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items.slice(

@@ -8,7 +8,7 @@ import {
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-    IBucket,
+    IBucketOfFun,
 } from "../../interfaces/Visualization";
 import {
     getFilteredMeasuresForStackedCharts,
@@ -61,14 +61,14 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     public isOpenAsReportSupported(): boolean {
         return (
             super.isOpenAsReportSupported() &&
-            !haveManyViewItems(this.mdObject) &&
+            !haveManyViewItems(this.insight) &&
             !isStackingMeasure(this.visualizationProperties) &&
             !isStackingToPercent(this.visualizationProperties)
         );
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucket[] = get(extendedReferencePoint, BUCKETS, []);
+        const buckets: IBucketOfFun[] = get(extendedReferencePoint, BUCKETS, []);
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
         const categoriesCount: number = get(

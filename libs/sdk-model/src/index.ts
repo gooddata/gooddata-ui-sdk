@@ -9,10 +9,13 @@ export {
     IObjLocalIdentifierQualifier,
     ObjQualifier,
     ObjQualifierWithLocal,
-    TotalType,
-    ITotal,
-    INativeTotalItem,
-    Total,
+} from "./base";
+
+export { TotalType, ITotal, INativeTotalItem, Total, isTotal, isNativeTotal } from "./base/totals";
+
+export { IDimension } from "./base/dimension";
+
+export {
     SortDirection,
     IAttributeSortItem,
     SortItem,
@@ -20,9 +23,13 @@ export {
     LocatorItem,
     IAttributeLocatorItem,
     IMeasureLocatorItem,
-    IResultSpec,
-    IDimension,
-} from "./base";
+    isMeasureLocator,
+    isAttributeLocator,
+    isMeasureSort,
+    isAttributeSort,
+    newMeasureSort,
+    newAttributeSort,
+} from "./base/sort";
 
 export {
     IAttributeElementsByRef,
@@ -49,16 +56,30 @@ export {
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasure,
+    measureId,
+    MeasurePredicate,
+    anyMeasure,
 } from "./measure";
 
 export {
     AttributeOrMeasure,
     IBucket,
     isBucket,
+    bucketIsEmpty,
     bucketAttributes,
     bucketsAttributes,
+    bucketMeasures,
+    bucketsMeasures,
+    bucketsById,
+    bucketsIsEmpty,
+    bucketsItems,
     ComputeRatioRule,
     computeRatioRules,
+    BucketPredicate,
+    bucketsFind,
+    idMatchBucket,
+    anyBucket,
+    bucketAttribute,
 } from "./buckets";
 
 export {
@@ -73,4 +94,19 @@ export {
     IRGBColorItem,
 } from "./colors";
 
-export { IInsight, IVisualizationClass, VisualizationProperties } from "./insight";
+export {
+    IInsight,
+    IVisualizationClass,
+    VisualizationProperties,
+    isInsight,
+    insightMeasures,
+    insightHasMeasures,
+    insightAttributes,
+    insightHasAttributes,
+    insightHasDataDefined,
+    insightProperties,
+    insightBuckets,
+    insightSorts,
+    insightBucket,
+    insightTotals,
+} from "./insight";

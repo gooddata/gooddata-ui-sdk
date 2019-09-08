@@ -9,7 +9,7 @@ import * as BucketNames from "../../constants/bucketNames";
 import {
     IFiltersBucketItem,
     IBucketItem,
-    IBucket,
+    IBucketOfFun,
     IReferencePoint,
     IFilters,
 } from "../interfaces/Visualization";
@@ -27,60 +27,60 @@ import {
 
 import { FILTERS, GRANULARITY, ALL_TIME, ATTRIBUTE, BUCKETS, METRIC } from "../constants/bucket";
 
-export function hasOneMeasure(buckets: IBucket[]): boolean {
+export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
 }
 
-function hasOneMasterMeasure(buckets: IBucket[]): boolean {
+function hasOneMasterMeasure(buckets: IBucketOfFun[]): boolean {
     return getMasterMeasuresCount(buckets, BucketNames.MEASURES) === 1;
 }
 
-export function getMasterMeasuresCount(buckets: IBucket[], bucketLocalIdentifier: string): number {
+export function getMasterMeasuresCount(buckets: IBucketOfFun[], bucketLocalIdentifier: string): number {
     const items: IBucketItem[] = getBucketItems(buckets, bucketLocalIdentifier);
     return reduce(items, (acc, item) => (item.masterLocalIdentifier ? acc : acc + 1), 0);
 }
 
-export function hasOneMasterMeasureInBucket(buckets: IBucket[], bucketLocalIdentifier: string): boolean {
+export function hasOneMasterMeasureInBucket(buckets: IBucketOfFun[], bucketLocalIdentifier: string): boolean {
     return getMasterMeasuresCount(buckets, bucketLocalIdentifier) === 1;
 }
 
-export function hasNoMeasures(buckets: IBucket[]): boolean {
+export function hasNoMeasures(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 0;
 }
 
-export function hasNoSecondaryMeasures(buckets: IBucket[]): boolean {
+export function hasNoSecondaryMeasures(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.SECONDARY_MEASURES) === 0;
 }
 
-export function hasSomeSegmentByItems(buckets: IBucket[]): boolean {
+export function hasSomeSegmentByItems(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.SEGMENT) !== 0;
 }
 
-export function hasMoreThanOneCategory(buckets: IBucket[]): boolean {
+export function hasMoreThanOneCategory(buckets: IBucketOfFun[]): boolean {
     return getAllAttributeItems(buckets).length > 1;
 }
 
-export function hasMoreThanOneMasterMeasure(buckets: IBucket[], bucketLocalIdentifier: string): boolean {
+export function hasMoreThanOneMasterMeasure(buckets: IBucketOfFun[], bucketLocalIdentifier: string): boolean {
     return getMasterMeasuresCount(buckets, bucketLocalIdentifier) > 1;
 }
 
-function hasSomeCategories(buckets: IBucket[]): boolean {
+function hasSomeCategories(buckets: IBucketOfFun[]): boolean {
     return getAttributeItemsWithoutStacks(buckets).length > 0;
 }
 
-function hasNoCategories(buckets: IBucket[]): boolean {
+function hasNoCategories(buckets: IBucketOfFun[]): boolean {
     return getAttributeItemsWithoutStacks(buckets).length === 0;
 }
 
 function allRulesMet(
-    rules: Array<(buckets: IBucket[], filters?: IFilters) => boolean>,
-    buckets: IBucket[],
+    rules: Array<(buckets: IBucketOfFun[], filters?: IFilters) => boolean>,
+    buckets: IBucketOfFun[],
     filters?: IFilters,
 ): boolean {
     return rules.every(rule => rule(buckets, filters));
 }
 
-function hasDateInCategories(buckets: IBucket[]): boolean {
+function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
     return some(getAllAttributeItems(buckets), isDate);
 }
 
@@ -103,15 +103,15 @@ export function hasGlobalDateFilter(filters: IFilters): boolean {
     return false;
 }
 
-export function hasUsedDateIgnoreAllTime(buckets: IBucket[], filters: IFilters): boolean {
+export function hasUsedDateIgnoreAllTime(buckets: IBucketOfFun[], filters: IFilters): boolean {
     return hasDateInCategories(buckets) || hasGlobalDateFilterIgnoreAllTime(filters);
 }
 
-export function hasUsedDate(buckets: IBucket[], filters: IFilters): boolean {
+export function hasUsedDate(buckets: IBucketOfFun[], filters: IFilters): boolean {
     return hasDateInCategories(buckets) || hasGlobalDateFilter(filters);
 }
 
-function hasNoWeekGranularity(buckets: IBucket[]): boolean {
+function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
     if (hasDateInCategories(buckets)) {
         return every(getAllAttributeItems(buckets), item => get(item, "granularity") !== GRANULARITY.week);
     }
@@ -119,35 +119,35 @@ function hasNoWeekGranularity(buckets: IBucket[]): boolean {
     return every(getBucketItems(buckets, FILTERS), item => get(item, "granularity") !== GRANULARITY.week);
 }
 
-function hasNoMeasureDateFilter(buckets: IBucket[]): boolean {
+function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
     return !some(getMeasureItems(buckets), (item: IBucketItem) => {
         const filters = get(item, FILTERS);
         return filters && some(filters, isDate);
     });
 }
 
-export function hasNoStacks(buckets: IBucket[]): boolean {
+export function hasNoStacks(buckets: IBucketOfFun[]): boolean {
     return getStackItems(buckets).length === 0;
 }
 
-export function hasOneCategory(buckets: IBucket[]): boolean {
+export function hasOneCategory(buckets: IBucketOfFun[]): boolean {
     return getAttributeItemsWithoutStacks(buckets).length === 1;
 }
 
-function isShowPercentageUnselected(buckets: IBucket[]): boolean {
+function isShowPercentageUnselected(buckets: IBucketOfFun[]): boolean {
     return !get(getBucketItems(buckets, BucketNames.MEASURES), [0, "showInPercent"], false);
 }
 
-export function noDerivedMeasurePresent(buckets: IBucket[]): boolean {
+export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
     const measures = getAllItemsByType(buckets, [METRIC]);
     return !some(measures, measure => measure.masterLocalIdentifier);
 }
 
-function hasFirstDate(buckets: IBucket[]): boolean {
+function hasFirstDate(buckets: IBucketOfFun[]): boolean {
     return isDate(get(getAllAttributeItems(buckets), 0));
 }
 
-function hasNotFirstDate(buckets: IBucket[]): boolean {
+function hasNotFirstDate(buckets: IBucketOfFun[]): boolean {
     return !hasFirstDate(buckets);
 }
 
@@ -161,7 +161,11 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
     return !isEmpty(filterInterval);
 }
 
-export function isShowInPercentAllowed(buckets: IBucket[], filters: IFilters, bucketLocalIdentifier: string) {
+export function isShowInPercentAllowed(
+    buckets: IBucketOfFun[],
+    filters: IFilters,
+    bucketLocalIdentifier: string,
+) {
     const rules = [hasNoStacks, hasSomeCategories];
 
     return (
@@ -169,7 +173,7 @@ export function isShowInPercentAllowed(buckets: IBucket[], filters: IFilters, bu
     );
 }
 
-export function isComparisonOverTimeAllowed(buckets: IBucket[], filters: IFilters) {
+export function isComparisonOverTimeAllowed(buckets: IBucketOfFun[], filters: IFilters) {
     const rules = [hasNoStacks, hasNoWeekGranularity];
 
     return allRulesMet(rules, buckets, filters) && hasGlobalDateFilter(filters);
@@ -192,13 +196,13 @@ export function overTimeComparisonRecommendationEnabled(referencePoint: IReferen
     );
 }
 
-export function comparisonAndTrendingRecommendationEnabled(buckets: IBucket[]) {
+export function comparisonAndTrendingRecommendationEnabled(buckets: IBucketOfFun[]) {
     const rules = [hasOneMeasure, noDerivedMeasurePresent, hasNoCategories];
 
     return allRulesMet(rules, buckets);
 }
 
-export function percentRecommendationEnabled(buckets: IBucket[]): boolean {
+export function percentRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
     const rules = [
         isShowPercentageUnselected,
         hasNotFirstDate,
@@ -210,7 +214,7 @@ export function percentRecommendationEnabled(buckets: IBucket[]): boolean {
     return allRulesMet(rules, buckets);
 }
 
-export function previousPeriodRecommendationEnabled(buckets: IBucket[]) {
+export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]) {
     const rules = [
         hasOneMeasure,
         hasOneCategory,

@@ -3,7 +3,6 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import { VisualizationObject } from "@gooddata/typings";
 import get = require("lodash/get");
 import * as classNames from "classnames";
 
@@ -19,6 +18,7 @@ import {
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 import { AxisType } from "../../interfaces/AxisType";
 import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper";
+import { IInsight } from "@gooddata/sdk-model";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {
@@ -26,8 +26,8 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
         const { xAxisVisible, yAxisVisible } = this.getControlProperties();
 
         const controlsDisabled = this.isControlDisabled();
-        const xAxisDisabled = this.isAxisDisabled(controlsDisabled, "xaxis", this.props.mdObject);
-        const yAxisDisabled = this.isAxisDisabled(controlsDisabled, "yaxis", this.props.mdObject);
+        const xAxisDisabled = this.isAxisDisabled(controlsDisabled, "xaxis", this.props.insight);
+        const yAxisDisabled = this.isAxisDisabled(controlsDisabled, "yaxis", this.props.insight);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -115,15 +115,9 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
         };
     }
 
-    private isAxisDisabled(
-        controlsDisabled: boolean,
-        axis: AxisType,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-    ): boolean {
+    private isAxisDisabled(controlsDisabled: boolean, axis: AxisType, insight: IInsight): boolean {
         const isAxisDisabled =
-            axis === "xaxis"
-                ? noColumnsAndHasOneMeasure(mdObject.buckets)
-                : noRowsAndHasOneMeasure(mdObject.buckets);
+            axis === "xaxis" ? noColumnsAndHasOneMeasure(insight) : noRowsAndHasOneMeasure(insight);
 
         return Boolean(controlsDisabled || isAxisDisabled);
     }

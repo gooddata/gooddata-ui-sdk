@@ -4,7 +4,7 @@ import { PluggableFunnelChart } from "../PluggableFunnelChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 
 describe("PluggableFunnelChart", () => {
     const defaultProps = {
@@ -34,7 +34,7 @@ describe("PluggableFunnelChart", () => {
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -75,7 +75,7 @@ describe("PluggableFunnelChart", () => {
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
@@ -106,7 +106,7 @@ describe("PluggableFunnelChart", () => {
     it("should return reference point with one metric and no category", async () => {
         const funnelChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,

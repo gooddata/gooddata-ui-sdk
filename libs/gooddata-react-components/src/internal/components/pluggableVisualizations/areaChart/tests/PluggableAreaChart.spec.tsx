@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 
-import { IBucket, IFilters, IVisProps } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import { PluggableAreaChart } from "../PluggableAreaChart";
 
 import * as testMocks from "../../../../mocks/testMocks";
@@ -50,7 +50,7 @@ describe("PluggableAreaChart", () => {
     it("should return reference point when no categories and only stacks", async () => {
         const areaChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[0].items,
@@ -83,7 +83,7 @@ describe("PluggableAreaChart", () => {
 
     it("should cut out measures tail when getting nM 0Vb 1Sb", async () => {
         const baseChart = createComponent();
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items.slice(
@@ -121,7 +121,7 @@ describe("PluggableAreaChart", () => {
     it("should allow only one date attribute", async () => {
         const areaChart = createComponent();
         const referencePoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [referencePoint.buckets[0].items[0]],
@@ -237,7 +237,7 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint;
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -269,7 +269,7 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesReferencePoint;
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -301,7 +301,7 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -332,7 +332,7 @@ describe("PluggableAreaChart", () => {
         it("should return reference point with Date in categories even it was as third item", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAsThirdCategoryReferencePointWithoutStack;
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -378,7 +378,7 @@ describe("PluggableAreaChart", () => {
         it("should keep date item as second view by item", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAsSecondViewByItemReferencePoint;
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -400,7 +400,7 @@ describe("PluggableAreaChart", () => {
         it("should move date from stack by bucket to view by bucket", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAttributeOnStackBucketReferencePoint;
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -422,7 +422,7 @@ describe("PluggableAreaChart", () => {
         it("should remove date from stack by bucket", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,
@@ -444,7 +444,7 @@ describe("PluggableAreaChart", () => {
         it("should not move attribute from view by to stack by", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.twoMeasuresAndDateAsSecondViewByItemReferencePoint;
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: mockRefPoint.buckets[0].items,

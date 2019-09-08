@@ -4,7 +4,7 @@ import { PluggableTreemap } from "../PluggableTreemap";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 
 describe("PluggableTreemap", () => {
     const defaultProps = {
@@ -30,7 +30,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.simpleStackedReferencePoint.buckets[0].items,
@@ -64,7 +64,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Vb, 0 Sb", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -107,7 +107,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Attrs", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[0].items.slice(
@@ -150,7 +150,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with n M, 0 Vb, 0 Sb for n M, 0 Attr", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
@@ -184,7 +184,7 @@ describe("PluggableTreemap", () => {
     it("should return reference point with 1 M, 0 Vb, 0 Sb for 1 M, 0 Vb, 0 Sb", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,
@@ -218,7 +218,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with n M, 0 Vb, 1 Sb for n M, 0 Vb, 1 Sb", async () => {
         const treemap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items,

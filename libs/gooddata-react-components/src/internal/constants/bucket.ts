@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IBucket } from "../interfaces/Visualization";
+import { IBucketOfFun } from "../interfaces/Visualization";
 
 // Buckets
 export const FILTERS = "filters";
@@ -26,4 +26,4 @@ export const FACT = "fact";
 export const DATE = "date";
 export const ATTRIBUTE = "attribute";
 
-export const DEFAULT_BUCKETS: IBucket[] = [];
+export const DEFAULT_BUCKETS: IBucketOfFun[] = [];

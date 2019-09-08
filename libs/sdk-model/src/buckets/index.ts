@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { IAttribute, isAttribute } from "../attribute";
+import { anyAttribute, AttributePredicate, IAttribute, isAttribute, idMatchAttribute } from "../attribute";
 import { Identifier } from "../base";
-import { IMeasure, isMeasure, isMeasureDefinition } from "../measure";
+import { anyMeasure, IMeasure, isMeasure, isMeasureDefinition, MeasurePredicate } from "../measure";
 
 /**
  * TODO: SDK8: Add docs
@@ -20,6 +20,27 @@ export interface IBucket {
     localIdentifier?: Identifier;
     items: AttributeOrMeasure[];
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type BucketPredicate = (bucket: IBucket) => boolean;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const anyBucket: BucketPredicate = _ => true;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const idMatchBucket: (id: string) => BucketPredicate = id => bucket => bucket.localIdentifier === id;
 
 //
 // Type guards
@@ -43,8 +64,64 @@ export function isBucket(obj: any): obj is IBucket {
  *
  * @public
  */
-export function bucketAttributes(bucket: IBucket): IAttribute[] {
-    return bucket.items.filter(isAttribute);
+export function bucketIsEmpty(bucket: IBucket): boolean {
+    return !bucket || bucket.items.length === 0;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketAttribute(
+    bucket: IBucket,
+    idOrFun: string | AttributePredicate = anyAttribute,
+): IAttribute | undefined {
+    const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
+    const compositeGuard = (obj: any): obj is IAttribute => {
+        return isAttribute(obj) && predicate(obj);
+    };
+
+    return bucket.items.find(compositeGuard);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketAttributes(
+    bucket: IBucket,
+    predicate: AttributePredicate = anyAttribute,
+): IAttribute[] {
+    if (!bucket) {
+        return [];
+    }
+
+    // need custom type-guard so as not to break type inference in filter() method
+    const compositeGuard = (obj: any): obj is IAttribute => {
+        return isAttribute(obj) && predicate(obj);
+    };
+
+    return bucket.items.filter(compositeGuard);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = anyMeasure): IMeasure[] {
+    if (!bucket) {
+        return [];
+    }
+
+    // need custom type-guard so as not to break type inference in filter() method
+    const compositeGuard = (obj: any): obj is IMeasure => {
+        return isMeasure(obj) && predicate(obj);
+    };
+
+    return bucket.items.filter(compositeGuard);
 }
 
 /**
@@ -53,7 +130,54 @@ export function bucketAttributes(bucket: IBucket): IAttribute[] {
  * @public
  */
 export function bucketsAttributes(buckets: IBucket[]): IAttribute[] {
-    return buckets.map(bucketAttributes).reduce((acc, items) => acc.concat(items), []);
+    return buckets.map(b => bucketAttributes(b)).reduce((acc, items) => acc.concat(items), []);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate = anyMeasure): IMeasure[] {
+    return buckets.map(b => bucketMeasures(b, predicate)).reduce((acc, items) => acc.concat(items), []);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsFind(buckets: IBucket[], idOrFun: string | BucketPredicate): IBucket | undefined {
+    const predicate = typeof idOrFun === "string" ? idMatchBucket(idOrFun) : idOrFun;
+
+    return buckets.find(predicate);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
+    return buckets.filter(b => b.localIdentifier && ids.indexOf(b.localIdentifier) >= 0);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
+    return buckets.reduce((acc, b) => acc.concat(b.items), [] as AttributeOrMeasure[]);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsIsEmpty(buckets: IBucket[]): boolean {
+    return buckets.every(b => b.items.length === 0);
 }
 
 /**

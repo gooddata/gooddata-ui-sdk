@@ -8,7 +8,6 @@ import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
 import { render, unmountComponentAtNode } from "react-dom";
-import { AFM, VisualizationObject } from "@gooddata/typings";
 import {
     IReferencePoint,
     IExtendedReferencePoint,
@@ -20,7 +19,7 @@ import {
     IUiConfig,
     IVisualizationProperties,
     IReferences,
-    IBucket,
+    IBucketOfFun,
     IBucketItem,
 } from "../../../interfaces/Visualization";
 import { IColorConfiguration } from "../../../interfaces/Colors";
@@ -56,7 +55,7 @@ import {
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { createSorts, removeSort } from "../../../utils/sort";
 
-import { BaseChart } from "../../../../components/core/base/BaseChart";
+import { BaseChart } from "../../../../components/core/base/NewBaseChart";
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getValidProperties } from "../../../utils/colors";
@@ -72,6 +71,10 @@ import { RuntimeError } from "../../../../errors/RuntimeError";
 import ColorUtils from "../../../../components/visualizations/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { IInsight, IDimension } from "@gooddata/sdk-model";
+import { insightHasDataDefined } from "@gooddata/sdk-model/src";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi/src";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -86,7 +89,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected defaultControlsProperties: IVisualizationProperties;
     protected customControlsProperties: IVisualizationProperties;
     protected propertiesMeta: any;
-    protected mdObject: VisualizationObject.IVisualizationObjectContent;
+    protected insight: IInsight;
     protected supportedPropertiesList: string[];
     protected configPanelElement: string;
     protected colors: IColorConfiguration;
@@ -95,11 +98,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected locale: ILocale;
+    private backend: IAnalyticalBackend;
     private environment: string;
     private element: string;
 
     constructor(props: IVisConstruct) {
         super();
+        this.backend = props.backend;
         this.projectId = props.projectId;
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
@@ -114,7 +119,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.onLoadingChanged = props.callbacks.onLoadingChanged && this.onLoadingChanged.bind(this);
         this.isError = false;
         this.isLoading = false;
-        this.references = props.references;
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
         this.setCustomControlsProperties({});
@@ -129,22 +133,17 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    public update(
-        options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-        references: IReferences,
-    ) {
+    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
+        const visualizationProperties = insight.insight.properties;
         this.options = options;
         this.visualizationProperties = getSupportedProperties(
             visualizationProperties,
             this.supportedPropertiesList,
         );
         this.propertiesMeta = get(visualizationProperties, "propertiesMeta", null);
-        this.mdObject = mdObject;
-        this.references = references;
+        this.insight = insight;
 
-        this.renderVisualization(this.options, this.visualizationProperties, this.mdObject);
+        this.renderVisualization(this.options, this.insight, executionFactory);
         this.renderConfigurationPanel();
     }
 
@@ -184,7 +183,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucket[] = get(extendedReferencePoint, BUCKETS, []);
+        const buckets: IBucketOfFun[] = get(extendedReferencePoint, BUCKETS, []);
         const categoriesCount: number = get(
             extendedReferencePoint,
             [UICONFIG, BUCKETS, BucketNames.VIEW, "itemsLimit"],
@@ -210,7 +209,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return BASE_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected getStackItems(buckets: IBucket[]): IBucketItem[] {
+    protected getStackItems(buckets: IBucketOfFun[]): IBucketItem[] {
         const measures = getMeasureItems(buckets);
         const masterMeasures = filterOutDerivedMeasures(measures);
 
@@ -234,71 +233,52 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
+        insight: IInsight,
+        executionFactory: IExecutionFactory,
     ) {
-        const { dataSource } = options;
-        if (dataSource) {
-            const { dimensions, custom, locale, config } = options;
-            const { height } = dimensions;
-
-            // keep height undef for AD; causes indigo-visualizations to pick default 100%
-            const resultingHeight = this.environment === "dashboards" ? height : undefined;
-
-            const afterRender = get(this.callbacks, "afterRender", noop);
-
-            const { drillableItems } = custom;
-
-            const allProperties: IVisualizationProperties = get(
-                visualizationProperties,
-                "properties",
-                {},
-            ) as IVisualizationProperties;
-
-            const supportedControls = this.getSupportedControls(mdObject);
-
-            const resultSpecWithDimensions: AFM.IResultSpec = {
-                ...options.resultSpec,
-                dimensions: this.getDimensions(mdObject),
-            };
-
-            const sorts: AFM.SortItem[] = createSorts(
-                this.type,
-                dataSource.getAfm(),
-                resultSpecWithDimensions,
-                allProperties,
-            );
-
-            const resultSpecWithSorts = {
-                ...resultSpecWithDimensions,
-                sorts,
-            };
-
-            const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
-            const fullConfig = this.buildVisualizationConfig(mdObject, config, configSupportedControls);
-
-            render(
-                <BaseChart
-                    projectId={this.projectId}
-                    afterRender={afterRender}
-                    environment={this.environment}
-                    drillableItems={drillableItems}
-                    onError={this.onError}
-                    onExportReady={this.onExportReady}
-                    onLoadingChanged={this.onLoadingChanged}
-                    pushData={this.handlePushData}
-                    height={resultingHeight}
-                    dataSource={dataSource}
-                    resultSpec={resultSpecWithSorts}
-                    type={this.type}
-                    locale={locale}
-                    config={fullConfig}
-                    LoadingComponent={null}
-                    ErrorComponent={null}
-                />,
-                document.querySelector(this.element),
-            );
+        if (!insightHasDataDefined(insight)) {
+            // there is nothing in the insight's bucket that can be visualized
+            // bail out
+            return;
         }
+
+        const { dimensions, custom, locale, config } = options;
+        const { height } = dimensions;
+
+        // keep height undef for AD; causes indigo-visualizations to pick default 100%
+        const resultingHeight = this.environment === "dashboards" ? height : undefined;
+        const afterRender = get(this.callbacks, "afterRender", noop);
+        const { drillableItems } = custom;
+        const supportedControls = this.getSupportedControls(insight);
+        const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
+        const fullConfig = this.buildVisualizationConfig(insight, config, configSupportedControls);
+
+        const execution = executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getDimensions(insight))
+            .withSorting(...createSorts(this.type, insight));
+
+        render(
+            <BaseChart
+                workspace={this.projectId}
+                backend={this.backend}
+                execution={execution}
+                afterRender={afterRender}
+                environment={this.environment}
+                drillableItems={drillableItems}
+                onError={this.onError}
+                onExportReady={this.onExportReady}
+                onLoadingChanged={this.onLoadingChanged}
+                pushData={this.handlePushData}
+                height={resultingHeight}
+                type={this.type}
+                locale={locale}
+                config={fullConfig}
+                LoadingComponent={null}
+                ErrorComponent={null}
+            />,
+            document.querySelector(this.element),
+        );
     }
 
     protected initializeProperties(visualizationProperties: IVisualizationProperties) {
@@ -322,7 +302,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    mdObject={this.mdObject}
+                    insight={this.insight}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}
@@ -336,8 +316,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-        return generateDimensions(mdObject, this.type);
+    protected getDimensions(insight: IInsight): IDimension[] {
+        return generateDimensions(insight, this.type);
     }
 
     protected colorMappingChanged(data: any) {
@@ -352,15 +332,19 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                   ...data.references,
               };
         this.ignoreUndoRedo = true;
+
+        // TODO: SDK8: this is weird; push data callback triggers this call;
+        //  why should plug viz bother with this? seems more like responsibility of the PV client
+        /*
         this.update(
             this.options,
             {
                 properties: this.visualizationProperties,
                 propertiesMeta: this.propertiesMeta,
             },
-            this.mdObject,
-            this.references,
-        );
+            this.insight,
+            __execution__factory__ WTF?
+        );*/
     }
 
     protected handleConfirmedColorMapping(data: any) {
@@ -437,7 +421,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    private getSupportedControls(mdObject: VisualizationObject.IVisualizationObjectContent) {
+    private getSupportedControls(insight: IInsight) {
         const supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
@@ -448,7 +432,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
 
-        const legendPosition = this.getLegendPosition(supportedControls, mdObject);
+        const legendPosition = this.getLegendPosition(supportedControls, insight);
 
         // Set legend position by bucket items and environment
         set(supportedControls, "legend.position", legendPosition);
@@ -481,10 +465,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    private getLegendPosition(
-        controlProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-    ) {
+    private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsight) {
         const legendPosition = get(controlProperties, "legend.position", "auto");
 
         if (legendPosition === "auto") {
@@ -492,17 +473,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             if (this.type === "heatmap") {
                 return this.environment === "dashboards" ? "right" : "top";
             }
-            return isStacked(mdObject) || this.environment === "dashboards" ? "right" : "auto";
+            return isStacked(insight) || this.environment === "dashboards" ? "right" : "auto";
         }
 
         return legendPosition;
     }
 
-    private buildVisualizationConfig(
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-        config: any,
-        supportedControls: any,
-    ) {
+    private buildVisualizationConfig(insight: IInsight, config: any, supportedControls: any) {
         const colorMapping: IColorMappingProperty[] = get(supportedControls, "colorMapping");
 
         const validColorMapping =
@@ -515,7 +492,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 }));
 
         return {
-            mdObject,
+            insight,
             ...config,
             ...supportedControls,
             colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,

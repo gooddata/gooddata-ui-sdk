@@ -16,7 +16,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import {
     IVisConstruct,
-    IBucket,
+    IBucketOfFun,
     ILocale,
     IVisProps,
     IFilters,
@@ -30,7 +30,7 @@ import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
-import { PivotTable } from "../../../../../components/core/PivotTable";
+import { CorePivotTable } from "../../../../../components/core/CorePivotTable";
 import { DEFAULT_LOCALE } from "../../../../../constants/localization";
 
 const getMockReferencePoint = (
@@ -316,7 +316,7 @@ describe("PluggablePivotTable", () => {
             pivotTable.update(options, {}, testMocks.emptyMdObject);
 
             expect(createElementSpy).toHaveBeenCalledTimes(1);
-            expect(createElementSpy.mock.calls[0][0]).toBe(PivotTable);
+            expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
 
             const defaultConfig = {
                 menu: {
@@ -363,7 +363,7 @@ describe("PluggablePivotTable", () => {
             > = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
 
             it("should return a new reference point with adapted buckets", () => {
-                const expectedBuckets: IBucket[] = mockPivotTableReferencePoint.buckets;
+                const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
@@ -404,7 +404,7 @@ describe("PluggablePivotTable", () => {
             > = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
 
             it("should return a new reference point with adapted buckets", () => {
-                const expectedBuckets: IBucket[] = mockPivotTableReferencePoint.buckets;
+                const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
@@ -475,7 +475,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point without duplicates in buckets", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedBuckets: IBucket[] = mockReferencePoint.buckets;
+                    const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
             });
@@ -491,7 +491,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with empty buckets", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedBuckets: IBucket[] = mockReferencePoint.buckets;
+                    const expectedBuckets: IBucketOfFun[] = mockReferencePoint.buckets;
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
             });
@@ -518,7 +518,7 @@ describe("PluggablePivotTable", () => {
 
         it("should return a new reference point with totals", () => {
             const pivotTable = createComponent();
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: cloneDeep(referencePointMocks.tableTotalsReferencePoint.buckets[0].items),
@@ -557,7 +557,7 @@ describe("PluggablePivotTable", () => {
         });
 
         it("should return a new reference point without updating grand totals and subtotals", () => {
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: cloneDeep(
@@ -625,7 +625,7 @@ const attributeReferenceBucketItem: IBucketItem = {
 };
 
 // Creates a theoretical bucket with one of each bucketItemTypes
-const createMockBucket = (type: string): IBucket => {
+const createMockBucket = (type: string): IBucketOfFun => {
     return {
         localIdentifier: type,
         items: [
@@ -659,7 +659,7 @@ const knownBucketNames = [
     "columns",
 ];
 
-const allBucketTypes: IBucket[] = knownBucketNames.map(bucketName => createMockBucket(bucketName));
+const allBucketTypes: IBucketOfFun[] = knownBucketNames.map(bucketName => createMockBucket(bucketName));
 
 describe("getColumnAttributes", () => {
     it("should collect common and date attributes from buckets: columns, stack, segment", () => {

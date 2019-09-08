@@ -23,6 +23,7 @@ import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 import { IAxisProperties } from "../../interfaces/AxisType";
 import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
+import { bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 
 export default class BaseChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderCanvasSection() {
@@ -110,16 +111,9 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     }
 
     protected isViewedBy() {
-        const { mdObject } = this.props;
-        return (
-            mdObject &&
-            mdObject.buckets
-                .filter(
-                    bucket =>
-                        [BucketNames.VIEW, BucketNames.TREND].indexOf(get(bucket, "localIdentifier")) >= 0,
-                )
-                .some(bucket => get(bucket, "items").length > 0)
-        );
+        const { insight } = this.props;
+
+        return !bucketsIsEmpty(insightBuckets(insight, BucketNames.VIEW, BucketNames.TREND));
     }
 
     protected getBaseChartAxisSection(

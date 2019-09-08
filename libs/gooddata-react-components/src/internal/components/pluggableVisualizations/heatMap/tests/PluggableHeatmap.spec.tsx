@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import { PluggableHeatmap } from "../PluggableHeatmap";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
-import { IBucket, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
 
 describe("PluggableHeatmap", () => {
     const defaultProps = {
@@ -30,7 +30,7 @@ describe("PluggableHeatmap", () => {
     it("should return reference point with one metric, category, stack and valid filters", async () => {
         const heatmap = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -134,7 +134,7 @@ describe("PluggableHeatmap", () => {
 
             const extendedReferencePoint = await heatmap.getExtendedReferencePoint(originalRefPoint);
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [originalRefPoint.buckets[0].items[1]],

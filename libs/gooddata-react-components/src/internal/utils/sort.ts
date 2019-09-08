@@ -7,23 +7,26 @@ import isEmpty = require("lodash/isEmpty");
 import omitBy = require("lodash/omitBy");
 import isNil = require("lodash/isNil");
 import { AFM } from "@gooddata/typings";
-import { DataLayer } from "@gooddata/gooddata-js";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
-import {
-    IBucket,
-    IBucketItem,
-    IExtendedReferencePoint,
-    IVisualizationProperties,
-} from "../interfaces/Visualization";
+import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
 import { MEASUREGROUP } from "../constants/bucket";
 import { VisualizationTypes } from "../../constants/visualizationTypes";
 import * as SortsHelper from "../../helpers/sorts";
-
-const STACK_BY_DIMENSION = 0;
-const VIEW_BY_DIMENSION = 1;
+import {
+    bucketsAttributes,
+    IInsight,
+    insightAttributes,
+    insightBuckets,
+    insightMeasures,
+    insightSorts,
+    newAttributeSort,
+    newMeasureSort,
+    SortItem,
+} from "@gooddata/sdk-model";
+import { BucketNames } from "../../index";
 
 export function getMeasureSortItems(identifier: string, direction: AFM.SortDirection): AFM.SortItem[] {
     return [
@@ -76,22 +79,20 @@ export function getFirstAttributeIdentifier(
     return dimensionItems.find(a => a !== MEASUREGROUP) || null;
 }
 
-function getFirstMeasureSort(afm: AFM.IAfm): AFM.SortItem[] {
-    const measure: AFM.IMeasure = get(afm, "measures.0");
-    if (measure) {
-        return getMeasureSortItems(measure.localIdentifier, SORT_DIR_DESC);
+function getDefaultTableSort(insight: IInsight): SortItem[] {
+    const attributes = insightAttributes(insight);
+
+    if (attributes.length > 0) {
+        return [newAttributeSort(attributes[0], SORT_DIR_ASC)];
+    }
+
+    const measures = insightMeasures(insight);
+
+    if (measures.length > 0) {
+        return [newMeasureSort(measures[0], SORT_DIR_DESC)];
     }
 
     return [];
-}
-
-function getDefaultTableSort(afm: AFM.IAfm): AFM.SortItem[] {
-    const attribute: AFM.IAttribute = get(afm, "attributes.0");
-    if (!attribute) {
-        return getFirstMeasureSort(afm);
-    }
-
-    return [getAttributeSortItem(attribute.localIdentifier, SORT_DIR_ASC)];
 }
 
 export function getDefaultPivotTableSort(afm: AFM.IAfm): AFM.SortItem[] {
@@ -103,62 +104,44 @@ export function getDefaultPivotTableSort(afm: AFM.IAfm): AFM.SortItem[] {
     return [];
 }
 
-function getDefaultBarChartSort(afm: AFM.IAfm, resultSpec: AFM.IResultSpec): AFM.SortItem[] {
-    const viewByAttributeIdentifier = getFirstAttributeIdentifier(resultSpec, VIEW_BY_DIMENSION);
-    const stackByAttributeIdentifier = getFirstAttributeIdentifier(resultSpec, STACK_BY_DIMENSION);
+function getDefaultBarChartSort(insight: IInsight): SortItem[] {
+    const viewBy = bucketsAttributes(insightBuckets(insight, BucketNames.VIEW));
+    const stackBy = bucketsAttributes(insightBuckets(insight, BucketNames.STACK));
 
-    if (viewByAttributeIdentifier && stackByAttributeIdentifier) {
-        return [getAttributeSortItem(viewByAttributeIdentifier, SORT_DIR_DESC, true)];
+    if (!isEmpty(viewBy) && !isEmpty(stackBy)) {
+        return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
     }
 
-    if (!stackByAttributeIdentifier) {
-        return getFirstMeasureSort(afm);
+    if (isEmpty(stackBy)) {
+        const measures = insightMeasures(insight);
+
+        return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
     }
 
     return [];
 }
 
-function sanitizeSorts(afm: AFM.IAfm, sorts: AFM.SortItem[]): AFM.SortItem[] {
-    if (isEmpty(sorts)) {
-        return [];
-    }
-
-    return sorts.filter((sortItem: AFM.SortItem) => DataLayer.ResultSpecUtils.isSortValid(afm, sortItem));
-}
-
 // Consider disolving this function into individual components
-export function createSorts(
-    type: string,
-    afm: AFM.IAfm,
-    resultSpec: AFM.IResultSpec,
-    visualizationProperties: IVisualizationProperties,
-): AFM.SortItem[] {
-    const sortItems = get(visualizationProperties, "sortItems", []) as AFM.SortItem[];
-    const sanitizedSortItems: AFM.SortItem[] = sanitizeSorts(afm, sortItems);
-
-    // reuse sorts only for Table
-    // This does not apply to PivotTable, it doesn't use this function at all
-    if (type === VisualizationTypes.TABLE && !isEmpty(sanitizedSortItems)) {
-        return sanitizedSortItems;
-    }
-
+export function createSorts(type: string, insight: IInsight): SortItem[] {
     switch (type) {
         case VisualizationTypes.TABLE:
-            return getDefaultTableSort(afm);
+            const sorts = insightSorts(insight);
+
+            return !isEmpty(sorts) ? sorts : getDefaultTableSort(insight);
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.LINE:
             return [];
         case VisualizationTypes.BAR:
-            return getDefaultBarChartSort(afm, resultSpec);
+            return getDefaultBarChartSort(insight);
         case VisualizationTypes.TREEMAP:
-            return SortsHelper.getDefaultTreemapSort(afm, resultSpec);
+            return SortsHelper.getDefaultTreemapSort(insight);
     }
     return [];
 }
 
 export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint): string[] {
-    const buckets: IBucket[] = get(referencePoint, "buckets", []);
-    return buckets.reduce((localIdentifiers: string[], bucket: IBucket): string[] => {
+    const buckets: IBucketOfFun[] = get(referencePoint, "buckets", []);
+    return buckets.reduce((localIdentifiers: string[], bucket: IBucketOfFun): string[] => {
         const items: IBucketItem[] = get(bucket, "items", []);
         return localIdentifiers.concat(items.map((item: IBucketItem): string => item.localIdentifier));
     }, []);

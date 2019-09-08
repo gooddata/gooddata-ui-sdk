@@ -5,7 +5,12 @@ import set = require("lodash/set");
 import { InjectedIntl } from "react-intl";
 
 import * as BucketNames from "../../../constants/bucketNames";
-import { IExtendedReferencePoint, IBucket, IUiConfig, IBucketUiConfig } from "../../interfaces/Visualization";
+import {
+    IExtendedReferencePoint,
+    IBucketOfFun,
+    IUiConfig,
+    IBucketUiConfig,
+} from "../../interfaces/Visualization";
 
 import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -41,10 +46,10 @@ function setAreaChartBucketWarningMessages(
     messageConfig: { [bucketName: string]: string },
     intl?: InjectedIntl,
 ): IUiConfig {
-    const buckets: IBucket[] = get(referencePoint, BUCKETS, []);
+    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
     const updatedUiConfig: IUiConfig = get(referencePoint, UICONFIG);
 
-    return buckets.reduce((uiConfig: IUiConfig, bucket: IBucket) => {
+    return buckets.reduce((uiConfig: IUiConfig, bucket: IBucketOfFun) => {
         const localIdentifier: string = get(bucket, "localIdentifier", "");
         const bucketUiConfig: IBucketUiConfig = get(uiConfig, [BUCKETS, localIdentifier]);
         const isEnabled: boolean = get(bucketUiConfig, "enabled", false);
@@ -68,7 +73,7 @@ export function setAreaChartUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucket[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
     const categoriesCount = getItemsCount(buckets, BucketNames.VIEW);
     const measuresCount = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
     const isStackEmpty = hasNoStacks(buckets);

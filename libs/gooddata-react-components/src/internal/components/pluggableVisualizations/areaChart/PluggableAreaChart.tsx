@@ -1,40 +1,34 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
-import negate = require("lodash/negate");
 import { render } from "react-dom";
 import * as BucketNames from "../../../../constants/bucketNames";
 import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import {
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IVisConstruct,
     IBucketItem,
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IReferencePoint,
     IUiConfig,
-    IBucket,
+    IVisConstruct,
     IVisProps,
-    IVisualizationProperties,
-    IReferences,
 } from "../../../interfaces/Visualization";
 import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../../constants/uiConfig";
 
 import { BUCKETS } from "../../../constants/bucket";
 
 import {
-    sanitizeUnusedFilters,
-    getStackItems,
-    getDateItems,
     getAllAttributeItemsWithPreference,
-    isDate,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
-    getFilteredMeasuresForStackedCharts,
     getAllCategoriesAttributeItems,
+    getDateItems,
+    getFilteredMeasuresForStackedCharts,
+    getStackItems,
+    isDate,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeUnusedFilters,
 } from "../../../utils/bucketHelper";
 
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
@@ -48,8 +42,13 @@ import {
     AREA_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties";
-import { VisualizationObject } from "@gooddata/typings";
 import { haveManyViewItems } from "../../../utils/mdObjectHelper";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IInsight } from "@gooddata/sdk-model";
+import cloneDeep = require("lodash/cloneDeep");
+import get = require("lodash/get");
+import set = require("lodash/set");
+import negate = require("lodash/negate");
 
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -65,14 +64,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return cloneDeep(DEFAULT_AREA_UICONFIG);
     }
 
-    public update(
-        options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-        references: IReferences,
-    ): void {
-        this.updateCustomSupportedProperties(mdObject);
-        super.update(options, visualizationProperties, mdObject, references);
+    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void {
+        this.updateCustomSupportedProperties(insight);
+        super.update(options, insight, executionFactory);
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -133,7 +127,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     colors={this.colors}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    mdObject={this.mdObject}
+                    insight={this.insight}
                     references={this.references}
                     pushData={this.handlePushData}
                     type={this.type}
@@ -146,8 +140,8 @@ export class PluggableAreaChart extends PluggableBaseChart {
         }
     }
 
-    private updateCustomSupportedProperties(mdObject: VisualizationObject.IVisualizationObjectContent): void {
-        if (haveManyViewItems(mdObject)) {
+    private updateCustomSupportedProperties(insight: IInsight): void {
+        if (haveManyViewItems(insight)) {
             this.addSupportedProperties(OPTIONAL_STACKING_PROPERTIES);
             this.setCustomControlsProperties({
                 stackMeasures: false,
@@ -167,7 +161,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         });
     }
 
-    private getAllAttributes(buckets: IBucket[]): IBucketItem[] {
+    private getAllAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
         return getAllAttributeItemsWithPreference(buckets, [
             BucketNames.TREND,
             BucketNames.VIEW,
@@ -176,7 +170,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         ]);
     }
 
-    private getAllAttributesWithoutDate(buckets: IBucket[]): IBucketItem[] {
+    private getAllAttributesWithoutDate(buckets: IBucketOfFun[]): IBucketItem[] {
         return this.getAllAttributes(buckets).filter(negate(isDate));
     }
 

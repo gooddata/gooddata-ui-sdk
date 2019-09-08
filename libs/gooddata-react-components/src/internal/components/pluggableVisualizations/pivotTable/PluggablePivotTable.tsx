@@ -25,7 +25,7 @@ import {
     ILocale,
     IVisualizationProperties,
     IBucketItem,
-    IBucket,
+    IBucketOfFun,
     IBucketFilter,
 } from "../../../interfaces/Visualization";
 
@@ -45,11 +45,11 @@ import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { VisualizationTypes, VisualizationEnvironment } from "../../../../constants/visualizationTypes";
-import { PivotTable } from "../../../../components/core/PivotTable";
+import { CorePivotTable } from "../../../../components/core/CorePivotTable";
 import { generateDimensions } from "../../../../helpers/dimensions";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
 
-export const getColumnAttributes = (buckets: IBucket[]): IBucketItem[] => {
+export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
         buckets,
         [BucketNames.COLUMNS, BucketNames.STACK, BucketNames.SEGMENT],
@@ -57,7 +57,7 @@ export const getColumnAttributes = (buckets: IBucket[]): IBucketItem[] => {
     );
 };
 
-export const getRowAttributes = (buckets: IBucket[]): IBucketItem[] => {
+export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
         buckets,
         [BucketNames.ATTRIBUTE, BucketNames.ATTRIBUTES, BucketNames.VIEW, BucketNames.TREND],
@@ -443,7 +443,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                                         style={pivotWrapperStyle}
                                         className="gd-table-dashboard-wrapper"
                                     >
-                                        <PivotTable {...pivotTableProps} height={usedHeight} />
+                                        <CorePivotTable {...pivotTableProps} height={usedHeight} />
                                     </div>
                                 );
                             }}
@@ -456,12 +456,12 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
                 render(
                     <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
-                        <PivotTable {...pivotTableProps} />
+                        <CorePivotTable {...pivotTableProps} />
                     </div>,
                     document.querySelector(this.element),
                 );
             } else {
-                render(<PivotTable {...pivotTableProps} />, document.querySelector(this.element));
+                render(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
             }
         }
     }

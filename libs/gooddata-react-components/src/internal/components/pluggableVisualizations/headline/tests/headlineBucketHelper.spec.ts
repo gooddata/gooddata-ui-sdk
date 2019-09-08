@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig";
-import { IBucket, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import {
     findComplementaryOverTimeComparisonMeasure,
@@ -11,7 +11,7 @@ import {
 
 describe("headlineBucketHelper", () => {
     function createReferencePoint(
-        buckets: IBucket[] = [],
+        buckets: IBucketOfFun[] = [],
         uiConfig = { buckets: {} },
     ): IExtendedReferencePoint {
         return {

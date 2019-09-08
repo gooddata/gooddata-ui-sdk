@@ -5,7 +5,7 @@ import set = require("lodash/set");
 import { InjectedIntl } from "react-intl";
 
 import * as BucketNames from "../../../constants/bucketNames";
-import { IBucket, IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
+import { IBucketOfFun, IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
@@ -25,7 +25,7 @@ export function getDefaultHeadlineUiConfig(): IUiConfig {
 export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: InjectedIntl): IUiConfig {
     let uiConfig = getDefaultHeadlineUiConfig();
 
-    const buckets: IBucket[] = get(referencePoint, BUCKETS, []);
+    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
     const viewCanAddPrimaryItems = hasNoMeasures(buckets);
     const viewCanAddSecondaryItems = hasNoSecondaryMeasures(buckets);
 

@@ -3,7 +3,6 @@
 import * as React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { InjectedIntl } from "react-intl";
-import { AFM, VisualizationObject } from "@gooddata/typings";
 
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -22,7 +21,7 @@ import {
     ILocale,
     IVisualizationProperties,
     IBucketItem,
-    IBucket,
+    IBucketOfFun,
 } from "../../../interfaces/Visualization";
 import {
     sanitizeUnusedFilters,
@@ -52,10 +51,10 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-// import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
-import { VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { generateDimensions } from "../../../../helpers/dimensions";
+import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
+import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -65,6 +64,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;
+    private backend: IAnalyticalBackend;
 
     constructor(props: IVisConstruct) {
         super();
@@ -74,6 +74,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
+        this.backend = props.backend;
     }
 
     public unmount() {
@@ -83,13 +84,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }
     }
 
-    public update(
-        options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-    ) {
-        this.visualizationProperties = visualizationProperties;
-        this.renderVisualization(options, mdObject);
+    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
+        this.visualizationProperties = insightProperties(insight);
+        this.renderVisualization(options, insight, executionFactory);
         this.renderConfigurationPanel();
     }
 
@@ -139,41 +136,36 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        _mdObject: VisualizationObject.IVisualizationObjectContent,
+        insight: IInsight,
+        executionFactory: IExecutionFactory,
     ) {
-        const { dataSource } = options;
-
-        if (dataSource) {
-            /*
-            const { resultSpec, locale, custom, config } = options;
-            const { drillableItems } = custom;
-            const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
-
-            const resultSpecWithDimensions: AFM.IResultSpec = {
-                ...resultSpec,
-                dimensions: this.getDimensions(mdObject),
-            };
-            */
-            // TODO: SDK8: headline is defunct now
-            render(
-                /*
-                <CoreHeadline
-                    workspace={this.projectId}
-                    drillableItems={drillableItems}
-                    locale={locale}
-                    config={config}
-                    dataSource={dataSource}
-                    resultSpec={resultSpecWithDimensions}
-                    afterRender={afterRender}
-                    onLoadingChanged={onLoadingChanged}
-                    pushData={pushData}
-                    onError={onError}
-                    LoadingComponent={null}
-                    ErrorComponent={null}
-                />*/ null,
-                document.querySelector(this.element),
-            );
+        if (!insightHasDataDefined(insight)) {
+            return;
         }
+
+        const { locale, custom, config } = options;
+        const { drillableItems } = custom;
+        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const execution = executionFactory
+            .forInsight(insight)
+            .withDimensions({ itemIdentifiers: ["measureGroup"] });
+
+        render(
+            <CoreHeadline
+                backend={this.backend}
+                execution={execution}
+                drillableItems={drillableItems}
+                locale={locale}
+                config={config}
+                afterRender={afterRender}
+                onLoadingChanged={onLoadingChanged}
+                pushData={pushData}
+                onError={onError}
+                LoadingComponent={null}
+                ErrorComponent={null}
+            />,
+            document.querySelector(this.element),
+        );
     }
 
     protected renderConfigurationPanel() {
@@ -195,13 +187,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-        return generateDimensions(mdObject, VisualizationTypes.HEADLINE);
-    }
-
     protected mergeDerivedBucketItems(
         referencePoint: IReferencePoint,
-        bucket: IBucket,
+        bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
     ): IBucketItem[] {
         return bucket.items.reduce((resultItems: IBucketItem[], bucketItem: IBucketItem) => {

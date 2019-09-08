@@ -24,6 +24,23 @@ export function isAttribute(obj: any): obj is IAttribute {
     return !isEmpty(obj) && (obj as IAttribute).attribute !== undefined;
 }
 
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type AttributePredicate = (attribute: IAttribute) => boolean;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const anyAttribute: AttributePredicate = _ => true;
+
+export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =>
+    attr.attribute.localIdentifier === id;
+
 //
 //
 //

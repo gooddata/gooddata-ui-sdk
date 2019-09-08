@@ -4,7 +4,7 @@ import { PluggableBubbleChart } from "../PluggableBubbleChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 
 describe("PluggableBubbleChart", () => {
     const defaultProps = {
@@ -30,7 +30,7 @@ describe("PluggableBubbleChart", () => {
     it("should return reference point with three measures and one category and only valid filters", async () => {
         const bubbleChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -81,7 +81,7 @@ describe("PluggableBubbleChart", () => {
     it("should return reference point with three measures and no attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -129,7 +129,7 @@ describe("PluggableBubbleChart", () => {
     it("should return reference point with secondary metric, tertiary metric and one category", async () => {
         const bubbleChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
@@ -183,7 +183,7 @@ describe("PluggableBubbleChart", () => {
                 referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
             const extendedReferencePoint = await bubbleChart.getExtendedReferencePoint(originalRefPoint);
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: originalRefPoint.buckets[0].items.slice(0, 1),

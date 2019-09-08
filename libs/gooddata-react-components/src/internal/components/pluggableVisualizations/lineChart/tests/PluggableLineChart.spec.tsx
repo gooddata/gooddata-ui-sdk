@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 import get = require("lodash/get");
-import { IBucket, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { PluggableLineChart } from "../PluggableLineChart";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
@@ -50,7 +50,7 @@ describe("PluggableLineChart", () => {
     it("should reuse all measures, only one category and no stacks", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items,
@@ -98,7 +98,7 @@ describe("PluggableLineChart", () => {
     it("should reuse one measure, only one category and one category as stack", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items,
@@ -138,7 +138,7 @@ describe("PluggableLineChart", () => {
     it("should return reference point with Date in categories even it was as second item", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.dateAsSecondCategoryReferencePoint.buckets[0].items,
@@ -172,7 +172,7 @@ describe("PluggableLineChart", () => {
     it("should return reference point with one category and one stack", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneMetricAndCategoryAndStackReferencePoint.buckets[0].items,
@@ -212,7 +212,7 @@ describe("PluggableLineChart", () => {
     it("should return reference point when no categories and only stacks", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[0].items,
@@ -246,7 +246,7 @@ describe("PluggableLineChart", () => {
     it("should cut out measures tail when getting nM 0Vb 1Sb", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items.slice(
@@ -284,7 +284,7 @@ describe("PluggableLineChart", () => {
     it("should handle wrong order of buckets in reference point", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: referencePointMocks.wrongBucketsOrderReferencePoint.buckets[0].items,
@@ -321,7 +321,7 @@ describe("PluggableLineChart", () => {
         async () => {
             const lineChart = createComponent();
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -357,7 +357,7 @@ describe("PluggableLineChart", () => {
         async () => {
             const lineChart = createComponent();
 
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[0].items[0]],
@@ -424,7 +424,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
         const referencePoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
 
-        const expectedBuckets: IBucket[] = [
+        const expectedBuckets: IBucketOfFun[] = [
             {
                 localIdentifier: "measures",
                 items: [referencePoint.buckets[0].items[0]],

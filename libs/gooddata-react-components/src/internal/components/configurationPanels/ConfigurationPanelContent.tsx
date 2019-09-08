@@ -2,15 +2,15 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import { ChartType } from "../../../constants/visualizationTypes";
-import { VisualizationObject } from "@gooddata/typings";
 
-import { hasMeasures } from "../../utils/mdObjectHelper";
 import { IVisualizationProperties, IFeatureFlags, IReferences } from "../../interfaces/Visualization";
 import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { DEFAULT_LOCALE } from "../../../constants/localization";
+import { IInsight } from "@gooddata/sdk-model";
+import { insightHasMeasures } from "@gooddata/sdk-model/src/insight";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;
@@ -21,7 +21,7 @@ export interface IConfigurationPanelContentProps {
     type?: ChartType;
     isError?: boolean;
     isLoading?: boolean;
-    mdObject?: VisualizationObject.IVisualizationObjectContent;
+    insight?: IInsight;
     featureFlags?: IFeatureFlags;
     axis?: string;
     pushData?(data: any): void;
@@ -38,7 +38,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         locale: DEFAULT_LOCALE,
         isError: false,
         isLoading: false,
-        mdObject: null,
+        insight: null,
         pushData: noop,
         featureFlags: {},
         axis: null,
@@ -59,8 +59,8 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     protected abstract renderConfigurationPanel(): JSX.Element;
 
     protected isControlDisabled() {
-        const { mdObject, isError, isLoading } = this.props;
-        return !hasMeasures(mdObject) || isError || isLoading;
+        const { insight, isError, isLoading } = this.props;
+        return !insightHasMeasures(insight) || isError || isLoading;
     }
 
     protected renderColorSection() {
@@ -71,7 +71,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
             colors,
             featureFlags,
             references,
-            mdObject,
+            insight,
             isLoading,
         } = this.props;
 
@@ -85,7 +85,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
                 colors={colors}
                 controlsDisabled={controlsDisabled}
                 pushData={pushData}
-                hasMeasures={hasMeasures(mdObject)}
+                hasMeasures={insightHasMeasures(insight)}
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
             />

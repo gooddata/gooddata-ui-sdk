@@ -11,7 +11,7 @@ import {
     IExtendedReferencePoint,
     IVisConstruct,
     IBucketItem,
-    IBucket,
+    IBucketOfFun,
     IVisualizationProperties,
     IUiConfig,
 } from "../../../interfaces/Visualization";
@@ -126,7 +126,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     protected configureBuckets(extReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucket[] = get(extReferencePoint, BUCKETS, []);
+        const buckets: IBucketOfFun[] = get(extReferencePoint, BUCKETS, []);
         const attributes: IBucketItem[] = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.TREND,
             BucketNames.VIEW,
@@ -187,7 +187,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     private configureChartTypes(referencePoint: IReferencePoint): IVisualizationProperties {
-        const buckets: IBucket[] = get(referencePoint, BUCKETS, []);
+        const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
         const primaryChartType = get(findBucket(buckets, BucketNames.MEASURES), "chartType");
         const secondaryChartType = get(findBucket(buckets, BucketNames.SECONDARY_MEASURES), "chartType");
 
@@ -210,7 +210,7 @@ export class PluggableComboChart extends PluggableBaseChart {
             return false;
         }
 
-        const buckets: IBucket[] = get(extReferencePoint, BUCKETS, []);
+        const buckets: IBucketOfFun[] = get(extReferencePoint, BUCKETS, []);
         const primaryMasterMeasures: number = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
         const secondaryMasterMeasures: number = getMasterMeasuresCount(
             buckets,

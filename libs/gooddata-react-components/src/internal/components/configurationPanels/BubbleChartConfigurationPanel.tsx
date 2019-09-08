@@ -122,12 +122,12 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
 
     private areDataLabelsDisabled() {
         const isDisabled = super.isControlDisabled();
-        return isDisabled || !hasTertiaryMeasures(this.props.mdObject);
+        return isDisabled || !hasTertiaryMeasures(this.props.insight);
     }
 
     private isDataLabelsWarningShown() {
         const isDisabled = super.isControlDisabled();
-        return !isDisabled && !hasTertiaryMeasures(this.props.mdObject);
+        return !isDisabled && !hasTertiaryMeasures(this.props.insight);
     }
 
     private getBubbleClassNames() {

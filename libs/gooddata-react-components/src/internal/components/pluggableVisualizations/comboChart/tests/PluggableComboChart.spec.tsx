@@ -6,7 +6,7 @@ import { VisualizationObject } from "@gooddata/typings";
 import { PluggableComboChart } from "../PluggableComboChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import {
-    IBucket,
+    IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IUiConfig,
@@ -27,12 +27,12 @@ describe("PluggableComboChart", () => {
             pushData: noop,
         },
     };
-    const primaryMeasureBucketProps: IBucket = {
+    const primaryMeasureBucketProps: IBucketOfFun = {
         localIdentifier: "measures",
         items: [],
         chartType: VisualizationTypes.COLUMN,
     };
-    const secondaryMeasureBucketProps: IBucket = {
+    const secondaryMeasureBucketProps: IBucketOfFun = {
         localIdentifier: "secondary_measures",
         items: [],
         chartType: VisualizationTypes.LINE,
@@ -340,7 +340,7 @@ describe("PluggableComboChart", () => {
                 const refPoints: Array<Promise<IExtendedReferencePoint>> = COLUMN_AREA_LINE.map(
                     (chartType: VisualizationObject.VisualizationType) => {
                         clonedReferencePoint.buckets.forEach(
-                            (bucket: IBucket) => (bucket.chartType = chartType),
+                            (bucket: IBucketOfFun) => (bucket.chartType = chartType),
                         );
                         return comboChart.getExtendedReferencePoint(clonedReferencePoint);
                     },

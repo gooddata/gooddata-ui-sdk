@@ -1,18 +1,16 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { VisualizationObject } from "@gooddata/typings";
-import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 import {
     IReferencePoint,
     IExtendedReferencePoint,
     IVisualization,
     IBucketItem,
     IVisProps,
-    IVisualizationProperties,
-    IBucket,
-    IReferences,
+    IBucketOfFun,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
+import { IInsight } from "@gooddata/sdk-model";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected supportedPropertiesList: string[];
@@ -42,16 +40,11 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint>;
 
-    public abstract update(
-        props: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: IVisualizationObjectContent,
-        references: IReferences,
-    ): void;
+    public abstract update(props: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void;
 
     protected mergeDerivedBucketItems(
         referencePoint: IReferencePoint,
-        bucket: IBucket,
+        bucket: IBucketOfFun,
         newDerivedBucketItems: IBucketItem[],
     ): IBucketItem[] {
         return bucket.items.reduce((resultItems: IBucketItem[], bucketItem: IBucketItem) => {

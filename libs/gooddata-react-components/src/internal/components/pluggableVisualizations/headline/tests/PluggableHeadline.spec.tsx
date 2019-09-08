@@ -8,7 +8,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import * as testMocks from "../../../../mocks/testMocks";
 import {
-    IBucket,
+    IBucketOfFun,
     IExtendedReferencePoint,
     IFilters,
     IReferencePoint,
@@ -43,7 +43,7 @@ describe("PluggableHeadline", () => {
         });
     }
 
-    function createReferencePointWithDateFilter(buckets: IBucket[]): IExtendedReferencePoint {
+    function createReferencePointWithDateFilter(buckets: IBucketOfFun[]): IExtendedReferencePoint {
         return {
             buckets,
             filters: referencePointMocks.samePeriodPrevYearFiltersBucket,
@@ -156,7 +156,7 @@ describe("PluggableHeadline", () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
@@ -255,7 +255,7 @@ describe("PluggableHeadline", () => {
             const extendedReferencePoint = await headline.getExtendedReferencePoint(
                 referencePointMocks.emptyReferencePoint,
             );
-            const expectedBuckets: IBucket[] = [
+            const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [],
@@ -787,7 +787,7 @@ describe("PluggableHeadline", () => {
             });
 
             describe("known buckets", () => {
-                const buckets: IBucket[] = [
+                const buckets: IBucketOfFun[] = [
                     {
                         localIdentifier: "measures",
                         items: [referencePointMocks.masterMeasureItems[0]],
@@ -1085,7 +1085,7 @@ describe("PluggableHeadline", () => {
             describe("mixed known and unknown buckets", () => {
                 // tslint:disable-next-line:max-line-length
                 it("should remove derived measures when viewBy date is present but global date filter is missing", async () => {
-                    const bucketsWithViewBy: IBucket[] = [
+                    const bucketsWithViewBy: IBucketOfFun[] = [
                         {
                             localIdentifier: "measures",
                             items: [

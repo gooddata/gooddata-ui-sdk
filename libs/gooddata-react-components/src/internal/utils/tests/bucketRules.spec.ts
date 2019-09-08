@@ -2,7 +2,7 @@
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 
-import { IBucketItem, IBucket, IFilters } from "../../interfaces/Visualization";
+import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization";
 import * as bucketRules from "../bucketRules";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import * as BucketNames from "../../../constants/bucketNames";
@@ -136,7 +136,7 @@ describe("previousPeriodRecommendationEnabled", () => {
 describe("partial rules", () => {
     describe("noDerivedMeasurePresent", () => {
         it("should return true for no bucket", () => {
-            const buckets: IBucket[] = [];
+            const buckets: IBucketOfFun[] = [];
 
             const result = bucketRules.noDerivedMeasurePresent(buckets);
 
@@ -144,7 +144,7 @@ describe("partial rules", () => {
         });
 
         it("should return true for empty bucket items", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "whatever",
                     items: [],
@@ -157,7 +157,7 @@ describe("partial rules", () => {
         });
 
         it("should return true for only master measures", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "whatever",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -170,7 +170,7 @@ describe("partial rules", () => {
         });
 
         it("should return false if there is a derived measure present", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "whatever",
                     items: [
@@ -188,7 +188,7 @@ describe("partial rules", () => {
 
     describe("hasSomeSegmentByItems", () => {
         it("should return false when bucket not exist", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [],
@@ -201,7 +201,7 @@ describe("partial rules", () => {
         });
 
         it("should return false for empty bucket", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "segment",
                     items: [],
@@ -214,7 +214,7 @@ describe("partial rules", () => {
         });
 
         it("should return true when some attribute in bucket", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "segment",
                     items: [
@@ -234,7 +234,7 @@ describe("partial rules", () => {
         });
 
         it("should return true when more attributes in bucket", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "segment",
                     items: [
@@ -262,7 +262,7 @@ describe("partial rules", () => {
 
     describe("hasOneMasterMeasureInBucket", () => {
         it("should return false for empty bucket items", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [],
@@ -275,7 +275,7 @@ describe("partial rules", () => {
         });
 
         it("should return true for only master measures", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -288,7 +288,7 @@ describe("partial rules", () => {
         });
 
         it("should return true if there is just one master measure and its derived measure present", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -304,7 +304,7 @@ describe("partial rules", () => {
         });
 
         it("should return false if there are more master measures", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
                     items: [
@@ -323,7 +323,7 @@ describe("partial rules", () => {
 
     describe("getMasterMeasuresCount", () => {
         it("should return 0 for empty bucket items", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
                     items: [],
@@ -336,7 +336,7 @@ describe("partial rules", () => {
         });
 
         it("should return 1 for only master measures", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
                     items: [referencePointMocks.masterMeasureItems[0]],
@@ -349,7 +349,7 @@ describe("partial rules", () => {
         });
 
         it("should return 1 if there is derived measure present", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
                     items: [
@@ -365,7 +365,7 @@ describe("partial rules", () => {
         });
 
         it("should count just master measures in given bucket", () => {
-            const buckets: IBucket[] = [
+            const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
                     items: [
@@ -392,7 +392,7 @@ describe("partial rules", () => {
     });
 
     describe("hasUsedDate", () => {
-        const bucketsEmpty: IBucket[] = [];
+        const bucketsEmpty: IBucketOfFun[] = [];
         const emptyFilters: IFilters = {
             localIdentifier: "filters",
             items: [],

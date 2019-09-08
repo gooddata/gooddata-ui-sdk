@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import set = require("lodash/set");
 import get = require("lodash/get");
-import has = require("lodash/has");
 import uniq = require("lodash/uniq");
 import uniqBy = require("lodash/uniqBy");
 import negate = require("lodash/negate");
@@ -21,27 +20,34 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../interface
 import { VisualizationObject } from "@gooddata/typings";
 
 import {
-    IFiltersBucketItem,
+    IBucketFilter,
     IBucketItem,
-    IBucket,
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IUiConfig,
+    IBucketOfFun,
     IBucketsUiConfig,
     IBucketUiConfig,
+    IExtendedReferencePoint,
     IFilters,
-    IBucketFilter,
+    IFiltersBucketItem,
+    IReferencePoint,
+    IUiConfig,
 } from "../interfaces/Visualization";
 import {
-    DATE_DATASET_ATTRIBUTE,
     ATTRIBUTE,
-    DATE,
-    METRIC,
     BUCKETS,
+    DATE,
+    DATE_DATASET_ATTRIBUTE,
+    METRIC,
     SHOW_ON_SECONDARY_AXIS,
 } from "../constants/bucket";
 import { UICONFIG } from "../constants/uiConfig";
 import { getTranslation } from "./translations";
+import {
+    bucketsItems,
+    IInsight,
+    insightBuckets,
+    bucketsMeasures,
+    isMeasureDefinition,
+} from "@gooddata/sdk-model";
 
 export function removeUnusedFilters(filters: IFiltersBucketItem[], unusedBucketItems: IBucketItem[]) {
     return filters.filter(filter => {
@@ -133,13 +139,13 @@ function findDerivedTypesReferencedByArithmeticMeasure(
  */
 export function getDerivedTypesFromArithmeticMeasure(
     measure: IBucketItem,
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
 ): OverTimeComparisonType[] {
     if (!isArithmeticBucketItem(measure)) {
         return [];
     }
 
-    const allMeasures = flatMap<IBucket, IBucketItem>(buckets, bucket => bucket.items);
+    const allMeasures = flatMap<IBucketOfFun, IBucketItem>(buckets, bucket => bucket.items);
     const overTimeComparisonTypes = findDerivedTypesReferencedByArithmeticMeasure(
         measure,
         allMeasures,
@@ -152,20 +158,20 @@ export function filterOutDerivedMeasures(measures: IBucketItem[]): IBucketItem[]
     return measures.filter(measure => !isDerivedBucketItem(measure));
 }
 
-function isArithmeticMeasureFromDerived(measure: IBucketItem, buckets: IBucket[]): boolean {
+function isArithmeticMeasureFromDerived(measure: IBucketItem, buckets: IBucketOfFun[]): boolean {
     return getDerivedTypesFromArithmeticMeasure(measure, buckets).length > 0;
 }
 
 export function filterOutArithmeticMeasuresFromDerived(
     measures: IBucketItem[],
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
 ): IBucketItem[] {
     return measures.filter(measure => !isArithmeticMeasureFromDerived(measure, buckets));
 }
 
 function isArithmeticMeasureFromDerivedOfTypeOnly(
     measure: IBucketItem,
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     derivedType: OverTimeComparisonType,
 ): boolean {
     const arithmeticMeasureDerivedTypes = getDerivedTypesFromArithmeticMeasure(measure, buckets);
@@ -183,7 +189,7 @@ export function keepOnlyMasterAndDerivedMeasuresOfType(
 
 export function filterOutIncompatibleArithmeticMeasures(
     measures: IBucketItem[],
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     derivedOfTypeToKeep: OverTimeComparisonType,
 ): IBucketItem[] {
     return measures.filter(
@@ -249,10 +255,10 @@ export function setBucketTitles(
     visualizationType: string,
     intl?: InjectedIntl,
 ): IUiConfig {
-    const buckets: IBucket[] = get(referencePoint, BUCKETS);
+    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
     const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
 
-    forEach(buckets, (bucket: IBucket) => {
+    forEach(buckets, (bucket: IBucketOfFun) => {
         const localIdentifier: string = get(bucket, "localIdentifier", "");
         // skip disabled buckets
         if (!get(updatedUiConfig, [BUCKETS, localIdentifier, "enabled"], false)) {
@@ -281,17 +287,17 @@ export function generateBucketSubtitleId(localIdentifier: string, visualizationT
     return `dashboard.bucket.${localIdentifier}_subtitle.${visualizationType}`;
 }
 
-export function getItemsCount(buckets: IBucket[], localIdentifier: string): number {
+export function getItemsCount(buckets: IBucketOfFun[], localIdentifier: string): number {
     return getBucketItems(buckets, localIdentifier).length;
 }
 
-export function getBucketItems(buckets: IBucket[], localIdentifier: string): IBucketItem[] {
+export function getBucketItems(buckets: IBucketOfFun[], localIdentifier: string): IBucketItem[] {
     return get(buckets.find(bucket => bucket.localIdentifier === localIdentifier), "items", []);
 }
 
 // return bucket items matching localIdentifiers from any bucket
 export function getItemsFromBuckets(
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     localIdentifiers: string[],
     types?: string[],
 ): IBucketItem[] {
@@ -307,7 +313,7 @@ export function getItemsFromBuckets(
 }
 
 export function getBucketItemsByType(
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     localIdentifier: string,
     types: string[],
 ): IBucketItem[] {
@@ -322,18 +328,22 @@ export function getBucketItemsByType(
     return itemsOfType;
 }
 
-export function getPreferredBucketItems(buckets: IBucket[], preference: string[], type: string[]): any {
+export function getPreferredBucketItems(buckets: IBucketOfFun[], preference: string[], type: string[]): any {
     const bucket = getPreferredBucket(buckets, preference, type);
     return get(bucket, "items", []);
 }
 
-export function getPreferredBucket(buckets: IBucket[], preference: string[], type: string[]): IBucket {
-    return preference.reduce((result: IBucket, preference: string) => {
+export function getPreferredBucket(
+    buckets: IBucketOfFun[],
+    preference: string[],
+    type: string[],
+): IBucketOfFun {
+    return preference.reduce((result: IBucketOfFun, preference: string) => {
         if (result) {
             return result;
         }
 
-        return buckets.find((bucket: IBucket) => {
+        return buckets.find((bucket: IBucketOfFun) => {
             const preferenceMatch = bucket.localIdentifier === preference;
             const typeMatch = every(get(bucket, "items", []), item => type.indexOf(item.type) !== -1);
 
@@ -342,7 +352,7 @@ export function getPreferredBucket(buckets: IBucket[], preference: string[], typ
     }, undefined);
 }
 
-export function getAllBucketItemsByType(bucket: IBucket, types: string[]): IBucketItem[] {
+export function getAllBucketItemsByType(bucket: IBucketOfFun, types: string[]): IBucketItem[] {
     return bucket.items.reduce((resultItems: IBucketItem[], item: IBucketItem): IBucketItem[] => {
         if (includes(types, item.type)) {
             resultItems.push(item);
@@ -351,14 +361,14 @@ export function getAllBucketItemsByType(bucket: IBucket, types: string[]): IBuck
     }, []);
 }
 
-export function getAllItemsByType(buckets: IBucket[], types: string[]): IBucketItem[] {
+export function getAllItemsByType(buckets: IBucketOfFun[], types: string[]): IBucketItem[] {
     return buckets.reduce(
-        (items: IBucketItem[], bucket: IBucket) => [...items, ...getAllBucketItemsByType(bucket, types)],
+        (items: IBucketItem[], bucket: IBucketOfFun) => [...items, ...getAllBucketItemsByType(bucket, types)],
         [],
     );
 }
 
-export function removeDuplicateBucketItems(buckets: IBucket[]): IBucket[] {
+export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFun[] {
     const usedIdentifiersMap: { [key: string]: boolean } = {};
 
     return buckets.map(bucket => {
@@ -377,33 +387,27 @@ export function removeDuplicateBucketItems(buckets: IBucket[]): IBucket[] {
 }
 
 export function getTotalsFromBucket(
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     bucketName: string,
 ): VisualizationObject.IVisualizationTotal[] {
     const selectedBucket = buckets.find(bucket => bucket.localIdentifier === bucketName);
     return get(selectedBucket, "totals", []);
 }
 
-export function getUniqueAttributes(buckets: IBucket[]) {
+export function getUniqueAttributes(buckets: IBucketOfFun[]) {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
     return uniqBy(attributes, attribute => get(attribute, "attribute"));
 }
 
-export function getMeasuresFromMdObject(mdObject: VisualizationObject.IVisualizationObjectContent) {
-    return get(mdObject, "buckets").reduce((acc, bucket) => {
-        const measureDefinition = get(bucket, "items", [] as any).filter((item: any) =>
-            has(item, "measure.definition.measureDefinition"),
-        );
-
-        return acc.concat(measureDefinition);
-    }, []);
+export function getMeasuresFromMdObject(insight: IInsight) {
+    return bucketsMeasures(insightBuckets(insight), m => isMeasureDefinition(m.measure.definition));
 }
 
-export function getMeasures(buckets: IBucket[]) {
+export function getMeasures(buckets: IBucketOfFun[]) {
     return getAllItemsByType(buckets, [METRIC]);
 }
 
-export function getFirstValidMeasure(buckets: IBucket[]): IBucketItem {
+export function getFirstValidMeasure(buckets: IBucketOfFun[]): IBucketItem {
     const measures = getMeasures(buckets);
     const validMeasures = measures.filter(isValidMeasure);
     return validMeasures[0] || null;
@@ -418,11 +422,11 @@ function isValidMeasure(measure: IBucketItem): boolean {
     return true;
 }
 
-export function getFirstAttribute(buckets: IBucket[]): IBucketItem {
+export function getFirstAttribute(buckets: IBucketOfFun[]): IBucketItem {
     return getUniqueAttributes(buckets)[0] || null;
 }
 
-export function getMeasureItems(buckets: IBucket[]): IBucketItem[] {
+export function getMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
     const preference = [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES, BucketNames.TERTIARY_MEASURES];
     const preferredMeasures = preference.reduce((acc, pref) => {
         const prefBucketItems = getPreferredBucketItems(buckets, [pref], [METRIC]);
@@ -437,45 +441,48 @@ export function getMeasureItems(buckets: IBucket[]): IBucketItem[] {
 }
 
 export function getBucketItemsWithExcludeByType(
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     excludedBucket: string[],
     type: string[],
 ) {
     const includedBuckets = buckets.filter(
-        (bucket: IBucket) => !includes(excludedBucket, bucket.localIdentifier),
+        (bucket: IBucketOfFun) => !includes(excludedBucket, bucket.localIdentifier),
     );
     return getAllItemsByType(includedBuckets, type);
 }
 
-export function getStackItems(buckets: IBucket[], itemTypes: string[] = [ATTRIBUTE]): IBucketItem[] {
+export function getStackItems(buckets: IBucketOfFun[], itemTypes: string[] = [ATTRIBUTE]): IBucketItem[] {
     const preferredStacks = getPreferredBucket(buckets, [BucketNames.STACK, BucketNames.SEGMENT], itemTypes);
 
     return get(preferredStacks, "items", []);
 }
 
-export function getAttributeItems(buckets: IBucket[]): IBucketItem[] {
+export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllAttributeItemsWithPreference(buckets, [BucketNames.VIEW, BucketNames.TREND]);
 }
 
-export function getAttributeItemsWithoutStacks(buckets: IBucket[]): IBucketItem[] {
+export function getAttributeItemsWithoutStacks(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAttributeItems(buckets).filter(attribute => {
         return !includes(getStackItems(buckets), attribute);
     });
 }
 
-export function getAllCategoriesAttributeItems(buckets: IBucket[]): IBucketItem[] {
+export function getAllCategoriesAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     const stackItemsWithDate = getStackItems(buckets, [ATTRIBUTE, DATE]);
     return getAttributeItems(buckets).filter((attribute: IBucketItem) => {
         return !includes(stackItemsWithDate, attribute);
     });
 }
 
-export function getAllAttributeItems(buckets: IBucket[]): IBucketItem[] {
+export function getAllAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
 }
 
 // get all attributes from buckets, but items from prefered buckets are first
-export function getAllAttributeItemsWithPreference(buckets: IBucket[], preference: string[]): IBucketItem[] {
+export function getAllAttributeItemsWithPreference(
+    buckets: IBucketOfFun[],
+    preference: string[],
+): IBucketItem[] {
     const preferredAttributes = preference.reduce((acc, pref) => {
         const prefBucket = getPreferredBucket(buckets, [pref], [ATTRIBUTE, DATE]);
         return [...acc, ...get(prefBucket, "items", [])];
@@ -490,16 +497,16 @@ export function getAllAttributeItemsWithPreference(buckets: IBucket[], preferenc
     return [...preferredAttributes, ...allOtherAttributes];
 }
 
-export function getDateItems(buckets: IBucket[]): IBucketItem[] {
+export function getDateItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAttributeItemsWithoutStacks(buckets).filter(isDate);
 }
 
-function hasItemsAboveLimit(bucket: IBucket, itemsLimit: number): boolean {
+function hasItemsAboveLimit(bucket: IBucketOfFun, itemsLimit: number): boolean {
     const masterBucketItems = filterOutDerivedMeasures(bucket.items);
     return masterBucketItems.length > itemsLimit;
 }
 
-function applyItemsLimit(bucket: IBucket, itemsLimit: number): IBucket {
+function applyItemsLimit(bucket: IBucketOfFun, itemsLimit: number): IBucketOfFun {
     if (itemsLimit !== undefined && hasItemsAboveLimit(bucket, itemsLimit)) {
         const newBucket = cloneDeep(bucket);
 
@@ -509,30 +516,30 @@ function applyItemsLimit(bucket: IBucket, itemsLimit: number): IBucket {
     return bucket;
 }
 
-function applyUiConfigOnBucket(bucket: IBucket, bucketUiConfig: IBucketUiConfig): IBucket {
+function applyUiConfigOnBucket(bucket: IBucketOfFun, bucketUiConfig: IBucketUiConfig): IBucketOfFun {
     return applyItemsLimit(bucket, get(bucketUiConfig, "itemsLimit"));
 }
 
 export function applyUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
-    const buckets: IBucket[] = referencePoint.buckets;
+    const buckets: IBucketOfFun[] = referencePoint.buckets;
     const uiConfig: IBucketsUiConfig = referencePoint.uiConfig.buckets;
-    const newBuckets: IBucket[] = buckets.map((bucket: IBucket) =>
+    const newBuckets: IBucketOfFun[] = buckets.map((bucket: IBucketOfFun) =>
         applyUiConfigOnBucket(bucket, uiConfig[bucket.localIdentifier]),
     );
     set(referencePoint, "buckets", newBuckets);
     return referencePoint;
 }
 
-export function hasBucket(buckets: IBucket[], localIdentifier: string): boolean {
+export function hasBucket(buckets: IBucketOfFun[], localIdentifier: string): boolean {
     return buckets.some(bucket => bucket.localIdentifier === localIdentifier);
 }
 
-export function findBucket(buckets: IBucket[], localIdentifier: string): IBucket {
-    return buckets.find((bucket: IBucket) => get(bucket, "localIdentifier") === localIdentifier);
+export function findBucket(buckets: IBucketOfFun[], localIdentifier: string): IBucketOfFun {
+    return buckets.find((bucket: IBucketOfFun) => get(bucket, "localIdentifier") === localIdentifier);
 }
 
-export function getBucketsByNames(buckets: IBucket[], names: string[]): IBucket[] {
-    return buckets.filter((bucket: IBucket) => includes(names, get(bucket, "localIdentifier")));
+export function getBucketsByNames(buckets: IBucketOfFun[], names: string[]): IBucketOfFun[] {
+    return buckets.filter((bucket: IBucketOfFun) => includes(names, get(bucket, "localIdentifier")));
 }
 
 export function getFirstMasterWithDerived(measureItems: IBucketItem[]): IBucketItem[] {
@@ -591,7 +598,7 @@ export function findDerivedBucketItem(
     );
 }
 
-export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IBucket[]): boolean {
+export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IBucketOfFun[]): boolean {
     return buckets.some(bucket =>
         bucket.items.some(
             bucketItem => bucketItem.masterLocalIdentifier === masterBucketItem.localIdentifier,
@@ -599,7 +606,7 @@ export function hasDerivedBucketItems(masterBucketItem: IBucketItem, buckets: IB
     );
 }
 
-export function getFilteredMeasuresForStackedCharts(buckets: IBucket[]) {
+export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]) {
     const hasStacks = getStackItems(buckets).length > 0;
     if (hasStacks) {
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
@@ -608,37 +615,37 @@ export function getFilteredMeasuresForStackedCharts(buckets: IBucket[]) {
     return getMeasureItems(buckets);
 }
 
-export function noRowsAndHasOneMeasure(buckets: VisualizationObject.IBucket[]): boolean {
-    const measureBucket = buckets.find(bucket => bucket.localIdentifier === BucketNames.MEASURES);
+export function noRowsAndHasOneMeasure(insight: IInsight): boolean {
+    const measures = bucketsItems(insightBuckets(insight, BucketNames.MEASURES));
+    const rows = bucketsItems(insightBuckets(insight, BucketNames.VIEW));
 
-    const rows = buckets.find(bucket => bucket.localIdentifier === BucketNames.VIEW);
+    const hasOneMeasure = measures.length === 1;
+    const hasRows = rows.length > 0;
 
-    const hasOneMeasure = measureBucket && measureBucket.items.length === 1;
-    const hasRows = rows && rows.items.length > 0;
     return Boolean(hasOneMeasure && !hasRows);
 }
 
-export function noColumnsAndHasOneMeasure(buckets: VisualizationObject.IBucket[]): boolean {
-    const measureBucket = buckets.find(bucket => bucket.localIdentifier === BucketNames.MEASURES);
+export function noColumnsAndHasOneMeasure(insight: IInsight): boolean {
+    const measures = bucketsItems(insightBuckets(insight, BucketNames.MEASURES));
+    const columns = bucketsItems(insightBuckets(insight, BucketNames.STACK));
 
-    const columns = buckets.find(bucket => bucket.localIdentifier === BucketNames.STACK);
+    const hasOneMeasure = measures.length === 1;
+    const hasColumn = columns.length > 0;
 
-    const hasOneMeasure = measureBucket && measureBucket.items.length === 1;
-    const hasColumn = columns && columns.items.length > 0;
-    return Boolean(hasOneMeasure && !hasColumn);
+    return hasOneMeasure && !hasColumn;
 }
 
 export function limitNumberOfMeasuresInBuckets(
-    buckets: IBucket[],
+    buckets: IBucketOfFun[],
     measuresLimitCount: number,
     tryToSelectDerivedWithMaster: boolean = false,
-): IBucket[] {
+): IBucketOfFun[] {
     const allMeasures = getMeasureItems(buckets);
 
     let selectedMeasuresLocalIdentifiers: string[] = [];
 
     // try to select measures one per bucket
-    buckets.forEach((bucket: IBucket) => {
+    buckets.forEach((bucket: IBucketOfFun) => {
         const currentBucketMeasures: IBucketItem[] = getAllBucketItemsByType(bucket, [METRIC]);
 
         if (currentBucketMeasures.length === 0) {
@@ -761,9 +768,12 @@ function tryToSelectMeasures(measures: string[], alreadySelectedMeasures: string
     return alreadySelectedMeasures;
 }
 
-function pruneBucketMeasureItems(buckets: IBucket[], measureLocalIdentifiersToBeKept: string[]): IBucket[] {
+function pruneBucketMeasureItems(
+    buckets: IBucketOfFun[],
+    measureLocalIdentifiersToBeKept: string[],
+): IBucketOfFun[] {
     return buckets.map(
-        (bucket: IBucket): IBucket => {
+        (bucket: IBucketOfFun): IBucketOfFun => {
             const prunedItems = bucket.items.filter(
                 (item: IBucketItem) =>
                     measureLocalIdentifiersToBeKept.indexOf(item.localIdentifier) > -1 ||
@@ -789,7 +799,7 @@ export function setMeasuresShowOnSecondaryAxis(items: IBucketItem[], value: bool
     }));
 }
 
-export function getAllMeasuresShowOnSecondaryAxis(buckets: IBucket[]): IBucketItem[] {
+export function getAllMeasuresShowOnSecondaryAxis(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [METRIC]).filter(isShowOnSecondaryAxis);
 }
 
