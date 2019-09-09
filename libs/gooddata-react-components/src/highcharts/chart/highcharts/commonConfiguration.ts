@@ -10,7 +10,7 @@ import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
-import { IHighchartsAxisExtend } from "../../../interfaces/HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../HighchartsExtend";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;

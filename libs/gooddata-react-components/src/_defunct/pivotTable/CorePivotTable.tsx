@@ -31,7 +31,7 @@ import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } 
 import { IDrillEvent, IDrillEventContextTable } from "../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { IMenuAggregationClickConfig, IPivotTableConfig } from "../../interfaces/PivotTable";
+import { IMenuAggregationClickConfig, IPivotTableConfig } from "./PivotTable";
 import { IDataSourceProviderInjectedProps } from "../to_delete/DataSourceProvider";
 import { LoadingComponent } from "../../base/simple/LoadingComponent";
 import TotalsUtils, { AVAILABLE_TOTALS as renderedTotalTypesOrder } from "./impl/utils";

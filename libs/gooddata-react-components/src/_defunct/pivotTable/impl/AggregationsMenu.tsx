@@ -11,7 +11,7 @@ import {
 } from "../../../base/helpers/executionResultHelper";
 import Menu from "../menu/Menu";
 import { getParsedFields } from "./agGridUtils";
-import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenuAggregationClickConfig } from "../PivotTable";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import { AVAILABLE_TOTALS } from "./utils";
 import AggregationsSubMenu from "./AggregationsSubMenu";

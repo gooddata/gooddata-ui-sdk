@@ -9,7 +9,7 @@ import {
     getNthAttributeName,
 } from "../../../base/helpers/executionResultHelper";
 import SubMenu from "../menu/SubMenu";
-import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenuAggregationClickConfig } from "../PivotTable";
 import { IColumnTotal } from "./AggregationsMenu";
 import menuHelper from "./aggregationsMenuHelper";
 

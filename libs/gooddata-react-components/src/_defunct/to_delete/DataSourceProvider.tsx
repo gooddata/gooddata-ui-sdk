@@ -8,7 +8,7 @@ import omit = require("lodash/omit");
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../../highcharts/proptypes/execution";
 
-import { IDataSource } from "../../interfaces/DataSource";
+import { IDataSource } from "./DataSource";
 import { ISubject } from "../../base/helpers/async";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { getNativeTotals } from "../pivotTable/impl/utils";

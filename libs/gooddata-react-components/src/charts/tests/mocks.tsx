@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 
-import { IDataSource } from "../../interfaces/DataSource";
+import { IDataSource } from "../../_defunct/to_delete/DataSource";
 import {
     oneMeasureResponse,
     oneMeasureAfm,

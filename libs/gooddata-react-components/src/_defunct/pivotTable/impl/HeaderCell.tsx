@@ -3,7 +3,7 @@ import * as React from "react";
 import * as classNames from "classnames";
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 
-import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
 

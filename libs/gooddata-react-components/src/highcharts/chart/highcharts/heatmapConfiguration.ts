@@ -6,7 +6,7 @@ import {
     IHighchartsAxisExtend,
     IHighchartsSeriesExtend,
     IHighchartsSeriesOptionsType,
-} from "../../../interfaces/HighchartsExtend";
+} from "../../HighchartsExtend";
 
 function between(x: number, lowerLimit: number, higherLimit: number): number {
     return Math.min(Math.max(lowerLimit, x), higherLimit);

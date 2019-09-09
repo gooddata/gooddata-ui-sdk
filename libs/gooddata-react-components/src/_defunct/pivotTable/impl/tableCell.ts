@@ -11,7 +11,7 @@ import {
     ITableCellStyleAndFormattedValue,
     MeasureCell,
     TableCell,
-} from "../../../interfaces/Table";
+} from "../PivotTable";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
     const parsedNumber: string | number =

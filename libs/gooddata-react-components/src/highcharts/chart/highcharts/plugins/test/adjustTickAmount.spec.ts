@@ -13,7 +13,7 @@ import {
     shouldBeHandledByHighcharts,
     Y_AXIS_SCORE,
 } from "../adjustTickAmount";
-import { IHighchartsAxisExtend } from "../../../../../interfaces/HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../../../HighchartsExtend";
 import { VisualizationTypes } from "../../../../../base/constants/visualizationTypes";
 
 describe("adjustTickAmount - general", () => {

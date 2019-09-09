@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Execution } from "@gooddata/typings";
 
-import { IDataSource } from "../src/interfaces/DataSource";
+import { IDataSource } from "../src/_defunct/to_delete/DataSource";
 
 export class DataSourceMock implements IDataSource {
     constructor(private returnValue: Execution.IExecutionResponses) {}

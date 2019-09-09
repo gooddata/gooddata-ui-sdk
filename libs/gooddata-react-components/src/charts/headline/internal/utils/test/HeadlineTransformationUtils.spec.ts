@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDrillEvent } from "../../../../../interfaces/DrillEvents";
-import { IHeadlineData } from "../../../../../interfaces/Headlines";
+import { IHeadlineData } from "../../../Headlines";
 import * as headerPredicateFactory from "../../../../../base/factory/HeaderPredicateFactory";
 import {
     getHeadlineData,

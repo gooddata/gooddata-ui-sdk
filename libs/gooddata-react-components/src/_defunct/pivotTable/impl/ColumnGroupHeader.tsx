@@ -5,7 +5,7 @@ import { AFM, Execution } from "@gooddata/typings/dist/index";
 import { IHeaderGroupParams, ColGroupDef } from "ag-grid-community";
 
 import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
-import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
 
 export interface IProps extends IHeaderGroupParams {
     menu?: IMenu;

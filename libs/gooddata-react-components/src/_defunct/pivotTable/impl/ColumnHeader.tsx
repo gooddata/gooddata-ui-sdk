@@ -5,7 +5,7 @@ import { IHeaderParams } from "ag-grid-community";
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 
 import { getParsedFields } from "./agGridUtils";
-import { IMenu, IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
 import { FIELD_TYPE_ATTRIBUTE, COLUMN_ATTRIBUTE_COLUMN } from "./agGridConst";
 

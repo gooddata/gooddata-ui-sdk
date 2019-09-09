@@ -2,7 +2,7 @@
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { IColumnTotal } from "../AggregationsMenu";
-import { IMenuAggregationClickConfig } from "../../../../interfaces/PivotTable";
+import { IMenuAggregationClickConfig } from "../../PivotTable";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../agGridConst";
 
 describe("aggregationsMenuHelper", () => {

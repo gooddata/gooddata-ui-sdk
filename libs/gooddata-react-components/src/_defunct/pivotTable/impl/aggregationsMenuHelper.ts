@@ -9,7 +9,7 @@ import sortBy = require("lodash/sortBy");
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
 import { AVAILABLE_TOTALS } from "./utils";
 import { IColumnTotal } from "./AggregationsMenu";
-import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
+import { IMenuAggregationClickConfig } from "../PivotTable";
 
 function getTotalsForMeasureAndType(
     totals: AFM.ITotalItem[],

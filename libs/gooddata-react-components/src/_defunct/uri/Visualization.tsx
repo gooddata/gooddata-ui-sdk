@@ -23,7 +23,7 @@ import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 import { IEvents, OnLegendReady } from "../../interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
 import { VisualizationTypes, VisType } from "../../base/constants/visualizationTypes";
-import { IDataSource } from "../../interfaces/DataSource";
+import { IDataSource } from "../to_delete/DataSource";
 import { ISubject } from "../../base/helpers/async";
 import { getVisualizationTypeFromVisualizationClass } from "../../base/helpers/visualizationType";
 import MdObjectHelper, { mdObjectToPivotBucketProps } from "../../base/helpers/MdObjectHelper";

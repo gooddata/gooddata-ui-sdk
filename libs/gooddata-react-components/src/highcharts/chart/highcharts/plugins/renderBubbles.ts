@@ -11,7 +11,7 @@
  */
 import isNil = require("lodash/isNil");
 import Highcharts from "../highchartsEntryPoint";
-import { IHighchartsAxisExtend } from "../../../../interfaces/HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../../HighchartsExtend";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
     dataMin?: number;

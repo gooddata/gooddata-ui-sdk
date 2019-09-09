@@ -10,7 +10,7 @@
 import isNil = require("lodash/isNil");
 import get = require("lodash/get");
 import Highcharts from "../highchartsEntryPoint";
-import { IHighchartsAxisExtend } from "../../../../interfaces/HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../../HighchartsExtend";
 import { isLineChart } from "../../../utils/common";
 
 interface IBaseAndAlignedAxes {
