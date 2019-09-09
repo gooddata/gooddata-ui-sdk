@@ -1,10 +1,4 @@
 // (C) 2007-2019 GoodData Corporation
-import get = require("lodash/get");
-import { AFM, VisualizationObject } from "@gooddata/typings";
-import { VisType, VisualizationTypes } from "../constants/visualizationTypes";
-import { MEASUREGROUP } from "../constants/dimensions";
-import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../constants/bucketNames";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
 import {
     attributeId,
     bucketAttribute,
@@ -16,25 +10,11 @@ import {
     insightBucket,
     insightMeasures,
     insightTotals,
-    ITotal,
 } from "@gooddata/sdk-model";
-
-export function getDimensionTotals(bucket: VisualizationObject.IBucket): ITotal[] {
-    const bucketTotals: VisualizationObject.IVisualizationTotal[] = get<
-        VisualizationObject.IBucket,
-        "totals",
-        VisualizationObject.IVisualizationTotal[]
-    >(bucket, "totals", []);
-    return bucketTotals.map(
-        (total: VisualizationObject.IVisualizationTotal): AFM.ITotalItem => {
-            return {
-                measureIdentifier: total.measureIdentifier,
-                type: total.type,
-                attributeIdentifier: total.attributeIdentifier,
-            };
-        },
-    );
-}
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
+import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../constants/bucketNames";
+import { MEASUREGROUP } from "../constants/dimensions";
+import { VisType, VisualizationTypes } from "../constants/visualizationTypes";
 
 export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const row = insightBucket(insight, ATTRIBUTE);
@@ -337,10 +317,6 @@ export function generateDefaultDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: insightAttributes(insight).map(attributeId),
         },
     ];
-}
-
-export function isStackedChart(buckets: VisualizationObject.IBucket[], stackedBuckedName: string = STACK) {
-    return buckets.some(bucket => bucket.localIdentifier === stackedBuckedName && bucket.items.length > 0);
 }
 
 // for ScatterPlot and BubbleChart

@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { DESC } from "../constants/sort";
 import {
     bucketAttributes,
     IBucket,
@@ -13,7 +12,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "../../index";
-import { SORT_DIR_ASC } from "../../internal/constants/sort";
+import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../internal/constants/sort";
 
 export function getDefaultTreemapSortFromBuckets(
     viewBy: IBucket,
@@ -24,7 +23,10 @@ export function getDefaultTreemapSortFromBuckets(
     const stackAttr = bucketAttributes(segmentBy);
 
     if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
-        return [newAttributeSort(viewAttr[0], SORT_DIR_ASC), ...measures.map(m => newMeasureSort(m, DESC))];
+        return [
+            newAttributeSort(viewAttr[0], SORT_DIR_ASC),
+            ...measures.map(m => newMeasureSort(m, SORT_DIR_DESC)),
+        ];
     }
 
     return [];

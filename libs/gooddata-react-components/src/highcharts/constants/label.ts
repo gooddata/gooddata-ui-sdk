@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import Highcharts from "../../highcharts/chart/highcharts/highchartsEntryPoint";
-import { VisualizationTypes } from "./visualizationTypes";
+import Highcharts from "../chart/highcharts/highchartsEntryPoint";
+import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 
 export const WHITE_LABEL: Highcharts.CSSObject = {
     color: "#ffffff",

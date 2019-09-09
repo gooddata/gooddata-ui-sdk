@@ -11,7 +11,7 @@ import {
 } from "../dataLabelsHelpers";
 
 import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../../base/constants/label";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 

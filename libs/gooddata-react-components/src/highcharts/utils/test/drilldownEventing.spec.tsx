@@ -9,7 +9,7 @@ import {
     createDrillIntersectionElement,
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { SeriesChartTypes } from "../../../base/constants/series";
+import { SeriesChartTypes } from "../../constants/series";
 import {
     IDrillConfig,
     IDrillEventIntersectionElement,

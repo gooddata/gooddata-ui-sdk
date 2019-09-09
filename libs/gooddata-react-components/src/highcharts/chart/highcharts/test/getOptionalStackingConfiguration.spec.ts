@@ -15,7 +15,7 @@ import getOptionalStackingConfiguration, {
 import { IDrillConfig } from "../../../../interfaces/DrillEvents";
 import { IChartConfig, ISeriesItem, IChartOptions } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { BLACK_LABEL, WHITE_LABEL } from "../../../../base/constants/label";
+import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {

@@ -13,7 +13,7 @@ import {
 } from "./helpers";
 import { isAreaChart, isOneOfTypes } from "../../utils/common";
 import { IDataLabelsVisible } from "../../../interfaces/Config";
-import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../base/constants/label";
+import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 
 export function isLabelOverlappingItsShape(point: any) {
     const { dataLabel, shapeArgs } = point;
