@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as BucketNames from "../../constants/bucketNames";
+import * as BucketNames from "../../base/constants/bucketNames";
 import { bucketsIsEmpty, bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
 
 export function haveManyViewItems(insight: IInsight): boolean {

@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import noop = require("lodash/noop");
 import { ConfigSection, IConfigSectionProps } from "../ConfigSection";
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("ConfigSection", () => {
     const defaultProps = {

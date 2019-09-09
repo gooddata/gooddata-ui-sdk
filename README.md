@@ -21,7 +21,7 @@ something like that)
 
 -   [ ] There are a bunch of `TODO: SDK8` comments in different parts of the code; all these should be addressed
 
-    -   They are mostly to add docs for public APIs
+    -   They are 99% about docs for public APIs; they will go down fast
 
 -   [ ] A couple of components are now in defunct state; they have been moved to src/\_defunct directory which
         excluded from package build; these should be addressed and here's how:
@@ -34,6 +34,7 @@ something like that)
         the same)
     -   uri: somewhat tricky in how the IPreparedExecution will be created but otherwise should be fairly
         straightforward
+-   [ ] Switch to automatic prop-types generation; remove all manually crafted code
 
 ## Contributing
 

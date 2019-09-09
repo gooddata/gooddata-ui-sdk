@@ -6,9 +6,9 @@ import { AFM, VisualizationObject } from "@gooddata/typings";
 
 import { ComboChart as AfmComboChart } from "../../../_defunct/afm/ComboChart";
 import { ComboChart } from "../ComboChart";
-import { M1, M2, M3, M4 } from "../../../components/tests/fixtures/buckets";
+import { M1, M2, M3, M4 } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../interfaces/Config";
-import { measure } from "../../../helpers/model";
+import { measure } from "../../../base/helpers/model";
 
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {

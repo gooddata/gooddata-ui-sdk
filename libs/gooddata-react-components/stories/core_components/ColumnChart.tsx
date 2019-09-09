@@ -23,9 +23,9 @@ import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
 
 import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
-import * as HeaderPredicateFactory from "../../src/factory/HeaderPredicateFactory";
+import * as HeaderPredicateFactory from "../../src/base/factory/HeaderPredicateFactory";
 import { wrap } from "../utils/wrap";
-import { Visualization } from "../../src/components/visualizations/Visualization";
+import { Visualization } from "../../src/highcharts/Visualization";
 import { dualChartWithComputedAttribute } from "../test_data/fixtures";
 
 const wrapperStyle = { width: 800, height: 400 };

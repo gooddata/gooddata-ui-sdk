@@ -2,7 +2,7 @@
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import * as BucketNames from "../../../constants/bucketNames";
+import * as BucketNames from "../../../base/constants/bucketNames";
 import { getTranslation } from "../translations";
 
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";

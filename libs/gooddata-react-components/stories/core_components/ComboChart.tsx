@@ -20,7 +20,7 @@ import {
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import { CUSTOM_COLOR_PALETTE_CONFIG } from "../data/configProps";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
-import { COMBO_SUPPORTED_CHARTS } from "../../src/components/visualizations/chart/chartOptions/comboChartOptions";
+import { COMBO_SUPPORTED_CHARTS } from "../../src/highcharts/chart/chartOptions/comboChartOptions";
 
 const wrapperStyle = { width: 800, height: 400 };
 const primaryMeasure = [MEASURE_1];

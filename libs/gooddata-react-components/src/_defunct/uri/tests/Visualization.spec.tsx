@@ -5,20 +5,20 @@ import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");
 import { testUtils } from "@gooddata/js-utils";
 import { SDK, ApiResponseError } from "@gooddata/gooddata-js";
-import { Table, BaseChart, LoadingComponent, ErrorComponent } from "../../../components/tests/mocks";
+import { Table, BaseChart, LoadingComponent, ErrorComponent } from "../../../charts/tests/mocks";
 import { visualizationObjects, visualizationClasses } from "../../../../__mocks__/fixtures";
 
 import { AFM, VisualizationObject, VisualizationClass } from "@gooddata/typings/dist/index";
 import { Visualization, IntlVisualization, VisualizationWrapped } from "../Visualization";
-import { ErrorStates } from "../../../constants/errorStates";
+import { ErrorStates } from "../../../base/constants/errorStates";
 import { CorePivotTable } from "../../pivotTable/CorePivotTable";
-import { IntlWrapper } from "../../../components/core/base/IntlWrapper";
-import { VisualizationTypes } from "../../../constants/visualizationTypes";
-import { RuntimeError } from "../../../errors/RuntimeError";
-import { createIntlMock } from "../../../components/visualizations/utils/intlUtils";
+import { IntlWrapper } from "../../../base/translations/IntlWrapper";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { RuntimeError } from "../../../base/errors/RuntimeError";
+import { createIntlMock } from "../../../highcharts/utils/intlUtils";
 import * as HttpStatusCodes from "http-status-codes";
 import { IColorPalette } from "../../../interfaces/Config";
-import { clearSdkCache } from "../../../helpers/sdkCache";
+import { clearSdkCache } from "../../../base/helpers/sdkCache";
 
 const projectId = "myproject";
 const CHART_URI = `/gdc/md/${projectId}/obj/1`;

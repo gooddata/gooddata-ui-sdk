@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { Execution } from "@gooddata/typings/dist/index";
-import { getMappingHeaderName } from "../../../helpers/mappingHeader";
-import { unwrap } from "../../../helpers/utils";
+import { getMappingHeaderName } from "../../../base/helpers/mappingHeader";
+import { unwrap } from "../../../base/helpers/utils";
 import { IMappingHeader } from "../../../interfaces/MappingHeader";
 import { getIdsFromUri } from "./agGridUtils";
 import range = require("lodash/range");

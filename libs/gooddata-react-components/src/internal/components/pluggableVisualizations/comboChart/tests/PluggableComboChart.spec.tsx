@@ -14,7 +14,7 @@ import {
 import { AXIS } from "../../../../constants/axis";
 import { UICONFIG_AXIS, COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
-import { VisualizationTypes } from "../../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../../base/constants/visualizationTypes";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 
 describe("PluggableComboChart", () => {

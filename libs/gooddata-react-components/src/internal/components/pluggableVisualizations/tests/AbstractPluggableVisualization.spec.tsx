@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { IVisProps } from "../../../interfaces/Visualization";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import * as referencePointMocks from "../../../mocks/referencePointMocks";
 
 describe("AbstractPluggableVisualization", () => {

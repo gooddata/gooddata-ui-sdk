@@ -3,7 +3,7 @@
 import { Execution } from "@gooddata/typings/dist/index";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { IMappingHeader } from "../../../../interfaces/MappingHeader";
-import { createIntlMock } from "../../../../components/visualizations/utils/intlUtils";
+import { createIntlMock } from "../../../../highcharts/utils/intlUtils";
 import { executionToAGGridAdapter } from "../agGridDataSource";
 import {
     getMeasureDrillItem,

@@ -2,10 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
-import {
-    oneMeasureOneDimensionDataSource,
-    twoMeasuresOneDimensionDataSource,
-} from "../../../components/tests/mocks";
+import { oneMeasureOneDimensionDataSource, twoMeasuresOneDimensionDataSource } from "../../tests/mocks";
 import { CoreHeadline } from "../../headline/CoreHeadline";
 import { ICommonVisualizationProps } from "../../../_defunct/to_delete/VisualizationLoadingHOC";
 import HeadlineTransformation from "../../headline/internal/HeadlineTransformation";

@@ -6,14 +6,11 @@ import * as PropTypes from "prop-types";
 import isEqual = require("lodash/isEqual");
 import omit = require("lodash/omit");
 import { AFM, Execution } from "@gooddata/typings/dist/index";
-import {
-    AfmPropTypesShape,
-    ResultSpecPropTypesShape,
-} from "../../components/visualizations/proptypes/execution";
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../../highcharts/proptypes/execution";
 
 import { IDataSource } from "../../interfaces/DataSource";
-import { ISubject } from "../../helpers/async";
-import { setTelemetryHeaders } from "../../helpers/utils";
+import { ISubject } from "../../base/helpers/async";
+import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { getNativeTotals } from "../pivotTable/impl/utils";
 
 export type IAdapterFactory = (

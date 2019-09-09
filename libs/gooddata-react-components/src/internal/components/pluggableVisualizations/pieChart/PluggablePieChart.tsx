@@ -4,7 +4,7 @@ import React = require("react");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 
 import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -32,7 +32,7 @@ import {
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
 import { removeSort } from "../../../utils/sort";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import noop = require("lodash/noop");
-import { ChartType } from "../../../constants/visualizationTypes";
+import { ChartType } from "../../../base/constants/visualizationTypes";
 
 import { IVisualizationProperties, IFeatureFlags, IReferences } from "../../interfaces/Visualization";
 import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
-import { DEFAULT_LOCALE } from "../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../base/constants/localization";
 import { IInsight } from "@gooddata/sdk-model";
 import { insightHasMeasures } from "@gooddata/sdk-model/src/insight";
 

@@ -55,7 +55,7 @@ import {
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { createSorts, removeSort } from "../../../utils/sort";
 
-import { BaseChart } from "../../../../components/core/base/NewBaseChart";
+import { BaseChart } from "../../../../charts/_base/BaseChart";
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getValidProperties } from "../../../utils/colors";
@@ -64,13 +64,13 @@ import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualiza
 import { getTranslation } from "../../../utils/translations";
 import { IColorMappingProperty } from "@gooddata/gooddata-js";
 import { AxisType } from "../../../interfaces/AxisType";
-import { ChartType, VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { generateDimensions } from "../../../../helpers/dimensions";
-import * as BucketNames from "../../../../constants/bucketNames";
-import { RuntimeError } from "../../../../errors/RuntimeError";
-import ColorUtils from "../../../../components/visualizations/utils/color";
+import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { generateDimensions } from "../../../../base/helpers/dimensions";
+import * as BucketNames from "../../../../base/constants/bucketNames";
+import { RuntimeError } from "../../../../base/errors/RuntimeError";
+import ColorUtils from "../../../../highcharts/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, IDimension } from "@gooddata/sdk-model";
 import { insightHasDataDefined } from "@gooddata/sdk-model/src";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";

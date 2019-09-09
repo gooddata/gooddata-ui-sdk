@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import { InjectedIntl } from "react-intl";
 
-import * as BucketNames from "../../../constants/bucketNames";
+import * as BucketNames from "../../../base/constants/bucketNames";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";
@@ -15,7 +15,7 @@ import * as columnMeasureIcon from "../../assets/combo/bucket-title-measures-col
 import * as columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
 
 import { UICONFIG } from "../../constants/uiConfig";
-import { ChartType } from "../../../constants/visualizationTypes";
+import { ChartType } from "../../../base/constants/visualizationTypes";
 
 export function setComboChartUiConfigDeprecated(
     referencePoint: IExtendedReferencePoint,

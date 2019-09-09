@@ -2,7 +2,7 @@
 import { IAttribute, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ICommonChartProps } from "../chartProps";
-import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW } from "../../constants/bucketNames";
+import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";

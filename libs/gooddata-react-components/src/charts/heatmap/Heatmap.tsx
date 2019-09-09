@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
-import { MEASURES, STACK, VIEW } from "../../constants/bucketNames";
+import { MEASURES, STACK, VIEW } from "../../base/constants/bucketNames";
 import { heatmapDimensions } from "../_commons/dimensions";
 import { ICommonChartProps } from "../chartProps";
 import { CoreHeatmap } from "./CoreHeatmap";

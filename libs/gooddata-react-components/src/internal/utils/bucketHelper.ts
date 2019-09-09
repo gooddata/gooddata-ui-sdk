@@ -14,8 +14,8 @@ import flatMap = require("lodash/flatMap");
 import compact = require("lodash/compact");
 import without = require("lodash/without");
 import { InjectedIntl } from "react-intl";
-import { VisualizationTypes } from "../../constants/visualizationTypes";
-import * as BucketNames from "../../constants/bucketNames";
+import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import * as BucketNames from "../../base/constants/bucketNames";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
 import { VisualizationObject } from "@gooddata/typings";
 

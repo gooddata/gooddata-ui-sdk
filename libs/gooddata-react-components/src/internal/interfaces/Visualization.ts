@@ -2,7 +2,7 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { OverTimeComparisonType } from "../../interfaces/OverTimeComparison";
-import { ChartType, VisualizationEnvironment } from "../../constants/visualizationTypes";
+import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
 import { IColorPalette } from "../../interfaces/Config";
 import * as VisEvents from "../../interfaces/Events";
 import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";

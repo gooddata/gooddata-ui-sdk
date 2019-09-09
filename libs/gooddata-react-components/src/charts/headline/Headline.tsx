@@ -2,9 +2,9 @@
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IFilter, IMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
-import { MEASURES } from "../../constants/bucketNames";
+import { MEASURES } from "../../base/constants/bucketNames";
 
-import { Subtract } from "../../typings/subtract";
+import { Subtract } from "../../base/typings/subtract";
 import { IChartProps, ICommonChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");

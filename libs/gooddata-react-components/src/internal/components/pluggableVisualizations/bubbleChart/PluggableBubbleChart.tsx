@@ -18,7 +18,7 @@ import {
     limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper";
 
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import { METRIC, BUCKETS } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper";
@@ -26,7 +26,7 @@ import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 
 export class PluggableBubbleChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

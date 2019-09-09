@@ -11,8 +11,8 @@ import AggregationsSubMenu from "../../src/components/core/pivotTable/Aggregatio
 import Menu from "../../src/_defunct/pivotTable/menu/Menu";
 import SubMenu, { ISubMenuProps } from "../../src/_defunct/pivotTable/menu/SubMenu";
 import { IOnOpenedChangeParams } from "../../src/_defunct/pivotTable/menu/MenuSharedTypes";
-import { EXECUTION_RESPONSE_2A_3M } from "../../src/components/visualizations/table/fixtures/2attributes3measures";
-import { createIntlMock } from "../../src/components/visualizations/utils/intlUtils";
+import { EXECUTION_RESPONSE_2A_3M } from "../../src/highcharts/table/fixtures/2attributes3measures";
+import { createIntlMock } from "../../src/highcharts/utils/intlUtils";
 import { IMenuAggregationClickConfig } from "../../src/interfaces/PivotTable";
 import {
     ATTRIBUTE_HEADERS_3A_LONG_NAME,

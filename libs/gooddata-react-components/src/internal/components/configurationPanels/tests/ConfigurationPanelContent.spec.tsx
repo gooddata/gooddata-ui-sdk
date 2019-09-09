@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import ConfigurationPanelContent, {
     IConfigurationPanelContentProps,
 } from "../../configurationPanels/ConfigurationPanelContent";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 class DummyConfigurationPanel extends ConfigurationPanelContent {
     constructor(props: IConfigurationPanelContentProps) {

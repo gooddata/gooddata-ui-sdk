@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { LineChart } from "../LineChart";
 import { LineChart as AfmLineChart } from "../../../_defunct/afm/LineChart";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("LineChart", () => {
     const measure: VisualizationObject.IMeasure = {

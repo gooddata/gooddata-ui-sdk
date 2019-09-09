@@ -14,23 +14,23 @@ import {
 } from "@gooddata/gooddata-js";
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 
-import { ErrorStates } from "../../constants/errorStates";
+import { ErrorStates } from "../../base/constants/errorStates";
 import { IEvents, IExportFunction, IExtendedExportConfig, ILoadingState } from "../../interfaces/Events";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
-import { ISubject } from "../../helpers/async";
-import { convertErrors, checkEmptyResult } from "../../helpers/errorHandlers";
+import { ISubject } from "../../base/helpers/async";
+import { convertErrors, checkEmptyResult } from "../../base/helpers/errorHandlers";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { IDataSourceProviderInjectedProps } from "./DataSourceProvider";
 import { injectIntl, InjectedIntl } from "react-intl";
-import { IntlWrapper } from "../../components/core/base/IntlWrapper";
+import { IntlWrapper } from "../../base/translations/IntlWrapper";
 
-import { LoadingComponent, ILoadingProps } from "../../components/simple/LoadingComponent";
-import { ErrorComponent, IErrorProps } from "../../components/simple/ErrorComponent";
-import { RuntimeError } from "../../errors/RuntimeError";
+import { LoadingComponent, ILoadingProps } from "../../base/simple/LoadingComponent";
+import { ErrorComponent, IErrorProps } from "../../base/simple/ErrorComponent";
+import { RuntimeError } from "../../base/errors/RuntimeError";
 import { IPushData } from "../../interfaces/PushData";
 import { IChartConfig } from "../../interfaces/Config";
-import { setTelemetryHeaders } from "../../helpers/utils";
-import { fixEmptyHeaderItems } from "../../components/core/base/utils/fixEmptyHeaderItems";
+import { setTelemetryHeaders } from "../../base/helpers/utils";
+import { fixEmptyHeaderItems } from "../../charts/_base/utils/fixEmptyHeaderItems";
 
 const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, "");
 

@@ -5,7 +5,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
-import { DEFAULT_LOCALE } from "../../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 
 describe("PluggablePieChart", () => {
     const defaultProps = {

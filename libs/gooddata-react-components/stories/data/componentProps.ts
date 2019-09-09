@@ -9,7 +9,7 @@ import {
     previousPeriodMeasure,
     measure,
     attribute,
-} from "../../src/helpers/model";
+} from "../../src/base/helpers/model";
 
 export const MEASURE_1: VisualizationObject.IMeasure = measure("/gdc/md/storybook/obj/1").localIdentifier(
     "m1",

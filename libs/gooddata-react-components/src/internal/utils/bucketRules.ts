@@ -5,7 +5,7 @@ import every = require("lodash/every");
 import isEmpty = require("lodash/isEmpty");
 import reduce = require("lodash/reduce");
 
-import * as BucketNames from "../../constants/bucketNames";
+import * as BucketNames from "../../base/constants/bucketNames";
 import {
     IFiltersBucketItem,
     IBucketItem,

@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { ErrorStates } from "../../constants/errorStates";
+import { ErrorStates } from "../../base/constants/errorStates";
 import { ICommonVisualizationProps, ILoadingInjectedProps } from "./VisualizationLoadingHOC";
-import { ILoadingProps } from "../../components/simple/LoadingComponent";
-import { IErrorProps } from "../../components/simple/ErrorComponent";
-import { generateErrorMap, IErrorMap } from "../../helpers/errorHandlers";
+import { ILoadingProps } from "../../base/simple/LoadingComponent";
+import { IErrorProps } from "../../base/simple/ErrorComponent";
+import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
 
 export abstract class BaseVisualization<
     P extends ICommonVisualizationProps & ILoadingInjectedProps,

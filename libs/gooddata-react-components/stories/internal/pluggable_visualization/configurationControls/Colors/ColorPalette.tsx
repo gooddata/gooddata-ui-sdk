@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/components/visualizations/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../src/highcharts/utils/defaultColors";
 import ColorPalette from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorPalette";
 import { getLargePalette } from "../../../../../src/internal/mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../src/internal/utils/internalIntlProvider";

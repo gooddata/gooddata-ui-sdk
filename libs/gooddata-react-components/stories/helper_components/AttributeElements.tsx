@@ -6,8 +6,8 @@ import { action } from "@storybook/addon-actions";
 import {
     AttributeElements,
     IAttributeElementsProps,
-} from "../../src/components/filters/AttributeFilter/AttributeElements";
-import { AttributeFilterItem } from "../../src/components/filters/AttributeFilter/AttributeFilterItem";
+} from "../../src/filters/AttributeFilter/AttributeElements";
+import { AttributeFilterItem } from "../../src/filters/AttributeFilter/AttributeFilterItem";
 
 const attributeElementsProps: IAttributeElementsProps = {
     // identifier: '3.df',

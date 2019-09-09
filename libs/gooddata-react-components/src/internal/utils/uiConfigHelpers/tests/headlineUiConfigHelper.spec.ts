@@ -2,7 +2,7 @@
 import { createInternalIntl } from "../../internalIntlProvider";
 import { getHeadlineUiConfig } from "../headlineUiConfigHelper";
 import * as referencePointMocks from "../../../mocks/referencePointMocks";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("headlineUiConfigHelper", () => {
     describe("getHeadlineUiConfig", () => {

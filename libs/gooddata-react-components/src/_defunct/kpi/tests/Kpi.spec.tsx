@@ -4,11 +4,11 @@ import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
 import set = require("lodash/set");
 
-import { LoadingComponent, ErrorComponent } from "../../../components/tests/mocks";
+import { LoadingComponent, ErrorComponent } from "../../../charts/tests/mocks";
 import { Kpi, IKpiProps } from "../Kpi";
 import { IExecuteProps } from "../../../execution/Execute";
-import { ErrorStates } from "../../../constants/errorStates";
-import { RuntimeError } from "../../../errors/RuntimeError";
+import { ErrorStates } from "../../../base/constants/errorStates";
+import { RuntimeError } from "../../../base/errors/RuntimeError";
 import {
     emptyResponse,
     emptyResponseWithNullData,

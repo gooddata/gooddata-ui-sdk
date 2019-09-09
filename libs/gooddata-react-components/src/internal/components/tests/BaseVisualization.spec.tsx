@@ -11,7 +11,7 @@ import * as testMocks from "../../mocks/testMocks";
 import { emptyReferencePoint } from "../../mocks/referencePointMocks";
 
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
-import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";
 
 const { delay } = testUtils;

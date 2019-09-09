@@ -3,10 +3,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import {
-    AttributeFilter,
-    IAttributeFilterProps,
-} from "../../src/components/filters/AttributeFilter/AttributeFilter";
+import { AttributeFilter, IAttributeFilterProps } from "../../src/filters/AttributeFilter/AttributeFilter";
 import "../../styles/scss/attributeFilter.scss";
 
 const attributeFilterWithUri: IAttributeFilterProps = {

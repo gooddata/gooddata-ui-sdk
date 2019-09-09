@@ -5,7 +5,7 @@ import set = require("lodash/set");
 import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization";
 import * as bucketRules from "../bucketRules";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
-import * as BucketNames from "../../../constants/bucketNames";
+import * as BucketNames from "../../../base/constants/bucketNames";
 
 describe("isShowInPercentAllowed", () => {
     it("should return true if buckets rules met", () => {

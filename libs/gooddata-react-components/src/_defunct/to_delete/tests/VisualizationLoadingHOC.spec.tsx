@@ -15,7 +15,7 @@ import {
     executionObjectWithTotalsDataSource,
     LoadingComponent,
     ErrorComponent,
-} from "../../../components/tests/mocks";
+} from "../../../charts/tests/mocks";
 
 import "jest";
 

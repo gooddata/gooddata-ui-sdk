@@ -2,8 +2,8 @@
 import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import noop from "lodash/noop";
 import * as React from "react";
-import { IErrorProps } from "../components/simple/ErrorComponent";
-import { ILoadingProps } from "../components/simple/LoadingComponent";
+import { IErrorProps } from "../base/simple/ErrorComponent";
+import { ILoadingProps } from "../base/simple/LoadingComponent";
 import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../index";
 import { INewChartConfig } from "../interfaces/Config";
 import {

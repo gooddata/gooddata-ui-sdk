@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter } from "@gooddata/sdk-model";
 import * as React from "react";
-import { MEASURES, SEGMENT, VIEW } from "../../constants/bucketNames";
+import { MEASURES, SEGMENT, VIEW } from "../../base/constants/bucketNames";
 import { treemapDimensions } from "../_commons/dimensions";
 import { ICommonChartProps } from "../chartProps";
 import { CoreTreemap } from "./CoreTreemap";

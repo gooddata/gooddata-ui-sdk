@@ -8,7 +8,7 @@ import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import * as VisEvents from "../../interfaces/Events";
-import { VisualizationEnvironment } from "../../constants/visualizationTypes";
+import { VisualizationEnvironment } from "../../base/constants/visualizationTypes";
 import {
     ILocale,
     IVisCallbacks,

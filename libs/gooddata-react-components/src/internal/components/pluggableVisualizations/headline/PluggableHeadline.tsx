@@ -7,7 +7,7 @@ import { InjectedIntl } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import { METRIC } from "../../../constants/bucket";
 
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -52,7 +52,7 @@ import {
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 

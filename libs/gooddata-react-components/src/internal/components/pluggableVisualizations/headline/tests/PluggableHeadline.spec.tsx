@@ -21,7 +21,7 @@ import { getMeasureItems } from "../../../../utils/bucketHelper";
 import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
-import * as BucketNames from "../../../../../constants/bucketNames";
+import * as BucketNames from "../../../../../base/constants/bucketNames";
 
 describe("PluggableHeadline", () => {
     const defaultProps = {

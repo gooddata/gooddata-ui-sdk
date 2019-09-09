@@ -6,7 +6,7 @@ import keys = require("lodash/keys");
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import { IExtendedReferencePoint, IVisualizationProperties, IBucketItem } from "../interfaces/Visualization";
-import * as BucketNames from "../../constants/bucketNames";
+import * as BucketNames from "../../base/constants/bucketNames";
 import { AXIS } from "../constants/axis";
 import {
     getItemsCount,

@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { PieChart } from "../PieChart";
 import { PieChart as AfmPieChart } from "../../../_defunct/afm/PieChart";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("PieChart", () => {
     const measure: VisualizationObject.IMeasure = {

@@ -2,8 +2,8 @@
 import { range, cloneDeep } from "lodash";
 import { VisualizationObject } from "@gooddata/typings";
 
-import { immutableSet, repeatItemsNTimes } from "../../src/components/visualizations/utils/common";
-import { STACK_BY_DIMENSION_INDEX } from "../../src/components/visualizations/chart/constants";
+import { immutableSet, repeatItemsNTimes } from "../../src/highcharts/utils/common";
+import { STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
 
 export const barChartWithSingleMeasureAndNoAttributes: any = {
     executionRequest: require("../test_data/bar_chart_with_single_measure_and_no_attributes_request.json")

@@ -20,7 +20,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG,
 } from "../data/configProps";
-import { attributeItemNameMatch } from "../../src/factory/HeaderPredicateFactory";
+import { attributeItemNameMatch } from "../../src/base/factory/HeaderPredicateFactory";
 
 import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 

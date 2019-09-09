@@ -2,7 +2,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import CatalogHelper from "../../src/helpers/CatalogHelper";
+import CatalogHelper from "../../src/base/helpers/CatalogHelper";
 import { Kpi } from "../../src/_defunct/kpi/Kpi";
 import "../../styles/scss/charts.scss";
 

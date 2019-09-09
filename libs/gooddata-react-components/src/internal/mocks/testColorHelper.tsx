@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../components/visualizations/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../highcharts/utils/defaultColors";
 import cloneDeep = require("lodash/cloneDeep");
 
 export function getLargePalette() {

@@ -3,7 +3,7 @@ import { DataLayer } from "@gooddata/gooddata-js";
 import { Execution, VisualizationObject, AFM, VisualizationClass } from "@gooddata/typings";
 import { MEASUREGROUP } from "../constants/bucket";
 import { executionObjectMock } from "./executionObjectMocks";
-import * as BucketNames from "../../constants/bucketNames";
+import * as BucketNames from "../../base/constants/bucketNames";
 
 export const emptyExecutionResponse: Execution.IExecutionResponses = {
     executionResponse: {

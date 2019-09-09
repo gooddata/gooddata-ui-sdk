@@ -18,26 +18,22 @@ import * as React from "react";
 
 import "../../../styles/css/pivotTable.css";
 
-import { VisualizationTypes } from "../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 
-import { getScrollbarWidth } from "../../helpers/domUtils";
+import { getScrollbarWidth } from "../../base/helpers/domUtils";
 import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
-} from "../../helpers/headerPredicate";
+} from "../../base/helpers/headerPredicate";
 
-import {
-    getCellClassNames,
-    getMeasureCellFormattedValue,
-    getMeasureCellStyle,
-} from "../../helpers/tableCell";
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
 import { IDrillEvent, IDrillEventContextTable } from "../../interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { IMenuAggregationClickConfig, IPivotTableConfig } from "../../interfaces/PivotTable";
 import { IDataSourceProviderInjectedProps } from "../to_delete/DataSourceProvider";
-import { LoadingComponent } from "../../components/simple/LoadingComponent";
+import { LoadingComponent } from "../../base/simple/LoadingComponent";
 import TotalsUtils, { AVAILABLE_TOTALS as renderedTotalTypesOrder } from "./impl/utils";
 
 import { ICommonChartProps } from "../to_delete/BaseChart";

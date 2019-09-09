@@ -51,9 +51,9 @@ import { createInternalIntl } from "../internalIntlProvider";
 import { VisualizationObject } from "@gooddata/typings";
 import { visualizationObjectMock } from "../../mocks/visualizationObjectMocks";
 import { OverTimeComparisonTypes } from "../../../interfaces/OverTimeComparison";
-import * as BucketNames from "../../../constants/bucketNames";
-import { VisualizationTypes } from "../../../constants/visualizationTypes";
-import { DEFAULT_LOCALE } from "../../../constants/localization";
+import * as BucketNames from "../../../base/constants/bucketNames";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { DEFAULT_LOCALE } from "../../../base/constants/localization";
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };

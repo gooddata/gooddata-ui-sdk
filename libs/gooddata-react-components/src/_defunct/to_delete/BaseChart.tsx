@@ -2,16 +2,16 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 
-import { Visualization } from "../../components/visualizations/Visualization";
+import { Visualization } from "../../highcharts/Visualization";
 
-import { IntlWrapper } from "../../components/core/base/IntlWrapper";
-import { ChartType } from "../../constants/visualizationTypes";
+import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { ChartType } from "../../base/constants/visualizationTypes";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../../components/core/base/TranslationsProvider";
+} from "../../base/translations/TranslationsProvider";
 import { IDataSourceProviderInjectedProps } from "./DataSourceProvider";
-import { fixEmptyHeaderItems } from "../../components/core/base/utils/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "../../charts/_base/utils/fixEmptyHeaderItems";
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,
@@ -21,7 +21,7 @@ import {
 import { ChartPropTypes, Requireable } from "../../proptypes/Chart";
 import { BaseVisualization } from "./BaseVisualization";
 import { OnLegendReady } from "../../interfaces/Events";
-import { getValidColorPalette } from "../../components/visualizations/utils/color";
+import { getValidColorPalette } from "../../highcharts/utils/color";
 import { IChartConfig } from "../../interfaces/Config";
 export { Requireable };
 

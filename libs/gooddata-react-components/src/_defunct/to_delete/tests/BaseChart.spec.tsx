@@ -2,9 +2,9 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
-import { Visualization, oneMeasureDataSource } from "../../../components/tests/mocks";
+import { Visualization, oneMeasureDataSource } from "../../../charts/tests/mocks";
 import { BaseChart, IBaseChartProps } from "../BaseChart";
-import { VisualizationTypes } from "../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 
 describe("BaseChart", () => {
     const createProps = (customProps = {}) => {

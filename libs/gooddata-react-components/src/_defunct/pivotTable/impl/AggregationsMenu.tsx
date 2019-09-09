@@ -8,7 +8,7 @@ import {
     getNthAttributeHeader,
     getNthAttributeLocalIdentifier,
     getNthDimensionHeaders,
-} from "../../../helpers/executionResultHelper";
+} from "../../../base/helpers/executionResultHelper";
 import Menu from "../menu/Menu";
 import { getParsedFields } from "./agGridUtils";
 import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";

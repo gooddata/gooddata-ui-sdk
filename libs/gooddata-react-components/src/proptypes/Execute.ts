@@ -1,9 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as PropTypes from "prop-types";
-import {
-    AfmPropTypesShape,
-    ResultSpecPropTypesShape,
-} from "../components/visualizations/proptypes/execution";
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../highcharts/proptypes/execution";
 import { EventsPropTypes } from "./Events";
 
 import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports

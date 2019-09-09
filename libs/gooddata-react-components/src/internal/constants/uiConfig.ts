@@ -3,7 +3,7 @@ import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "./bucket";
 import { OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
-import { VisualizationTypes } from "../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 
 export const MAX_METRICS_COUNT = 20;
 export const DEFAULT_PIE_METRICS_COUNT = 1;

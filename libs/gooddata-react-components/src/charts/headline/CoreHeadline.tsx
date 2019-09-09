@@ -1,16 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { ErrorStates } from "../..";
-import { IntlWrapper } from "../../components/core/base/IntlWrapper";
+import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../../components/core/base/TranslationsProvider";
-import { fixEmptyHeaderItems2 } from "../../components/core/base/utils/fixEmptyHeaderItems";
-import { withEntireDataView } from "../../components/exp/NewLoadingHOC";
-import { IErrorProps } from "../../components/simple/ErrorComponent";
-import { ILoadingProps } from "../../components/simple/LoadingComponent";
-import { generateErrorMap, IErrorMap } from "../../helpers/errorHandlers";
+} from "../../base/translations/TranslationsProvider";
+import { fixEmptyHeaderItems2 } from "../_base/utils/fixEmptyHeaderItems";
+import { withEntireDataView } from "../NewLoadingHOC";
+import { IErrorProps } from "../../base/simple/ErrorComponent";
+import { ILoadingProps } from "../../base/simple/LoadingComponent";
+import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
 import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
 import {
     defaultCommonVisProps,

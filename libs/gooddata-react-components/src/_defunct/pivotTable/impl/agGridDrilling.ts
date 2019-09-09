@@ -1,18 +1,18 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { AFM, Execution } from "@gooddata/typings/dist/index";
-import { getMasterMeasureObjQualifier } from "../../../helpers/afmHelper";
+import { getMasterMeasureObjQualifier } from "../../../base/helpers/afmHelper";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName,
     getMappingHeaderUri,
-} from "../../../helpers/mappingHeader";
+} from "../../../base/helpers/mappingHeader";
 import get = require("lodash/get");
 import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
 import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
-import { getAttributeElementIdFromAttributeElementUri } from "../../../components/visualizations/utils/common";
-import { createDrillIntersectionElement } from "../../../components/visualizations/utils/drilldownEventing";
+import { getAttributeElementIdFromAttributeElementUri } from "../../../highcharts/utils/common";
+import { createDrillIntersectionElement } from "../../../highcharts/utils/drilldownEventing";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";

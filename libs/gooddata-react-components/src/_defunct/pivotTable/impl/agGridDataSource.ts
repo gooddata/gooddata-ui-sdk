@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, Execution } from "@gooddata/typings/dist/index";
 import { IDatasource, IGetRowsParams, GridApi } from "ag-grid-community";
-import { getMappingHeaderName } from "../../../helpers/mappingHeader";
+import { getMappingHeaderName } from "../../../base/helpers/mappingHeader";
 
 import InjectedIntl = ReactIntl.InjectedIntl;
 

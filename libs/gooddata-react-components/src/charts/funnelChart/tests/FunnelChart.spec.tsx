@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { FunnelChart } from "../FunnelChart";
 import { FunnelChart as AfmFunnelChart } from "../../../_defunct/afm/FunnelChart";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("FunnelChart", () => {
     const measure: VisualizationObject.IMeasure = {

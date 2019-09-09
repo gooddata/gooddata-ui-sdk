@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
-import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
+import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { ICommonChartProps } from "../chartProps";

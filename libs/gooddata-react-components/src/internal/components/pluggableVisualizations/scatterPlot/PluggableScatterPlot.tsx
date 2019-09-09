@@ -18,7 +18,7 @@ import {
     limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper";
 
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import { METRIC, BUCKETS } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper";
@@ -26,7 +26,7 @@ import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
 import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 
 export class PluggableScatterPlot extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

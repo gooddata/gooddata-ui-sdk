@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import { CoreAreaChart } from "../CoreAreaChart";
 import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../../components/tests/mocks";
+import { emptyDataSource } from "../../tests/mocks";
 
 describe("AreaChart", () => {
     it("should render BaseChart", () => {

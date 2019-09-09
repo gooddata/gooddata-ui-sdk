@@ -4,7 +4,7 @@ import set = require("lodash/set");
 import get = require("lodash/get");
 import { InjectedIntl } from "react-intl";
 
-import * as BucketNames from "../../../constants/bucketNames";
+import * as BucketNames from "../../../base/constants/bucketNames";
 import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
@@ -27,8 +27,8 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
-import { ChartType, VisualizationTypes } from "../../../constants/visualizationTypes";
-import { isLineChart } from "../../../components/visualizations/utils/common";
+import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { isLineChart } from "../../../highcharts/utils/common";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 

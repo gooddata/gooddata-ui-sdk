@@ -8,9 +8,9 @@ import { AFM, Execution } from "@gooddata/typings";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
-import { createDrillIntersectionElement } from "../../../../components/visualizations/utils/drilldownEventing";
-import { HeadlineElementType, VisualizationTypes } from "../../../../constants/visualizationTypes";
-import { isSomeHeaderPredicateMatched2 } from "../../../../helpers/headerPredicate";
+import { createDrillIntersectionElement } from "../../../../highcharts/utils/drilldownEventing";
+import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { isSomeHeaderPredicateMatched2 } from "../../../../base/helpers/headerPredicate";
 import {
     IDrillEvent2,
     IDrillEventCallback2,

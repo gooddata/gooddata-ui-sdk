@@ -3,7 +3,7 @@ import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveTex
 import { AFM } from "@gooddata/typings";
 import * as classNames from "classnames";
 import * as React from "react";
-import { HeadlineElementType } from "../../../constants/visualizationTypes";
+import { HeadlineElementType } from "../../../base/constants/visualizationTypes";
 import { INewChartConfig } from "../../../interfaces/Config";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../../../interfaces/Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";

@@ -8,8 +8,8 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import * as React from "react";
-import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../constants/bucketNames";
-import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
+import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
+import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { defaultDimensions } from "../_commons/dimensions";
 import { ICommonChartProps } from "../chartProps";

@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { Headline } from "../Headline";
 import { Headline as AfmHeadline } from "../../../_defunct/afm/Headline";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("Headline", () => {
     const measure: VisualizationObject.IMeasure = {

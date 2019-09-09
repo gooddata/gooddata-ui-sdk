@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { GuidType, IColorItem } from "@gooddata/gooddata-js";
-import { DEFAULT_COLOR_PALETTE } from "../../../components/visualizations/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../highcharts/utils/defaultColors";
 import * as MappingHeader from "../../../interfaces/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";

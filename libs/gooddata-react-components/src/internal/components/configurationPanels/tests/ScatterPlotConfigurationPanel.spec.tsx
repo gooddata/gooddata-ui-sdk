@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(

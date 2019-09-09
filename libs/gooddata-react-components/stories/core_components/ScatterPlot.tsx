@@ -19,7 +19,7 @@ import {
     DATA_LABELS_HIDDEN_CONFIG,
     DATA_LABELS_AUTO_CONFIG,
 } from "../data/configProps";
-import { localIdentifierMatch } from "../../src/factory/HeaderPredicateFactory";
+import { localIdentifierMatch } from "../../src/base/factory/HeaderPredicateFactory";
 import { ScreenshotReadyWrapper, createHighChartResolver } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 800, height: 400 };

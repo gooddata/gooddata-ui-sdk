@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { Treemap } from "../Treemap";
 import { Treemap as AfmTreemap } from "../../../_defunct/afm/Treemap";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("Treemap", () => {
     const measure: VisualizationObject.IMeasure = {

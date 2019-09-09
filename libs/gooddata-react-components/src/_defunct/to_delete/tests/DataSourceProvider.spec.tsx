@@ -8,7 +8,7 @@ import {
     IDataSourceProviderProps,
     IDataSourceProviderInjectedProps,
 } from "../DataSourceProvider";
-import { Table } from "../../../components/tests/mocks";
+import { Table } from "../../../charts/tests/mocks";
 import { getNativeTotals } from "../../../components/core/pivotTable/utils";
 
 describe("DataSourceProvider", () => {

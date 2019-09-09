@@ -5,7 +5,7 @@ import * as React from "react";
 import { EXECUTION_RESPONSE_2A_3M } from "../../../visualizations/table/fixtures/2attributes3measures";
 import { EXECUTION_RESPONSE_2M } from "../../../visualizations/table/fixtures/2measures";
 import { AVAILABLE_TOTALS } from "../utils";
-import { createIntlMock } from "../../../../components/visualizations/utils/intlUtils";
+import { createIntlMock } from "../../../../highcharts/utils/intlUtils";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
 

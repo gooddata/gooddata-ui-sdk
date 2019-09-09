@@ -3,7 +3,7 @@ import * as React from "react";
 import noop = require("lodash/noop");
 import { VisualizationObject } from "@gooddata/typings";
 import { ILocale, IVisProps, IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
-import * as BucketNames from "../../../../../constants/bucketNames";
+import * as BucketNames from "../../../../../base/constants/bucketNames";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
@@ -13,9 +13,9 @@ import {
     ChartType,
     VisualizationTypes,
     VisualizationEnvironment,
-} from "../../../../../constants/visualizationTypes";
+} from "../../../../../base/constants/visualizationTypes";
 import { BaseChart } from "../../../../../_defunct/to_delete/BaseChart";
-import { DEFAULT_LOCALE } from "../../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 
 jest.mock("react-dom", () => {
     const renderObject = {

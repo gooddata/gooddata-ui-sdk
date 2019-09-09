@@ -15,7 +15,7 @@ import { configurePercent, configureOverTimeComparison } from "../../../../../in
 import UnsupportedConfigurationPanel from "../../../../../internal/components/configurationPanels/UnsupportedConfigurationPanel";
 
 import * as VisEvents from "../../../../../interfaces/Events";
-import * as BucketNames from "../../../../../constants/bucketNames";
+import * as BucketNames from "../../../../../base/constants/bucketNames";
 import {
     IReferencePoint,
     IExtendedReferencePoint,
@@ -44,10 +44,13 @@ import { createInternalIntl } from "../../../../../internal/utils/internalIntlPr
 import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../../../internal/constants/uiConfig";
 import { AbstractPluggableVisualization } from "../../../../../internal/components/pluggableVisualizations/AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../../../internal/utils/propertiesHelper";
-import { VisualizationTypes, VisualizationEnvironment } from "../../../../../constants/visualizationTypes";
+import {
+    VisualizationTypes,
+    VisualizationEnvironment,
+} from "../../../../../base/constants/visualizationTypes";
 import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
-import { generateDimensions } from "../../../../../helpers/dimensions";
-import { DEFAULT_LOCALE } from "../../../../../constants/localization";
+import { generateDimensions } from "../../../../../base/helpers/dimensions";
+import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(

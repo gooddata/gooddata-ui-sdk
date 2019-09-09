@@ -4,7 +4,7 @@ import { IColor, IColorItem } from "@gooddata/gooddata-js";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/components/visualizations/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../src/highcharts/utils/defaultColors";
 import * as MappingHeader from "../../../../../src/interfaces/MappingHeader";
 import ColoredItemsList, {
     IColoredItemsListOwnProps,

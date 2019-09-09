@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import { CoreFunnelChart } from "../CoreFunnelChart";
 import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../../components/tests/mocks";
+import { emptyDataSource } from "../../tests/mocks";
 
 describe("FunnelChart", () => {
     it("should render BaseChart", () => {

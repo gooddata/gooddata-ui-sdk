@@ -31,7 +31,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../../interfaces/DrillEvents";
 import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
-import { DEFAULT_LOCALE } from "../../../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../../../base/constants/localization";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],

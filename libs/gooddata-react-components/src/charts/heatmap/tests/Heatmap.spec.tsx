@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 
 import { Heatmap as AfmHeatmap } from "../../../_defunct/afm/Heatmap";
 import { Heatmap } from "../Heatmap";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("Heatmap", () => {
     it("should render with custom SDK", () => {

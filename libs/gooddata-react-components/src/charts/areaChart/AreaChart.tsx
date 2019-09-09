@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem, computeRatioRules } from "@gooddata/sdk-model";
 import * as React from "react";
-import { truncate } from "../../components/exp/chartUtils";
+import { truncate } from "../_commons/truncate";
 import { ICommonChartProps } from "../chartProps";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../components/visualizations/chart/constants";
-import { ATTRIBUTE, MEASURES, STACK } from "../../constants/bucketNames";
-import { sanitizeConfig2 } from "../../helpers/optionalStacking/common";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
+import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";

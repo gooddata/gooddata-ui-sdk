@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { ScatterPlot } from "../ScatterPlot";
 import { ScatterPlot as AfmScatterPlot } from "../../../_defunct/afm/ScatterPlot";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("ScatterPlot", () => {
     const measure: VisualizationObject.IMeasure = {

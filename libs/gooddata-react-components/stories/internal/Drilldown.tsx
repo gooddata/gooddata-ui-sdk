@@ -6,14 +6,11 @@ import { action, decorateAction } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 import { Execution } from "@gooddata/typings";
 
-import { Visualization } from "../../src/components/visualizations/Visualization";
-import * as headerPredicateFactory from "../../src/factory/HeaderPredicateFactory";
+import { Visualization } from "../../src/highcharts/Visualization";
+import * as headerPredicateFactory from "../../src/base/factory/HeaderPredicateFactory";
 import { wrap } from "../utils/wrap";
 import * as fixtures from "../test_data/fixtures";
-import {
-    VIEW_BY_DIMENSION_INDEX,
-    STACK_BY_DIMENSION_INDEX,
-} from "../../src/components/visualizations/chart/constants";
+import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
 
 import "../../styles/scss/charts.scss";
 import "../../styles/scss/table.scss";
@@ -22,13 +19,13 @@ import {
     EXECUTION_RESPONSE_POP,
     EXECUTION_RESULT_POP,
     TABLE_HEADERS_POP,
-} from "../../src/components/visualizations/table/fixtures/periodOverPeriod";
+} from "../../src/highcharts/table/fixtures/periodOverPeriod";
 import {
     EXECUTION_REQUEST_AM,
     EXECUTION_RESPONSE_AM,
     EXECUTION_RESULT_AM,
     TABLE_HEADERS_AM,
-} from "../../src/components/visualizations/table/fixtures/arithmericMeasures";
+} from "../../src/highcharts/table/fixtures/arithmericMeasures";
 import { PivotTable } from "../../src";
 import { ATTRIBUTE_1, MEASURE_1, MEASURE_2, MEASURE_AM_1_2 } from "../data/componentProps";
 import HeadlineTransformation from "../../src/charts/headline/internal/HeadlineTransformation";

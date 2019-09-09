@@ -3,7 +3,7 @@ import * as React from "react";
 import { IntlProvider, InjectedIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 import { ILocale } from "../interfaces/Visualization";
-import { DEFAULT_LOCALE } from "../../constants/localization";
+import { DEFAULT_LOCALE } from "../../base/constants/localization";
 
 import * as enUS from "../translations/en-US.json";
 import * as deDE from "../translations/de-DE.json";

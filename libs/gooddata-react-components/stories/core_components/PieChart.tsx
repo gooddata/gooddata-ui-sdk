@@ -23,10 +23,10 @@ import {
     DATA_LABELS_AUTO_CONFIG,
     CUSTOM_COLOR_PALETTE_CONFIG,
 } from "../data/configProps";
-import { attributeItemNameMatch } from "../../src/factory/HeaderPredicateFactory";
+import { attributeItemNameMatch } from "../../src/base/factory/HeaderPredicateFactory";
 import { RGBType } from "@gooddata/gooddata-js";
 import { VisualizationObject } from "@gooddata/typings";
-import { PositionType } from "../../src/components/visualizations/typings/legend";
+import { PositionType } from "../../src/highcharts/typings/legend";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 400, height: 400 };

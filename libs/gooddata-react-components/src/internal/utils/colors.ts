@@ -12,7 +12,7 @@ import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gooddat
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../interfaces/MappingHeader";
-import ColorUtils from "../../components/visualizations/utils/color";
+import ColorUtils from "../../highcharts/utils/color";
 import * as ChartConfiguration from "../../interfaces/Config";
 
 function getItemName(item: IColoredItem): string {

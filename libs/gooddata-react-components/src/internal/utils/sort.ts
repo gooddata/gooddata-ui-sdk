@@ -13,8 +13,8 @@ import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interface
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
 import { MEASUREGROUP } from "../constants/bucket";
-import { VisualizationTypes } from "../../constants/visualizationTypes";
-import * as SortsHelper from "../../helpers/sorts";
+import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import * as SortsHelper from "../../base/helpers/sorts";
 import {
     bucketsAttributes,
     IInsight,

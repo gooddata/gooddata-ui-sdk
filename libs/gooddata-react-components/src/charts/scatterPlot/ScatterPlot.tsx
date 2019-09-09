@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
-import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../constants/bucketNames";
+import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { ICommonChartProps } from "../chartProps";
 import { CoreScatterPlot } from "./CoreScatterPlot";

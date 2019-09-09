@@ -2,7 +2,7 @@
 
 import { AFM } from "@gooddata/typings/dist/index";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
-import { createIntlMock } from "../../../../components/visualizations/utils/intlUtils";
+import { createIntlMock } from "../../../../highcharts/utils/intlUtils";
 import { getRowHeaders, getFields } from "../agGridHeaders";
 import { getRow, getRowTotals } from "../agGridData";
 

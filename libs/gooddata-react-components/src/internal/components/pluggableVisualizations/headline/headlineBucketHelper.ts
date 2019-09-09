@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import every = require("lodash/every");
-import * as BucketNames from "../../../../constants/bucketNames";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import { IBucketItem, IExtendedReferencePoint } from "../../../interfaces/Visualization";
 import { METRIC, BUCKETS } from "../../../constants/bucket";
 import {

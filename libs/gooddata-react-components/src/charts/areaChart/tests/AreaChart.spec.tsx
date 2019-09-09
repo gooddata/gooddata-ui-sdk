@@ -6,7 +6,7 @@ import { VisualizationInput } from "@gooddata/typings";
 
 import { AreaChart as AfmAreaChart } from "../afm/AreaChart";
 import { AreaChart } from "../AreaChart";
-import { M1, M1WithRatio } from "../../../components/tests/fixtures/buckets";
+import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../interfaces/Config";
 
 function renderChart(

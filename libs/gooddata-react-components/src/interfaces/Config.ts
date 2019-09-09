@@ -2,13 +2,13 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/typings";
 import { IColorItem, IColor } from "@gooddata/gooddata-js";
-import Highcharts from "../components/visualizations/chart/highcharts/highchartsEntryPoint";
-import { PositionType } from "../components/visualizations/typings/legend";
-import { VisType } from "../constants/visualizationTypes";
+import Highcharts from "../highcharts/chart/highcharts/highchartsEntryPoint";
+import { PositionType } from "../highcharts/typings/legend";
+import { VisType } from "../base/constants/visualizationTypes";
 import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from "../components/visualizations/utils/defaultColors";
+export { DEFAULT_COLOR_PALETTE } from "../highcharts/utils/defaultColors";
 
 export type IDataLabelsVisible = string | boolean;
 

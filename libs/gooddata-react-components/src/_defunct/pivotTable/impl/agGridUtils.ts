@@ -4,7 +4,7 @@ import omit = require("lodash/omit");
 import escape = require("lodash/escape");
 import stringify = require("json-stable-stringify");
 import { AFM, Execution } from "@gooddata/typings/dist/index";
-import { getMappingHeaderUri } from "../../../helpers/mappingHeader";
+import { getMappingHeaderUri } from "../../../base/helpers/mappingHeader";
 import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
 import {
     DOT_PLACEHOLDER,

@@ -4,7 +4,10 @@ import { AFM, Execution } from "@gooddata/typings/dist/index";
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
 import * as classNames from "classnames";
 
-import { getNthAttributeLocalIdentifier, getNthAttributeName } from "../../../helpers/executionResultHelper";
+import {
+    getNthAttributeLocalIdentifier,
+    getNthAttributeName,
+} from "../../../base/helpers/executionResultHelper";
 import SubMenu from "../menu/SubMenu";
 import { IMenuAggregationClickConfig } from "../../../interfaces/PivotTable";
 import { IColumnTotal } from "./AggregationsMenu";

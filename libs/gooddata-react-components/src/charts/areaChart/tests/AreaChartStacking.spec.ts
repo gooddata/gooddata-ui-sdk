@@ -2,7 +2,7 @@
 import { VisualizationObject } from "@gooddata/typings";
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
 import { IChartConfig } from "../../../interfaces/Config";
-import { getViewByTwoAttributes } from "../../../helpers/optionalStacking/common";
+import { getViewByTwoAttributes } from "../../../base/helpers/optionalStacking/common";
 import BucketItem = VisualizationObject.BucketItem;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 

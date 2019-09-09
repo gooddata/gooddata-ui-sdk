@@ -9,8 +9,8 @@ import {
     ILoadingInjectedProps,
     commonDefaultProps,
 } from "../VisualizationLoadingHOC";
-import { LoadingComponent, ErrorComponent, DummyComponent } from "../../../components/tests/mocks";
-import { ErrorStates } from "../../../constants/errorStates";
+import { LoadingComponent, ErrorComponent, DummyComponent } from "../../../charts/tests/mocks";
+import { ErrorStates } from "../../../base/constants/errorStates";
 import { oneMeasureResponse } from "../../../../execution/fixtures/ExecuteAfm.fixtures";
 
 const intlMock = {

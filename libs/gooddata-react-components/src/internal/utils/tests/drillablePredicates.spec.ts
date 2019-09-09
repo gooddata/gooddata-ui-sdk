@@ -4,7 +4,7 @@ import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../dr
 import SpyInstance = jest.SpyInstance;
 import Mock = jest.Mock;
 import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
-import * as HeaderPredicateFactory from "../../../factory/HeaderPredicateFactory";
+import * as HeaderPredicateFactory from "../../../base/factory/HeaderPredicateFactory";
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: SpyInstance;

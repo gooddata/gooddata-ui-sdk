@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
-import { DEFAULT_LOCALE } from "../../../../constants/localization";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("BubbleChartconfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {

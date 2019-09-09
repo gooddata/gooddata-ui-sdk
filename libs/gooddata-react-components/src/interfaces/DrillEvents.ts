@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { AFM } from "@gooddata/typings";
-import Highcharts from "../components/visualizations/chart/highcharts/highchartsEntryPoint";
+import Highcharts from "../highcharts/chart/highcharts/highchartsEntryPoint";
 import {
     ChartElementType,
     ChartType,
@@ -11,7 +11,7 @@ import {
     TableType,
     VisElementType,
     VisType,
-} from "../constants/visualizationTypes";
+} from "../base/constants/visualizationTypes";
 import { TableRowForDrilling } from "./Table";
 import { OnFiredDrillEvent } from "./Events";
 

@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { VisualizationObject, AFM } from "@gooddata/typings";
 import { BubbleChart } from "../BubbleChart";
 import { BubbleChart as AfmBubbleChart } from "../../../_defunct/afm/BubbleChart";
-import { M1 } from "../../../components/tests/fixtures/buckets";
+import { M1 } from "../../tests/fixtures/buckets";
 
 describe("BubbleChart", () => {
     const measure: VisualizationObject.IMeasure = {

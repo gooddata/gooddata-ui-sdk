@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import { CoreHeatmap } from "../CoreHeatmap";
 import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../../components/tests/mocks";
+import { emptyDataSource } from "../../tests/mocks";
 
 describe("Heatmap", () => {
     it("should render BaseChart", () => {

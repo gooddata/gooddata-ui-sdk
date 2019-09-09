@@ -6,12 +6,9 @@ import { range, cloneDeep } from "lodash";
 import { screenshotWrap } from "@gooddata/test-storybook";
 import { AFM, Execution } from "@gooddata/typings";
 
-import { IntlWrapper } from "../../src/components/core/base/IntlWrapper";
-import { TableTransformation } from "../../src/components/visualizations/table/TableTransformation";
-import {
-    IResponsiveTableProps,
-    ResponsiveTable,
-} from "../../src/components/visualizations/table/ResponsiveTable";
+import { IntlWrapper } from "../../src/base/translations/IntlWrapper";
+import { TableTransformation } from "../../src/highcharts/table/TableTransformation";
+import { IResponsiveTableProps, ResponsiveTable } from "../../src/highcharts/table/ResponsiveTable";
 import { IIndexedTotalItem } from "../../src/interfaces/Totals";
 
 import "../../styles/scss/table.scss";
@@ -20,13 +17,13 @@ import {
     EXECUTION_REQUEST_2A_1M,
     EXECUTION_RESPONSE_2A_1M,
     EXECUTION_RESULT_2A_1M,
-} from "../../src/components/visualizations/table/fixtures/2attributes1measure";
+} from "../../src/highcharts/table/fixtures/2attributes1measure";
 
 import {
     EXECUTION_REQUEST_2A_3M,
     EXECUTION_RESPONSE_2A_3M,
     EXECUTION_RESULT_2A_3M,
-} from "../../src/components/visualizations/table/fixtures/2attributes3measures";
+} from "../../src/highcharts/table/fixtures/2attributes3measures";
 import { GERMAN_NUMBER_FORMAT } from "../data/numberFormat";
 
 const tableWrap = (component: JSX.Element) => (

@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import { CoreComboChart } from "../CoreComboChart";
 import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../../components/tests/mocks";
+import { emptyDataSource } from "../../tests/mocks";
 
 describe("ComboChart", () => {
     it("should render BaseChart", () => {

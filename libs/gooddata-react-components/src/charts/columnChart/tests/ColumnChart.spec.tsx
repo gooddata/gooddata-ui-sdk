@@ -5,7 +5,7 @@ import { factory } from "@gooddata/gooddata-js";
 import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/typings";
 import { ColumnChart } from "../ColumnChart";
 import { ColumnChart as AfmColumnChart } from "../../../_defunct/afm/ColumnChart";
-import { M1, M1WithRatio } from "../../../components/tests/fixtures/buckets";
+import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../interfaces/Config";
 
 function renderChart(

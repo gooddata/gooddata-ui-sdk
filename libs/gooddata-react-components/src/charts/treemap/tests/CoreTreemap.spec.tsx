@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import { CoreTreemap } from "../CoreTreemap";
 import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../../components/tests/mocks";
+import { emptyDataSource } from "../../tests/mocks";
 
 describe("Treemap", () => {
     it("should render BaseChart", () => {

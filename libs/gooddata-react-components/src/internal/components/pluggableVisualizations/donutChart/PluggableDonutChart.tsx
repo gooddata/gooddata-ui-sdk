@@ -3,7 +3,7 @@ import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../.
 
 import { PluggablePieChart } from "../pieChart/PluggablePieChart";
 import { setDonutChartUiConfig } from "../../../utils/uiConfigHelpers/donutChartUiConfigHelper";
-import { VisualizationTypes } from "../../../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 
 export class PluggableDonutChart extends PluggablePieChart {
     constructor(props: IVisConstruct) {

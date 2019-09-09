@@ -2,8 +2,8 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 
-import { LoadingComponent } from "../../src/components/simple/LoadingComponent";
-import { ErrorComponent } from "../../src/components/simple/ErrorComponent";
+import { LoadingComponent } from "../../src/base/simple/LoadingComponent";
+import { ErrorComponent } from "../../src/base/simple/ErrorComponent";
 
 const wrapperStyle = { height: 300 };
 

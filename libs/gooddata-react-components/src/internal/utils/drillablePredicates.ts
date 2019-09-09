@@ -4,7 +4,7 @@ import uniq = require("lodash/uniq");
 import includes = require("lodash/includes");
 import isArray = require("lodash/isArray");
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
-import * as HeaderPredicateFactory from "../../factory/HeaderPredicateFactory";
+import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
 
 export interface ISimplePostMessageData {
     uris?: string[];

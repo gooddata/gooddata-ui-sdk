@@ -4,17 +4,17 @@ import { VisualizationObject, VisualizationInput } from "@gooddata/typings/dist/
 import omit = require("lodash/omit");
 import noop = require("lodash/noop");
 
-import { Subtract } from "../../typings/subtract";
+import { Subtract } from "../../base/typings/subtract";
 import { CorePivotTable } from "./CorePivotTable";
 import { dataSourceProvider } from "../to_delete/DataSourceProvider";
 import { ICommonChartProps } from "../to_delete/BaseChart";
-import { convertBucketsToAFM } from "../../helpers/conversion";
-import { getPivotTableDimensions } from "../../helpers/dimensions";
+import { convertBucketsToAFM } from "../../base/helpers/conversion";
+import { getPivotTableDimensions } from "../../base/helpers/dimensions";
 import { getResultSpec } from "../helpers/resultSpec";
 import { IPivotTableConfig } from "../../interfaces/PivotTable";
 
-import { MEASURES, ATTRIBUTE, COLUMNS } from "../../constants/bucketNames";
-import { hasDuplicateIdentifiers } from "../../helpers/errorHandlers";
+import { MEASURES, ATTRIBUTE, COLUMNS } from "../../base/constants/bucketNames";
+import { hasDuplicateIdentifiers } from "../../base/helpers/errorHandlers";
 
 export interface IPivotTableBucketProps {
     measures?: VisualizationInput.AttributeOrMeasure[];

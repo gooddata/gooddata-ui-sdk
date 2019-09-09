@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDrillEvent } from "../../../../../interfaces/DrillEvents";
 import { IHeadlineData } from "../../../../../interfaces/Headlines";
-import * as headerPredicateFactory from "../../../../../factory/HeaderPredicateFactory";
+import * as headerPredicateFactory from "../../../../../base/factory/HeaderPredicateFactory";
 import {
     getHeadlineData,
     applyDrillableItems,
@@ -28,7 +28,7 @@ import {
     ZERO_SECOND_MEASURE_VALUE_EXECUTION_RESULT,
     SAME_MEASURE_VALUES_EXECUTION_RESULT,
 } from "../../test/fixtures/two_measures";
-import { createIntlMock } from "../../../../../components/visualizations/utils/intlUtils";
+import { createIntlMock } from "../../../../../highcharts/utils/intlUtils";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {
