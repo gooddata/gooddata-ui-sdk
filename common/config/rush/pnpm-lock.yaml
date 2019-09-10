@@ -10,6 +10,7 @@ dependencies:
     "@microsoft/api-extractor": 7.3.9
     "@rush-temp/gooddata-js": "file:projects/gooddata-js.tgz"
     "@rush-temp/react-components": "file:projects/react-components.tgz_tslint@5.19.0+webpack@4.39.3"
+    "@rush-temp/sdk-backend-bear": "file:projects/sdk-backend-bear.tgz"
     "@rush-temp/sdk-backend-spi": "file:projects/sdk-backend-spi.tgz"
     "@rush-temp/sdk-model": "file:projects/sdk-model.tgz"
     "@rush-temp/sdk-skel-ts": "file:projects/sdk-skel-ts.tgz"
@@ -1970,6 +1971,29 @@ packages:
         dev: false
         resolution:
             integrity: sha512-2yNbQsQl5PI36l5WzHQshwjBHPe5IeIcmidWad0E+wjyaAxGMLx5pBp5AgXY2JG9S9VQjFmmGmqJJBXn8tzu+w==
+    /@microsoft/api-extractor-model/7.3.4:
+        dependencies:
+            "@microsoft/node-core-library": 3.14.1
+            "@microsoft/tsdoc": 0.12.14
+            "@types/node": 8.5.8
+        dev: false
+        resolution:
+            integrity: sha512-a9gXhWG7PWcUNpJRtxGZ/Vepq1ke5ES2B6NnBH0M3zT//vGYXymf7aOQepCHfmY4p1cJvvmJoJNGMwtoC0eF5A==
+    /@microsoft/api-extractor/7.3.11:
+        dependencies:
+            "@microsoft/api-extractor-model": 7.3.4
+            "@microsoft/node-core-library": 3.14.1
+            "@microsoft/ts-command-line": 4.2.7
+            "@microsoft/tsdoc": 0.12.14
+            colors: 1.2.5
+            lodash: 4.17.15
+            resolve: 1.8.1
+            source-map: 0.6.1
+            typescript: 3.5.3
+        dev: false
+        hasBin: true
+        resolution:
+            integrity: sha512-i/hBovsbk1btBIQFWHHbAQdcXxL07+nYwF6wxDabtM+rJgySQ/flsjZJYXJV+ADlP0L3jyKdWZNF03M3zlQUlw==
     /@microsoft/api-extractor/7.3.9:
         dependencies:
             "@microsoft/api-extractor-model": 7.3.2
@@ -1998,6 +2022,19 @@ packages:
         dev: false
         resolution:
             integrity: sha512-+gbTXTRfvR40hTH+C3Vno/RJ51sU/RZAyHb2bo9af8GCdOgxCxCs+qp2KCXklbpuolmIPFfbCmdTwv90yH5tJw==
+    /@microsoft/node-core-library/3.14.1:
+        dependencies:
+            "@types/fs-extra": 5.0.4
+            "@types/jju": 1.4.1
+            "@types/node": 8.5.8
+            "@types/z-schema": 3.16.31
+            colors: 1.2.5
+            fs-extra: 7.0.1
+            jju: 1.4.0
+            z-schema: 3.18.4
+        dev: false
+        resolution:
+            integrity: sha512-KVYef9kjK6lmGOOjYRctYFX3ymZ71xobweBftwP8hQS5JTBX+QqpAOvfiFQmlMgfJ7/TS7u3u3QjVzeztuz5cg==
     /@microsoft/ts-command-line/4.2.7:
         dependencies:
             "@types/argparse": 1.0.33
@@ -2011,6 +2048,10 @@ packages:
         dev: false
         resolution:
             integrity: sha512-5EzH1gHIonvvgA/xWRmVAJmRkTQj/yayUXyr66hFwNZiFE4j7lP8is9YQeXhwxGZEjO1PVMblAmFF0CyjNtPGw==
+    /@microsoft/tsdoc/0.12.14:
+        dev: false
+        resolution:
+            integrity: sha512-518yewjSga1jLdiLrcmpMFlaba5P+50b0TWNFUpC+SL9Yzf0kMi57qw+bMl+rQ08cGqH1vLx4eg9YFUbZXgZ0Q==
     /@mrmlnc/readdir-enhanced/2.2.1:
         dependencies:
             call-me-maybe: 1.0.1
@@ -5636,6 +5677,12 @@ packages:
             node: ">=0.3.1"
         resolution:
             integrity: sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
+    /diff/4.0.1:
+        dev: false
+        engines:
+            node: ">=0.3.1"
+        resolution:
+            integrity: sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
     /diffie-hellman/5.0.3:
         dependencies:
             bn.js: 4.11.8
@@ -14094,6 +14141,17 @@ packages:
             typescript: ^2.2.0 || ^3.0.0
         resolution:
             integrity: sha512-WlSXE+J2vY/VPgIcqQuijMQiel+UtmXS+4nvK4ZzlDiqBfXse8FAvkNnTcYhnQyOTW5KFM+uRRGXxYhFpuBc6w==
+    /tslint-microsoft-contrib/5.2.1_330cb491d766f6f7c415aabd4cc320a9:
+        dependencies:
+            tslint: 5.20.0_typescript@3.3.4000
+            tsutils: 2.28.0_typescript@3.3.4000
+            typescript: 3.3.4000
+        dev: false
+        peerDependencies:
+            tslint: ^5.1.0
+            typescript: ^2.1.0 || ^3.0.0
+        resolution:
+            integrity: sha512-PDYjvpo0gN9IfMULwKk0KpVOPMhU6cNoT9VwCOLeDl/QS8v8W2yspRpFFuUS7/c5EIH/n8ApMi8TxJAz1tfFUA==
     /tslint-microsoft-contrib/5.2.1_d3d11f1f7a97248d227f511c2f3f9779:
         dependencies:
             tslint: 5.19.0_typescript@3.3.4000
@@ -14175,6 +14233,30 @@ packages:
             typescript: ">=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev"
         resolution:
             integrity: sha512-1LwwtBxfRJZnUvoS9c0uj8XQtAnyhWr9KlNvDIdB+oXyT+VpsOAaEhEgKi1HrZ8rq0ki/AAnbGSv4KM6/AfVZw==
+    /tslint/5.20.0_typescript@3.3.4000:
+        dependencies:
+            "@babel/code-frame": 7.5.5
+            builtin-modules: 1.1.1
+            chalk: 2.4.2
+            commander: 2.20.0
+            diff: 4.0.1
+            glob: 7.1.4
+            js-yaml: 3.13.1
+            minimatch: 3.0.4
+            mkdirp: 0.5.1
+            resolve: 1.12.0
+            semver: 5.7.1
+            tslib: 1.10.0
+            tsutils: 2.29.0_typescript@3.3.4000
+            typescript: 3.3.4000
+        dev: false
+        engines:
+            node: ">=4.8.0"
+        hasBin: true
+        peerDependencies:
+            typescript: ">=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev"
+        resolution:
+            integrity: sha512-2vqIvkMHbnx8acMogAERQ/IuINOq6DFqgF8/VDvhEkBqQh/x6SP0Y+OHnKth9/ZcHQSroOZwUQSN18v8KKF0/g==
     /tsutils/2.28.0_typescript@3.3.4000:
         dependencies:
             tslib: 1.10.0
@@ -15122,7 +15204,7 @@ packages:
         dev: false
         name: "@rush-temp/gooddata-js"
         resolution:
-            integrity: sha512-YNosry5CMQAjfvCJSoHlIo3rmOolj0TbyIaLU6EpC28ycRekN02vw0T0Qg86/rfb5Q3hXm2H5SjyZjyuq6JtYA==
+            integrity: sha512-2mFSLWUXgZX5JrlWKdij2uk6bbJEXZ72inw6fuw3Bj8SFgLLVMDgX6UmgIv5XNYVu4GTzSJ7GYiKxcEkLjRwKA==
             tarball: "file:projects/gooddata-js.tgz"
         version: 0.0.0
     "file:projects/react-components.tgz_tslint@5.19.0+webpack@4.39.3":
@@ -15210,14 +15292,35 @@ packages:
             tslint: "*"
             webpack: "*"
         resolution:
-            integrity: sha512-O4cxQwdY3nJkPE3KGZjVOHSaA8S35Ew7RXdFd+f2V7qyJ7VL5MLh8HjFvMiKAv9A7CqXrykn2p+FaPgOytQvmQ==
+            integrity: sha512-MQwEid3CgXLxD7zzazEWjPhJYDLIelIHbL3aGPSrBXrSLKvZudG7OHJEvuGzPyUZp1xFJ4R2hfE/Oc0qLFTdxQ==
             tarball: "file:projects/react-components.tgz"
+        version: 0.0.0
+    "file:projects/sdk-backend-bear.tgz":
+        dependencies:
+            "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
+            "@microsoft/api-extractor": 7.3.11
+            "@types/jest": 24.0.18
+            jest: 24.9.0
+            jest-junit: 3.7.0
+            lodash: 4.17.15
+            prettier: 1.18.2
+            ts-jest: 24.0.2_jest@24.9.0
+            tslint: 5.20.0_typescript@3.3.4000
+            tslint-config-prettier: 1.18.0
+            tslint-microsoft-contrib: 5.2.1_330cb491d766f6f7c415aabd4cc320a9
+            typescript: 3.3.4000
+        dev: false
+        name: "@rush-temp/sdk-backend-bear"
+        resolution:
+            integrity: sha512-QjJ9KwySX0Grnlna4M73sAmcvR7wLaBZBNqdnubt0mteGsMWzSPDFJ/cnnZlU87NphRARqFXdEKKoxJvg+rokg==
+            tarball: "file:projects/sdk-backend-bear.tgz"
         version: 0.0.0
     "file:projects/sdk-backend-spi.tgz":
         dependencies:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
             "@microsoft/api-extractor": 7.3.9
             "@types/jest": 24.0.18
+            "@types/lodash": 4.14.123
             jest: 24.9.0
             jest-junit: 3.7.0
             lodash: 4.17.15
@@ -15230,7 +15333,7 @@ packages:
         dev: false
         name: "@rush-temp/sdk-backend-spi"
         resolution:
-            integrity: sha512-jQ69OPGwJ/01wyDOCI/jgm9Ix2N1/FG+2b9jdQuAAoY9ToSOTnomct6GZ1u+OJuX5FPAYCkRO7HuqX2ywxuRsw==
+            integrity: sha512-o6ZlNGSDp2LClDhhYNDk6DBpY/jhya4/Wwp1fn8OU8utnc0CI0mxYJoFGVtJBIvjM/oZoXoU5iVwM8+JH7Sqng==
             tarball: "file:projects/sdk-backend-spi.tgz"
         version: 0.0.0
     "file:projects/sdk-model.tgz":
@@ -15238,6 +15341,7 @@ packages:
             "@gooddata/tslint-config": 1.0.0_typescript@3.3.4000
             "@microsoft/api-extractor": 7.3.9
             "@types/jest": 24.0.18
+            "@types/lodash": 4.14.123
             jest: 24.9.0
             jest-junit: 3.7.0
             lodash: 4.17.15
@@ -15250,7 +15354,7 @@ packages:
         dev: false
         name: "@rush-temp/sdk-model"
         resolution:
-            integrity: sha512-3Ry9zqH8l7eEMVuIRXFQx04inO2QEmmDJgvA+YRnegpGdzHLIG+Mx/20K3zlfsAu9Y0pLxzbMGs6GCBoUvEdbA==
+            integrity: sha512-iCTXMrvUTkQKFesuN5yK1xLq57t90oYOuYzHGsveMtGJvTiaZhIdnAismJTsw4MIpF1CK8B4RcBSGCnAgG0U+w==
             tarball: "file:projects/sdk-model.tgz"
         version: 0.0.0
     "file:projects/sdk-skel-ts.tgz":
@@ -15270,7 +15374,7 @@ packages:
         dev: false
         name: "@rush-temp/sdk-skel-ts"
         resolution:
-            integrity: sha512-Qz7SYQ/3jvRDAftm4qjnum8YZsQA4JGFIoc6MJStrMntw/VIhc899+D/JxpAJCq8mo/QSQVmYLyK5FewDIoP9w==
+            integrity: sha512-KSgBuShaW52XHdXWLOnKgDmo7uwW3U1n+88qLNjIZwAZw+jCUxiZkcBdPRVSatPCUfDjVJYemvGbTHHt5lj62w==
             tarball: "file:projects/sdk-skel-ts.tgz"
         version: 0.0.0
     "file:projects/sdk-skel-tsx.tgz_webpack@4.39.3":
@@ -15326,7 +15430,7 @@ packages:
         peerDependencies:
             webpack: "*"
         resolution:
-            integrity: sha512-M6Q6vJkuVbRNxK80RV1wgy32WaetTSj4wMRoh5v3LglSaIOVqo+t9tcTR18/fcN9VnCg3kePl52sqc2kSY0VMw==
+            integrity: sha512-9g5hzCY1JsxZvkMKPzCOXV+5iEXJF0cCGixTgQJI5BkAzxiX9DDc6QwmE4UbmODxFlt4ixiTKamru4eE8cHaKg==
             tarball: "file:projects/sdk-skel-tsx.tgz"
         version: 0.0.0
     "file:projects/typings.tgz":
@@ -15345,9 +15449,10 @@ packages:
         dev: false
         name: "@rush-temp/typings"
         resolution:
-            integrity: sha512-DA8zXQlR5yPJuGFDssuPZixUM+MEhcNu0pdn6QjFVftbqOOmysS+QhdQ/24sKGciSKIA34vd2wqhnyrtWs0Q0w==
+            integrity: sha512-DKHIOdwqp/sYmIWz/UGS8sg3i1HIWzi6yvxpEIa9wcEsss17u6oB2uAmHozX6+EyPPwgrSNRo+SX0WJuhjq/jw==
             tarball: "file:projects/typings.tgz"
         version: 0.0.0
+registry: ""
 specifiers:
     "@babel/core": ^7.4.4
     "@gooddata/goodstrap": ^63.1.1
@@ -15360,6 +15465,7 @@ specifiers:
     "@microsoft/api-extractor": ^7.3.8
     "@rush-temp/gooddata-js": "file:./projects/gooddata-js.tgz"
     "@rush-temp/react-components": "file:./projects/react-components.tgz"
+    "@rush-temp/sdk-backend-bear": "file:./projects/sdk-backend-bear.tgz"
     "@rush-temp/sdk-backend-spi": "file:./projects/sdk-backend-spi.tgz"
     "@rush-temp/sdk-model": "file:./projects/sdk-model.tgz"
     "@rush-temp/sdk-skel-ts": "file:./projects/sdk-skel-ts.tgz"

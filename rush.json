@@ -300,6 +300,11 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-backend-bear",
+            "projectFolder": "libs/sdk-backend-bear",
+            "reviewCategory": "production"
+        },
+        {
             "packageName": "@gooddata/sdk-model",
             "projectFolder": "libs/sdk-model",
             "reviewCategory": "production"
