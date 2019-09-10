@@ -8,8 +8,8 @@ _build_styles(){
 _common-build(){
     rm -rf dist
 
-    mkdir dist
-    cp -rf src/translations/ dist/translations/
+    mkdir -p dist/base/translations
+    cp -rf src/base/translations/bundles dist/base/translations
 
     mkdir dist/internal
     cp -rf src/internal/assets dist/internal/
