@@ -1,6 +1,13 @@
 // (C) 2019 GoodData Corporation
 
-export { IAnalyticalBackend, IAnalyticalWorkspace, BackendCapabilities } from "./backend";
+export {
+    IAnalyticalBackend,
+    IAnalyticalWorkspace,
+    BackendCapabilities,
+    UserCredentials,
+    AnalyticalBackendConfig,
+    AnalyticalBackendFactory,
+} from "./backend";
 
 export {
     IExecutionFactory,
@@ -8,6 +15,7 @@ export {
     IExecutionResult,
     IDataView,
     IExecutionDefinition,
+    DimensionGenerator,
 } from "./execution";
 
 export { DataViewFacade } from "./execution/facade";
@@ -40,9 +48,13 @@ export {
     AnalyticalBackendError,
     DataViewError,
     ExecutionError,
+    NotSupported,
+    NotImplemented,
+    NotAuthenticated,
     isAnalyticalBackendError,
     isDataViewError,
     isExecutionError,
     isNotSupported,
     isNotImplemented,
+    isNotAuthenticated,
 } from "./errors";

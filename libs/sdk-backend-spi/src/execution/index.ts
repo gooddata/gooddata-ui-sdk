@@ -24,21 +24,26 @@ export interface IExecutionFactory {
 
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
 
-    forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 /**
  * TODO: SDK8: add docs
  * @public
  */
-export interface IPreparedExecution extends IExecutionDefinition {
+export interface IPreparedExecution {
     /**
      * Fingerprint of this prepared execution. Each unique combination of prepared execution attributes
      * results in an unique fingerprint - a perfect hash.
      */
     readonly fingerprint: string;
+    readonly definition: IExecutionDefinition;
 
     withSorting(...items: SortItem[]): IPreparedExecution;
 

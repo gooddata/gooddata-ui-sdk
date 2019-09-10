@@ -109,4 +109,5 @@ export {
     insightSorts,
     insightBucket,
     insightTotals,
+    insightFilters,
 } from "./insight";

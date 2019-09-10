@@ -148,6 +148,15 @@ export function insightHasDataDefined(insight: IInsight): boolean {
  *
  * @public
  */
+export function insightFilters(insight: IInsight): IFilter[] {
+    return insight.insight.filters;
+}
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
 export function insightSorts(insight: IInsight): SortItem[] {
     const attributeIds = insightAttributes(insight).map(attributeId);
     const measureIds = insightMeasures(insight).map(measureId);

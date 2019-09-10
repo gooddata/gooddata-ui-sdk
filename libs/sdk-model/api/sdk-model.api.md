@@ -285,6 +285,9 @@ export function insightBucket(insight: IInsight, idOrFun: string | BucketPredica
 export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[];
 
 // @public
+export function insightFilters(insight: IInsight): IFilter[];
+
+// @public
 export function insightHasAttributes(insight: IInsight): boolean;
 
 // @public

@@ -11,8 +11,38 @@ import { IWorkspaceStyling } from "../styling";
  *
  * @public
  */
-export interface IAnalyticalBackend {
+export type AnalyticalBackendConfig = {
     readonly hostname?: string;
+    readonly credentials?: UserCredentials;
+};
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
+export type UserCredentials = {
+    readonly username: string;
+    readonly password: string;
+};
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
+export type AnalyticalBackendFactory = (
+    config?: AnalyticalBackendConfig,
+    implConfig?: any,
+) => IAnalyticalBackend;
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
+export interface IAnalyticalBackend {
+    readonly config: AnalyticalBackendConfig;
     readonly capabilities: BackendCapabilities;
 
     onHostname(hostname: string): IAnalyticalBackend;
@@ -80,7 +110,7 @@ export type BackendCapabilities = {
     /**
      * Indicates whether backend can transform an existing result into a different shape / sorting / totals.
      */
-    canTransformExistingResult: boolean;
+    canTransformExistingResult?: boolean;
 
     /**
      * Catchall for additional capabilities

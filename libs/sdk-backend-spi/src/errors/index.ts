@@ -6,11 +6,7 @@ import isEmpty from "lodash/isEmpty";
  * @public
  */
 export abstract class AnalyticalBackendError extends Error {
-    protected constructor(
-        message: string,
-        public readonly abeType: string,
-        public readonly cause: Error | null,
-    ) {
+    protected constructor(message: string, public readonly abeType: string, public readonly cause?: Error) {
         super(message);
     }
 }
@@ -20,7 +16,7 @@ export abstract class AnalyticalBackendError extends Error {
  * @public
  */
 export class ExecutionError extends AnalyticalBackendError {
-    constructor(message: string, cause: Error) {
+    constructor(message: string, cause?: Error) {
         super(message, "EE", cause);
     }
 }
@@ -41,7 +37,7 @@ export class DataViewError extends AnalyticalBackendError {
  */
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string) {
-        super(message, "UF", null);
+        super(message, "UF");
     }
 }
 
@@ -52,7 +48,19 @@ export class NotSupported extends AnalyticalBackendError {
  */
 export class NotImplemented extends AnalyticalBackendError {
     constructor(message: string) {
-        super(message, "NI!", null);
+        super(message, "NI!");
+    }
+}
+
+/**
+ * This exception is thrown when client code triggers an operation which requires authentication but the client
+ * code did not provide credentials or the credentials are invalid.
+ *
+ * @public
+ */
+export class NotAuthenticated extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, "NAuth", cause);
     }
 }
 
@@ -104,4 +112,14 @@ export function isNotSupported(obj: any): obj is NotSupported {
  */
 export function isNotImplemented(obj: any): obj is NotImplemented {
     return isAnalyticalBackendError(obj) && obj.abeType === "NI!";
+}
+
+/**
+ * Tests whether input is a NotAuthenticated error.
+ *
+ * @param obj - anything
+ * @public
+ */
+export function isNotAuthenticated(obj: any): obj is NotAuthenticated {
+    return isAnalyticalBackendError(obj) && obj.abeType === "NAuth";
 }

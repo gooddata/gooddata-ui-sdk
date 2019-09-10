@@ -4,10 +4,19 @@
 
 ```ts
 
-// Warning: (ae-internal-missing-underscore) The name "mySdkFunction" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export function mySdkFunction(input: string): string;
+import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+
+// @public
+export type BearBackendConfig = {
+    packageName?: string;
+    packageVersion?: string;
+};
+
+// @public
+function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
+
+export default bearFactory;
 
 
 // (No @packageDocumentation comment for this package)

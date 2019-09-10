@@ -17,13 +17,22 @@ import { SortItem } from '@gooddata/sdk-model';
 import { Total } from '@gooddata/sdk-model';
 
 // @public
+export type AnalyticalBackendConfig = {
+    readonly hostname?: string;
+    readonly credentials?: UserCredentials;
+};
+
+// @public
 export abstract class AnalyticalBackendError extends Error {
-    protected constructor(message: string, abeType: string, cause: Error | null);
+    protected constructor(message: string, abeType: string, cause?: Error | undefined);
     // (undocumented)
     readonly abeType: string;
     // (undocumented)
-    readonly cause: Error | null;
+    readonly cause?: Error | undefined;
 }
+
+// @public
+export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
 // @public
 export type BackendCapabilities = {
@@ -34,7 +43,7 @@ export type BackendCapabilities = {
     maxDimensions?: number;
     canExportCsv?: boolean;
     canExportXlsx?: boolean;
-    canTransformExistingResult: boolean;
+    canTransformExistingResult?: boolean;
     [key: string]: undefined | boolean | number | string;
 };
 
@@ -94,6 +103,9 @@ export class DataViewFacade {
 }
 
 // @public
+export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
+
+// @public
 export type Element = {
     readonly value: string;
     readonly uri?: string;
@@ -101,7 +113,7 @@ export type Element = {
 
 // @public
 export class ExecutionError extends AnalyticalBackendError {
-    constructor(message: string, cause: Error);
+    constructor(message: string, cause?: Error);
 }
 
 // @public
@@ -109,7 +121,7 @@ export interface IAnalyticalBackend {
     // (undocumented)
     readonly capabilities: BackendCapabilities;
     // (undocumented)
-    readonly hostname?: string;
+    readonly config: AnalyticalBackendConfig;
     // (undocumented)
     onHostname(hostname: string): IAnalyticalBackend;
     // (undocumented)
@@ -233,7 +245,7 @@ export interface IExecutionFactory {
     // (undocumented)
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsight(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }
@@ -307,7 +319,9 @@ export interface IMeasureHeaderItem {
 }
 
 // @public
-export interface IPreparedExecution extends IExecutionDefinition {
+export interface IPreparedExecution {
+    // (undocumented)
+    readonly definition: IExecutionDefinition;
     // (undocumented)
     equals(other: IPreparedExecution): boolean;
     // (undocumented)
@@ -315,8 +329,6 @@ export interface IPreparedExecution extends IExecutionDefinition {
     readonly fingerprint: string;
     // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
-    // Warning: (ae-forgotten-export) The symbol "DimensionGenerator" needs to be exported by the entry point index.d.ts
-    // 
     // (undocumented)
     withDimensions(f: DimensionGenerator): IPreparedExecution;
     // (undocumented)
@@ -370,13 +382,12 @@ export function isDataViewError(obj: any): obj is DataViewError;
 // @public
 export function isExecutionError(obj: any): obj is ExecutionError;
 
-// Warning: (ae-forgotten-export) The symbol "NotImplemented" needs to be exported by the entry point index.d.ts
-// 
+// @public
+export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
+
 // @public
 export function isNotImplemented(obj: any): obj is NotImplemented;
 
-// Warning: (ae-forgotten-export) The symbol "NotSupported" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function isNotSupported(obj: any): obj is NotSupported;
 
@@ -403,6 +414,27 @@ export interface IWorkspaceStyling {
     // (undocumented)
     colorPalette(): Promise<IColorPaletteItem[]>;
 }
+
+// @public
+export class NotAuthenticated extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
+
+// @public
+export class NotImplemented extends AnalyticalBackendError {
+    constructor(message: string);
+}
+
+// @public
+export class NotSupported extends AnalyticalBackendError {
+    constructor(message: string);
+}
+
+// @public
+export type UserCredentials = {
+    readonly username: string;
+    readonly password: string;
+};
 
 
 // (No @packageDocumentation comment for this package)
