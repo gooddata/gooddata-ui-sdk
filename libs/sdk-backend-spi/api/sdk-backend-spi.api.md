@@ -18,11 +18,11 @@ import { Total } from '@gooddata/sdk-model';
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
-    protected constructor(message: string, abeType: string, cause: Error);
+    protected constructor(message: string, abeType: string, cause: Error | null);
     // (undocumented)
     readonly abeType: string;
     // (undocumented)
-    readonly cause: Error;
+    readonly cause: Error | null;
 }
 
 // @public
@@ -369,6 +369,16 @@ export function isDataViewError(obj: any): obj is DataViewError;
 
 // @public
 export function isExecutionError(obj: any): obj is ExecutionError;
+
+// Warning: (ae-forgotten-export) The symbol "NotImplemented" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function isNotImplemented(obj: any): obj is NotImplemented;
+
+// Warning: (ae-forgotten-export) The symbol "NotSupported" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function isNotSupported(obj: any): obj is NotSupported;
 
 // @public
 export interface ITotalHeaderItem {

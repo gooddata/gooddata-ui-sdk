@@ -6,7 +6,11 @@ import isEmpty from "lodash/isEmpty";
  * @public
  */
 export abstract class AnalyticalBackendError extends Error {
-    protected constructor(message: string, public readonly abeType: string, public readonly cause: Error) {
+    protected constructor(
+        message: string,
+        public readonly abeType: string,
+        public readonly cause: Error | null,
+    ) {
         super(message);
     }
 }
@@ -28,6 +32,27 @@ export class ExecutionError extends AnalyticalBackendError {
 export class DataViewError extends AnalyticalBackendError {
     constructor(message: string, cause: Error) {
         super(message, "DV", cause);
+    }
+}
+
+/**
+ * This exception is thrown when client code asks Analytical Backend to exercise an unsupported feature.
+ * @public
+ */
+export class NotSupported extends AnalyticalBackendError {
+    constructor(message: string) {
+        super(message, "UF", null);
+    }
+}
+
+/**
+ * This exception is thrown when client code asks Analytical Backend to exercise a feature that is not
+ * implemented yet.
+ * @public
+ */
+export class NotImplemented extends AnalyticalBackendError {
+    constructor(message: string) {
+        super(message, "NI!", null);
     }
 }
 
@@ -59,4 +84,24 @@ export function isExecutionError(obj: any): obj is ExecutionError {
  */
 export function isDataViewError(obj: any): obj is DataViewError {
     return isAnalyticalBackendError(obj) && obj.abeType === "DV";
+}
+
+/**
+ * Tests whether input is an NotSupported error.
+ *
+ * @param obj - anything
+ * @public
+ */
+export function isNotSupported(obj: any): obj is NotSupported {
+    return isAnalyticalBackendError(obj) && obj.abeType === "UF";
+}
+
+/**
+ * Tests whether input is a NotImplemented error.
+ *
+ * @param obj - anything
+ * @public
+ */
+export function isNotImplemented(obj: any): obj is NotImplemented {
+    return isAnalyticalBackendError(obj) && obj.abeType === "NI!";
 }

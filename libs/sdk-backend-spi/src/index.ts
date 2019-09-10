@@ -43,4 +43,6 @@ export {
     isAnalyticalBackendError,
     isDataViewError,
     isExecutionError,
+    isNotSupported,
+    isNotImplemented,
 } from "./errors";
