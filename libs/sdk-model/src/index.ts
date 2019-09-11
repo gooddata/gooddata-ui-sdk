@@ -11,7 +11,7 @@ export {
     ObjQualifierWithLocal,
 } from "./base";
 
-export { IDimension, isDimension, dimensionTotals } from "./base/dimension";
+export { IDimension, isDimension, dimensionTotals, newTwoDimensional } from "./base/dimension";
 
 export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
 

@@ -31,3 +31,19 @@ export function isDimension(obj: any): obj is IDimension {
 export function dimensionTotals(dim: IDimension): ITotal[] {
     return dim.totals ? dim.totals : [];
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[] {
+    return [
+        {
+            itemIdentifiers: dim1Ids,
+        },
+        {
+            itemIdentifiers: dim2Ids,
+        },
+    ];
+}

@@ -535,6 +535,9 @@ export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirec
 export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem;
 
 // @public
+export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
+
+// @public
 export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
 
 // @public
