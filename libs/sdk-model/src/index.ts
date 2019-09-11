@@ -13,7 +13,7 @@ export {
 
 export { TotalType, ITotal, INativeTotalItem, Total, isTotal, isNativeTotal } from "./base/totals";
 
-export { IDimension } from "./base/dimension";
+export { IDimension, isDimension } from "./base/dimension";
 
 export {
     SortDirection,

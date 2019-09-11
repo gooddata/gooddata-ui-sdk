@@ -3,11 +3,11 @@
 import { IExecutionFactory, IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
 import { defWithFilters, newDefFromBuckets, newDefFromInsight, newDefFromItems } from "./executionDefinition";
-import { IAuthenticatedSdkProvider } from "./commonTypes";
+import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearPreparedExecution } from "./preparedExecution";
 
 export class BearExecution implements IExecutionFactory {
-    constructor(private readonly authSdk: IAuthenticatedSdkProvider, private readonly workspace: string) {}
+    constructor(private readonly authSdk: AuthenticatedSdkProvider, private readonly workspace: string) {}
 
     public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
         const def = defWithFilters(newDefFromBuckets(this.workspace, buckets), filters);

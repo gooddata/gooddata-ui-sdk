@@ -3,27 +3,72 @@ import {
     AttributeOrMeasure,
     IAttribute,
     IBucket,
-    IFilter,
-    IMeasure,
-    SortItem,
-    Total,
     IDimension,
+    IFilter,
     IInsight,
+    IMeasure,
+    ITotal,
+    SortItem,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
 
 /**
- * TODO: SDK8: add docs
+ * Execution factory provides several methods to create a prepared execution from different types
+ * of inputs.
+ *
  * @public
  */
 export interface IExecutionFactory {
+    /**
+     * Prepares a new execution for a list of attributes and measures, optionally filtered using the
+     * provided filters.
+     *
+     * @param items - list of attributes and measures, must not be empty
+     * @param filters - list of filters, may not be provided
+     */
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 
+    /**
+     * Prepares a new execution for a list of buckets. Attributes and measures WILL be transferred to the
+     * execution in natural order:
+     *
+     * - Order of items within a bucket is retained in the execution
+     * - Items from first bucket appear before items from second bucket
+     *
+     * Or more specifically, given two buckets with items as [A1, A2, M1] and [A3, M2, M3], the resulting
+     * prepared execution WILL have definition with attributes = [A1, A2, A3] and measures = [M1, M2, M3]
+     *
+     * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
+     * @param filters - optional, may not be provided
+     */
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
 
+    /**
+     * Prepares a new execution for the provided insight. Buckets with attributes and measures WILL be used
+     * to obtain attributes and measures - the behavior WILL be same as in forBuckets() function. Filters, sort by
+     * and totals in the insight WILL be included in the prepared execution.
+     *
+     * Additionally, an optional list of additional filters WILL be merged with the filters already defined in
+     * the insight.
+     *
+     * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
+     * @param filters - optional, may not be provided
+     */
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
 
+    /**
+     * Prepares new execution for an insight specified by reference => a link. This function is asynchronous as
+     * the insight WILL be retrieved from backend at this point.
+     *
+     * Execution prepared using this method MAY be realized using different backend API than the executions where
+     * attributes and measures are provided 'freeform'. In return, this different backend API may provide additional
+     * authorization guarantees - for instance the backend MAY only allow end user to execute these stored insights
+     * and not do any 'freeform' execution.
+     *
+     * @param uri - link to insight
+     * @param filters - optional list of filters to merge with filters already defined in the insight
+     */
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
 
@@ -38,11 +83,6 @@ export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
  * @public
  */
 export interface IPreparedExecution {
-    /**
-     * Fingerprint of this prepared execution. Each unique combination of prepared execution attributes
-     * results in an unique fingerprint - a perfect hash.
-     */
-    readonly fingerprint: string;
     readonly definition: IExecutionDefinition;
 
     withSorting(...items: SortItem[]): IPreparedExecution;
@@ -50,11 +90,17 @@ export interface IPreparedExecution {
     withDimensions(...dim: IDimension[]): IPreparedExecution;
     withDimensions(f: DimensionGenerator): IPreparedExecution;
 
-    withTotals(...totals: Total[]): IPreparedExecution;
+    withTotals(...totals: ITotal[]): IPreparedExecution;
 
     execute(): Promise<IExecutionResult>;
 
     equals(other: IPreparedExecution): boolean;
+
+    /**
+     * Fingerprint of this prepared execution. Each unique combination of prepared execution attributes
+     * results in an unique fingerprint - a perfect hash.
+     */
+    fingerprint(): string;
 }
 
 /**
@@ -69,7 +115,7 @@ export interface IExecutionDefinition {
     readonly filters: IFilter[];
     readonly sortBy: SortItem[];
     readonly dimensions: IDimension[];
-    readonly totals: Total[];
+    readonly totals: ITotal[];
 }
 
 /**
@@ -77,13 +123,6 @@ export interface IExecutionDefinition {
  * @public
  */
 export interface IExecutionResult {
-    /**
-     * Unique fingerprint of the execution result. The fingerprint is influenced by both data included in
-     * the result and its dimensionality, sorting and totals.
-     *
-     * Thus, two results with the same data and same execution definition will have the same fingerprint.
-     */
-    readonly fingerprint: string;
     readonly dimensions: IResultDimension[];
     readonly executionDefinition: IExecutionDefinition;
 
@@ -145,6 +184,14 @@ export interface IExecutionResult {
      * @returns true if equal, false if not
      */
     equals(other: IExecutionResult): boolean;
+
+    /**
+     * Unique fingerprint of the execution result. The fingerprint is influenced by both data included in
+     * the result and its dimensionality, sorting and totals.
+     *
+     * Thus, two results with the same data and same execution definition will have the same fingerprint.
+     */
+    fingerprint(): string;
 }
 
 /**
@@ -152,14 +199,6 @@ export interface IExecutionResult {
  * @public
  */
 export interface IDataView {
-    /**
-     * Unique fingerprint of this data view - the fingerprint is influenced by the execution result and the
-     * offset and limit of the data view.
-     *
-     * Thus, two data views on the same result, with same offset and limit will have the same fingerprint.
-     */
-    readonly fingerprint: string;
-
     readonly offset: number[];
     readonly limit: number[];
     readonly headerItems: IResultHeaderItem[][][];
@@ -226,4 +265,12 @@ export interface IDataView {
      * @returns true if equal, false if not
      */
     equals(other: IDataView): boolean;
+
+    /**
+     * Unique fingerprint of this data view - the fingerprint is influenced by the execution result and the
+     * offset and limit of the data view.
+     *
+     * Thus, two data views on the same result, with same offset and limit will have the same fingerprint.
+     */
+    fingerprint(): string;
 }

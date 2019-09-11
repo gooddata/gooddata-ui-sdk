@@ -7,24 +7,25 @@ import {
     IPreparedExecution,
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
-import { IAuthenticatedSdkProvider } from "./commonTypes";
-import { IDimension, SortItem, Total } from "@gooddata/sdk-model";
-import { defFingerprint } from "./executionDefinition";
+import { AuthenticatedSdkProvider } from "./commonTypes";
+import { IDimension, ITotal, SortItem } from "@gooddata/sdk-model";
+import { defFingerprint, defWithDimensions, defWithSorts, defWithTotals } from "./executionDefinition";
 import { toAfmExecution } from "./toAfm";
+import isEmpty from "lodash/isEmpty";
+import { isDimension } from "@gooddata/sdk-model/src";
 
 export class BearPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
-    public readonly fingerprint: string;
+    private _fingerprint: string | undefined;
 
-    constructor(private readonly authSdk: IAuthenticatedSdkProvider, def: IExecutionDefinition) {
+    constructor(private readonly authSdk: AuthenticatedSdkProvider, def: IExecutionDefinition) {
         this.definition = def;
-        this.fingerprint = defFingerprint(def);
     }
 
     public async execute(): Promise<IExecutionResult> {
         checkDefIsExecutable(this.definition);
 
-        const sdk = await this.authSdk.get();
+        const sdk = await this.authSdk();
         const afmExecution = toAfmExecution(this.definition);
 
         return sdk.execution.getExecutionResponse(this.definition.workspace, afmExecution).then(_ => {
@@ -32,19 +33,39 @@ export class BearPreparedExecution implements IPreparedExecution {
         });
     }
 
-    // @ts-ignore
-    public withDimensions(...dimsOrGen: IDimension[] | DimensionGenerator[]): IPreparedExecution {
-        return this;
+    public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
+        if (!dimsOrGen || isEmpty(dimsOrGen)) {
+            return this;
+        }
+
+        const maybeGenerator = dimsOrGen[0];
+
+        if (typeof maybeGenerator === "function") {
+            return new BearPreparedExecution(
+                this.authSdk,
+                defWithDimensions(this.definition, maybeGenerator(this.definition.buckets)),
+            );
+        }
+
+        const dimensions: IDimension[] = dimsOrGen.filter(isDimension);
+
+        return new BearPreparedExecution(this.authSdk, defWithDimensions(this.definition, dimensions));
     }
 
-    // @ts-ignore
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return this;
+        return new BearPreparedExecution(this.authSdk, defWithSorts(this.definition, items));
     }
 
-    // @ts-ignore
-    public withTotals(...totals: Total[]): IPreparedExecution {
-        return this;
+    public withTotals(...totals: ITotal[]): IPreparedExecution {
+        return new BearPreparedExecution(this.authSdk, defWithTotals(this.definition, totals));
+    }
+
+    public fingerprint(): string {
+        if (!this._fingerprint) {
+            this._fingerprint = defFingerprint(this.definition);
+        }
+
+        return this._fingerprint;
     }
 
     public equals(other: IPreparedExecution): boolean {

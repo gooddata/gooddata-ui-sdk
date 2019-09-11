@@ -10,16 +10,10 @@ import {
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
-import { IAuthenticatedSdkProvider } from "./commonTypes";
+import { AuthenticatedSdkProvider } from "./commonTypes";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
-    public readonly workspace: string;
-    private readonly authSdk: IAuthenticatedSdkProvider;
-
-    constructor(authSdk: IAuthenticatedSdkProvider, workspace: string) {
-        this.authSdk = authSdk;
-        this.workspace = workspace;
-    }
+    constructor(private readonly authSdk: AuthenticatedSdkProvider, public readonly workspace: string) {}
 
     public elements(): IElementQueryFactory {
         throw new NotImplemented("element query not yet implemented");

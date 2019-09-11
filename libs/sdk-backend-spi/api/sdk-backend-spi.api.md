@@ -12,9 +12,9 @@ import { IDimension } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
-import { Total } from '@gooddata/sdk-model';
 
 // @public
 export type AnalyticalBackendConfig = {
@@ -44,6 +44,7 @@ export type BackendCapabilities = {
     canExportCsv?: boolean;
     canExportXlsx?: boolean;
     canTransformExistingResult?: boolean;
+    canExecuteByReference?: boolean;
     [key: string]: undefined | boolean | number | string;
 };
 
@@ -73,7 +74,7 @@ export class DataViewFacade {
     // (undocumented)
     dimensions(): IResultDimension[];
     // (undocumented)
-    fingerprint(): string;
+    fingerprint(): () => string;
     // (undocumented)
     hasAttributes(): boolean;
     // (undocumented)
@@ -173,7 +174,7 @@ export interface IDataView {
     equals(other: IDataView): boolean;
     // (undocumented)
     readonly executionDefinition: IExecutionDefinition;
-    readonly fingerprint: string;
+    fingerprint(): string;
     // (undocumented)
     readonly fromResult: IExecutionResult;
     // (undocumented)
@@ -233,20 +234,16 @@ export interface IExecutionDefinition {
     // (undocumented)
     readonly sortBy: SortItem[];
     // (undocumented)
-    readonly totals: Total[];
+    readonly totals: ITotal[];
     // (undocumented)
     readonly workspace: string;
 }
 
 // @public
 export interface IExecutionFactory {
-    // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
-    // (undocumented)
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
-    // (undocumented)
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
-    // (undocumented)
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }
 
@@ -258,7 +255,7 @@ export interface IExecutionResult {
     // (undocumented)
     readonly executionDefinition: IExecutionDefinition;
     export(options: IExportConfig): Promise<IExportResult>;
-    readonly fingerprint: string;
+    fingerprint(): string;
     readAll(): Promise<IDataView>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     transform(): IPreparedExecution;
@@ -326,7 +323,7 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     // (undocumented)
     execute(): Promise<IExecutionResult>;
-    readonly fingerprint: string;
+    fingerprint(): string;
     // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
     // (undocumented)
@@ -334,7 +331,7 @@ export interface IPreparedExecution {
     // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
     // (undocumented)
-    withTotals(...totals: Total[]): IPreparedExecution;
+    withTotals(...totals: ITotal[]): IPreparedExecution;
 }
 
 // @public

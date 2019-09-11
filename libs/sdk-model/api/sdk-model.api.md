@@ -393,6 +393,9 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 export function isBucket(obj: any): obj is IBucket;
 
 // @public
+export function isDimension(obj: any): obj is IDimension;
+
+// @public
 export function isInsight(obj: any): obj is IInsight;
 
 // @public

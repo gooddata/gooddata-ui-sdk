@@ -113,6 +113,11 @@ export type BackendCapabilities = {
     canTransformExistingResult?: boolean;
 
     /**
+     * Indicates whether backend can execute an existing, persistent insight by reference.
+     */
+    canExecuteByReference?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
