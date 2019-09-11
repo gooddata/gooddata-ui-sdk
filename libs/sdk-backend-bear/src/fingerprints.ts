@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IAttribute, IDimension, IFilter, IMeasure, ITotal, SortItem } from "@gooddata/sdk-model";
+import { IAttribute, IDimension, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 
 /*
  * These are simple fingerprinters that can produce false negatives => fingerprints different but the
@@ -22,10 +22,6 @@ export function filterFingerprint(filter: IFilter): string {
 
 export function sortFingerprint(sort: SortItem): string {
     return JSON.stringify(sort);
-}
-
-export function totalFingerprint(total: ITotal): string {
-    return JSON.stringify(total);
 }
 
 export function dimensionFingerprint(dim: IDimension): string {
