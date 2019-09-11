@@ -31,7 +31,7 @@ export class DataViewFacade {
     private readonly _bucketById: BucketIndex;
 
     constructor(private dataView: IDataView) {
-        this._bucketById = dataView.executionDefinition.buckets.reduce((acc: BucketIndex, val) => {
+        this._bucketById = dataView.definition.buckets.reduce((acc: BucketIndex, val) => {
             const id = val.localIdentifier ? val.localIdentifier : "unknown";
             acc[id] = val;
             return acc;
@@ -43,7 +43,7 @@ export class DataViewFacade {
     //
 
     public buckets(): IBucket[] {
-        return this.dataView.executionDefinition.buckets;
+        return this.dataView.definition.buckets;
     }
 
     public bucket(id: string): IBucket | undefined {
@@ -51,7 +51,7 @@ export class DataViewFacade {
     }
 
     public bucketCount(): number {
-        return this.dataView.executionDefinition.buckets.length;
+        return this.dataView.definition.buckets.length;
     }
 
     public hasBuckets(): boolean {
@@ -72,11 +72,11 @@ export class DataViewFacade {
     //
     //
     public measure(id: string): IMeasure | undefined {
-        return this.dataView.executionDefinition.measures.find(m => m.measure.localIdentifier === id);
+        return this.dataView.definition.measures.find(m => m.measure.localIdentifier === id);
     }
 
     public measureIndex(id: string): number {
-        return this.dataView.executionDefinition.measures.findIndex(m => m.measure.localIdentifier === id);
+        return this.dataView.definition.measures.findIndex(m => m.measure.localIdentifier === id);
     }
 
     public masterMeasureForDerived(id: string): IMeasure | undefined {
@@ -98,7 +98,7 @@ export class DataViewFacade {
     }
 
     public hasMeasures(): boolean {
-        return this.dataView.executionDefinition.measures.length > 0;
+        return this.dataView.definition.measures.length > 0;
     }
 
     //
@@ -106,7 +106,7 @@ export class DataViewFacade {
     //
 
     public hasAttributes(): boolean {
-        return this.dataView.executionDefinition.attributes.length > 0;
+        return this.dataView.definition.attributes.length > 0;
     }
 
     //
@@ -114,7 +114,7 @@ export class DataViewFacade {
     //
 
     public dimensions(): IResultDimension[] {
-        return this.dataView.fromResult.dimensions;
+        return this.dataView.result.dimensions;
     }
 
     public attributeHeaders(): IResultAttributeHeaderItem[][][] {
@@ -126,7 +126,7 @@ export class DataViewFacade {
     }
 
     public measureGroupHeader(): IMeasureGroupHeader | undefined {
-        for (const dim of this.dataView.fromResult.dimensions) {
+        for (const dim of this.dataView.result.dimensions) {
             const measureGroupHeader = dim.headers.find(isMeasureGroupHeader);
 
             if (measureGroupHeader) {
@@ -148,7 +148,7 @@ export class DataViewFacade {
     }
 
     public isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean {
-        return this.dataView.executionDefinition.measures.some((measure: IMeasure) => {
+        return this.dataView.definition.measures.some((measure: IMeasure) => {
             if (measure.measure.localIdentifier !== measureHeader.measureHeaderItem.localIdentifier) {
                 return false;
             }

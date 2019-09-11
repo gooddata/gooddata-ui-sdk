@@ -26,7 +26,7 @@ export class ExecutionError extends AnalyticalBackendError {
  * @public
  */
 export class DataViewError extends AnalyticalBackendError {
-    constructor(message: string, cause: Error) {
+    constructor(message: string, cause?: Error) {
         super(message, "DV", cause);
     }
 }

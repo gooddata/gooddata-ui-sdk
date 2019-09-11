@@ -2,10 +2,10 @@
 
 import {
     DimensionGenerator,
+    ExecutionError,
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
-    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { IDimension, ITotal, SortItem } from "@gooddata/sdk-model";
@@ -13,6 +13,7 @@ import { defFingerprint, defWithDimensions, defWithSorts, defWithTotals } from "
 import { toAfmExecution } from "./toAfm";
 import isEmpty from "lodash/isEmpty";
 import { isDimension } from "@gooddata/sdk-model/src";
+import { BearExecutionResult } from "./executionResult";
 
 export class BearPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
@@ -28,9 +29,14 @@ export class BearPreparedExecution implements IPreparedExecution {
         const sdk = await this.authSdk();
         const afmExecution = toAfmExecution(this.definition);
 
-        return sdk.execution.getExecutionResponse(this.definition.workspace, afmExecution).then(_ => {
-            throw new NotImplemented("...");
-        });
+        return sdk.execution
+            .getExecutionResponse(this.definition.workspace, afmExecution)
+            .then(response => {
+                return new BearExecutionResult(this.authSdk, this.definition, response);
+            })
+            .catch(e => {
+                throw new ExecutionError("An error has occurred while doing execution on backend", e);
+            });
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

@@ -4,12 +4,11 @@ import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
-import { AFM, VisualizationObject } from "@gooddata/typings";
+import { ExecuteAFM, VisualizationObject } from "@gooddata/typings";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import { IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection } from "./interfaces";
 import { convertUrisToReferences, convertReferencesToUris } from "./referenceHandling";
-import { convertAfm } from "./execution/execute-afm.convert";
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -22,7 +21,7 @@ export interface IValidElementsOptions {
     includeTotalCountWithoutFilters?: boolean;
     restrictiveDefinition?: string;
     restrictiveDefinitionContent?: object;
-    afm?: AFM.IAfm;
+    afm?: ExecuteAFM.IAfm;
 }
 
 /**
@@ -699,7 +698,7 @@ export class MetadataModule {
                 .post(`/gdc/app/projects/${projectId}/executeAfm/debug`, {
                     body: {
                         execution: {
-                            afm: convertAfm(afm),
+                            afm,
                         },
                     },
                 })

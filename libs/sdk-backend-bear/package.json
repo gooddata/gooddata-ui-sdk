@@ -59,13 +59,15 @@
         "@gooddata/sdk-backend-spi": "^1.0.0",
         "@gooddata/gooddata-js": "^11.18.0",
         "@gooddata/typings": "^2.17.1",
-        "lodash": "^4.7.11"
+        "lodash": "^4.7.11",
+        "md5": "^2.2.1"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "^1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
+        "@types/md5": "^2.1.33",
         "jest": "^24.1.0",
         "jest-junit": "^3.0.0",
         "prettier": "^1.18.2",

@@ -58,7 +58,7 @@ export interface IExecutionFactory {
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
 
     /**
-     * Prepares new execution for an insight specified by reference => a link. This function is asynchronous as
+     * Prepares new execution for an insight specified by reference =\> a link. This function is asynchronous as
      * the insight WILL be retrieved from backend at this point.
      *
      * Execution prepared using this method MAY be realized using different backend API than the executions where
@@ -124,7 +124,7 @@ export interface IExecutionDefinition {
  */
 export interface IExecutionResult {
     readonly dimensions: IResultDimension[];
-    readonly executionDefinition: IExecutionDefinition;
+    readonly definition: IExecutionDefinition;
 
     /**
      * Asynchronously reads all data for this result into a single data view.
@@ -200,13 +200,13 @@ export interface IExecutionResult {
  */
 export interface IDataView {
     readonly offset: number[];
-    readonly limit: number[];
+    readonly count: number[];
     readonly headerItems: IResultHeaderItem[][][];
     readonly data: DataValue[][] | DataValue[];
     readonly totals?: DataValue[][][];
 
-    readonly executionDefinition: IExecutionDefinition;
-    readonly fromResult: IExecutionResult;
+    readonly definition: IExecutionDefinition;
+    readonly result: IExecutionResult;
 
     /**
      * Asynchronously gets data view adjacent to this one in specified dimensions.

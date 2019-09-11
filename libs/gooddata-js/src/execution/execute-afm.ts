@@ -3,7 +3,7 @@ import invariant from "invariant";
 import qs from "qs";
 import range from "lodash/range";
 import get from "lodash/get";
-import { Execution, AFM } from "@gooddata/typings";
+import { Execution, ExecuteAFM } from "@gooddata/typings";
 
 import { XhrModule } from "../xhr";
 import { convertExecutionToJson } from "./execute-afm.convert";
@@ -22,8 +22,8 @@ export const DEFAULT_LIMIT = 1000;
 export interface IVisualizationExecution {
     visualizationExecution: {
         reference: string;
-        resultSpec?: AFM.IResultSpec;
-        filters?: AFM.CompatibilityFilter[];
+        resultSpec?: ExecuteAFM.IResultSpec;
+        filters?: ExecuteAFM.CompatibilityFilter[];
     };
 }
 
@@ -40,7 +40,10 @@ export class ExecuteAfmModule {
      * @returns {Promise<Execution.IExecutionResponses>} Structure with `executionResponse` and `executionResult` -
      *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L113
      */
-    public executeAfm(projectId: string, execution: AFM.IExecution): Promise<Execution.IExecutionResponses> {
+    public executeAfm(
+        projectId: string,
+        execution: ExecuteAFM.IExecution,
+    ): Promise<Execution.IExecutionResponses> {
         validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
         return this.getExecutionResponse(projectId, execution).then(
             (executionResponse: Execution.IExecutionResponse) => {
@@ -66,7 +69,7 @@ export class ExecuteAfmModule {
      */
     public getExecutionResponse(
         projectId: string,
-        execution: AFM.IExecution,
+        execution: ExecuteAFM.IExecution,
     ): Promise<Execution.IExecutionResponse> {
         validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
         return this.xhr

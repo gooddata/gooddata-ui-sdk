@@ -105,20 +105,11 @@ export function convertAfm(afm?: AFM.IAfm): ExecuteAFM.IAfm {
     return cloneDeep(executeAFM);
 }
 
-function convertExecution(execution: AFM.IExecution): ExecuteAFM.IExecution {
-    return {
-        execution: {
-            afm: convertAfm(execution.execution.afm),
-            resultSpec: execution.execution.resultSpec,
-        },
-    };
-}
-
 /**
  * Converts 'client-land' AFM to JSON payload acceptable by REST API.
  *
  * @param execution execution to send to API
  */
-export function convertExecutionToJson(execution: AFM.IExecution): string {
-    return JSON.stringify(convertExecution(execution));
+export function convertExecutionToJson(execution: ExecuteAFM.IExecution): string {
+    return JSON.stringify(execution);
 }

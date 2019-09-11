@@ -147,6 +147,6 @@ export default class ChartTransformation extends React.Component<
     private getChartConfig(props: IChartTransformationProps): INewChartConfig {
         const { dataView, config } = props;
 
-        return getNewSanitizedStackingConfig(dataView.executionDefinition, config);
+        return getNewSanitizedStackingConfig(dataView.definition, config);
     }
 }

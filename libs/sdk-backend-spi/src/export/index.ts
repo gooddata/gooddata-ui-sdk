@@ -9,7 +9,7 @@ export interface IExportConfig {
     title?: string;
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
-    showFilters?: IFilter;
+    showFilters?: IFilter[];
 }
 
 /**

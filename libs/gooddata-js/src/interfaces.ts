@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, AFM } from "@gooddata/typings";
+import { VisualizationObject, AFM, ExecuteAFM } from "@gooddata/typings";
 
 export type SortDirection = "asc" | "desc";
 
@@ -274,7 +274,7 @@ export interface IBaseExportConfig {
 }
 
 export interface IExportConfig extends IBaseExportConfig {
-    showFilters?: AFM.CompatibilityFilter[];
+    showFilters?: ExecuteAFM.CompatibilityFilter[];
 }
 
 export interface IExportResponse {

@@ -53,7 +53,7 @@ export type DataValue = null | string | number;
 
 // @public
 export class DataViewError extends AnalyticalBackendError {
-    constructor(message: string, cause: Error);
+    constructor(message: string, cause?: Error);
 }
 
 // @public
@@ -170,23 +170,23 @@ export interface IAttributeHeader {
 export interface IDataView {
     advance(...dims: number[]): Promise<IDataView | null>;
     // (undocumented)
-    readonly data: DataValue[][] | DataValue[];
-    equals(other: IDataView): boolean;
+    readonly count: number[];
     // (undocumented)
-    readonly executionDefinition: IExecutionDefinition;
+    readonly data: DataValue[][] | DataValue[];
+    // (undocumented)
+    readonly definition: IExecutionDefinition;
+    equals(other: IDataView): boolean;
     fingerprint(): string;
     // (undocumented)
-    readonly fromResult: IExecutionResult;
-    // (undocumented)
     readonly headerItems: IResultHeaderItem[][][];
-    // (undocumented)
-    readonly limit: number[];
     // (undocumented)
     readonly offset: number[];
     pageDown(): Promise<IDataView | null>;
     pageLeft(): Promise<IDataView | null>;
     pageRight(): Promise<IDataView | null>;
     pageUp(): Promise<IDataView | null>;
+    // (undocumented)
+    readonly result: IExecutionResult;
     // (undocumented)
     readonly totals?: DataValue[][][];
 }
@@ -250,10 +250,10 @@ export interface IExecutionFactory {
 // @public
 export interface IExecutionResult {
     // (undocumented)
+    readonly definition: IExecutionDefinition;
+    // (undocumented)
     readonly dimensions: IResultDimension[];
     equals(other: IExecutionResult): boolean;
-    // (undocumented)
-    readonly executionDefinition: IExecutionDefinition;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
@@ -268,7 +268,7 @@ export interface IExportConfig {
     // (undocumented)
     mergeHeaders?: boolean;
     // (undocumented)
-    showFilters?: IFilter;
+    showFilters?: IFilter[];
     // (undocumented)
     title?: string;
 }
