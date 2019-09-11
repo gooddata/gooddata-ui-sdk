@@ -37,17 +37,66 @@ export type AnalyticalBackendFactory = (
 ) => IAnalyticalBackend;
 
 /**
- * TODO: SDK8: add public doc
+ * This is the root of the Analytical Backend SPI. It allows configuration related to communication with the backend
+ * and access to analytical workspaces.
+ *
+ * The analytical backend instance MUST be immutable. Changes to configuration of the backend MUST create a new
+ * instance to work with.
  *
  * @public
  */
 export interface IAnalyticalBackend {
+    /**
+     * Configuration used for communication with this backend.
+     */
     readonly config: AnalyticalBackendConfig;
+
+    /**
+     * Capabilities available on this backend.
+     */
     readonly capabilities: BackendCapabilities;
 
+    /**
+     * Creates new instance of backend on the provided hostname. It is valid NOT TO specify any hostname, in
+     * which case the analytical backend assumes it should communicate with the current origin.
+     *
+     * @param hostname - host[:port]
+     * @returns new, unauthenticated instance
+     */
     onHostname(hostname: string): IAnalyticalBackend;
+
+    /**
+     * Sets credentials to use for authentication against the backend.
+     *
+     * @param username - user name, typically an email address
+     * @param password - password, do not give this to anyone
+     * @returns a new instance, set up with the provided credentials
+     */
     withCredentials(username: string, password: string): IAnalyticalBackend;
+
+    /**
+     * Sets telemetry information that SHOULD be sent to backend to track component usage.
+     *
+     * @param componentName - name of component
+     * @param props props
+     * @returns a new instance, set up with the provided telemetry
+     */
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
+
+    /**
+     * Tests authentication against this backend. This requires network communication and is thus
+     * asynchronous.
+     *
+     * @returns promise of authentication status - true if auth, false if not
+     */
+    isAuthenticated(): Promise<boolean>;
+
+    /**
+     * Returns an analytical workspace available on this backend.
+     *
+     * @param id - identifier of the workspace
+     * @returns an instance that can be used to interact with the workspace
+     */
     workspace(id: string): IAnalyticalWorkspace;
 }
 
@@ -60,9 +109,13 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 
     featureFlags(): IFeatureFlagsQuery;
+
     execution(): IExecutionFactory;
+
     elements(): IElementQueryFactory;
+
     metadata(): IWorkspaceMetadata;
+
     styling(): IWorkspaceStyling;
 }
 

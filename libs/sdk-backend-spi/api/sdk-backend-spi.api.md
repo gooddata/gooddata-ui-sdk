@@ -118,17 +118,12 @@ export class ExecutionError extends AnalyticalBackendError {
 
 // @public
 export interface IAnalyticalBackend {
-    // (undocumented)
     readonly capabilities: BackendCapabilities;
-    // (undocumented)
     readonly config: AnalyticalBackendConfig;
-    // (undocumented)
+    isAuthenticated(): Promise<boolean>;
     onHostname(hostname: string): IAnalyticalBackend;
-    // (undocumented)
     withCredentials(username: string, password: string): IAnalyticalBackend;
-    // (undocumented)
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
-    // (undocumented)
     workspace(id: string): IAnalyticalWorkspace;
 }
 

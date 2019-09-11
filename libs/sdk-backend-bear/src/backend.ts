@@ -113,6 +113,16 @@ export class BearBackend implements IAnalyticalBackend {
         );
     }
 
+    public isAuthenticated(): Promise<boolean> {
+        if (!this.deferredAuth) {
+            return new Promise(resolve => {
+                resolve(false);
+            });
+        }
+
+        return this.deferredAuth.then(_ => true).catch(_ => false);
+    }
+
     public workspace(id: string): IAnalyticalWorkspace {
         if (!this.deferredAuth) {
             throw new NotAuthenticated("Backend is not set up with credentials.");
