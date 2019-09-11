@@ -77,6 +77,9 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[];
 export function bucketsMeasures(buckets: IBucket[], predicate?: MeasurePredicate): IMeasure[];
 
 // @public
+export function bucketsTotals(buckets: IBucket[]): ITotal[];
+
+// @public
 export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @public
@@ -247,7 +250,6 @@ export interface IInsight {
         visualizationClassIdentifier: string;
         buckets: IBucket[];
         filters: IFilter[];
-        totals: ITotal[];
         sorts: SortItem[];
         properties: VisualizationProperties;
     };

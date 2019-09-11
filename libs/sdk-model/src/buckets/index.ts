@@ -290,6 +290,15 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
  *
  * @public
  */
+export function bucketsTotals(buckets: IBucket[]): ITotal[] {
+    return buckets.reduce((acc, b) => acc.concat(bucketTotals(b)), [] as ITotal[]);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export function bucketsIsEmpty(buckets: IBucket[]): boolean {
     return buckets.every(b => b.items.length === 0);
 }

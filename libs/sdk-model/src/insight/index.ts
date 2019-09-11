@@ -8,6 +8,7 @@ import {
     bucketsById,
     bucketsFind,
     bucketsMeasures,
+    bucketsTotals,
     IBucket,
 } from "../buckets";
 import { IFilter } from "../filter";
@@ -28,7 +29,6 @@ export interface IInsight {
         visualizationClassIdentifier: string;
         buckets: IBucket[];
         filters: IFilter[];
-        totals: ITotal[]; // TODO: SDK8: revisit native totals; is type "nat" and INativeTotalItem same thing??
         sorts: SortItem[];
         properties: VisualizationProperties;
     };
@@ -183,7 +183,7 @@ export function insightSorts(insight: IInsight): SortItem[] {
  * @public
  */
 export function insightTotals(insight: IInsight): ITotal[] {
-    return insight.insight.totals;
+    return bucketsTotals(insight.insight.buckets);
 }
 
 /**

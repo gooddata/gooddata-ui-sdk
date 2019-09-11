@@ -97,6 +97,7 @@ export {
     bucketsFind,
     bucketsFindAttribute,
     bucketsFindMeasure,
+    bucketsTotals,
     ComputeRatioRule,
     computeRatioRules,
     BucketPredicate,
