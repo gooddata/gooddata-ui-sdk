@@ -71,7 +71,7 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public equals(other: IPreparedExecution): boolean {
-        return this.fingerprint === other.fingerprint;
+        return this.fingerprint() === other.fingerprint();
     }
 }
 
