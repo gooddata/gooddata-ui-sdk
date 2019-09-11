@@ -15,9 +15,11 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { Execution } from "@gooddata/typings";
+import SparkMD5 from "spark-md5";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
+    private readonly _fingerprint: string;
 
     constructor(
         private readonly authSdk: AuthenticatedSdkProvider,
@@ -25,6 +27,7 @@ export class BearExecutionResult implements IExecutionResult {
         private readonly execResponse: Execution.IExecutionResponse,
     ) {
         this.dimensions = execResponse.dimensions;
+        this._fingerprint = SparkMD5.hash(execResponse.links.executionResult);
     }
 
     public async readAll(): Promise<IDataView> {
@@ -66,7 +69,7 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public fingerprint(): string {
-        return "";
+        return this._fingerprint;
     }
 
     private asDataView: DataViewFactory = promisedRes => {
@@ -117,6 +120,7 @@ class BearDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals: DataValue[][][];
+    private readonly _fingerprint: string;
 
     constructor(result: IExecutionResult, dataResult: Execution.IExecutionResult) {
         this.result = result;
@@ -126,6 +130,8 @@ class BearDataView implements IDataView {
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;
+
+        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }
 
     public advance(..._dims: number[]): Promise<IDataView | null> {
@@ -148,11 +154,11 @@ class BearDataView implements IDataView {
         throw new NotImplemented("not yet implemented");
     }
 
-    public equals(other: IDataView): boolean {
-        return this.fingerprint() === other.fingerprint();
+    public fingerprint(): string {
+        return this._fingerprint;
     }
 
-    public fingerprint(): string {
-        return "";
+    public equals(other: IDataView): boolean {
+        return this.fingerprint() === other.fingerprint();
     }
 }

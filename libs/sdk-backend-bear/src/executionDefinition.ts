@@ -16,6 +16,15 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
+import SparkMD5 from "spark-md5";
+import {
+    attributeFingerprint,
+    dimensionFingerprint,
+    filterFingerprint,
+    measureFingerprint,
+    sortFingerprint,
+    totalFingerprint,
+} from "./fingerprints";
 
 /**
  * Creates new, empty execution definition for the provided workspace.
@@ -169,9 +178,30 @@ export function defWithDimensions(
 
 /**
  * Calculates fingerprint for the execution definition.
- * @param _def
+ * @param def
  */
-export function defFingerprint(_def: IExecutionDefinition): string {
-    // TODO: finish this
-    return "haluz";
+export function defFingerprint(def: IExecutionDefinition): string {
+    const hasher = new SparkMD5();
+
+    /*
+     * Simple approach to construct exec definition fingerprint; the main drawback is that it completely
+     * disregards that ordering of some array elements does not impact the results of the actual execution.
+     *
+     * - attributes, measures, filters, sortby and totals should be sorted first and then fingerprinted.
+     * - dimensions must be fingerprinted in the defined order
+     *
+     * This simple approach can lead to 'false negatives' => code says executions are different while in
+     * fact are the same. This does not lead to functional issues as the bear can deal with that and will
+     * reuse cached and all. The only drawback is frontend cache misses.
+     */
+
+    hasher.append(def.workspace);
+    def.attributes.map(attributeFingerprint).forEach(hasher.append);
+    def.measures.map(measureFingerprint).forEach(hasher.append);
+    def.filters.map(filterFingerprint).forEach(hasher.append);
+    def.sortBy.map(sortFingerprint).forEach(hasher.append);
+    def.totals.map(totalFingerprint).forEach(hasher.append);
+    def.dimensions.map(dimensionFingerprint).forEach(hasher.append);
+
+    return hasher.end();
 }
