@@ -11,7 +11,6 @@ import {
     insightFilters,
     isAttribute,
     isMeasure,
-    ITotal,
     SortItem,
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
@@ -23,7 +22,6 @@ import {
     filterFingerprint,
     measureFingerprint,
     sortFingerprint,
-    totalFingerprint,
 } from "./fingerprints";
 
 /**
@@ -41,7 +39,6 @@ export function emptyDef(workspace: string): IExecutionDefinition {
         dimensions: [],
         filters: [],
         sortBy: [],
-        totals: [],
     };
 }
 
@@ -138,24 +135,6 @@ export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IEx
 }
 
 /**
- * Creates new execution definition by merging new totals into an existing definition.
- *
- * @param def - existing definition
- * @param totals - array of totals
- * @returns always new instance
- */
-export function defWithTotals(def: IExecutionDefinition, totals?: ITotal[]): IExecutionDefinition {
-    if (!totals || isEmpty(totals)) {
-        return def;
-    }
-
-    return {
-        ...def,
-        totals,
-    };
-}
-
-/**
  * Creates new execution definition by slapping the provided dimensions on top of the definition.
  *
  * @param def - existing definition
@@ -200,7 +179,6 @@ export function defFingerprint(def: IExecutionDefinition): string {
     def.measures.map(measureFingerprint).forEach(hasher.append);
     def.filters.map(filterFingerprint).forEach(hasher.append);
     def.sortBy.map(sortFingerprint).forEach(hasher.append);
-    def.totals.map(totalFingerprint).forEach(hasher.append);
     def.dimensions.map(dimensionFingerprint).forEach(hasher.append);
 
     return hasher.end();

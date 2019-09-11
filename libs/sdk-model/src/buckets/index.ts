@@ -1,11 +1,20 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { anyAttribute, AttributePredicate, IAttribute, isAttribute, idMatchAttribute } from "../attribute";
+import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { Identifier } from "../base";
-import { anyMeasure, IMeasure, isMeasure, isMeasureDefinition, MeasurePredicate } from "../measure";
+import {
+    anyMeasure,
+    idMatchMeasure,
+    IMeasure,
+    isMeasure,
+    isMeasureDefinition,
+    MeasurePredicate,
+} from "../measure";
+import { ITotal } from "../base/totals";
 
 /**
  * TODO: SDK8: Add docs
+ * TODO: SDK8: rename this; perhaps Item was the right name all along? :)
  *
  * @public
  */
@@ -19,6 +28,7 @@ export type AttributeOrMeasure = IMeasure | IAttribute;
 export interface IBucket {
     localIdentifier?: Identifier;
     items: AttributeOrMeasure[];
+    totals?: ITotal[];
 }
 
 /**
@@ -41,6 +51,28 @@ export const anyBucket: BucketPredicate = _ => true;
  * @public
  */
 export const idMatchBucket: (id: string) => BucketPredicate = id => bucket => bucket.localIdentifier === id;
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type AttributeInBucket = {
+    bucket: IBucket;
+    idx: number;
+    attribute: IAttribute;
+};
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export type MeasureInBucket = {
+    bucket: IBucket;
+    idx: number;
+    measure: IMeasure;
+};
 
 //
 // Type guards
@@ -129,6 +161,36 @@ export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = an
  *
  * @public
  */
+export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
+    if (!bucket) {
+        return [];
+    }
+
+    return bucket.items;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketTotals(bucket: IBucket): ITotal[] {
+    if (!bucket) {
+        return [];
+    }
+
+    return bucket.totals ? bucket.totals : [];
+}
+
+//
+// Functions working with array of bucket
+//
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export function bucketsAttributes(buckets: IBucket[]): IAttribute[] {
     return buckets.map(b => bucketAttributes(b)).reduce((acc, items) => acc.concat(items), []);
 }
@@ -151,6 +213,58 @@ export function bucketsFind(buckets: IBucket[], idOrFun: string | BucketPredicat
     const predicate = typeof idOrFun === "string" ? idMatchBucket(idOrFun) : idOrFun;
 
     return buckets.find(predicate);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsFindAttribute(
+    buckets: IBucket[],
+    idOrFun: string | AttributePredicate,
+): AttributeInBucket | undefined {
+    const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
+    const typeAgnosticPredicate = (obj: any): boolean => {
+        return isAttribute(obj) && predicate(obj);
+    };
+
+    for (const bucket of buckets) {
+        const idx = bucket.items.findIndex(typeAgnosticPredicate);
+
+        if (idx >= 0) {
+            const item = bucket.items[idx];
+            return isAttribute(item) ? { bucket, idx, attribute: item } : undefined;
+        }
+    }
+
+    return undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function bucketsFindMeasure(
+    buckets: IBucket[],
+    idOrFun: string | MeasurePredicate,
+): MeasureInBucket | undefined {
+    const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
+    const typeAgnosticPredicate = (obj: any): boolean => {
+        return isMeasure(obj) && predicate(obj);
+    };
+
+    for (const bucket of buckets) {
+        const idx = bucket.items.findIndex(typeAgnosticPredicate);
+
+        if (idx >= 0) {
+            const item = bucket.items[idx];
+            return isMeasure(item) ? { bucket, idx, measure: item } : undefined;
+        }
+    }
+
+    return undefined;
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { ObjQualifier, Identifier } from "../base";
+import { Identifier, ObjQualifier } from "../base";
 import { IFilter } from "../filter";
 
 /**
@@ -120,6 +120,13 @@ export type MeasurePredicate = (measure: IMeasure) => boolean;
  */
 export const anyMeasure: MeasurePredicate = _ => true;
 
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const idMatchMeasure: (id: string) => MeasurePredicate = id => m => m.measure.localIdentifier === id;
+
 //
 // Type guards
 //
@@ -147,7 +154,7 @@ export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
  *
  * @public
  */
-export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
+export function isPoPMeasure(obj: any): obj is IPoPMeasureDefinition {
     return !isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
 }
 
@@ -158,6 +165,15 @@ export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
  */
 export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition {
     return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isArithmeticMeasure(obj: any): obj is IArithmeticMeasureDefinition {
+    return !isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
 }
 
 //

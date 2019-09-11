@@ -36,6 +36,10 @@ something like that)
         straightforward
 -   [ ] Switch to automatic prop-types generation; remove all manually crafted code
 
+Here is a list of important items to remember for future development:
+
+-   Native total storage in vis object vs native total struct as needed
+
 ## Contributing
 
 ### Getting started

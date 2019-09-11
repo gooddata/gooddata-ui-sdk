@@ -8,12 +8,12 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedSdkProvider } from "./commonTypes";
-import { IDimension, ITotal, SortItem } from "@gooddata/sdk-model";
-import { defFingerprint, defWithDimensions, defWithSorts, defWithTotals } from "./executionDefinition";
-import { toAfmExecution } from "./toAfm";
+import { IDimension, SortItem } from "@gooddata/sdk-model";
+import { defFingerprint, defWithDimensions, defWithSorts } from "./executionDefinition";
 import isEmpty from "lodash/isEmpty";
 import { isDimension } from "@gooddata/sdk-model/src";
 import { BearExecutionResult } from "./executionResult";
+import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
 export class BearPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
@@ -60,10 +60,6 @@ export class BearPreparedExecution implements IPreparedExecution {
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
         return new BearPreparedExecution(this.authSdk, defWithSorts(this.definition, items));
-    }
-
-    public withTotals(...totals: ITotal[]): IPreparedExecution {
-        return new BearPreparedExecution(this.authSdk, defWithTotals(this.definition, totals));
     }
 
     public fingerprint(): string {

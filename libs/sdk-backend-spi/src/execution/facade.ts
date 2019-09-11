@@ -1,11 +1,5 @@
 // (C) 2019 GoodData Corporation
-import {
-    IMeasure,
-    isMeasure,
-    isPoPMeasureDefinition,
-    isPreviousPeriodMeasure,
-    IBucket,
-} from "@gooddata/sdk-model";
+import { IMeasure, isMeasure, isPoPMeasure, isPreviousPeriodMeasure, IBucket } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import { IDataView } from "./index";
 import {
@@ -88,7 +82,7 @@ export class DataViewFacade {
 
         const definition = measure.measure.definition;
 
-        if (isPoPMeasureDefinition(definition)) {
+        if (isPoPMeasure(definition)) {
             return this.measure(definition.popMeasureDefinition.measureIdentifier);
         } else if (isPreviousPeriodMeasure(definition)) {
             return this.measure(definition.previousPeriodMeasure.measureIdentifier);
@@ -155,7 +149,7 @@ export class DataViewFacade {
 
             const definition = measure.measure.definition;
 
-            return isPoPMeasureDefinition(definition) || isPreviousPeriodMeasure(definition);
+            return isPoPMeasure(definition) || isPreviousPeriodMeasure(definition);
         });
     }
 

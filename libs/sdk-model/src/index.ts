@@ -11,9 +11,9 @@ export {
     ObjQualifierWithLocal,
 } from "./base";
 
-export { TotalType, ITotal, INativeTotalItem, Total, isTotal, isNativeTotal } from "./base/totals";
+export { IDimension, isDimension, dimensionTotals } from "./base/dimension";
 
-export { IDimension, isDimension } from "./base/dimension";
+export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
 
 export {
     SortDirection,
@@ -40,6 +40,18 @@ export {
     IAbsoluteDateFilter,
     IRelativeDateFilter,
     IFilter,
+    IDateFilter,
+    IAttributeFilter,
+    isAbsoluteDateFilter,
+    isRelativeDateFilter,
+    isPositiveAttributeFilter,
+    isNegativeAttributeFilter,
+    isDateFilter,
+    isAttributeFilter,
+    isAttributeElementsByRef,
+    isAttributeElementsByValue,
+    attributeElementsIsEmpty,
+    filterIsEmpty,
 } from "./filter";
 
 export {
@@ -54,32 +66,40 @@ export {
     IPreviousPeriodDateDataSet,
     isMeasure,
     isMeasureDefinition,
-    isPoPMeasureDefinition,
+    isPoPMeasure,
     isPreviousPeriodMeasure,
+    isArithmeticMeasure,
     measureId,
     MeasurePredicate,
     anyMeasure,
+    idMatchMeasure,
 } from "./measure";
 
 export {
     AttributeOrMeasure,
     IBucket,
     isBucket,
+    idMatchBucket,
+    anyBucket,
+    MeasureInBucket,
+    AttributeInBucket,
     bucketIsEmpty,
     bucketAttributes,
-    bucketsAttributes,
+    bucketAttribute,
     bucketMeasures,
+    bucketTotals,
+    bucketItems,
+    bucketsAttributes,
     bucketsMeasures,
     bucketsById,
     bucketsIsEmpty,
     bucketsItems,
+    bucketsFind,
+    bucketsFindAttribute,
+    bucketsFindMeasure,
     ComputeRatioRule,
     computeRatioRules,
     BucketPredicate,
-    bucketsFind,
-    idMatchBucket,
-    anyBucket,
-    bucketAttribute,
 } from "./buckets";
 
 export {

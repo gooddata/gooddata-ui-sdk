@@ -7,7 +7,6 @@ import {
     IFilter,
     IInsight,
     IMeasure,
-    ITotal,
     SortItem,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
@@ -90,8 +89,6 @@ export interface IPreparedExecution {
     withDimensions(...dim: IDimension[]): IPreparedExecution;
     withDimensions(f: DimensionGenerator): IPreparedExecution;
 
-    withTotals(...totals: ITotal[]): IPreparedExecution;
-
     execute(): Promise<IExecutionResult>;
 
     equals(other: IPreparedExecution): boolean;
@@ -115,7 +112,6 @@ export interface IExecutionDefinition {
     readonly filters: IFilter[];
     readonly sortBy: SortItem[];
     readonly dimensions: IDimension[];
-    readonly totals: ITotal[];
 }
 
 /**

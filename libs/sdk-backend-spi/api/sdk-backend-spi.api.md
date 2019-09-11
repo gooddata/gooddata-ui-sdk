@@ -12,7 +12,6 @@ import { IDimension } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
@@ -234,8 +233,6 @@ export interface IExecutionDefinition {
     // (undocumented)
     readonly sortBy: SortItem[];
     // (undocumented)
-    readonly totals: ITotal[];
-    // (undocumented)
     readonly workspace: string;
 }
 
@@ -330,8 +327,6 @@ export interface IPreparedExecution {
     withDimensions(f: DimensionGenerator): IPreparedExecution;
     // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
-    // (undocumented)
-    withTotals(...totals: ITotal[]): IPreparedExecution;
 }
 
 // @public

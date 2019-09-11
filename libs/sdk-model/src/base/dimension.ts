@@ -22,3 +22,12 @@ export interface IDimension {
 export function isDimension(obj: any): obj is IDimension {
     return !isEmpty(obj) && (obj as IDimension).itemIdentifiers !== undefined;
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function dimensionTotals(dim: IDimension): ITotal[] {
+    return dim.totals ? dim.totals : [];
+}

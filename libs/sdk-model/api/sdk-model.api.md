@@ -17,7 +17,17 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
+export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
+
+// @public
 export function attributeId(a: IAttribute): string;
+
+// @public
+export type AttributeInBucket = {
+    bucket: IBucket;
+    idx: number;
+    attribute: IAttribute;
+};
 
 // @public
 export type AttributeOrMeasure = IMeasure | IAttribute;
@@ -32,6 +42,9 @@ export function bucketAttributes(bucket: IBucket, predicate?: AttributePredicate
 
 // @public
 export function bucketIsEmpty(bucket: IBucket): boolean;
+
+// @public
+export function bucketItems(bucket: IBucket): AttributeOrMeasure[];
 
 // @public
 export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): IMeasure[];
@@ -49,6 +62,12 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[];
 export function bucketsFind(buckets: IBucket[], idOrFun: string | BucketPredicate): IBucket | undefined;
 
 // @public
+export function bucketsFindAttribute(buckets: IBucket[], idOrFun: string | AttributePredicate): AttributeInBucket | undefined;
+
+// @public
+export function bucketsFindMeasure(buckets: IBucket[], idOrFun: string | MeasurePredicate): MeasureInBucket | undefined;
+
+// @public
 export function bucketsIsEmpty(buckets: IBucket[]): boolean;
 
 // @public
@@ -56,6 +75,9 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[];
 
 // @public
 export function bucketsMeasures(buckets: IBucket[], predicate?: MeasurePredicate): IMeasure[];
+
+// @public
+export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @public
 export enum ComputeRatioRule {
@@ -69,6 +91,12 @@ export enum ComputeRatioRule {
 
 // @public
 export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
+
+// @public
+export function dimensionTotals(dim: IDimension): ITotal[];
+
+// @public
+export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
 export type GuidType = "guid";
@@ -115,6 +143,9 @@ export interface IAttributeElementsByValue {
 }
 
 // @public
+export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public
 export interface IAttributeLocatorItem {
     // (undocumented)
     attributeLocatorItem: {
@@ -139,6 +170,8 @@ export interface IBucket {
     items: AttributeOrMeasure[];
     // (undocumented)
     localIdentifier?: Identifier;
+    // (undocumented)
+    totals?: ITotal[];
 }
 
 // @public
@@ -174,6 +207,9 @@ export interface IColorPaletteItem {
 }
 
 // @public
+export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
+
+// @public
 export type Identifier = string;
 
 // @public
@@ -186,6 +222,9 @@ export interface IDimension {
 
 // @public
 export const idMatchBucket: (id: string) => BucketPredicate;
+
+// @public
+export const idMatchMeasure: (id: string) => MeasurePredicate;
 
 // @public
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -254,15 +293,6 @@ export interface IMeasureSortItem {
     measureSortItem: {
         direction: SortDirection;
         locators: LocatorItem[];
-    };
-}
-
-// @public
-export interface INativeTotalItem {
-    // (undocumented)
-    nativeTotal: {
-        measureIdentifier: Identifier;
-        attributeIdentifiers: Identifier[];
     };
 }
 
@@ -381,7 +411,22 @@ export interface IRGBColorItem {
 }
 
 // @public
+export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter;
+
+// @public
+export function isArithmeticMeasure(obj: any): obj is IArithmeticMeasureDefinition;
+
+// @public
 export function isAttribute(obj: any): obj is IAttribute;
+
+// @public
+export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByRef;
+
+// @public
+export function isAttributeElementsByValue(obj: any): obj is IAttributeElementsByValue;
+
+// @public
+export function isAttributeFilter(obj: any): obj is IAttributeFilter;
 
 // @public
 export function isAttributeLocator(obj: any): obj is IAttributeLocatorItem;
@@ -391,6 +436,9 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 
 // @public
 export function isBucket(obj: any): obj is IBucket;
+
+// @public
+export function isDateFilter(obj: any): obj is IDateFilter;
 
 // @public
 export function isDimension(obj: any): obj is IDimension;
@@ -411,13 +459,19 @@ export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem;
 export function isMeasureSort(obj: any): obj is IMeasureSortItem;
 
 // @public
-export function isNativeTotal(obj: any): obj is INativeTotalItem;
+export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter;
 
 // @public
-export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition;
+export function isPoPMeasure(obj: any): obj is IPoPMeasureDefinition;
+
+// @public
+export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFilter;
 
 // @public
 export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition;
+
+// @public
+export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
 
 // @public
 export function isTotal(obj: any): obj is ITotal;
@@ -459,6 +513,13 @@ export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "medi
 export function measureId(measure: IMeasure): string;
 
 // @public
+export type MeasureInBucket = {
+    bucket: IBucket;
+    idx: number;
+    measure: IMeasure;
+};
+
+// @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
 
 // Warning: (ae-internal-missing-underscore) The name "newAttributeSort" should be prefixed with an underscore because the declaration is marked as @internal
@@ -487,7 +548,7 @@ export type SortDirection = "asc" | "desc";
 export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 // @public
-export type Total = ITotal | INativeTotalItem;
+export function totalIsNative(total: ITotal): boolean;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
