@@ -719,4 +719,41 @@ describe('AFM', () => {
             expect(result).toEqual(false);
         });
     });
+
+    describe('isMeasureValueFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = AFM.isMeasureValueFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = AFM.isMeasureValueFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when measure value filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                measureValueFilter: {
+                    measure: {
+                        uri: '/gdc/mock/date'
+                    }
+                }
+            };
+            const result = AFM.isMeasureValueFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when positive attribute filter is tested', () => {
+            const filter: CompatibilityFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/attribute'
+                    },
+                    in: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = AFM.isMeasureValueFilter(filter);
+            expect(result).toEqual(false);
+        });
+    });
 });

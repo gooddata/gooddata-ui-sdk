@@ -105,7 +105,8 @@ export namespace ExecuteAFM {
         uri: string;
     }
 
-    export type CompatibilityFilter = IExpressionFilter | FilterItem;
+    export type ExtendedFilter = FilterItem | IMeasureValueFilter;
+    export type CompatibilityFilter = IExpressionFilter | ExtendedFilter;
     export type FilterItem = DateFilterItem | AttributeFilterItem;
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
@@ -151,7 +152,46 @@ export namespace ExecuteAFM {
         };
     }
 
-// Might be removed, as we don't know if expression filter is needed
+    export type ComparisonConditionOperator = 'GREATER_THAN'
+        | 'GREATER_THAN_OR_EQUAL_TO'
+        | 'LESS_THAN'
+        | 'LESS_THAN_OR_EQUAL_TO'
+        | 'EQUAL_TO'
+        | 'NOT_EQUAL_TO';
+
+    export interface IComparisonCondition {
+        comparison: {
+            operator: ComparisonConditionOperator
+            value: number;
+        };
+    }
+
+    export type RangeConditionOperator = 'BETWEEN' | 'NOT_BETWEEN';
+
+    export interface IRangeCondition {
+        range: {
+            operator: RangeConditionOperator;
+            from: number;
+            to: number;
+        };
+    }
+
+    export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
+    export interface ILocalIdentifierQualifier {
+        localIdentifier: string;
+    }
+
+    export type Qualifier = ObjQualifier | ILocalIdentifierQualifier;
+
+    export interface IMeasureValueFilter {
+        measureValueFilter: {
+            measure: Qualifier;
+            condition?: MeasureValueFilterCondition;
+        };
+    }
+
+    // Might be removed, as we don't know if expression filter is needed
     export interface IExpressionFilter {
         value: string;
     }
@@ -316,6 +356,13 @@ export namespace ExecuteAFM {
     ): filter is ExecuteAFM.INegativeAttributeFilter {
         return !isEmpty(filter)
             && (filter as ExecuteAFM.INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    }
+
+    export function isMeasureValueFilter(
+        filter: ExecuteAFM.CompatibilityFilter
+    ): filter is ExecuteAFM.IMeasureValueFilter {
+        return !isEmpty(filter)
+            && (filter as ExecuteAFM.IMeasureValueFilter).measureValueFilter !== undefined;
     }
 
     export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[] {
