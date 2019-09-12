@@ -131,6 +131,14 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@gooddata/frontend-npm-scripts@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@gooddata/frontend-npm-scripts/-/frontend-npm-scripts-1.0.1.tgz#f13d351c383bf009cf04728eb86a5610be2cc695"
+  integrity sha512-3Szx0DjNucb7Zq7HvF9fZieJTKOYOMI1lCbX/Qgq3XOun08E3iZSclMEHJ6//NtJAZwaf4NevTKQImQylvRpBw==
+  dependencies:
+    firstline "^2.0.2"
+    line-replace "^1.0.2"
+
 "@gooddata/tslint-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@gooddata/tslint-config/-/tslint-config-1.0.0.tgz#287981e8e9040a7d94d17c495c170c4697759242"
@@ -1936,6 +1944,11 @@ findup-sync@~0.3.0:
   dependencies:
     glob "~5.0.0"
 
+firstline@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/firstline/-/firstline-2.0.2.tgz#3fdfd894a80e181cd2fa478b07cadb8d446c53cd"
+  integrity sha512-8KcmfI0jgSECnzdhucm0i7vrwef3BWwgjimW2YkRC5eSFwjb5DibVoA0YvgkYwwxuJi9c+7M7X3b3lX8o9B6wg==
+
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -3633,6 +3646,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+line-replace@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/line-replace/-/line-replace-1.0.2.tgz#b1995da54060d671c449196fa228395f0faaea47"
+  integrity sha1-sZldpUBg1nHESRlvoig5Xw+q6kc=
 
 linkify-it@~1.2.0:
   version "1.2.4"
