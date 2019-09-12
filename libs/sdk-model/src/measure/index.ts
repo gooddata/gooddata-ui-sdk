@@ -145,6 +145,42 @@ export function isMeasure(obj: any): obj is IMeasure {
  *
  * @public
  */
+export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
+    return isMeasure(obj) && isMeasureDefinition(obj.measure.definition);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition> {
+    return isMeasure(obj) && isPoPMeasureDefinition(obj.measure.definition);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeriodMeasureDefinition> {
+    return isMeasure(obj) && isPreviousPeriodMeasureDefinition(obj.measure.definition);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasureDefinition> {
+    return isMeasure(obj) && isArithmeticMeasureDefinition(obj.measure.definition);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
     return !isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
 }
@@ -154,7 +190,7 @@ export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
  *
  * @public
  */
-export function isPoPMeasure(obj: any): obj is IPoPMeasureDefinition {
+export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
     return !isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
 }
 
@@ -163,7 +199,7 @@ export function isPoPMeasure(obj: any): obj is IPoPMeasureDefinition {
  *
  * @public
  */
-export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition {
+export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPeriodMeasureDefinition {
     return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
 }
 
@@ -172,7 +208,7 @@ export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasure
  *
  * @public
  */
-export function isArithmeticMeasure(obj: any): obj is IArithmeticMeasureDefinition {
+export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasureDefinition {
     return !isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
 }
 

@@ -416,7 +416,10 @@ export interface IRGBColorItem {
 export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter;
 
 // @public
-export function isArithmeticMeasure(obj: any): obj is IArithmeticMeasureDefinition;
+export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasureDefinition>;
+
+// @public
+export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasureDefinition;
 
 // @public
 export function isAttribute(obj: any): obj is IAttribute;
@@ -464,16 +467,25 @@ export function isMeasureSort(obj: any): obj is IMeasureSortItem;
 export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter;
 
 // @public
-export function isPoPMeasure(obj: any): obj is IPoPMeasureDefinition;
+export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition>;
+
+// @public
+export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition;
 
 // @public
 export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFilter;
 
 // @public
-export function isPreviousPeriodMeasure(obj: any): obj is IPreviousPeriodMeasureDefinition;
+export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeriodMeasureDefinition>;
+
+// @public
+export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPeriodMeasureDefinition;
 
 // @public
 export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
+
+// @public
+export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
 
 // @public
 export function isTotal(obj: any): obj is ITotal;

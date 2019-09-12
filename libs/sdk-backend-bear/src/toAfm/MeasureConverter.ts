@@ -1,8 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import compact from "lodash/compact";
-import get from "lodash/get";
-import { ExecuteAFM } from "@gooddata/typings";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
 import {
     IArithmeticMeasureDefinition,
     IMeasure,
@@ -10,11 +6,15 @@ import {
     IMeasureDefinitionType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    isArithmeticMeasureDefinition,
     isMeasureDefinition,
-    isPoPMeasure,
-    isArithmeticMeasure,
-    isPreviousPeriodMeasure,
+    isPoPMeasureDefinition,
+    isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
+import { ExecuteAFM } from "@gooddata/typings";
+import compact from "lodash/compact";
+import get from "lodash/get";
+import { convertVisualizationObjectFilter } from "./FilterConverter";
 
 export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
     const {
@@ -40,11 +40,11 @@ export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
 function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAFM.MeasureDefinition {
     if (isMeasureDefinition(definition)) {
         return convertSimpleMeasureDefinition(definition);
-    } else if (isPoPMeasure(definition)) {
+    } else if (isPoPMeasureDefinition(definition)) {
         return convertPopMeasureDefinition(definition);
-    } else if (isPreviousPeriodMeasure(definition)) {
+    } else if (isPreviousPeriodMeasureDefinition(definition)) {
         return convertPreviousPeriodMeasureDefinition(definition);
-    } else if (isArithmeticMeasure(definition)) {
+    } else if (isArithmeticMeasureDefinition(definition)) {
         return convertArithmeticMeasureDefinition(definition);
     } else {
         throw Error("The measure definition is not supported: " + JSON.stringify(definition));
@@ -118,7 +118,7 @@ function getFormat(measure: IMeasure): string | undefined {
     } = measure;
     const measureFormat = get(measure.measure, "format");
 
-    if (isArithmeticMeasure(definition)) {
+    if (isArithmeticMeasureDefinition(definition)) {
         if (definition.arithmeticMeasure.operator === "change") {
             return "#,##0.00%";
         }

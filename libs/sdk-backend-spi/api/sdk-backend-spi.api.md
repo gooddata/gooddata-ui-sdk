@@ -65,7 +65,7 @@ export class DataViewFacade {
     // (undocumented)
     bucketCount(): number;
     // (undocumented)
-    bucketMeasures(id: string, ifNoBucket?: IMeasure[]): IMeasure[];
+    bucketMeasures(id: string): IMeasure[];
     // (undocumented)
     buckets(): IBucket[];
     // (undocumented)
@@ -163,23 +163,18 @@ export interface IAttributeHeader {
 // @public
 export interface IDataView {
     advance(...dims: number[]): Promise<IDataView | null>;
-    // (undocumented)
     readonly count: number[];
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
-    // (undocumented)
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
-    // (undocumented)
     readonly headerItems: IResultHeaderItem[][][];
-    // (undocumented)
     readonly offset: number[];
     pageDown(): Promise<IDataView | null>;
     pageLeft(): Promise<IDataView | null>;
     pageRight(): Promise<IDataView | null>;
     pageUp(): Promise<IDataView | null>;
-    // (undocumented)
     readonly result: IExecutionResult;
     // (undocumented)
     readonly totals?: DataValue[][][];
@@ -241,9 +236,7 @@ export interface IExecutionFactory {
 
 // @public
 export interface IExecutionResult {
-    // (undocumented)
     readonly definition: IExecutionDefinition;
-    // (undocumented)
     readonly dimensions: IResultDimension[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
@@ -309,18 +302,12 @@ export interface IMeasureHeaderItem {
 
 // @public
 export interface IPreparedExecution {
-    // (undocumented)
     readonly definition: IExecutionDefinition;
-    // (undocumented)
     equals(other: IPreparedExecution): boolean;
-    // (undocumented)
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
-    // (undocumented)
     withDimensions(...dim: IDimension[]): IPreparedExecution;
-    // (undocumented)
     withDimensions(f: DimensionGenerator): IPreparedExecution;
-    // (undocumented)
     withSorting(...items: SortItem[]): IPreparedExecution;
 }
 

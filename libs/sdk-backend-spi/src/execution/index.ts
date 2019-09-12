@@ -113,7 +113,6 @@ export interface IPreparedExecution {
      * The realizations of analytical backend MAY impose constraints on the minimum and maximum number of dimensions.
      * This call WILL fail if the input dimensions do not match constraints imposed by the backend.
      *
-     * @remarks See {@link IDimension} for further description of the report dimensionality settings and behavior
      * @param dim - dimensions to set
      * @returns new execution with the updated dimensions
      */
