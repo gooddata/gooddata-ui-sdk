@@ -16,6 +16,12 @@ import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
  * Execution factory provides several methods to create a prepared execution from different types
  * of inputs.
  *
+ * Note: the execution factory WILL perform extensive input validation to ensure that the created
+ * instance of prepared execution is semantically correct.
+ *
+ * The contract is that any freshly created instance of {@link IPreparedExecution} MUST be executable (of course
+ * barring desync conditions with the backend where the data model changes).
+ *
  * @public
  */
 export interface IExecutionFactory {
@@ -72,25 +78,70 @@ export interface IExecutionFactory {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Function transforming a list of buckets (with attributes and measures) into execution dimension descriptors.
+ *
  * @public
  */
 export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 /**
- * TODO: SDK8: add docs
+ * Prepared execution already knows what data to calculate and allows to specify how the data should be
+ * sorted and shaped into dimensions.
+ *
+ * To this end, it provides several functions to customize sort items and dimensions. The prepared execution
+ * is immutable and so all the customization functions WILL result in a new instance of prepared execution.
+ *
  * @public
  */
 export interface IPreparedExecution {
+    /**
+     * Definition of the execution accumulated to so far.
+     */
     readonly definition: IExecutionDefinition;
 
+    /**
+     * Changes sorting of the resulting data. Any sorting settings accumulated so far WILL be wiped out.
+     *
+     * @param items - items to sort by
+     * @returns new execution with the updated sorts
+     */
     withSorting(...items: SortItem[]): IPreparedExecution;
 
+    /**
+     * Configures dimensions of the resulting data. Any dimension settings accumulated so far WILL be wiped out.
+     *
+     * The realizations of analytical backend MAY impose constraints on the minimum and maximum number of dimensions.
+     * This call WILL fail if the input dimensions do not match constraints imposed by the backend.
+     *
+     * @remarks See {@link IDimension} for further description of the report dimensionality settings and behavior
+     * @param dim - dimensions to set
+     * @returns new execution with the updated dimensions
+     */
     withDimensions(...dim: IDimension[]): IPreparedExecution;
+
+    /**
+     * This is a convenience method to set dimensions of the resulting data. The prepared execution will call
+     * the provided function with any buckets accumulated in the definition so far and will set the dimensions
+     * to whatever values the function returns.
+     *
+     * The dimensions returned by the generator function are subject to the same constraints as if they were
+     * provided explicitly on input to withDimensions().
+     *
+     * @param f - generator function
+     * @returns new execution with the updated dimensions
+     */
     withDimensions(f: DimensionGenerator): IPreparedExecution;
 
+    /**
+     * Starts the execution.
+     */
     execute(): Promise<IExecutionResult>;
 
+    /**
+     * Tests whether this execution and the other execution are the same.
+     *
+     * @param other - another execution
+     */
     equals(other: IPreparedExecution): boolean;
 
     /**
@@ -101,7 +152,9 @@ export interface IPreparedExecution {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Execution definition contains 100% complete description of what will the execution compute and how will
+ * the resulting data look like.
+ *
  * @public
  */
 export interface IExecutionDefinition {
@@ -115,12 +168,21 @@ export interface IExecutionDefinition {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Represents results of execution done with particular definition. Within the result is the description of the
+ * shape of the data and methods to to obtain views on the data.
+ *
  * @public
  */
 export interface IExecutionResult {
-    readonly dimensions: IResultDimension[];
+    /**
+     * Full definition of execution that yielded this result.
+     */
     readonly definition: IExecutionDefinition;
+
+    /**
+     * Description of shape of the data.
+     */
+    readonly dimensions: IResultDimension[];
 
     /**
      * Asynchronously reads all data for this result into a single data view.
@@ -191,17 +253,41 @@ export interface IExecutionResult {
 }
 
 /**
- * TODO: SDK8: add docs
+ * A view on the calculated data.
+ *
+ * @remarks
+ *
+ * See also the {@link DataViewFacade}. This wrapper on top of this raw IDataView can be used to work
+ * with the data in a way more convenient fashion.
+ *
  * @public
  */
 export interface IDataView {
+    /**
+     * Coordinates of where this data view starts. One coordinate per result dimension.
+     */
     readonly offset: number[];
+
+    /**
+     * Size of data in each dimension.
+     */
     readonly count: number[];
+
+    /**
+     * TODO: find a way to describe these :)
+     */
     readonly headerItems: IResultHeaderItem[][][];
     readonly data: DataValue[][] | DataValue[];
     readonly totals?: DataValue[][][];
 
+    /**
+     * Full definition of execution that computed data included in this DataView.
+     */
     readonly definition: IExecutionDefinition;
+
+    /**
+     * Result of the execution that calculated data for this view.
+     */
     readonly result: IExecutionResult;
 
     /**
