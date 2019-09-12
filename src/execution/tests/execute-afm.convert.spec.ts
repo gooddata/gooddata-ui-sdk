@@ -21,6 +21,11 @@ const FILTER_TESTS = [
         [input.absoluteDate, input.positiveUri, input.relativeDate, input.negativeValue],
         [input.absoluteDate, input.positiveUriExpected, input.relativeDate, input.negativeValueExpected],
     ],
+    [
+        "convert measure value filters",
+        [input.comparisonMeasureValue, input.rangeMeasureValue],
+        [input.comparisonMeasureValueExpected, input.rangeMeasureValueExpected],
+    ],
 ];
 
 describe.each(FILTER_TESTS)("convertAfm", (desc, input, expected) => {

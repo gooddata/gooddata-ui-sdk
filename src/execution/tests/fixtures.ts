@@ -76,6 +76,64 @@ export const negativeValueExpected: ExecuteAFM.INegativeAttributeFilter = {
     },
 };
 
+export const comparisonMeasureValue: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 50,
+            },
+        },
+    },
+};
+
+export const comparisonMeasureValueExpected: ExecuteAFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 50,
+            },
+        },
+    },
+};
+
+export const rangeMeasureValue: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            range: {
+                operator: "BETWEEN",
+                from: 10,
+                to: 100,
+            },
+        },
+    },
+};
+
+export const rangeMeasureValueExpected: ExecuteAFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            range: {
+                operator: "BETWEEN",
+                from: 10,
+                to: 100,
+            },
+        },
+    },
+};
+
 export const simpleMeasureWithFilters: AFM.IMeasure = {
     localIdentifier: "measure",
     alias: "test measure",

@@ -731,6 +731,32 @@ export const dateFilterWithoutInterval: IFixture = {
     resultSpec: {},
 };
 
+export const measureValueFilter: IFixture = {
+    afm: {
+        filters: [
+            {
+                measureValueFilter: {
+                    measure: {
+                        localIdentifier: "measureLocalIdentifier",
+                    },
+                    condition: {
+                        comparison: {
+                            operator: "GREATER_THAN",
+                            value: 100,
+                        },
+                    },
+                },
+            },
+        ],
+    },
+    resultSpec: {},
+};
+
+export const measureValueFilterWithoutCondition: IFixture = {
+    afm: {},
+    resultSpec: {},
+};
+
 export const attributeWithIdentifier: IFixture = {
     afm: {
         measures: [

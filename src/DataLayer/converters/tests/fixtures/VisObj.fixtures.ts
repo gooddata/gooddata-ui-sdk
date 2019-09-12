@@ -805,6 +805,44 @@ const dateFilterWithUndefs: VisualizationObject.IVisualizationObjectContent = {
     ],
 };
 
+const measureValueFilter: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: "visClassUri",
+    },
+    buckets: [],
+    filters: [
+        {
+            measureValueFilter: {
+                measure: {
+                    localIdentifier: "measureLocalIdentifier",
+                },
+                condition: {
+                    comparison: {
+                        operator: "GREATER_THAN",
+                        value: 100,
+                    },
+                },
+            },
+        },
+    ],
+};
+
+const measureValueFilterWithoutCondition: VisualizationObject.IVisualizationObjectContent = {
+    visualizationClass: {
+        uri: "visClassUri",
+    },
+    buckets: [],
+    filters: [
+        {
+            measureValueFilter: {
+                measure: {
+                    localIdentifier: "measureLocalIdentifier",
+                },
+            },
+        },
+    ],
+};
+
 const attributeFilterWithAll: VisualizationObject.IVisualizationObjectContent = {
     visualizationClass: {
         uri: "visClassUri",
@@ -1280,6 +1318,8 @@ export const charts = {
     dateFilter,
     dateFilterWithStrings,
     dateFilterWithUndefs,
+    measureValueFilter,
+    measureValueFilterWithoutCondition,
     attributeFilter,
     attributeTextFilter,
     attributeFilterWithAll,

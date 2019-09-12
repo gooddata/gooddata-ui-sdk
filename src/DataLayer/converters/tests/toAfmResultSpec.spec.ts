@@ -25,6 +25,8 @@ import {
     attributeFilterWithAll,
     dateFilter,
     dateFilterWithoutInterval,
+    measureValueFilter,
+    measureValueFilterWithoutCondition,
     oneMeasureOneAttribute,
     oneMeasureOneAttributeWithIdentifiers,
     reducedMultipleSorts,
@@ -183,6 +185,18 @@ describe("toAfmResultSpec", () => {
     it("should skip filter when date filter from/to is undefined for relative (alltime)", () => {
         expect(toAfmResultSpec(charts.dateFilterWithUndefs)).toEqual({
             ...dateFilterWithoutInterval,
+        });
+    });
+
+    it("should convert measure value filter", () => {
+        expect(toAfmResultSpec(charts.measureValueFilter)).toEqual({
+            ...measureValueFilter,
+        });
+    });
+
+    it("should convert measure value filter when condition is undefined", () => {
+        expect(toAfmResultSpec(charts.measureValueFilterWithoutCondition)).toEqual({
+            ...measureValueFilterWithoutCondition,
         });
     });
 

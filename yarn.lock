@@ -150,9 +150,9 @@
     tslint-react "3.6.0"
 
 "@gooddata/typings@^2.17.1":
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.17.1.tgz#b2724f4fa722f0361498d15529301c2089b5447a"
-  integrity sha512-frlT4BcskKMclqT5O+ncLZtgD3AMRNcKpPgR0Gxa4ilk8LAKxCxsdrRO4xeW9Csy1LNy5cFdYxFK1rmqg/0B6w==
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@gooddata/typings/-/typings-2.18.0.tgz#f048c2b34d1d2d670c7b54e5a44ac698965944ec"
+  integrity sha512-A5ivk8PAO5bX4a8Ko1O90wR3+3oiPAVhjzZpOXrcv2OAfp6F+0mB4ZkPOWRcp/Xj0777uT6Nx5Pv0NqaKzqAcg==
   dependencies:
     lodash "^4.17.11"
 
@@ -3801,8 +3801,9 @@ lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.8.0, lo
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 lodash@^4.17.11, lodash@^4.7.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 lodash@~4.3.0:
   version "4.3.0"
