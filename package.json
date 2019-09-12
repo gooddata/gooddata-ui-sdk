@@ -128,7 +128,8 @@
       "git add"
     ],
     "{src,test}/**/*.{ts,tsx,scss}": [
-      "npx gdc-fix-copyright"
+      "npx gdc-fix-copyright",
+      "git add"
     ]
   }
 }
