@@ -1,0 +1,557 @@
+{
+    "dashboard.bucket.measures_title.column": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.bar": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.line": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.area": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.pie": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.funnel": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.treemap": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.donut": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.heatmap": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.headline": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_subtitle.headline": {
+        "value": "primary",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.headline": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_subtitle.headline": {
+        "value": "secondary",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.scatter": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.scatter": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_subtitle.scatter": {
+        "value": "X-axis",
+        "comment": "Horizontal axis of a scatter plot.",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_subtitle.scatter": {
+        "value": "Y-axis",
+        "comment": "Vertical axis of a scatter plot.",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_title.scatter": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.combo": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_subtitle.combo": {
+        "value": "Column",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.combo": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_subtitle.combo": {
+        "value": "Line",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.combo.subtitle.column": {
+        "value": "as columns",
+        "comment": "Display measures in column chart = 'as columns'.",
+        "limit": 0
+    },
+    "dashboard.bucket.combo.subtitle.line": {
+        "value": "as lines",
+        "comment": "Display measures in line chart = 'as lines'.",
+        "limit": 0
+    },
+    "dashboard.bucket.combo.subtitle.area": {
+        "value": "as areas",
+        "comment": "Display measures in area chart = 'as areas'.",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.bubble": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.bubble": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_title.bubble": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_subtitle.bubble": {
+        "value": "X-axis",
+        "comment": "Horizontal axis of a bubble plot.",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_subtitle.bubble": {
+        "value": "Y-axis",
+        "comment": "Vertical axis of a bubble plot.",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_subtitle.bubble": {
+        "value": "Size",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.bubble": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.pie": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.treemap": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.donut": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.funnel": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.column": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.bar": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.area": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.heatmap": {
+        "value": "Rows",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.trend_title.line": {
+        "value": "Trend by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.combo": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.stack_title.column": {
+        "value": "Stack by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.stack_title.bar": {
+        "value": "Stack by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.stack_title.area": {
+        "value": "Stack by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.stack_title.heatmap": {
+        "value": "Columns",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.segment_title.line": {
+        "value": "Segment by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.segment_title.treemap": {
+        "value": "Segment by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.metric_segment_by_warning": {
+        "value": "To add additional measure, remove <span class=\"attr-field-icon\"></span> from <span class=\"stack-by\">segment by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Translate words 'segment by'.",
+        "limit": 0
+    },
+    "dashboard.bucket.metric_stack_by_warning": {
+        "value": "To add additional measure, remove <span class=\"attr-field-icon\"></span> from <span class=\"stack-by\">stack by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Translate words 'stack by'.",
+        "limit": 0
+    },
+    "dashboard.bucket.metric_view_by_warning": {
+        "value": "To add additional measure, remove <span class=\"attr-field-icon\"></span> from <span class=\"stack-by\">view by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Translate words 'view by'.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_view_by_warning": {
+        "value": "To view by another attribute, an insight can have only one measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_stack_by_warning": {
+        "value": "To add additional attribute, remove <span class=\"attr-field-icon\"></span> from <span class=\"stack-by\">stack by</span>",
+        "comment": "Do not translate HTML markup enclosed in <>. Translate words 'stack by'.",
+        "limit": 0
+    },
+    "dashboard.bucket.category_stack_by_warning": {
+        "value": "To stack by, an insight can have only one measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.stack_view_by_warning": {
+        "value": "To stack by, an insight can have only one attribute in view by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measure_stack_by_warning": {
+        "value": "To stack by an attribute, an insight can have only one measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.category_category_by_warning": {
+        "value": "To view by, an insight can have only one measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.category_segment_by_warning": {
+        "value": "To segment by, an insight can have only one measure",
+        "comment": "",
+        "limit": 0
+    },
+    "previous_year": {
+        "value": "previous year",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.table": {
+        "value": "Measures",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_title.table": {
+        "value": "Rows",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.columns_title.table": {
+        "value": "Columns",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.headline.error.missing_bucket_item.heading": {
+        "value": "No primary measure in your insight",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.headline.error.missing_bucket_item.text": {
+        "value": "Add a primary measure to your insight, or switch to table.\nOnce done, you'll be able to save it.",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.unsupported": {
+        "value": "This visualization doesn’t support configuration",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.config.not_applicable": {
+        "value": "Configuration Panel is not applicable for this configuration of the insight",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.not_applicable": {
+        "value": "Property is not applicable for this configuration of the insight",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.auto_placeholder": {
+        "value": "auto",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.auto_default": {
+        "value": "auto (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.title": {
+        "value": "Legend",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.position": {
+        "value": "Position",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.title": {
+        "value": "Canvas",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.gridline": {
+        "value": "Gridline",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataLabels": {
+        "value": "Data Labels",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataLabels.auto": {
+        "value": "auto (default)",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataLabels.show": {
+        "value": "show",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.dataLabels.hide": {
+        "value": "hide",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.yaxis.title": {
+        "value": "Y-Axis",
+        "comment": "Vertical axis of a plot.",
+        "limit": 0
+    },
+    "properties.axis.labels": {
+        "value": "labels",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.rotation": {
+        "value": "Rotation",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.min": {
+        "value": "Min",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.min.warning": {
+        "value": "Min value cannot be greater than max value",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.max": {
+        "value": "Max",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.max.warning": {
+        "value": "Max value cannot be smaller than min value",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.xaxis.title": {
+        "value": "X-Axis",
+        "comment": "Horizontal axis of a plot.",
+        "limit": 0
+    },
+    "properties.axis.scale": {
+        "value": "scale",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.left": {
+        "value": "Left",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.right": {
+        "value": "Right",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.top": {
+        "value": "Top",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.bottom": {
+        "value": "Bottom",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.rotation.0": {
+        "value": "0°",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.rotation.30": {
+        "value": "30°",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.rotation.60": {
+        "value": "60°",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.rotation.90": {
+        "value": "90°",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.position.up": {
+        "value": "up",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.position.down": {
+        "value": "down",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.position.right": {
+        "value": "right",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.position.left": {
+        "value": "left",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.inputPlaceholder": {
+        "value": "#color",
+        "comment": "Character '#' means user should input color code as hexadecimal value, e.g. #C0D6E4",
+        "limit": 0
+    },
+    "gs.color-picker.currentColor": {
+        "value": "current",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.newColor": {
+        "value": "new",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.okButton": {
+        "value": "OK",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.hex": {
+        "value": "hex",
+        "comment": "label that inidicates that user should enter hexadecimal color value, e.g. #C0D6E4",
+        "limit": 0
+    },
+    "gs.color-dropdown.custom-color": {
+        "value": "Custom color",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.colors.reset-colors": {
+        "value": "Reset Colors",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.colors": {
+        "value": "Colors",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.noData.noMatchingData": {
+        "value": "No matching data",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.noData.noDataAvailable": {
+        "value": "No matching data",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.colors.unsupported": {
+        "value": "There are no colors for this configuration of the insight",
+        "comment": "",
+        "limit": 0
+    },
+    "export_unsupported.colors": {
+        "value": "The insight is not compatible with custom colors. To open the insight as a report, click Reset Colors in Configuration —> Colors.",
+        "comment": "",
+        "limit": 0
+    }
+}

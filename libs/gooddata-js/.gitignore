@@ -1,0 +1,21 @@
+dist/
+ci/results/
+coverage/
+
+examples/gooddata.js
+node_modules/
+lib/
+test/test-results.xml
+docs/
+
+# for gh-pages harness
+pages/api/
+pages/_site/
+.grunt/
+
+.DS_Store
+.idea
+
+npm-debug.log
+yarn-error.log
+.vscode/
