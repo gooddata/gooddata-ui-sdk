@@ -1,16 +1,22 @@
 // (C) 2019 GoodData Corporation
-import { IMeasure, isMeasure, isPoPMeasure, isPreviousPeriodMeasure, IBucket } from "@gooddata/sdk-model";
+import {
+    bucketMeasures,
+    IBucket,
+    IMeasure,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+} from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import { IDataView } from "./index";
 import {
     DataValue,
+    IMeasureGroupHeader,
     IMeasureHeaderItem,
     IResultAttributeHeaderItem,
     IResultDimension,
     IResultHeaderItem,
-    isResultAttributeHeaderItem,
-    IMeasureGroupHeader,
     isMeasureGroupHeader,
+    isResultAttributeHeaderItem,
 } from "./results";
 
 type BucketIndex = {
@@ -19,6 +25,7 @@ type BucketIndex = {
 
 /**
  * TODO: SDK8: add docs
+ * TODO: revisit this class and the functions it provides and how it implements them
  * @public
  */
 export class DataViewFacade {
@@ -56,10 +63,10 @@ export class DataViewFacade {
         return !this._bucketById[id] || this._bucketById[id].items.length === 0;
     }
 
-    public bucketMeasures(id: string, ifNoBucket: IMeasure[] = []): IMeasure[] {
-        const bucket = this.bucket(id);
+    public bucketMeasures(id: string): IMeasure[] {
+        const bucket = this._bucketById[id];
 
-        return bucket ? bucket.items.filter(isMeasure) : ifNoBucket;
+        return bucket ? bucketMeasures(bucket) : [];
     }
 
     //
@@ -80,12 +87,10 @@ export class DataViewFacade {
             return;
         }
 
-        const definition = measure.measure.definition;
-
-        if (isPoPMeasure(definition)) {
-            return this.measure(definition.popMeasureDefinition.measureIdentifier);
-        } else if (isPreviousPeriodMeasure(definition)) {
-            return this.measure(definition.previousPeriodMeasure.measureIdentifier);
+        if (isPoPMeasure(measure)) {
+            return this.measure(measure.measure.definition.popMeasureDefinition.measureIdentifier);
+        } else if (isPreviousPeriodMeasure(measure)) {
+            return this.measure(measure.measure.definition.previousPeriodMeasure.measureIdentifier);
         }
 
         return measure;
