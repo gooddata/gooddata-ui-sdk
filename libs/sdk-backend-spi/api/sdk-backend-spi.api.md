@@ -18,7 +18,7 @@ import { SortItem } from '@gooddata/sdk-model';
 // @public
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
-    readonly credentials?: UserCredentials;
+    readonly username?: string;
 };
 
 // @public
@@ -416,12 +416,6 @@ export class NotImplemented extends AnalyticalBackendError {
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
-
-// @public
-export type UserCredentials = {
-    readonly username: string;
-    readonly password: string;
-};
 
 
 // (No @packageDocumentation comment for this package)

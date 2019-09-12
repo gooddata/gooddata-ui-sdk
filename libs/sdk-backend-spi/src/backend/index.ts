@@ -13,22 +13,19 @@ import { IWorkspaceStyling } from "../styling";
  */
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
-    readonly credentials?: UserCredentials;
+    readonly username?: string;
 };
 
 /**
- * TODO: SDK8: add public doc
+ * Factory function to create new instances of Analytical Backend realization using optionally both platform agnostic
+ * and platform specific configuration.
  *
- * @public
- */
-export type UserCredentials = {
-    readonly username: string;
-    readonly password: string;
-};
-
-/**
- * TODO: SDK8: add public doc
+ * This factory function implementation MUST be exposed as the default export of packages which contain
+ * realizations of the Analytical Backend SPI.
  *
+ *
+ * @param config - platform agnostic configuration
+ * @param implConfig - platform specific configuration
  * @public
  */
 export type AnalyticalBackendFactory = (
@@ -78,7 +75,7 @@ export interface IAnalyticalBackend {
      * Sets telemetry information that SHOULD be sent to backend to track component usage.
      *
      * @param componentName - name of component
-     * @param props props
+     * @param props - props
      * @returns a new instance, set up with the provided telemetry
      */
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
@@ -120,7 +117,8 @@ export interface IAnalyticalWorkspace {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
+ * can then be used by applications to enable / disable particular features.
  *
  * @public
  */

@@ -4,7 +4,6 @@ export {
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     BackendCapabilities,
-    UserCredentials,
     AnalyticalBackendConfig,
     AnalyticalBackendFactory,
 } from "./backend";

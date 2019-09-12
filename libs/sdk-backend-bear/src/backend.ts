@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
+import { factory as createSdk, SDK } from "@gooddata/gooddata-js";
 import {
     AnalyticalBackendConfig,
     BackendCapabilities,
@@ -7,9 +7,9 @@ import {
     IAnalyticalWorkspace,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import { factory as createSdk, SDK } from "@gooddata/gooddata-js";
-import { BearWorkspace } from "./workspace";
+import isEmpty from "lodash/isEmpty";
 import { AuthenticatedSdkProvider } from "./commonTypes";
+import { BearWorkspace } from "./workspace";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -81,15 +81,7 @@ export class BearBackend implements IAnalyticalBackend {
         this.telemetry = telemetrySanitize(telemetry);
 
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
-
-        if (deferredAuth) {
-            this.deferredAuth = deferredAuth;
-        } else if (this.config.credentials) {
-            this.deferredAuth = this.sdk.user.login(
-                this.config.credentials.username,
-                this.config.credentials.password,
-            );
-        }
+        this.deferredAuth = deferredAuth;
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -98,9 +90,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public withCredentials(username: string, password: string): IAnalyticalBackend {
         return new BearBackend(
-            { ...this.config, credentials: { username, password } },
+            { ...this.config, username },
             this.implConfig,
             this.telemetry,
+            this.sdk.user.login(username, password),
         );
     }
 
@@ -141,7 +134,7 @@ export class BearBackend implements IAnalyticalBackend {
                 return this.sdk;
             })
             .catch(e => {
-                const user = this.config.credentials ? this.config.credentials.username : "unknown";
+                const user = this.config.username ? this.config.username : "unknown";
                 throw new NotAuthenticated(
                     `Authentication to hostname ${this.config.hostname} as user ${user} has failed`,
                     e,
