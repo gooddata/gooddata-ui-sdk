@@ -6,17 +6,17 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
 
-import { IChartConfig, IChartLimits, IChartOptions } from "../../interfaces/Config";
+import { IChartLimits, IChartOptions, INewChartConfig } from "../../interfaces/Config";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";
 import { getColumnConfiguration } from "./highcharts/columnConfiguration";
-import { getCustomizedConfiguration } from "./highcharts/customConfiguration";
+import { getCustomizedConfiguration2 } from "./highcharts/customConfiguration";
 import { getPieConfiguration } from "./highcharts/pieConfiguration";
 import { getDonutConfiguration } from "./highcharts/donutConfiguration";
 import { getAreaConfiguration } from "./highcharts/areaConfiguration";
 import { getScatterConfiguration } from "./highcharts/scatterConfiguration";
-import { getComboConfiguration } from "./highcharts/comboConfiguration";
+import { getComboConfiguration } from "./highcharts/newComboConfiguration";
 import { getTreemapConfiguration } from "./highcharts/treemapConfiguration";
 import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
@@ -39,7 +39,11 @@ const chartConfigurationMap = {
     [VisualizationTypes.BUBBLE]: getBubbleConfiguration,
 };
 
-export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: any, config?: IChartConfig) {
+export function getHighchartsOptions(
+    chartOptions: IChartOptions,
+    drillConfig: any,
+    config?: INewChartConfig,
+) {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
         getConfigurationByType,
@@ -49,7 +53,7 @@ export function getHighchartsOptions(chartOptions: IChartOptions, drillConfig: a
         {},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType.call(null, config),
-        getCustomizedConfiguration(chartOptions, config, drillConfig),
+        getCustomizedConfiguration2(chartOptions, config, drillConfig),
     );
 }
 

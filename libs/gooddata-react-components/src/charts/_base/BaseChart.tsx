@@ -8,7 +8,7 @@ import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
 import noop = require("lodash/noop");
 
-import { Visualization } from "../../highcharts/NewVisualization";
+import { Visualization } from "../../highcharts/Visualization";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {

@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import * as React from "react";
 import noop = require("lodash/noop");
 
-import { convertDrillableItemsToPredicates } from "../../base/helpers/headerPredicate";
-import { getSanitizedStackingConfigFromAfm } from "../../base/helpers/optionalStacking/common";
-import { IChartConfig, IChartOptions } from "../../interfaces/Config";
+import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
+import { getNewSanitizedStackingConfig } from "../../base/helpers/optionalStacking/common";
+import { IChartOptions, INewChartConfig } from "../../interfaces/Config";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../interfaces/Events";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
 import { ILegendOptions } from "../typings/legend";
 import { getChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
@@ -24,22 +24,14 @@ export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
 }
 
-export interface IExecutionRequest {
-    afm: AFM.IAfm;
-    resultSpec: AFM.IResultSpec;
-}
-
 export interface IChartTransformationProps {
-    config: IChartConfig;
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
+    config: INewChartConfig;
+    drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
     height: number;
     width: number;
     locale: string;
 
-    executionRequest: IExecutionRequest;
-    executionResponse: Execution.IExecutionResponse;
-    executionResult: Execution.IExecutionResult;
-    mdObject?: VisualizationObject.IVisualizationObjectContent;
+    dataView: IDataView;
 
     onFiredDrillEvent: OnFiredDrillEvent;
     onLegendReady: OnLegendReady;
@@ -85,19 +77,11 @@ export default class ChartTransformation extends React.Component<
 
     public getRendererProps() {
         const { chartOptions, legendOptions } = this;
-        const {
-            executionRequest: { afm },
-            height,
-            width,
-            afterRender,
-            onFiredDrillEvent,
-            onLegendReady,
-            locale,
-        } = this.props;
+        const { dataView, height, width, afterRender, onFiredDrillEvent, onLegendReady, locale } = this.props;
 
         const chartConfig = this.getChartConfig(this.props);
 
-        const drillConfig = { afm, onFiredDrillEvent };
+        const drillConfig = { dataView, onFiredDrillEvent };
         const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig);
 
         return {
@@ -113,34 +97,12 @@ export default class ChartTransformation extends React.Component<
     }
 
     public assignChartOptions(props: IChartTransformationProps) {
-        const {
-            drillableItems,
-            executionRequest: { afm, resultSpec },
-            executionResponse,
-            executionResult: { data, headerItems },
-            onDataTooLarge,
-            onNegativeValues,
-            pushData,
-        } = props;
+        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData } = props;
 
         const chartConfig = this.getChartConfig(props);
+        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
 
-        let multiDimensionalData = data;
-        if (data[0].constructor !== Array) {
-            multiDimensionalData = [data] as Execution.DataValue[][];
-        }
-
-        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
-
-        this.chartOptions = getChartOptions(
-            afm,
-            resultSpec,
-            executionResponse,
-            multiDimensionalData as Execution.DataValue[][],
-            headerItems,
-            chartConfig,
-            drillablePredicates,
-        );
+        this.chartOptions = getChartOptions(dataView, chartConfig, drillablePredicates);
         const validationResult = validateData(chartConfig.limits, this.chartOptions);
 
         if (validationResult.dataTooLarge) {
@@ -182,12 +144,9 @@ export default class ChartTransformation extends React.Component<
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
     }
 
-    private getChartConfig(props: IChartTransformationProps): IChartConfig {
-        const {
-            executionRequest: { afm },
-            config,
-        } = props;
+    private getChartConfig(props: IChartTransformationProps): INewChartConfig {
+        const { dataView, config } = props;
 
-        return getSanitizedStackingConfigFromAfm(afm, config);
+        return getNewSanitizedStackingConfig(dataView.definition, config);
     }
 }

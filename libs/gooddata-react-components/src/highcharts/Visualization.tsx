@@ -1,31 +1,28 @@
 // (C) 2007-2018 GoodData Corporation
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import * as invariant from "invariant";
-import { IHeaderPredicate } from "../interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import isFunction = require("lodash/isFunction");
 import omitBy = require("lodash/omitBy");
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
-import { IChartConfig } from "../interfaces/Config";
+import { INewChartConfig } from "../interfaces/Config";
 import { OnFiredDrillEvent } from "../interfaces/Events";
-
-import { Execution } from "@gooddata/typings";
 
 import { isChartSupported, stringifyChartTypes } from "./utils/common";
 import { IDrillableItem } from "../interfaces/DrillEvents";
-import ChartTransformation, { IExecutionRequest, renderHighCharts } from "./chart/ChartTransformation";
+import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 
 export interface IVisualizationProps {
     height: number;
     width: number;
-    config: IChartConfig;
+    config: INewChartConfig;
     numericSymbols?: string[];
 
-    executionRequest: IExecutionRequest;
-    executionResponse: Execution.IExecutionResponse;
-    executionResult: Execution.IExecutionResult;
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
+    dataView: IDataView;
+    drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
     locale?: string;
 
     onFiredDrillEvent?: OnFiredDrillEvent;
@@ -78,9 +75,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                 height,
                 width,
                 config,
-                executionRequest,
-                executionResponse,
-                executionResult,
+                dataView,
                 drillableItems,
                 onFiredDrillEvent,
                 afterRender,
@@ -98,9 +93,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                     config={config}
                     drillableItems={drillableItems}
                     locale={locale}
-                    executionRequest={executionRequest}
-                    executionResponse={executionResponse}
-                    executionResult={executionResult}
+                    dataView={dataView}
                     afterRender={afterRender}
                     onFiredDrillEvent={onFiredDrillEvent}
                     onDataTooLarge={onDataTooLarge}
