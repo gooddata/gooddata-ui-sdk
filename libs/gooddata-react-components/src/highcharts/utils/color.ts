@@ -1,11 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { IColor, IColorItem } from "@gooddata/gooddata-js";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { AFM, Execution } from "@gooddata/typings";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import {
     IChartConfig,
-    IColorMapping,
     IColorMapping2,
     IColorPalette,
     IColorPaletteItem,
@@ -131,20 +129,6 @@ export function isCustomPalette(palette: IColorPalette) {
 }
 
 export function getColorFromMapping(
-    mappingHeader: IMappingHeader,
-    colorMapping: IColorMapping[],
-    executionResponse: Execution.IExecutionResponse,
-    afm: AFM.IAfm,
-): IColorItem {
-    if (!colorMapping) {
-        return undefined;
-    }
-
-    const mapping = colorMapping.find(item => item.predicate(mappingHeader, { afm, executionResponse }));
-    return mapping && mapping.color;
-}
-
-export function getColorFromMapping2(
     mappingHeader: IMappingHeader,
     colorMapping: IColorMapping2[],
     dv: DataViewFacade,

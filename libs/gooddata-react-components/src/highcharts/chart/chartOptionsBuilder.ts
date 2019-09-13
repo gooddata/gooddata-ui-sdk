@@ -65,8 +65,8 @@ import {
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
-    getComboChartSeries2,
-    getComboChartStackingConfig2,
+    getComboChartSeries,
+    getComboChartStackingConfig,
 } from "./chartOptions/comboChartOptions";
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
@@ -1702,13 +1702,13 @@ export function getChartOptions(
     );
 
     if (isComboChart(type)) {
-        const comboSeries = getComboChartSeries2(config, measureGroup, series, dv);
+        const comboSeries = getComboChartSeries(config, measureGroup, series, dv);
         const canStackInPercent = canComboChartBeStackedInPercent(comboSeries);
         return {
             type,
             xAxes,
             yAxes,
-            stacking: getComboChartStackingConfig2(config, comboSeries, stacking),
+            stacking: getComboChartStackingConfig(config, comboSeries, stacking),
             legendLayout: config.legendLayout || "horizontal",
             actions: {
                 tooltip: buildTooltipFactory(viewByAttribute, type, {

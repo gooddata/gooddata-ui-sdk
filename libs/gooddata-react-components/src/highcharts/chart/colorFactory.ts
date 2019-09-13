@@ -1,30 +1,30 @@
 // (C) 2007-2018 GoodData Corporation
-import { TypeGuards, IColor, IColorItem, IGuidColorItem, RGBType } from "@gooddata/gooddata-js";
+import { IColor, IColorItem, IGuidColorItem, RGBType, TypeGuards } from "@gooddata/gooddata-js";
 import { DataViewFacade, IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
-import range = require("lodash/range");
-import uniqBy = require("lodash/uniqBy");
-import isEqual = require("lodash/isEqual");
-
-import {
-    HEATMAP_BLUE_COLOR_PALETTE,
-    getLighterColorFromRGB,
-    isCustomPalette,
-    getColorByGuid,
-    getRgbStringFromRGB,
-    DEFAULT_HEATMAP_BLUE_COLOR,
-    getColorFromMapping2,
-} from "../utils/color";
-import { isHeatmap, isOneOfTypes, isTreemap, isScatterPlot, isBubbleChart } from "../utils/common";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
 import {
-    IColorPalette,
-    IColorMapping2,
-    IColorAssignment,
-    IColorPaletteItem,
     DEFAULT_COLOR_PALETTE,
+    IColorAssignment,
+    IColorMapping2,
+    IColorPalette,
+    IColorPaletteItem,
 } from "../../interfaces/Config";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
+
+import {
+    DEFAULT_HEATMAP_BLUE_COLOR,
+    getColorByGuid,
+    getColorFromMapping,
+    getLighterColorFromRGB,
+    getRgbStringFromRGB,
+    HEATMAP_BLUE_COLOR_PALETTE,
+    isCustomPalette,
+} from "../utils/color";
+import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../utils/common";
+import isEqual = require("lodash/isEqual");
+import range = require("lodash/range");
+import uniqBy = require("lodash/uniqBy");
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;
@@ -177,7 +177,7 @@ export class MeasureColorStrategy extends ColorStrategy {
         colorAssignment: IColorMapping2[],
         dv: DataViewFacade,
     ): IColorAssignment {
-        const mappedColor = getColorFromMapping2(headerItem, colorAssignment, dv);
+        const mappedColor = getColorFromMapping(headerItem, colorAssignment, dv);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -254,7 +254,7 @@ function getAtributeColorAssignment(
     );
 
     return uniqItems.map(headerItem => {
-        const mappedColor = getColorFromMapping2(headerItem, colorMapping, dv);
+        const mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
 
         const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -322,7 +322,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
         const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
         const headerItem = measureGroup && measureGroup.items[0];
         if (colorMapping) {
-            mappedColor = getColorFromMapping2(headerItem, colorMapping, dv);
+            mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
             if (mappedColor) {
                 colorAssignment = [
                     {
@@ -444,7 +444,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
     ): IColorAssignment[] {
         const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
         const measureHeaderItem = measureGroup.items[0];
-        const measureColorMapping = getColorFromMapping2(measureHeaderItem, colorMapping, dv);
+        const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, dv);
         const color: IColorItem = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping
             : { type: "guid", value: colorPalette[0].guid };

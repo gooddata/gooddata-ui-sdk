@@ -4,9 +4,8 @@ import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupHeader, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
-import { Execution, VisualizationObject as VizObject } from "@gooddata/typings";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
-import { IChartConfig, INewChartConfig, ISeriesItem } from "../../../interfaces/Config";
+import { INewChartConfig, ISeriesItem } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../utils/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
@@ -25,20 +24,7 @@ export const COMBO_SUPPORTED_CHARTS = [
 
 const DEFAULT_COMBO_CHART_TYPES = [VisualizationTypes.COLUMN, VisualizationTypes.LINE];
 
-function getMeasureIndices(bucketItems: VizObject.BucketItem[], measureGroupIdentifiers: string[]): number[] {
-    return bucketItems.reduce((result: number[], item: VizObject.BucketItem) => {
-        const localIdentifier = get(item, ["measure", "localIdentifier"], "");
-
-        if (localIdentifier) {
-            const metricIndex = measureGroupIdentifiers.indexOf(localIdentifier);
-            result.push(metricIndex);
-        }
-
-        return result;
-    }, []);
-}
-
-function getMeasureIndices2(bucketItems: AttributeOrMeasure[], measureGroupIdentifiers: string[]): number[] {
+function getMeasureIndices(bucketItems: AttributeOrMeasure[], measureGroupIdentifiers: string[]): number[] {
     return bucketItems.reduce((result: number[], item: AttributeOrMeasure) => {
         const localIdentifier = get(item, ["measure", "localIdentifier"], "");
 
@@ -52,38 +38,6 @@ function getMeasureIndices2(bucketItems: AttributeOrMeasure[], measureGroupIdent
 }
 
 export function getComboChartSeries(
-    config: IChartConfig,
-    measureGroup: Execution.IMeasureGroupHeader["measureGroupHeader"],
-    series: ISeriesItem[],
-): ISeriesItem[] {
-    const updatedSeries = cloneDeep(series);
-    const measureBuckets = {};
-    const types = [config.primaryChartType, config.secondaryChartType];
-    const buckets = get(config, ["mdObject", "buckets"], []);
-    const measureGroupIdentifiers = measureGroup.items.map((item: Execution.IMeasureHeaderItem) =>
-        get(item, ["measureHeaderItem", "localIdentifier"], ""),
-    );
-
-    buckets.forEach((bucket: VizObject.IBucket) => {
-        const bucketItems = bucket.items || [];
-        measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
-    });
-
-    [MEASURES, SECONDARY_MEASURES].forEach((name: string, index: number) => {
-        (measureBuckets[name] || []).forEach((measureIndex: number) => {
-            const chartType: string = CHART_ORDER[types[index]]
-                ? types[index]
-                : DEFAULT_COMBO_CHART_TYPES[index];
-
-            set(updatedSeries, [measureIndex, "type"], chartType);
-            set(updatedSeries, [measureIndex, "zIndex"], CHART_ORDER[chartType]);
-        });
-    });
-
-    return updatedSeries;
-}
-
-export function getComboChartSeries2(
     config: INewChartConfig,
     measureGroup: IMeasureGroupHeader["measureGroupHeader"],
     series: ISeriesItem[],
@@ -98,7 +52,7 @@ export function getComboChartSeries2(
 
     dv.buckets().forEach((bucket: IBucket) => {
         const bucketItems = bucket.items || [];
-        measureBuckets[bucket.localIdentifier] = getMeasureIndices2(bucketItems, measureGroupIdentifiers);
+        measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
     });
 
     [MEASURES, SECONDARY_MEASURES].forEach((name: string, index: number) => {
@@ -131,21 +85,6 @@ export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean 
 }
 
 export function getComboChartStackingConfig(
-    config: IChartConfig,
-    series: ISeriesItem[],
-    defaultStacking: string,
-): string {
-    const { stackMeasures } = config;
-    const canStackInPercent = canComboChartBeStackedInPercent(series);
-
-    if (canStackInPercent) {
-        return defaultStacking;
-    }
-
-    return stackMeasures ? NORMAL_STACK : null;
-}
-
-export function getComboChartStackingConfig2(
     config: INewChartConfig,
     series: ISeriesItem[],
     defaultStacking: string,
