@@ -14,7 +14,7 @@ import {
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedSdkProvider } from "./commonTypes";
-import { Execution } from "@gooddata/typings";
+import { Execution } from "@gooddata/gd-bear-model";
 import SparkMD5 from "spark-md5";
 
 export class BearExecutionResult implements IExecutionResult {

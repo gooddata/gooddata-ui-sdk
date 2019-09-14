@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable no-console */
-const { factory } = require("@gooddata/gooddata-js");
+const { factory } = require("@gooddata/gd-bear-client");
 const https = require("https");
 const fs = require("fs");
 const express = require("express");

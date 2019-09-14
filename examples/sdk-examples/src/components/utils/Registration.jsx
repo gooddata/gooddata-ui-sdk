@@ -2,7 +2,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { withRouter, Redirect, Link } from "react-router-dom";
-import sdk from "@gooddata/gooddata-js";
+import sdk from "@gooddata/gd-bear-client";
 import { has } from "lodash";
 import { withFormik } from "formik";
 import Yup from "yup";

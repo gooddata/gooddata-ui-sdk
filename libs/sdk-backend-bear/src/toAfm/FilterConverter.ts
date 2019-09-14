@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExecuteAFM } from "@gooddata/typings";
+import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import {
     IAbsoluteDateFilter,
     IAttributeFilter,

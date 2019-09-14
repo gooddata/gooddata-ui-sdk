@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import compact from "lodash/compact";
-import { ExecuteAFM } from "@gooddata/typings";
+import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {

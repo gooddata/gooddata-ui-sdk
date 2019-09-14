@@ -315,29 +315,31 @@
             "reviewCategory": "production"
         },
         {
-            "packageName": "@gooddata/gooddata-js",
-            "projectFolder": "libs/gooddata-js",
+            "packageName": "@gooddata/gd-bear-client",
+            "projectFolder": "libs/gd-bear-client",
             "reviewCategory": "production"
         },
         {
-            "packageName": "@gooddata/typings",
-            "projectFolder": "libs/gooddata-typings",
+            "packageName": "@gooddata/gd-bear-model",
+            "projectFolder": "libs/gd-bear-model",
             "reviewCategory": "production"
         },
         {
-            "packageName": "@gooddata/react-components",
-            "projectFolder": "libs/gooddata-react-components",
+            "packageName": "@gooddata/sdk-ui",
+            "projectFolder": "libs/sdk-ui",
             "reviewCategory": "production"
         },
         {
             "packageName": "@gooddata/sdk-skel-tsx",
             "projectFolder": "skel/sdk-skel-tsx",
-            "reviewCategory": "tools"
+            "reviewCategory": "tools",
+            "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-skel-ts",
             "projectFolder": "skel/sdk-skel-ts",
-            "reviewCategory": "tools"
+            "reviewCategory": "tools",
+            "shouldPublish": false
         }
         // {
         //   /**

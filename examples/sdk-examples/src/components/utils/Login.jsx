@@ -3,7 +3,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { withRouter, Link, Redirect } from "react-router-dom";
-import sdk from "@gooddata/gooddata-js";
+import sdk from "@gooddata/gd-bear-client";
 import { withFormik } from "formik";
 import Yup from "yup";
 import CustomLoading from "./CustomLoading";

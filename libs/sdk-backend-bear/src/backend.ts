@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { factory as createSdk, SDK } from "@gooddata/gooddata-js";
+import { factory as createSdk, SDK } from "@gooddata/gd-bear-client";
 import {
     AnalyticalBackendConfig,
     BackendCapabilities,

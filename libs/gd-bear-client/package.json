@@ -1,0 +1,110 @@
+{
+    "name": "@gooddata/gd-bear-client",
+    "version": "8.0.0",
+    "author": "GoodData",
+    "description": "GoodData JavaScript SDK",
+    "license": "BSD-3-Clause",
+    "main": "lib/gooddata-node.js",
+    "browser": "lib/gooddata-browser.js",
+    "typings": "lib/gooddata-browser.d.ts",
+    "files": [
+        "dist",
+        "lib",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{src,test}/**/*.ts"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "npm run build:lib && npm run build:dist",
+        "build:lib": "rm -rf lib && tsc -p tsconfig.build.json",
+        "build:dist": "rm -rf dist && webpack",
+        "prepublishOnly": "npm run build",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "run-tslint": "tslint -p tsconfig.json",
+        "tslint": "npm run run-tslint -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && npm run run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:gooddata/gooddata-js.git"
+    },
+    "jest": {
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest.setup.js"
+        ],
+        "transform": {
+            ".(ts|tsx)": "ts-jest"
+        },
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
+        "collectCoverageFrom": [
+            "src/**/*.{ts,tsx}",
+            "!**/*.d.ts"
+        ],
+        "collectCoverage": false,
+        "coverageReporters": [
+            "html"
+        ],
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ]
+    },
+    "dependencies": {
+        "@gooddata/gd-bear-model": "^8.0.0",
+        "es6-promise": "^3.0.2",
+        "fetch-cookie": "^0.7.0",
+        "invariant": "^2.2.2",
+        "isomorphic-fetch": "^2.2.1",
+        "json-stable-stringify": "^1.0.1",
+        "lodash": "^4.7.11",
+        "md5": "^2.2.1",
+        "node-fetch": "^1.7.3",
+        "qs": "^6.5.1",
+        "rxjs": "^5.5.6",
+        "uuid": "^3.2.1"
+    },
+    "devDependencies": {
+        "@gooddata/tslint-config": "^1.0.0",
+        "@types/fast-levenshtein": "0.0.1",
+        "@types/fetch-mock": "^5.*",
+        "@types/invariant": "^2.2.29",
+        "@types/isomorphic-fetch": "^0.0.34",
+        "@types/jest": "^24.0.6",
+        "@types/json-stable-stringify": "^1.0.32",
+        "@types/lodash": "^4.14.121",
+        "@types/md5": "^2.1.32",
+        "@types/node-fetch": "^1.6.7",
+        "@types/qs": "^6.5.1",
+        "@types/uuid": "^3.4.4",
+        "async": "^2.1.5",
+        "awesome-typescript-loader": "^5.2.1",
+        "exports-loader": "^0.6.3",
+        "fast-levenshtein": "^2.0.6",
+        "fetch-mock": "^5.12.2",
+        "imports-loader": "^0.7.0",
+        "istanbul-instrumenter-loader": "^0.2.0",
+        "jest": "^24.1.0",
+        "jest-junit": "^3.0.0",
+        "js-object-pretty-print": "^0.2.0",
+        "lodash-webpack-plugin": "^0.11.0",
+        "prettier": "^1.18.2",
+        "ts-jest": "^24.0.0",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "tslint-microsoft-contrib": "^5.2.1",
+        "typescript": "3.3.4000",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.7",
+        "webpack-dev-server": "^3.8.0"
+    }
+}

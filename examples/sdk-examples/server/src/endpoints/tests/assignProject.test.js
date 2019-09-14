@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 const express = require("express");
 const request = require("supertest");
-const gdjs = require("@gooddata/gooddata-js");
+const gdjs = require("@gooddata/gd-bear-client");
 
 const assignProject = require("../assignProject");
 

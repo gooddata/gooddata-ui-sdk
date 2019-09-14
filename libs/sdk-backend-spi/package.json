@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "1.0.0",
+    "version": "8.0.0",
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",
     "repository": "git@github.com:lupko/gooddata-ui-sdk.git",
@@ -55,7 +55,7 @@
         }
     },
     "dependencies": {
-        "@gooddata/sdk-model": "^1.0.0",
+        "@gooddata/sdk-model": "^8.0.0",
         "lodash": "^4.7.11"
     },
     "devDependencies": {

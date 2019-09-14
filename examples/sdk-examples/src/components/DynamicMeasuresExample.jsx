@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
 import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, Model } from "@gooddata/react-components";
-import sdk from "@gooddata/gooddata-js";
+import sdk from "@gooddata/gd-bear-client";
 import "@gooddata/react-components/styles/css/main.css";
 
 import { Layout } from "./utils/Layout";

@@ -1,6 +1,14 @@
 # SDK 7 => SDK 8 migration guide
 
-## Removed components
+## Packages renamed:
+
+-   @gooddata/gd-bear-client => @gooddata/gd-bear-client
+-   @gooddata/typings => @gooddata/gd-bear-model
+-   @gooddata/react-components => @gooddata/sdk-ui
+
+### Changes in react-components => sdk-ui
+
+#### Removed components
 
 -   AfmComponents are not present in SDK 8; use the main components instead
 
@@ -10,7 +18,7 @@
 
 -   BucketExecutor component is not present in SDK 8; use Execute component
 
-## Public API changes
+#### Public API changes
 
 -   Charts no longer have the sdk prop
 

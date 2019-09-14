@@ -11,7 +11,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/typings";
+import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import compact from "lodash/compact";
 import get from "lodash/get";
 import { convertVisualizationObjectFilter } from "./FilterConverter";

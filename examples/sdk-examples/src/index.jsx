@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import ReactDOM from "react-dom";
-import sdk from "@gooddata/gooddata-js";
+import sdk from "@gooddata/gd-bear-client";
 import "babel-polyfill";
 
 import { Router, Route, Redirect, Switch } from "react-router-dom";

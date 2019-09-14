@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { keyBy, mapValues } from "lodash";
 import { Kpi } from "@gooddata/react-components";
-import { factory } from "@gooddata/gooddata-js";
+import { factory } from "@gooddata/gd-bear-client";
 import "@gooddata/react-components/styles/css/main.css";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
