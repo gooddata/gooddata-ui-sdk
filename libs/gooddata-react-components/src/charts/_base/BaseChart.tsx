@@ -1,12 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { ErrorStates } from "../../index";
+import { ChartType, ErrorStates } from "../../index";
 import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
-import { withEntireDataView } from "../NewLoadingHOC";
-import { ILoadingInjectedProps, defaultCommonVisProps, IBaseChartProps } from "../chartProps";
+import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
+import { ICoreChartProps } from "../chartProps";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
-import noop = require("lodash/noop");
 
 import { Visualization } from "../../highcharts/Visualization";
 
@@ -15,14 +14,23 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
-import { fixEmptyHeaderItems2 } from "./utils/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
 import { getValidColorPalette2 } from "../../highcharts/utils/color";
+import { OnLegendReady } from "../../interfaces/Events";
+import noop = require("lodash/noop");
+import { defaultCoreChartProps } from "../_commons/defaultProps";
+
+export interface IBaseChartProps extends ICoreChartProps {
+    type: ChartType;
+    visualizationComponent?: React.ComponentClass<any>; // for testing
+    onLegendReady?: OnLegendReady;
+}
 
 type Props = IBaseChartProps & ILoadingInjectedProps;
 
 class StatelessBaseChart extends React.Component<Props, {}> {
     public static defaultProps: Partial<Props> = {
-        ...defaultCommonVisProps,
+        ...defaultCoreChartProps,
         onDataTooLarge: noop,
         onLegendReady: noop,
         config: {},
@@ -81,7 +89,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
                                 afterRender={afterRender}
                                 onDataTooLarge={onDataTooLarge}
                                 onNegativeValues={this.props.onNegativeValues}
-                                onFiredDrillEvent={this.props.onFiredDrillEvent}
+                                onFiredDrillEvent={this.props.onDrill}
                                 onLegendReady={this.props.onLegendReady}
                                 pushData={pushData}
                             />

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";
@@ -16,7 +16,7 @@ export interface IBubbleChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IBubbleChartProps extends ICommonChartProps, IBubbleChartBucketProps {
+export interface IBubbleChartProps extends IBucketChartProps, IBubbleChartBucketProps {
     workspace: string;
 }
 

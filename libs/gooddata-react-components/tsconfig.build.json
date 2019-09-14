@@ -4,5 +4,5 @@
     "compilerOptions": {
         "noImplicitAny": true
     },
-    "exclude": ["src/_defunct/**/*"]
+    "exclude": ["**/_defunct/**/*.*"]
 }

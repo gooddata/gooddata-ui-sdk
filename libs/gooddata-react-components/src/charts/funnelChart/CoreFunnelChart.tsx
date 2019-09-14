@@ -2,10 +2,10 @@
 import * as React from "react";
 import { BaseChart } from "../_base/BaseChart";
 import { visualizationIsBetaWarning } from "../../base/helpers/utils";
-import { IChartProps } from "../chartProps";
+import { ICoreChartProps } from "../chartProps";
 
-export class CoreFunnelChart extends React.PureComponent<IChartProps, null> {
-    constructor(props: IChartProps) {
+export class CoreFunnelChart extends React.PureComponent<ICoreChartProps, null> {
+    constructor(props: ICoreChartProps) {
         super(props);
         visualizationIsBetaWarning();
     }

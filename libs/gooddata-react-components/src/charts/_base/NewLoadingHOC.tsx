@@ -2,17 +2,13 @@
 
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { injectIntl } from "react-intl";
-import { ErrorStates } from "../base/constants/errorStates";
-import { RuntimeError } from "../base/errors/RuntimeError";
-import { convertErrors } from "../base/helpers/errorHandlers";
-import { ILoadingState } from "../interfaces/Events";
-import { IntlWrapper } from "../base/translations/IntlWrapper";
-import {
-    ICommonVisualizationProps,
-    IExecutableVisualizationProps,
-    ILoadingInjectedProps,
-} from "./chartProps";
+import { injectIntl, InjectedIntl } from "react-intl";
+import { ErrorStates } from "../../base/constants/errorStates";
+import { RuntimeError } from "../../base/errors/RuntimeError";
+import { convertErrors } from "../../base/helpers/errorHandlers";
+import { ILoadingState } from "../../interfaces/Events";
+import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 
@@ -23,7 +19,44 @@ interface IDataViewLoadState {
     dataView?: IDataView;
 }
 
-export function withEntireDataView<T extends ICommonVisualizationProps & IExecutableVisualizationProps>(
+/**
+ * These props are injected by withEntireDataView HOC. This HOC takes care of driving the execution and obtaining
+ * the data view to visualize. Oh and by the way, the HOC also provides internationalization context :/
+ *
+ * @internal
+ */
+export interface ILoadingInjectedProps {
+    /**
+     * If the data is loading, then this prop contains true. Otherwise, if the loading finished with either
+     * success or failure, this prop contains false.
+     */
+    isLoading: boolean;
+
+    /**
+     * If loading succeeds, then this prop contains the data to visualize. Otherwise is undefined.
+     */
+    dataView?: IDataView;
+
+    /**
+     * If loading fails, then this prop contains description of the error. Otherwise is undefined.
+     */
+    error?: string;
+
+    /**
+     * Callback to trigger if the chart cannot visualize the data because it is too large.
+     */
+    onDataTooLarge(): void;
+
+    /**
+     * Callback to trigger if the chart cannot visualize the data because it contains negative values.
+     */
+    onNegativeValues(): void;
+
+    // TODO: SDK8: take this out of here
+    intl: InjectedIntl;
+}
+
+export function withEntireDataView<T extends ICoreChartProps>(
     InnerComponent: React.ComponentClass<T & ILoadingInjectedProps>,
 ): React.ComponentClass<T> {
     class LoadingHOCWrapped extends React.Component<T & ILoadingInjectedProps, IDataViewLoadState> {

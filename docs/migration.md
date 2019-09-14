@@ -6,9 +6,32 @@
 
     -   Migration steps: TBD
 
--   Execute (AFM) component is not present in SDK 8; use ExecutionContext
--   BucketExecutor component is not present in SDK 8; use ExecutionContext
-
 -   The Table component is not present in SDK 8; use the PivotTable component instead
 
+-   BucketExecutor component is not present in SDK 8; use Execute component
+
 ## Public API changes
+
+-   Charts no longer have the sdk prop
+
+    -   prop renamed to backend
+    -   prop type changed to IAnalyticalBackend
+
+-   Charts no longer have projectId prop
+
+    -   prop renamed to workspace
+
+-   Charts no longer have environment prop
+
+    -   prop deleted, it was a red herring, not used for anything
+
+-   Charts no longer have onLoadingFinish prop
+
+    -   prop deleted, it was red herring, never fired for charts
+
+-   Charts no longer have onFiredDrillEvent prop
+
+    -   prop renamed to onDrill
+
+-   IPushData no longer contains result prop
+    -   it contains dataView prop instead

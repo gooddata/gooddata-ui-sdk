@@ -3,7 +3,7 @@ import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk
 import * as React from "react";
 import { MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { roundChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CorePieChart } from "./CorePieChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -14,7 +14,7 @@ export interface IPieChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IPieChartProps extends ICommonChartProps, IPieChartBucketProps {
+export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps {
     projectId: string;
 }
 

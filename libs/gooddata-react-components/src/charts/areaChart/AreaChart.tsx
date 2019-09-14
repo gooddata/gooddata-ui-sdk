@@ -2,7 +2,7 @@
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem, computeRatioRules } from "@gooddata/sdk-model";
 import * as React from "react";
 import { truncate } from "../_commons/truncate";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
@@ -20,7 +20,7 @@ export interface IAreaChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IAreaChartProps extends ICommonChartProps, IAreaChartBucketProps {
+export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {
     workspace: string;
 }
 
@@ -70,6 +70,8 @@ const getProps = getCoreChartProps(areaChartDefinition);
 /**
  * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
  * is a component with bucket props measures, viewBy, stacksBy, filters
+ *
+ * @public
  */
 export function AreaChart(props: IAreaChartProps): JSX.Element {
     return <CoreAreaChart {...getProps(props)} />;

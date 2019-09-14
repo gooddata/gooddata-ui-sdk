@@ -11,7 +11,7 @@ import {
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
 import { IDataSourceProviderInjectedProps } from "./DataSourceProvider";
-import { fixEmptyHeaderItems } from "../../charts/_base/utils/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "../../charts/_base/fixEmptyHeaderItems";
 import {
     ICommonVisualizationProps,
     visualizationLoadingHOC,

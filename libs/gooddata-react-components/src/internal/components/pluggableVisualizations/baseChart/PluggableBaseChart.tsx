@@ -72,9 +72,8 @@ import ColorUtils from "../../../../highcharts/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, IDimension } from "@gooddata/sdk-model";
-import { insightHasDataDefined } from "@gooddata/sdk-model/src";
+import { insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi/src";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -98,13 +97,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected locale: ILocale;
-    private backend: IAnalyticalBackend;
     private environment: string;
     private element: string;
 
     constructor(props: IVisConstruct) {
         super();
-        this.backend = props.backend;
         this.projectId = props.projectId;
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
@@ -260,11 +257,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         render(
             <BaseChart
-                workspace={this.projectId}
-                backend={this.backend}
                 execution={execution}
                 afterRender={afterRender}
-                environment={this.environment}
                 drillableItems={drillableItems}
                 onError={this.onError}
                 onExportReady={this.onExportReady}

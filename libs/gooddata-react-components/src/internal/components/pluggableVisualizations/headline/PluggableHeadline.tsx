@@ -54,7 +54,7 @@ import {
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
-import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -64,7 +64,6 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;
-    private backend: IAnalyticalBackend;
 
     constructor(props: IVisConstruct) {
         super();
@@ -74,7 +73,6 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
-        this.backend = props.backend;
     }
 
     public unmount() {
@@ -152,7 +150,6 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         render(
             <CoreHeadline
-                backend={this.backend}
                 execution={execution}
                 drillableItems={drillableItems}
                 locale={locale}

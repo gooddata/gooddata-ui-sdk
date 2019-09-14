@@ -6,7 +6,7 @@ import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreColumnChart } from "./CoreColumnChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -18,7 +18,7 @@ export interface IColumnChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IColumnChartProps extends ICommonChartProps, IColumnChartBucketProps {
+export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucketProps {
     workspace: string;
 }
 

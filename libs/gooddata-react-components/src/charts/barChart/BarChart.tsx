@@ -2,7 +2,7 @@
 import { AttributeOrMeasure, computeRatioRules, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { truncate } from "../_commons/truncate";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
@@ -18,7 +18,7 @@ export interface IBarChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IBarChartProps extends IBarChartBucketProps, ICommonChartProps {
+export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {
     workspace: string;
 }
 

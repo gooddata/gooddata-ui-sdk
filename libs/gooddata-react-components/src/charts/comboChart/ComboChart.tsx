@@ -12,7 +12,7 @@ import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketN
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { defaultDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreColumnChart } from "../columnChart/CoreColumnChart";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -30,7 +30,7 @@ export interface IComboChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IComboChartProps extends ICommonChartProps, IComboChartBucketProps {
+export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {
     workspace: string;
 }
 

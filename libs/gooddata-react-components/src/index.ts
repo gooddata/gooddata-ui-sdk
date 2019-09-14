@@ -3,7 +3,7 @@ import * as VisEvents from "./interfaces/Events";
 import CatalogHelper from "./base/helpers/CatalogHelper";
 import { isEmptyResult } from "./base/helpers/errorHandlers";
 import * as Model from "./base/helpers/model";
-import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
+// import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { ErrorComponent } from "./base/simple/ErrorComponent";
 import { LoadingComponent } from "./base/simple/LoadingComponent";
 // import { Kpi } from "./_defunct/kpi/Kpi";
@@ -89,7 +89,7 @@ export {
     // BucketExecutor,
     generateDimensions,
     Headline,
-    ICommonVisualizationProps,
+    // ICommonVisualizationProps,
     IDrillableItem,
     ILegendConfig,
     IChartConfig,

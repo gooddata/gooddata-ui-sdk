@@ -5,7 +5,7 @@ import * as React from "react";
 import { MEASURES } from "../../base/constants/bucketNames";
 
 import { Subtract } from "../../base/typings/subtract";
-import { IChartProps, ICommonChartProps } from "../chartProps";
+import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
 
@@ -15,7 +15,7 @@ export interface IHeadlineBucketProps {
     filters?: IFilter[];
 }
 
-export interface IHeadlineProps extends ICommonChartProps, IHeadlineBucketProps {
+export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps {
     workspace: string;
 }
 
@@ -29,7 +29,7 @@ export function Headline(props: IHeadlineProps): JSX.Element {
     return <CoreHeadline {...toCoreHeadlineProps(props)} />;
 }
 
-export function toCoreHeadlineProps(props: IHeadlineProps): IChartProps {
+export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
     const buckets = [
         {
             localIdentifier: MEASURES,

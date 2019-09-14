@@ -1,105 +1,131 @@
 // (C) 2019 GoodData Corporation
-import { IAnalyticalBackend, IDataView, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import noop from "lodash/noop";
+import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { IErrorProps } from "../base/simple/ErrorComponent";
 import { ILoadingProps } from "../base/simple/LoadingComponent";
-import { ChartType, ErrorComponent, IDrillableItem, IPushData, LoadingComponent } from "../index";
 import { INewChartConfig } from "../interfaces/Config";
-import {
-    OnError,
-    OnExportReady,
-    OnFiredDrillEvent2,
-    OnLegendReady,
-    OnLoadingChanged,
-    OnLoadingFinish,
-} from "../interfaces/Events";
+import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "../interfaces/Events";
 import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
-import InjectedIntl = ReactIntl.InjectedIntl;
+import { IDrillableItem } from "../interfaces/DrillEvents";
+import { IPushData } from "../interfaces/PushData";
+
+/**
+ * Props applicable for all charts
+ *
+ * @public
+ */
+export interface ICommonChartProps extends IChartCallbacks {
+    /**
+     * Set Locale for chart localization.
+     *
+     * Note: This locale will be used for everything EXCEPT the data being visualized.
+     */
+    locale?: string;
+
+    /**
+     * Configure chart drillability; e.g. which parts of the
+     */
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
+
+    /**
+     * Configure chart's behavior and appearance.
+     */
+    config?: INewChartConfig;
+
+    /**
+     * Set height of the chart (in pixels).
+     */
+    height?: number;
+
+    /**
+     * React component to display in the event when there is an error with either obtaining the data from
+     * backend or with the data itself.
+     */
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+
+    /**
+     * React component to display while loading data from the backend.
+     */
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
+}
+
+/**
+ * Defines callbacks to execute for different events.
+ *
+ * @public
+ */
+export interface IChartCallbacks {
+    /**
+     * Called when an error occurs while loading data for the chart.
+     */
+    onError?: OnError;
+
+    /**
+     * Called when the chart is ready to be exported.
+     */
+    onExportReady?: OnExportReady;
+
+    /**
+     * Called when loading status of the chart changes - chart starts loading or stops loading
+     */
+    onLoadingChanged?: OnLoadingChanged;
+
+    /**
+     * Called when user triggers a drill on a chart.
+     */
+    onDrill?: OnFiredDrillEvent2;
+
+    /**
+     * @internal
+     */
+    afterRender?: () => void;
+
+    /**
+     * @internal
+     */
+    pushData?: (data: IPushData) => void;
+}
 
 //
 // Prop types extended by the bucket components
 //
 
-export interface ICommonChartProps extends ICommonVisualizationProps {
-    workspace: string;
-    height?: number;
-    environment?: string;
-}
-
-export interface ICommonVisualizationProps extends IEvents {
-    // TODO: SDK8: document change from sdk => backend; make this optional auto-retrieve from some global location
+/**
+ * Props for all bucket charts.
+ *
+ * TODO: SDK8: revisit the naming
+ * @public
+ */
+export interface IBucketChartProps extends ICommonChartProps {
+    /**
+     * Analytical backend, from which the chart will obtain data to visualize
+     *
+     * TODO: SDK8: make this optional; obtain singleton analytical backend
+     */
     backend: IAnalyticalBackend;
-    // TODO: SDK8: document change from project => workspace
-    workspace?: string;
-    locale?: string;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
-    // TODO: SDK8: rename & move: possibly include in IEvents
-    afterRender?: () => void;
-    // TODO: SDK8: rename+move or remove; probably remove, address the need differently
-    pushData?: (data: IPushData) => void;
-    // TODO: SDK8: possibly encapsulate in a separate object?
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
-    config?: INewChartConfig;
+
+    /**
+     * Workspace, from which the chart will obtain data to visualize.
+     *
+     * TODO: SDK8: perhaps should also accept IAnalyticalWorkspace as input
+     */
+    workspace: string;
 }
 
-export interface IEvents {
-    onError?: OnError;
-    onExportReady?: OnExportReady;
-    onLoadingChanged?: OnLoadingChanged;
-    onLoadingFinish?: OnLoadingFinish;
-    onFiredDrillEvent?: OnFiredDrillEvent2;
-}
+//
+// Props for all core charts
+//
 
-export interface IExecutableVisualizationProps {
+/**
+ * Props for all Core* charts.
+ *
+ * NOTE: Core* charts are NOT part of public API.
+ *
+ * @internal
+ */
+export interface ICoreChartProps extends ICommonChartProps {
+    /**
+     * Prepared execution, which when executed, will provide data to visualize in the chart.
+     */
     execution: IPreparedExecution;
 }
-
-export interface ILoadingInjectedProps {
-    dataView: IDataView;
-    error?: string;
-    isLoading: boolean;
-    intl: InjectedIntl;
-    onDataTooLarge(): void;
-    onNegativeValues(): void;
-}
-
-//
-// Base chart props
-//
-
-export interface IChartProps extends ICommonVisualizationProps, IExecutableVisualizationProps {
-    config?: INewChartConfig;
-    height?: number;
-    environment?: string;
-}
-
-export interface IBaseChartProps extends IChartProps {
-    type: ChartType;
-    visualizationComponent?: React.ComponentClass<any>; // for testing
-    onLegendReady?: OnLegendReady;
-}
-
-//
-//
-//
-
-const defaultErrorHandler = (error: any) => {
-    // if error was not placed in object, we couldnt see its properties in console (ie cause, responseText etc.)
-    console.error("Error in execution:", { error }); // tslint:disable-line no-console
-};
-
-export const defaultCommonVisProps: Partial<ICommonVisualizationProps & IExecutableVisualizationProps> = {
-    execution: undefined,
-    onError: defaultErrorHandler,
-    onLoadingChanged: noop,
-    ErrorComponent,
-    LoadingComponent,
-    afterRender: noop,
-    pushData: noop,
-    locale: "en-US",
-    drillableItems: [],
-    onExportReady: noop,
-    onFiredDrillEvent: () => true,
-};

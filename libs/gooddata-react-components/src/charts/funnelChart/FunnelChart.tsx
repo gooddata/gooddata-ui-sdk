@@ -3,7 +3,7 @@ import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk
 import * as React from "react";
 import { MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { roundChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreFunnelChart } from "./CoreFunnelChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -14,7 +14,7 @@ export interface IFunnelChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IFunnelChartProps extends ICommonChartProps, IFunnelChartBucketProps {
+export interface IFunnelChartProps extends IBucketChartProps, IFunnelChartBucketProps {
     workspace: string;
 }
 

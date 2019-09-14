@@ -4,7 +4,7 @@ import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreLineChart } from "./CoreLineChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -16,7 +16,7 @@ export interface ILineChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface ILineChartProps extends ICommonChartProps, ILineChartBucketProps {
+export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
     workspace: string;
 }
 

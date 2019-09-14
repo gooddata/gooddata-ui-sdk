@@ -3,7 +3,7 @@ import { AttributeOrMeasure, IAttribute, IFilter } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { roundChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreDonutChart } from "./CoreDonutChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -13,7 +13,7 @@ export interface IDonutChartBucketProps {
     filters?: IFilter[];
 }
 
-export interface IDonutChartProps extends ICommonChartProps, IDonutChartBucketProps {
+export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketProps {
     workspace: string;
 }
 

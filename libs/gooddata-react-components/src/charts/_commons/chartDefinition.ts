@@ -1,15 +1,16 @@
+// (C) 2019 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
 
-import { IChartProps, ICommonChartProps } from "../chartProps";
+import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 
 /**
  * Defines all the functions needed to render a chart.
  */
 export interface IChartDefinition<
     TBucketProps extends object,
-    TProps extends TBucketProps & ICommonChartProps
+    TProps extends TBucketProps & IBucketChartProps
 > {
     /**
      * Function converting bucket props to the relevant buckets.
@@ -26,7 +27,7 @@ export interface IChartDefinition<
     /**
      * Function creating prop overrides from props and buckets (e.g. custom config).
      */
-    propOverridesFactory?: (props: TProps, buckets: IBucket[]) => Partial<ICommonChartProps>;
+    propOverridesFactory?: (props: TProps, buckets: IBucket[]) => Partial<IBucketChartProps>;
     /**
      * Place to put any side-effectful functions, like validation of props to show a warning etc.
      */
@@ -35,10 +36,10 @@ export interface IChartDefinition<
 
 export const getCoreChartProps = <
     TBucketProps extends object,
-    TProps extends TBucketProps & ICommonChartProps
+    TProps extends TBucketProps & IBucketChartProps
 >(
     chart: IChartDefinition<TBucketProps, TProps>,
-) => (props: TProps): IChartProps => {
+) => (props: TProps): ICoreChartProps => {
     if (chart.onBeforePropsConversion) {
         chart.onBeforePropsConversion(props);
     }

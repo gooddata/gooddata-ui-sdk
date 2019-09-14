@@ -3,7 +3,7 @@ import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk
 import * as React from "react";
 import { MEASURES, STACK, VIEW } from "../../base/constants/bucketNames";
 import { heatmapDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreHeatmap } from "./CoreHeatmap";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -15,7 +15,7 @@ export interface IHeatmapBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IHeatmapProps extends ICommonChartProps, IHeatmapBucketProps {
+export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
     workspace: string;
 }
 

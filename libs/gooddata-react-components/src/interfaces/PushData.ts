@@ -1,17 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from "@gooddata/typings";
 import { IColorAssignment, IColorPalette } from "./Config";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { ITotal, SortItem } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export interface IColorsData {
     colorAssignments: IColorAssignment[];
     colorPalette: IColorPalette;
 }
 
+/**
+ * @internal
+ */
 export interface IPushData {
-    result?: Execution.IExecutionResponses;
+    dataView?: IDataView;
     properties?: {
-        sortItems?: AFM.SortItem[];
-        totals?: VisualizationObject.IVisualizationTotal[];
+        sortItems?: SortItem[];
+        totals?: ITotal[];
     };
     propertiesMeta?: any;
     colors?: IColorsData;

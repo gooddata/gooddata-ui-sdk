@@ -6,25 +6,21 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
-import { fixEmptyHeaderItems2 } from "../_base/utils/fixEmptyHeaderItems";
-import { withEntireDataView } from "../NewLoadingHOC";
+import { fixEmptyHeaderItems2 } from "../_base/fixEmptyHeaderItems";
+import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
 import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
 import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
-import {
-    defaultCommonVisProps,
-    IChartProps,
-    ICommonVisualizationProps,
-    ILoadingInjectedProps,
-} from "../chartProps";
+import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
+import { defaultCoreChartProps } from "../_commons/defaultProps";
 
 export { Requireable };
 
-type Props = IChartProps & ILoadingInjectedProps;
+type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props, {}> {
-    public static defaultProps: Partial<ICommonVisualizationProps> = defaultCommonVisProps;
+    public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
 
     public static propTypes = HeadlinePropTypes;
 
@@ -57,7 +53,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
     }
 
     protected renderVisualization(): JSX.Element {
-        const { afterRender, drillableItems, locale, dataView, onFiredDrillEvent, config } = this.props;
+        const { afterRender, drillableItems, locale, dataView, onDrill, config } = this.props;
 
         return (
             <IntlWrapper locale={locale}>
@@ -70,7 +66,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
                             <HeadlineTransformation
                                 dataView={dataView}
                                 onAfterRender={afterRender}
-                                onFiredDrillEvent={onFiredDrillEvent}
+                                onFiredDrillEvent={onDrill}
                                 drillableItems={drillableItems}
                                 config={config}
                             />

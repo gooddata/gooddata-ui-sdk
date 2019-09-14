@@ -3,7 +3,7 @@ import { AttributeOrMeasure, IAttribute, IFilter } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, SEGMENT, VIEW } from "../../base/constants/bucketNames";
 import { treemapDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreTreemap } from "./CoreTreemap";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -23,7 +23,7 @@ export interface ITreemapBucketProps {
     filters?: IFilter[];
 }
 
-export interface ITreemapProps extends ICommonChartProps, ITreemapBucketProps {
+export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {
     workspace: string;
 }
 

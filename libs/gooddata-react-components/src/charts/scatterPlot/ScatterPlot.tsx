@@ -3,7 +3,7 @@ import { IAttribute, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
-import { ICommonChartProps } from "../chartProps";
+import { IBucketChartProps } from "../chartProps";
 import { CoreScatterPlot } from "./CoreScatterPlot";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
@@ -15,7 +15,7 @@ export interface IScatterPlotBucketProps {
     sortBy?: SortItem[]; // TODO would it be removed? if not dont forget to test
 }
 
-export interface IScatterPlotProps extends ICommonChartProps, IScatterPlotBucketProps {
+export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucketProps {
     workspace: string;
 }
 

@@ -30,7 +30,7 @@ import { RuntimeError } from "../../base/errors/RuntimeError";
 import { IPushData } from "../../interfaces/PushData";
 import { IChartConfig } from "../../interfaces/Config";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
-import { fixEmptyHeaderItems } from "../../charts/_base/utils/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "../../charts/_base/fixEmptyHeaderItems";
 
 const escapeFileName = (str: string) => str && str.replace(/[\/\?<>\\:\*\|":]/g, "");
 
