@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import {
+    filterIsEmpty,
     IAbsoluteDateFilter,
     IAttributeFilter,
     IFilter,
@@ -9,7 +10,6 @@ import {
     isAttributeFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { filterIsEmpty } from "@gooddata/sdk-model/src";
 
 function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem | null {
     if (!isPositiveAttributeFilter(filter)) {

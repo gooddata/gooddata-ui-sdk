@@ -7,8 +7,7 @@ import { IColorPalette } from "../../interfaces/Config";
 import * as VisEvents from "../../interfaces/Events";
 import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi/src";
+import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export type ILocale =
     | "en-US"

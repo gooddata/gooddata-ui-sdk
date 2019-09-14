@@ -4,6 +4,7 @@ import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
+    attributeId,
     bucketItems,
     bucketsFindAttribute,
     dimensionTotals,
@@ -13,7 +14,6 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
-import { attributeId } from "@gooddata/sdk-model/src";
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

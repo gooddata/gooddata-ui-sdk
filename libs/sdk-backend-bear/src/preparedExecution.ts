@@ -8,10 +8,9 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedSdkProvider } from "./commonTypes";
-import { IDimension, SortItem } from "@gooddata/sdk-model";
+import { IDimension, isDimension, SortItem } from "@gooddata/sdk-model";
 import { defFingerprint, defWithDimensions, defWithSorts } from "./executionDefinition";
 import isEmpty from "lodash/isEmpty";
-import { isDimension } from "@gooddata/sdk-model/src";
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
