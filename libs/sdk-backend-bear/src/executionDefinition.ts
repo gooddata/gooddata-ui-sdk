@@ -174,12 +174,14 @@ export function defFingerprint(def: IExecutionDefinition): string {
      * reuse cached and all. The only drawback is frontend cache misses.
      */
 
+    const hashFun = hasher.append.bind(hasher);
+
     hasher.append(def.workspace);
-    def.attributes.map(attributeFingerprint).forEach(hasher.append);
-    def.measures.map(measureFingerprint).forEach(hasher.append);
-    def.filters.map(filterFingerprint).forEach(hasher.append);
-    def.sortBy.map(sortFingerprint).forEach(hasher.append);
-    def.dimensions.map(dimensionFingerprint).forEach(hasher.append);
+    def.attributes.map(attributeFingerprint).forEach(hashFun);
+    def.measures.map(measureFingerprint).forEach(hashFun);
+    def.filters.map(filterFingerprint).forEach(hashFun);
+    def.sortBy.map(sortFingerprint).forEach(hashFun);
+    def.dimensions.map(dimensionFingerprint).forEach(hashFun);
 
     return hasher.end();
 }

@@ -134,9 +134,10 @@ export class BearBackend implements IAnalyticalBackend {
                 return this.sdk;
             })
             .catch(e => {
+                const hostname = this.config.hostname ? this.config.hostname : "'same-origin'";
                 const user = this.config.username ? this.config.username : "unknown";
                 throw new NotAuthenticated(
-                    `Authentication to hostname ${this.config.hostname} as user ${user} has failed`,
+                    `Authentication to hostname ${hostname} as user ${user} has failed`,
                     e,
                 );
             });
