@@ -5,6 +5,7 @@ import {
     IAttribute,
     IFilter,
     IMeasure,
+    newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
 import * as React from "react";
@@ -14,12 +15,21 @@ import { INewChartConfig } from "../../interfaces/Config";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreColumnChart } from "../columnChart/CoreColumnChart";
+import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isArray = require("lodash/isArray");
 import set = require("lodash/set");
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export interface IComboChartBucketProps {
     columnMeasures?: IMeasure[];
     lineMeasures?: IMeasure[];
@@ -30,9 +40,26 @@ export interface IComboChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {
-    workspace: string;
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {}
+
+/**
+ * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
+ * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
+ *
+ * @public
+ */
+export function ComboChart(props: IComboChartProps): JSX.Element {
+    return <CoreColumnChart {...getProps(props)} />;
 }
+
+//
+// Internals
+//
 
 const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChartProps> = {
     bucketPropsKeys: [
@@ -49,18 +76,9 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
         const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
 
         return [
-            {
-                localIdentifier: MEASURES,
-                items: primaryMeasures,
-            },
-            {
-                localIdentifier: SECONDARY_MEASURES,
-                items: secondaryMeasures,
-            },
-            {
-                localIdentifier: VIEW,
-                items: categories,
-            },
+            newBucket(MEASURES, ...primaryMeasures),
+            newBucket(SECONDARY_MEASURES, ...secondaryMeasures),
+            newBucket(VIEW, ...categories),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -84,14 +102,6 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 };
 
 const getProps = getCoreChartProps(comboChartDefinition);
-
-/**
- * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
- * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
- */
-export function ComboChart(props: IComboChartProps): JSX.Element {
-    return <CoreColumnChart {...getProps(props)} />;
-}
 
 function deprecateOldProps(props: IComboChartProps): IComboChartProps {
     const clonedProps = cloneDeep(props);

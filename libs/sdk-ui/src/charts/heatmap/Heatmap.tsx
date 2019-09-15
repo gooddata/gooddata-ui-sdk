@@ -1,12 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IAttribute, IFilter, newBucket, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, STACK, VIEW } from "../../base/constants/bucketNames";
 import { heatmapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreHeatmap } from "./CoreHeatmap";
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
+import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IHeatmapBucketProps {
     measure: AttributeOrMeasure;
     rows?: IAttribute;
@@ -15,26 +23,31 @@ export interface IHeatmapBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
-    workspace: string;
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function Heatmap(props: IHeatmapProps): JSX.Element {
+    return <CoreHeatmap {...getProps(props)} />;
 }
+
+//
+// Internals
+//
 
 const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = {
     bucketPropsKeys: ["measure", "rows", "columns", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            {
-                localIdentifier: MEASURES,
-                items: [props.measure] || [],
-            },
-            {
-                localIdentifier: VIEW,
-                items: props.rows ? [props.rows] : [],
-            },
-            {
-                localIdentifier: STACK,
-                items: props.columns ? [props.columns] : [],
-            },
+            newBucket(MEASURES, props.measure),
+            newBucket(VIEW, props.rows),
+            newBucket(STACK, props.columns),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -50,7 +63,3 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
 };
 
 const getProps = getCoreChartProps(heatmapDefinition);
-
-export function Heatmap(props: IHeatmapProps): JSX.Element {
-    return <CoreHeatmap {...getProps(props)} />;
-}

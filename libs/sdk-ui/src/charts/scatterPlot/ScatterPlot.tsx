@@ -1,12 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttribute, IFilter, IMeasure, SortItem } from "@gooddata/sdk-model";
+import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreScatterPlot } from "./CoreScatterPlot";
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
+import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8
+ *
+ * @public
+ */
 export interface IScatterPlotBucketProps {
     xAxisMeasure?: IMeasure;
     yAxisMeasure?: IMeasure;
@@ -15,26 +24,34 @@ export interface IScatterPlotBucketProps {
     sortBy?: SortItem[]; // TODO would it be removed? if not dont forget to test
 }
 
-export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucketProps {
-    workspace: string;
+/**
+ * TODO: SDK8
+ *
+ * @public
+ */
+export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucketProps {}
+
+/**
+ * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
+ * is a component with bucket props xAxisMeasure, yAxisMeasure, attribute, filters
+ *
+ * @public
+ */
+export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
+    return <CoreScatterPlot {...getProps(props)} />;
 }
+
+//
+// Internals
+//
 
 const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterPlotProps> = {
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            {
-                localIdentifier: MEASURES,
-                items: props.xAxisMeasure ? [props.xAxisMeasure] : [],
-            },
-            {
-                localIdentifier: SECONDARY_MEASURES,
-                items: props.yAxisMeasure ? [props.yAxisMeasure] : [],
-            },
-            {
-                localIdentifier: ATTRIBUTE,
-                items: props.attribute ? [props.attribute] : [],
-            },
+            newBucket(MEASURES, props.xAxisMeasure),
+            newBucket(SECONDARY_MEASURES, props.yAxisMeasure),
+            newBucket(ATTRIBUTE, props.attribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -50,11 +67,3 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
 };
 
 const getProps = getCoreChartProps(scatterPlotDefinition);
-
-/**
- * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
- * is a component with bucket props xAxisMeasure, yAxisMeasure, attribute, filters
- */
-export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
-    return <CoreScatterPlot {...getProps(props)} />;
-}

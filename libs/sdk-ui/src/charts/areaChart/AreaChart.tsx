@@ -1,5 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, SortItem, computeRatioRules } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    computeRatioRules,
+    IAttribute,
+    IFilter,
+    newBucket,
+    SortItem,
+} from "@gooddata/sdk-model";
 import * as React from "react";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
@@ -9,9 +16,18 @@ import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
+import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
 import isNil = require("lodash/isNil");
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: describe buckets
+ *
+ * @public
+ */
 export interface IAreaChartBucketProps {
     measures: AttributeOrMeasure[];
     viewBy?: IAttribute | IAttribute[];
@@ -20,9 +36,25 @@ export interface IAreaChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {
-    workspace: string;
+/**
+ * @public
+ */
+export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {}
+
+/**
+ * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
+ * is a component with bucket props measures, viewBy, stacksBy, filters
+ *
+ * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
+ * @public
+ */
+export function AreaChart(props: IAreaChartProps): JSX.Element {
+    return <CoreAreaChart {...getProps(props)} />;
 }
+
+//
+// Internals
+//
 
 const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartProps> = {
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
@@ -30,18 +62,9 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
         const { measures, viewBy, stackBy } = getBucketsProps(props);
         const sanitizedMeasures = computeRatioRules(measures);
         return [
-            {
-                localIdentifier: MEASURES,
-                items: sanitizedMeasures,
-            },
-            {
-                localIdentifier: ATTRIBUTE,
-                items: viewBy,
-            },
-            {
-                localIdentifier: STACK,
-                items: stackBy,
-            },
+            newBucket(MEASURES, ...sanitizedMeasures),
+            newBucket(ATTRIBUTE, ...viewBy),
+            newBucket(STACK, ...stackBy),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -64,18 +87,6 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
     },
     onBeforePropsConversion: verifyBuckets,
 };
-
-const getProps = getCoreChartProps(areaChartDefinition);
-
-/**
- * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
- * is a component with bucket props measures, viewBy, stacksBy, filters
- *
- * @public
- */
-export function AreaChart(props: IAreaChartProps): JSX.Element {
-    return <CoreAreaChart {...getProps(props)} />;
-}
 
 function getStackConfiguration(config: INewChartConfig = {}): INewChartConfig {
     const { stackMeasures, stackMeasuresToPercent } = config;
@@ -148,3 +159,5 @@ export function verifyBuckets(props: IAreaChartProps): void {
         );
     }
 }
+
+const getProps = getCoreChartProps(areaChartDefinition);

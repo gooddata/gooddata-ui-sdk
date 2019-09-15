@@ -1,5 +1,12 @@
 // (C) 2019 GoodData Corporation
-import { AttributeOrMeasure, computeRatioRules, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    computeRatioRules,
+    IAttribute,
+    IFilter,
+    newBucket,
+    SortItem,
+} from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { IBucketChartProps } from "../chartProps";
@@ -8,8 +15,16 @@ import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { CoreBarChart } from "./CoreBarChart";
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
+import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IBarChartBucketProps {
     measures: AttributeOrMeasure[];
     viewBy?: IAttribute | IAttribute[];
@@ -18,9 +33,25 @@ export interface IBarChartBucketProps {
     sortBy?: SortItem[];
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {
     workspace: string;
 }
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function BarChart(props: IBarChartProps): JSX.Element {
+    return <CoreBarChart {...getProps(props)} />;
+}
+
+//
+// Internals
+//
 
 const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps> = {
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
@@ -30,18 +61,9 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
         const stackBy = props.stackBy ? [props.stackBy] : [];
 
         return [
-            {
-                localIdentifier: MEASURES,
-                items: measures,
-            },
-            {
-                localIdentifier: ATTRIBUTE,
-                items: viewBy, // could be one or two attributes
-            },
-            {
-                localIdentifier: STACK,
-                items: stackBy,
-            },
+            newBucket(MEASURES, ...measures),
+            newBucket(ATTRIBUTE, ...viewBy),
+            newBucket(STACK, ...stackBy),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -63,7 +85,3 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
 };
 
 const getProps = getCoreChartProps(barChartDefinition);
-
-export function BarChart(props: IBarChartProps): JSX.Element {
-    return <CoreBarChart {...getProps(props)} />;
-}

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, SortItem } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
 import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 
@@ -8,6 +8,15 @@ import { IBucketChartProps } from "../chartProps";
 import { CoreLineChart } from "./CoreLineChart";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export interface ILineChartBucketProps {
     measures: AttributeOrMeasure[];
     trendBy?: IAttribute;
@@ -16,26 +25,34 @@ export interface ILineChartBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
-    workspace: string;
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {}
+
+/**
+ * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
+ * is a component with bucket props measures, trendBy, segmentBy, filters
+ *
+ * @public
+ */
+export function LineChart(props: ILineChartProps): JSX.Element {
+    return <CoreLineChart {...getProps(props)} />;
 }
+
+//
+// Internals
+//
 
 const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartProps> = {
     bucketPropsKeys: ["measures", "trendBy", "segmentBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            {
-                localIdentifier: MEASURES,
-                items: props.measures || [],
-            },
-            {
-                localIdentifier: ATTRIBUTE,
-                items: props.trendBy ? [props.trendBy] : [],
-            },
-            {
-                localIdentifier: STACK,
-                items: props.segmentBy ? [props.segmentBy] : [],
-            },
+            newBucket(MEASURES, ...props.measures),
+            newBucket(ATTRIBUTE, props.trendBy),
+            newBucket(STACK, props.segmentBy),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -51,11 +68,3 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
 };
 
 const getProps = getCoreChartProps(lineChartDefinition);
-
-/**
- * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
- * is a component with bucket props measures, trendBy, segmentBy, filters
- */
-export function LineChart(props: ILineChartProps): JSX.Element {
-    return <CoreLineChart {...getProps(props)} />;
-}
