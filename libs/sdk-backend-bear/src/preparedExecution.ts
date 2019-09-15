@@ -10,7 +10,7 @@ import {
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { IDimension, isDimension, SortItem } from "@gooddata/sdk-model";
 import { defFingerprint, defWithDimensions, defWithSorts } from "./executionDefinition";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 

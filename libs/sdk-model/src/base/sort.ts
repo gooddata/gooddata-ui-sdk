@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { Identifier } from ".";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 import { IAttribute } from "../attribute";
 import { IMeasure } from "../measure";
 

@@ -7,7 +7,7 @@ import {
     IAnalyticalWorkspace,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearWorkspace } from "./workspace";
 

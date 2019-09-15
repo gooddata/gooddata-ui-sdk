@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import compact from "lodash/compact";
+import compact = require("lodash/compact");
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
@@ -13,7 +13,7 @@ import {
     totalIsNative,
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

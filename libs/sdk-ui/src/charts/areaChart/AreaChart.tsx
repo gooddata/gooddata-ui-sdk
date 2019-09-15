@@ -9,7 +9,7 @@ import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
-import isNil from "lodash/isNil";
+import isNil = require("lodash/isNil");
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 
 export interface IAreaChartBucketProps {

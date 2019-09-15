@@ -14,7 +14,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 import SparkMD5 from "spark-md5";
 import {
     attributeFingerprint,

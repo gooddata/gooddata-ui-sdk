@@ -2,7 +2,7 @@
 
 import { Identifier } from "./index";
 import { ITotal } from "./totals";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * TODO: SDK8: Add docs

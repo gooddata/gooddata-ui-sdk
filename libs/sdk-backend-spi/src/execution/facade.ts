@@ -6,7 +6,7 @@ import {
     isPoPMeasure,
     isPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
-import isArray from "lodash/isArray";
+import isArray = require("lodash/isArray");
 import { IDataView } from "./index";
 import {
     DataValue,

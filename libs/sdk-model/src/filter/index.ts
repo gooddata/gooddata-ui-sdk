@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { ObjQualifier } from "../base";
-import isEmpty from "lodash/isEmpty";
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * TODO: SDK8: Add docs

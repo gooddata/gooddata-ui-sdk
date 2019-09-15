@@ -12,8 +12,8 @@ import {
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
-import compact from "lodash/compact";
-import get from "lodash/get";
+import compact = require("lodash/compact");
+import get = require("lodash/get");
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 
 export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {

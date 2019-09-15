@@ -119,9 +119,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         private onLoadingChanged(loadingState: ILoadingState) {
             const { onLoadingChanged } = this.props;
 
-            if (onLoadingChanged) {
-                this.props.onLoadingChanged(loadingState);
-            }
+            onLoadingChanged(loadingState);
 
             const { isLoading } = loadingState;
 
