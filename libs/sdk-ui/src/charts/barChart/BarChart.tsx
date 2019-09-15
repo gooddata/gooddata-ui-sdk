@@ -58,12 +58,11 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
     bucketsFactory: props => {
         const measures = computeRatioRules(props.measures);
         const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
-        const stackBy = props.stackBy ? [props.stackBy] : [];
 
         return [
             newBucket(MEASURES, ...measures),
             newBucket(ATTRIBUTE, ...viewBy),
-            newBucket(STACK, ...stackBy),
+            newBucket(STACK, props.stackBy),
         ];
     },
     executionFactory: (props, buckets) => {

@@ -528,6 +528,9 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
+export function measureDoesComputeRatio(measure: IMeasure): boolean;
+
+// @public
 export function measureId(measure: IMeasure): string;
 
 // @public

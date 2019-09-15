@@ -3,11 +3,11 @@ import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import {
     DataValue,
     DataViewFacade,
+    IAttributeHeader,
     IDataView,
     IMeasureGroupHeader,
     IMeasureHeaderItem,
     IResultAttributeHeaderItem,
-    IAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 import { isMeasureDefinition } from "@gooddata/sdk-model";
 import * as cx from "classnames";
@@ -34,9 +34,9 @@ import { unwrap } from "../../base/helpers/utils";
 import {
     IAxis,
     ICategory,
-    INewChartConfig,
     IChartLimits,
     IChartOptions,
+    INewChartConfig,
     IPatternObject,
     IPointData,
     ISeriesDataItem,
@@ -409,11 +409,8 @@ export function getBubbleChartSeries(
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucket = dv.bucket(MEASURES);
-    const secondaryMeasuresBucket = dv.bucket(SECONDARY_MEASURES);
-
-    const primaryMeasuresBucketEmpty = isEmpty(get(primaryMeasuresBucket, "items", []));
-    const secondaryMeasuresBucketEmpty = isEmpty(get(secondaryMeasuresBucket, "items", []));
+    const primaryMeasuresBucketEmpty = dv.isBucketEmpty(MEASURES);
+    const secondaryMeasuresBucketEmpty = dv.isBucketEmpty(SECONDARY_MEASURES);
 
     return dv.twoDimData().map((resData: any, index: number) => {
         let data: any = [];
@@ -1219,14 +1216,15 @@ function getXAxes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
     const { type } = config;
-    const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
-        label: config.xLabel,
-        format: config.xFormat,
-    });
-
-    const firstMeasureGroupItem = measureGroupItems[0];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
+        const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
+            label: config.xLabel,
+            format: config.xFormat,
+        });
+
+        const firstMeasureGroupItem = measureGroupItems[0];
+
         const noPrimaryMeasures = dv.isBucketEmpty(MEASURES);
         if (noPrimaryMeasures) {
             return [

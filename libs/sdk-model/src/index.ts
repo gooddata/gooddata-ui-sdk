@@ -84,6 +84,7 @@ export {
     MeasurePredicate,
     anyMeasure,
     idMatchMeasure,
+    measureDoesComputeRatio,
 } from "./measure";
 
 export {

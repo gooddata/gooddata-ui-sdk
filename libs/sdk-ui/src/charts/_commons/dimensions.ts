@@ -15,7 +15,7 @@ import { ATTRIBUTE, STACK, VIEW } from "../../base/constants/bucketNames";
 import { MEASUREGROUP } from "../../base/constants/dimensions";
 
 function isStackedChart(buckets: IBucket[]) {
-    return buckets.some(bucket => bucket.localIdentifier === STACK && bucket.items.length > 0);
+    return !bucketIsEmpty(bucketsFind(buckets, STACK));
 }
 
 function stackedDimensions(buckets: IBucket[]): IDimension[] {

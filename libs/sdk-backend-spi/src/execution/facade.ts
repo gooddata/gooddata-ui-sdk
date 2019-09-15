@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
 import {
+    bucketIsEmpty,
     bucketMeasures,
     IBucket,
     IMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
-import isArray = require("lodash/isArray");
 import { IDataView } from "./index";
 import {
     DataValue,
@@ -18,6 +18,7 @@ import {
     isMeasureGroupHeader,
     isResultAttributeHeaderItem,
 } from "./results";
+import isArray = require("lodash/isArray");
 
 type BucketIndex = {
     [key: string]: IBucket;
@@ -60,7 +61,7 @@ export class DataViewFacade {
     }
 
     public isBucketEmpty(id: string): boolean {
-        return !this._bucketById[id] || this._bucketById[id].items.length === 0;
+        return !this._bucketById[id] || bucketIsEmpty(this._bucketById[id]);
     }
 
     public bucketMeasures(id: string): IMeasure[] {

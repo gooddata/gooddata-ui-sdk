@@ -224,3 +224,19 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
 export function measureId(measure: IMeasure): string {
     return measure.measure.localIdentifier;
 }
+
+/**
+ * Tests whether the measure is set to compute ratio.
+ *
+ * @param measure - measure to to test
+ * @returns true if computes ratio, false otherwise
+ */
+export function measureDoesComputeRatio(measure: IMeasure): boolean {
+    if (isSimpleMeasure(measure)) {
+        const computeRatio = measure.measure.definition.measureDefinition.computeRatio;
+
+        return computeRatio ? computeRatio : false;
+    }
+
+    return false;
+}

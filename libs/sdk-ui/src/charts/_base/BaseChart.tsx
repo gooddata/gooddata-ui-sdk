@@ -37,7 +37,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
         visualizationComponent: Visualization,
     };
 
-    private errorMap: IErrorMap;
+    private readonly errorMap: IErrorMap;
 
     constructor(props: Props) {
         super(props);

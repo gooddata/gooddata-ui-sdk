@@ -42,6 +42,9 @@ export interface ILoadingInjectedProps {
      */
     error?: string;
 
+    // TODO: SDK8: take this out of here
+    intl: InjectedIntl;
+
     /**
      * Callback to trigger if the chart cannot visualize the data because it is too large.
      */
@@ -51,9 +54,6 @@ export interface ILoadingInjectedProps {
      * Callback to trigger if the chart cannot visualize the data because it contains negative values.
      */
     onNegativeValues(): void;
-
-    // TODO: SDK8: take this out of here
-    intl: InjectedIntl;
 }
 
 export function withEntireDataView<T extends ICoreChartProps>(
