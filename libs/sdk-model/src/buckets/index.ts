@@ -142,7 +142,7 @@ export function bucketIsEmpty(bucket: IBucket): boolean {
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
  * will be returned.
  *
- * This function also provided convenience to find attribute by its local identifier - if you pass predicate as
+ * This function also provides convenience to find attribute by its local identifier - if you pass predicate as
  * string the function will automatically create idMatchAttribute predicate.
  *
  * @param bucket - bucket to to search in

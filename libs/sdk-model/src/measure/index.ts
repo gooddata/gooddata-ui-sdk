@@ -107,21 +107,21 @@ export interface IPreviousPeriodDateDataSet {
 //
 //
 /**
- * TODO: SDK8: Add docs
+ * Defines function signature for measure predicates.
  *
  * @public
  */
 export type MeasurePredicate = (measure: IMeasure) => boolean;
 
 /**
- * TODO: SDK8: Add docs
+ * Implementation of measure predicate which always returns true.
  *
  * @public
  */
 export const anyMeasure: MeasurePredicate = _ => true;
 
 /**
- * TODO: SDK8: Add docs
+ * Factory function for measure predicate which evaluates true for measures that match particular ID.
  *
  * @public
  */
@@ -132,7 +132,7 @@ export const idMatchMeasure: (id: string) => MeasurePredicate = id => m => m.mea
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is any type of measure.
  *
  * @public
  */
@@ -141,7 +141,7 @@ export function isMeasure(obj: any): obj is IMeasure {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a simple measure.
  *
  * @public
  */
@@ -150,7 +150,7 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition> {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a period-over-period measure.
  *
  * @public
  */
@@ -159,7 +159,7 @@ export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition> {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a previous-period measure.
  *
  * @public
  */
@@ -168,7 +168,7 @@ export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeri
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is an arithmetic measure.
  *
  * @public
  */
@@ -177,7 +177,7 @@ export function isArithmeticMeasure(obj: any): obj is IMeasure<IArithmeticMeasur
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a measure definition.
  *
  * @public
  */
@@ -186,7 +186,7 @@ export function isMeasureDefinition(obj: any): obj is IMeasureDefinition {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a period-over-period measure definition.
  *
  * @public
  */
@@ -195,7 +195,7 @@ export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is a previous period measure definition.
  *
  * @public
  */
@@ -204,7 +204,7 @@ export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPer
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard for checking whether object is an arithmetic measure definition.
  *
  * @public
  */
@@ -217,8 +217,10 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Gets measure's local identifier.
  *
+ * @param measure - measure to work with
+ * @returns string identifier
  * @public
  */
 export function measureId(measure: IMeasure): string {
@@ -230,6 +232,7 @@ export function measureId(measure: IMeasure): string {
  *
  * @param measure - measure to to test
  * @returns true if computes ratio, false otherwise
+ * @public
  */
 export function measureDoesComputeRatio(measure: IMeasure): boolean {
     if (isSimpleMeasure(measure)) {

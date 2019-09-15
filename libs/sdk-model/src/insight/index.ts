@@ -79,8 +79,14 @@ export function isInsight(obj: any): obj is IInsight {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Finds bucket matching the provided predicate in an insight.
  *
+ * This function also provides convenience to find bucket by its local identifier - if you pass predicate as
+ * string the function will automatically create idMatchBucket predicate.
+ *
+ * @param insight - insight to work with
+ * @param idOrFun - local identifier or bucket predicate
+ * @returns undefined if none match
  * @public
  */
 export function insightBucket(insight: IInsight, idOrFun: string | BucketPredicate): IBucket | undefined {
@@ -88,17 +94,26 @@ export function insightBucket(insight: IInsight, idOrFun: string | BucketPredica
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets all buckets matching the provided ids from an insight
  *
+ * @param insight - insight to work with
+ * @param ids - local identifiers of buckets
+ * @returns empty list if none match
  * @public
  */
 export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
+    if (!ids || !ids.length) {
+        return [];
+    }
+
     return bucketsById(insight.insight.buckets, ...ids);
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets all measures used in the provided insight.
  *
+ * @param insight - insight to work with
+ * @returns empty if one
  * @public
  */
 export function insightMeasures(insight: IInsight): IMeasure[] {
@@ -106,8 +121,10 @@ export function insightMeasures(insight: IInsight): IMeasure[] {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Tests whether insight uses any measures.
  *
+ * @param insight - insight to test
+ * @returns true if any measures, false if not
  * @public
  */
 export function insightHasMeasures(insight: IInsight): boolean {
@@ -115,8 +132,10 @@ export function insightHasMeasures(insight: IInsight): boolean {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets all attributes used in the provided insight
  *
+ * @param insight - insight to work with
+ * @returns empty if none
  * @public
  */
 export function insightAttributes(insight: IInsight): IAttribute[] {
@@ -124,8 +143,10 @@ export function insightAttributes(insight: IInsight): IAttribute[] {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Tests whether insight uses any attributes
  *
+ * @param insight - insight to test
+ * @returns true if any measures, false if not
  * @public
  */
 export function insightHasAttributes(insight: IInsight): boolean {
@@ -133,8 +154,11 @@ export function insightHasAttributes(insight: IInsight): boolean {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Tests whether insight contains valid definition of data to visualise - meaning at least one attribute or
+ * one measure is defined in the insight.
  *
+ * @param insight - insight to test
+ * @returns true if at least one measure or attribute, false if none
  * @public
  */
 export function insightHasDataDefined(insight: IInsight): boolean {
@@ -144,8 +168,9 @@ export function insightHasDataDefined(insight: IInsight): boolean {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets filters used in an insight.
  *
+ * @param insight - insight to work with
  * @public
  */
 export function insightFilters(insight: IInsight): IFilter[] {
@@ -153,8 +178,13 @@ export function insightFilters(insight: IInsight): IFilter[] {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets sorting defined in the insight.
  *
+ * Note: this function ensures that only sorts working on top of attributes and measures defined in the
+ * insight will be returned. Any invalid entries will be stripped.
+ *
+ * @param insight - insight to get sorts from
+ * @returns array of valid sorts
  * @public
  */
 export function insightSorts(insight: IInsight): SortItem[] {
@@ -165,7 +195,7 @@ export function insightSorts(insight: IInsight): SortItem[] {
         return intersection(arr1, arr2).length === arr2.length;
     }
 
-    const filteredSorts = insight.insight.sorts.filter(s => {
+    return insight.insight.sorts.filter(s => {
         const entities: SortEntityIds = sortEntityIds(s);
 
         return (
@@ -173,13 +203,13 @@ export function insightSorts(insight: IInsight): SortItem[] {
             contains(measureIds, entities.measureIdentifiers)
         );
     });
-
-    return filteredSorts;
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets all totals defined in the insight
  *
+ * @param insight - insight to get totals from
+ * @returns empty if none
  * @public
  */
 export function insightTotals(insight: IInsight): ITotal[] {
@@ -187,8 +217,10 @@ export function insightTotals(insight: IInsight): ITotal[] {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Gets visualization properties of an insight.
  *
+ * @param insight - insight to get vis properties for
+ * @returns empty object is no properties
  * @public
  */
 export function insightProperties(insight: IInsight): VisualizationProperties {
