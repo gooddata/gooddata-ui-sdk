@@ -7,10 +7,10 @@ import {
     idMatchMeasure,
     IMeasure,
     isMeasure,
-    isMeasureDefinition,
+    isSimpleMeasure,
     MeasurePredicate,
 } from "../measure";
-import { ITotal } from "../base/totals";
+import { isTotal, ITotal } from "../base/totals";
 
 /**
  * TODO: SDK8: Add docs
@@ -79,8 +79,9 @@ export type MeasureInBucket = {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type-guard testing whether the provided object is an instance of {@link IBucket}.
  *
+ * @param obj - object to test
  * @public
  */
 export function isBucket(obj: any): obj is IBucket {
@@ -92,23 +93,71 @@ export function isBucket(obj: any): obj is IBucket {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Creates a new bucket with the provided id and all the specified content.
  *
+ * @param id - bucket identifier
+ * @param content - items to put into the bucket; attributes, measures and/or totals
+ * @returns always new instance
  * @public
  */
-export function bucketIsEmpty(bucket: IBucket): boolean {
-    return !bucket || bucket.items.length === 0;
+export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket {
+    const items: AttributeOrMeasure[] = [];
+    const totals: ITotal[] = [];
+
+    (content ? content : []).forEach(i => {
+        if (!i) {
+            return;
+        }
+        if (isAttribute(i) || isMeasure(i)) {
+            items.push(i);
+        } else if (isTotal(i)) {
+            totals.push(i);
+        } else {
+            // TODO: SDK8: switch to invariant
+            throw new Error("...");
+        }
+    });
+
+    return {
+        localIdentifier: id,
+        items,
+        totals,
+    };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Tests whether the provided bucket is empty = contains no items and no totals.
  *
+ * @param bucket - bucket to test
+ * @returns true if empty, false if not
+ * @public
+ */
+export function bucketIsEmpty(bucket: IBucket): boolean {
+    return !bucket || (bucket.items.length === 0 && (!bucket.totals || bucket.totals.length === 0));
+}
+
+/**
+ * Gets first attribute matching the provided predicate from the bucket.
+ *
+ * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
+ * will be returned.
+ *
+ * This function also provided convenience to find attribute by its local identifier - if you pass predicate as
+ * string the function will automatically create idMatchAttribute predicate.
+ *
+ * @param bucket - bucket to to search in
+ * @param idOrFun - attribute identifier or instance of AttributePredicate; {@link anyAttribute} predicate is default
+ * @returns undefined if no matching attribute is found
  * @public
  */
 export function bucketAttribute(
     bucket: IBucket,
     idOrFun: string | AttributePredicate = anyAttribute,
 ): IAttribute | undefined {
+    if (!bucket) {
+        return;
+    }
+
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
     const compositeGuard = (obj: any): obj is IAttribute => {
         return isAttribute(obj) && predicate(obj);
@@ -118,8 +167,14 @@ export function bucketAttribute(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all attributes matching the provided predicate from the bucket.
  *
+ * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning all attributes
+ * from the bucket will be returned.
+ *
+ * @param bucket - bucket to work with
+ * @param predicate - attribute predicate; {@link anyAttribute} predicate is default
+ * @returns empty list if none match
  * @public
  */
 export function bucketAttributes(
@@ -139,8 +194,14 @@ export function bucketAttributes(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all measures matching the provided predicate from the bucket.
  *
+ * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning all measures from
+ * the bucket will be returned.
+ *
+ * @param bucket - bucket to work with
+ * @param predicate - measure predicate; {@link anyMeasure} predicate is default
+ * @returns empty list if none match
  * @public
  */
 export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = anyMeasure): IMeasure[] {
@@ -157,8 +218,10 @@ export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = an
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all attributes and measures from the bucket.
  *
+ * @param bucket - bucket to work with
+ * @returns empty list if no items
  * @public
  */
 export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
@@ -170,8 +233,10 @@ export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all totals from the bucket
  *
+ * @param bucket - bucket to work with
+ * @returns empty list if no totals
  * @public
  */
 export function bucketTotals(bucket: IBucket): ITotal[] {
@@ -187,43 +252,90 @@ export function bucketTotals(bucket: IBucket): ITotal[] {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all attributes matching the provided predicate from a list of buckets.
  *
+ * If no predicate is provided, then the function defaults to {@link anyAttribute} predicate - meaning all
+ * attributes will be returned.
+ *
+ * @param buckets - list of buckets to get attributes from
+ * @param predicate - attribute predicate; {@link anyAttribute} is default
+ * @returns empty list if none match
  * @public
  */
-export function bucketsAttributes(buckets: IBucket[]): IAttribute[] {
-    return buckets.map(b => bucketAttributes(b)).reduce((acc, items) => acc.concat(items), []);
+export function bucketsAttributes(
+    buckets: IBucket[],
+    predicate: AttributePredicate = anyAttribute,
+): IAttribute[] {
+    if (!buckets || !buckets.length) {
+        return [];
+    }
+
+    return buckets.map(b => bucketAttributes(b, predicate)).reduce((acc, items) => acc.concat(items), []);
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all measures matching the provided predicate from a list of buckets.
  *
+ * If no predicate is provided, then the function defaults to {@link anyMeasure} predicate - meaning all
+ * measures will be returned.
+ *
+ * @param buckets - list of buckets to get measures from
+ * @param predicate - measure predicate; {@link anyMeasure} is default
+ * @returns empty list if none match
  * @public
  */
 export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate = anyMeasure): IMeasure[] {
+    if (!buckets || !buckets.length) {
+        return [];
+    }
+
     return buckets.map(b => bucketMeasures(b, predicate)).reduce((acc, items) => acc.concat(items), []);
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Finds bucket matching the provided predicate in a list of buckets.
  *
+ * If no predicate is provided, then the function defaults to {@link anyBucket} predicate - meaning first
+ * bucket in the list will be returned.
+ *
+ * This function also provides convenience to find bucket by local identifier - if you pass predicate as
+ * string the function will automatically create idMatchBucket predicate.
+ *
+ * @param buckets - list of buckets to search
+ * @param idOrFun - bucket predicate or string to match bucket by local identifier; {@link anyBucket} is default
  * @public
  */
-export function bucketsFind(buckets: IBucket[], idOrFun: string | BucketPredicate): IBucket | undefined {
+export function bucketsFind(
+    buckets: IBucket[],
+    idOrFun: string | BucketPredicate = anyBucket,
+): IBucket | undefined {
     const predicate = typeof idOrFun === "string" ? idMatchBucket(idOrFun) : idOrFun;
 
     return buckets.find(predicate);
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Finds attribute matching the provided predicate in a list of buckets. If found, the function returns an object
+ * that contains bucket where the matched attribute is stored, index within that bucket and the attribute itself.
  *
+ * This function also provides convenience to find attribute by local identifier - if you pass predicate as
+ * string the function will automatically create idMatchAttribute predicate.
+ *
+ * @remarks See {@link AttributeInBucket}
+ *
+ * @param buckets - list of buckets to search
+ * @param idOrFun - attribute predicate or string to find attribute by local identifier; no default
+ * @returns first-found attribute matching the predicate, undefined if none match
  * @public
  */
 export function bucketsFindAttribute(
     buckets: IBucket[],
     idOrFun: string | AttributePredicate,
 ): AttributeInBucket | undefined {
+    if (!buckets || !buckets.length) {
+        return;
+    }
+
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
     const typeAgnosticPredicate = (obj: any): boolean => {
         return isAttribute(obj) && predicate(obj);
@@ -242,14 +354,27 @@ export function bucketsFindAttribute(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Finds measure matching the provided predicate in a list of buckets. If found, the function returns an object
+ * that contains bucket where the matched measure is stored, index within that bucket and the measure itself.
  *
+ * This function also provides convenience to find measure by local identifier - if you pass predicate as
+ * string the function will automatically create idMatchMeasure predicate.
+ *
+ * @remarks See {@link MeasureInBucket}
+ *
+ * @param buckets - list of buckets to search
+ * @param idOrFun - measure predicate or string to find measure by local identifier; no default
+ * @returns first-found measure matching the predicate, undefined if none match
  * @public
  */
 export function bucketsFindMeasure(
     buckets: IBucket[],
     idOrFun: string | MeasurePredicate,
 ): MeasureInBucket | undefined {
+    if (!buckets || !buckets.length) {
+        return;
+    }
+
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
     const typeAgnosticPredicate = (obj: any): boolean => {
         return isMeasure(obj) && predicate(obj);
@@ -268,17 +393,26 @@ export function bucketsFindMeasure(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets buckets with the provided local identifiers from a list of buckets.
  *
+ * @param buckets - list of buckets to filter
+ * @param ids - bucket identifiers
+ * @returns empty list if none match
  * @public
  */
 export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
+    if (!ids || !ids.length) {
+        return [];
+    }
+
     return buckets.filter(b => b.localIdentifier && ids.indexOf(b.localIdentifier) >= 0);
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all attributes and measures from a list of buckets.
  *
+ * @param buckets - buckets to work with
+ * @returns empty list if none
  * @public
  */
 export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
@@ -286,8 +420,10 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Gets all totals from a list of buckets
  *
+ * @param buckets - buckets to work with
+ * @returns empty list if none
  * @public
  */
 export function bucketsTotals(buckets: IBucket[]): ITotal[] {
@@ -295,28 +431,50 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[] {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Tests whether all buckets in a list are empty (meaning neither has any items or totals defined)
  *
+ * @param buckets - buckets to work with
+ * @returns true if empty, false if not
  * @public
  */
 export function bucketsIsEmpty(buckets: IBucket[]): boolean {
-    return buckets.every(b => b.items.length === 0);
+    return buckets.every(bucketIsEmpty);
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Defines possible compute ratio sanitization rules.
  *
  * @public
  */
 export enum ComputeRatioRule {
+    /**
+     * Compute ratio must not be used in any measure
+     */
     NEVER,
+
+    /**
+     * Compute ratio can be used if there is just a single measure
+     */
     SINGLE_MEASURE_ONLY,
+
+    /**
+     * Compute ratio can be used on any measure
+     */
     ANY_MEASURE,
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Applies compute ratio rule to all measures in a list - this MAY be done to sanitize measure definitions
+ * so that the computed results make sense when visualized in a chart
  *
+ * The function will return a new list with updated measures according to the specified rule; see {@link ComputeRatioRule}.
+ *
+ * For convenience this function can work with list of measures AND attributes; attributes will be ignored
+ * in processing and kept in resulting array as-is.
+ *
+ * @param items - list of attributes or measures to sanitize; attributes will be lef
+ * @param rule - rule to apply; see {@link ComputeRatioRule}
+ * @returns new list with modified measures; the original list and measures in it are left intact
  * @public
  */
 export function computeRatioRules<T extends AttributeOrMeasure>(
@@ -337,11 +495,7 @@ export function computeRatioRules<T extends AttributeOrMeasure>(
 }
 
 function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
-    if (
-        isMeasure(item) &&
-        isMeasureDefinition(item.measure.definition) &&
-        item.measure.definition.measureDefinition.computeRatio
-    ) {
+    if (isSimpleMeasure(item) && item.measure.definition.measureDefinition.computeRatio) {
         const newDefinition = { ...item.measure.definition };
         newDefinition.measureDefinition.computeRatio = false;
 

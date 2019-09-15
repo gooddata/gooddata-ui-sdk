@@ -1,6 +1,13 @@
 // (C) 2019 GoodData Corporation
 
-export { IAttribute, isAttribute, attributeId } from "./attribute";
+export {
+    IAttribute,
+    isAttribute,
+    attributeId,
+    AttributePredicate,
+    anyAttribute,
+    idMatchAttribute,
+} from "./attribute";
 
 export {
     Identifier,
@@ -87,6 +94,7 @@ export {
     anyBucket,
     MeasureInBucket,
     AttributeInBucket,
+    newBucket,
     bucketIsEmpty,
     bucketAttributes,
     bucketAttribute,

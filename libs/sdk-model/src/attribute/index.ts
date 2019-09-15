@@ -38,6 +38,11 @@ export type AttributePredicate = (attribute: IAttribute) => boolean;
  */
 export const anyAttribute: AttributePredicate = _ => true;
 
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =>
     attr.attribute.localIdentifier === id;
 

@@ -5,6 +5,9 @@
 ```ts
 
 // @public
+export const anyAttribute: AttributePredicate;
+
+// @public
 export const anyBucket: BucketPredicate;
 
 // @public
@@ -32,8 +35,9 @@ export type AttributeInBucket = {
 // @public
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
-// Warning: (ae-forgotten-export) The symbol "AttributePredicate" needs to be exported by the entry point index.d.ts
-// 
+// @public
+export type AttributePredicate = (attribute: IAttribute) => boolean;
+
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
@@ -53,13 +57,13 @@ export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): I
 export type BucketPredicate = (bucket: IBucket) => boolean;
 
 // @public
-export function bucketsAttributes(buckets: IBucket[]): IAttribute[];
+export function bucketsAttributes(buckets: IBucket[], predicate?: AttributePredicate): IAttribute[];
 
 // @public
 export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[];
 
 // @public
-export function bucketsFind(buckets: IBucket[], idOrFun: string | BucketPredicate): IBucket | undefined;
+export function bucketsFind(buckets: IBucket[], idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
 export function bucketsFindAttribute(buckets: IBucket[], idOrFun: string | AttributePredicate): AttributeInBucket | undefined;
@@ -84,11 +88,8 @@ export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @public
 export enum ComputeRatioRule {
-    // (undocumented)
     ANY_MEASURE = 2,
-    // (undocumented)
     NEVER = 0,
-    // (undocumented)
     SINGLE_MEASURE_ONLY = 1
 }
 
@@ -222,6 +223,9 @@ export interface IDimension {
     // (undocumented)
     totals?: ITotal[];
 }
+
+// @public
+export const idMatchAttribute: (id: string) => AttributePredicate;
 
 // @public
 export const idMatchBucket: (id: string) => BucketPredicate;
@@ -540,6 +544,9 @@ export type MeasurePredicate = (measure: IMeasure) => boolean;
 // 
 // @internal
 export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
+
+// @public
+export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // Warning: (ae-internal-missing-underscore) The name "newMeasureSort" should be prefixed with an underscore because the declaration is marked as @internal
 // 
