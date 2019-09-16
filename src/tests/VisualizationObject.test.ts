@@ -3,6 +3,7 @@ import { VisualizationObject } from '../VisualizationObject';
 import IMeasure = VisualizationObject.IMeasure;
 import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
 import BucketItem = VisualizationObject.BucketItem;
+import VisualizationObjectExtendedFilter = VisualizationObject.VisualizationObjectExtendedFilter;
 import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
 import VisualizationObjectDateFilter = VisualizationObject.VisualizationObjectDateFilter;
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
@@ -562,6 +563,43 @@ describe('VisualizationObject', () => {
             };
             const result = VisualizationObject.isAttribute(attribute);
             expect(result).toEqual(true);
+        });
+    });
+
+    describe('isMeasureValueFilter', () => {
+        it('should return false when null is tested', () => {
+            const result = VisualizationObject.isMeasureValueFilter(null);
+            expect(result).toEqual(false);
+        });
+
+        it('should return false when undefined is tested', () => {
+            const result = VisualizationObject.isMeasureValueFilter(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it('should return true when measure value filter is tested', () => {
+            const filter: VisualizationObjectExtendedFilter = {
+                measureValueFilter: {
+                    measure: {
+                        uri: '/gdc/mock/date'
+                    }
+                }
+            };
+            const result = VisualizationObject.isMeasureValueFilter(filter);
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when positive attribute filter is tested', () => {
+            const filter: VisualizationObjectExtendedFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        uri: '/gdc/mock/attribute'
+                    },
+                    in: ['/gdc/mock/attribute/value_1', '/gdc/mock/attribute/value_2']
+                }
+            };
+            const result = VisualizationObject.isMeasureValueFilter(filter);
+            expect(result).toEqual(false);
         });
     });
 });

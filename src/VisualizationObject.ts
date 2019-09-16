@@ -12,6 +12,7 @@ export namespace VisualizationObject {
 
     export type BucketItem = IMeasure | IVisualizationAttribute;
 
+    export type VisualizationObjectExtendedFilter = VisualizationObjectFilter | IMeasureValueFilter;
     export type VisualizationObjectFilter = VisualizationObjectDateFilter | VisualizationObjectAttributeFilter;
 
     export type VisualizationObjectDateFilter =
@@ -61,10 +62,47 @@ export namespace VisualizationObject {
         };
     }
 
+    export type ComparisonConditionOperator = 'GREATER_THAN'
+        | 'GREATER_THAN_OR_EQUAL_TO'
+        | 'LESS_THAN'
+        | 'LESS_THAN_OR_EQUAL_TO'
+        | 'EQUAL_TO'
+        | 'NOT_EQUAL_TO';
+
+    export interface IComparisonCondition {
+        comparison: {
+            operator: ComparisonConditionOperator
+            value: number;
+        };
+    }
+
+    export type RangeConditionOperator = 'BETWEEN' | 'NOT_BETWEEN';
+
+    export interface IRangeCondition {
+        range: {
+            operator: RangeConditionOperator;
+            from: number;
+            to: number;
+        };
+    }
+
+    export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
+    export interface ILocalIdentifierQualifier {
+        localIdentifier: string;
+    }
+
+    export interface IMeasureValueFilter {
+        measureValueFilter: {
+            measure: IObjUriQualifier | ILocalIdentifierQualifier;
+            condition?: MeasureValueFilterCondition;
+        };
+    }
+
     export interface IVisualizationObjectContent {
         visualizationClass: IObjUriQualifier;
         buckets: IBucket[];
-        filters?: VisualizationObjectFilter[];
+        filters?: VisualizationObjectExtendedFilter[];
         properties?: string;
         references?: IReferenceItems;
     }
@@ -204,6 +242,13 @@ export namespace VisualizationObject {
     ): filter is IVisualizationObjectPositiveAttributeFilter {
         return !isEmpty(filter)
             && (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    }
+
+    export function isMeasureValueFilter(
+        filter: VisualizationObjectExtendedFilter
+    ): filter is IMeasureValueFilter {
+        return !isEmpty(filter)
+            && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
     }
 
     export function isAbsoluteDateFilter(
