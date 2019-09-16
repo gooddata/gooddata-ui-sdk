@@ -17,7 +17,7 @@
         "tslint": "./{src,test}/**/*.ts"
     },
     "scripts": {
-        "dev": "tsc --watch",
+        "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "npm run build:lib && npm run build:dist",
         "build:lib": "rm -rf lib && tsc -p tsconfig.build.json",
         "build:dist": "rm -rf dist && webpack",

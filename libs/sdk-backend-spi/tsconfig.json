@@ -12,7 +12,11 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "removeComments": false
+        "removeComments": false,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/sdk-model": ["sdk-model/src"]
+        }
     },
     "exclude": ["node_modules", "dist"]
 }

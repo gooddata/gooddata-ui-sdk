@@ -2,9 +2,35 @@
 
 ## Architecture Overview
 
-TBD
+The SDK follows layered architecture with several packages (modules) on each layer. Each layer has clear set of responsibilities
+and constraints.
+
+-   Layer 1: Platform-specific API clients and their supporting code (models, DTOs and the like)
+-   Layer 2: Platform-agnostic domain model and analytical backend SPI; SPI realizations are on this layer as well
+-   Layer 3: UI SDK - React components
+
+The main constraints in the architecture are:
+
+1.  Packages on lower layers MUST NOT depend on packages on higher layers
+2.  Packages on one layer MUST depend only on packages either on same layer or one layer down
+3.  Packages on one layer MUST NOT have cyclic dependencies
 
 ## Package Overview
+
+### Naming conventions
+
+-   All platform-specific packages (clients, models and the like) start with `gd-` prefix
+-   All SDK packages have `sdk-` prefix
+-   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix
+-   All SDK React packages have `sdk-ui-` prefix
+
+### Package conventions / constraints
+
+-   Each package MUST have an index.ts(x) in its source root. This is where API surface of the package is defined
+-   API surface of each package is enumerated _exactly_. Wildcard re-exports are not allowed
+-   Everything exposed on the package's API MUST have TSDoc; this TSDoc MUST contain @public, @alpha, @beta or @internal
+    annotations
+-   Packages MUST depend only on exposed API; in other words, never import from "package/someDir/someFile"
 
 ### Layer 1: API Clients and platform specific data models
 
@@ -13,7 +39,7 @@ TBD
 REST API Client for the GoodData 'bear' platform is implemented here. When APIs used by frontend are added or updated
 in 'bear', they SHOULD be added or updated in this package.
 
-#### @gooddata/gd-bear-client-model
+#### @gooddata/gd-bear-model
 
 Data types fundamental to bear's domain model SHOULD be implemented here, together with any and all functions
 needed to manipulate these types.
@@ -25,7 +51,7 @@ is highly likely that the function SHOULD be located here as well.
 
 REST API Client for the GoodData 'tiger' platform is implemented here.
 
-#### @gooddata/gd-tiger-client-model
+#### @gooddata/gd-tiger-model
 
 Data types fundamental to tiger's domain model SHOULD be implemented here, together with any and all functions
 needed to manipulate these types.
@@ -106,13 +132,25 @@ React components that can be used to define attribute or measure filters are imp
 
 Non-visual, 'supporting' components... Executor, BucketExecutor and the like.
 
+#### @gooddata/sdk-ui-vis-loader
+
+Standalone visualization loader component - e.g. the Visualization URI component.
+
 #### @gooddata/sdk-ui
 
 Umbrella for all packages.
 
-### Naming conventions
+## TypeScript setup
 
--   All platform-specific packages (clients, models and the like) start with `gd-` prefix
--   All SDK packages have `sdk-` prefix
--   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix
--   All SDK React packages have `sdk-ui-` prefix
+Each project has three TS Config files:
+
+-   tsconfig.build.json - used for production builds
+-   tsconfig.dev.json - used for builds on dev workstation, typically used in conjunction with --watch
+-   tsconfig.json - base file, used for IDEs
+
+The TypeScript configuration in `tsconfig.json` uses `baseUrl` and `paths` to link to source directories of
+other dependent SDK projects: this is to enable fully integrated developer experience in the IDE. In this setup,
+changes made in dependent project are immediately visible in the depending project. In other words, IDE resolves
+intra-SDK dependencies to their source files instead of built files in the `dist`.
+
+The `tsconfig.dev.json` and `tsconfig.build.json` nullify the `baseUrl` and `paths` settings.

@@ -5,7 +5,9 @@
         "noImplicitAny": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
-        "pretty": true
+        "pretty": true,
+        "baseUrl": null,
+        "paths": null
     },
     "exclude": ["src/_defunct/**/*"]
 }
