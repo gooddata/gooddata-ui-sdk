@@ -88,3 +88,32 @@ export const negativeAttrFilterWithoutElements: VisualizationObject.IVisualizati
         notIn: [],
     },
 };
+
+export const comparisonMeasureValueFilter: VisualizationObject.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 50,
+            },
+        },
+    },
+};
+
+export const rangeMeasureValueFilter: VisualizationObject.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            range: {
+                operator: "BETWEEN",
+                from: 10,
+                to: 100,
+            },
+        },
+    },
+};

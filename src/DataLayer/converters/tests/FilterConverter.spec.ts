@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import * as input from "./fixtures/FilterConverter.input.fixtures";
 import * as expected from "./fixtures/FilterConverter.afm.fixtures";
-import { convertVisualizationObjectFilter } from "../FilterConverter";
+import { convertVisualizationObjectExtendedFilter } from "../FilterConverter";
 
 // tslint:disable:max-line-length
 const VIS_OBJ_TESTS = [
@@ -22,10 +22,16 @@ const VIS_OBJ_TESTS = [
     ["positive attribute filter", input.positiveAttrFilter, expected.positiveAttrFilter],
     ["negative attribute filter", input.negativeAttrFilter, expected.negativeAttrFilter],
     ["negative attribute filter without elements", input.negativeAttrFilterWithoutElements, null],
+    [
+        "comparison measure value filter",
+        input.comparisonMeasureValueFilter,
+        expected.comparisonMeasureValueFilter,
+    ],
+    ["range measure value filter", input.rangeMeasureValueFilter, expected.rangeMeasureValueFilter],
 ];
 
-describe.each(VIS_OBJ_TESTS)("convertVisualizationObjectFilter", (desc, input, expected) => {
+describe.each(VIS_OBJ_TESTS)("convertVisualizationObjectExtendedFilter", (desc, input, expected) => {
     it(`should ${desc}`, () => {
-        expect(convertVisualizationObjectFilter(input)).toEqual(expected);
+        expect(convertVisualizationObjectExtendedFilter(input)).toEqual(expected);
     });
 });

@@ -3,7 +3,7 @@ import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import get from "lodash/get";
 import { AFM, VisualizationObject } from "@gooddata/typings";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { convertVisualizationObjectExtendedFilter } from "./FilterConverter";
 import MeasureConverter from "./MeasureConverter";
 
 function convertAttribute(
@@ -29,7 +29,7 @@ function convertAFM(visualizationObject: VisualizationObject.IVisualizationObjec
     const measuresProp = measures.length ? { measures } : {};
 
     const filters: AFM.CompatibilityFilter[] = visualizationObject.filters
-        ? compact(visualizationObject.filters.map(convertVisualizationObjectFilter))
+        ? compact(visualizationObject.filters.map(convertVisualizationObjectExtendedFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

@@ -61,3 +61,32 @@ export const negativeAttrFilter: AFM.INegativeAttributeFilter = {
         notIn: ["a?id=1", "a?id=2"],
     },
 };
+
+export const comparisonMeasureValueFilter: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 50,
+            },
+        },
+    },
+};
+
+export const rangeMeasureValueFilter: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "df",
+        },
+        condition: {
+            range: {
+                operator: "BETWEEN",
+                from: 10,
+                to: 100,
+            },
+        },
+    },
+};

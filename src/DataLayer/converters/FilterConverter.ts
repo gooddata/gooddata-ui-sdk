@@ -4,6 +4,7 @@ import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObj
 import IVisualizationObjectRelativeDateFilter = VisualizationObject.IVisualizationObjectRelativeDateFilter;
 import IVisualizationObjectAbsoluteDateFilter = VisualizationObject.IVisualizationObjectAbsoluteDateFilter;
 import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
+import VisualizationObjectExtendedFilter = VisualizationObject.VisualizationObjectExtendedFilter;
 
 function convertAttributeFilter(filter: VisualizationObjectAttributeFilter): AFM.FilterItem | null {
     if (!VisualizationObject.isPositiveAttributeFilter(filter)) {
@@ -51,6 +52,16 @@ export function convertRelativeDateFilter(
     };
 }
 
+export function convertMeasureValueFilter(
+    filter: VisualizationObject.IMeasureValueFilter | AFM.IMeasureValueFilter,
+): AFM.IMeasureValueFilter | null {
+    if (filter.measureValueFilter.condition === undefined) {
+        return null;
+    }
+
+    return filter;
+}
+
 export function convertVisualizationObjectFilter(filter: VisualizationObjectFilter): AFM.FilterItem | null {
     if (VisualizationObject.isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
@@ -58,5 +69,15 @@ export function convertVisualizationObjectFilter(filter: VisualizationObjectFilt
         return convertAbsoluteDateFilter(filter);
     } else {
         return convertRelativeDateFilter(filter);
+    }
+}
+
+export function convertVisualizationObjectExtendedFilter(
+    filter: VisualizationObjectExtendedFilter,
+): AFM.ExtendedFilter | null {
+    if (VisualizationObject.isMeasureValueFilter(filter)) {
+        return convertMeasureValueFilter(filter);
+    } else {
+        return convertVisualizationObjectFilter(filter);
     }
 }
