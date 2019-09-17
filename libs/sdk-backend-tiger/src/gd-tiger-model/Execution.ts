@@ -2,10 +2,12 @@
 export namespace Execution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
+            /* not in new stack yet
             identifier?: string;
+            format: string;
+             */
             localIdentifier: string;
             name: string;
-            format: string;
         };
     }
 
@@ -18,20 +20,22 @@ export namespace Execution {
     export interface IMeasureGroupHeader {
         measureGroupHeader: {
             items: IMeasureHeaderItem[];
-            totalItems?: ITotalHeaderItem[];
+            // not in new stack yet
+            // totalItems?: ITotalHeaderItem[];
         };
     }
 
     export interface IAttributeHeader {
         attributeHeader: {
             identifier: string;
+            /* not in new stack yet
             localIdentifier: string;
             name: string;
             totalItems?: ITotalHeaderItem[];
             formOf: {
                 identifier: string;
                 name: string;
-            };
+            };*/
         };
     }
 
@@ -67,10 +71,12 @@ export namespace Execution {
     }
 
     export interface IExecutionResponse {
-        links: {
-            executionResult: string;
+        executionResponse: {
+            links: {
+                executionResult: string;
+            };
+            dimensions: IResultDimension[];
         };
-        dimensions: IResultDimension[];
     }
 
     export type DataValue = null | string | number;

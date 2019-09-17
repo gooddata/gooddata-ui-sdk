@@ -16,6 +16,7 @@ export function executeAfm(
     execution: ExecuteAFM.IExecution,
 ): Promise<Execution.IExecutionResponse> {
     return axios.post("/api/afm", execution).then((res: AxiosResponse<Execution.IExecutionResponse>) => {
+        console.log("got AFM response from backend", res);
         return res.data;
     });
 }
@@ -24,14 +25,12 @@ export function executeAfm(
  * Retrieves result of execution. All calculated data is returned, no paging yet.
  *
  * @param axios - instance of configured http client to use
- * @param resultLink - link to AFM execution result
+ * @param resultId - ID of AFM execution result
  * @internal
  */
-export function executionResult(
-    axios: AxiosInstance,
-    resultLink: string,
-): Promise<Execution.IExecutionResult> {
-    return axios.get(`${resultLink}`).then((res: AxiosResponse<Execution.IExecutionResult>) => {
+export function executionResult(axios: AxiosInstance, resultId: string): Promise<Execution.IExecutionResult> {
+    return axios.get(`/api/result/${resultId}`).then((res: AxiosResponse<Execution.IExecutionResult>) => {
+        console.log("got AFM result from backend", res);
         return res.data;
     });
 }

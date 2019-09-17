@@ -23,19 +23,21 @@ import { Execution } from "./gd-tiger-model/Execution";
 
 export class TigerExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
+    private readonly resultId: string;
     private readonly _fingerprint: string;
 
     constructor(
         private readonly axios: AxiosInstance,
         public readonly definition: IExecutionDefinition,
-        private readonly execResponse: Execution.IExecutionResponse,
+        readonly execResponse: Execution.IExecutionResponse,
     ) {
-        this.dimensions = transformResultDimensions(execResponse.dimensions);
-        this._fingerprint = SparkMD5.hash(execResponse.links.executionResult);
+        this.dimensions = transformResultDimensions(execResponse.executionResponse.dimensions);
+        this.resultId = execResponse.executionResponse.links.executionResult;
+        this._fingerprint = SparkMD5.hash(this.resultId);
     }
 
     public async readAll(): Promise<IDataView> {
-        return this.asDataView(executionResult(this.axios, this.execResponse.links.executionResult));
+        return this.asDataView(executionResult(this.axios, this.resultId));
     }
 
     public async readWindow(_offset: number[], _size: number[]): Promise<IDataView> {

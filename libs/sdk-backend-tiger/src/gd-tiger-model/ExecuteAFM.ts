@@ -8,7 +8,7 @@ export namespace ExecuteAFM {
     }
 
     export interface IAfm {
-        attributes?: IAttribute[];
+        attributes?: string[];
         measures?: IMeasure[];
         filters?: CompatibilityFilter[];
         // native totals not yet supported by NAS
@@ -55,7 +55,7 @@ export namespace ExecuteAFM {
         previousPeriodMeasure: IPreviousPeriodMeasure;
     }
 
-    export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+    export type SimpleMeasureAggregation = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM";
 
     export interface ISimpleMeasure {
         item: ObjQualifier;

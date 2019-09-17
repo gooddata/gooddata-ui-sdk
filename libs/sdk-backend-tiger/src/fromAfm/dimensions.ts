@@ -1,5 +1,10 @@
 // (C) 2019 GoodData Corporation
-import { IAttributeHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeHeader,
+    IMeasureGroupHeader,
+    IMeasureHeaderItem,
+    IResultDimension,
+} from "@gooddata/sdk-backend-spi";
 import { Execution } from "../gd-tiger-model/Execution";
 import isAttributeHeader = Execution.isAttributeHeader;
 
@@ -12,21 +17,40 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
                 // TODO: SDK8: make our mind about whether URIs should be optional in attribute headers
                 //  perhaps it makes sense. perhaps the URIs should be always present and should be coming from
                 //  new stack as well? anyway, making URIs optional in the domain model will mean waterfall of fun
-                //  changes across the codebase (drilling etc)
+                //  changes across public interface of the SDK (drilling etc)
                 const attrHeader: IAttributeHeader = {
                     attributeHeader: {
                         uri: "/fake/",
-                        ...h.attributeHeader,
+                        identifier: h.attributeHeader.identifier,
                         formOf: {
+                            identifier: h.attributeHeader.identifier,
+                            name: h.attributeHeader.identifier,
                             uri: "/fake",
-                            ...h.attributeHeader.formOf,
                         },
+                        localIdentifier: h.attributeHeader.identifier,
+                        name: h.attributeHeader.identifier,
                     },
                 };
 
                 return attrHeader;
             } else {
-                return h;
+                const measureHeader: IMeasureGroupHeader = {
+                    measureGroupHeader: {
+                        items: h.measureGroupHeader.items.map(m => {
+                            const newItem: IMeasureHeaderItem = {
+                                measureHeaderItem: {
+                                    localIdentifier: m.measureHeaderItem.localIdentifier,
+                                    name: m.measureHeaderItem.name,
+                                    format: "#",
+                                },
+                            };
+
+                            return newItem;
+                        }),
+                    },
+                };
+
+                return measureHeader;
             }
         }),
     };

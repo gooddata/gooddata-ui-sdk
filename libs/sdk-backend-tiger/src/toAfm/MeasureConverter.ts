@@ -12,6 +12,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
     isUriQualifier,
+    MeasureAggregation,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
@@ -53,6 +54,34 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAF
     }
 }
 
+function convertAggregation(
+    aggregation?: MeasureAggregation,
+): ExecuteAFM.SimpleMeasureAggregation | undefined {
+    if (!aggregation) {
+        return undefined;
+    }
+    if (aggregation === "sum") {
+        return "SUM";
+    }
+    if (aggregation === "avg") {
+        return "AVG";
+    }
+    if (aggregation === "count") {
+        return "COUNT";
+    }
+    if (aggregation === "max") {
+        return "MAX";
+    }
+    if (aggregation === "median") {
+        return "MEDIAN";
+    }
+    if (aggregation === "min") {
+        return "MIN";
+    }
+
+    return "RUNSUM";
+}
+
 function convertSimpleMeasureDefinition(definition: IMeasureDefinition): ExecuteAFM.ISimpleMeasureDefinition {
     const { measureDefinition } = definition;
 
@@ -61,7 +90,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
         : [];
     const filtersProp = filters.length ? { filters } : {};
 
-    const aggregation = measureDefinition.aggregation;
+    const aggregation = convertAggregation(measureDefinition.aggregation);
     const aggregationProp = aggregation ? { aggregation } : {};
 
     const computeRatio = measureDefinition.computeRatio;
