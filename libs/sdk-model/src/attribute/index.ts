@@ -67,3 +67,17 @@ export function attributeId(a: IAttribute): string {
 export function attributeFingerprint(attribute: IAttribute): string {
     return JSON.stringify(attribute);
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function attributesFind(
+    attributes: IAttribute[],
+    idOrFun: string | AttributePredicate = anyAttribute,
+): IAttribute | undefined {
+    const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
+
+    return attributes.find(predicate);
+}

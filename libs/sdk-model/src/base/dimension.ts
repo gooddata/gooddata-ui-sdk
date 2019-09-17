@@ -14,6 +14,13 @@ export interface IDimension {
     totals?: ITotal[];
 }
 
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export const MeasureGroupIdentifier = "measureGroup";
+
 //
 // Type guards
 //

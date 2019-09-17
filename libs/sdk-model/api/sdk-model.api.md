@@ -42,6 +42,9 @@ export type AttributeOrMeasure = IMeasure | IAttribute;
 export type AttributePredicate = (attribute: IAttribute) => boolean;
 
 // @public
+export function attributesFind(attributes: IAttribute[], idOrFun?: string | AttributePredicate): IAttribute | undefined;
+
+// @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
 // @public
@@ -547,6 +550,9 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
 // @public
 export function measureFingerprint(measure: IMeasure): string;
+
+// @public
+export const MeasureGroupIdentifier = "measureGroup";
 
 // @public
 export function measureId(measure: IMeasure): string;

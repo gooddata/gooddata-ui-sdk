@@ -8,6 +8,7 @@ export {
     anyAttribute,
     idMatchAttribute,
     attributeFingerprint,
+    attributesFind,
 } from "./attribute";
 
 export {
@@ -27,6 +28,7 @@ export {
     dimensionTotals,
     newTwoDimensional,
     dimensionFingerprint,
+    MeasureGroupIdentifier,
 } from "./base/dimension";
 
 export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
