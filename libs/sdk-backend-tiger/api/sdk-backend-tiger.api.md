@@ -4,12 +4,13 @@
 
 ```ts
 
+import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 
-// @public (undocumented)
-const _default: IAnalyticalBackend;
+// @public
+function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
-export default _default;
+export default tigerFactory;
 
 
 // (No @packageDocumentation comment for this package)
