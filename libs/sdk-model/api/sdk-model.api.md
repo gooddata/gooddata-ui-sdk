@@ -23,6 +23,9 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
 
 // @public
+export function attributeFingerprint(attribute: IAttribute): string;
+
+// @public
 export function attributeId(a: IAttribute): string;
 
 // @public
@@ -97,7 +100,13 @@ export enum ComputeRatioRule {
 export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
+export function dimensionFingerprint(dim: IDimension): string;
+
+// @public
 export function dimensionTotals(dim: IDimension): ITotal[];
+
+// @public
+export function filterFingerprint(filter: IFilter): string;
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -453,6 +462,9 @@ export function isDateFilter(obj: any): obj is IDateFilter;
 export function isDimension(obj: any): obj is IDimension;
 
 // @public
+export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier;
+
+// @public
 export function isInsight(obj: any): obj is IInsight;
 
 // @public
@@ -495,6 +507,9 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
 export function isTotal(obj: any): obj is ITotal;
 
 // @public
+export function isUriQualifier(obj: any): obj is IObjUriQualifier;
+
+// @public
 export interface ITotal {
     // (undocumented)
     alias?: string;
@@ -531,6 +546,9 @@ export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "medi
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
 // @public
+export function measureFingerprint(measure: IMeasure): string;
+
+// @public
 export function measureId(measure: IMeasure): string;
 
 // @public
@@ -543,17 +561,13 @@ export type MeasureInBucket = {
 // @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
 
-// Warning: (ae-internal-missing-underscore) The name "newAttributeSort" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
+// @public
 export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
-// Warning: (ae-internal-missing-underscore) The name "newMeasureSort" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
+// @public
 export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem;
 
 // @public
@@ -570,6 +584,9 @@ export type RGBType = "rgb";
 
 // @public
 export type SortDirection = "asc" | "desc";
+
+// @public
+export function sortFingerprint(sort: SortItem): string;
 
 // @public
 export type SortItem = IAttributeSortItem | IMeasureSortItem;

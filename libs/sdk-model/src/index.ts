@@ -7,6 +7,7 @@ export {
     AttributePredicate,
     anyAttribute,
     idMatchAttribute,
+    attributeFingerprint,
 } from "./attribute";
 
 export {
@@ -16,9 +17,17 @@ export {
     IObjLocalIdentifierQualifier,
     ObjQualifier,
     ObjQualifierWithLocal,
+    isUriQualifier,
+    isIdentifierQualifier,
 } from "./base";
 
-export { IDimension, isDimension, dimensionTotals, newTwoDimensional } from "./base/dimension";
+export {
+    IDimension,
+    isDimension,
+    dimensionTotals,
+    newTwoDimensional,
+    dimensionFingerprint,
+} from "./base/dimension";
 
 export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
 
@@ -36,6 +45,7 @@ export {
     isAttributeSort,
     newMeasureSort,
     newAttributeSort,
+    sortFingerprint,
 } from "./base/sort";
 
 export {
@@ -59,6 +69,7 @@ export {
     isAttributeElementsByValue,
     attributeElementsIsEmpty,
     filterIsEmpty,
+    filterFingerprint,
 } from "./filter";
 
 export {
@@ -85,6 +96,7 @@ export {
     anyMeasure,
     idMatchMeasure,
     measureDoesComputeRatio,
+    measureFingerprint,
 } from "./measure";
 
 export {

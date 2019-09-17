@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import {
+    attributeFingerprint,
     AttributeOrMeasure,
     bucketsAttributes,
     bucketsMeasures,
@@ -12,23 +13,44 @@ import {
     isAttribute,
     isMeasure,
     SortItem,
+    measureFingerprint,
+    filterFingerprint,
+    sortFingerprint,
+    dimensionFingerprint,
+    IAttribute,
+    IMeasure,
 } from "@gooddata/sdk-model";
-import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 import SparkMD5 from "spark-md5";
-import {
-    attributeFingerprint,
-    dimensionFingerprint,
-    filterFingerprint,
-    measureFingerprint,
-    sortFingerprint,
-} from "./fingerprints";
+
+/*
+ * TODO: SDK8: revisit whether this is the right location
+ *  it does appear like that to me; it does not fit the model package as it is not about the domain model but
+ *  rather part of the interface with the backend.
+ */
+
+/**
+ * Execution definition contains 100% complete description of what will the execution compute and how will
+ * the resulting data look like.
+ *
+ * @public
+ */
+export interface IExecutionDefinition {
+    readonly workspace: string;
+    readonly buckets: IBucket[];
+    readonly attributes: IAttribute[];
+    readonly measures: IMeasure[];
+    readonly filters: IFilter[];
+    readonly sortBy: SortItem[];
+    readonly dimensions: IDimension[];
+}
 
 /**
  * Creates new, empty execution definition for the provided workspace.
  *
  * @param workspace - workspace to calculate on
  * @returns always new instance
+ * @public
  */
 export function emptyDef(workspace: string): IExecutionDefinition {
     return {
@@ -48,6 +70,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
  * @param workspace - workspace to calculate on
  * @param items - mix of attributes and measures
  * @returns always new instance
+ * @public
  */
 export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition {
     return {
@@ -66,6 +89,7 @@ export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]):
  * @param workspace - workspace to calculate on
  * @param buckets - buckets
  * @returns always new instance
+ * @public
  */
 export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition {
     return {
@@ -88,6 +112,7 @@ export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecu
  * @param workspace - workspace to calculate on
  * @param insight - insight to create definition for
  * @returns always new instance
+ * @public
  */
 export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition {
     const def = newDefFromBuckets(workspace, insightBuckets(insight));
@@ -102,6 +127,7 @@ export function newDefFromInsight(workspace: string, insight: IInsight): IExecut
  * @param def - existing definition
  * @param filters - array of filters to add to definition
  * @returns always new instance
+ * @public
  */
 export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition {
     if (!filters || isEmpty(filters)) {
@@ -122,6 +148,7 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
  * @param def - existing definition
  * @param sorts - array of sort items to add to definition
  * @returns always new instance
+ * @public
  */
 export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition {
     if (!sorts || isEmpty(sorts)) {
@@ -140,6 +167,7 @@ export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IEx
  * @param def - existing definition
  * @param dimensions - dimensions
  * @returns always new instance
+ * @public
  */
 export function defWithDimensions(
     def: IExecutionDefinition,
@@ -157,7 +185,8 @@ export function defWithDimensions(
 
 /**
  * Calculates fingerprint for the execution definition.
- * @param def
+ * @param def - execution definition
+ * @public
  */
 export function defFingerprint(def: IExecutionDefinition): string {
     const hasher = new SparkMD5();

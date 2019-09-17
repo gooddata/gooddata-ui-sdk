@@ -58,3 +58,12 @@ export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =
 export function attributeId(a: IAttribute): string {
     return a.attribute.localIdentifier;
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function attributeFingerprint(attribute: IAttribute): string {
+    return JSON.stringify(attribute);
+}

@@ -166,7 +166,7 @@ export function sortEntityIds(sort: SortItem): SortEntityIds {
 /**
  * TODO: SDK8: Add docs
  *
- * @internal
+ * @public
  */
 export function newAttributeSort(
     attribute: IAttribute,
@@ -194,7 +194,7 @@ export function newAttributeSort(
 /**
  * TODO: SDK8: Add docs
  *
- * @internal
+ * @public
  */
 export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem {
     return {
@@ -209,4 +209,13 @@ export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection):
             ],
         },
     };
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function sortFingerprint(sort: SortItem): string {
+    return JSON.stringify(sort);
 }

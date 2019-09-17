@@ -201,6 +201,15 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
  *
  * @public
  */
+export function filterFingerprint(filter: IFilter): string {
+    return JSON.stringify(filter);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
     if (isAttributeElementsByRef(attributeElements)) {
         return isEmpty(attributeElements.uris.length);

@@ -228,6 +228,17 @@ export function measureId(measure: IMeasure): string {
 }
 
 /**
+ * Calculates measure fingerprint - this is a unique string representing unique measure.
+ *
+ * @param measure - measure to get fingerprint for
+ * @returns string
+ * @public
+ */
+export function measureFingerprint(measure: IMeasure): string {
+    return JSON.stringify(measure);
+}
+
+/**
  * Tests whether the measure is set to compute ratio.
  *
  * @param measure - measure to to test

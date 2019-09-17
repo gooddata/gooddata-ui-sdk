@@ -1,8 +1,15 @@
 // (C) 2019 GoodData Corporation
 
-import { IExecutionFactory, IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
+import {
+    IExecutionFactory,
+    IPreparedExecution,
+    NotImplemented,
+    defWithFilters,
+    newDefFromBuckets,
+    newDefFromInsight,
+    newDefFromItems,
+} from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
-import { defWithFilters, newDefFromBuckets, newDefFromInsight, newDefFromItems } from "./executionDefinition";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearPreparedExecution } from "./preparedExecution";
 

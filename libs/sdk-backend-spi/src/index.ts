@@ -13,9 +13,20 @@ export {
     IPreparedExecution,
     IExecutionResult,
     IDataView,
-    IExecutionDefinition,
     DimensionGenerator,
 } from "./execution";
+
+export {
+    IExecutionDefinition,
+    defFingerprint,
+    defWithDimensions,
+    defWithFilters,
+    defWithSorts,
+    emptyDef,
+    newDefFromBuckets,
+    newDefFromInsight,
+    newDefFromItems,
+} from "./execution/executionDefinition";
 
 export { DataViewFacade } from "./execution/facade";
 
@@ -31,6 +42,9 @@ export {
     IResultMeasureHeaderItem,
     IResultTotalHeaderItem,
     ITotalHeaderItem,
+    isAttributeHeader,
+    isMeasureGroupHeader,
+    isResultAttributeHeaderItem,
 } from "./execution/results";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";

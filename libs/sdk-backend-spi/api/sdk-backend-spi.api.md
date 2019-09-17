@@ -103,6 +103,18 @@ export class DataViewFacade {
 }
 
 // @public
+export function defFingerprint(def: IExecutionDefinition): string;
+
+// @public
+export function defWithDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
+
+// @public
+export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
+
+// @public
+export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition;
+
+// @public
 export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 // @public
@@ -110,6 +122,9 @@ export type Element = {
     readonly value: string;
     readonly uri?: string;
 };
+
+// @public
+export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
 export class ExecutionError extends AnalyticalBackendError {
@@ -351,10 +366,16 @@ export interface IResultTotalHeaderItem {
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
 
 // @public
+export function isAttributeHeader(obj: any): obj is IAttributeHeader;
+
+// @public
 export function isDataViewError(obj: any): obj is DataViewError;
 
 // @public
 export function isExecutionError(obj: any): obj is ExecutionError;
+
+// @public
+export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader;
 
 // @public
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
@@ -364,6 +385,9 @@ export function isNotImplemented(obj: any): obj is NotImplemented;
 
 // @public
 export function isNotSupported(obj: any): obj is NotSupported;
+
+// @public
+export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem;
 
 // @public
 export interface ITotalHeaderItem {
@@ -388,6 +412,15 @@ export interface IWorkspaceStyling {
     // (undocumented)
     colorPalette(): Promise<IColorPaletteItem[]>;
 }
+
+// @public
+export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition;
+
+// @public
+export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition;
+
+// @public
+export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition;
 
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {

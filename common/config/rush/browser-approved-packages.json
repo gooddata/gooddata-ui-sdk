@@ -191,6 +191,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "axios",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "babel-loader",
       "allowedCategories": [ "production", "tools" ]
     },

@@ -122,10 +122,26 @@ export type IResultHeaderItem =
 // Type guards
 //
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function isAttributeHeader(obj: any): obj is IAttributeHeader {
+    return !isEmpty(obj) && (obj as IAttributeHeader).attributeHeader !== undefined;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader {
     return !isEmpty(obj) && (obj as IMeasureGroupHeader).measureGroupHeader !== undefined;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem {
     return !isEmpty(obj) && (obj as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
 }

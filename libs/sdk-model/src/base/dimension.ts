@@ -14,6 +14,10 @@ export interface IDimension {
     totals?: ITotal[];
 }
 
+//
+// Type guards
+//
+
 /**
  * TODO: SDK8: Add docs
  *
@@ -22,6 +26,10 @@ export interface IDimension {
 export function isDimension(obj: any): obj is IDimension {
     return !isEmpty(obj) && (obj as IDimension).itemIdentifiers !== undefined;
 }
+
+//
+// Public functions
+//
 
 /**
  * TODO: SDK8: Add docs
@@ -46,4 +54,13 @@ export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]):
             itemIdentifiers: dim2Ids,
         },
     ];
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function dimensionFingerprint(dim: IDimension): string {
+    return JSON.stringify(dim);
 }

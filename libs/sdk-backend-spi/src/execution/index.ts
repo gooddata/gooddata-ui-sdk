@@ -1,15 +1,7 @@
 // (C) 2019 GoodData Corporation
-import {
-    AttributeOrMeasure,
-    IAttribute,
-    IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    IMeasure,
-    SortItem,
-} from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
+import { IExecutionDefinition } from "./executionDefinition";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
 
 /**
@@ -148,22 +140,6 @@ export interface IPreparedExecution {
      * results in an unique fingerprint - a perfect hash.
      */
     fingerprint(): string;
-}
-
-/**
- * Execution definition contains 100% complete description of what will the execution compute and how will
- * the resulting data look like.
- *
- * @public
- */
-export interface IExecutionDefinition {
-    readonly workspace: string;
-    readonly buckets: IBucket[];
-    readonly attributes: IAttribute[];
-    readonly measures: IMeasure[];
-    readonly filters: IFilter[];
-    readonly sortBy: SortItem[];
-    readonly dimensions: IDimension[];
 }
 
 /**

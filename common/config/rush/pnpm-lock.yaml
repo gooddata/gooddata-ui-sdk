@@ -48,6 +48,7 @@ dependencies:
   ag-grid-react: 20.0.0_bf54138f8a315b7fa0d0e08521edc521
   async: 2.6.3
   awesome-typescript-loader: 5.2.1_typescript@3.3.4000
+  axios: 0.19.0
   babel-loader: 8.0.6_@babel+core@7.6.0+webpack@4.40.2
   circular-dependency-plugin: 5.0.2_webpack@4.40.2
   classnames: 2.2.6
@@ -3456,6 +3457,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+  /axios/0.19.0:
+    dependencies:
+      follow-redirects: 1.5.10
+      is-buffer: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
   /babel-code-frame/6.26.0:
     dependencies:
       chalk: 1.1.3
@@ -5348,6 +5356,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
+  /debug/3.1.0:
+    dependencies:
+      ms: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
   /debug/3.2.6:
     dependencies:
       ms: 2.1.2
@@ -6790,6 +6804,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i/mVBOoa9o+tl+u9owOJUF8k8L85odZNIsctB+JAK2HFT8jckiBwmk+3uydlm6FN8czgnkIwQtBv6yyAbrzXjw==
+  /follow-redirects/1.5.10:
+    dependencies:
+      debug: 3.1.0
+    dev: false
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
   /follow-redirects/1.9.0:
     dependencies:
       debug: 3.2.6
@@ -8013,6 +8035,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
+  /is-buffer/2.0.3:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha512-U15Q7MXTuZlrbymiz95PJpZxu8IlipAp4dtS3wOdgPXx3mqBnslrWU14kxfHB+Py/+2PVKSr37dMAgM2A4uArw==
   /is-callable/1.1.4:
     dev: false
     engines:
@@ -15214,6 +15242,7 @@ packages:
       '@microsoft/api-extractor': 7.4.2
       '@types/jest': 24.0.18
       '@types/lodash': 4.14.138
+      axios: 0.19.0
       jest: 24.9.0
       jest-junit: 3.7.0
       lodash: 4.17.15
@@ -15226,7 +15255,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-mm8W76Ek6PcZzgCm4Jkm179BfFkr7HXGyxSn10ZftwahauLMOXMvJMfA2++2wWjhN44pWkYfhN1RO4sqgDkEXA==
+      integrity: sha512-WkZ/TnpI+trPyPx96MUGgxUEsMMN6Y3OyuUTTqx91TBPMi3oSb0khlWW5k0CTRHidKVp0T6hLu9jBuyl6qSK7Q==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -15466,6 +15495,7 @@ specifiers:
   ag-grid-react: 20.0.0
   async: ^2.1.5
   awesome-typescript-loader: ^5.2.1
+  axios: ^0.19.0
   babel-loader: ^8.0.5
   circular-dependency-plugin: 5.0.2
   classnames: ^2.2.6
