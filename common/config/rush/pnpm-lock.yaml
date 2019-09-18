@@ -10,6 +10,7 @@ dependencies:
   '@microsoft/api-extractor': 7.4.2
   '@rush-temp/gd-bear-client': 'file:projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
+  '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/sdk-backend-bear': 'file:projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:projects/sdk-backend-mockingbird.tgz'
   '@rush-temp/sdk-backend-spi': 'file:projects/sdk-backend-spi.tgz'
@@ -96,6 +97,7 @@ dependencies:
   stringify-object: 2.4.0
   ts-jest: 24.1.0
   ts-loader: 6.1.0_typescript@3.3.4000
+  ts-node: 8.4.1_typescript@3.3.4000
   tslint: 5.20.0_typescript@3.3.4000
   tslint-config-prettier: 1.18.0
   tslint-microsoft-contrib: 5.2.1_330cb491d766f6f7c415aabd4cc320a9
@@ -3180,6 +3182,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5hYdAkZlcG8tOLujVDTgCT+uPX0VnpAH28gWsLfzpXYm7wP6mp5Q/gYyR7YQ0cKVJcXJnl3j2kpBan13PtQf6w==
+  /arg/4.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-SlmP3fEA88MBv0PypnXZ8ZfJhwmDeIE3SP71j37AiXQBXYosPV0x6uISAaHYSlSVhmHOVkomen0tbGk6Anlebw==
   /argparse/1.0.10:
     dependencies:
       sprintf-js: 1.0.3
@@ -14146,6 +14152,22 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-7JedeOu2rsYHQDEr2fwmMozABwbQTZXEaEMZPSIWG7gpzRefOLJCqwdazcegHtyaxp04PeEgs/b0m08WMpnIzQ==
+  /ts-node/8.4.1_typescript@3.3.4000:
+    dependencies:
+      arg: 4.1.1
+      diff: 4.0.1
+      make-error: 1.3.5
+      source-map-support: 0.5.13
+      typescript: 3.3.4000
+      yn: 3.1.1
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    peerDependencies:
+      typescript: '>=2.0'
+    resolution:
+      integrity: sha512-5LpRN+mTiCs7lI5EtbXmF/HfMeCjzt7DH9CZwtkr6SywStrNQC723wG+aOWFiLNn7zT3kD/RnFqi3ZUfr4l5Qw==
   /tslib/1.10.0:
     dev: false
     resolution:
@@ -15143,6 +15165,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-lSj0QtqxsihOWLQ3m7GU4i4MQAU=
+  /yn/3.1.1:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   /z-schema/3.18.4:
     dependencies:
       lodash.get: 4.4.2
@@ -15202,7 +15230,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-client'
     resolution:
-      integrity: sha512-+99lB2n63KoCBMVIAfK0Vz/J8MrdCMSy+BWFEk6wk8qbS3L321sUoduUtU0x+qsqCP6LsHE2HD7etyTyhvMWzQ==
+      integrity: sha512-l48wWd9sY0HR2/qASpx1enu9KSdlYco4gjcU+TK3er/ZPRMUwZrU+E7RNXCqy3CVMw5P54RGpJD3zHOfq21wNg==
       tarball: 'file:projects/gd-bear-client.tgz'
     version: 0.0.0
   'file:projects/gd-bear-model.tgz':
@@ -15221,8 +15249,30 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-model'
     resolution:
-      integrity: sha512-bzwDQ20zKECHzh8MQQr4h2SIx4ggv/ea55lE9oX9a39U6RBXiGS7EUP9H0+lam+AQGO36mdgZYFA8vTOwUoXGQ==
+      integrity: sha512-GZTKvilGVFGnMZCZRFOKvngvpE7fmPEbltbEFvEKmb9AkIAPny5pnXp2i45sOyWg3oU5ghAfjVjM0eclELvrag==
       tarball: 'file:projects/gd-bear-model.tgz'
+    version: 0.0.0
+  'file:projects/mock-handling.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.3.4000
+      '@microsoft/api-extractor': 7.4.2
+      '@types/jest': 24.0.18
+      '@types/lodash': 4.14.138
+      jest: 24.9.0
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      prettier: 1.18.2
+      ts-jest: 24.1.0_jest@24.9.0
+      ts-node: 8.4.1_typescript@3.3.4000
+      tslint: 5.20.0_typescript@3.3.4000
+      tslint-config-prettier: 1.18.0
+      tslint-microsoft-contrib: 5.2.1_330cb491d766f6f7c415aabd4cc320a9
+      typescript: 3.3.4000
+    dev: false
+    name: '@rush-temp/mock-handling'
+    resolution:
+      integrity: sha512-JmI+FcafzjSECKvYb3Krb3pWf80zFHZyarQFX/WZR+6/jvaXAv+FHKSw480RiTt//5g4T6wRuyqUf+nKP2FEkA==
+      tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
     dependencies:
@@ -15244,7 +15294,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-Pq1Kvh8dg4xfhMs0VHVQVOGkDvp+xclgM6+hjCYhoSMkY7VLpsKPbFNey9IILUN5L4jnBuakCxBA0CigH0TbXg==
+      integrity: sha512-1ELsD/3DS0EgH3Jj+5E6qGYKF33EzCBSlnKmUIeAK0GwugLxJf11sRFzmnfTpzcK98xD0Ncr1+ctNiTEgL1Cqw==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -15265,7 +15315,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-2jI4VtswnZD3lT9Tsibiqkzx98UYAzHU22WpXqxwJHHPkyEbjOm0/6XcNlQ4GRq4e5zvbeiWyYOTRqObMZSRcw==
+      integrity: sha512-ptXUVSjN+jkfE/gIAer53PmCjxM2E5bVt7zhIVBThFEB/E15TeoF9pz9YQzCr63FQIrPl4x3NxjxhkNJfhQ3pA==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -15288,7 +15338,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-8iiFdLpE4jKgXbgeiSaQSaWrjEDrAdvrKfoLNEwe3+jetmpoBeVlv0A5u7y1K/ontTdK3oF+scKlqnHs7QfwXg==
+      integrity: sha512-nlfxSvymT28q/FT8NZu+oFhWyRNugWLSAvVNNAIeHye2ghO7cSGkNMJea04W8IoOxojjW2vAOxA4juUpG+/AXw==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -15312,7 +15362,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-XKzCGd18xS0YIffNC8xtB56sYSACCo7ct5GBkhwdcrX5fE2Ae8wr9NA/TBiqgesy3nzK+cdxyaxl5sNL7pY1lQ==
+      integrity: sha512-LMoCo502fjiLhJtV1Xc7D+ctH6xN9Vn/BdqoyWjcWyyJj3AUKnxC+o0Y333FMwO80+1J+cxTNcbv8l5rIaLWdg==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -15333,7 +15383,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-5NmcMxUVXZRHNqrDG/fNezNGArHhB0NlmOfh3wYjdxRxLGAH5gaJTQOeFwBCxHhEg6op46z1UAt+cOGSOiRPGw==
+      integrity: sha512-KLsMHA48VtAbBmj1q82ylOfwQ47tJkCdzs5tpX/6Z4EEJn8IBNk9BBQY1BQjhg4IsnXPDJvlxHRFuBa2O++VJw==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -15354,7 +15404,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-jSIvtMnuql8nYz8vnZUUCSxdYfLPzqaIu6dL9b8n64rwGx6PhmUNbflwXs+OFcQnI8lam+zTxdQPrpv13jF+qg==
+      integrity: sha512-p5uaO9wqk0NqVnc7tHGRVL4TcXsl0+sBkQon7OcU1lolyQKAofv8Kt7F83kyf6Waiz8heI2hzuLpE5lS2P36Dg==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz_webpack@4.40.2':
@@ -15410,7 +15460,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-V7RokXbgLOp889CjrDG7dpfqVAJ8DMqKrgul+MJY8UjY8OIbWmhliRu7iiaMtdCpKNW2qBDXkFMHYu/eyBCbxw==
+      integrity: sha512-Ojmh3gDFBJ+gbyDSJ98NXlMLkyYpzDo5Jff3uysKrFHPVxdU/yLMd2+eGAp6jxt5XpsqOvZzWFAclBpIQVg1Tg==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz_tslint@5.20.0+webpack@4.40.2':
@@ -15498,7 +15548,7 @@ packages:
       tslint: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-HnVW8q9kyLSe0Q5vGPLFj+yBImqM0eQ993E9+CiUTwKKESapcDsUkvx37iXk74MiZgSExtVa+jcWMQ7UChuv0A==
+      integrity: sha512-UHCjLUxktGGWm0uslDbgnZEsQIVdHETzukeAha7/FKNDk0vTdL300Onj8iXZ1SJCGdWak60zs+7d4MWvm8xXuw==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 specifiers:
@@ -15513,6 +15563,7 @@ specifiers:
   '@microsoft/api-extractor': ^7.3.8
   '@rush-temp/gd-bear-client': 'file:./projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
+  '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/sdk-backend-bear': 'file:./projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:./projects/sdk-backend-mockingbird.tgz'
   '@rush-temp/sdk-backend-spi': 'file:./projects/sdk-backend-spi.tgz'
@@ -15599,6 +15650,7 @@ specifiers:
   stringify-object: ^2.4.0
   ts-jest: ^24.1.0
   ts-loader: ^6.0.0
+  ts-node: ^8.4.1
   tslint: ^5.14.0
   tslint-config-prettier: ^1.18.0
   tslint-microsoft-contrib: ^5.2.1

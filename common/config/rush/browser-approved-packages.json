@@ -411,6 +411,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "ts-node",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "tslint",
       "allowedCategories": [ "production", "tools" ]
     },

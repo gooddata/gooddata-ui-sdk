@@ -300,6 +300,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/mock-handling",
+            "projectFolder": "tools/mock-handling",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-backend-mockingbird",
             "projectFolder": "libs/sdk-backend-mockingbird",
             "reviewCategory": "production"

@@ -15,15 +15,16 @@
      * will recalculate all version selections.
      */
     "preferredVersions": {
-        "prettier": "~1.18.1",
-        "pretty-quick": "~1.11.0",
-        "typescript": "3.3.4000",
         "@microsoft/api-extractor": "^7.3.8",
         "@microsoft/api-documenter": "^7.3.16",
         "@gooddata/tslint-config": "1.0.0",
         "tslint-config-prettier": "^1.18.0",
+        "prettier": "~1.18.1",
+        "pretty-quick": "~1.11.0",
         "react": "^16.5.2",
-        "react-dom": "^16.5.2"
+        "react-dom": "^16.5.2",
+        "ts-node": "^8.4.1",
+        "typescript": "3.3.4000"
         /**
          * When someone asks for "^1.0.0" make sure they get "1.2.3" when working in this repo,
          * instead of the latest version.
