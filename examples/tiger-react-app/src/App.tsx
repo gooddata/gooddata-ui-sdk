@@ -1,10 +1,17 @@
 // (C) 2019 GoodData Corporation
-import { BarChart } from "@gooddata/sdk-ui";
+import { BarChart, PieChart } from "@gooddata/sdk-ui";
 import React from "react";
 import { Col, Container, Row } from "react-grid-system";
 import "./App.css";
 import { backend, initialize } from "./backend";
-import { CountryName, ExtendedPriceSum, workspace } from "./model";
+import {
+    BrandName,
+    CountryName,
+    ExtendedPriceSum,
+    FilteredExtendedPriceSum,
+    QuantitySum,
+    workspace,
+} from "./model";
 
 initialize();
 const analyticalBackend = backend();
@@ -15,13 +22,32 @@ const App: React.FC = () => {
         <div className="App">
             <Container>
                 <Row>
-                    <Col sm={12}>
+                    <Col sm={6}>
                         <BarChart
                             backend={analyticalBackend}
                             workspace={workspace}
                             measures={[ExtendedPriceSum]}
+                            viewBy={BrandName}
+                            height={height}
+                        />
+                    </Col>
+                    <Col sm={6}>
+                        <BarChart
+                            backend={analyticalBackend}
+                            workspace={workspace}
+                            measures={[QuantitySum]}
                             viewBy={CountryName}
                             height={height}
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={6}>
+                        <PieChart
+                            backend={analyticalBackend}
+                            workspace={workspace}
+                            measures={[FilteredExtendedPriceSum]}
+                            viewBy={BrandName}
                         />
                     </Col>
                     <Col sm={6}></Col>
