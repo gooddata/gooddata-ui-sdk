@@ -105,14 +105,39 @@ export class DataViewFacade {
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
 
+// Warning: (ae-internal-missing-underscore) The name "defForBuckets" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function defForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
+
+// Warning: (ae-internal-missing-underscore) The name "defForInsight" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function defForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
+
+// Warning: (ae-internal-missing-underscore) The name "defForItems" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function defForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
+
 // @public
-export function defWithDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
+export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
+
+// @public
+export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition;
+
+// Warning: (ae-internal-missing-underscore) The name "defWithDimensions" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
 
 // @public
 export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
 
-// @public
-export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition;
+// Warning: (ae-internal-missing-underscore) The name "defWithSorting" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
 
 // @public
 export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
@@ -436,11 +461,6 @@ export class NotImplemented extends AnalyticalBackendError {
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
-
-// Warning: (ae-internal-missing-underscore) The name "toDimensions" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function toDimensions(dimsOrGen: Array<IDimension | DimensionGenerator>, def: IExecutionDefinition): IDimension[];
 
 
 // (No @packageDocumentation comment for this package)

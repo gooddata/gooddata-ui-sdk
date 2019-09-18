@@ -3,13 +3,12 @@
 import {
     defFingerprint,
     defWithDimensions,
-    defWithSorts,
+    defWithSorting,
     DimensionGenerator,
     ExecutionError,
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
-    toDimensions,
 } from "@gooddata/sdk-backend-spi";
 import { IDimension, SortItem } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
@@ -40,13 +39,11 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        const dimensions: IDimension[] = toDimensions(dimsOrGen, this.definition);
-
-        return new TigerPreparedExecution(this.axios, defWithDimensions(this.definition, dimensions));
+        return new TigerPreparedExecution(this.axios, defWithDimensions(this.definition, dimsOrGen));
     }
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return new TigerPreparedExecution(this.axios, defWithSorts(this.definition, items));
+        return new TigerPreparedExecution(this.axios, defWithSorting(this.definition, items));
     }
 
     public fingerprint(): string {

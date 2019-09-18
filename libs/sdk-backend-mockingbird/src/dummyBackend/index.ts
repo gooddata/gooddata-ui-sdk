@@ -1,32 +1,30 @@
 // (C) 2019 GoodData Corporation
 import {
+    AnalyticalBackendConfig,
     DataViewFacade,
     defFingerprint,
+    defForBuckets,
+    defForInsight,
+    defForItems,
     defWithDimensions,
-    defWithSorts,
+    defWithSorting,
     DimensionGenerator,
     IAnalyticalBackend,
+    IAnalyticalWorkspace,
     IDataView,
+    IElementQueryFactory,
     IExecutionDefinition,
+    IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IPreparedExecution,
-    NotSupported,
-    toDimensions,
-    IAnalyticalWorkspace,
-    IExecutionFactory,
-    IElementQueryFactory,
     IFeatureFlagsQuery,
+    IPreparedExecution,
     IWorkspaceMetadata,
     IWorkspaceStyling,
-    AnalyticalBackendConfig,
-    newDefFromBuckets,
-    defWithFilters,
-    newDefFromInsight,
-    newDefFromItems,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { IDimension, SortItem, IBucket, IFilter, AttributeOrMeasure, IInsight } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
 
 const nullPromise: Promise<null> = new Promise(r => r(null));
 const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
@@ -106,13 +104,13 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
 function dummyExecutionFactory(workspace: string): IExecutionFactory {
     return {
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defWithFilters(newDefFromItems(workspace, items), filters));
+            return dummyPreparedExecution(defForItems(workspace, items, filters));
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defWithFilters(newDefFromBuckets(workspace, buckets), filters));
+            return dummyPreparedExecution(defForBuckets(workspace, buckets, filters));
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defWithFilters(newDefFromInsight(workspace, insight), filters));
+            return dummyPreparedExecution(defForInsight(workspace, insight, filters));
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
@@ -180,10 +178,10 @@ function dummyPreparedExecution(definition: IExecutionDefinition): IPreparedExec
     return {
         definition,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return dummyPreparedExecution(defWithDimensions(definition, toDimensions(dim, definition)));
+            return dummyPreparedExecution(defWithDimensions(definition, dim));
         },
         withSorting(...items: SortItem[]): IPreparedExecution {
-            return dummyPreparedExecution(defWithSorts(definition, items));
+            return dummyPreparedExecution(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise(_ => dummyExecutionResult(definition));

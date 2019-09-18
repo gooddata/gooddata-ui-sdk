@@ -3,13 +3,12 @@
 import {
     defFingerprint,
     defWithDimensions,
-    defWithSorts,
+    defWithSorting,
     DimensionGenerator,
     ExecutionError,
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
-    toDimensions,
 } from "@gooddata/sdk-backend-spi";
 import { IDimension, SortItem } from "@gooddata/sdk-model";
 import { AuthenticatedSdkProvider } from "./commonTypes";
@@ -41,13 +40,11 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        const dimensions: IDimension[] = toDimensions(dimsOrGen, this.definition);
-
-        return new BearPreparedExecution(this.authSdk, defWithDimensions(this.definition, dimensions));
+        return new BearPreparedExecution(this.authSdk, defWithDimensions(this.definition, dimsOrGen));
     }
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return new BearPreparedExecution(this.authSdk, defWithSorts(this.definition, items));
+        return new BearPreparedExecution(this.authSdk, defWithSorting(this.definition, items));
     }
 
     public fingerprint(): string {

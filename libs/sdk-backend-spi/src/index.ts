@@ -14,15 +14,14 @@ export {
     IExecutionResult,
     IDataView,
     DimensionGenerator,
-    toDimensions,
 } from "./execution";
 
 export {
     IExecutionDefinition,
     defFingerprint,
-    defWithDimensions,
     defWithFilters,
-    defWithSorts,
+    defSetSorts,
+    defSetDimensions,
     emptyDef,
     newDefFromBuckets,
     newDefFromInsight,
@@ -47,6 +46,14 @@ export {
     isMeasureGroupHeader,
     isResultAttributeHeaderItem,
 } from "./execution/results";
+
+export {
+    defForItems,
+    defForBuckets,
+    defForInsight,
+    defWithDimensions,
+    defWithSorting,
+} from "./execution/toolkit";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
 

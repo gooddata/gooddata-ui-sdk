@@ -150,7 +150,7 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
  * @returns always new instance
  * @public
  */
-export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition {
+export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition {
     if (!sorts || isEmpty(sorts)) {
         return def;
     }
@@ -169,10 +169,7 @@ export function defWithSorts(def: IExecutionDefinition, sorts?: SortItem[]): IEx
  * @returns always new instance
  * @public
  */
-export function defWithDimensions(
-    def: IExecutionDefinition,
-    dimensions?: IDimension[],
-): IExecutionDefinition {
+export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition {
     if (!dimensions || isEmpty(dimensions)) {
         return def;
     }

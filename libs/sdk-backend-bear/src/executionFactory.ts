@@ -1,13 +1,12 @@
 // (C) 2019 GoodData Corporation
 
 import {
+    defForBuckets,
+    defForInsight,
+    defForItems,
     IExecutionFactory,
     IPreparedExecution,
     NotImplemented,
-    defWithFilters,
-    newDefFromBuckets,
-    newDefFromInsight,
-    newDefFromItems,
 } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
 import { AuthenticatedSdkProvider } from "./commonTypes";
@@ -16,20 +15,20 @@ import { BearPreparedExecution } from "./preparedExecution";
 export class BearExecution implements IExecutionFactory {
     constructor(private readonly authSdk: AuthenticatedSdkProvider, private readonly workspace: string) {}
 
+    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+        const def = defForItems(this.workspace, items, filters);
+
+        return new BearPreparedExecution(this.authSdk, def);
+    }
+
     public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-        const def = defWithFilters(newDefFromBuckets(this.workspace, buckets), filters);
+        const def = defForBuckets(this.workspace, buckets, filters);
 
         return new BearPreparedExecution(this.authSdk, def);
     }
 
     public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-        const def = defWithFilters(newDefFromInsight(this.workspace, insight), filters);
-
-        return new BearPreparedExecution(this.authSdk, def);
-    }
-
-    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-        const def = defWithFilters(newDefFromItems(this.workspace, items), filters);
+        const def = defForInsight(this.workspace, insight, filters);
 
         return new BearPreparedExecution(this.authSdk, def);
     }
