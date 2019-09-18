@@ -45,7 +45,8 @@
         "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
         "testPathIgnorePatterns": [
             ",/node_modules/",
-            "/dist/"
+            "/dist/",
+            "/src/_defunct/"
         ],
         "collectCoverageFrom": [
             "src/**/*.{ts,tsx}",
