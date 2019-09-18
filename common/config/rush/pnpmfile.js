@@ -34,5 +34,20 @@ function readPackage(packageJson, context) {
   //  packageJson.dependencies['log4js'] = '0.6.38';
   // }
 
+  if (packageJson.name === "@gooddata/goodstrap") {
+    /*
+     * js code produced by goodstrap build requires small functions from babel-runtime/helpers; yet the
+     * babel-runtime is only a dev dependency.
+     *
+     * see here: https://babeljs.io/docs/en/6.26.3/babel-plugin-transform-runtime#installation
+     *
+     * correcting the status
+     */
+    context.log("Fixed up dependencies for @gooddata/goodstrap@" + packageJson.version +
+        " ; switching babel-runtime as dependency; version: " + packageJson.devDependencies["babel-runtime"]);
+
+    packageJson.dependencies["babel-runtime"] = packageJson.devDependencies["babel-runtime"];
+  }
+
   return packageJson;
 }
