@@ -1,5 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationObject, VisualizationClass, AFM } from "@gooddata/gd-bear-model";
+import { newDefFromBuckets, testingFacade } from "@gooddata/sdk-backend-spi";
+import { IBucket, IMeasure } from "@gooddata/sdk-model";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
 import IVisualization = VisualizationObject.IVisualization;
 
@@ -1342,3 +1344,66 @@ export const comboVizObjectContent: VisualizationObject.IVisualizationObjectCont
         },
     ],
 };
+
+//
+// new fixtures
+//
+
+export const testWorkspace = "testWorkspace";
+
+export const newMeasures: IMeasure[] = [
+    {
+        measure: {
+            localIdentifier: "m1",
+            title: "# Logged-in Users",
+            definition: {
+                measureDefinition: {
+                    item: {
+                        uri: "/gdc/md/myproject/obj/3276",
+                    },
+                    filters: [],
+                },
+            },
+        },
+    },
+    {
+        measure: {
+            localIdentifier: "m2",
+            title: "# Users Opened AD",
+            definition: {
+                measureDefinition: {
+                    item: {
+                        uri: "/gdc/md/myproject/obj/1995",
+                    },
+                    filters: [],
+                },
+            },
+        },
+    },
+];
+
+export const comboBuckets: IBucket[] = [
+    {
+        localIdentifier: "measures",
+        items: newMeasures.slice(0),
+    },
+    {
+        localIdentifier: "secondary_measures",
+        items: newMeasures.slice(1),
+    },
+    {
+        localIdentifier: "view",
+        items: [
+            {
+                attribute: {
+                    localIdentifier: "a1",
+                    displayForm: {
+                        uri: "/gdc/md/myproject/obj/851",
+                    },
+                },
+            },
+        ],
+    },
+];
+
+export const comboFacade = testingFacade(newDefFromBuckets(testWorkspace, comboBuckets));

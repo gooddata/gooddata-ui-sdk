@@ -14,6 +14,7 @@ export {
     IExecutionResult,
     IDataView,
     DimensionGenerator,
+    toDimensions,
 } from "./execution";
 
 export {
@@ -28,7 +29,7 @@ export {
     newDefFromItems,
 } from "./execution/executionDefinition";
 
-export { DataViewFacade } from "./execution/facade";
+export { DataViewFacade, testingFacade } from "./execution/facade";
 
 export {
     DataValue,

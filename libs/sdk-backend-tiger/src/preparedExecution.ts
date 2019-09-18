@@ -9,13 +9,13 @@ import {
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
+    toDimensions,
 } from "@gooddata/sdk-backend-spi";
-import { IDimension, isDimension, SortItem } from "@gooddata/sdk-model";
+import { IDimension, SortItem } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
 import { TigerExecutionResult } from "./executionResult";
 import { executeAfm } from "./gd-tiger-client/execution";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
-import isEmpty = require("lodash/isEmpty");
 
 export class TigerPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
@@ -40,20 +40,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        if (!dimsOrGen || isEmpty(dimsOrGen)) {
-            return this;
-        }
-
-        const maybeGenerator = dimsOrGen[0];
-
-        if (typeof maybeGenerator === "function") {
-            return new TigerPreparedExecution(
-                this.axios,
-                defWithDimensions(this.definition, maybeGenerator(this.definition.buckets)),
-            );
-        }
-
-        const dimensions: IDimension[] = dimsOrGen.filter(isDimension);
+        const dimensions: IDimension[] = toDimensions(dimsOrGen, this.definition);
 
         return new TigerPreparedExecution(this.axios, defWithDimensions(this.definition, dimensions));
     }

@@ -1,8 +1,17 @@
 // (C) 2019 GoodData Corporation
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    IBucket,
+    IDimension,
+    IFilter,
+    IInsight,
+    isDimension,
+    SortItem,
+} from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { IExecutionDefinition } from "./executionDefinition";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types
@@ -140,6 +149,34 @@ export interface IPreparedExecution {
      * results in an unique fingerprint - a perfect hash.
      */
     fingerprint(): string;
+}
+
+/**
+ * This utility function can be useful when implementing IPreparedExecution's withDimensions() methods; the
+ * two (overloaded) methods lead to a common method with this input signature.
+ *
+ * This function will analyze the inputs; if it is dimension generator function then it will be called and
+ * the resulting dimensions will be returned. Otherwise, input dimensions will be returned as-is.
+ *
+ * @param dimsOrGen - list of dimensions or dimension generators
+ * @param def - definition of execution; this will be used to get buckets for dim generator
+ * @internal
+ */
+export function toDimensions(
+    dimsOrGen: Array<IDimension | DimensionGenerator>,
+    def: IExecutionDefinition,
+): IDimension[] {
+    if (!dimsOrGen || isEmpty(dimsOrGen)) {
+        return [];
+    }
+
+    const maybeGenerator = dimsOrGen[0];
+
+    if (typeof maybeGenerator === "function") {
+        return maybeGenerator(def.buckets);
+    }
+
+    return dimsOrGen.filter(isDimension);
 }
 
 /**

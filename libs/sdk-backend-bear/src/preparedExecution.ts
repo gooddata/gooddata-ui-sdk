@@ -2,17 +2,17 @@
 
 import {
     defFingerprint,
+    defWithDimensions,
+    defWithSorts,
     DimensionGenerator,
     ExecutionError,
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
-    defWithSorts,
-    defWithDimensions,
+    toDimensions,
 } from "@gooddata/sdk-backend-spi";
+import { IDimension, SortItem } from "@gooddata/sdk-model";
 import { AuthenticatedSdkProvider } from "./commonTypes";
-import { IDimension, isDimension, SortItem } from "@gooddata/sdk-model";
-import isEmpty = require("lodash/isEmpty");
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
@@ -41,20 +41,7 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        if (!dimsOrGen || isEmpty(dimsOrGen)) {
-            return this;
-        }
-
-        const maybeGenerator = dimsOrGen[0];
-
-        if (typeof maybeGenerator === "function") {
-            return new BearPreparedExecution(
-                this.authSdk,
-                defWithDimensions(this.definition, maybeGenerator(this.definition.buckets)),
-            );
-        }
-
-        const dimensions: IDimension[] = dimsOrGen.filter(isDimension);
+        const dimensions: IDimension[] = toDimensions(dimsOrGen, this.definition);
 
         return new BearPreparedExecution(this.authSdk, defWithDimensions(this.definition, dimensions));
     }

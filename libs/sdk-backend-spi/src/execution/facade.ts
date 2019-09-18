@@ -6,8 +6,13 @@ import {
     IMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
+    SortItem,
+    IDimension,
 } from "@gooddata/sdk-model";
-import { IDataView } from "./index";
+import { NotSupported } from "../errors";
+import { IExportConfig, IExportResult } from "../export";
+import { defFingerprint, defWithDimensions, defWithSorts, IExecutionDefinition } from "./executionDefinition";
+import { DimensionGenerator, IDataView, IExecutionResult, IPreparedExecution, toDimensions } from "./index";
 import {
     DataValue,
     IMeasureGroupHeader,
@@ -207,4 +212,97 @@ export class DataViewFacade {
     public fingerprint() {
         return this.dataView.fingerprint;
     }
+}
+
+//
+// Functions to support testing code that works with the facade
+// TODO: move to separate test support package and use as dev dependency
+//
+const nullPromise: Promise<null> = new Promise(r => r(null));
+const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
+
+/**
+ * Creates a new, empty data view facade for the provided execution definition. The definition will be
+ * retained as-is. The data will be empty.
+ * @param definition
+ */
+export function testingFacade(definition: IExecutionDefinition): DataViewFacade {
+    return new DataViewFacade(emptyDataView(definition));
+}
+
+function emptyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
+    const execResult = result ? result : emptyResult(definition);
+
+    const fp = defFingerprint(definition) + "/emptyView";
+
+    return {
+        definition,
+        result: execResult,
+        headerItems: [[[]]],
+        data: [[]],
+        offset: [0, 0],
+        count: [0, 0],
+        advance: noop,
+        pageDown: noop,
+        pageUp: noop,
+        pageLeft: noop,
+        pageRight: noop,
+        fingerprint(): string {
+            return fp;
+        },
+        equals(other: IDataView): boolean {
+            return fp === other.fingerprint();
+        },
+    };
+}
+
+function emptyResult(definition: IExecutionDefinition): IExecutionResult {
+    const fp = defFingerprint(definition) + "/emptyResult";
+    const result: IExecutionResult = {
+        definition,
+        dimensions: [],
+        readAll(): Promise<IDataView> {
+            return new Promise(r => r(emptyDataView(definition, result)));
+        },
+        readWindow(_1: number[], _2: number[]): Promise<IDataView> {
+            return new Promise(r => r(emptyDataView(definition, result)));
+        },
+        fingerprint(): string {
+            return fp;
+        },
+        equals(other: IExecutionResult): boolean {
+            return fp === other.fingerprint();
+        },
+        export(_: IExportConfig): Promise<IExportResult> {
+            throw new NotSupported("...");
+        },
+        transform(): IPreparedExecution {
+            return testPreparedExecution(definition);
+        },
+    };
+
+    return result;
+}
+
+function testPreparedExecution(definition: IExecutionDefinition): IPreparedExecution {
+    const fp = defFingerprint(definition);
+
+    return {
+        definition,
+        withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
+            return testPreparedExecution(defWithDimensions(definition, toDimensions(dim, definition)));
+        },
+        withSorting(...items: SortItem[]): IPreparedExecution {
+            return testPreparedExecution(defWithSorts(definition, items));
+        },
+        execute(): Promise<IExecutionResult> {
+            return new Promise(_ => emptyResult(definition));
+        },
+        fingerprint(): string {
+            return fp;
+        },
+        equals(other: IPreparedExecution): boolean {
+            return fp === other.fingerprint();
+        },
+    };
 }
