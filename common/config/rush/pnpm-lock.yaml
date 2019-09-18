@@ -33,7 +33,6 @@ dependencies:
   '@types/isomorphic-fetch': 0.0.34
   '@types/json-stable-stringify': 1.0.32
   '@types/md5': 2.1.33
-  '@types/node': 7.0.8
   '@types/node-fetch': 1.6.9
   '@types/prop-types': 15.5.2
   '@types/qs': 6.5.3
@@ -42,6 +41,7 @@ dependencies:
   '@types/react-intl': 2.3.5
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
+  '@types/rimraf': 2.0.2
   '@types/spark-md5': 3.0.1
   '@types/storybook__addon-actions': 3.4.2
   '@types/storybook__react': 4.0.1
@@ -52,6 +52,7 @@ dependencies:
   awesome-typescript-loader: 5.2.1_typescript@3.3.4000
   axios: 0.19.0
   babel-loader: 8.0.6_@babel+core@7.6.0+webpack@4.40.2
+  caller-callsite: 4.1.0
   circular-dependency-plugin: 5.0.2_webpack@4.40.2
   classnames: 2.2.6
   css-loader: 0.28.7
@@ -92,6 +93,7 @@ dependencies:
   react-dom-factories: 1.0.2
   react-intl: 2.9.0_prop-types@15.7.2+react@16.9.0
   react-measure: 2.3.0_react-dom@16.9.0+react@16.9.0
+  rimraf: 3.0.0
   rxjs: 5.5.12
   spark-md5: 3.0.0
   stringify-object: 2.4.0
@@ -2581,7 +2583,7 @@ packages:
     dependencies:
       '@types/events': 3.0.0
       '@types/minimatch': 3.0.3
-      '@types/node': 7.0.8
+      '@types/node': 12.7.5
     dev: false
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
@@ -2662,6 +2664,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-n2r6WLoY7+uuPT7pnEtKJCmPUGyJ+cbyBR8Avnu4+m1nzz7DwBVuyIvvlBzCZ/nrpC7rIgb3D6pNavL7rFEa9g==
+  /@types/node/10.14.18:
+    dev: false
+    resolution:
+      integrity: sha512-ryO3Q3++yZC/+b8j8BdKd/dn9JlzlHBPdm80656xwYUdmPkpTGTjkAdt6BByiNupGPE8w0FhBgvYy/fX9hRNGQ==
+  /@types/node/12.7.5:
+    dev: false
+    resolution:
+      integrity: sha512-9fq4jZVhPNW8r+UYKnxF1e2HkDWOWKM5bC2/7c9wPV835I0aOrVbS/Hw/pWPk2uKrNXQqg9Z959Kz+IYDd5p3w==
   /@types/node/7.0.8:
     dev: false
     resolution:
@@ -2709,6 +2719,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Ee66fX2qMsDnDq7sPnDtq1bGoo479j6Fo1BlSnne+L5rp6ndzBUgz72+MRNuN56zg9uuteRCkJAMdDJEX2Uqig==
+  /@types/rimraf/2.0.2:
+    dependencies:
+      '@types/glob': 7.1.1
+      '@types/node': 12.7.5
+    dev: false
+    resolution:
+      integrity: sha512-Hm/bnWq0TCy7jmjeN5bKYij9vw5GrDFWME4IuxV08278NtU/VdGbzsBohcCUJ7+QMqmUq5hpRKB39HeQWJjztQ==
   /@types/seedrandom/2.4.27:
     dev: false
     resolution:
@@ -4276,6 +4293,14 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-hH4PzgoiN1CpoCfFSzNzGtMVQTQ=
+  /caller-callsite/4.1.0:
+    dependencies:
+      callsites: 3.1.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-99nnnGlJexTc41xwQTr+mWl15OI5PPczUJzM4YRE7QjkefMKCXGa5gfQjCOuVrD+1TjI/fevIDHg2nz3iYN5Ig==
   /caller-path/2.0.0:
     dependencies:
       caller-callsite: 2.0.0
@@ -12698,6 +12723,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
+  /rimraf/3.0.0:
+    dependencies:
+      glob: 7.1.4
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-NDGVxTsjqfunkds7CqsOiEnxln4Bo7Nddl3XhS4pXg5OzwkLqJ971ZVAAnB+DDLnF76N+VnDEiBHaVV8I06SUg==
   /ripemd160/2.0.2:
     dependencies:
       hash-base: 3.0.4
@@ -15258,10 +15290,13 @@ packages:
       '@microsoft/api-extractor': 7.4.2
       '@types/jest': 24.0.18
       '@types/lodash': 4.14.138
+      '@types/node': 10.14.18
+      '@types/rimraf': 2.0.2
       jest: 24.9.0
       jest-junit: 3.7.0
       lodash: 4.17.15
       prettier: 1.18.2
+      rimraf: 3.0.0
       ts-jest: 24.1.0_jest@24.9.0
       ts-node: 8.4.1_typescript@3.3.4000
       tslint: 5.20.0_typescript@3.3.4000
@@ -15271,7 +15306,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-JmI+FcafzjSECKvYb3Krb3pWf80zFHZyarQFX/WZR+6/jvaXAv+FHKSw480RiTt//5g4T6wRuyqUf+nKP2FEkA==
+      integrity: sha512-hhNv4hWcd3NOdxJ6Gd5PnmV60wQ+8/C8d7cBNUSFmdXFjssZHBu7qbA3yh5Jhm1rCHY3g2v1x360wxj6SOtxuQ==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -15303,11 +15338,14 @@ packages:
       '@microsoft/api-extractor': 7.4.2
       '@types/jest': 24.0.18
       '@types/lodash': 4.14.138
+      '@types/node': 10.14.18
+      caller-callsite: 4.1.0
       jest: 24.9.0
       jest-junit: 3.7.0
       lodash: 4.17.15
       prettier: 1.18.2
       ts-jest: 24.1.0_jest@24.9.0
+      ts-node: 8.4.1_typescript@3.3.4000
       tslint: 5.20.0_typescript@3.3.4000
       tslint-config-prettier: 1.18.0
       tslint-microsoft-contrib: 5.2.1_330cb491d766f6f7c415aabd4cc320a9
@@ -15315,7 +15353,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-ptXUVSjN+jkfE/gIAer53PmCjxM2E5bVt7zhIVBThFEB/E15TeoF9pz9YQzCr63FQIrPl4x3NxjxhkNJfhQ3pA==
+      integrity: sha512-a+7RDTFiQG0jTUnnmpekUKt4jSAljqe8n2CpnKWfv4EyIqAYoH0vEvUXiE/nOUVTMLanV9jyrTyevmryc5VEow==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -15551,6 +15589,7 @@ packages:
       integrity: sha512-UHCjLUxktGGWm0uslDbgnZEsQIVdHETzukeAha7/FKNDk0vTdL300Onj8iXZ1SJCGdWak60zs+7d4MWvm8xXuw==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@babel/core': ^7.4.4
   '@gooddata/goodstrap': ^63.1.1
@@ -15586,7 +15625,6 @@ specifiers:
   '@types/isomorphic-fetch': ^0.0.34
   '@types/json-stable-stringify': ^1.0.32
   '@types/md5': ^2.1.32
-  '@types/node': 7.0.8
   '@types/node-fetch': ^1.6.7
   '@types/prop-types': 15.5.2
   '@types/qs': ^6.5.1
@@ -15595,6 +15633,7 @@ specifiers:
   '@types/react-intl': 2.3.5
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
+  '@types/rimraf': ^2.0.2
   '@types/spark-md5': ^3.0.1
   '@types/storybook__addon-actions': 3.4.2
   '@types/storybook__react': 4.0.1
@@ -15605,6 +15644,7 @@ specifiers:
   awesome-typescript-loader: ^5.2.1
   axios: ^0.19.0
   babel-loader: ^8.0.5
+  caller-callsite: ^4.1.0
   circular-dependency-plugin: 5.0.2
   classnames: ^2.2.6
   css-loader: 0.28.7
@@ -15645,6 +15685,7 @@ specifiers:
   react-dom-factories: ^1.0.2
   react-intl: ^2.4.0
   react-measure: ^2.3.0
+  rimraf: ^3.0.0
   rxjs: ^5.5.6
   spark-md5: ^3.0.0
   stringify-object: ^2.4.0

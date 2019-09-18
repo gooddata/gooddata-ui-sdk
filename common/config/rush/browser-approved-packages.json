@@ -8,11 +8,11 @@
     },
     {
       "name": "@gooddata/gd-bear-client",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/gd-bear-model",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/goodstrap",
@@ -36,11 +36,11 @@
     },
     {
       "name": "@gooddata/sdk-backend-spi",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-model",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/test-storybook",
@@ -159,6 +159,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/rimraf",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/spark-md5",
       "allowedCategories": [ "production" ]
     },
@@ -201,6 +205,10 @@
     {
       "name": "babel-loader",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "caller-callsite",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "circular-dependency-plugin",
@@ -383,6 +391,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "rimraf",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "rxjs",
       "allowedCategories": [ "production" ]
     },
@@ -412,7 +424,7 @@
     },
     {
       "name": "ts-node",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "tslint",

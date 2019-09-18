@@ -19,6 +19,25 @@ export function dummyBackend(config?: AnalyticalBackendConfig): IAnalyticalBacke
 // @internal
 export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
 
+// Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export type ExecutionRecording = {
+    definition: any;
+    response: any;
+    result: any;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function recordedBackend(config?: AnalyticalBackendConfig): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "recordedDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade;
+
 
 // (No @packageDocumentation comment for this package)
 

@@ -1,10 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, VisualizationClass, AFM } from "@gooddata/gd-bear-model";
-import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
+import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure } from "@gooddata/sdk-model";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
 import IVisualization = VisualizationObject.IVisualization;
+
+import * as rec from "./recordings/playlist";
 
 export const dummyMeasureGroup = {
     items: [
@@ -1408,3 +1410,6 @@ export const comboBuckets: IBucket[] = [
 ];
 
 export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
+export const areaChart3MetricsAndViewByAttr = recordedDataFacade(
+    rec.area_chart_with_3_metrics_and_view_by_attribute,
+);
