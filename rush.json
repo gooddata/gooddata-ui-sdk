@@ -300,6 +300,11 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-backend-mockingbird",
+            "projectFolder": "libs/sdk-backend-mockingbird",
+            "reviewCategory": "production"
+        },
+        {
             "packageName": "@gooddata/sdk-backend-tiger",
             "projectFolder": "libs/sdk-backend-tiger",
             "reviewCategory": "production"

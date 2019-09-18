@@ -31,6 +31,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-backend-mockingbird",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-backend-spi",
       "allowedCategories": [ "production" ]
     },

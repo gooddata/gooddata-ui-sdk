@@ -11,6 +11,7 @@ dependencies:
   '@rush-temp/gd-bear-client': 'file:projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
   '@rush-temp/sdk-backend-bear': 'file:projects/sdk-backend-bear.tgz'
+  '@rush-temp/sdk-backend-mockingbird': 'file:projects/sdk-backend-mockingbird.tgz'
   '@rush-temp/sdk-backend-spi': 'file:projects/sdk-backend-spi.tgz'
   '@rush-temp/sdk-backend-tiger': 'file:projects/sdk-backend-tiger.tgz'
   '@rush-temp/sdk-model': 'file:projects/sdk-model.tgz'
@@ -4118,7 +4119,7 @@ packages:
       create-hmac: 1.1.7
       elliptic: 6.5.1
       inherits: 2.0.4
-      parse-asn1: 5.1.4
+      parse-asn1: 5.1.5
     dev: false
     resolution:
       integrity: sha1-qk62jl17ZYuqa/alfmMMvXqT0pg=
@@ -10684,7 +10685,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-35T9jPZTHs915r75oIWPvHK+Ikc=
-  /parse-asn1/5.1.4:
+  /parse-asn1/5.1.5:
     dependencies:
       asn1.js: 4.10.1
       browserify-aes: 1.2.0
@@ -10694,7 +10695,7 @@ packages:
       safe-buffer: 5.2.0
     dev: false
     resolution:
-      integrity: sha512-Qs5duJcuvNExRfFZ99HDD3z4mAi3r9Wl/FOjEOijlxwCZs7E7mW2vjTpgQ4J8LpTF8x5v+1Vn5UQFejmWT11aw==
+      integrity: sha512-jkMYn1dcJqF6d5CpU689bq7w/b5ALS9ROVSpQDPrZsqqesUJii9qutvoT5ltGedNXMO2e16YUWIghG9KxaViTQ==
   /parse-bmfont-ascii/1.0.6:
     dev: false
     resolution:
@@ -11580,7 +11581,7 @@ packages:
       bn.js: 4.11.8
       browserify-rsa: 4.0.1
       create-hash: 1.2.0
-      parse-asn1: 5.1.4
+      parse-asn1: 5.1.5
       randombytes: 2.1.0
       safe-buffer: 5.2.0
     dev: false
@@ -15246,6 +15247,27 @@ packages:
       integrity: sha512-Pq1Kvh8dg4xfhMs0VHVQVOGkDvp+xclgM6+hjCYhoSMkY7VLpsKPbFNey9IILUN5L4jnBuakCxBA0CigH0TbXg==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
+  'file:projects/sdk-backend-mockingbird.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.3.4000
+      '@microsoft/api-extractor': 7.4.2
+      '@types/jest': 24.0.18
+      '@types/lodash': 4.14.138
+      jest: 24.9.0
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      prettier: 1.18.2
+      ts-jest: 24.1.0_jest@24.9.0
+      tslint: 5.20.0_typescript@3.3.4000
+      tslint-config-prettier: 1.18.0
+      tslint-microsoft-contrib: 5.2.1_330cb491d766f6f7c415aabd4cc320a9
+      typescript: 3.3.4000
+    dev: false
+    name: '@rush-temp/sdk-backend-mockingbird'
+    resolution:
+      integrity: sha512-2jI4VtswnZD3lT9Tsibiqkzx98UYAzHU22WpXqxwJHHPkyEbjOm0/6XcNlQ4GRq4e5zvbeiWyYOTRqObMZSRcw==
+      tarball: 'file:projects/sdk-backend-mockingbird.tgz'
+    version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
     dependencies:
       '@gooddata/tslint-config': 1.0.0_typescript@3.3.4000
@@ -15492,6 +15514,7 @@ specifiers:
   '@rush-temp/gd-bear-client': 'file:./projects/gd-bear-client.tgz'
   '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
   '@rush-temp/sdk-backend-bear': 'file:./projects/sdk-backend-bear.tgz'
+  '@rush-temp/sdk-backend-mockingbird': 'file:./projects/sdk-backend-mockingbird.tgz'
   '@rush-temp/sdk-backend-spi': 'file:./projects/sdk-backend-spi.tgz'
   '@rush-temp/sdk-backend-tiger': 'file:./projects/sdk-backend-tiger.tgz'
   '@rush-temp/sdk-model': 'file:./projects/sdk-model.tgz'

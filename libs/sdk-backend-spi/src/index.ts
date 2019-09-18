@@ -29,7 +29,7 @@ export {
     newDefFromItems,
 } from "./execution/executionDefinition";
 
-export { DataViewFacade, testingFacade } from "./execution/facade";
+export { DataViewFacade } from "./execution/facade";
 
 export {
     DataValue,

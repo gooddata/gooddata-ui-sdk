@@ -437,9 +437,6 @@ export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
 
-// @public (undocumented)
-export function testingFacade(definition: IExecutionDefinition): DataViewFacade;
-
 // Warning: (ae-internal-missing-underscore) The name "toDimensions" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal

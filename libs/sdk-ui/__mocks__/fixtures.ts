@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationObject, VisualizationClass, AFM } from "@gooddata/gd-bear-model";
-import { newDefFromBuckets, testingFacade } from "@gooddata/sdk-backend-spi";
+import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure } from "@gooddata/sdk-model";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
 import IVisualization = VisualizationObject.IVisualization;
@@ -1406,4 +1407,4 @@ export const comboBuckets: IBucket[] = [
     },
 ];
 
-export const comboFacade = testingFacade(newDefFromBuckets(testWorkspace, comboBuckets));
+export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
