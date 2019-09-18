@@ -1,17 +1,14 @@
 // (C) 2019 GoodData Corporation
-import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
+import { comboFacade, dummyMeasureGroup } from "../../../../../__mocks__/fixtures";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { comboVizObjectContent, dummyMeasureGroup } from "../../../../../__mocks__/fixtures";
-import { IChartConfig, ISeriesItem } from "../../../../interfaces/Config";
+import { ISeriesItem } from "../../../../interfaces/Config";
 import { NORMAL_STACK, PERCENT_STACK } from "../../highcharts/getOptionalStackingConfiguration";
+import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 
 const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;
 
 describe("getComboChartSeries", () => {
     const series: ISeriesItem[] = [{}, {}];
-    const baseConfig: IChartConfig = {
-        mdObject: comboVizObjectContent,
-    };
 
     it.each`
         config                                                | primaryType | secondaryType
@@ -22,14 +19,7 @@ describe("getComboChartSeries", () => {
     `(
         "should set $primaryType as primary type and $secondaryType as secondary type",
         ({ config, primaryType, secondaryType }) => {
-            const result = getComboChartSeries(
-                {
-                    ...baseConfig,
-                    ...config,
-                },
-                dummyMeasureGroup,
-                series,
-            );
+            const result = getComboChartSeries(config, dummyMeasureGroup, series, comboFacade);
 
             expect(result).toEqual([
                 { type: primaryType, zIndex: CHART_ORDER[primaryType] },
