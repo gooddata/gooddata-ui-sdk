@@ -7,7 +7,7 @@
 git diff-index --quiet HEAD -- || (echo "There are uncommitted changes. Please commit or stash changes first" && exit 1)
 
 if [[ "$#" -ne 2 ]]; then
-    echo "Syntax: create-new-lib.sh <ts|tsx> <library_name>"
+    echo "Syntax: create-new-tool.sh <ts|tsx> <tool-name>"
     exit 1
 fi
 
@@ -18,46 +18,46 @@ if [[ ! -d ${skeleton} ]]; then
     exit 1
 fi;
 
-newlib_name="${2}"
-newlib_dir="../libs/${newlib_name}"
+newtool_name="${2}"
+newtool_dir="../tools/${newtool_name}"
 
-if [[ -d ${newlib_dir} ]]; then
-    echo "SDK already has library ${newlib_name}; Directory exists: ${newlib_dir}"
+if [[ -d ${newtool_dir} ]]; then
+    echo "SDK already has library ${newtool_name}; Directory exists: ${newtool_dir}"
     exit 1
 fi;
 
-echo "Creating new directory ${newlib_dir}"
-mkdir ${newlib_dir}
+echo "Creating new directory ${newtool_dir}"
+mkdir ${newtool_dir}
 
 #
 # Copy everything except node_modules and dist
 #
 for item in `ls -A ${skeleton} | grep -Ev "node_modules|dist"`; do
     echo "Copying ${item}..."
-    cp -r ${skeleton}/${item} ${newlib_dir}/
+    cp -r ${skeleton}/${item} ${newtool_dir}/
 done;
 
 #
 # Update package.json to match library name
 #
-newlib_package="${newlib_dir}/package.json"
+newlib_package="${newtool_dir}/package.json"
 
-echo "Setting name in ${newlib_package} to ${newlib_name}"
-sedexp="s/${skeleton}/${newlib_name}/g"
+echo "Setting name in ${newlib_package} to ${newtool_name}"
+sedexp="s/${skeleton}/${newtool_name}/g"
 sed "${sedexp}" ${newlib_package} >${newlib_package}.new
 mv ${newlib_package}.new ${newlib_package}
 
 #
-# Add new lib package into rush.json
+# Add new tool package into rush.json
 #
 echo "Adding new entry to rush.json"
-newlib_entry=" \"projects\": \[    {\"packageName\": \"@gooddata\/${newlib_name}\",\"projectFolder\": \"libs\/${newlib_name}\",\"reviewCategory\": \"production\"},"
+newlib_entry=" \"projects\": \[    {\"packageName\": \"@gooddata\/${newtool_name}\",\"projectFolder\": \"tools\/${newtool_name}\",\"reviewCategory\": \"tools\", \"shouldPublish\": false},"
 sed "s/\"projects\": \[/${newlib_entry}/" ../rush.json > ../rush.json.new
 mv ../rush.json.new ../rush.json
 ../common/temp/node_modules/.bin/prettier --write '../rush.json'
 
-rush update || echo "Rush update has failed. Stopping now. Please fix it up and and then do commit and fixup"
-git add ${newlib_dir}
+rush update || echo "Rush update has failed. Stopping now. Please fix it up and and then do commit & fixup"
+git add ${newtool_dir}
 git add ../common
 git add ../rush.json
-git commit -m "Initialize new SDK package ${newlib_name}"
+git commit -m "Initialize new SDK tool ${newtool_name}"
