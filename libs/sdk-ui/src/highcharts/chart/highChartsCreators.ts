@@ -16,12 +16,13 @@ import { getPieConfiguration } from "./highcharts/pieConfiguration";
 import { getDonutConfiguration } from "./highcharts/donutConfiguration";
 import { getAreaConfiguration } from "./highcharts/areaConfiguration";
 import { getScatterConfiguration } from "./highcharts/scatterConfiguration";
-import { getComboConfiguration } from "./highcharts/newComboConfiguration";
+import { getComboConfiguration } from "./highcharts/comboConfiguration";
 import { getTreemapConfiguration } from "./highcharts/treemapConfiguration";
 import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
@@ -43,6 +44,7 @@ export function getHighchartsOptions(
     chartOptions: IChartOptions,
     drillConfig: any,
     config?: INewChartConfig,
+    definition?: IExecutionDefinition,
 ) {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
@@ -52,7 +54,7 @@ export function getHighchartsOptions(
     return merge(
         {},
         getCommonConfiguration(chartOptions, drillConfig),
-        getConfigurationByType.call(null, config),
+        getConfigurationByType.call(null, config, definition),
         getCustomizedConfiguration2(chartOptions, config, drillConfig),
     );
 }

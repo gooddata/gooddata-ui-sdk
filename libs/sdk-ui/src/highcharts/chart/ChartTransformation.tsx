@@ -82,7 +82,7 @@ export default class ChartTransformation extends React.Component<
         const chartConfig = this.getChartConfig(this.props);
 
         const drillConfig = { dataView, onFiredDrillEvent };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig, dataView.definition);
 
         return {
             chartOptions,

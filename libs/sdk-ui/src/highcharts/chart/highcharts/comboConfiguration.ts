@@ -1,24 +1,23 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
-
-import get = require("lodash/get");
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
-import { IChartConfig } from "../../../interfaces/Config";
+import { INewChartConfig } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../utils/common";
-import { isBucketEmpty } from "../../../base/helpers/mdObjBucketHelper";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
+import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
+import { bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";
+import get = require("lodash/get");
 
 const { COLUMN, LINE } = VisualizationTypes;
 
-function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
+function getDefaultComboTypes(config?: INewChartConfig): INewChartConfig {
     return {
         primaryChartType: get(config, "primaryChartType", COLUMN),
         secondaryChartType: get(config, "secondaryChartType", LINE),
     };
 }
-export function getDefaultChartType(config?: IChartConfig) {
+export function getDefaultChartType(config?: INewChartConfig) {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
 
     if (primaryChartType === secondaryChartType) {
@@ -32,11 +31,11 @@ export function getDefaultChartType(config?: IChartConfig) {
     return LINE;
 }
 
-function isOnlyLineSeries(config: IChartConfig): boolean {
+function isOnlyLineSeries(config: INewChartConfig, definition?: IExecutionDefinition): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
-    const buckets: VisualizationObject.IBucket[] = get(config, "mdObject.buckets", []);
-    const isEmptyPrimaryMeasure = isBucketEmpty(buckets, MEASURES);
-    const isEmptySecondaryMeasure = isBucketEmpty(buckets, SECONDARY_MEASURES);
+    const buckets = definition ? definition.buckets : [];
+    const isEmptyPrimaryMeasure = bucketIsEmpty(bucketsFind(buckets, MEASURES));
+    const isEmptySecondaryMeasure = bucketIsEmpty(bucketsFind(buckets, SECONDARY_MEASURES));
     const isLineChartOnLeftAxis = isLineChart(primaryChartType);
     const isLineChartOnRightAxis = isLineChart(secondaryChartType);
     return (
@@ -46,8 +45,8 @@ function isOnlyLineSeries(config: IChartConfig): boolean {
     );
 }
 
-export function getComboConfiguration(config?: IChartConfig) {
-    const series = isOnlyLineSeries(config)
+export function getComboConfiguration(config?: INewChartConfig, definition?: IExecutionDefinition) {
+    const series = isOnlyLineSeries(config, definition)
         ? {
               series: {
                   states: {
