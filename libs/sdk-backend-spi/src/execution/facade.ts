@@ -2,6 +2,7 @@
 import {
     bucketIsEmpty,
     bucketMeasures,
+    IAttribute,
     IBucket,
     IMeasure,
     isPoPMeasure,
@@ -32,12 +33,20 @@ type BucketIndex = {
 export class DataViewFacade {
     private readonly _bucketById: BucketIndex;
 
-    constructor(private dataView: IDataView) {
+    constructor(public readonly dataView: IDataView) {
         this._bucketById = dataView.definition.buckets.reduce((acc: BucketIndex, val) => {
             const id = val.localIdentifier ? val.localIdentifier : "unknown";
             acc[id] = val;
             return acc;
         }, {});
+    }
+
+    public attributes(): IAttribute[] {
+        return this.dataView.definition.attributes;
+    }
+
+    public measures(): IMeasure[] {
+        return this.dataView.definition.measures;
     }
 
     //
@@ -115,6 +124,10 @@ export class DataViewFacade {
 
     public dimensions(): IResultDimension[] {
         return this.dataView.result.dimensions;
+    }
+
+    public headerItems(): IResultHeaderItem[][][] {
+        return this.dataView.headerItems;
     }
 
     public attributeHeaders(): IResultAttributeHeaderItem[][][] {

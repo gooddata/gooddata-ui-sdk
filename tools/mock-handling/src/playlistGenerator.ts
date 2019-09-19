@@ -91,7 +91,7 @@ function main(dir: string) {
             workspaceDir = acc[workspace];
         }
 
-        workspaceDir[defFingerprint(def)] = entry.name;
+        workspaceDir["fp_" + defFingerprint(def)] = entry.name;
 
         return acc;
     }, {});

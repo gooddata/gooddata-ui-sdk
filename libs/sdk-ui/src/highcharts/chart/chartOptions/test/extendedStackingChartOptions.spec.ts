@@ -1,13 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import { Execution } from "@gooddata/gd-bear-model";
+import { barChartWith4MetricsAndViewByTwoAttributes } from "../../../../../__mocks__/fixtures";
+import * as headerPredicateFactory from "../../../../base/factory/HeaderPredicateFactory";
+import { DEFAULT_COLOR_PALETTE } from "../../../utils/defaultColors";
+import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
+import { MeasureColorStrategy } from "../../colorFactory";
+import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { IUnwrappedAttributeHeadersWithItems } from "../../types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
-import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
-import { barChartWith4MetricsAndViewBy2Attribute } from "../../../../../stories/test_data/fixtures";
-import { getMVSForViewByTwoAttributes } from "../../test/helper";
-import { MeasureColorStrategy } from "../../colorFactory";
-import { DEFAULT_COLOR_PALETTE } from "../../../utils/defaultColors";
-import * as headerPredicateFactory from "../../../../base/factory/HeaderPredicateFactory";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeHeader: Execution.IAttributeHeader["attributeHeader"] = {
@@ -191,30 +191,27 @@ describe("getCategoriesForTwoAttributes", () => {
 });
 
 describe("getDrillableSeriesWithParentAttribute", () => {
-    const dataSet = barChartWith4MetricsAndViewBy2Attribute;
-    const { afm } = dataSet.executionRequest;
+    const dv = barChartWith4MetricsAndViewByTwoAttributes;
     const {
         measureGroup,
         viewByAttribute,
         viewByParentAttribute,
         stackByAttribute,
-    } = getMVSForViewByTwoAttributes(dataSet);
+    } = getMVSForViewByTwoAttributes(dv);
     const type = "column";
     const metricColorStrategy = new MeasureColorStrategy(
         DEFAULT_COLOR_PALETTE,
         undefined,
         viewByAttribute,
         stackByAttribute,
-        dataSet.executionResponse,
-        dataSet.executionRequest.afm,
+        dv,
     );
     const seriesWithoutDrillability = getSeries(
-        dataSet.executionResult.data,
+        dv,
         measureGroup,
         viewByAttribute,
         stackByAttribute,
         type,
-        {} as any,
         metricColorStrategy,
     );
     const drillIntersectionItems = [
@@ -241,10 +238,13 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         },
     ];
 
+    const attributes = dv.attributes();
+    const measures = dv.measures();
+
     it.each([
-        ["parent attribute", [dataSet.executionRequest.afm.attributes[0].displayForm.uri]],
-        ["child attribute", [dataSet.executionRequest.afm.attributes[1].displayForm.uri]],
-        ["measure", [dataSet.executionRequest.afm.measures[0].definition.measure.item.uri]],
+        ["parent attribute", [attributes[0].displayForm.uri]],
+        ["child attribute", [attributes[1].displayForm.uri]],
+        ["measure", [measures[0].definition.measure.item.uri]],
         // tslint:disable-next-line:max-line-length
         [
             "parent and child attributes",
@@ -264,12 +264,11 @@ describe("getDrillableSeriesWithParentAttribute", () => {
     ])('should return 3 drill items with "%s" configured', (_desc: string, itemUris: string[]) => {
         const drillableItems = itemUris.map((uri: string) => headerPredicateFactory.uriMatch(uri));
         const drillableMeasuresSeriesData = getDrillableSeries(
+            dv,
             seriesWithoutDrillability,
             drillableItems,
             [viewByAttribute, viewByParentAttribute],
             stackByAttribute,
-            dataSet.executionResponse,
-            afm,
             type,
         );
 

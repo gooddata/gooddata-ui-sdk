@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
-import { dummyDataFacade, recordedBackend, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { newDefFromBuckets, prepareExecution } from "@gooddata/sdk-backend-spi";
+import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure } from "@gooddata/sdk-model";
-import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
-import IVisualization = VisualizationObject.IVisualization;
 
 import * as rec from "./recordings/playlist";
+import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
+import IVisualization = VisualizationObject.IVisualization;
 
 export const dummyMeasureGroup = {
     items: [
@@ -1410,10 +1410,9 @@ export const comboBuckets: IBucket[] = [
 ];
 
 export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
-export const areaChart3MetricsAndViewByAttr = recordedDataFacade(rec.AreaChartWith3MetricsAndViewByAttribute);
-
-export const mockBackend = recordedBackend(rec.MasterIndex);
-export const areaChart3MetricsAndViewByAttrPreparedExecution = prepareExecution(
-    mockBackend,
-    rec.AreaChartWith3MetricsAndViewByAttribute.definition,
+export const barChartWith4MetricsAndViewByTwoAttributes = recordedDataFacade(
+    rec.BarChartWith4MetricsAndViewByTwoAttributes,
+);
+export const barChartWithStackByAndViewByAttributes = recordedDataFacade(
+    rec.BarChartWithStackByAndViewByAttributes,
 );

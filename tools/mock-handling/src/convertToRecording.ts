@@ -218,4 +218,4 @@ const TARGET_DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
  * use these recorded executions.
  */
 
-main(SOURCE_DIR, TARGET_DIR, "area_chart_with_3_metrics_and_view_by_attribute");
+main(SOURCE_DIR, TARGET_DIR, "bar_chart_with_stack_by_and_view_by_attributes");

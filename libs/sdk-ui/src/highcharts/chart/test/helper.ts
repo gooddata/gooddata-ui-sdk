@@ -1,4 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { barChartWithStackByAndViewByAttributes } from "../../../../__mocks__/fixtures";
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
@@ -12,31 +14,23 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../constants";
 
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
-import { barChartWithStackByAndViewByAttributes } from "../../../../stories/test_data/fixtures";
+import { IHeaderPredicate2 } from "../../../interfaces/HeaderPredicate";
 import { IChartOptions } from "../../../interfaces/Config";
 
 export function generateChartOptions(
-    dataSet: any = barChartWithStackByAndViewByAttributes,
+    dv: DataViewFacade = barChartWithStackByAndViewByAttributes,
     config: any = {
         type: "column",
         stacking: false,
     },
-    drillableItems: IHeaderPredicate[] = [],
+    drillableItems: IHeaderPredicate2[] = [],
 ): IChartOptions {
-    const {
-        executionRequest: { afm, resultSpec },
-        executionResponse,
-        executionResult: { data, headerItems },
-    } = dataSet;
-    return getChartOptions(afm, resultSpec, executionResponse, data, headerItems, config, drillableItems);
+    return getChartOptions(dv.dataView, config, drillableItems);
 }
 
-export function getMVS(dataSet: any) {
-    const {
-        executionResponse: { dimensions },
-        executionResult: { headerItems },
-    } = dataSet;
+export function getMVS(dv: DataViewFacade) {
+    const dimensions = dv.dimensions();
+    const headerItems = dv.headerItems();
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const viewByAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],
@@ -53,12 +47,12 @@ export function getMVS(dataSet: any) {
     };
 }
 
-export function getMVSForViewByTwoAttributes(dataSet: any) {
-    const mvs = getMVS(dataSet);
-    const {
-        executionResponse: { dimensions },
-        executionResult: { headerItems },
-    } = dataSet;
+export function getMVSForViewByTwoAttributes(dv: DataViewFacade) {
+    const mvs = getMVS(dv);
+
+    const dimensions = dv.dimensions();
+    const headerItems = dv.headerItems();
+
     const viewByParentAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],
         headerItems[VIEW_BY_DIMENSION_INDEX],

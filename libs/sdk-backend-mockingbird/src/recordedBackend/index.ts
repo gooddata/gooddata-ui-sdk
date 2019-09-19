@@ -239,7 +239,7 @@ function recordedPreparedExecution(
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
-                const recording = recordings[fp];
+                const recording = recordings["fp_" + fp];
 
                 if (!recording) {
                     reject(new Error("Recording not found"));
