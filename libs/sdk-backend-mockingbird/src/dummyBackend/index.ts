@@ -184,7 +184,7 @@ function dummyPreparedExecution(definition: IExecutionDefinition): IPreparedExec
             return dummyPreparedExecution(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
-            return new Promise(_ => dummyExecutionResult(definition));
+            return new Promise(r => r(dummyExecutionResult(definition)));
         },
         fingerprint(): string {
             return fp;
