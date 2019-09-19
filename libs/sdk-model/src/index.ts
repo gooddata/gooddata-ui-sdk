@@ -9,6 +9,8 @@ export {
     idMatchAttribute,
     attributeFingerprint,
     attributesFind,
+    attributeUri,
+    attributeIdentifier,
 } from "./attribute";
 
 export {
@@ -99,6 +101,8 @@ export {
     idMatchMeasure,
     measureDoesComputeRatio,
     measureFingerprint,
+    measureUri,
+    measureIdentifier,
 } from "./measure";
 
 export {

@@ -61,6 +61,8 @@ export class DataViewFacade {
     // (undocumented)
     attributeHeaders(): IResultAttributeHeaderItem[][][];
     // (undocumented)
+    attributes(): IAttribute[];
+    // (undocumented)
     bucket(id: string): IBucket | undefined;
     // (undocumented)
     bucketCount(): number;
@@ -71,6 +73,8 @@ export class DataViewFacade {
     // (undocumented)
     data(): DataValue[][] | DataValue[];
     // (undocumented)
+    readonly dataView: IDataView;
+    // (undocumented)
     dimensions(): IResultDimension[];
     // (undocumented)
     fingerprint(): () => string;
@@ -80,6 +84,8 @@ export class DataViewFacade {
     hasBuckets(): boolean;
     // (undocumented)
     hasMeasures(): boolean;
+    // (undocumented)
+    headerItems(): IResultHeaderItem[][][];
     // (undocumented)
     isBucketEmpty(id: string): boolean;
     // (undocumented)
@@ -96,6 +102,8 @@ export class DataViewFacade {
     measureGroupHeaderItems(): IMeasureHeaderItem[];
     // (undocumented)
     measureIndex(id: string): number;
+    // (undocumented)
+    measures(): IMeasure[];
     // (undocumented)
     singleDimData(): DataValue[];
     // (undocumented)

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { Identifier, ObjQualifier } from "../base";
+import { Identifier, isUriQualifier, ObjQualifier, isIdentifierQualifier } from "../base";
 import isEmpty = require("lodash/isEmpty");
 
 /**
@@ -57,6 +57,32 @@ export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =
  */
 export function attributeId(a: IAttribute): string {
     return a.attribute.localIdentifier;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function attributeUri(a: IAttribute): string | undefined {
+    if (!a) {
+        return undefined;
+    }
+
+    return isUriQualifier(a.attribute.displayForm) ? a.attribute.displayForm.uri : undefined;
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function attributeIdentifier(a: IAttribute): string | undefined {
+    if (!a) {
+        return undefined;
+    }
+
+    return isIdentifierQualifier(a.attribute.displayForm) ? a.attribute.displayForm.identifier : undefined;
 }
 
 /**

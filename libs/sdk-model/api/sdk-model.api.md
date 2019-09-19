@@ -29,6 +29,9 @@ export function attributeFingerprint(attribute: IAttribute): string;
 export function attributeId(a: IAttribute): string;
 
 // @public
+export function attributeIdentifier(a: IAttribute): string | undefined;
+
+// @public
 export type AttributeInBucket = {
     bucket: IBucket;
     idx: number;
@@ -43,6 +46,9 @@ export type AttributePredicate = (attribute: IAttribute) => boolean;
 
 // @public
 export function attributesFind(attributes: IAttribute[], idOrFun?: string | AttributePredicate): IAttribute | undefined;
+
+// @public
+export function attributeUri(a: IAttribute): string | undefined;
 
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
@@ -558,6 +564,9 @@ export const MeasureGroupIdentifier = "measureGroup";
 export function measureId(measure: IMeasure): string;
 
 // @public
+export function measureIdentifier(measure: IMeasure): string | undefined;
+
+// @public
 export type MeasureInBucket = {
     bucket: IBucket;
     idx: number;
@@ -566,6 +575,9 @@ export type MeasureInBucket = {
 
 // @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
+
+// @public
+export function measureUri(measure: IMeasure): string | undefined;
 
 // @public
 export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;

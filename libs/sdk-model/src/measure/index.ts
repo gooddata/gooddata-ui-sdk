@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { Identifier, ObjQualifier } from "../base";
+import { Identifier, isIdentifierQualifier, isUriQualifier, ObjQualifier } from "../base";
 import { IFilter } from "../filter";
 
 /**
@@ -225,6 +225,42 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
  */
 export function measureId(measure: IMeasure): string {
     return measure.measure.localIdentifier;
+}
+
+/**
+ * Gets URI of persistent measure; undefined is returned if the measure definition is not for a persistent
+ * measure (arithmetic or derived). Undefined is returned if the measure is not specified by URI.
+ *
+ * @param measure - measure to get URI for
+ * @returns URI or undefined
+ * @public
+ */
+export function measureUri(measure: IMeasure): string | undefined {
+    if (!isSimpleMeasure(measure)) {
+        return undefined;
+    }
+
+    const qualifier = measure.measure.definition.measureDefinition.item;
+
+    return isUriQualifier(qualifier) ? qualifier.uri : undefined;
+}
+
+/**
+ * Gets identifier of persistent measure; undefined is returned if the measure definition is not for a persistent
+ * measure (arithmetic or derived). Undefined is returned if the measure is not specified by identifier.
+ *
+ * @param measure - measure to get URI for
+ * @returns identifier or undefined
+ * @public
+ */
+export function measureIdentifier(measure: IMeasure): string | undefined {
+    if (!isSimpleMeasure(measure)) {
+        return undefined;
+    }
+
+    const qualifier = measure.measure.definition.measureDefinition.item;
+
+    return isIdentifierQualifier(qualifier) ? qualifier.identifier : undefined;
 }
 
 /**
