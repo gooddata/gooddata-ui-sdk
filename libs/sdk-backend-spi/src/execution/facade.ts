@@ -176,6 +176,10 @@ export class DataViewFacade {
     // data ops
     //
 
+    public dataAt(index: number): DataValue | DataValue[] {
+        return this.dataView.data[index];
+    }
+
     public data(): DataValue[][] | DataValue[] {
         return this.dataView.data;
     }

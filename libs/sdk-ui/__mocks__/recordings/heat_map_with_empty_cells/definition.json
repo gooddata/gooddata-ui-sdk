@@ -1,0 +1,47 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/storybook/obj/5.df"
+                },
+                "localIdentifier": "a2"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/storybook/obj/4.df"
+                },
+                "localIdentifier": "a1"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m4",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/storybook/obj/9"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a2"]
+        },
+        {
+            "itemIdentifiers": ["a1", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

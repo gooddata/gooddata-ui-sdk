@@ -73,6 +73,8 @@ export class DataViewFacade {
     // (undocumented)
     data(): DataValue[][] | DataValue[];
     // (undocumented)
+    dataAt(index: number): DataValue | DataValue[];
+    // (undocumented)
     readonly dataView: IDataView;
     // (undocumented)
     dimensions(): IResultDimension[];

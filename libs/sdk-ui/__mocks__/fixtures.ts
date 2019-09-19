@@ -1411,6 +1411,22 @@ export const comboBuckets: IBucket[] = [
 
 export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
 
+//
+// Area chart fixtures
+//
+
+export const areaChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+    rec.AreaChartWith3MetricsAndViewByAttribute,
+);
+
+export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
+    rec.AreaChartWithMeasureViewByAndStackBy,
+);
+
+//
+// Bar chart fixtures
+//
+
 export const barChartWith4MetricsAndViewByTwoAttributes = recordedDataFacade(
     rec.BarChartWith4MetricsAndViewByTwoAttributes,
 );
@@ -1424,8 +1440,70 @@ export const barChartWith2MetricsAndViewByAttribute = recordedDataFacade(
 export const barChartWith3MetricsAndViewByAttribute = recordedDataFacade(
     rec.BarChartWith3MetricsAndViewByAttribute,
 );
-export const pieChartWithMetricsOnly = recordedDataFacade(rec.PieChartWithMetricsOnly);
+export const barChartWith3MetricsAndViewByAttributeFunformat = recordedDataFacade(
+    rec.BarChartWith3MetricsAndViewByAttributeFunformat,
+);
+export const barChartWithPopMeasureAndViewByAttribute = recordedDataFacade(
+    rec.BarChartWithPopMeasureAndViewByAttribute,
+);
+export const barChartWithPreviousPeriodMeasure = recordedDataFacade(rec.BarChartWithPreviousPeriodMeasure);
+export const barChartWithSingleMeasureAndNoAttributes = recordedDataFacade(
+    rec.BarChartWithSingleMeasureAndNoAttributes,
+);
 export const barChartWithStackByAndOnlyOneStack = recordedDataFacade(rec.BarChartWithStackByAndOnlyOneStack);
+
+export const barChartWithPreviousPeriodMeasureX6 = recordedDataFacade(
+    rec.BarChartWithPreviousPeriodMeasureX6,
+);
+
+//
+// Bubble chart
+//
+export const bubbleChartWith2MetricsAndAttributeNoPrimaries = recordedDataFacade(
+    rec.BubbleChartWith2MetricsAndAttributeNoPrimaries,
+);
+export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
+    rec.BubbleChartWith3MetricsAndAttribute,
+);
+export const bubbleChartWith3MetricsAndAttributeNullsInData = recordedDataFacade(
+    rec.BubbleChartWith3MetricsAndAttributeNullsInData,
+);
+
+//
+// Combo chart
+//
+export const comboWithTwoMeasuresAndViewByAttribute = recordedDataFacade(
+    rec.ComboChartWithTwoMeasuresViewByAttribute,
+);
+
+//
+// Heatmap recordings
+//
+
+export const heatMapWithEmptyCells = recordedDataFacade(rec.HeatMapWithEmptyCells);
+export const heatMapWithMetricRowColumn = recordedDataFacade(rec.HeatMapWithMetricRowColumn);
+//
+// Pie chart recordings
+//
+
+export const pieChartWithMetricsOnly = recordedDataFacade(rec.PieChartWithMetricsOnly);
+export const pieChartWithMetricsOnlyFundata = recordedDataFacade(rec.PieChartWithMetricsOnlyFundata);
+
+//
+// Scatter plot recording
+//
+
+export const scatterPlotWith2MetricsAndAttribute = recordedDataFacade(
+    rec.ScatterPlotWith2MetricsAndAttribute,
+);
+export const scatterPlotWith2MetricsAndAttributeNullsInData = recordedDataFacade(
+    rec.ScatterPlotWith2MetricsAndAttributeNullsInData,
+);
+
+//
+// Treemap recordings
+//
+
 export const treemapWithMetricAndStackByAttribute = recordedDataFacade(
     rec.TreemapWithMetricAndStackByAttribute,
 );
@@ -1439,4 +1517,7 @@ export const treemapWithThreeMetrics = recordedDataFacade(rec.TreemapWithThreeMe
 export const treemapWithOneMetric = recordedDataFacade(rec.TreemapWithOneMetric);
 export const treemapWithMetricAndViewByAttribute1element = recordedDataFacade(
     rec.TreemapWithMetricAndViewByAttribute1element,
+);
+export const treemapWithMetricViewByAndStackByAttribute = recordedDataFacade(
+    rec.TreemapWithMetricViewByAndStackByAttribute,
 );

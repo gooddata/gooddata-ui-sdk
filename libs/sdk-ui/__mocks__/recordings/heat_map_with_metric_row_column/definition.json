@@ -1,0 +1,48 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/px4o16t9ftwkloa82p4o78zv34lqk4vs/obj/952"
+                },
+                "localIdentifier": "productAttribute"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/px4o16t9ftwkloa82p4o78zv34lqk4vs/obj/1805"
+                },
+                "localIdentifier": "stageNameAttribute"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure",
+                "alias": "Amount",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/px4o16t9ftwkloa82p4o78zv34lqk4vs/obj/1279"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["productAttribute"]
+        },
+        {
+            "itemIdentifiers": ["stageNameAttribute", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}
