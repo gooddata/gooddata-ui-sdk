@@ -1,0 +1,42 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/952"
+                },
+                "localIdentifier": "f4213833c9244f63858b52686044f7aa"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "350381637b674c2eaa18d29ebf22c043",
+                "alias": "% Amount",
+                "format": "#,##0.00%",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1279"
+                        },
+                        "computeRatio": true,
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["f4213833c9244f63858b52686044f7aa"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

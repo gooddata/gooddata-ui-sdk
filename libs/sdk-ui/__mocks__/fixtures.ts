@@ -1456,6 +1456,8 @@ export const barChartWithPreviousPeriodMeasureX6 = recordedDataFacade(
     rec.BarChartWithPreviousPeriodMeasureX6,
 );
 
+export const barChartWithoutAttributes = recordedDataFacade(rec.BarChartWithoutAttributes);
+
 //
 // Bubble chart
 //
@@ -1467,6 +1469,16 @@ export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
 );
 export const bubbleChartWith3MetricsAndAttributeNullsInData = recordedDataFacade(
     rec.BubbleChartWith3MetricsAndAttributeNullsInData,
+);
+
+//
+// Column chart
+//
+
+export const columnChartWithMeasureAndViewBy = recordedDataFacade(rec.ColumnChartWithMeasureAndViewBy);
+
+export const columnChartWithMeasureAndViewByAndComputeRatio = recordedDataFacade(
+    rec.ColumnChartWithMeasureAndViewByAndComputeRatio,
 );
 
 //

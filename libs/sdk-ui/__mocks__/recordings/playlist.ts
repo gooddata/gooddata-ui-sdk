@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-19T22:17:31.866Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-19T23:03:39.795Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -79,6 +79,12 @@ export const BarChartWithViewByAttribute = {
     result: require("./bar_chart_with_view_by_attribute/result.json"),
 };
 
+export const BarChartWithoutAttributes = {
+    definition: require("./bar_chart_without_attributes/definition.json"),
+    response: require("./bar_chart_without_attributes/response.json"),
+    result: require("./bar_chart_without_attributes/result.json"),
+};
+
 export const BubbleChartWith2MetricsAndAttributeNoPrimaries = {
     definition: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/definition.json"),
     response: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/response.json"),
@@ -95,6 +101,18 @@ export const BubbleChartWith3MetricsAndAttributeNullsInData = {
     definition: require("./bubble_chart_with_3_metrics_and_attribute_nulls_in_data/definition.json"),
     response: require("./bubble_chart_with_3_metrics_and_attribute_nulls_in_data/response.json"),
     result: require("./bubble_chart_with_3_metrics_and_attribute_nulls_in_data/result.json"),
+};
+
+export const ColumnChartWithMeasureAndViewBy = {
+    definition: require("./column_chart_with_measure_and_view_by/definition.json"),
+    response: require("./column_chart_with_measure_and_view_by/response.json"),
+    result: require("./column_chart_with_measure_and_view_by/result.json"),
+};
+
+export const ColumnChartWithMeasureAndViewByAndComputeRatio = {
+    definition: require("./column_chart_with_measure_and_view_by_and_computeRatio/definition.json"),
+    response: require("./column_chart_with_measure_and_view_by_and_computeRatio/response.json"),
+    result: require("./column_chart_with_measure_and_view_by_and_computeRatio/result.json"),
 };
 
 export const ComboChartWithTwoMeasuresViewByAttribute = {
@@ -195,8 +213,11 @@ export const MasterIndex = {
         fp_7ebc96ae6d02197155fcd63a41f870b3: BarChartWithSingleMeasureAndNoAttributes,
         fp_1b740fffd1df15049b4c5771cf293327: BarChartWithStackByAndViewByAttributes,
         fp_8d33743b38a06a7af0a1a71e3c573f8b: BarChartWithViewByAttribute,
+        fp_f8a55bf206246c9ed76b5eb455c1a45c: BarChartWithoutAttributes,
         fp_14f9897772326f7e811f4aa9a20d871d: BubbleChartWith2MetricsAndAttributeNoPrimaries,
         fp_bcc9d43c8427eeb41548d866b1630374: BubbleChartWith3MetricsAndAttributeNullsInData,
+        fp_7ae5322d5061eae29d76993176d7c595: ColumnChartWithMeasureAndViewBy,
+        fp_21efe764109d6cbbc1c9617b90920bdc: ColumnChartWithMeasureAndViewByAndComputeRatio,
         fp_7ba00bd46fb37f68fbb549e997f349dd: HeatMapWithEmptyCells,
         fp_16dd93e14c96b0317d74f5e0e37792ff: HeatMapWithMetricRowColumn,
         fp_551204e9d10f29532c64d0aad6d9b19b: PieChartWithMetricsOnlyFundata,

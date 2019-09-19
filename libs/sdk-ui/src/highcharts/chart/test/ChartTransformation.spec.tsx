@@ -4,7 +4,7 @@ import { shallow, mount } from "enzyme";
 import noop = require("lodash/noop");
 
 import ChartTransformation from "../ChartTransformation";
-import * as fixtures from "../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../__mocks__/fixtures";
 import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig, IColorPaletteItem } from "../../../interfaces/Config";
@@ -62,7 +62,7 @@ describe("ChartTransformation", () => {
         };
         const componentProps = {
             renderer,
-            ...fixtures.barChartWithStackByAndViewByAttributes,
+            dataView: fixtures.barChartWithStackByAndViewByAttributes.dataView,
             config: {
                 ...defaultProps.config,
                 colorPalette: customColorPalette,
@@ -80,14 +80,14 @@ describe("ChartTransformation", () => {
         };
 
         function createChartRendererProps(
-            executionData = fixtures.areaChartWith3MetricsAndViewByAttribute,
+            executionData = fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
             config: IChartConfig = {},
         ) {
             const renderer = jest.fn().mockReturnValue(<div />);
             mount(
                 createComponent({
                     renderer,
-                    ...executionData,
+                    dataView: executionData,
                     config: {
                         ...config,
                         type: config.type || defaultConfig.type,
@@ -98,28 +98,36 @@ describe("ChartTransformation", () => {
         }
 
         it("should be enabled by default for area chart", () => {
-            const passedProps = createChartRendererProps(fixtures.areaChartWith3MetricsAndViewByAttribute);
+            const passedProps = createChartRendererProps(
+                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
+            );
             expect(passedProps.chartOptions.stacking).toEqual("normal");
         });
 
         it("should be enabled by configuration", () => {
-            const passedProps = createChartRendererProps(fixtures.areaChartWith3MetricsAndViewByAttribute, {
-                stacking: true,
-            });
+            const passedProps = createChartRendererProps(
+                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
+                {
+                    stacking: true,
+                },
+            );
             expect(passedProps.chartOptions.stacking).toEqual("normal");
         });
 
         it("should be disabled by configuration", () => {
-            const passedProps = createChartRendererProps(fixtures.areaChartWith3MetricsAndViewByAttribute, {
-                stacking: false,
-            });
+            const passedProps = createChartRendererProps(
+                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
+                {
+                    stacking: false,
+                },
+            );
             expect(passedProps.chartOptions.stacking).toBeNull();
         });
 
         describe("getChartConfig", () => {
             it("should keep stack measures configuration", () => {
                 const passedProps = createChartRendererProps(
-                    fixtures.areaChartWith3MetricsAndViewByAttribute,
+                    fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
                     {
                         stackMeasures: true,
                         stackMeasuresToPercent: true,
@@ -128,15 +136,18 @@ describe("ChartTransformation", () => {
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should keep stack measures configuration without stackBy", () => {
-                const passedProps = createChartRendererProps(fixtures.columnChartWithMeasureViewBy, {
-                    stackMeasures: true,
-                    stackMeasuresToPercent: true,
-                });
+                const passedProps = createChartRendererProps(
+                    fixtures.columnChartWithMeasureAndViewBy.dataView,
+                    {
+                        stackMeasures: true,
+                        stackMeasuresToPercent: true,
+                    },
+                );
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should sanitized stack measures configuration with computeRatio", () => {
                 const passedProps = createChartRendererProps(
-                    fixtures.columnChartWithMeasureViewByAndComputeRatio,
+                    fixtures.columnChartWithMeasureAndViewByAndComputeRatio.dataView,
                     {
                         stackMeasures: true,
                         stackMeasuresToPercent: true,
@@ -358,14 +369,10 @@ describe("ChartTransformation", () => {
 
     describe("onNegativeValues", () => {
         const pieChartPropsWithNegativeValue = {
-            ...fixtures.pieChartWithMetricsOnly,
+            dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
             config: {
                 ...defaultProps.config,
                 type: "pie",
-            },
-            executionResult: {
-                ...fixtures.pieChartWithMetricsOnly.executionResult,
-                data: [["-1", "38310753.45", "9011389.956"]],
             },
         };
 
