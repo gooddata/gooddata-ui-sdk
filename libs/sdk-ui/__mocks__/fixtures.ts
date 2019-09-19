@@ -1410,9 +1410,33 @@ export const comboBuckets: IBucket[] = [
 ];
 
 export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
+
 export const barChartWith4MetricsAndViewByTwoAttributes = recordedDataFacade(
     rec.BarChartWith4MetricsAndViewByTwoAttributes,
 );
 export const barChartWithStackByAndViewByAttributes = recordedDataFacade(
     rec.BarChartWithStackByAndViewByAttributes,
+);
+export const barChartWithViewByAttribute = recordedDataFacade(rec.BarChartWithViewByAttribute);
+export const barChartWith2MetricsAndViewByAttribute = recordedDataFacade(
+    rec.BarChartWith2MetricsAndViewByAttribute,
+);
+export const barChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+    rec.BarChartWith3MetricsAndViewByAttribute,
+);
+export const pieChartWithMetricsOnly = recordedDataFacade(rec.PieChartWithMetricsOnly);
+export const barChartWithStackByAndOnlyOneStack = recordedDataFacade(rec.BarChartWithStackByAndOnlyOneStack);
+export const treemapWithMetricAndStackByAttribute = recordedDataFacade(
+    rec.TreemapWithMetricAndStackByAttribute,
+);
+export const treemapWithMetricAndViewByAttribute = recordedDataFacade(
+    rec.TreemapWithMetricAndViewByAttribute,
+);
+export const treemapWithTwoMetricsAndStackByAttribute = recordedDataFacade(
+    rec.TreemapWithTwoMetricsAndStackByAttribute,
+);
+export const treemapWithThreeMetrics = recordedDataFacade(rec.TreemapWithThreeMetrics);
+export const treemapWithOneMetric = recordedDataFacade(rec.TreemapWithOneMetric);
+export const treemapWithMetricAndViewByAttribute1element = recordedDataFacade(
+    rec.TreemapWithMetricAndViewByAttribute1element,
 );

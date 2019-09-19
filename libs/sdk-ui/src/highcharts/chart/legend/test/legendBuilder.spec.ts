@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { generateChartOptions } from "../../test/helper";
 
-import * as fixtures from "../../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../../__mocks__/fixtures";
 import getLegend, { shouldLegendBeEnabled, getLegendItems } from "../legendBuilder";
 import { DEFAULT_LEGEND_CONFIG } from "../../../typings/legend";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
@@ -37,47 +37,32 @@ describe("shouldLegendBeEnabled", () => {
     });
 
     it("should return false if the treemap is stacked and has only one measure item", () => {
-        const dataSet = fixtures.treemapWithMetricAndStackByAttribute;
-        const chartOptions = generateChartOptions(dataSet, {
-            type: "treemap",
-            mdObject: dataSet.mdObject,
-        });
+        const dv = fixtures.treemapWithMetricAndStackByAttribute;
+        const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap is stacked and has many measures", () => {
-        const dataSet = fixtures.treemapWithTwoMetricsAndStackByAttribute;
-        const chartOptions = generateChartOptions(dataSet, {
-            type: "treemap",
-            mdObject: dataSet.mdObject,
-        });
+        const dv = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+        const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if the treemap has many measures", () => {
-        const dataSet = fixtures.treemapWithThreeMetrics;
-        const chartOptions = generateChartOptions(dataSet, {
-            type: "treemap",
-            mdObject: dataSet.mdObject,
-        });
+        const dv = fixtures.treemapWithThreeMetrics;
+        const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return false if the treemap has only one measures", () => {
-        const dataSet = fixtures.treemapWithOneMetric;
-        const chartOptions = generateChartOptions(dataSet, {
-            type: "treemap",
-            mdObject: dataSet.mdObject,
-        });
+        const dv = fixtures.treemapWithOneMetric;
+        const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap has view by and has only one view by item", () => {
-        const dataSet = fixtures.treemapWithMetricAndViewByAndOnlyOneElement;
-        const chartOptions = generateChartOptions(dataSet, {
-            type: "treemap",
-            mdObject: dataSet.mdObject,
-        });
+        const dv = fixtures.treemapWithMetricAndViewByAttribute1element;
+        const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
