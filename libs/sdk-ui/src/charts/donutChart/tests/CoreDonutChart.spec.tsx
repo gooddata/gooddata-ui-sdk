@@ -3,12 +3,12 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreDonutChart } from "../CoreDonutChart";
-import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../tests/mocks";
+import { dummyExecution } from "../../tests/mocks";
+import { BaseChart } from "../../_base/BaseChart";
 
 describe("DonutChart", () => {
     it("should render BaseChart", () => {
-        const wrapper = shallow(<CoreDonutChart dataSource={emptyDataSource} />);
+        const wrapper = shallow(<CoreDonutChart execution={dummyExecution} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

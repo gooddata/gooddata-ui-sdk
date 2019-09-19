@@ -3,12 +3,12 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreLineChart } from "../CoreLineChart";
-import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../tests/mocks";
+import { dummyExecution } from "../../tests/mocks";
+import { BaseChart } from "../../_base/BaseChart";
 
 describe("LineChart", () => {
     it("should render BaseChart", () => {
-        const wrapper = shallow(<CoreLineChart dataSource={emptyDataSource} />);
+        const wrapper = shallow(<CoreLineChart execution={dummyExecution} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

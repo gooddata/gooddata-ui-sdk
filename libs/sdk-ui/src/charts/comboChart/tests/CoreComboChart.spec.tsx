@@ -3,12 +3,12 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreComboChart } from "../CoreComboChart";
-import { BaseChart } from "../../../_defunct/to_delete/BaseChart";
-import { emptyDataSource } from "../../tests/mocks";
+import { dummyExecution } from "../../tests/mocks";
+import { BaseChart } from "../../_base/BaseChart";
 
 describe("ComboChart", () => {
     it("should render BaseChart", () => {
-        const wrapper = shallow(<CoreComboChart dataSource={emptyDataSource} />);
+        const wrapper = shallow(<CoreComboChart execution={dummyExecution} />);
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });
