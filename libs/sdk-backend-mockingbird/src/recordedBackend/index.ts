@@ -32,6 +32,34 @@ const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 
 /**
+ * Master Index is the input needed to initialize the recorded backend.
+ * @internal
+ */
+export type RecordingIndex = {
+    [workspace: string]: WorkspaceRecordings;
+};
+
+/**
+ * Workspace-specific recordings
+ *
+ * @internal
+ */
+export type WorkspaceRecordings = {
+    [fp: string]: ExecutionRecording;
+};
+
+/**
+ * Each recording in the master index has these 3 entries
+ *
+ * @internal
+ */
+export type ExecutionRecording = {
+    definition: IExecutionDefinition;
+    response: any;
+    result: any;
+};
+
+/**
  * Returns dummy backend - this backend focuses on the execution 'branch' of the SPI. it implements
  * execution factory et al. in a way, that the returned result and data view have a correct execution
  * definition but have no data whatsoever.
@@ -40,24 +68,28 @@ const defaultConfig = { hostname: "test", username: "testUser@example.com" };
  * - testing code which builds and configures an instance of IPreparedExecution.
  * - testing code which works with IDataView's' execution definition
  *
+ * @param index - index with available recordings
  * @param config - optionally provide configuration of the backend (host/user)
  * @internal
  */
-export function recordedBackend(config: AnalyticalBackendConfig = defaultConfig): IAnalyticalBackend {
+export function recordedBackend(
+    index: RecordingIndex,
+    config: AnalyticalBackendConfig = defaultConfig,
+): IAnalyticalBackend {
     const noopBackend: IAnalyticalBackend = {
         capabilities: {},
         config,
         onHostname(hostname: string): IAnalyticalBackend {
-            return recordedBackend({ ...config, hostname });
+            return recordedBackend(index, { ...config, hostname });
         },
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
         withCredentials(username: string, _password: string): IAnalyticalBackend {
-            return recordedBackend({ ...config, username });
+            return recordedBackend(index, { ...config, username });
         },
         workspace(id: string): IAnalyticalWorkspace {
-            return recordedWorkspace(id);
+            return recordedWorkspace(id, index[id]);
         },
         isAuthenticated(): Promise<boolean> {
             return new Promise(r => r(true));
@@ -68,29 +100,18 @@ export function recordedBackend(config: AnalyticalBackendConfig = defaultConfig)
 }
 
 /**
- * @internal
- */
-export type ExecutionRecording = {
-    definition: any;
-    response: any;
-    result: any;
-};
-
-/**
  * Creates a new, empty data view facade for the provided execution definition. The definition will be
  * retained as-is. The data will be empty.
  * @param recording - recorded definition, AFM response and AFM result
  * @internal
  */
 export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade {
-    const definition = recording.definition as IExecutionDefinition;
-    const afmResponse = recording.response.executionResponse as Execution.IExecutionResponse;
-    const afmResult = recording.result.executionResult as Execution.IExecutionResult;
+    const definition = recording.definition;
 
     // this result can readAll() and promise data view from recorded afm result
-    const result = recordedExecutionResult(definition, afmResponse, afmResult);
-    // the facade needs the data view right now, no promises; co create that too
-    const dataView = recordedDataView(definition, result, afmResult);
+    const result = recordedExecutionResult(definition, recording);
+    // the facade needs the data view right now, no promises; so create that too
+    const dataView = recordedDataView(definition, result, recording);
 
     return new DataViewFacade(dataView);
 }
@@ -99,11 +120,11 @@ export function recordedDataFacade(recording: ExecutionRecording): DataViewFacad
 // Internals
 //
 
-function recordedWorkspace(workspace: string): IAnalyticalWorkspace {
+function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = {}): IAnalyticalWorkspace {
     return {
         workspace,
         execution(): IExecutionFactory {
-            return recordedExecutionFactory(workspace);
+            return recordedExecutionFactory(workspace, recordings);
         },
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
@@ -120,16 +141,19 @@ function recordedWorkspace(workspace: string): IAnalyticalWorkspace {
     };
 }
 
-function recordedExecutionFactory(workspace: string): IExecutionFactory {
+function recordedExecutionFactory(
+    workspace: string,
+    recordings: WorkspaceRecordings = {},
+): IExecutionFactory {
     return {
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForItems(workspace, items, filters));
+            return recordedPreparedExecution(defForItems(workspace, items, filters), recordings);
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForBuckets(workspace, buckets, filters));
+            return recordedPreparedExecution(defForBuckets(workspace, buckets, filters), recordings);
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForInsight(workspace, insight, filters));
+            return recordedPreparedExecution(defForInsight(workspace, insight, filters), recordings);
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
@@ -140,8 +164,9 @@ function recordedExecutionFactory(workspace: string): IExecutionFactory {
 function recordedDataView(
     definition: IExecutionDefinition,
     result: IExecutionResult,
-    afmResult: Execution.IExecutionResult,
+    recording: ExecutionRecording,
 ): IDataView {
+    const afmResult = recording.result.executionResult as Execution.IExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {
@@ -167,19 +192,19 @@ function recordedDataView(
 
 function recordedExecutionResult(
     definition: IExecutionDefinition,
-    afmResponse: Execution.IExecutionResponse,
-    afmResult: Execution.IExecutionResult,
+    recording: ExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
+    const afmResponse = recording.response.executionResponse as Execution.IExecutionResponse;
 
     const result: IExecutionResult = {
         definition,
         dimensions: afmResponse.dimensions,
         readAll(): Promise<IDataView> {
-            return new Promise(r => r(recordedDataView(definition, result, afmResult)));
+            return new Promise(r => r(recordedDataView(definition, result, recording)));
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
-            return new Promise(r => r(recordedDataView(definition, result, afmResult)));
+            return new Promise(r => r(recordedDataView(definition, result, recording)));
         },
         fingerprint(): string {
             return fp;
@@ -198,18 +223,31 @@ function recordedExecutionResult(
     return result;
 }
 
-function recordedPreparedExecution(definition: IExecutionDefinition): IPreparedExecution {
+function recordedPreparedExecution(
+    definition: IExecutionDefinition,
+    recordings: WorkspaceRecordings = {},
+): IPreparedExecution {
     const fp = defFingerprint(definition);
 
     return {
         definition,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return recordedPreparedExecution(defWithDimensions(definition, dim));
+            return recordedPreparedExecution(defWithDimensions(definition, dim), recordings);
         },
         withSorting(...items: SortItem[]): IPreparedExecution {
-            return recordedPreparedExecution(defWithSorting(definition, items));
+            return recordedPreparedExecution(defWithSorting(definition, items), recordings);
         },
         execute(): Promise<IExecutionResult> {
+            return new Promise((resolve, reject) => {
+                const recording = recordings[fp];
+
+                if (!recording) {
+                    reject(new Error("Recording not found"));
+                } else {
+                    resolve(recordedExecutionResult(definition, recording));
+                }
+            });
+
             // TODO: this needs completion; the playlist should contain a generated fingerprint of execution definition,
             //  and all that this impl would do for execution is locate recording by the fingerprint.
             throw new NotSupported("...");

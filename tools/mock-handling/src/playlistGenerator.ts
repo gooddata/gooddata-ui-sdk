@@ -2,30 +2,56 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 
 const _COPYRIGHT = `// (C) 2019-${new Date().getFullYear()} GoodData Corporation`;
 const _WARNING = `// THIS FILE WAS AUTO-GENERATED ON ${new Date().toISOString()}; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING`;
 const _TSLINT = "// tslint:disable:variable-name";
 
-function recordingEntry(name: string, dir: string): string | null {
-    const def = path.join(dir, "definition.json");
-    const response = path.join(dir, "response.json");
-    const result = path.join(dir, "result.json");
+type RecordingEntry = {
+    name: string;
+    def: IExecutionDefinition;
+    constant: string;
+};
 
-    if (!fs.existsSync(def) || !fs.existsSync(response) || !fs.existsSync(result)) {
+function makeNameNice(dirName: string): string {
+    return dirName
+        .split("_")
+        .map(word => word.charAt(0).toLocaleUpperCase() + word.substr(1))
+        .join("");
+}
+
+function recordingEntry(dirName: string, dir: string): RecordingEntry | null {
+    const defPath = path.join(dir, "definition.json");
+    const responsePath = path.join(dir, "response.json");
+    const resultPath = path.join(dir, "result.json");
+
+    if (!fs.existsSync(defPath) || !fs.existsSync(responsePath) || !fs.existsSync(resultPath)) {
         console.log("WARN: Directory", dir, "does not contain all the required files. Skipping...");
 
         return null;
     }
 
-    console.log("INFO: Building playlist entry for", name);
+    console.log("INFO: Building playlist entry for", dirName, "reading definition...");
 
-    return `export const ${name} = {
-    definition: require('./${name}/definition.json'),
-    response: require('./${name}/response.json'),
-    result: require('./${name}/result.json'),
+    const name = makeNameNice(dirName);
+    const def = JSON.parse(fs.readFileSync(defPath, { encoding: "utf-8" })) as IExecutionDefinition;
+    const constant = `export const ${name} = {
+    definition: require('./${dirName}/definition.json'),
+    response: require('./${dirName}/response.json'),
+    result: require('./${dirName}/result.json'),
 };
     `;
+
+    return {
+        name,
+        def,
+        constant,
+    };
+}
+
+function isRecording(obj: any): obj is RecordingEntry {
+    return obj !== null;
 }
 
 function main(dir: string) {
@@ -44,18 +70,44 @@ function main(dir: string) {
 
             return recordingEntry(maybeDir.name, path.join(dir, maybeDir.name));
         })
-        .filter(item => item !== null);
+        .filter(isRecording);
 
     if (!entries.length) {
         console.log("WARN: No recordings found. Doing nothing");
-    } else {
-        const playlist = path.join(dir, "playlist.ts");
-        fs.writeFileSync(playlist, `${_COPYRIGHT}\n${_WARNING}\n${_TSLINT}\n${entries.join("\n")}`, {
-            encoding: "utf-8",
-        });
 
-        console.log("SUCCESS: Created", playlist);
+        return;
     }
+    const playlist = path.join(dir, "playlist.ts");
+
+    const recordingsMap = entries.reduce((acc: any, entry: RecordingEntry) => {
+        const {
+            def,
+            def: { workspace },
+        } = entry;
+        let workspaceDir = acc[workspace];
+
+        if (!workspaceDir) {
+            acc[workspace] = {};
+            workspaceDir = acc[workspace];
+        }
+
+        workspaceDir[defFingerprint(def)] = entry.name;
+
+        return acc;
+    }, {});
+
+    const constants = entries.map(entry => entry.constant).join("\n");
+    const masterIndex = `// initialize recorded backend with this\nexport const MasterIndex = ${JSON.stringify(
+        recordingsMap,
+        null,
+        4,
+    ).replace(/"/g, "")};`;
+
+    fs.writeFileSync(playlist, `${_COPYRIGHT}\n${_WARNING}\n${_TSLINT}\n${constants}\n${masterIndex}`, {
+        encoding: "utf-8",
+    });
+
+    console.log("SUCCESS: Created", playlist);
 }
 
 const DIR = "../../../libs/sdk-ui/__mocks__/recordings/";

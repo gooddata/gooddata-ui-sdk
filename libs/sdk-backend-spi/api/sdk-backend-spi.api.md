@@ -462,6 +462,9 @@ export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
 
+// @public
+export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+
 
 // (No @packageDocumentation comment for this package)
 

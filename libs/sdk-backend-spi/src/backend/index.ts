@@ -1,10 +1,11 @@
 // (C) 2019 GoodData Corporation
 
 import { IElementQueryFactory } from "../elements";
-import { IExecutionFactory } from "../execution";
+import { IExecutionFactory, IPreparedExecution } from "../execution";
 import { IFeatureFlagsQuery } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
 import { IWorkspaceStyling } from "../styling";
+import { IExecutionDefinition } from "../execution/executionDefinition";
 
 /**
  * TODO: SDK8: add public doc
@@ -173,3 +174,29 @@ export type BackendCapabilities = {
      */
     [key: string]: undefined | boolean | number | string;
 };
+
+//
+// Supporting / convenience functions
+//
+
+/**
+ * Prepares execution of the provided definition against a backend.
+ *
+ * This is a convenience function which uses the backend methods to create and prepare an execution.
+ *
+ * @param definition - execution definition to prepare execution for
+ * @param backend - backend to use
+ * @returns new prepared execution
+ * @public
+ */
+export function prepareExecution(
+    backend: IAnalyticalBackend,
+    definition: IExecutionDefinition,
+): IPreparedExecution {
+    return backend
+        .workspace(definition.workspace)
+        .execution()
+        .forItems([...definition.attributes, ...definition.measures], definition.filters)
+        .withDimensions(...definition.dimensions)
+        .withSorting(...definition.sortBy);
+}

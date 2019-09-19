@@ -6,6 +6,7 @@ export {
     BackendCapabilities,
     AnalyticalBackendConfig,
     AnalyticalBackendFactory,
+    prepareExecution,
 } from "./backend";
 
 export {
