@@ -1,82 +1,51 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { AFM, VisualizationObject } from "@gooddata/gd-bear-model";
-
-import { ComboChart as AfmComboChart } from "../../../_defunct/afm/ComboChart";
 import { ComboChart } from "../ComboChart";
 import { M1, M2, M3, M4 } from "../../tests/fixtures/buckets";
-import { IChartConfig } from "../../../interfaces/Config";
+import { INewChartConfig } from "../../../interfaces/Config";
 import { measure } from "../../../base/helpers/model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { CoreComboChart } from "../CoreComboChart";
+import { IMeasure } from "@gooddata/sdk-model";
+import { Model } from "../../../index";
 
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = shallow(
             <ComboChart
-                projectId="foo"
+                workspace="foo"
+                backend={dummyBackend()}
                 primaryMeasures={[M1]}
                 secondaryMeasures={[M2]}
-                sdk={factory({ domain: "example.com" })}
             />,
         );
-        expect(wrapper.find(AfmComboChart)).toHaveLength(1);
+        expect(wrapper.find(CoreComboChart)).toHaveLength(1);
     });
 
-    it("should render AfmComboChart when columnMeasures & lineMeasures provided", () => {
-        const wrapper = shallow(<ComboChart projectId="foo" columnMeasures={[M3]} lineMeasures={[M4]} />);
-        expect(wrapper.find(AfmComboChart)).toHaveLength(1);
-    });
-
-    it("should override primaryMeasures & secondaryMeasures", () => {
+    it("should render CoreComboChart", () => {
         const wrapper = shallow(
             <ComboChart
-                projectId="foo"
-                columnMeasures={[M3]}
-                lineMeasures={[M4]}
-                primaryMeasures={[M1]}
-                secondaryMeasures={[M2]}
+                workspace="foo"
+                backend={dummyBackend()}
+                primaryMeasures={[M3]}
+                secondaryMeasures={[M4]}
             />,
         );
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m3",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "m3",
-                            },
-                        },
-                    },
-                },
-                {
-                    localIdentifier: "m4",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "m4",
-                            },
-                        },
-                    },
-                },
-            ],
-        };
-        const afmComponent = wrapper.find(AfmComboChart);
-
-        expect(afmComponent.prop("afm")).toEqual(expectedAfm);
+        expect(wrapper.find(CoreComboChart)).toHaveLength(1);
     });
 
     describe("Stacking", () => {
         function renderChart(
-            primaryMeasures: VisualizationObject.IMeasure[],
-            secondaryMeasures: VisualizationObject.IMeasure[],
-            config?: IChartConfig,
+            primaryMeasures: IMeasure[],
+            secondaryMeasures: IMeasure[],
+            config?: INewChartConfig,
         ) {
             return shallow(
                 <ComboChart
                     config={config}
-                    projectId="foo"
+                    workspace="foo"
+                    backend={dummyBackend()}
                     primaryMeasures={primaryMeasures}
                     secondaryMeasures={secondaryMeasures}
                 />,
@@ -91,7 +60,7 @@ describe("ComboChart", () => {
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M5], [], config);
-            const configProps = wrapper.find(AfmComboChart).prop("config");
+            const configProps = wrapper.find(CoreComboChart).prop("config");
 
             expect(configProps.stackMeasures).toBeTruthy();
             expect(configProps.stackMeasuresToPercent).toBeTruthy();
@@ -99,7 +68,7 @@ describe("ComboChart", () => {
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
             const wrapper = renderChart([M5WithRatio], [], config);
-            const configProps = wrapper.find(AfmComboChart).prop("config");
+            const configProps = wrapper.find(CoreComboChart).prop("config");
 
             expect(configProps.stackMeasures).toBeFalsy();
             expect(configProps.stackMeasuresToPercent).toBeFalsy();
@@ -107,38 +76,15 @@ describe("ComboChart", () => {
 
         it.each([["primary", [M5, M5WithRatio], []], ["secondary", [], [M5, M5WithRatio]]])(
             "should ignore computeRatio when %s measure bucket has multiple items",
-            (
-                _name: string,
-                primaryMeasures: VisualizationObject.IMeasure[],
-                secondaryMeasures: VisualizationObject.IMeasure[],
-            ) => {
+            (_name: string, primaryMeasures: IMeasure[], secondaryMeasures: IMeasure[]) => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
-                const afmProps = wrapper.find(AfmComboChart).prop("afm");
+                const execution = wrapper.find(CoreComboChart).prop("execution");
+                const expectedMeasures = [
+                    Model.measure("m5").localIdentifier("m5"),
+                    Model.measure("m5ratio").localIdentifier("m5ratio"),
+                ];
 
-                expect(afmProps).toEqual({
-                    measures: [
-                        {
-                            localIdentifier: "m5",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "m5",
-                                    },
-                                },
-                            },
-                        },
-                        {
-                            localIdentifier: "m5ratio",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "m5ratio",
-                                    },
-                                },
-                            },
-                        },
-                    ],
-                });
+                expect(execution.definition.measures).toEqual(expectedMeasures);
             },
         );
 
@@ -150,32 +96,13 @@ describe("ComboChart", () => {
                 ...config,
                 dualAxis: false,
             });
-            const afmProps = wrapper.find(AfmComboChart).prop("afm");
+            const execution = wrapper.find(CoreComboChart).prop("execution");
+            const expectedMeasures = [
+                Model.measure("m1ratio").localIdentifier("m1ratio"),
+                Model.measure("m5ratio").localIdentifier("m5ratio"),
+            ];
 
-            expect(afmProps).toEqual({
-                measures: [
-                    {
-                        localIdentifier: "m1ratio",
-                        definition: {
-                            measure: {
-                                item: {
-                                    identifier: "m1ratio",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        localIdentifier: "m5ratio",
-                        definition: {
-                            measure: {
-                                item: {
-                                    identifier: "m5ratio",
-                                },
-                            },
-                        },
-                    },
-                ],
-            });
+            expect(execution.definition.measures).toEqual(expectedMeasures);
         });
 
         it("should apply computeRatio when dual axis is OFF and # of measures = 1", () => {
@@ -183,24 +110,15 @@ describe("ComboChart", () => {
                 ...config,
                 dualAxis: false,
             });
-            const afmProps = wrapper.find(AfmComboChart).prop("afm");
+            const execution = wrapper.find(CoreComboChart).prop("execution");
+            const expectedMeasure = [
+                measure("m5ratio")
+                    .localIdentifier("m5ratio")
+                    .ratio()
+                    .format("#,##0.00%"),
+            ];
 
-            expect(afmProps).toEqual({
-                measures: [
-                    {
-                        localIdentifier: "m5ratio",
-                        format: "#,##0.00%",
-                        definition: {
-                            measure: {
-                                item: {
-                                    identifier: "m5ratio",
-                                },
-                                computeRatio: true,
-                            },
-                        },
-                    },
-                ],
-            });
+            expect(execution.definition.measures).toEqual(expectedMeasure);
         });
     });
 });

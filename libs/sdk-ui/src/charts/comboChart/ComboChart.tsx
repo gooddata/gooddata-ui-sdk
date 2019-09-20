@@ -14,12 +14,10 @@ import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
-import { CoreColumnChart } from "../columnChart/CoreColumnChart";
 import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
-import cloneDeep = require("lodash/cloneDeep");
+import { CoreComboChart } from "./CoreComboChart";
 import get = require("lodash/get");
 import isArray = require("lodash/isArray");
-import set = require("lodash/set");
 
 //
 // Public interface
@@ -31,8 +29,6 @@ import set = require("lodash/set");
  * @public
  */
 export interface IComboChartBucketProps {
-    columnMeasures?: IMeasure[];
-    lineMeasures?: IMeasure[];
     primaryMeasures?: IMeasure[];
     secondaryMeasures?: IMeasure[];
     viewBy?: IAttribute | IAttribute[];
@@ -54,7 +50,7 @@ export interface IComboChartProps extends IBucketChartProps, IComboChartBucketPr
  * @public
  */
 export function ComboChart(props: IComboChartProps): JSX.Element {
-    return <CoreColumnChart {...getProps(props)} />;
+    return <CoreComboChart {...getProps(props)} />;
 }
 
 //
@@ -62,15 +58,7 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
 //
 
 const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChartProps> = {
-    bucketPropsKeys: [
-        "primaryMeasures",
-        "secondaryMeasures",
-        "columnMeasures",
-        "lineMeasures",
-        "viewBy",
-        "filters",
-        "sortBy",
-    ],
+    bucketPropsKeys: ["primaryMeasures", "secondaryMeasures", "viewBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const { primaryMeasures, secondaryMeasures, viewBy } = props;
         const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
@@ -103,28 +91,8 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 
 const getProps = getCoreChartProps(comboChartDefinition);
 
-function deprecateOldProps(props: IComboChartProps): IComboChartProps {
-    const clonedProps = cloneDeep(props);
-    const { columnMeasures, lineMeasures } = clonedProps;
-    const isOldConfig = Boolean(columnMeasures || lineMeasures);
-
-    if (isOldConfig) {
-        set(clonedProps, "primaryMeasures", columnMeasures);
-        set(clonedProps, "secondaryMeasures", lineMeasures);
-        set(clonedProps, "config.dualAxis", false);
-
-        // tslint:disable-next-line:no-console
-        console.warn(
-            "Props columnMeasures and lineMeasures are deprecated. Please migrate to props primaryMeasures and secondaryMeasures.",
-        );
-    }
-
-    return clonedProps;
-}
-
 function sanitizeComboProps(props: IComboChartProps): IComboChartProps {
-    const newProps = deprecateOldProps(props);
-    const { primaryMeasures = [], secondaryMeasures = [] } = newProps;
+    const { primaryMeasures = [], secondaryMeasures = [] } = props;
     const isDualAxis = get(props, "config.dualAxis", true);
     const computeRatioRule =
         !isDualAxis && primaryMeasures.length + secondaryMeasures.length > 1
@@ -132,7 +100,7 @@ function sanitizeComboProps(props: IComboChartProps): IComboChartProps {
             : ComputeRatioRule.SINGLE_MEASURE_ONLY;
 
     return {
-        ...newProps,
+        ...props,
         primaryMeasures: computeRatioRules(primaryMeasures, computeRatioRule),
         secondaryMeasures: computeRatioRules(secondaryMeasures, computeRatioRule),
     };
