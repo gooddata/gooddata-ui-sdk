@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-19T23:03:39.795Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-20T08:28:37.870Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -41,6 +41,12 @@ export const BarChartWithPopMeasureAndViewByAttribute = {
     definition: require("./bar_chart_with_pop_measure_and_view_by_attribute/definition.json"),
     response: require("./bar_chart_with_pop_measure_and_view_by_attribute/response.json"),
     result: require("./bar_chart_with_pop_measure_and_view_by_attribute/result.json"),
+};
+
+export const BarChartWithPopMeasureAndViewByAttributeX6 = {
+    definition: require("./bar_chart_with_pop_measure_and_view_by_attribute_x6/definition.json"),
+    response: require("./bar_chart_with_pop_measure_and_view_by_attribute_x6/response.json"),
+    result: require("./bar_chart_with_pop_measure_and_view_by_attribute_x6/result.json"),
 };
 
 export const BarChartWithPreviousPeriodMeasure = {
@@ -89,6 +95,12 @@ export const BubbleChartWith2MetricsAndAttributeNoPrimaries = {
     definition: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/definition.json"),
     response: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/response.json"),
     result: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/result.json"),
+};
+
+export const BubbleChartWith3Metrics = {
+    definition: require("./bubble_chart_with_3_metrics/definition.json"),
+    response: require("./bubble_chart_with_3_metrics/response.json"),
+    result: require("./bubble_chart_with_3_metrics/result.json"),
 };
 
 export const BubbleChartWith3MetricsAndAttribute = {
@@ -208,6 +220,7 @@ export const MasterIndex = {
         fp_baa24e54ab2909e7a7ae4f5f6d21ffaa: BarChartWith3MetricsAndViewByAttributeFunformat,
         fp_3f95917db9f15eb872d904631fc3edcd: BarChartWith4MetricsAndViewByTwoAttributes,
         fp_f567a925d82dd41eff9780eb4ca934d2: BarChartWithPopMeasureAndViewByAttribute,
+        fp_62bcd4f8af06c91324c3af201560ac9c: BarChartWithPopMeasureAndViewByAttributeX6,
         fp_ac28e4e88b5011dd98c8c92f970f3910: BarChartWithPreviousPeriodMeasure,
         fp_b836c933d95c1aef2d07f950f38b645d: BarChartWithPreviousPeriodMeasureX6,
         fp_7ebc96ae6d02197155fcd63a41f870b3: BarChartWithSingleMeasureAndNoAttributes,
@@ -215,6 +228,7 @@ export const MasterIndex = {
         fp_8d33743b38a06a7af0a1a71e3c573f8b: BarChartWithViewByAttribute,
         fp_f8a55bf206246c9ed76b5eb455c1a45c: BarChartWithoutAttributes,
         fp_14f9897772326f7e811f4aa9a20d871d: BubbleChartWith2MetricsAndAttributeNoPrimaries,
+        fp_55304bc00ec27220f829c2dca5d39598: BubbleChartWith3Metrics,
         fp_bcc9d43c8427eeb41548d866b1630374: BubbleChartWith3MetricsAndAttributeNullsInData,
         fp_7ae5322d5061eae29d76993176d7c595: ColumnChartWithMeasureAndViewBy,
         fp_21efe764109d6cbbc1c9617b90920bdc: ColumnChartWithMeasureAndViewByAndComputeRatio,

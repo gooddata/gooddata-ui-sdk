@@ -199,6 +199,11 @@ export class MeasureColorStrategy extends ColorStrategy {
     ): IColorAssignment[] {
         return measuresColorAssignment.map((mapItem, measureItemIndex) => {
             const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+
+            if (!dv.isDerivedMeasure(measureGroup.items[measureItemIndex])) {
+                return mapItem;
+            }
+
             const masterMeasure = dv.masterMeasureForDerived(
                 measureGroup.items[measureItemIndex].measureHeaderItem.localIdentifier,
             );

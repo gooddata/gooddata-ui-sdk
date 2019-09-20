@@ -1446,6 +1446,11 @@ export const barChartWith3MetricsAndViewByAttributeFunformat = recordedDataFacad
 export const barChartWithPopMeasureAndViewByAttribute = recordedDataFacade(
     rec.BarChartWithPopMeasureAndViewByAttribute,
 );
+
+export const barChartWithPopMeasureAndViewByAttributeX6 = recordedDataFacade(
+    rec.BarChartWithPopMeasureAndViewByAttributeX6,
+);
+
 export const barChartWithPreviousPeriodMeasure = recordedDataFacade(rec.BarChartWithPreviousPeriodMeasure);
 export const barChartWithSingleMeasureAndNoAttributes = recordedDataFacade(
     rec.BarChartWithSingleMeasureAndNoAttributes,
@@ -1464,6 +1469,9 @@ export const barChartWithoutAttributes = recordedDataFacade(rec.BarChartWithoutA
 export const bubbleChartWith2MetricsAndAttributeNoPrimaries = recordedDataFacade(
     rec.BubbleChartWith2MetricsAndAttributeNoPrimaries,
 );
+
+export const bubbleChartWith3Metrics = recordedDataFacade(rec.BubbleChartWith3Metrics);
+
 export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
     rec.BubbleChartWith3MetricsAndAttribute,
 );

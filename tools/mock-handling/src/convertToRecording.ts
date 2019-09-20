@@ -218,4 +218,4 @@ const TARGET_DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
  * use these recorded executions.
  */
 
-main(SOURCE_DIR, TARGET_DIR, "column_chart_with_measure_and_view_by_and_computeRatio");
+main(SOURCE_DIR, TARGET_DIR, "bubble_chart_with_3_metrics");

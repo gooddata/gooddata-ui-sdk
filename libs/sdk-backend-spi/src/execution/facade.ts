@@ -166,9 +166,7 @@ export class DataViewFacade {
                 return false;
             }
 
-            const definition = measure.measure.definition;
-
-            return isPoPMeasure(definition) || isPreviousPeriodMeasure(definition);
+            return isPoPMeasure(measure) || isPreviousPeriodMeasure(measure);
         });
     }
 

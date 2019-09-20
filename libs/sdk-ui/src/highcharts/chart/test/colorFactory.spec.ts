@@ -1,27 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
 import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
 import {
-    TreemapColorStrategy,
-    MeasureColorStrategy,
     AttributeColorStrategy,
-    HeatmapColorStrategy,
     BubbleChartColorStrategy,
-    ScatterPlotColorStrategy,
     ColorFactory,
+    HeatmapColorStrategy,
     IColorStrategy,
     isValidMappedColor,
+    MeasureColorStrategy,
+    ScatterPlotColorStrategy,
+    TreemapColorStrategy,
 } from "../colorFactory";
 
 import { getMVS } from "./helper";
 
-import { HEATMAP_BLUE_COLOR_PALETTE, getRgbString } from "../../utils/color";
+import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
-import * as fixtures from "../../../../stories/test_data/fixtures";
-import { IColorPalette, IColorPaletteItem, IColorMapping } from "../../../interfaces/Config";
-import { Execution } from "@gooddata/gd-bear-model";
+import * as fixtures from "../../../../__mocks__/fixtures";
+import { IColorMapping2, IColorPalette, IColorPaletteItem } from "../../../interfaces/Config";
+import { IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IColorItem, RGBType } from "@gooddata/sdk-model";
 import range = require("lodash/range");
-import { IColorItem, RGBType } from "@gooddata/gd-bear-client";
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -115,11 +115,8 @@ describe("ColorFactory", () => {
 
     describe("AttributeColorStrategy", () => {
         it("should return AttributeColorStrategy with two colors from default color palette", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWithStackByAndViewByAttributes,
-            );
-            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
-            const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
+            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const colorPalette: IColorPalette = undefined;
 
@@ -128,8 +125,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -144,11 +140,8 @@ describe("ColorFactory", () => {
         });
 
         it("should return AttributeColorStrategy with two colors from custom color palette", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWithStackByAndViewByAttributes,
-            );
-            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
-            const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
+            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const colorPalette = [
                 {
@@ -182,8 +175,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -200,11 +192,8 @@ describe("ColorFactory", () => {
         });
 
         it("should return AttributeColorStrategy with properly applied mapping", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWithStackByAndViewByAttributes,
-            );
-            const { executionResponse } = fixtures.barChartWithStackByAndViewByAttributes;
-            const { afm } = fixtures.barChartWithStackByAndViewByAttributes.executionRequest;
+            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const colorPalette = [
                 {
@@ -232,9 +221,9 @@ describe("ColorFactory", () => {
                     },
                 },
             ];
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem &&
                         headerItem.attributeHeaderItem.uri ===
                             "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1225",
@@ -244,7 +233,7 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: Execution.IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem && headerItem.attributeHeaderItem.uri === "invalid",
                     color: {
                         type: "rgb" as RGBType,
@@ -256,7 +245,7 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: Execution.IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem &&
                         headerItem.attributeHeaderItem.uri ===
                             "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1237",
@@ -276,8 +265,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -290,11 +278,8 @@ describe("ColorFactory", () => {
 
     describe("MeasureColorStrategy", () => {
         it("should return a palette with a lighter color for each pop measure based on it`s source measure", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWithPopMeasureAndViewByAttribute,
-            );
-            const { executionResponse } = fixtures.barChartWithPopMeasureAndViewByAttribute;
-            const { afm } = fixtures.barChartWithPopMeasureAndViewByAttribute.executionRequest;
+            const dv = fixtures.barChartWithPopMeasureAndViewByAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -302,8 +287,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -313,9 +297,8 @@ describe("ColorFactory", () => {
         });
 
         it("should return a palette with a lighter color for each previous period based on it`s source measure", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.barChartWithPreviousPeriodMeasure);
-            const { executionResponse } = fixtures.barChartWithPreviousPeriodMeasure;
-            const { afm } = fixtures.barChartWithPreviousPeriodMeasure.executionRequest;
+            const dv = fixtures.barChartWithPreviousPeriodMeasure;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -323,8 +306,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -334,11 +316,8 @@ describe("ColorFactory", () => {
         });
 
         it("should rotate colors from original palette and generate lighter PoP colors", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWith6PopMeasuresAndViewByAttribute,
-            );
-            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
-            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -346,8 +325,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -371,11 +349,8 @@ describe("ColorFactory", () => {
         });
 
         it("should rotate colors from original palette and generate lighter previous period measures", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWith6PreviousPeriodMeasures,
-            );
-            const { executionResponse } = fixtures.barChartWith6PreviousPeriodMeasures;
-            const { afm } = fixtures.barChartWith6PreviousPeriodMeasures.executionRequest;
+            const dv = fixtures.barChartWithPreviousPeriodMeasureX6;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -383,8 +358,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -409,11 +383,8 @@ describe("ColorFactory", () => {
         });
 
         it("should just return the original palette if there are no pop measures shorten to cover all legend items", () => {
-            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWithoutAttributes,
-            );
-            const { executionResponse } = fixtures.barChartWithoutAttributes;
-            const { afm } = fixtures.barChartWithoutAttributes.executionRequest;
+            const dv = fixtures.barChartWithoutAttributes;
+            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
             const colorPalette: IColorPalette = undefined;
 
@@ -422,8 +393,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -434,32 +404,30 @@ describe("ColorFactory", () => {
         });
 
         it("should return MeasureColorStrategy with properly applied mapping", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWith6PopMeasuresAndViewByAttribute,
-            );
-            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
-            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_0",
+                    predicate: (headerItem: IMeasureHeaderItem) =>
+                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_1",
                     color: {
                         type: "guid",
                         value: "02",
                     },
                 },
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountPopMeasure_0",
+                    predicate: (headerItem: IMeasureHeaderItem) =>
+                        headerItem.measureHeaderItem.localIdentifier === "amountPopMeasure_1",
                     color: {
                         type: "guid",
                         value: "03",
                     },
                 },
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_1",
+                    predicate: (headerItem: IMeasureHeaderItem) =>
+                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_2",
                     color: {
                         type: "guid",
                         value: "03",
@@ -472,8 +440,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -497,11 +464,8 @@ describe("ColorFactory", () => {
         });
 
         it("should return only non-derived measures in getColorAssignment", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.barChartWith6PopMeasuresAndViewByAttribute,
-            );
-            const { executionResponse } = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
-            const { afm } = fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest;
+            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -509,8 +473,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -520,11 +483,8 @@ describe("ColorFactory", () => {
 
     describe("TreemapColorStrategy", () => {
         it("should return TreemapColorStrategy strategy with two colors from default color palette", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.treemapWithMetricViewByAndStackByAttribute,
-            );
-            const { executionResponse } = fixtures.treemapWithMetricViewByAndStackByAttribute;
-            const { afm } = fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest;
+            const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "treemap";
             const colorPalette: IColorPalette = undefined;
 
@@ -533,8 +493,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -549,16 +508,13 @@ describe("ColorFactory", () => {
         });
 
         it("should return TreemapColorStrategy with properly applied mapping", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.treemapWithMetricViewByAndStackByAttribute,
-            );
-            const { executionResponse } = fixtures.treemapWithMetricViewByAndStackByAttribute;
-            const { afm } = fixtures.treemapWithMetricViewByAndStackByAttribute.executionRequest;
+            const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "treemap";
 
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMetric",
                     color: {
                         type: "guid",
@@ -572,8 +528,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -586,9 +541,8 @@ describe("ColorFactory", () => {
 
     describe("HeatmapColorStrategy", () => {
         it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
-            const { executionResponse } = fixtures.heatmapMetricRowColumn;
-            const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+            const dv = fixtures.heatMapWithMetricRowColumn;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
             const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
@@ -596,8 +550,7 @@ describe("ColorFactory", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -613,9 +566,8 @@ describe("ColorFactory", () => {
             "should return HeatmapColorStrategy strategy with 7 colors" +
                 " based on the first color from custom palette",
             () => {
-                const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
-                const { executionResponse } = fixtures.heatmapMetricRowColumn;
-                const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+                const dv = fixtures.heatMapWithMetricRowColumn;
+                const { viewByAttribute, stackByAttribute } = getMVS(dv);
                 const type = "heatmap";
 
                 const expectedColors: string[] = [
@@ -633,8 +585,7 @@ describe("ColorFactory", () => {
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
-                    executionResponse,
-                    afm,
+                    dv,
                     type,
                 );
 
@@ -650,9 +601,8 @@ describe("ColorFactory", () => {
             "should return HeatmapColorStrategy strategy with 7 colors" +
                 " based on the first color from custom palette when color mapping given but not applicable",
             () => {
-                const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
-                const { executionResponse } = fixtures.heatmapMetricRowColumn;
-                const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+                const dv = fixtures.heatMapWithMetricRowColumn;
+                const { viewByAttribute, stackByAttribute } = getMVS(dv);
                 const type = "heatmap";
 
                 const expectedColors: string[] = [
@@ -665,7 +615,7 @@ describe("ColorFactory", () => {
                     "rgb(195,49,73)",
                 ];
 
-                const inapplicableColorMapping: IColorMapping[] = [
+                const inapplicableColorMapping: IColorMapping2[] = [
                     {
                         predicate: () => false,
                         color: {
@@ -680,8 +630,7 @@ describe("ColorFactory", () => {
                     inapplicableColorMapping,
                     viewByAttribute,
                     stackByAttribute,
-                    executionResponse,
-                    afm,
+                    dv,
                     type,
                 );
 
@@ -694,9 +643,8 @@ describe("ColorFactory", () => {
         );
 
         it("should return HeatmapColorStrategy with properly applied mapping", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.heatmapMetricRowColumn);
-            const { executionResponse } = fixtures.heatmapMetricRowColumn;
-            const { afm } = fixtures.heatmapMetricRowColumn.executionRequest;
+            const dv = fixtures.heatMapWithMetricRowColumn;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
             const expectedColors: string[] = [
@@ -708,9 +656,9 @@ describe("ColorFactory", () => {
                 "rgb(182,204,114)",
                 "rgb(168,194,86)",
             ];
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure",
                     color: {
                         type: "guid",
@@ -724,8 +672,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -737,15 +684,14 @@ describe("ColorFactory", () => {
 
     describe("BubbleChartStrategy", () => {
         it("should create palette with color from first measure", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(fixtures.bubbleChartWith3Metrics);
-            const { executionResponse } = fixtures.bubbleChartWith3Metrics;
-            const { afm } = fixtures.bubbleChartWith3Metrics.executionRequest;
+            const dv = fixtures.bubbleChartWith3Metrics;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "784a5018a51049078e8f7e86247e08a3",
                     color: {
                         type: "rgb",
@@ -763,8 +709,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -774,17 +719,14 @@ describe("ColorFactory", () => {
         });
 
         it("should create palette with color for each attribute element", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.bubbleChartWith3MetricsAndAttribute,
-            );
-            const { executionResponse } = fixtures.bubbleChartWith3MetricsAndAttribute;
-            const { afm } = fixtures.bubbleChartWith3MetricsAndAttribute.executionRequest;
+            const dv = fixtures.bubbleChartWith3MetricsAndAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem.uri ===
                         "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1224",
                     color: {
@@ -803,8 +745,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
@@ -816,17 +757,14 @@ describe("ColorFactory", () => {
 
     describe("ScatterPlotColorStrategy", () => {
         it("should create palette with same color from first measure for all attribute elements", () => {
-            const { viewByAttribute, stackByAttribute } = getMVS(
-                fixtures.scatterPlotWith2MetricsAndAttribute,
-            );
-            const { executionResponse } = fixtures.scatterPlotWith2MetricsAndAttribute;
-            const { afm } = fixtures.scatterPlotWith2MetricsAndAttribute.executionRequest;
+            const dv = fixtures.scatterPlotWith2MetricsAndAttribute;
+            const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "scatter";
 
             const expectedColor = "rgb(0,0,0)";
-            const colorMapping: IColorMapping[] = [
+            const colorMapping: IColorMapping2[] = [
                 {
-                    predicate: (headerItem: Execution.IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "33bd337ed5534fd383861f11ff657b23",
                     color: {
                         type: "rgb",
@@ -844,8 +782,7 @@ describe("ColorFactory", () => {
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
-                executionResponse,
-                afm,
+                dv,
                 type,
             );
 
