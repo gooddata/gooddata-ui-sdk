@@ -1,10 +1,16 @@
 // (C) 2018 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
+import {
+    IAttributeLocatorItem,
+    IAttributeSortItem,
+    Identifier,
+    IMeasureSortItem,
+    SortDirection,
+} from "@gooddata/sdk-model";
 
-export class AttributeSortItemBuilder implements AFM.IAttributeSortItem {
-    public attributeSortItem: AFM.IAttributeSortItem["attributeSortItem"];
+export class AttributeSortItemBuilder implements IAttributeSortItem {
+    public attributeSortItem: IAttributeSortItem["attributeSortItem"];
 
-    constructor(attributeIdentifier: string, direction: AFM.SortDirection) {
+    constructor(attributeIdentifier: string, direction: SortDirection) {
         this.attributeSortItem = {
             attributeIdentifier,
             direction,
@@ -17,10 +23,10 @@ export class AttributeSortItemBuilder implements AFM.IAttributeSortItem {
     };
 }
 
-export class MeasureSortItemBuilder implements AFM.IMeasureSortItem {
-    public measureSortItem: AFM.IMeasureSortItem["measureSortItem"];
+export class MeasureSortItemBuilder implements IMeasureSortItem {
+    public measureSortItem: IMeasureSortItem["measureSortItem"];
 
-    constructor(measureIdentifier: AFM.Identifier, direction: AFM.SortDirection) {
+    constructor(measureIdentifier: Identifier, direction: SortDirection) {
         this.measureSortItem = {
             direction,
             locators: [
@@ -34,7 +40,7 @@ export class MeasureSortItemBuilder implements AFM.IMeasureSortItem {
     }
 
     public attributeLocators = (
-        ...attributeLocators: Array<AFM.IAttributeLocatorItem["attributeLocatorItem"]>
+        ...attributeLocators: Array<IAttributeLocatorItem["attributeLocatorItem"]>
     ) => {
         this.measureSortItem.locators.splice(
             -2,
@@ -47,8 +53,8 @@ export class MeasureSortItemBuilder implements AFM.IMeasureSortItem {
     };
 }
 
-export const attributeSortItem = (attributeIdentifier: string, direction: AFM.SortDirection) =>
+export const attributeSortItem = (attributeIdentifier: string, direction: SortDirection) =>
     new AttributeSortItemBuilder(attributeIdentifier, direction);
 
-export const measureSortItem = (measureIdentifier: AFM.Identifier, direction: AFM.SortDirection) =>
+export const measureSortItem = (measureIdentifier: Identifier, direction: SortDirection) =>
     new MeasureSortItemBuilder(measureIdentifier, direction);

@@ -4,8 +4,39 @@ import identity = require("lodash/identity");
 import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
-import { VisualizationInput, AFM } from "@gooddata/gd-bear-model";
 import stringifyObject = require("stringify-object");
+import {
+    IAttributeLocatorItem,
+    ObjQualifier,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinition,
+    IArithmeticMeasureDefinition,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+    isMeasureDefinition,
+    isArithmeticMeasureDefinition,
+    isPreviousPeriodMeasureDefinition,
+    isPoPMeasureDefinition,
+    IMeasureLocatorItem,
+    isMeasure,
+    isAbsoluteDateFilter,
+    isRelativeDateFilter,
+    isPositiveAttributeFilter,
+    isNegativeAttributeFilter,
+    IAbsoluteDateFilter,
+    IRelativeDateFilter,
+    IPositiveAttributeFilter,
+    INegativeAttributeFilter,
+    isAttribute,
+    isMeasureSort,
+    isAttributeSort,
+    isMeasureLocator,
+    IMeasureSortItem,
+    IAttributeSortItem,
+    LocatorItem,
+    IFilter,
+} from "@gooddata/sdk-model";
 
 const stringify = (input: any) =>
     stringifyObject(input, {
@@ -16,8 +47,7 @@ const stringify = (input: any) =>
 
 const ARRAY_JOINER = ", ";
 
-const getObjQualifierValue = (value: VisualizationInput.ObjQualifier): string =>
-    (value as any).uri || (value as any).identifier;
+const getObjQualifierValue = (value: ObjQualifier): string => (value as any).uri || (value as any).identifier;
 
 // dot suffix handling e. g. ".localIdentifier(...)"
 // is curried explicitly to allow easier composition in cases where more than one dot suffix is supported
@@ -31,13 +61,11 @@ const addFormat = addStringDotItem("format");
 const addLocalIdentifier = addStringDotItem("localIdentifier");
 const addTitle = addStringDotItem("title");
 
-const addFilters = ({ filters }: { filters?: VisualizationInput.IFilter[] }) => (value: string) =>
+const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
     filters ? `${value}.filters(${filters.map(getModelNotationFor).join(ARRAY_JOINER)})` : value;
 
-const addLocators = ({ locators }: { locators?: AFM.LocatorItem[] }) => (value: string) => {
-    const attributeLocators = locators.filter(
-        l => !AFM.isMeasureLocatorItem(l),
-    ) as AFM.IAttributeLocatorItem[];
+const addLocators = ({ locators }: { locators?: LocatorItem[] }) => (value: string) => {
+    const attributeLocators = locators.filter(l => !isMeasureLocator(l)) as IAttributeLocatorItem[];
     return attributeLocators && attributeLocators.length
         ? `${value}.attributeLocators(${attributeLocators
               .map(a => stringify(a.attributeLocatorItem))
@@ -50,22 +78,19 @@ const addRatio = ({ computeRatio }: { computeRatio?: boolean }) => (value: strin
 
 // converters for each supported object to Model notation string
 type Converter<T> = (input: T) => string;
-const convertAttribute: Converter<VisualizationInput.IAttribute> = ({ visualizationAttribute }) =>
-    flow([addAlias(visualizationAttribute), addLocalIdentifier(visualizationAttribute)])(
-        `Model.attribute("${getObjQualifierValue(visualizationAttribute.displayForm)}")`,
+const convertAttribute: Converter<IAttribute> = ({ attribute }) =>
+    flow([addAlias(attribute), addLocalIdentifier(attribute)])(
+        `Model.attribute("${getObjQualifierValue(attribute.displayForm)}")`,
     );
 
-const baseMeasureDotAdders = (measure: VisualizationInput.IMeasure["measure"]) => [
+const baseMeasureDotAdders = (measure: IMeasure["measure"]) => [
     addAlias(measure),
     addFormat(measure),
     addLocalIdentifier(measure),
     addTitle(measure),
 ];
 
-const convertSimpleMeasure = (
-    measure: VisualizationInput.IMeasure["measure"],
-    definition: VisualizationInput.IMeasureDefinition,
-) =>
+const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasureDefinition) =>
     flow([
         ...baseMeasureDotAdders(measure),
         addAggregation(definition.measureDefinition),
@@ -73,20 +98,14 @@ const convertSimpleMeasure = (
         addRatio(definition.measureDefinition),
     ])(`Model.measure("${getObjQualifierValue(definition.measureDefinition.item)}")`);
 
-const convertArithmeticMeasure = (
-    measure: VisualizationInput.IMeasure["measure"],
-    definition: VisualizationInput.IArithmeticMeasureDefinition,
-) =>
+const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) =>
     flow(baseMeasureDotAdders(measure))(
         `Model.arithmeticMeasure(${stringify(definition.arithmeticMeasure.measureIdentifiers)}, "${
             definition.arithmeticMeasure.operator
         }")`,
     );
 
-const convertPopMeasure = (
-    measure: VisualizationInput.IMeasure["measure"],
-    definition: VisualizationInput.IPoPMeasureDefinition,
-) =>
+const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasureDefinition) =>
     flow(baseMeasureDotAdders(measure))(
         `Model.popMeasure("${definition.popMeasureDefinition.measureIdentifier}", "${getObjQualifierValue(
             definition.popMeasureDefinition.popAttribute,
@@ -94,8 +113,8 @@ const convertPopMeasure = (
     );
 
 const convertPreviousPeriodMeasure = (
-    measure: VisualizationInput.IMeasure["measure"],
-    definition: VisualizationInput.IPreviousPeriodMeasureDefinition,
+    measure: IMeasure["measure"],
+    definition: IPreviousPeriodMeasureDefinition,
 ) =>
     flow(baseMeasureDotAdders(measure))(
         `Model.previousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${definition
@@ -110,79 +129,77 @@ const convertPreviousPeriodMeasure = (
                 .join(ARRAY_JOINER)}])`,
     );
 
-const convertMeasure: Converter<VisualizationInput.IMeasure> = ({ measure }) => {
+const convertMeasure: Converter<IMeasure> = ({ measure }) => {
     const { definition } = measure;
-    if (VisualizationInput.isMeasureDefinition(definition)) {
+    if (isMeasureDefinition(definition)) {
         return convertSimpleMeasure(measure, definition);
-    } else if (VisualizationInput.isArithmeticMeasureDefinition(definition)) {
+    } else if (isArithmeticMeasureDefinition(definition)) {
         return convertArithmeticMeasure(measure, definition);
-    } else if (VisualizationInput.isPopMeasureDefinition(definition)) {
+    } else if (isPoPMeasureDefinition(definition)) {
         return convertPopMeasure(measure, definition);
-    } else if (VisualizationInput.isPreviousPeriodMeasureDefinition(definition)) {
+    } else if (isPreviousPeriodMeasureDefinition(definition)) {
         return convertPreviousPeriodMeasure(measure, definition);
     }
 };
 
-const convertAttributeSortItem: Converter<AFM.IAttributeSortItem> = ({ attributeSortItem }) =>
+const convertAttributeSortItem: Converter<IAttributeSortItem> = ({ attributeSortItem }) =>
     addAggregation(attributeSortItem)(
         `Model.attributeSortItem("${attributeSortItem.attributeIdentifier}", "${attributeSortItem.direction}")`,
     );
 
-const convertMeasureSortItem: Converter<AFM.IMeasureSortItem> = ({ measureSortItem }) => {
-    const measureLocator = measureSortItem.locators.find(l =>
-        AFM.isMeasureLocatorItem(l),
-    ) as AFM.IMeasureLocatorItem;
+const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }) => {
+    const measureLocator = measureSortItem.locators.find(l => isMeasureLocator(l)) as IMeasureLocatorItem;
     return addLocators(measureSortItem)(
         `Model.measureSortItem("${measureLocator.measureLocatorItem.measureIdentifier}", "${measureSortItem.direction}")`,
     );
 };
 
-const convertAbsoluteDateFilter: Converter<VisualizationInput.IAbsoluteDateFilter> = ({
+const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
     absoluteDateFilter: { dataSet, from, to },
 }) => {
     const args = [getObjQualifierValue(dataSet), from, to].filter(identity).map(stringify);
     return `Model.absoluteDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
-const convertRelativeDateFilter: Converter<VisualizationInput.IRelativeDateFilter> = ({
+const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
     const args = [getObjQualifierValue(dataSet), granularity, from, to].filter(identity).map(stringify);
     return `Model.relativeDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
-const convertPositiveAttributeFilter: Converter<VisualizationInput.IPositiveAttributeFilter> = ({
-    positiveAttributeFilter: { displayForm, in: inValues, textFilter },
+const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({
+    positiveAttributeFilter: { displayForm, in: inValues },
 }) => {
-    const args = [getObjQualifierValue(displayForm), inValues, textFilter].filter(identity).map(stringify);
+    const args = [getObjQualifierValue(displayForm), inValues].filter(identity).map(stringify);
     return `Model.positiveAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
-const convertNegativeAttributeFilter: Converter<VisualizationInput.INegativeAttributeFilter> = ({
-    negativeAttributeFilter: { displayForm, notIn, textFilter },
+const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
+    negativeAttributeFilter: { displayForm, notIn },
 }) => {
-    const args = [getObjQualifierValue(displayForm), notIn, textFilter].filter(identity).map(stringify);
+    const args = [getObjQualifierValue(displayForm), notIn].filter(identity).map(stringify);
     return `Model.negativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 export const getModelNotationFor = (data: any): string => {
     if (isArray(data)) {
         return `[${data.map(getModelNotationFor).join(ARRAY_JOINER)}]`;
-    } else if (VisualizationInput.isAttribute(data)) {
+    } else if (isAttribute(data)) {
         return convertAttribute(data);
-    } else if (VisualizationInput.isMeasure(data)) {
+    } else if (isMeasure(data)) {
         return convertMeasure(data);
-    } else if (AFM.isAttributeSortItem(data)) {
+    } else if (isAttributeSort(data)) {
         return convertAttributeSortItem(data);
-    } else if (AFM.isMeasureSortItem(data)) {
+    } else if (isMeasureSort(data)) {
         return convertMeasureSortItem(data);
-    } else if (VisualizationInput.isAbsoluteDateFilter(data)) {
+    } else if (isAbsoluteDateFilter(data)) {
         return convertAbsoluteDateFilter(data);
-    } else if (VisualizationInput.isRelativeDateFilter(data)) {
+    } else if (isRelativeDateFilter(data)) {
         return convertRelativeDateFilter(data);
-    } else if (VisualizationInput.isPositiveAttributeFilter(data)) {
+    } else if (isPositiveAttributeFilter(data)) {
         return convertPositiveAttributeFilter(data);
-    } else if (VisualizationInput.isNegativeAttributeFilter(data)) {
+    } else if (isNegativeAttributeFilter(data)) {
         return convertNegativeAttributeFilter(data);
     }
 

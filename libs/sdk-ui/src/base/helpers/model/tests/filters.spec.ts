@@ -15,7 +15,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["bar", "baz"],
+                    in: { uris: ["bar", "baz"] },
                 },
             });
         });
@@ -26,8 +26,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["bar", "baz"],
-                    textFilter: true,
+                    in: { values: ["bar", "baz"] },
                 },
             });
         });
@@ -40,7 +39,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    notIn: ["bar", "baz"],
+                    notIn: { uris: ["bar", "baz"] },
                 },
             });
         });
@@ -50,8 +49,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    notIn: ["bar", "baz"],
-                    textFilter: true,
+                    notIn: { values: ["bar", "baz"] },
                 },
             });
         });
@@ -64,8 +62,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["uri1", "uri2"],
-                    textFilter: false,
+                    in: { uris: ["uri1", "uri2"] },
                 },
             });
         });
@@ -75,8 +72,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["value1", "value2"],
-                    textFilter: true,
+                    in: { values: ["value1", "value2"] },
                 },
             });
         });
@@ -86,8 +82,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    notIn: ["uri1", "uri2"],
-                    textFilter: false,
+                    notIn: { uris: ["uri1", "uri2"] },
                 },
             });
         });
@@ -97,8 +92,7 @@ describe("Filters", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    notIn: ["value1", "value2"],
-                    textFilter: true,
+                    notIn: { values: ["value1", "value2"] },
                 },
             });
         });

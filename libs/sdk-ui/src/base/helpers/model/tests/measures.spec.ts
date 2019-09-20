@@ -92,7 +92,7 @@ describe("Measures", () => {
                                         displayForm: {
                                             identifier: "filter",
                                         },
-                                        in: ["baz"],
+                                        in: { uris: ["baz"] },
                                     },
                                 },
                             ],
@@ -119,8 +119,7 @@ describe("Measures", () => {
                                         displayForm: {
                                             identifier: "filter",
                                         },
-                                        in: ["val1"],
-                                        textFilter: true,
+                                        in: { values: ["val1"] },
                                     },
                                 },
                             ],

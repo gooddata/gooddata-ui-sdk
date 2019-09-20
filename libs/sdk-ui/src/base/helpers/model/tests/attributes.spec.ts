@@ -1,12 +1,12 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { attribute } from "../attributes";
+import { IAttribute } from "@gooddata/sdk-model";
 
 describe("Attributes", () => {
     describe("visualizationAttribute", () => {
         it("should return a simple attribute", () => {
-            const expected: VisualizationObject.IVisualizationAttribute = {
-                visualizationAttribute: {
+            const expected: IAttribute = {
+                attribute: {
                     displayForm: {
                         identifier: "foo",
                     },
@@ -17,8 +17,8 @@ describe("Attributes", () => {
         });
 
         it("should return a simple attribute with alias", () => {
-            const expected: VisualizationObject.IVisualizationAttribute = {
-                visualizationAttribute: {
+            const expected: IAttribute = {
+                attribute: {
                     alias: "alias",
                     displayForm: {
                         identifier: "foo",
@@ -30,8 +30,8 @@ describe("Attributes", () => {
         });
 
         it("should return a simple attribute with custom localIdentifier", () => {
-            const expected: VisualizationObject.IVisualizationAttribute = {
-                visualizationAttribute: {
+            const expected: IAttribute = {
+                attribute: {
                     displayForm: {
                         identifier: "foo",
                     },

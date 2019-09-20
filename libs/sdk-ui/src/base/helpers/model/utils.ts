@@ -1,12 +1,12 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { DataLayer } from "@gooddata/gd-bear-client";
+import { ObjQualifier } from "@gooddata/sdk-model";
 
-const {
-    Uri: { isUri },
-} = DataLayer;
+// TODO: SDK8: this should probably go away; switching as-is for now and removing dep on bear client
 
-export const getQualifierObject = (qualifierString: string): VisualizationObject.ObjQualifier =>
+const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
+const isUri = (identifier: string) => REG_URI_OBJ.test(identifier);
+
+export const getQualifierObject = (qualifierString: string): ObjQualifier =>
     isUri(qualifierString)
         ? {
               uri: qualifierString,

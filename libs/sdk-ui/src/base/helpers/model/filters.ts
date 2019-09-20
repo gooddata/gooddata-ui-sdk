@@ -1,40 +1,63 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationInput } from "@gooddata/gd-bear-model";
 import { getQualifierObject } from "./utils";
+import {
+    AttributeElements,
+    IAbsoluteDateFilter,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+    IRelativeDateFilter,
+} from "@gooddata/sdk-model";
 
 export function positiveAttributeFilter(
     qualifier: string,
-    inValues: string[],
+    inValues: string[] | AttributeElements,
     textFilter?: boolean,
-): VisualizationInput.IPositiveAttributeFilter {
+): IPositiveAttributeFilter {
+    if (typeof inValues === "object") {
+        return {
+            positiveAttributeFilter: {
+                displayForm: getQualifierObject(qualifier),
+                in: inValues as AttributeElements,
+            },
+        };
+    }
     return {
         positiveAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
-            in: inValues,
-            ...(textFilter && { textFilter }),
+            in: {
+                ...(textFilter && { values: inValues }),
+                ...(!textFilter && { uris: inValues }),
+            },
         },
     };
 }
 
 export function negativeAttributeFilter(
     qualifier: string,
-    notInValues: string[],
+    notInValues: string[] | AttributeElements,
     textFilter?: boolean,
-): VisualizationInput.INegativeAttributeFilter {
+): INegativeAttributeFilter {
+    if (typeof notInValues === "object") {
+        return {
+            negativeAttributeFilter: {
+                displayForm: getQualifierObject(qualifier),
+                notIn: notInValues as AttributeElements,
+            },
+        };
+    }
+
     return {
         negativeAttributeFilter: {
             displayForm: getQualifierObject(qualifier),
-            notIn: notInValues,
-            ...(textFilter && { textFilter }),
+            notIn: {
+                ...(textFilter && { values: notInValues }),
+                ...(!textFilter && { uris: notInValues }),
+            },
         },
     };
 }
 
-export function absoluteDateFilter(
-    dataSet: string,
-    from?: string,
-    to?: string,
-): VisualizationInput.IAbsoluteDateFilter {
+export function absoluteDateFilter(dataSet: string, from?: string, to?: string): IAbsoluteDateFilter {
     return {
         absoluteDateFilter: {
             dataSet: getQualifierObject(dataSet),
@@ -49,7 +72,7 @@ export function relativeDateFilter(
     granularity: string,
     from?: number,
     to?: number,
-): VisualizationInput.IRelativeDateFilter {
+): IRelativeDateFilter {
     return {
         relativeDateFilter: {
             dataSet: getQualifierObject(dataSet),
@@ -71,12 +94,11 @@ export class AttributeFilterBuilder {
      *
      * @param values textual values of the attribute elements
      */
-    public in(...values: string[]): VisualizationInput.IPositiveAttributeFilter {
+    public in(...values: string[]): IPositiveAttributeFilter {
         return {
             positiveAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
-                in: values,
-                textFilter: true,
+                in: { values },
             },
         };
     }
@@ -87,12 +109,11 @@ export class AttributeFilterBuilder {
      *
      * @param values textual values of the attribute elements
      */
-    public notIn(...values: string[]): VisualizationInput.INegativeAttributeFilter {
+    public notIn(...values: string[]): INegativeAttributeFilter {
         return {
             negativeAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
-                notIn: values,
-                textFilter: true,
+                notIn: { values },
             },
         };
     }
@@ -103,12 +124,11 @@ export class AttributeFilterBuilder {
      *
      * @param uris URIs of attribute elements
      */
-    public inUris(...uris: string[]): VisualizationInput.IPositiveAttributeFilter {
+    public inUris(...uris: string[]): IPositiveAttributeFilter {
         return {
             positiveAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
-                in: uris,
-                textFilter: false,
+                in: { uris },
             },
         };
     }
@@ -119,12 +139,11 @@ export class AttributeFilterBuilder {
      *
      * @param uris URIs of attribute elements
      */
-    public notInUris(...uris: string[]): VisualizationInput.INegativeAttributeFilter {
+    public notInUris(...uris: string[]): INegativeAttributeFilter {
         return {
             negativeAttributeFilter: {
                 displayForm: getQualifierObject(this.qualifier),
-                notIn: uris,
-                textFilter: false,
+                notIn: { uris },
             },
         };
     }

@@ -1,11 +1,11 @@
 // (C) 2018 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
 import { attributeSortItem, measureSortItem } from "../sortBy";
+import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("SortBy", () => {
     describe("attributeSortItem", () => {
         it("should return a simple sort item", () => {
-            const expected: AFM.IAttributeSortItem = {
+            const expected: IAttributeSortItem = {
                 attributeSortItem: {
                     attributeIdentifier: "foo",
                     direction: "asc",
@@ -15,7 +15,7 @@ describe("SortBy", () => {
         });
 
         it("should return a simple sort item with aggregation", () => {
-            const expected: AFM.IAttributeSortItem = {
+            const expected: IAttributeSortItem = {
                 attributeSortItem: {
                     attributeIdentifier: "foo",
                     direction: "asc",
@@ -28,7 +28,7 @@ describe("SortBy", () => {
 
     describe("measureSortItem", () => {
         it("should return a simple sort item", () => {
-            const expected: AFM.IMeasureSortItem = {
+            const expected: IMeasureSortItem = {
                 measureSortItem: {
                     direction: "asc",
                     locators: [
@@ -44,7 +44,7 @@ describe("SortBy", () => {
         });
 
         it("should return a simple sort item", () => {
-            const expected: AFM.IMeasureSortItem = {
+            const expected: IMeasureSortItem = {
                 measureSortItem: {
                     direction: "asc",
                     locators: [

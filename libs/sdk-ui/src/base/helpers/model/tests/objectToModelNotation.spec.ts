@@ -1,7 +1,16 @@
 // (C) 2019 GoodData Corporation
-import { VisualizationInput, AFM } from "@gooddata/gd-bear-model";
 import { getModelNotationFor } from "../objectToModelNotation";
 import * as Model from "../index";
+import {
+    IAttribute,
+    IMeasure,
+    IAttributeSortItem,
+    IMeasureSortItem,
+    IPositiveAttributeFilter,
+    INegativeAttributeFilter,
+    IAbsoluteDateFilter,
+    IRelativeDateFilter,
+} from "@gooddata/sdk-model";
 
 /**
  * Makes sure that evaluating the model notation results in the provided object.
@@ -31,8 +40,8 @@ describe("getModelNotationFor", () => {
     });
     describe("attributes", () => {
         it("should handle attribute with identifier", () => {
-            const input: VisualizationInput.IAttribute = {
-                visualizationAttribute: {
+            const input: IAttribute = {
+                attribute: {
                     displayForm: {
                         identifier: "foo",
                     },
@@ -43,8 +52,8 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle attribute with uri", () => {
-            const input: VisualizationInput.IAttribute = {
-                visualizationAttribute: {
+            const input: IAttribute = {
+                attribute: {
                     displayForm: {
                         uri: "/gdc/md/PROJECT/obj/42",
                     },
@@ -55,8 +64,8 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle attribute with alias", () => {
-            const input: VisualizationInput.IAttribute = {
-                visualizationAttribute: {
+            const input: IAttribute = {
+                attribute: {
                     alias: "My Alias",
                     displayForm: {
                         identifier: "foo",
@@ -70,7 +79,7 @@ describe("getModelNotationFor", () => {
     });
     describe("simple measures", () => {
         it("should handle basic measure", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -86,7 +95,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with alias", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -103,7 +112,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with format", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -120,7 +129,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with title", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -137,7 +146,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with computeRatio: true", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -154,7 +163,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with aggregation", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -171,7 +180,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure with a filter", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -181,7 +190,7 @@ describe("getModelNotationFor", () => {
                                         displayForm: {
                                             identifier: "filter",
                                         },
-                                        in: ["a", "b", "c"],
+                                        in: { uris: ["a", "b", "c"] },
                                     },
                                 },
                             ],
@@ -199,7 +208,7 @@ describe("getModelNotationFor", () => {
     });
     describe("arithmetic measures", () => {
         it("should handle basic arithmetic measure", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         arithmeticMeasure: {
@@ -216,7 +225,7 @@ describe("getModelNotationFor", () => {
     });
     describe("pop measures", () => {
         it("should handle basic pop measure", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         popMeasureDefinition: {
@@ -235,7 +244,7 @@ describe("getModelNotationFor", () => {
     });
     describe("previous period measures", () => {
         it("should handle basic previous period measure", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         previousPeriodMeasure: {
@@ -257,7 +266,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle basic previous period measure without dataSets", () => {
-            const input: VisualizationInput.IMeasure = {
+            const input: IMeasure = {
                 measure: {
                     definition: {
                         previousPeriodMeasure: {
@@ -274,7 +283,7 @@ describe("getModelNotationFor", () => {
     });
     describe("sortBy", () => {
         it("should handle basic attribute sort item", () => {
-            const input: AFM.IAttributeSortItem = {
+            const input: IAttributeSortItem = {
                 attributeSortItem: {
                     attributeIdentifier: "foo",
                     direction: "asc",
@@ -284,7 +293,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle attribute sort item with aggregation", () => {
-            const input: AFM.IAttributeSortItem = {
+            const input: IAttributeSortItem = {
                 attributeSortItem: {
                     attributeIdentifier: "foo",
                     direction: "asc",
@@ -295,7 +304,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle basic measure sort item", () => {
-            const input: AFM.IMeasureSortItem = {
+            const input: IMeasureSortItem = {
                 measureSortItem: {
                     direction: "asc",
                     locators: [
@@ -311,7 +320,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle measure sort item with attribute locators", () => {
-            const input: AFM.IMeasureSortItem = {
+            const input: IMeasureSortItem = {
                 measureSortItem: {
                     direction: "asc",
                     locators: [
@@ -335,44 +344,43 @@ describe("getModelNotationFor", () => {
     });
     describe("filters", () => {
         it("should handle basic positive attribute filter", () => {
-            const input: AFM.IPositiveAttributeFilter = {
+            const input: IPositiveAttributeFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["a", "b", "c"],
+                    in: { uris: ["a", "b", "c"] },
                 },
             };
             const actual = getModelNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle textual positive attribute filter", () => {
-            const input: AFM.IPositiveAttributeFilter = {
+            const input: IPositiveAttributeFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         identifier: "foo",
                     },
-                    in: ["a", "b", "c"],
-                    textFilter: true,
+                    in: { values: ["a", "b", "c"] },
                 },
             };
             const actual = getModelNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic negative attribute filter", () => {
-            const input: AFM.INegativeAttributeFilter = {
+            const input: INegativeAttributeFilter = {
                 negativeAttributeFilter: {
                     displayForm: {
                         identifier: "foo",
                     },
-                    notIn: ["a", "b", "c"],
+                    notIn: { values: ["a", "b", "c"] },
                 },
             };
             const actual = getModelNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic absolute date filter", () => {
-            const input: AFM.IAbsoluteDateFilter = {
+            const input: IAbsoluteDateFilter = {
                 absoluteDateFilter: {
                     dataSet: {
                         identifier: "foo",
@@ -385,7 +393,7 @@ describe("getModelNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle basic relative date filter", () => {
-            const input: AFM.IRelativeDateFilter = {
+            const input: IRelativeDateFilter = {
                 relativeDateFilter: {
                     dataSet: {
                         identifier: "foo",

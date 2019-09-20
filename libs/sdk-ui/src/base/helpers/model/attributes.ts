@@ -1,24 +1,25 @@
 // (C) 2018 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { getQualifierObject } from "./utils";
+import { IAttribute } from "@gooddata/sdk-model";
 
-export class AttributeBuilder implements VisualizationObject.IVisualizationAttribute {
+export class AttributeBuilder implements IAttribute {
     private static lastAttributeId = 0;
-    public visualizationAttribute: VisualizationObject.IVisualizationAttribute["visualizationAttribute"];
+    public attribute: IAttribute["attribute"];
+
     constructor(displayForm: string) {
-        this.visualizationAttribute = {
+        this.attribute = {
             displayForm: getQualifierObject(displayForm),
             localIdentifier: `va_${AttributeBuilder.lastAttributeId++}`,
         };
     }
 
     public alias = (alias: string) => {
-        this.visualizationAttribute.alias = alias;
+        this.attribute.alias = alias;
         return this;
     };
 
     public localIdentifier = (localIdentifier: string) => {
-        this.visualizationAttribute.localIdentifier = localIdentifier;
+        this.attribute.localIdentifier = localIdentifier;
         return this;
     };
 }
