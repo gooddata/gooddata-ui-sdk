@@ -1059,35 +1059,6 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
 
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
-    chartConfig?: IChartConfig,
-    drillConfig?: IDrillConfig,
-) {
-    const configurators = [
-        getAxesConfiguration,
-        getTitleConfiguration,
-        getStackingConfiguration,
-        hideOverlappedLabels,
-        getShowInPercentConfiguration,
-        getDataConfiguration,
-        getTooltipConfiguration,
-        getHoverStyles,
-        getGridConfiguration,
-        getLabelsConfiguration,
-        // should be after 'getDataConfiguration' to modify 'series'
-        // and should be after 'getStackingConfiguration' to get stackLabels config
-        getOptionalStackingConfiguration,
-        getZeroAlignConfiguration,
-    ];
-
-    const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig));
-    }, {});
-
-    return merge({}, commonData);
-}
-
-export function getCustomizedConfiguration2(
-    chartOptions: IChartOptions,
     chartConfig?: INewChartConfig,
     drillConfig?: IDrillConfig,
 ) {

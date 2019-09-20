@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-20T08:28:37.870Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-20T10:20:10.091Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -29,6 +29,12 @@ export const BarChartWith3MetricsAndViewByAttributeFunformat = {
     definition: require("./bar_chart_with_3_metrics_and_view_by_attribute_funformat/definition.json"),
     response: require("./bar_chart_with_3_metrics_and_view_by_attribute_funformat/response.json"),
     result: require("./bar_chart_with_3_metrics_and_view_by_attribute_funformat/result.json"),
+};
+
+export const BarChartWith3MetricsAndViewByAttributePercInFormat = {
+    definition: require("./bar_chart_with_3_metrics_and_view_by_attribute_perc_in_format/definition.json"),
+    response: require("./bar_chart_with_3_metrics_and_view_by_attribute_perc_in_format/response.json"),
+    result: require("./bar_chart_with_3_metrics_and_view_by_attribute_perc_in_format/result.json"),
 };
 
 export const BarChartWith4MetricsAndViewByTwoAttributes = {
@@ -91,6 +97,12 @@ export const BarChartWithoutAttributes = {
     result: require("./bar_chart_without_attributes/result.json"),
 };
 
+export const BubbleChartWith1Metric = {
+    definition: require("./bubble_chart_with_1_metric/definition.json"),
+    response: require("./bubble_chart_with_1_metric/response.json"),
+    result: require("./bubble_chart_with_1_metric/result.json"),
+};
+
 export const BubbleChartWith2MetricsAndAttributeNoPrimaries = {
     definition: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/definition.json"),
     response: require("./bubble_chart_with_2_metrics_and_attribute_no_primaries/response.json"),
@@ -133,6 +145,18 @@ export const ComboChartWithTwoMeasuresViewByAttribute = {
     result: require("./combo_chart_with_two_measures_view_by_attribute/result.json"),
 };
 
+export const ComboChartWithTwoMeasuresViewByAttributeNoBuckets = {
+    definition: require("./combo_chart_with_two_measures_view_by_attribute_no_buckets/definition.json"),
+    response: require("./combo_chart_with_two_measures_view_by_attribute_no_buckets/response.json"),
+    result: require("./combo_chart_with_two_measures_view_by_attribute_no_buckets/result.json"),
+};
+
+export const ComboChartWithTwoMeasuresViewByAttributePercformat = {
+    definition: require("./combo_chart_with_two_measures_view_by_attribute_percformat/definition.json"),
+    response: require("./combo_chart_with_two_measures_view_by_attribute_percformat/response.json"),
+    result: require("./combo_chart_with_two_measures_view_by_attribute_percformat/result.json"),
+};
+
 export const HeatMapWithEmptyCells = {
     definition: require("./heat_map_with_empty_cells/definition.json"),
     response: require("./heat_map_with_empty_cells/response.json"),
@@ -167,6 +191,12 @@ export const ScatterPlotWith2MetricsAndAttributeNullsInData = {
     definition: require("./scatter_plot_with_2_metrics_and_attribute_nulls_in_data/definition.json"),
     response: require("./scatter_plot_with_2_metrics_and_attribute_nulls_in_data/response.json"),
     result: require("./scatter_plot_with_2_metrics_and_attribute_nulls_in_data/result.json"),
+};
+
+export const ScatterPlotWith2MetricsAndAttributeWithPrimary = {
+    definition: require("./scatter_plot_with_2_metrics_and_attribute_with_primary/definition.json"),
+    response: require("./scatter_plot_with_2_metrics_and_attribute_with_primary/response.json"),
+    result: require("./scatter_plot_with_2_metrics_and_attribute_with_primary/result.json"),
 };
 
 export const TreemapWithMetricAndStackByAttribute = {
@@ -216,8 +246,9 @@ export const MasterIndex = {
     testWorkspace: {
         fp_ada6838291be0409535d24690a31749e: BarChartWith3MetricsAndViewByAttribute,
         fp_0b599ac8ef275e712d231f304d9e29d0: AreaChartWithMeasureViewByAndStackBy,
-        fp_45eabf83c34eaa23f347b56a5858d57f: ComboChartWithTwoMeasuresViewByAttribute,
+        fp_45eabf83c34eaa23f347b56a5858d57f: ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
         fp_baa24e54ab2909e7a7ae4f5f6d21ffaa: BarChartWith3MetricsAndViewByAttributeFunformat,
+        fp_d04ba7363a1ce9162b18fe0ddc005a07: BarChartWith3MetricsAndViewByAttributePercInFormat,
         fp_3f95917db9f15eb872d904631fc3edcd: BarChartWith4MetricsAndViewByTwoAttributes,
         fp_f567a925d82dd41eff9780eb4ca934d2: BarChartWithPopMeasureAndViewByAttribute,
         fp_62bcd4f8af06c91324c3af201560ac9c: BarChartWithPopMeasureAndViewByAttributeX6,
@@ -227,15 +258,17 @@ export const MasterIndex = {
         fp_1b740fffd1df15049b4c5771cf293327: BarChartWithStackByAndViewByAttributes,
         fp_8d33743b38a06a7af0a1a71e3c573f8b: BarChartWithViewByAttribute,
         fp_f8a55bf206246c9ed76b5eb455c1a45c: BarChartWithoutAttributes,
+        fp_4b146f4139daf56999dc16e76d478de9: BubbleChartWith1Metric,
         fp_14f9897772326f7e811f4aa9a20d871d: BubbleChartWith2MetricsAndAttributeNoPrimaries,
         fp_55304bc00ec27220f829c2dca5d39598: BubbleChartWith3Metrics,
         fp_bcc9d43c8427eeb41548d866b1630374: BubbleChartWith3MetricsAndAttributeNullsInData,
         fp_7ae5322d5061eae29d76993176d7c595: ColumnChartWithMeasureAndViewBy,
         fp_21efe764109d6cbbc1c9617b90920bdc: ColumnChartWithMeasureAndViewByAndComputeRatio,
+        fp_63a093ee40d9e5d13e14cd186ced8376: ComboChartWithTwoMeasuresViewByAttributePercformat,
         fp_7ba00bd46fb37f68fbb549e997f349dd: HeatMapWithEmptyCells,
         fp_16dd93e14c96b0317d74f5e0e37792ff: HeatMapWithMetricRowColumn,
         fp_551204e9d10f29532c64d0aad6d9b19b: PieChartWithMetricsOnlyFundata,
-        fp_f28b82a9ed53ff7655a633dca593e1fb: ScatterPlotWith2MetricsAndAttributeNullsInData,
+        fp_f28b82a9ed53ff7655a633dca593e1fb: ScatterPlotWith2MetricsAndAttributeWithPrimary,
         fp_939756fa0fd99eba324e3da62c0f87d1: TreemapWithMetricAndViewByAttribute1element,
         fp_539276f8275d76bce58f585086fd2cf4: TreemapWithMetricViewByAndStackByAttribute,
         fp_305a452e274067e6c5a81bfbb040aaf5: TreemapWithOneMetric,

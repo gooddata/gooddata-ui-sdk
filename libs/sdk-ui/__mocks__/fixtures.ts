@@ -1443,6 +1443,11 @@ export const barChartWith3MetricsAndViewByAttribute = recordedDataFacade(
 export const barChartWith3MetricsAndViewByAttributeFunformat = recordedDataFacade(
     rec.BarChartWith3MetricsAndViewByAttributeFunformat,
 );
+
+export const barChartWith3MetricsAndViewByAttributePercInFormat = recordedDataFacade(
+    rec.BarChartWith3MetricsAndViewByAttributePercInFormat,
+);
+
 export const barChartWithPopMeasureAndViewByAttribute = recordedDataFacade(
     rec.BarChartWithPopMeasureAndViewByAttribute,
 );
@@ -1470,6 +1475,8 @@ export const bubbleChartWith2MetricsAndAttributeNoPrimaries = recordedDataFacade
     rec.BubbleChartWith2MetricsAndAttributeNoPrimaries,
 );
 
+export const bubbleChartWith1Metric = recordedDataFacade(rec.BubbleChartWith1Metric);
+
 export const bubbleChartWith3Metrics = recordedDataFacade(rec.BubbleChartWith3Metrics);
 
 export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
@@ -1496,6 +1503,14 @@ export const comboWithTwoMeasuresAndViewByAttribute = recordedDataFacade(
     rec.ComboChartWithTwoMeasuresViewByAttribute,
 );
 
+export const comboChartWithTwoMeasuresViewByAttributeNoBuckets = recordedDataFacade(
+    rec.ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
+);
+
+export const comboChartWithTwoMeasuresViewByAttributePercformat = recordedDataFacade(
+    rec.ComboChartWithTwoMeasuresViewByAttributePercformat,
+);
+
 //
 // Heatmap recordings
 //
@@ -1518,6 +1533,9 @@ export const scatterPlotWith2MetricsAndAttribute = recordedDataFacade(
 );
 export const scatterPlotWith2MetricsAndAttributeNullsInData = recordedDataFacade(
     rec.ScatterPlotWith2MetricsAndAttributeNullsInData,
+);
+export const scatterPlotWith2MetricsAndAttributeWithPrimary = recordedDataFacade(
+    rec.ScatterPlotWith2MetricsAndAttributeWithPrimary,
 );
 
 //

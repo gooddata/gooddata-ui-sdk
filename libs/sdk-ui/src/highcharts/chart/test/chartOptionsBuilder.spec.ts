@@ -1,13 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import range = require("lodash/range");
-import get = require("lodash/get");
 import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../../base/helpers/executionResultHelper";
-import { immutableSet } from "../../utils/common";
 import {
     buildTooltipFactory,
     buildTooltipForTwoAttributesFactory,
@@ -28,7 +26,7 @@ import {
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { PIE_CHART_LIMIT, STACK_BY_DIMENSION_INDEX } from "../constants";
+import { PIE_CHART_LIMIT } from "../constants";
 import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
@@ -2754,11 +2752,7 @@ describe("chartOptionsBuilder", () => {
 
     describe("getChartOptions", () => {
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
-        const dataSetWithoutMeasureGroup = immutableSet(
-            dataSet,
-            `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}].headers`,
-            [],
-        );
+        const emptyDataView = dummyDataFacade(emptyDef("testWorkspace"));
         const chartOptionsWithCustomOptions = generateChartOptions(dataSet, {
             xLabel: "xLabel",
             yLabel: "yLabel",
@@ -2768,31 +2762,21 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should throw if measure group is missing in dimensions", () => {
-            expect(generateChartOptions.bind(this, dataSetWithoutMeasureGroup)).toThrow();
+            expect(generateChartOptions.bind(this, emptyDataView)).toThrow();
         });
 
         it("should throw if chart type is of unknown type", () => {
-            expect(generateChartOptions.bind(this, dataSetWithoutMeasureGroup, { type: "bs" })).toThrow();
+            expect(generateChartOptions.bind(this, emptyDataView, { type: "bs" })).toThrow();
         });
 
         it('should assign format from first measure which format includes a "%" sign', () => {
-            const expectedPercentageFormat = "0.00 %";
-            const expectedNormalFormat = get(
-                dataSet,
-                `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
-                    "headers[0].measureGroupHeader.items[1].measureHeaderItem.format",
-            );
-            const dataSetWithPercentFormat = immutableSet(
-                dataSet,
-                `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
-                    "headers[0].measureGroupHeader.items[1].measureHeaderItem.format",
-                "0.00 %",
-            );
-            const chartOptions = generateChartOptions(dataSetWithPercentFormat);
-            // first measure format by default
-            expect(generateChartOptions(dataSet).yAxes[0].format).toBe(expectedNormalFormat);
-            // if measure format including %
-            expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
+            // this recording has all but 1 measure formatted without percent
+            // one measure (second one) has format with %
+            // if there is any measure with percent formatting, then that should be used for the axis format
+            const percDv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
+            const expectedPercentageFormat = "#,##0.00%";
+
+            expect(generateChartOptions(percDv).yAxes[0].format).toBe(expectedPercentageFormat);
         });
 
         it("should assign custom legend format", () => {
@@ -3134,36 +3118,23 @@ describe("chartOptionsBuilder", () => {
                 expect(chartOptions.data.series[1].type).toBe(LINE);
             });
 
-            it("should handle missing mbObject", () => {
-                const chartOptions = generateChartOptions(fixtures.comboWithTwoMeasuresAndViewByAttribute, {
-                    type: COMBO,
-                });
+            it("should handle missing buckets", () => {
+                const chartOptions = generateChartOptions(
+                    fixtures.comboChartWithTwoMeasuresViewByAttributeNoBuckets,
+                    {
+                        type: COMBO,
+                    },
+                );
 
                 expect(chartOptions.data.series[0].type).toBeUndefined();
                 expect(chartOptions.data.series[1].type).toBeUndefined();
             });
 
             it('should assign format from first measure which format includes a "%" sign', () => {
-                const dataSet = fixtures.comboWithTwoMeasuresAndViewByAttribute;
-                const expectedPercentageFormat = "0.00 %";
-                const expectedNormalFormat = get(
-                    dataSet,
-                    `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
-                        "headers[0].measureGroupHeader.items[1].measureHeaderItem.format",
-                );
+                const dv = fixtures.comboChartWithTwoMeasuresViewByAttributePercformat;
+                const expectedPercentageFormat = "#,##0.00%";
+                const chartOptions = generateChartOptions(dv, { type: "combo" });
 
-                const dataSetWithPercentFormat = immutableSet(
-                    dataSet,
-                    `executionResponse.dimensions[${STACK_BY_DIMENSION_INDEX}]` +
-                        "headers[0].measureGroupHeader.items[1].measureHeaderItem.format",
-                    "0.00 %",
-                );
-                const chartOptions = generateChartOptions(dataSetWithPercentFormat, {
-                    type: "combo",
-                });
-                // first measure format by default
-                expect(generateChartOptions(dataSet).yAxes[0].format).toBe(expectedNormalFormat);
-                // if measure format includes %
                 expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
 
@@ -3263,18 +3234,15 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should generate one axis with label from primary measures for scatter plot", () => {
-                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
-                    type: "scatter",
-                    mdObject: {
-                        buckets: [
-                            { localIdentifier: "measures", items: [{}] },
-                            { localIdentifier: "secondary_measures", items: [] },
-                        ],
+                const chartOptions = generateChartOptions(
+                    fixtures.scatterPlotWith2MetricsAndAttributeWithPrimary,
+                    {
+                        type: "scatter",
                     },
-                });
+                );
                 const expectedAxes = [
                     {
-                        label: "<button>Lost</button> ...",
+                        label: "Sum of Amount",
                         format: "#,##0.00",
                     },
                 ];
@@ -3285,13 +3253,6 @@ describe("chartOptionsBuilder", () => {
             it("should generate one axis with no label if primary measures are empty for bubble chart", () => {
                 const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
                     type: "bubble",
-                    mdObject: {
-                        buckets: [
-                            { localIdentifier: "measures", items: [] },
-                            { localIdentifier: "secondary_measures", items: [{}] },
-                            { localIdentifier: "tertiary_measures", items: [{}] },
-                        ],
-                    },
                 });
                 const expectedAxes = [
                     {
@@ -3303,19 +3264,12 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should generate one axis with label from primary measure for bubble chart", () => {
-                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                const chartOptions = generateChartOptions(fixtures.bubbleChartWith1Metric, {
                     type: "bubble",
-                    mdObject: {
-                        buckets: [
-                            { localIdentifier: "measures", items: [{}] },
-                            { localIdentifier: "secondary_measures", items: [] },
-                            { localIdentifier: "tertiary_measures", items: [] },
-                        ],
-                    },
                 });
                 const expectedAxes = [
                     {
-                        label: "<button>Lost</button> ...",
+                        label: "_Snapshot [EOP-2]",
                         format: "#,##0.00",
                     },
                 ];
@@ -3659,7 +3613,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should generate % format for right Y axis ", () => {
-                const dv = fixtures.barChartWith3MetricsAndViewByAttributeFunformat;
+                const dv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
                 const chartOptions = generateChartOptions(dv, config);
                 const formatValues = chartOptions.yAxes.map(({ format }: any) => format);
                 expect(formatValues).toEqual(["#,##0.00", "#,##0.00%"]);
