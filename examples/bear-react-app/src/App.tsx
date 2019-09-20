@@ -1,10 +1,12 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import "./App.css";
-import { AreaChart, BarChart, BubbleChart } from "@gooddata/sdk-ui";
-import { backend, initialize } from "./backend";
 import { Col, Container, Row } from "react-grid-system";
-import { AgentName, AvgDuration, EndpointName, SumOfCalls, workspace } from "./model";
+
+import { AreaChart, BarChart, BubbleChart, Executor } from "@gooddata/sdk-ui";
+
+import "./App.css";
+import { backend, initialize } from "./backend";
+import { workspace, AgentName, AvgDuration, EndpointName, SumOfCalls } from "./model";
 
 initialize();
 const analyticalBackend = backend();
@@ -14,6 +16,37 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <Container>
+                <Row>
+                    <Col>
+                        <Executor
+                            execution={backend()
+                                .workspace(workspace)
+                                .execution()
+                                .forItems([EndpointName, AgentName, AvgDuration])}
+                        >
+                            {({ error, isLoading, fetch, result }) => {
+                                const data = result && result.data();
+                                let render;
+                                if (isLoading) {
+                                    render = <div>Loading...</div>;
+                                } else if (error) {
+                                    render = <div>Error: {error.toString()}</div>;
+                                } else if (data) {
+                                    render = <div>Data: {data && data.toString()}</div>;
+                                }
+
+                                return (
+                                    <div>
+                                        {render}
+                                        <button onClick={fetch} disabled={isLoading}>
+                                            Refetch
+                                        </button>
+                                    </div>
+                                );
+                            }}
+                        </Executor>
+                    </Col>
+                </Row>
                 <Row>
                     <Col sm={6}>
                         <AreaChart

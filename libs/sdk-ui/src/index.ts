@@ -40,6 +40,8 @@ import { ComboChart } from "./charts/comboChart/ComboChart";
 import { FunnelChart } from "./charts/funnelChart/FunnelChart";
 import { Heatmap } from "./charts/heatmap/Heatmap";
 import { withJsxExport } from "./charts/withJsxExport";
+import { withExecution } from "./execution/withExecution";
+import { Executor } from "./execution/Executor";
 import * as ChartConfiguration from "./interfaces/Config";
 // tslint:disable-next-line:no-duplicate-imports
 import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
@@ -87,6 +89,8 @@ export {
     ErrorComponent,
     // Execute,
     // BucketExecutor,
+    Executor,
+    withExecution,
     generateDimensions,
     Headline,
     // ICommonVisualizationProps,

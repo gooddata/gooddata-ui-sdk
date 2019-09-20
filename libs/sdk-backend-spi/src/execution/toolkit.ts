@@ -7,6 +7,9 @@ import {
     IInsight,
     isDimension,
     SortItem,
+    isMeasure,
+    IAttribute,
+    isAttribute,
 } from "@gooddata/sdk-model";
 import {
     defSetDimensions,
@@ -147,4 +150,55 @@ function toDimensions(
     }
 
     return dimsOrGen.filter(isDimension);
+}
+
+const attributeLocalIdentifier = (attr: IAttribute): string => attr.attribute.localIdentifier;
+
+const getAttributesLocalIdentifiers = (items: AttributeOrMeasure[]): string[] =>
+    items.filter(isAttribute).map(attributeLocalIdentifier);
+
+export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[] {
+    const dimensions: IDimension[] = [];
+    const emptyDim: IDimension = {
+        itemIdentifiers: [],
+    };
+    const firstDim: IDimension = { ...emptyDim };
+    let secondDim: IDimension | undefined;
+
+    if (isEmpty(definition.buckets)) {
+        const attrLocalIds = getAttributesLocalIdentifiers(definition.attributes);
+        firstDim.itemIdentifiers = attrLocalIds;
+        const hasMeasures = !isEmpty(definition.measures);
+        if (hasMeasures) {
+            firstDim.itemIdentifiers.push("measureGroup");
+        }
+
+        return [firstDim];
+    }
+
+    const [firstBucket, ...otherBuckets] = definition.buckets;
+
+    const firstDimAttrLocalIds = getAttributesLocalIdentifiers(firstBucket.items);
+    firstDim.itemIdentifiers = firstDimAttrLocalIds;
+    dimensions.push(firstDim);
+
+    if (!isEmpty(otherBuckets)) {
+        const secondDimAttrLocalIds = otherBuckets.reduce((acc: string[], b) => {
+            const attrLocalIds = getAttributesLocalIdentifiers(b.items);
+            return [...acc, ...attrLocalIds];
+        }, []);
+        if (!isEmpty(secondDimAttrLocalIds)) {
+            secondDim = { ...emptyDim };
+            secondDim.itemIdentifiers = secondDimAttrLocalIds;
+            dimensions.push(secondDim);
+        }
+    }
+
+    const measureDimIdx = definition.buckets.findIndex(b => b.items.some(isMeasure));
+
+    if (measureDimIdx !== -1) {
+        dimensions[measureDimIdx].itemIdentifiers.push("measureGroup");
+    }
+
+    return dimensions;
 }

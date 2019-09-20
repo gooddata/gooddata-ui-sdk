@@ -9,7 +9,9 @@ import {
     IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
+    defaultDimensionsGenerator,
 } from "@gooddata/sdk-backend-spi";
+import isEmpty from "lodash/isEmpty";
 import { IDimension, SortItem } from "@gooddata/sdk-model";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearExecutionResult } from "./executionResult";
@@ -21,6 +23,13 @@ export class BearPreparedExecution implements IPreparedExecution {
 
     constructor(private readonly authSdk: AuthenticatedSdkProvider, def: IExecutionDefinition) {
         this.definition = def;
+
+        if (isEmpty(this.definition.dimensions)) {
+            this.definition = {
+                ...this.definition,
+                dimensions: defaultDimensionsGenerator(this.definition),
+            };
+        }
     }
 
     public async execute(): Promise<IExecutionResult> {

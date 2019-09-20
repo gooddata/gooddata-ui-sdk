@@ -16,7 +16,7 @@
     },
     "scripts": {
         "build": "bash scripts/build.sh && npm run-script api-extractor",
-        "api-extractor": "mkdir -p api && [[ -z \"${CI}\" ]] && (api-extractor run -l) || (api-extractor run)",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
