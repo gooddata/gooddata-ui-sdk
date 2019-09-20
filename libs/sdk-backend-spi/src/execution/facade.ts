@@ -20,6 +20,7 @@ import {
     isResultAttributeHeaderItem,
 } from "./results";
 import isArray = require("lodash/isArray");
+import { IExecutionDefinition } from "./executionDefinition";
 
 type BucketIndex = {
     [key: string]: IBucket;
@@ -31,6 +32,7 @@ type BucketIndex = {
  * @public
  */
 export class DataViewFacade {
+    public readonly definition: IExecutionDefinition;
     private readonly _bucketById: BucketIndex;
 
     constructor(public readonly dataView: IDataView) {
@@ -39,6 +41,8 @@ export class DataViewFacade {
             acc[id] = val;
             return acc;
         }, {});
+
+        this.definition = dataView.definition;
     }
 
     public attributes(): IAttribute[] {

@@ -77,6 +77,8 @@ export class DataViewFacade {
     // (undocumented)
     readonly dataView: IDataView;
     // (undocumented)
+    readonly definition: IExecutionDefinition;
+    // (undocumented)
     dimensions(): IResultDimension[];
     // (undocumented)
     fingerprint(): () => string;
