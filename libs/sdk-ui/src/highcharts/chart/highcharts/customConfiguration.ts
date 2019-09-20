@@ -16,34 +16,34 @@ import * as numberJS from "@gooddata/numberjs";
 
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
-import { VisualizationTypes, ChartType } from "../../../base/constants/visualizationTypes";
+import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import {
-    IDataLabelsVisible,
-    IChartConfig,
     IAxis,
+    IChartConfig,
     IChartOptions,
-    ISeriesItem,
+    IDataLabelsVisible,
     INewChartConfig,
+    ISeriesItem,
 } from "../../../interfaces/Config";
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
 import {
-    isBarChart,
-    isColumnChart,
-    isOneOfTypes,
     isAreaChart,
-    isRotationInRange,
-    isTreemap,
-    isHeatmap,
-    isScatterPlot,
+    isBarChart,
     isBubbleChart,
+    isColumnChart,
+    isHeatmap,
+    isOneOfTypes,
+    isRotationInRange,
+    isScatterPlot,
+    isTreemap,
 } from "../../utils/common";
-import { shouldFollowPointer } from "./helpers";
 import {
-    shouldStartOnTick,
     shouldEndOnTick,
+    shouldFollowPointer,
+    shouldStartOnTick,
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
 } from "./helpers";

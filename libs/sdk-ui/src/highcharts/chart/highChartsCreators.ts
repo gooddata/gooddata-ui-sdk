@@ -11,7 +11,7 @@ import { IChartLimits, IChartOptions, INewChartConfig } from "../../interfaces/C
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";
 import { getColumnConfiguration } from "./highcharts/columnConfiguration";
-import { getCustomizedConfiguration2 } from "./highcharts/customConfiguration";
+import { getCustomizedConfiguration } from "./highcharts/customConfiguration";
 import { getPieConfiguration } from "./highcharts/pieConfiguration";
 import { getDonutConfiguration } from "./highcharts/donutConfiguration";
 import { getAreaConfiguration } from "./highcharts/areaConfiguration";
@@ -55,7 +55,7 @@ export function getHighchartsOptions(
         {},
         getCommonConfiguration(chartOptions, drillConfig),
         getConfigurationByType.call(null, config, definition),
-        getCustomizedConfiguration2(chartOptions, config, drillConfig),
+        getCustomizedConfiguration(chartOptions, config, drillConfig),
     );
 }
 
