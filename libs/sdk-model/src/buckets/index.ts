@@ -438,6 +438,10 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[] {
  * @public
  */
 export function bucketsIsEmpty(buckets: IBucket[]): boolean {
+    if (!buckets || !buckets.length) {
+        return true;
+    }
+
     return buckets.every(bucketIsEmpty);
 }
 

@@ -68,6 +68,17 @@ export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]):
  *
  * @public
  */
+export function newDimension(ids: Identifier[] = []): IDimension {
+    return {
+        itemIdentifiers: ids,
+    };
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
 export function dimensionFingerprint(dim: IDimension): string {
     return JSON.stringify(dim);
 }

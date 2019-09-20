@@ -29,6 +29,7 @@ export {
     isDimension,
     dimensionTotals,
     newTwoDimensional,
+    newDimension,
     dimensionFingerprint,
     MeasureGroupIdentifier,
 } from "./base/dimension";

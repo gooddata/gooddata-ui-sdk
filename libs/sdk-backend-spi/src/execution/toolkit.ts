@@ -1,15 +1,20 @@
 // (C) 2019 GoodData Corporation
 import {
+    attributeId,
     AttributeOrMeasure,
+    bucketAttributes,
+    bucketMeasures,
+    bucketsAttributes,
+    bucketsIsEmpty,
     IBucket,
     IDimension,
     IFilter,
     IInsight,
     isDimension,
+    MeasureGroupIdentifier,
+    newDimension,
+    newTwoDimensional,
     SortItem,
-    isMeasure,
-    IAttribute,
-    isAttribute,
 } from "@gooddata/sdk-model";
 import {
     defSetDimensions,
@@ -152,53 +157,63 @@ function toDimensions(
     return dimsOrGen.filter(isDimension);
 }
 
-const attributeLocalIdentifier = (attr: IAttribute): string => attr.attribute.localIdentifier;
+function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
+    const [firstBucket, ...otherBuckets] = buckets;
 
-const getAttributesLocalIdentifiers = (items: AttributeOrMeasure[]): string[] =>
-    items.filter(isAttribute).map(attributeLocalIdentifier);
+    if (bucketsIsEmpty(otherBuckets)) {
+        if (bucketMeasures(firstBucket).length) {
+            return newTwoDimensional(
+                [MeasureGroupIdentifier],
+                bucketAttributes(firstBucket).map(attributeId),
+            );
+        }
 
+        return [newDimension(bucketAttributes(firstBucket).map(attributeId))];
+    }
+
+    const firstDim = bucketAttributes(firstBucket).map(attributeId);
+    const secondDim = bucketsAttributes(otherBuckets).map(attributeId);
+
+    if (bucketMeasures(firstBucket).length) {
+        firstDim.push(MeasureGroupIdentifier);
+    } else {
+        secondDim.push(MeasureGroupIdentifier);
+    }
+
+    return newTwoDimensional(firstDim, secondDim);
+}
+
+function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDimension[] {
+    if (definition.measures.length) {
+        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeId));
+    }
+
+    return [newDimension(definition.attributes.map(attributeId))];
+}
+
+/**
+ * Default dimension generator for execution definition behaves as follows:
+ *
+ * - If the definition was created WITHOUT 'buckets', then:
+ *   - If there are no measures specified, then single dimension will be returned and will contain all attributes
+ *   - If there are measures, then two dimensions will be returned; measureGroup will be in the first dimension
+ *     and all attributes in the second dimension
+ *
+ * If the definition was created WITH 'buckets' then:
+ *   - If there is just one bucket and it contains only attributes, then single dimension with all attributes will be returned
+ *   - If there is just one bucket and it contains both attributes and measures, then two dimensions will be returned:
+ *     measureGroup will be in first dimension, all other attributes in the second dimension
+ *   - If there are multiple buckets, then all attributes from first bucket will be in first dimension and all attributes
+ *     from other buckets in the second dimension. If the first bucket contains measure(s), then the MeasureGroup will
+ *     be in first dimension. Otherwise it will be in second dimension.
+ *
+ * @param definition - execution definition to get dims for
+ * @public
+ */
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[] {
-    const dimensions: IDimension[] = [];
-    const emptyDim: IDimension = {
-        itemIdentifiers: [],
-    };
-    const firstDim: IDimension = { ...emptyDim };
-    let secondDim: IDimension | undefined;
+    const buckets = definition.buckets;
 
-    if (isEmpty(definition.buckets)) {
-        const attrLocalIds = getAttributesLocalIdentifiers(definition.attributes);
-        firstDim.itemIdentifiers = attrLocalIds;
-        const hasMeasures = !isEmpty(definition.measures);
-        if (hasMeasures) {
-            firstDim.itemIdentifiers.push("measureGroup");
-        }
-
-        return [firstDim];
-    }
-
-    const [firstBucket, ...otherBuckets] = definition.buckets;
-
-    const firstDimAttrLocalIds = getAttributesLocalIdentifiers(firstBucket.items);
-    firstDim.itemIdentifiers = firstDimAttrLocalIds;
-    dimensions.push(firstDim);
-
-    if (!isEmpty(otherBuckets)) {
-        const secondDimAttrLocalIds = otherBuckets.reduce((acc: string[], b) => {
-            const attrLocalIds = getAttributesLocalIdentifiers(b.items);
-            return [...acc, ...attrLocalIds];
-        }, []);
-        if (!isEmpty(secondDimAttrLocalIds)) {
-            secondDim = { ...emptyDim };
-            secondDim.itemIdentifiers = secondDimAttrLocalIds;
-            dimensions.push(secondDim);
-        }
-    }
-
-    const measureDimIdx = definition.buckets.findIndex(b => b.items.some(isMeasure));
-
-    if (measureDimIdx !== -1) {
-        dimensions[measureDimIdx].itemIdentifiers.push("measureGroup");
-    }
-
-    return dimensions;
+    return !bucketsIsEmpty(buckets)
+        ? defaultDimensionsWithBuckets(buckets)
+        : defaultDimensionsWithoutBuckets(definition);
 }

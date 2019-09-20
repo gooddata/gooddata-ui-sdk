@@ -588,6 +588,9 @@ export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirec
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
+export function newDimension(ids?: Identifier[]): IDimension;
+
+// @public
 export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem;
 
 // @public
