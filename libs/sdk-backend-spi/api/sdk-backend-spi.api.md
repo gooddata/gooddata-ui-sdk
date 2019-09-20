@@ -114,7 +114,7 @@ export class DataViewFacade {
     twoDimData(): DataValue[][];
 }
 
-// @public (undocumented)
+// @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
 
 // @public
