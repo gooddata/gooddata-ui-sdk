@@ -1,14 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
-import { IChartConfig } from "../../../interfaces/Config";
-import { getViewByTwoAttributes } from "../../../base/helpers/optionalStacking/common";
-import BucketItem = VisualizationObject.BucketItem;
-import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
+import { INewChartConfig } from "../../../interfaces/Config";
+import { AttributeOrMeasure, IAttribute, IMeasure } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
-function createAttribute(id: number): VisualizationObject.IVisualizationAttribute {
+function createAttribute(id: number): IAttribute {
     return {
-        visualizationAttribute: {
+        attribute: {
             localIdentifier: `a${id}`,
             displayForm: {
                 uri: `/gdc/md/myproject/obj/${id}`,
@@ -17,7 +15,7 @@ function createAttribute(id: number): VisualizationObject.IVisualizationAttribut
     };
 }
 
-function createMeasure(id: number): VisualizationObject.IMeasure {
+function createMeasure(id: number): IMeasure {
     return {
         measure: {
             localIdentifier: `m${id}`,
@@ -32,49 +30,18 @@ function createMeasure(id: number): VisualizationObject.IMeasure {
     };
 }
 
-const [ATTRIBUTE_1, ATTRIBUTE_2, ATTRIBUTE_3]: VisualizationObject.IVisualizationAttribute[] = [1, 2, 3].map(
-    createAttribute,
-);
+const [ATTRIBUTE_1, ATTRIBUTE_2, ATTRIBUTE_3]: IAttribute[] = [1, 2, 3].map(createAttribute);
 
-const [MEASURE_1, MEASURE_2]: VisualizationObject.IMeasure[] = [1, 2].map(createMeasure);
-
-describe("getViewByTwoAttributes", () => {
-    it.each`
-        description                                                       | viewBy                                     | expectation
-        ${"should return no attribute when viewBy is undefined"}          | ${undefined}                               | ${[]}
-        ${"should return no attribute when viewBy is empty"}              | ${[]}                                      | ${[]}
-        ${"should return one attribute when viewBy is one-element array"} | ${[ATTRIBUTE_1]}                           | ${[ATTRIBUTE_1]}
-        ${"should return one attribute when viewBy is single object"}     | ${ATTRIBUTE_1}                             | ${[ATTRIBUTE_1]}
-        ${"should return two attributes"}                                 | ${[ATTRIBUTE_1, ATTRIBUTE_2]}              | ${[ATTRIBUTE_1, ATTRIBUTE_2]}
-        ${"should return first two attributes"}                           | ${[ATTRIBUTE_1, ATTRIBUTE_2, ATTRIBUTE_3]}
-        ${[ATTRIBUTE_1, ATTRIBUTE_2]}
-    `(
-        "$description",
-        ({
-            viewBy,
-            expectation,
-        }: {
-            viewBy:
-                | VisualizationObject.IVisualizationAttribute
-                | VisualizationObject.IVisualizationAttribute[];
-            expectation:
-                | VisualizationObject.IVisualizationAttribute
-                | VisualizationObject.IVisualizationAttribute[];
-        }) => {
-            const result = getViewByTwoAttributes(viewBy);
-            expect(result).toEqual(expectation);
-        },
-    );
-});
+const [MEASURE_1, MEASURE_2]: IMeasure[] = [1, 2].map(createMeasure);
 
 describe("getPropsForArea", () => {
     function getPropsForArea(
         props: IAreaChartProps,
     ): {
-        measures: BucketItem[];
-        viewBy: IVisualizationAttribute[];
-        stackBy: IVisualizationAttribute[];
-        config: IChartConfig;
+        measures: AttributeOrMeasure[];
+        viewBy: IAttribute[];
+        stackBy: IAttribute[];
+        config: INewChartConfig;
     } {
         return {
             ...getBucketsProps(props),
@@ -85,7 +52,8 @@ describe("getPropsForArea", () => {
     describe("view by one attribute", () => {
         it("should return props with empty chart props", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                workspace: "myProjectId",
+                backend: dummyBackend(),
                 measures: [],
                 viewBy: [],
                 stackBy: null,
@@ -100,7 +68,8 @@ describe("getPropsForArea", () => {
 
         it("should return props with normal chart props", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                backend: dummyBackend(),
+                workspace: "myProjectId",
                 measures: [MEASURE_1],
                 viewBy: [ATTRIBUTE_1],
                 stackBy: ATTRIBUTE_2,
@@ -115,7 +84,8 @@ describe("getPropsForArea", () => {
 
         it("should return props with stacking config", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                workspace: "myProjectId",
+                backend: dummyBackend(),
                 measures: [MEASURE_1],
                 viewBy: [ATTRIBUTE_1],
                 stackBy: ATTRIBUTE_2,
@@ -133,7 +103,8 @@ describe("getPropsForArea", () => {
             'should return props with "%s" stackMeasures overwrites "%s" stacking config',
             (stackMeasures: boolean, stacking: boolean) => {
                 const props: IAreaChartProps = {
-                    projectId: "myProjectId",
+                    workspace: "myProjectId",
+                    backend: dummyBackend(),
                     measures: [MEASURE_1],
                     viewBy: [ATTRIBUTE_1],
                     stackBy: ATTRIBUTE_2,
@@ -155,7 +126,8 @@ describe("getPropsForArea", () => {
             'should return props with "%s" stackMeasuresToPercent overwrites "%s" stacking config',
             (stackMeasuresToPercent: boolean, stacking: boolean) => {
                 const props: IAreaChartProps = {
-                    projectId: "myProjectId",
+                    workspace: "myProjectId",
+                    backend: dummyBackend(),
                     measures: [MEASURE_1],
                     viewBy: [ATTRIBUTE_1],
                     stackBy: ATTRIBUTE_2,
@@ -184,7 +156,8 @@ describe("getPropsForArea", () => {
 
         it("should return props with view by 2 attributes and 1 measure", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                workspace: "myProjectId",
+                backend: dummyBackend(),
                 measures: [MEASURE_1],
                 viewBy: [ATTRIBUTE_1, ATTRIBUTE_2],
                 stackBy: null,
@@ -199,7 +172,8 @@ describe("getPropsForArea", () => {
 
         it("should return props with view by 2 attributes and 2 measure", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                workspace: "myProjectId",
+                backend: dummyBackend(),
                 measures: [MEASURE_1, MEASURE_2],
                 viewBy: [ATTRIBUTE_1, ATTRIBUTE_2],
                 stackBy: null,
@@ -214,7 +188,8 @@ describe("getPropsForArea", () => {
 
         it("should return props with view by 2 attributes and 1 measure and one stack by", () => {
             const props: IAreaChartProps = {
-                projectId: "myProjectId",
+                workspace: "myProjectId",
+                backend: dummyBackend(),
                 measures: [MEASURE_1],
                 viewBy: [ATTRIBUTE_1, ATTRIBUTE_2],
                 stackBy: ATTRIBUTE_3,
