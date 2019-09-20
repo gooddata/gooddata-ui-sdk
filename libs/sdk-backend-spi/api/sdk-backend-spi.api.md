@@ -114,6 +114,9 @@ export class DataViewFacade {
     twoDimData(): DataValue[][];
 }
 
+// @public (undocumented)
+export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
+
 // @public
 export function defFingerprint(def: IExecutionDefinition): string;
 

@@ -54,6 +54,7 @@ export {
     defForInsight,
     defWithDimensions,
     defWithSorting,
+    defaultDimensionsGenerator,
 } from "./execution/toolkit";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";

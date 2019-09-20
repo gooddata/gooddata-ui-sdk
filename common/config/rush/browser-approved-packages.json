@@ -99,6 +99,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/hoist-non-react-statics",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/invariant",
       "allowedCategories": [ "production" ]
     },
