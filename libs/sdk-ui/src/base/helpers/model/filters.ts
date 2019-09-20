@@ -7,13 +7,14 @@ import {
     IPositiveAttributeFilter,
     IRelativeDateFilter,
 } from "@gooddata/sdk-model";
+import isArray = require("lodash/isArray");
 
 export function positiveAttributeFilter(
     qualifier: string,
     inValues: string[] | AttributeElements,
     textFilter?: boolean,
 ): IPositiveAttributeFilter {
-    if (typeof inValues === "object") {
+    if (!isArray(inValues)) {
         return {
             positiveAttributeFilter: {
                 displayForm: getQualifierObject(qualifier),
@@ -37,7 +38,7 @@ export function negativeAttributeFilter(
     notInValues: string[] | AttributeElements,
     textFilter?: boolean,
 ): INegativeAttributeFilter {
-    if (typeof notInValues === "object") {
+    if (!isArray(notInValues)) {
         return {
             negativeAttributeFilter: {
                 displayForm: getQualifierObject(qualifier),

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { VisualizationObject, AFM, VisualizationInput } from "@gooddata/gd-bear-model";
+import { VisualizationObject } from "@gooddata/gd-bear-model";
 import MdObjectHelper from "../MdObjectHelper";
-import { visualizationObjects, pivotTableMDO } from "../../../../__mocks__/fixtures";
+import { visualizationObjects } from "../../../../__mocks__/fixtures";
 
 describe("MdObjectHelper", () => {
     describe("getTotals", () => {
@@ -164,120 +164,6 @@ describe("MdObjectHelper", () => {
                 operator: "change",
                 masterMeasureLocalIdentifiers: ["m1", "m2"],
             });
-        });
-    });
-
-    describe("mdObjectToPivotBucketProps", () => {
-        it("should convert MDO to pivot table bucket props", () => {
-            const filtersFromProps: AFM.FilterItem[] = [
-                {
-                    relativeDateFilter: {
-                        to: 0,
-                        from: -3,
-                        granularity: "GDC.time.quarter",
-                        dataSet: {
-                            uri: "/gdc/md/myproject/obj/921",
-                        },
-                    },
-                },
-            ];
-            const pivotTableBucketProps = MdObjectHelper.mdObjectToPivotBucketProps(
-                pivotTableMDO.visualizationObject,
-                filtersFromProps,
-            );
-
-            const expectedMeasures: VisualizationInput.IMeasure[] = [
-                {
-                    measure: {
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    uri: "/gdc/md/myproject/obj/8172",
-                                },
-                            },
-                        },
-                        localIdentifier: "m1",
-                        title: "# Accounts with AD Query",
-                    },
-                },
-                {
-                    measure: {
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    uri: "/gdc/md/myproject/obj/8173",
-                                },
-                            },
-                        },
-                        localIdentifier: "m2",
-                        title: "Measure 2",
-                    },
-                },
-            ];
-
-            const expectedColumns: VisualizationInput.IAttribute[] = [
-                {
-                    visualizationAttribute: {
-                        displayForm: {
-                            uri: "/gdc/md/myproject/obj/853",
-                        },
-                        localIdentifier: "a3",
-                    },
-                },
-            ];
-
-            const expectedRows: VisualizationInput.IAttribute[] = [
-                {
-                    visualizationAttribute: {
-                        displayForm: {
-                            uri: "/gdc/md/myproject/obj/851",
-                        },
-                        localIdentifier: "a1",
-                    },
-                },
-                {
-                    visualizationAttribute: {
-                        displayForm: {
-                            uri: "/gdc/md/myproject/obj/852",
-                        },
-                        localIdentifier: "a2",
-                    },
-                },
-            ];
-
-            const expectedFilters: VisualizationInput.IFilter[] = [
-                {
-                    relativeDateFilter: {
-                        dataSet: {
-                            uri: "/gdc/md/myproject/obj/921",
-                        },
-                        from: -3,
-                        granularity: "GDC.time.quarter",
-                        to: 0,
-                    },
-                },
-            ];
-
-            const expectedTotals: VisualizationInput.ITotal[] = [
-                {
-                    alias: "average",
-                    attributeIdentifier: "a1",
-                    measureIdentifier: "m1",
-                    type: "avg",
-                },
-                {
-                    alias: "Native total",
-                    attributeIdentifier: "a2",
-                    measureIdentifier: "m1",
-                    type: "nat",
-                },
-            ];
-
-            expect(pivotTableBucketProps.measures).toEqual(expectedMeasures);
-            expect(pivotTableBucketProps.columns).toEqual(expectedColumns);
-            expect(pivotTableBucketProps.rows).toEqual(expectedRows);
-            expect(pivotTableBucketProps.filters).toEqual(expectedFilters);
-            expect(pivotTableBucketProps.totals).toEqual(expectedTotals);
         });
     });
 });

@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as VisEvents from "./interfaces/Events";
 import CatalogHelper from "./base/helpers/CatalogHelper";
-import { isEmptyResult } from "./base/helpers/errorHandlers";
 import * as Model from "./base/helpers/model";
 // import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { ErrorComponent } from "./base/simple/ErrorComponent";
@@ -101,7 +100,6 @@ export {
     IColorPaletteItem,
     IPushData,
     IColorsData,
-    isEmptyResult,
     LoadingComponent,
     LineChart,
     AreaChart,

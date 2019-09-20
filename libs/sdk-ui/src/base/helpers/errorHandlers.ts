@@ -1,14 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import { isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
-import { Execution, VisualizationObject } from "@gooddata/gd-bear-model";
 import { ApiResponseError } from "@gooddata/gd-bear-client";
 import { InjectedIntl } from "react-intl";
-import { ErrorStates, ErrorCodes } from "../constants/errorStates";
-import get = require("lodash/get");
-import includes = require("lodash/includes");
+import { ErrorCodes, ErrorStates } from "../constants/errorStates";
 import * as HttpStatusCodes from "http-status-codes";
 import { RuntimeError } from "../errors/RuntimeError";
-import { unwrap } from "./utils";
+import get = require("lodash/get");
+import includes = require("lodash/includes");
 
 function getJSONFromText(data: string): object {
     try {
@@ -107,70 +105,3 @@ export function convertErrors(inError: ApiResponseError | TypeError): RuntimeErr
             return new RuntimeError(ErrorStates.UNKNOWN_ERROR);
     }
 }
-
-/** @deprecated */
-function isNullExecutionResult(responses: Execution.IExecutionResponses): boolean {
-    return responses.executionResult === null;
-}
-
-function hasEmptyData(responses: Execution.IExecutionResponses): boolean {
-    return responses.executionResult.data.length === 0;
-}
-
-function hasMissingHeaderItems(responses: Execution.IExecutionResponses): boolean {
-    return !responses.executionResult.headerItems;
-}
-
-function isEmptyDataResult(responses: Execution.IExecutionResponses): boolean {
-    return hasEmptyData(responses) && hasMissingHeaderItems(responses);
-}
-
-/**
- * isEmptyResult
- * is a function that returns true if the execution result is empty (no data points) and false otherwise.
- * @param responses:Execution.IExecutionResponses - object with execution response and result
- * @return boolean
- * @internal
- */
-export function isEmptyResult(responses: Execution.IExecutionResponses): boolean {
-    return isNullExecutionResult(responses) || isEmptyDataResult(responses);
-}
-
-export function checkEmptyResult(responses: Execution.IExecutionResponses) {
-    if (isEmptyResult(responses)) {
-        throw {
-            name: "EmptyResultError",
-            response: {
-                status: HttpStatusCodes.NO_CONTENT,
-                json: () => Promise.resolve(null),
-                text: () => Promise.resolve(null),
-            },
-        };
-    }
-
-    return responses;
-}
-
-export const hasDuplicateIdentifiers = (buckets: VisualizationObject.IBucket[]) => {
-    const buffer: string[] = [];
-    const duplicates: string[] = [];
-    buckets.forEach(({ items }) => {
-        items.forEach((bucketItem: VisualizationObject.BucketItem) => {
-            const localIdentifier: string = unwrap(bucketItem).localIdentifier;
-            const isDuplicate = buffer.includes(localIdentifier);
-            buffer.push(localIdentifier);
-            if (isDuplicate && !duplicates.includes(localIdentifier)) {
-                duplicates.push(localIdentifier);
-            }
-        });
-    });
-    if (duplicates.length > 0) {
-        // tslint:disable-next-line:no-console max-line-length
-        console.warn(
-            `Duplicate identifier${duplicates.length > 1 ? "s" : ""} '${duplicates.join(
-                ", ",
-            )}' detected in PivotTable. Please make sure all localIdentifiers are unique.`,
-        );
-    }
-    return duplicates.length > 0;
-};

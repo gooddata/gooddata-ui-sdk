@@ -277,8 +277,10 @@ export interface IInsight {
     };
 }
 
+// Warning: (ae-forgotten-export) The symbol "IMeasureTitle" needs to be exported by the entry point index.d.ts
+// 
 // @public
-export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> {
+export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     // (undocumented)
     measure: {
         localIdentifier: Identifier;
@@ -333,7 +335,7 @@ export interface INegativeAttributeFilter {
 export function insightAttributes(insight: IInsight): IAttribute[];
 
 // @public
-export function insightBucket(insight: IInsight, idOrFun: string | BucketPredicate): IBucket | undefined;
+export function insightBucket(insight: IInsight, idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
 export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[];

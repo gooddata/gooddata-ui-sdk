@@ -19,13 +19,26 @@ export type IMeasureDefinitionType =
  *
  * @public
  */
-export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> {
+export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     measure: {
         localIdentifier: Identifier;
         definition: T;
         alias?: string;
         title?: string;
         format?: string;
+    };
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export interface IMeasureTitle {
+    measure: {
+        localIdentifier: string;
+        title?: string;
+        alias?: string;
     };
 }
 

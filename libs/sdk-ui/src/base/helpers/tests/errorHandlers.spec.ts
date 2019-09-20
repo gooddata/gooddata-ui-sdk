@@ -1,18 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import * as HttpStatusCodes from "http-status-codes";
-import { checkEmptyResult, convertErrors, generateErrorMap, hasDuplicateIdentifiers } from "../errorHandlers";
+import { convertErrors, generateErrorMap } from "../errorHandlers";
 import { ApiResponseError } from "@gooddata/gd-bear-client";
 import "isomorphic-fetch";
 
-import {
-    emptyResponse,
-    emptyResponseWithNull,
-    attributeOnlyResponse,
-} from "../../execution/fixtures/ExecuteAfm.fixtures";
 import { ErrorCodes, ErrorStates } from "../../constants/errorStates";
 import { RuntimeError } from "../../errors/RuntimeError";
 import "jest";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 
 async function createMockedError(status: number, body: string = "{}") {
     const response = new Response(body, { status });
@@ -106,32 +100,6 @@ describe("convertErrors", () => {
     });
 });
 
-describe("checkEmptyResult", () => {
-    it("should throw 204 if executionResult does not contain any data", () => {
-        expect.hasAssertions();
-
-        try {
-            checkEmptyResult(emptyResponse);
-        } catch (obj) {
-            expect(obj.response.status).toEqual(204);
-        }
-    });
-
-    it("should throw 204 if executionResult is null", () => {
-        expect.hasAssertions();
-
-        try {
-            checkEmptyResult(emptyResponseWithNull);
-        } catch (obj) {
-            expect(obj.response.status).toEqual(204);
-        }
-    });
-
-    it("should not throw 204 if executionResult does not contain any data, but contain headers", () => {
-        expect(() => checkEmptyResult(attributeOnlyResponse)).not.toThrow();
-    });
-});
-
 describe("generateErrorMap", () => {
     it("should generate map", () => {
         const intlMock = {
@@ -139,97 +107,5 @@ describe("generateErrorMap", () => {
         };
         const map = generateErrorMap(intlMock as any);
         expect(map).toMatchSnapshot();
-    });
-});
-
-describe("hasDuplicateIdentifiers", () => {
-    const buckets: VisualizationObject.IBucket[] = [
-        {
-            localIdentifier: "measures",
-            items: [
-                {
-                    measure: {
-                        localIdentifier: "abc",
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    identifier: "aaEGaXAEgB7U",
-                                },
-                            },
-                        },
-                    },
-                },
-                {
-                    measure: {
-                        localIdentifier: "def",
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    identifier: "aabHeqImaK0d",
-                                },
-                            },
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            localIdentifier: "rows",
-            items: [
-                {
-                    visualizationAttribute: {
-                        localIdentifier: "ghi",
-                        displayForm: {
-                            identifier: "label.restaurantlocation.locationstate",
-                        },
-                    },
-                },
-                {
-                    visualizationAttribute: {
-                        localIdentifier: "jkl",
-                        displayForm: {
-                            identifier: "label.restaurantlocation.locationname",
-                        },
-                    },
-                },
-                {
-                    visualizationAttribute: {
-                        localIdentifier: "abc",
-                        displayForm: {
-                            identifier: "label.menuitem.menucategory",
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            localIdentifier: "columns",
-            items: [
-                {
-                    visualizationAttribute: {
-                        localIdentifier: "def",
-                        displayForm: {
-                            identifier: "date.aam81lMifn6q",
-                        },
-                    },
-                },
-                {
-                    visualizationAttribute: {
-                        localIdentifier: "xyz",
-                        displayForm: {
-                            identifier: "date.abm81lMifn6q",
-                        },
-                    },
-                },
-            ],
-        },
-    ];
-    it("should return true if there are duplicate identifiers", () => {
-        const hasDuplicates = hasDuplicateIdentifiers(buckets);
-        expect(hasDuplicates).toBe(true);
-    });
-    it("should return false if there are duplicate identifiers", () => {
-        const hasDuplicates = hasDuplicateIdentifiers(buckets.slice(1));
-        expect(hasDuplicates).toBe(false);
     });
 });

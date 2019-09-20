@@ -2,7 +2,7 @@
 import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
 import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
-import { IBucket, IMeasure } from "@gooddata/sdk-model";
+import { IBucket, IInsight, IMeasure } from "@gooddata/sdk-model";
 
 import * as rec from "./recordings/playlist";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
@@ -1559,3 +1559,144 @@ export const treemapWithMetricAndViewByAttribute1element = recordedDataFacade(
 export const treemapWithMetricViewByAndStackByAttribute = recordedDataFacade(
     rec.TreemapWithMetricViewByAndStackByAttribute,
 );
+
+//
+// Insights
+//
+
+export const singleMeasureInsight: IInsight = {
+    insight: {
+        identifier: "singleMeasureInsight",
+        uri: "/some/uri/singleMeasureInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            title: "# Logged-in Users",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/myproject/obj/3276",
+                                    },
+                                    filters: [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        title: "One measure",
+        sorts: [],
+        properties: {},
+    },
+};
+
+export const singleAttributeInsight: IInsight = {
+    insight: {
+        identifier: "singleAttributeInsight",
+        uri: "/some/uri/singleAttributeInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "attribute",
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/myproject/obj/4001",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        title: "One attribute",
+        sorts: [],
+        properties: {},
+    },
+};
+
+export const insightWithProperties: IInsight = {
+    insight: {
+        identifier: "singleAttributeInsight",
+        uri: "/some/uri/singleAttributeInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            title: "# Logged-in Users",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/myproject/obj/3276",
+                                    },
+                                    filters: [],
+                                },
+                            },
+                        },
+                    },
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            title: "# Users Opened AD",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/myproject/obj/1995",
+                                    },
+                                    filters: [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "view",
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/myproject/obj/851",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [
+            {
+                relativeDateFilter: {
+                    from: -3,
+                    to: 0,
+                    granularity: "GDC.time.quarter",
+                    dataSet: {
+                        uri: "/gdc/md/myproject/obj/921",
+                    },
+                },
+            },
+        ],
+        properties: {
+            controls: {
+                grid: {
+                    enabled: true,
+                },
+            },
+        },
+        title: "One attribute",
+        sorts: [],
+    },
+};

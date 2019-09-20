@@ -12,13 +12,18 @@ import {
 import get = require("lodash/get");
 import noop = require("lodash/noop");
 import isEqual = require("lodash/isEqual");
-import { AFM, VisualizationObject, VisualizationClass, Localization } from "@gooddata/gd-bear-model/dist/index";
+import {
+    AFM,
+    VisualizationObject,
+    VisualizationClass,
+    Localization,
+} from "@gooddata/gd-bear-model/dist/index";
 import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { BaseChart } from "../to_delete/BaseChart";
 import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
-import { PivotTable } from "../pivotTable/PivotTable";
+import { IPivotTableBucketProps, PivotTable } from "../pivotTable/PivotTable";
 import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 import { IEvents, OnLegendReady } from "../../interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
@@ -26,7 +31,7 @@ import { VisualizationTypes, VisType } from "../../base/constants/visualizationT
 import { IDataSource } from "../to_delete/DataSource";
 import { ISubject } from "../../base/helpers/async";
 import { getVisualizationTypeFromVisualizationClass } from "../../base/helpers/visualizationType";
-import MdObjectHelper, { mdObjectToPivotBucketProps } from "../../base/helpers/MdObjectHelper";
+import MdObjectHelper from "./MdObjectHelper";
 import { fillMissingTitles } from "../../base/helpers/measureTitleHelper";
 import { LoadingComponent, ILoadingProps } from "../../base/simple/LoadingComponent";
 import { ErrorComponent, IErrorProps } from "../../base/simple/ErrorComponent";
@@ -41,6 +46,7 @@ import { getFeatureFlags } from "../../base/helpers/featureFlags";
 import { mergeFiltersToAfm } from "../../base/helpers/afmHelper";
 import { _experimentalDataSourceFactory } from "./experimentalDataSource";
 import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
+import { ATTRIBUTE, COLUMNS, MEASURES } from "../../base/constants/bucketNames";
 export { Requireable };
 
 const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;
@@ -572,3 +578,44 @@ export class Visualization extends React.PureComponent<IVisualizationProps> {
         );
     }
 }
+
+const mdObjectToPivotBucketProps = (
+    mdObject: VisualizationObject.IVisualizationObject,
+    filtersFromProps: AFM.FilterItem[],
+): IPivotTableBucketProps => {
+    const measureBucket = mdObject.content.buckets.find(bucket => bucket.localIdentifier === MEASURES);
+    const rowBucket = mdObject.content.buckets.find(bucket => bucket.localIdentifier === ATTRIBUTE);
+    const columnBucket = mdObject.content.buckets.find(bucket => bucket.localIdentifier === COLUMNS);
+
+    const measures: IPivotTableBucketProps["measures"] = (measureBucket && measureBucket.items) || [];
+    const rows: IPivotTableBucketProps["rows"] =
+        (rowBucket && (rowBucket.items as VisualizationObject.IVisualizationAttribute[])) || [];
+    const columns: IPivotTableBucketProps["columns"] =
+        (columnBucket && (columnBucket.items as VisualizationObject.IVisualizationAttribute[])) || [];
+    const sortBy: IPivotTableBucketProps["sortBy"] =
+        (mdObject &&
+            mdObject.content &&
+            mdObject.content.properties &&
+            JSON.parse(mdObject.content.properties).sortItems) ||
+        [];
+    const totals: IPivotTableBucketProps["totals"] = (rowBucket && rowBucket.totals) || [];
+
+    const afmWithoutMergedFilters = DataLayer.toAfmResultSpec(mdObject.content).afm;
+    afmWithoutMergedFilters.filters = afmWithoutMergedFilters.filters || [];
+
+    const afm = mergeFiltersToAfm(afmWithoutMergedFilters, filtersFromProps);
+
+    const filters: VisualizationInput.IFilter[] = (afm.filters || []).filter(afmFilter => {
+        // Filter out expression filters which are not supported in bucket interface
+        return AFM.isDateFilter(afmFilter) || AFM.isAttributeFilter(afmFilter);
+    }) as AFM.FilterItem[];
+
+    return {
+        measures,
+        rows,
+        columns,
+        filters,
+        sortBy,
+        totals,
+    };
+};

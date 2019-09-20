@@ -1,8 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
-import * as fixtures from "../../../../stories/test_data/fixtures";
+
 import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../../highcharts/chart/constants";
-import { EXECUTION_RESPONSE_1A_2M } from "../../highcharts/table/fixtures/1attribute2measures";
 import {
     findAttributeInDimension,
     findInDimensionHeaders,
@@ -13,12 +11,13 @@ import {
     getNthAttributeName,
     getNthDimensionHeaders,
 } from "../executionResultHelper";
+import * as fixtures from "../../../../__mocks__/fixtures";
 
 describe("findInDimensionHeaders", () => {
     it("should call supplied callback for all headers in all dimensions until it returns a non null value", () => {
         const mockCallback = jest.fn();
         mockCallback.mockReturnValue(null);
-        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.executionResponse.dimensions;
+        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
         const headerCount =
             sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers.length +
             sampleDimensions[STACK_BY_DIMENSION_INDEX].headers.length;
@@ -29,7 +28,7 @@ describe("findInDimensionHeaders", () => {
     it("should return the first non-null value of it`s callback value", () => {
         const mockCallback = jest.fn();
         mockCallback.mockReturnValue(42);
-        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.executionResponse.dimensions;
+        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
         const returnValue = findInDimensionHeaders(sampleDimensions, mockCallback);
         expect(returnValue).toBe(42);
         expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -37,7 +36,7 @@ describe("findInDimensionHeaders", () => {
 });
 
 describe("findMeasureGroupInDimensions", () => {
-    const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.executionResponse.dimensions;
+    const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
@@ -60,8 +59,8 @@ describe("findMeasureGroupInDimensions", () => {
 });
 
 describe("findAttributeInDimension", () => {
-    const { dimensions } = fixtures.barChartWithStackByAndViewByAttributes.executionResponse;
-    const { headerItems } = fixtures.barChartWithStackByAndViewByAttributes.executionResult;
+    const dimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
+    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.headerItems();
     it("should return the view by attribute header with header items", () => {
         const returnValue = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],

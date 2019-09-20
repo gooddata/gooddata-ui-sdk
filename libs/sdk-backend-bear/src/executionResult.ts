@@ -81,6 +81,9 @@ export class BearExecutionResult implements IExecutionResult {
                     );
                 }
 
+                // TODO: SDK8: enable empty result checking? moved this here from helpers, it was used in vis loading HOC
+                // const result = checkEmptyResult(res);
+
                 return new BearDataView(this, res);
             })
             .catch(e => {
@@ -161,4 +164,36 @@ class BearDataView implements IDataView {
     public equals(other: IDataView): boolean {
         return this.fingerprint() === other.fingerprint();
     }
+}
+
+//
+//
+//
+
+function hasEmptyData(result: Execution.IExecutionResult): boolean {
+    return result.data.length === 0;
+}
+
+function hasMissingHeaderItems(result: Execution.IExecutionResult): boolean {
+    return !result.headerItems;
+}
+
+function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
+    return hasEmptyData(result) && hasMissingHeaderItems(result);
+}
+
+// @ts-ignore
+function checkEmptyResult(result: Execution.IExecutionResult) {
+    if (isEmptyDataResult(result)) {
+        throw {
+            name: "EmptyResultError",
+            response: {
+                status: 204,
+                json: () => Promise.resolve(null),
+                text: () => Promise.resolve(null),
+            },
+        };
+    }
+
+    return result;
 }

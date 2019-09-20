@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { getObjectIdFromUri, setTelemetryHeaders, percentFormatter, unwrap } from "../utils";
-import { factory as createSdk } from "@gooddata/gd-bear-client";
+import { getObjectIdFromUri, percentFormatter, unwrap } from "../utils";
 
 describe("getObjectIdFromUri", () => {
     it("should extract object id from uris", () => {
@@ -11,21 +10,6 @@ describe("getObjectIdFromUri", () => {
 
     it("should return null if it cannot find the uri", () => {
         expect(getObjectIdFromUri("/uri/without/objectId")).toBe(null);
-    });
-});
-
-describe("setTelemetryHeaders", () => {
-    it("should set telemetry headers", () => {
-        const sdk = createSdk();
-        setTelemetryHeaders(sdk, "componentName", { prop: "value" });
-
-        expect(sdk.config.getJsPackage()).toMatchObject({
-            name: "@gooddata/react-components",
-            version: expect.any(String),
-        });
-
-        expect(sdk.config.getRequestHeader("X-GDC-JS-SDK-COMP")).toEqual("componentName");
-        expect(sdk.config.getRequestHeader("X-GDC-JS-SDK-COMP-PROPS")).toEqual("prop");
     });
 });
 

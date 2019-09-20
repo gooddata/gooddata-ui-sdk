@@ -3,6 +3,7 @@ import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
 import {
+    anyBucket,
     BucketPredicate,
     bucketsAttributes,
     bucketsById,
@@ -89,12 +90,16 @@ export function isInsight(obj: any): obj is IInsight {
  * @returns undefined if none match
  * @public
  */
-export function insightBucket(insight: IInsight, idOrFun: string | BucketPredicate): IBucket | undefined {
+export function insightBucket(
+    insight: IInsight,
+    idOrFun: string | BucketPredicate = anyBucket,
+): IBucket | undefined {
     return bucketsFind(insight.insight.buckets, idOrFun);
 }
 
 /**
- * Gets all buckets matching the provided ids from an insight
+ * Gets all buckets matching the provided ids from an insight. If no ids are provided, then all buckets are
+ * returned
  *
  * @param insight - insight to work with
  * @param ids - local identifiers of buckets
@@ -103,7 +108,7 @@ export function insightBucket(insight: IInsight, idOrFun: string | BucketPredica
  */
 export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
     if (!ids || !ids.length) {
-        return [];
+        return insight.insight.buckets;
     }
 
     return bucketsById(insight.insight.buckets, ...ids);

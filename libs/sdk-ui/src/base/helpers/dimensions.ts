@@ -8,7 +8,6 @@ import {
     IInsight,
     insightAttributes,
     insightBucket,
-    insightMeasures,
     insightTotals,
 } from "@gooddata/sdk-model";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
@@ -387,22 +386,4 @@ export function getTreemapDimensionsFromAFM(insight: IInsight): IDimension[] {
             itemIdentifiers: [MEASUREGROUP],
         },
     ];
-}
-
-export function getGeneralDimensionsFromAFM(insight: IInsight): IDimension[] {
-    const attributes = insightAttributes(insight);
-    const measures = insightMeasures(insight);
-    const dimensions = [];
-
-    if (attributes.length > 0) {
-        dimensions.push({
-            itemIdentifiers: attributes.map(attributeId),
-        });
-    }
-    if (measures.length > 0) {
-        dimensions.push({
-            itemIdentifiers: [MEASUREGROUP],
-        });
-    }
-    return dimensions;
 }

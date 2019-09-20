@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import compact = require("lodash/compact");
+import isEmpty = require("lodash/isEmpty");
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
@@ -10,10 +11,10 @@ import {
     dimensionTotals,
     IAttribute,
     isAttribute,
+    ITotal,
     totalIsNative,
 } from "@gooddata/sdk-model";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
@@ -81,11 +82,38 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
     });
 }
 
+function convertTotals(totals: ITotal[] = []): ExecuteAFM.ITotalItem[] {
+    return totals.map(t => {
+        const newItem: ExecuteAFM.ITotalItem = {
+            type: t.type,
+            attributeIdentifier: t.attributeIdentifier,
+            measureIdentifier: t.measureIdentifier,
+        };
+
+        return newItem;
+    });
+}
+
+function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
+    return def.dimensions.map(dim => {
+        const totals = convertTotals(dim.totals);
+        const totalsProp = !isEmpty(totals) ? { totals } : {};
+
+        const newDim: ExecuteAFM.IDimension = {
+            itemIdentifiers: dim.itemIdentifiers,
+            ...totalsProp,
+        };
+
+        return newDim;
+    });
+}
+
 function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
     // TODO: SDK8: why this???
     // Workaround because we can handle only 1 sort item for now
     const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy.slice(0, 1) } : {};
-    const dimsProp = !isEmpty(def.dimensions) ? { dimensions: def.dimensions } : {};
+    const dims = convertDimensions(def);
+    const dimsProp = !isEmpty(dims) ? { dimensions: dims } : {};
 
     return {
         ...sortsProp,
