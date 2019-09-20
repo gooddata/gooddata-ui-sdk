@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
 import { BubbleChart } from "../BubbleChart";
-import { BubbleChart as AfmBubbleChart } from "../../../_defunct/afm/BubbleChart";
 import { M1 } from "../../tests/fixtures/buckets";
+import { IAttribute, IAttributeSortItem, IMeasure } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { CoreBubbleChart } from "../CoreBubbleChart";
 
 describe("BubbleChart", () => {
-    const measure: VisualizationObject.IMeasure = {
+    const measure: IMeasure = {
         measure: {
             localIdentifier: "m1",
             definition: {
@@ -21,7 +21,7 @@ describe("BubbleChart", () => {
         },
     };
 
-    const secondaryMeasure: VisualizationObject.IMeasure = {
+    const secondaryMeasure: IMeasure = {
         measure: {
             localIdentifier: "m2",
             definition: {
@@ -34,7 +34,7 @@ describe("BubbleChart", () => {
         },
     };
 
-    const tertiaryMeasure: VisualizationObject.IMeasure = {
+    const tertiaryMeasure: IMeasure = {
         measure: {
             localIdentifier: "m3",
             definition: {
@@ -47,8 +47,8 @@ describe("BubbleChart", () => {
         },
     };
 
-    const attribute: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute: IAttribute = {
+        attribute: {
             localIdentifier: "a1",
             displayForm: {
                 identifier: "attribute1",
@@ -56,7 +56,7 @@ describe("BubbleChart", () => {
         },
     };
 
-    const attributeSortItem: AFM.IAttributeSortItem = {
+    const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: {
             direction: "desc",
             attributeIdentifier: "attribute1",
@@ -64,16 +64,15 @@ describe("BubbleChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <BubbleChart projectId="foo" xAxisMeasure={M1} sdk={factory({ domain: "example.com" })} />,
-        );
-        expect(wrapper.find(AfmBubbleChart)).toHaveLength(1);
+        const wrapper = shallow(<BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={M1} />);
+        expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
     });
 
     it("should render scatter plot and convert the buckets to AFM", () => {
         const wrapper = shallow(
             <BubbleChart
-                projectId="foo"
+                workspace="foo"
+                backend={dummyBackend()}
                 xAxisMeasure={measure}
                 yAxisMeasure={secondaryMeasure}
                 size={tertiaryMeasure}
@@ -82,70 +81,17 @@ describe("BubbleChart", () => {
             />,
         );
 
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-                {
-                    localIdentifier: "m2",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "abc321",
-                            },
-                        },
-                    },
-                },
-                {
-                    localIdentifier: "m3",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "size",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-            ],
-        };
+        const expectedDims = [
+            {
+                itemIdentifiers: ["a1"],
+            },
+            {
+                itemIdentifiers: ["measureGroup"],
+            },
+        ];
 
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ],
-            sorts: [
-                {
-                    attributeSortItem: {
-                        direction: "desc",
-                        attributeIdentifier: "attribute1",
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmBubbleChart)).toHaveLength(1);
-        expect(wrapper.find(AfmBubbleChart).prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.find(AfmBubbleChart).prop("resultSpec")).toEqual(expectedResultSpec);
+        expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
+        expect(wrapper.find(CoreBubbleChart).prop("execution")).toBeDefined();
+        expect(wrapper.find(CoreBubbleChart).prop("execution").definition.dimensions).toEqual(expectedDims);
     });
 });

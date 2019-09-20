@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
 import { FunnelChart } from "../FunnelChart";
-import { FunnelChart as AfmFunnelChart } from "../../../_defunct/afm/FunnelChart";
 import { M1 } from "../../tests/fixtures/buckets";
+import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { CoreFunnelChart } from "../CoreFunnelChart";
 
 describe("FunnelChart", () => {
-    const measure: VisualizationObject.IMeasure = {
+    const measure: IMeasure = {
         measure: {
             localIdentifier: "m1",
             definition: {
@@ -21,8 +21,8 @@ describe("FunnelChart", () => {
         },
     };
 
-    const attribute: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute: IAttribute = {
+        attribute: {
             localIdentifier: "a1",
             displayForm: {
                 identifier: "attribute1",
@@ -30,7 +30,7 @@ describe("FunnelChart", () => {
         },
     };
 
-    const measureSortItem: AFM.IMeasureSortItem = {
+    const measureSortItem: IMeasureSortItem = {
         measureSortItem: {
             direction: "asc",
             locators: [
@@ -44,72 +44,31 @@ describe("FunnelChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <FunnelChart projectId="foo" measures={[M1]} sdk={factory({ domain: "example.com" })} />,
-        );
-        expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
+        const wrapper = shallow(<FunnelChart workspace="foo" backend={dummyBackend()} measures={[M1]} />);
+        expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);
     });
 
     it("should render funnel chart and convert the buckets to AFM", () => {
         const wrapper = shallow(
             <FunnelChart
-                projectId="foo"
+                workspace="foo"
+                backend={dummyBackend()}
                 measures={[measure]}
                 viewBy={attribute}
                 sortBy={[measureSortItem]}
             />,
         );
 
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-            ],
-        };
+        const expectedDims = [
+            {
+                itemIdentifiers: ["measureGroup"],
+            },
+            {
+                itemIdentifiers: ["a1"],
+            },
+        ];
 
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ],
-            sorts: [
-                {
-                    measureSortItem: {
-                        direction: "asc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
-                                },
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmFunnelChart)).toHaveLength(1);
-        expect(wrapper.find(AfmFunnelChart).prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.find(AfmFunnelChart).prop("resultSpec")).toEqual(expectedResultSpec);
+        expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);
+        expect(wrapper.find(CoreFunnelChart).prop("execution").definition.dimensions).toEqual(expectedDims);
     });
 });

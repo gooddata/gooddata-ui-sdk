@@ -42,4 +42,8 @@
     -   prop renamed to onDrill
 
 -   IPushData no longer contains result prop
+
     -   it contains dataView prop instead
+
+-   Combo Chart no longer has columnMeasures and lineMeasures
+    -   use primaryMeasures and secondaryMeasures

@@ -1,29 +1,21 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { AFM, VisualizationInput, VisualizationObject } from "@gooddata/gd-bear-model";
 import { ColumnChart } from "../ColumnChart";
-import { ColumnChart as AfmColumnChart } from "../../../_defunct/afm/ColumnChart";
 import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
-import { IChartConfig } from "../../../interfaces/Config";
+import { INewChartConfig } from "../../../interfaces/Config";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
+import { CoreColumnChart } from "../CoreColumnChart";
 
-function renderChart(
-    measures: VisualizationInput.AttributeOrMeasure[],
-    config?: IChartConfig,
-): ShallowWrapper {
+function renderChart(measures: AttributeOrMeasure[], config?: INewChartConfig): ShallowWrapper {
     return shallow(
-        <ColumnChart
-            config={config}
-            projectId="foo"
-            measures={measures}
-            sdk={factory({ domain: "example.com" })}
-        />,
+        <ColumnChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />,
     );
 }
 
 describe("ColumnChart", () => {
-    const measure: VisualizationObject.IMeasure = {
+    const measure: IMeasure = {
         measure: {
             localIdentifier: "m1",
             definition: {
@@ -36,8 +28,8 @@ describe("ColumnChart", () => {
         },
     };
 
-    const attribute: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute: IAttribute = {
+        attribute: {
             localIdentifier: "a1",
             displayForm: {
                 identifier: "attribute1",
@@ -45,8 +37,8 @@ describe("ColumnChart", () => {
         },
     };
 
-    const attribute2: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute2: IAttribute = {
+        attribute: {
             localIdentifier: "a2",
             displayForm: {
                 identifier: "attribute2",
@@ -54,7 +46,7 @@ describe("ColumnChart", () => {
         },
     };
 
-    const measureSortItem: AFM.IMeasureSortItem = {
+    const measureSortItem: IMeasureSortItem = {
         measureSortItem: {
             direction: "asc",
             locators: [
@@ -69,13 +61,14 @@ describe("ColumnChart", () => {
 
     it("should render with custom SDK", () => {
         const wrapper = renderChart([M1]);
-        expect(wrapper.find(AfmColumnChart)).toHaveLength(1);
+        expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
     });
 
     it("should render column chart and convert the buckets to AFM", () => {
         const wrapper = shallow(
             <ColumnChart
-                projectId="foo"
+                workspace="foo"
+                backend={dummyBackend()}
                 measures={[measure]}
                 viewBy={attribute}
                 stackBy={attribute2}
@@ -83,63 +76,18 @@ describe("ColumnChart", () => {
             />,
         );
 
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-                {
-                    localIdentifier: "a2",
-                    displayForm: {
-                        identifier: "attribute2",
-                    },
-                },
-            ],
-        };
+        const expectedDims = [
+            {
+                itemIdentifiers: ["a2"],
+            },
+            {
+                itemIdentifiers: ["a1", "measureGroup"],
+            },
+        ];
 
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ],
-            sorts: [
-                {
-                    measureSortItem: {
-                        direction: "asc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
-                                },
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmColumnChart)).toHaveLength(1);
-        expect(wrapper.find(AfmColumnChart).prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.find(AfmColumnChart).prop("resultSpec")).toEqual(expectedResultSpec);
+        expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
+        expect(wrapper.find(CoreColumnChart).prop("execution")).toBeDefined();
+        expect(wrapper.find(CoreColumnChart).prop("execution").definition.dimensions).toEqual(expectedDims);
     });
 
     describe("Stacking", () => {
@@ -147,7 +95,7 @@ describe("ColumnChart", () => {
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M1], config);
-            expect(wrapper.find(AfmColumnChart).prop("config")).toEqual({
+            expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
             });
@@ -155,7 +103,7 @@ describe("ColumnChart", () => {
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
             const wrapper = renderChart([M1WithRatio], config);
-            expect(wrapper.find(AfmColumnChart).prop("config")).toEqual({
+            expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: false,
                 stackMeasuresToPercent: false,
             });
