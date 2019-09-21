@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
 import { LineChart } from "../LineChart";
-import { LineChart as AfmLineChart } from "../../../_defunct/afm/LineChart";
 import { M1 } from "../../tests/fixtures/buckets";
+import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
+import { CoreLineChart } from "../CoreLineChart";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("LineChart", () => {
-    const measure: VisualizationObject.IMeasure = {
+    const measure: IMeasure = {
         measure: {
             localIdentifier: "m1",
             definition: {
@@ -21,8 +21,8 @@ describe("LineChart", () => {
         },
     };
 
-    const attribute: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute: IAttribute = {
+        attribute: {
             localIdentifier: "a1",
             displayForm: {
                 identifier: "attribute1",
@@ -30,8 +30,8 @@ describe("LineChart", () => {
         },
     };
 
-    const attribute2: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
+    const attribute2: IAttribute = {
+        attribute: {
             localIdentifier: "a2",
             displayForm: {
                 identifier: "attribute2",
@@ -39,7 +39,7 @@ describe("LineChart", () => {
         },
     };
 
-    const measureSortItem: AFM.IMeasureSortItem = {
+    const measureSortItem: IMeasureSortItem = {
         measureSortItem: {
             direction: "asc",
             locators: [
@@ -53,16 +53,15 @@ describe("LineChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <LineChart projectId="foo" measures={[M1]} sdk={factory({ domain: "example.com" })} />,
-        );
-        expect(wrapper.find(AfmLineChart)).toHaveLength(1);
+        const wrapper = shallow(<LineChart workspace="foo" backend={dummyBackend()} measures={[M1]} />);
+        expect(wrapper.find(CoreLineChart)).toHaveLength(1);
     });
 
     it("should render pie chart and convert the buckets to AFM", () => {
         const wrapper = shallow(
             <LineChart
-                projectId="foo"
+                workspace="foo"
+                backend={dummyBackend()}
                 measures={[measure]}
                 trendBy={attribute}
                 segmentBy={attribute2}
@@ -70,62 +69,17 @@ describe("LineChart", () => {
             />,
         );
 
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-                {
-                    localIdentifier: "a2",
-                    displayForm: {
-                        identifier: "attribute2",
-                    },
-                },
-            ],
-        };
+        const expectedDims = [
+            {
+                itemIdentifiers: ["a2"],
+            },
+            {
+                itemIdentifiers: ["a1", "measureGroup"],
+            },
+        ];
 
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ],
-            sorts: [
-                {
-                    measureSortItem: {
-                        direction: "asc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
-                                },
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmLineChart)).toHaveLength(1);
-        expect(wrapper.find(AfmLineChart).prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.find(AfmLineChart).prop("resultSpec")).toEqual(expectedResultSpec);
+        expect(wrapper.find(CoreLineChart)).toHaveLength(1);
+        expect(wrapper.find(CoreLineChart).prop("execution")).toBeDefined();
+        expect(wrapper.find(CoreLineChart).prop("execution").definition.dimensions).toEqual(expectedDims);
     });
 });
