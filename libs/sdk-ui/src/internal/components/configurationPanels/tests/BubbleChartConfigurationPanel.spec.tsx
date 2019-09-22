@@ -5,6 +5,7 @@ import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
+import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../mocks/testMocks";
 
 describe("BubbleChartconfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
@@ -14,24 +15,8 @@ describe("BubbleChartconfigurationPanel", () => {
     }
 
     it("should render configuration panel with enabled controls", () => {
-        const mdObject = {
-            buckets: [
-                {
-                    items: [
-                        {
-                            measure: {
-                                definition: { measureDefinition: { item: { uri: "measure" } } },
-                                localIdentifier: "measureId",
-                            },
-                        },
-                    ],
-                },
-            ],
-            visualizationClass: { uri: "visualization/class/uri" },
-        };
-
         const props: IConfigurationPanelContentProps = {
-            mdObject,
+            insight: insightWithSingleMeasure,
             isError: false,
             isLoading: false,
             locale: DEFAULT_LOCALE,
@@ -43,24 +28,8 @@ describe("BubbleChartconfigurationPanel", () => {
     });
 
     it("should render configuration panel with disabled controls when it has no measures", () => {
-        const mdObject = {
-            buckets: [
-                {
-                    items: [
-                        {
-                            visualizationAttribute: {
-                                displayForm: { uri: "df" },
-                                localIdentifier: "attributeId",
-                            },
-                        },
-                    ],
-                },
-            ],
-            visualizationClass: { uri: "visualization/class/uri" },
-        };
-
         const props: IConfigurationPanelContentProps = {
-            mdObject,
+            insight: insightWithSingleAttribute,
             isError: false,
             isLoading: false,
             locale: DEFAULT_LOCALE,
@@ -72,24 +41,8 @@ describe("BubbleChartconfigurationPanel", () => {
     });
 
     it("should render configuration panel with disabled controls when it is in error state", () => {
-        const mdObject = {
-            buckets: [
-                {
-                    items: [
-                        {
-                            measure: {
-                                definition: { measureDefinition: { item: { uri: "measure" } } },
-                                localIdentifier: "measureId",
-                            },
-                        },
-                    ],
-                },
-            ],
-            visualizationClass: { uri: "visualization/class/uri" },
-        };
-
         const props: IConfigurationPanelContentProps = {
-            mdObject,
+            insight: insightWithSingleMeasure,
             isError: true,
             isLoading: false,
             locale: DEFAULT_LOCALE,
@@ -101,24 +54,8 @@ describe("BubbleChartconfigurationPanel", () => {
     });
 
     it("should render configuration panel with disabled controls when it is loading", () => {
-        const mdObject = {
-            buckets: [
-                {
-                    items: [
-                        {
-                            measure: {
-                                definition: { measureDefinition: { item: { uri: "measure" } } },
-                                localIdentifier: "measureId",
-                            },
-                        },
-                    ],
-                },
-            ],
-            visualizationClass: { uri: "visualization/class/uri" },
-        };
-
         const props: IConfigurationPanelContentProps = {
-            mdObject,
+            insight: insightWithSingleMeasure,
             isError: false,
             isLoading: true,
             locale: DEFAULT_LOCALE,
