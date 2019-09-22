@@ -100,8 +100,8 @@ export function recordedBackend(
 }
 
 /**
- * Creates a new, empty data view facade for the provided execution definition. The definition will be
- * retained as-is. The data will be empty.
+ * Creates a new data view facade for the provided recording.
+ *
  * @param recording - recorded definition, AFM response and AFM result
  * @internal
  */
@@ -247,10 +247,6 @@ function recordedPreparedExecution(
                     resolve(recordedExecutionResult(definition, recording));
                 }
             });
-
-            // TODO: this needs completion; the playlist should contain a generated fingerprint of execution definition,
-            //  and all that this impl would do for execution is locate recording by the fingerprint.
-            throw new NotSupported("...");
         },
         fingerprint(): string {
             return fp;
