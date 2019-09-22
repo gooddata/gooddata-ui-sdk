@@ -5,6 +5,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableBubbleChart", () => {
     const defaultProps = {
@@ -15,6 +16,8 @@ describe("PluggableBubbleChart", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {

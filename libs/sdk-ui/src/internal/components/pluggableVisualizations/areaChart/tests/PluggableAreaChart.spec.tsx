@@ -8,6 +8,8 @@ import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { insightWithProperties } from "@gooddata/sdk-model";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -36,8 +38,13 @@ describe("PluggableAreaChart", () => {
             onError: noop,
             onLoadingChanged: noop,
         },
-        dataSource: testMocks.dummyDataSource,
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
+
+    const executionFactory = dummyBackend()
+        .workspace("PROJECTID")
+        .execution();
 
     function createComponent(props = defaultProps) {
         return new PluggableAreaChart(props);
@@ -145,8 +152,6 @@ describe("PluggableAreaChart", () => {
 
     describe("optional stacking", () => {
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: 5 },
             locale: "en-US",
             custom: {},
@@ -167,8 +172,9 @@ describe("PluggableAreaChart", () => {
                           },
                       }
                     : {};
+            const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
             const expected = stackMeasures === null ? true : stackMeasures;
-            chart.update(options, visualizationProperties, testMocks.emptyMdObject, undefined);
+            chart.update(options, testInsight, executionFactory);
             const renderCallsCount = spyOnRender.mock.calls.length;
             const renderArguments = spyOnRender.mock.calls[renderCallsCount - 1][0];
             expect(renderArguments.props.config.stackMeasures).toBe(expected);
@@ -198,7 +204,13 @@ describe("PluggableAreaChart", () => {
                     },
                 },
             };
-            areaChart.update(options, visualizationProperties, testMocks.twoViewItemsMdObject, undefined);
+
+            const testInsight = insightWithProperties(
+                testMocks.insightWithTwoViewBys,
+                visualizationProperties,
+            );
+
+            areaChart.update(options, testInsight, executionFactory);
 
             const renderCallsCount = spyOnRender.mock.calls.length;
             const renderArguments: any = spyOnRender.mock.calls[renderCallsCount - 1][0];
@@ -224,7 +236,13 @@ describe("PluggableAreaChart", () => {
                 stackMeasures: false,
                 stackMeasuresToPercent: false,
             });
-            areaChart.update(options, visualizationProperties, testMocks.twoMeasuresMdObject, undefined);
+
+            const testInsight = insightWithProperties(
+                testMocks.insightWithTwoMeasuresAndViewBy,
+                visualizationProperties,
+            );
+
+            areaChart.update(options, testInsight, executionFactory);
 
             const renderCallsCount = spyOnRender.mock.calls.length;
             const renderArguments: any = spyOnRender.mock.calls[renderCallsCount - 1][0];

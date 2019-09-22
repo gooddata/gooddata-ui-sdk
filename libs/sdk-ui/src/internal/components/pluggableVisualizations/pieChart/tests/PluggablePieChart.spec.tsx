@@ -6,6 +6,7 @@ import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggablePieChart", () => {
     const defaultProps = {
@@ -17,6 +18,8 @@ describe("PluggablePieChart", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {

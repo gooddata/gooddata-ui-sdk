@@ -5,6 +5,7 @@ import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeCompa
 import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableBarChart", () => {
     const defaultProps = {
@@ -15,6 +16,8 @@ describe("PluggableBarChart", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {

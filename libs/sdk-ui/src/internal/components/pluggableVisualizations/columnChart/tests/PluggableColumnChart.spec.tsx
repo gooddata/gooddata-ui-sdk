@@ -5,6 +5,7 @@ import { PluggableColumnChart } from "../PluggableColumnChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableColumnChart", () => {
     const defaultProps = {
@@ -15,6 +16,8 @@ describe("PluggableColumnChart", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {

@@ -5,6 +5,7 @@ import { PluggableHeatmap } from "../PluggableHeatmap";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableHeatmap", () => {
     const defaultProps = {
@@ -15,6 +16,8 @@ describe("PluggableHeatmap", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {
