@@ -42,10 +42,12 @@ import {
 import { UICONFIG } from "../constants/uiConfig";
 import { getTranslation } from "./translations";
 import {
-    bucketsItems,
+    bucketItems,
+    bucketsFind,
+    bucketsMeasures,
+    IBucket,
     IInsight,
     insightBuckets,
-    bucketsMeasures,
     isMeasureDefinition,
 } from "@gooddata/sdk-model";
 
@@ -615,9 +617,9 @@ export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]) {
     return getMeasureItems(buckets);
 }
 
-export function noRowsAndHasOneMeasure(insight: IInsight): boolean {
-    const measures = bucketsItems(insightBuckets(insight, BucketNames.MEASURES));
-    const rows = bucketsItems(insightBuckets(insight, BucketNames.VIEW));
+export function noRowsAndHasOneMeasure(buckets: IBucket[]): boolean {
+    const measures = bucketItems(bucketsFind(buckets, BucketNames.MEASURES));
+    const rows = bucketItems(bucketsFind(buckets, BucketNames.VIEW));
 
     const hasOneMeasure = measures.length === 1;
     const hasRows = rows.length > 0;
@@ -625,9 +627,9 @@ export function noRowsAndHasOneMeasure(insight: IInsight): boolean {
     return Boolean(hasOneMeasure && !hasRows);
 }
 
-export function noColumnsAndHasOneMeasure(insight: IInsight): boolean {
-    const measures = bucketsItems(insightBuckets(insight, BucketNames.MEASURES));
-    const columns = bucketsItems(insightBuckets(insight, BucketNames.STACK));
+export function noColumnsAndHasOneMeasure(buckets: IBucket[]): boolean {
+    const measures = bucketItems(bucketsFind(buckets, BucketNames.MEASURES));
+    const columns = bucketItems(bucketsFind(buckets, BucketNames.STACK));
 
     const hasOneMeasure = measures.length === 1;
     const hasColumn = columns.length > 0;

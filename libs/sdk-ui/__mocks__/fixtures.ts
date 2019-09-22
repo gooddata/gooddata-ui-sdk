@@ -1643,6 +1643,181 @@ export const singleAttributeInsight: IInsight = {
     },
 };
 
+export const insightWithSorts: IInsight = {
+    insight: {
+        identifier: "singleAttributeInsight",
+        uri: "/some/uri/singleAttributeInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1280",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "view",
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1027",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        properties: {},
+        title: "Test insight with sorts",
+        sorts: [
+            {
+                measureSortItem: {
+                    direction: "asc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+};
+
+export const insightWithTotals: IInsight = {
+    insight: {
+        identifier: "singleAttributeInsight",
+        uri: "/some/uri/singleAttributeInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1280",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+                totals: [
+                    {
+                        measureIdentifier: "m2",
+                        type: "nat",
+                        attributeIdentifier: "",
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        properties: {},
+        title: "Test insight with totals",
+        sorts: [],
+    },
+};
+
+export const insightWithoutTotals: IInsight = {
+    insight: {
+        identifier: "singleAttributeInsight",
+        uri: "/some/uri/singleAttributeInsight",
+        visualizationClassIdentifier: "testClassId",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        measure: {
+                            localIdentifier: "m2",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1280",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "view",
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1027",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        properties: {},
+        title: "Test insight without totals",
+        sorts: [],
+    },
+};
+
 export const insightWithProperties: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",

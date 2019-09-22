@@ -1,59 +1,57 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-
 import { ATTRIBUTE, DATE_DATASET_ATTRIBUTE, METRIC } from "../../constants/bucket";
 import {
     applyUiConfig,
-    getBucketItemsWithExcludeByType,
-    getFirstMasterWithDerived,
+    filterOutArithmeticMeasuresFromDerived,
     filterOutDerivedMeasures,
+    filterOutIncompatibleArithmeticMeasures,
+    findDerivedBucketItem,
     findDerivedBucketItems,
     findMasterBucketItem,
     findMasterBucketItems,
     generateBucketTitleId,
     getAllAttributeItemsWithPreference,
+    getAllMeasuresShowOnSecondaryAxis,
+    getAttributeItems,
+    getBucketItemsWithExcludeByType,
     getComparisonTypeFromFilters,
     getDateFilter,
+    getDerivedTypesFromArithmeticMeasure,
     getFilteredMeasuresForStackedCharts,
-    keepOnlyMasterAndDerivedMeasuresOfType,
-    removeAllDerivedMeasures,
-    sanitizeUnusedFilters,
-    removeUnusedFilters,
-    setBucketTitles,
-    getAttributeItems,
-    noRowsAndHasOneMeasure,
-    noColumnsAndHasOneMeasure,
-    findDerivedBucketItem,
-    hasDerivedBucketItems,
-    removeDuplicateBucketItems,
+    getFirstMasterWithDerived,
     getFirstValidMeasure,
     getItemsFromBuckets,
+    hasDerivedBucketItems,
+    keepOnlyMasterAndDerivedMeasuresOfType,
     limitNumberOfMeasuresInBuckets,
-    getDerivedTypesFromArithmeticMeasure,
-    filterOutIncompatibleArithmeticMeasures,
+    noColumnsAndHasOneMeasure,
+    noRowsAndHasOneMeasure,
     removeAllArithmeticMeasuresFromDerived,
-    filterOutArithmeticMeasuresFromDerived,
-    getAllMeasuresShowOnSecondaryAxis,
+    removeAllDerivedMeasures,
+    removeDuplicateBucketItems,
+    removeUnusedFilters,
+    sanitizeUnusedFilters,
+    setBucketTitles,
 } from "../bucketHelper";
 import {
     IBucketItem,
-    IFiltersBucketItem,
-    IUiConfig,
+    IBucketOfFun,
     IExtendedReferencePoint,
     IFilters,
-    IBucketOfFun,
+    IFiltersBucketItem,
+    IUiConfig,
 } from "../../interfaces/Visualization";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import { createInternalIntl } from "../internalIntlProvider";
-
-import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { visualizationObjectMock } from "../../mocks/visualizationObjectMocks";
 import { OverTimeComparisonTypes } from "../../../interfaces/OverTimeComparison";
 import * as BucketNames from "../../../base/constants/bucketNames";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { DEFAULT_LOCALE } from "../../../base/constants/localization";
+import { IBucket } from "@gooddata/sdk-model";
+import { oneMeasureOneStack, oneMeasureOneView } from "../../mocks/visualizationObjectMocks";
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };
@@ -1414,7 +1412,7 @@ describe("getFilteredMeasuresForStackedCharts", () => {
 describe("noRowsAndHasOneMeasure", () => {
     it("should return true when VisualizationObject.BucketItem has one measure and any rows", () => {
         // localIdentifier of row is 'view'
-        const buckets: VisualizationObject.IBucket[] = visualizationObjectMock.oneMeasureOneStack.buckets;
+        const buckets: IBucket[] = oneMeasureOneStack;
 
         const result = noRowsAndHasOneMeasure(buckets);
         expect(result).toBe(true);
@@ -1422,7 +1420,7 @@ describe("noRowsAndHasOneMeasure", () => {
 
     it("should return false when VisualizationObject.BucketItem has one measure and some rows", () => {
         // localIdentifier of row is 'view'
-        const buckets: VisualizationObject.IBucket[] = visualizationObjectMock.oneMeasureOneView.buckets;
+        const buckets: IBucket[] = oneMeasureOneView;
 
         const result = noRowsAndHasOneMeasure(buckets);
         expect(result).toBe(false);
@@ -1432,7 +1430,7 @@ describe("noRowsAndHasOneMeasure", () => {
 describe("noColumnsAndHasOneMeasure", () => {
     it("should return true when VisualizationObject.BucketItem has one measure and any columns", () => {
         // localIdentifier of column is 'stack'
-        const buckets: VisualizationObject.IBucket[] = visualizationObjectMock.oneMeasureOneView.buckets;
+        const buckets: IBucket[] = oneMeasureOneView;
 
         const result = noColumnsAndHasOneMeasure(buckets);
         expect(result).toBe(true);
@@ -1440,7 +1438,7 @@ describe("noColumnsAndHasOneMeasure", () => {
 
     it("should return false when VisualizationObject.BucketItem has one measure and some columns", () => {
         // localIdentifier of row is 'stack'
-        const buckets: VisualizationObject.IBucket[] = visualizationObjectMock.oneMeasureOneStack.buckets;
+        const buckets: IBucket[] = oneMeasureOneStack;
 
         const result = noColumnsAndHasOneMeasure(buckets);
         expect(result).toBe(false);
