@@ -34,73 +34,6 @@ export const dummyTableResultSpec: AFM.IResultSpec = {
     sorts: [],
 };
 
-export const doubleMeasureHeadlineMdObject: VisualizationObject.IVisualizationObjectContent = {
-    visualizationClass: {
-        uri: "/gdc/md/mockproject/obj/headline",
-    },
-    buckets: [
-        {
-            localIdentifier: BucketNames.MEASURES,
-            items: [
-                {
-                    measure: {
-                        localIdentifier: "m1",
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    uri: "/gdc/md/project/obj/1279",
-                                },
-                            },
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            localIdentifier: BucketNames.SECONDARY_MEASURES,
-            items: [
-                {
-                    measure: {
-                        localIdentifier: "m2",
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    uri: "/gdc/md/project/obj/1280",
-                                },
-                            },
-                        },
-                    },
-                },
-            ],
-        },
-    ],
-};
-
-export const secondMeasureHeadlineMdObject: VisualizationObject.IVisualizationObjectContent = {
-    visualizationClass: {
-        uri: "/gdc/md/mockproject/obj/headline",
-    },
-    buckets: [
-        {
-            localIdentifier: BucketNames.SECONDARY_MEASURES,
-            items: [
-                {
-                    measure: {
-                        localIdentifier: "m2",
-                        definition: {
-                            measureDefinition: {
-                                item: {
-                                    uri: "/gdc/md/project/obj/1280",
-                                },
-                            },
-                        },
-                    },
-                },
-            ],
-        },
-    ],
-};
-
 //
 // Test insights
 //
@@ -581,17 +514,6 @@ export const dummyColumnVisualizationClass: IVisualizationClass = {
         identifier: "columnVis",
         title: EMPTY_TITLE,
         url: "local:column",
-        icon: "",
-        iconSelected: "",
-        checksum: "",
-    },
-};
-
-export const dummyHeadlineVisualizationClass: IVisualizationClass = {
-    visualizationClass: {
-        title: EMPTY_TITLE,
-        identifier: "headlineVis",
-        url: "local:headline",
         icon: "",
         iconSelected: "",
         checksum: "",

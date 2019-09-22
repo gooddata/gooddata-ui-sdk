@@ -2,7 +2,7 @@
 import * as React from "react";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { TypeGuards, IColor, IColorItem } from "@gooddata/gd-bear-client";
+import { IColor, IColorItem, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
 import * as uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
@@ -108,7 +108,7 @@ class ColorDropdown extends React.PureComponent<
     }
 
     private getSelectedGuidFromColorItem(): string {
-        if (TypeGuards.isGuidColorItem(this.props.selectedColorItem)) {
+        if (isGuidColorItem(this.props.selectedColorItem)) {
             return this.props.selectedColorItem.value;
         }
 
@@ -127,7 +127,7 @@ class ColorDropdown extends React.PureComponent<
     }
 
     private getSelectedColorFromPalette(): IColor {
-        if (TypeGuards.isGuidColorItem(this.props.selectedColorItem)) {
+        if (isGuidColorItem(this.props.selectedColorItem)) {
             const selected = this.props.colorPalette.find((item: any) => {
                 return item.guid === this.props.selectedColorItem.value;
             });
@@ -137,7 +137,7 @@ class ColorDropdown extends React.PureComponent<
             }
         }
 
-        if (TypeGuards.isRgbColorItem(this.props.selectedColorItem)) {
+        if (isRgbColorItem(this.props.selectedColorItem)) {
             return this.props.selectedColorItem.value;
         }
 

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as ChartConfiguration from "../../../../../interfaces/Config";
-import { IColorItem, IGuidColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem, IGuidColorItem } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 
 const ITEM_MARGIN = 5;

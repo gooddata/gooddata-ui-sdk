@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
-import { IColor, IColorItem } from "@gooddata/gd-bear-client";
 import * as MappingHeader from "../../interfaces/MappingHeader";
 import * as ChartConfiguration from "../../interfaces/Config";
+import { IColor, IColorItem } from "@gooddata/sdk-model";
 
 export interface IColoredItem {
     colorItem: IColorItem;

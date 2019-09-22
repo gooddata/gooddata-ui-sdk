@@ -1,5 +1,7 @@
 // (C) 2019 GoodData Corporation
 
+import isEmpty = require("lodash/isEmpty");
+
 /**
  * TODO: SDK8: Add docs
  *
@@ -77,4 +79,26 @@ export type IColorItem = IGuidColorItem | IRGBColorItem;
 export interface IColorMappingProperty {
     id: string;
     color: IColorItem;
+}
+
+//
+// Type guards
+//
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isGuidColorItem(obj: any): obj is IGuidColorItem {
+    return !isEmpty(obj) && (obj as IGuidColorItem).type === "guid";
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function isRgbColorItem(obj: any): obj is IRGBColorItem {
+    return !isEmpty(obj) && (obj as IRGBColorItem).type === "rgb";
 }

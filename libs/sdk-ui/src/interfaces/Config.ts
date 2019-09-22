@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { IColorItem, IColor } from "@gooddata/gd-bear-client";
+import { IColorItem, IColor } from "@gooddata/sdk-model";
 import Highcharts from "../highcharts/chart/highcharts/highchartsEntryPoint";
 import { PositionType } from "../highcharts/typings/legend";
 import { VisType } from "../base/constants/visualizationTypes";

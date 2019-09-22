@@ -479,6 +479,9 @@ export function isDateFilter(obj: any): obj is IDateFilter;
 export function isDimension(obj: any): obj is IDimension;
 
 // @public
+export function isGuidColorItem(obj: any): obj is IGuidColorItem;
+
+// @public
 export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier;
 
 // @public
@@ -516,6 +519,9 @@ export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPer
 
 // @public
 export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
+
+// @public
+export function isRgbColorItem(obj: any): obj is IRGBColorItem;
 
 // @public
 export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;

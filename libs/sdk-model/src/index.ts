@@ -145,6 +145,8 @@ export {
     IColorPaletteItem,
     IGuidColorItem,
     IRGBColorItem,
+    isGuidColorItem,
+    isRgbColorItem,
 } from "./colors";
 
 export {

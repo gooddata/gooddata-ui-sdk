@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import { GuidType, IColorItem } from "@gooddata/gd-bear-client";
 import { DEFAULT_COLOR_PALETTE } from "../../../highcharts/utils/defaultColors";
 import * as MappingHeader from "../../../interfaces/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
+import { GuidType, IColorItem } from "@gooddata/sdk-model";
 
 describe("color utils", () => {
     const color1: IColorItem = {

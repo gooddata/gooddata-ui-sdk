@@ -4,7 +4,7 @@ import * as CustomEvent from "custom-event";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import * as ChartConfiguration from "../../../../../interfaces/Config";
-import { IColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem } from "@gooddata/sdk-model";
 
 import ColoredItem from "./ColoredItem";
 import { getSearchedItems } from "../../../../utils/colors";

@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as ChartConfiguration from "../../../../../interfaces/Config";
-import { IColorItem } from "@gooddata/gd-bear-client";
 import * as classNames from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem";
+import { IColorItem } from "@gooddata/sdk-model";
 
 const MAX_SMALL_PALETTE_SIZE = 20;
 

@@ -4,7 +4,7 @@ import set = require("lodash/set");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { IColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem } from "@gooddata/sdk-model";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import * as classNames from "classnames";
 

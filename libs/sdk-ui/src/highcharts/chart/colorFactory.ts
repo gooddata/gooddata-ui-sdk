@@ -1,5 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { IColor, IColorItem, IGuidColorItem, RGBType, TypeGuards } from "@gooddata/gd-bear-client";
+import {
+    IColor,
+    IColorItem,
+    IGuidColorItem,
+    RGBType,
+    isGuidColorItem,
+    isRgbColorItem,
+} from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
@@ -95,7 +102,7 @@ export abstract class ColorStrategy implements IColorStrategy {
         _stackByAttribute: any,
     ): string[] {
         return colorAssignment.map((map, index: number) => {
-            const color = TypeGuards.isGuidColorItem(map.color)
+            const color = isGuidColorItem(map.color)
                 ? getColorByGuid(colorPalette, map.color.value, index)
                 : map.color.value;
             return getRgbStringFromRGB(color);
@@ -233,7 +240,7 @@ export class MeasureColorStrategy extends ColorStrategy {
         measureItemIndex: number,
         mapItem: IColorAssignment,
     ) {
-        const rgbColor = TypeGuards.isGuidColorItem(sourceMeasureColor)
+        const rgbColor = isGuidColorItem(sourceMeasureColor)
             ? getColorByGuid(colorPalette, sourceMeasureColor.value, measureItemIndex)
             : sourceMeasureColor.value;
         return {
@@ -347,13 +354,13 @@ export class HeatmapColorStrategy extends ColorStrategy {
     }
 
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[]): string[] {
-        if (TypeGuards.isRgbColorItem(colorAssignment[0].color)) {
+        if (isRgbColorItem(colorAssignment[0].color)) {
             if (isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR)) {
                 return HEATMAP_BLUE_COLOR_PALETTE;
             }
         }
 
-        if (TypeGuards.isGuidColorItem(colorAssignment[0].color)) {
+        if (isGuidColorItem(colorAssignment[0].color)) {
             return this.getCustomHeatmapColorPalette(
                 getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0),
             );
@@ -467,7 +474,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
         viewByAttribute: any,
     ): string[] {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;
-        const color = TypeGuards.isGuidColorItem(colorAssignment[0].color)
+        const color = isGuidColorItem(colorAssignment[0].color)
             ? getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
             : (colorAssignment[0].color.value as IColor);
         const colorString = getRgbStringFromRGB(color);

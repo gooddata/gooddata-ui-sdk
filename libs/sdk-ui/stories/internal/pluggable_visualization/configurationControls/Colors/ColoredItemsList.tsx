@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IColor, IColorItem } from "@gooddata/gd-bear-client";
+import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";

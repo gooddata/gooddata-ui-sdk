@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
 import * as React from "react";
 import { DEFAULT_COLOR_PALETTE } from "../../../../../highcharts/utils/defaultColors";

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";

@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
-import { IColorItem } from "@gooddata/gd-bear-client";
+import { IColorItem } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownProps, IconPosition } from "../ColorDropdown";

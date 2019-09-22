@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IColor, IColorItem } from "@gooddata/gd-bear-client";
+import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import {

@@ -55,7 +55,6 @@ import { getValidProperties } from "../../../utils/colors";
 import { COLOR_MAPPING_CHANGED } from "../../configurationControls/colors/ColorsSection";
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
 import { getTranslation } from "../../../utils/translations";
-import { IColorMappingProperty } from "@gooddata/gd-bear-client";
 import { AxisType } from "../../../interfaces/AxisType";
 import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { generateDimensions } from "../../../../base/helpers/dimensions";
@@ -66,6 +65,7 @@ import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
+    IColorMappingProperty,
     IDimension,
     IInsight,
     insightBuckets,
