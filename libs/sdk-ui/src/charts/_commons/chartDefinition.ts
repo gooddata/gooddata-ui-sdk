@@ -13,6 +13,11 @@ export interface IChartDefinition<
     TProps extends TBucketProps & IBucketChartProps
 > {
     /**
+     * Function that may do initial transformation of the props. The returned props will then be used in
+     * all following steps. If this function is not specified, then the props will be passed as-is.
+     */
+    propTransformation?: (props: TProps) => TProps;
+    /**
      * Function converting bucket props to the relevant buckets.
      */
     bucketsFactory: (props: TBucketProps) => IBucket[];
@@ -40,18 +45,20 @@ export const getCoreChartProps = <
 >(
     chart: IChartDefinition<TBucketProps, TProps>,
 ) => (props: TProps): ICoreChartProps => {
+    const propsToUse = chart.propTransformation ? chart.propTransformation(props) : props;
+
     if (chart.onBeforePropsConversion) {
-        chart.onBeforePropsConversion(props);
+        chart.onBeforePropsConversion(propsToUse);
     }
 
-    const buckets = chart.bucketsFactory(props);
-    const execution = chart.executionFactory(props, buckets);
-    const nonBucketProps = omit(props, chart.bucketPropsKeys);
-    const propOverrides = chart.propOverridesFactory ? chart.propOverridesFactory(props, buckets) : {};
+    const buckets = chart.bucketsFactory(propsToUse);
+    const execution = chart.executionFactory(propsToUse, buckets);
+    const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
+    const propOverrides = chart.propOverridesFactory ? chart.propOverridesFactory(propsToUse, buckets) : {};
     return {
         ...nonBucketProps,
         ...propOverrides,
         execution,
-        backend: props.backend, // make sure the required props are not removed
+        backend: propsToUse.backend, // make sure the required props are not removed
     };
 };

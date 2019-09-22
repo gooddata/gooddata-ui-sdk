@@ -73,6 +73,14 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
         this.measure.definition.measureDefinition.filters = filters;
         return this;
     };
+
+    public build = () => {
+        return {
+            measure: {
+                ...this.measure,
+            },
+        };
+    };
 }
 
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {

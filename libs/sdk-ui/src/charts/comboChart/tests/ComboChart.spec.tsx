@@ -53,10 +53,13 @@ describe("ComboChart", () => {
         }
 
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
-        const M5 = measure("m5").localIdentifier("m5");
+        const M5 = measure("m5")
+            .localIdentifier("m5")
+            .build();
         const M5WithRatio = measure("m5ratio")
             .localIdentifier("m5ratio")
-            .ratio();
+            .ratio()
+            .build();
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M5], [], config);
@@ -80,8 +83,12 @@ describe("ComboChart", () => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
-                    Model.measure("m5").localIdentifier("m5"),
-                    Model.measure("m5ratio").localIdentifier("m5ratio"),
+                    Model.measure("m5")
+                        .localIdentifier("m5")
+                        .build(),
+                    Model.measure("m5ratio")
+                        .localIdentifier("m5ratio")
+                        .build(),
                 ];
 
                 expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -91,15 +98,20 @@ describe("ComboChart", () => {
         it("should ignore computeRatio when dual axis is OFF and # of measures > 1", () => {
             const M1WithRatio = measure("m1ratio")
                 .localIdentifier("m1ratio")
-                .ratio();
+                .ratio()
+                .build();
             const wrapper = renderChart([M1WithRatio], [M5WithRatio], {
                 ...config,
                 dualAxis: false,
             });
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                Model.measure("m1ratio").localIdentifier("m1ratio"),
-                Model.measure("m5ratio").localIdentifier("m5ratio"),
+                Model.measure("m1ratio")
+                    .localIdentifier("m1ratio")
+                    .build(),
+                Model.measure("m5ratio")
+                    .localIdentifier("m5ratio")
+                    .build(),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -115,7 +127,7 @@ describe("ComboChart", () => {
                 measure("m5ratio")
                     .localIdentifier("m5ratio")
                     .ratio()
-                    .format("#,##0.00%"),
+                    .build(),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasure);

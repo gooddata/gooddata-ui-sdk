@@ -59,6 +59,20 @@ export function ComboChart(props: IComboChartProps): JSX.Element {
 
 const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChartProps> = {
     bucketPropsKeys: ["primaryMeasures", "secondaryMeasures", "viewBy", "filters", "sortBy"],
+    propTransformation: props => {
+        const { primaryMeasures = [], secondaryMeasures = [] } = props;
+        const isDualAxis = get(props, "config.dualAxis", true);
+        const computeRatioRule =
+            !isDualAxis && primaryMeasures.length + secondaryMeasures.length > 1
+                ? ComputeRatioRule.NEVER
+                : ComputeRatioRule.SINGLE_MEASURE_ONLY;
+
+        return {
+            ...props,
+            primaryMeasures: computeRatioRules(primaryMeasures, computeRatioRule),
+            secondaryMeasures: computeRatioRules(secondaryMeasures, computeRatioRule),
+        };
+    },
     bucketsFactory: props => {
         const { primaryMeasures, secondaryMeasures, viewBy } = props;
         const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
@@ -81,30 +95,13 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
             .withDimensions(defaultDimensions);
     },
     propOverridesFactory: props => {
-        const comboProps = sanitizeComboProps(props);
-
         return {
-            config: getConfiguration(comboProps),
+            config: getConfiguration(props),
         };
     },
 };
 
 const getProps = getCoreChartProps(comboChartDefinition);
-
-function sanitizeComboProps(props: IComboChartProps): IComboChartProps {
-    const { primaryMeasures = [], secondaryMeasures = [] } = props;
-    const isDualAxis = get(props, "config.dualAxis", true);
-    const computeRatioRule =
-        !isDualAxis && primaryMeasures.length + secondaryMeasures.length > 1
-            ? ComputeRatioRule.NEVER
-            : ComputeRatioRule.SINGLE_MEASURE_ONLY;
-
-    return {
-        ...props,
-        primaryMeasures: computeRatioRules(primaryMeasures, computeRatioRule),
-        secondaryMeasures: computeRatioRules(secondaryMeasures, computeRatioRule),
-    };
-}
 
 function getConfiguration(props: IComboChartProps): INewChartConfig {
     const { primaryMeasures, secondaryMeasures, config } = props;

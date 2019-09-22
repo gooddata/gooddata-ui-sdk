@@ -2,6 +2,8 @@
 import isEmpty = require("lodash/isEmpty");
 import { Identifier, isIdentifierQualifier, isUriQualifier, ObjQualifier } from "../base";
 import { IFilter } from "../filter";
+import unset = require("lodash/unset");
+import cloneDeep = require("lodash/cloneDeep");
 
 /**
  * TODO: SDK8: Add docs
@@ -302,4 +304,22 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
     }
 
     return false;
+}
+
+/**
+ * Disables compute ratio on the provided measure. This is an immutable function - returning new
+ * measure with the ratio disabled.
+ *
+ * @param measure
+ */
+export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
+    if (!isSimpleMeasure(measure)) {
+        return measure;
+    }
+
+    const newItem: IMeasure = cloneDeep(measure);
+    // I was not able to get any other way working for a while so doing this dirty stuff.
+    unset(newItem, ["measure", "definition", "measureDefinition", "computeRatio"]);
+
+    return newItem;
 }

@@ -7,7 +7,7 @@ import {
     idMatchMeasure,
     IMeasure,
     isMeasure,
-    isSimpleMeasure,
+    measureDisableComputeRatio,
     MeasurePredicate,
 } from "../measure";
 import { isTotal, ITotal } from "../base/totals";
@@ -485,29 +485,24 @@ export function computeRatioRules<T extends AttributeOrMeasure>(
     items: T[],
     rule: ComputeRatioRule = ComputeRatioRule.SINGLE_MEASURE_ONLY,
 ): T[] {
+    if (!items) {
+        return [];
+    }
+
     if (rule === ComputeRatioRule.ANY_MEASURE) {
         return items;
     }
 
-    const nonEmptyMeasures = items || [];
-
-    if (nonEmptyMeasures.length > 1 || rule === ComputeRatioRule.NEVER) {
-        return nonEmptyMeasures.map(disableComputeRatio);
+    if (items.length > 1 || rule === ComputeRatioRule.NEVER) {
+        return items.map(disableComputeRatio);
     }
 
     return items;
 }
 
 function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
-    if (isSimpleMeasure(item) && item.measure.definition.measureDefinition.computeRatio) {
-        const newDefinition = { ...item.measure.definition };
-        newDefinition.measureDefinition.computeRatio = false;
-
-        const newItem = { ...item };
-        newItem.measure.definition = newDefinition;
-
-        return newItem;
+    if (isMeasure(item)) {
+        return measureDisableComputeRatio(item) as T;
     }
-
     return item;
 }
