@@ -46,4 +46,8 @@
     -   it contains dataView prop instead
 
 -   Combo Chart no longer has columnMeasures and lineMeasures
+
     -   use primaryMeasures and secondaryMeasures
+
+-   Execute component public API has changed
+    -   TODO: add description & migration guide

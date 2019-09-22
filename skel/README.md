@@ -11,6 +11,8 @@ cd skel
 This will bootstrap a new project in libs directory and a new project entry to `rush.json`,
 execute `rush update` and then commit all the new files and changes.
 
+Alternatively, if you would like to create a new non-production tooling, use [create-new-tool.sh](create-new-tool.sh)
+
 ## sdk-skel-ts
 
 Pure TypeScript project. Jest for testing.
