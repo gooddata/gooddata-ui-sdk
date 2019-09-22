@@ -368,6 +368,9 @@ export function insightTotals(insight: IInsight): ITotal[];
 export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
 
 // @public
+export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight;
+
+// @public
 export interface IObjIdentifierQualifier {
     // (undocumented)
     identifier: string;
@@ -594,7 +597,7 @@ export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITo
 export function newDimension(ids?: Identifier[]): IDimension;
 
 // @public
-export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem;
+export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection): IMeasureSortItem;
 
 // @public
 export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];

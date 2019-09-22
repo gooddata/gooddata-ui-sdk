@@ -206,7 +206,7 @@ describe("PluggableAreaChart", () => {
             };
 
             const testInsight = insightWithProperties(
-                testMocks.insightWithTwoViewBys,
+                testMocks.insightWithSingleMeasureAndTwoViewBy,
                 visualizationProperties,
             );
 

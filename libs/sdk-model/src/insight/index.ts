@@ -233,7 +233,7 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
 }
 
 /**
- * Gets a new insight that inherits all data from the provided insight but has different properties.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
  *
  * @param insight - insight to work with
  * @param properties - new properties to have on the new insight
@@ -245,6 +245,23 @@ export function insightWithProperties(insight: IInsight, properties: Visualizati
         insight: {
             ...insight.insight,
             properties,
+        },
+    };
+}
+
+/**
+ * Gets a new insight that 'inherits' all data from the provided insight but has different sorts.
+ *
+ * @param insight - insight to work with
+ * @param sorts - new sorts to apply
+ * @returns always new instance
+ * @public
+ */
+export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight {
+    return {
+        insight: {
+            ...insight.insight,
+            sorts,
         },
     };
 }

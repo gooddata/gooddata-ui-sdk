@@ -1,75 +1,36 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-
-import { AFM } from "@gooddata/gd-bear-model";
 import {
     createSorts,
-    removeInvalidSort,
-    getBucketItemIdentifiers,
-    getSortIdentifiers,
     getAttributeSortItem,
-    getFirstAttributeIdentifier,
+    getBucketItemIdentifiers,
+    removeInvalidSort,
     setSortItems,
 } from "../sort";
-import { IVisualizationProperties, IExtendedReferencePoint } from "../../interfaces/Visualization";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../constants/sort";
-import { FILTERS, METRIC, ATTRIBUTE } from "../../constants/bucket";
+import { ATTRIBUTE, FILTERS, METRIC } from "../../constants/bucket";
+import {
+    emptyInsight,
+    insightWithNoMeasureAndTwoViewBy,
+    insightWithSingleMeasure,
+    insightWithSingleMeasureAndStack,
+    insightWithSingleMeasureAndViewBy,
+    insightWithSingleMeasureAndViewByAndStack,
+    insightWithTwoMeasuresAndViewBy,
+} from "../../mocks/testMocks";
+import { IAttributeSortItem, IMeasureSortItem, insightWithSorts, SortItem } from "@gooddata/sdk-model";
 
-const emptyVisualizationProperties: IVisualizationProperties = {};
-const emptyResultSpec: AFM.IResultSpec = {};
-const emptyAfm: AFM.IAfm = {};
-
-const stackedAfm: AFM.IAfm = {
-    measures: [
-        {
-            alias: "Measure m1",
-            definition: {
-                measure: {
-                    item: {
-                        identifier: "ident_m1",
-                    },
-                },
-            },
-            localIdentifier: "m1",
-        },
-    ],
-    attributes: [
-        {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "ident_a1",
-            },
-        },
-        {
-            localIdentifier: "a2",
-            displayForm: {
-                identifier: "ident_a2",
-            },
-        },
-    ],
-};
-
-const stackedResultSpec: AFM.IResultSpec = {
-    dimensions: [
-        {
-            itemIdentifiers: ["measureGroup", "a2"],
-        },
-        {
-            itemIdentifiers: ["a1"],
-        },
-    ],
-};
-
-const attributeSort: AFM.IAttributeSortItem = {
+const attributeSort: IAttributeSortItem = {
     attributeSortItem: {
         attributeIdentifier: "a1",
         direction: "asc",
     },
 };
 
-const measureSort: AFM.IMeasureSortItem = {
+const measureSort: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -102,23 +63,7 @@ describe("createSorts", () => {
     describe("default sorting", () => {
         describe("table", () => {
             it("should sort by first attribute ASC", () => {
-                const afm: AFM.IAfm = {
-                    attributes: [
-                        {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                identifier: "ident_a1",
-                            },
-                        },
-                        {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                identifier: "ident_a2",
-                            },
-                        },
-                    ],
-                };
-                const expectedSorts: AFM.SortItem[] = [
+                const expectedSorts: SortItem[] = [
                     {
                         attributeSortItem: {
                             attributeIdentifier: "a1",
@@ -126,42 +71,11 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("table", afm, emptyResultSpec, emptyVisualizationProperties)).toEqual(
-                    expectedSorts,
-                );
+                expect(createSorts("table", insightWithNoMeasureAndTwoViewBy)).toEqual(expectedSorts);
             });
 
             it("should sort by first attribute ASC if there are some measures", () => {
-                const afm: AFM.IAfm = {
-                    measures: [
-                        {
-                            alias: "Measure m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "ident_m1",
-                                    },
-                                },
-                            },
-                            localIdentifier: "m1",
-                        },
-                    ],
-                    attributes: [
-                        {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                identifier: "ident_a1",
-                            },
-                        },
-                        {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                identifier: "ident_a2",
-                            },
-                        },
-                    ],
-                };
-                const expectedSorts: AFM.SortItem[] = [
+                const expectedSorts: SortItem[] = [
                     {
                         attributeSortItem: {
                             attributeIdentifier: "a1",
@@ -169,28 +83,11 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("table", afm, emptyResultSpec, emptyVisualizationProperties)).toEqual(
-                    expectedSorts,
-                );
+                expect(createSorts("table", insightWithTwoMeasuresAndViewBy)).toEqual(expectedSorts);
             });
 
             it("should sort by first measure DESC if there are no attributes", () => {
-                const afm: AFM.IAfm = {
-                    measures: [
-                        {
-                            alias: "Measure m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "ident_m1",
-                                    },
-                                },
-                            },
-                            localIdentifier: "m1",
-                        },
-                    ],
-                };
-                const expectedSort: AFM.SortItem[] = [
+                const expectedSort: SortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -204,38 +101,13 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("table", afm, emptyResultSpec, emptyVisualizationProperties)).toEqual(
-                    expectedSort,
-                );
+                expect(createSorts("table", insightWithSingleMeasure)).toEqual(expectedSort);
             });
         });
 
         describe("bar", () => {
             it("should sort by first measure for basic bar chart", () => {
-                const afm: AFM.IAfm = {
-                    measures: [
-                        {
-                            alias: "Measure m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "ident_m1",
-                                    },
-                                },
-                            },
-                            localIdentifier: "m1",
-                        },
-                    ],
-                    attributes: [
-                        {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                identifier: "ident_a1",
-                            },
-                        },
-                    ],
-                };
-                const expectedSort: AFM.SortItem[] = [
+                const expectedSort: SortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -249,42 +121,11 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("bar", afm, emptyResultSpec, emptyVisualizationProperties)).toEqual(
-                    expectedSort,
-                );
+                expect(createSorts("bar", insightWithSingleMeasureAndViewBy)).toEqual(expectedSort);
             });
 
             it("should return area sort for stacked bar chart", () => {
-                const afm: AFM.IAfm = {
-                    measures: [
-                        {
-                            alias: "Measure m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "ident_m1",
-                                    },
-                                },
-                            },
-                            localIdentifier: "m1",
-                        },
-                    ],
-                    attributes: [
-                        {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                identifier: "ident_a1",
-                            },
-                        },
-                        {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                identifier: "ident_a2",
-                            },
-                        },
-                    ],
-                };
-                const expectedSort: AFM.SortItem[] = [
+                const expectedSort: SortItem[] = [
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -298,91 +139,68 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("bar", afm, emptyResultSpec, emptyVisualizationProperties)).toEqual(
-                    expectedSort,
-                );
+                expect(createSorts("bar", insightWithSingleMeasureAndStack)).toEqual(expectedSort);
             });
         });
 
         describe("column", () => {
             it("should return empty array", () => {
-                expect(
-                    createSorts("column", stackedAfm, stackedResultSpec, emptyVisualizationProperties),
-                ).toEqual([]);
+                expect(createSorts("column", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
             });
         });
 
         describe("line", () => {
             it("should return empty array", () => {
-                expect(
-                    createSorts("line", stackedAfm, stackedResultSpec, emptyVisualizationProperties),
-                ).toEqual([]);
+                expect(createSorts("line", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
             });
         });
 
         describe("pie", () => {
             it("should return empty array", () => {
-                expect(
-                    createSorts("pie", stackedAfm, stackedResultSpec, emptyVisualizationProperties),
-                ).toEqual([]);
+                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
             });
         });
     });
 
     it("should extract sort from visualization properties", () => {
-        const afm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "ident_m1",
+        const sortItems: SortItem[] = [
+            {
+                measureSortItem: {
+                    direction: "desc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
                             },
                         },
-                    },
+                    ],
                 },
-            ],
-        };
-        const visualizationProperties = {
-            sortItems: [
-                {
-                    measureSortItem: {
-                        direction: "desc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
-                                },
-                            },
-                        ],
-                    },
-                },
-            ],
-        };
-        expect(createSorts("table", afm, emptyResultSpec, visualizationProperties)).toEqual(
-            visualizationProperties.sortItems,
-        );
+            },
+        ];
+        const testInsight = insightWithSorts(insightWithSingleMeasure, sortItems);
+
+        expect(createSorts("table", testInsight)).toEqual(sortItems);
     });
 
     it("should ignore sort from visualization properties if localIdentifier is missing in AFM", () => {
-        const visualizationProperties = {
-            sortItems: [
-                {
-                    measureSortItem: {
-                        direction: "desc",
-                        locators: [
-                            {
-                                measureLocatorItem: {
-                                    measureIdentifier: "m1",
-                                },
+        const sortItems: SortItem[] = [
+            {
+                measureSortItem: {
+                    direction: "desc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
                             },
-                        ],
-                    },
+                        },
+                    ],
                 },
-            ],
-        };
-        expect(createSorts("table", emptyAfm, emptyResultSpec, visualizationProperties)).toEqual([]);
+            },
+        ];
+
+        const testInsight = insightWithSorts(emptyInsight, sortItems);
+
+        expect(createSorts("table", testInsight)).toEqual([]);
     });
 });
 
@@ -403,30 +221,15 @@ describe("getAttributeSortItem", () => {
     });
 });
 
-describe("getFirstAttributeIdentifier", () => {
-    it("should return an attribute sort item", () => {
-        expect(getFirstAttributeIdentifier(stackedResultSpec, 0)).toEqual("a2");
-        expect(getFirstAttributeIdentifier(stackedResultSpec, 1)).toEqual("a1");
-        expect(getFirstAttributeIdentifier(stackedResultSpec, 2)).toEqual(null);
-    });
-});
-
-describe("getSortIdentifiers", () => {
-    it("should get all identifiers from sort items", () => {
-        expect(getSortIdentifiers(attributeSort)).toEqual(["a1"]);
-        expect(getSortIdentifiers(measureSort)).toEqual(["a1", "m1"]);
-    });
-});
-
 describe("removeInvalidSort", () => {
     it("should remove sorts with with identifiers that are not included in buckets", () => {
-        const invalidAttributeSort: AFM.IAttributeSortItem = {
+        const invalidAttributeSort: IAttributeSortItem = {
             attributeSortItem: {
                 attributeIdentifier: "invalid",
                 direction: SORT_DIR_DESC,
             },
         };
-        const invalidMeasureSort1: AFM.IMeasureSortItem = {
+        const invalidMeasureSort1: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [
@@ -439,7 +242,7 @@ describe("removeInvalidSort", () => {
                 ],
             },
         };
-        const invalidMeasureSort2: AFM.IMeasureSortItem = {
+        const invalidMeasureSort2: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [
@@ -485,7 +288,7 @@ describe("setSortItems", () => {
     };
 
     it("should return unchanged reference if there are sort properties present", () => {
-        const measureSortItem: AFM.IMeasureSortItem = {
+        const measureSortItem: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [

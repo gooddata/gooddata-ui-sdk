@@ -123,6 +123,7 @@ export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem {
  * @internal
  */
 export type SortEntityIds = {
+    allIdentifiers: Identifier[];
     attributeIdentifiers: Identifier[];
     measureIdentifiers: Identifier[];
 };
@@ -137,18 +138,25 @@ export function sortEntityIds(sort: SortItem): SortEntityIds {
         return {
             attributeIdentifiers: [sort.attributeSortItem.attributeIdentifier],
             measureIdentifiers: [],
+            allIdentifiers: [sort.attributeSortItem.attributeIdentifier],
         };
     } else if (isMeasureSort(sort)) {
         const res: SortEntityIds = {
             attributeIdentifiers: [],
             measureIdentifiers: [],
+            allIdentifiers: [],
         };
 
         return sort.measureSortItem.locators.reduce((acc, loc) => {
             if (isAttributeLocator(loc)) {
-                acc.attributeIdentifiers.push(loc.attributeLocatorItem.attributeIdentifier);
+                const attrId = loc.attributeLocatorItem.attributeIdentifier;
+                acc.attributeIdentifiers.push(attrId);
+                acc.allIdentifiers.push(attrId);
             } else if (isMeasureLocator(loc)) {
-                acc.measureIdentifiers.push(loc.measureLocatorItem.measureIdentifier);
+                const measureId = loc.measureLocatorItem.measureIdentifier;
+
+                acc.measureIdentifiers.push(measureId);
+                acc.allIdentifiers.push(measureId);
             }
 
             return acc;
@@ -196,14 +204,19 @@ export function newAttributeSort(
  *
  * @public
  */
-export function newMeasureSort(measure: IMeasure, sortDirection: SortDirection): IMeasureSortItem {
+export function newMeasureSort(
+    measureOrId: IMeasure | string,
+    sortDirection: SortDirection,
+): IMeasureSortItem {
+    const id: string = typeof measureOrId === "string" ? measureOrId : measureOrId.measure.localIdentifier;
+
     return {
         measureSortItem: {
             direction: sortDirection,
             locators: [
                 {
                     measureLocatorItem: {
-                        measureIdentifier: measure.measure.localIdentifier,
+                        measureIdentifier: id,
                     },
                 },
             ],

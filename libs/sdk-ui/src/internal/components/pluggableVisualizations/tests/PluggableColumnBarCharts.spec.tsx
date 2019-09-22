@@ -265,7 +265,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should disable open as report for insight have two view items", () => {
             const visualization = createComponent(defaultProps);
-            visualization.update(options, testMocks.insightWithTwoViewBys, executionFactory);
+            visualization.update(options, testMocks.insightWithSingleMeasureAndTwoViewBy, executionFactory);
             const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });

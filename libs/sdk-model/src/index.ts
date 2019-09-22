@@ -164,5 +164,6 @@ export {
     insightTotals,
     insightFilters,
     insightWithProperties,
+    insightWithSorts,
     visClassUrl,
 } from "./insight";

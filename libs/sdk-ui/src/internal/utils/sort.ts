@@ -6,17 +6,16 @@ import every = require("lodash/every");
 import isEmpty = require("lodash/isEmpty");
 import omitBy = require("lodash/omitBy");
 import isNil = require("lodash/isNil");
-import { AFM } from "@gooddata/gd-bear-model";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
 import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
-import { MEASUREGROUP } from "../constants/bucket";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import * as SortsHelper from "../../base/helpers/sorts";
 import {
     bucketsAttributes,
+    IAttributeSortItem,
     IInsight,
     insightAttributes,
     insightBuckets,
@@ -24,38 +23,27 @@ import {
     insightSorts,
     newAttributeSort,
     newMeasureSort,
+    SortDirection,
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "../../index";
+import { SortEntityIds, sortEntityIds } from "@gooddata/sdk-model/src/base/sort";
 
-export function getMeasureSortItems(identifier: string, direction: AFM.SortDirection): AFM.SortItem[] {
-    return [
-        {
-            measureSortItem: {
-                direction,
-                locators: [
-                    {
-                        measureLocatorItem: {
-                            measureIdentifier: identifier,
-                        },
-                    },
-                ],
-            },
-        },
-    ];
+export function getMeasureSortItems(identifier: string, direction: SortDirection): SortItem[] {
+    return [newMeasureSort(identifier, direction)];
 }
 
 export function getAttributeSortItem(
     identifier: string,
-    direction: AFM.SortDirection = SORT_DIR_ASC,
+    direction: SortDirection = "asc",
     aggregation: boolean = false,
-): AFM.SortItem {
+): SortItem {
     const attributeSortItemWithoutAggregation = {
         attributeIdentifier: identifier,
         direction,
     };
 
-    const attributeSortItem: AFM.IAttributeSortItem = {
+    const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: aggregation
             ? {
                   ...attributeSortItemWithoutAggregation,
@@ -65,18 +53,6 @@ export function getAttributeSortItem(
     };
 
     return attributeSortItem;
-}
-
-export function getFirstAttributeIdentifier(
-    resultSpec: AFM.IResultSpec,
-    dimensionIndex: number,
-): string | null {
-    const dimensionItems: AFM.Identifier[] = get(
-        resultSpec,
-        ["dimensions", dimensionIndex, "itemIdentifiers"],
-        [],
-    );
-    return dimensionItems.find(a => a !== MEASUREGROUP) || null;
 }
 
 function getDefaultTableSort(insight: IInsight): SortItem[] {
@@ -95,15 +71,6 @@ function getDefaultTableSort(insight: IInsight): SortItem[] {
     return [];
 }
 
-export function getDefaultPivotTableSort(afm: AFM.IAfm): AFM.SortItem[] {
-    const attribute: AFM.IAttribute = get(afm, "attributes.0");
-    if (!attribute) {
-        return [];
-    }
-
-    return [];
-}
-
 function getDefaultBarChartSort(insight: IInsight): SortItem[] {
     const viewBy = bucketsAttributes(insightBuckets(insight, BucketNames.VIEW));
     const stackBy = bucketsAttributes(insightBuckets(insight, BucketNames.STACK));
@@ -112,13 +79,9 @@ function getDefaultBarChartSort(insight: IInsight): SortItem[] {
         return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
     }
 
-    if (isEmpty(stackBy)) {
-        const measures = insightMeasures(insight);
+    const measures = insightMeasures(insight);
 
-        return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
-    }
-
-    return [];
+    return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
 }
 
 // Consider disolving this function into individual components
@@ -147,28 +110,10 @@ export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint
     }, []);
 }
 
-export function getSortIdentifiers(item: AFM.SortItem): string[] {
-    if (AFM.isMeasureSortItem(item)) {
-        return get(item, "measureSortItem.locators", []).map((locator: AFM.LocatorItem) => {
-            if (get(locator, "measureLocatorItem")) {
-                return get(locator, "measureLocatorItem.measureIdentifier");
-            } else {
-                return get(locator, "attributeLocatorItem.attributeIdentifier");
-            }
-        });
-    }
-    if (AFM.isAttributeSortItem(item)) {
-        const attribute = get(item, "attributeSortItem.attributeIdentifier");
-        if (attribute) {
-            return [attribute];
-        }
-    }
-    return [];
-}
+function isSortItemValid(item: SortItem, identifiers: string[]) {
+    const sortIdentifiers: SortEntityIds = sortEntityIds(item);
 
-function isSortItemValid(item: AFM.SortItem, identifiers: string[]) {
-    const sortIdentifiers = getSortIdentifiers(item);
-    return every(sortIdentifiers, id => includes(identifiers, id));
+    return every(sortIdentifiers.allIdentifiers, id => includes(identifiers, id));
 }
 
 export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>) {
@@ -195,7 +140,7 @@ export function removeInvalidSort(referencePoint: Readonly<IExtendedReferencePoi
         const identifiers = getBucketItemIdentifiers(referencePoint);
 
         let sortItems = referencePoint.properties.sortItems || [];
-        sortItems = sortItems.filter((item: AFM.SortItem) => {
+        sortItems = sortItems.filter((item: SortItem) => {
             return isSortItemValid(item, identifiers);
         });
 
