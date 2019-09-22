@@ -195,10 +195,6 @@ export class DataViewFacade {
 
         const e = d[0];
 
-        if (e === null || !e) {
-            return [];
-        }
-
         if (isArray(e)) {
             // TODO: SDK8: switch to invariant?
             throw new Error();

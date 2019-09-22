@@ -1,98 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
 import { Headline } from "../Headline";
-import { Headline as AfmHeadline } from "../../../_defunct/afm/Headline";
 import { M1 } from "../../tests/fixtures/buckets";
+import { CoreHeadline } from "../CoreHeadline";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("Headline", () => {
-    const measure: VisualizationObject.IMeasure = {
-        measure: {
-            localIdentifier: "m1",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "xyz123",
-                    },
-                },
-            },
-        },
-    };
-
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
-            <Headline projectId="foo" primaryMeasure={M1} sdk={factory({ domain: "example.com" })} />,
-        );
-        expect(wrapper.find(AfmHeadline)).toHaveLength(1);
-    });
-
-    it("should render headline with one measure and convert the bucket to AFM", () => {
-        const wrapper = shallow(<Headline projectId="foo" primaryMeasure={measure} />);
-
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmHeadline)).toHaveLength(1);
-        expect(wrapper.find(AfmHeadline).prop("afm")).toEqual(expectedAfm);
-    });
-
-    it("should render headline with two measures and convert the bucket to AFM", () => {
-        const secondaryMeasure: VisualizationObject.IMeasure = {
-            measure: {
-                localIdentifier: "m2",
-                definition: {
-                    measureDefinition: {
-                        item: {
-                            identifier: "abc123",
-                        },
-                    },
-                },
-            },
-        };
-        const wrapper = shallow(
-            <Headline projectId="foo" primaryMeasure={measure} secondaryMeasure={secondaryMeasure} />,
-        );
-
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-                {
-                    localIdentifier: "m2",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "abc123",
-                            },
-                        },
-                    },
-                },
-            ],
-        };
-
-        expect(wrapper.find(AfmHeadline)).toHaveLength(1);
-        expect(wrapper.find(AfmHeadline).prop("afm")).toEqual(expectedAfm);
+        const wrapper = shallow(<Headline workspace="foo" primaryMeasure={M1} backend={dummyBackend()} />);
+        expect(wrapper.find(CoreHeadline)).toHaveLength(1);
     });
 });

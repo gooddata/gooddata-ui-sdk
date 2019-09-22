@@ -1512,6 +1512,25 @@ export const comboChartWithTwoMeasuresViewByAttributePercformat = recordedDataFa
 );
 
 //
+//
+//
+export const headlineWithOneMeasure = recordedDataFacade(rec.HeadlineWithOneMeasure);
+export const headlineWithOneMeasureWithIdentifier = recordedDataFacade(
+    rec.HeadlineWithOneMeasureWithIdentifier,
+);
+export const headlineWithTwoMeasures = recordedDataFacade(rec.HeadlineWithTwoMeasures);
+export const headlineWithTwoMeasuresWithIdentifier = recordedDataFacade(
+    rec.HeadlineWithTwoMeasuresWithIdentifier,
+);
+export const headlineWithTwoMeasuresFirstEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresFirstEmpty);
+export const headlineWithTwoMeasuresSecondEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresSecondEmpty);
+export const headlineWithTwoMeasuresBothEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothEmpty);
+export const headlineWithTwoMeasuresBothZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothZero);
+export const headlineWithTwoMeasuresFirstZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresFirstZero);
+export const headlineWithTwoMeasuresSecondZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresSecondZero);
+export const headlineWithTwoMeasuresBothSame = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothSame);
+
+//
 // Heatmap recordings
 //
 

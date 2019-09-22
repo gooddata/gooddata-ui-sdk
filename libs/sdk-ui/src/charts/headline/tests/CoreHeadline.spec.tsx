@@ -2,32 +2,31 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
-import { oneMeasureOneDimensionDataSource, twoMeasuresOneDimensionDataSource } from "../../tests/mocks";
 import { CoreHeadline } from "../CoreHeadline";
-import { ICommonVisualizationProps } from "../../../_defunct/to_delete/VisualizationLoadingHOC";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
-import { IDataSourceProviderInjectedProps } from "../../../_defunct/to_delete/DataSourceProvider";
+import { ICoreChartProps } from "../../chartProps";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
+import { prepareExecution } from "@gooddata/sdk-backend-spi";
+import { headlineWithOneMeasure, headlineWithTwoMeasures } from "../../../../__mocks__/fixtures";
 
 describe("Headline", () => {
-    function createComponent(props: ICommonVisualizationProps & IDataSourceProviderInjectedProps) {
-        return mount<Partial<ICommonVisualizationProps & IDataSourceProviderInjectedProps>>(
-            <CoreHeadline
-                {...props}
-                afterRender={jest.fn()}
-                drillableItems={[]}
-                resultSpec={{
-                    dimensions: [{ itemIdentifiers: ["measureGroup"] }],
-                }}
-            />,
+    function createComponent(props: ICoreChartProps) {
+        return mount<Partial<ICoreChartProps>>(
+            <CoreHeadline {...props} afterRender={jest.fn()} drillableItems={[]} />,
         );
     }
+
+    const backend = recordedBackend(MasterIndex);
+    const singleMeasureExec = prepareExecution(backend, headlineWithOneMeasure.definition);
+    const twoMeasureExec = prepareExecution(backend, headlineWithTwoMeasures.definition);
 
     describe("one measure", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", () => {
             const drillEventCallback = jest.fn();
             const wrapper = createComponent({
-                dataSource: oneMeasureOneDimensionDataSource,
-                onFiredDrillEvent: drillEventCallback,
+                execution: singleMeasureExec,
+                onDrill: drillEventCallback,
             });
 
             return testUtils.delay().then(() => {
@@ -35,12 +34,9 @@ describe("Headline", () => {
                 const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
                 const wrapperProps = wrapper.props();
                 expect(renderedHeadlineTrans.props()).toMatchObject({
-                    executionRequest: {
-                        afm: wrapperProps.dataSource.getAfm(),
-                        resultSpec: wrapperProps.resultSpec,
+                    dataView: {
+                        definition: singleMeasureExec.definition,
                     },
-                    executionResponse: expect.any(Object),
-                    executionResult: expect.any(Object),
                     onAfterRender: wrapperProps.afterRender,
                     drillableItems: wrapperProps.drillableItems,
                     onFiredDrillEvent: drillEventCallback,
@@ -52,7 +48,7 @@ describe("Headline", () => {
     describe("two measures", () => {
         it("should render HeadlineTransformation and pass down given props and props from execution", () => {
             const wrapper = createComponent({
-                dataSource: twoMeasuresOneDimensionDataSource,
+                execution: twoMeasureExec,
             });
 
             return testUtils.delay().then(() => {
@@ -60,12 +56,9 @@ describe("Headline", () => {
                 const renderedHeadlineTrans = wrapper.find(HeadlineTransformation);
                 const wrapperProps = wrapper.props();
                 expect(renderedHeadlineTrans.props()).toMatchObject({
-                    executionRequest: {
-                        afm: wrapperProps.dataSource.getAfm(),
-                        resultSpec: wrapperProps.resultSpec,
+                    dataView: {
+                        definition: twoMeasureExec.definition,
                     },
-                    executionResponse: expect.any(Object),
-                    executionResult: expect.any(Object),
                     onAfterRender: wrapperProps.afterRender,
                     drillableItems: wrapperProps.drillableItems,
                 });

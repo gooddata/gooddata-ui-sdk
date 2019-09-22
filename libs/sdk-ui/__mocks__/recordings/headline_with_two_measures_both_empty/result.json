@@ -1,0 +1,28 @@
+{
+    "executionResult": {
+        "data": [null, null],
+        "headerItems": [
+            [
+                [
+                    {
+                        "measureHeaderItem": {
+                            "name": "Lost",
+                            "order": 0
+                        }
+                    },
+                    {
+                        "measureHeaderItem": {
+                            "name": "Won",
+                            "order": 1
+                        }
+                    }
+                ]
+            ]
+        ],
+        "paging": {
+            "count": [2],
+            "offset": [0],
+            "total": [2]
+        }
+    }
+}

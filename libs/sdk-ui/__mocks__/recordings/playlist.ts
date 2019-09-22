@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-20T10:20:10.091Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-22T08:16:55.539Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -157,6 +157,72 @@ export const ComboChartWithTwoMeasuresViewByAttributePercformat = {
     result: require("./combo_chart_with_two_measures_view_by_attribute_percformat/result.json"),
 };
 
+export const HeadlineWithOneMeasure = {
+    definition: require("./headline_with_one_measure/definition.json"),
+    response: require("./headline_with_one_measure/response.json"),
+    result: require("./headline_with_one_measure/result.json"),
+};
+
+export const HeadlineWithOneMeasureWithIdentifier = {
+    definition: require("./headline_with_one_measure_with_identifier/definition.json"),
+    response: require("./headline_with_one_measure_with_identifier/response.json"),
+    result: require("./headline_with_one_measure_with_identifier/result.json"),
+};
+
+export const HeadlineWithTwoMeasures = {
+    definition: require("./headline_with_two_measures/definition.json"),
+    response: require("./headline_with_two_measures/response.json"),
+    result: require("./headline_with_two_measures/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresBothEmpty = {
+    definition: require("./headline_with_two_measures_both_empty/definition.json"),
+    response: require("./headline_with_two_measures_both_empty/response.json"),
+    result: require("./headline_with_two_measures_both_empty/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresBothSame = {
+    definition: require("./headline_with_two_measures_both_same/definition.json"),
+    response: require("./headline_with_two_measures_both_same/response.json"),
+    result: require("./headline_with_two_measures_both_same/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresBothZero = {
+    definition: require("./headline_with_two_measures_both_zero/definition.json"),
+    response: require("./headline_with_two_measures_both_zero/response.json"),
+    result: require("./headline_with_two_measures_both_zero/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresFirstEmpty = {
+    definition: require("./headline_with_two_measures_first_empty/definition.json"),
+    response: require("./headline_with_two_measures_first_empty/response.json"),
+    result: require("./headline_with_two_measures_first_empty/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresFirstZero = {
+    definition: require("./headline_with_two_measures_first_zero/definition.json"),
+    response: require("./headline_with_two_measures_first_zero/response.json"),
+    result: require("./headline_with_two_measures_first_zero/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresSecondEmpty = {
+    definition: require("./headline_with_two_measures_second_empty/definition.json"),
+    response: require("./headline_with_two_measures_second_empty/response.json"),
+    result: require("./headline_with_two_measures_second_empty/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresSecondZero = {
+    definition: require("./headline_with_two_measures_second_zero/definition.json"),
+    response: require("./headline_with_two_measures_second_zero/response.json"),
+    result: require("./headline_with_two_measures_second_zero/result.json"),
+};
+
+export const HeadlineWithTwoMeasuresWithIdentifier = {
+    definition: require("./headline_with_two_measures_with_identifier/definition.json"),
+    response: require("./headline_with_two_measures_with_identifier/response.json"),
+    result: require("./headline_with_two_measures_with_identifier/result.json"),
+};
+
 export const HeatMapWithEmptyCells = {
     definition: require("./heat_map_with_empty_cells/definition.json"),
     response: require("./heat_map_with_empty_cells/response.json"),
@@ -265,6 +331,10 @@ export const MasterIndex = {
         fp_7ae5322d5061eae29d76993176d7c595: ColumnChartWithMeasureAndViewBy,
         fp_21efe764109d6cbbc1c9617b90920bdc: ColumnChartWithMeasureAndViewByAndComputeRatio,
         fp_63a093ee40d9e5d13e14cd186ced8376: ComboChartWithTwoMeasuresViewByAttributePercformat,
+        fp_e2b71aa2be7ba9d7c46ee9f153cce9f2: HeadlineWithOneMeasure,
+        fp_4f043c79dbefafee7e26f3f77d945b86: HeadlineWithOneMeasureWithIdentifier,
+        fp_d53d09f0ed2ab5f3ef73b73ca749e4f7: HeadlineWithTwoMeasuresSecondZero,
+        fp_4bf5193c9d1f6560bc5c43b0b2b99ea1: HeadlineWithTwoMeasuresWithIdentifier,
         fp_7ba00bd46fb37f68fbb549e997f349dd: HeatMapWithEmptyCells,
         fp_16dd93e14c96b0317d74f5e0e37792ff: HeatMapWithMetricRowColumn,
         fp_551204e9d10f29532c64d0aad6d9b19b: PieChartWithMetricsOnlyFundata,
