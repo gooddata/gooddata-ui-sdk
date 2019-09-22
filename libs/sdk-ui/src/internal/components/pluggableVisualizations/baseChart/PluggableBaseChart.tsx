@@ -29,7 +29,6 @@ import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedPro
 
 import { BUCKETS } from "../../../constants/bucket";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
-import { isStacked } from "../../../utils/mdObjectHelper";
 
 import {
     filterOutDerivedMeasures,
@@ -65,15 +64,21 @@ import { RuntimeError } from "../../../../base/errors/RuntimeError";
 import ColorUtils from "../../../../highcharts/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
-import { IDimension, IInsight, insightHasDataDefined } from "@gooddata/sdk-model";
+import {
+    bucketsIsEmpty,
+    IDimension,
+    IInsight,
+    insightBuckets,
+    insightHasDataDefined,
+} from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { INewChartConfig } from "../../../../interfaces/Config";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
-import { INewChartConfig } from "../../../../interfaces/Config";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -491,4 +496,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
         };
     }
+}
+
+function isStacked(insight: IInsight): boolean {
+    return !bucketsIsEmpty(insightBuckets(insight, BucketNames.STACK, BucketNames.SEGMENT));
 }

@@ -42,9 +42,8 @@ import {
     AREA_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,
 } from "../../../constants/supportedProperties";
-import { haveManyViewItems } from "../../../utils/mdObjectHelper";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
@@ -141,7 +140,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private updateCustomSupportedProperties(insight: IInsight): void {
-        if (haveManyViewItems(insight)) {
+        if (bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1) {
             this.addSupportedProperties(OPTIONAL_STACKING_PROPERTIES);
             this.setCustomControlsProperties({
                 stackMeasures: false,

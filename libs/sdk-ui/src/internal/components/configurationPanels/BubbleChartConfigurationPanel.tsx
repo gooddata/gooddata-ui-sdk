@@ -12,13 +12,14 @@ import ConfigSection from "../configurationControls/ConfigSection";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import MinMaxControl from "../configurationControls//MinMaxControl";
-import { hasTertiaryMeasures } from "../../utils/mdObjectHelper";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
+import { bucketsIsEmpty, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import * as BucketNames from "../../../base/constants/bucketNames";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {
@@ -147,4 +148,8 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
             yAxisVisible,
         };
     }
+}
+
+function hasTertiaryMeasures(insight: IInsight): boolean {
+    return !bucketsIsEmpty(insightBuckets(insight, BucketNames.TERTIARY_MEASURES));
 }

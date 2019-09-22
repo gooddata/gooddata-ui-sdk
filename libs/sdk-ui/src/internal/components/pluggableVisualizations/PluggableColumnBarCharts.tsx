@@ -27,8 +27,8 @@ import {
     isStackingToPercent,
 } from "../../utils/propertiesHelper";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
-import { haveManyViewItems } from "../../utils/mdObjectHelper";
 import { BUCKETS } from "../../constants/bucket";
+import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
 
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -110,4 +110,8 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
             },
         ]);
     }
+}
+
+function haveManyViewItems(insight: IInsight): boolean {
+    return bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1;
 }
