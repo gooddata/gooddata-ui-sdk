@@ -163,4 +163,5 @@ export {
     insightBucket,
     insightTotals,
     insightFilters,
+    insightWithProperties,
 } from "./insight";

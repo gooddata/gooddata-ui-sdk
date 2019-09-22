@@ -365,6 +365,9 @@ export function insightSorts(insight: IInsight): SortItem[];
 export function insightTotals(insight: IInsight): ITotal[];
 
 // @public
+export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
+
+// @public
 export interface IObjIdentifierQualifier {
     // (undocumented)
     identifier: string;

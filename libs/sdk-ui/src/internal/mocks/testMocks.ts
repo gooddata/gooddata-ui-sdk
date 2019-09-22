@@ -1,9 +1,11 @@
 // (C) 2019 GoodData Corporation
 import { DataLayer } from "@gooddata/gd-bear-client";
-import { Execution, VisualizationObject, AFM, VisualizationClass } from "@gooddata/gd-bear-model";
+import { AFM, Execution, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
 import { MEASUREGROUP } from "../constants/bucket";
 import { executionObjectMock } from "./executionObjectMocks";
 import * as BucketNames from "../../base/constants/bucketNames";
+import { IInsight } from "@gooddata/sdk-model";
+import { attribute } from "../../base/helpers/model";
 
 export const emptyExecutionResponse: Execution.IExecutionResponses = {
     executionResponse: {
@@ -72,6 +74,94 @@ export const emptyMdObject: VisualizationObject.IVisualizationObjectContent = {
     filters: [],
     visualizationClass: {
         uri: "/gdc/md/mockproject/obj/column",
+    },
+};
+
+export const emptyInsight: IInsight = {
+    insight: {
+        visualizationClassIdentifier: "column",
+        buckets: [],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Empty insight",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const dummyInsight: IInsight = {
+    insight: {
+        visualizationClassIdentifier: "column",
+        buckets: [
+            {
+                localIdentifier: "attribute",
+                items: [attribute("attr1").localIdentifier("a1")],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single attribute",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const insightWithStacking: IInsight = {
+    insight: {
+        visualizationClassIdentifier: "column",
+        buckets: [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1280",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.VIEW,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1027",
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.STACK,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a2",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single attribute",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 

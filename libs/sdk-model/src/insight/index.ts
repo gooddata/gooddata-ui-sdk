@@ -231,3 +231,20 @@ export function insightTotals(insight: IInsight): ITotal[] {
 export function insightProperties(insight: IInsight): VisualizationProperties {
     return insight.insight.properties;
 }
+
+/**
+ * Gets a new insight that inherits all data from the provided insight but has different properties.
+ *
+ * @param insight - insight to work with
+ * @param properties - new properties to have on the new insight
+ * @returns always new instance
+ * @public
+ */
+export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight {
+    return {
+        insight: {
+            ...insight.insight,
+            properties,
+        },
+    };
+}

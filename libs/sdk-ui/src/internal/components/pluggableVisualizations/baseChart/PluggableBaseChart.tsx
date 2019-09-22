@@ -1,51 +1,45 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntl } from "react-intl";
-import isEmpty = require("lodash/isEmpty");
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import noop = require("lodash/noop");
-import tail = require("lodash/tail");
-import set = require("lodash/set");
 import { render, unmountComponentAtNode } from "react-dom";
 import {
-    IReferencePoint,
+    IBucketItem,
+    IBucketOfFun,
     IExtendedReferencePoint,
+    IFeatureFlags,
+    ILocale,
+    IReferencePoint,
+    IReferences,
+    IUiConfig,
     IVisCallbacks,
     IVisConstruct,
     IVisProps,
-    ILocale,
-    IFeatureFlags,
-    IUiConfig,
     IVisualizationProperties,
-    IReferences,
-    IBucketOfFun,
-    IBucketItem,
 } from "../../../interfaces/Visualization";
 import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
+    getReferencePointWithSupportedProperties,
+    getSupportedProperties,
     getSupportedPropertiesControls,
     hasColorMapping,
     isEmptyObject,
-    getReferencePointWithSupportedProperties,
-    getSupportedProperties,
 } from "../../../utils/propertiesHelper";
 import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT, UICONFIG } from "../../../constants/uiConfig";
 import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 
 import { BUCKETS } from "../../../constants/bucket";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import { isStacked } from "../../../utils/mdObjectHelper";
 
 import {
-    sanitizeUnusedFilters,
-    getMeasureItems,
+    filterOutDerivedMeasures,
     getAllAttributeItemsWithPreference,
     getAttributeItemsWithoutStacks,
+    getFilteredMeasuresForStackedCharts,
+    getMeasureItems,
     getStackItems,
     isDate,
-    filterOutDerivedMeasures,
-    getFilteredMeasuresForStackedCharts,
+    sanitizeUnusedFilters,
 } from "../../../utils/bucketHelper";
 
 import {
@@ -71,9 +65,15 @@ import { RuntimeError } from "../../../../base/errors/RuntimeError";
 import ColorUtils from "../../../../highcharts/utils/color";
 import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
-import { IInsight, IDimension } from "@gooddata/sdk-model";
-import { insightHasDataDefined } from "@gooddata/sdk-model";
+import { IDimension, IInsight, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import isEmpty = require("lodash/isEmpty");
+import cloneDeep = require("lodash/cloneDeep");
+import get = require("lodash/get");
+import noop = require("lodash/noop");
+import tail = require("lodash/tail");
+import set = require("lodash/set");
+import { INewChartConfig } from "../../../../interfaces/Config";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -248,7 +248,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
         const supportedControls = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
-        const fullConfig = this.buildVisualizationConfig(insight, config, configSupportedControls);
+        const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
 
         const execution = executionFactory
             .forInsight(insight)
@@ -473,7 +473,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return legendPosition;
     }
 
-    private buildVisualizationConfig(insight: IInsight, config: any, supportedControls: any) {
+    private buildVisualizationConfig(config: any, supportedControls: any): INewChartConfig {
         const colorMapping: IColorMappingProperty[] = get(supportedControls, "colorMapping");
 
         const validColorMapping =
@@ -486,7 +486,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 }));
 
         return {
-            insight,
             ...config,
             ...supportedControls,
             colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,

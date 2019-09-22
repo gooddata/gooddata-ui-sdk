@@ -1,21 +1,18 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import noop = require("lodash/noop");
-import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { ILocale, IVisProps, IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters, ILocale, IVisProps } from "../../../../interfaces/Visualization";
 import * as BucketNames from "../../../../../base/constants/bucketNames";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
-import {
-    ChartType,
-    VisualizationTypes,
-    VisualizationEnvironment,
-} from "../../../../../base/constants/visualizationTypes";
-import { BaseChart } from "../../../../../_defunct/to_delete/BaseChart";
+import { VisualizationEnvironment } from "../../../../../base/constants/visualizationTypes";
 import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IInsight, insightWithProperties } from "@gooddata/sdk-model";
+import noop = require("lodash/noop");
+import { IBaseChartProps } from "sdk-ui/src/charts/_base/BaseChart";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -36,6 +33,8 @@ describe("PluggableBaseChart", () => {
     const dashboardEnvironment: VisualizationEnvironment = "dashboards";
     const noneEnvironment: VisualizationEnvironment = "none";
     const dummyLocale: ILocale = "en-US";
+    const backend = dummyBackend();
+    const executionFactory = backend.workspace("PROJECTID").execution();
 
     const callbacks: any = {
         afterRender: noop,
@@ -48,62 +47,23 @@ describe("PluggableBaseChart", () => {
         projectId: "PROJECTID",
         element: "body",
         configPanelElement: "invalid",
+        backend: dummyBackend(),
+        visualizationProperties: {},
         callbacks,
-        dataSource: testMocks.dummyDataSource,
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableBaseChart(props);
     }
 
-    function dummyBaseChartRenderer(props: IVisProps, expectedValues: any, visualizationType: ChartType) {
-        const { dataSource, locale, custom, resultSpec } = props;
-        const {
-            expectedHeight,
-            environment,
-            mdObject = testMocks.emptyMdObject,
-            visualizationProperties,
-        } = expectedValues;
-
-        let validVisualizationProperties = visualizationProperties;
-        if (!visualizationProperties) {
-            validVisualizationProperties =
-                environment === "dashboards"
-                    ? { legend: { position: "right", responsive: true } }
-                    : { legend: { position: "auto" } };
-        }
-        const { drillableItems } = custom;
-        const config = { mdObject, ...validVisualizationProperties, colorMapping: null };
-
-        return (
-            <BaseChart
-                afterRender={noop}
-                environment={environment}
-                drillableItems={drillableItems}
-                onError={null}
-                onLoadingChanged={null}
-                height={expectedHeight}
-                dataSource={dataSource}
-                resultSpec={resultSpec}
-                config={config}
-                type={visualizationType}
-                locale={locale}
-                ErrorComponent={null}
-                LoadingComponent={null}
-            />
-        );
-    }
-
-    function dummyConfigurationRenderer(mdObject: VisualizationObject.IVisualizationObjectContent) {
+    function dummyConfigurationRenderer(insight: IInsight) {
         const properties = {};
-        const propertiesMeta = {};
 
         return (
             <BaseChartConfigurationPanel
                 locale={DEFAULT_LOCALE}
                 properties={properties}
-                propertiesMeta={propertiesMeta}
-                mdObject={mdObject}
+                insight={insight}
                 pushData={noop}
                 type="column"
             />
@@ -119,16 +79,14 @@ describe("PluggableBaseChart", () => {
         expect(visualization).toBeTruthy();
     });
 
-    it("should not render chart when dataSource is missing", () => {
+    it("should not render chart when insight has no data to render", () => {
         const renderObject = require("react-dom");
         const spyOnRender = jest.spyOn(renderObject, "render");
 
-        const props = { ...defaultProps, dataSource: null as any };
+        const props = { ...defaultProps };
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: null,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: null },
             locale: dummyLocale,
             custom: {
@@ -136,7 +94,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, {}, testMocks.emptyMdObject, undefined);
+        visualization.update(options, testMocks.emptyInsight, executionFactory);
 
         expect(spyOnRender).toHaveBeenCalledTimes(0);
     });
@@ -147,12 +105,9 @@ describe("PluggableBaseChart", () => {
 
         const props = { ...defaultProps, environment: dashboardEnvironment };
         const expectedHeight = 5;
-        const environment = "dashboards";
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {
@@ -160,19 +115,15 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        const visualizationProperties = {
-            properties: {},
-            propertiesMeta: {},
-        };
-        visualization.update(options, visualizationProperties, testMocks.emptyMdObject, null);
-        const expectedBaseChartElement = dummyBaseChartRenderer(
-            options,
-            { expectedHeight, environment },
-            VisualizationTypes.COLUMN,
-        );
+        visualization.update(options, testMocks.dummyInsight, executionFactory);
 
         const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toMatchObject(expectedBaseChartElement);
+        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+
+        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+            .props as IBaseChartProps;
+        expect(renderProps.config.legend.position).toEqual("right");
+        expect(renderProps.height).toEqual(5);
     });
 
     it("should render chart with legend on right when it is auto positioned and environment is dashboards", () => {
@@ -181,12 +132,9 @@ describe("PluggableBaseChart", () => {
 
         const props = { ...defaultProps, environment: dashboardEnvironment };
         const expectedHeight = 5;
-        const environment = "dashboards";
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {
@@ -195,24 +143,22 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = {
-            properties: {
-                controls: {
-                    legend: {
-                        position: "auto",
-                    },
+            controls: {
+                legend: {
+                    position: "auto",
                 },
             },
-            propertiesMeta: {},
         };
-        visualization.update(options, visualizationProperties, testMocks.emptyMdObject, undefined);
-        const expectedBaseChartElement = dummyBaseChartRenderer(
-            options,
-            { expectedHeight, environment },
-            VisualizationTypes.COLUMN,
-        );
+        const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
+
+        visualization.update(options, testInsight, executionFactory);
 
         const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toMatchObject(expectedBaseChartElement);
+        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+
+        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+            .props as IBaseChartProps;
+        expect(renderProps.config.legend.position).toEqual("right");
     });
 
     it("should render chart with legend on right when it is auto positioned and visualization is stacked", () => {
@@ -224,8 +170,6 @@ describe("PluggableBaseChart", () => {
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.stackedBaseChartResultSpec,
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {
@@ -234,34 +178,23 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = {
-            properties: {
-                controls: {
-                    legend: {
-                        position: "auto",
-                    },
+            controls: {
+                legend: {
+                    position: "auto",
                 },
             },
-            propertiesMeta: {},
         };
-        visualization.update(options, visualizationProperties, testMocks.stackedMdObject, undefined);
 
-        const expectedVisualizationProperties = {
-            legend: {
-                position: "right",
-            },
-        };
-        const expectedValues = {
-            mdObject: testMocks.stackedMdObject,
-            visualizationProperties: expectedVisualizationProperties,
-        };
-        const expectedBaseChartElement = dummyBaseChartRenderer(
-            options,
-            expectedValues,
-            VisualizationTypes.COLUMN,
-        );
+        const testInsight = insightWithProperties(testMocks.insightWithStacking, visualizationProperties);
+
+        visualization.update(options, testInsight, executionFactory);
 
         const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toMatchObject(expectedBaseChartElement);
+        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+
+        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+            .props as IBaseChartProps;
+        expect(renderProps.config.legend.position).toEqual("right");
     });
 
     it("should render configuration panel with correct properties", () => {
@@ -273,21 +206,15 @@ describe("PluggableBaseChart", () => {
         const props = { ...defaultProps, configPanelElement: "body" };
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: expectedHeight },
             locale: dummyLocale,
             custom: {
                 stickyHeaderOffset: 3,
             },
         };
-        const visualizationProperties = {
-            properties: {},
-            propertiesMeta: {},
-        };
 
-        visualization.update(options, visualizationProperties, testMocks.emptyMdObject, undefined);
-        const expectedConfigPanelElement = dummyConfigurationRenderer(testMocks.emptyMdObject);
+        visualization.update(options, testMocks.dummyInsight, executionFactory);
+        const expectedConfigPanelElement = dummyConfigurationRenderer(testMocks.dummyInsight);
 
         // arguments of last called render method
         const renderCallsCount = spyOnRender.mock.calls.length;
@@ -305,12 +232,9 @@ describe("PluggableBaseChart", () => {
         const spyOnRender = jest.spyOn(renderObject, "render");
 
         const props = { ...defaultProps, environment: noneEnvironment };
-        const environment = "none";
 
         const visualization = createComponent(props);
         const options: IVisProps = {
-            dataSource: testMocks.dummyDataSource,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: 50 },
             locale: dummyLocale,
             custom: {
@@ -318,19 +242,17 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        const visualizationProperties = {
-            properties: { controls: { legend: {} } },
-            propertiesMeta: {},
-        };
-        visualization.update(options, visualizationProperties, testMocks.emptyMdObject, undefined);
-        const expectedBaseChartElement = dummyBaseChartRenderer(
-            options,
-            { expectedHeight: undefined, environment },
-            VisualizationTypes.COLUMN,
-        );
+        const visualizationProperties = { controls: { legend: {} } };
+        const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
+
+        visualization.update(options, testInsight, executionFactory);
 
         const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toMatchObject(expectedBaseChartElement);
+        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+
+        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+            .props as IBaseChartProps;
+        expect(renderProps.height).toBeUndefined();
     });
 
     it(
