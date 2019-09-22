@@ -3,12 +3,12 @@ import noop = require("lodash/noop");
 import get = require("lodash/get");
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { PluggableLineChart } from "../PluggableLineChart";
-import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { AXIS } from "../../../../constants/axis";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -36,7 +36,8 @@ describe("PluggableLineChart", () => {
             onError: noop,
             onLoadingChanged: noop,
         },
-        dataSource: testMocks.dummyDataSource,
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {
