@@ -13,6 +13,7 @@ import { emptyReferencePoint } from "../../mocks/referencePointMocks";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { IDrillableItem } from "../../../interfaces/DrillEvents";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 const { delay } = testUtils;
 
@@ -37,9 +38,9 @@ describe("BaseVisualization", () => {
 
     const defaultProps: IBaseVisualizationProps = {
         projectId: "PROJECTID",
-        mdObject: testMocks.emptyMdObject,
+        insight: testMocks.emptyInsight,
         visualizationClass: testMocks.dummyTableVisualizationClass,
-        dataSource: testMocks.dummyDataSource,
+        backend: dummyBackend(),
         referencePoint: emptyReferencePoint,
         drillableItems: [],
         onError: noop,
@@ -105,7 +106,6 @@ describe("BaseVisualization", () => {
         const component = createComponent({
             ...defaultProps,
             visualizationsCatalog,
-            dataSource: null,
             ...customProps,
         });
 
@@ -255,7 +255,6 @@ describe("BaseVisualization", () => {
 
         expect(tableUpdateCall).toHaveBeenCalledTimes(1);
         expect(tableUpdateCall).toHaveBeenCalledWith({
-            dataSource: null,
             custom: {
                 totalsEditAllowed: undefined,
                 stickyHeaderOffset: undefined,
@@ -265,7 +264,6 @@ describe("BaseVisualization", () => {
                 height: undefined,
             },
             locale: undefined,
-            resultSpec: {},
         });
     });
 
@@ -278,7 +276,6 @@ describe("BaseVisualization", () => {
 
         component.setProps({
             type: VisualizationTypes.TABLE,
-            dataSource: testMocks.dummyDataSource,
             totalsEditAllowed,
             stickyHeaderOffset,
             drillableItems,
@@ -292,10 +289,8 @@ describe("BaseVisualization", () => {
                     stickyHeaderOffset,
                     totalsEditAllowed,
                 },
-                dataSource: testMocks.dummyDataSource,
                 dimensions: { height: undefined },
                 locale: undefined,
-                resultSpec: {},
             });
         });
     });

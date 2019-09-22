@@ -1,23 +1,18 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
-import isEqual = require("lodash/isEqual");
-import isEmpty = require("lodash/isEmpty");
-import get = require("lodash/get");
-import noop = require("lodash/noop");
-import omit = require("lodash/omit");
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import * as VisEvents from "../../interfaces/Events";
 import { VisualizationEnvironment } from "../../base/constants/visualizationTypes";
 import {
-    ILocale,
-    IVisCallbacks,
-    IVisualization,
-    IReferencePoint,
-    IFeatureFlags,
     IBucketItem,
+    IFeatureFlags,
     IGdcConfig,
+    ILocale,
+    IReferencePoint,
+    IVisCallbacks,
     IVisConstruct,
+    IVisualization,
 } from "../interfaces/Visualization";
 import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableColumnChart } from "./pluggableVisualizations/columnChart/PluggableColumnChart";
@@ -34,8 +29,12 @@ import { PluggableComboChart } from "./pluggableVisualizations/comboChart/Plugga
 import { PluggableTreemap } from "./pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "./pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { PluggableBubbleChart } from "./pluggableVisualizations/bubbleChart/PluggableBubbleChart";
-import { IInsight, IVisualizationClass } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IInsight, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import isEqual = require("lodash/isEqual");
+import isEmpty = require("lodash/isEmpty");
+import noop = require("lodash/noop");
+import omit = require("lodash/omit");
 
 // visualization catalogue - add your new visualization here
 const VisualizationsCatalog = {
@@ -75,7 +74,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onExportReady: VisEvents.OnExportReady;
     onLoadingChanged: VisEvents.OnLoadingChanged;
     isMdObjectValid?: boolean;
-    executionFactory: IExecutionFactory;
+    backend: IAnalyticalBackend;
     onExtendedReferencePointChanged?(): void;
     onNewDerivedBucketItemsPlaced?(): void;
 }
@@ -93,10 +92,12 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
     private componentId: string;
     private visualization: IVisualization;
+    private executionFactory: IExecutionFactory;
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
         this.componentId = uuid.v4();
+        this.executionFactory = props.backend.workspace(props.projectId).execution();
     }
 
     public componentWillUnmount() {
@@ -171,15 +172,16 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.visualization.unmount();
         }
 
-        const type = get(visualizationClass, "content.url", "").split(":")[1];
+        const type = visClassUrl(visualizationClass).split(":")[1];
 
         const visConstructor = this.props.visualizationsCatalog[type];
 
         if (visConstructor) {
-            this.visualization = new visConstructor({
+            const constInput: IVisConstruct = {
                 projectId,
                 locale,
                 environment,
+                backend: props.backend,
                 element: `.${this.getVisualizationClassName()}`,
                 configPanelElement: `.${this.getConfigPanelClassName()}`,
                 callbacks: {
@@ -190,7 +192,10 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                     pushData: props.pushData,
                 },
                 featureFlags,
-            } as IVisConstruct);
+                visualizationProperties: insightProperties(props.insight),
+            };
+
+            this.visualization = new visConstructor(constInput);
         } else {
             console.error(`Error: unsupported visualization type - ${type}`); // tslint:disable-line
         }
@@ -212,7 +217,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                     config: this.props.config,
                 },
                 this.props.insight,
-                this.props.executionFactory,
+                this.executionFactory,
             );
         }
     }

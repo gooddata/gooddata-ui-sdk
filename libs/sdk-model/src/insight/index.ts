@@ -248,3 +248,18 @@ export function insightWithProperties(insight: IInsight, properties: Visualizati
         },
     };
 }
+
+//
+// Visualization class functions
+//
+
+/**
+ * For given visualization class, return URL where the vis assets are stored.
+ *
+ * @param vc - visualization class
+ * @returns never null, never empty
+ * @public
+ */
+export function visClassUrl(vc: IVisualizationClass): string {
+    return vc.visualizationClass.url;
+}

@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import { DataLayer } from "@gooddata/gd-bear-client";
-import { AFM, Execution, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
+import { AFM, Execution, VisualizationObject } from "@gooddata/gd-bear-model";
 import { MEASUREGROUP } from "../constants/bucket";
 import { executionObjectMock } from "./executionObjectMocks";
 import * as BucketNames from "../../base/constants/bucketNames";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IVisualizationClass } from "@gooddata/sdk-model";
 import { attribute } from "../../base/helpers/model";
 
 export const emptyExecutionResponse: Execution.IExecutionResponses = {
@@ -276,6 +276,64 @@ export const insightWithTwoMeasuresAndViewBy: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with two viewby attributes",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const insightWithSingleMeasure: IInsight = {
+    insight: {
+        visualizationClassIdentifier: "column",
+        buckets: [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single measure",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const insightWithSingleAttribute: IInsight = {
+    insight: {
+        visualizationClassIdentifier: "column",
+        buckets: [
+            {
+                localIdentifier: BucketNames.VIEW,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1027",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single measure",
         identifier: "myIdentifier",
         uri: "/gdc/md/mockproject/obj/123",
     },
@@ -623,23 +681,21 @@ export const twoMeasuresMdObject: VisualizationObject.IVisualizationObjectConten
 };
 
 // Visualization classes
-export const dummyTableVisualizationClass: VisualizationClass.IVisualizationClass = {
-    meta: {
-        title: EMPTY_TITLE,
-    },
-    content: {
+export const dummyTableVisualizationClass: IVisualizationClass = {
+    visualizationClass: {
+        identifier: "tableVis",
         url: "local:table",
+        title: EMPTY_TITLE,
         icon: "",
         iconSelected: "",
         checksum: "",
     },
 };
 
-export const dummyColumnVisualizationClass: VisualizationClass.IVisualizationClass = {
-    meta: {
+export const dummyColumnVisualizationClass: IVisualizationClass = {
+    visualizationClass: {
+        identifier: "columnVis",
         title: EMPTY_TITLE,
-    },
-    content: {
         url: "local:column",
         icon: "",
         iconSelected: "",
@@ -647,11 +703,10 @@ export const dummyColumnVisualizationClass: VisualizationClass.IVisualizationCla
     },
 };
 
-export const dummyHeadlineVisualizationClass: VisualizationClass.IVisualizationClass = {
-    meta: {
+export const dummyHeadlineVisualizationClass: IVisualizationClass = {
+    visualizationClass: {
         title: EMPTY_TITLE,
-    },
-    content: {
+        identifier: "headlineVis",
         url: "local:headline",
         icon: "",
         iconSelected: "",
@@ -659,11 +714,10 @@ export const dummyHeadlineVisualizationClass: VisualizationClass.IVisualizationC
     },
 };
 
-export const dummyUnknownTypeVisualizationClass: VisualizationClass.IVisualizationClass = {
-    meta: {
+export const dummyUnknownTypeVisualizationClass: IVisualizationClass = {
+    visualizationClass: {
         title: EMPTY_TITLE,
-    },
-    content: {
+        identifier: "fun",
         url: "unknown",
         icon: "",
         iconSelected: "",

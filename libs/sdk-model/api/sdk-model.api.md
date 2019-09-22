@@ -624,6 +624,9 @@ export function totalIsNative(total: ITotal): boolean;
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
 
 // @public
+export function visClassUrl(vc: IVisualizationClass): string;
+
+// @public
 export type VisualizationProperties = {
     [key: string]: any;
 };
