@@ -3,44 +3,20 @@
 import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../../highcharts/chart/constants";
 import {
     findAttributeInDimension,
-    findInDimensionHeaders,
     findMeasureGroupInDimensions,
     findMeasureHeaderByLocalIdentifier,
-    getNthAttributeHeader,
-    getNthAttributeLocalIdentifier,
-    getNthAttributeName,
-    getNthDimensionHeaders,
 } from "../executionResultHelper";
 import * as fixtures from "../../../../__mocks__/fixtures";
-
-describe("findInDimensionHeaders", () => {
-    it("should call supplied callback for all headers in all dimensions until it returns a non null value", () => {
-        const mockCallback = jest.fn();
-        mockCallback.mockReturnValue(null);
-        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
-        const headerCount =
-            sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers.length +
-            sampleDimensions[STACK_BY_DIMENSION_INDEX].headers.length;
-        const returnValue = findInDimensionHeaders(sampleDimensions, mockCallback);
-        expect(returnValue).toBeNull();
-        expect(mockCallback).toHaveBeenCalledTimes(headerCount);
-    });
-    it("should return the first non-null value of it`s callback value", () => {
-        const mockCallback = jest.fn();
-        mockCallback.mockReturnValue(42);
-        const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
-        const returnValue = findInDimensionHeaders(sampleDimensions, mockCallback);
-        expect(returnValue).toBe(42);
-        expect(mockCallback).toHaveBeenCalledTimes(1);
-    });
-});
+import { IAttributeHeader, IMeasureGroupHeader } from "@gooddata/sdk-backend-spi";
+import { Execution } from "@gooddata/gd-bear-model";
 
 describe("findMeasureGroupInDimensions", () => {
     const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
-        const expectedValue = sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers[1].measureGroupHeader;
+        const expectedValue = (sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers[1] as IMeasureGroupHeader)
+            .measureGroupHeader;
         expect(returnValue).toBe(expectedValue);
     });
 
@@ -67,7 +43,7 @@ describe("findAttributeInDimension", () => {
             headerItems[VIEW_BY_DIMENSION_INDEX],
         );
         const expectedValue = {
-            ...dimensions[VIEW_BY_DIMENSION_INDEX].headers[0].attributeHeader,
+            ...(dimensions[VIEW_BY_DIMENSION_INDEX].headers[0] as IAttributeHeader).attributeHeader,
             items: headerItems[VIEW_BY_DIMENSION_INDEX][0],
         };
         expect(returnValue).toEqual(expectedValue);
@@ -78,7 +54,7 @@ describe("findAttributeInDimension", () => {
             headerItems[STACK_BY_DIMENSION_INDEX],
         );
         const expectedValue = {
-            ...dimensions[STACK_BY_DIMENSION_INDEX].headers[0].attributeHeader,
+            ...(dimensions[STACK_BY_DIMENSION_INDEX].headers[0] as IAttributeHeader).attributeHeader,
             items: headerItems[STACK_BY_DIMENSION_INDEX][0],
         };
         expect(returnValue).toEqual(expectedValue);
@@ -142,71 +118,5 @@ describe("findMeasureHeaderByLocalIdentifier", () => {
             links: { executionResult: "" },
         };
         expect(findMeasureHeaderByLocalIdentifier(emptyExecutionResponse, "foo")).toBe(null);
-    });
-});
-
-describe("getNthAttributeHeader", () => {
-    it("should return first header", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeHeader(attributeHeaders, 0)).toBe(attributeHeaders[0].attributeHeader);
-    });
-
-    it("should return null if attribute header not found", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeHeader(attributeHeaders, 1)).toBe(null);
-    });
-});
-
-describe("getNthAttributeLocalIdentifier", () => {
-    it("should return local identifier of first header", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeLocalIdentifier(attributeHeaders, 0)).toBe(
-            attributeHeaders[0].attributeHeader.localIdentifier,
-        );
-    });
-
-    it("should return null if attribute header not found", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeLocalIdentifier(attributeHeaders, 1)).toBe(null);
-    });
-});
-
-describe("getNthAttributeName", () => {
-    it("should return name of first header", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeName(attributeHeaders, 0)).toBe(
-            attributeHeaders[0].attributeHeader.formOf.name,
-        );
-    });
-
-    it("should return null if attribute header not found", () => {
-        const attributeHeaders = EXECUTION_RESPONSE_1A_2M.dimensions[0]
-            .headers as Execution.IAttributeHeader[];
-
-        expect(getNthAttributeName(attributeHeaders, 1)).toBe(null);
-    });
-});
-
-describe("getNthDimensionHeaders", () => {
-    it("should return first header", () => {
-        const executionResponse = EXECUTION_RESPONSE_1A_2M;
-
-        expect(getNthDimensionHeaders(executionResponse, 0)).toBe(executionResponse.dimensions[0].headers);
-    });
-
-    it("should return null if dimension not found", () => {
-        const executionResponse = EXECUTION_RESPONSE_1A_2M;
-
-        expect(getNthDimensionHeaders(executionResponse, 3)).toBe(null);
     });
 });

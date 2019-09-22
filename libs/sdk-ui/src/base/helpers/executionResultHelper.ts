@@ -1,12 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
 import * as invariant from "invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "../../highcharts/chart/types";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { getMappingHeaderLocalIdentifier } from "./mappingHeader";
+import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
+import { Execution } from "@gooddata/gd-bear-model";
 
-export function findInDimensionHeaders(
-    dimensions: Execution.IResultDimension[],
+//
+// TODO: move all this code to data view facade.
+//
+
+function findInDimensionHeaders(
+    dimensions: IResultDimension[],
     headerCallback: (
         headerType: string,
         header: any,
@@ -18,10 +23,7 @@ export function findInDimensionHeaders(
     let returnValue: any = null;
     dimensions.some((dimension: any, dimensionIndex: number) => {
         dimension.headers.some(
-            (
-                wrappedHeader: Execution.IMeasureGroupHeader | Execution.IAttributeHeader,
-                headerIndex: number,
-            ) => {
+            (wrappedHeader: IMeasureGroupHeader | IAttributeHeader, headerIndex: number) => {
                 const headerType = Object.keys(wrappedHeader)[0];
                 const header = wrappedHeader[headerType];
                 const headerCount = dimension.headers.length;
@@ -35,13 +37,13 @@ export function findInDimensionHeaders(
 }
 
 export function findMeasureGroupInDimensions(
-    dimensions: Execution.IResultDimension[],
-): Execution.IMeasureGroupHeader["measureGroupHeader"] {
+    dimensions: IResultDimension[],
+): IMeasureGroupHeader["measureGroupHeader"] {
     return findInDimensionHeaders(
         dimensions,
         (
             headerType: string,
-            header: Execution.IMeasureGroupHeader["measureGroupHeader"],
+            header: IMeasureGroupHeader["measureGroupHeader"],
             _dimensionIndex: number,
             headerIndex: number,
             headerCount: number,
@@ -67,7 +69,7 @@ export function findAttributeInDimension(
         [dimension],
         (
             headerType: string,
-            header: Execution.IAttributeHeader["attributeHeader"],
+            header: IAttributeHeader["attributeHeader"],
             _dimensionIndex: number,
             headerIndex: number,
         ) => {
@@ -101,9 +103,9 @@ export function findMeasureHeaderByLocalIdentifier(
 }
 
 export function getNthAttributeHeader(
-    attributeHeaders: Execution.IAttributeHeader[],
+    attributeHeaders: IAttributeHeader[],
     headerIndex: number,
-): Execution.IAttributeHeader["attributeHeader"] {
+): IAttributeHeader["attributeHeader"] {
     if (attributeHeaders.length && attributeHeaders[headerIndex]) {
         return attributeHeaders[headerIndex].attributeHeader;
     }
@@ -111,17 +113,14 @@ export function getNthAttributeHeader(
 }
 
 export function getNthAttributeLocalIdentifier(
-    rowAttributeHeaders: Execution.IAttributeHeader[],
+    rowAttributeHeaders: IAttributeHeader[],
     headerIndex: number,
 ): string {
     const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
     return attributeHeader && attributeHeader.localIdentifier;
 }
 
-export function getNthAttributeName(
-    rowAttributeHeaders: Execution.IAttributeHeader[],
-    headerIndex: number,
-): string {
+export function getNthAttributeName(rowAttributeHeaders: IAttributeHeader[], headerIndex: number): string {
     const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
     return attributeHeader && attributeHeader.formOf.name;
 }
