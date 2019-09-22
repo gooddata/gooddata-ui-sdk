@@ -12,6 +12,8 @@ import {
 } from "../../../constants/supportedProperties";
 import { AXIS } from "../../../constants/axis";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { insightWithProperties } from "@gooddata/sdk-model";
 
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
@@ -22,16 +24,20 @@ describe("PluggableColumnBarCharts", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {
         return new PluggableColumnChart(props);
     }
 
+    const executionFactory = dummyBackend()
+        .workspace("PROJECTID")
+        .execution();
+
     describe("optional stacking", () => {
         const options: IVisProps = {
-            dataSource: null,
-            resultSpec: testMocks.dummyBaseChartResultSpec,
             dimensions: { height: null },
             locale: "en-US",
             custom: {
@@ -259,17 +265,14 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should disable open as report for insight have two view items", () => {
             const visualization = createComponent(defaultProps);
-            const mdObject = testMocks.twoViewItemsMdObject;
-
-            visualization.update(options, {}, mdObject, undefined);
+            visualization.update(options, testMocks.insightWithTwoViewBys, executionFactory);
             const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
 
-        it("should disable open as report for insight have properties stackMeasures or stackMeasuresToPercent", () => {
+        it("should disable open as report for insight have properties stackMeasures ", () => {
             const visualization = createComponent(defaultProps);
             let visualizationProperties;
-            let mdObject;
             let isOpenAsReportSupported;
 
             // stackMeasures property
@@ -280,10 +283,20 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 },
             };
-            mdObject = testMocks.twoMeasuresMdObject;
-            visualization.update(options, visualizationProperties, mdObject, undefined);
+            const testInsight = insightWithProperties(
+                testMocks.insightWithTwoMeasuresAndViewBy,
+                visualizationProperties,
+            );
+
+            visualization.update(options, testInsight, executionFactory);
             isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
+        });
+
+        it("should disable open as report for insight have properties stackMeasuresToPercent", () => {
+            const visualization = createComponent(defaultProps);
+            let visualizationProperties;
+            let isOpenAsReportSupported;
 
             // stackMeasuresToPercent property
             visualizationProperties = {
@@ -293,17 +306,20 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 },
             };
-            mdObject = testMocks.stackedMdObject;
-            visualization.update(options, visualizationProperties, mdObject, undefined);
+            const testInsight = insightWithProperties(
+                testMocks.insightWithTwoMeasuresAndViewBy,
+                visualizationProperties,
+            );
+
+            visualization.update(options, testInsight, executionFactory);
             isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(false);
         });
 
         it("should enable open as report for normal column chart", () => {
             const visualization = createComponent(defaultProps);
-            const mdObject = testMocks.twoMeasuresMdObject;
 
-            visualization.update(options, {}, mdObject, undefined);
+            visualization.update(options, testMocks.insightWithTwoMeasuresAndViewBy, executionFactory);
             const isOpenAsReportSupported = visualization.isOpenAsReportSupported();
             expect(isOpenAsReportSupported).toBe(true);
         });
