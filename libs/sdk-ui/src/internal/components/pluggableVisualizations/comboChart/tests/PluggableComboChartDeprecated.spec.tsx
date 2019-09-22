@@ -2,6 +2,7 @@
 import noop = require("lodash/noop");
 import { PluggableComboChartDeprecated } from "../PluggableComboChartDeprecated";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableComboChartDeprecated", () => {
     const defaultProps = {
@@ -12,6 +13,8 @@ describe("PluggableComboChartDeprecated", () => {
             afterRender: noop,
             pushData: noop,
         },
+        backend: dummyBackend(),
+        visualizationProperties: {},
     };
 
     function createComponent(props = defaultProps) {
