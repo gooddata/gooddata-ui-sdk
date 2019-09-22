@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import cloneDeep = require("lodash/cloneDeep");
 
 import { PluggableHeadline } from "../PluggableHeadline";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
@@ -14,7 +13,6 @@ import {
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-    IVisualizationProperties,
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
@@ -22,12 +20,16 @@ import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
 import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
 import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
 import * as BucketNames from "../../../../../base/constants/bucketNames";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import cloneDeep = require("lodash/cloneDeep");
 
 describe("PluggableHeadline", () => {
     const defaultProps = {
         projectId: "PROJECTID",
+        backend: dummyBackend(),
         element: "body",
         configPanelElement: "invalid",
+        visualizationProperties: {},
         callbacks: {
             afterRender: jest.fn(),
             pushData: jest.fn(),
@@ -35,6 +37,10 @@ describe("PluggableHeadline", () => {
             onError: jest.fn(),
         },
     };
+
+    const executionFactory = dummyBackend()
+        .workspace("PROJECTID")
+        .execution();
 
     function createComponent(customProps: Partial<IVisConstruct> = {}) {
         return new PluggableHeadline({
@@ -77,8 +83,6 @@ describe("PluggableHeadline", () => {
         function getTestOptions(): IVisProps {
             const drillableItems: IDrillableItem[] = [];
             return {
-                dataSource: testMocks.dummyDataSource,
-                resultSpec: testMocks.dummyTableResultSpec,
                 dimensions: {
                     width: 12,
                     height: 14,
@@ -100,10 +104,9 @@ describe("PluggableHeadline", () => {
 
             const headline = createComponent();
 
-            const properties: IVisualizationProperties = {};
             const options: IVisProps = getTestOptions();
 
-            headline.update({ ...options, dataSource: null }, properties, testMocks.emptyMdObject);
+            headline.update({ ...options }, testMocks.emptyInsight, executionFactory);
 
             expect(reactRenderSpy).toHaveBeenCalledTimes(0);
 
@@ -121,25 +124,20 @@ describe("PluggableHeadline", () => {
             const headline = createComponent();
             const options: IVisProps = getTestOptions();
 
-            headline.update(options, null, testMocks.emptyMdObject);
+            headline.update(options, testMocks.insightWithSingleMeasure, executionFactory);
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
-            expect(reactCreateElementSpy.mock.calls[0][1]).toEqual({
-                projectId: "PROJECTID",
+            expect(reactCreateElementSpy.mock.calls[0][1]).toMatchObject({
                 config: undefined,
                 drillableItems: options.custom.drillableItems,
                 locale: options.locale,
-                dataSource: options.dataSource,
-                resultSpec: {
-                    ...options.resultSpec,
-                    dimensions: [{ itemIdentifiers: ["measureGroup"] }],
-                },
                 afterRender: defaultProps.callbacks.afterRender,
                 onLoadingChanged: defaultProps.callbacks.onLoadingChanged,
                 pushData: defaultProps.callbacks.pushData,
                 onError: defaultProps.callbacks.onError,
                 ErrorComponent: null,
                 LoadingComponent: null,
+                execution: expect.any(Object),
             });
             expect(reactRenderSpy).toHaveBeenCalledWith(
                 fakeElement,
