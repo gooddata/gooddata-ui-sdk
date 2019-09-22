@@ -94,6 +94,10 @@ export function insightBucket(
     insight: IInsight,
     idOrFun: string | BucketPredicate = anyBucket,
 ): IBucket | undefined {
+    if (!insight) {
+        return;
+    }
+
     return bucketsFind(insight.insight.buckets, idOrFun);
 }
 
@@ -107,6 +111,10 @@ export function insightBucket(
  * @public
  */
 export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
+    if (!insight) {
+        return [];
+    }
+
     if (!ids || !ids.length) {
         return insight.insight.buckets;
     }
@@ -122,6 +130,10 @@ export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
  * @public
  */
 export function insightMeasures(insight: IInsight): IMeasure[] {
+    if (!insight) {
+        return [];
+    }
+
     return bucketsMeasures(insight.insight.buckets);
 }
 
@@ -133,6 +145,10 @@ export function insightMeasures(insight: IInsight): IMeasure[] {
  * @public
  */
 export function insightHasMeasures(insight: IInsight): boolean {
+    if (!insight) {
+        return false;
+    }
+
     return insightMeasures(insight).length > 0;
 }
 
@@ -144,6 +160,10 @@ export function insightHasMeasures(insight: IInsight): boolean {
  * @public
  */
 export function insightAttributes(insight: IInsight): IAttribute[] {
+    if (!insight) {
+        return [];
+    }
+
     return bucketsAttributes(insight.insight.buckets);
 }
 
@@ -155,6 +175,10 @@ export function insightAttributes(insight: IInsight): IAttribute[] {
  * @public
  */
 export function insightHasAttributes(insight: IInsight): boolean {
+    if (!insight) {
+        return false;
+    }
+
     return insightAttributes(insight).length > 0;
 }
 
@@ -167,6 +191,10 @@ export function insightHasAttributes(insight: IInsight): boolean {
  * @public
  */
 export function insightHasDataDefined(insight: IInsight): boolean {
+    if (!insight) {
+        return false;
+    }
+
     return (
         insight.insight.buckets.length > 0 && (insightHasMeasures(insight) || insightHasAttributes(insight))
     );
@@ -179,6 +207,10 @@ export function insightHasDataDefined(insight: IInsight): boolean {
  * @public
  */
 export function insightFilters(insight: IInsight): IFilter[] {
+    if (!insight) {
+        return [];
+    }
+
     return insight.insight.filters;
 }
 
@@ -193,6 +225,10 @@ export function insightFilters(insight: IInsight): IFilter[] {
  * @public
  */
 export function insightSorts(insight: IInsight): SortItem[] {
+    if (!insight) {
+        return [];
+    }
+
     const attributeIds = insightAttributes(insight).map(attributeId);
     const measureIds = insightMeasures(insight).map(measureId);
 
@@ -218,6 +254,10 @@ export function insightSorts(insight: IInsight): SortItem[] {
  * @public
  */
 export function insightTotals(insight: IInsight): ITotal[] {
+    if (!insight) {
+        return [];
+    }
+
     return bucketsTotals(insight.insight.buckets);
 }
 
@@ -229,6 +269,10 @@ export function insightTotals(insight: IInsight): ITotal[] {
  * @public
  */
 export function insightProperties(insight: IInsight): VisualizationProperties {
+    if (!insight) {
+        return {};
+    }
+
     return insight.insight.properties;
 }
 

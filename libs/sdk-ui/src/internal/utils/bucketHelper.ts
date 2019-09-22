@@ -48,7 +48,7 @@ import {
     IBucket,
     IInsight,
     insightBuckets,
-    isMeasureDefinition,
+    isSimpleMeasure,
 } from "@gooddata/sdk-model";
 
 export function removeUnusedFilters(filters: IFiltersBucketItem[], unusedBucketItems: IBucketItem[]) {
@@ -402,7 +402,7 @@ export function getUniqueAttributes(buckets: IBucketOfFun[]) {
 }
 
 export function getMeasuresFromMdObject(insight: IInsight) {
-    return bucketsMeasures(insightBuckets(insight), m => isMeasureDefinition(m.measure.definition));
+    return bucketsMeasures(insightBuckets(insight), isSimpleMeasure);
 }
 
 export function getMeasures(buckets: IBucketOfFun[]) {
