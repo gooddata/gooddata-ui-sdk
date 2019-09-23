@@ -8,7 +8,7 @@ import { VisType } from "../base/constants/visualizationTypes";
 import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from "../highcharts/utils/defaultColors";
+export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
 
 export type IDataLabelsVisible = string | boolean;
 

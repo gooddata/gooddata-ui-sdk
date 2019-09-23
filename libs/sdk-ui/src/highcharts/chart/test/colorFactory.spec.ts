@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 import {
     AttributeColorStrategy,
     BubbleChartColorStrategy,
@@ -14,7 +14,7 @@ import {
 
 import { getMVS } from "./helper";
 
-import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
+import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../../base/helpers/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";

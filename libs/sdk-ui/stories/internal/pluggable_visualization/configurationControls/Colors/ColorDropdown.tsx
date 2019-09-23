@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/highcharts/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../src/base/constants/defaultColors";
 import ColorDropdown from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
 // tslint:disable-next-line:max-line-length
 import ColoredItemContent from "../../../../../src/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";

@@ -46,7 +46,7 @@ import {
 import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
+import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../../base/helpers/color";
 
 import {
     isAreaChart,

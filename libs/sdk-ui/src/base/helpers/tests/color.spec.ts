@@ -12,8 +12,8 @@ import {
     context,
     attributeHeader,
     attributeHeaderItem,
-} from "../../../base/factory/tests/HeaderPredicateFactory.mock";
-import { DEFAULT_COLOR_PALETTE } from "../defaultColors";
+} from "../../factory/tests/HeaderPredicateFactory.mock";
+import { DEFAULT_COLOR_PALETTE } from "../../constants/defaultColors";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {

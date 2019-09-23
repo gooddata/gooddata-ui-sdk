@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../../highcharts/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 import * as MappingHeader from "../../../interfaces/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";

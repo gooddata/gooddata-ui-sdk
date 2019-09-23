@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
-import { getRgbString } from "../../../../utils/color";
+import { getRgbString } from "../../../../../base/helpers/color";
 import { DEFAULT_COLOR_PALETTE, IColorPaletteItem } from "../../../../../interfaces/Config";
 
 describe("dataLabelsColors", () => {

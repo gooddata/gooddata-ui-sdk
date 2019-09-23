@@ -49,7 +49,7 @@ import ChartTransformation from "./highcharts/chart/ChartTransformation";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
-import ColorUtils from "./highcharts/utils/color";
+import ColorUtils from "./base/helpers/color";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";

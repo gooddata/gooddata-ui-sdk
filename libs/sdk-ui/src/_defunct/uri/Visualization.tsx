@@ -40,7 +40,7 @@ import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { getDefaultTreemapSort } from "../../base/helpers/sorts";
 import { convertErrors, generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
 import { isTreemap } from "../../base/helpers/common";
-import { getColorMappingPredicate, getColorPaletteFromColors } from "../../highcharts/utils/color";
+import { getColorMappingPredicate, getColorPaletteFromColors } from "../../base/helpers/color";
 import { getCachedOrLoad } from "../../base/helpers/sdkCache";
 import { getFeatureFlags } from "../../base/helpers/featureFlags";
 import { mergeFiltersToAfm } from "../../base/helpers/afmHelper";

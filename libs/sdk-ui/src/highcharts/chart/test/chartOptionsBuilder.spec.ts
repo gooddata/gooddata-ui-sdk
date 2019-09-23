@@ -3,7 +3,7 @@ import range = require("lodash/range");
 import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
-import { DEFAULT_COLOR_PALETTE } from "../../utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../../base/helpers/executionResultHelper";
 import {
@@ -27,7 +27,7 @@ import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { PIE_CHART_LIMIT } from "../constants";
-import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
+import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../../base/helpers/color";
 
 import {
     AttributeColorStrategy,

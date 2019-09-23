@@ -5,7 +5,7 @@ import { getChartType, getVisibleSeries, isStacked, getShapeAttributes } from ".
 
 import { getDataLabelAttributes } from "../dataLabelsHelpers";
 
-import { parseRGBColorCode } from "../../../utils/color";
+import { parseRGBColorCode } from "../../../../base/helpers/color";
 import { isOneOfTypes } from "../../../../base/helpers/common";
 
 const setWhiteColor = (point: any) => {
