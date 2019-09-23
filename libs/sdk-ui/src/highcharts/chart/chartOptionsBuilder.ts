@@ -73,13 +73,15 @@ import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingCh
 import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
     HEATMAP_DATA_POINTS_LIMIT,
-    PARENT_ATTRIBUTE_INDEX,
     PIE_CHART_LIMIT,
+    VIEW_BY_ATTRIBUTES_LIMIT,
+} from "../../base/constants/limits";
+import {
+    PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
-    VIEW_BY_ATTRIBUTES_LIMIT,
     VIEW_BY_DIMENSION_INDEX,
-} from "./constants";
+} from "../../base/constants/dimensions";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,

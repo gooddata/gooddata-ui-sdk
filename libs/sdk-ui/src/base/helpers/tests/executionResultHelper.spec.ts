@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 
-import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../../highcharts/chart/constants";
+import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../constants/dimensions";
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,

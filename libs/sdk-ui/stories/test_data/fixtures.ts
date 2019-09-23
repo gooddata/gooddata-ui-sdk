@@ -3,7 +3,7 @@ import { range, cloneDeep } from "lodash";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 
 import { immutableSet, repeatItemsNTimes } from "../../src/base/helpers/common";
-import { STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
+import { STACK_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
 
 export const barChartWithSingleMeasureAndNoAttributes: any = {
     executionRequest: require("../test_data/bar_chart_with_single_measure_and_no_attributes_request.json")

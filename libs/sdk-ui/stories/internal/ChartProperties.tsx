@@ -6,7 +6,7 @@ import identity = require("lodash/identity");
 import cloneDeep = require("lodash/cloneDeep");
 
 import ChartTransformation from "../../src/highcharts/chart/ChartTransformation";
-import { VIEW_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
+import { VIEW_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
 import { BASE_DUAL_AXIS_CHARTS } from "../data/dualAxis";
 
 import * as fixtures from "../test_data/fixtures";

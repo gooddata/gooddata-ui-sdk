@@ -7,7 +7,7 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 import ChartTransformation from "../../src/highcharts/chart/ChartTransformation";
 import { FLUID_LEGEND_THRESHOLD } from "../../src/highcharts/chart/HighChartsRenderer";
 import { immutableSet } from "../../src/base/helpers/common";
-import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
+import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
 
 import fixtureDataSets, * as fixtures from "../test_data/fixtures";
 

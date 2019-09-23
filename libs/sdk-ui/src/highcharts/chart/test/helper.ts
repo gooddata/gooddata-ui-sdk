@@ -12,7 +12,7 @@ import {
     STACK_BY_DIMENSION_INDEX,
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
-} from "../constants";
+} from "../../../base/constants/dimensions";
 
 import { IHeaderPredicate2 } from "../../../interfaces/HeaderPredicate";
 import { IChartOptions } from "../../../interfaces/Config";

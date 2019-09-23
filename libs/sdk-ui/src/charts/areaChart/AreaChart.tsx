@@ -10,7 +10,7 @@ import {
 import * as React from "react";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
 import { INewChartConfig } from "../../interfaces/Config";

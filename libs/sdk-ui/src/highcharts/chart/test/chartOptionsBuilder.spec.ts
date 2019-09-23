@@ -26,7 +26,7 @@ import {
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { PIE_CHART_LIMIT } from "../constants";
+import { PIE_CHART_LIMIT } from "../../../base/constants/limits";
 import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../../base/helpers/color";
 
 import {
