@@ -39,7 +39,7 @@ import {
     isRotationInRange,
     isScatterPlot,
     isTreemap,
-} from "../../utils/common";
+} from "../../../base/helpers/common";
 import {
     shouldEndOnTick,
     shouldFollowPointer,

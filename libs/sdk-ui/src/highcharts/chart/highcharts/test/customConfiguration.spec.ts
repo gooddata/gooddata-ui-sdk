@@ -11,7 +11,7 @@ import {
 } from "../customConfiguration";
 import { ISeriesDataItem } from "../../../../interfaces/Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { immutableSet } from "../../../utils/common";
+import { immutableSet } from "../../../../base/helpers/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,

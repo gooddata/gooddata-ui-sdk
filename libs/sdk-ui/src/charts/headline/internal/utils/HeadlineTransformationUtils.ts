@@ -8,7 +8,7 @@ import { AFM, Execution } from "@gooddata/gd-bear-model";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
-import { createDrillIntersectionElement } from "../../../../highcharts/utils/drilldownEventing";
+import { createDrillIntersectionElement } from "../../../../base/helpers/drilldownEventing";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { isSomeHeaderPredicateMatched2 } from "../../../../base/helpers/headerPredicate";
 import {

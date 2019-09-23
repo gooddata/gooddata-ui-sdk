@@ -60,8 +60,8 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-} from "../utils/common";
-import { createDrillIntersectionElement } from "../utils/drilldownEventing";
+} from "../../base/helpers/common";
+import { createDrillIntersectionElement } from "../../base/helpers/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
     getComboChartSeries,

@@ -7,7 +7,7 @@ import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
 import { INewChartConfig, ISeriesItem } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { isLineChart } from "../../utils/common";
+import { isLineChart } from "../../../base/helpers/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
 export const CHART_ORDER = {

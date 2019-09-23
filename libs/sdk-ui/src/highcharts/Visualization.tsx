@@ -11,7 +11,7 @@ import Highcharts from "./chart/highcharts/highchartsEntryPoint";
 import { INewChartConfig } from "../interfaces/Config";
 import { OnFiredDrillEvent } from "../interfaces/Events";
 
-import { isChartSupported, stringifyChartTypes } from "./utils/common";
+import { isChartSupported, stringifyChartTypes } from "../base/helpers/common";
 import { IDrillableItem } from "../interfaces/DrillEvents";
 import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 

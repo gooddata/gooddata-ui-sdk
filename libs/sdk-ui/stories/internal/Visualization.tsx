@@ -8,7 +8,7 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 import { Visualization } from "../../src/highcharts/Visualization";
 import fixtureDataSets, * as fixtures from "../test_data/fixtures";
 import { wrap } from "../utils/wrap";
-import { immutableSet } from "../../src/highcharts/utils/common";
+import { immutableSet } from "../../src/base/helpers/common";
 
 import "../../styles/scss/charts.scss";
 import { GERMAN_NUMBER_FORMAT } from "../data/numberFormat";

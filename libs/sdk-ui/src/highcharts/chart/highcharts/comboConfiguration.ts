@@ -3,7 +3,7 @@ import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
 import { INewChartConfig } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { isLineChart } from "../../utils/common";
+import { isLineChart } from "../../../base/helpers/common";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";

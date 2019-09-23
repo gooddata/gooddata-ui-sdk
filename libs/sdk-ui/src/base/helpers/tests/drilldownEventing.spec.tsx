@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { AFM } from "@gooddata/gd-bear-model";
-import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
+import Highcharts from "../../../highcharts/chart/highcharts/highchartsEntryPoint";
 import {
     getClickableElementNameByChartType,
     chartClick,
     cellClick,
     createDrillIntersectionElement,
 } from "../drilldownEventing";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { SeriesChartTypes } from "../../constants/series";
+import { VisualizationTypes } from "../../constants/visualizationTypes";
+import { SeriesChartTypes } from "../../../highcharts/constants/series";
 import {
     IDrillConfig,
     IDrillEventIntersectionElement,

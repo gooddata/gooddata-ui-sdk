@@ -6,7 +6,7 @@ import { getChartType, getVisibleSeries, isStacked, getShapeAttributes } from ".
 import { getDataLabelAttributes } from "../dataLabelsHelpers";
 
 import { parseRGBColorCode } from "../../../utils/color";
-import { isOneOfTypes } from "../../../utils/common";
+import { isOneOfTypes } from "../../../../base/helpers/common";
 
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = "#fff";

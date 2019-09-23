@@ -15,7 +15,7 @@ import max = require("lodash/max");
 import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "../../../base/constants/visualizationTypes";
-import { isBarChart } from "../../utils/common";
+import { isBarChart } from "../../../base/helpers/common";
 import { IChartConfig, ISeriesItem, ISeriesDataItem, INewChartConfig } from "../../../interfaces/Config";
 
 export interface IRectByPoints {

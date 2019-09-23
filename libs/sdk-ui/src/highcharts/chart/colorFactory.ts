@@ -28,7 +28,7 @@ import {
     HEATMAP_BLUE_COLOR_PALETTE,
     isCustomPalette,
 } from "../utils/color";
-import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../utils/common";
+import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../../base/helpers/common";
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
 import uniqBy = require("lodash/uniqBy");

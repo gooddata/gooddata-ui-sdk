@@ -3,7 +3,7 @@ import get = require("lodash/get");
 import partial = require("lodash/partial");
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { styleVariables } from "../../styles/variables";
-import { tickLabelClick } from "../../utils/drilldownEventing";
+import { tickLabelClick } from "../../../base/helpers/drilldownEventing";
 import { ChartType } from "../../../base/constants/visualizationTypes";
 import {
     IDrillConfig,
