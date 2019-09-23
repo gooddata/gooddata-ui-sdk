@@ -5,7 +5,7 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
 import Highcharts from "./highchartsEntryPoint";
-import { chartClick } from "../../../base/helpers/drilldownEventing";
+import { chartClick } from "../../utils/drilldownEventing";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../../base/helpers/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";

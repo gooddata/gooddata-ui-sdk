@@ -61,7 +61,7 @@ import {
     parseValue,
     stringifyChartTypes,
 } from "../../base/helpers/common";
-import { createDrillIntersectionElement } from "../../base/helpers/drilldownEventing";
+import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
     getComboChartSeries,
