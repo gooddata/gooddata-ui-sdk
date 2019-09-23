@@ -22,7 +22,9 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 // @public
 export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "attributeFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function attributeFingerprint(attribute: IAttribute): string;
 
 // @public
@@ -108,13 +110,17 @@ export enum ComputeRatioRule {
 // @public
 export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "dimensionFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function dimensionFingerprint(dim: IDimension): string;
 
 // @public
 export function dimensionTotals(dim: IDimension): ITotal[];
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "filterFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function filterFingerprint(filter: IFilter): string;
 
 // @public
@@ -236,9 +242,7 @@ export type Identifier = string;
 
 // @public
 export interface IDimension {
-    // (undocumented)
     itemIdentifiers: Identifier[];
-    // (undocumented)
     totals?: ITotal[];
 }
 
@@ -568,7 +572,9 @@ export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "medi
 // @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "measureFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function measureFingerprint(measure: IMeasure): string;
 
 // @public

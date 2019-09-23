@@ -197,9 +197,9 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
  *
- * @public
+ * @internal
  */
 export function filterFingerprint(filter: IFilter): string {
     return JSON.stringify(filter);

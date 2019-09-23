@@ -279,11 +279,9 @@ export function measureIdentifier(measure: IMeasure): string | undefined {
 }
 
 /**
- * Calculates measure fingerprint - this is a unique string representing unique measure.
+ * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
  *
- * @param measure - measure to get fingerprint for
- * @returns string
- * @public
+ * @internal
  */
 export function measureFingerprint(measure: IMeasure): string {
     return JSON.stringify(measure);

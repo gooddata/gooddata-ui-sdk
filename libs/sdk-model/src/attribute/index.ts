@@ -128,12 +128,9 @@ export function attributeIdentifier(attribute: IAttribute): string | undefined {
 }
 
 /**
- * Calculates attribute's unique fingerprint. The contract here is that two attribute definitions which lead to same
- * results computed by the backend SHOULD return same fingerprint.
+ * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
  *
- * @param attribute - attribute to work with, must be defined
- * @returns opaque string
- * @public
+ * @internal
  */
 export function attributeFingerprint(attribute: IAttribute): string {
     invariant(attribute, "attribute must not be undefined");

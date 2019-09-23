@@ -225,9 +225,9 @@ export function newMeasureSort(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
  *
- * @public
+ * @internal
  */
 export function sortFingerprint(sort: SortItem): string {
     return JSON.stringify(sort);
