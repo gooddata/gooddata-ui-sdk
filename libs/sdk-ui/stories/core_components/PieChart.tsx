@@ -24,9 +24,9 @@ import {
     CUSTOM_COLOR_PALETTE_CONFIG,
 } from "../data/configProps";
 import { attributeItemNameMatch } from "../../src/base/factory/HeaderPredicateFactory";
+import { PositionType } from "../../src/interfaces/Config";
 import { RGBType } from "@gooddata/gd-bear-client";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { PositionType } from "../../src/highcharts/typings/legend";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";
 
 const wrapperStyle = { width: 400, height: 400 };

@@ -23,10 +23,10 @@ import {
     isColumnChart,
     isComboChart,
     isLineChart,
-    isPrimaryYAxis,
 } from "../../../base/helpers/common";
 import { IDrillConfig } from "../../../interfaces/DrillEvents";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
+import { isPrimaryYAxis } from "../../utils/isPrimaryYAxis";
 
 export const NORMAL_STACK = "normal";
 export const PERCENT_STACK = "percent";

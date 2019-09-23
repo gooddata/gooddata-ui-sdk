@@ -12,7 +12,7 @@ import get = require("lodash/get");
 import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
 import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
 import { getAttributeElementIdFromAttributeElementUri } from "../../../base/helpers/getAttributeElementIdFromAttributeElementUri";
-import { createDrillIntersectionElement } from "../../../highcharts/utils/drilldownEventing";
+import { createDrillIntersectionElement } from "../../../highcharts";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";

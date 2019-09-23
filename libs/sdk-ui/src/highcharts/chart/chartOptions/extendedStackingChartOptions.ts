@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import { Execution } from "@gooddata/gd-bear-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../base/helpers/types";
 
 /**
  * Transform

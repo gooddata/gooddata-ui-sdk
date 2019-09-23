@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Visualization } from "../../src/highcharts/Visualization";
+import { Visualization } from "../../src/highcharts";
 import fixtureDataSets, * as fixtures from "../test_data/fixtures";
 import { wrap } from "../utils/wrap";
 import { immutableSet } from "../../src/base/helpers/common";

@@ -2,7 +2,7 @@
 import get = require("lodash/get");
 import { setupDrilldown } from "../setupDrilldownToParentAttribute";
 import { styleVariables } from "../../../styles/variables";
-import { IHighchartsPointObject } from "../../../../interfaces/DrillEvents";
+import { IHighchartsPointObject } from "../../../utils/isGroupHighchartsDrillEvent";
 
 class MockHighChartsLabel {
     public basicStyles = { cursor: "default" };

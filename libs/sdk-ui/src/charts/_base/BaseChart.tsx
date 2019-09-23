@@ -7,7 +7,7 @@ import { ICoreChartProps } from "../chartProps";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
 
-import { Visualization } from "../../highcharts/Visualization";
+import { Visualization } from "../../highcharts";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {

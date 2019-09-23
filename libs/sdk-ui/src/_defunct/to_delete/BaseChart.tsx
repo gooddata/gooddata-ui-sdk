@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 
-import { Visualization } from "../../highcharts/Visualization";
+import { Visualization } from "../../highcharts";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ChartType } from "../../base/constants/visualizationTypes";

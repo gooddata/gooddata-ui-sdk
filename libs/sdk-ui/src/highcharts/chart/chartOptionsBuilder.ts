@@ -93,7 +93,7 @@ import { getChartProperties2 } from "./highcharts/helpers";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
-import { IUnwrappedAttributeHeadersWithItems } from "./types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 import escape = require("lodash/escape");

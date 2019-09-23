@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { Execution } from "@gooddata/gd-bear-model";
-import { IUnwrappedAttributeHeadersWithItems } from "../../types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../../base/helpers/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 
 describe("getCategoriesForTwoAttributes", () => {

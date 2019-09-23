@@ -9,8 +9,8 @@ import {
     IDrillConfig,
     IHighchartsCategoriesTree,
     IHighchartsParentTick,
-    IHighchartsPointObject,
 } from "../../../interfaces/DrillEvents";
+import { IHighchartsPointObject } from "../../utils/isGroupHighchartsDrillEvent";
 
 function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {
     const { startAt, leaves } = tick;

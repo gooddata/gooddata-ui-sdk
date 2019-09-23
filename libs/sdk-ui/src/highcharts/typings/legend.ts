@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { TOP } from "../chart/legend/PositionTypes";
-
-export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+import { PositionType } from "../../interfaces/Config";
 
 export interface ILegendOptions {
     enabled: boolean;

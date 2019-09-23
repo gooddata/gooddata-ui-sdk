@@ -6,7 +6,7 @@ import * as PropTypes from "prop-types";
 import isEqual = require("lodash/isEqual");
 import omit = require("lodash/omit");
 import { AFM, Execution } from "@gooddata/gd-bear-model/dist/index";
-import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../../highcharts/proptypes/execution";
+import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../../highcharts";
 
 import { IDataSource } from "./DataSource";
 import { ISubject } from "../../base/helpers/async";

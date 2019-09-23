@@ -10,11 +10,8 @@ import {
 } from "../drilldownEventing";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { SeriesChartTypes } from "../../constants/series";
-import {
-    IDrillConfig,
-    IDrillEventIntersectionElement,
-    IHighchartsPointObject,
-} from "../../../interfaces/DrillEvents";
+import { IDrillConfig, IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
+import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
