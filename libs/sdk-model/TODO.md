@@ -12,3 +12,4 @@ Documentation:
 
 -   Migration guide: text filters are no longer defined using textFilter indicator
 -   100% doc coverage needed here
+-   Sort out nomenclature; it is all over the place now

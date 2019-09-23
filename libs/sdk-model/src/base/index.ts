@@ -3,7 +3,7 @@
 import isEmpty = require("lodash/isEmpty");
 
 /**
- * TODO: SDK8: Add docs
+ * Type for all identifiers.
  *
  * @public
  */
@@ -24,7 +24,7 @@ export interface IObjUriQualifier {
  * @public
  */
 export interface IObjIdentifierQualifier {
-    identifier: string;
+    identifier: Identifier;
 }
 
 /**

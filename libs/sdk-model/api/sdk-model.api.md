@@ -377,7 +377,7 @@ export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight
 // @public
 export interface IObjIdentifierQualifier {
     // (undocumented)
-    identifier: string;
+    identifier: Identifier;
 }
 
 // @public
@@ -600,7 +600,7 @@ export type MeasurePredicate = (measure: IMeasure) => boolean;
 export function measureUri(measure: IMeasure): string | undefined;
 
 // @public
-export function newAttributeSort(attribute: IAttribute, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
+export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
@@ -626,7 +626,9 @@ export type RGBType = "rgb";
 // @public
 export type SortDirection = "asc" | "desc";
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "sortFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function sortFingerprint(sort: SortItem): string;
 
 // @public
