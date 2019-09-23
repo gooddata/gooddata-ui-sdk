@@ -55,13 +55,15 @@
         }
     },
     "dependencies": {
-        "lodash": "^4.7.11"
+        "lodash": "^4.7.11",
+        "ts-invariant": "^0.4.4"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "^1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^24.0.6",
         "@types/lodash": "4.14.123",
+        "@types/node": "^10.14.18",
         "jest": "^24.1.0",
         "jest-junit": "^3.0.0",
         "prettier": "^1.18.2",
