@@ -46,11 +46,6 @@ export function subscribeEvents(func: any, events: any[], target: any = window) 
 export const unEscapeAngleBrackets = (str: string) =>
     str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
-export function getAttributeElementIdFromAttributeElementUri(attributeElementUri: string) {
-    const match = "/elements?id=";
-    return attributeElementUri.slice(attributeElementUri.lastIndexOf(match) + match.length);
-}
-
 export function isRotationInRange(rotation: number, min: number, max: number) {
     return rotation >= min && rotation <= max;
 }

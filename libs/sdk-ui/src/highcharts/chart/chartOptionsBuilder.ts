@@ -49,7 +49,6 @@ import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
-    getAttributeElementIdFromAttributeElementUri,
     isAreaChart,
     isBarChart,
     isBubbleChart,
@@ -106,6 +105,7 @@ import last = require("lodash/last");
 import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
+import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
 
 const TOOLTIP_PADDING = 10;
 
