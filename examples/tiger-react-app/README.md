@@ -1,9 +1,15 @@
-# Basic React & GoodData.UI SDK Application
+# Basic React & GoodData.UI SDK Application for Tiger backend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
--   Install dependencies using `pnpm install --shamefully-flatten` :)
--   Make sure to start dev server using `HTTPS=true pnpm start`; our cookies are HTTPS only, dev proxy must be https
+-   Install dependencies using `pnpm install`
+-   Start dev server using `pnpm start`
+-   Make sure NAS router has authentication turned off
+
+    -   Alternatively: implement support for basic auth into sdk-backend-tiger/src/backend.ts (axios HTTP client
+        can be configured with basic auth credentials)
+
+NOTE: tiger backend implementation is very rough at the moment so you may run into issues.
 
 ## Available Scripts
 

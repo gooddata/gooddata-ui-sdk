@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
--   Install dependencies using `pnpm install --shamefully-flatten` :)
+-   Install dependencies using `pnpm install`
 -   Make sure to start dev server using `HTTPS=true pnpm start`; our cookies are HTTPS only, dev proxy must be https
 
 ## Available Scripts
