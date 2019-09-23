@@ -26,10 +26,10 @@ export function attributeElementsIsEmpty(attributeElements: AttributeElements): 
 export function attributeFingerprint(attribute: IAttribute): string;
 
 // @public
-export function attributeId(a: IAttribute): string;
+export function attributeId(attribute: IAttribute): string;
 
 // @public
-export function attributeIdentifier(a: IAttribute): string | undefined;
+export function attributeIdentifier(attribute: IAttribute): string | undefined;
 
 // @public
 export type AttributeInBucket = {
@@ -48,7 +48,7 @@ export type AttributePredicate = (attribute: IAttribute) => boolean;
 export function attributesFind(attributes: IAttribute[], idOrFun?: string | AttributePredicate): IAttribute | undefined;
 
 // @public
-export function attributeUri(a: IAttribute): string | undefined;
+export function attributeUri(attribute: IAttribute): string | undefined;
 
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
