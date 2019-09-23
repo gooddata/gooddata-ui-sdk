@@ -3,7 +3,7 @@
 import { Execution } from "@gooddata/gd-bear-model/dist/index";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { IMappingHeader } from "../../../../interfaces/MappingHeader";
-import { createIntlMock } from "../../../../highcharts/utils/intlUtils";
+import { createIntlMock } from "../../../../base/helpers/intlUtils";
 import { executionToAGGridAdapter } from "../agGridDataSource";
 import {
     getMeasureDrillItem,

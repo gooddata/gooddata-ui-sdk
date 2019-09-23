@@ -6,7 +6,7 @@ import noop = require("lodash/noop");
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import StaticLegend from "../StaticLegend";
 import LegendItem from "../LegendItem";
-import { withIntl } from "../../../utils/intlUtils";
+import { withIntl } from "../../../../base/helpers/intlUtils";
 
 describe("StaticLegend", () => {
     function render(customProps: any = {}) {

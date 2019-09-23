@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { getHeadlineData } from "../HeadlineTransformationUtils";
-import { createIntlMock } from "../../../../../highcharts/utils/intlUtils";
+import { createIntlMock } from "../../../../../base/helpers/intlUtils";
 import {
     headlineWithOneMeasure,
     headlineWithTwoMeasures,

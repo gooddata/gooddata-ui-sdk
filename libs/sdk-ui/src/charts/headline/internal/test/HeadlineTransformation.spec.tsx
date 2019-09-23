@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import HeadlineTransformation, { IHeadlineTransformationProps } from "../HeadlineTransformation";
 import { SINGLE_URI_METRIC_EXECUTION_REQUEST } from "./fixtures/one_measure";
 import Headline from "../Headline";
-import { withIntl } from "../../../../highcharts/utils/intlUtils";
+import { withIntl } from "../../../../base/helpers/intlUtils";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,

@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { IntlProvider } from "react-intl";
-import { messagesMap } from "../../base/translations/IntlWrapper";
-import { DEFAULT_LOCALE } from "../../base/constants/localization";
+import { messagesMap } from "../translations/IntlWrapper";
+import { DEFAULT_LOCALE } from "../constants/localization";
 
 export function createIntlMock(customMessages = {}) {
     const intlProvider = new IntlProvider(
