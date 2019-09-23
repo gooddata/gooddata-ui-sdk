@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateErrorMap should generate map 1`] = `
+Object {
+  "DATA_TOO_LARGE_TO_DISPLAY": Object {
+    "description": "visualization.ErrorDescriptionDataTooLarge",
+    "icon": "icon-cloud-rain",
+    "message": "visualization.ErrorMessageDataTooLarge",
+  },
+  "NOT_FOUND": Object {
+    "description": "visualization.ErrorDescriptionNotFound",
+    "message": "visualization.ErrorMessageNotFound",
+  },
+  "NO_DATA": Object {
+    "description": "visualization.ErrorDescriptionNoData",
+    "icon": "icon-filter",
+    "message": "visualization.ErrorMessageNoData",
+  },
+  "UNAUTHORIZED": Object {
+    "description": "visualization.ErrorDescriptionUnauthorized",
+    "message": "visualization.ErrorMessageUnauthorized",
+  },
+  "UNKNOWN_ERROR": Object {
+    "description": "visualization.ErrorDescriptionGeneric",
+    "message": "visualization.ErrorMessageGeneric",
+  },
+}
+`;

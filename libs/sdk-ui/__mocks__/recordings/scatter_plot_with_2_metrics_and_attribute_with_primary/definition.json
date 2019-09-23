@@ -1,0 +1,76 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "localIdentifier": "33bd337ed5534fd383861f11ff657b23",
+                        "alias": "Sum of Amount",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1144"
+                                },
+                                "aggregation": "sum",
+                                "filters": []
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/952"
+                },
+                "localIdentifier": "7369345339414eceaaf67ba05dfe6724"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "33bd337ed5534fd383861f11ff657b23",
+                "alias": "Sum of Amount",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/1144"
+                        },
+                        "aggregation": "sum",
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "88291f6f6fef47a7b9c5ad709af2b45b",
+                "alias": "# of Open Opps.",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["7369345339414eceaaf67ba05dfe6724"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Left legend</title>
+    <defs></defs>
+    <g id="Left-legend" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle-8" fill-opacity="0.4" fill="#B0BECA" x="4" y="15" width="12" height="1"></rect>
+        <rect id="Rectangle-8-Copy" fill="#DFE5EA" transform="translate(3.500000, 8.000000) rotate(-90.000000) translate(-3.500000, -8.000000) " x="-4.5" y="7.5" width="16" height="1"></rect>
+        <circle id="Oval-5" fill="#B0BECA" cx="1" cy="1" r="1"></circle>
+        <circle id="Oval-5-Copy" fill="#B0BECA" cx="1" cy="4.5" r="1"></circle>
+        <circle id="Oval-5-Copy-2" fill="#B0BECA" cx="1" cy="11.5" r="1"></circle>
+        <circle id="Oval-5-Copy-2" fill="#B0BECA" cx="1" cy="8" r="1"></circle>
+        <circle id="Oval-5-Copy-3" fill="#B0BECA" cx="1" cy="15" r="1"></circle>
+    </g>
+</svg>

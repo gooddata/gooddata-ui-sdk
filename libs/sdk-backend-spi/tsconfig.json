@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["es6", "dom"],
+        "declaration": true,
+        "outDir": "./dist",
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "removeComments": false,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/sdk-model": ["sdk-model/src"]
+        }
+    },
+    "exclude": ["node_modules", "dist"]
+}

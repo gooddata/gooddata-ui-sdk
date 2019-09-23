@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["es6", "dom"],
+        "declaration": true,
+        "outDir": "./lib",
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/gd-bear-model": ["gd-bear-model/src"]
+        }
+    },
+    "exclude": ["node_modules", "lib"]
+}

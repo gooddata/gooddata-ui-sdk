@@ -1,0 +1,3 @@
+*.api.md
+common/config/rush/*.*
+*.yaml

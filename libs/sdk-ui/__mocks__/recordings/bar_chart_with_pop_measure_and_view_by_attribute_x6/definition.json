@@ -1,0 +1,194 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158"
+                },
+                "localIdentifier": "yearCreatedAttribute"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_1",
+                "alias": "Amount previous year_1",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_1",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_1",
+                "alias": "Amount current year_1",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_1"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_2",
+                "alias": "Amount previous year_2",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_2",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_2",
+                "alias": "Amount current year_2",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_2"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_3",
+                "alias": "Amount previous year_3",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_3",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_3",
+                "alias": "Amount current year_3",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_3"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_4",
+                "alias": "Amount previous year_4",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_4",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_4",
+                "alias": "Amount current year_4",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_4"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_5",
+                "alias": "Amount previous year_5",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_5",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_5",
+                "alias": "Amount current year_5",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_5"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountPopMeasure_6",
+                "alias": "Amount previous year_6",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "amountMeasure_6",
+                        "popAttribute": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "amountMeasure_6",
+                "alias": "Amount current year_6",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279_6"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["yearCreatedAttribute"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

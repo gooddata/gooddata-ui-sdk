@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="12px" viewBox="0 0 16 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bucketMeasures</title>
+    <defs></defs>
+    <g id="t" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-26.000000, -26.000000)" fill="#B0BECA">
+            <g id="bucketMeasures" transform="translate(26.000000, 26.000000)">
+                <polygon id="measures" points="0 5.39404239 2.38651747 4.72782945 7.93729872 0.761904762 12.6593969 5.33088642 16 0.920319728 16 11.2857143 0 11.2857143"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
