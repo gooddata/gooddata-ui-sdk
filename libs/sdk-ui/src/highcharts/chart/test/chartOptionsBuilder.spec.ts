@@ -36,13 +36,7 @@ import {
     MeasureColorStrategy,
     TreemapColorStrategy,
 } from "../colorFactory";
-import {
-    IChartOptions,
-    IColorPaletteItem,
-    IMeasuresStackConfig,
-    IChartConfig,
-    IPointData,
-} from "../../Config";
+import { IChartOptions, IColorPaletteItem, IChartConfig, IPointData } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";
@@ -3159,7 +3153,7 @@ describe("chartOptionsBuilder", () => {
                 [NORMAL_STACK, { stackMeasures: true }],
             ])(
                 "should return %s when column+line chart is dual axis",
-                (stacking: string, stackingConfig: IMeasuresStackConfig) => {
+                (stacking: any, stackingConfig: any) => {
                     const chartOptions = generateChartOptions(
                         fixtures.comboWithTwoMeasuresAndViewByAttribute,
                         {

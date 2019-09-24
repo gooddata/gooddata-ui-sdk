@@ -53,7 +53,7 @@ describe("Combo Configuration", () => {
 
         it.each([[COLUMN, LINE], [COLUMN, AREA], [LINE, COLUMN], [AREA, COLUMN]])(
             "should return 'column' if primaryChartType=%s and secondaryChartType=%s",
-            (primaryChartType, secondaryChartType) => {
+            (primaryChartType: any, secondaryChartType: any) => {
                 const config: IChartConfig = {
                     primaryChartType,
                     secondaryChartType,

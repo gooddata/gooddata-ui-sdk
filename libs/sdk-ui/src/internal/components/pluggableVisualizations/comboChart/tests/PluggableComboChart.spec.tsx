@@ -254,7 +254,7 @@ describe("PluggableComboChart", () => {
             [VisualizationTypes.AREA, true],
         ])(
             "should return stack measures by %s chart type is %s",
-            (chartType: VisualizationObject.VisualizationType, expectedResult: boolean) => {
+            (chartType: any, expectedResult: boolean) => {
                 const mockProps = {
                     ...defaultProps,
                     visualizationProperties: {
@@ -312,7 +312,7 @@ describe("PluggableComboChart", () => {
             ],
         ])(
             "should return combo chart uiconfig by chart type is %s with optional stacking",
-            (chartType: VisualizationObject.VisualizationType, expectedUiConfig: IUiConfig) => {
+            (chartType: any, expectedUiConfig: IUiConfig) => {
                 const mockProps = {
                     ...defaultProps,
                     visualizationProperties: {

@@ -16,7 +16,7 @@ describe("setMeasuresToSecondaryAxis", () => {
 
     it.each(TEST_CASES)(
         "should %s add measures to secondary axis when dualAxis=%s",
-        (_desc, value, expected) => {
+        (_desc: string, value: boolean, expected: any) => {
             const config: IChartConfig = {
                 type: "combo2",
                 dualAxis: value,

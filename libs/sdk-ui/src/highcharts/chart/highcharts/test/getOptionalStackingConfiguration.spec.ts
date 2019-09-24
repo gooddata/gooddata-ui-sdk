@@ -107,7 +107,7 @@ describe("getOptionalStackingConfiguration", () => {
 
         it.each([[NORMAL_STACK, { stackMeasures: true }], [PERCENT_STACK, { stackMeasuresToPercent: true }]])(
             "should return series config with %s stacking",
-            (type: string, chartConfig: IChartConfig) => {
+            (type: any, chartConfig: IChartConfig) => {
                 const chartOptions = { yAxes: [{}] };
                 const config = { series: Array(2).fill({ yAxis: 0 }) };
 
