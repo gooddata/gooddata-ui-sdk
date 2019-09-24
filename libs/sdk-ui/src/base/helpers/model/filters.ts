@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import isArray = require("lodash/isArray");
 
+// TODO prozkoumat call sites a zkusit se zbavit inValues: string, chceme asi jenom AttributeElements
 export function positiveAttributeFilter(
     qualifier: string,
     inValues: string[] | AttributeElements,
