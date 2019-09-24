@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import { measureHeaders, context, attributeHeaderItem, attributeHeader } from "./HeaderPredicateFactory.mock";
 

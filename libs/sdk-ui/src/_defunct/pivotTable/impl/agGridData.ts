@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { AFM, Execution } from "@gooddata/gd-bear-model/dist/index";
-import { IMappingHeader } from "../../../interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { getIdsFromUri } from "./agGridUtils";
 import {
     FIELD_SEPARATOR,

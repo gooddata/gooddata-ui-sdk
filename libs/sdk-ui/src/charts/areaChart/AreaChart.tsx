@@ -12,8 +12,7 @@ import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
-import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
-import { INewChartConfig } from "../../interfaces/Config";
+import { IChartConfig, sanitizeConfig2 } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
 import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
@@ -88,7 +87,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
     onBeforePropsConversion: verifyBuckets,
 };
 
-function getStackConfiguration(config: INewChartConfig = {}): INewChartConfig {
+function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
     const { stackMeasures, stackMeasuresToPercent } = config;
     if (isNil(stackMeasures) && isNil(stackMeasuresToPercent)) {
         return config;
@@ -128,7 +127,7 @@ export function getBucketsProps(
     };
 }
 
-export function getConfigProps(props: IAreaChartProps): INewChartConfig {
+export function getConfigProps(props: IAreaChartProps): IChartConfig {
     const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
     if (viewBy.length <= 1) {
         return getStackConfiguration(props.config);

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
-import { INewChartConfig } from "../../../../interfaces/Config";
+import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { MEASURES, SECONDARY_MEASURES } from "../../../../base/constants/bucketNames";
@@ -43,7 +43,7 @@ describe("Combo Configuration", () => {
 
     describe("getDefaultChartType", () => {
         it.each([COLUMN, LINE, AREA])("should return '%s' when both y axes have same chart type", type => {
-            const config: INewChartConfig = {
+            const config: IChartConfig = {
                 primaryChartType: type,
                 secondaryChartType: type,
             };
@@ -54,7 +54,7 @@ describe("Combo Configuration", () => {
         it.each([[COLUMN, LINE], [COLUMN, AREA], [LINE, COLUMN], [AREA, COLUMN]])(
             "should return 'column' if primaryChartType=%s and secondaryChartType=%s",
             (primaryChartType, secondaryChartType) => {
-                const config: INewChartConfig = {
+                const config: IChartConfig = {
                     primaryChartType,
                     secondaryChartType,
                 };
@@ -64,7 +64,7 @@ describe("Combo Configuration", () => {
         );
 
         it("should return 'line' when there is no column chart type", () => {
-            const config: INewChartConfig = {
+            const config: IChartConfig = {
                 primaryChartType: LINE,
                 secondaryChartType: AREA,
             };
@@ -74,7 +74,7 @@ describe("Combo Configuration", () => {
     });
 
     it("should disable saturation on other series in combo which has line series on both axes", () => {
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             primaryChartType: LINE,
             secondaryChartType: LINE,
         };
@@ -85,7 +85,7 @@ describe("Combo Configuration", () => {
     });
 
     it("should disable saturation on other series in combo which have line series on left axis only", () => {
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             primaryChartType: LINE,
             secondaryChartType: COLUMN,
         };
@@ -96,7 +96,7 @@ describe("Combo Configuration", () => {
     });
 
     it("should disable saturation on other series in combo which have line series on right axis only", () => {
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             primaryChartType: COLUMN,
             secondaryChartType: LINE,
         };
@@ -107,7 +107,7 @@ describe("Combo Configuration", () => {
     });
 
     it("should not disable saturation other series for another kind of combo", () => {
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             primaryChartType: LINE,
             secondaryChartType: AREA,
         };

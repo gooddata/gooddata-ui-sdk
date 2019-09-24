@@ -20,9 +20,9 @@ import {
     ICellDrillEvent,
     IDrillEventContextPoint,
     IDrillEventContext,
-} from "../../interfaces/DrillEvents";
-import { OnFiredDrillEvent } from "../../interfaces/Events";
-import { isComboChart, isHeatmap, isTreemap } from "../../base/helpers/common";
+} from "../../base/interfaces/DrillEvents";
+import { OnFiredDrillEvent } from "../../base/interfaces/Events";
+import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 

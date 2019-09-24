@@ -19,13 +19,13 @@ import {
     Localization,
 } from "@gooddata/gd-bear-model/dist/index";
 import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { BaseChart } from "../to_delete/BaseChart";
-import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
+import { IChartConfig, IColorPaletteItem } from "../../highcharts/Config";
 import { IPivotTableBucketProps, PivotTable } from "../pivotTable/PivotTable";
 import { CoreHeadline } from "../../charts/headline/CoreHeadline";
-import { IEvents, OnLegendReady } from "../../interfaces/Events";
+import { IEvents, OnLegendReady } from "../../base/interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
 import { VisualizationTypes, VisType } from "../../base/constants/visualizationTypes";
 import { IDataSource } from "../to_delete/DataSource";
@@ -39,8 +39,8 @@ import { IDrillableItem, generateDimensions, RuntimeError } from "../../index";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { getDefaultTreemapSort } from "../../base/helpers/sorts";
 import { convertErrors, generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
-import { isTreemap } from "../../base/helpers/common";
-import { getColorMappingPredicate, getColorPaletteFromColors } from "../../base/helpers/color";
+import { isTreemap } from "../../highcharts/utils/common";
+import { getColorMappingPredicate, getColorPaletteFromColors } from "../../highcharts/utils/color";
 import { getCachedOrLoad } from "../../base/helpers/sdkCache";
 import { getFeatureFlags } from "../../base/helpers/featureFlags";
 import { mergeFiltersToAfm } from "../../base/helpers/afmHelper";

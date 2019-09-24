@@ -2,9 +2,9 @@
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { AFM, Execution } from "@gooddata/gd-bear-model";
 import { identifierMatch, uriMatch } from "../factory/HeaderPredicateFactory";
-import { IDrillableItem, isDrillableItemIdentifier, isDrillableItemUri } from "../../interfaces/DrillEvents";
-import { IHeaderPredicate, IHeaderPredicate2, isHeaderPredicate } from "../../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+import { IDrillableItem, isDrillableItemIdentifier, isDrillableItemUri } from "../interfaces/DrillEvents";
+import { IHeaderPredicate, IHeaderPredicate2, isHeaderPredicate } from "../interfaces/HeaderPredicate";
+import { IMappingHeader } from "../interfaces/MappingHeader";
 
 export function isSomeHeaderPredicateMatched(
     drillablePredicates: IHeaderPredicate[],

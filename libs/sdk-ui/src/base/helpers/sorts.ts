@@ -12,7 +12,6 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "../../index";
-import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../internal/constants/sort";
 
 export function getDefaultTreemapSortFromBuckets(
     viewBy: IBucket,
@@ -23,10 +22,7 @@ export function getDefaultTreemapSortFromBuckets(
     const stackAttr = bucketAttributes(segmentBy);
 
     if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
-        return [
-            newAttributeSort(viewAttr[0], SORT_DIR_ASC),
-            ...measures.map(m => newMeasureSort(m, SORT_DIR_DESC)),
-        ];
+        return [newAttributeSort(viewAttr[0], "asc"), ...measures.map(m => newMeasureSort(m, "desc"))];
     }
 
     return [];

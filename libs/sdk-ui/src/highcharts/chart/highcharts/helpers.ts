@@ -15,8 +15,8 @@ import max = require("lodash/max");
 import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "../../../base/constants/visualizationTypes";
-import { isBarChart } from "../../../base/helpers/common";
-import { IChartConfig, ISeriesItem, ISeriesDataItem, INewChartConfig } from "../../../interfaces/Config";
+import { isBarChart } from "../../utils/common";
+import { ISeriesItem, ISeriesDataItem, IChartConfig } from "../../Config";
 
 export interface IRectByPoints {
     left: number;
@@ -90,7 +90,7 @@ export function getChartProperties(config: IChartConfig, type: VisType) {
     return chartProps;
 }
 
-export function getChartProperties2(config: INewChartConfig, type: VisType) {
+export function getChartProperties2(config: IChartConfig, type: VisType) {
     const isBarType = isBarChart(type);
     const chartProps: any = {
         xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },

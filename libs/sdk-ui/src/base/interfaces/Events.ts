@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { IExportConfig, IExportResponse } from "@gooddata/gd-bear-client";
 import { IDrillEventCallback, IDrillEventCallback2 } from "./DrillEvents";
-import { RuntimeError } from "../base/errors/RuntimeError";
+import { RuntimeError } from "../errors/RuntimeError";
 
 export interface ILoadingState {
     isLoading: boolean;

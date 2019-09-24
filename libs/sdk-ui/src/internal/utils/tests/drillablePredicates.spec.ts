@@ -3,7 +3,7 @@ import sdk from "@gooddata/gd-bear-client";
 import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
 import Mock = jest.Mock;
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
 import * as HeaderPredicateFactory from "../../../base/factory/HeaderPredicateFactory";
 
 describe("convertPostMessageToDrillablePredicates", () => {

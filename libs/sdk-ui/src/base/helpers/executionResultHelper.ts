@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as invariant from "invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "./types";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+import { IMappingHeader } from "../interfaces/MappingHeader";
 import { getMappingHeaderLocalIdentifier } from "./mappingHeader";
 import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
 import { Execution } from "@gooddata/gd-bear-model";

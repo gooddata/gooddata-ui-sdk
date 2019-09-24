@@ -15,8 +15,8 @@ import {
     IDrillEvent2,
     IDrillEventCallback2,
     IDrillEventContextHeadline,
-} from "../../../../interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../../../interfaces/HeaderPredicate";
+} from "../../../../base/interfaces/DrillEvents";
+import { IHeaderPredicate2 } from "../../../../base/interfaces/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
 import { measureUriOrQualifier } from "../../../_commons/measures";
 

@@ -27,7 +27,7 @@ import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { PIE_CHART_LIMIT } from "../../../base/constants/limits";
-import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../../base/helpers/color";
+import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
     AttributeColorStrategy,
@@ -37,13 +37,12 @@ import {
     TreemapColorStrategy,
 } from "../colorFactory";
 import {
-    IChartConfig,
     IChartOptions,
     IColorPaletteItem,
     IMeasuresStackConfig,
-    INewChartConfig,
+    IChartConfig,
     IPointData,
-} from "../../../interfaces/Config";
+} from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";
@@ -2375,7 +2374,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
 
@@ -2531,7 +2530,7 @@ describe("chartOptionsBuilder", () => {
         );
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
 
@@ -2632,7 +2631,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
             const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
@@ -2725,7 +2724,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "treemap",
             };
             const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
@@ -3351,7 +3350,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate correct tooltip for chart with small width", () => {
-                    const chartConfig: INewChartConfig = {
+                    const chartConfig: IChartConfig = {
                         type: "heatmap",
                     };
                     const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, chartConfig);

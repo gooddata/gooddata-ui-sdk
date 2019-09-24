@@ -9,8 +9,8 @@ import {
     getMappingHeaderUri,
 } from "../../../base/helpers/mappingHeader";
 import get = require("lodash/get");
-import { IDrillEventIntersectionElement } from "../../../interfaces/DrillEvents";
-import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
+import { IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
+import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../base/interfaces/MappingHeader";
 import { getAttributeElementIdFromAttributeElementUri } from "../../../base/helpers/getAttributeElementIdFromAttributeElementUri";
 import { createDrillIntersectionElement } from "../../../highcharts";
 import { getIdsFromUri } from "./agGridUtils";

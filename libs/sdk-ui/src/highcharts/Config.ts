@@ -2,6 +2,9 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { IColorItem, IColor } from "@gooddata/sdk-model";
+import { VisType } from "../base/constants/visualizationTypes";
+import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import {
     HTMLDOMElement,
     SVGDOMElement,
@@ -9,10 +12,7 @@ import {
     StackItemObject,
     DataLabelsOptionsObject,
     ColorAxisOptions,
-} from "../highcharts";
-import { VisType } from "../base/constants/visualizationTypes";
-import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
-import { IMappingHeader } from "./MappingHeader";
+} from "./chart/highcharts/highchartsEntryPoint";
 
 export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
 
@@ -28,12 +28,6 @@ export interface IDataLabelsConfig {
 }
 
 export interface IColorMapping {
-    // sent to SDK
-    predicate: IHeaderPredicate;
-    color: IColorItem;
-}
-
-export interface IColorMapping2 {
     // sent to SDK
     predicate: IHeaderPredicate2;
     color: IColorItem;
@@ -73,33 +67,6 @@ export interface IChartConfig extends IMeasuresStackConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
-    type?: VisType;
-    legend?: ILegendConfig;
-    legendLayout?: string;
-    limits?: IChartLimits;
-    stacking?: boolean;
-    grid?: any;
-    mdObject?: VisualizationObject.IVisualizationObjectContent;
-    yFormat?: string;
-    yLabel?: string;
-    xFormat?: string;
-    xLabel?: string;
-    chart?: any;
-    xaxis?: IAxisConfig;
-    yaxis?: IAxisConfig;
-    secondary_xaxis?: IAxisConfig;
-    secondary_yaxis?: IAxisConfig;
-    separators?: ISeparators;
-    dataLabels?: IDataLabelsConfig;
-    dualAxis?: boolean;
-    primaryChartType?: VisualizationObject.VisualizationType;
-    secondaryChartType?: VisualizationObject.VisualizationType;
-}
-
-export interface INewChartConfig extends IMeasuresStackConfig {
-    colors?: string[];
-    colorPalette?: IColorPalette;
-    colorMapping?: IColorMapping2[];
     type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;

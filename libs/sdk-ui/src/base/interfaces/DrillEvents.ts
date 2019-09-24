@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { AFM } from "@gooddata/gd-bear-model";
-import { TableRowForDrilling } from "../_defunct/pivotTable/PivotTable";
+import { TableRowForDrilling } from "../../_defunct/pivotTable/PivotTable";
 import {
     ChartElementType,
     ChartType,
@@ -11,7 +11,7 @@ import {
     TableType,
     VisElementType,
     VisType,
-} from "../base/constants/visualizationTypes";
+} from "../constants/visualizationTypes";
 import { OnFiredDrillEvent } from "./Events";
 
 export interface IDrillableItemUri {

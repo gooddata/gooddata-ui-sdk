@@ -17,18 +17,11 @@ import * as numberJS from "@gooddata/numberjs";
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import {
-    IAxis,
-    IChartConfig,
-    IChartOptions,
-    IDataLabelsVisible,
-    INewChartConfig,
-    ISeriesItem,
-} from "../../../interfaces/Config";
+import { IAxis, IChartConfig, IChartOptions, IDataLabelsVisible, ISeriesItem } from "../../Config";
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
-import { AXIS_LINE_COLOR, getLighterColor } from "../../../base/helpers/color";
+import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
 import {
     isAreaChart,
     isBarChart,
@@ -39,7 +32,7 @@ import {
     isRotationInRange,
     isScatterPlot,
     isTreemap,
-} from "../../../base/helpers/common";
+} from "../../utils/common";
 import {
     shouldEndOnTick,
     shouldFollowPointer,
@@ -49,7 +42,7 @@ import {
 } from "./helpers";
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
-import { IDrillConfig } from "../../../interfaces/DrillEvents";
+import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 
@@ -1059,7 +1052,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
 
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
-    chartConfig?: INewChartConfig,
+    chartConfig?: IChartConfig,
     drillConfig?: IDrillConfig,
 ) {
     const configurators = [

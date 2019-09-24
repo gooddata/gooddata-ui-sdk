@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
-import { IDrillableItem } from "../../interfaces/DrillEvents";
-import * as VisEvents from "../../interfaces/Events";
+import { IDrillableItem } from "../../base/interfaces/DrillEvents";
+import * as VisEvents from "../../base/interfaces/Events";
 import { VisualizationEnvironment } from "../../base/constants/visualizationTypes";
 import {
     IBucketItem,

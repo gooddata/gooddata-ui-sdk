@@ -16,7 +16,7 @@ import without = require("lodash/without");
 import { InjectedIntl } from "react-intl";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import * as BucketNames from "../../base/constants/bucketNames";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 
 import {

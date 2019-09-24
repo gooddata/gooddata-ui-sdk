@@ -7,7 +7,7 @@ import * as uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";
-import * as ChartConfiguration from "../../../../../interfaces/Config";
+import { IColorPalette } from "../../../../../highcharts";
 
 export enum IconPosition {
     Down,
@@ -21,7 +21,7 @@ export interface ISelectableChild {
 
 export interface IColorDropdownProps {
     selectedColorItem?: IColorItem;
-    colorPalette: ChartConfiguration.IColorPalette;
+    colorPalette: IColorPalette;
     showCustomPicker: boolean;
     onColorSelected: (color: IColorItem) => void;
 }

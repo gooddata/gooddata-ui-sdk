@@ -2,7 +2,7 @@
 import * as React from "react";
 import unescape = require("lodash/unescape");
 
-import { isLineChart, isAreaChart, isComboChart } from "../../../base/helpers/common";
+import { isLineChart, isAreaChart, isComboChart } from "../../utils/common";
 
 const VISIBLE_COLOR = "#6D7680";
 const DISABLED_COLOR = "#CCCCCC";

@@ -1,12 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
-import {
-    IPointData,
-    IDataLabelsConfig,
-    IAxisConfig,
-    ISeriesDataItem,
-} from "../../../../../../interfaces/Config";
+import { IPointData, IDataLabelsConfig, IAxisConfig, ISeriesDataItem } from "../../../../../Config";
 import { VisualizationTypes } from "../../../../../../base/constants/visualizationTypes";
 
 describe("getStackLabelPointsForDualAxis", () => {

@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import * as VisEvents from "./interfaces/Events";
+import * as VisEvents from "./base/interfaces/Events";
 import CatalogHelper from "./base/helpers/CatalogHelper";
 import * as Model from "./base/helpers/model";
 // import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
@@ -10,9 +10,9 @@ import { LoadingComponent } from "./base/simple/LoadingComponent";
 import { ErrorStates, ErrorCodes } from "./base/constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
 // import { Execute } from "./execution/Execute";
-import { IDrillableItem } from "./interfaces/DrillEvents";
-import { IHeaderPredicate } from "./interfaces/HeaderPredicate";
-import { IPushData, IColorsData } from "./interfaces/PushData";
+import { IDrillableItem } from "./base/interfaces/DrillEvents";
+import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
+import { IPushData, IColorsData } from "./base/interfaces/PushData";
 import { AttributeFilter } from "./filters/AttributeFilter/AttributeFilter";
 import { AttributeElements } from "./filters/AttributeFilter/AttributeElements";
 import * as PropTypes from "./proptypes/index";
@@ -41,16 +41,21 @@ import { Heatmap } from "./charts/heatmap/Heatmap";
 import { withJsxExport } from "./charts/withJsxExport";
 import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
-import * as ChartConfiguration from "./interfaces/Config";
 // tslint:disable-next-line:no-duplicate-imports
-import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
-import { Chart, ChartTransformation } from "./highcharts";
+import {
+    Chart,
+    ChartTransformation,
+    ILegendConfig,
+    IChartConfig,
+    IColorPalette,
+    IColorPaletteItem,
+    ColorUtils,
+} from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
-import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./interfaces/MeasureTitle";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
-import ColorUtils from "./base/helpers/color";
+import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
-import * as MappingHeader from "./interfaces/MappingHeader";
+import * as MappingHeader from "./base/interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";
 
 /**
@@ -122,7 +127,6 @@ export {
     OverTimeComparisonType,
     OverTimeComparisonTypes,
     SortsHelper,
-    ChartConfiguration,
     ColorUtils,
     IHeaderPredicate,
     HeaderPredicateFactory,

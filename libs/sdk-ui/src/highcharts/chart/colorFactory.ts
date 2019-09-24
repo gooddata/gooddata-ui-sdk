@@ -13,11 +13,11 @@ import { findMeasureGroupInDimensions } from "../../base/helpers/executionResult
 import {
     DEFAULT_COLOR_PALETTE,
     IColorAssignment,
-    IColorMapping2,
+    IColorMapping,
     IColorPalette,
     IColorPaletteItem,
-} from "../../interfaces/Config";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+} from "../Config";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,
@@ -27,8 +27,8 @@ import {
     getRgbStringFromRGB,
     HEATMAP_BLUE_COLOR_PALETTE,
     isCustomPalette,
-} from "../../base/helpers/color";
-import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../../base/helpers/common";
+} from "../utils/color";
+import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../utils/common";
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
 import uniqBy = require("lodash/uniqBy");
@@ -60,7 +60,7 @@ export abstract class ColorStrategy implements IColorStrategy {
 
     constructor(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -111,7 +111,7 @@ export abstract class ColorStrategy implements IColorStrategy {
 
     protected abstract createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -123,7 +123,7 @@ const emptyColorPaletteItem: IGuidColorItem = { type: "guid", value: "none" };
 export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
@@ -142,7 +142,7 @@ export class MeasureColorStrategy extends ColorStrategy {
 
     private mapColorsFromMeasures(
         dv: DataViewFacade,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         colorPalette: IColorPalette,
     ): { allMeasuresAssignment: IColorAssignment[]; nonDerivedMeasuresAssignment: IColorAssignment[] } {
         let currentColorPaletteIndex = 0;
@@ -181,7 +181,7 @@ export class MeasureColorStrategy extends ColorStrategy {
         headerItem: IMeasureHeaderItem,
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
-        colorAssignment: IColorMapping2[],
+        colorAssignment: IColorMapping[],
         dv: DataViewFacade,
     ): IColorAssignment {
         const mappedColor = getColorFromMapping(headerItem, colorAssignment, dv);
@@ -256,7 +256,7 @@ export class MeasureColorStrategy extends ColorStrategy {
 function getAtributeColorAssignment(
     attribute: any,
     colorPalette: IColorPalette,
-    colorMapping: IColorMapping2[],
+    colorMapping: IColorMapping[],
     dv: DataViewFacade,
 ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
@@ -304,7 +304,7 @@ function isColorItemInPalette(colorItem: IColorItem, colorPalette: IColorPalette
 export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -324,7 +324,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
 
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
@@ -422,7 +422,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
 export class TreemapColorStrategy extends MeasureColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -451,7 +451,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
 export class PointsChartColorStrategy extends AttributeColorStrategy {
     protected singleMeasureColorMapping(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         dv: DataViewFacade,
     ): IColorAssignment[] {
         const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
@@ -485,7 +485,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
 export class BubbleChartColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,
@@ -525,7 +525,7 @@ export class BubbleChartColorStrategy extends PointsChartColorStrategy {
 export class ScatterPlotColorStrategy extends PointsChartColorStrategy {
     protected createColorAssignment(
         colorPalette: IColorPalette,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         _viewByAttribute: any,
         _stackByAttribute: any,
         dv: DataViewFacade,
@@ -554,7 +554,7 @@ export function isAttributeColorPalette(type: string, dv: DataViewFacade, stackB
 export class ColorFactory {
     public static getColorStrategy(
         colorPalette: IColorPalette = DEFAULT_COLOR_PALETTE,
-        colorMapping: IColorMapping2[],
+        colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,
         dv: DataViewFacade,

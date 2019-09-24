@@ -3,11 +3,11 @@ import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-sp
 import * as React from "react";
 import { IErrorProps } from "../base/simple/ErrorComponent";
 import { ILoadingProps } from "../base/simple/LoadingComponent";
-import { INewChartConfig } from "../interfaces/Config";
-import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "../interfaces/Events";
-import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
-import { IDrillableItem } from "../interfaces/DrillEvents";
-import { IPushData } from "../interfaces/PushData";
+import { IChartConfig } from "../highcharts";
+import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "../base/interfaces/Events";
+import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IDrillableItem } from "../base/interfaces/DrillEvents";
+import { IPushData } from "../base/interfaces/PushData";
 
 /**
  * Props applicable for all charts
@@ -30,7 +30,7 @@ export interface ICommonChartProps extends IChartCallbacks {
     /**
      * Configure chart's behavior and appearance.
      */
-    config?: INewChartConfig;
+    config?: IChartConfig;
 
     /**
      * Set height of the chart (in pixels).

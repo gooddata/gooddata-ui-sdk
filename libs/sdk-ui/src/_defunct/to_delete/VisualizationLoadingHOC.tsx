@@ -15,11 +15,11 @@ import {
 import { AFM, Execution } from "@gooddata/gd-bear-model/dist/index";
 
 import { ErrorStates } from "../../base/constants/errorStates";
-import { IEvents, IExportFunction, IExtendedExportConfig, ILoadingState } from "../../interfaces/Events";
-import { IDrillableItem } from "../../interfaces/DrillEvents";
+import { IEvents, IExportFunction, IExtendedExportConfig, ILoadingState } from "../../base/interfaces/Events";
+import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { ISubject } from "../../base/helpers/async";
 import { convertErrors, checkEmptyResult } from "../../base/helpers/errorHandlers";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IDataSourceProviderInjectedProps } from "./DataSourceProvider";
 import { injectIntl, InjectedIntl } from "react-intl";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
@@ -27,8 +27,8 @@ import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { LoadingComponent, ILoadingProps } from "../../base/simple/LoadingComponent";
 import { ErrorComponent, IErrorProps } from "../../base/simple/ErrorComponent";
 import { RuntimeError } from "../../base/errors/RuntimeError";
-import { IPushData } from "../../interfaces/PushData";
-import { IChartConfig } from "../../interfaces/Config";
+import { IPushData } from "../../base/interfaces/PushData";
+import { IChartConfig } from "../../highcharts";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { fixEmptyHeaderItems } from "../../charts/_base/fixEmptyHeaderItems";
 

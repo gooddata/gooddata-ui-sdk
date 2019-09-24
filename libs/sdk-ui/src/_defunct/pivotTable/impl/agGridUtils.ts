@@ -5,7 +5,7 @@ import escape = require("lodash/escape");
 import stringify = require("json-stable-stringify");
 import { AFM, Execution } from "@gooddata/gd-bear-model/dist/index";
 import { getMappingHeaderUri } from "../../../base/helpers/mappingHeader";
-import { IMappingHeader, isMappingHeaderTotal } from "../../../interfaces/MappingHeader";
+import { IMappingHeader, isMappingHeaderTotal } from "../../../base/interfaces/MappingHeader";
 import {
     DOT_PLACEHOLDER,
     FIELD_SEPARATOR,

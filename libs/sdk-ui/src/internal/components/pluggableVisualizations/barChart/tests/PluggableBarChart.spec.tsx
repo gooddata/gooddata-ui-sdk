@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 import get = require("lodash/get");
-import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
+import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
 import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";

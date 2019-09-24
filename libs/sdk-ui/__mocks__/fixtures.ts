@@ -1511,6 +1511,10 @@ export const comboChartWithTwoMeasuresViewByAttributePercformat = recordedDataFa
     rec.ComboChartWithTwoMeasuresViewByAttributePercformat,
 );
 
+export const comboChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+    rec.ComboChartWith3MetricsAndViewByAttribute,
+);
+
 //
 //
 //

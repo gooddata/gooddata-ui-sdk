@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import max = require("lodash/max");
 import { IGridRow } from "./agGridTypes";
-import { isMappingHeaderAttributeItem } from "../../../interfaces/MappingHeader";
+import { isMappingHeaderAttributeItem } from "../../../base/interfaces/MappingHeader";
 
 interface IAttributesRowItemUris {
     [columnId: string]: string[];

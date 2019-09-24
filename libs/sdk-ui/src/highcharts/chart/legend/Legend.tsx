@@ -6,7 +6,7 @@ import * as cx from "classnames";
 import FluidLegend from "./FluidLegend";
 import StaticLegend from "./StaticLegend";
 import { ChartType } from "../../../base/constants/visualizationTypes";
-import { isComboChart, isHeatmap } from "../../../base/helpers/common";
+import { isComboChart, isHeatmap } from "../../utils/common";
 import HeatmapLegend from "./HeatmapLegend";
 import { IntlWrapper } from "../../../base/translations/IntlWrapper";
 import {

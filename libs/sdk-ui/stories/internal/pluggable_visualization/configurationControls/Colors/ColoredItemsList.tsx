@@ -5,7 +5,7 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { DEFAULT_COLOR_PALETTE } from "../../../../../src/base/constants/defaultColors";
-import * as MappingHeader from "../../../../../src/interfaces/MappingHeader";
+import * as MappingHeader from "../../../../../src/base/interfaces/MappingHeader";
 import ColoredItemsList, {
     IColoredItemsListOwnProps,
 } from "../../../../../src/internal/components/configurationControls/colors/coloredItemsList/ColoredItemsList";

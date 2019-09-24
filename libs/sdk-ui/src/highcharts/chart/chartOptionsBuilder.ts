@@ -22,7 +22,7 @@ import {
 } from "../../base/constants/bucketNames";
 import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
-import { setMeasuresToSecondaryAxis2 } from "../../base/helpers/dualAxis";
+import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
 
 import {
     findAttributeInDimension,
@@ -36,17 +36,17 @@ import {
     ICategory,
     IChartLimits,
     IChartOptions,
-    INewChartConfig,
+    IChartConfig,
     IPatternObject,
     IPointData,
     ISeriesDataItem,
     ISeriesItem,
     ISeriesItemConfig,
-} from "../../interfaces/Config";
-import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../../base/helpers/color";
+} from "../Config";
+import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
+import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
     isAreaChart,
@@ -60,7 +60,7 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-} from "../../base/helpers/common";
+} from "../utils/common";
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
@@ -111,7 +111,7 @@ import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers
 
 const TOOLTIP_PADDING = 10;
 
-const isAreaChartStackingEnabled = (options: INewChartConfig) => {
+const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
     if (!isAreaChart(type)) {
         return false;
@@ -720,7 +720,7 @@ function isPointOnOppositeAxis(point: IPointData): boolean {
 export function buildTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
@@ -757,7 +757,7 @@ export function buildTooltipFactory(
 export function buildTooltipForTwoAttributesFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
@@ -796,7 +796,7 @@ export function buildTooltipForTwoAttributesFactory(
 export function generateTooltipXYFn(
     measures: any,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
 
@@ -836,7 +836,7 @@ export function generateTooltipXYFn(
 export function generateTooltipHeatmapFn(
     viewByAttribute: any,
     stackByAttribute: any,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
     const formatValue = (val: number, format: string) => {
@@ -871,7 +871,7 @@ export function generateTooltipHeatmapFn(
 export function buildTooltipTreemapFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
 
@@ -1171,7 +1171,7 @@ function getCategories(
 
 function getStackingConfig(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    options: INewChartConfig,
+    options: IChartConfig,
 ): string {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
     const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
@@ -1213,7 +1213,7 @@ function preprocessMeasureGroupItems(
 
 function getXAxes(
     dv: DataViewFacade,
-    config: INewChartConfig,
+    config: IChartConfig,
     measureGroup: IMeasureGroupHeader["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
@@ -1275,7 +1275,7 @@ function isPercentage(format: string) {
 
 function getYAxes(
     dv: DataViewFacade,
-    config: INewChartConfig,
+    config: IChartConfig,
     measureGroup: IMeasureGroupHeader["measureGroupHeader"],
     stackByAttribute: any,
 ): IAxis[] {
@@ -1554,7 +1554,7 @@ function getTooltipFactory(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
-    config: INewChartConfig = {},
+    config: IChartConfig = {},
     isDualAxis: boolean = false,
 ): ITooltipFactory {
     const { type } = config;
@@ -1577,7 +1577,7 @@ function getTooltipFactory(
  */
 export function getChartOptions(
     dataView: IDataView,
-    chartConfig: INewChartConfig,
+    chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate2[],
 ): IChartOptions {
     const dv = new DataViewFacade(dataView);
@@ -1585,7 +1585,7 @@ export function getChartOptions(
     const dimensions = dv.dimensions();
     const attributeHeaderItems = dv.attributeHeaders();
 
-    const config = setMeasuresToSecondaryAxis2(chartConfig, dv);
+    const config = setMeasuresToSecondaryAxis(chartConfig, dv);
 
     invariant(
         config && isChartSupported(config.type),

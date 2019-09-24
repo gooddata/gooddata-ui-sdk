@@ -3,12 +3,12 @@ import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
 import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
-import { INewChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";
 
-function renderChart(measures: AttributeOrMeasure[], config?: INewChartConfig): ShallowWrapper {
+function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
     return shallow(
         <ColumnChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />,
     );

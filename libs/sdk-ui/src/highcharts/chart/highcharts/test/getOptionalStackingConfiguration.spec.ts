@@ -12,8 +12,8 @@ import getOptionalStackingConfiguration, {
     PERCENT_STACK,
     NORMAL_STACK,
 } from "../getOptionalStackingConfiguration";
-import { IDrillConfig } from "../../../../interfaces/DrillEvents";
-import { IChartConfig, ISeriesItem, IChartOptions } from "../../../../interfaces/Config";
+import { IDrillConfig } from "../../../../base/interfaces/DrillEvents";
+import { IChartConfig, ISeriesItem, IChartOptions } from "../../../Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label";
 

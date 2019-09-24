@@ -7,8 +7,8 @@ import ChartTransformation from "../ChartTransformation";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
-import { IChartConfig, IColorPaletteItem } from "../../../interfaces/Config";
-import { getRgbString } from "../../../base/helpers/color";
+import { IChartConfig, IColorPaletteItem } from "../../Config";
+import { getRgbString } from "../../utils/color";
 
 describe("ChartTransformation", () => {
     const defaultProps = {

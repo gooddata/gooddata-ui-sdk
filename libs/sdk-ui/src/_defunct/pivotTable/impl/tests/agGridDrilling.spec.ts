@@ -2,7 +2,7 @@
 
 import { Execution } from "@gooddata/gd-bear-model/dist/index";
 import * as fixtures from "../../../../../stories/test_data/fixtures";
-import { IMappingHeader } from "../../../../interfaces/MappingHeader";
+import { IMappingHeader } from "../../../../base/interfaces/MappingHeader";
 import { createIntlMock } from "../../../../base/helpers/intlUtils";
 import { executionToAGGridAdapter } from "../agGridDataSource";
 import {
