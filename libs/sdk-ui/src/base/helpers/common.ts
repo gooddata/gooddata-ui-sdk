@@ -6,9 +6,8 @@ import includes = require("lodash/includes");
 import { Observable } from "rxjs/Rx";
 import { numberFormat } from "@gooddata/numberjs";
 
-import { VisualizationTypes } from "../../base/constants/visualizationTypes";
-import { IAxis, ISeriesItem, IChartOptions } from "../../interfaces/Config";
-import { IHighchartsAxisExtend } from "../HighchartsExtend";
+import { VisualizationTypes } from "../constants/visualizationTypes";
+import { ISeriesItem, IChartOptions } from "../../interfaces/Config";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
@@ -46,11 +45,6 @@ export function subscribeEvents(func: any, events: any[], target: any = window) 
 export const unEscapeAngleBrackets = (str: string) =>
     str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
-export function getAttributeElementIdFromAttributeElementUri(attributeElementUri: string) {
-    const match = "/elements?id=";
-    return attributeElementUri.slice(attributeElementUri.lastIndexOf(match) + match.length);
-}
-
 export function isRotationInRange(rotation: number, min: number, max: number) {
     return rotation >= min && rotation <= max;
 }
@@ -73,7 +67,6 @@ export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
-export const isPrimaryYAxis = (yAxis: IAxis | IHighchartsAxisExtend) => !yAxis.opposite;
 export const stringifyChartTypes = () =>
     Object.keys(VisualizationTypes)
         .reduce((acc, type) => {

@@ -28,7 +28,7 @@ import {
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
-import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
+import { AXIS_LINE_COLOR, getLighterColor } from "../../../base/helpers/color";
 import {
     isAreaChart,
     isBarChart,
@@ -39,7 +39,7 @@ import {
     isRotationInRange,
     isScatterPlot,
     isTreemap,
-} from "../../utils/common";
+} from "../../../base/helpers/common";
 import {
     shouldEndOnTick,
     shouldFollowPointer,

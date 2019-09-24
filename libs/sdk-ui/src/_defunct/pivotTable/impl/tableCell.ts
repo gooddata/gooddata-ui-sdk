@@ -2,7 +2,6 @@
 import * as classNames from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { styleVariables } from "../../../highcharts/styles/variables";
 import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../interfaces/MappingHeader";
 
 import {
@@ -53,7 +52,7 @@ export function getMeasureCellStyle(
 
     if (label === "") {
         return {
-            color: styleVariables.gdColorStateBlank,
+            color: "#94a1ad",
             fontWeight: "bold",
         };
     }

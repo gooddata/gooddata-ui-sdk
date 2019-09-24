@@ -5,7 +5,7 @@ import { SECONDARY_MEASURES } from "../constants/bucketNames";
 import get = require("lodash/get");
 import { IChartConfig, INewChartConfig } from "../../interfaces/Config";
 import { getSecondaryMeasuresLocalIdentifiers } from "./mdObjBucketHelper";
-import { isComboChart } from "../../highcharts/utils/common";
+import { isComboChart } from "./common";
 import { VisType } from "../constants/visualizationTypes";
 
 export function setMeasuresToSecondaryAxis(config: IChartConfig = {}): IChartConfig {

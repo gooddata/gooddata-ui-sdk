@@ -2,7 +2,6 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { AFM } from "@gooddata/gd-bear-model";
 import { TableRowForDrilling } from "../_defunct/pivotTable/PivotTable";
-import Highcharts from "../highcharts/chart/highcharts/highchartsEntryPoint";
 import {
     ChartElementType,
     ChartType,
@@ -131,16 +130,6 @@ export interface IHighchartsParentTick {
 
 export interface IHighchartsCategoriesTree {
     tick: IHighchartsParentTick;
-}
-
-export interface IHighchartsPointObject extends Highcharts.Point {
-    drillIntersection: IDrillEventIntersectionElement[];
-    z?: number; // is missing in HCH's interface
-    value?: number; // is missing in HCH's interface
-}
-
-export function isGroupHighchartsDrillEvent(event: Highcharts.DrilldownEventObject) {
-    return !!event.points;
 }
 
 export interface ICellDrillEvent {

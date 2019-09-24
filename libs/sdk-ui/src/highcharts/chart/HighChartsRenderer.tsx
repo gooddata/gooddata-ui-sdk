@@ -12,7 +12,7 @@ import * as cx from "classnames";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
-import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
+import { isPieOrDonutChart, isOneOfTypes } from "../../base/helpers/common";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { OnLegendReady } from "../../interfaces/Events";
 import { IChartConfig } from "../../interfaces/Config";

@@ -2,13 +2,21 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { IColorItem, IColor } from "@gooddata/sdk-model";
-import Highcharts from "../highcharts/chart/highcharts/highchartsEntryPoint";
-import { PositionType } from "../highcharts/typings/legend";
+import {
+    HTMLDOMElement,
+    SVGDOMElement,
+    SVGAttributes,
+    StackItemObject,
+    DataLabelsOptionsObject,
+    ColorAxisOptions,
+} from "../highcharts";
 import { VisType } from "../base/constants/visualizationTypes";
 import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from "../highcharts/utils/defaultColors";
+export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
+
+export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 export type IDataLabelsVisible = string | boolean;
 
@@ -16,7 +24,7 @@ export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
     width?: number;
     padding?: number;
-    element?: Highcharts.HTMLDOMElement | Highcharts.SVGDOMElement;
+    element?: HTMLDOMElement | SVGDOMElement;
 }
 
 export interface IColorMapping {
@@ -149,7 +157,7 @@ export interface IAxisConfig {
     measures?: string[];
     stacks?: IStackItem;
     series?: ISeriesItem[];
-    stackTotalGroup?: Highcharts.SVGAttributes;
+    stackTotalGroup?: SVGAttributes;
 }
 
 export interface IAxis {
@@ -167,7 +175,7 @@ export interface ISeriesDataItem {
 }
 
 export interface IStackItem {
-    column0?: Highcharts.StackItemObject[];
+    column0?: StackItemObject[];
     column?: ISeriesDataItem[];
 }
 
@@ -185,8 +193,8 @@ export interface ISeriesItem {
     labelKey?: string;
     stack?: number;
     stacking?: string;
-    dataLabels?: Highcharts.DataLabelsOptionsObject;
-    dataLabelsGroup?: Highcharts.SVGAttributes;
+    dataLabels?: DataLabelsOptionsObject;
+    dataLabelsGroup?: SVGAttributes;
 }
 
 export interface IShapeArgsConfig {
@@ -213,13 +221,13 @@ export interface IChartOptions {
     secondary_xAxisProps?: any;
     secondary_yAxisProps?: any;
     title?: any;
-    colorAxis?: Highcharts.ColorAxisOptions;
+    colorAxis?: ColorAxisOptions;
     colorAssignments?: IColorAssignment[];
     colorPalette?: IColorPalette;
 }
 
 export interface IPatternOptionsObject {
-    path: Highcharts.SVGAttributes;
+    path: SVGAttributes;
     width: number;
     height: number;
 }

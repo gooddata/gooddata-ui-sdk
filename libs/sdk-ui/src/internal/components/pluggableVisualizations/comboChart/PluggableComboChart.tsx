@@ -49,7 +49,7 @@ import {
 } from "../../../constants/properties";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
-import { isLineChart, isAreaChart } from "../../../../highcharts/utils/common";
+import { isLineChart, isAreaChart } from "../../../../base/helpers/common";
 
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;

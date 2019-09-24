@@ -11,7 +11,7 @@ import {
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
-} from "../../utils/common";
+} from "../../../base/helpers/common";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from "../../typings/legend";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";

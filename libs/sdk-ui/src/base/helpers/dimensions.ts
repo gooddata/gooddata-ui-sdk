@@ -10,7 +10,7 @@ import {
     insightBucket,
     insightTotals,
 } from "@gooddata/sdk-model";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../highcharts/chart/constants";
+import { VIEW_BY_ATTRIBUTES_LIMIT } from "../constants/limits";
 import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../constants/bucketNames";
 import { MEASUREGROUP } from "../constants/dimensions";
 import { VisType, VisualizationTypes } from "../constants/visualizationTypes";

@@ -6,11 +6,11 @@ import { action, decorateAction } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 import { Execution } from "@gooddata/gd-bear-model";
 
-import { Visualization } from "../../src/highcharts/Visualization";
+import { Visualization } from "../../src/highcharts";
 import * as headerPredicateFactory from "../../src/base/factory/HeaderPredicateFactory";
 import { wrap } from "../utils/wrap";
 import * as fixtures from "../test_data/fixtures";
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/chart/constants";
+import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
 
 import "../../styles/scss/charts.scss";
 import "../../styles/scss/table.scss";

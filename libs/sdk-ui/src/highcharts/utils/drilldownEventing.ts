@@ -16,16 +16,15 @@ import {
     IDrillEventIntersectionElement,
     IDrillEventContextTable,
     IDrillPoint,
-    IHighchartsPointObject,
     IDrillConfig,
     ICellDrillEvent,
-    isGroupHighchartsDrillEvent,
     IDrillEventContextPoint,
     IDrillEventContext,
 } from "../../interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../interfaces/Events";
-import { isComboChart, isHeatmap, isTreemap } from "./common";
+import { isComboChart, isHeatmap, isTreemap } from "../../base/helpers/common";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
+import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
     switch (type) {

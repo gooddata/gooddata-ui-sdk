@@ -2,7 +2,7 @@
 import { IColorItem } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../highcharts/utils/defaultColors";
+import { DEFAULT_COLOR_PALETTE } from "../../../../../base/constants/defaultColors";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 

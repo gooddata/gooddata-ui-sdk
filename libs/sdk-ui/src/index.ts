@@ -44,12 +44,11 @@ import { Executor } from "./execution/Executor";
 import * as ChartConfiguration from "./interfaces/Config";
 // tslint:disable-next-line:no-duplicate-imports
 import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./interfaces/Config";
-import Chart from "./highcharts/chart/Chart";
-import ChartTransformation from "./highcharts/chart/ChartTransformation";
+import { Chart, ChartTransformation } from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
-import ColorUtils from "./highcharts/utils/color";
+import ColorUtils from "./base/helpers/color";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";

@@ -5,7 +5,7 @@ import { mount } from "enzyme";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import Legend from "../Legend";
 import HeatmapLegend from "../HeatmapLegend";
-import { withIntl } from "../../../utils/intlUtils";
+import { withIntl } from "../../../../base/helpers/intlUtils";
 
 describe("Legend", () => {
     const series = [

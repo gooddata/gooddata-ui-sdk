@@ -46,10 +46,9 @@ import {
 import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
+import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../../base/helpers/color";
 
 import {
-    getAttributeElementIdFromAttributeElementUri,
     isAreaChart,
     isBarChart,
     isBubbleChart,
@@ -61,7 +60,7 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-} from "../utils/common";
+} from "../../base/helpers/common";
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
@@ -74,13 +73,15 @@ import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingCh
 import { ColorFactory, IColorStrategy } from "./colorFactory";
 import {
     HEATMAP_DATA_POINTS_LIMIT,
-    PARENT_ATTRIBUTE_INDEX,
     PIE_CHART_LIMIT,
+    VIEW_BY_ATTRIBUTES_LIMIT,
+} from "../../base/constants/limits";
+import {
+    PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
-    VIEW_BY_ATTRIBUTES_LIMIT,
     VIEW_BY_DIMENSION_INDEX,
-} from "./constants";
+} from "../../base/constants/dimensions";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -92,7 +93,7 @@ import { getChartProperties2 } from "./highcharts/helpers";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
-import { IUnwrappedAttributeHeadersWithItems } from "./types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 import escape = require("lodash/escape");
@@ -106,6 +107,7 @@ import last = require("lodash/last");
 import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
+import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
 
 const TOOLTIP_PADDING = 10;
 

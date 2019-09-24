@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 
-import { Visualization } from "../../highcharts/Visualization";
+import { Visualization } from "../../highcharts";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ChartType } from "../../base/constants/visualizationTypes";
@@ -21,7 +21,7 @@ import {
 import { ChartPropTypes, Requireable } from "../../proptypes/Chart";
 import { BaseVisualization } from "./BaseVisualization";
 import { OnLegendReady } from "../../interfaces/Events";
-import { getValidColorPalette } from "../../highcharts/utils/color";
+import { getValidColorPalette } from "../../base/helpers/color";
 import { IChartConfig } from "../../interfaces/Config";
 export { Requireable };
 

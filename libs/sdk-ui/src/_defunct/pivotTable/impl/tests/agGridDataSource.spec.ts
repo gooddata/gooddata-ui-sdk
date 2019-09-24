@@ -2,7 +2,7 @@
 import * as fixtures from "../../../../../stories/test_data/fixtures";
 import { createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
 import { GroupingProviderFactory } from "../GroupingProvider";
-import { createIntlMock } from "../../../../highcharts/utils/intlUtils";
+import { createIntlMock } from "../../../../base/helpers/intlUtils";
 
 const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();

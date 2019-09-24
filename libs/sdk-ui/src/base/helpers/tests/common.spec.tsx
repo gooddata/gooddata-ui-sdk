@@ -4,7 +4,6 @@ import {
     immutableSet,
     repeatItemsNTimes,
     unEscapeAngleBrackets,
-    getAttributeElementIdFromAttributeElementUri,
     formatLegendLabel,
     getPrimaryChartType,
 } from "../common";
@@ -54,14 +53,6 @@ describe("Common utils", () => {
         const repeatedArray = repeatItemsNTimes(array, n);
         it("should return a new array with original items repeated N times", () => {
             expect(repeatedArray).toEqual([1, 2, 3, 1, 2, 3, 1, 2, 3]);
-        });
-    });
-
-    describe("getAttributeElementIdFromAttributeElementUri", () => {
-        const uri = "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1225";
-
-        it("should return id from attribute value uri", () => {
-            expect(getAttributeElementIdFromAttributeElementUri(uri)).toEqual("1225");
         });
     });
 

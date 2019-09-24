@@ -2,7 +2,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { screenshotWrap } from "@gooddata/test-storybook";
-import { Visualization } from "../../src/highcharts/Visualization";
+import { Visualization } from "../../src/highcharts";
 import { wrap } from "../utils/wrap";
 import "../../styles/scss/charts.scss";
 import {

@@ -15,7 +15,7 @@ import { CorePivotTable } from "../../pivotTable/CorePivotTable";
 import { IntlWrapper } from "../../../base/translations/IntlWrapper";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { RuntimeError } from "../../../base/errors/RuntimeError";
-import { createIntlMock } from "../../../highcharts/utils/intlUtils";
+import { createIntlMock } from "../../../base/helpers/intlUtils";
 import * as HttpStatusCodes from "http-status-codes";
 import { IColorPalette } from "../../../interfaces/Config";
 import { clearSdkCache } from "../../../base/helpers/sdkCache";

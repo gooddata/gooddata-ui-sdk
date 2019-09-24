@@ -60,7 +60,7 @@ import { ChartType, VisualizationTypes } from "../../../../base/constants/visual
 import { generateDimensions } from "../../../../base/helpers/dimensions";
 import * as BucketNames from "../../../../base/constants/bucketNames";
 import { RuntimeError } from "../../../../base/errors/RuntimeError";
-import ColorUtils from "../../../../highcharts/utils/color";
+import ColorUtils from "../../../../base/helpers/color";
 import * as VisEvents from "../../../../interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {

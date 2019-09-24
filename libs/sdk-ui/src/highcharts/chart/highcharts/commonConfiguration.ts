@@ -7,7 +7,7 @@ import isEmpty = require("lodash/isEmpty");
 import Highcharts from "./highchartsEntryPoint";
 import { chartClick } from "../../utils/drilldownEventing";
 import { styleVariables } from "../../styles/variables";
-import { isOneOfTypes } from "../../utils/common";
+import { isOneOfTypes } from "../../../base/helpers/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
 import { IHighchartsAxisExtend } from "../../HighchartsExtend";

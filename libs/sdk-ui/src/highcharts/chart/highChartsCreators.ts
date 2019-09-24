@@ -4,7 +4,7 @@ import merge = require("lodash/merge");
 import * as invariant from "invariant";
 import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
-import { stringifyChartTypes } from "../utils/common";
+import { stringifyChartTypes } from "../../base/helpers/common";
 
 import { IChartLimits, IChartOptions, INewChartConfig } from "../../interfaces/Config";
 
