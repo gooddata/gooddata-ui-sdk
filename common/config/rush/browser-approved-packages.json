@@ -95,10 +95,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/fixed-data-table-2",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@types/hoist-non-react-statics",
       "allowedCategories": [ "production" ]
     },
@@ -239,14 +235,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "es6-promise",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "exports-loader",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "fast-levenshtein",
       "allowedCategories": [ "production" ]
     },
@@ -261,10 +249,6 @@
     {
       "name": "file-loader",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "fixed-data-table-2",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "foundation-sites",
@@ -291,19 +275,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "imports-loader",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "invariant",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "isomorphic-fetch",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "istanbul-instrumenter-loader",
       "allowedCategories": [ "production" ]
     },
     {
@@ -440,10 +416,6 @@
     },
     {
       "name": "tslint-config-prettier",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "tslint-microsoft-contrib",
       "allowedCategories": [ "production", "tools" ]
     },
     {

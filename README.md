@@ -135,7 +135,7 @@ If you want to build _just_ single subproject, you can navigate to the subprojec
 npm:
 
 ```bash
-npm run-script build
+npm run build
 ```
 
 #### There are so many packages - where do I put my contributions?

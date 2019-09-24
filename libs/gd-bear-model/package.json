@@ -6,16 +6,15 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
-        "prepublish": "npm run-script build",
+        "prepublish": "npm run build",
         "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
-        "run-tslint": "tslint -p tsconfig.json",
-        "tslint": "npm run-script run-tslint -t verbose $npm_package_config_tslint",
-        "tslint-ci": "mkdir -p ./ci/results && npm run-script run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-        "validate": "tsc --noEmit && npm run-script tslint",
-        "validate-ci": "tsc --noEmit && npm run-script tslint-ci",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "validate": "tsc --noEmit && npm run tslint",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci",
         "prettier-check": "prettier --check 'src/**/*.ts'",
         "prettier-write": "prettier --write 'src/**/*.ts'"
     },
@@ -27,17 +26,12 @@
         "index.ts",
         "README.md"
     ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/gooddata/gooddata-typings.git"
-    },
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-model",
     "jest": {
+        "preset": "ts-jest",
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.js"
         ],
-        "transform": {
-            ".(ts|tsx)": "ts-jest"
-        },
         "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
         "collectCoverageFrom": [
             "src/**/*.{ts}",
@@ -47,10 +41,11 @@
         "coverageReporters": [
             "html"
         ],
-        "moduleFileExtensions": [
-            "ts",
-            "js"
-        ]
+        "globals": {
+            "ts-jest": {
+                "packageJson": "package.json"
+            }
+        }
     },
     "keywords": [
         "typescript",
@@ -69,13 +64,13 @@
     "devDependencies": {
         "@gooddata/tslint-config": "^1.0.0",
         "@types/jest": "^24.0.6",
-        "@types/lodash": "^4.14.121",
+        "@types/lodash": "^4.14.123",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "^1.18.2",
         "ts-jest": "^24.1.0",
         "tslint": "^5.14.0",
-        "tslint-microsoft-contrib": "^5.2.1",
+        "tslint-config-prettier": "^1.18.0",
         "typescript": "3.3.4000"
     }
 }
