@@ -14,7 +14,7 @@ import produce from "immer";
 import { configurePercent, configureOverTimeComparison } from "../../../../../internal/utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../../../../internal/components/configurationPanels/UnsupportedConfigurationPanel";
 
-import * as VisEvents from "../../../../../interfaces/Events";
+import * as VisEvents from "../../../../../base/interfaces/Events";
 import * as BucketNames from "../../../../../base/constants/bucketNames";
 import {
     IReferencePoint,

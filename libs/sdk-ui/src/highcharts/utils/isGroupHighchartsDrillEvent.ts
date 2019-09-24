@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
-import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
+import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
 
 export interface IHighchartsPointObject extends Highcharts.Point {
     drillIntersection: IDrillEventIntersectionElement[];

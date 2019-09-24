@@ -2,8 +2,8 @@
 import { AFM, Execution } from "@gooddata/gd-bear-model";
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import { context, measureHeaders } from "../../factory/tests/HeaderPredicateFactory.mock";
-import { IMappingHeader } from "../../../interfaces/MappingHeader";
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../interfaces/MappingHeader";
+import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../headerPredicate";
 
 describe("isSomeHeaderPredicateMatched", () => {

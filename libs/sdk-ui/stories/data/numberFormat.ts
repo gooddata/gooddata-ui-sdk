@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IChartConfig } from "../../src/interfaces/Config";
+import { IChartConfig } from "../../src/base/interfaces/Config";
 
 export const GERMAN_NUMBER_FORMAT: ISeparators = {
     thousand: ".",

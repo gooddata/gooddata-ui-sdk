@@ -19,13 +19,13 @@ import {
     Localization,
 } from "@gooddata/gd-bear-model/dist/index";
 import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { BaseChart } from "../to_delete/BaseChart";
-import { IChartConfig, IColorPaletteItem } from "../../interfaces/Config";
+import { IChartConfig, IColorPaletteItem } from "../../base/interfaces/Config";
 import { IPivotTableBucketProps, PivotTable } from "../pivotTable/PivotTable";
 import { CoreHeadline } from "../../charts/headline/CoreHeadline";
-import { IEvents, OnLegendReady } from "../../interfaces/Events";
+import { IEvents, OnLegendReady } from "../../base/interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";
 import { VisualizationTypes, VisType } from "../../base/constants/visualizationTypes";
 import { IDataSource } from "../to_delete/DataSource";

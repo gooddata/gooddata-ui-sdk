@@ -6,7 +6,7 @@ import includes = require("lodash/includes");
 import isEqual = require("lodash/isEqual");
 import cloneDeep = require("lodash/cloneDeep");
 
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../interfaces/OverTimeComparison";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
 import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket";
 import { IBucketItem, IBucketUiConfig, IExtendedReferencePoint } from "../interfaces/Visualization";
 import {

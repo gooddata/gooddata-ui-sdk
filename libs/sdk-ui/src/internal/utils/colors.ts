@@ -11,9 +11,9 @@ import { Execution } from "@gooddata/gd-bear-model";
 import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gd-bear-client";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
-import * as MappingHeader from "../../interfaces/MappingHeader";
+import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import ColorUtils from "../../base/helpers/color";
-import * as ChartConfiguration from "../../interfaces/Config";
+import * as ChartConfiguration from "../../base/interfaces/Config";
 
 function getItemName(item: IColoredItem): string {
     let name = "";

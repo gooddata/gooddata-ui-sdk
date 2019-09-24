@@ -9,7 +9,7 @@ import {
     getCustomizedConfiguration,
     percentageDataLabelFormatter,
 } from "../customConfiguration";
-import { ISeriesDataItem } from "../../../../interfaces/Config";
+import { ISeriesDataItem } from "../../../../base/interfaces/Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { immutableSet } from "../../../../base/helpers/common";
 import {
@@ -17,7 +17,7 @@ import {
     supportedTooltipFollowPointerChartTypes,
 } from "../../chartOptionsBuilder";
 import { AFM } from "@gooddata/gd-bear-model";
-import { IDrillConfig } from "../../../../interfaces/DrillEvents";
+import { IDrillConfig } from "../../../../base/interfaces/DrillEvents";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {

@@ -15,12 +15,12 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "../helpers/mappingHeader";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
 import {
     IMappingHeader,
     isMappingHeaderAttributeItem,
     isMappingHeaderMeasureItem,
-} from "../../interfaces/MappingHeader";
+} from "../interfaces/MappingHeader";
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
     measures: AFM.IMeasure[],

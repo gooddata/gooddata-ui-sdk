@@ -17,7 +17,7 @@ import sum = require("lodash/sum");
 import compact = require("lodash/compact");
 
 import { PERCENT_STACK } from "./getOptionalStackingConfiguration";
-import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../../interfaces/Config";
+import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../../base/interfaces/Config";
 import { isComboChart, isLineChart } from "../../../base/helpers/common";
 
 export interface ICanon {

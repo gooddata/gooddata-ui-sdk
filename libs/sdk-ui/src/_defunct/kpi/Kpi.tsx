@@ -10,7 +10,7 @@ import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
 import { Execute, IExecuteChildrenProps, IExecuteProps } from "../../execution/Execute";
 import { LoadingComponent, ILoadingProps } from "../../base/simple/LoadingComponent";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
-import { IEvents } from "../../interfaces/Events";
+import { IEvents } from "../../base/interfaces/Events";
 import { KpiPropTypes, Requireable } from "../../proptypes/Kpi";
 import { isEmptyResult } from "../../base/helpers/errorHandlers";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";

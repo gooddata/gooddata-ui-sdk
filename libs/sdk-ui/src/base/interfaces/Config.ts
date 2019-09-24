@@ -9,12 +9,12 @@ import {
     StackItemObject,
     DataLabelsOptionsObject,
     ColorAxisOptions,
-} from "../highcharts";
-import { VisType } from "../base/constants/visualizationTypes";
+} from "../../highcharts";
+import { VisType } from "../constants/visualizationTypes";
 import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
 import { IMappingHeader } from "./MappingHeader";
 
-export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
+export { DEFAULT_COLOR_PALETTE } from "../constants/defaultColors";
 
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 

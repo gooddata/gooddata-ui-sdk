@@ -23,7 +23,7 @@ import {
     IChartOptions,
     IDataLabelsVisible,
     ISeriesItem,
-} from "../../../interfaces/Config";
+} from "../../../base/interfaces/Config";
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
@@ -48,7 +48,7 @@ import {
 } from "./helpers";
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
-import { IDrillConfig } from "../../../interfaces/DrillEvents";
+import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 

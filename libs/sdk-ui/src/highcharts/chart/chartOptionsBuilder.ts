@@ -42,10 +42,10 @@ import {
     ISeriesDataItem,
     ISeriesItem,
     ISeriesItemConfig,
-} from "../../interfaces/Config";
-import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+} from "../../base/interfaces/Config";
+import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
+import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../../base/helpers/color";
 
 import {

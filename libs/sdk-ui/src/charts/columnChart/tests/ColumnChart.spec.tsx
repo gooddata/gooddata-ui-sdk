@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
 import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
-import { IChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../base/interfaces/Config";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";

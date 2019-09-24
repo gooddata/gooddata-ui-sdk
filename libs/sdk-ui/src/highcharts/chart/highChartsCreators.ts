@@ -6,7 +6,7 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../../base/helpers/common";
 
-import { IChartLimits, IChartOptions, IChartConfig } from "../../interfaces/Config";
+import { IChartLimits, IChartOptions, IChartConfig } from "../../base/interfaces/Config";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";

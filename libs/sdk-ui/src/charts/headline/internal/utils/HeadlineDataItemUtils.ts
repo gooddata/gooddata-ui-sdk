@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
-import { IChartConfig } from "../../../../interfaces/Config";
+import { IChartConfig } from "../../../../base/interfaces/Config";
 import { IFormattedHeadlineDataItem, IHeadlineDataItem } from "../../Headlines";
 import isEmpty = require("lodash/isEmpty");
 import isNaN = require("lodash/isNaN");

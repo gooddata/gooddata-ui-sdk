@@ -12,7 +12,7 @@ import { emptyReferencePoint } from "../../mocks/referencePointMocks";
 
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { IDrillableItem } from "../../../interfaces/DrillEvents";
+import { IDrillableItem } from "../../../base/interfaces/DrillEvents";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 const { delay } = testUtils;

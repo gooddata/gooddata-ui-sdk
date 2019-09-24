@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/gd-bear-model/dist/index";
-import { IMappingHeader } from "../../../interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { ColDef, CellEvent, GridOptions } from "ag-grid-community";
 
 export interface IGridRow {

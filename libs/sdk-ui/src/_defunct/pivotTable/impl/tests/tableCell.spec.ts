@@ -5,7 +5,7 @@ import {
     getMeasureCellFormattedValue,
     getMeasureCellStyle,
 } from "../tableCell";
-import { IMappingHeader } from "../../../../interfaces/MappingHeader";
+import { IMappingHeader } from "../../../../base/interfaces/MappingHeader";
 
 import { TABLE_HEADERS_2A_3M } from "../../highcharts/table/fixtures/2attributes3measures";
 

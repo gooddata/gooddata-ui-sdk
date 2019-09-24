@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as MappingHeader from "../../interfaces/MappingHeader";
-import * as ChartConfiguration from "../../interfaces/Config";
+import * as MappingHeader from "../../base/interfaces/MappingHeader";
+import * as ChartConfiguration from "../../base/interfaces/Config";
 import { IColor, IColorItem } from "@gooddata/sdk-model";
 
 export interface IColoredItem {

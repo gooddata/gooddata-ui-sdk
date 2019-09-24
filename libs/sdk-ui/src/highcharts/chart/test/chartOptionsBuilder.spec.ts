@@ -42,7 +42,7 @@ import {
     IMeasuresStackConfig,
     IChartConfig,
     IPointData,
-} from "../../../interfaces/Config";
+} from "../../../base/interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";

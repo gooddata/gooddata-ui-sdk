@@ -16,7 +16,7 @@ import {
 } from "../../base/translations/TranslationsProvider";
 import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
 import { getValidColorPalette2 } from "../../base/helpers/color";
-import { OnLegendReady } from "../../interfaces/Events";
+import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 

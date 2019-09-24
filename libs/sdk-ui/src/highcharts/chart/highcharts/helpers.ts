@@ -16,7 +16,7 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "../../../base/constants/visualizationTypes";
 import { isBarChart } from "../../../base/helpers/common";
-import { ISeriesItem, ISeriesDataItem, IChartConfig } from "../../../interfaces/Config";
+import { ISeriesItem, ISeriesDataItem, IChartConfig } from "../../../base/interfaces/Config";
 
 export interface IRectByPoints {
     left: number;

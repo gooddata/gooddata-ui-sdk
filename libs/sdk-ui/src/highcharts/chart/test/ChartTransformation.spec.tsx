@@ -7,7 +7,7 @@ import ChartTransformation from "../ChartTransformation";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
-import { IChartConfig, IColorPaletteItem } from "../../../interfaces/Config";
+import { IChartConfig, IColorPaletteItem } from "../../../base/interfaces/Config";
 import { getRgbString } from "../../../base/helpers/color";
 
 describe("ChartTransformation", () => {

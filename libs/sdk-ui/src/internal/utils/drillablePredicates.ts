@@ -3,7 +3,7 @@ import sdk from "@gooddata/gd-bear-client";
 import uniq = require("lodash/uniq");
 import includes = require("lodash/includes");
 import isArray = require("lodash/isArray");
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
 
 export interface ISimplePostMessageData {

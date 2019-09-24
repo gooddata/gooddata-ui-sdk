@@ -14,8 +14,8 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../../../base/constants/dimensions";
 
-import { IHeaderPredicate2 } from "../../../interfaces/HeaderPredicate";
-import { IChartOptions } from "../../../interfaces/Config";
+import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
+import { IChartOptions } from "../../../base/interfaces/Config";
 
 export function generateChartOptions(
     dv: DataViewFacade = barChartWithStackByAndViewByAttributes,

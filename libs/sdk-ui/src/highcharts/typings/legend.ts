@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { TOP } from "../chart/legend/PositionTypes";
-import { PositionType } from "../../interfaces/Config";
+import { PositionType } from "../../base/interfaces/Config";
 
 export interface ILegendOptions {
     enabled: boolean;

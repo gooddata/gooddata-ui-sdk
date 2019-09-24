@@ -6,7 +6,7 @@ import {
     IDataLabelsConfig,
     IAxisConfig,
     ISeriesDataItem,
-} from "../../../../../../interfaces/Config";
+} from "../../../../../../base/interfaces/Config";
 import { VisualizationTypes } from "../../../../../../base/constants/visualizationTypes";
 
 describe("getStackLabelPointsForDualAxis", () => {

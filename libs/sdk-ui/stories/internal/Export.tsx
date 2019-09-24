@@ -8,7 +8,7 @@ import { storiesOf } from "@storybook/react";
 
 import { BarChart, Headline, PivotTable, Table } from "../../src";
 import { Visualization } from "../../src/_defunct/uri/Visualization";
-import { IExportFunction, IExtendedExportConfig, OnExportReady } from "../../src/interfaces/Events";
+import { IExportFunction, IExtendedExportConfig, OnExportReady } from "../../src/base/interfaces/Events";
 
 import { onErrorHandler } from "../mocks";
 import { ATTRIBUTE_1, MEASURE_1, MEASURE_1_WITH_ALIAS, MEASURE_2 } from "../data/componentProps";

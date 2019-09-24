@@ -2,17 +2,17 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import * as invariant from "invariant";
-import { IHeaderPredicate2 } from "../interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import isFunction = require("lodash/isFunction");
 import omitBy = require("lodash/omitBy");
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
-import { IChartConfig } from "../interfaces/Config";
-import { OnFiredDrillEvent } from "../interfaces/Events";
+import { IChartConfig } from "../base/interfaces/Config";
+import { OnFiredDrillEvent } from "../base/interfaces/Events";
 
 import { isChartSupported, stringifyChartTypes } from "../base/helpers/common";
-import { IDrillableItem } from "../interfaces/DrillEvents";
+import { IDrillableItem } from "../base/interfaces/DrillEvents";
 import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 
 export interface IVisualizationProps {

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
-import * as MappingHeader from "../../../interfaces/MappingHeader";
+import * as MappingHeader from "../../../base/interfaces/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
 import { GuidType, IColorItem } from "@gooddata/sdk-model";

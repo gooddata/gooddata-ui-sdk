@@ -5,12 +5,12 @@ import {
     isMappingHeaderAttribute,
 } from "../MappingHeader";
 import { isHeaderPredicate } from "../HeaderPredicate";
-import * as headerPredicateFactory from "../../base/factory/HeaderPredicateFactory";
+import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import {
     attributeHeaderItem,
     measureHeaders,
     attributeHeader,
-} from "../../base/factory/tests/HeaderPredicateFactory.mock";
+} from "../../factory/tests/HeaderPredicateFactory.mock";
 
 describe("isMappingHeaderMeasureItem", () => {
     it("should return true when object contains measureHeaderItem", () => {

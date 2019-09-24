@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { IHeaderPredicateContext } from "../../../interfaces/HeaderPredicate";
+import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
 
 export const afm: AFM.IAfm = {
     measures: [

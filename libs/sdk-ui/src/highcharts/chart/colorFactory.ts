@@ -16,8 +16,8 @@ import {
     IColorMapping2,
     IColorPalette,
     IColorPaletteItem,
-} from "../../interfaces/Config";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+} from "../../base/interfaces/Config";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,

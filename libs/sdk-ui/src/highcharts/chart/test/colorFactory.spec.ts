@@ -18,7 +18,7 @@ import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../../base/helpers/
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IColorMapping2, IColorPalette, IColorPaletteItem } from "../../../interfaces/Config";
+import { IColorMapping2, IColorPalette, IColorPaletteItem } from "../../../base/interfaces/Config";
 import { IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IColorItem, RGBType } from "@gooddata/sdk-model";
 import range = require("lodash/range");

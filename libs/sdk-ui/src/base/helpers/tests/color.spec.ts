@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IHeaderPredicate } from "../../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import {
     getLighterColor,
     normalizeColorToRGB,

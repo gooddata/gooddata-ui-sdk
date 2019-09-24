@@ -9,7 +9,7 @@ import {
     IDrillConfig,
     IHighchartsCategoriesTree,
     IHighchartsParentTick,
-} from "../../../interfaces/DrillEvents";
+} from "../../../base/interfaces/DrillEvents";
 import { IHighchartsPointObject } from "../../utils/isGroupHighchartsDrillEvent";
 
 function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {

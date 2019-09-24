@@ -14,8 +14,8 @@ import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
 import { isPieOrDonutChart, isOneOfTypes } from "../../base/helpers/common";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
-import { OnLegendReady } from "../../interfaces/Events";
-import { IChartConfig } from "../../interfaces/Config";
+import { OnLegendReady } from "../../base/interfaces/Events";
+import { IChartConfig } from "../../base/interfaces/Config";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 
 export const FLUID_LEGEND_THRESHOLD = 768;

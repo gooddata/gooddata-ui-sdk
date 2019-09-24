@@ -3,7 +3,7 @@
 import { Execution } from "@gooddata/gd-bear-model/dist/index";
 import { getMappingHeaderName } from "../../../base/helpers/mappingHeader";
 import { unwrap } from "../../../base/helpers/utils";
-import { IMappingHeader } from "../../../interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { getIdsFromUri } from "./agGridUtils";
 import range = require("lodash/range");
 import clone = require("lodash/clone");

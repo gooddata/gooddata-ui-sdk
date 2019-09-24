@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IDrillableItem } from "../../interfaces/DrillEvents";
-import { OverTimeComparisonType } from "../../interfaces/OverTimeComparison";
+import { IDrillableItem } from "../../base/interfaces/DrillEvents";
+import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison";
 import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
-import { IColorPalette } from "../../interfaces/Config";
-import * as VisEvents from "../../interfaces/Events";
+import { IColorPalette } from "../../base/interfaces/Config";
+import * as VisEvents from "../../base/interfaces/Events";
 import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

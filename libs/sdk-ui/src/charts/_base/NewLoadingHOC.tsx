@@ -6,7 +6,7 @@ import { injectIntl, InjectedIntl } from "react-intl";
 import { ErrorStates } from "../../base/constants/errorStates";
 import { RuntimeError } from "../../base/errors/RuntimeError";
 import { convertErrors } from "../../base/helpers/errorHandlers";
-import { ILoadingState } from "../../interfaces/Events";
+import { ILoadingState } from "../../base/interfaces/Events";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");

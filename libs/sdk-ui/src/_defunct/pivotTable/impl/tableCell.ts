@@ -2,7 +2,7 @@
 import * as classNames from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../interfaces/MappingHeader";
+import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../base/interfaces/MappingHeader";
 
 import {
     isAttributeCell,

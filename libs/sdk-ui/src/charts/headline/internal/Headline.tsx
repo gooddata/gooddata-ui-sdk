@@ -4,7 +4,7 @@ import { AFM } from "@gooddata/gd-bear-model";
 import * as classNames from "classnames";
 import * as React from "react";
 import { HeadlineElementType } from "../../../base/constants/visualizationTypes";
-import { IChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../base/interfaces/Config";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
 import noop = require("lodash/noop");

@@ -61,7 +61,7 @@ import { generateDimensions } from "../../../../base/helpers/dimensions";
 import * as BucketNames from "../../../../base/constants/bucketNames";
 import { RuntimeError } from "../../../../base/errors/RuntimeError";
 import ColorUtils from "../../../../base/helpers/color";
-import * as VisEvents from "../../../../interfaces/Events";
+import * as VisEvents from "../../../../base/interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
@@ -72,7 +72,7 @@ import {
     insightHasDataDefined,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig } from "../../../../interfaces/Config";
+import { IChartConfig } from "../../../../base/interfaces/Config";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");

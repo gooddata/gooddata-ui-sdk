@@ -28,9 +28,9 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
-import { IDrillEvent, IDrillEventContextTable } from "../../interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
+import { IDrillEvent, IDrillEventContextTable } from "../../base/interfaces/DrillEvents";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { IMenuAggregationClickConfig, IPivotTableConfig } from "./PivotTable";
 import { IDataSourceProviderInjectedProps } from "../to_delete/DataSourceProvider";
 import { LoadingComponent } from "../../base/simple/LoadingComponent";

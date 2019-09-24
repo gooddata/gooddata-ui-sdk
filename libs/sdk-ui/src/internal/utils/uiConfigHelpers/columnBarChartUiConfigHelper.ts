@@ -12,7 +12,7 @@ import { BUCKETS } from "../../constants/bucket";
 
 import { getMeasureItems } from "../bucketHelper";
 import { InjectedIntl } from "react-intl";
-import { OverTimeComparisonTypes } from "../../../interfaces/OverTimeComparison";
+import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
 
 export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,

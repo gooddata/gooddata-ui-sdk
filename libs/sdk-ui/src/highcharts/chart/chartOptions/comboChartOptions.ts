@@ -5,7 +5,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupHeader, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
-import { IChartConfig, ISeriesItem } from "../../../interfaces/Config";
+import { IChartConfig, ISeriesItem } from "../../../base/interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../../base/helpers/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";

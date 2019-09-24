@@ -2,7 +2,7 @@
 import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
 import { getRgbString } from "../../../../../base/helpers/color";
-import { DEFAULT_COLOR_PALETTE, IColorPaletteItem } from "../../../../../interfaces/Config";
+import { DEFAULT_COLOR_PALETTE, IColorPaletteItem } from "../../../../../base/interfaces/Config";
 
 describe("dataLabelsColors", () => {
     describe("isWhiteNotContrastEnough", () => {

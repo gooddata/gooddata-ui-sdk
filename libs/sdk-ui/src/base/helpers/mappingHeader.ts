@@ -4,7 +4,7 @@ import {
     isMappingHeaderAttribute,
     isMappingHeaderAttributeItem,
     isMappingHeaderMeasureItem,
-} from "../../interfaces/MappingHeader";
+} from "../interfaces/MappingHeader";
 
 export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean {
     return isMappingHeaderAttribute(header) || isMappingHeaderMeasureItem(header);

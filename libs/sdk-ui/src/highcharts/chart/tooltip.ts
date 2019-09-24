@@ -3,7 +3,7 @@ import { colors2Object, INumberObject, ISeparators, numberFormat } from "@goodda
 import isNil = require("lodash/isNil");
 import { customEscape } from "./chartOptionsBuilder";
 import { percentFormatter } from "../../base/helpers/utils";
-import { IPointData } from "../../interfaces/Config";
+import { IPointData } from "../../base/interfaces/Config";
 
 export function formatValueForTooltip(
     val: string | number,

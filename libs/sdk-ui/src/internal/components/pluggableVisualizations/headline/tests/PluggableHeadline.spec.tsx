@@ -16,8 +16,8 @@ import {
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
-import { IDrillableItem } from "../../../../../interfaces/DrillEvents";
-import { OverTimeComparisonTypes } from "../../../../../interfaces/OverTimeComparison";
+import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
 import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
 import * as BucketNames from "../../../../../base/constants/bucketNames";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

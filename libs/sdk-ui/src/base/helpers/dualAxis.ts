@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { measureId } from "@gooddata/sdk-model";
-import { IChartConfig } from "../../interfaces/Config";
+import { IChartConfig } from "../interfaces/Config";
 import { SECONDARY_MEASURES } from "../constants/bucketNames";
 import { VisType } from "../constants/visualizationTypes";
 import { isComboChart } from "./common";

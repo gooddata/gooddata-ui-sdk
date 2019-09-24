@@ -5,8 +5,8 @@ import { IColorItem } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
-import * as ChartConfiguration from "../../../../../interfaces/Config";
-import * as MappingHeader from "../../../../../interfaces/MappingHeader";
+import * as ChartConfiguration from "../../../../../base/interfaces/Config";
+import * as MappingHeader from "../../../../../base/interfaces/MappingHeader";
 
 export interface IColoredItemProps {
     colorPalette: ChartConfiguration.IColorPalette;

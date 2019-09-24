@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import ArithmeticMeasureTitleFactory from "../ArithmeticMeasureTitleFactory";
-import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "../../../interfaces/MeasureTitle";
+import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "../../interfaces/MeasureTitle";
 
 describe("ArithmeticMeasureTitleFactory", () => {
     describe("getTitle", () => {
