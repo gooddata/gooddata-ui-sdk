@@ -4,16 +4,16 @@ import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
 import { WithLoadingResult } from "../base/hoc/withLoading";
 
-interface IExecutor {
+export interface IExecutorProps {
     children: (executionResult: WithLoadingResult<DataViewFacade>) => React.ReactElement<any> | null;
     execution: IPreparedExecution;
-    onError?: (error?: Error, props?: IExecutor) => void;
-    onLoadingStart?: (props?: IExecutor) => void;
-    onLoadingChanged?: (isLoading?: boolean, props?: IExecutor) => void;
-    onLoadingFinish?: (result?: DataViewFacade, props?: IExecutor) => void;
+    onError?: (error?: Error, props?: IExecutorProps) => void;
+    onLoadingStart?: (props?: IExecutorProps) => void;
+    onLoadingChanged?: (isLoading?: boolean, props?: IExecutorProps) => void;
+    onLoadingFinish?: (result?: DataViewFacade, props?: IExecutorProps) => void;
 }
 
-type Props = IExecutor & WithLoadingResult<DataViewFacade>;
+type Props = IExecutorProps & WithLoadingResult<DataViewFacade>;
 
 const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoading, fetch, result }) => {
     return children({
@@ -25,7 +25,7 @@ const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoad
 };
 
 export const Executor = withExecution({
-    executionOrFactory: (props: IExecutor) => props.execution,
+    executionOrFactory: (props: IExecutorProps) => props.execution,
     mapResultToProps: r => r,
     eventsOrFactory: props => {
         const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
