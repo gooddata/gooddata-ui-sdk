@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { ErrorStates } from "../..";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {
     IntlTranslationsProvider,
@@ -15,6 +14,7 @@ import { HeadlinePropTypes, Requireable } from "../../proptypes/Headline";
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
+import { ErrorStates } from "../../base/constants/errorStates";
 
 export { Requireable };
 

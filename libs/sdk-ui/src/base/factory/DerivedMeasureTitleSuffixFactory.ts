@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Localization } from "@gooddata/gd-bear-model";
 import IntlStore from "../translations/IntlStore";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../index";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.

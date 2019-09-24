@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { ChartType, ErrorStates } from "../../index";
 import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
 import { ICoreChartProps } from "../chartProps";
@@ -18,6 +17,8 @@ import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
 import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
+import { ChartType } from "../../base/constants/visualizationTypes";
+import { ErrorStates } from "../../base/constants/errorStates";
 
 export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;

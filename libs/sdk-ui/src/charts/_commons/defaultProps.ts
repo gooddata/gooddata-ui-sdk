@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
-import { ErrorComponent, LoadingComponent } from "../..";
+import { ErrorComponent } from "../../base/simple/ErrorComponent";
+import { LoadingComponent } from "../../base/simple/LoadingComponent";
 import { ICoreChartProps } from "../chartProps";
 
 const defaultErrorHandler = (error: any) => {

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { Localization } from "@gooddata/gd-bear-model";
 import IntlStore from "../translations/IntlStore";
-import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "../../index";
+import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../interfaces/MeasureTitle";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.

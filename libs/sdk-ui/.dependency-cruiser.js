@@ -174,7 +174,7 @@ options = {
                 path: "src/base",
             },
             to: {
-                pathNot: "^(src/base)",
+                pathNot: "^(src/base|package.json)",
             },
         },
         {
@@ -189,14 +189,45 @@ options = {
             },
         },
         {
-            name: "highcharts-dependencies",
-            comment: "The highcharts module must only depend on base.",
+            name: "highchart-dependents-through-index",
+            comment: "Other components depending on highcharts must do so through its index.ts.",
             severity: "error",
             from: {
                 pathNot: "^(src/highcharts)",
             },
             to: {
-                path: "^(src/highcharts/utils)",
+                path: "src/highcharts/(chart|constants|proptypes|styles|typings|utils)",
+            },
+        },
+        {
+            name: "charts-dependencies",
+            comment: "Charts must only depend on base and highcharts.",
+            severity: "error",
+            from: {
+                path: "src/charts",
+            },
+            to: {
+                pathNot: "^(src/base|src/charts|src/highcharts)",
+            },
+        },
+        {
+            name: "internal-dependencies",
+            comment: "Charts must only depend on base and highcharts.",
+            severity: "error",
+            from: {
+                path: "src/internal",
+            },
+            to: {
+                pathNot: "^(src/internal|src/base|src/charts|src/highcharts)",
+            },
+        },
+        {
+            name: "global-index-import",
+            comment: "No one must depend on global index",
+            severity: "error",
+            from: {},
+            to: {
+                path: "src/index.ts",
             },
         },
     ],
