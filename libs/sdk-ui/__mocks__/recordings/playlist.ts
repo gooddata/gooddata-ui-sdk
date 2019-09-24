@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-22T08:16:55.539Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-24T11:28:06.737Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -137,6 +137,12 @@ export const ColumnChartWithMeasureAndViewByAndComputeRatio = {
     definition: require("./column_chart_with_measure_and_view_by_and_computeRatio/definition.json"),
     response: require("./column_chart_with_measure_and_view_by_and_computeRatio/response.json"),
     result: require("./column_chart_with_measure_and_view_by_and_computeRatio/result.json"),
+};
+
+export const ComboChartWith3MetricsAndViewByAttribute = {
+    definition: require("./combo_chart_with_3_metrics_and_view_by_attribute/definition.json"),
+    response: require("./combo_chart_with_3_metrics_and_view_by_attribute/response.json"),
+    result: require("./combo_chart_with_3_metrics_and_view_by_attribute/result.json"),
 };
 
 export const ComboChartWithTwoMeasuresViewByAttribute = {
@@ -310,7 +316,7 @@ export const TreemapWithTwoMetricsAndStackByAttribute = {
 // initialize recorded backend with this
 export const MasterIndex = {
     testWorkspace: {
-        fp_ada6838291be0409535d24690a31749e: BarChartWith3MetricsAndViewByAttribute,
+        fp_ada6838291be0409535d24690a31749e: ComboChartWith3MetricsAndViewByAttribute,
         fp_0b599ac8ef275e712d231f304d9e29d0: AreaChartWithMeasureViewByAndStackBy,
         fp_45eabf83c34eaa23f347b56a5858d57f: ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
         fp_baa24e54ab2909e7a7ae4f5f6d21ffaa: BarChartWith3MetricsAndViewByAttributeFunformat,

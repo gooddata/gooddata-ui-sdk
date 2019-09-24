@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
 import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
-import { INewChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../interfaces/Config";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     attributeId,
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { CoreBarChart } from "../CoreBarChart";
 
-function renderChart(measures: AttributeOrMeasure[], config?: INewChartConfig): ShallowWrapper {
+function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
     return shallow(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
 }
 

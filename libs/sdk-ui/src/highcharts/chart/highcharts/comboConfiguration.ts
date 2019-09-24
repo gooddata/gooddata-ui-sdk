@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
-import { INewChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../../base/helpers/common";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
@@ -11,13 +11,13 @@ import get = require("lodash/get");
 
 const { COLUMN, LINE } = VisualizationTypes;
 
-function getDefaultComboTypes(config?: INewChartConfig): INewChartConfig {
+function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
     return {
         primaryChartType: get(config, "primaryChartType", COLUMN),
         secondaryChartType: get(config, "secondaryChartType", LINE),
     };
 }
-export function getDefaultChartType(config?: INewChartConfig) {
+export function getDefaultChartType(config?: IChartConfig) {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
 
     if (primaryChartType === secondaryChartType) {
@@ -31,7 +31,7 @@ export function getDefaultChartType(config?: INewChartConfig) {
     return LINE;
 }
 
-function isOnlyLineSeries(config: INewChartConfig, definition?: IExecutionDefinition): boolean {
+function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinition): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
     const buckets = definition ? definition.buckets : [];
     const isEmptyPrimaryMeasure = bucketIsEmpty(bucketsFind(buckets, MEASURES));
@@ -45,7 +45,7 @@ function isOnlyLineSeries(config: INewChartConfig, definition?: IExecutionDefini
     );
 }
 
-export function getComboConfiguration(config?: INewChartConfig, definition?: IExecutionDefinition) {
+export function getComboConfiguration(config?: IChartConfig, definition?: IExecutionDefinition) {
     const series = isOnlyLineSeries(config, definition)
         ? {
               series: {

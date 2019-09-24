@@ -11,16 +11,13 @@ import {
     measureDoesComputeRatio,
 } from "@gooddata/sdk-model";
 import { MEASURES } from "../../constants/bucketNames";
-import { INewChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../interfaces/Config";
 
 function isMeasureArray(obj: any): obj is IMeasure[] {
     return !isEmpty(obj) && isMeasure(obj[0]);
 }
 
-export function sanitizeConfig2(
-    input: IMeasure[] | IBucket[] = [],
-    config: INewChartConfig = {},
-): INewChartConfig {
+export function sanitizeConfig2(input: IMeasure[] | IBucket[] = [], config: IChartConfig = {}): IChartConfig {
     if (!input.length) {
         return config;
     }
@@ -47,8 +44,8 @@ function isComputeRatioMeasure(bucketItem: AttributeOrMeasure): boolean {
 
 export function getNewSanitizedStackingConfig(
     executionDef: IExecutionDefinition,
-    chartConfig: INewChartConfig,
-): INewChartConfig {
+    chartConfig: IChartConfig,
+): IChartConfig {
     if (executionDef.measures.length === 1) {
         const { stackMeasures, stackMeasuresToPercent } = chartConfig;
         const singleMeasure = executionDef.measures[0];

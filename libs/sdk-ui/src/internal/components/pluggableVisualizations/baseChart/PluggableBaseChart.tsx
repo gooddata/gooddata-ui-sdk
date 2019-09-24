@@ -72,7 +72,7 @@ import {
     insightHasDataDefined,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { INewChartConfig } from "../../../../interfaces/Config";
+import { IChartConfig } from "../../../../interfaces/Config";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -478,7 +478,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return legendPosition;
     }
 
-    private buildVisualizationConfig(config: any, supportedControls: any): INewChartConfig {
+    private buildVisualizationConfig(config: any, supportedControls: any): IChartConfig {
         const colorMapping: IColorMappingProperty[] = get(supportedControls, "colorMapping");
 
         const validColorMapping =

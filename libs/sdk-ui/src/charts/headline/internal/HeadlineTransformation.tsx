@@ -3,7 +3,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { convertDrillableItemsToPredicates2 } from "../../../base/helpers/headerPredicate";
-import { INewChartConfig } from "../../../interfaces/Config";
+import { IChartConfig } from "../../../interfaces/Config";
 import { IDrillableItem, IDrillEventCallback2 } from "../../../interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../../interfaces/HeaderPredicate";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
@@ -18,7 +18,7 @@ import noop = require("lodash/noop");
 export interface IHeadlineTransformationProps {
     dataView: IDataView;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
-    config?: INewChartConfig;
+    config?: IChartConfig;
 
     onFiredDrillEvent?: IDrillEventCallback2;
     onAfterRender?: () => void;

@@ -20,5 +20,6 @@
             "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"]
         }
     },
+    "compileOnSave": false,
     "exclude": ["node_modules", "dist", "**/__mocks__/**/*", "src/_defunct/**/*"]
 }

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { measure } from "../../model";
-import { INewChartConfig } from "../../../../interfaces/Config";
+import { IChartConfig } from "../../../../interfaces/Config";
 import * as fixtures from "../../../../../__mocks__/fixtures";
 import { getNewSanitizedStackingConfig, sanitizeConfig2 } from "../common";
 import { IMeasure } from "@gooddata/sdk-model";
@@ -16,7 +16,7 @@ function createMeasureWithRatio(name: string): IMeasure {
 }
 
 describe("sanitizeConfig", () => {
-    const config: INewChartConfig = {
+    const config: IChartConfig = {
         stackMeasures: true,
         stackMeasuresToPercent: true,
     };
@@ -52,21 +52,21 @@ describe("sanitizeConfig", () => {
 describe("getSanitizedStackingConfigFromAfm", () => {
     it("should keep config as is if afm has more than 1 measure", () => {
         const { definition } = fixtures.barChartWith3MetricsAndViewByAttribute;
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: INewChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual(config);
     });
 
     it("should keep stacking config if afm has one measure and no stackBy", () => {
         const { definition } = fixtures.barChartWithViewByAttribute;
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: INewChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual({
             stackMeasures: true,
             stackMeasuresToPercent: true,
@@ -75,21 +75,21 @@ describe("getSanitizedStackingConfigFromAfm", () => {
 
     it("should sanitized stacking config if afm has one measure and one stackBy", () => {
         const { definition } = fixtures.barChartWithStackByAndViewByAttributes;
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: INewChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual(config);
     });
 
     it("should sanitized stacking config if afm has 1 measure and isComputeRatio", () => {
         const { definition } = fixtures.columnChartWithMeasureAndViewByAndComputeRatio;
-        const config: INewChartConfig = {
+        const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: INewChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual({
             stackMeasures: false,
             stackMeasuresToPercent: false,

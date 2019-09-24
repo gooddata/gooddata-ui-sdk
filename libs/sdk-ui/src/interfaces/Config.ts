@@ -72,33 +72,6 @@ export interface IMeasuresStackConfig {
 export interface IChartConfig extends IMeasuresStackConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
-    colorMapping?: IColorMapping[];
-    type?: VisType;
-    legend?: ILegendConfig;
-    legendLayout?: string;
-    limits?: IChartLimits;
-    stacking?: boolean;
-    grid?: any;
-    mdObject?: VisualizationObject.IVisualizationObjectContent;
-    yFormat?: string;
-    yLabel?: string;
-    xFormat?: string;
-    xLabel?: string;
-    chart?: any;
-    xaxis?: IAxisConfig;
-    yaxis?: IAxisConfig;
-    secondary_xaxis?: IAxisConfig;
-    secondary_yaxis?: IAxisConfig;
-    separators?: ISeparators;
-    dataLabels?: IDataLabelsConfig;
-    dualAxis?: boolean;
-    primaryChartType?: VisualizationObject.VisualizationType;
-    secondaryChartType?: VisualizationObject.VisualizationType;
-}
-
-export interface INewChartConfig extends IMeasuresStackConfig {
-    colors?: string[];
-    colorPalette?: IColorPalette;
     colorMapping?: IColorMapping2[];
     type?: VisType;
     legend?: ILegendConfig;

@@ -5,7 +5,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupHeader, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
-import { INewChartConfig, ISeriesItem } from "../../../interfaces/Config";
+import { IChartConfig, ISeriesItem } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../../base/helpers/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
@@ -38,7 +38,7 @@ function getMeasureIndices(bucketItems: AttributeOrMeasure[], measureGroupIdenti
 }
 
 export function getComboChartSeries(
-    config: INewChartConfig,
+    config: IChartConfig,
     measureGroup: IMeasureGroupHeader["measureGroupHeader"],
     series: ISeriesItem[],
     dv: DataViewFacade,
@@ -85,7 +85,7 @@ export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean 
 }
 
 export function getComboChartStackingConfig(
-    config: INewChartConfig,
+    config: IChartConfig,
     series: ISeriesItem[],
     defaultStacking: string,
 ): string {

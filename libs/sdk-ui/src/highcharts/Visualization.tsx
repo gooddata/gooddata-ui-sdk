@@ -8,7 +8,7 @@ import noop = require("lodash/noop");
 import isFunction = require("lodash/isFunction");
 import omitBy = require("lodash/omitBy");
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
-import { INewChartConfig } from "../interfaces/Config";
+import { IChartConfig } from "../interfaces/Config";
 import { OnFiredDrillEvent } from "../interfaces/Events";
 
 import { isChartSupported, stringifyChartTypes } from "../base/helpers/common";
@@ -18,7 +18,7 @@ import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformati
 export interface IVisualizationProps {
     height: number;
     width: number;
-    config: INewChartConfig;
+    config: IChartConfig;
     numericSymbols?: string[];
 
     dataView: IDataView;

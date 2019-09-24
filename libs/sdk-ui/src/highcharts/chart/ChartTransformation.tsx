@@ -6,7 +6,7 @@ import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
 import { getNewSanitizedStackingConfig } from "../../base/helpers/optionalStacking/common";
-import { IChartOptions, INewChartConfig } from "../../interfaces/Config";
+import { IChartOptions, IChartConfig } from "../../interfaces/Config";
 import { IDrillableItem } from "../../interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../interfaces/Events";
 import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
@@ -25,7 +25,7 @@ export function renderHighCharts(props: IHighChartsRendererProps) {
 }
 
 export interface IChartTransformationProps {
-    config: INewChartConfig;
+    config: IChartConfig;
     drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
     height: number;
     width: number;
@@ -144,7 +144,7 @@ export default class ChartTransformation extends React.Component<
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
     }
 
-    private getChartConfig(props: IChartTransformationProps): INewChartConfig {
+    private getChartConfig(props: IChartTransformationProps): IChartConfig {
         const { dataView, config } = props;
 
         return getNewSanitizedStackingConfig(dataView.definition, config);

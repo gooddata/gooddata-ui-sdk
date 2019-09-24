@@ -37,11 +37,10 @@ import {
     TreemapColorStrategy,
 } from "../colorFactory";
 import {
-    IChartConfig,
     IChartOptions,
     IColorPaletteItem,
     IMeasuresStackConfig,
-    INewChartConfig,
+    IChartConfig,
     IPointData,
 } from "../../../interfaces/Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
@@ -2375,7 +2374,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
 
@@ -2531,7 +2530,7 @@ describe("chartOptionsBuilder", () => {
         );
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
 
@@ -2632,7 +2631,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "donut",
             };
             const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
@@ -2725,7 +2724,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         it("should generate correct tooltip for chart with small width", () => {
-            const chartConfig: INewChartConfig = {
+            const chartConfig: IChartConfig = {
                 type: "treemap",
             };
             const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
@@ -3351,7 +3350,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate correct tooltip for chart with small width", () => {
-                    const chartConfig: INewChartConfig = {
+                    const chartConfig: IChartConfig = {
                         type: "heatmap",
                     };
                     const tooltipFn = generateTooltipHeatmapFn(viewBy, stackBy, chartConfig);

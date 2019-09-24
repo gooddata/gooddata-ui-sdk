@@ -22,7 +22,6 @@ import {
     IChartConfig,
     IChartOptions,
     IDataLabelsVisible,
-    INewChartConfig,
     ISeriesItem,
 } from "../../../interfaces/Config";
 import { percentFormatter } from "../../../base/helpers/utils";
@@ -1059,7 +1058,7 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
 
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
-    chartConfig?: INewChartConfig,
+    chartConfig?: IChartConfig,
     drillConfig?: IDrillConfig,
 ) {
     const configurators = [

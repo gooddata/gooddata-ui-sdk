@@ -6,7 +6,7 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../../base/helpers/common";
 
-import { IChartLimits, IChartOptions, INewChartConfig } from "../../interfaces/Config";
+import { IChartLimits, IChartOptions, IChartConfig } from "../../interfaces/Config";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";
@@ -43,7 +43,7 @@ const chartConfigurationMap = {
 export function getHighchartsOptions(
     chartOptions: IChartOptions,
     drillConfig: any,
-    config?: INewChartConfig,
+    config?: IChartConfig,
     definition?: IExecutionDefinition,
 ) {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
