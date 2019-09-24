@@ -72,7 +72,7 @@ describe("adjustTickAmount - general", () => {
             ["right", getRightAxis(), [-12000, -9000, -6000, -3000, 0, 3000, 6000, 9000]], // reduced to 8 ticks
         ])(
             "should return %s tick positions aligned zero with opposite",
-            (_side: string, axis: IHighchartsAxisExtend, expectation: number) => {
+            (_side: any, axis: any, expectation: any) => {
                 customAdjustTickAmount.call(axis);
                 expect(axis.tickPositions).toEqual(expectation);
             },
@@ -80,7 +80,7 @@ describe("adjustTickAmount - general", () => {
 
         it.each([["left", getLeftAxis(), -900, 1200], ["right", getRightAxis(), -12000, 9000]])(
             "should min/max be updated on %s axis",
-            (_side: string, axis: IHighchartsAxisExtend, min: number, max: number) => {
+            (_side: any, axis: any, min: number, max: number) => {
                 customAdjustTickAmount.call(axis);
                 expect(axis.min).toBe(min);
                 expect(axis.max).toBe(max);
@@ -132,14 +132,14 @@ describe("adjustTickAmount - general", () => {
             ["right", rightAxis, [-5600, -4800, -4000, -3200, -2400, -1600, -800, 0]], // adjusted to 8 ticks
         ])(
             "should return %s tick positions aligned zero with opposite",
-            (_side: string, axis: IHighchartsAxisExtend, expectation: number) => {
+            (_side: any, axis: any, expectation: any) => {
                 expect(axis.tickPositions).toEqual(expectation);
             },
         );
 
         it.each([["left", leftAxis, -105, 0], ["right", rightAxis, -5600, 0]])(
             "should min/max be updated on %s axis",
-            (_side: string, axis: IHighchartsAxisExtend, min: number, max: number) => {
+            (_side: any, axis: any, min: number, max: number) => {
                 expect(axis.min).toBe(min);
                 expect(axis.max).toBe(max);
             },

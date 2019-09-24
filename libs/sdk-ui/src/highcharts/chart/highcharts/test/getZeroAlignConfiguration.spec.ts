@@ -517,7 +517,7 @@ describe("getZeroAlignConfiguration", () => {
 
         it.each([[VisualizationTypes.COLUMN], [VisualizationTypes.LINE]])(
             "should hide left Y axis when min > max in %s chart",
-            (chartType: string) => {
+            (chartType: any) => {
                 const chartOptions = {
                     type: chartType,
                 };

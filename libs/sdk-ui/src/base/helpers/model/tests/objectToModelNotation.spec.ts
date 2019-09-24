@@ -34,7 +34,7 @@ describe("getModelNotationFor", () => {
             [42, 42],
             [[], "[]"],
             [{ foo: "bar" }, '{foo: "bar"}'],
-        ])(`should not touch irrelevant input %p`, (value, expectedValue) => {
+        ])(`should not touch irrelevant input %p`, (value: any, expectedValue: any) => {
             expect(getModelNotationFor(value)).toEqual(expectedValue);
         });
     });

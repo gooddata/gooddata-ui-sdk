@@ -209,7 +209,7 @@ describe("areNeighborsOverlapping", () => {
     ] as any;
     it.each([[true, overlaplabels], [false, withoutOverlapLabel]])(
         "should return overlap is %s",
-        (isOverlap: number, labels: IDataLabelsConfig[][]) => {
+        (isOverlap: boolean, labels: IDataLabelsConfig[][]) => {
             const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
             expect(areNeighborsOverlapping).toEqual(isOverlap);
         },

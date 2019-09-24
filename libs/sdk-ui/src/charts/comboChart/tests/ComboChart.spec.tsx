@@ -79,7 +79,7 @@ describe("ComboChart", () => {
 
         it.each([["primary", [M5, M5WithRatio], []], ["secondary", [], [M5, M5WithRatio]]])(
             "should ignore computeRatio when %s measure bucket has multiple items",
-            (_name: string, primaryMeasures: IMeasure[], secondaryMeasures: IMeasure[]) => {
+            (_name: any, primaryMeasures: any, secondaryMeasures: any) => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
