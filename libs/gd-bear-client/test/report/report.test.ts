@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { AFM, ExecuteAFM } from "@gooddata/gd-bear-model";
+import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { ReportModule } from "../../src/report/report";
 import { XhrModule, ApiResponseError } from "../../src/xhr";
 import { IExportConfig, IExportResponse } from "../../src/interfaces";
@@ -28,6 +28,7 @@ describe("report", () => {
         });
 
         describe("exportResult", () => {
+            // TODO: fixme
             it("should sanitized showFilters config", () => {
                 fetchMock.mock(projectUri, {
                     status: SUCCESS_REQUEST_STATUS,
@@ -39,7 +40,7 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const showFilters: AFM.CompatibilityFilter[] = [
+                const showFilters: ExecuteAFM.CompatibilityFilter[] = [
                     {
                         positiveAttributeFilter: {
                             displayForm: {
@@ -54,7 +55,6 @@ describe("report", () => {
                                 identifier: "foo",
                             },
                             notIn: ["foo1", "foo2"],
-                            textFilter: true,
                         },
                     },
                     {
@@ -84,9 +84,7 @@ describe("report", () => {
                             displayForm: {
                                 uri: "bar",
                             },
-                            in: {
-                                uris: ["/gdc/md/bar1", "/gdc/md/bar2"],
-                            },
+                            in: ["/gdc/md/bar1", "/gdc/md/bar2"],
                         },
                     },
                     {
@@ -94,9 +92,7 @@ describe("report", () => {
                             displayForm: {
                                 identifier: "foo",
                             },
-                            notIn: {
-                                values: ["foo1", "foo2"],
-                            },
+                            notIn: ["foo1", "foo2"],
                         },
                     },
                     {

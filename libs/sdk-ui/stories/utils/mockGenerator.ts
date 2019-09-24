@@ -1,5 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { range, unzip, isNumber } from "lodash";
+import isNumber from "lodash/isNumber";
+import range from "lodash/range";
+import unzip from "lodash/unzip";
 
 function generateRawData(fns: any, length: any) {
     const data = [(x: any) => ({ id: x, name: x.toString() }), ...fns].map((fn: any) => {

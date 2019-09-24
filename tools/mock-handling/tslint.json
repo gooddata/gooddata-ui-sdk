@@ -1,5 +1,5 @@
 {
-    "extends": ["@gooddata/tslint-config", "tslint-config-prettier"],
+    "extends": ["../../tslint.json"],
     "rules": {
         "interface-over-type-literal": false,
         "prefer-conditional-expression": false,

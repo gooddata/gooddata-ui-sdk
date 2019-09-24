@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
-import isEmpty = require('lodash/isEmpty');
+import isArray = require("lodash/isArray");
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * Types defined here exactly match types accepted by the executeAfm resource.
@@ -42,7 +43,8 @@ export namespace ExecuteAFM {
         format?: string;
     }
 
-    export type MeasureDefinition = ISimpleMeasureDefinition
+    export type MeasureDefinition =
+        | ISimpleMeasureDefinition
         | IArithmeticMeasureDefinition
         | IPopMeasureDefinition
         | IPreviousPeriodMeasureDefinition;
@@ -63,7 +65,7 @@ export namespace ExecuteAFM {
         previousPeriodMeasure: IPreviousPeriodMeasure;
     }
 
-    export type SimpleMeasureAggregation = 'sum' | 'count' | 'avg' | 'min' | 'max' | 'median' | 'runsum';
+    export type SimpleMeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
     export interface ISimpleMeasure {
         item: ObjQualifier;
@@ -72,7 +74,7 @@ export namespace ExecuteAFM {
         computeRatio?: boolean;
     }
 
-    export type ArithmeticMeasureOperator = 'sum' | 'difference' | 'multiplication' | 'ratio' | 'change';
+    export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
     export interface IArithmeticMeasure {
         measureIdentifiers: Identifier[];
@@ -151,7 +153,7 @@ export namespace ExecuteAFM {
         };
     }
 
-// Might be removed, as we don't know if expression filter is needed
+    // Might be removed, as we don't know if expression filter is needed
     export interface IExpressionFilter {
         value: string;
     }
@@ -162,7 +164,7 @@ export namespace ExecuteAFM {
         attributeIdentifier: Identifier;
     }
 
-    export type TotalType = 'sum' | 'avg' | 'max' | 'min' | 'nat' | 'med';
+    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
     export interface INativeTotalItem {
         measureIdentifier: Identifier;
@@ -175,17 +177,17 @@ export namespace ExecuteAFM {
     }
 
     export type SortItem = IAttributeSortItem | IMeasureSortItem;
-    export type SortDirection = 'asc' | 'desc';
+    export type SortDirection = "asc" | "desc";
 
     export interface IAttributeSortItem {
         attributeSortItem: {
             direction: SortDirection;
             attributeIdentifier: Identifier;
-            aggregation?: 'sum';
+            aggregation?: "sum";
         };
     }
 
-    export type VisualizationStyleType = 'common' | 'table' | 'line' | 'column' | 'bar' | 'area';
+    export type VisualizationStyleType = "common" | "table" | "line" | "column" | "bar" | "area";
 
     export interface IVisualizationStyle {
         visualizationStyle: {
@@ -194,10 +196,10 @@ export namespace ExecuteAFM {
                 measure?: {
                     color: string;
                     periodOverPeriod: string;
-                }
+                };
 
-                stack?: any
-            }
+                stack?: any;
+            };
         };
     }
 
@@ -224,115 +226,139 @@ export namespace ExecuteAFM {
     }
 
     export function isObjectUriQualifier(
-        qualifier: ExecuteAFM.ObjQualifier
+        qualifier: ExecuteAFM.ObjQualifier,
     ): qualifier is ExecuteAFM.IObjUriQualifier {
         return !isEmpty(qualifier) && (qualifier as ExecuteAFM.IObjUriQualifier).uri !== undefined;
     }
 
     export function isObjIdentifierQualifier(
-        qualifier: ExecuteAFM.ObjQualifier
+        qualifier: ExecuteAFM.ObjQualifier,
     ): qualifier is ExecuteAFM.IObjIdentifierQualifier {
-        return !isEmpty(qualifier) && (qualifier as ExecuteAFM.IObjIdentifierQualifier).identifier !== undefined;
+        return (
+            !isEmpty(qualifier) && (qualifier as ExecuteAFM.IObjIdentifierQualifier).identifier !== undefined
+        );
     }
 
     export function isSimpleMeasureDefinition(
-        definition: ExecuteAFM.MeasureDefinition
+        definition: ExecuteAFM.MeasureDefinition,
     ): definition is ExecuteAFM.ISimpleMeasureDefinition {
-        return !isEmpty(definition) && (definition as ExecuteAFM.ISimpleMeasureDefinition).measure !== undefined;
+        return (
+            !isEmpty(definition) && (definition as ExecuteAFM.ISimpleMeasureDefinition).measure !== undefined
+        );
     }
 
     export function isArithmeticMeasureDefinition(
-        definition: ExecuteAFM.MeasureDefinition
+        definition: ExecuteAFM.MeasureDefinition,
     ): definition is ExecuteAFM.IArithmeticMeasureDefinition {
-        return !isEmpty(definition)
-            && (definition as ExecuteAFM.IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
+        return (
+            !isEmpty(definition) &&
+            (definition as ExecuteAFM.IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
+        );
     }
 
     export function isPopMeasureDefinition(
-        definition: ExecuteAFM.MeasureDefinition
+        definition: ExecuteAFM.MeasureDefinition,
     ): definition is ExecuteAFM.IPopMeasureDefinition {
-        return !isEmpty(definition) && (definition as ExecuteAFM.IPopMeasureDefinition).popMeasure !== undefined;
+        return (
+            !isEmpty(definition) && (definition as ExecuteAFM.IPopMeasureDefinition).popMeasure !== undefined
+        );
     }
 
     export function isPreviousPeriodMeasureDefinition(
-        definition: ExecuteAFM.MeasureDefinition
+        definition: ExecuteAFM.MeasureDefinition,
     ): definition is ExecuteAFM.IPreviousPeriodMeasureDefinition {
-        return !isEmpty(definition)
-            && (definition as ExecuteAFM.IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
+        return (
+            !isEmpty(definition) &&
+            (definition as ExecuteAFM.IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined
+        );
     }
 
     export function isAttributeSortItem(
-        sortItem: ExecuteAFM.SortItem
+        sortItem: ExecuteAFM.SortItem,
     ): sortItem is ExecuteAFM.IAttributeSortItem {
-        return !isEmpty(sortItem) && (sortItem as ExecuteAFM.IAttributeSortItem).attributeSortItem !== undefined;
+        return (
+            !isEmpty(sortItem) && (sortItem as ExecuteAFM.IAttributeSortItem).attributeSortItem !== undefined
+        );
     }
 
     export function isMeasureSortItem(
-        sortItem: ExecuteAFM.SortItem
+        sortItem: ExecuteAFM.SortItem,
     ): sortItem is ExecuteAFM.IMeasureSortItem {
         return !isEmpty(sortItem) && (sortItem as ExecuteAFM.IMeasureSortItem).measureSortItem !== undefined;
     }
 
     export function isMeasureLocatorItem(
-        locator: ExecuteAFM.LocatorItem
+        locator: ExecuteAFM.LocatorItem,
     ): locator is ExecuteAFM.IMeasureLocatorItem {
-        return !isEmpty(locator)
-            && (locator as ExecuteAFM.IMeasureLocatorItem).measureLocatorItem !== undefined;
+        return (
+            !isEmpty(locator) && (locator as ExecuteAFM.IMeasureLocatorItem).measureLocatorItem !== undefined
+        );
     }
 
     export function isDateFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.DateFilterItem {
         return !isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
     }
 
     export function isRelativeDateFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.IRelativeDateFilter {
         return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
     }
 
     export function isAbsoluteDateFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.IAbsoluteDateFilter {
         return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
     }
 
     export function isAttributeFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.AttributeFilterItem {
         return !isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
     }
 
     export function isPositiveAttributeFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.IPositiveAttributeFilter {
-        return !isEmpty(filter)
-            && (filter as ExecuteAFM.IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+        return (
+            !isEmpty(filter) &&
+            (filter as ExecuteAFM.IPositiveAttributeFilter).positiveAttributeFilter !== undefined
+        );
     }
 
     export function isNegativeAttributeFilter(
-        filter: ExecuteAFM.CompatibilityFilter
+        filter: ExecuteAFM.CompatibilityFilter,
     ): filter is ExecuteAFM.INegativeAttributeFilter {
-        return !isEmpty(filter)
-            && (filter as ExecuteAFM.INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+        return (
+            !isEmpty(filter) &&
+            (filter as ExecuteAFM.INegativeAttributeFilter).negativeAttributeFilter !== undefined
+        );
     }
 
-    export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[] {
+    export function isAttributeElementsArray(
+        attributeElements: AttributeElements,
+    ): attributeElements is string[] {
         return attributeElements !== undefined && attributeElements instanceof Array;
     }
 
     export function isAttributeElementsByRef(
-        attributeElements: ExecuteAFM.AttributeElements
+        attributeElements: ExecuteAFM.AttributeElements,
     ): attributeElements is ExecuteAFM.IAttributeElementsByRef {
-        return !isEmpty(attributeElements)
-            && (attributeElements as ExecuteAFM.IAttributeElementsByRef).uris !== undefined;
+        return (
+            !isEmpty(attributeElements) &&
+            (attributeElements as ExecuteAFM.IAttributeElementsByRef).uris !== undefined
+        );
     }
 
     export function isAttributeElementsByValue(
-        attributeElements: ExecuteAFM.AttributeElements
+        attributeElements: ExecuteAFM.AttributeElements,
     ): attributeElements is ExecuteAFM.IAttributeElementsByValue {
-        return !isEmpty(attributeElements)
-            && (attributeElements as ExecuteAFM.IAttributeElementsByValue).values !== undefined;
+        return (
+            !isEmpty(attributeElements) &&
+            !isArray(attributeElements) &&
+            (attributeElements as ExecuteAFM.IAttributeElementsByValue).values !== undefined
+        );
     }
 }

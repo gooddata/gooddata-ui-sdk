@@ -16,6 +16,7 @@ export function executeAfm(
     execution: ExecuteAFM.IExecution,
 ): Promise<Execution.IExecutionResponse> {
     return axios.post("/api/afm", execution).then((res: AxiosResponse<Execution.IExecutionResponse>) => {
+        // tslint:disable-next-line: no-console
         console.log("got AFM response from backend", res);
         return res.data;
     });
@@ -30,6 +31,7 @@ export function executeAfm(
  */
 export function executionResult(axios: AxiosInstance, resultId: string): Promise<Execution.IExecutionResult> {
     return axios.get(`/api/result/${resultId}`).then((res: AxiosResponse<Execution.IExecutionResult>) => {
+        // tslint:disable-next-line: no-console
         console.log("got AFM result from backend", res);
         return res.data;
     });

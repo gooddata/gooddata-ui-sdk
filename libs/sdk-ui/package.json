@@ -27,8 +27,8 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "check-circular-deps": "madge --circular --extensions ts ./src",
-        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check",
+        "validate": "tsc --noEmit -p tsconfig.build.json && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit -p tsconfig.build.json && npm run tslint-ci && npm run prettier-check",
         "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
         "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
         "test-storybook": "npm run build && test-storybook"
@@ -147,6 +147,7 @@
         "style-loader": "^0.19.1",
         "ts-jest": "^24.1.0",
         "ts-loader": "^6.0.0",
+        "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
         "typescript": "3.3.4000"
     }

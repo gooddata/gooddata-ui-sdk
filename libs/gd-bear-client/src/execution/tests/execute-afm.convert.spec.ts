@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-
+import { AFM, ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertAfm } from "../execute-afm.convert";
 import * as input from "./fixtures";
 
-const FILTER_TESTS = [
+const FILTER_TESTS: Array<[string, AFM.FilterItem[], ExecuteAFM.FilterItem[]]> = [
     ["leave empty filters as is", [], []],
     ["leave relative date filter as is", [input.relativeDate], [input.relativeDate]],
     ["leave absolute date filter as is", [input.absoluteDate], [input.absoluteDate]],
@@ -29,7 +29,7 @@ describe.each(FILTER_TESTS)("convertAfm", (desc, input, expected) => {
     });
 });
 
-const MEASURE_TESTS = [
+const MEASURE_TESTS: Array<[string, AFM.IMeasure[], ExecuteAFM.IMeasure[]]> = [
     [
         "convert simple measure with filters",
         [input.simpleMeasureWithFilters],

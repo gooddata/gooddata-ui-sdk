@@ -3,7 +3,7 @@ import { AFM } from "@gooddata/gd-bear-model";
 import { isEmptyFilter, mergeFilters } from "../filters";
 import * as input from "./filters.input.fixtures";
 
-const EMPTY_FILTER_TESTS = [
+const EMPTY_FILTER_TESTS: Array<[string, AFM.FilterItem, boolean]> = [
     ["non empty positive filter", input.positiveAttributeFilter, false],
     ["non empty negative filter", input.negativeAttributeFilter, false],
     ["empty positive filter", input.positiveAttributeFilterEmpty, true],

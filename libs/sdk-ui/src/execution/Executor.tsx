@@ -1,3 +1,4 @@
+// (C) 2019 GoodData Corporation
 import React from "react";
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";

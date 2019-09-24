@@ -1,3 +1,4 @@
+// (C) 2019 GoodData Corporation
 import Chart from "./chart/Chart";
 import ChartTransformation from "./chart/ChartTransformation";
 

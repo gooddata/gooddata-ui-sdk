@@ -1,3 +1,4 @@
+// (C) 2019 GoodData Corporation
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { IDrillEventIntersectionElement } from "../../interfaces/DrillEvents";
 
