@@ -419,10 +419,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "tslint-microsoft-contrib",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
