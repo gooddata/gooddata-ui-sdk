@@ -11,17 +11,19 @@ import {
     MeasurePredicate,
 } from "../measure";
 import { isTotal, ITotal } from "../base/totals";
+import invariant from "ts-invariant";
 
 /**
- * TODO: SDK8: Add docs
- * TODO: SDK8: rename this; perhaps Item was the right name all along? :)
+ * Type representing bucket items - which can be either measure or an attribute.
  *
  * @public
  */
 export type AttributeOrMeasure = IMeasure | IAttribute;
 
 /**
- * TODO: SDK8: Add docs
+ * Bucket is a logical, user-defined grouping of attributes, measures and totals. Buckets can be used to create
+ * a new execution and to derive the result dimensionality. In the context of an existing execution, they serve
+ * as metadata about the execution.
  *
  * @public
  */
@@ -32,28 +34,29 @@ export interface IBucket {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Signature for bucket predicates; predicates are used by different functions to find/filter buckets according
+ * to some criteria.
  *
  * @public
  */
 export type BucketPredicate = (bucket: IBucket) => boolean;
 
 /**
- * TODO: SDK8: Add docs
+ * This predicate evaluates true for any bucket.
  *
  * @public
  */
 export const anyBucket: BucketPredicate = _ => true;
 
 /**
- * TODO: SDK8: Add docs
+ * Factory function for predicates that will evaluate true if bucket's id is same as the provided id.
  *
  * @public
  */
 export const idMatchBucket: (id: string) => BucketPredicate = id => bucket => bucket.localIdentifier === id;
 
 /**
- * TODO: SDK8: Add docs
+ * Describes exact location of attribute in a bucket.
  *
  * @public
  */
@@ -64,7 +67,7 @@ export type AttributeInBucket = {
 };
 
 /**
- * TODO: SDK8: Add docs
+ * Describes exact location of measure in a bucket.
  *
  * @public
  */
@@ -113,8 +116,7 @@ export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITo
         } else if (isTotal(i)) {
             totals.push(i);
         } else {
-            // TODO: SDK8: switch to invariant
-            throw new Error("...");
+            invariant(false, `Contents of a bucket must be either attribute, measure or total. Got: ${i}`);
         }
     });
 
