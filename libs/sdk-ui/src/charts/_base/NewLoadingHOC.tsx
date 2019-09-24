@@ -87,12 +87,11 @@ export function withEntireDataView<T extends ICoreChartProps>(
             const { isLoading, error, dataView } = this.state;
             const { intl } = this.props;
 
-            // lower-level components do not need projectId
-            const props = omit(this.props, ["workspace"]);
+            // lower-level components do not need workspace
+            const props = this.stripWorkspace(this.props);
 
             return (
                 <InnerComponent
-                    key={"InnerComponent"}
                     {...props}
                     dataView={dataView}
                     onDataTooLarge={this.onDataTooLarge}
@@ -174,6 +173,10 @@ export function withEntireDataView<T extends ICoreChartProps>(
                 this.onError(convertErrors(error));
             }
         }
+
+        private stripWorkspace = (props: T & ILoadingInjectedProps): T & ILoadingInjectedProps => {
+            return omit(props, ["workspace"]) as any;
+        };
     }
 
     const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
