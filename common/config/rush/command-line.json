@@ -50,6 +50,24 @@
       "allowWarningsInSuccessfulBuild": true
     },
     {
+      "commandKind": "bulk",
+      "name": "validate",
+      "summary": "Validates code in all projects",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "validate-ci",
+      "summary": "Validates code in all projects in CI mode",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true
+    },
+    {
       "commandKind": "global",
       "name": "api-extractor",
       "summary": "Runs api-extractor in all applicable subprojects",

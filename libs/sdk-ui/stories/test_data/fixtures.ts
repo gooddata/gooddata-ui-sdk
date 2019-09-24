@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
-import { range, cloneDeep } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import range from "lodash/range";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 
 import { immutableSet, repeatItemsNTimes } from "../../src/base/helpers/common";

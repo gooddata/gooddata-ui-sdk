@@ -12,7 +12,7 @@ import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightWithProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
-import { IBaseChartProps } from "sdk-ui/src/charts/_base/BaseChart";
+import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
 
 jest.mock("react-dom", () => {
     const renderObject = {

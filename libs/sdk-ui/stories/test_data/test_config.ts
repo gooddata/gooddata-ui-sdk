@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { assign } from "lodash";
+import assign from "lodash/assign";
 
 export const barChart2Series: any = {
     type: "line",

@@ -1,13 +1,14 @@
+// (C) 2019 GoodData Corporation
 import * as React from "react";
-const noop = require("lodash/noop");
-const hoistNonReactStatics = require("hoist-non-react-statics");
+import noop from "lodash/noop";
+import hoistNonReactStatics = require("hoist-non-react-statics");
 
-interface CancelablePromise<T> {
+interface ICancelablePromise<T> {
     promise: Promise<T>;
     cancel: () => void;
 }
 
-function makeCancelable<T>(promise: Promise<T>): CancelablePromise<T> {
+function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
     let hasCanceled = false;
 
     const wrappedPromise = new Promise<T>((resolve, reject) => {
@@ -29,7 +30,7 @@ export type WithLoadingState<T> = {
     isLoading: boolean;
     error: Error | undefined;
     result: T | undefined;
-    promise: CancelablePromise<T> | undefined;
+    promise: ICancelablePromise<T> | undefined;
 };
 
 export type WithLoadingResult<T> = {
@@ -39,7 +40,7 @@ export type WithLoadingResult<T> = {
     fetch: () => Promise<T>;
 };
 
-export interface WithLoadingEvents<T, P> {
+export interface IWithLoadingEvents<T, P> {
     onError?: (error?: Error, props?: T) => void;
     onLoadingStart?: (props?: T) => void;
     onLoadingChanged?: (isLoading?: boolean, props?: T) => void;
@@ -49,7 +50,7 @@ export interface WithLoadingEvents<T, P> {
 export interface IWithLoading<T, P, R extends object> {
     promiseFactory: (props: T) => Promise<P>;
     mapResultToProps: (result: WithLoadingResult<P>) => R;
-    eventsOrFactory?: WithLoadingEvents<T, P> | ((props: T) => WithLoadingEvents<T, P>);
+    eventsOrFactory?: IWithLoadingEvents<T, P> | ((props: T) => IWithLoadingEvents<T, P>);
     loadOnMount?: boolean;
 }
 
@@ -96,7 +97,7 @@ export function withLoading<T, P, R extends object>({
                 };
             }
 
-            private setPromise(promise: CancelablePromise<P>) {
+            private setPromise(promise: ICancelablePromise<P>) {
                 this.setState(state => ({
                     ...state,
                     promise,

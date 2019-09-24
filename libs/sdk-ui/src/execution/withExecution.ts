@@ -1,12 +1,13 @@
+// (C) 2019 GoodData Corporation
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, WithLoadingResult, WithLoadingEvents } from "../base/hoc/withLoading";
+import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/hoc/withLoading";
 
 export interface IWithExecution<T, R extends object> {
     executionOrFactory: IPreparedExecution | ((props: T) => IPreparedExecution);
     mapResultToProps: (result: WithLoadingResult<DataViewFacade>) => R;
     eventsOrFactory?:
-        | WithLoadingEvents<T, DataViewFacade>
-        | ((props: T) => WithLoadingEvents<T, DataViewFacade>);
+        | IWithLoadingEvents<T, DataViewFacade>
+        | ((props: T) => IWithLoadingEvents<T, DataViewFacade>);
     loadOnMount?: boolean;
 }
 

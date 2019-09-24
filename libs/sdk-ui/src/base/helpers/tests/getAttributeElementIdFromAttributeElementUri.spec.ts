@@ -1,3 +1,4 @@
+// (C) 2019 GoodData Corporation
 import { getAttributeElementIdFromAttributeElementUri } from "../getAttributeElementIdFromAttributeElementUri";
 
 describe("getAttributeElementIdFromAttributeElementUri", () => {
