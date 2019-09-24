@@ -17,7 +17,7 @@ function isMeasureArray(obj: any): obj is IMeasure[] {
     return !isEmpty(obj) && isMeasure(obj[0]);
 }
 
-export function sanitizeConfig2(input: IMeasure[] | IBucket[] = [], config: IChartConfig = {}): IChartConfig {
+export function sanitizeConfig(input: IMeasure[] | IBucket[] = [], config: IChartConfig = {}): IChartConfig {
     if (!input.length) {
         return config;
     }
@@ -42,7 +42,7 @@ function isComputeRatioMeasure(bucketItem: AttributeOrMeasure): boolean {
     return isMeasure(bucketItem) && measureDoesComputeRatio(bucketItem);
 }
 
-export function getNewSanitizedStackingConfig(
+export function getSanitizedStackingConfig(
     executionDef: IExecutionDefinition,
     chartConfig: IChartConfig,
 ): IChartConfig {

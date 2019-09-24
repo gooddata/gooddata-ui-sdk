@@ -12,7 +12,7 @@ import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
-import { IChartConfig, sanitizeConfig2 } from "../../highcharts";
+import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
 import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
@@ -81,7 +81,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
         const config = getConfigProps(props);
 
         return {
-            config: sanitizeConfig2(buckets, config),
+            config: sanitizeConfig(buckets, config),
         };
     },
     onBeforePropsConversion: verifyBuckets,

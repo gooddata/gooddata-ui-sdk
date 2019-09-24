@@ -11,7 +11,7 @@ import * as React from "react";
 import { truncate } from "../_commons/truncate";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
-import { sanitizeConfig2 } from "../../highcharts";
+import { sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreColumnChart } from "./CoreColumnChart";
@@ -80,7 +80,7 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
     },
     propOverridesFactory: (props, buckets) => {
         return {
-            config: sanitizeConfig2(buckets, props.config),
+            config: sanitizeConfig(buckets, props.config),
         };
     },
 };

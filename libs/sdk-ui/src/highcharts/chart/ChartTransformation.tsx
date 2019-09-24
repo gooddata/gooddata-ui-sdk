@@ -5,7 +5,7 @@ import * as React from "react";
 import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
-import { getNewSanitizedStackingConfig } from "../utils/optionalStacking/common";
+import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";
 import { IChartOptions, IChartConfig } from "../Config";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../base/interfaces/Events";
@@ -147,6 +147,6 @@ export default class ChartTransformation extends React.Component<
     private getChartConfig(props: IChartTransformationProps): IChartConfig {
         const { dataView, config } = props;
 
-        return getNewSanitizedStackingConfig(dataView.definition, config);
+        return getSanitizedStackingConfig(dataView.definition, config);
     }
 }

@@ -110,14 +110,6 @@ export function getValidColorPalette(config: IChartConfig) {
         : config.colorPalette;
 }
 
-export function getValidColorPalette2(config: IChartConfig) {
-    return isEmpty(config.colorPalette)
-        ? isEmpty(config.colors)
-            ? DEFAULT_COLOR_PALETTE
-            : getColorPaletteFromColors(config.colors)
-        : config.colorPalette;
-}
-
 export function isCustomPalette(palette: IColorPalette) {
     return !isEqual(palette, DEFAULT_COLOR_PALETTE);
 }

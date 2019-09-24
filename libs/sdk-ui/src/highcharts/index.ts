@@ -24,9 +24,9 @@ export { AfmPropTypesShape, ResultSpecPropTypesShape, FiltersPropTypesShape } fr
 
 export { isLineChart, isAreaChart } from "./utils/common";
 
-export { sanitizeConfig2 } from "./utils/optionalStacking/common";
+export { sanitizeConfig } from "./utils/optionalStacking/common";
 
-export { getValidColorPalette2 } from "./utils/color";
+export { getValidColorPalette } from "./utils/color";
 
 import ColorUtils from "./utils/color";
 

@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
-import { IChartConfig, sanitizeConfig2 } from "../../highcharts";
+import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
@@ -107,5 +107,5 @@ function getConfiguration(props: IComboChartProps): IChartConfig {
     const isDualAxis = get(props, "config.dualAxis", true);
     const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures, ...secondaryMeasures];
 
-    return sanitizeConfig2(measuresOnPrimaryAxis, config);
+    return sanitizeConfig(measuresOnPrimaryAxis, config);
 }

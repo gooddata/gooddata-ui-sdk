@@ -7,7 +7,7 @@ import { ICoreChartProps } from "../chartProps";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
 
-import { Visualization, getValidColorPalette2 } from "../../highcharts";
+import { Visualization, getValidColorPalette } from "../../highcharts";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {
@@ -67,7 +67,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
 
     public renderVisualization(): JSX.Element {
         const { afterRender, height, locale, config, type, dataView, onDataTooLarge, pushData } = this.props;
-        const colorPalette = getValidColorPalette2(config);
+        const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
 
         return (

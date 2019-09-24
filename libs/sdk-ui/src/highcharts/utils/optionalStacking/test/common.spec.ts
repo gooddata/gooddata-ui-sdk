@@ -2,7 +2,7 @@
 import { measure } from "../../../../base/helpers/model";
 import { IChartConfig } from "../../../Config";
 import * as fixtures from "../../../../../__mocks__/fixtures";
-import { getNewSanitizedStackingConfig, sanitizeConfig2 } from "../common";
+import { getSanitizedStackingConfig, sanitizeConfig } from "../common";
 import { IMeasure } from "@gooddata/sdk-model";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {
@@ -22,30 +22,30 @@ describe("sanitizeConfig", () => {
     };
 
     it("should keep config as is if buckets have more than 1 measure", () => {
-        expect(sanitizeConfig2([M1, M2], config)).toEqual(config);
+        expect(sanitizeConfig([M1, M2], config)).toEqual(config);
     });
 
     it("should sanitized stacking config if buckets have one measure and no stackBy", () => {
-        expect(sanitizeConfig2([M1], config)).toEqual({
+        expect(sanitizeConfig([M1], config)).toEqual({
             stackMeasures: true,
             stackMeasuresToPercent: true,
         });
     });
 
     it("should sanitized stacking config if buckets have one measure and one stackBy", () => {
-        expect(sanitizeConfig2([M1], config)).toEqual(config);
+        expect(sanitizeConfig([M1], config)).toEqual(config);
     });
 
     it("should sanitized stacking config if buckets have 1 measure and isComputeRatio", () => {
         const M1WithRatio = createMeasureWithRatio("m1");
-        expect(sanitizeConfig2([M1WithRatio], config)).toEqual({
+        expect(sanitizeConfig([M1WithRatio], config)).toEqual({
             stackMeasures: false,
             stackMeasuresToPercent: false,
         });
     });
 
     it("should NOT sanitize stacking config if there is no measures", () => {
-        expect(sanitizeConfig2([], config)).toEqual(config);
+        expect(sanitizeConfig([], config)).toEqual(config);
     });
 });
 
@@ -56,7 +56,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual(config);
     });
 
@@ -66,7 +66,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual({
             stackMeasures: true,
             stackMeasuresToPercent: true,
@@ -79,7 +79,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual(config);
     });
 
@@ -89,7 +89,7 @@ describe("getSanitizedStackingConfigFromAfm", () => {
             stackMeasures: true,
             stackMeasuresToPercent: true,
         };
-        const newConfig: IChartConfig = getNewSanitizedStackingConfig(definition, config);
+        const newConfig: IChartConfig = getSanitizedStackingConfig(definition, config);
         expect(newConfig).toEqual({
             stackMeasures: false,
             stackMeasuresToPercent: false,
