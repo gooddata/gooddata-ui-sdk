@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "GoodData SDK TypeScript & React skeleton",
     "main": "dist/index.js",
-    "repository": "git@github.com:lupko/gooddata-ui-sdk.git",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-tsx",
     "author": "GoodData Corporation",
     "license": "BSD-3-Clause",
     "files": [
@@ -15,29 +15,28 @@
         "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
-        "build": "bash scripts/build.sh && npm run-script api-extractor",
+        "build": "bash scripts/build.sh && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
         "test-once": "jest",
-        "run-tslint": "tslint -p tsconfig.json",
-        "tslint": "npm run-script run-tslint -t verbose $npm_package_config_tslint",
-        "tslint-ci": "mkdir -p ./ci/results && npm run-script run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "validate": "tsc --noEmit && npm run-script tslint && npm run-script prettier-check",
-        "validate-ci": "tsc --noEmit && npm run-script tslint-ci && npm run-script prettier-check",
-        "storybook": "npm run-script build && start-storybook -p 9001 -c .storybook",
-        "build-storybook": "npm run-script build && build-storybook -c .storybook -o dist-storybook",
-        "test-storybook": "npm run-script build && test-storybook"
+        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check",
+        "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
+        "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
+        "test-storybook": "npm run build && test-storybook"
     },
     "typings": "dist/index.d.ts",
     "jest": {
+        "preset": "ts-jest",
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.ts"
         ],
-        "preset": "ts-jest",
         "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
         "testPathIgnorePatterns": [
             ",/node_modules/",
@@ -82,9 +81,9 @@
         "@storybook/theming": "5.0.11",
         "@types/enzyme": "3.1.13",
         "@types/enzyme-adapter-react-16": "1.0.3",
-        "@types/jest": "24.0.6",
+        "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
-        "@types/node": "7.0.8",
+        "@types/node": "^10.14.18",
         "@types/prop-types": "15.5.2",
         "@types/react": "16.0.34",
         "@types/react-dom": "16.0.3",
@@ -110,8 +109,7 @@
         "ts-jest": "^24.1.0",
         "ts-loader": "^6.0.0",
         "tslint": "^5.14.0",
-        "tslint-config-prettier": "1.18.0",
-        "tslint-microsoft-contrib": "^5.2.1",
+        "tslint-config-prettier": "^1.18.0",
         "typescript": "3.3.4000"
     }
 }

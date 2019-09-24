@@ -22,9 +22,8 @@
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
-        "run-tslint": "tslint -p tsconfig.json",
-        "tslint": "npm run run-tslint -t verbose $npm_package_config_tslint",
-        "tslint-ci": "mkdir -p ./ci/results && npm run run-tslint -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
@@ -70,13 +69,12 @@
         "@types/node": "^10.14.18",
         "@types/rimraf": "^2.0.2",
         "ts-node": "^8.4.1",
-        "jest": "^24.1.0",
+        "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "^1.18.2",
         "ts-jest": "^24.1.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "tslint-microsoft-contrib": "^5.2.1",
         "typescript": "3.3.4000"
     }
 }
