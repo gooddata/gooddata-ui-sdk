@@ -13,7 +13,7 @@ import { IColorAssignment } from "../../highcharts";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
-import ColorUtils from "../../highcharts/utils/color";
+import { ColorUtils } from "../../highcharts";
 
 function getItemName(item: IColoredItem): string {
     let name = "";

@@ -7,7 +7,7 @@ import { ICoreChartProps } from "../chartProps";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
 
-import { Visualization } from "../../highcharts";
+import { Visualization, getValidColorPalette2 } from "../../highcharts";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import {
@@ -15,7 +15,6 @@ import {
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
 import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
-import { getValidColorPalette2 } from "../../highcharts/utils/color";
 import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";

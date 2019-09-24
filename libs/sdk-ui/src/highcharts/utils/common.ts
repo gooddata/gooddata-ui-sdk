@@ -49,22 +49,67 @@ export function isRotationInRange(rotation: number, min: number, max: number) {
     return rotation >= min && rotation <= max;
 }
 
-export const isTable = isEqual(VisualizationTypes.TABLE);
+/**
+ * @internal
+ */
 export const isColumnChart = isEqual(VisualizationTypes.COLUMN);
+
+/**
+ * @internal
+ */
 export const isBarChart = isEqual(VisualizationTypes.BAR);
+
+/**
+ * @internal
+ */
 export const isLineChart = isEqual(VisualizationTypes.LINE);
+
+/**
+ * @internal
+ */
 export const isScatterPlot = isEqual(VisualizationTypes.SCATTER);
+
+/**
+ * @internal
+ */
 export const isPieChart = isEqual(VisualizationTypes.PIE);
+
+/**
+ * @internal
+ */
 export const isDonutChart = isEqual(VisualizationTypes.DONUT);
+
+/**
+ * @internal
+ */
 export const isPieOrDonutChart = (type: string) => isPieChart(type) || isDonutChart(type);
+
+/**
+ * @internal
+ */
 export const isAreaChart = isEqual(VisualizationTypes.AREA);
+
+/**
+ * @internal
+ */
 export const isBubbleChart = isEqual(VisualizationTypes.BUBBLE);
-export const isHeadline = isEqual(VisualizationTypes.HEADLINE);
+
+/**
+ * @internal
+ */
 export const isComboChart = (type: string) =>
     isEqual(type, VisualizationTypes.COMBO) || isEqual(type, VisualizationTypes.COMBO2);
+
+/**
+ * @internal
+ */
 export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
-export const isFunnelChart = isEqual(VisualizationTypes.FUNNEL);
+
+/**
+ * @internal
+ */
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
+
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
 export const stringifyChartTypes = () =>

@@ -188,6 +188,17 @@ options = {
                 pathNot: "^(src/base|src/highcharts)",
             },
         },
+        {
+            name: "highcharts-dependencies",
+            comment: "The highcharts module must only depend on base.",
+            severity: "error",
+            from: {
+                pathNot: "^(src/highcharts)",
+            },
+            to: {
+                path: "^(src/highcharts/utils)",
+            },
+        },
     ],
     options: {
         /* conditions specifying which files not to follow further when encountered:
