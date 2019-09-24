@@ -2,7 +2,7 @@
 import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
-import { IChartConfig, IColorMapping2, IColorPalette, IColorPaletteItem } from "../Config";
+import { IChartConfig, IColorMapping, IColorPalette, IColorPaletteItem } from "../Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader, isMappingHeaderAttributeItem } from "../../base/interfaces/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
@@ -124,7 +124,7 @@ export function isCustomPalette(palette: IColorPalette) {
 
 export function getColorFromMapping(
     mappingHeader: IMappingHeader,
-    colorMapping: IColorMapping2[],
+    colorMapping: IColorMapping[],
     dv: DataViewFacade,
 ): IColorItem {
     if (!colorMapping) {

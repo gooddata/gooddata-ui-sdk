@@ -3,7 +3,7 @@ import { ISeparators } from "@gooddata/numberjs";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison";
 import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
-import { IColorPalette } from "../../highcharts/Config";
+import { IColorPalette } from "../../highcharts";
 import * as VisEvents from "../../base/interfaces/Events";
 import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";

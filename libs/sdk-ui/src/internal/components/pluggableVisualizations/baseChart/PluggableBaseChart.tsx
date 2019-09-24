@@ -72,7 +72,7 @@ import {
     insightHasDataDefined,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig } from "../../../../highcharts/Config";
+import { IChartConfig } from "../../../../highcharts";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");

@@ -2,14 +2,14 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { IColorItem } from "@gooddata/sdk-model";
+import { IColorPalette } from "../../../../../highcharts";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
-import * as ChartConfiguration from "../../../../../highcharts/Config";
 import * as MappingHeader from "../../../../../base/interfaces/MappingHeader";
 
 export interface IColoredItemProps {
-    colorPalette: ChartConfiguration.IColorPalette;
+    colorPalette: IColorPalette;
     className?: string;
     item?: IColoredItemDropdownItem;
     onSelect?: (source: IColoredItem, color: IColorItem) => void;

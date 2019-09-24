@@ -4,7 +4,7 @@ import { shallow, ShallowWrapper } from "enzyme";
 
 import { AreaChart } from "../AreaChart";
 import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
-import { IChartConfig } from "../../../highcharts/Config";
+import { IChartConfig } from "../../../highcharts";
 import { AttributeOrMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreAreaChart } from "../CoreAreaChart";

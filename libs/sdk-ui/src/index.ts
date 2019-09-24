@@ -43,7 +43,7 @@ import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
 import * as ChartConfiguration from "./highcharts/Config";
 // tslint:disable-next-line:no-duplicate-imports
-import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./highcharts/Config";
+import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./highcharts";
 import { Chart, ChartTransformation } from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";

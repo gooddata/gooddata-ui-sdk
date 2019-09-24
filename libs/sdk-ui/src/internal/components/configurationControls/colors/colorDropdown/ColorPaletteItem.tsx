@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import * as ChartConfiguration from "../../../../../highcharts/Config";
 import { IColorItem, IGuidColorItem } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
+import { IColorPaletteItem } from "../../../../../highcharts";
 
 const ITEM_MARGIN = 5;
 
 export interface IColorPaletteItemProps {
     selected: boolean;
-    paletteItem: ChartConfiguration.IColorPaletteItem;
+    paletteItem: IColorPaletteItem;
     onColorSelected: (color: IColorItem) => void;
 }
 

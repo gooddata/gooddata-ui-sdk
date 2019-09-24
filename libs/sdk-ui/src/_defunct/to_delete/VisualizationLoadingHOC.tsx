@@ -28,7 +28,7 @@ import { LoadingComponent, ILoadingProps } from "../../base/simple/LoadingCompon
 import { ErrorComponent, IErrorProps } from "../../base/simple/ErrorComponent";
 import { RuntimeError } from "../../base/errors/RuntimeError";
 import { IPushData } from "../../base/interfaces/PushData";
-import { IChartConfig } from "../../highcharts/Config";
+import { IChartConfig } from "../../highcharts";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
 import { fixEmptyHeaderItems } from "../../charts/_base/fixEmptyHeaderItems";
 

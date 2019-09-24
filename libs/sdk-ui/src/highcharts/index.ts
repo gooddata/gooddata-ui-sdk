@@ -1,5 +1,13 @@
 // (C) 2019 GoodData Corporation
-export { IChartConfig } from "./Config";
+export {
+    IChartConfig,
+    IColorPalette,
+    IColorPaletteItem,
+    IColorAssignment,
+    PositionType,
+    ILegendConfig,
+} from "./Config";
+
 import Chart from "./chart/Chart";
 import ChartTransformation from "./chart/ChartTransformation";
 export { Chart, ChartTransformation };

@@ -3,8 +3,8 @@ import * as React from "react";
 import * as CustomEvent from "custom-event";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import * as ChartConfiguration from "../../../../../highcharts/Config";
 import { IColorItem } from "@gooddata/sdk-model";
+import { IColorPalette } from "../../../../../highcharts";
 
 import ColoredItem from "./ColoredItem";
 import { getSearchedItems } from "../../../../utils/colors";
@@ -15,7 +15,7 @@ const SEARCHFIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
 export interface IColoredItemsListOwnProps {
-    colorPalette: ChartConfiguration.IColorPalette;
+    colorPalette: IColorPalette;
     inputItems: IColoredItem[];
     onSelect: (selectedColorItem: IColoredItem, color: IColorItem) => void;
     showCustomPicker?: boolean;

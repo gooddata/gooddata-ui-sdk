@@ -18,7 +18,7 @@ import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IColorMapping2, IColorPalette, IColorPaletteItem } from "../../Config";
+import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../Config";
 import { IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IColorItem, RGBType } from "@gooddata/sdk-model";
 import range = require("lodash/range");
@@ -221,7 +221,7 @@ describe("ColorFactory", () => {
                     },
                 },
             ];
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem &&
@@ -408,7 +408,7 @@ describe("ColorFactory", () => {
 
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure_1",
@@ -512,7 +512,7 @@ describe("ColorFactory", () => {
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "treemap";
 
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMetric",
@@ -615,7 +615,7 @@ describe("ColorFactory", () => {
                     "rgb(195,49,73)",
                 ];
 
-                const inapplicableColorMapping: IColorMapping2[] = [
+                const inapplicableColorMapping: IColorMapping[] = [
                     {
                         predicate: () => false,
                         color: {
@@ -656,7 +656,7 @@ describe("ColorFactory", () => {
                 "rgb(182,204,114)",
                 "rgb(168,194,86)",
             ];
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure",
@@ -689,7 +689,7 @@ describe("ColorFactory", () => {
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "784a5018a51049078e8f7e86247e08a3",
@@ -724,7 +724,7 @@ describe("ColorFactory", () => {
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IResultAttributeHeaderItem) =>
                         headerItem.attributeHeaderItem.uri ===
@@ -762,7 +762,7 @@ describe("ColorFactory", () => {
             const type = "scatter";
 
             const expectedColor = "rgb(0,0,0)";
-            const colorMapping: IColorMapping2[] = [
+            const colorMapping: IColorMapping[] = [
                 {
                     predicate: (headerItem: IMeasureHeaderItem) =>
                         headerItem.measureHeaderItem.localIdentifier === "33bd337ed5534fd383861f11ff657b23",

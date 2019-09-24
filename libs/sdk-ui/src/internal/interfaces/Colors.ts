@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
-import * as ChartConfiguration from "../../highcharts/Config";
 import { IColor, IColorItem } from "@gooddata/sdk-model";
+import { IColorPaletteItem, IColorAssignment } from "../../highcharts";
 
 export interface IColoredItem {
     colorItem: IColorItem;
@@ -10,8 +10,8 @@ export interface IColoredItem {
 }
 
 export interface IColorConfiguration {
-    colorAssignments: ChartConfiguration.IColorAssignment[];
-    colorPalette: ChartConfiguration.IColorPaletteItem[];
+    colorAssignments: IColorAssignment[];
+    colorPalette: IColorPaletteItem[];
 }
 
 export interface IColoredItemDropdownItem {

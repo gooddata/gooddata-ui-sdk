@@ -24,7 +24,7 @@ import {
     CUSTOM_COLOR_PALETTE_CONFIG,
 } from "../data/configProps";
 import { attributeItemNameMatch } from "../../src/base/factory/HeaderPredicateFactory";
-import { PositionType } from "../../src/highcharts/Config";
+import { PositionType } from "../../src/highcharts";
 import { RGBType } from "@gooddata/gd-bear-client";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../utils/ScreenshotReadyWrapper";

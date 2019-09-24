@@ -9,11 +9,11 @@ import compact = require("lodash/compact");
 
 import { Execution } from "@gooddata/gd-bear-model";
 import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gd-bear-client";
+import { IColorAssignment } from "../../highcharts";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import ColorUtils from "../../highcharts/utils/color";
-import * as ChartConfiguration from "../../highcharts/Config";
 
 function getItemName(item: IColoredItem): string {
     let name = "";
@@ -41,27 +41,21 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
     let inputItems: IColoredItem[] = [];
 
     if (colors && colors.colorAssignments) {
-        inputItems = colors.colorAssignments.map(
-            (assignmentItem: ChartConfiguration.IColorAssignment, index: number) => {
-                if (TypeGuards.isGuidColorItem(assignmentItem.color)) {
-                    return {
-                        colorItem: assignmentItem.color,
-                        mappingHeader: assignmentItem.headerItem,
-                        color: ColorUtils.getColorByGuid(
-                            colors.colorPalette,
-                            assignmentItem.color.value,
-                            index,
-                        ),
-                    };
-                } else if (TypeGuards.isRgbColorItem(assignmentItem.color)) {
-                    return {
-                        colorItem: assignmentItem.color,
-                        mappingHeader: assignmentItem.headerItem,
-                        color: assignmentItem.color.value,
-                    };
-                }
-            },
-        );
+        inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
+            if (TypeGuards.isGuidColorItem(assignmentItem.color)) {
+                return {
+                    colorItem: assignmentItem.color,
+                    mappingHeader: assignmentItem.headerItem,
+                    color: ColorUtils.getColorByGuid(colors.colorPalette, assignmentItem.color.value, index),
+                };
+            } else if (TypeGuards.isRgbColorItem(assignmentItem.color)) {
+                return {
+                    colorItem: assignmentItem.color,
+                    mappingHeader: assignmentItem.headerItem,
+                    color: assignmentItem.color.value,
+                };
+            }
+        });
     }
 
     return inputItems;
@@ -107,7 +101,7 @@ export function getProperties(
 
 export function getValidProperties(
     properties: IVisualizationProperties,
-    colorAssignments: ChartConfiguration.IColorAssignment[],
+    colorAssignments: IColorAssignment[],
 ) {
     if (!properties || !properties.controls || !properties.controls.colorMapping) {
         return properties;
@@ -118,32 +112,28 @@ export function getValidProperties(
             const { id } = mappingItem;
             const colorValue = mappingItem.color.value;
 
-            const isMeasureInAssignment = colorAssignments.find(
-                (colorAssignment: ChartConfiguration.IColorAssignment) => {
-                    if (MappingHeader.isMappingHeaderMeasureItem(colorAssignment.headerItem)) {
-                        return (
-                            colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
-                            isEqual(colorAssignment.color.value, colorValue)
-                        );
-                    }
+            const isMeasureInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
+                if (MappingHeader.isMappingHeaderMeasureItem(colorAssignment.headerItem)) {
+                    return (
+                        colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
+                        isEqual(colorAssignment.color.value, colorValue)
+                    );
+                }
 
-                    return false;
-                },
-            );
+                return false;
+            });
 
             if (isMeasureInAssignment) {
                 return true;
             }
 
-            const isAttributeInAssignment = colorAssignments.find(
-                (colorAssignment: ChartConfiguration.IColorAssignment) => {
-                    if (MappingHeader.isMappingHeaderAttributeItem(colorAssignment.headerItem)) {
-                        return colorAssignment.headerItem.attributeHeaderItem.uri === id;
-                    }
+            const isAttributeInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
+                if (MappingHeader.isMappingHeaderAttributeItem(colorAssignment.headerItem)) {
+                    return colorAssignment.headerItem.attributeHeaderItem.uri === id;
+                }
 
-                    return false;
-                },
-            );
+                return false;
+            });
 
             if (isAttributeInAssignment) {
                 return true;

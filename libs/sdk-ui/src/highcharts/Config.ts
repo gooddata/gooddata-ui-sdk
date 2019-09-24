@@ -3,7 +3,7 @@ import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { IColorItem, IColor } from "@gooddata/sdk-model";
 import { VisType } from "../base/constants/visualizationTypes";
-import { IHeaderPredicate, IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import {
     HTMLDOMElement,
@@ -28,12 +28,6 @@ export interface IDataLabelsConfig {
 }
 
 export interface IColorMapping {
-    // sent to SDK
-    predicate: IHeaderPredicate;
-    color: IColorItem;
-}
-
-export interface IColorMapping2 {
     // sent to SDK
     predicate: IHeaderPredicate2;
     color: IColorItem;
@@ -72,7 +66,7 @@ export interface IMeasuresStackConfig {
 export interface IChartConfig extends IMeasuresStackConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
-    colorMapping?: IColorMapping2[];
+    colorMapping?: IColorMapping[];
     type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;
