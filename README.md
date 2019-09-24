@@ -5,8 +5,8 @@
 This repo is currently in semi-cowboy development mode:
 
 -   `rush build` must never fail
--   `npm run test` in sdk-ui must never fail; we will be stabilizing
--   tests in other packages and storybooks may fail for now
+-   `rush test-once` must never fail
+-   storybooks may fail for now
 -   live examples may fail to compile (they are not managed by Rush)
 
 Progress and tasks are tracked in RAIL-1791.
