@@ -2,7 +2,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-grid-system";
 
-import { AreaChart, BarChart, BubbleChart, Executor } from "@gooddata/sdk-ui";
+import { AreaChart, BarChart, BubbleChart, Executor, Kpi } from "@gooddata/sdk-ui";
 
 import "./App.css";
 import { backend, initialize } from "./backend";
@@ -45,6 +45,9 @@ const App: React.FC = () => {
                                 );
                             }}
                         </Executor>
+                    </Col>
+                    <Col>
+                        <Kpi backend={analyticalBackend} workspace={workspace} measure={AvgDuration} />
                     </Col>
                 </Row>
                 <Row>

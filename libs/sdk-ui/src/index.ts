@@ -5,7 +5,7 @@ import * as Model from "./base/helpers/model";
 // import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { ErrorComponent } from "./base/simple/ErrorComponent";
 import { LoadingComponent } from "./base/simple/LoadingComponent";
-// import { Kpi } from "./_defunct/kpi/Kpi";
+import { Kpi } from "./kpi/Kpi";
 // import { Visualization } from "./_defunct/uri/Visualization";
 import { ErrorStates, ErrorCodes } from "./base/constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
@@ -90,8 +90,7 @@ export {
     ErrorCodes,
     ErrorStates,
     ErrorComponent,
-    // Execute,
-    // BucketExecutor,
+    Kpi,
     Executor,
     withExecution,
     generateDimensions,
