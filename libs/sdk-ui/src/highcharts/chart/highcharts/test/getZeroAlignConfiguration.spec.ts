@@ -6,7 +6,7 @@ import {
 } from "../getZeroAlignConfiguration";
 import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { ISeriesItem, IChartOptions } from "../../../../base/interfaces/Config";
+import { ISeriesItem, IChartOptions } from "../../../Config";
 
 describe("getZeroAlignConfiguration", () => {
     const numberToYValue = (y: number | null) => ({ y });

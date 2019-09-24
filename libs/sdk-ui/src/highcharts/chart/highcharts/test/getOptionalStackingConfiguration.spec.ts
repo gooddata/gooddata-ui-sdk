@@ -13,7 +13,7 @@ import getOptionalStackingConfiguration, {
     NORMAL_STACK,
 } from "../getOptionalStackingConfiguration";
 import { IDrillConfig } from "../../../../base/interfaces/DrillEvents";
-import { IChartConfig, ISeriesItem, IChartOptions } from "../../../../base/interfaces/Config";
+import { IChartConfig, ISeriesItem, IChartOptions } from "../../../Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label";
 

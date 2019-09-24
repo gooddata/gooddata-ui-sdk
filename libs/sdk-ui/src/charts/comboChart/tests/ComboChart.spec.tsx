@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import { ComboChart } from "../ComboChart";
 import { M1, M2, M3, M4 } from "../../tests/fixtures/buckets";
-import { IChartConfig } from "../../../base/interfaces/Config";
+import { IChartConfig } from "../../../highcharts/Config";
 import { measure } from "../../../base/helpers/model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreComboChart } from "../CoreComboChart";

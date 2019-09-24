@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
-import { IChartConfig } from "../../../base/interfaces/Config";
+import { IChartConfig } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { isLineChart } from "../../../base/helpers/common";
+import { isLineChart } from "../../utils/common";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
 import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";

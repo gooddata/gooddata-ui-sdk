@@ -12,8 +12,8 @@ import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gd-bear
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
-import ColorUtils from "../../base/helpers/color";
-import * as ChartConfiguration from "../../base/interfaces/Config";
+import ColorUtils from "../../highcharts/utils/color";
+import * as ChartConfiguration from "../../highcharts/Config";
 
 function getItemName(item: IColoredItem): string {
     let name = "";

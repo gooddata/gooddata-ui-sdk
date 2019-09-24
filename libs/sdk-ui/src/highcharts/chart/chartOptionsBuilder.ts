@@ -22,7 +22,7 @@ import {
 } from "../../base/constants/bucketNames";
 import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
-import { setMeasuresToSecondaryAxis } from "../../base/helpers/dualAxis";
+import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
 
 import {
     findAttributeInDimension,
@@ -42,11 +42,11 @@ import {
     ISeriesDataItem,
     ISeriesItem,
     ISeriesItemConfig,
-} from "../../base/interfaces/Config";
+} from "../Config";
 import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../../base/helpers/color";
+import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
     isAreaChart,
@@ -60,7 +60,7 @@ import {
     isTreemap,
     parseValue,
     stringifyChartTypes,
-} from "../../base/helpers/common";
+} from "../utils/common";
 import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,

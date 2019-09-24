@@ -15,7 +15,7 @@ import {
 } from "../../../base/constants/dimensions";
 
 import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
-import { IChartOptions } from "../../../base/interfaces/Config";
+import { IChartOptions } from "../../Config";
 
 export function generateChartOptions(
     dv: DataViewFacade = barChartWithStackByAndViewByAttributes,

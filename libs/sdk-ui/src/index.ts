@@ -41,14 +41,14 @@ import { Heatmap } from "./charts/heatmap/Heatmap";
 import { withJsxExport } from "./charts/withJsxExport";
 import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
-import * as ChartConfiguration from "./base/interfaces/Config";
+import * as ChartConfiguration from "./highcharts/Config";
 // tslint:disable-next-line:no-duplicate-imports
-import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./base/interfaces/Config";
+import { ILegendConfig, IChartConfig, IColorPalette, IColorPaletteItem } from "./highcharts/Config";
 import { Chart, ChartTransformation } from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
-import ColorUtils from "./base/helpers/color";
+import ColorUtils from "./highcharts/utils/color";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./base/interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";

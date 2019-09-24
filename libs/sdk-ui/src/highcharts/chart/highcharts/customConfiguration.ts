@@ -17,17 +17,11 @@ import * as numberJS from "@gooddata/numberjs";
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import {
-    IAxis,
-    IChartConfig,
-    IChartOptions,
-    IDataLabelsVisible,
-    ISeriesItem,
-} from "../../../base/interfaces/Config";
+import { IAxis, IChartConfig, IChartOptions, IDataLabelsVisible, ISeriesItem } from "../../Config";
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
-import { AXIS_LINE_COLOR, getLighterColor } from "../../../base/helpers/color";
+import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
 import {
     isAreaChart,
     isBarChart,
@@ -38,7 +32,7 @@ import {
     isRotationInRange,
     isScatterPlot,
     isTreemap,
-} from "../../../base/helpers/common";
+} from "../../utils/common";
 import {
     shouldEndOnTick,
     shouldFollowPointer,

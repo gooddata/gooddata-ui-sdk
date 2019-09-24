@@ -12,7 +12,7 @@ import {
     shouldYAxisStartOnTickOnBubbleScatter,
 } from "../helpers";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { IChartConfig } from "../../../../base/interfaces/Config";
+import { IChartConfig } from "../../../Config";
 
 describe("helpers", () => {
     describe("getChartProperties", () => {

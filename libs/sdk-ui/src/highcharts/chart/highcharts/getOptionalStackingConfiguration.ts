@@ -14,7 +14,7 @@ import {
     IHighChartAxis,
     IYAxisConfig,
     IChartOptions,
-} from "../../../base/interfaces/Config";
+} from "../../Config";
 import { supportedStackingAttributesChartTypes } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
@@ -23,7 +23,7 @@ import {
     isColumnChart,
     isComboChart,
     isLineChart,
-} from "../../../base/helpers/common";
+} from "../../utils/common";
 import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 import { isPrimaryYAxis } from "../../utils/isPrimaryYAxis";

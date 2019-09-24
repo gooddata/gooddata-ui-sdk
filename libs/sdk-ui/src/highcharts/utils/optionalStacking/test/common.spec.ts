@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { measure } from "../../model";
-import { IChartConfig } from "../../../interfaces/Config";
+import { measure } from "../../../../base/helpers/model";
+import { IChartConfig } from "../../../Config";
 import * as fixtures from "../../../../../__mocks__/fixtures";
 import { getNewSanitizedStackingConfig, sanitizeConfig2 } from "../common";
 import { IMeasure } from "@gooddata/sdk-model";

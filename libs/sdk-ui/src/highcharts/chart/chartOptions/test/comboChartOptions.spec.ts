@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { comboFacade, dummyMeasureGroup } from "../../../../../__mocks__/fixtures";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { ISeriesItem } from "../../../../base/interfaces/Config";
+import { ISeriesItem } from "../../../Config";
 import { NORMAL_STACK, PERCENT_STACK } from "../../highcharts/getOptionalStackingConfiguration";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 

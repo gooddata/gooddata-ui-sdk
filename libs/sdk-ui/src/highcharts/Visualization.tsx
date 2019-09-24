@@ -8,10 +8,10 @@ import noop = require("lodash/noop");
 import isFunction = require("lodash/isFunction");
 import omitBy = require("lodash/omitBy");
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
-import { IChartConfig } from "../base/interfaces/Config";
+import { IChartConfig } from "./Config";
 import { OnFiredDrillEvent } from "../base/interfaces/Events";
 
-import { isChartSupported, stringifyChartTypes } from "../base/helpers/common";
+import { isChartSupported, stringifyChartTypes } from "./utils/common";
 import { IDrillableItem } from "../base/interfaces/DrillEvents";
 import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 

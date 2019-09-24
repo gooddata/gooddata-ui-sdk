@@ -22,7 +22,7 @@ import {
     IDrillEventContext,
 } from "../../base/interfaces/DrillEvents";
 import { OnFiredDrillEvent } from "../../base/interfaces/Events";
-import { isComboChart, isHeatmap, isTreemap } from "../../base/helpers/common";
+import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 

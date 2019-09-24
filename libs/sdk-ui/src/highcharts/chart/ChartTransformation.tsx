@@ -5,8 +5,8 @@ import * as React from "react";
 import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
-import { getNewSanitizedStackingConfig } from "../../base/helpers/optionalStacking/common";
-import { IChartOptions, IChartConfig } from "../../base/interfaces/Config";
+import { getNewSanitizedStackingConfig } from "../utils/optionalStacking/common";
+import { IChartOptions, IChartConfig } from "../Config";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { OnFiredDrillEvent, OnLegendReady } from "../../base/interfaces/Events";
 import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";

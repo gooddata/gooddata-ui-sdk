@@ -11,8 +11,8 @@ import {
     IAxisRange,
     IAxisRangeForAxes,
 } from "./helpers";
-import { isAreaChart, isOneOfTypes } from "../../../base/helpers/common";
-import { IDataLabelsVisible } from "../../../base/interfaces/Config";
+import { isAreaChart, isOneOfTypes } from "../../utils/common";
+import { IDataLabelsVisible } from "../../Config";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 
 export function isLabelOverlappingItsShape(point: any) {

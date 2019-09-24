@@ -15,7 +15,7 @@ import {
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
 import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
-import { getValidColorPalette2 } from "../../base/helpers/color";
+import { getValidColorPalette2 } from "../../highcharts/utils/color";
 import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";

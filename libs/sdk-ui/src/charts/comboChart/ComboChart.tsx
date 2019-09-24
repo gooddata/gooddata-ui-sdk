@@ -10,8 +10,8 @@ import {
 } from "@gooddata/sdk-model";
 import * as React from "react";
 import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
-import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
-import { IChartConfig } from "../../base/interfaces/Config";
+import { sanitizeConfig2 } from "../../highcharts/utils/optionalStacking/common";
+import { IChartConfig } from "../../highcharts/Config";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { comboChartWith3MetricsAndViewByAttribute } from "../../../../__mocks__/fixtures";
 import { setMeasuresToSecondaryAxis } from "../dualAxis";
-import { IChartConfig } from "../../../index";
+import { IChartConfig } from "../../Config";
 
 describe("setMeasuresToSecondaryAxis", () => {
     const dualAxisConfig = { secondary_yaxis: { rotation: "90" } };

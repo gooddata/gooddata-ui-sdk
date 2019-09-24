@@ -17,7 +17,7 @@ import {
     groupSeriesItemsByType,
 } from "../helpers";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { ISeriesItem } from "../../../../base/interfaces/Config";
+import { ISeriesItem } from "../../../Config";
 
 describe("helpers", () => {
     describe("calculateFluidLegend", () => {

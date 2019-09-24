@@ -39,7 +39,7 @@ import {
     IStackItem,
     IClientRect,
     IDataLabelsConfig,
-} from "../../../../../base/interfaces/Config";
+} from "../../../../Config";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,

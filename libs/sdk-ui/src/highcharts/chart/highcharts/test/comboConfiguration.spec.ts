@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
-import { IChartConfig } from "../../../../base/interfaces/Config";
+import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { MEASURES, SECONDARY_MEASURES } from "../../../../base/constants/bucketNames";

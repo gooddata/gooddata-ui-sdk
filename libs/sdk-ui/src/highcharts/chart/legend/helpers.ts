@@ -8,9 +8,9 @@ import inRange = require("lodash/inRange");
 
 import { IHeatmapLegendItem } from "../../typings/legend";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
-import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../../base/helpers/common";
+import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
-import { ISeriesItem } from "../../../base/interfaces/Config";
+import { ISeriesItem } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;

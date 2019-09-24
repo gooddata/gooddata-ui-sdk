@@ -27,7 +27,7 @@ import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { PIE_CHART_LIMIT } from "../../../base/constants/limits";
-import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../../base/helpers/color";
+import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
     AttributeColorStrategy,
@@ -42,7 +42,7 @@ import {
     IMeasuresStackConfig,
     IChartConfig,
     IPointData,
-} from "../../../base/interfaces/Config";
+} from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";

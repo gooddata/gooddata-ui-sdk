@@ -17,7 +17,7 @@ import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { RuntimeError } from "../../../base/errors/RuntimeError";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
 import * as HttpStatusCodes from "http-status-codes";
-import { IColorPalette } from "../../../base/interfaces/Config";
+import { IColorPalette } from "../../../highcharts/Config";
 import { clearSdkCache } from "../../../base/helpers/sdkCache";
 import MdObjectHelper from "../MdObjectHelper";
 

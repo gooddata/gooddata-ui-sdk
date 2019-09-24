@@ -21,8 +21,8 @@ import {
 import { ChartPropTypes, Requireable } from "../../proptypes/Chart";
 import { BaseVisualization } from "./BaseVisualization";
 import { OnLegendReady } from "../../base/interfaces/Events";
-import { getValidColorPalette } from "../../base/helpers/color";
-import { IChartConfig } from "../../base/interfaces/Config";
+import { getValidColorPalette } from "../../highcharts/utils/color";
+import { IChartConfig } from "../../highcharts/Config";
 export { Requireable };
 
 export interface ICommonChartProps extends ICommonVisualizationProps {

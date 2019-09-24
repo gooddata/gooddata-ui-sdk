@@ -2,6 +2,9 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { IColorItem, IColor } from "@gooddata/sdk-model";
+import { VisType } from "../base/constants/visualizationTypes";
+import { IHeaderPredicate, IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import {
     HTMLDOMElement,
     SVGDOMElement,
@@ -9,12 +12,9 @@ import {
     StackItemObject,
     DataLabelsOptionsObject,
     ColorAxisOptions,
-} from "../../highcharts";
-import { VisType } from "../constants/visualizationTypes";
-import { IHeaderPredicate, IHeaderPredicate2 } from "./HeaderPredicate";
-import { IMappingHeader } from "./MappingHeader";
+} from "./chart/highcharts/highchartsEntryPoint";
 
-export { DEFAULT_COLOR_PALETTE } from "../constants/defaultColors";
+export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
 
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 

@@ -5,9 +5,9 @@ import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupHeader, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
-import { IChartConfig, ISeriesItem } from "../../../base/interfaces/Config";
+import { IChartConfig, ISeriesItem } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { isLineChart } from "../../../base/helpers/common";
+import { isLineChart } from "../../utils/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
 export const CHART_ORDER = {
@@ -16,6 +16,9 @@ export const CHART_ORDER = {
     [VisualizationTypes.LINE]: 3,
 };
 
+/**
+ * @internal
+ */
 export const COMBO_SUPPORTED_CHARTS = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.LINE,

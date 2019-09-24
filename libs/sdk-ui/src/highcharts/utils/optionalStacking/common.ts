@@ -10,8 +10,8 @@ import {
     isMeasure,
     measureDoesComputeRatio,
 } from "@gooddata/sdk-model";
-import { MEASURES } from "../../constants/bucketNames";
-import { IChartConfig } from "../../interfaces/Config";
+import { MEASURES } from "../../../base/constants/bucketNames";
+import { IChartConfig } from "../../Config";
 
 function isMeasureArray(obj: any): obj is IMeasure[] {
     return !isEmpty(obj) && isMeasure(obj[0]);

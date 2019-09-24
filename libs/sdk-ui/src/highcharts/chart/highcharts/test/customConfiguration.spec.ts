@@ -9,9 +9,9 @@ import {
     getCustomizedConfiguration,
     percentageDataLabelFormatter,
 } from "../customConfiguration";
-import { ISeriesDataItem } from "../../../../base/interfaces/Config";
+import { ISeriesDataItem } from "../../../Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { immutableSet } from "../../../../base/helpers/common";
+import { immutableSet } from "../../../utils/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,

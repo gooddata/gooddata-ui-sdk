@@ -11,7 +11,7 @@ import * as React from "react";
 import { truncate } from "../_commons/truncate";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
-import { sanitizeConfig2 } from "../../base/helpers/optionalStacking/common";
+import { sanitizeConfig2 } from "../../highcharts/utils/optionalStacking/common";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreColumnChart } from "./CoreColumnChart";

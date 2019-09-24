@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import * as ChartConfiguration from "../../../../../base/interfaces/Config";
+import * as ChartConfiguration from "../../../../../highcharts/Config";
 import { IColorItem, IGuidColorItem } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 

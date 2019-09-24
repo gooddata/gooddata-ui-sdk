@@ -12,12 +12,15 @@ import * as cx from "classnames";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
-import { isPieOrDonutChart, isOneOfTypes } from "../../base/helpers/common";
+import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { OnLegendReady } from "../../base/interfaces/Events";
-import { IChartConfig } from "../../base/interfaces/Config";
+import { IChartConfig } from "../Config";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 
+/**
+ * @internal
+ */
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
