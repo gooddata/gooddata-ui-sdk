@@ -1,74 +1,102 @@
 // (C) 2019 GoodData Corporation
 import { Identifier } from ".";
+import { attributeId, IAttribute } from "../attribute";
+import { IMeasure, measureId } from "../measure";
 import isEmpty = require("lodash/isEmpty");
-import { IAttribute } from "../attribute";
-import { IMeasure } from "../measure";
 
 /**
- * TODO: SDK8: Add docs
- *
- * @public
- */
-export type SortDirection = "asc" | "desc";
-
-/**
- * TODO: SDK8: Add docs
- *
- * @public
- */
-export interface IAttributeSortItem {
-    attributeSortItem: {
-        direction: SortDirection;
-        attributeIdentifier: Identifier;
-        aggregation?: "sum";
-    };
-}
-
-/**
- * TODO: SDK8: Add docs
+ * Sort items can be used to specify how the result of an execution should be sorted. Sorting can be done by
+ * attribute value and/or by value of a measure.
  *
  * @public
  */
 export type SortItem = IAttributeSortItem | IMeasureSortItem;
 
 /**
- * TODO: SDK8: Add docs
+ * Sorting direction.
+ *
+ * @public
+ */
+export type SortDirection = "asc" | "desc";
+
+/**
+ * Sort item which specifies that the result should be sorted by attribute element values in either
+ * ascending or descending order.
+ *
+ * @public
+ */
+export interface IAttributeSortItem {
+    attributeSortItem: {
+        /**
+         * Sort ascending or descending.
+         */
+        direction: SortDirection;
+        /**
+         * Local identifier of the attribute to sort by.
+         */
+        attributeIdentifier: Identifier;
+        /**
+         * TODO: find out what this does :)
+         */
+        aggregation?: "sum";
+    };
+}
+
+/**
+ * Sort item which specifies that the result should be sorted by value of a measure. Since the result can have
+ * the value of the measure sliced by one or more attributes, the measure sort item must explicitly specify
+ * the 'slice' by which to sort. This slice is specified by locators.
  *
  * @public
  */
 export interface IMeasureSortItem {
     measureSortItem: {
+        /**
+         * Sort ascending or descending.
+         */
         direction: SortDirection;
+        /**
+         * Locators explicitly specifying the exact slice of the measure values to sort by.
+         */
         locators: LocatorItem[];
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Locators are used to identify slice of measure values to sort by.
  *
  * @public
  */
 export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 /**
- * TODO: SDK8: Add docs
+ * Locator that specifies a concrete attribute element for which the measure values are sliced.
  *
  * @public
  */
 export interface IAttributeLocatorItem {
     attributeLocatorItem: {
+        /**
+         * Local identifier of the attribute.
+         */
         attributeIdentifier: Identifier;
+        /**
+         * Value of the attribute element; TODO: make sure bear is ready for this
+         */
         element: string;
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Locator that specifies a concrete measure to sort by.
  *
  * @public
  */
 export interface IMeasureLocatorItem {
     measureLocatorItem: {
+        /**
+         * Local identifier of the measure.
+         */
         measureIdentifier: Identifier;
     };
 }
@@ -78,7 +106,7 @@ export interface IMeasureLocatorItem {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether an object is an attribute sort item.
  *
  * @public
  */
@@ -87,7 +115,7 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether an object is a measure sort item.
  *
  * @public
  */
@@ -96,7 +124,7 @@ export function isMeasureSort(obj: any): obj is IMeasureSortItem {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether an object is an attribute locator.
  *
  * @public
  */
@@ -105,7 +133,7 @@ export function isAttributeLocator(obj: any): obj is IAttributeLocatorItem {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether an object is measure locator
  *
  * @public
  */
@@ -118,7 +146,7 @@ export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Categorized collection of entity (object) identifiers referenced by a sort item.
  *
  * @internal
  */
@@ -129,42 +157,40 @@ export type SortEntityIds = {
 };
 
 /**
- * TODO: SDK8: Add docs
+ * Given sort item, returns ids of entities (objects) that are referenced by the sort item.
+ *
+ * The ids are returned in an categorized way.
  *
  * @internal
  */
 export function sortEntityIds(sort: SortItem): SortEntityIds {
-    if (isAttributeSort(sort)) {
-        return {
-            attributeIdentifiers: [sort.attributeSortItem.attributeIdentifier],
-            measureIdentifiers: [],
-            allIdentifiers: [sort.attributeSortItem.attributeIdentifier],
-        };
-    } else if (isMeasureSort(sort)) {
-        const res: SortEntityIds = {
-            attributeIdentifiers: [],
-            measureIdentifiers: [],
-            allIdentifiers: [],
-        };
+    const res: SortEntityIds = {
+        attributeIdentifiers: [],
+        measureIdentifiers: [],
+        allIdentifiers: [],
+    };
 
-        return sort.measureSortItem.locators.reduce((acc, loc) => {
+    if (isAttributeSort(sort)) {
+        const attrId = sort.attributeSortItem.attributeIdentifier;
+        res.attributeIdentifiers.push(attrId);
+        res.allIdentifiers.push(attrId);
+    } else if (isMeasureSort(sort)) {
+        sort.measureSortItem.locators.forEach(loc => {
             if (isAttributeLocator(loc)) {
                 const attrId = loc.attributeLocatorItem.attributeIdentifier;
-                acc.attributeIdentifiers.push(attrId);
-                acc.allIdentifiers.push(attrId);
+
+                res.attributeIdentifiers.push(attrId);
+                res.allIdentifiers.push(attrId);
             } else if (isMeasureLocator(loc)) {
                 const measureId = loc.measureLocatorItem.measureIdentifier;
 
-                acc.measureIdentifiers.push(measureId);
-                acc.allIdentifiers.push(measureId);
+                res.measureIdentifiers.push(measureId);
+                res.allIdentifiers.push(measureId);
             }
-
-            return acc;
-        }, res);
+        });
     }
 
-    // TODO: SDK8: switch to invariant
-    throw new Error();
+    return res;
 }
 
 //
@@ -172,19 +198,26 @@ export function sortEntityIds(sort: SortItem): SortEntityIds {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Creates a new attribute sort - sorting the result by values of the provided attribute's elements. The attribute
+ * can be either specified by value or by reference using its local identifier.
  *
+ * @param attributeOrId - attribute to sort by
+ * @param sortDirection - asc or desc
+ * @param aggregation - TODO
+ * @returns always new item
  * @public
  */
 export function newAttributeSort(
-    attribute: IAttribute,
+    attributeOrId: IAttribute | string,
     sortDirection: SortDirection,
     aggregation: boolean = false,
 ): IAttributeSortItem {
+    const id: string = typeof attributeOrId === "string" ? attributeOrId : attributeId(attributeOrId);
+
     if (!aggregation) {
         return {
             attributeSortItem: {
-                attributeIdentifier: attribute.attribute.localIdentifier,
+                attributeIdentifier: id,
                 direction: sortDirection,
             },
         };
@@ -192,7 +225,7 @@ export function newAttributeSort(
 
     return {
         attributeSortItem: {
-            attributeIdentifier: attribute.attribute.localIdentifier,
+            attributeIdentifier: id,
             direction: sortDirection,
             aggregation: "sum",
         },
@@ -200,15 +233,19 @@ export function newAttributeSort(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Creates a new measure sort - sorting the result by values of the provided measure. The measure
+ * can be either specified by value or by reference using its local identifier.
  *
+ * @param measureOrId - measure to sort by
+ * @param sortDirection - asc or desc
+ * @returns always new instance
  * @public
  */
 export function newMeasureSort(
     measureOrId: IMeasure | string,
     sortDirection: SortDirection,
 ): IMeasureSortItem {
-    const id: string = typeof measureOrId === "string" ? measureOrId : measureOrId.measure.localIdentifier;
+    const id: string = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
 
     return {
         measureSortItem: {
@@ -225,9 +262,9 @@ export function newMeasureSort(
 }
 
 /**
- * TODO: SDK8: Add docs
+ * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
  *
- * @public
+ * @internal
  */
 export function sortFingerprint(sort: SortItem): string {
     return JSON.stringify(sort);
