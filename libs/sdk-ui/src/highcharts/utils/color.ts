@@ -2,12 +2,13 @@
 import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
-import { IChartConfig, IColorMapping, IColorPalette, IColorPaletteItem } from "../Config";
+import { IChartConfig } from "../Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader, isMappingHeaderAttributeItem } from "../../base/interfaces/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
+import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../base/interfaces/Colors";
 
 export const WHITE = "rgb(255, 255, 255)";
 export const BLACK = "rgb(0, 0, 0)";
@@ -103,14 +104,6 @@ export function getRgbString(color: IColorPaletteItem): string {
 }
 
 export function getValidColorPalette(config: IChartConfig) {
-    return isEmpty(config.colorPalette)
-        ? isEmpty(config.colors)
-            ? DEFAULT_COLOR_PALETTE
-            : getColorPaletteFromColors(config.colors)
-        : config.colorPalette;
-}
-
-export function getValidColorPalette2(config: IChartConfig) {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
             ? DEFAULT_COLOR_PALETTE

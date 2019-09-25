@@ -1,6 +1,13 @@
+// (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IErrorProps } from "../base/simple/ErrorComponent";
 
+/**
+ * TODO: SDK8: add docs
+ * @param props
+ * @constructor
+ * @public
+ */
 export const KpiError: React.StatelessComponent<IErrorProps> = props => {
     const message: string = props.message;
 

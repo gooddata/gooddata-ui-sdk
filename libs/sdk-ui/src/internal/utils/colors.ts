@@ -9,7 +9,7 @@ import compact = require("lodash/compact");
 
 import { Execution } from "@gooddata/gd-bear-model";
 import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gd-bear-client";
-import { IColorAssignment } from "../../highcharts";
+import { IColorAssignment } from "../../base/interfaces/Colors";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";

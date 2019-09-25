@@ -1,3 +1,4 @@
+// (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IAnalyticalBackend, DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
@@ -12,6 +13,15 @@ import { IntlWrapper } from "../base/translations/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
 
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export interface IKpiProps {
     backend: IAnalyticalBackend;
     workspace: string;
@@ -27,18 +37,25 @@ export interface IKpiProps {
     onError?: IExecutorProps["onError"];
 }
 
-const KpiLoading = () => <LoadingComponent inline={true} />;
-
-const getMeasureData = (result: DataViewFacade) => {
-    const data = result.data();
-    const measure = get(data, [0, 0]);
-
-    if (isNil(measure)) {
-        return "";
-    }
-
-    return parseFloat(measure);
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export const Kpi: React.StatelessComponent<IKpiProps> = props => {
+    const { locale } = props;
+    return (
+        <IntlWrapper locale={locale}>
+            <IntlKpi {...props} />
+        </IntlWrapper>
+    );
 };
+
+//
+// Internals
+//
+
+const KpiLoading = () => <LoadingComponent inline={true} />;
 
 const CoreKpi: React.StatelessComponent<IKpiProps & InjectedIntlProps> = props => {
     const {
@@ -98,13 +115,15 @@ const CoreKpi: React.StatelessComponent<IKpiProps & InjectedIntlProps> = props =
     );
 };
 
-const IntlKpi = injectIntl(CoreKpi);
+const getMeasureData = (result: DataViewFacade) => {
+    const data = result.data();
+    const measure = get(data, [0, 0]);
 
-export const Kpi: React.StatelessComponent<IKpiProps> = props => {
-    const { locale } = props;
-    return (
-        <IntlWrapper locale={locale}>
-            <IntlKpi {...props} />
-        </IntlWrapper>
-    );
+    if (isNil(measure)) {
+        return "";
+    }
+
+    return parseFloat(measure);
 };
+
+const IntlKpi = injectIntl(CoreKpi);

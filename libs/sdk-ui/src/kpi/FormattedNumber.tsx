@@ -1,6 +1,10 @@
+// (C) 2019 GoodData Corporation
 import * as React from "react";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
+/**
+ * @internal
+ */
 export interface IFormattedNumberProps {
     className: string;
     number: number | string;
@@ -10,8 +14,12 @@ export interface IFormattedNumberProps {
 
 const DEFAULT_FORMAT = "#,#.##";
 
+/**
+ * @internal
+ */
 export const FormattedNumber: React.StatelessComponent<IFormattedNumberProps> = ({
     className,
+    // tslint:disable-next-line:variable-name
     number,
     format = DEFAULT_FORMAT,
     separators,

@@ -90,26 +90,6 @@ export function getChartProperties(config: IChartConfig, type: VisType) {
     return chartProps;
 }
 
-export function getChartProperties2(config: IChartConfig, type: VisType) {
-    const isBarType = isBarChart(type);
-    const chartProps: any = {
-        xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },
-        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis },
-    };
-
-    const secondaryXAxisProps = isBarType ? { ...config.secondary_yaxis } : { ...config.secondary_xaxis };
-    const secondaryYAxisProps = isBarType ? { ...config.secondary_xaxis } : { ...config.secondary_yaxis };
-
-    if (!isEmpty(secondaryXAxisProps)) {
-        chartProps.secondary_xAxisProps = secondaryXAxisProps;
-    }
-    if (!isEmpty(secondaryYAxisProps)) {
-        chartProps.secondary_yAxisProps = secondaryYAxisProps;
-    }
-
-    return chartProps;
-}
-
 export const getPointPositions = (point: any) => {
     const { dataLabel, graphic } = point;
     const labelRect = dataLabel.element.getBoundingClientRect();

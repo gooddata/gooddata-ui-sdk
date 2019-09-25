@@ -7,13 +7,14 @@ import { string as stringUtils } from "@gooddata/js-utils";
 
 import DerivedMeasureTitleSuffixFactory from "../factory/DerivedMeasureTitleSuffixFactory";
 import ArithmeticMeasureTitleFactory from "../factory/ArithmeticMeasureTitleFactory";
-import { IMeasureTitleProps, OverTimeComparisonType, OverTimeComparisonTypes } from "../../index";
 import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
 import IMeasure = VisualizationObject.IMeasure;
 import IBucket = VisualizationObject.IBucket;
 import BucketItem = VisualizationObject.BucketItem;
 import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 import isMeasure = VisualizationObject.isMeasure;
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
+import { IMeasureTitleProps } from "../interfaces/MeasureTitle";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITotal, SortItem } from "@gooddata/sdk-model";
-import { IColorAssignment, IColorPalette } from "../../highcharts";
+import { IColorAssignment, IColorPalette } from "./Colors";
 
 /**
  * @internal

@@ -2,11 +2,11 @@
 import React from "react";
 import { Col, Container, Row } from "react-grid-system";
 
-import { AreaChart, BarChart, BubbleChart, Executor, Kpi } from "@gooddata/sdk-ui";
+import { AreaChart, BarChart, BubbleChart, DonutChart, Executor, Kpi, PieChart } from "@gooddata/sdk-ui";
 
 import "./App.css";
 import { backend, initialize } from "./backend";
-import { workspace, AgentName, AvgDuration, EndpointName, SumOfCalls } from "./model";
+import { AgentName, AvgDuration, EndpointName, SumOfCalls, workspace } from "./model";
 
 initialize();
 const analyticalBackend = backend();
@@ -110,9 +110,54 @@ const App: React.FC = () => {
                             xAxisMeasure={AvgDuration}
                             size={SumOfCalls}
                             viewBy={AgentName}
+                            config={{
+                                legend: {
+                                    enabled: false,
+                                },
+                            }}
                         />
                     </Col>
                     <Col sm={6}></Col>
+                </Row>
+                <Row>
+                    <Col sm={6}>
+                        <PieChart
+                            backend={analyticalBackend}
+                            workspace={workspace}
+                            measures={[SumOfCalls]}
+                            viewBy={AgentName}
+                            height={height}
+                            config={{
+                                colorPalette: [
+                                    {
+                                        guid: "1",
+                                        fill: {
+                                            r: 100,
+                                            g: 100,
+                                            b: 100,
+                                        },
+                                    },
+                                ],
+                                legend: {
+                                    enabled: false,
+                                },
+                            }}
+                        />
+                    </Col>
+                    <Col sm={6}>
+                        <DonutChart
+                            backend={analyticalBackend}
+                            workspace={workspace}
+                            measures={[SumOfCalls]}
+                            viewBy={AgentName}
+                            height={height}
+                            config={{
+                                legend: {
+                                    enabled: false,
+                                },
+                            }}
+                        />
+                    </Col>
                 </Row>
             </Container>
         </div>

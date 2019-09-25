@@ -7,7 +7,7 @@ import * as uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";
-import { IColorPalette } from "../../../../../highcharts";
+import { IColorPalette } from "../../../../../base/interfaces/Colors";
 
 export enum IconPosition {
     Down,

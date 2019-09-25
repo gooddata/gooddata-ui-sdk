@@ -8,7 +8,6 @@ import { measure } from "../../../base/helpers/model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreComboChart } from "../CoreComboChart";
 import { IMeasure } from "@gooddata/sdk-model";
-import { Model } from "../../../index";
 
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
@@ -83,10 +82,10 @@ describe("ComboChart", () => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
-                    Model.measure("m5")
+                    measure("m5")
                         .localIdentifier("m5")
                         .build(),
-                    Model.measure("m5ratio")
+                    measure("m5ratio")
                         .localIdentifier("m5ratio")
                         .build(),
                 ];
@@ -106,10 +105,10 @@ describe("ComboChart", () => {
             });
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                Model.measure("m1ratio")
+                measure("m1ratio")
                     .localIdentifier("m1ratio")
                     .build(),
-                Model.measure("m5ratio")
+                measure("m5ratio")
                     .localIdentifier("m5ratio")
                     .build(),
             ];

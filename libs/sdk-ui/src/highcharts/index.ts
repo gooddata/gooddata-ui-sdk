@@ -1,12 +1,5 @@
 // (C) 2019 GoodData Corporation
-export {
-    IChartConfig,
-    IColorPalette,
-    IColorPaletteItem,
-    IColorAssignment,
-    PositionType,
-    ILegendConfig,
-} from "./Config";
+export { IChartConfig, PositionType, ILegendConfig } from "./Config";
 
 import Chart from "./chart/Chart";
 import ChartTransformation from "./chart/ChartTransformation";
@@ -19,14 +12,11 @@ export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
 // TODO: SDK8: this should go away; its exported for drills
 export { createDrillIntersectionElement } from "./utils/drilldownEventing";
 
-// TODO: SDK8: this should go away; proptypes need to be generated and placed elsewhere
-export { AfmPropTypesShape, ResultSpecPropTypesShape, FiltersPropTypesShape } from "./proptypes/execution";
-
 export { isLineChart, isAreaChart } from "./utils/common";
 
-export { sanitizeConfig2 } from "./utils/optionalStacking/common";
+export { sanitizeConfig } from "./utils/optionalStacking/common";
 
-export { getValidColorPalette2 } from "./utils/color";
+export { getValidColorPalette } from "./utils/color";
 
 import ColorUtils from "./utils/color";
 

@@ -2,7 +2,7 @@
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { IColorItem } from "@gooddata/sdk-model";
-import { IColorPalette } from "../../../../../highcharts";
+import { IColorPalette } from "../../../../../base/interfaces/Colors";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";

@@ -1,38 +1,16 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import noop from "lodash/noop";
+import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
 
-interface ICancelablePromise<T> {
-    promise: Promise<T>;
-    cancel: () => void;
-}
+//
+// Public interface
+//
 
-function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
-    let hasCanceled = false;
-
-    const wrappedPromise = new Promise<T>((resolve, reject) => {
-        promise.then(
-            val => (hasCanceled ? reject({ isCanceled: true }) : resolve(val)),
-            error => (hasCanceled ? reject({ isCanceled: true }) : reject(error)),
-        );
-    });
-
-    return {
-        promise: wrappedPromise,
-        cancel() {
-            hasCanceled = true;
-        },
-    };
-}
-
-export type WithLoadingState<T> = {
-    isLoading: boolean;
-    error: Error | undefined;
-    result: T | undefined;
-    promise: ICancelablePromise<T> | undefined;
-};
-
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export type WithLoadingResult<T> = {
     isLoading: boolean;
     error: Error | undefined;
@@ -40,6 +18,10 @@ export type WithLoadingResult<T> = {
     fetch: () => Promise<T>;
 };
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IWithLoadingEvents<T, P> {
     onError?: (error?: Error, props?: T) => void;
     onLoadingStart?: (props?: T) => void;
@@ -47,6 +29,10 @@ export interface IWithLoadingEvents<T, P> {
     onLoadingFinish?: (result?: P, props?: T) => void;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IWithLoading<T, P, R extends object> {
     promiseFactory: (props: T) => Promise<P>;
     mapResultToProps: (result: WithLoadingResult<P>) => R;
@@ -54,6 +40,21 @@ export interface IWithLoading<T, P, R extends object> {
     loadOnMount?: boolean;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @internal
+ */
+export type WithLoadingState<T> = {
+    isLoading: boolean;
+    error: Error | undefined;
+    result: T | undefined;
+    promise: ICancelablePromise<T> | undefined;
+};
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function withLoading<T, P, R extends object>({
     promiseFactory,
     mapResultToProps,
@@ -187,5 +188,32 @@ export function withLoading<T, P, R extends object>({
         hoistNonReactStatics(WithLoading, WrappedComponent);
 
         return WithLoading;
+    };
+}
+
+//
+// internals
+//
+
+interface ICancelablePromise<T> {
+    promise: Promise<T>;
+    cancel: () => void;
+}
+
+function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
+    let hasCanceled = false;
+
+    const wrappedPromise = new Promise<T>((resolve, reject) => {
+        promise.then(
+            val => (hasCanceled ? reject({ isCanceled: true }) : resolve(val)),
+            error => (hasCanceled ? reject({ isCanceled: true }) : reject(error)),
+        );
+    });
+
+    return {
+        promise: wrappedPromise,
+        cancel() {
+            hasCanceled = true;
+        },
     };
 }

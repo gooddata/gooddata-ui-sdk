@@ -89,7 +89,7 @@ import {
     DEFAULT_SERIES_LIMIT,
 } from "./highcharts/commonConfiguration";
 import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
-import { getChartProperties2 } from "./highcharts/helpers";
+import { getChartProperties } from "./highcharts/helpers";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
@@ -1696,7 +1696,7 @@ export function getChartOptions(
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
-    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties2(
+    const { xAxisProps, yAxisProps, secondary_xAxisProps, secondary_yAxisProps } = getChartProperties(
         config,
         type,
     );
@@ -1732,7 +1732,7 @@ export function getChartOptions(
     }
 
     if (isScatterPlot(type)) {
-        const { xAxisProps, yAxisProps } = getChartProperties2(config, type);
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
         let measures = [
             measureGroup.items[0] ? measureGroup.items[0] : null,
@@ -1766,7 +1766,7 @@ export function getChartOptions(
     }
 
     if (isHeatmap(type)) {
-        const { xAxisProps, yAxisProps } = getChartProperties2(config, type);
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
         return {
             type,
             stacking: null,
@@ -1801,7 +1801,7 @@ export function getChartOptions(
     if (isBubbleChart(type)) {
         const measures: IMeasureHeaderItem[] = [];
         const measureGroupCopy = cloneDeep(measureGroup);
-        const { xAxisProps, yAxisProps } = getChartProperties2(config, type);
+        const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
         if (!dv.isBucketEmpty(MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);

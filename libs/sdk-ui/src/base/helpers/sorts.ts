@@ -11,7 +11,7 @@ import {
     newMeasureSort,
     SortItem,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "../../index";
+import * as BucketNames from "../../base/constants/bucketNames";
 
 export function getDefaultTreemapSortFromBuckets(
     viewBy: IBucket,
