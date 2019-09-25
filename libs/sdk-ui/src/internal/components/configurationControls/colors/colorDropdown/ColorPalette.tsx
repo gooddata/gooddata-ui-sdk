@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { IColorPaletteItem, IColorPalette } from "../../../../../highcharts";
+import { IColorPaletteItem, IColorPalette } from "../../../../../base/interfaces/Colors";
 import * as classNames from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem";
 import { IColorItem } from "@gooddata/sdk-model";

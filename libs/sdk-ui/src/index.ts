@@ -42,21 +42,15 @@ import { withJsxExport } from "./charts/withJsxExport";
 import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
 // tslint:disable-next-line:no-duplicate-imports
-import {
-    Chart,
-    ChartTransformation,
-    ILegendConfig,
-    IChartConfig,
-    IColorPalette,
-    IColorPaletteItem,
-    ColorUtils,
-} from "./highcharts";
+import { Chart, ChartTransformation, ILegendConfig, IChartConfig, ColorUtils } from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./base/interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";
+
+import { IColorPalette, IColorPaletteItem } from "./base/interfaces/Colors";
 
 /**
  * CoreComponents

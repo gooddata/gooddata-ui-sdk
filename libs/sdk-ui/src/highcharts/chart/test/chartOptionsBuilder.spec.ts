@@ -36,11 +36,12 @@ import {
     MeasureColorStrategy,
     TreemapColorStrategy,
 } from "../colorFactory";
-import { IChartOptions, IColorPaletteItem, IChartConfig, IPointData } from "../../Config";
+import { IChartOptions, IChartConfig, IPointData } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { IColorPaletteItem } from "../../../base/interfaces/Colors";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);

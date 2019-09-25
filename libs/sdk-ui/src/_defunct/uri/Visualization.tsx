@@ -22,7 +22,7 @@ import { injectIntl, intlShape, InjectedIntlProps } from "react-intl";
 import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { BaseChart } from "../to_delete/BaseChart";
-import { IChartConfig, IColorPaletteItem } from "../../highcharts/Config";
+import { IChartConfig } from "../../highcharts/Config";
 import { IPivotTableBucketProps, PivotTable } from "../pivotTable/PivotTable";
 import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 import { IEvents, OnLegendReady } from "../../base/interfaces/Events";
@@ -47,6 +47,7 @@ import { mergeFiltersToAfm } from "../../base/helpers/afmHelper";
 import { _experimentalDataSourceFactory } from "./experimentalDataSource";
 import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 import { ATTRIBUTE, COLUMNS, MEASURES } from "../../base/constants/bucketNames";
+import { IColorPaletteItem } from "../../base/interfaces/Colors";
 export { Requireable };
 
 const { ExecuteAfmAdapter, toAfmResultSpec, createSubject } = DataLayer;

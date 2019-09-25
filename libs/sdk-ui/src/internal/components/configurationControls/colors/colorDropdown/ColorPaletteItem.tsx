@@ -2,7 +2,7 @@
 import * as React from "react";
 import { IColorItem, IGuidColorItem } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
-import { IColorPaletteItem } from "../../../../../highcharts";
+import { IColorPaletteItem } from "../../../../../base/interfaces/Colors";
 
 const ITEM_MARGIN = 5;
 

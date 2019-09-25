@@ -18,10 +18,10 @@ import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../Config";
 import { IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { IColorItem, RGBType } from "@gooddata/sdk-model";
 import range = require("lodash/range");
+import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../../base/interfaces/Colors";
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];

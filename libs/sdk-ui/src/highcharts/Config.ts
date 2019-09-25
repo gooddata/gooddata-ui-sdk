@@ -1,18 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { IColorItem, IColor } from "@gooddata/sdk-model";
 import { VisType } from "../base/constants/visualizationTypes";
-import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import {
-    HTMLDOMElement,
-    SVGDOMElement,
-    SVGAttributes,
-    StackItemObject,
-    DataLabelsOptionsObject,
     ColorAxisOptions,
+    DataLabelsOptionsObject,
+    HTMLDOMElement,
+    StackItemObject,
+    SVGAttributes,
+    SVGDOMElement,
 } from "./chart/highcharts/highchartsEntryPoint";
+import { IColorAssignment, IColorMapping, IColorPalette } from "../base/interfaces/Colors";
 
 export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
 
@@ -26,25 +24,6 @@ export interface IDataLabelsConfig {
     padding?: number;
     element?: HTMLDOMElement | SVGDOMElement;
 }
-
-export interface IColorMapping {
-    // sent to SDK
-    predicate: IHeaderPredicate2;
-    color: IColorItem;
-}
-
-export interface IColorAssignment {
-    // << send from SDK up
-    headerItem: IMappingHeader;
-    color: IColorItem;
-}
-
-export interface IColorPaletteItem {
-    guid: string;
-    fill: IColor;
-}
-
-export interface IColorPalette extends Array<IColorPaletteItem> {}
 
 export interface ILegendConfig {
     enabled?: boolean;
