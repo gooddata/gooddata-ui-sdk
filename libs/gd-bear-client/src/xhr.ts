@@ -5,8 +5,7 @@ import set from "lodash/set";
 import defaults from "lodash/defaults";
 import merge from "lodash/merge";
 import result from "lodash/result";
-
-import { thisPackage } from "./util";
+import { name as pkgName, version as pkgVersion } from "../package.json";
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -27,6 +26,12 @@ const REST_API_DEPRECATED_VERSION_HEADER = "X-GDC-DEPRECATED";
 
 // The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
 const LATEST_REST_API_VERSION = 3;
+
+/**
+ * Gooddata-js package signature
+ * @private
+ */
+const thisPackage = { name: pkgName, version: pkgVersion };
 
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {
