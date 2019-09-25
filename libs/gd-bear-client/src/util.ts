@@ -3,8 +3,6 @@ import get from "lodash/get";
 import { delay } from "./utils/promise";
 import { ApiResponse, ApiResponseError } from "./xhr";
 
-import { name as pkgName, version as pkgVersion } from "../package.json";
-
 /**
  * Utility methods. Mostly private
  *
@@ -12,12 +10,6 @@ import { name as pkgName, version as pkgVersion } from "../package.json";
  * @class util
  *
  */
-
-/**
- * Gooddata-js package signature
- * @private
- */
-export const thisPackage = { name: pkgName, version: pkgVersion };
 
 /**
  * Create getter function for accessing nested objects
