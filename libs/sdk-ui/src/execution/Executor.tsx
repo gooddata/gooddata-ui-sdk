@@ -4,6 +4,11 @@ import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
 import { WithLoadingResult } from "../base/hoc/withLoading";
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export interface IExecutorProps {
     children: (executionResult: WithLoadingResult<DataViewFacade>) => React.ReactElement<any> | null;
     execution: IPreparedExecution;
@@ -24,6 +29,10 @@ const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoad
     });
 };
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export const Executor = withExecution({
     executionOrFactory: (props: IExecutorProps) => props.execution,
     mapResultToProps: r => r,

@@ -2,6 +2,10 @@
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/hoc/withLoading";
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IWithExecution<T, R extends object> {
     executionOrFactory: IPreparedExecution | ((props: T) => IPreparedExecution);
     mapResultToProps: (result: WithLoadingResult<DataViewFacade>) => R;
@@ -11,6 +15,10 @@ export interface IWithExecution<T, R extends object> {
     loadOnMount?: boolean;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function withExecution<T, R extends object>({
     executionOrFactory,
     mapResultToProps,
