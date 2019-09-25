@@ -3,8 +3,13 @@ import * as React from "react";
 import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
 import { IntlTranslationsProvider, ITranslationsComponentProps } from "../TranslationsProvider";
-import { Visualization } from "../../../charts/tests/mocks";
 import { IntlWrapper } from "../IntlWrapper";
+
+class DummyComponent extends React.Component<any, any> {
+    public render() {
+        return <div />;
+    }
+}
 
 class Helper extends React.Component<any, any> {
     public render() {
@@ -12,7 +17,7 @@ class Helper extends React.Component<any, any> {
             <IntlWrapper locale="en-US">
                 <IntlTranslationsProvider {...this.props}>
                     {(props: ITranslationsComponentProps) => (
-                        <Visualization numericSymbols={props.numericSymbols} />
+                        <DummyComponent numericSymbols={props.numericSymbols} />
                     )}
                 </IntlTranslationsProvider>
             </IntlWrapper>
@@ -28,7 +33,7 @@ describe("TranslationsProvider", () => {
     it("shouldn add numeric symbols", () => {
         const numericSymbols = ["k", "M", "G", "T", "P", "E"];
         const wrapper = createComponent();
-        const translationsProviderProps = wrapper.find(Visualization).props() as ITranslationsComponentProps;
+        const translationsProviderProps = wrapper.find(DummyComponent).props() as ITranslationsComponentProps;
 
         return testUtils.delay().then(() => {
             expect(translationsProviderProps.numericSymbols).toEqual(numericSymbols);
