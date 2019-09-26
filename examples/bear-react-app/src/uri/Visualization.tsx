@@ -2,21 +2,53 @@
 import React from "react";
 
 import { PluggableBarChart, IVisualization } from "@gooddata/sdk-ui";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IInsight, IFilter, AttributeOrMeasure, IBucket } from "@gooddata/sdk-model";
 
 import "./Visualization.css";
 
 interface IVisualizationProps {
     backend: IAnalyticalBackend;
+    filters?: IFilter[];
     id: string;
     workspace: string;
+}
+
+const mergeFilters = (filtersA: IFilter[], filtersB: IFilter[] | undefined): IFilter[] => {
+    return [...filtersA, ...(filtersB || [])]; // TODO actually implement the merging logic -> executionDefinition.ts r137
+};
+
+class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
+    constructor(
+        private readonly factory: IExecutionFactory,
+        private readonly presetFilters: IFilter[] = [],
+    ) {}
+    forItems = (items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution => {
+        const mergedFilters = mergeFilters(this.presetFilters, filters);
+        return this.factory.forItems(items, mergedFilters);
+    };
+    forBuckets = (buckets: IBucket[], filters?: IFilter[]): IPreparedExecution => {
+        const mergedFilters = mergeFilters(this.presetFilters, filters);
+        return this.factory.forBuckets(buckets, mergedFilters);
+    };
+    forInsight = (insight: IInsight, filters?: IFilter[]): IPreparedExecution => {
+        const mergedFilters = mergeFilters(this.presetFilters, filters);
+        return this.factory.forInsight(insight, mergedFilters);
+    };
+    forInsightByRef = (uri: string, filters?: IFilter[]): Promise<IPreparedExecution> => {
+        const mergedFilters = mergeFilters(this.presetFilters, filters);
+        return this.factory.forInsightByRef(uri, mergedFilters);
+    };
 }
 
 export class Visualization extends React.Component<IVisualizationProps> {
     private elementId = "really-random-string"; // TODO
     private visualization!: IVisualization; // TODO exclamation mark
     private insight!: IInsight; // TODO exclamation mark
+
+    public static defaultProps: Partial<IVisualizationProps> = {
+        filters: [],
+    };
 
     setup = async () => {
         this.insight = await this.getInsight();
@@ -45,7 +77,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                 // config: this.props.config,
             },
             this.insight,
-            this.props.backend.workspace(this.props.workspace).execution(),
+            this.getExecutionFactory(),
         );
     };
 
@@ -55,6 +87,13 @@ export class Visualization extends React.Component<IVisualizationProps> {
             .workspace(this.props.workspace)
             .metadata()
             .getInsight(this.props.id);
+    };
+
+    getExecutionFactory = () => {
+        return new ExecutionFactoryWithPresetFilters(
+            this.props.backend.workspace(this.props.workspace).execution(),
+            this.props.filters,
+        );
     };
 
     componentDidMount(): void {

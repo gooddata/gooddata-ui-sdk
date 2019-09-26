@@ -20,7 +20,23 @@ const App: React.FC = () => {
             <Container>
                 <Row>
                     <Col>
-                        <Visualization backend={analyticalBackend} id="abgkddfHcFon" workspace={workspace} />
+                        <Visualization
+                            backend={analyticalBackend}
+                            id="abgkddfHcFon"
+                            workspace={workspace}
+                            filters={[
+                                {
+                                    relativeDateFilter: {
+                                        dataSet: {
+                                            identifier: "timeline.dataset.dt",
+                                        },
+                                        from: -10,
+                                        to: 0,
+                                        granularity: "GDC.time.month",
+                                    },
+                                },
+                            ]}
+                        />
                     </Col>
                 </Row>
                 {/*
