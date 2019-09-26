@@ -5,7 +5,7 @@ import ExampleWithSource from "../components/utils/ExampleWithSource";
 
 import { MeasureSortingExample } from "../components/MeasureSortingExample";
 import { AttributeSortingExample } from "../components/AttributeSortingExample";
-import DynamicSortingExample from "../components/DynamicSortingExample";
+import { DynamicSortingExample } from "../components/DynamicSortingExample";
 
 import MeasureSortingExampleSRC from "!raw-loader!../components/MeasureSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import AttributeSortingExampleSRC from "!raw-loader!../components/AttributeSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -34,7 +34,6 @@ export const Sorting: React.FC = () => (
         <ExampleWithSource for={AttributeSortingExample} source={AttributeSortingExampleSRC} />
 
         <hr className="separator" />
-        {/* 
 
         <h2>Dynamic Sorting</h2>
         <p>
@@ -43,7 +42,7 @@ export const Sorting: React.FC = () => (
             <code>measureSortItem</code> with an <code>attributeLocator</code> property. Sorting by an
             attribute value works the same way as in the previous example.
         </p>
-        <ExampleWithSource for={DynamicSortingExample} source={DynamicSortingExampleSRC} /> */}
+        <ExampleWithSource for={DynamicSortingExample} source={DynamicSortingExampleSRC} />
     </div>
 );
 

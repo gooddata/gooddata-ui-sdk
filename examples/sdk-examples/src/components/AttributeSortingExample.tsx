@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import React, { Component } from "react";
+import React from "react";
 import { ColumnChart, Model } from "@gooddata/sdk-ui";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
