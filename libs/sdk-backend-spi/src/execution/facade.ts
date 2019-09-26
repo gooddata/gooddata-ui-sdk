@@ -7,6 +7,7 @@ import {
     IMeasure,
     isPoPMeasure,
     isPreviousPeriodMeasure,
+    measureMasterIdentifier,
 } from "@gooddata/sdk-model";
 import { IDataView } from "./index";
 import {
@@ -19,12 +20,48 @@ import {
     isMeasureGroupHeader,
     isResultAttributeHeaderItem,
 } from "./results";
-import isArray = require("lodash/isArray");
 import { IExecutionDefinition } from "./executionDefinition";
+import isArray = require("lodash/isArray");
 
 type BucketIndex = {
     [key: string]: IBucket;
 };
+
+type MeasureGroupHeaderIndex = {
+    [id: string]: IMeasureHeaderItem;
+};
+
+function buildBucketIndex(dataView: IDataView): BucketIndex {
+    return dataView.definition.buckets.reduce((acc: BucketIndex, val) => {
+        const id = val.localIdentifier ? val.localIdentifier : "unknown";
+        acc[id] = val;
+        return acc;
+    }, {});
+}
+
+function findMeasureGroupHeader(dataView: IDataView): IMeasureGroupHeader | undefined {
+    for (const dim of dataView.result.dimensions) {
+        const measureGroupHeader = dim.headers.find(isMeasureGroupHeader);
+
+        if (measureGroupHeader) {
+            return measureGroupHeader;
+        }
+    }
+
+    return undefined;
+}
+
+function buildMeasureHeaderIndex(measureGroup: IMeasureGroupHeader | undefined): MeasureGroupHeaderIndex {
+    const items =
+        measureGroup && measureGroup.measureGroupHeader.items ? measureGroup.measureGroupHeader.items : [];
+
+    return items.reduce((acc: MeasureGroupHeaderIndex, val) => {
+        const id = val.measureHeaderItem.localIdentifier;
+        acc[id] = val;
+
+        return acc;
+    }, {});
+}
 
 /**
  * TODO: SDK8: add docs
@@ -33,14 +70,25 @@ type BucketIndex = {
  */
 export class DataViewFacade {
     public readonly definition: IExecutionDefinition;
+
+    /*
+     * Derived property; bucket id => bucket
+     */
     private readonly _bucketById: BucketIndex;
 
+    /*
+     * Derived property; measure group header found in dimensions
+     */
+    private readonly _measureGroupHeader: IMeasureGroupHeader | undefined;
+    /*
+     * Derived property; measure local id => measure group header item
+     */
+    private readonly _measureHeaderById: MeasureGroupHeaderIndex;
+
     constructor(public readonly dataView: IDataView) {
-        this._bucketById = dataView.definition.buckets.reduce((acc: BucketIndex, val) => {
-            const id = val.localIdentifier ? val.localIdentifier : "unknown";
-            acc[id] = val;
-            return acc;
-        }, {});
+        this._bucketById = buildBucketIndex(dataView);
+        this._measureGroupHeader = findMeasureGroupHeader(dataView);
+        this._measureHeaderById = buildMeasureHeaderIndex(this._measureGroupHeader);
 
         this.definition = dataView.definition;
     }
@@ -101,12 +149,13 @@ export class DataViewFacade {
             return;
         }
 
-        if (isPoPMeasure(measure)) {
-            return this.measure(measure.measure.definition.popMeasureDefinition.measureIdentifier);
-        } else if (isPreviousPeriodMeasure(measure)) {
-            return this.measure(measure.measure.definition.previousPeriodMeasure.measureIdentifier);
+        const masterMeasureId = measureMasterIdentifier(measure);
+
+        if (masterMeasureId) {
+            return this.measure(masterMeasureId);
         }
 
+        // TODO: revisit; this is weird but existing callers used to rely on the behavior; perhaps rename method?
         return measure;
     }
 
@@ -143,15 +192,7 @@ export class DataViewFacade {
     }
 
     public measureGroupHeader(): IMeasureGroupHeader | undefined {
-        for (const dim of this.dataView.result.dimensions) {
-            const measureGroupHeader = dim.headers.find(isMeasureGroupHeader);
-
-            if (measureGroupHeader) {
-                return measureGroupHeader;
-            }
-        }
-
-        return;
+        return this._measureGroupHeader;
     }
 
     public measureGroupHeaderItems(): IMeasureHeaderItem[] {
@@ -161,7 +202,7 @@ export class DataViewFacade {
     }
 
     public measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined {
-        return this.measureGroupHeaderItems().find(i => i.measureHeaderItem.localIdentifier === id);
+        return this._measureHeaderById[id];
     }
 
     public isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean {

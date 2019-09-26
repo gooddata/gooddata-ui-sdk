@@ -570,6 +570,12 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
+export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
+
+// @public
+export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
+
+// @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
 // Warning: (ae-internal-missing-underscore) The name "measureFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
@@ -592,6 +598,9 @@ export type MeasureInBucket = {
     idx: number;
     measure: IMeasure;
 };
+
+// @public
+export function measureMasterIdentifier(measure: IMeasure): string | undefined;
 
 // @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;

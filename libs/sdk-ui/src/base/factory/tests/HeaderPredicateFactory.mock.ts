@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicateContext2 } from "../../interfaces/HeaderPredicate";
+import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 
 export const afm: AFM.IAfm = {
     measures: [
@@ -530,7 +531,6 @@ export const executionResponse: Execution.IExecutionResponse = {
     },
 };
 
-export const context: IHeaderPredicateContext = {
-    afm,
-    executionResponse,
+export const context: IHeaderPredicateContext2 = {
+    dv: barChartForDrillTests,
 };

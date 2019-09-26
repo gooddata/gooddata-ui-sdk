@@ -308,10 +308,12 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
  * Disables compute ratio on the provided measure. This is an immutable function - returning new
  * measure with the ratio disabled.
  *
- * @param measure
+ * @param measure - measure to disable compute ratio for
+ * @returns new measure with disabled ratio; same measure if ratio was not enabled in the first place
+ * @public
  */
 export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
-    if (!isSimpleMeasure(measure)) {
+    if (!measureDoesComputeRatio(measure)) {
         return measure;
     }
 
@@ -320,4 +322,41 @@ export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
     unset(newItem, ["measure", "definition", "measureDefinition", "computeRatio"]);
 
     return newItem;
+}
+
+/**
+ * Gets identifier of master measure for the provided derived measure (PoP measure or Previous Period measure).
+ * If the measure is not derived or is derived and does not specify master measure id, then undefined is returned.
+ *
+ * @param measure - derived measure
+ * @returns master measure identifier, undefined if input measure not derived or does not specify master
+ * @public
+ */
+export function measureMasterIdentifier(measure: IMeasure): string | undefined {
+    if (isPoPMeasure(measure)) {
+        return measure.measure.definition.popMeasureDefinition.measureIdentifier;
+    } else if (isPreviousPeriodMeasure(measure)) {
+        return measure.measure.definition.previousPeriodMeasure.measureIdentifier;
+    }
+
+    return undefined;
+}
+
+/**
+ * Gets identifiers of arithmetic operands from the provided measure. If the measure is not an arithmetic measure, then
+ * undefined is returned.
+ *
+ * TODO: revisit; perhaps should return empty array?
+ *
+ * @param measure - measure to get arithmetic operands from
+ * @returns array of local identifiers of measures that are used as arithmetic operands, undefined if input measure
+ * is not arithmetic
+ * @public
+ */
+export function measureArithmeticOperands(measure: IMeasure): string[] | undefined {
+    if (!isArithmeticMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.arithmeticMeasure.measureIdentifiers;
 }

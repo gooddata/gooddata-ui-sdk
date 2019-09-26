@@ -1,135 +1,97 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import {
-    findMeasureByLocalIdentifier,
-    getMasterMeasureLocalIdentifier,
-    isDerivedMeasure,
-} from "../helpers/afmHelper";
-import {
-    findMeasureHeaderByLocalIdentifier,
-    findMeasureGroupInDimensions,
-} from "../helpers/executionResultHelper";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "../helpers/mappingHeader";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
+import { IHeaderPredicate2, IHeaderPredicateContext2 } from "../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../interfaces/MappingHeader";
-import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import {
+    DataViewFacade,
+    IMeasureHeaderItem,
+    isMeasureHeaderItem,
+    isResultAttributeHeaderItem,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IMeasure,
+    isArithmeticMeasure,
+    measureArithmeticOperands,
+    measureIdentifier,
+    measureMasterIdentifier,
+    measureUri,
+} from "@gooddata/sdk-model";
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
-    measures: AFM.IMeasure[],
-    measureHeaders: Execution.IMeasureHeaderItem[],
+    dv: DataViewFacade,
     operandLocalIdentifier: string,
-    predicate: IHeaderPredicate,
-    context: IHeaderPredicateContext,
+    predicate: IHeaderPredicate2,
+    context: IHeaderPredicateContext2,
 ): boolean {
-    const operandInAfm: AFM.IMeasure = measures.find(
-        measure => measure.localIdentifier === operandLocalIdentifier,
-    );
-    const operandHeader: Execution.IMeasureHeaderItem = measureHeaders.find(
-        header => getMappingHeaderLocalIdentifier(header) === operandLocalIdentifier,
-    );
+    const operandInAfm: IMeasure = dv.measure(operandLocalIdentifier);
+    const operandHeader: IMeasureHeaderItem = dv.measureGroupHeaderItem(operandLocalIdentifier);
 
-    if (AFM.isArithmeticMeasureDefinition(operandInAfm.definition)) {
-        return operandInAfm.definition.arithmeticMeasure.measureIdentifiers.some(operandLocalIdentifier =>
-            arithmeticMeasureLocalIdentifierDeepMatch(
-                measures,
-                measureHeaders,
-                operandLocalIdentifier,
-                predicate,
-                context,
-            ),
+    if (isArithmeticMeasure(operandInAfm)) {
+        const operands = measureArithmeticOperands(operandInAfm);
+
+        return (operands ? operands : []).some(operandLocalIdentifier =>
+            arithmeticMeasureLocalIdentifierDeepMatch(dv, operandLocalIdentifier, predicate, context),
         );
     }
 
     return predicate(operandHeader, context);
 }
 
-function getMasterMeasureOperandIdentifiers(measure: AFM.IMeasure): string[] {
-    if (AFM.isArithmeticMeasureDefinition(measure.definition)) {
-        return measure.definition.arithmeticMeasure.measureIdentifiers;
-    }
-
-    return null;
+function getMasterMeasureOperandIdentifiers(measure: IMeasure): string[] {
+    return measureArithmeticOperands(measure);
 }
 
-function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: AFM.IMeasure, afm: AFM.IAfm): string[] {
-    if (!isDerivedMeasure(measure)) {
+function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: IMeasure, dv: DataViewFacade): string[] {
+    const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
+
+    if (!masterMeasureLocalIdentifier) {
         return null;
     }
 
-    const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(measure);
-    const masterMeasure = findMeasureByLocalIdentifier(afm, masterMeasureLocalIdentifier);
+    const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
 
     return getMasterMeasureOperandIdentifiers(masterMeasure);
 }
 
-function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
-    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
+function composedFromQualifier(predicate: IHeaderPredicate2): IHeaderPredicate2 {
+    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
         if (!isMeasureHeaderItem(header)) {
             return false;
         }
 
-        const { afm, executionResponse } = context;
+        const { dv } = context;
         const measureLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        const measureInAFM = afm.measures.find(measure => {
-            return measure.localIdentifier === measureLocalIdentifier;
-        });
+        const measureInAFM = dv.measure(measureLocalIdentifier);
 
         if (!measureInAFM) {
             return false;
         }
 
         const arithmeticMeasureOperands =
-            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, afm) ||
+            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, dv) ||
             getMasterMeasureOperandIdentifiers(measureInAFM);
 
         if (!arithmeticMeasureOperands) {
             return false;
         }
 
-        const measureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
-
         return arithmeticMeasureOperands.some(operandLocalIdentifier =>
-            arithmeticMeasureLocalIdentifierDeepMatch(
-                afm.measures,
-                measureGroup.items,
-                operandLocalIdentifier,
-                predicate,
-                context,
-            ),
+            arithmeticMeasureLocalIdentifierDeepMatch(dv, operandLocalIdentifier, predicate, context),
         );
     };
 }
 
-function getSimpleMeasureUri(afmMeasure: AFM.IMeasure): string {
-    const { definition } = afmMeasure;
-    if (!AFM.isSimpleMeasureDefinition(definition)) {
-        return null;
-    }
-    if (AFM.isObjectUriQualifier(definition.measure.item)) {
-        return definition.measure.item.uri;
-    }
-    return null;
+function getSimpleMeasureUri(measure: IMeasure): string {
+    return measureUri(measure);
 }
 
-function getSimpleMeasureIdentifier(afmMeasure: AFM.IMeasure): string {
-    const { definition } = afmMeasure;
-    if (!AFM.isSimpleMeasureDefinition(definition)) {
-        return null;
-    }
-    if (AFM.isObjIdentifierQualifier(definition.measure.item)) {
-        return definition.measure.item.identifier;
-    }
-    return null;
-}
-
-function findMeasureInAfmByHeader(header: IMappingHeader, afm: AFM.IAfm): AFM.IMeasure {
-    const localIdentifier = getMappingHeaderLocalIdentifier(header);
-    return findMeasureByLocalIdentifier(afm, localIdentifier);
+function getSimpleMeasureIdentifier(measure: IMeasure): string {
+    return measureIdentifier(measure);
 }
 
 function matchHeaderUri(uri: string, header: IMappingHeader): boolean {
@@ -142,35 +104,34 @@ function matchHeaderIdentifier(identifier: string, header: IMappingHeader): bool
     return headerIdentifier ? headerIdentifier === identifier : false;
 }
 
-function matchAfmMeasureUri(uri: string, afmMeasure: AFM.IMeasure): boolean {
-    const measureUri = getSimpleMeasureUri(afmMeasure);
+function matchAfmMeasureUri(uri: string, measure: IMeasure): boolean {
+    const measureUri = getSimpleMeasureUri(measure);
     return measureUri ? measureUri === uri : false;
 }
 
-function matchAfmMeasureIdentifier(identifier: string, afmMeasure: AFM.IMeasure): boolean {
-    const measureIdentifier = getSimpleMeasureIdentifier(afmMeasure);
+function matchAfmMeasureIdentifier(identifier: string, measure: IMeasure): boolean {
+    const measureIdentifier = getSimpleMeasureIdentifier(measure);
     return measureIdentifier ? measureIdentifier === identifier : false;
 }
 
 function matchDerivedMeasureByMasterUri(
     uri: string,
-    afmMeasure: AFM.IMeasure,
-    context: IHeaderPredicateContext,
+    measure: IMeasure,
+    context: IHeaderPredicateContext2,
 ): boolean {
-    const { afm, executionResponse } = context;
-    const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(afmMeasure);
+    const { dv } = context;
+    const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(
-            executionResponse,
-            masterMeasureLocalIdentifier,
-        );
+        const masterMeasureHeader = dv.measureGroupHeaderItem(masterMeasureLocalIdentifier);
+
         if (matchHeaderUri(uri, masterMeasureHeader)) {
             return true;
         }
 
-        const masterMeasure = findMeasureByLocalIdentifier(afm, masterMeasureLocalIdentifier);
+        const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
+
         return matchAfmMeasureUri(uri, masterMeasure);
     }
     return false;
@@ -178,30 +139,31 @@ function matchDerivedMeasureByMasterUri(
 
 function matchDerivedMeasureByMasterIdentifier(
     identifier: string,
-    afmMeasure: AFM.IMeasure,
-    context: IHeaderPredicateContext,
+    measure: IMeasure,
+    context: IHeaderPredicateContext2,
 ): boolean {
-    const { afm, executionResponse } = context;
-    const masterMeasureLocalIdentifier = getMasterMeasureLocalIdentifier(afmMeasure);
+    const { dv } = context;
+    const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = findMeasureHeaderByLocalIdentifier(
-            executionResponse,
-            masterMeasureLocalIdentifier,
-        );
+        const masterMeasureHeader = dv.measureGroupHeaderItem(masterMeasureLocalIdentifier);
+
         if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
             return true;
         }
 
-        const masterMeasure = findMeasureByLocalIdentifier(afm, masterMeasureLocalIdentifier);
+        const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
+
         return matchAfmMeasureIdentifier(identifier, masterMeasure);
     }
     return false;
 }
 
-export function uriMatch(uri: string): IHeaderPredicate {
-    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
+export function uriMatch(uri: string): IHeaderPredicate2 {
+    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
+        const { dv } = context;
+
         if (matchHeaderUri(uri, header)) {
             return true;
         }
@@ -210,21 +172,22 @@ export function uriMatch(uri: string): IHeaderPredicate {
             return false;
         }
 
-        const afmMeasure = findMeasureInAfmByHeader(header, context.afm);
-        if (!afmMeasure) {
+        const measure = dv.measure(getMappingHeaderLocalIdentifier(header));
+        if (!measure) {
             return false;
         }
 
-        if (matchAfmMeasureUri(uri, afmMeasure)) {
+        if (matchAfmMeasureUri(uri, measure)) {
             return true;
         }
 
-        return matchDerivedMeasureByMasterUri(uri, afmMeasure, context);
+        return matchDerivedMeasureByMasterUri(uri, measure, context);
     };
 }
 
-export function identifierMatch(identifier: string): IHeaderPredicate {
-    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
+export function identifierMatch(identifier: string): IHeaderPredicate2 {
+    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
+        const { dv } = context;
         if (isResultAttributeHeaderItem(header)) {
             return false;
         }
@@ -237,29 +200,30 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        const afmMeasure = findMeasureInAfmByHeader(header, context.afm);
-        if (!afmMeasure) {
+        const measure = dv.measure(getMappingHeaderLocalIdentifier(header));
+
+        if (!measure) {
             return false;
         }
 
-        if (matchAfmMeasureIdentifier(identifier, afmMeasure)) {
+        if (matchAfmMeasureIdentifier(identifier, measure)) {
             return true;
         }
 
-        return matchDerivedMeasureByMasterIdentifier(identifier, afmMeasure, context);
+        return matchDerivedMeasureByMasterIdentifier(identifier, measure, context);
     };
 }
 
-export function attributeItemNameMatch(name: string): IHeaderPredicate {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
+export function attributeItemNameMatch(name: string): IHeaderPredicate2 {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
         return isResultAttributeHeaderItem(header)
             ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
             : false;
     };
 }
 
-export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
+export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate2 {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
             return false;
         }
@@ -268,10 +232,10 @@ export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate 
     };
 }
 
-export function composedFromUri(uri: string): IHeaderPredicate {
+export function composedFromUri(uri: string): IHeaderPredicate2 {
     return composedFromQualifier(uriMatch(uri));
 }
 
-export function composedFromIdentifier(identifier: string): IHeaderPredicate {
+export function composedFromIdentifier(identifier: string): IHeaderPredicate2 {
     return composedFromQualifier(identifierMatch(identifier));
 }

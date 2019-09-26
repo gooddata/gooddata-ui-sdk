@@ -17,6 +17,6 @@ export interface IHeaderPredicateContext2 {
 
 export type IHeaderPredicate2 = (header: IMappingHeader, context: IHeaderPredicateContext2) => boolean;
 
-export function isHeaderPredicate(item: IDrillableItem | IHeaderPredicate): item is IHeaderPredicate {
+export function isHeaderPredicate(item: IDrillableItem | IHeaderPredicate2): item is IHeaderPredicate2 {
     return typeof item === "function";
 }

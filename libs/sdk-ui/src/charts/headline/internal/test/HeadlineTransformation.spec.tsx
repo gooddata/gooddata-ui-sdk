@@ -47,7 +47,7 @@ describe("HeadlineTransformation", () => {
                 title: "Lost",
                 value: "9011389.956",
                 format: "#,##0.00",
-                isDrillable: false, // TODO: change this once drilling is fixed up
+                isDrillable: true,
             },
         });
         expect(props.onAfterRender).toEqual(onAfterRender);
@@ -74,7 +74,7 @@ describe("HeadlineTransformation", () => {
                 title: "Lost",
                 value: "9011389.956",
                 format: "#,##0.00",
-                isDrillable: false, // TODO: change this once drilling is fixed up
+                isDrillable: true,
             },
         });
         expect(props.onAfterRender).toEqual(onAfterRender);
@@ -133,14 +133,14 @@ describe("HeadlineTransformation", () => {
                 title: "Lost",
                 value: "9011389.956",
                 format: "#,##0.00",
-                isDrillable: false, // TODO: switch this once drilling works again
+                isDrillable: true,
             },
             secondaryItem: {
                 localIdentifier: "wonMetric",
                 title: "Won",
                 value: "42470571.16",
                 format: "#,##0.00",
-                isDrillable: false, // TODO: switch this once drilling works again
+                isDrillable: true,
             },
             tertiaryItem: {
                 localIdentifier: "tertiaryIdentifier",
