@@ -4,6 +4,8 @@ import { Col, Container, Row } from "react-grid-system";
 
 import { AreaChart, BarChart, BubbleChart, DonutChart, Executor, Kpi, PieChart } from "@gooddata/sdk-ui";
 
+import { Visualization } from "./uri/Visualization";
+
 import "./App.css";
 import { backend, initialize } from "./backend";
 import { AgentName, AvgDuration, EndpointName, SumOfCalls, workspace } from "./model";
@@ -16,6 +18,16 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <Container>
+                <Row>
+                    <Col>
+                        <Visualization
+                            backend={analyticalBackend}
+                            uri="https://secure.gooddata.com/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/671"
+                            workspace={workspace}
+                        />
+                    </Col>
+                </Row>
+                {/*
                 <Row>
                     <Col>
                         <Executor
@@ -159,6 +171,7 @@ const App: React.FC = () => {
                         />
                     </Col>
                 </Row>
+                 */}
             </Container>
         </div>
     );
