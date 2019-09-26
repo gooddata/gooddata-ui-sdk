@@ -20,9 +20,12 @@
         "@babel/polyfill": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
         "@babel/preset-react": "^7.0.0",
+        "@babel/preset-typescript": "^7.6.0",
         "@babel/runtime": "^7.4.4",
         "@gooddata/eslint-config": "^0.1.0",
         "@gooddata/mock-js": "^1.31.0",
+        "@types/react": "^16.9.3",
+        "@types/react-dom": "^16.9.1",
         "babel-loader": "^8.0.5",
         "babel-plugin-lodash": "^3.3.4",
         "babel-runtime": "^6.26.0",
@@ -30,6 +33,7 @@
         "clean-webpack-plugin": "^2.0.2",
         "compression-webpack-plugin": "^2.0.0",
         "css-loader": "^0.28.7",
+        "dotenv-webpack": "^1.7.0",
         "enzyme": "^3.5.0",
         "enzyme-adapter-react-16": "^1.3.1",
         "eslint": "^4.19.1",
@@ -55,7 +59,10 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "file:../../libs/gd-bear-client",
         "@gooddata/goodstrap": "^63.1.1",
+        "@gooddata/sdk-backend-bear": "file:../../libs/sdk-backend-bear",
+        "@gooddata/sdk-backend-spi": "file:../../libs/sdk-backend-spi",
         "@gooddata/sdk-ui": "file:../../libs/sdk-ui",
+        "@types/node": "^12.7.7",
         "babel-polyfill": "^6.26.0",
         "formik": "^0.11.11",
         "history": "^4.7.2",
@@ -64,9 +71,9 @@
         "lodash": "^4.17.11",
         "moment": "^2.23.0",
         "prop-types": "^15.6.0",
-        "react": "^16.5.2",
+        "react": "^16.9.0",
         "react-datepicker": "^1.1.0",
-        "react-dom": "^16.5.2",
+        "react-dom": "^16.9.0",
         "react-ga": "^2.5.2",
         "react-google-recaptcha": "^0.14.1",
         "react-helmet": "^5.2.0",
@@ -79,7 +86,7 @@
         "yup": "^0.24.1"
     },
     "config": {
-        "eslint": "./examples/**/*.{js,jsx}"
+        "eslint": "./examples/**/*.{js,jsx,ts,tsx}"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",

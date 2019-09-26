@@ -1,7 +1,10 @@
 dependencies:
   '@gooddata/gd-bear-client': 'link:../../libs/gd-bear-client'
   '@gooddata/goodstrap': 63.4.1_react-dom@16.9.0+react@16.9.0
+  '@gooddata/sdk-backend-bear': 'link:../../libs/sdk-backend-bear'
+  '@gooddata/sdk-backend-spi': 'link:../../libs/sdk-backend-spi'
   '@gooddata/sdk-ui': 'link:../../libs/sdk-ui'
+  '@types/node': 12.7.7
   babel-polyfill: 6.26.0
   formik: 0.11.11_react@16.9.0
   history: 4.10.1
@@ -31,9 +34,12 @@ devDependencies:
   '@babel/polyfill': 7.6.0
   '@babel/preset-env': 7.6.2_@babel+core@7.6.2
   '@babel/preset-react': 7.0.0_@babel+core@7.6.2
+  '@babel/preset-typescript': 7.6.0_@babel+core@7.6.2
   '@babel/runtime': 7.6.2
   '@gooddata/eslint-config': 0.1.0
   '@gooddata/mock-js': 1.34.0
+  '@types/react': 16.9.3
+  '@types/react-dom': 16.9.1
   babel-loader: 8.0.6_@babel+core@7.6.2+webpack@4.41.0
   babel-plugin-lodash: 3.3.4
   babel-runtime: 6.26.0
@@ -41,6 +47,7 @@ devDependencies:
   clean-webpack-plugin: 2.0.2_webpack@4.41.0
   compression-webpack-plugin: 2.0.0_webpack@4.41.0
   css-loader: 0.28.11
+  dotenv-webpack: 1.7.0_webpack@4.41.0
   enzyme: 3.10.0
   enzyme-adapter-react-16: 1.14.0_fac5447b4435e6ebc7a803f0a5ff0247
   eslint: 4.19.1
@@ -408,6 +415,15 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-bDe4xKNhb0LI7IvZHiA13kff0KEfaGX/Hv4lMA9+7TEc63hMNvfKo6ZFpXhKuEp+II/q35Gc4NoMeDZyaUbj9w==
+  /@babel/plugin-syntax-typescript/7.3.3_@babel+core@7.6.2:
+    dependencies:
+      '@babel/core': 7.6.2
+      '@babel/helper-plugin-utils': 7.0.0
+    dev: true
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-dGwbSMA1YhVS8+31CnPR7LB4pcbrzcV99wQzby4uAfrkZPYZlQ7ImwdpzLqi6Z6IL02b8IAL379CaMwo0x5Lag==
   /@babel/plugin-transform-arrow-functions/7.2.0_@babel+core@7.6.2:
     dependencies:
       '@babel/core': 7.6.2
@@ -747,6 +763,17 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-2LNhETWYxiYysBtrBTqL8+La0jIoQQnIScUJc74OYvUGRmkskNY4EzLCnjHBzdmb38wqtTaixpo1NctEcvMDZw==
+  /@babel/plugin-transform-typescript/7.6.0_@babel+core@7.6.2:
+    dependencies:
+      '@babel/core': 7.6.2
+      '@babel/helper-create-class-features-plugin': 7.6.0_@babel+core@7.6.2
+      '@babel/helper-plugin-utils': 7.0.0
+      '@babel/plugin-syntax-typescript': 7.3.3_@babel+core@7.6.2
+    dev: true
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-yzw7EopOOr6saONZ3KA3lpizKnWRTe+rfBqg4AmQbSow7ik7fqmzrfIqt053osLwLE2AaTqGinLM2tl6+M/uog==
   /@babel/plugin-transform-unicode-regex/7.6.2_@babel+core@7.6.2:
     dependencies:
       '@babel/core': 7.6.2
@@ -836,6 +863,16 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-oayxyPS4Zj+hF6Et11BwuBkmpgT/zMxyuZgFrMeZID6Hdh3dGlk4sHCAhdBCpuCKW2ppBfl2uCCetlrUIJRY3w==
+  /@babel/preset-typescript/7.6.0_@babel+core@7.6.2:
+    dependencies:
+      '@babel/core': 7.6.2
+      '@babel/helper-plugin-utils': 7.0.0
+      '@babel/plugin-transform-typescript': 7.6.0_@babel+core@7.6.2
+    dev: true
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    resolution:
+      integrity: sha512-4xKw3tTcCm0qApyT6PqM9qniseCE79xGHiUnNdKGdxNsGUc2X7WwZybqIpnTmoukg3nhPceI5KPNzNqLNeIJww==
   /@babel/runtime/7.6.2:
     dependencies:
       regenerator-runtime: 0.13.3
@@ -1212,9 +1249,25 @@ packages:
     resolution:
       integrity: sha512-j6Sqt38ssdMKutXBUuAcmWF8QtHW1Fwz/mz4Y+Wd9mzpBiVFirjpNQf363hG5itkG+yGaD+oiLyb50HxJ36l9Q==
   /@types/node/12.7.7:
-    dev: true
     resolution:
       integrity: sha512-4jUncNe2tj1nmrO/34PsRpZqYVnRV1svbU78cKhuQKkMntKB/AmdLyGgswcZKjFHEHGpiY8pVD8CuVI55nP54w==
+  /@types/prop-types/15.7.3:
+    dev: true
+    resolution:
+      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+  /@types/react-dom/16.9.1:
+    dependencies:
+      '@types/react': 16.9.3
+    dev: true
+    resolution:
+      integrity: sha512-1S/akvkKr63qIUWVu5IKYou2P9fHLb/P2VAwyxVV85JGaGZTcUniMiTuIqM3lXFB25ej6h+CYEQ27ERVwi6eGA==
+  /@types/react/16.9.3:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.6
+    dev: true
+    resolution:
+      integrity: sha512-Ogb2nSn+2qQv5opoCv7Ls5yFxtyrdUYxp5G+SWTrlGk7dmFKw331GiezCgEZj9U7QeXJi1CDtws9pdXU1zUL4g==
   /@types/seedrandom/2.4.27:
     dev: true
     resolution:
@@ -3803,6 +3856,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-GBrLZYZ4X4x6/QEoBnIrqb8B/f5l4+8me2dkom/j1Gtbxy0kBv6OGzKuAsGM75bkGwGAFkt56Iwg28S3XTZgSA==
+  /csstype/2.6.6:
+    dev: true
+    resolution:
+      integrity: sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
   /cuint/0.2.2:
     dev: true
     resolution:
@@ -4243,6 +4300,27 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
+  /dotenv-defaults/1.0.2:
+    dependencies:
+      dotenv: 6.2.0
+    dev: true
+    resolution:
+      integrity: sha512-iXFvHtXl/hZPiFj++1hBg4lbKwGM+t/GlvELDnRtOFdjXyWP7mubkVr+eZGWG62kdsbulXAef6v/j6kiWc/xGA==
+  /dotenv-webpack/1.7.0_webpack@4.41.0:
+    dependencies:
+      dotenv-defaults: 1.0.2
+      webpack: 4.41.0_webpack@4.41.0
+    dev: true
+    peerDependencies:
+      webpack: ^1 || ^2 || ^3 || ^4
+    resolution:
+      integrity: sha512-wwNtOBW/6gLQSkb8p43y0Wts970A3xtNiG/mpwj9MLUhtPCQG6i+/DSXXoNN7fbPCU/vQ7JjwGmgOeGZSSZnsw==
+  /dotenv/6.2.0:
+    dev: true
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
   /duplexify/3.7.1:
     dependencies:
       end-of-stream: 1.4.3
@@ -6866,6 +6944,9 @@ packages:
       node: '>=6'
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
   /jest-regex-util/24.9.0:
@@ -10255,6 +10336,13 @@ packages:
       node-sass: ^4.0.0
       sass: ^1.3.0
       webpack: ^4.36.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
     resolution:
       integrity: sha512-+qeMu563PN7rPdit2+n5uuYVR0SSVwm0JsOUsaJXzgYcClWSlmX0iHDnmeOobPkf5kUglVot3QS6SyLyaQoJ4w==
   /sax/1.2.4:
@@ -12321,12 +12409,18 @@ specifiers:
   '@babel/polyfill': ^7.4.4
   '@babel/preset-env': ^7.4.4
   '@babel/preset-react': ^7.0.0
+  '@babel/preset-typescript': ^7.6.0
   '@babel/runtime': ^7.4.4
   '@gooddata/eslint-config': ^0.1.0
   '@gooddata/gd-bear-client': 'file:../../libs/gd-bear-client'
   '@gooddata/goodstrap': ^63.1.1
   '@gooddata/mock-js': ^1.31.0
+  '@gooddata/sdk-backend-bear': 'file:../../libs/sdk-backend-bear'
+  '@gooddata/sdk-backend-spi': 'file:../../libs/sdk-backend-spi'
   '@gooddata/sdk-ui': 'file:../../libs/sdk-ui'
+  '@types/node': ^12.7.7
+  '@types/react': ^16.9.3
+  '@types/react-dom': ^16.9.1
   babel-loader: ^8.0.5
   babel-plugin-lodash: ^3.3.4
   babel-polyfill: ^6.26.0
@@ -12335,6 +12429,7 @@ specifiers:
   clean-webpack-plugin: ^2.0.2
   compression-webpack-plugin: ^2.0.0
   css-loader: ^0.28.7
+  dotenv-webpack: ^1.7.0
   enzyme: ^3.5.0
   enzyme-adapter-react-16: ^1.3.1
   eslint: ^4.19.1
@@ -12353,9 +12448,9 @@ specifiers:
   prettier: ^1.18.2
   prop-types: ^15.6.0
   raw-loader: ^0.5.1
-  react: ^16.5.2
+  react: ^16.9.0
   react-datepicker: ^1.1.0
-  react-dom: ^16.5.2
+  react-dom: ^16.9.0
   react-ga: ^2.5.2
   react-google-recaptcha: ^0.14.1
   react-helmet: ^5.2.0

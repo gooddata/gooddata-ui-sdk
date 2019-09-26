@@ -6,6 +6,7 @@ const CircularDependencyPlugin = require("circular-dependency-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
 const StatsPlugin = require("stats-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -84,6 +85,7 @@ module.exports = async (env, argv) => {
             BASEPATH: JSON.stringify(basePath),
         }),
         new SimplestProgressPlugin(),
+        new Dotenv(),
     ];
 
     if (isProduction) {
@@ -91,7 +93,7 @@ module.exports = async (env, argv) => {
     }
 
     return {
-        entry: ["./src/index.jsx"],
+        entry: ["./src/index.tsx"],
         plugins,
         output: {
             filename: "[name].[hash].js",
@@ -103,7 +105,7 @@ module.exports = async (env, argv) => {
             __filename: true,
         },
         resolve: {
-            extensions: [".js", ".jsx"],
+            extensions: [".js", ".jsx", ".ts", ".tsx"],
         },
         module: {
             rules: [
@@ -112,11 +114,9 @@ module.exports = async (env, argv) => {
                     loaders: ["style-loader", "css-loader", "sass-loader"],
                 },
                 {
-                    test: /\.jsx?$/,
+                    test: /\.[j|t]sx?$/,
                     exclude: /node_modules|update-dependencies/,
-                    use: {
-                        loader: "babel-loader",
-                    },
+                    loaders: ["babel-loader"],
                 },
                 {
                     test: /\.(jpe?g|gif|png|svg|ico|eot|woff2?|ttf|wav|mp3)$/,

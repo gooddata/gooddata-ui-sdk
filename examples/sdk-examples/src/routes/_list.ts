@@ -8,7 +8,7 @@ import ComboChart from "./ComboChart";
 import GlobalFilters from "./GlobalFilters";
 import Execute from "./Execute";
 import BucketExecutor from "./BucketExecutor";
-import DatePicker from "./DatePicker";
+// import DatePicker from "./DatePicker";
 import ResponsiveChart from "./ResponsiveChart";
 import DynamicMeasures from "./DynamicMeasures";
 import CustomLegend from "./CustomLegend";
@@ -21,19 +21,19 @@ import Registration from "./Registration";
 import Login from "./Login";
 import PivotTable from "./PivotTable";
 import PivotTableDemo from "./PivotTableDemo";
-import PivotTableDynamic from "./PivotTableDynamic";
+// import PivotTableDynamic from "./PivotTableDynamic";
 import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasure from "./ArithmeticMeasure";
 import Export from "./Export";
 import VisualizationByUri from "./VisualizationByUri";
-import VisualizationByIdentifier from "./VisualizationByIdentifier";
+// import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
-    { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
+    // { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
     { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
     { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
@@ -51,11 +51,11 @@ export const visualizationUseCasesRoutes = [
         title: "Visualization by URI",
         Component: VisualizationByUri,
     },
-    {
-        path: "/visualization/visualization-by-identifier",
-        title: "Visualization by identifier",
-        Component: VisualizationByIdentifier,
-    },
+    // {
+    //     path: "/visualization/visualization-by-identifier",
+    //     title: "Visualization by identifier",
+    //     Component: VisualizationByIdentifier,
+    // },
 ];
 
 export const drillingUseCasesRoutes = [
@@ -77,56 +77,56 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
-    { path: "/pivot-table", title: "Pivot Table", Component: PivotTableDemo },
-    {
-        path: "/visualization",
-        pathMatch: "full",
-        redirectTo: visualizationUseCasesRoutes[0].path,
-        title: "Visualization Component",
-        Component: VisualizationUseCasesRoutes,
-    },
-    { path: "/sorting", title: "Sorting", Component: Sorting },
-    {
-        path: "/time-over-time-comparison",
-        title: "Time Over Time Comparison",
-        Component: TimeOverTimeComparison,
-    },
-    {
-        path: "/attribute-filter-components",
-        title: "Attribute Filter Components",
-        Component: AttributeFilter,
-    },
-    { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasure },
-    { path: "/execute", title: "Execute Component", Component: Execute },
-    {
-        path: "/advanced",
-        pathMatch: "full",
-        redirectTo: advancedUseCasesRoutes[0].path,
-        title: "Advanced Use Cases",
-        Component: AdvancedUseCasesRoutes,
-    },
-    { path: "/export", title: "Export", Component: Export },
-    {
-        path: "/drilling",
-        pathMatch: "full",
-        redirectTo: drillingUseCasesRoutes[0].path,
-        title: "Drilling",
-        Component: DrillingUseCasesRoutes,
-    },
-    {
-        path: "/next",
-        pathMatch: "full",
-        redirectTo: nextRoutes[0].path,
-        title: "Next",
-        Component: NextRoutes,
-    },
+    // { path: "/pivot-table", title: "Pivot Table", Component: PivotTableDemo },
+    // {
+    //     path: "/visualization",
+    //     pathMatch: "full",
+    //     redirectTo: visualizationUseCasesRoutes[0].path,
+    //     title: "Visualization Component",
+    //     Component: VisualizationUseCasesRoutes,
+    // },
+    // { path: "/sorting", title: "Sorting", Component: Sorting },
+    // {
+    //     path: "/time-over-time-comparison",
+    //     title: "Time Over Time Comparison",
+    //     Component: TimeOverTimeComparison,
+    // },
+    // {
+    //     path: "/attribute-filter-components",
+    //     title: "Attribute Filter Components",
+    //     Component: AttributeFilter,
+    // },
+    // { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasure },
+    // { path: "/execute", title: "Execute Component", Component: Execute },
+    // {
+    //     path: "/advanced",
+    //     pathMatch: "full",
+    //     redirectTo: advancedUseCasesRoutes[0].path,
+    //     title: "Advanced Use Cases",
+    //     Component: AdvancedUseCasesRoutes,
+    // },
+    // { path: "/export", title: "Export", Component: Export },
+    // {
+    //     path: "/drilling",
+    //     pathMatch: "full",
+    //     redirectTo: drillingUseCasesRoutes[0].path,
+    //     title: "Drilling",
+    //     Component: DrillingUseCasesRoutes,
+    // },
+    // {
+    //     path: "/next",
+    //     pathMatch: "full",
+    //     redirectTo: nextRoutes[0].path,
+    //     title: "Next",
+    //     Component: NextRoutes,
+    // },
 ];
 
 export const hiddenPaths = [
     { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
-    { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
 
@@ -143,15 +143,15 @@ export const topNavigationRoutes = [{ path: "/", title: "Live Examples", Compone
 
 export const routes = [
     ...sideNavigationRoutes,
-    ...visualizationUseCasesRoutes,
-    ...advancedUseCasesRoutes,
-    ...drillingUseCasesRoutes,
-    ...nextRoutes,
-    ...hiddenPaths,
-    ...backendInfoRoutes,
+    // ...visualizationUseCasesRoutes,
+    // ...advancedUseCasesRoutes,
+    // ...drillingUseCasesRoutes,
+    // ...nextRoutes,
+    // ...hiddenPaths,
+    // ...backendInfoRoutes,
 ];
 
-const components = routes.map(r => r.component);
+const components = routes.map(r => r.Component);
 
 export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
     href: path,

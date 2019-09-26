@@ -35,7 +35,7 @@ import TableExampleSRC from "!raw-loader!../components/TableExample"; // eslint-
 import HeadlineExampleSRC from "!raw-loader!../components/HeadlineExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import KpiExampleSRC from "!raw-loader!../components/KpiExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const BasicComponents = () => (
+export const BasicComponents: React.FC = () => (
     <div>
         <h1>Basic Components</h1>
 
@@ -48,7 +48,7 @@ export const BasicComponents = () => (
 
         <h2 id="bar-chart">Bar chart</h2>
         <ExampleWithSource for={BarChartExample} source={BarChartExampleSRC} />
-
+        {/* 
         <hr className="separator" />
 
         <h2 id="column-chart">Column chart</h2>
@@ -101,7 +101,7 @@ export const BasicComponents = () => (
             The interface of the KPI component is different compared to the components above. It takes only
             one measure.
         </p>
-        <ExampleWithSource for={KpiExample} source={KpiExampleSRC} />
+        <ExampleWithSource for={KpiExample} source={KpiExampleSRC} /> */}
     </div>
 );
 
