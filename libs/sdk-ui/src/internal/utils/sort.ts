@@ -25,8 +25,9 @@ import {
     newMeasureSort,
     SortDirection,
     SortItem,
+    SortEntityIds,
+    sortEntityIds,
 } from "@gooddata/sdk-model";
-import { SortEntityIds, sortEntityIds } from "@gooddata/sdk-model/src/base/sort";
 import * as BucketNames from "../../base/constants/bucketNames";
 
 export function getMeasureSortItems(identifier: string, direction: SortDirection): SortItem[] {
