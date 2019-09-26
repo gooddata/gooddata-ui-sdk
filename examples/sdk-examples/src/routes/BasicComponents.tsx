@@ -3,8 +3,8 @@ import React from "react";
 
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import BarChartExample from "../components/BarChartExample";
-import ColumnChartExample from "../components/ColumnChartExample";
+import { BarChartExample } from "../components/BarChartExample";
+import { ColumnChartExample } from "../components/ColumnChartExample";
 import LineChartExample from "../components/LineChartExample";
 import AreaChartExample from "../components/AreaChartExample";
 import StackedAreaChartExample from "../components/StackedAreaChartExample";
@@ -48,7 +48,7 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="bar-chart">Bar chart</h2>
         <ExampleWithSource for={BarChartExample} source={BarChartExampleSRC} />
-        {/* 
+
         <hr className="separator" />
 
         <h2 id="column-chart">Column chart</h2>
@@ -56,6 +56,7 @@ export const BasicComponents: React.FC = () => (
 
         <hr className="separator" />
 
+        {/* 
         <h2 id="line-chart">Line chart with custom colors</h2>
         <ExampleWithSource for={LineChartExample} source={LineChartExampleSRC} />
 
