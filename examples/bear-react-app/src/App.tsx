@@ -20,11 +20,7 @@ const App: React.FC = () => {
             <Container>
                 <Row>
                     <Col>
-                        <Visualization
-                            backend={analyticalBackend}
-                            uri="https://secure.gooddata.com/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/671"
-                            workspace={workspace}
-                        />
+                        <Visualization backend={analyticalBackend} id="abgkddfHcFon" workspace={workspace} />
                     </Col>
                 </Row>
                 {/*

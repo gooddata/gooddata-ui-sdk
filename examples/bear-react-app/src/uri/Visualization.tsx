@@ -9,76 +9,27 @@ import "./Visualization.css";
 
 interface IVisualizationProps {
     backend: IAnalyticalBackend;
+    id: string;
     workspace: string;
-    uri: string;
 }
 
 export class Visualization extends React.Component<IVisualizationProps> {
     private elementId = "really-random-string"; // TODO
-    private visualization: IVisualization;
-    private insight: IInsight;
+    private visualization!: IVisualization; // TODO exclamation mark
+    private insight!: IInsight; // TODO exclamation mark
 
-    constructor(props: IVisualizationProps) {
-        super(props);
-
+    setup = async () => {
+        this.insight = await this.getInsight();
         this.visualization = new PluggableBarChart({
-            backend: props.backend,
+            backend: this.props.backend,
             callbacks: {
                 pushData: () => {},
             },
             configPanelElement: "nonexistent",
             element: `#${this.elementId}`,
-            projectId: props.workspace,
+            projectId: this.props.workspace,
             visualizationProperties: {},
         });
-
-        // TODO get this from backend using the uri from props
-        this.insight = {
-            insight: {
-                buckets: [
-                    {
-                        items: [
-                            {
-                                measure: {
-                                    definition: {
-                                        measureDefinition: {
-                                            aggregation: "sum",
-                                            item: {
-                                                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/392",
-                                            },
-                                        },
-                                    },
-                                    format: "#,##0.00",
-                                    localIdentifier: "8d132aa76b474f41beda17c0a0d05776",
-                                    title: "Sum of Calls",
-                                },
-                            },
-                        ],
-                        localIdentifier: "measures",
-                    },
-                ],
-                filters: [],
-                identifier: "abgkddfHcFon",
-                properties: {},
-                sorts: [],
-                title: "DHO-uri test",
-                visualizationClassIdentifier: "gdc.visualization.bar",
-            },
-        };
-    }
-
-    getVisualizationClasses = async () => {
-        const x = await this.props.backend
-            .workspace(this.props.workspace)
-            .metadata()
-            .getVisualizationClasses();
-
-        console.log("XXX", x);
-    };
-
-    componentDidMount(): void {
-        this.getVisualizationClasses();
-
         this.visualization.update(
             {
                 locale: "en-US", // this.props.locale,
@@ -96,11 +47,21 @@ export class Visualization extends React.Component<IVisualizationProps> {
             this.insight,
             this.props.backend.workspace(this.props.workspace).execution(),
         );
+    };
+
+    getInsight = async () => {
+        // should we allow for getting insights by URI?
+        return await this.props.backend
+            .workspace(this.props.workspace)
+            .metadata()
+            .getInsight(this.props.id);
+    };
+
+    componentDidMount(): void {
+        this.setup();
     }
 
     render(): React.ReactNode {
-        const { props } = this;
-
         return (
             <>
                 HERE
