@@ -9,7 +9,7 @@ import { LineChartExample } from "../components/LineChartExample";
 import { AreaChartExample } from "../components/AreaChartExample";
 import { StackedAreaChartExample } from "../components/StackedAreaChartExample";
 import { PieChartExample } from "../components/PieChartExample";
-import DonutChartExample from "../components/DonutChartExample";
+import { DonutChartExample } from "../components/DonutChartExample";
 import ComboChartExample from "../components/ComboChartExample";
 import ScatterPlotExample from "../components/ScatterPlotExample";
 import BubbleChartExample from "../components/BubbleChartExample";
@@ -70,10 +70,10 @@ export const BasicComponents: React.FC = () => (
         <h2 id="pie-chart">Pie chart</h2>
         <ExampleWithSource for={PieChartExample} source={PieChartExampleSRC} />
 
-        {/*
         <h2 id="donut-chart">Donut chart</h2>
         <ExampleWithSource for={DonutChartExample} source={DonutChartExampleSRC} />
 
+        {/*
         <h2 id="combo-chart">Combo chart</h2>
         <ExampleWithSource for={ComboChartExample} source={ComboChartExampleSRC} />
 
