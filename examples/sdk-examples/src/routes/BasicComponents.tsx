@@ -7,7 +7,7 @@ import { BarChartExample } from "../components/BarChartExample";
 import { ColumnChartExample } from "../components/ColumnChartExample";
 import { LineChartExample } from "../components/LineChartExample";
 import { AreaChartExample } from "../components/AreaChartExample";
-import StackedAreaChartExample from "../components/StackedAreaChartExample";
+import { StackedAreaChartExample } from "../components/StackedAreaChartExample";
 import PieChartExample from "../components/PieChartExample";
 import DonutChartExample from "../components/DonutChartExample";
 import ComboChartExample from "../components/ComboChartExample";
@@ -61,10 +61,11 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="area-chart">Area chart</h2>
         <ExampleWithSource for={AreaChartExample} source={AreaChartExampleSRC} />
-        {/*
+
         <h2 id="stacked-area-chart">Stacked area chart</h2>
         <ExampleWithSource for={StackedAreaChartExample} source={StackedAreaChartExampleSRC} />
 
+        {/*
         <hr className="separator" />
 
         <h2 id="pie-chart">Pie chart</h2>
