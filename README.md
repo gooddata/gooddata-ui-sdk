@@ -16,20 +16,21 @@ Progress and tasks are tracked in RAIL-1791.
 ### Getting started
 
 1.  Install nvm; for instance: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
-2.  Install Microsoft Rush: `npm i -g @microsoft/rush`
-3.  Make sure Python2 and c++ compile toolchain are installed on your machine
+2.  Make sure Python2 and c++ compile toolchain are installed on your machine
     These are needed to build native parts of the node-sass packages. If you do not have them installed then
     the `rush install` will fail once it downloads all packages and tries to install them.
-4.  Clone and bootstrap
+3.  Clone and bootstrap
 
     ```bash
     git clone git@github.com:lupko/gooddata-ui-sdk.git
     cd gooddata-ui-sdk
+    nvm install
     nvm use
+    npm i -g @microsoft/rush pnpm
     rush install
     ```
 
-5.  Build: `rush build`
+4.  Build: `rush build`
 
 ### After you pull latest changes
 
