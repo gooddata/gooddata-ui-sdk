@@ -12,7 +12,7 @@ import { PieChartExample } from "../components/PieChartExample";
 import { DonutChartExample } from "../components/DonutChartExample";
 import { ComboChartExample } from "../components/ComboChartExample";
 import { ScatterPlotExample } from "../components/ScatterPlotExample";
-import BubbleChartExample from "../components/BubbleChartExample";
+import { BubbleChartExample } from "../components/BubbleChartExample";
 import TreemapExample from "../components/TreemapExample";
 import HeatmapExample from "../components/HeatmapExample";
 import TableExample from "../components/TableExample";
@@ -78,10 +78,10 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="scatter-plot">Scatter plot</h2>
         <ExampleWithSource for={ScatterPlotExample} source={ScatterPlotExampleSRC} />
-        {/*
 
         <h2 id="bubble-chart">Bubble chart</h2>
         <ExampleWithSource for={BubbleChartExample} source={BubbleChartExampleSRC} />
+        {/*
 
         <h2 id="treemap">Treemap</h2>
         <ExampleWithSource for={TreemapExample} source={TreemapExampleSRC} />
