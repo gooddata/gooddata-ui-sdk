@@ -86,11 +86,11 @@ export const sideNavigationRoutes = [
     //     Component: VisualizationUseCasesRoutes,
     // },
     { path: "/sorting", title: "Sorting", Component: Sorting },
-    // {
-    //     path: "/time-over-time-comparison",
-    //     title: "Time Over Time Comparison",
-    //     Component: TimeOverTimeComparison,
-    // },
+    {
+        path: "/time-over-time-comparison",
+        title: "Time Over Time Comparison",
+        Component: TimeOverTimeComparison,
+    },
     // {
     //     path: "/attribute-filter-components",
     //     title: "Attribute Filter Components",
