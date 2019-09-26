@@ -142,6 +142,46 @@ export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader {
  * TODO: SDK8: add docs
  * @public
  */
+export function isMeasureHeaderItem(obj: any): obj is IMeasureHeaderItem {
+    return !isEmpty(obj) && (obj as IMeasureHeaderItem).measureHeaderItem !== undefined;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function isTotalHeader(obj: any): obj is ITotalHeaderItem {
+    return !isEmpty(obj) && (obj as ITotalHeaderItem).totalHeaderItem !== undefined;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem {
     return !isEmpty(obj) && (obj as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function isResultMeasureHeaderItem(obj: any): obj is IResultMeasureHeaderItem {
+    return (
+        !isEmpty(obj) &&
+        (obj as IResultMeasureHeaderItem).measureHeaderItem !== undefined &&
+        (obj as IResultMeasureHeaderItem).measureHeaderItem.order !== undefined
+    );
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export function isResultTotalHeaderItem(obj: any): obj is IResultTotalHeaderItem {
+    return (
+        !isEmpty(obj) &&
+        (obj as IResultTotalHeaderItem).totalHeaderItem !== undefined &&
+        (obj as IResultTotalHeaderItem).totalHeaderItem.type !== undefined
+    );
 }

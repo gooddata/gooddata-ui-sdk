@@ -418,6 +418,9 @@ export function isExecutionError(obj: any): obj is ExecutionError;
 export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader;
 
 // @public
+export function isMeasureHeaderItem(obj: any): obj is IMeasureHeaderItem;
+
+// @public
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
 
 // @public
@@ -428,6 +431,15 @@ export function isNotSupported(obj: any): obj is NotSupported;
 
 // @public
 export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem;
+
+// @public
+export function isResultMeasureHeaderItem(obj: any): obj is IResultMeasureHeaderItem;
+
+// @public
+export function isResultTotalHeaderItem(obj: any): obj is IResultTotalHeaderItem;
+
+// @public
+export function isTotalHeader(obj: any): obj is ITotalHeaderItem;
 
 // @public
 export interface ITotalHeaderItem {
