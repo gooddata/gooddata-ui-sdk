@@ -6,7 +6,8 @@ import { IColorPalette } from "../../../../../base/interfaces/Colors";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
-import * as MappingHeader from "../../../../../base/interfaces/MappingHeader";
+import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IMappingHeader } from "../../../../../base/interfaces/MappingHeader";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;
@@ -31,7 +32,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & InjectedIntlPr
             return this.renderLoadingItem();
         }
 
-        const headerItem: MappingHeader.IMappingHeader = coloredItem.mappingHeader;
+        const headerItem: IMappingHeader = coloredItem.mappingHeader;
         const text = this.getText(headerItem);
 
         return (
@@ -57,12 +58,12 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & InjectedIntlPr
         }
     };
 
-    private getText(headerItem: MappingHeader.IMappingHeader) {
+    private getText(headerItem: IMappingHeader) {
         let text;
 
-        if (MappingHeader.isMappingHeaderMeasureItem(headerItem)) {
+        if (isMeasureHeaderItem(headerItem)) {
             text = headerItem.measureHeaderItem.name;
-        } else if (MappingHeader.isMappingHeaderAttributeItem(headerItem)) {
+        } else if (isResultAttributeHeaderItem(headerItem)) {
             text = headerItem.attributeHeaderItem.name;
         }
 

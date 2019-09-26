@@ -10,13 +10,14 @@ import {
 } from "../../../base/helpers/mappingHeader";
 import get = require("lodash/get");
 import { IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
-import { IMappingHeader, isMappingHeaderAttributeItem } from "../../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { getAttributeElementIdFromAttributeElementUri } from "../../../base/helpers/getAttributeElementIdFromAttributeElementUri";
 import { createDrillIntersectionElement } from "../../../highcharts";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";
 import { IGridHeader } from "./agGridTypes";
+import { isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
@@ -53,7 +54,7 @@ export const getDrillIntersection = (
     //     0..1 row attribute and row attribute value
     //     0..n column attribute and column attribute values
     return drillItems.map((drillItem: IMappingHeader) => {
-        if (isMappingHeaderAttributeItem(drillItem)) {
+        if (isResultAttributeHeaderItem(drillItem)) {
             const id = getAttributeElementIdFromAttributeElementUri(drillItem.attributeHeaderItem.uri);
             return createDrillIntersectionElement(
                 id,

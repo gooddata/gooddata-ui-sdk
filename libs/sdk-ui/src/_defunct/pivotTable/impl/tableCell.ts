@@ -2,7 +2,7 @@
 import * as classNames from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { isMappingHeaderMeasureItem, IMappingHeader } from "../../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 
 import {
     isAttributeCell,
@@ -11,6 +11,7 @@ import {
     MeasureCell,
     TableCell,
 } from "../PivotTable";
+import { isMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
     const parsedNumber: string | number =
@@ -80,7 +81,7 @@ export function getCellStyleAndFormattedValue(
         };
     }
 
-    const measureFormat = isMappingHeaderMeasureItem(header) ? header.measureHeaderItem.format : "";
+    const measureFormat = isMeasureHeaderItem(header) ? header.measureHeaderItem.format : "";
 
     return {
         style: getMeasureCellStyle(cellContent, measureFormat, separators, applyColor),

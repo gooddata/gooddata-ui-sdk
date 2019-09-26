@@ -14,13 +14,14 @@ import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import { ColorUtils } from "../../highcharts";
+import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 
 function getItemName(item: IColoredItem): string {
     let name = "";
 
-    if (MappingHeader.isMappingHeaderMeasureItem(item.mappingHeader)) {
+    if (isMeasureHeaderItem(item.mappingHeader)) {
         name = item.mappingHeader.measureHeaderItem.name;
-    } else if (MappingHeader.isMappingHeaderAttributeItem(item.mappingHeader)) {
+    } else if (isResultAttributeHeaderItem(item.mappingHeader)) {
         name = item.mappingHeader.attributeHeaderItem.name;
     }
 
@@ -87,12 +88,12 @@ export function getProperties(
     item: MappingHeader.IMappingHeader,
     color: IColorItem,
 ): IVisualizationProperties {
-    if (MappingHeader.isMappingHeaderMeasureItem(item)) {
+    if (isMeasureHeaderItem(item)) {
         const id = getMeasureMappingIdentifier(item);
         const newProperties = mergeColorMappingToProperties(properties, id, color);
 
         return newProperties;
-    } else if (MappingHeader.isMappingHeaderAttributeItem(item)) {
+    } else if (isResultAttributeHeaderItem(item)) {
         return mergeColorMappingToProperties(properties, item.attributeHeaderItem.uri, color);
     }
 
@@ -113,7 +114,7 @@ export function getValidProperties(
             const colorValue = mappingItem.color.value;
 
             const isMeasureInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
-                if (MappingHeader.isMappingHeaderMeasureItem(colorAssignment.headerItem)) {
+                if (isMeasureHeaderItem(colorAssignment.headerItem)) {
                     return (
                         colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
                         isEqual(colorAssignment.color.value, colorValue)
@@ -128,7 +129,7 @@ export function getValidProperties(
             }
 
             const isAttributeInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
-                if (MappingHeader.isMappingHeaderAttributeItem(colorAssignment.headerItem)) {
+                if (isResultAttributeHeaderItem(colorAssignment.headerItem)) {
                     return colorAssignment.headerItem.attributeHeaderItem.uri === id;
                 }
 

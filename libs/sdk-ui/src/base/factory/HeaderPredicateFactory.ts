@@ -16,11 +16,8 @@ import {
     hasMappingHeaderLocalIdentifier,
 } from "../helpers/mappingHeader";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
-import {
-    IMappingHeader,
-    isMappingHeaderAttributeItem,
-    isMappingHeaderMeasureItem,
-} from "../interfaces/MappingHeader";
+import { IMappingHeader } from "../interfaces/MappingHeader";
+import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
     measures: AFM.IMeasure[],
@@ -72,7 +69,7 @@ function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: AFM.IMeasure,
 
 function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
-        if (!isMappingHeaderMeasureItem(header)) {
+        if (!isMeasureHeaderItem(header)) {
             return false;
         }
 
@@ -209,7 +206,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
             return true;
         }
 
-        if (!isMappingHeaderMeasureItem(header)) {
+        if (!isMeasureHeaderItem(header)) {
             return false;
         }
 
@@ -228,7 +225,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
 
 export function identifierMatch(identifier: string): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
-        if (isMappingHeaderAttributeItem(header)) {
+        if (isResultAttributeHeaderItem(header)) {
             return false;
         }
 
@@ -236,7 +233,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return true;
         }
 
-        if (!isMappingHeaderMeasureItem(header)) {
+        if (!isMeasureHeaderItem(header)) {
             return false;
         }
 
@@ -255,7 +252,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 
 export function attributeItemNameMatch(name: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        return isMappingHeaderAttributeItem(header)
+        return isResultAttributeHeaderItem(header)
             ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
             : false;
     };
