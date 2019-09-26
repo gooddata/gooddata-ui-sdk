@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { DonutChart, Model } from "@gooddata/react-components";
+import { DonutChart, Model } from "@gooddata/sdk-ui";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     projectId,

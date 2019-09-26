@@ -104,16 +104,12 @@ module.exports = async (env, argv) => {
         },
         resolve: {
             extensions: [".js", ".jsx"],
-            alias: {
-                "@gooddata/react-components/styles": path.resolve(__dirname, "../styles/"),
-                "@gooddata/react-components": path.resolve(__dirname, "../dist/"),
-            },
         },
         module: {
             rules: [
                 {
-                    test: /\.css$/,
-                    loaders: ["style-loader", "css-loader"],
+                    test: /\.s?[a|c]ss$/,
+                    loaders: ["style-loader", "css-loader", "sass-loader"],
                 },
                 {
                     test: /\.jsx?$/,

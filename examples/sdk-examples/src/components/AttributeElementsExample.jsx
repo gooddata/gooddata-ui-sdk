@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { AttributeElements } from "@gooddata/react-components";
+import { AttributeElements } from "@gooddata/sdk-ui";
 import PropTypes from "prop-types";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { employeeNameIdentifier, projectId } from "../utils/fixtures";
 

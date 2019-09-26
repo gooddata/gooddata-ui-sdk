@@ -11,7 +11,7 @@ import {
     ErrorComponent,
     HeaderPredicateFactory,
     Model,
-} from "@gooddata/react-components";
+} from "@gooddata/sdk-ui";
 import {
     projectId,
     employeeNameIdentifier,

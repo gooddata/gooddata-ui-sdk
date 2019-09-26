@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
-import { ColumnChart, Model } from "@gooddata/react-components";
-import "@gooddata/react-components/styles/css/main.css";
+import { ColumnChart, Model } from "@gooddata/sdk-ui";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     totalSalesIdentifier,

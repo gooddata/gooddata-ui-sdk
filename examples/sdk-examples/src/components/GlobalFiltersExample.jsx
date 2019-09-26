@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from "react";
 import { PropTypes } from "prop-types";
-import { AttributeElements, Kpi, BarChart, PieChart, Model } from "@gooddata/react-components";
+import { AttributeElements, Kpi, BarChart, PieChart, Model } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../components/utils/SidebarItem";
 import { EmployeeCard } from "../components/GlobalFiltersComponents/EmployeeCard";
 import { KpiMetricBox } from "../components/GlobalFiltersComponents/KpiMetricBox";

@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 export const Layout = ({ sidebar, sidebarWidth, contentWidth, children }) => (
     <div className="wrapper">

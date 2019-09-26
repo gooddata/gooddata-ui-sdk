@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { LoadingComponent } from "@gooddata/react-components";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 export class CustomisedLoadingComponentExample extends Component {
     render() {

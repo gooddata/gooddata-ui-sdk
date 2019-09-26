@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { AfmComponents } from "@gooddata/react-components";
-import "@gooddata/react-components/styles/css/main.css";
+import { AfmComponents } from "@gooddata/sdk-ui";
+import "@gooddata/sdk-ui/styles/css/main.css";
 import Measure from "react-measure";
 
 import { projectId, totalSalesIdentifier, locationResortIdentifier } from "../utils/fixtures";

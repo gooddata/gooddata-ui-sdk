@@ -15,8 +15,8 @@
     "react/no-multi-comp": 0,
     "jsx-a11y/anchor-is-valid": 0,
 
-    "import/no-unresolved": [2, { "ignore": ["@gooddata/react-components"] }],
-    "import/extensions": [2, { "ignore": ["@gooddata/react-components"] }]
+    "import/no-unresolved": [2, { "ignore": ["@gooddata/sdk-ui"] }],
+    "import/extensions": [2, { "ignore": ["@gooddata/sdk-ui"] }]
   },
 
   "globals": {

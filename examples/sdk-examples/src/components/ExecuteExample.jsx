@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
-import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/react-components";
+import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
 

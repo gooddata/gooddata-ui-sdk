@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ErrorComponent } from "@gooddata/react-components";
+import { ErrorComponent } from "@gooddata/sdk-ui";
 import { NavLink } from "react-router-dom";
 
 export const Route404 = () => (

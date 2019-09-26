@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { Visualization } from "@gooddata/react-components";
+import { Visualization } from "@gooddata/sdk-ui";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { columnsVisualizationIdentifier, projectId } from "../utils/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../utils/colors";

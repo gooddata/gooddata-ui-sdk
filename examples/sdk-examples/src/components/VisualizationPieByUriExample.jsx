@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { Component } from "react";
-import "@gooddata/react-components/styles/css/main.css";
-import { Visualization } from "@gooddata/react-components";
+import "@gooddata/sdk-ui/styles/css/main.css";
+import { Visualization } from "@gooddata/sdk-ui";
 
 import { projectId, pieVisualizationUri } from "../utils/fixtures";
 

@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Headline, Model } from "@gooddata/react-components";
+import { Headline, Model } from "@gooddata/sdk-ui";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, dateDataSetUri, projectId } from "../utils/fixtures";
 
