@@ -31,7 +31,7 @@ const LATEST_REST_API_VERSION = 3;
  * Gooddata-js package signature
  * @private
  */
-const thisPackage = { name: pkgName, version: pkgVersion };
+export const thisPackage = { name: pkgName, version: pkgVersion };
 
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {

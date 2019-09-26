@@ -3,7 +3,7 @@ import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./helpers/polling";
 import { IExportResponse } from "../src/interfaces";
-import { getIn, handleHeadPolling, IPollingOptions, queryString, thisPackage } from "../src/util";
+import { getIn, handleHeadPolling, IPollingOptions, queryString } from "../src/util";
 import { ApiResponse, XhrModule } from "../src/xhr";
 
 describe("util", () => {
@@ -41,14 +41,6 @@ describe("util", () => {
 
         it("should handle object with arrays", () => {
             expect(queryString({ ar: [1, 2, "x"], b: false })).toBe("?ar=1&ar=2&ar=x&b=false");
-        });
-    });
-
-    describe("thisPackage", () => {
-        it("should equal to current package name and version", () => {
-            const pkgJson = require("../package.json");
-
-            expect(thisPackage).toEqual({ name: pkgJson.name, version: pkgJson.version });
         });
     });
 

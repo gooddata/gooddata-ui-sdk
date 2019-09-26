@@ -2,11 +2,20 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
-import { handlePolling, originPackageHeaders, XhrModule } from "../src/xhr";
+import { handlePolling, originPackageHeaders, XhrModule, thisPackage } from "../src/xhr";
 import { ConfigModule } from "../src/config";
 import { getHeaderValue } from "./helpers/headers";
 
 const createXhr = (configStorage = {}) => new XhrModule(fetch, configStorage);
+
+
+describe("thisPackage", () => {
+    it("should equal to current package name and version", () => {
+        const pkgJson = require("../package.json");
+
+        expect(thisPackage).toEqual({ name: pkgJson.name, version: pkgJson.version });
+    });
+});
 
 describe("originPackageHeaders", () => {
     it("should get correct headers", () => {
