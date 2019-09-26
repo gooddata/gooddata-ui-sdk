@@ -11,7 +11,7 @@ import { StackedAreaChartExample } from "../components/StackedAreaChartExample";
 import { PieChartExample } from "../components/PieChartExample";
 import { DonutChartExample } from "../components/DonutChartExample";
 import { ComboChartExample } from "../components/ComboChartExample";
-import ScatterPlotExample from "../components/ScatterPlotExample";
+import { ScatterPlotExample } from "../components/ScatterPlotExample";
 import BubbleChartExample from "../components/BubbleChartExample";
 import TreemapExample from "../components/TreemapExample";
 import HeatmapExample from "../components/HeatmapExample";
@@ -75,10 +75,10 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="combo-chart">Combo chart</h2>
         <ExampleWithSource for={ComboChartExample} source={ComboChartExampleSRC} />
-        {/*
 
         <h2 id="scatter-plot">Scatter plot</h2>
         <ExampleWithSource for={ScatterPlotExample} source={ScatterPlotExampleSRC} />
+        {/*
 
         <h2 id="bubble-chart">Bubble chart</h2>
         <ExampleWithSource for={BubbleChartExample} source={BubbleChartExampleSRC} />
