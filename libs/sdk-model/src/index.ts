@@ -51,6 +51,8 @@ export {
     newMeasureSort,
     newAttributeSort,
     sortFingerprint,
+    SortEntityIds,
+    sortEntityIds,
 } from "./base/sort";
 
 export {

@@ -626,6 +626,20 @@ export type RGBType = "rgb";
 // @public
 export type SortDirection = "asc" | "desc";
 
+// Warning: (ae-internal-missing-underscore) The name "SortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export type SortEntityIds = {
+    allIdentifiers: Identifier[];
+    attributeIdentifiers: Identifier[];
+    measureIdentifiers: Identifier[];
+};
+
+// Warning: (ae-internal-missing-underscore) The name "sortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function sortEntityIds(sort: SortItem): SortEntityIds;
+
 // Warning: (ae-internal-missing-underscore) The name "sortFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
