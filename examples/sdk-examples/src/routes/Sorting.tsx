@@ -4,7 +4,7 @@ import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
 import { MeasureSortingExample } from "../components/MeasureSortingExample";
-import AttributeSortingExample from "../components/AttributeSortingExample";
+import { AttributeSortingExample } from "../components/AttributeSortingExample";
 import DynamicSortingExample from "../components/DynamicSortingExample";
 
 import MeasureSortingExampleSRC from "!raw-loader!../components/MeasureSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -25,7 +25,6 @@ export const Sorting: React.FC = () => (
             You can sort data by a measure value with the <code>measureSortItem</code>.
         </p>
         <ExampleWithSource for={MeasureSortingExample} source={MeasureSortingExampleSRC} />
-        {/* 
         <hr className="separator" />
 
         <h2>Sorting by Attribute</h2>
@@ -35,6 +34,7 @@ export const Sorting: React.FC = () => (
         <ExampleWithSource for={AttributeSortingExample} source={AttributeSortingExampleSRC} />
 
         <hr className="separator" />
+        {/* 
 
         <h2>Dynamic Sorting</h2>
         <p>
