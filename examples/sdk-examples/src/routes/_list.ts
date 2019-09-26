@@ -19,15 +19,15 @@ import DrillWithExternalData from "./DrillWithExternalData";
 import PivotTableDrilling from "./PivotTableDrilling";
 import Registration from "./Registration";
 import Login from "./Login";
-import PivotTable from "./PivotTable";
-import PivotTableDemo from "./PivotTableDemo";
+// import PivotTable from "./PivotTable";
+// import PivotTableDemo from "./PivotTableDemo";
 // import PivotTableDynamic from "./PivotTableDynamic";
 import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasure from "./ArithmeticMeasure";
 import Export from "./Export";
-import VisualizationByUri from "./VisualizationByUri";
+// import VisualizationByUri from "./VisualizationByUri";
 // import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
@@ -46,11 +46,11 @@ export const advancedUseCasesRoutes = [
 ];
 
 export const visualizationUseCasesRoutes = [
-    {
-        path: "/visualization/visualization-by-uri",
-        title: "Visualization by URI",
-        Component: VisualizationByUri,
-    },
+    // {
+    //     path: "/visualization/visualization-by-uri",
+    //     title: "Visualization by URI",
+    //     Component: VisualizationByUri,
+    // },
     // {
     //     path: "/visualization/visualization-by-identifier",
     //     title: "Visualization by identifier",
@@ -85,7 +85,7 @@ export const sideNavigationRoutes = [
     //     title: "Visualization Component",
     //     Component: VisualizationUseCasesRoutes,
     // },
-    // { path: "/sorting", title: "Sorting", Component: Sorting },
+    { path: "/sorting", title: "Sorting", Component: Sorting },
     // {
     //     path: "/time-over-time-comparison",
     //     title: "Time Over Time Comparison",
@@ -125,7 +125,7 @@ export const sideNavigationRoutes = [
 export const hiddenPaths = [
     { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
-    { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
+    // { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
     // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
