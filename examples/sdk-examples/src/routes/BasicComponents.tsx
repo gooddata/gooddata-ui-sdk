@@ -6,7 +6,7 @@ import ExampleWithSource from "../components/utils/ExampleWithSource";
 import { BarChartExample } from "../components/BarChartExample";
 import { ColumnChartExample } from "../components/ColumnChartExample";
 import { LineChartExample } from "../components/LineChartExample";
-import AreaChartExample from "../components/AreaChartExample";
+import { AreaChartExample } from "../components/AreaChartExample";
 import StackedAreaChartExample from "../components/StackedAreaChartExample";
 import PieChartExample from "../components/PieChartExample";
 import DonutChartExample from "../components/DonutChartExample";
@@ -58,10 +58,10 @@ export const BasicComponents: React.FC = () => (
 
         <h2 id="line-chart">Line chart with custom colors</h2>
         <ExampleWithSource for={LineChartExample} source={LineChartExampleSRC} />
-        {/* 
+
         <h2 id="area-chart">Area chart</h2>
         <ExampleWithSource for={AreaChartExample} source={AreaChartExampleSRC} />
-
+        {/*
         <h2 id="stacked-area-chart">Stacked area chart</h2>
         <ExampleWithSource for={StackedAreaChartExample} source={StackedAreaChartExampleSRC} />
 
