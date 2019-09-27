@@ -6,7 +6,6 @@ import { factory, SDK } from "./gooddata";
 import * as DataLayer from "./DataLayer";
 import { ApiResponse, ApiResponseError, ApiNetworkError } from "./xhr";
 import * as referenceHandling from "./referenceHandling";
-import * as TypeGuards from "./typeGuards";
 
 const factoryNode = factory(fetchCookie(nodeFetch as any));
 
@@ -19,7 +18,7 @@ export { factoryNode as factory, SDK, DataLayer };
 export { ApiResponse, ApiResponseError, ApiNetworkError };
 
 // explicitly export TypeGuards as they cannot be exported using the export * syntax when there is also a default export
-export { TypeGuards, referenceHandling };
+export { referenceHandling };
 export * from "./interfaces";
 
 export default factoryNode();
