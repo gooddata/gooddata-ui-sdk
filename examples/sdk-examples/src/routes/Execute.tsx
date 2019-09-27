@@ -2,7 +2,7 @@
 import React from "react";
 
 import { ExecuteExample } from "../components/ExecuteExample";
-import ExecuteAttributeValuesExample from "../components/ExecuteAttributeValuesExample";
+import { ExecuteAttributeValuesExample } from "../components/ExecuteAttributeValuesExample";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
 import ExecuteExampleSRC from "!raw-loader!../components/ExecuteExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -22,7 +22,7 @@ export const Execute: React.FC = () => (
         <hr className="separator" />
 
         <ExampleWithSource for={ExecuteExample} source={ExecuteExampleSRC} />
-        {/* 
+
         <hr className="separator" />
 
         <h2>Execute attribute values only</h2>
@@ -30,7 +30,7 @@ export const Execute: React.FC = () => (
 
         <hr className="separator" />
 
-        <ExampleWithSource for={ExecuteAttributeValuesExample} source={ExecuteAttributeValuesExampleSRC} /> */}
+        <ExampleWithSource for={ExecuteAttributeValuesExample} source={ExecuteAttributeValuesExampleSRC} />
     </div>
 );
 
