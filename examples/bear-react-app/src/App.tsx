@@ -35,7 +35,7 @@ const App: React.FC = () => {
                                 {
                                     relativeDateFilter: {
                                         dataSet: {
-                                            identifier: "timeline.dataset.dt",
+                                            uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/344",
                                         },
                                         from: -10,
                                         to: 0,

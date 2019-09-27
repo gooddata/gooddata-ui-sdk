@@ -127,6 +127,9 @@ export function filterFingerprint(filter: IFilter): string;
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
+export function filterQualifierValue(filter: IFilter): string;
+
+// @public
 export type GuidType = "guid";
 
 // @public
@@ -622,6 +625,9 @@ export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: So
 
 // @public
 export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
+
+// @public
+export function objectQualifierValue(obj: ObjQualifier): string;
 
 // @public
 export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;

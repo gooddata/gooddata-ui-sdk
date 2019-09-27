@@ -1,8 +1,9 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
+import * as uuid from "uuid";
 
-import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IInsight, IFilter, AttributeOrMeasure, IBucket } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IInsight, IFilter } from "@gooddata/sdk-model";
 
 import { IVisualization } from "../internal/interfaces/Visualization";
 import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
@@ -19,6 +20,7 @@ import { PluggableComboChartDeprecated } from "../internal/components/pluggableV
 import { PluggableComboChart } from "../internal/components/pluggableVisualizations/comboChart/PluggableComboChart";
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
+import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
@@ -51,35 +53,10 @@ interface IVisualizationProps {
     workspace: string;
 }
 
-const mergeFilters = (filtersA: IFilter[], filtersB: IFilter[] | undefined): IFilter[] => {
-    return [...filtersA, ...(filtersB || [])]; // TODO actually implement the merging logic -> executionDefinition.ts r137
-};
-
-class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
-    constructor(
-        private readonly factory: IExecutionFactory,
-        private readonly presetFilters: IFilter[] = [],
-    ) {}
-    public forItems = (items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution => {
-        const mergedFilters = mergeFilters(this.presetFilters, filters);
-        return this.factory.forItems(items, mergedFilters);
-    };
-    public forBuckets = (buckets: IBucket[], filters?: IFilter[]): IPreparedExecution => {
-        const mergedFilters = mergeFilters(this.presetFilters, filters);
-        return this.factory.forBuckets(buckets, mergedFilters);
-    };
-    public forInsight = (insight: IInsight, filters?: IFilter[]): IPreparedExecution => {
-        const mergedFilters = mergeFilters(this.presetFilters, filters);
-        return this.factory.forInsight(insight, mergedFilters);
-    };
-    public forInsightByRef = (uri: string, filters?: IFilter[]): Promise<IPreparedExecution> => {
-        const mergedFilters = mergeFilters(this.presetFilters, filters);
-        return this.factory.forInsightByRef(uri, mergedFilters);
-    };
-}
+const getElementId = () => `gd-vis-${uuid.v4()}`;
 
 export class Visualization extends React.Component<IVisualizationProps> {
-    private elementId = "really-random-string"; // TODO
+    private elementId = getElementId();
     private visualization!: IVisualization; // TODO exclamation mark
     private insight!: IInsight; // TODO exclamation mark
 
