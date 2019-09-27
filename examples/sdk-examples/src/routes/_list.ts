@@ -35,7 +35,7 @@ export const advancedUseCasesRoutes = [
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
     // { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
-    // { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
+    { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
     // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
     // {
     //     path: "/advanced/loading-and-error",
