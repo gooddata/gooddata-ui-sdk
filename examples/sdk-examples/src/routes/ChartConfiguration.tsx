@@ -8,7 +8,7 @@ import ConfigurationColumnChartExample from "../components/ConfigurationColumnCh
 import ConfigurationColumnChartExampleSRC from "!raw-loader!../components/ConfigurationColumnChartExample"; // eslint-disable-line
 import PieChartColorMappingExample from "../components/PieChartColorMappingExample";
 import PieChartColorMappingExampleSRC from "!raw-loader!../components/PieChartColorMappingExample"; // eslint-disable-line
-import DualAxisColumnChartExample from "../components/DualAxisColumnChartExample";
+import { DualAxisColumnChartExample } from "../components/DualAxisColumnChartExample";
 import DualAxisColumnChartExampleSRC from "!raw-loader!../components/DualAxisColumnChartExample"; // eslint-disable-line
 import VisualizationDualAxisBarChartExample from "../components/VisualizationDualAxisBarChartExample";
 import VisualizationDualAxisBarChartExampleSRC from "!raw-loader!../components/VisualizationDualAxisBarChartExample"; // eslint-disable-line
@@ -23,12 +23,12 @@ export const BarChartDynamic = () => (
             <hr className="separator" />
 
             <ExampleWithSource for={BarChartDynamicExample} source={BarChartDynamicExampleSRC} />
-            {/* 
+
             <h2>Dual Axis Column chart</h2>
 
             <hr className="separator" />
 
-            <ExampleWithSource for={DualAxisColumnChartExample} source={DualAxisColumnChartExampleSRC} /> */}
+            <ExampleWithSource for={DualAxisColumnChartExample} source={DualAxisColumnChartExampleSRC} />
         </div>
         {/* 
         <div>
