@@ -60,7 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@gooddata/frontend-npm-scripts": "1.0.1",
     "@gooddata/tslint-config": "^1.0.0",
     "@types/fast-levenshtein": "0.0.1",
     "@types/fetch-mock": "5.*",
@@ -125,10 +124,6 @@
   "lint-staged": {
     "{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}": [
       "prettier --write",
-      "git add"
-    ],
-    "{src,test}/**/*.{ts,tsx,scss}": [
-      "npx gdc-fix-copyright",
       "git add"
     ]
   }
