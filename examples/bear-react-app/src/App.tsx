@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 import { Col, Container, Row } from "react-grid-system";
 
 import {
@@ -22,14 +22,23 @@ const analyticalBackend = backend();
 const height = 400;
 
 const App: React.FC = () => {
+    const [useValidRequest, setUseValidRequest] = useState(true);
+    const [visId, setVisId] = useState("abgkddfHcFon");
+
     return (
         <div className="App">
             <Container>
                 <Row>
                     <Col>
+                        <input
+                            type="checkbox"
+                            checked={useValidRequest}
+                            onChange={e => setUseValidRequest(e.target.checked)}
+                        />
+                        <input value={visId} onChange={e => setVisId(e.target.value)} />
                         <Visualization
                             backend={analyticalBackend}
-                            id="abgkddfHcFon"
+                            id={visId}
                             workspace={workspace}
                             filters={[
                                 {
@@ -39,7 +48,9 @@ const App: React.FC = () => {
                                         },
                                         from: -10,
                                         to: 0,
-                                        granularity: "GDC.time.month",
+                                        granularity: useValidRequest
+                                            ? "GDC.time.month"
+                                            : "GDC.time.monthAAAAA",
                                     },
                                 },
                             ]}

@@ -172,6 +172,7 @@ export {
     insightBucket,
     insightTotals,
     insightFilters,
+    insightVisualizationClassIdentifier,
     insightWithProperties,
     insightWithSorts,
     visClassUrl,

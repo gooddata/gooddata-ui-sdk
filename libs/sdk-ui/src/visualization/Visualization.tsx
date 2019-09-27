@@ -3,9 +3,14 @@ import * as React from "react";
 import * as uuid from "uuid";
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, IFilter } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    IFilter,
+    insightProperties,
+    insightVisualizationClassIdentifier,
+} from "@gooddata/sdk-model";
 
-import { IVisualization } from "../internal/interfaces/Visualization";
+import { IVisualization, ILocale } from "../internal/interfaces/Visualization";
 import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableColumnChart } from "../internal/components/pluggableVisualizations/columnChart/PluggableColumnChart";
 import { PluggableLineChart } from "../internal/components/pluggableVisualizations/lineChart/PluggableLineChart";
@@ -21,6 +26,9 @@ import { PluggableComboChart } from "../internal/components/pluggableVisualizati
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
+import { LoadingComponent } from "../base/simple/LoadingComponent";
+import { RuntimeError } from "../base/errors/RuntimeError";
+import { ErrorComponent } from "../base/simple/ErrorComponent";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
@@ -40,7 +48,8 @@ const VisualizationsCatalog = {
     funnel: PluggableFunnelChart,
 };
 
-const getVisualizationFromVisualizationClassIdentifier = (visClassIdentifier: string) => {
+const getVisualizationForInsight = (insight: IInsight) => {
+    const visClassIdentifier = insightVisualizationClassIdentifier(insight);
     const split = visClassIdentifier.split(".");
     const key = split[split.length - 1] as keyof typeof VisualizationsCatalog;
     return VisualizationsCatalog[key];
@@ -50,41 +59,67 @@ interface IVisualizationProps {
     backend: IAnalyticalBackend;
     filters?: IFilter[];
     id: string;
+    locale?: string;
     workspace: string;
+}
+
+interface IVisualizationState {
+    isLoading: boolean;
+    error: RuntimeError | undefined;
 }
 
 const getElementId = () => `gd-vis-${uuid.v4()}`;
 
-export class Visualization extends React.Component<IVisualizationProps> {
+export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
     private elementId = getElementId();
-    private visualization!: IVisualization; // TODO exclamation mark
-    private insight!: IInsight; // TODO exclamation mark
+    private visualization: IVisualization | undefined;
+    private insight: IInsight | undefined;
 
     public static defaultProps: Partial<IVisualizationProps> = {
         filters: [],
     };
 
-    public setup = async () => {
-        this.insight = await this.getInsight();
+    public state: IVisualizationState = {
+        isLoading: false,
+        error: undefined,
+    };
 
-        const Visualization = getVisualizationFromVisualizationClassIdentifier(
-            this.insight.insight.visualizationClassIdentifier,
-        );
+    private startLoading = () => {
+        this.setIsLoading(true);
+        this.setError(undefined);
+    };
 
-        this.visualization = new Visualization({
-            backend: this.props.backend,
-            callbacks: {
-                pushData: () => {},
-            },
-            configPanelElement: "nonexistent",
-            element: `#${this.elementId}`,
-            projectId: this.props.workspace,
-            visualizationProperties: {},
-        });
+    private stopLoading = () => {
+        this.setIsLoading(false);
+    };
+
+    private setIsLoading = (isLoading: boolean) => {
+        if (this.state.isLoading !== isLoading) {
+            this.setState({ isLoading });
+        }
+    };
+
+    private setError = (error: RuntimeError | undefined) => {
+        if (this.state.error !== error) {
+            this.setState({ error });
+        }
+    };
+
+    private unmountVisualization = () => {
+        if (this.visualization) {
+            this.visualization.unmount();
+        }
+        this.visualization = undefined;
+    };
+
+    private updateVisualization = () => {
+        if (!this.visualization) {
+            return;
+        }
 
         this.visualization.update(
             {
-                locale: "en-US", // this.props.locale,
+                locale: this.props.locale as ILocale,
                 dimensions: {
                     height: 300, // this.props.height,
                 },
@@ -101,12 +136,48 @@ export class Visualization extends React.Component<IVisualizationProps> {
         );
     };
 
+    public setupVisualization = async () => {
+        this.startLoading();
+
+        this.insight = await this.getInsight();
+
+        if (!this.insight) {
+            // the visualization we may have from earlier is no longer valid -> get rid of it
+            this.unmountVisualization();
+            return;
+        }
+
+        const Visualization = getVisualizationForInsight(this.insight);
+
+        this.visualization = new Visualization({
+            backend: this.props.backend,
+            callbacks: {
+                onError: this.setError,
+                onLoadingChanged: ({ isLoading }) => {
+                    return isLoading ? this.startLoading() : this.stopLoading();
+                },
+                pushData: () => {},
+            },
+            configPanelElement: "nonexistent",
+            element: `#${this.elementId}`,
+            locale: this.props.locale as ILocale,
+            projectId: this.props.workspace,
+            visualizationProperties: insightProperties(this.insight),
+        });
+    };
+
     public getInsight = async () => {
         // should we allow for getting insights by URI?
-        return this.props.backend
-            .workspace(this.props.workspace)
-            .metadata()
-            .getInsight(this.props.id);
+        try {
+            return await this.props.backend
+                .workspace(this.props.workspace)
+                .metadata()
+                .getInsight(this.props.id);
+        } catch (e) {
+            this.setError(new RuntimeError(e.message, e));
+            this.stopLoading();
+            return undefined;
+        }
     };
 
     public getExecutionFactory = () => {
@@ -116,13 +187,35 @@ export class Visualization extends React.Component<IVisualizationProps> {
         );
     };
 
+    private componentDidMountInner = async () => {
+        await this.setupVisualization();
+        return this.updateVisualization();
+    };
+
     public componentDidMount(): void {
-        this.setup();
+        this.componentDidMountInner();
+    }
+
+    private componentDidUpdateInner = async (prevProps: IVisualizationProps) => {
+        const needsNewSetup = this.props.id !== prevProps.id || this.props.workspace !== prevProps.workspace;
+        if (needsNewSetup) {
+            await this.setupVisualization();
+        }
+
+        return this.updateVisualization();
+    };
+
+    public componentDidUpdate(prevProps: IVisualizationProps): void {
+        this.componentDidUpdateInner(prevProps);
+    }
+
+    public componentWillUnmount() {
+        this.unmountVisualization();
     }
 
     public render(): React.ReactNode {
         return (
-            <>
+            <div>
                 HERE
                 <style>
                     {`/* hack to see the contents */
@@ -130,8 +223,10 @@ export class Visualization extends React.Component<IVisualizationProps> {
     height: 400px;
 }`}
                 </style>
+                {this.state.isLoading && <LoadingComponent />}
+                {this.state.error && <ErrorComponent message={this.state.error.message} />}
                 <div className="visualization-uri-root" id={this.elementId} />
-            </>
+            </div>
         );
     }
 }

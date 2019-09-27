@@ -372,6 +372,9 @@ export function insightSorts(insight: IInsight): SortItem[];
 export function insightTotals(insight: IInsight): ITotal[];
 
 // @public
+export function insightVisualizationClassIdentifier(insight: IInsight): string;
+
+// @public
 export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
 
 // @public
