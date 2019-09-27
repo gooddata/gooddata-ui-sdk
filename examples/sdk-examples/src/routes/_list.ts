@@ -31,18 +31,18 @@ import Export from "./Export";
 // import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
-    { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
+    // { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
     // { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
-    { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
-    { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
-    { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
-    {
-        path: "/advanced/loading-and-error",
-        title: "Loading and Error Components",
-        Component: LoadingAndError,
-    },
-    { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
+    // { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
+    // { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
+    // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
+    // {
+    //     path: "/advanced/loading-and-error",
+    //     title: "Loading and Error Components",
+    //     Component: LoadingAndError,
+    // },
+    // { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
 ];
 
 export const visualizationUseCasesRoutes = [
@@ -98,13 +98,13 @@ export const sideNavigationRoutes = [
     // },
     // { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasure },
     { path: "/execute", title: "Execute Component", Component: Execute },
-    // {
-    //     path: "/advanced",
-    //     pathMatch: "full",
-    //     redirectTo: advancedUseCasesRoutes[0].path,
-    //     title: "Advanced Use Cases",
-    //     Component: AdvancedUseCasesRoutes,
-    // },
+    {
+        path: "/advanced",
+        pathMatch: "full",
+        redirectTo: advancedUseCasesRoutes[0].path,
+        title: "Advanced Use Cases",
+        Component: AdvancedUseCasesRoutes,
+    },
     // { path: "/export", title: "Export", Component: Export },
     // {
     //     path: "/drilling",
@@ -144,7 +144,7 @@ export const topNavigationRoutes = [{ path: "/", title: "Live Examples", Compone
 export const routes = [
     ...sideNavigationRoutes,
     // ...visualizationUseCasesRoutes,
-    // ...advancedUseCasesRoutes,
+    ...advancedUseCasesRoutes,
     // ...drillingUseCasesRoutes,
     // ...nextRoutes,
     // ...hiddenPaths,

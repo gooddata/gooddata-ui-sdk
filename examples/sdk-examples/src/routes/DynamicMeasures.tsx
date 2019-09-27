@@ -2,10 +2,10 @@
 import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import DynamicMeasuresExample from "../components/DynamicMeasuresExample";
+import { DynamicMeasuresExample } from "../components/DynamicMeasuresExample";
 import DynamicMeasuresExampleSRC from "!raw-loader!../components/DynamicMeasuresExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const DynamicMeasures = () => (
+export const DynamicMeasures: React.FC = () => (
     <div>
         <h1>Dynamic Measures</h1>
 
