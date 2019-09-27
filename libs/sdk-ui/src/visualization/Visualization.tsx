@@ -10,7 +10,7 @@ import {
     insightVisualizationClassIdentifier,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, ILocale } from "../internal/interfaces/Visualization";
+import { IVisualization, IVisProps } from "../internal/interfaces/Visualization";
 import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableColumnChart } from "../internal/components/pluggableVisualizations/columnChart/PluggableColumnChart";
 import { PluggableLineChart } from "../internal/components/pluggableVisualizations/lineChart/PluggableLineChart";
@@ -59,7 +59,7 @@ interface IVisualizationProps {
     backend: IAnalyticalBackend;
     filters?: IFilter[];
     id: string;
-    locale?: string;
+    visualizationProps?: IVisProps;
     workspace: string;
 }
 
@@ -77,6 +77,12 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
 
     public static defaultProps: Partial<IVisualizationProps> = {
         filters: [],
+        visualizationProps: {
+            custom: {},
+            dimensions: {
+                height: 300, // TODO: what should this be?
+            },
+        },
     };
 
     public state: IVisualizationState = {
@@ -116,24 +122,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         if (!this.visualization) {
             return;
         }
-
-        this.visualization.update(
-            {
-                locale: this.props.locale as ILocale,
-                dimensions: {
-                    height: 300, // this.props.height,
-                },
-                custom: {},
-                // custom: {
-                //     stickyHeaderOffset: this.props.stickyHeaderOffset,
-                //     drillableItems: this.props.drillableItems,
-                //     totalsEditAllowed: this.props.totalsEditAllowed,
-                // },
-                // config: this.props.config,
-            },
-            this.insight,
-            this.getExecutionFactory(),
-        );
+        this.visualization.update(this.props.visualizationProps, this.insight, this.getExecutionFactory());
     };
 
     public setupVisualization = async () => {
@@ -160,7 +149,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
             },
             configPanelElement: "nonexistent",
             element: `#${this.elementId}`,
-            locale: this.props.locale as ILocale,
+            locale: this.props.visualizationProps ? this.props.visualizationProps.locale : undefined,
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
         });
