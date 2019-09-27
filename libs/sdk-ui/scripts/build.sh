@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 _build_styles(){
-    node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
-    node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
 }
 
 _common-build(){
