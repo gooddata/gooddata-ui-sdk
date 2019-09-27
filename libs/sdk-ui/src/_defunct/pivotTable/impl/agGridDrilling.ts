@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { AFM, Execution } from "@gooddata/gd-bear-model/dist/index";
-import { getMasterMeasureObjQualifier } from "../../../base/helpers/afmHelper";
+import { getMasterMeasureObjQualifier } from "../../to_delete/afmHelper";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
