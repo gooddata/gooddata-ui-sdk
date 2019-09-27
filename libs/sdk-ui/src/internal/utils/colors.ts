@@ -8,13 +8,13 @@ import isEmpty = require("lodash/isEmpty");
 import compact = require("lodash/compact");
 
 import { Execution } from "@gooddata/gd-bear-model";
-import { TypeGuards, IColorItem, IColorMappingProperty } from "@gooddata/gd-bear-client";
 import { IColorAssignment } from "../../base/interfaces/Colors";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import { ColorUtils } from "../../highcharts";
 import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IColorItem, IColorMappingProperty, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
 
 function getItemName(item: IColoredItem): string {
     let name = "";
@@ -43,13 +43,13 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
 
     if (colors && colors.colorAssignments) {
         inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
-            if (TypeGuards.isGuidColorItem(assignmentItem.color)) {
+            if (isGuidColorItem(assignmentItem.color)) {
                 return {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,
                     color: ColorUtils.getColorByGuid(colors.colorPalette, assignmentItem.color.value, index),
                 };
-            } else if (TypeGuards.isRgbColorItem(assignmentItem.color)) {
+            } else if (isRgbColorItem(assignmentItem.color)) {
                 return {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,

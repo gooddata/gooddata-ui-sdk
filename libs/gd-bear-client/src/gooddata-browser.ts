@@ -5,7 +5,6 @@ import { ApiResponse, ApiResponseError, ApiNetworkError } from "./xhr";
 import * as referenceHandling from "./referenceHandling";
 
 import * as DataLayer from "./DataLayer";
-import * as TypeGuards from "./typeGuards";
 
 const factoryBrowser = factory(fetch.bind(window));
 
@@ -19,7 +18,7 @@ export { factoryBrowser as factory, SDK, DataLayer };
 export { ApiResponse, ApiResponseError, ApiNetworkError };
 
 // explicitly export TypeGuards as they cannot be exported using the export * syntax when there is also a default export
-export { TypeGuards, referenceHandling };
+export { referenceHandling };
 
 export * from "./interfaces";
 
