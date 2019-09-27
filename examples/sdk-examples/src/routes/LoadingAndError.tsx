@@ -9,7 +9,7 @@ import LoadingExampleSRC from "!raw-loader!../components/LoadingExample"; // esl
 import { CustomisedLoadingExample } from "../components/CustomisedLoadingExample";
 import CustomisedLoadingExampleSRC from "!raw-loader!../components/CustomisedLoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-import ErrorExample from "../components/ErrorExample";
+import { ErrorExample } from "../components/ErrorExample";
 import ErrorExampleSRC from "!raw-loader!../components/ErrorExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const LoadingAndError: React.FC = () => (
@@ -27,11 +27,10 @@ export const LoadingAndError: React.FC = () => (
         <h2>Customised Loading Component</h2>
         <ExampleWithSource for={CustomisedLoadingExample} source={CustomisedLoadingExampleSRC} />
 
-        {/* 
         <hr className="separator" />
 
         <h2>Error Component</h2>
-        <ExampleWithSource for={ErrorExample} source={ErrorExampleSRC} /> */}
+        <ExampleWithSource for={ErrorExample} source={ErrorExampleSRC} />
     </div>
 );
 
