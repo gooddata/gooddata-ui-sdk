@@ -2,9 +2,16 @@
 import React from "react";
 import { Col, Container, Row } from "react-grid-system";
 
-import { AreaChart, BarChart, BubbleChart, DonutChart, Executor, Kpi, PieChart } from "@gooddata/sdk-ui";
-
-import { Visualization } from "./uri/Visualization";
+import {
+    AreaChart,
+    BarChart,
+    BubbleChart,
+    DonutChart,
+    Executor,
+    Kpi,
+    PieChart,
+    Visualization,
+} from "@gooddata/sdk-ui";
 
 import "./App.css";
 import { backend, initialize } from "./backend";

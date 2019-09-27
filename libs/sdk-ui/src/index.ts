@@ -69,8 +69,7 @@ const CoreComponents: ICoreComponents = {
 };
 */
 
-import { PluggableBarChart } from "./internal/components/pluggableVisualizations/barChart/PluggableBarChart";
-import { IVisualization } from "./internal/interfaces/Visualization";
+import { Visualization } from "./visualization/Visualization";
 
 export {
     AttributeElements,
@@ -128,7 +127,5 @@ export {
     HeaderPredicateFactory,
     MappingHeader,
     withJsxExport,
-    // maybe remove
-    PluggableBarChart,
-    IVisualization,
+    Visualization,
 };
