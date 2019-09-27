@@ -97,7 +97,7 @@ export const sideNavigationRoutes = [
     //     Component: AttributeFilter,
     // },
     // { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasure },
-    // { path: "/execute", title: "Execute Component", Component: Execute },
+    { path: "/execute", title: "Execute Component", Component: Execute },
     // {
     //     path: "/advanced",
     //     pathMatch: "full",
