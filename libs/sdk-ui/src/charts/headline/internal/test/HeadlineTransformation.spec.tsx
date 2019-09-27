@@ -9,8 +9,14 @@ import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasures,
+    headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../__mocks__/fixtures";
 import noop = require("lodash/noop");
+import {
+    DRILL_EVENT_DATA_BY_MEASURE_URI,
+    DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
+    DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
+} from "./fixtures/drill_event_data";
 
 describe("HeadlineTransformation", () => {
     function createComponent(props: IHeadlineTransformationProps) {
@@ -169,7 +175,6 @@ describe("HeadlineTransformation", () => {
         expect(onAfterRender).toHaveBeenCalledTimes(2);
     });
 
-    /* TODO: re-enable once drilling is fixed up
     describe("drill eventing", () => {
         describe("for primary value", () => {
             it("should dispatch drill event and post message", () => {
@@ -298,5 +303,4 @@ describe("HeadlineTransformation", () => {
             });
         });
     });
-    */
 });
