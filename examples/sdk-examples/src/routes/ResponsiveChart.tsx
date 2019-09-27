@@ -2,10 +2,10 @@
 import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import ResponsiveExample from "../components/ResponsiveExample";
+import { ResponsiveExample } from "../components/ResponsiveExample";
 import ResponsiveExampleSRC from "!raw-loader!../components/ResponsiveExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const ResponsiveChart = () => (
+export const ResponsiveChart: React.FC = () => (
     <div>
         <h1>Responsive Chart</h1>
 
