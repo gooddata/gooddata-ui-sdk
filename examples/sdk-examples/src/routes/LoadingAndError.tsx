@@ -3,7 +3,7 @@ import React from "react";
 
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import LoadingExample from "../components/LoadingExample";
+import { LoadingExample } from "../components/LoadingExample";
 import LoadingExampleSRC from "!raw-loader!../components/LoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 import CustomisedLoadingExample from "../components/CustomisedLoadingExample";
@@ -12,7 +12,7 @@ import CustomisedLoadingExampleSRC from "!raw-loader!../components/CustomisedLoa
 import ErrorExample from "../components/ErrorExample";
 import ErrorExampleSRC from "!raw-loader!../components/ErrorExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const LoadingAndError = () => (
+export const LoadingAndError: React.FC = () => (
     <div>
         <h1>Loading and Error Components</h1>
 
@@ -22,7 +22,7 @@ export const LoadingAndError = () => (
 
         <h2>Default Loading Component</h2>
         <ExampleWithSource for={LoadingExample} source={LoadingExampleSRC} />
-
+        {/* 
         <hr className="separator" />
 
         <h2>Customised Loading Component</h2>
@@ -31,7 +31,7 @@ export const LoadingAndError = () => (
         <hr className="separator" />
 
         <h2>Error Component</h2>
-        <ExampleWithSource for={ErrorExample} source={ErrorExampleSRC} />
+        <ExampleWithSource for={ErrorExample} source={ErrorExampleSRC} /> */}
     </div>
 );
 

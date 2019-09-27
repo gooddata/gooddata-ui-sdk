@@ -37,11 +37,11 @@ export const advancedUseCasesRoutes = [
     { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
     { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
     // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },
-    // {
-    //     path: "/advanced/loading-and-error",
-    //     title: "Loading and Error Components",
-    //     Component: LoadingAndError,
-    // },
+    {
+        path: "/advanced/loading-and-error",
+        title: "Loading and Error Components",
+        Component: LoadingAndError,
+    },
     // { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
 ];
 
