@@ -28,11 +28,11 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     predicate: IHeaderPredicate2,
     context: IHeaderPredicateContext2,
 ): boolean {
-    const operandInAfm: IMeasure = dv.measure(operandLocalIdentifier);
+    const operand: IMeasure = dv.measure(operandLocalIdentifier);
     const operandHeader: IMeasureHeaderItem = dv.measureGroupHeaderItem(operandLocalIdentifier);
 
-    if (isArithmeticMeasure(operandInAfm)) {
-        const operands = measureArithmeticOperands(operandInAfm);
+    if (isArithmeticMeasure(operand)) {
+        const operands = measureArithmeticOperands(operand);
 
         return (operands ? operands : []).some(operandLocalIdentifier =>
             arithmeticMeasureLocalIdentifierDeepMatch(dv, operandLocalIdentifier, predicate, context),
@@ -66,15 +66,15 @@ function composedFromQualifier(predicate: IHeaderPredicate2): IHeaderPredicate2 
 
         const { dv } = context;
         const measureLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        const measureInAFM = dv.measure(measureLocalIdentifier);
+        const measure = dv.measure(measureLocalIdentifier);
 
-        if (!measureInAFM) {
+        if (!measure) {
             return false;
         }
 
         const arithmeticMeasureOperands =
-            getDerivedMeasureMasterMeasureOperandIdentifiers(measureInAFM, dv) ||
-            getMasterMeasureOperandIdentifiers(measureInAFM);
+            getDerivedMeasureMasterMeasureOperandIdentifiers(measure, dv) ||
+            getMasterMeasureOperandIdentifiers(measure);
 
         if (!arithmeticMeasureOperands) {
             return false;
@@ -84,14 +84,6 @@ function composedFromQualifier(predicate: IHeaderPredicate2): IHeaderPredicate2 
             arithmeticMeasureLocalIdentifierDeepMatch(dv, operandLocalIdentifier, predicate, context),
         );
     };
-}
-
-function getSimpleMeasureUri(measure: IMeasure): string {
-    return measureUri(measure);
-}
-
-function getSimpleMeasureIdentifier(measure: IMeasure): string {
-    return measureIdentifier(measure);
 }
 
 function matchHeaderUri(uri: string, header: IMappingHeader): boolean {
@@ -104,14 +96,14 @@ function matchHeaderIdentifier(identifier: string, header: IMappingHeader): bool
     return headerIdentifier ? headerIdentifier === identifier : false;
 }
 
-function matchAfmMeasureUri(uri: string, measure: IMeasure): boolean {
-    const measureUri = getSimpleMeasureUri(measure);
-    return measureUri ? measureUri === uri : false;
+function matchUri(uri: string, measure: IMeasure): boolean {
+    const simpleMeasureUri = measureUri(measure);
+    return simpleMeasureUri ? simpleMeasureUri === uri : false;
 }
 
-function matchAfmMeasureIdentifier(identifier: string, measure: IMeasure): boolean {
-    const measureIdentifier = getSimpleMeasureIdentifier(measure);
-    return measureIdentifier ? measureIdentifier === identifier : false;
+function matchMeasureIdentifier(identifier: string, measure: IMeasure): boolean {
+    const simpleMeasureIdentifier = measureIdentifier(measure);
+    return simpleMeasureIdentifier ? simpleMeasureIdentifier === identifier : false;
 }
 
 function matchDerivedMeasureByMasterUri(
@@ -132,7 +124,7 @@ function matchDerivedMeasureByMasterUri(
 
         const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
 
-        return matchAfmMeasureUri(uri, masterMeasure);
+        return matchUri(uri, masterMeasure);
     }
     return false;
 }
@@ -155,7 +147,7 @@ function matchDerivedMeasureByMasterIdentifier(
 
         const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
 
-        return matchAfmMeasureIdentifier(identifier, masterMeasure);
+        return matchMeasureIdentifier(identifier, masterMeasure);
     }
     return false;
 }
@@ -177,7 +169,7 @@ export function uriMatch(uri: string): IHeaderPredicate2 {
             return false;
         }
 
-        if (matchAfmMeasureUri(uri, measure)) {
+        if (matchUri(uri, measure)) {
             return true;
         }
 
@@ -206,7 +198,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate2 {
             return false;
         }
 
-        if (matchAfmMeasureIdentifier(identifier, measure)) {
+        if (matchMeasureIdentifier(identifier, measure)) {
             return true;
         }
 
