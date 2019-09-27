@@ -42,7 +42,7 @@ export const advancedUseCasesRoutes = [
         title: "Loading and Error Components",
         Component: LoadingAndError,
     },
-    // { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
+    { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
 ];
 
 export const visualizationUseCasesRoutes = [
