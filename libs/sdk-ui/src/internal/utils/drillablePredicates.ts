@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import sdk from "@gooddata/gd-bear-client";
+import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
 import uniq = require("lodash/uniq");
 import includes = require("lodash/includes");
 import isArray = require("lodash/isArray");
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
-import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
 
 export interface ISimplePostMessageData {
     uris?: string[];
@@ -43,7 +43,7 @@ function getUriFromPairByIdentifier(
 export async function convertPostMessageToDrillablePredicates(
     projectId: string,
     postMessageData: IPostMessageData,
-): Promise<IHeaderPredicate[]> {
+): Promise<IHeaderPredicate2[]> {
     const { uris, identifiers, composedFrom } = postMessageData;
 
     const simpleUris = isArray(uris) ? uris : [];

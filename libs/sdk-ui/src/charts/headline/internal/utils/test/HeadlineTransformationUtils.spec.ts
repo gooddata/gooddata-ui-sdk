@@ -1,8 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import { getHeadlineData } from "../HeadlineTransformationUtils";
+import {
+    applyDrillableItems,
+    buildDrillEventData,
+    fireDrillEvent,
+    getHeadlineData,
+    IHeadlineDrillItemContext,
+} from "../HeadlineTransformationUtils";
 import { createIntlMock } from "../../../../../base/helpers/intlUtils";
 import {
     headlineWithOneMeasure,
+    headlineWithOneMeasureWithIdentifier,
     headlineWithTwoMeasures,
     headlineWithTwoMeasuresBothEmpty,
     headlineWithTwoMeasuresBothSame,
@@ -11,7 +18,11 @@ import {
     headlineWithTwoMeasuresFirstZero,
     headlineWithTwoMeasuresSecondEmpty,
     headlineWithTwoMeasuresSecondZero,
+    headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures";
+import { IHeadlineData } from "../../../Headlines";
+import { identifierMatch, uriMatch } from "../../../../../base/factory/HeaderPredicateFactory";
+import { IDrillEvent2 } from "../../../../../base/interfaces/DrillEvents";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {
@@ -263,13 +274,12 @@ describe("HeadlineTransformationUtils", () => {
         });
     });
 
-    /* TODO: re-enable these tests once drilling is all switched to new types
     describe("applyDrillableItems", () => {
         it("should NOT throw any error when drillable items do not match defined headline or execution data", () => {
             const headlineData = {};
             const data = applyDrillableItems(
                 headlineData as IHeadlineData,
-                [headerPredicateFactory.uriMatch("some-uri")],
+                [uriMatch("some-uri")],
                 headlineWithTwoMeasures.dataView,
             );
             expect(data).toEqual({});
@@ -286,7 +296,7 @@ describe("HeadlineTransformationUtils", () => {
             };
             const updatedData = applyDrillableItems(
                 data,
-                [headerPredicateFactory.uriMatch("some-uri")],
+                [uriMatch("some-uri")],
                 headlineWithTwoMeasures.dataView,
             );
 
@@ -310,7 +320,7 @@ describe("HeadlineTransformationUtils", () => {
                         isDrillable: false,
                     },
                 },
-                [headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")],
+                [uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")],
                 headlineWithOneMeasure.dataView,
             );
 
@@ -334,8 +344,8 @@ describe("HeadlineTransformationUtils", () => {
                         isDrillable: false,
                     },
                 },
-                [headerPredicateFactory.identifierMatch("af2Ewj9Re2vK")],
-                headlineWithOneMeasureWithIdentifier.dataView
+                [identifierMatch("af2Ewj9Re2vK")],
+                headlineWithOneMeasureWithIdentifier.dataView,
             );
 
             expect(data).toEqual({
@@ -359,8 +369,8 @@ describe("HeadlineTransformationUtils", () => {
             };
             const data = applyDrillableItems(
                 headlineData as IHeadlineData,
-                [headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284")],
-                headlineWithTwoMeasures.dataView
+                [uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284")],
+                headlineWithTwoMeasures.dataView,
             );
 
             expect(data).toEqual({
@@ -384,8 +394,8 @@ describe("HeadlineTransformationUtils", () => {
             };
             const data = applyDrillableItems(
                 headlineData as IHeadlineData,
-                [headerPredicateFactory.identifierMatch("afSEwRwdbMeQ")],
-                headlineWithTwoMeasuresWithIdentifier.dataView
+                [identifierMatch("afSEwRwdbMeQ")],
+                headlineWithTwoMeasuresWithIdentifier.dataView,
             );
 
             expect(data).toEqual({
@@ -415,10 +425,10 @@ describe("HeadlineTransformationUtils", () => {
                     },
                 },
                 [
-                    headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                    headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"),
+                    uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
+                    uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284"),
                 ],
-                headlineWithTwoMeasures.dataView
+                headlineWithTwoMeasures.dataView,
             );
 
             expect(data).toEqual({
@@ -448,10 +458,8 @@ describe("HeadlineTransformationUtils", () => {
             };
             const updatedData = applyDrillableItems(
                 data,
-                [
-                    headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                ],
-                headlineWithOneMeasure.dataView
+                [uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")],
+                headlineWithOneMeasure.dataView,
             );
 
             expect(updatedData).toEqual({
@@ -469,39 +477,23 @@ describe("HeadlineTransformationUtils", () => {
     describe("buildDrillEventData", () => {
         it("should build expected drill event data from execution request made with metric uri", () => {
             const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "m1",
+                localIdentifier: "lostMetric",
                 element: "primaryValue",
-                value: "42",
+                value: "9011389.956",
             };
-            const eventData = buildDrillEventData(
-                itemContext,
-                headlineWithOneMeasure.dataView
-            );
+            const eventData = buildDrillEventData(itemContext, headlineWithOneMeasure.dataView);
             expect(eventData).toEqual({
-                executionContext: {
-                    measures: [
-                        {
-                            localIdentifier: "m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                                    },
-                                },
-                            },
-                        },
-                    ],
-                },
+                dataView: headlineWithOneMeasure.dataView,
                 drillContext: {
                     type: "headline",
                     element: "primaryValue",
-                    value: "42",
+                    value: "9011389.956",
                     intersection: [
                         {
-                            id: "m1",
+                            id: "lostMetric",
                             title: "Lost",
                             header: {
-                                uri: "/gdc/md/project_id/obj/1",
+                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
                                 identifier: "",
                             },
                         },
@@ -512,39 +504,23 @@ describe("HeadlineTransformationUtils", () => {
 
         it("should build expected drill event data from execution request made with metric identifier", () => {
             const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "m1",
+                localIdentifier: "lostMetric",
                 element: "primaryValue",
-                value: "42",
+                value: "9011389.956",
             };
-            const eventData = buildDrillEventData(
-                itemContext,
-                headlineWithOneMeasureWithIdentifier.dataView
-            );
+            const eventData = buildDrillEventData(itemContext, headlineWithOneMeasureWithIdentifier.dataView);
             expect(eventData).toEqual({
-                executionContext: {
-                    measures: [
-                        {
-                            localIdentifier: "m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        identifier: "metric.lost",
-                                    },
-                                },
-                            },
-                        },
-                    ],
-                },
+                dataView: headlineWithOneMeasureWithIdentifier.dataView,
                 drillContext: {
                     type: "headline",
                     element: "primaryValue",
-                    value: "42",
+                    value: "9011389.956",
                     intersection: [
                         {
-                            id: "m1",
+                            id: "lostMetric",
                             title: "Lost",
                             header: {
-                                identifier: "metric.lost",
+                                identifier: "af2Ewj9Re2vK",
                                 uri: "",
                             },
                         },
@@ -555,49 +531,23 @@ describe("HeadlineTransformationUtils", () => {
 
         it("should build drill event data from execution for secondary value", () => {
             const itemContext: IHeadlineDrillItemContext = {
-                localIdentifier: "m2",
+                localIdentifier: "wonMetric",
                 element: "secondaryValue",
-                value: "12345678",
+                value: "42470571.16",
             };
-            const eventData = buildDrillEventData(
-                itemContext,
-                headlineWithTwoMeasures.dataView
-            );
+            const eventData = buildDrillEventData(itemContext, headlineWithTwoMeasures.dataView);
             expect(eventData).toEqual({
-                executionContext: {
-                    measures: [
-                        {
-                            localIdentifier: "m1",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        uri: "/gdc/md/project_id/obj/1",
-                                    },
-                                },
-                            },
-                        },
-                        {
-                            localIdentifier: "m2",
-                            definition: {
-                                measure: {
-                                    item: {
-                                        uri: "/gdc/md/project_id/obj/2",
-                                    },
-                                },
-                            },
-                        },
-                    ],
-                },
+                dataView: headlineWithTwoMeasures.dataView,
                 drillContext: {
                     type: "headline",
                     element: "secondaryValue",
-                    value: "12345678",
+                    value: "42470571.16",
                     intersection: [
                         {
-                            id: "m2",
-                            title: "Found",
+                            id: "wonMetric",
+                            title: "Won",
                             header: {
-                                uri: "/gdc/md/project_id/obj/2",
+                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
                                 identifier: "",
                             },
                         },
@@ -612,12 +562,7 @@ describe("HeadlineTransformationUtils", () => {
                 element: "primaryValue",
                 value: "42",
             };
-            expect(() =>
-                buildDrillEventData(
-                    itemContext,
-                    headlineWithOneMeasure.dataView
-                ),
-            ).toThrow();
+            expect(() => buildDrillEventData(itemContext, headlineWithOneMeasure.dataView)).toThrow();
         });
     });
 
@@ -638,7 +583,7 @@ describe("HeadlineTransformationUtils", () => {
             expect(eventHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
                     detail: {
-                        executionContext: {},
+                        dataView: {},
                         drillContext: {},
                     },
                     bubbles: true,
@@ -665,7 +610,7 @@ describe("HeadlineTransformationUtils", () => {
             expect(eventHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
                     detail: {
-                        executionContext: {},
+                        dataView: {},
                         drillContext: {},
                     },
                     bubbles: true,
@@ -692,5 +637,4 @@ describe("HeadlineTransformationUtils", () => {
             expect(drillEventFunction).toHaveBeenCalledTimes(1);
         });
     });
-    */
 });

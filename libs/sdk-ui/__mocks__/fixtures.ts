@@ -1354,6 +1354,8 @@ export const comboVizObjectContent: VisualizationObject.IVisualizationObjectCont
 
 export const testWorkspace = "testWorkspace";
 
+export const emptyFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, []));
+
 export const newMeasures: IMeasure[] = [
     {
         measure: {
@@ -1467,6 +1469,8 @@ export const barChartWithPreviousPeriodMeasureX6 = recordedDataFacade(
 );
 
 export const barChartWithoutAttributes = recordedDataFacade(rec.BarChartWithoutAttributes);
+
+export const barChartForDrillTests = recordedDataFacade(rec.BarChartForDrillTests);
 
 //
 // Bubble chart

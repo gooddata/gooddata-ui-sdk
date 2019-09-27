@@ -43,7 +43,7 @@ import { isTreemap } from "../../highcharts/utils/common";
 import { getColorMappingPredicate, getColorPaletteFromColors } from "../../highcharts/utils/color";
 import { getCachedOrLoad } from "../../base/helpers/sdkCache";
 import { getFeatureFlags } from "../../base/helpers/featureFlags";
-import { mergeFiltersToAfm } from "../../base/helpers/afmHelper";
+import { mergeFiltersToAfm } from "../to_delete/afmHelper";
 import { _experimentalDataSourceFactory } from "./experimentalDataSource";
 import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
 import { ATTRIBUTE, COLUMNS, MEASURES } from "../../base/constants/bucketNames";

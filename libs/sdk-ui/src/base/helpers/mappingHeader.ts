@@ -1,20 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
+import { IMappingHeader } from "../interfaces/MappingHeader";
 import {
-    IMappingHeader,
-    isMappingHeaderAttribute,
-    isMappingHeaderAttributeItem,
-    isMappingHeaderMeasureItem,
-} from "../interfaces/MappingHeader";
+    isAttributeHeader,
+    isMeasureHeaderItem,
+    isResultAttributeHeaderItem,
+} from "@gooddata/sdk-backend-spi";
 
 export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean {
-    return isMappingHeaderAttribute(header) || isMappingHeaderMeasureItem(header);
+    return isAttributeHeader(header) || isMeasureHeaderItem(header);
 }
 
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string {
-    if (isMappingHeaderAttribute(header)) {
+    if (isAttributeHeader(header)) {
         return header.attributeHeader.localIdentifier;
     }
-    if (isMappingHeaderMeasureItem(header)) {
+    if (isMeasureHeaderItem(header)) {
         return header.measureHeaderItem.localIdentifier;
     }
 
@@ -22,35 +22,35 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
 }
 
 export function getMappingHeaderName(header: IMappingHeader): string {
-    if (isMappingHeaderAttribute(header)) {
+    if (isAttributeHeader(header)) {
         return header.attributeHeader.formOf.name;
     }
-    if (isMappingHeaderAttributeItem(header)) {
+    if (isResultAttributeHeaderItem(header)) {
         return header.attributeHeaderItem.name;
     }
-    if (isMappingHeaderMeasureItem(header)) {
+    if (isMeasureHeaderItem(header)) {
         return header.measureHeaderItem.name;
     }
 }
 
 export function getMappingHeaderIdentifier(header: IMappingHeader): string {
-    if (isMappingHeaderAttribute(header)) {
+    if (isAttributeHeader(header)) {
         return header.attributeHeader.identifier;
     }
-    if (isMappingHeaderMeasureItem(header)) {
+    if (isMeasureHeaderItem(header)) {
         return header.measureHeaderItem.identifier;
     }
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no identifier`);
 }
 
 export function getMappingHeaderUri(header: IMappingHeader): string {
-    if (isMappingHeaderAttribute(header)) {
+    if (isAttributeHeader(header)) {
         return header.attributeHeader.uri;
     }
-    if (isMappingHeaderAttributeItem(header)) {
+    if (isResultAttributeHeaderItem(header)) {
         return header.attributeHeaderItem.uri;
     }
-    if (isMappingHeaderMeasureItem(header)) {
+    if (isMeasureHeaderItem(header)) {
         return header.measureHeaderItem.uri;
     }
 }

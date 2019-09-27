@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import { IColor, IColorItem } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import { IChartConfig } from "../Config";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader, isMappingHeaderAttributeItem } from "../../base/interfaces/MappingHeader";
+import { IHeaderPredicate2, IHeaderPredicateContext2 } from "../../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
+import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../base/interfaces/Colors";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
-import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../base/interfaces/Colors";
 
 export const WHITE = "rgb(255, 255, 255)";
 export const BLACK = "rgb(0, 0, 0)";
@@ -138,9 +138,9 @@ export function getRgbStringFromRGB(color: IColor) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 
-export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        if (isMappingHeaderAttributeItem(header)) {
+export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate2 {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
+        if (isResultAttributeHeaderItem(header)) {
             return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
         }
 

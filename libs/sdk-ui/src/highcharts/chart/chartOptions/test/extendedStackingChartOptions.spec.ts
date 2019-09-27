@@ -2,6 +2,13 @@
 import { Execution } from "@gooddata/gd-bear-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../../base/helpers/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
+import { barChartWith4MetricsAndViewByTwoAttributes } from "../../../../../__mocks__/fixtures";
+import { MeasureColorStrategy } from "../../colorFactory";
+import { getMVSForViewByTwoAttributes } from "../../test/helper";
+import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
+import { attributeUri, measureUri } from "@gooddata/sdk-model";
+import { uriMatch } from "../../../../base/factory/HeaderPredicateFactory";
+import { DEFAULT_COLOR_PALETTE } from "../../../Config";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeHeader: Execution.IAttributeHeader["attributeHeader"] = {
@@ -184,7 +191,6 @@ describe("getCategoriesForTwoAttributes", () => {
     });
 });
 
-/* TODO: SDK8: re-enable this test once drilling is fixed up
 describe("getDrillableSeriesWithParentAttribute", () => {
     const dv = barChartWith4MetricsAndViewByTwoAttributes;
     const {
@@ -241,27 +247,15 @@ describe("getDrillableSeriesWithParentAttribute", () => {
     const m0uri = measureUri(measures[0]);
 
     it.each([
-        ["parent attribute", [a0uri],
-        ["child attribute", [a1uri],
-        ["measure", [measureUri(measures[0])],
+        ["parent attribute", [a0uri]],
+        ["child attribute", [a1uri]],
+        ["measure", [measureUri(measures[0])]],
         // tslint:disable-next-line:max-line-length
-        [
-            "parent and child attributes",
-            [
-                a0uri,
-                a1uri,
-            ],
-        ],
+        ["parent and child attributes", [a0uri, a1uri]],
         // tslint:disable-next-line:max-line-length
-        [
-            "parent attribute and measure",
-            [
-                a0uri,
-                m0uri,
-            ],
-        ],
+        ["parent attribute and measure", [a0uri, m0uri]],
     ])('should return 3 drill items with "%s" configured', (_desc: string, itemUris: string[]) => {
-        const drillableItems = itemUris.map((uri: string) => headerPredicateFactory.uriMatch(uri));
+        const drillableItems = itemUris.map((uri: string) => uriMatch(uri));
         const drillableMeasuresSeriesData = getDrillableSeries(
             dv,
             seriesWithoutDrillability,
@@ -274,4 +268,3 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toEqual(drillIntersectionItems);
     });
 });
-*/

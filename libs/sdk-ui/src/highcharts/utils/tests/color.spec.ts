@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
 import {
-    getLighterColor,
-    normalizeColorToRGB,
-    getColorPaletteFromColors,
-    getValidColorPalette,
     getColorMappingPredicate,
+    getColorPaletteFromColors,
+    getLighterColor,
+    getValidColorPalette,
+    normalizeColorToRGB,
 } from "../color";
 import {
-    measureHeaders,
-    context,
     attributeHeader,
     attributeHeaderItem,
+    context,
+    measureHeaders,
 } from "../../../base/factory/tests/HeaderPredicateFactory.mock";
 import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 
@@ -95,26 +95,26 @@ describe("getValidColorPalette", () => {
 describe("getColorMappingPredicate", () => {
     describe("no references provided", () => {
         it("should match predicate when measure local identifier matches and measureHeaderItem tested", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("uriBasedMeasureLocalIdentifier");
+            const predicate: IHeaderPredicate2 = getColorMappingPredicate("uriBasedMeasureLocalIdentifier");
 
             expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
         });
 
         // tslint:disable-next-line:max-line-length
         it("should not match predicate when measure local identifier does not match and measureHeaderItem tested", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("someOtherMeasure.localIdentifier");
+            const predicate: IHeaderPredicate2 = getColorMappingPredicate("someOtherMeasure.localIdentifier");
 
             expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(false);
         });
 
         it("should not match predicate when referenced uri matches and attributeHeader tested", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("/attributeItemUri");
+            const predicate: IHeaderPredicate2 = getColorMappingPredicate("/attributeItemUri");
 
             expect(predicate(attributeHeader, {} as any)).toEqual(false);
         });
 
         it("should match predicate when referenced uri matches and attributeItemHeader tested", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("/attributeItemUri");
+            const predicate: IHeaderPredicate2 = getColorMappingPredicate("/attributeItemUri");
 
             expect(predicate(attributeHeaderItem, {} as any)).toEqual(true);
         });

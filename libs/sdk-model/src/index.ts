@@ -106,6 +106,9 @@ export {
     measureFingerprint,
     measureUri,
     measureIdentifier,
+    measureMasterIdentifier,
+    measureArithmeticOperands,
+    measureDisableComputeRatio,
 } from "./measure";
 
 export {

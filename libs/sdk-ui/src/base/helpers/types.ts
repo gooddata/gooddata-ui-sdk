@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
+import { IAttributeHeader, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 
-export type IUnwrappedAttributeHeadersWithItems = Execution.IAttributeHeader["attributeHeader"] & {
-    items: Execution.IResultAttributeHeaderItem[];
+export type IUnwrappedAttributeHeadersWithItems = IAttributeHeader["attributeHeader"] & {
+    items: IResultAttributeHeaderItem[];
 };

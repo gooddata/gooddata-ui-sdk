@@ -1,0 +1,339 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/attributeDisplayFormUri"
+                },
+                "localIdentifier": "attributeLocalIdentifier"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "alias": "measure defined by uri",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/uriBasedMeasureUri"
+                        }
+                    }
+                },
+                "localIdentifier": "uriBasedMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "measure defined by identifier",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "identifierBasedMeasureIdentifier"
+                        }
+                    }
+                },
+                "localIdentifier": "identifierBasedMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Show in % ad-hoc measure defined by uri",
+                "definition": {
+                    "measureDefinition": {
+                        "computeRatio": true,
+                        "item": {
+                            "uri": "/uriBasedRatioMeasureUri"
+                        }
+                    }
+                },
+                "localIdentifier": "uriBasedRatioMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Show in % ad-hoc measure defined by identifier",
+                "definition": {
+                    "measureDefinition": {
+                        "computeRatio": true,
+                        "item": {
+                            "identifier": "identifierBasedRatioMeasureIdentifier"
+                        }
+                    }
+                },
+                "localIdentifier": "identifierBasedRatioMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Ad-hoc uri-based measurecreated from attribute",
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "count",
+                        "item": {
+                            "uri": "/attributeUri"
+                        }
+                    }
+                },
+                "localIdentifier": "uriBasedAdhocMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Ad-hoc identifier-based measurecreated from attribute",
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "count",
+                        "item": {
+                            "identifier": "attributeIdentifier"
+                        }
+                    }
+                },
+                "localIdentifier": "identifierBasedAdhocMeasureLocalIdentifier",
+                "format": "#,##0.00"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare PP measurefrom uri-based measure",
+                "localIdentifier": "uriBasedPPMeasureLocalIdentifier",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "uriBasedMeasureLocalIdentifier",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/bar"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare PP measurefrom identifier-based measure",
+                "localIdentifier": "identifierBasedPPMeasureLocalIdentifier",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "identifierBasedMeasureLocalIdentifier",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/bar"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare SP measurefrom uri-based measure",
+                "localIdentifier": "uriBasedSPMeasureLocalIdentifier",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "uriBasedMeasureLocalIdentifier",
+                        "popAttribute": {
+                            "uri": "/foo"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare SP measurefrom identifier-based measure",
+                "localIdentifier": "identifierBasedSPMeasureLocalIdentifier",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "identifierBasedMeasureLocalIdentifier",
+                        "popAttribute": {
+                            "uri": "/foo"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare PP measurefrom uri-based ratio measure",
+                "localIdentifier": "uriBasedPPRatioMeasureLocalIdentifier",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "uriBasedRatioMeasureLocalIdentifier",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/bar"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare PP measurefrom identifier-based ratio measure",
+                "localIdentifier": "identifierBasedPPRatioMeasureLocalIdentifier",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "identifierBasedRatioMeasureLocalIdentifier",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/bar"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare SP measurefrom uri-based ratio measure",
+                "localIdentifier": "uriBasedSPRatioMeasureLocalIdentifier",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "uriBasedRatioMeasureLocalIdentifier",
+                        "popAttribute": {
+                            "uri": "/foo"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare SP measurefrom identifier-based ratio measure",
+                "localIdentifier": "identifierBasedSPRatioMeasureLocalIdentifier",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "identifierBasedRatioMeasureLocalIdentifier",
+                        "popAttribute": {
+                            "uri": "/foo"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "alias": "Arithmetic measurefrom mixed-based measures",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": [
+                            "uriBasedMeasureLocalIdentifier",
+                            "identifierBasedMeasureLocalIdentifier"
+                        ],
+                        "operator": "sum"
+                    }
+                },
+                "localIdentifier": "arithmeticMeasureLocalIdentifier"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Arithmetic measureof 2nd order from mixed-based measures",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": [
+                            "arithmeticMeasureLocalIdentifier",
+                            "arithmeticMeasureLocalIdentifier"
+                        ],
+                        "operator": "sum"
+                    }
+                },
+                "localIdentifier": "arithmeticMeasureOf2ndOrderLocalIdentifier"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Arithmetic measurefrom uri-based compare PP+SP measures",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": [
+                            "uriBasedPPMeasureLocalIdentifier",
+                            "uriBasedSPMeasureLocalIdentifier"
+                        ],
+                        "operator": "sum"
+                    }
+                },
+                "localIdentifier": "uriBasedCompareArithmeticMeasureLocalIdentifier"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Arithmetic measurefrom identifier-based compare PP+SP measures",
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": [
+                            "identifierBasedPPMeasureLocalIdentifier",
+                            "identifierBasedSPMeasureLocalIdentifier"
+                        ],
+                        "operator": "sum"
+                    }
+                },
+                "localIdentifier": "identifierBasedCompareArithmeticMeasureLocalIdentifier"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare PP measurederived from AM",
+                "definition": {
+                    "previousPeriodMeasure": {
+                        "measureIdentifier": "arithmeticMeasureLocalIdentifier",
+                        "dateDataSets": [
+                            {
+                                "dataSet": {
+                                    "uri": "/bar"
+                                },
+                                "periodsAgo": 1
+                            }
+                        ]
+                    }
+                },
+                "localIdentifier": "identifierComparePPDerivedFromAM"
+            }
+        },
+        {
+            "measure": {
+                "alias": "Compare SP measurederived from AM",
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "arithmeticMeasureLocalIdentifier",
+                        "popAttribute": {
+                            "uri": "/foo"
+                        }
+                    }
+                },
+                "localIdentifier": "identifierCompareSPDerivedFromAM"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["attributeLocalIdentifier"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

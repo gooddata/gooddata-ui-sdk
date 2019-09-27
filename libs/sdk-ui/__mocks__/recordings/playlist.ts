@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-09-24T11:28:06.737Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-09-26T13:28:30.293Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -11,6 +11,12 @@ export const AreaChartWithMeasureViewByAndStackBy = {
     definition: require("./area_chart_with_measure_view_by_and_stack_by/definition.json"),
     response: require("./area_chart_with_measure_view_by_and_stack_by/response.json"),
     result: require("./area_chart_with_measure_view_by_and_stack_by/result.json"),
+};
+
+export const BarChartForDrillTests = {
+    definition: require("./bar_chart_for_drill_tests/definition.json"),
+    response: require("./bar_chart_for_drill_tests/response.json"),
+    result: require("./bar_chart_for_drill_tests/result.json"),
 };
 
 export const BarChartWith2MetricsAndViewByAttribute = {
@@ -318,6 +324,7 @@ export const MasterIndex = {
     testWorkspace: {
         fp_ada6838291be0409535d24690a31749e: ComboChartWith3MetricsAndViewByAttribute,
         fp_0b599ac8ef275e712d231f304d9e29d0: AreaChartWithMeasureViewByAndStackBy,
+        fp_18206c9517c4b36f8775d27939aa9a27: BarChartForDrillTests,
         fp_45eabf83c34eaa23f347b56a5858d57f: ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
         fp_baa24e54ab2909e7a7ae4f5f6d21ffaa: BarChartWith3MetricsAndViewByAttributeFunformat,
         fp_d04ba7363a1ce9162b18fe0ddc005a07: BarChartWith3MetricsAndViewByAttributePercInFormat,

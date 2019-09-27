@@ -1,34 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
+import {
+    headlineWithOneMeasure,
+    headlineWithOneMeasureWithIdentifier,
+    headlineWithTwoMeasuresWithIdentifier,
+} from "../../../../../../__mocks__/fixtures";
+
 export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
     drillContext: {
         element: "primaryValue",
         intersection: [
             {
                 header: {
-                    uri: "/gdc/md/project_id/obj/1",
+                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
                     identifier: "",
                 },
-                id: "m1",
+                id: "lostMetric",
                 title: "Lost",
             },
         ],
         type: "headline",
-        value: "42470571.16",
+        value: "9011389.956",
     },
-    executionContext: {
-        measures: [
-            {
-                definition: {
-                    measure: {
-                        item: {
-                            uri: "/gdc/md/project_id/obj/1",
-                        },
-                    },
-                },
-                localIdentifier: "m1",
-            },
-        ],
-    },
+    dataView: headlineWithOneMeasure.dataView,
 };
 
 export const DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER = {
@@ -37,30 +30,17 @@ export const DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER = {
         intersection: [
             {
                 header: {
-                    identifier: "metric.lost",
+                    identifier: "af2Ewj9Re2vK",
                     uri: "",
                 },
-                id: "m1",
+                id: "lostMetric",
                 title: "Lost",
             },
         ],
         type: "headline",
-        value: "42470571.16",
+        value: "9011389.956",
     },
-    executionContext: {
-        measures: [
-            {
-                definition: {
-                    measure: {
-                        item: {
-                            identifier: "metric.lost",
-                        },
-                    },
-                },
-                localIdentifier: "m1",
-            },
-        ],
-    },
+    dataView: headlineWithOneMeasureWithIdentifier.dataView,
 };
 
 export const DRILL_EVENT_DATA_FOR_SECONDARY_ITEM = {
@@ -69,38 +49,15 @@ export const DRILL_EVENT_DATA_FOR_SECONDARY_ITEM = {
         intersection: [
             {
                 header: {
-                    identifier: "measure.found",
+                    identifier: "afSEwRwdbMeQ",
                     uri: "",
                 },
-                id: "m2",
-                title: "Found",
+                id: "wonMetric",
+                title: "Won",
             },
         ],
         type: "headline",
-        value: "12345678",
+        value: "42470571.16",
     },
-    executionContext: {
-        measures: [
-            {
-                definition: {
-                    measure: {
-                        item: {
-                            identifier: "measure.lost",
-                        },
-                    },
-                },
-                localIdentifier: "m1",
-            },
-            {
-                definition: {
-                    measure: {
-                        item: {
-                            identifier: "measure.found",
-                        },
-                    },
-                },
-                localIdentifier: "m2",
-            },
-        ],
-    },
+    dataView: headlineWithTwoMeasuresWithIdentifier.dataView,
 };

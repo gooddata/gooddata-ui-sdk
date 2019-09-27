@@ -1,0 +1,180 @@
+{
+    "executionResponse": {
+        "dimensions": [
+            {
+                "headers": [
+                    {
+                        "attributeHeader": {
+                            "uri": "/attributeUri",
+                            "identifier": "attributeIdentifier",
+                            "localIdentifier": "attributeLocalIdentifier",
+                            "name": "attributeName",
+                            "formOf": {
+                                "uri": "/attributeElementUri",
+                                "identifier": "attributeElementIdentifier",
+                                "name": "attributeElementName"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "headers": [
+                    {
+                        "measureGroupHeader": {
+                            "items": [
+                                {
+                                    "measureHeaderItem": {
+                                        "uri": "/uriBasedMeasureUri",
+                                        "localIdentifier": "uriBasedMeasureLocalIdentifier",
+                                        "identifier": "uriBasedMeasureIdentifier",
+                                        "name": "uriBasedMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "uri": "identifierBasedMeasureUri",
+                                        "localIdentifier": "identifierBasedMeasureLocalIdentifier",
+                                        "identifier": "identifierBasedMeasureIdentifier",
+                                        "name": "identifierBasedMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedRatioMeasureLocalIdentifier",
+                                        "name": "uriBasedMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedRatioMeasureLocalIdentifier",
+                                        "name": "identifierBasedRatioMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedAdhocMeasureLocalIdentifier",
+                                        "name": "uriBasedAdhocMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedAdhocMeasureLocalIdentifier",
+                                        "name": "identifierBasedAdhocMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedPPMeasureLocalIdentifier",
+                                        "name": "uriBasedSPMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedPPMeasureLocalIdentifier",
+                                        "name": "uriBasedSPMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedSPMeasureLocalIdentifier",
+                                        "name": "uriBasedSPMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedSPMeasureLocalIdentifier",
+                                        "name": "identifierBasedSPMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedPPRatioMeasureLocalIdentifier",
+                                        "name": "uriBasedSPRatioMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedPPRatioMeasureLocalIdentifier",
+                                        "name": "uriBasedSPRatioMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedSPRatioMeasureLocalIdentifier",
+                                        "name": "uriBasedSPRatioMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedSPRatioMeasureLocalIdentifier",
+                                        "name": "identifierBasedSPRatioMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "arithmeticMeasureLocalIdentifier",
+                                        "name": "arithmeticMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "arithmeticMeasureOf2ndOrderLocalIdentifier",
+                                        "name": "arithmeticMeasureOf2ndName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "uriBasedCompareArithmeticMeasureLocalIdentifier",
+                                        "name": "uriBasedCompareArithmeticMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierBasedCompareArithmeticMeasureLocalIdentifier",
+                                        "name": "identifierBasedCompareArithmeticMeasureName",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierComparePPDerivedFromAM",
+                                        "name": "identifierComparePPDerivedFromAM",
+                                        "format": "#,##0.00"
+                                    }
+                                },
+                                {
+                                    "measureHeaderItem": {
+                                        "localIdentifier": "identifierCompareSPDerivedFromAM",
+                                        "name": "identifierCompareSPDerivedFromAM",
+                                        "format": "#,##0.00"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
+        "links": {
+            "executionResult": "willBeEmpty"
+        }
+    }
+}

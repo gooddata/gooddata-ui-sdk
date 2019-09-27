@@ -13,6 +13,7 @@ import {
     customEscape,
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
+    getDrillableSeries,
     getDrillIntersection,
     getHeatmapDataClasses,
     getHeatmapSeries,
@@ -36,12 +37,13 @@ import {
     MeasureColorStrategy,
     TreemapColorStrategy,
 } from "../colorFactory";
-import { IChartOptions, IChartConfig, IPointData } from "../../Config";
+import { IChartConfig, IChartOptions, IPointData } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { IColorPaletteItem } from "../../../base/interfaces/Colors";
+import { uriMatch } from "../../../base/factory/HeaderPredicateFactory";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
@@ -1646,9 +1648,6 @@ describe("chartOptionsBuilder", () => {
         });
     });
 
-    /*
-     * TODO: re-enable the drilling tests; they are mostly fixed compilation-wise, just a couple of errors
-     *  remaining as not all functionality related to drill predicates is switched to the sdk-model and backend-spi.
     describe("getDrillableSeries", () => {
         describe("in usecase of scatter plot with 2 measures and attribute", () => {
             const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
@@ -1660,7 +1659,7 @@ describe("chartOptionsBuilder", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                dv
+                dv,
             );
 
             const seriesWithoutDrillability = getSeries(
@@ -1672,19 +1671,14 @@ describe("chartOptionsBuilder", () => {
                 metricColorStrategy,
             );
 
-            const drillableMeasures = [
-                headerPredicateFactory.uriMatch(
-                    dataSet.executionResponse.dimensions[0].headers[0].measureGroupHeader.items[0]
-                        .measureHeaderItem.uri,
-                ),
-            ];
+            const drillableMeasures = [uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283")];
             const drillableMeasuresSeriesData = getDrillableSeries(
                 dv,
                 seriesWithoutDrillability,
                 drillableMeasures,
                 [viewByAttribute],
                 stackByAttribute,
-                type
+                type,
             );
 
             it("should assign correct drillIntersection to pointData with drilldown true", () => {
@@ -1723,8 +1717,8 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should fillter out points with one or both coordinates null", () => {
-                const dataSetWithNulls = fixtures.scatterPlotWith2MetricsAndAttributeNullsInData;
-                const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dataSetWithNulls);
+                const dv = fixtures.scatterPlotWith2MetricsAndAttributeNullsInData;
+                const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                 const type = "scatter";
 
                 const metricColorStrategy = new MeasureColorStrategy(
@@ -1732,7 +1726,7 @@ describe("chartOptionsBuilder", () => {
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
-                    dv
+                    dv,
                 );
 
                 const seriesWithoutDrillability = getSeries(
@@ -1744,12 +1738,7 @@ describe("chartOptionsBuilder", () => {
                     metricColorStrategy,
                 );
 
-                const drillableMeasures = [
-                    headerPredicateFactory.uriMatch(
-                        dataSetWithNulls.executionResponse.dimensions[1].headers[0].measureGroupHeader
-                            .items[1].measureHeaderItem.uri,
-                    ),
-                ];
+                const drillableMeasures = [uriMatch("/gdc/md/adtxv0e7evvx6dawu7t2jju5a6r73eua/obj/13465")];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     dv,
                     seriesWithoutDrillability,
@@ -1773,7 +1762,7 @@ describe("chartOptionsBuilder", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                dv
+                dv,
             );
 
             const seriesWithoutDrillability = getSeries(
@@ -1784,12 +1773,7 @@ describe("chartOptionsBuilder", () => {
                 type,
                 attributeColorStrategy,
             );
-            const drillableMeasures = [
-                headerPredicateFactory.uriMatch(
-                    dataSet.executionResponse.dimensions[1].headers[0].measureGroupHeader.items[0]
-                        .measureHeaderItem.uri,
-                ),
-            ];
+            const drillableMeasures = [uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097")];
             const drillableMeasuresSeriesData = getDrillableSeries(
                 dv,
                 seriesWithoutDrillability,
@@ -1859,7 +1843,7 @@ describe("chartOptionsBuilder", () => {
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
-                    dv
+                    dv,
                 );
 
                 const seriesWithoutDrillability = getSeries(
@@ -1871,12 +1855,7 @@ describe("chartOptionsBuilder", () => {
                     attributeColorStrategy,
                 );
 
-                const drillableMeasures = [
-                    headerPredicateFactory.uriMatch(
-                        dataSetWithNulls.executionResponse.dimensions[1].headers[0].measureGroupHeader
-                            .items[1].measureHeaderItem.uri,
-                    ),
-                ];
+                const drillableMeasures = [uriMatch("/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465")];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     dv,
                     seriesWithoutDrillability,
@@ -1893,53 +1872,47 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("in usecase of bar chart with 6 pop measures and view by attribute", () => {
-            const dataSet = fixtures.barChartWith6PopMeasuresAndViewByAttribute;
-            const { afm } = dataSet.executionRequest;
-            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dataSet);
+            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+
+            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const metricColorStrategy = new MeasureColorStrategy(
                 DEFAULT_COLOR_PALETTE,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionResponse,
-                fixtures.barChartWith6PopMeasuresAndViewByAttribute.executionRequest.afm,
+                dv,
             );
             const seriesWithoutDrillability = getSeries(
-                dataSet.executionResult.data,
+                dv,
                 measureGroup,
                 viewByAttribute,
                 stackByAttribute,
                 type,
-                {} as any,
                 metricColorStrategy,
             );
 
             describe("with all drillable measures", () => {
-                const drillableMeasures = [
-                    headerPredicateFactory.uriMatch(
-                        dataSet.executionRequest.afm.attributes[0].displayForm.uri,
-                    ),
-                ];
+                // setting drills on all measure series by setting drill on the attr they are sliced by
+                const drillableAttr = [uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158")];
                 const drillableMeasuresSeriesData = getDrillableSeries(
+                    dv,
                     seriesWithoutDrillability,
-                    drillableMeasures,
+                    drillableAttr,
                     [viewByAttribute],
                     stackByAttribute,
-                    dataSet.executionResponse,
-                    afm,
                     type,
                 );
 
                 it("should assign correct drillIntersection to pointData with drilldown true", () => {
                     const startYear = parseInt(
                         // should be 2008
-                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].value,
+                        drillableMeasuresSeriesData[0].data[0].drillIntersection[1].title,
                         10,
                     );
                     drillableMeasuresSeriesData.forEach((seriesItem: any) => {
                         seriesItem.data.forEach((point: any, index: number) => {
-                            expect(point.drillIntersection[1].value - index).toEqual(startYear);
+                            expect(point.drillIntersection[1].title - index).toEqual(startYear);
                         });
                     });
                 });
@@ -1955,7 +1928,7 @@ describe("chartOptionsBuilder", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                dv
+                dv,
             );
             const seriesWithoutDrillability = getSeries(
                 dv,
@@ -1967,11 +1940,7 @@ describe("chartOptionsBuilder", () => {
             );
 
             describe("with all drillable measures", () => {
-                const drillableMeasures = [
-                    headerPredicateFactory.uriMatch(
-                        dataSet.executionRequest.afm.attributes[0].displayForm.uri,
-                    ),
-                ];
+                const drillableMeasures = [uriMatch("/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/324")];
                 const drillableMeasuresSeriesData = getDrillableSeries(
                     dv,
                     seriesWithoutDrillability,
@@ -2006,7 +1975,7 @@ describe("chartOptionsBuilder", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                dv
+                dv,
             );
 
             const seriesWithoutDrillability = getSeries(
@@ -2076,8 +2045,8 @@ describe("chartOptionsBuilder", () => {
 
             describe("with first and last drillable measures", () => {
                 const twoDrillableMeasuresItems = [
-                    headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
-                    headerPredicateFactory.uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285"),
+                    uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283"),
+                    uriMatch("/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285"),
                 ];
                 const twoDrillableMeasuresSeriesData = getDrillableSeries(
                     dv,
@@ -2157,7 +2126,6 @@ describe("chartOptionsBuilder", () => {
             });
         });
 
-
         describe("in usecase of bar chart with stack by and view by attributes", () => {
             const dv = fixtures.barChartWithStackByAndViewByAttributes;
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
@@ -2168,7 +2136,7 @@ describe("chartOptionsBuilder", () => {
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
-                dv
+                dv,
             );
 
             const seriesData = getSeries(
@@ -2225,7 +2193,6 @@ describe("chartOptionsBuilder", () => {
             });
         });
     });
-    */
 
     describe("customEscape", () => {
         it("should encode some characters into named html entities", () => {

@@ -45,7 +45,11 @@ export {
     ITotalHeaderItem,
     isAttributeHeader,
     isMeasureGroupHeader,
+    isTotalHeader,
+    isMeasureHeaderItem,
     isResultAttributeHeaderItem,
+    isResultMeasureHeaderItem,
+    isResultTotalHeaderItem,
 } from "./execution/results";
 
 export {
