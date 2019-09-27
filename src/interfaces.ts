@@ -38,6 +38,7 @@ export interface IValidElementsResponse {
             filter: string;
             order: SortDirection;
         };
+        totalCountWithoutFilters?: string;
     };
 }
 
