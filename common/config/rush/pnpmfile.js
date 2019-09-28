@@ -18,6 +18,8 @@ module.exports = {
   }
 };
 
+const TYPESCRIPT_VERSION = "3.6.3";
+
 /**
  * This hook is invoked during installation before a package's dependencies
  * are selected.
@@ -44,7 +46,7 @@ function readPackage(packageJson, context) {
      * correcting the status
      */
     context.log("Fixed up dependencies for @gooddata/goodstrap@" + packageJson.version +
-        " ; switching babel-runtime as dependency; version: " + packageJson.devDependencies["babel-runtime"]);
+        " ; switching babel-runtime to prod dependency; version: " + packageJson.devDependencies["babel-runtime"]);
 
     packageJson.dependencies["babel-runtime"] = packageJson.devDependencies["babel-runtime"];
   }

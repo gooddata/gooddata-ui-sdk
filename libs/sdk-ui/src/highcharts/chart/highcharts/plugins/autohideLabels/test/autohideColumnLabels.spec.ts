@@ -266,7 +266,7 @@ describe("areLabelsOverlappingColumns", () => {
     it.each([
         [true, labelsWithOverlapColumns, pointsWithOverlapColumns],
         [false, labelsWithoutOverlapColumns, pointsWithoutOverlapColumns],
-    ])("should return overlap is %s", (isOverlap: number, labels: IPointData[], points: IPointData[]) => {
+    ])("should return overlap is %s", (isOverlap: boolean, labels: IPointData[], points: IPointData[]) => {
         const areOverlappingColumns = autohideColumnLabels.areLabelsOverlappingColumns(labels, points);
         expect(areOverlappingColumns).toEqual(isOverlap);
     });

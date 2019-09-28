@@ -12,6 +12,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
+        "suppressExcessPropertyErrors": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/gd-bear-model": ["gd-bear-model/src"]

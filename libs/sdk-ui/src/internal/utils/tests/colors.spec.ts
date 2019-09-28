@@ -114,10 +114,7 @@ describe("color utils", () => {
         const attributeItem: MappingHeader.IMappingHeader = {
             attributeHeaderItem: {
                 uri: "/a1",
-                identifier: "",
-                localIdentifier: "",
                 name: "",
-                formOf: null,
             },
         };
 

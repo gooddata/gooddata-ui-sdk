@@ -56,8 +56,8 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0",
         "@gooddata/gd-bear-model": "^8.0.0",
-        "@gooddata/sdk-model": "^8.0.0",
         "@gooddata/sdk-backend-spi": "^8.0.0",
+        "@gooddata/sdk-model": "^8.0.0",
         "lodash": "^4.7.11",
         "rimraf": "^3.0.0"
     },
@@ -68,13 +68,13 @@
         "@types/lodash": "^4.14.123",
         "@types/node": "^10.14.18",
         "@types/rimraf": "^2.0.2",
-        "ts-node": "^8.4.1",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "^1.18.2",
         "ts-jest": "^24.1.0",
+        "ts-node": "^8.4.1",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "3.3.4000"
+        "typescript": "3.6.3"
     }
 }

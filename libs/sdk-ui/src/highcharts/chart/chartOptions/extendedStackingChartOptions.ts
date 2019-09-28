@@ -1,7 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
-import { Execution } from "@gooddata/gd-bear-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../base/helpers/types";
+import { IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+
+type NameAndCategories = {
+    name: string;
+    categories: string[];
+};
 
 /**
  * Transform
@@ -18,30 +23,27 @@ import { IUnwrappedAttributeHeadersWithItems } from "../../../base/helpers/types
  *          name: P3,
  *          categories: [C2]
  *       }]
- * @param viewByTwoAttributes
  */
 export function getCategoriesForTwoAttributes(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
-): Array<{
-    name: string;
-    categories: string[];
-}> {
+): NameAndCategories[] {
     const keys: string[] = [];
     const { items: children } = viewByAttribute;
     const { items: parent } = viewByParentAttribute;
 
     const combinedResult = parent.reduce(
         (
-            result: { [property: string]: string[] },
-            parentAttr: Execution.IResultAttributeHeaderItem,
+            result: { [property: string]: NameAndCategories },
+            parentAttr: IResultAttributeHeaderItem,
             index: number,
         ) => {
             const uri: string = get(parentAttr, "attributeHeaderItem.uri", "");
             const name: string = get(parentAttr, "attributeHeaderItem.name", "");
             const value: string = get(children[index], "attributeHeaderItem.name", "");
 
-            const childCategories: string[] = get(result, `${uri}.categories`, []);
+            const existingEntry = result[uri];
+            const childCategories = existingEntry && existingEntry.categories ? existingEntry.categories : [];
 
             if (!childCategories.length) {
                 keys.push(uri);

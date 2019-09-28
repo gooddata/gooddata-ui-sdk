@@ -2,9 +2,12 @@
 import * as input from "./fixtures/FilterConverter.input.fixtures";
 import * as expected from "./fixtures/FilterConverter.afm.fixtures";
 import { convertVisualizationObjectFilter } from "../FilterConverter";
+import { AFM, VisualizationObject } from "@gooddata/gd-bear-model";
 
 // tslint:disable:max-line-length
-const VIS_OBJ_TESTS = [
+const VIS_OBJ_TESTS: Array<
+    [string, VisualizationObject.VisualizationObjectFilter, AFM.CompatibilityFilter | null]
+> = [
     ["absolute date filter", input.absoluteDateFilter, expected.absoluteDateFilter],
     [
         "absolute date filter with identifier",
