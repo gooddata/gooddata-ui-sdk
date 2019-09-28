@@ -17,7 +17,7 @@ export default class RenderChildrenInPortal extends React.Component<IRenderChild
         this.portalContentWrapperEl = wrapperEl;
     }
 
-    public componentWillMount() {
+    public UNSAFE_componentWillMount() {
         if (this.props.targetElement) {
             this.props.targetElement.appendChild(this.portalContentWrapperEl);
         }

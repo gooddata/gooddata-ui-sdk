@@ -253,7 +253,7 @@ export class VisualizationWrapped extends React.Component<
         return propKeys.some(propKey => !isEqual(this.props[propKey], nextProps[propKey]));
     }
 
-    public componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps & InjectedIntlProps) {
         if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, "Visualization", nextProps);

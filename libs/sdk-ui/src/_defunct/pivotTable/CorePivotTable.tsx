@@ -173,7 +173,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setGroupingProvider(props.groupRows);
     }
 
-    public componentWillMount() {
+    public UNSAFE_componentWillMount() {
         this.createAGGridDataSource();
     }
 
@@ -188,7 +188,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     }
 
-    public componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
+    public UNSAFE_componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
         if (
             this.props.groupRows !== nextProps.groupRows ||
             this.state.sortedByFirstAttribute !== nextState.sortedByFirstAttribute

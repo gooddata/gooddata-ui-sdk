@@ -66,7 +66,7 @@ export class InputControl extends React.Component<
         this.triggerBlur = this.triggerBlur.bind(this);
     }
 
-    public componentWillReceiveProps(newProps: IInputControlProps & InjectedIntlProps) {
+    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & InjectedIntlProps) {
         if (newProps.value !== this.state.value) {
             this.setState({
                 value: newProps.value,

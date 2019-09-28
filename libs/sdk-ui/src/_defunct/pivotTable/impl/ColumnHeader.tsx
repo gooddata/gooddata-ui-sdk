@@ -43,7 +43,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
         sorting: null,
     };
 
-    public componentWillMount() {
+    public UNSAFE_componentWillMount() {
         this.props.column.addEventListener("sortChanged", this.getCurrentSortDirection);
         this.setState({
             sorting: this.props.column.getSort() as AFM.SortDirection,

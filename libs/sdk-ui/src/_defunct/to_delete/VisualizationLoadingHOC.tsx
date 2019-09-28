@@ -225,7 +225,7 @@ export function visualizationLoadingHOC<
             );
         }
 
-        public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
+        public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             if (nextProps.sdk && this.props.sdk !== nextProps.sdk) {
                 this.sdk = nextProps.sdk.clone();
                 setTelemetryHeaders(this.sdk, "LoadingHOCWrapped", nextProps);

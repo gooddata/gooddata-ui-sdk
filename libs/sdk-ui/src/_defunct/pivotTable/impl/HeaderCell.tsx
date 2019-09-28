@@ -58,7 +58,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         });
     }
 
-    public componentWillReceiveProps(nextProps: IHeaderCellProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps) {
         if (nextProps.sortDirection !== this.props.sortDirection) {
             this.setState({
                 currentSortDirection: this.props.sortDirection,

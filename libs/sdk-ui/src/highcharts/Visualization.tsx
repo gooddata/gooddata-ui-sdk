@@ -47,7 +47,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
         this.setNumericSymbols(this.props);
     }
 
-    public componentWillReceiveProps(nextProps: IVisualizationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps) {
         this.setNumericSymbols(nextProps);
     }
 
