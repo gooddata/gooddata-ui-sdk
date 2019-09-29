@@ -3,8 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
-import { DataViewFacade, IDataView } from "@gooddata/sdk-backend-spi";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
+import { DataValue, DataViewFacade, IDataView, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
@@ -19,14 +18,15 @@ import {
 import { IHeaderPredicate2 } from "../../../../base/interfaces/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
 import { measureUriOrQualifier } from "../../../_commons/measures";
+import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
-    measureHeaderItem: Execution.IMeasureHeaderItem["measureHeaderItem"];
-    value: Execution.DataValue;
+    measureHeaderItem: IMeasureHeaderItem["measureHeaderItem"];
+    value: DataValue;
 }
 
 export interface IHeadlineDrillItemContext {
-    localIdentifier: AFM.Identifier;
+    localIdentifier: Identifier;
     value: string;
     element: HeadlineElementType;
 }

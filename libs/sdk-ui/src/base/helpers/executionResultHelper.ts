@@ -1,8 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as invariant from "invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "./types";
-import { IMappingHeader } from "../interfaces/MappingHeader";
-import { getMappingHeaderLocalIdentifier } from "./mappingHeader";
 import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
 import { Execution } from "@gooddata/gd-bear-model";
 
@@ -86,20 +84,6 @@ export function findAttributeInDimension(
             return null;
         },
     );
-}
-
-export function findMeasureHeaderByLocalIdentifier(
-    executionResponse: Execution.IExecutionResponse,
-    localIdentifier: string,
-): IMappingHeader {
-    const responseMeasureGroup = findMeasureGroupInDimensions(executionResponse.dimensions);
-    if (!responseMeasureGroup) {
-        return null;
-    }
-    const header = responseMeasureGroup.items.find(
-        header => getMappingHeaderLocalIdentifier(header) === localIdentifier,
-    );
-    return header ? header : null;
 }
 
 export function getNthAttributeHeader(

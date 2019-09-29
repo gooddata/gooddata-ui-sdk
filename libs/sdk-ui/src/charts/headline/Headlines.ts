@@ -1,9 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution, AFM } from "@gooddata/gd-bear-model";
 import { CSSProperties } from "react";
+import { Identifier } from "@gooddata/sdk-model";
+import { DataValue } from "@gooddata/sdk-backend-spi";
 
 export interface IHeadlineDataItem {
-    localIdentifier: AFM.Identifier;
+    localIdentifier: Identifier;
     title?: string;
     value: string;
     format?: string;
@@ -12,7 +13,7 @@ export interface IHeadlineDataItem {
 
 export interface IFormattedHeadlineDataItem {
     cssStyle?: CSSProperties;
-    value: Execution.DataValue;
+    value: DataValue;
     isValueEmpty: boolean;
 }
 
