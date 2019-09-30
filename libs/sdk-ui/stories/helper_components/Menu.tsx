@@ -8,12 +8,12 @@ import noop = require("lodash/noop");
 
 import AggregationsMenu from "../../src/components/core/pivotTable/AggregationsMenu";
 import AggregationsSubMenu from "../../src/components/core/pivotTable/AggregationsSubMenu";
-import Menu from "../../src/_defunct/pivotTable/menu/Menu";
-import SubMenu, { ISubMenuProps } from "../../src/_defunct/pivotTable/menu/SubMenu";
-import { IOnOpenedChangeParams } from "../../src/_defunct/pivotTable/menu/MenuSharedTypes";
+import Menu from "../../src/pivotTable/menu/Menu";
+import SubMenu, { ISubMenuProps } from "../../src/pivotTable/menu/SubMenu";
+import { IOnOpenedChangeParams } from "../../src/pivotTable/menu/MenuSharedTypes";
 import { EXECUTION_RESPONSE_2A_3M } from "../../src/highcharts/table/fixtures/2attributes3measures";
 import { createIntlMock } from "../../src/base/helpers/intlUtils";
-import { IMenuAggregationClickConfig } from "../../src/_defunct/pivotTable/PivotTable";
+import { IMenuAggregationClickConfig } from "../../src/pivotTable/PivotTable";
 import {
     ATTRIBUTE_HEADERS_3A_LONG_NAME,
     COLUMN_TOTAL_1ST_2ND_ATTR_MAX,

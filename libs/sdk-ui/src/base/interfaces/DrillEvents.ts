@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { TableRowForDrilling } from "../../_defunct/pivotTable/PivotTable";
+import { AFM } from "@gooddata/gd-bear-model";
+import { TableRowForDrilling } from "../../pivotTable/PivotTable";
 import {
     ChartElementType,
     ChartType,

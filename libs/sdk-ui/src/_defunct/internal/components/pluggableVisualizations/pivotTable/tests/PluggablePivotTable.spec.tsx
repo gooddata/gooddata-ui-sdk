@@ -30,7 +30,7 @@ import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../../base/interfaces/DrillEvents";
-import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
+import { CorePivotTable } from "../../../../../../pivotTable/CorePivotTable";
 import { DEFAULT_LOCALE } from "../../../../../../base/constants/localization";
 
 const getMockReferencePoint = (

@@ -11,7 +11,7 @@ import { visualizationObjects, visualizationClasses, pivotTableMDO } from "../..
 import { AFM, VisualizationObject, VisualizationClass } from "@gooddata/gd-bear-model/dist/index";
 import { Visualization, IntlVisualization, VisualizationWrapped } from "../Visualization";
 import { ErrorStates } from "../../../base/constants/errorStates";
-import { CorePivotTable } from "../../pivotTable/CorePivotTable";
+import { CorePivotTable } from "../../../pivotTable/CorePivotTable";
 import { IntlWrapper } from "../../../base/translations/IntlWrapper";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { RuntimeError } from "../../../base/errors/RuntimeError";

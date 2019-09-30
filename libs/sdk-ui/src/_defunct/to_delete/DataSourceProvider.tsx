@@ -11,7 +11,7 @@ import { AfmPropTypesShape, ResultSpecPropTypesShape } from "../../highcharts";
 import { IDataSource } from "./DataSource";
 import { ISubject } from "../../base/helpers/async";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
-import { getNativeTotals } from "../pivotTable/impl/utils";
+import { getNativeTotals } from "../../pivotTable/impl/utils";
 
 export type IAdapterFactory = (
     sdk: SDK,
