@@ -118,7 +118,7 @@ export function dataSourceProvider<T>(
             this.prepareDataSource(afm);
         }
 
-        public componentWillReceiveProps(nextProps: IDataSourceProviderProps) {
+        public UNSAFE_componentWillReceiveProps(nextProps: IDataSourceProviderProps) {
             const { projectId, afm, resultSpec, sdk } = nextProps;
             if (projectId !== this.props.projectId) {
                 this.createAdapter(projectId);

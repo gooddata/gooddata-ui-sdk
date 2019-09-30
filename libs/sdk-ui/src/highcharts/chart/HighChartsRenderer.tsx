@@ -105,7 +105,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
     }
 
-    public componentWillMount() {
+    public UNSAFE_componentWillMount() {
         this.resetLegendState(this.props);
     }
 
@@ -135,7 +135,7 @@ export default class HighChartsRenderer extends React.PureComponent<
         window.removeEventListener("resize", this.throttledOnWindowResize);
     }
 
-    public componentWillReceiveProps(nextProps: IHighChartsRendererProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps) {
         const thisLegendItems = get(this.props, "legend.items", []);
         const nextLegendItems = get(nextProps, "legend.items", []);
         const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);

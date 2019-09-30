@@ -103,7 +103,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
             );
         }
 
-        public componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
+        public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             if (!this.props.execution.equals(nextProps.execution)) {
                 this.initDataLoading(nextProps.execution);
             }

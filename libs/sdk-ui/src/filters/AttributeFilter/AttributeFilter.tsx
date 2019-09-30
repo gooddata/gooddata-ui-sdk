@@ -77,7 +77,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         setTelemetryHeaders(this.sdk, "AttributeFilter", props);
     }
 
-    public componentWillReceiveProps(nextProps: IAttributeFilterProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeFilterProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, "AttributeFilter", nextProps);

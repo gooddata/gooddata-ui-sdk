@@ -67,11 +67,11 @@ export default class ChartTransformation extends React.Component<
     private chartOptions: IChartOptions;
     private legendOptions: ILegendOptions;
 
-    public componentWillMount() {
+    public UNSAFE_componentWillMount() {
         this.assignChartOptions(this.props);
     }
 
-    public componentWillReceiveProps(nextProps: IChartTransformationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IChartTransformationProps) {
         this.assignChartOptions(nextProps);
     }
 

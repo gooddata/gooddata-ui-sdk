@@ -94,7 +94,7 @@ export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, 
         this.getAttributeDisplayForm(this.props);
     }
 
-    public componentWillReceiveProps(nextProps: IAttributeLoaderProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeLoaderProps) {
         if (
             this.props.uri !== nextProps.uri ||
             this.props.identifier !== nextProps.identifier ||

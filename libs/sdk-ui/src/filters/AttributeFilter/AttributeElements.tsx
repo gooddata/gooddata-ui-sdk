@@ -128,7 +128,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
         this.getValidElements(this.props, get(this.props, "options.offset", 0));
     }
 
-    public componentWillReceiveProps(nextProps: IAttributeElementsProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeElementsProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
             setTelemetryHeaders(this.sdk, "AttributeElements", nextProps);

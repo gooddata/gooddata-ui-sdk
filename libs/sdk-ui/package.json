@@ -93,8 +93,8 @@
         "uuid": "^3.2.1"
     },
     "peerDependencies": {
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2"
+        "react": "^16.10.0",
+        "react-dom": "^16.10.0"
     },
     "devDependencies": {
         "@babel/core": "^7.4.4",
@@ -141,14 +141,14 @@
         "node-sass-magic-importer": "5.1.0",
         "prettier": "^1.18.2",
         "raf": "^3.3.2",
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2",
+        "react": "^16.10.0",
+        "react-dom": "^16.10.0",
         "sass-loader": "^6.0.6",
         "style-loader": "^0.19.1",
         "ts-jest": "^24.1.0",
         "ts-loader": "^6.0.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "3.3.4000"
+        "typescript": "3.6.3"
     }
 }

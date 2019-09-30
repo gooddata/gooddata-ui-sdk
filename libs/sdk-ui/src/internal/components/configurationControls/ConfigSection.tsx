@@ -58,7 +58,7 @@ export class ConfigSection extends React.Component<
         };
     }
 
-    public componentWillReceiveProps(nextProps: IConfigSectionProps & InjectedIntlProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionProps & InjectedIntlProps) {
         const collapsed = get(nextProps, `propertiesMeta.${this.props.id}.collapsed`, true);
         this.setState({ collapsed });
     }

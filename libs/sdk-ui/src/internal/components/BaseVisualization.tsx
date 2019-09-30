@@ -104,7 +104,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         this.visualization.unmount();
     }
 
-    public componentWillReceiveProps(nextProps: IBaseVisualizationProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IBaseVisualizationProps) {
         const newDerivedBucketItemsChanged =
             !isEmpty(nextProps.newDerivedBucketItems) &&
             !isEqual(nextProps.newDerivedBucketItems, this.props.newDerivedBucketItems);

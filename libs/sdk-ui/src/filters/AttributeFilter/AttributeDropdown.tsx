@@ -197,7 +197,7 @@ export class AttributeDropdownWrapped extends React.PureComponent<
         this.onClose = this.onClose.bind(this);
     }
 
-    public componentWillReceiveProps(nextProps: IAttributeDropdownProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeDropdownProps) {
         if (!isEqual(nextProps.attributeDisplayForm, this.props.attributeDisplayForm)) {
             this.setupDataSource(nextProps.attributeDisplayForm.meta.uri);
         }

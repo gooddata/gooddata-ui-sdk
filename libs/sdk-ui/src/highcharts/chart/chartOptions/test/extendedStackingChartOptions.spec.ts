@@ -1,5 +1,4 @@
 // (C) 2007-2019 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../../base/helpers/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 import { barChartWith4MetricsAndViewByTwoAttributes } from "../../../../../__mocks__/fixtures";
@@ -9,9 +8,10 @@ import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeUri, measureUri } from "@gooddata/sdk-model";
 import { uriMatch } from "../../../../base/factory/HeaderPredicateFactory";
 import { DEFAULT_COLOR_PALETTE } from "../../../Config";
+import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 describe("getCategoriesForTwoAttributes", () => {
-    const attributeHeader: Execution.IAttributeHeader["attributeHeader"] = {
+    const attributeHeader: IAttributeHeader["attributeHeader"] = {
         uri: "uri",
         identifier: "identifier",
         localIdentifier: "localIdentifier",
