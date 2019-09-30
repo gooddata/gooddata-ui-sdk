@@ -1,21 +1,25 @@
 // (C) 2007-2019 GoodData Corporation
 import { ICellRendererParams } from "ag-grid-community";
-import omit = require("lodash/omit");
-import escape = require("lodash/escape");
-import stringify = require("json-stable-stringify");
 import { AFM, Execution } from "@gooddata/gd-bear-model";
 import { getMappingHeaderUri } from "../../base/helpers/mappingHeader";
-import { IMappingHeader, isMappingHeaderTotal } from "../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import {
     DOT_PLACEHOLDER,
     FIELD_SEPARATOR,
     FIELD_SEPARATOR_PLACEHOLDER,
     ID_SEPARATOR,
     ID_SEPARATOR_PLACEHOLDER,
-    ROW_TOTAL,
     ROW_SUBTOTAL,
+    ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
+import {
+    defFingerprint,
+    IExecutionDefinition,
+    IExecutionResult,
+    isTotalHeader,
+} from "@gooddata/sdk-backend-spi";
+import escape = require("lodash/escape");
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
@@ -53,7 +57,7 @@ export const getRowNodeId = (item: any) => {
         .map(key => {
             const mappingHeader: IMappingHeader = item.headerItemMap[key];
 
-            if (isMappingHeaderTotal(mappingHeader)) {
+            if (isTotalHeader(mappingHeader)) {
                 return `${key}${ID_SEPARATOR}${mappingHeader.totalHeaderItem.name}`;
             }
 
@@ -139,8 +143,8 @@ export function isMeasureColumnReadyToRender(params: any, execution: Execution.I
     return Boolean(params && params.value !== undefined && execution && execution.executionResponse);
 }
 
-export function getMeasureFormat(gridHeader: IGridHeader, execution: Execution.IExecutionResponses): string {
-    const headers = execution.executionResponse.dimensions[1].headers;
+export function getMeasureFormat(gridHeader: IGridHeader, result: IExecutionResult): string {
+    const headers = result.dimensions[1].headers;
     const header = headers[headers.length - 1];
 
     if (!Execution.isMeasureGroupHeader(header)) {
@@ -172,7 +176,6 @@ export function getSubtotalStyles(dimension: AFM.IDimension): string[] {
     return [null, ...subtotalStyles];
 }
 
-export function generateAgGridComponentKey(afm: AFM.IAfm, rendererId: number): string {
-    const afmWithoutTotals: Partial<AFM.IAfm> = omit<AFM.IAfm>(afm, ["nativeTotals"]);
-    return `agGridKey-${stringify(afmWithoutTotals)}-${rendererId}`;
+export function generateAgGridComponentKey(def: IExecutionDefinition, rendererId: number): string {
+    return `agGridKey-${defFingerprint(def)}-${rendererId}`;
 }

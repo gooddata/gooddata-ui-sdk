@@ -10,7 +10,7 @@ import {
     ITableCellStyleAndFormattedValue,
     MeasureCell,
     TableCell,
-} from "../PivotTable";
+} from "../types";
 import { isMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {

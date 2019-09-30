@@ -17,7 +17,7 @@ import {
 } from "../../../../base/interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../../../base/interfaces/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
-import { measureUriOrQualifier } from "../../../_commons/measures";
+import { measureUriOrQualifier } from "../../../../base/helpers/measures";
 import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {

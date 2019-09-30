@@ -1,16 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
+import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { ITotal } from '@gooddata/sdk-model';
+import { ColGroupDef, IHeaderGroupParams } from 'ag-grid-community';
+import * as React from 'react';
+import { IMenu, IMenuAggregationClickConfig } from '../types';
 
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { IHeaderGroupParams, ColGroupDef } from "ag-grid-community";
-
-import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
-import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
+import HeaderCell, { ALIGN_LEFT } from './HeaderCell';
 
 export interface IProps extends IHeaderGroupParams {
     menu?: IMenu;
-    getColumnTotals: () => AFM.ITotalItem[];
-    getExecutionResponse: () => Execution.IExecutionResponse;
+    getColumnTotals: () => ITotal[];
+    getDataView: () => DataViewFacade;
     onMenuAggregationClick: (config: IMenuAggregationClickConfig) => void;
     intl: ReactIntl.InjectedIntl;
 }
@@ -39,7 +39,7 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 colId={columnGroupDef.field}
                 getColumnTotals={this.props.getColumnTotals}
-                getExecutionResponse={this.props.getExecutionResponse}
+                getDataView={this.props.getDataView}
                 intl={intl}
             />
         );

@@ -11,6 +11,15 @@ import { FIELD_SEPARATOR, ID_SEPARATOR, ROW_ATTRIBUTE_COLUMN } from "./agGridCon
 import { assignDrillItemsAndType } from "./agGridDrilling";
 import { IColumnDefOptions, IGridHeader } from "./agGridTypes";
 import invariant = require("invariant");
+import {
+    IHeader,
+    IResultDimension,
+    IAttributeHeader,
+    IMeasureHeaderItem,
+    isAttributeHeader,
+    isMeasureGroupHeader,
+    IResultHeaderItem,
+} from "@gooddata/sdk-backend-spi";
 
 /*
  * All code related to transforming headers from our backend to ag-grid specific data structures
@@ -86,8 +95,8 @@ export const mergeHeaderEndIndex = (
  * for each span of identical headers in a row, the function is called recursively to assign child items
  */
 export const getColumnHeaders = (
-    resultHeaderDimension: Execution.IResultHeaderItem[][],
-    responseHeaders: Execution.IHeader[],
+    resultHeaderDimension: IResultHeaderItem[][],
+    responseHeaders: IHeader[],
     columnDefOptions: IColumnDefOptions = {},
     headerIndex = 0,
     headerItemStartIndex = 0,
@@ -169,20 +178,17 @@ export const getFields = (dataHeaders: Execution.IResultHeaderItem[][]) => {
     }) as string[];
 };
 
-export const assortDimensionHeaders = (dimensions: Execution.IResultDimension[]) => {
-    const dimensionHeaders: Execution.IHeader[] = dimensions.reduce(
-        (headers: Execution.IHeader[], dimension: Execution.IResultDimension) => [
-            ...headers,
-            ...dimension.headers,
-        ],
+export const assortDimensionHeaders = (dimensions: IResultDimension[]) => {
+    const dimensionHeaders: IHeader[] = dimensions.reduce(
+        (headers: IHeader[], dimension: IResultDimension) => [...headers, ...dimension.headers],
         [],
     );
-    const attributeHeaders: Execution.IAttributeHeader[] = [];
-    const measureHeaderItems: Execution.IMeasureHeaderItem[] = [];
-    dimensionHeaders.forEach((dimensionHeader: Execution.IHeader) => {
-        if (Execution.isAttributeHeader(dimensionHeader)) {
+    const attributeHeaders: IAttributeHeader[] = [];
+    const measureHeaderItems: IMeasureHeaderItem[] = [];
+    dimensionHeaders.forEach((dimensionHeader: IHeader) => {
+        if (isAttributeHeader(dimensionHeader)) {
             attributeHeaders.push(dimensionHeader);
-        } else if (Execution.isMeasureGroupHeader(dimensionHeader)) {
+        } else if (isMeasureGroupHeader(dimensionHeader)) {
             measureHeaderItems.push(...dimensionHeader.measureGroupHeader.items);
         }
     });

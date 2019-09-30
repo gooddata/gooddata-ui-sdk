@@ -1,18 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import * as PropTypes from "prop-types";
-import { IHeaderParams } from "ag-grid-community";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
+import { AFM } from '@gooddata/gd-bear-model';
+import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { IHeaderParams } from 'ag-grid-community';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+import { IMenu, IMenuAggregationClickConfig } from '../types';
+import { COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from './agGridConst';
 
-import { getParsedFields } from "./agGridUtils";
-import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
-import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
-import { FIELD_TYPE_ATTRIBUTE, COLUMN_ATTRIBUTE_COLUMN } from "./agGridConst";
+import { getParsedFields } from './agGridUtils';
+import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from './HeaderCell';
 
 export interface IColumnHeaderProps extends IHeaderParams {
     menu?: IMenu;
     getColumnTotals?: () => AFM.ITotalItem[];
-    getExecutionResponse?: () => Execution.IExecutionResponse;
+    getDataView?: () => DataViewFacade;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     intl?: ReactIntl.InjectedIntl;
 }
@@ -28,7 +29,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     public static propTypes = {
         menu: PropTypes.object,
         getColumnTotals: PropTypes.func,
-        getExecutionResponse: PropTypes.func,
+        getDataView: PropTypes.func,
         onMenuAggregationClick: PropTypes.func,
         intl: PropTypes.object,
         enableSorting: PropTypes.bool,
@@ -88,7 +89,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 menu={menu}
                 colId={column.getColDef().field}
                 getColumnTotals={this.props.getColumnTotals}
-                getExecutionResponse={this.props.getExecutionResponse}
+                getDataView={this.props.getDataView}
                 intl={this.props.intl}
             />
         );

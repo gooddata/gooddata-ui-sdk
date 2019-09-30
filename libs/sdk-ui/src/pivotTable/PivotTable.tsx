@@ -15,8 +15,10 @@ import {
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
-import { IPivotTableBucketProps, IPivotTableProps } from "./pivotProps";
+import { IPivotTableBucketProps, IPivotTableProps } from "./types";
 import omit = require("lodash/omit");
+import { IntlWrapper } from "../base/translations/IntlWrapper";
+import { IntlTranslationsProvider, ITranslationsComponentProps } from '../base/translations/TranslationsProvider';
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 /**
@@ -43,12 +45,26 @@ export class PivotTable extends React.Component<IPivotTableProps> {
             .withDimensions(pivotDimensions)
             .withSorting(...sortBy);
 
-        return <CorePivotTable {...newProps} execution={execution} exportTitle={exportTitle} />;
+        return (
+            <IntlWrapper locale={this.props.locale}>
+                <IntlTranslationsProvider>
+                    {(translationProps: ITranslationsComponentProps) => {
+                        return (
+                            <CorePivotTable
+                                {...newProps}
+                                intl={translationProps.intl}
+                                execution={execution}
+                                exportTitle={exportTitle} />
+                        );
+                    }}
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
     }
 }
 
 function getBuckets(props: IPivotTableBucketProps): IBucket[] {
-    const { measures, rows, columns, totals } = props;
+    const { measures = [], rows = [], columns = [], totals = [] } = props;
 
     return [
         newBucket(MEASURES, ...measures),

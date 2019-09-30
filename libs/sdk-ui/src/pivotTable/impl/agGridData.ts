@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { AFM, Execution } from "@gooddata/gd-bear-model";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getIdsFromUri } from "./agGridUtils";
 import {
@@ -8,27 +7,34 @@ import {
     FIELD_TYPE_ATTRIBUTE,
     FIELD_TYPE_MEASURE,
     ID_SEPARATOR,
-    ROW_TOTAL,
     ROW_SUBTOTAL,
+    ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader, IGridRow, IGridTotalsRow } from "./agGridTypes";
+import {
+    DataValue,
+    DataViewFacade,
+    IAttributeHeader,
+    IHeader,
+    IResultHeaderItem,
+    isAttributeHeader,
+    isResultAttributeHeaderItem,
+    isResultTotalHeaderItem,
+} from "@gooddata/sdk-backend-spi";
 import invariant = require("invariant");
-import InjectedIntl = ReactIntl.InjectedIntl;
 import zipObject = require("lodash/zipObject");
+import InjectedIntl = ReactIntl.InjectedIntl;
 
 /*
  * All code related to transforming data from our backend to ag-grid structures
  */
 
-const getSubtotalLabelCellIndex = (
-    resultHeaderItems: Execution.IResultHeaderItem[][],
-    rowIndex: number,
-): number => {
-    return resultHeaderItems.findIndex(headerItem => Execution.isTotalHeaderItem(headerItem[rowIndex]));
+const getSubtotalLabelCellIndex = (resultHeaderItems: IResultHeaderItem[][], rowIndex: number): number => {
+    return resultHeaderItems.findIndex(headerItem => isResultTotalHeaderItem(headerItem[rowIndex]));
 };
 
 const getCell = (
-    rowHeaderData: Execution.IResultHeaderItem[][],
+    rowHeaderData: IResultHeaderItem[][],
     rowIndex: number,
     rowHeader: IGridHeader,
     rowHeaderIndex: number,
@@ -36,7 +42,7 @@ const getCell = (
 ): {
     field: string;
     value: string;
-    rowHeaderDataItem: Execution.IResultHeaderItem;
+    rowHeaderDataItem: IResultHeaderItem;
     isSubtotal: boolean;
 } => {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
@@ -46,14 +52,14 @@ const getCell = (
         isSubtotal: false,
     };
 
-    if (Execution.isAttributeHeaderItem(rowHeaderDataItem)) {
+    if (isResultAttributeHeaderItem(rowHeaderDataItem)) {
         return {
             ...cell,
             value: rowHeaderDataItem.attributeHeaderItem.name,
         };
     }
 
-    if (Execution.isTotalHeaderItem(rowHeaderDataItem)) {
+    if (isResultTotalHeaderItem(rowHeaderDataItem)) {
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
         return {
             ...cell,
@@ -72,11 +78,11 @@ const getCell = (
 };
 
 export const getRow = (
-    cellData: Execution.DataValue[],
+    cellData: DataValue[],
     rowIndex: number,
     columnFields: string[],
     rowHeaders: IGridHeader[],
-    rowHeaderData: Execution.IResultHeaderItem[][],
+    rowHeaderData: IResultHeaderItem[][],
     subtotalStyles: string[],
     intl: InjectedIntl,
 ): IGridRow => {
@@ -104,7 +110,7 @@ export const getRow = (
         row.headerItemMap[field] = rowHeaderDataItem as IMappingHeader;
     });
 
-    cellData.forEach((cell: Execution.DataValue, cellIndex: number) => {
+    cellData.forEach((cell: DataValue, cellIndex: number) => {
         const field = columnFields[cellIndex];
         if (field) {
             row[field] = cell;
@@ -114,16 +120,18 @@ export const getRow = (
 };
 
 export const getRowTotals = (
-    totals: Execution.DataValue[][][],
+    dv: DataViewFacade,
     columnKeys: string[],
-    headers: Execution.IHeader[],
-    resultSpec: AFM.IResultSpec,
-    measureIds: string[],
     intl: InjectedIntl,
 ): IGridTotalsRow[] => {
-    if (!totals) {
+    if (!dv.hasTotals()) {
         return null;
     }
+
+    const totals = dv.totals();
+    const headers = dv.dimensions()[0].headers;
+    const measureIds = dv.measureGroupHeaderItems().map(m => m.measureHeaderItem.localIdentifier);
+    const totalDefs = dv.definition.dimensions[0].totals;
 
     return totals[0].map((totalRow: string[], totalIndex: number) => {
         const attributeKeys: string[] = [];
@@ -144,11 +152,11 @@ export const getRowTotals = (
         const [totalAttributeKey] = attributeKeys;
         const totalAttributeId: string = totalAttributeKey.split(ID_SEPARATOR).pop();
 
-        const totalHeader: Execution.IAttributeHeader = headers.find(
-            (header: Execution.IHeader) =>
-                Execution.isAttributeHeader(header) &&
+        const totalHeader: IAttributeHeader = headers.find(
+            (header: IHeader) =>
+                isAttributeHeader(header) &&
                 getIdsFromUri(header.attributeHeader.uri)[0] === totalAttributeId,
-        ) as Execution.IAttributeHeader;
+        ) as IAttributeHeader;
 
         invariant(totalHeader, `Could not find header for ${totalAttributeKey}`);
 
@@ -159,7 +167,7 @@ export const getRowTotals = (
 
         // create measure ids in the form of "m_index" for measures having the current type of grand total
         // this makes it easier to match against in the cell renderer
-        const rowTotalActiveMeasures = resultSpec.dimensions[0].totals
+        const rowTotalActiveMeasures = totalDefs
             .filter(t => t.type === grandTotalName && t.attributeIdentifier === grandTotalAttributeIdentifier)
             .map(t => `m_${measureIds.indexOf(t.measureIdentifier)}`);
 

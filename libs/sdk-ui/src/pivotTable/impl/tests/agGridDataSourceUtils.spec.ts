@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { IGridTotalsRow } from "../agGridTypes";
-import { areTotalsChanged, isInvalidGetRowsRequest, wrapGetPageWithCaching } from "../agGridDataSourceUtils";
-import * as fixtures from "../../../../stories/test_data/fixtures";
+import { areTotalsChanged, isInvalidGetRowsRequest } from '../agGridDataSourceUtils';
+import { IGridTotalsRow } from '../agGridTypes';
 
 describe("getGridDataSourceUtils", () => {
     describe("isInvalidGetRowsRequest", () => {
@@ -77,34 +76,5 @@ describe("getGridDataSourceUtils", () => {
                 expect(areTotalsChanged(gridApi, passedTotals)).toBe(expectedValue);
             },
         );
-    });
-
-    describe("wrapGetPageWithCaching", () => {
-        it("should call getPage only once if the execution params are the same", async () => {
-            const execution = fixtures.pivotTableWithColumnAndRowAttributes.executionRequest;
-
-            const getPage = jest.fn(() => Promise.resolve(execution));
-            const getPageWithCaching = wrapGetPageWithCaching(getPage);
-
-            await getPageWithCaching(execution.resultSpec, [0], [1]);
-            await getPageWithCaching(execution.resultSpec, [0], [1]);
-            expect(getPage).toHaveBeenCalledTimes(1);
-        });
-
-        it("should call getPage each time if execution params changes", async () => {
-            const execution = fixtures.pivotTableWithColumnAndRowAttributes.executionRequest;
-            const differentResultSpec =
-                fixtures.pivotTableWithColumnRowAttributesAndTotals.executionRequest.resultSpec;
-
-            const getPage = jest.fn(() => Promise.resolve(execution));
-            const getPageWithCaching = wrapGetPageWithCaching(getPage);
-
-            await getPageWithCaching(execution.resultSpec, [0], [0]);
-            await getPageWithCaching(execution.resultSpec, [0], [1]);
-            await getPageWithCaching(execution.resultSpec, [1], [0]);
-            await getPageWithCaching(execution.resultSpec, [1], [1]);
-            await getPageWithCaching(differentResultSpec, [1], [1]);
-            expect(getPage).toHaveBeenCalledTimes(5);
-        });
     });
 });

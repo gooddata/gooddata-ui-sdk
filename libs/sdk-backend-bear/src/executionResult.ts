@@ -123,15 +123,15 @@ class BearDataView implements IDataView {
     public readonly count: number[];
     public readonly offset: number[];
     public readonly result: IExecutionResult;
-    public readonly totals: DataValue[][][];
+    public readonly totals?: DataValue[][][];
     private readonly _fingerprint: string;
 
     constructor(result: IExecutionResult, dataResult: Execution.IExecutionResult) {
         this.result = result;
         this.definition = result.definition;
         this.data = dataResult.data;
-        this.headerItems = dataResult.headerItems ? dataResult.headerItems : [[[]]];
-        this.totals = dataResult.totals ? dataResult.totals : [[[]]];
+        this.headerItems = dataResult.headerItems ? dataResult.headerItems : [];
+        this.totals = dataResult.totals;
         this.totalCount = dataResult.paging.total;
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;

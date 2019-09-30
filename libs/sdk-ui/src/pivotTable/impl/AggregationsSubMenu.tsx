@@ -1,26 +1,24 @@
 // (C) 2007-2018 GoodData Corporation
-import * as React from "react";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import * as classNames from "classnames";
+import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
+import { IAttributeHeader } from '@gooddata/sdk-backend-spi';
+import { TotalType } from '@gooddata/sdk-model';
+import * as classNames from 'classnames';
+import * as React from 'react';
 
-import {
-    getNthAttributeLocalIdentifier,
-    getNthAttributeName,
-} from "../../base/helpers/executionResultHelper";
-import SubMenu from "../menu/SubMenu";
-import { IMenuAggregationClickConfig } from "../PivotTable";
-import { IColumnTotal } from "./AggregationsMenu";
-import menuHelper from "./aggregationsMenuHelper";
+import { getNthAttributeLocalIdentifier, getNthAttributeName, } from '../../base/helpers/executionResultHelper';
+import SubMenu from '../menu/SubMenu';
+import { IMenuAggregationClickConfig } from '../types';
+import { IColumnTotal } from './AggregationsMenu';
+import menuHelper from './aggregationsMenuHelper';
 
 const MENU_HEADER_OFFSET = -36;
 
 export interface IAggregationsSubMenuProps {
     intl: ReactIntl.InjectedIntl;
-    totalType: AFM.TotalType;
+    totalType: TotalType;
     toggler: JSX.Element;
     isMenuOpened?: boolean;
-    rowAttributeHeaders: Execution.IAttributeHeader[];
+    rowAttributeHeaders: IAttributeHeader[];
     measureLocalIdentifiers: string[];
     columnTotals: IColumnTotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
@@ -48,14 +46,14 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
     }
 
     private getPreviousAttributeName(
-        rowAttributeHeaders: Execution.IAttributeHeader[],
+        rowAttributeHeaders: IAttributeHeader[],
         attributeHeaderIndex: number,
     ): string {
         return getNthAttributeName(rowAttributeHeaders, attributeHeaderIndex - 1);
     }
 
     private getAttributeName(
-        rowAttributeHeaders: Execution.IAttributeHeader[],
+        rowAttributeHeaders: IAttributeHeader[],
         afmAttributeHeaderIndex: number,
     ): string {
         const { intl } = this.props;
@@ -78,7 +76,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         const { totalType, rowAttributeHeaders, measureLocalIdentifiers, columnTotals } = this.props;
 
         return rowAttributeHeaders.map(
-            (_attributeHeader: Execution.IAttributeHeader, headerIndex: number) => {
+            (_attributeHeader: IAttributeHeader, headerIndex: number) => {
                 const attributeLocalIdentifier = getNthAttributeLocalIdentifier(
                     rowAttributeHeaders,
                     headerIndex,

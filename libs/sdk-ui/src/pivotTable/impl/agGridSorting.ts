@@ -12,6 +12,8 @@ import { assortDimensionHeaders, identifyResponseHeader } from "./agGridHeaders"
 import { ISortedByColumnIndexes, ISortModelItem } from "./agGridTypes";
 import invariant = require("invariant");
 import { ColDef } from "ag-grid-community";
+import { SortItem, SortDirection } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
@@ -58,11 +60,11 @@ export const getMeasureSortItemFieldAndDirection = (
 };
 
 export const getSortItemByColId = (
-    execution: Execution.IExecutionResponses,
+    dv: DataViewFacade,
     colId: string,
-    direction: AFM.SortDirection,
+    direction: SortDirection,
 ): AFM.IMeasureSortItem | AFM.IAttributeSortItem => {
-    const { dimensions } = execution.executionResponse;
+    const dimensions = dv.dimensions();
 
     const fields = getParsedFields(colId);
     const [lastFieldType, lastFieldId] = fields[fields.length - 1];
@@ -124,7 +126,7 @@ export const getSortItemByColId = (
     invariant(false, `could not find header matching ${colId}`);
 };
 
-export function isSortedByFirstAttibute(columnDefs: ColDef[], resultSpec: AFM.IResultSpec): boolean {
+export function isSortedByFirstAttibute(columnDefs: ColDef[], sorts: SortItem[]): boolean {
     const sortedColumnIndexes: ISortedByColumnIndexes = columnDefs.reduce(
         (sortStack: ISortedByColumnIndexes, columnDef: ColDef, columnIndex: number) => {
             if (columnDef.sort) {
@@ -140,23 +142,19 @@ export function isSortedByFirstAttibute(columnDefs: ColDef[], resultSpec: AFM.IR
 
     const sortedByFirstAttribute =
         sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1;
-    const isSorted =
-        sortedColumnIndexes.all.length > 0 || (resultSpec && resultSpec.sorts && resultSpec.sorts.length > 0);
+    const isSorted = sortedColumnIndexes.all.length > 0 || sorts.length > 0;
 
     return sortedByFirstAttribute || !isSorted;
 }
 
-export const getSortsFromModel = (
-    sortModel: ISortModelItem[], // AgGrid has any, but we can do better
-    execution: Execution.IExecutionResponses,
-) => {
+export function getSortsFromModel(sortModel: ISortModelItem[], dv: DataViewFacade): SortItem[] {
     return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
-        const sortHeader = getSortItemByColId(execution, colId, sort);
+        const sortHeader = getSortItemByColId(dv, colId, sort);
         invariant(sortHeader, `unable to find sort item by field ${colId}`);
         return sortHeader;
     });
-};
+}
 
 export const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): void => {
     const direction = sortingMap[colDef.field];

@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
+import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import * as React from "react";
 import * as classNames from "classnames";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
 
-import { IMenu, IMenuAggregationClickConfig } from "../PivotTable";
+import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
+import { ITotal, SortDirection } from '@gooddata/sdk-model';
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";
@@ -15,15 +16,15 @@ export interface IHeaderCellProps {
     displayText: string;
     className?: string;
     enableSorting?: boolean;
-    defaultSortDirection?: AFM.SortDirection;
+    defaultSortDirection?: SortDirection;
     menuPosition?: AlignPositions;
     textAlign?: AlignPositions;
-    sortDirection?: AFM.SortDirection;
-    onSortClick?: (direction: AFM.SortDirection) => void;
+    sortDirection?: SortDirection;
+    onSortClick?: (direction: SortDirection) => void;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     menu?: IMenu;
-    getExecutionResponse?: () => Execution.IExecutionResponse;
-    getColumnTotals?: () => AFM.ITotalItem[];
+    getDataView?: () => DataViewFacade;
+    getColumnTotals?: () => ITotal[];
     colId?: string;
     intl?: ReactIntl.InjectedIntl;
 }
@@ -31,7 +32,7 @@ export interface IHeaderCellProps {
 export interface IHeaderCellState {
     isMenuOpen: boolean;
     isMenuButtonVisible: boolean;
-    currentSortDirection: AFM.SortDirection;
+    currentSortDirection: SortDirection;
 }
 
 export default class HeaderCell extends React.Component<IHeaderCellProps, IHeaderCellState> {
@@ -89,7 +90,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     }
 
     private renderMenu() {
-        const { intl, colId, menu, getExecutionResponse, getColumnTotals } = this.props;
+        const { intl, colId, menu, getDataView, getColumnTotals } = this.props;
         const { isMenuOpen, isMenuButtonVisible } = this.state;
 
         if (!menu || !menu.aggregations) {
@@ -103,7 +104,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 isMenuOpened={isMenuOpen}
                 isMenuButtonVisible={isMenuButtonVisible}
                 showSubmenu={menu.aggregationsSubMenu}
-                getExecutionResponse={getExecutionResponse}
+                getDataView={getDataView}
                 getTotals={getColumnTotals}
                 onMenuOpenedChange={this.handleMenuOpenedChange}
                 onAggregationSelect={this.menuItemClick}

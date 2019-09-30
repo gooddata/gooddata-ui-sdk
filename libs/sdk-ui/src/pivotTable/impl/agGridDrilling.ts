@@ -1,14 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { getMasterMeasureObjQualifier } from "../../_defunct/to_delete/afmHelper";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderName,
     getMappingHeaderUri,
 } from "../../base/helpers/mappingHeader";
-import get = require("lodash/get");
 import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
@@ -17,7 +14,18 @@ import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";
 import { IGridHeader } from "./agGridTypes";
-import { isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import {
+    DataViewFacade,
+    IAttributeHeader,
+    IHeader,
+    IResultHeaderItem,
+    IResultMeasureHeaderItem,
+    isMeasureGroupHeader,
+    isResultAttributeHeaderItem,
+    isResultMeasureHeaderItem,
+} from "@gooddata/sdk-backend-spi";
+import { measureUriOrQualifier } from "../../base/helpers/measures";
+import get = require("lodash/get");
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
@@ -46,7 +54,7 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
 
 export const getDrillIntersection = (
     drillItems: IMappingHeader[],
-    afm: AFM.IAfm,
+    dv: DataViewFacade,
 ): IDrillEventIntersectionElement[] => {
     // Drilling needs refactoring: all '' should be replaced by null (breaking change)
     // intersection consists of
@@ -66,9 +74,8 @@ export const getDrillIntersection = (
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
         const headerIdentifier = getMappingHeaderIdentifier(drillItem) || "";
-        const uriAndIdentifier = headerLocalIdentifier
-            ? getMasterMeasureObjQualifier(afm, headerLocalIdentifier)
-            : null;
+        const measure = dv.masterMeasureForDerived(headerLocalIdentifier);
+        const uriAndIdentifier = measureUriOrQualifier(measure);
 
         const headerUri = getMappingHeaderUri(drillItem) || "";
         const uri = (uriAndIdentifier && uriAndIdentifier.uri) || headerUri;
@@ -79,36 +86,31 @@ export const getDrillIntersection = (
     });
 };
 
-export const getMeasureDrillItem = (
-    responseHeaders: Execution.IHeader[],
-    header: Execution.IResultMeasureHeaderItem,
-) => {
-    const measureGroupHeader = responseHeaders.find(responseHeader =>
-        Execution.isMeasureGroupHeader(responseHeader),
-    ) as Execution.IMeasureGroupHeader;
+export const getMeasureDrillItem = (responseHeaders: IHeader[], header: IResultMeasureHeaderItem) => {
+    const measureGroupHeader = responseHeaders.find(isMeasureGroupHeader);
 
     return get(measureGroupHeader, ["measureGroupHeader", "items", header.measureHeaderItem.order], null);
 };
 
 export const assignDrillItemsAndType = (
     header: IGridHeader,
-    currentHeader: Execution.IResultHeaderItem,
-    responseHeaders: Execution.IHeader[],
+    currentHeader: IResultHeaderItem,
+    responseHeaders: IHeader[],
     headerIndex: number,
     drillItems: IMappingHeader[],
 ) => {
-    if (Execution.isAttributeHeaderItem(currentHeader)) {
+    if (isResultAttributeHeaderItem(currentHeader)) {
         header.type = COLUMN_ATTRIBUTE_COLUMN;
         // attribute value uri
         drillItems.push(currentHeader);
         // attribute uri and identifier
         const attributeResponseHeader = responseHeaders[
             headerIndex % responseHeaders.length
-        ] as Execution.IAttributeHeader;
+        ] as IAttributeHeader;
         drillItems.push(attributeResponseHeader);
         // This is where we could assign drillItems if we want to start drilling on column headers
         // It needs to have an empty array for some edge cases like column attributes without measures
-    } else if (Execution.isMeasureHeaderItem(currentHeader)) {
+    } else if (isResultMeasureHeaderItem(currentHeader)) {
         // measure uri and identifier
         header.type = MEASURE_COLUMN;
         drillItems.push(getMeasureDrillItem(responseHeaders, currentHeader));

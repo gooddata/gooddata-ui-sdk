@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import { AFM } from "@gooddata/gd-bear-model";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { ColDef, CellEvent, GridOptions } from "ag-grid-community";
+import { CellEvent, ColDef, GridOptions } from "ag-grid-community";
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 
 export interface IGridRow {
     headerItemMap: {
@@ -37,8 +38,10 @@ export interface IColumnDefOptions {
 }
 
 export interface IGridAdapterOptions {
-    makeRowGroups?: boolean;
     addLoadingRenderer?: string;
+    // TODO: is this even used?
+    makeRowGroups?: boolean;
+    // TODO: is this even used?
     columnDefOptions?: IColumnDefOptions;
 }
 
@@ -61,3 +64,17 @@ export interface ISortedByColumnIndexes {
     attributes: number[];
     all: number[];
 }
+
+export type TableHeaders = {
+    rowHeaders: IGridHeader[];
+    colHeaders: IGridHeader[];
+    allHeaders: IGridHeader[];
+    rowFields: string[];
+    colFields: string[];
+};
+
+export type DatasourceCallbacks = {
+    onPageLoaded: OnPageLoaded;
+};
+
+export type OnPageLoaded = (dv: DataViewFacade) => void;

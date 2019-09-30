@@ -2,7 +2,7 @@
 import { AFM, Execution } from "@gooddata/gd-bear-model";
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { IColumnTotal } from "../AggregationsMenu";
-import { IMenuAggregationClickConfig } from "../../PivotTable";
+import { IMenuAggregationClickConfig } from "../../types";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../agGridConst";
 
 describe("aggregationsMenuHelper", () => {

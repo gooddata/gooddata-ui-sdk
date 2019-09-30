@@ -1,68 +1,50 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, Execution, VisualizationObject } from "@gooddata/gd-bear-model";
+import { DataViewFacade, defTotals, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
     BodyScrollEvent,
-    ColDef,
     ColumnResizedEvent,
     GridApi,
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
 } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
 import { CellClassParams } from "ag-grid-community/dist/lib/entities/colDef";
+import { AgGridReact } from "ag-grid-react";
 import * as classNames from "classnames";
 import * as CustomEvent from "custom-event";
-import * as invariant from "invariant";
 import * as React from "react";
+import { ErrorComponent } from "..";
 
 import "../../styles/css/pivotTable.css";
-
-import { VisualizationTypes } from "../../base/constants/visualizationTypes";
-
-import { getScrollbarWidth } from "../../base/helpers/domUtils";
+import { VisualizationTypes } from "../base/constants/visualizationTypes";
+import { getScrollbarWidth } from "../base/helpers/domUtils";
 import {
-    convertDrillableItemsToPredicates,
-    isSomeHeaderPredicateMatched,
-} from "../../base/helpers/headerPredicate";
-
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
-
-import { IDrillEvent, IDrillEventContextTable } from "../../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { IMenuAggregationClickConfig, IPivotTableConfig } from "./PivotTable";
-import { IDataSourceProviderInjectedProps } from "../to_delete/DataSourceProvider";
-import { LoadingComponent } from "../../base/simple/LoadingComponent";
-import TotalsUtils, { AVAILABLE_TOTALS as renderedTotalTypesOrder } from "./impl/utils";
-
-import { ICommonChartProps } from "../to_delete/BaseChart";
-import { BaseVisualization } from "../to_delete/BaseVisualization";
-
-import {
-    commonDefaultProps,
-    IGetPage,
-    ILoadingInjectedProps,
-    visualizationLoadingHOC,
-} from "../to_delete/VisualizationLoadingHOC";
+    convertDrillableItemsToPredicates2,
+    isSomeHeaderPredicateMatched2,
+} from "../base/helpers/headerPredicate";
+import { IDrillEvent2, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
+import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../base/interfaces/MappingHeader";
+import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
-    ROW_TOTAL,
     ROW_SUBTOTAL,
+    ROW_TOTAL,
 } from "./impl/agGridConst";
-import { createAgGridDataSource } from "./impl/agGridDataSource";
+import { createAgGridDataSource, createTableHeaders } from "./impl/agGridDataSource";
 import { getDrillIntersection, getDrillRowData } from "./impl/agGridDrilling";
 import { getSortsFromModel, isSortedByFirstAttibute } from "./impl/agGridSorting";
 import {
     ICustomGridOptions,
     IGridCellEvent,
     IGridHeader,
-    IGridRow,
     ISortModelItem,
+    TableHeaders,
 } from "./impl/agGridTypes";
 import {
     cellRenderer,
@@ -71,7 +53,6 @@ import {
     getRowNodeId,
     getTreeLeaves,
     indexOfTreeNode,
-    isMeasureColumnReadyToRender,
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
 import ColumnHeader from "./impl/ColumnHeader";
@@ -84,39 +65,24 @@ import {
     updateStickyRowContentClasses,
     updateStickyRowPosition,
 } from "./impl/stickyRowHandler";
+
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
+import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from "./impl/utils";
+
+import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import sumBy = require("lodash/sumBy");
 
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
-
-export interface IPivotTableProps extends ICommonChartProps, IDataSourceProviderInjectedProps {
-    totals?: VisualizationObject.IVisualizationTotal[];
-    getPage?: IGetPage;
-    cancelPagePromises?: () => void;
-    pageSize?: number;
-    config?: IPivotTableConfig;
-    groupRows?: boolean;
-    onDataSourceUpdateSuccess?: () => void;
-}
-
-export interface IPivotTableState {
-    columnDefs: ColDef[];
-    // rowData an an array of different objects depending on the content of the table.
-    rowData: IGridRow[];
-    execution: Execution.IExecutionResponses;
-    columnTotals: AFM.ITotalItem[];
+export interface ICorePivotTableState {
+    tableReady: boolean;
+    columnTotals: ITotal[];
     agGridRerenderNumber: number;
     desiredHeight: number | undefined;
     sortedByFirstAttribute: boolean;
 }
-
-export type IPivotTableInnerProps = IPivotTableProps &
-    ILoadingInjectedProps &
-    IDataSourceProviderInjectedProps &
-    InjectedIntlProps;
 
 const DEFAULT_ROW_HEIGHT = 28;
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
@@ -128,22 +94,34 @@ export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
 /**
  * Pivot Table react component
  */
-export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IPivotTableState> {
-    public static defaultProps: Partial<IPivotTableInnerProps> = {
-        ...commonDefaultProps,
-        // This prop is optional if you handle nativeTotals through pushData like in appComponents PluggablePivotTable
-        updateTotals: noop,
-        onDataTooLarge: noop,
-        onDataSourceUpdateSuccess: noop,
+export class CorePivotTable extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
+    public static defaultProps: Partial<ICorePivotTableProps> = {
+        locale: "en-US",
+        drillableItems: [],
+        afterRender: noop,
+        pushData: noop,
+        onExportReady: noop,
+        onLoadingChanged: noop,
+        onDrill: () => true,
+        ErrorComponent,
+        LoadingComponent,
         pageSize: 100,
         config: {},
         groupRows: true,
     };
 
-    private agGridDataSource: IDatasource;
-    private gridApi: GridApi;
+    private _pendingAsync: Promise<void>;
     private containerRef: HTMLDivElement;
-    private groupingProvider: IGroupingProvider;
+
+    private gridApi: GridApi = null;
+    private gridOptions: ICustomGridOptions = null;
+    private tableHeaders: TableHeaders = null;
+    private agGridDataSource: IDatasource = null;
+    private result: IExecutionResult = null;
+    private visibleData: DataViewFacade = null;
+
+    private groupingProvider: IGroupingProvider = null;
+
     private lastScrollPosition: IScrollPosition = {
         top: 0,
         left: 0,
@@ -152,43 +130,92 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     private watchingIntervalId: number | null;
     private watchingTimeoutId: number | null;
 
-    constructor(props: IPivotTableInnerProps) {
+    constructor(props: ICorePivotTableProps) {
         super(props);
 
-        this.state = {
-            columnDefs: [],
-            rowData: [],
+        const { execution, config, groupRows } = props;
 
-            execution: null,
-            columnTotals: cloneDeep(TotalsUtils.getColumnTotalsFromResultSpec(this.props.resultSpec)),
+        this.state = {
+            tableReady: false,
+            columnTotals: cloneDeep(defTotals(execution.definition, 0)),
             agGridRerenderNumber: 1,
-            desiredHeight: props.config.maxHeight,
+            desiredHeight: config.maxHeight,
 
             sortedByFirstAttribute: true,
         };
 
-        this.agGridDataSource = null;
-        this.gridApi = null;
-
-        this.setGroupingProvider(props.groupRows);
+        this.setGroupingProvider(groupRows);
     }
 
-    public UNSAFE_componentWillMount() {
-        this.createAGGridDataSource();
+    private reinitialize = (execution: IPreparedExecution): void => {
+        this.setState(
+            {
+                tableReady: false,
+            },
+            () => {
+                this.gridApi = null;
+                this.gridOptions = null;
+                this.tableHeaders = null;
+                this.agGridDataSource = null;
+                this.result = null;
+                this.visibleData = null;
+
+                this.initialize(execution);
+            },
+        );
+    };
+
+    private initialize(execution: IPreparedExecution): Promise<void> {
+        return execution.execute().then(result => {
+            // TODO: externalize into constants
+            this._pendingAsync = result.readWindow([0, 0], [this.props.pageSize, 1000]).then(dataView => {
+                this._pendingAsync = null;
+
+                this.tableHeaders = createTableHeaders(dataView);
+                this.result = result;
+                this.visibleData = new DataViewFacade(dataView);
+                this.agGridDataSource = createAgGridDataSource(
+                    this.tableHeaders,
+                    this.visibleData,
+                    this.getGridApi,
+                    () => this.groupingProvider,
+                    {
+                        onPageLoaded: this.onPageLoaded,
+                    },
+                    this.props.intl,
+                );
+
+                this.setGridDataSource(this.agGridDataSource);
+
+                const sortedByFirstAttribute = isSortedByFirstAttibute(
+                    this.tableHeaders.allHeaders,
+                    this.visibleData.definition.sortBy,
+                );
+
+                this.setState({ tableReady: true, sortedByFirstAttribute });
+            });
+        });
     }
 
     public componentDidMount() {
         if (this.containerRef) {
             this.containerRef.addEventListener("mousedown", this.preventHeaderResizerEvents);
         }
+
+        this._pendingAsync = this.initialize(this.props.execution);
     }
     public componentWillUnmount() {
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
         }
+
+        if (this._pendingAsync) {
+            // TODO: cancel promise
+        }
     }
 
-    public UNSAFE_componentWillUpdate(nextProps: IPivotTableInnerProps, nextState: IPivotTableState) {
+    public UNSAFE_componentWillUpdate(nextProps: ICorePivotTableProps, nextState: ICorePivotTableState) {
+        // TODO: get rid of this unsafe lifecycle
         if (
             this.props.groupRows !== nextProps.groupRows ||
             this.state.sortedByFirstAttribute !== nextState.sortedByFirstAttribute
@@ -197,70 +224,38 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         }
     }
 
-    public componentDidUpdate(prevProps: IPivotTableInnerProps, prevState: IPivotTableState) {
-        const prevPropsTotals = TotalsUtils.getColumnTotalsFromResultSpec(prevProps.resultSpec);
-        const currentPropsTotals = TotalsUtils.getColumnTotalsFromResultSpec(this.props.resultSpec);
-        const totalsPropsChanged = !isEqual(prevPropsTotals, currentPropsTotals);
+    public componentDidUpdate(prevProps: ICorePivotTableProps) {
+        // TODO: handle totals coming from menu
 
-        const prevStateTotals = prevState.columnTotals;
-        const currentStateTotals = this.state.columnTotals;
-        const totalsStateChanged = !isEqual(prevStateTotals, currentStateTotals);
-
-        new Promise(resolve => {
-            if (totalsPropsChanged) {
-                this.setState(
-                    {
-                        columnTotals: currentPropsTotals,
-                    },
-                    resolve,
-                );
-            } else {
-                resolve();
-            }
-        }).then(() => {
-            let agGridDataSourceUpdateNeeded = false;
-            if (totalsStateChanged) {
-                this.props.updateTotals(this.state.columnTotals);
-                agGridDataSourceUpdateNeeded = true;
-            }
-            if (this.isNewAGGridDataSourceNeeded(prevProps)) {
-                this.groupingProvider.reset();
-                agGridDataSourceUpdateNeeded = true;
-            }
-            if (agGridDataSourceUpdateNeeded) {
-                this.updateAGGridDataSource();
-            }
-        });
+        if (
+            !prevProps.execution.equals(this.props.execution) ||
+            prevProps.drillableItems !== this.props.drillableItems
+        ) {
+            this.reinitialize(this.props.execution);
+        }
 
         if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
             this.forceRerender();
         }
     }
 
-    public renderVisualization() {
+    public render() {
+        const { LoadingComponent, execution } = this.props;
         const { desiredHeight } = this.state;
-        const gridOptions = this.createGridOptions();
 
-        // columnDefs are loaded with first page request. Show overlay loading before first page is available.
-        const tableLoadingOverlay = this.isTableHidden() ? (
-            <div
-                style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                }}
-            >
-                <LoadingComponent />
-            </div>
-        ) : null;
+        if (this.isTableHidden()) {
+            return <LoadingComponent />;
+        }
 
         const style: React.CSSProperties = {
             height: desiredHeight || "100%",
             position: "relative",
             overflow: "hidden",
         };
+
+        if (!this.gridOptions) {
+            this.gridOptions = this.createGridOptions();
+        }
 
         return (
             <div className="gd-table-component" style={style}>
@@ -269,13 +264,13 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    {tableLoadingOverlay}
                     <AgGridReact
-                        {...gridOptions}
+                        {...this.gridOptions}
+                        // TODO: revisit; there is gridApi.refreshHeaders(), maybe that works?
                         // To force Ag grid rerender because AFAIK there is no way
                         // to tell Ag grid header cell to rerender
                         key={generateAgGridComponentKey(
-                            this.props.dataSource.getAfm(),
+                            execution.definition,
                             this.state.agGridRerenderNumber,
                         )}
                     />
@@ -289,7 +284,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     //
 
     private isTableHidden() {
-        return this.state.columnDefs.length === 0;
+        return !this.state.tableReady;
     }
 
     private forceRerender() {
@@ -314,16 +309,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
     };
 
-    private getExecutionResponse = () => {
-        return this.state.execution ? this.state.execution.executionResponse : null;
-    };
-
     private getColumnTotals = () => {
         return this.state.columnTotals;
     };
 
-    private getExecution = () => {
-        return this.state.execution;
+    private getDataView = () => {
+        return this.visibleData;
     };
 
     private getGridApi = () => this.gridApi;
@@ -332,78 +323,30 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     // working with data source
     //
 
-    private isNewAGGridDataSourceNeeded(prevProps: IPivotTableInnerProps): boolean {
-        // cannot compare dataSource using deep equal as it stores execution promises that almost always differ
-        const dataSourceChanged =
-            this.props.dataSource.getFingerprint() !== prevProps.dataSource.getFingerprint();
-
-        const dataSourceInvalidatingPropNames = [
-            "resultSpec",
-            "getPage",
-            // drillable items need fresh execution because drillable context for row attribute is kept in rowData
-            // It could be refactored to assign drillability without execution,
-            // but it would suffer a significant performance hit
-            "drillableItems",
-        ];
-
-        const dataSourceInvalidatingPropChanged = dataSourceInvalidatingPropNames.some(
-            propKey => !isEqual(this.props[propKey], prevProps[propKey]),
-        );
-
-        return dataSourceChanged || dataSourceInvalidatingPropChanged;
-    }
-
-    private isAgGridRerenderNeeded(props: IPivotTableInnerProps, prevProps: IPivotTableInnerProps): boolean {
+    private isAgGridRerenderNeeded(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
         const propsRequiringAgGridRerender = [["config", "menu"]];
         return propsRequiringAgGridRerender.some(
             propKey => !isEqual(get(props, propKey), get(prevProps, propKey)),
         );
     }
 
-    private updateAGGridDataSource(): void {
-        this.createAGGridDataSource();
-        this.setGridDataSource();
-    }
+    private onPageLoaded = (dv: DataViewFacade): void => {
+        this.visibleData = dv;
+        // TODO: make sure change in sorts disables grouping
+        this.updateDesiredHeight(dv);
 
-    private createAGGridDataSource() {
-        const onSuccess = (
-            execution: Execution.IExecutionResponses,
-            columnDefs: IGridHeader[],
-            resultSpec: AFM.IResultSpec,
-        ) => {
-            if (!isEqual(columnDefs, this.state.columnDefs)) {
+        /*
                 const sortedByFirstAttribute = isSortedByFirstAttibute(columnDefs, resultSpec);
                 this.setState({
                     columnDefs,
                     sortedByFirstAttribute,
                 });
-            }
-            if (!isEqual(execution, this.state.execution)) {
-                this.setState({
-                    execution,
-                });
-            }
-            this.updateDesiredHeight(execution.executionResult);
-            this.props.onDataSourceUpdateSuccess();
-        };
+         */
+    };
 
-        this.agGridDataSource = createAgGridDataSource(
-            this.props.resultSpec,
-            this.props.getPage,
-            this.getExecution,
-            onSuccess,
-            this.getGridApi,
-            this.props.intl,
-            this.state.columnTotals,
-            () => this.groupingProvider,
-            this.props.cancelPagePromises,
-        );
-    }
-
-    private setGridDataSource() {
-        this.setState({ execution: null });
+    private setGridDataSource(dataSource: IDatasource) {
         if (this.gridApi) {
-            this.gridApi.setDatasource(this.agGridDataSource);
+            this.gridApi.setDatasource(dataSource);
         }
     }
 
@@ -413,7 +356,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
     private onGridReady = (params: GridReadyEvent) => {
         this.gridApi = params.api;
-        this.setGridDataSource();
+        this.setGridDataSource(this.agGridDataSource);
+        this.updateDesiredHeight(this.visibleData);
 
         if (this.props.groupRows) {
             initializeStickyRow(this.gridApi);
@@ -460,12 +404,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     private cellClicked = (cellEvent: IGridCellEvent) => {
-        const {
-            onFiredDrillEvent,
-            execution: { executionResponse },
-        } = this.props;
-        const { columnDefs } = this.state;
-        const afm: AFM.IAfm = this.props.dataSource.getAfm();
+        const { onDrill } = this.props;
+        const tableHeaders = this.tableHeaders;
+        const dv = this.visibleData;
         const drillablePredicates = this.getDrillablePredicates();
 
         const { colDef, rowIndex } = cellEvent;
@@ -484,17 +425,17 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             : colDef.drillItems;
 
         const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
-            isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse),
+            isSomeHeaderPredicateMatched2(drillablePredicates, drillItem, dv),
         );
 
         if (drillableHeaders.length === 0) {
             return false;
         }
 
-        const leafColumnDefs = getTreeLeaves(columnDefs);
+        const leafColumnDefs = getTreeLeaves(tableHeaders.allHeaders);
         const columnIndex = leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field);
         const row = getDrillRowData(leafColumnDefs, cellEvent.data);
-        const intersection = getDrillIntersection(drillItems, afm);
+        const intersection = getDrillIntersection(drillItems, dv);
 
         const drillContext: IDrillEventContextTable = {
             type: VisualizationTypes.TABLE,
@@ -504,12 +445,12 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             row,
             intersection,
         };
-        const drillEvent: IDrillEvent = {
-            executionContext: afm,
+        const drillEvent: IDrillEvent2 = {
+            dataView: dv.dataView, // TODO: this may be stale data at the moment (update to current page)
             drillContext,
         };
 
-        if (onFiredDrillEvent(drillEvent)) {
+        if (onDrill(drillEvent)) {
             // This is needed for /analyze/embedded/ drilling with post message
             // tslint:disable-next-line:max-line-length
             // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
@@ -527,7 +468,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         if (!columnEvent.finished) {
             return; // only update the height once the user is done setting the column size
         }
-        this.updateDesiredHeight(this.state.execution.executionResult);
+        this.updateDesiredHeight(this.visibleData);
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
@@ -544,19 +485,21 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     };
 
     private sortChanged = (event: SortChangedEvent): void => {
-        const execution = this.getExecution();
-
-        invariant(execution !== undefined, "changing sorts without prior execution cannot work");
+        if (!this.visibleData) {
+            // tslint:disable-next-line:no-console
+            console.warn("changing sorts without prior execution cannot work");
+            return;
+        }
 
         const sortModel: ISortModelItem[] = event.columnApi
             .getAllColumns()
             .filter(col => col.getSort() !== undefined && col.getSort() !== null)
             .map(col => ({
                 colId: col.getColDef().field,
-                sort: col.getSort() as AFM.SortDirection,
+                sort: col.getSort() as SortDirection,
             }));
 
-        const sortItems = getSortsFromModel(sortModel, execution);
+        const sortItems = getSortsFromModel(sortModel, this.visibleData);
 
         this.props.pushData({
             properties: {
@@ -564,6 +507,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
             },
         });
 
+        // TODO: likely not good as-is.. because state holds 'sortedByFirstAttr' and at this moment that field
+        //  is not updated
         this.updateGrouping();
     };
 
@@ -586,23 +531,25 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     //
 
     private createGridOptions = (): ICustomGridOptions => {
-        const { columnDefs, rowData } = this.state;
+        const tableHeaders = this.tableHeaders;
+        const dv = this.visibleData;
         const { pageSize } = this.props;
 
+        const actualPageSize = Math.min(pageSize, dv.firstDimSize());
         const separators = get(this.props, ["config", "separators"], undefined);
         const menu = get(this.props, ["config", "menu"]);
 
         const commonHeaderComponentParams = {
             onMenuAggregationClick: this.onMenuAggregationClick,
-            getExecutionResponse: this.getExecutionResponse,
+            getDataView: this.getDataView,
             getColumnTotals: this.getColumnTotals,
             intl: this.props.intl,
         };
 
         return {
             // Initial data
-            columnDefs,
-            rowData,
+            columnDefs: tableHeaders.allHeaders,
+            rowData: [],
             defaultColDef: {
                 cellClass: this.getCellClass(null),
                 headerComponentFramework: ColumnHeader as any,
@@ -635,11 +582,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
 
             // infinite scrolling model
             rowModelType: "infinite",
-            paginationPageSize: pageSize,
-            cacheOverflowSize: pageSize,
-            cacheBlockSize: pageSize,
+            paginationPageSize: actualPageSize,
+            cacheOverflowSize: actualPageSize,
+            cacheBlockSize: actualPageSize,
             maxConcurrentDatasourceRequests: 1,
-            infiniteInitialRowCount: pageSize,
+            infiniteInitialRowCount: actualPageSize,
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
             onFirstDataRendered: this.onFirstDataRendered,
@@ -683,19 +630,19 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                     ),
                     // wrong params type from ag-grid, we need any
                     valueFormatter: (params: any) => {
-                        return isMeasureColumnReadyToRender(params, this.state.execution)
+                        return params.value !== undefined
                             ? getMeasureCellFormattedValue(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.state.execution),
+                                  getMeasureFormat(params.colDef, this.result),
                                   separators,
                               )
                             : null;
                     },
                     cellStyle: params => {
-                        return isMeasureColumnReadyToRender(params, this.state.execution)
+                        return params.value !== undefined
                             ? getMeasureCellStyle(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.state.execution),
+                                  getMeasureFormat(params.colDef, this.result),
                                   separators,
                                   true,
                               )
@@ -721,16 +668,11 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
     private getCellClass = (classList: string) => (cellClassParams: CellClassParams): string => {
-        const {
-            dataSource,
-            execution: { executionResponse },
-        } = this.props;
         const { rowIndex } = cellClassParams;
+        const dv = this.visibleData;
         const colDef = cellClassParams.colDef as IGridHeader;
         const drillablePredicates = this.getDrillablePredicates();
         // return none if no drillableItems are specified
-
-        const afm: AFM.IAfm = dataSource.getAfm();
 
         let hasDrillableHeader = false;
 
@@ -745,7 +687,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
                 : colDef.drillItems;
 
             hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
-                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, afm, executionResponse),
+                isSomeHeaderPredicateMatched2(drillablePredicates, drillItem, dv),
             );
         }
 
@@ -773,7 +715,7 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         const treeIndexes = colDef
             ? indexOfTreeNode(
                   colDef,
-                  this.state.columnDefs,
+                  this.tableHeaders.allHeaders,
                   (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field,
               )
             : null;
@@ -795,8 +737,8 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
     // misc :)
     //
 
-    private getDrillablePredicates(): IHeaderPredicate[] {
-        return convertDrillableItemsToPredicates(this.props.drillableItems);
+    private getDrillablePredicates(): IHeaderPredicate2[] {
+        return convertDrillableItemsToPredicates2(this.props.drillableItems);
     }
 
     private isStickyRowAvailable(): boolean {
@@ -833,9 +775,9 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         this.lastScrollPosition = { ...scrollPosition };
     }
 
-    private getTotalBodyHeight(executionResult: Execution.IExecutionResult): number {
-        const aggregationCount = sumBy(executionResult.totals, total => total.length);
-        const rowCount = executionResult.paging.total[0];
+    private getTotalBodyHeight(dv: DataViewFacade): number {
+        const aggregationCount = sumBy(dv.totals(), total => total.length);
+        const rowCount = dv.firstDimSize();
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
 
@@ -859,14 +801,19 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return hasHorizontalScrollBar ? getScrollbarWidth() : 0;
     }
 
-    private updateDesiredHeight(executionResult: Execution.IExecutionResult): void {
+    private calculateDesiredHeight(dv: DataViewFacade): number {
         const { maxHeight } = this.props.config;
         if (!maxHeight) {
             return;
         }
 
-        const totalHeight = this.getTotalBodyHeight(executionResult) + this.getScrollBarPadding();
-        const desiredHeight = Math.min(totalHeight, maxHeight);
+        const totalHeight = this.getTotalBodyHeight(dv) + this.getScrollBarPadding();
+
+        return Math.min(totalHeight, maxHeight);
+    }
+
+    private updateDesiredHeight(dv: DataViewFacade): void {
+        const desiredHeight = this.calculateDesiredHeight(dv);
 
         if (this.state.desiredHeight !== desiredHeight) {
             this.setState({ desiredHeight });
@@ -877,5 +824,3 @@ export class PivotTableInner extends BaseVisualization<IPivotTableInnerProps, IP
         return target.classList.contains("ag-header-cell-resize");
     }
 }
-
-export const CorePivotTable = visualizationLoadingHOC(PivotTableInner, false);

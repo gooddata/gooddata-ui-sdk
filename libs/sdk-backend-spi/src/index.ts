@@ -27,6 +27,7 @@ export {
     newDefFromBuckets,
     newDefFromInsight,
     newDefFromItems,
+    defTotals,
 } from "./execution/executionDefinition";
 
 export { DataViewFacade } from "./execution/facade";

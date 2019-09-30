@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import { factory } from "@gooddata/gd-bear-client";
 import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
-import { PivotTable } from "../PivotTable";
+import { PivotTable } from "../types";
 import { M1 } from "../../charts/tests/fixtures/buckets";
 
 describe("PivotTable", () => {

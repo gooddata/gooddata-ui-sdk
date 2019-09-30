@@ -23,7 +23,7 @@ import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { BaseChart } from "../to_delete/BaseChart";
 import { IChartConfig } from "../../highcharts/Config";
-import { IPivotTableBucketProps, PivotTable } from "../../pivotTable/PivotTable";
+import { IPivotTableBucketProps, PivotTable } from "../../pivotTable/types";
 import { CoreHeadline } from "../../charts/headline/CoreHeadline";
 import { IEvents, OnLegendReady } from "../../base/interfaces/Events";
 import { VisualizationPropType, Requireable } from "../../proptypes/Visualization";

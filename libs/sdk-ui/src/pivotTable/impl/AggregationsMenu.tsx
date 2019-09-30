@@ -1,25 +1,22 @@
 // (C) 2019 GoodData Corporation
-import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import * as classNames from "classnames";
-import * as React from "react";
+import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
+import { DataViewFacade, IAttributeHeader } from '@gooddata/sdk-backend-spi';
+import { ITotal, TotalType } from '@gooddata/sdk-model';
+import * as classNames from 'classnames';
+import * as React from 'react';
 
-import {
-    getNthAttributeHeader,
-    getNthAttributeLocalIdentifier,
-    getNthDimensionHeaders,
-} from "../../base/helpers/executionResultHelper";
-import Menu from "../menu/Menu";
-import { getParsedFields } from "./agGridUtils";
-import { IMenuAggregationClickConfig } from "../PivotTable";
-import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
-import { AVAILABLE_TOTALS } from "./utils";
-import AggregationsSubMenu from "./AggregationsSubMenu";
-import menuHelper from "./aggregationsMenuHelper";
-import { FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
+import { getNthAttributeHeader, getNthAttributeLocalIdentifier, } from '../../base/helpers/executionResultHelper';
+import Menu from '../menu/Menu';
+import { IOnOpenedChangeParams } from '../menu/MenuSharedTypes';
+import { IMenuAggregationClickConfig } from '../types';
+import menuHelper from './aggregationsMenuHelper';
+import AggregationsSubMenu from './AggregationsSubMenu';
+import { FIELD_TYPE_ATTRIBUTE } from './agGridConst';
+import { getParsedFields } from './agGridUtils';
+import { AVAILABLE_TOTALS } from './utils';
 
 export interface IColumnTotal {
-    type: AFM.TotalType;
+    type: TotalType;
     attributes: string[];
 }
 
@@ -29,41 +26,31 @@ export interface IAggregationsMenuProps {
     isMenuButtonVisible: boolean;
     showSubmenu: boolean;
     colId: string;
-    getExecutionResponse: () => Execution.IExecutionResponse;
-    getTotals: () => AFM.ITotalItem[];
+    getDataView: () => DataViewFacade;
+    getTotals: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
     onMenuOpenedChange: ({ opened, source }: IOnOpenedChangeParams) => void;
 }
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
     public render() {
-        const { intl, colId, getExecutionResponse, isMenuOpened, onMenuOpenedChange } = this.props;
+        const { intl, colId, getDataView, isMenuOpened, onMenuOpenedChange } = this.props;
 
         // Because of Ag-grid react wrapper does not rerender the component when we pass
         // new gridOptions we need to pull the data manually on each render
-        const executionResponse: Execution.IExecutionResponse = getExecutionResponse();
-        if (!executionResponse) {
+        const dv: DataViewFacade = getDataView();
+        if (!dv) {
             return null;
         }
 
-        const rowAttributeHeaders = getNthDimensionHeaders(
-            executionResponse,
-            0,
-        ) as Execution.IAttributeHeader[];
+        const rowAttributeHeaders = dv.dimensionHeaders(0) as IAttributeHeader[];
         const isOneRowTable = rowAttributeHeaders.length === 0;
         if (isOneRowTable) {
             return null;
         }
 
-        const dimensionHeader = getNthDimensionHeaders(executionResponse, 1);
-        if (!dimensionHeader) {
-            return null;
-        }
-
-        const measureGroupHeader = dimensionHeader[
-            dimensionHeader.length - 1
-        ] as Execution.IMeasureGroupHeader;
-        if (!measureGroupHeader || !Execution.isMeasureGroupHeader(measureGroupHeader)) {
+        const measureGroupHeader = dv.measureGroupHeader();
+        if (!measureGroupHeader) {
             return null;
         }
 
@@ -127,7 +114,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     }
 
     private renderMenuItemContent(
-        totalType: AFM.TotalType,
+        totalType: TotalType,
         onClick: () => void,
         isSelected: boolean,
         hasSubMenu = false,
@@ -143,7 +130,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         );
     }
 
-    private getItemClassNames(totalType: AFM.TotalType): string {
+    private getItemClassNames(totalType: TotalType): string {
         return classNames(
             "gd-aggregation-menu-item",
             "s-menu-aggregation",
@@ -154,12 +141,12 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
-        rowAttributeHeaders: Execution.IAttributeHeader[],
+        rowAttributeHeaders: IAttributeHeader[],
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
         const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, 0);
 
-        return AVAILABLE_TOTALS.map((totalType: AFM.TotalType) => {
+        return AVAILABLE_TOTALS.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
                 firstAttributeIdentifier,
                 totalType,

@@ -1,21 +1,30 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, Execution } from "@gooddata/gd-bear-model";
-import { IDatasource, IGetRowsParams, GridApi } from "ag-grid-community";
+import {
+    DataValue,
+    DataViewFacade,
+    IAttributeHeader,
+    IDataView,
+    IExecutionResult,
+    IHeader,
+    isAttributeHeader,
+} from "@gooddata/sdk-backend-spi";
+import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
 import { getMappingHeaderName } from "../../base/helpers/mappingHeader";
 
-import InjectedIntl = ReactIntl.InjectedIntl;
-
-import { getTreeLeaves, getSubtotalStyles } from "./agGridUtils";
+import { getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
 import { COLUMN_GROUPING_DELIMITER, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import {
-    getMeasureSortItemFieldAndDirection,
-    getSortsFromModel,
-    getAttributeSortItemFieldAndDirection,
     assignSorting,
+    getAttributeSortItemFieldAndDirection,
+    getMeasureSortItemFieldAndDirection,
 } from "./agGridSorting";
-import { IAgGridPage, IGridAdapterOptions, IGridHeader } from "./agGridTypes";
-
-import { IGetPage } from "../../_defunct/to_delete/VisualizationLoadingHOC";
+import {
+    DatasourceCallbacks,
+    IAgGridPage,
+    IGridAdapterOptions,
+    IGridHeader,
+    TableHeaders,
+} from "./agGridTypes";
 import { IGroupingProvider } from "./GroupingProvider";
 import {
     assortDimensionHeaders,
@@ -25,110 +34,32 @@ import {
     getRowHeaders,
 } from "./agGridHeaders";
 import { getRow, getRowTotals } from "./agGridData";
-import { areTotalsChanged, isInvalidGetRowsRequest, wrapGetPageWithCaching } from "./agGridDataSourceUtils";
+import { areTotalsChanged, isInvalidGetRowsRequest } from "./agGridDataSourceUtils";
+import { isAttributeSort, isMeasureSort } from "@gooddata/sdk-model";
+import InjectedIntl = ReactIntl.InjectedIntl;
 
-export const getDataSourceRowsGetter = (
-    resultSpec: AFM.IResultSpec,
-    getPage: IGetPage,
-    getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (
-        execution: Execution.IExecutionResponses,
-        columnDefs: IGridHeader[],
-        resultSpec: AFM.IResultSpec,
-    ) => void,
-    getGridApi: () => GridApi,
-    intl: InjectedIntl,
-    columnTotals: AFM.ITotalItem[],
-    getGroupingProvider: () => IGroupingProvider,
-): ((params: IGetRowsParams) => void) => {
-    return (getRowsParams: IGetRowsParams) => {
-        const { startRow, endRow, successCallback, failCallback, sortModel } = getRowsParams;
+export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {
+    const dv = new DataViewFacade(dataView);
+    const dimensions = dv.dimensions();
+    const headerItems = dv.headerItems();
+    const { columnDefOptions, makeRowGroups = false } = options;
 
-        if (isInvalidGetRowsRequest(startRow, getGridApi())) {
-            failCallback();
-            return Promise.resolve(null);
+    const sorting = dv.definition.sortBy;
+    const sortingMap = {};
+    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+    sorting.forEach(sortItem => {
+        if (isAttributeSort(sortItem)) {
+            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeHeaders);
+            sortingMap[field] = direction;
         }
-
-        const execution = getExecution();
-        const groupingProvider = getGroupingProvider();
-
-        let resultSpecUpdated: AFM.IResultSpec = resultSpec;
-        // If execution is null, this means this is a fresh dataSource and we should ignore current sortModel
-        if (sortModel.length > 0 && execution) {
-            resultSpecUpdated = {
-                ...resultSpecUpdated,
-                sorts: getSortsFromModel(sortModel, execution),
-            };
+        if (isMeasureSort(sortItem)) {
+            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureHeaderItems);
+            sortingMap[field] = direction;
         }
-        if (columnTotals && columnTotals.length > 0) {
-            resultSpecUpdated = {
-                ...resultSpecUpdated,
-                dimensions: [
-                    {
-                        ...resultSpecUpdated.dimensions[0],
-                        totals: columnTotals,
-                    },
-                    ...resultSpecUpdated.dimensions.slice(1),
-                ],
-            };
-        }
-
-        const pagePromise = getPage(
-            resultSpecUpdated,
-            // column limit defaults to SERVERSIDE_COLUMN_LIMIT (1000), because 1000 columns is hopefully enough.
-            [endRow - startRow, undefined],
-            // column offset defaults to 0, because we do not support horizontal paging yet
-            [startRow, undefined],
-        );
-        return pagePromise.then((execution: Execution.IExecutionResponses | null) => {
-            if (!execution) {
-                return null;
-            }
-
-            const { columnDefs, rowData, rowTotals } = executionToAGGridAdapter(
-                execution,
-                resultSpecUpdated,
-                intl,
-                {
-                    addLoadingRenderer: "loadingRenderer",
-                },
-            );
-            const { offset, count, total } = execution.executionResult.paging;
-
-            const rowAttributeIds = columnDefs
-                .filter(columnDef => columnDef.type === ROW_ATTRIBUTE_COLUMN)
-                .map(columnDef => columnDef.field);
-            groupingProvider.processPage(rowData, offset[0], rowAttributeIds);
-            // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
-            const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : total[0];
-            onSuccess(execution, columnDefs, resultSpecUpdated);
-            successCallback(rowData, lastRow);
-
-            // set totals
-            if (areTotalsChanged(getGridApi(), rowTotals)) {
-                getGridApi().setPinnedBottomRowData(rowTotals);
-            }
-
-            return execution;
-        });
-    };
-};
-
-export const executionToAGGridAdapter = (
-    executionResponses: Execution.IExecutionResponses,
-    resultSpec: AFM.IResultSpec = {},
-    intl: InjectedIntl,
-    options: IGridAdapterOptions = {},
-): IAgGridPage => {
-    const { makeRowGroups = false, addLoadingRenderer = null, columnDefOptions } = options;
-
-    const {
-        executionResponse: { dimensions },
-        executionResult: { data, headerItems, totals },
-    } = executionResponses;
+    });
 
     const columnAttributeHeaderCount = dimensions[1].headers.filter(
-        (header: Execution.IHeader) => !!(header as Execution.IAttributeHeader).attributeHeader,
+        (header: IHeader) => !!(header as IAttributeHeader).attributeHeader,
     ).length;
 
     const columnHeaders: IGridHeader[] = getColumnHeaders(
@@ -136,13 +67,14 @@ export const executionToAGGridAdapter = (
         dimensions[1].headers,
         columnDefOptions,
     );
+
     const groupColumnHeaders: IGridHeader[] =
         columnAttributeHeaderCount > 0
             ? [
                   {
                       headerName: dimensions[1].headers
-                          .filter(header => Execution.isAttributeHeader(header))
-                          .map((header: Execution.IAttributeHeader) => {
+                          .filter(header => isAttributeHeader(header))
+                          .map((header: IAttributeHeader) => {
                               return getMappingHeaderName(header);
                           })
                           .filter((item: string) => item !== null)
@@ -156,24 +88,9 @@ export const executionToAGGridAdapter = (
 
     const rowHeaders: IGridHeader[] =
         // There are supposed to be only attribute headers on the first dimension
-        getRowHeaders(dimensions[0].headers as Execution.IAttributeHeader[], columnDefOptions, makeRowGroups);
+        getRowHeaders(dimensions[0].headers as IAttributeHeader[], columnDefOptions, makeRowGroups);
 
-    // build sortingMap from resultSpec.sorts
-    const sorting = resultSpec.sorts || [];
-    const sortingMap = {};
-    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
-    sorting.forEach(sortItem => {
-        if (AFM.isAttributeSortItem(sortItem)) {
-            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeHeaders);
-            sortingMap[field] = direction;
-        }
-        if (AFM.isMeasureSortItem(sortItem)) {
-            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureHeaderItems);
-            sortingMap[field] = direction;
-        }
-    });
-    // assign sorting and indexes
-    const columnDefs: IGridHeader[] = [...rowHeaders, ...groupColumnHeaders].map((column, index) => {
+    const allHeaders: IGridHeader[] = [...rowHeaders, ...groupColumnHeaders].map((column, index) => {
         if (column.children) {
             getTreeLeaves(column).forEach((leafColumn, leafColumnIndex) => {
                 leafColumn.index = index + leafColumnIndex;
@@ -185,131 +102,180 @@ export const executionToAGGridAdapter = (
         return column;
     });
 
-    // Add loading indicator to the first column
+    const colFields: string[] = getFields(headerItems[1]);
+    const rowFields: string[] = rowHeaders.map(header => header.field);
+
+    const leafColumnDefs = getTreeLeaves(allHeaders);
+    if (leafColumnDefs[0]) {
+        leafColumnDefs[0].cellRenderer = "loadingRenderer";
+    }
+
+    return {
+        rowHeaders,
+        colHeaders: groupColumnHeaders,
+        allHeaders,
+        rowFields,
+        colFields,
+    };
+}
+
+export function createRowData(
+    headers: TableHeaders,
+    dv: DataViewFacade,
+    intl: InjectedIntl,
+    options: IGridAdapterOptions = {},
+): IAgGridPage {
+    const { addLoadingRenderer = null } = options;
+    const headerItems = dv.headerItems();
+    const dimensions = dv.definition.dimensions;
+
+    const { rowHeaders, rowFields, colFields, allHeaders } = headers;
+
     if (addLoadingRenderer) {
-        const leafColumnDefs = getTreeLeaves(columnDefs);
+        const leafColumnDefs = getTreeLeaves(allHeaders);
         if (leafColumnDefs[0]) {
             leafColumnDefs[0].cellRenderer = addLoadingRenderer;
         }
     }
 
-    const columnFields: string[] = getFields(headerItems[1]);
-    const rowFields: string[] = rowHeaders.map(header => header.field);
-    // PivotTable execution should always return a two-dimensional array (Execution.DataValue[][])
-    const minimalRowData: Execution.DataValue[][] = getMinimalRowData(
-        data as Execution.DataValue[][],
-        headerItems[0],
+    const minimalRowData: DataValue[][] = getMinimalRowData(dv.twoDimData(), headerItems[0]);
+
+    const subtotalStyles = getSubtotalStyles(dimensions ? dimensions[0] : null);
+    const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) =>
+        getRow(dataRow, dataRowIndex, colFields, rowHeaders, headerItems[0], subtotalStyles, intl),
     );
 
-    const subtotalStyles = getSubtotalStyles(resultSpec.dimensions ? resultSpec.dimensions[0] : null);
-    const rowData = minimalRowData.map((dataRow: Execution.DataValue[], dataRowIndex: number) =>
-        getRow(dataRow, dataRowIndex, columnFields, rowHeaders, headerItems[0], subtotalStyles, intl),
-    );
+    const columnKeys = [...rowFields, ...colFields];
 
-    const columnKeys = [...rowFields, ...columnFields];
-    const rowTotals = getRowTotals(
-        totals,
-        columnKeys,
-        dimensions[0].headers,
-        resultSpec,
-        measureHeaderItems.map(mhi => mhi.measureHeaderItem.localIdentifier),
-        intl,
-    );
+    const rowTotals = getRowTotals(dv, columnKeys, intl);
 
     return {
-        columnDefs,
+        columnDefs: allHeaders,
         rowData,
         rowTotals,
     };
-};
+}
 
-class GdToAgGridAdapter implements IDatasource {
-    // not needed; see IDatasource
-    public rowCount?: number;
+export class NewAgGridAdapter implements IDatasource {
+    public rowCount: number | undefined;
     private destroyed: boolean = false;
-    private onDestroy: () => void;
-    private getRowsImpl: (params: IGetRowsParams) => void;
+    private currentResult: IExecutionResult;
+    private dataPromises: Array<Promise<IDataView>> = [];
 
-    public constructor(
-        resultSpec: AFM.IResultSpec,
-        getPage: IGetPage,
-        getExecution: () => Execution.IExecutionResponses,
-        onSuccess: (
-            execution: Execution.IExecutionResponses,
-            columnDefs: IGridHeader[],
-            resultSpec: AFM.IResultSpec,
-        ) => void,
-        getGridApi: () => any,
-        intl: InjectedIntl,
-        columnTotals: AFM.ITotalItem[],
-        getGroupingProvider: () => IGroupingProvider,
-        cancelPagePromises: () => void,
+    constructor(
+        private readonly tableHeaders: TableHeaders,
+        // @ts-ignore
+        private readonly initialDv: DataViewFacade,
+        private readonly gridApiProvider: GridApiProvider,
+        private readonly groupingProvider: GroupingProviderProvider,
+        private readonly callbacks: DatasourceCallbacks,
+        private readonly intl: InjectedIntl,
     ) {
-        this.onDestroy = cancelPagePromises;
-        this.getRowsImpl = getDataSourceRowsGetter(
-            resultSpec,
-            wrapGetPageWithCaching(getPage),
-            getExecution,
-            onSuccess,
-            getGridApi,
-            intl,
-            columnTotals,
-            getGroupingProvider,
-        );
+        this.rowCount = initialDv.firstDimSize();
+        this.currentResult = initialDv.result();
     }
 
-    public getRows(params: IGetRowsParams): void {
+    private onDestroy = (): void => {
+        // tslint:disable-next-line:no-console
+        console.log("cleaning up data source");
+
+        this.dataPromises = [];
+    };
+
+    public destroy = (): void => {
         if (this.destroyed) {
+            // tslint:disable-next-line:no-console
+            console.log("cleaning up data source");
+
+            // TODO: see if this is still needed
             return;
         }
 
-        // NOTE: some of our tests rely on getRows() to return the actual promise
-        return this.getRowsImpl(params);
-    }
-
-    public destroy(): void {
         this.destroyed = true;
         this.onDestroy();
-    }
+    };
+
+    public getRows = (params: IGetRowsParams): void => {
+        const { startRow, endRow, successCallback, failCallback, sortModel } = params;
+
+        if (isInvalidGetRowsRequest(startRow, this.gridApiProvider())) {
+            failCallback();
+
+            return;
+        }
+
+        /*
+         * This seems to trigger re-render of column/row headers, thus ensuring that sort indicators
+         * are shown correctly.
+         */
+        this.gridApiProvider().refreshHeader();
+
+        console.log(JSON.stringify(sortModel, null, 4));
+        // TODO: verify sorts are the same. if not, transform existing result with new sorts & re-execute and
+        //  get new data view
+        // getSortsFromModel(sortModel, execution)
+
+        // TODO: handle addition of totals.. somehow; perhaps the component should be responsible for re-executing
+        //  with totals?
+        const result = this.currentResult;
+
+        // TODO: identify request to get data from the initial data view (exec def match && first page), then
+        //  return data immediately
+
+        const pagePromise = result.readWindow([startRow, 0], [endRow - startRow, undefined]);
+
+        // this.gridApiProvider().setColumnDefs(this.tableHeaders.allHeaders);
+        this.dataPromises.push(pagePromise);
+
+        pagePromise.then((dataView: IDataView) => {
+            if (!dataView) {
+                return null;
+            }
+
+            // destroy of the data source cleans up dataPromises array; if that happened, do nothing with
+            // whatever was returned by backend
+            if (!this.dataPromises.length) {
+                return null;
+            }
+
+            const dv = new DataViewFacade(dataView);
+            const pageData = createRowData(this.tableHeaders, dv, this.intl, {
+                addLoadingRenderer: "loadingRenderer",
+            });
+
+            const { rowData, rowTotals, columnDefs } = pageData;
+            const { offset, count, totalCount } = dataView;
+
+            const rowAttributeIds = columnDefs
+                .filter(columnDef => columnDef.type === ROW_ATTRIBUTE_COLUMN)
+                .map(columnDef => columnDef.field);
+
+            this.groupingProvider().processPage(rowData, offset[0], rowAttributeIds);
+
+            // RAIL-1130: Backend returns incorrectly total: [1, N], when count: [0, N] and offset: [0, N]
+            const lastRow = offset[0] === 0 && count[0] === 0 ? 0 : totalCount[0];
+
+            this.callbacks.onPageLoaded(dv);
+            successCallback(rowData, lastRow);
+
+            // set totals
+            if (areTotalsChanged(this.gridApiProvider(), rowTotals)) {
+                this.gridApiProvider().setPinnedBottomRowData(rowTotals);
+            }
+        });
+    };
 }
 
-/**
- * Factory function to create ag-grid data source backed by GoodData executeAFM.
- *
- * @param resultSpec
- * @param getPage
- * @param getExecution
- * @param onSuccess
- * @param getGridApi
- * @param intl
- * @param columnTotals
- * @param getGroupingProvider
- * @param cancelPagePromises
- */
-export const createAgGridDataSource = (
-    resultSpec: AFM.IResultSpec,
-    getPage: IGetPage,
-    getExecution: () => Execution.IExecutionResponses,
-    onSuccess: (
-        execution: Execution.IExecutionResponses,
-        columnDefs: IGridHeader[],
-        resultSpec: AFM.IResultSpec,
-    ) => void,
-    getGridApi: () => any,
+export function createAgGridDataSource(
+    tableHeaders: TableHeaders,
+    initialDv: DataViewFacade,
+    gridApiProvider: GridApiProvider,
+    groupingProvider: GroupingProviderProvider,
+    callbacks: DatasourceCallbacks,
     intl: InjectedIntl,
-    columnTotals: AFM.ITotalItem[],
-    getGroupingProvider: () => IGroupingProvider,
-    cancelPagePromises: () => void,
-): IDatasource => {
-    return new GdToAgGridAdapter(
-        resultSpec,
-        getPage,
-        getExecution,
-        onSuccess,
-        getGridApi,
-        intl,
-        columnTotals,
-        getGroupingProvider,
-        cancelPagePromises,
-    );
-};
+): IDatasource {
+    return new NewAgGridAdapter(tableHeaders, initialDv, gridApiProvider, groupingProvider, callbacks, intl);
+}
+
+export type GridApiProvider = () => GridApi;
+export type GroupingProviderProvider = () => IGroupingProvider;
