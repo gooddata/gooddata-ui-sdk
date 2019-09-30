@@ -1,0 +1,1662 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Element": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["value"]
+        },
+        "Identifier": {
+            "description": "Type for all identifiers.",
+            "type": "string"
+        },
+        "IObjUriQualifier": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["uri"]
+        },
+        "IObjIdentifierQualifier": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "identifier": {
+                    "description": "Type for all identifiers.",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["identifier"]
+        },
+        "IObjLocalIdentifierQualifier": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "localIdentifier": {
+                    "description": "Type for all identifiers.",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["localIdentifier"]
+        },
+        "ObjQualifier": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                }
+            ]
+        },
+        "ObjQualifierWithLocal": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IObjLocalIdentifierQualifier"
+                }
+            ]
+        },
+        "IAttribute": {
+            "description": "Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling. The attribute\nspecifies on what dimension to slice/dice the measures.\n\nIn GoodData, each attribute can have multiple different display forms. Display forms essentially provide different\nrepresentations for elements in the dimension.",
+            "type": "object",
+            "properties": {
+                "attribute": {
+                    "type": "object",
+                    "properties": {
+                        "localIdentifier": {
+                            "description": "User-assigned id of the attribute. The value is used to cross-reference model elements that are part\nof an execution.\n\nThe constraint is that the local identifiers of all measures and attributes in an execution definition MUST\nbe unique.",
+                            "type": "string"
+                        },
+                        "displayForm": {
+                            "description": "Reference to display form to use for element representations.\n\nThe display form can be referenced by either URL of the display form resource on backend OR by\nunique, backend-recognized, identifier of the display form.\n\nNote: specifying display forms by URI is discouraged and WILL be deprecated in the future. The\nspecification of URL has several drawbacks:\n\n-  Display form URLs are tied to particular analytical workspace; this makes any application that uses\n    URL-specified display forms workspace-specific.\n-  Display for URLs are not supported by all GoodData backends == this makes any application that uses\n    URL-specified display form backend-specific",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "alias": {
+                            "description": "This is user-assigned alias of the attribute; it is opaque for the backend. When backend returns\nmetadata about execution results, it WILL include this user-assigned alias in the metadata.",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["displayForm", "localIdentifier"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attribute"]
+        },
+        "TotalType": {
+            "description": "TODO: SDK8: Add docs",
+            "enum": ["avg", "max", "med", "min", "nat", "sum"],
+            "type": "string"
+        },
+        "ITotal": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "sdk-backend-spi.json#/definitions/TotalType"
+                },
+                "measureIdentifier": {
+                    "type": "string"
+                },
+                "attributeIdentifier": {
+                    "type": "string"
+                },
+                "alias": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributeIdentifier", "measureIdentifier", "type"]
+        },
+        "IDimension": {
+            "description": "Dimensions specify how to organize the results of an execution in a data view. Imagine an attribute in columns vs. rows.\nEach dimension requires the itemIdentifiers property, which is an array of items. These items could be attributes' localIdentifiers\nor a special 'measureGroup' identifier.\n\nThe 'measureGroup' can be used to specify that all measures in the execution definition should be\nincluded in the dimension.",
+            "type": "object",
+            "properties": {
+                "itemIdentifiers": {
+                    "description": "List of localIdentifier's of attribute to put in this dimension.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "totals": {
+                    "description": "List of totals to include in this dimension.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/ITotal"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["itemIdentifiers"]
+        },
+        "IAttributeElementsByRef": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "uris": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["uris"]
+        },
+        "IAttributeElementsByValue": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["values"]
+        },
+        "AttributeElements": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByRef"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByValue"
+                }
+            ]
+        },
+        "IPositiveAttributeFilter": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "positiveAttributeFilter": {
+                    "type": "object",
+                    "properties": {
+                        "displayForm": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "in": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByRef"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByValue"
+                                }
+                            ]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["displayForm", "in"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["positiveAttributeFilter"]
+        },
+        "INegativeAttributeFilter": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "negativeAttributeFilter": {
+                    "type": "object",
+                    "properties": {
+                        "displayForm": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "notIn": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByRef"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeElementsByValue"
+                                }
+                            ]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["displayForm", "notIn"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["negativeAttributeFilter"]
+        },
+        "IAbsoluteDateFilter": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "absoluteDateFilter": {
+                    "type": "object",
+                    "properties": {
+                        "dataSet": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "from": {
+                            "type": "string"
+                        },
+                        "to": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["dataSet", "from", "to"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["absoluteDateFilter"]
+        },
+        "IRelativeDateFilter": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "relativeDateFilter": {
+                    "type": "object",
+                    "properties": {
+                        "dataSet": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "granularity": {
+                            "type": "string"
+                        },
+                        "from": {
+                            "type": "number"
+                        },
+                        "to": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["dataSet", "from", "granularity", "to"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["relativeDateFilter"]
+        },
+        "IAttributeFilter": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                }
+            ]
+        },
+        "IDateFilter": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                }
+            ]
+        },
+        "IFilter": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                }
+            ]
+        },
+        "IMeasureDefinitionType": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasureDefinition"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IArithmeticMeasureDefinition"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IPoPMeasureDefinition"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IPreviousPeriodMeasureDefinition"
+                }
+            ]
+        },
+        "IMeasureTitle": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "measure": {
+                    "type": "object",
+                    "properties": {
+                        "localIdentifier": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "alias": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["localIdentifier"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measure"]
+        },
+        "MeasureAggregation": {
+            "enum": ["avg", "count", "max", "median", "min", "runsum", "sum"],
+            "type": "string"
+        },
+        "IMeasureDefinition": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "measureDefinition": {
+                    "type": "object",
+                    "properties": {
+                        "item": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        },
+                        "aggregation": {
+                            "description": "TODO: SDK8: Add docs",
+                            "enum": ["avg", "count", "max", "median", "min", "runsum", "sum"],
+                            "type": "string"
+                        },
+                        "filters": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                                    }
+                                ]
+                            }
+                        },
+                        "computeRatio": {
+                            "type": "boolean"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["item"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureDefinition"]
+        },
+        "ArithmeticMeasureOperator": {
+            "description": "TODO: SDK8: Add docs",
+            "enum": ["change", "difference", "multiplication", "ratio", "sum"],
+            "type": "string"
+        },
+        "IArithmeticMeasureDefinition": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "arithmeticMeasure": {
+                    "type": "object",
+                    "properties": {
+                        "measureIdentifiers": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "operator": {
+                            "$ref": "sdk-backend-spi.json#/definitions/ArithmeticMeasureOperator"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["measureIdentifiers", "operator"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["arithmeticMeasure"]
+        },
+        "IPoPMeasureDefinition": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "popMeasureDefinition": {
+                    "type": "object",
+                    "properties": {
+                        "measureIdentifier": {
+                            "description": "Type for all identifiers.",
+                            "type": "string"
+                        },
+                        "popAttribute": {
+                            "description": "TODO: SDK8: Add docs",
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                                }
+                            ]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["measureIdentifier", "popAttribute"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["popMeasureDefinition"]
+        },
+        "IPreviousPeriodMeasureDefinition": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "previousPeriodMeasure": {
+                    "type": "object",
+                    "properties": {
+                        "measureIdentifier": {
+                            "description": "Type for all identifiers.",
+                            "type": "string"
+                        },
+                        "dateDataSets": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "sdk-backend-spi.json#/definitions/IPreviousPeriodDateDataSet"
+                            }
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["dateDataSets", "measureIdentifier"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["previousPeriodMeasure"]
+        },
+        "IPreviousPeriodDateDataSet": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "dataSet": {
+                    "description": "TODO: SDK8: Add docs",
+                    "anyOf": [
+                        {
+                            "$ref": "sdk-backend-spi.json#/definitions/IObjUriQualifier"
+                        },
+                        {
+                            "$ref": "sdk-backend-spi.json#/definitions/IObjIdentifierQualifier"
+                        }
+                    ]
+                },
+                "periodsAgo": {
+                    "type": "number"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["dataSet", "periodsAgo"]
+        },
+        "SortItem": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeSortItem"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasureSortItem"
+                }
+            ]
+        },
+        "SortDirection": {
+            "description": "Sorting direction.",
+            "enum": ["asc", "desc"],
+            "type": "string"
+        },
+        "IAttributeSortItem": {
+            "description": "Sort item which specifies that the result should be sorted by attribute element values in either\nascending or descending order.",
+            "type": "object",
+            "properties": {
+                "attributeSortItem": {
+                    "type": "object",
+                    "properties": {
+                        "direction": {
+                            "$ref": "sdk-backend-spi.json#/definitions/SortDirection",
+                            "description": "Sort ascending or descending."
+                        },
+                        "attributeIdentifier": {
+                            "description": "Local identifier of the attribute to sort by.",
+                            "type": "string"
+                        },
+                        "aggregation": {
+                            "description": "TODO: find out what this does :)",
+                            "enum": ["sum"],
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["attributeIdentifier", "direction"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributeSortItem"]
+        },
+        "IMeasureSortItem": {
+            "description": "Sort item which specifies that the result should be sorted by value of a measure. Since the result can have\nthe value of the measure sliced by one or more attributes, the measure sort item must explicitly specify\nthe 'slice' by which to sort. This slice is specified by locators.",
+            "type": "object",
+            "properties": {
+                "measureSortItem": {
+                    "type": "object",
+                    "properties": {
+                        "direction": {
+                            "$ref": "sdk-backend-spi.json#/definitions/SortDirection",
+                            "description": "Sort ascending or descending."
+                        },
+                        "locators": {
+                            "description": "Locators explicitly specifying the exact slice of the measure values to sort by.",
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IAttributeLocatorItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IMeasureLocatorItem"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["direction", "locators"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureSortItem"]
+        },
+        "LocatorItem": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeLocatorItem"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasureLocatorItem"
+                }
+            ]
+        },
+        "IAttributeLocatorItem": {
+            "description": "Locator that specifies a concrete attribute element for which the measure values are sliced.",
+            "type": "object",
+            "properties": {
+                "attributeLocatorItem": {
+                    "type": "object",
+                    "properties": {
+                        "attributeIdentifier": {
+                            "description": "Local identifier of the attribute.",
+                            "type": "string"
+                        },
+                        "element": {
+                            "description": "Value of the attribute element; TODO: make sure bear is ready for this",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["attributeIdentifier", "element"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributeLocatorItem"]
+        },
+        "IMeasureLocatorItem": {
+            "description": "Locator that specifies a concrete measure to sort by.",
+            "type": "object",
+            "properties": {
+                "measureLocatorItem": {
+                    "type": "object",
+                    "properties": {
+                        "measureIdentifier": {
+                            "description": "Local identifier of the measure.",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["measureIdentifier"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureLocatorItem"]
+        },
+        "SortEntityIds": {
+            "type": "object",
+            "properties": {
+                "allIdentifiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "attributeIdentifiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "measureIdentifiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["allIdentifiers", "attributeIdentifiers", "measureIdentifiers"]
+        },
+        "AttributeOrMeasure": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttribute"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasure<IMeasureDefinitionType>"
+                }
+            ]
+        },
+        "IBucket": {
+            "description": "Bucket is a logical, user-defined grouping of attributes, measures and totals. Buckets can be used to create\na new execution and to derive the result dimensionality. In the context of an existing execution, they serve\nas metadata about the execution.",
+            "type": "object",
+            "properties": {
+                "localIdentifier": {
+                    "description": "Type for all identifiers.",
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IAttribute"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IMeasure<IMeasureDefinitionType>"
+                            }
+                        ]
+                    }
+                },
+                "totals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/ITotal"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["items"]
+        },
+        "AttributeInBucket": {
+            "type": "object",
+            "properties": {
+                "bucket": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IBucket"
+                },
+                "idx": {
+                    "type": "number"
+                },
+                "attribute": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttribute"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attribute", "bucket", "idx"]
+        },
+        "MeasureInBucket": {
+            "type": "object",
+            "properties": {
+                "bucket": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IBucket"
+                },
+                "idx": {
+                    "type": "number"
+                },
+                "measure": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasure<IMeasureDefinitionType>"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["bucket", "idx", "measure"]
+        },
+        "ComputeRatioRule": {
+            "description": "Defines possible compute ratio sanitization rules.",
+            "enum": [0, 1, 2],
+            "type": "number"
+        },
+        "IColor": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "r": {
+                    "type": "number"
+                },
+                "g": {
+                    "type": "number"
+                },
+                "b": {
+                    "type": "number"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["b", "g", "r"]
+        },
+        "IColorPaletteItem": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "guid": {
+                    "type": "string"
+                },
+                "fill": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IColor"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["fill", "guid"]
+        },
+        "IColorPalette": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "array",
+            "items": {
+                "$ref": "sdk-backend-spi.json#/definitions/IColorPaletteItem"
+            }
+        },
+        "GuidType": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "string",
+            "enum": ["guid"]
+        },
+        "RGBType": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "string",
+            "enum": ["rgb"]
+        },
+        "IGuidColorItem": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "TODO: SDK8: Add docs",
+                    "type": "string",
+                    "enum": ["guid"]
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["type", "value"]
+        },
+        "IRGBColorItem": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "description": "TODO: SDK8: Add docs",
+                    "type": "string",
+                    "enum": ["rgb"]
+                },
+                "value": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IColor"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["type", "value"]
+        },
+        "IColorItem": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IGuidColorItem"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IRGBColorItem"
+                }
+            ]
+        },
+        "IColorMappingProperty": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "color": {
+                    "description": "TODO: SDK8: Add docs",
+                    "anyOf": [
+                        {
+                            "$ref": "sdk-backend-spi.json#/definitions/IGuidColorItem"
+                        },
+                        {
+                            "$ref": "sdk-backend-spi.json#/definitions/IRGBColorItem"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["color", "id"]
+        },
+        "IInsight": {
+            "description": "TODO: SDK8: add public doc",
+            "type": "object",
+            "properties": {
+                "insight": {
+                    "type": "object",
+                    "properties": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "uri": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "visualizationClassIdentifier": {
+                            "type": "string"
+                        },
+                        "buckets": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "sdk-backend-spi.json#/definitions/IBucket"
+                            }
+                        },
+                        "filters": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                                    }
+                                ]
+                            }
+                        },
+                        "sorts": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IAttributeSortItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IMeasureSortItem"
+                                    }
+                                ]
+                            }
+                        },
+                        "properties": {
+                            "description": "TODO: SDK8: add public doc",
+                            "type": "object",
+                            "additionalProperties": {}
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "buckets",
+                        "filters",
+                        "identifier",
+                        "properties",
+                        "sorts",
+                        "title",
+                        "visualizationClassIdentifier"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["insight"]
+        },
+        "IVisualizationClass": {
+            "description": "TODO: SDK8: add public doc",
+            "type": "object",
+            "properties": {
+                "visualizationClass": {
+                    "type": "object",
+                    "properties": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "uri": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "url": {
+                            "type": "string"
+                        },
+                        "icon": {
+                            "type": "string"
+                        },
+                        "iconSelected": {
+                            "type": "string"
+                        },
+                        "checksum": {
+                            "type": "string"
+                        },
+                        "orderIndex": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["checksum", "icon", "iconSelected", "identifier", "title", "url"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["visualizationClass"]
+        },
+        "VisualizationProperties": {
+            "type": "object",
+            "additionalProperties": {}
+        },
+        "IExportConfig": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "format": {
+                    "enum": ["csv", "raw", "xlsx"],
+                    "type": "string"
+                },
+                "mergeHeaders": {
+                    "type": "boolean"
+                },
+                "showFilters": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                            }
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "IExportResult": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["uri"]
+        },
+        "IExecutionDefinition": {
+            "description": "Execution definition contains 100% complete description of what will the execution compute and how will\nthe resulting data look like.",
+            "type": "object",
+            "properties": {
+                "workspace": {
+                    "type": "string"
+                },
+                "buckets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/IBucket"
+                    }
+                },
+                "attributes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/IAttribute"
+                    }
+                },
+                "measures": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/IMeasure<IMeasureDefinitionType>"
+                    }
+                },
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IPositiveAttributeFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/INegativeAttributeFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IAbsoluteDateFilter"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IRelativeDateFilter"
+                            }
+                        ]
+                    }
+                },
+                "sortBy": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IAttributeSortItem"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IMeasureSortItem"
+                            }
+                        ]
+                    }
+                },
+                "dimensions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/IDimension"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributes", "buckets", "dimensions", "filters", "measures", "sortBy", "workspace"]
+        },
+        "DataValue": {
+            "type": ["null", "string", "number"]
+        },
+        "IMeasureHeaderItem": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "measureHeaderItem": {
+                    "type": "object",
+                    "properties": {
+                        "uri": {
+                            "type": "string"
+                        },
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "localIdentifier": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "format": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["format", "localIdentifier", "name"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureHeaderItem"]
+        },
+        "ITotalHeaderItem": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "totalHeaderItem": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["name"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["totalHeaderItem"]
+        },
+        "IMeasureGroupHeader": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "measureGroupHeader": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "sdk-backend-spi.json#/definitions/IMeasureHeaderItem"
+                            }
+                        },
+                        "totalItems": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "sdk-backend-spi.json#/definitions/ITotalHeaderItem"
+                            }
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["items"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureGroupHeader"]
+        },
+        "IAttributeHeader": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "attributeHeader": {
+                    "type": "object",
+                    "properties": {
+                        "uri": {
+                            "type": "string"
+                        },
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "localIdentifier": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "totalItems": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "sdk-backend-spi.json#/definitions/ITotalHeaderItem"
+                            }
+                        },
+                        "formOf": {
+                            "type": "object",
+                            "properties": {
+                                "uri": {
+                                    "type": "string"
+                                },
+                                "identifier": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": ["identifier", "name", "uri"]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["formOf", "identifier", "localIdentifier", "name", "uri"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributeHeader"]
+        },
+        "IHeader": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IMeasureGroupHeader"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IAttributeHeader"
+                }
+            ]
+        },
+        "IResultDimension": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "headers": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IMeasureGroupHeader"
+                            },
+                            {
+                                "$ref": "sdk-backend-spi.json#/definitions/IAttributeHeader"
+                            }
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["headers"]
+        },
+        "IResultAttributeHeaderItem": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "attributeHeaderItem": {
+                    "type": "object",
+                    "properties": {
+                        "uri": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["name", "uri"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["attributeHeaderItem"]
+        },
+        "IResultMeasureHeaderItem": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "measureHeaderItem": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "order": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["name", "order"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measureHeaderItem"]
+        },
+        "IResultTotalHeaderItem": {
+            "description": "TODO: SDK8: add docs",
+            "type": "object",
+            "properties": {
+                "totalHeaderItem": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["name", "type"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["totalHeaderItem"]
+        },
+        "IResultHeaderItem": {
+            "anyOf": [
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IResultAttributeHeaderItem"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IResultMeasureHeaderItem"
+                },
+                {
+                    "$ref": "sdk-backend-spi.json#/definitions/IResultTotalHeaderItem"
+                }
+            ]
+        },
+        "IExecutionFactory": {
+            "description": "Execution factory provides several methods to create a prepared execution from different types\nof inputs.\n\nNote: the execution factory WILL perform extensive input validation to ensure that the created\ninstance of prepared execution is semantically correct.\n\nThe contract is that any freshly created instance of {@link IPreparedExecution} MUST be executable (of course\nbarring desync conditions with the backend where the data model changes).",
+            "type": "object",
+            "additionalProperties": false
+        },
+        "DimensionGenerator": {
+            "type": "object",
+            "additionalProperties": false
+        },
+        "IPreparedExecution": {
+            "description": "Prepared execution already knows what data to calculate and allows to specify how the data should be\nsorted and shaped into dimensions.\n\nTo this end, it provides several functions to customize sort items and dimensions. The prepared execution\nis immutable and so all the customization functions WILL result in a new instance of prepared execution.",
+            "type": "object",
+            "properties": {
+                "definition": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IExecutionDefinition",
+                    "description": "Definition of the execution accumulated to so far."
+                }
+            },
+            "additionalProperties": false,
+            "required": ["definition"]
+        },
+        "IExecutionResult": {
+            "description": "Represents results of execution done with particular definition. Within the result is the description of the\nshape of the data and methods to to obtain views on the data.",
+            "type": "object",
+            "properties": {
+                "definition": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IExecutionDefinition",
+                    "description": "Full definition of execution that yielded this result."
+                },
+                "dimensions": {
+                    "description": "Description of shape of the data.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "sdk-backend-spi.json#/definitions/IResultDimension"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["definition", "dimensions"]
+        },
+        "IDataView": {
+            "description": "A view on the calculated data.",
+            "type": "object",
+            "properties": {
+                "offset": {
+                    "description": "Coordinates of where this data view starts. One coordinate per result dimension.",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "count": {
+                    "description": "Size of data in each dimension.",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "headerItems": {
+                    "description": "TODO: find a way to describe these :)",
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultAttributeHeaderItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultMeasureHeaderItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultTotalHeaderItem"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "data": {
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": ["null", "string", "number"]
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": ["null", "string", "number"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                "totals": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": ["null", "string", "number"]
+                            }
+                        }
+                    }
+                },
+                "definition": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IExecutionDefinition",
+                    "description": "Full definition of execution that computed data included in this DataView."
+                },
+                "result": {
+                    "$ref": "sdk-backend-spi.json#/definitions/IExecutionResult",
+                    "description": "Result of the execution that calculated data for this view."
+                }
+            },
+            "additionalProperties": false,
+            "required": ["count", "data", "definition", "headerItems", "offset", "result"]
+        },
+        "IFeatureFlags": {
+            "description": "TODO: SDK8: add public doc",
+            "type": "object",
+            "additionalProperties": {
+                "type": ["string", "number", "boolean"]
+            }
+        },
+        "AnalyticalBackendConfig": {
+            "type": "object",
+            "properties": {
+                "hostname": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "BackendCapabilities": {
+            "type": "object",
+            "additionalProperties": {
+                "type": ["string", "number", "boolean"]
+            },
+            "properties": {
+                "supportsObjectUris": {
+                    "description": "Indicates whether the backend is capable to address objects using URIs",
+                    "type": "boolean"
+                },
+                "canCalculateTotals": {
+                    "description": "Indicates whether the backend is capable to calculate and include totals in the resulting data view.",
+                    "type": "boolean"
+                },
+                "canSortData": {
+                    "description": "Indicates whether the backend is capable to sort the result data view.",
+                    "type": "boolean"
+                },
+                "supportsElementUris": {
+                    "description": "Indicates whether the backend can recognize attribute elements by URI.",
+                    "type": "boolean"
+                },
+                "maxDimensions": {
+                    "description": "Indicates maximum result dimensions that the backend is able to produce.",
+                    "type": "number"
+                },
+                "canExportCsv": {
+                    "description": "Indicates whether backend can export data to CSV file.",
+                    "type": "boolean"
+                },
+                "canExportXlsx": {
+                    "description": "Indicates whether backend can export data to Excel",
+                    "type": "boolean"
+                },
+                "canTransformExistingResult": {
+                    "description": "Indicates whether backend can transform an existing result into a different shape / sorting / totals.",
+                    "type": "boolean"
+                },
+                "canExecuteByReference": {
+                    "description": "Indicates whether backend can execute an existing, persistent insight by reference.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "NotAuthenticated": {
+            "description": "This exception is thrown when client code triggers an operation which requires authentication but the client\ncode did not provide credentials or the credentials are invalid.",
+            "type": "object",
+            "properties": {
+                "abeType": {
+                    "type": "string"
+                },
+                "cause": {
+                    "$ref": "sdk-backend-spi.json#/definitions/Error"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "stack": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["abeType", "message", "name"]
+        },
+        "IMeasure<IMeasureDefinitionType>": {
+            "description": "TODO: SDK8: Add docs",
+            "type": "object",
+            "properties": {
+                "measure": {
+                    "type": "object",
+                    "properties": {
+                        "localIdentifier": {
+                            "description": "Type for all identifiers.",
+                            "type": "string"
+                        },
+                        "definition": {
+                            "anyOf": [
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IMeasureDefinition"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IArithmeticMeasureDefinition"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IPoPMeasureDefinition"
+                                },
+                                {
+                                    "$ref": "sdk-backend-spi.json#/definitions/IPreviousPeriodMeasureDefinition"
+                                }
+                            ]
+                        },
+                        "alias": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "format": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["definition", "localIdentifier"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["measure"]
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "stack": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": ["message", "name"]
+        }
+    },
+    "$id": "sdk-backend-spi.json"
+}

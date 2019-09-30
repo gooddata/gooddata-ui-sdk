@@ -423,6 +423,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "typescript-json-schema",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "uuid",
       "allowedCategories": [ "production" ]
     },

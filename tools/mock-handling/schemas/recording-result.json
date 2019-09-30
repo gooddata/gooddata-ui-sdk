@@ -1,0 +1,95 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "recording-result.json",
+    "type": "object",
+    "properties": {
+        "executionResult": {
+            "type": "object",
+            "properties": {
+                "paging": {
+                    "type": "object",
+                    "properties": {
+                        "offset": {
+                            "description": "Coordinates of where this data view starts. One coordinate per result dimension.",
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "count": {
+                            "description": "Size of data in each dimension.",
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "total": {
+                            "description": "Size of data in each dimension.",
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "required": ["count", "offset", "total"]
+                },
+                "headerItems": {
+                    "description": "TODO: find a way to describe these :)",
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultAttributeHeaderItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultMeasureHeaderItem"
+                                    },
+                                    {
+                                        "$ref": "sdk-backend-spi.json#/definitions/IResultTotalHeaderItem"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "data": {
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": ["null", "string", "number"]
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": ["null", "string", "number"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                "totals": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": ["null", "string", "number"]
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": ["paging", "data", "headerItems"]
+        }
+    }
+}
