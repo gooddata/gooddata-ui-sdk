@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
 import propTypes from "prop-types";
-import { BucketExecutor, ErrorComponent, Model } from "@gooddata/react-components";
+import { BucketExecutor, ErrorComponent, Model } from "@gooddata/sdk-ui";
 
 import { totalSalesIdentifier, projectId, locationStateDisplayFormIdentifier } from "../utils/fixtures";
 

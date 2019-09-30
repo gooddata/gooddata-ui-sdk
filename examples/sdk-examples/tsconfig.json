@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "allowJs": true,
+        "jsx": "react",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "outDir": "dist"
+    },
+    "include": ["src/index.tsx", "typings"],
+    "exclude": ["node_modules", "dist"]
+}

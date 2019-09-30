@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
 import { keyBy, mapValues } from "lodash";
-import { Kpi } from "@gooddata/react-components";
+import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/gd-bear-client";
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
 

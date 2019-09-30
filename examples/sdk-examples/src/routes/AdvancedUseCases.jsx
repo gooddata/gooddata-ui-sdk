@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import PropTypes from "prop-types";
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 import { Link, Redirect } from "react-router-dom";
 
 export const AdvacedUseCases = ({ advancedUseCasesRoutes, match, location: { pathname } }) => {

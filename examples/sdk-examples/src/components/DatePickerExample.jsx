@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
-import { AfmComponents, ErrorComponent } from "@gooddata/react-components";
+import { AfmComponents, ErrorComponent } from "@gooddata/sdk-ui";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import {

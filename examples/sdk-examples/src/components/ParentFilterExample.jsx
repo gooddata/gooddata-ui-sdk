@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { AttributeElements, BarChart, Model } from "@gooddata/react-components";
+import { AttributeElements, BarChart, Model } from "@gooddata/sdk-ui";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
-import "@gooddata/react-components/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     projectId,

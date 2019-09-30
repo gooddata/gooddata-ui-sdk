@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Visualization, CoreComponents } from "@gooddata/react-components";
+import { Visualization, CoreComponents } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, Bar, Legend, CartesianGrid, XAxis, YAxis } from "recharts";
 import { get, unzip, range } from "lodash";
 
