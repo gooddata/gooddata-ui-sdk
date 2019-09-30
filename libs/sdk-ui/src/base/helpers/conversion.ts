@@ -2,6 +2,8 @@
 import { AFM, VisualizationObject } from "@gooddata/gd-bear-model";
 import { DataLayer } from "@gooddata/gd-bear-client";
 
+// TODO: SDK8: delete this entire file after pivot is switched to backend-spi
+
 export function convertBucketsToMdObject(
     buckets: VisualizationObject.IBucket[],
     filters?: VisualizationObject.VisualizationObjectFilter[],

@@ -3,7 +3,7 @@ import { AFM } from "@gooddata/gd-bear-model";
 import get = require("lodash/get");
 import { AfmUtils } from "@gooddata/gd-bear-client/lib/DataLayer";
 
-// TODO: SDK8: replace these find functions in sdk-model
+// TODO: SDK8: delete this after pivot and vis uri component are switched to model & backend-spi
 
 export function getMasterMeasureLocalIdentifier(measure: AFM.IMeasure): AFM.Identifier {
     const measureDefinition =
