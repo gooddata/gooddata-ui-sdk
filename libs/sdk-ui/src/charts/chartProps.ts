@@ -8,13 +8,14 @@ import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "..
 import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
 import { IDrillableItem } from "../base/interfaces/DrillEvents";
 import { IPushData } from "../base/interfaces/PushData";
+import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";
 
 /**
  * Props applicable for all charts
  *
  * @public
  */
-export interface ICommonChartProps extends IChartCallbacks {
+export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
     /**
      * Set Locale for chart localization.
      *
@@ -54,7 +55,7 @@ export interface ICommonChartProps extends IChartCallbacks {
  *
  * @public
  */
-export interface IChartCallbacks {
+export interface IChartCallbacks extends IVisualizationCallbacks {
     /**
      * Called when an error occurs while loading data for the chart.
      */
