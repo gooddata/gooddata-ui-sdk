@@ -25,7 +25,7 @@ function transformHeaderItems(headerItems?: Execution.IResultHeaderItem[][][]): 
                     if (isAttributeHeaderItem(item)) {
                         const newItem: IResultAttributeHeaderItem = {
                             attributeHeaderItem: {
-                                uri: "/fake",
+                                uri: `/fake/${item.attributeHeaderItem.name}`,
                                 name: item.attributeHeaderItem.name,
                             },
                         };
