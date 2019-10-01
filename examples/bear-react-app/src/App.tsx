@@ -40,6 +40,21 @@ const App: React.FC = () => {
                             backend={analyticalBackend}
                             id={visId}
                             workspace={workspace}
+                            visualizationProps={{
+                                custom: {
+                                    drillableItems: [
+                                        {
+                                            identifier: "label.method.method",
+                                        },
+                                    ],
+                                },
+                                dimensions: {
+                                    height: 300,
+                                },
+                            }}
+                            onFiredDrillEvent={e => {
+                                console.log("AAAAA", e);
+                            }}
                             filters={
                                 [
                                     // {

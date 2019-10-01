@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
+import noop = require("lodash/noop");
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -10,7 +11,7 @@ import {
     insightVisualizationClassIdentifier,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps } from "../internal/interfaces/Visualization";
+import { IVisualization, IVisProps, IVisCallbacks } from "../internal/interfaces/Visualization";
 import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableColumnChart } from "../internal/components/pluggableVisualizations/columnChart/PluggableColumnChart";
 import { PluggableLineChart } from "../internal/components/pluggableVisualizations/lineChart/PluggableLineChart";
@@ -55,7 +56,7 @@ const getVisualizationForInsight = (insight: IInsight) => {
     return VisualizationsCatalog[key];
 };
 
-interface IInsightViewProps {
+interface IInsightViewProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     filters?: IFilter[];
@@ -145,11 +146,31 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         this.visualization = new Visualization({
             backend: this.props.backend,
             callbacks: {
-                onError: this.setError,
-                onLoadingChanged: ({ isLoading }) => {
-                    return isLoading ? this.startLoading() : this.stopLoading();
+                onError: error => {
+                    this.setError(error);
+                    if (this.props.onError) {
+                        this.props.onError(error);
+                    }
                 },
-                pushData: () => {},
+                onLoadingChanged: ({ isLoading }) => {
+                    if (isLoading) {
+                        this.startLoading();
+                    } else {
+                        this.stopLoading();
+                    }
+
+                    if (this.props.onLoadingChanged) {
+                        this.props.onLoadingChanged({ isLoading });
+                    }
+                },
+                pushData: noop, // TODO
+                onFiredDrillEvent: e => {
+                    console.log("IN", e);
+
+                    this.props.onFiredDrillEvent(e);
+                },
+                onExportReady: this.props.onExportReady,
+                onLoadingFinish: this.props.onLoadingFinish,
             },
             configPanelElement: "nonexistent",
             element: `#${this.elementId}`,
