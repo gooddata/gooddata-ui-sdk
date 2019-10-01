@@ -26,9 +26,9 @@ import { PluggableComboChart } from "../internal/components/pluggableVisualizati
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
+import { ErrorComponent } from "../base/simple/ErrorComponent";
 import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { RuntimeError } from "../base/errors/RuntimeError";
-import { ErrorComponent } from "../base/simple/ErrorComponent";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
@@ -55,7 +55,7 @@ const getVisualizationForInsight = (insight: IInsight) => {
     return VisualizationsCatalog[key];
 };
 
-interface IVisualizationProps {
+interface IInsightViewProps {
     backend: IAnalyticalBackend;
     filters?: IFilter[];
     id: string;
@@ -63,19 +63,19 @@ interface IVisualizationProps {
     workspace: string;
 }
 
-interface IVisualizationState {
+interface IInsightViewState {
     isLoading: boolean;
     error: RuntimeError | undefined;
 }
 
 const getElementId = () => `gd-vis-${uuid.v4()}`;
 
-export class Visualization extends React.Component<IVisualizationProps, IVisualizationState> {
+export class InsightView extends React.Component<IInsightViewProps, IInsightViewState> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
 
-    public static defaultProps: Partial<IVisualizationProps> = {
+    public static defaultProps: Partial<IInsightViewProps> = {
         filters: [],
         visualizationProps: {
             custom: {},
@@ -85,7 +85,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         },
     };
 
-    public state: IVisualizationState = {
+    public state: IInsightViewState = {
         isLoading: false,
         error: undefined,
     };
@@ -125,7 +125,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.visualization.update(this.props.visualizationProps, this.insight, this.getExecutionFactory());
     };
 
-    public setupVisualization = async () => {
+    private setupVisualization = async () => {
         this.startLoading();
 
         this.insight = await this.getInsight();
@@ -155,7 +155,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         });
     };
 
-    public getInsight = async () => {
+    private getInsight = async () => {
         // should we allow for getting insights by URI?
         try {
             return await this.props.backend
@@ -169,7 +169,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         }
     };
 
-    public getExecutionFactory = () => {
+    private getExecutionFactory = () => {
         return new ExecutionFactoryWithPresetFilters(
             this.props.backend.workspace(this.props.workspace).execution(),
             this.props.filters,
@@ -185,7 +185,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         this.componentDidMountInner();
     }
 
-    private componentDidUpdateInner = async (prevProps: IVisualizationProps) => {
+    private componentDidUpdateInner = async (prevProps: IInsightViewProps) => {
         const needsNewSetup = this.props.id !== prevProps.id || this.props.workspace !== prevProps.workspace;
         if (needsNewSetup) {
             await this.setupVisualization();
@@ -194,7 +194,7 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
         return this.updateVisualization();
     };
 
-    public componentDidUpdate(prevProps: IVisualizationProps): void {
+    public componentDidUpdate(prevProps: IInsightViewProps): void {
         this.componentDidUpdateInner(prevProps);
     }
 
@@ -204,18 +204,11 @@ export class Visualization extends React.Component<IVisualizationProps, IVisuali
 
     public render(): React.ReactNode {
         return (
-            <div>
-                HERE
-                <style>
-                    {`/* hack to see the contents */
-.visualization-uri-root div div {
-    height: 400px;
-}`}
-                </style>
+            <>
                 {this.state.isLoading && <LoadingComponent />}
                 {this.state.error && <ErrorComponent message={this.state.error.message} />}
                 <div className="visualization-uri-root" id={this.elementId} />
-            </div>
+            </>
         );
     }
 }

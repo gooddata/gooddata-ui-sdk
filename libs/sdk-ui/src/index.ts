@@ -69,7 +69,7 @@ const CoreComponents: ICoreComponents = {
 };
 */
 
-import { Visualization } from "./visualization/Visualization";
+import { InsightView } from "./insightView/InsightView";
 
 export {
     AttributeElements,
@@ -127,5 +127,5 @@ export {
     HeaderPredicateFactory,
     MappingHeader,
     withJsxExport,
-    Visualization,
+    InsightView,
 };

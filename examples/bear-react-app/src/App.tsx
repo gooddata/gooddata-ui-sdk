@@ -10,7 +10,7 @@ import {
     Executor,
     Kpi,
     PieChart,
-    Visualization,
+    InsightView,
 } from "@gooddata/sdk-ui";
 
 import "./App.css";
@@ -36,24 +36,26 @@ const App: React.FC = () => {
                             onChange={e => setUseValidRequest(e.target.checked)}
                         />
                         <input value={visId} onChange={e => setVisId(e.target.value)} />
-                        <Visualization
+                        <InsightView
                             backend={analyticalBackend}
                             id={visId}
                             workspace={workspace}
-                            filters={[
-                                {
-                                    relativeDateFilter: {
-                                        dataSet: {
-                                            uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/344",
-                                        },
-                                        from: -10,
-                                        to: 0,
-                                        granularity: useValidRequest
-                                            ? "GDC.time.month"
-                                            : "GDC.time.monthAAAAA",
-                                    },
-                                },
-                            ]}
+                            filters={
+                                [
+                                    // {
+                                    //     relativeDateFilter: {
+                                    //         dataSet: {
+                                    //             uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/344",
+                                    //         },
+                                    //         from: -10,
+                                    //         to: 0,
+                                    //         granularity: useValidRequest
+                                    //             ? "GDC.time.month"
+                                    //             : "GDC.time.monthAAAAA",
+                                    //     },
+                                    // },
+                                ]
+                            }
                         />
                     </Col>
                 </Row>
