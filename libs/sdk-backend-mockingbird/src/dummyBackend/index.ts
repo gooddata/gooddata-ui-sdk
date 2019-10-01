@@ -118,6 +118,12 @@ function dummyExecutionFactory(workspace: string): IExecutionFactory {
     };
 }
 
+/**
+ * Creates a new DataView according to the result provided
+ * @param definition - execution definition
+ * @param result - desired execution result
+ * @internal
+ */
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
     const execResult = result ? result : dummyExecutionResult(definition);
 
