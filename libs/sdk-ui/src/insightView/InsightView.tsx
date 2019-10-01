@@ -26,8 +26,8 @@ import { PluggableComboChart } from "../internal/components/pluggableVisualizati
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
-import { ErrorComponent } from "../base/simple/ErrorComponent";
-import { LoadingComponent } from "../base/simple/LoadingComponent";
+import { ErrorComponent, IErrorProps } from "../base/simple/ErrorComponent";
+import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent";
 import { RuntimeError } from "../base/errors/RuntimeError";
 
 const VisualizationsCatalog = {
@@ -57,8 +57,10 @@ const getVisualizationForInsight = (insight: IInsight) => {
 
 interface IInsightViewProps {
     backend: IAnalyticalBackend;
+    ErrorComponent?: React.ComponentType<IErrorProps>;
     filters?: IFilter[];
     id: string;
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
     visualizationProps?: IVisProps;
     workspace: string;
 }
@@ -76,7 +78,9 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
     private insight: IInsight | undefined;
 
     public static defaultProps: Partial<IInsightViewProps> = {
+        ErrorComponent,
         filters: [],
+        LoadingComponent,
         visualizationProps: {
             custom: {},
             dimensions: {
@@ -203,6 +207,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
     }
 
     public render(): React.ReactNode {
+        const { ErrorComponent, LoadingComponent } = this.props;
         return (
             <>
                 {this.state.isLoading && <LoadingComponent />}
