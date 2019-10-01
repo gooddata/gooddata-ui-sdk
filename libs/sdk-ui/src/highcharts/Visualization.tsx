@@ -1,19 +1,19 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import * as React from "react";
 import * as invariant from "invariant";
+import * as React from "react";
+import { IDrillableItem } from "../base/interfaces/DrillEvents";
+import { OnFiredDrillEvent2 } from "../base/interfaces/Events";
 import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
-import isEqual = require("lodash/isEqual");
-import noop = require("lodash/noop");
-import isFunction = require("lodash/isFunction");
-import omitBy = require("lodash/omitBy");
+import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
 import { IChartConfig } from "./Config";
-import { OnFiredDrillEvent } from "../base/interfaces/Events";
 
 import { isChartSupported, stringifyChartTypes } from "./utils/common";
-import { IDrillableItem } from "../base/interfaces/DrillEvents";
-import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
+import isEqual = require("lodash/isEqual");
+import isFunction = require("lodash/isFunction");
+import noop = require("lodash/noop");
+import omitBy = require("lodash/omitBy");
 
 export interface IVisualizationProps {
     height: number;
@@ -25,7 +25,7 @@ export interface IVisualizationProps {
     drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
     locale?: string;
 
-    onFiredDrillEvent?: OnFiredDrillEvent;
+    onFiredDrillEvent?: OnFiredDrillEvent2;
     afterRender?: () => void;
     onDataTooLarge(): void;
     onNegativeValues(): void;
