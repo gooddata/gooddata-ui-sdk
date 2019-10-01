@@ -7,7 +7,9 @@
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-backend-spi';
+import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 
 // Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
 // 
@@ -18,6 +20,9 @@ export function dummyBackend(config?: AnalyticalBackendConfig): IAnalyticalBacke
 // 
 // @internal
 export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
+
+// @public (undocumented)
+export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView;
 
 // Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 // 

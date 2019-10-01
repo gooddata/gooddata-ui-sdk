@@ -2,6 +2,7 @@
 import get = require("lodash/get");
 import merge = require("lodash/merge");
 import * as invariant from "invariant";
+import { IDrillConfig } from "../../base/interfaces/DrillEvents";
 import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
@@ -42,7 +43,7 @@ const chartConfigurationMap = {
 
 export function getHighchartsOptions(
     chartOptions: IChartOptions,
-    drillConfig: any,
+    drillConfig: IDrillConfig,
     config?: IChartConfig,
     definition?: IExecutionDefinition,
 ) {

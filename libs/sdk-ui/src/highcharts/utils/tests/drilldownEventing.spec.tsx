@@ -1,36 +1,41 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { AFM } from "@gooddata/gd-bear-model";
-import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
-import {
-    getClickableElementNameByChartType,
-    chartClick,
-    cellClick,
-    createDrillIntersectionElement,
-} from "../drilldownEventing";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
+import { defForItems } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { SeriesChartTypes } from "../../constants/series";
 import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
+import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
+import { SeriesChartTypes } from "../../constants/series";
+import {
+    cellClick,
+    chartClick,
+    createDrillIntersectionElement,
+    getClickableElementNameByChartType,
+} from "../drilldownEventing";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
+
     const ADHOC_MEASURE_LOCAL_IDENTIFIER = "m1";
     const ADHOC_MEASURE_URI = "/gdc/md/projectId/obj/2";
-    const afm: AFM.IAfm = {
-        measures: [
+    const dataView = dummyDataView(
+        defForItems("testWorkspace", [
             {
-                localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                definition: {
-                    measure: {
-                        item: {
-                            uri: ADHOC_MEASURE_URI,
+                measure: {
+                    localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                uri: ADHOC_MEASURE_URI,
+                            },
                         },
                     },
                 },
             },
-        ],
-    };
+        ]),
+    );
+
     const point: Partial<IHighchartsPointObject> = {
         x: 1,
         y: 2,
@@ -78,7 +83,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call point drill context (non-group) when event.points given but null", () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const pointClickEventDataWithNullPoints: Highcharts.DrilldownEventObject = {
             ...pointClickEventData,
@@ -99,7 +104,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call default fire event on point click and fire correct data", () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -109,20 +114,7 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
+            dataView,
             drillContext: {
                 type: "line",
                 element: "point",
@@ -159,7 +151,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it('should fire correct data with property "value" for treemap and heatmap', () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(
@@ -240,7 +232,7 @@ describe("Drilldown Eventing", () => {
             points: pointsWithEmptyValues,
         } as any;
 
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(
@@ -279,7 +271,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should correctly handle z coordinate of point", () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const pointClickWitZEventData = cloneDeep(pointClickEventData);
 
@@ -297,20 +289,7 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
+            dataView,
             drillContext: {
                 type: "bubble",
                 element: "point",
@@ -348,7 +327,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call user defined callback on point click", () => {
-        const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
+        const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
         const target = { dispatchEvent: () => true };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -359,7 +338,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call both default fire event and user defined callback on point click", () => {
-        const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
+        const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -371,7 +350,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should only call user defined callback on point click", () => {
-        const drillConfig = { afm, onFiredDrillEvent: jest.fn().mockReturnValue(false) };
+        const drillConfig = { dataView, onFiredDrillEvent: jest.fn().mockReturnValue(false) };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -383,7 +362,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call fire event on label click", () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const clickedPoint: Partial<IHighchartsPointObject> = {
             x: 1,
@@ -410,20 +389,7 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
+            dataView,
             drillContext: {
                 type: "line",
                 element: "label",
@@ -448,7 +414,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call fire event on cell click", () => {
-        const drillConfig = { afm, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onFiredDrillEvent: () => true };
         const target = { dispatchEvent: jest.fn() };
         const cellClickEventData = {
             columnIndex: 1,
@@ -471,20 +437,7 @@ describe("Drilldown Eventing", () => {
         expect(target.dispatchEvent).toHaveBeenCalled();
 
         expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            executionContext: {
-                measures: [
-                    {
-                        localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,
-                        definition: {
-                            measure: {
-                                item: {
-                                    uri: ADHOC_MEASURE_URI,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
+            dataView,
             drillContext: {
                 type: "table",
                 element: "cell",
@@ -575,7 +528,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should fire drill event (non-group) when point value is null and return empty string for value", () => {
-            const drillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
             const target = { dispatchEvent: jest.fn() };
             const pointClickEventDataWithPointNullValue: Highcharts.DrilldownEventObject = {
                 ...pointClickEventData,
@@ -639,7 +592,7 @@ describe("Drilldown Eventing", () => {
         } as any;
 
         it("should return chart type for each point", () => {
-            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: jest.fn() };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: columnPoint,
@@ -674,7 +627,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should fire event on cell click and fire correct data", () => {
-            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: linePoint,
@@ -687,7 +640,7 @@ describe("Drilldown Eventing", () => {
 
             expect(target.dispatchEvent).toHaveBeenCalled();
             expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-                executionContext: afm,
+                dataView,
                 drillContext: {
                     type: VisualizationTypes.COMBO,
                     element: "point",
@@ -700,7 +653,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should NOT add chart type for each point if it is not Combo chart", () => {
-            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: jest.fn() };
+            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: jest.fn() };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: columnPoint,
@@ -728,7 +681,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should NOT add elementChartType on cell click if it is not Combo chart", () => {
-            const drillConfig: IDrillConfig = { afm, onFiredDrillEvent: () => true };
+            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: linePoint,
@@ -741,7 +694,7 @@ describe("Drilldown Eventing", () => {
 
             expect(target.dispatchEvent).toHaveBeenCalled();
             expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-                executionContext: afm,
+                dataView,
                 drillContext: {
                     type: VisualizationTypes.LINE,
                     element: "point",

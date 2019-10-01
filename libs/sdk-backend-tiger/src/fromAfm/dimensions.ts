@@ -20,12 +20,12 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
                 //  changes across public interface of the SDK (drilling etc)
                 const attrHeader: IAttributeHeader = {
                     attributeHeader: {
-                        uri: "/fake/",
+                        uri: `/fakeAttrUri/${h.attributeHeader.identifier}`,
                         identifier: h.attributeHeader.identifier,
                         formOf: {
                             identifier: h.attributeHeader.identifier,
                             name: h.attributeHeader.identifier,
-                            uri: "/fake",
+                            uri: `/fakeDfUri/${h.attributeHeader.identifier}`,
                         },
                         localIdentifier: h.attributeHeader.identifier,
                         name: h.attributeHeader.identifier,

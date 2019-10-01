@@ -1,29 +1,29 @@
 // (C) 2007-2019 GoodData Corporation
-import get = require("lodash/get");
 import debounce = require("lodash/debounce");
+import get = require("lodash/get");
 import * as CustomEvent from "custom-event";
 import * as invariant from "invariant";
-import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import {
     ChartElementType,
     ChartType,
     VisType,
     VisualizationTypes,
 } from "../../base/constants/visualizationTypes";
-import {
-    IDrillEvent,
-    IDrillEventContextGroup,
-    IDrillEventIntersectionElement,
-    IDrillEventContextTable,
-    IDrillPoint,
-    IDrillConfig,
-    ICellDrillEvent,
-    IDrillEventContextPoint,
-    IDrillEventContext,
-} from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent } from "../../base/interfaces/Events";
-import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
+import {
+    ICellDrillEvent,
+    IDrillConfig,
+    IDrillEvent2,
+    IDrillEventContext,
+    IDrillEventContextGroup,
+    IDrillEventContextPoint,
+    IDrillEventContextTable,
+    IDrillEventIntersectionElement,
+    IDrillPoint,
+} from "../../base/interfaces/DrillEvents";
+import { OnFiredDrillEvent2 } from "../../base/interfaces/Events";
+import Highcharts from "../chart/highcharts/highchartsEntryPoint";
+import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
@@ -49,7 +49,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
     }
 }
 
-function fireEvent(onFiredDrillEvent: OnFiredDrillEvent, data: any, target: EventTarget) {
+function fireEvent(onFiredDrillEvent: OnFiredDrillEvent2, data: any, target: EventTarget) {
     const returnValue = onFiredDrillEvent(data);
 
     // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
@@ -130,7 +130,7 @@ const chartClickDebounced = debounce(
         target: EventTarget,
         chartType: ChartType,
     ) => {
-        const { afm, onFiredDrillEvent } = drillConfig;
+        const { dataView, onFiredDrillEvent } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
 
@@ -142,8 +142,8 @@ const chartClickDebounced = debounce(
             drillContext = composeDrillContextPoint(point, type);
         }
 
-        const data: IDrillEvent = {
-            executionContext: afm,
+        const data: IDrillEvent2 = {
+            dataView,
             drillContext,
         };
 
@@ -167,7 +167,7 @@ const tickLabelClickDebounce = debounce(
         target: EventTarget,
         chartType: ChartType,
     ): void => {
-        const { afm, onFiredDrillEvent } = drillConfig;
+        const { dataView, onFiredDrillEvent } = drillConfig;
         const sanitizedPoints = sanitizeContextPoints(chartType, points);
         const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => ({
             x: point.x,
@@ -179,8 +179,8 @@ const tickLabelClickDebounce = debounce(
             element: "label",
             points: contextPoints,
         };
-        const data: IDrillEvent = {
-            executionContext: afm,
+        const data: IDrillEvent2 = {
+            dataView,
             drillContext,
         };
 
@@ -208,7 +208,7 @@ export function tickLabelClick(
 }
 
 export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {
-    const { afm, onFiredDrillEvent } = drillConfig;
+    const { dataView, onFiredDrillEvent } = drillConfig;
     const { columnIndex, rowIndex, row, intersection } = event;
 
     const drillContext: IDrillEventContextTable = {
@@ -219,8 +219,8 @@ export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, tar
         row,
         intersection,
     };
-    const data: IDrillEvent = {
-        executionContext: afm,
+    const data: IDrillEvent2 = {
+        dataView,
         drillContext,
     };
 

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
 import { AFM } from "@gooddata/gd-bear-model";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import { TableRowForDrilling } from "../../_defunct/pivotTable/PivotTable";
 import {
     ChartElementType,
@@ -12,7 +12,7 @@ import {
     VisElementType,
     VisType,
 } from "../constants/visualizationTypes";
-import { OnFiredDrillEvent } from "./Events";
+import { OnFiredDrillEvent2 } from "./Events";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -140,6 +140,6 @@ export interface ICellDrillEvent {
 }
 
 export interface IDrillConfig {
-    afm: AFM.IAfm;
-    onFiredDrillEvent: OnFiredDrillEvent;
+    dataView: IDataView;
+    onFiredDrillEvent: OnFiredDrillEvent2;
 }

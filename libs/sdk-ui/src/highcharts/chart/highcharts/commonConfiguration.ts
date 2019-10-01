@@ -1,16 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import invoke = require("lodash/invoke");
 import get = require("lodash/get");
-import set = require("lodash/set");
+import invoke = require("lodash/invoke");
 import isEmpty = require("lodash/isEmpty");
-import Highcharts from "./highchartsEntryPoint";
-import { chartClick } from "../../utils/drilldownEventing";
+import set = require("lodash/set");
+import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
+import { IHighchartsAxisExtend } from "../../HighchartsExtend";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
+import { chartClick } from "../../utils/drilldownEventing";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
-import { IHighchartsAxisExtend } from "../../HighchartsExtend";
+import Highcharts from "./highchartsEntryPoint";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
@@ -132,7 +133,7 @@ const BASE_TEMPLATE: any = {
     ],
 };
 
-function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: any) {
+function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
     set(configuration, "chart.events.drilldown", function chartDrilldownHandler(
         event: Highcharts.DrilldownEventObject,
     ) {
@@ -153,7 +154,7 @@ function registerRenderHandler(configuration: any, chartOptions: any) {
     return configuration;
 }
 
-export function getCommonConfiguration(chartOptions: any, drillConfig: any) {
+export function getCommonConfiguration(chartOptions: any, drillConfig: IDrillConfig) {
     const commonConfiguration = cloneDeep(BASE_TEMPLATE);
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 

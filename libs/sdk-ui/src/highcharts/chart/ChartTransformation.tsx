@@ -2,15 +2,14 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import * as React from "react";
-import noop = require("lodash/noop");
 
 import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
-import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";
-import { IChartOptions, IChartConfig } from "../Config";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent, OnLegendReady } from "../../base/interfaces/Events";
+import { OnFiredDrillEvent2, OnLegendReady } from "../../base/interfaces/Events";
 import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
+import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";
 import { getChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
@@ -19,6 +18,7 @@ import HighChartsRenderer, {
     renderLegend as legendRenderer,
 } from "./HighChartsRenderer";
 import getLegend from "./legend/legendBuilder";
+import noop = require("lodash/noop");
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;
@@ -33,7 +33,7 @@ export interface IChartTransformationProps {
 
     dataView: IDataView;
 
-    onFiredDrillEvent: OnFiredDrillEvent;
+    onFiredDrillEvent: OnFiredDrillEvent2;
     onLegendReady: OnLegendReady;
 
     afterRender(): void;

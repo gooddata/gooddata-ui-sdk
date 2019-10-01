@@ -118,7 +118,7 @@ function dummyExecutionFactory(workspace: string): IExecutionFactory {
     };
 }
 
-function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
+export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
     const execResult = result ? result : dummyExecutionResult(definition);
 
     const fp = defFingerprint(definition) + "/emptyView";
