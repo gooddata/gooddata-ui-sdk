@@ -136,6 +136,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
         data: [[]],
         offset: [0, 0],
         count: [0, 0],
+        totalCount: [0, 0],
         advance: noop,
         pageDown: noop,
         pageUp: noop,

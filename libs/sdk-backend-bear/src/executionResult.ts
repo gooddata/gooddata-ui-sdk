@@ -119,6 +119,7 @@ class BearDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
     public readonly headerItems: IResultHeaderItem[][][];
+    public readonly totalCount: number[];
     public readonly count: number[];
     public readonly offset: number[];
     public readonly result: IExecutionResult;
@@ -131,6 +132,7 @@ class BearDataView implements IDataView {
         this.data = dataResult.data;
         this.headerItems = dataResult.headerItems ? dataResult.headerItems : [[[]]];
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];
+        this.totalCount = dataResult.paging.total;
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;
 

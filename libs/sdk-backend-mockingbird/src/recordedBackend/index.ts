@@ -176,6 +176,7 @@ function recordedDataView(
         data: afmResult.data ? afmResult.data : [[]],
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
+        totalCount: afmResult.paging.total,
         advance: noop,
         pageDown: noop,
         pageUp: noop,

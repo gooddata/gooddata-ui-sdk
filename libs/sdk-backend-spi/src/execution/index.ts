@@ -244,9 +244,14 @@ export interface IDataView {
     readonly offset: number[];
 
     /**
-     * Size of data in each dimension.
+     * Count of data in each dimension.
      */
     readonly count: number[];
+
+    /**
+     * Total size of data in each dimension.
+     */
+    readonly totalCount: number[];
 
     /**
      * TODO: find a way to describe these :)

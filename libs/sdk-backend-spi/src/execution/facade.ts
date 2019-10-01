@@ -9,7 +9,7 @@ import {
     isPreviousPeriodMeasure,
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
-import { IDataView } from "./index";
+import { IDataView, IExecutionResult } from "./index";
 import {
     DataValue,
     IMeasureGroupHeader,
@@ -219,6 +219,14 @@ export class DataViewFacade {
     // data ops
     //
 
+    public firstDimSize(): number {
+        return this.dataView.totalCount[0];
+    }
+
+    public secondDimSize(): number {
+        return this.dataView.totalCount[1];
+    }
+
     public dataAt(index: number): DataValue | DataValue[] {
         return this.dataView.data[index];
     }
@@ -258,6 +266,10 @@ export class DataViewFacade {
         }
 
         return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
+    }
+
+    public result(): IExecutionResult {
+        return this.dataView.result;
     }
 
     public fingerprint() {
