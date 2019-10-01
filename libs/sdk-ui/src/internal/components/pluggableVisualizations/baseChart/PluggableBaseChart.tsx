@@ -265,7 +265,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 execution={execution}
                 afterRender={afterRender}
                 drillableItems={drillableItems}
-                onDrill={onDrill} // TODO: HACK
+                onDrill={onDrill}
                 onError={this.onError}
                 onExportReady={this.onExportReady}
                 onLoadingChanged={this.onLoadingChanged}

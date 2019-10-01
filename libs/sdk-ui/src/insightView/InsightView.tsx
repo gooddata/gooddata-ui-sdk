@@ -56,7 +56,7 @@ const getVisualizationForInsight = (insight: IInsight) => {
     return VisualizationsCatalog[key];
 };
 
-interface IInsightViewProps extends IVisCallbacks {
+interface IInsightViewProps extends Partial<IVisCallbacks> {
     backend: IAnalyticalBackend;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     filters?: IFilter[];
@@ -169,7 +169,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
                 onExportReady: this.props.onExportReady,
                 onLoadingFinish: this.props.onLoadingFinish,
             },
-            configPanelElement: "nonexistent",
+            configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,
             locale: this.props.visualizationProps ? this.props.visualizationProps.locale : undefined,
             projectId: this.props.workspace,
@@ -178,7 +178,6 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
     };
 
     private getInsight = async () => {
-        // should we allow for getting insights by URI?
         try {
             return await this.props.backend
                 .workspace(this.props.workspace)
