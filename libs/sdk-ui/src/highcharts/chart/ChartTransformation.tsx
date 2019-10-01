@@ -33,7 +33,7 @@ export interface IChartTransformationProps {
 
     dataView: IDataView;
 
-    onFiredDrillEvent: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent2;
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
@@ -57,7 +57,7 @@ export default class ChartTransformation extends React.Component<
         renderer: renderHighCharts,
         afterRender: noop,
         onNegativeValues: null as any,
-        onFiredDrillEvent: () => true,
+        onDrill: () => true,
         pushData: noop,
         onLegendReady: noop,
         height: undefined as number,
@@ -77,11 +77,11 @@ export default class ChartTransformation extends React.Component<
 
     public getRendererProps() {
         const { chartOptions, legendOptions } = this;
-        const { dataView, height, width, afterRender, onFiredDrillEvent, onLegendReady, locale } = this.props;
+        const { dataView, height, width, afterRender, onDrill, onLegendReady, locale } = this.props;
 
         const chartConfig = this.getChartConfig(this.props);
 
-        const drillConfig = { dataView, onFiredDrillEvent };
+        const drillConfig = { dataView, onDrill };
         const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig, dataView.definition);
 
         return {

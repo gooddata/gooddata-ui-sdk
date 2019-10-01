@@ -145,7 +145,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Line chart with standard onFiredDrillEvent callback</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "line",
                             legend: {
@@ -169,7 +169,7 @@ storiesOf("Internal/Drilldown", module)
                 </p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "line",
                             legend: {
@@ -353,7 +353,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Area chart with standard onFiredDrillEvent callback</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "area",
                             legend: {
@@ -377,7 +377,7 @@ storiesOf("Internal/Drilldown", module)
                 </p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "area",
                             legend: {
@@ -538,7 +538,7 @@ storiesOf("Internal/Drilldown", module)
                     <p>Combo chart with drilling on measure</p>
                     {wrap(
                         <Visualization
-                            onFiredDrillEvent={action("onFiredDrillEvent")}
+                            onDrill={action("onFiredDrillEvent")}
                             config={{
                                 type: "combo",
                                 dualAxis: false,
@@ -562,7 +562,7 @@ storiesOf("Internal/Drilldown", module)
                     <p>Combo chart with drilling on attribute and logging to console</p>
                     {wrap(
                         <Visualization
-                            onFiredDrillEvent={onFiredDrillEvent}
+                            onDrill={onFiredDrillEvent}
                             config={{
                                 type: "combo",
                                 dualAxis: false,
@@ -591,7 +591,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Scatter plot with standard onFiredDrillEvent callback</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "scatter",
                             mdObject: dataSet.mdObject,
@@ -610,7 +610,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Scatter plot with drilling on attribute</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "scatter",
                             mdObject: dataSet.mdObject,
@@ -629,7 +629,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Scatter plot with drilling on attribute element "Educationly"</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "scatter",
                             mdObject: dataSet.mdObject,
@@ -651,7 +651,7 @@ storiesOf("Internal/Drilldown", module)
                 </p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "scatter",
                             mdObject: dataSet.mdObject,
@@ -679,7 +679,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Bubble chart with drilling on measure</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "bubble",
                             mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject,
@@ -699,7 +699,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Bubble chart with drilling on attribute and logging to console</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "bubble",
                             mdObject: fixtures.bubbleChartWith3MetricsAndAttributeMd.mdObject,
@@ -726,7 +726,7 @@ storiesOf("Internal/Drilldown", module)
         return screenshotWrap(
             wrap(
                 <Visualization
-                    onFiredDrillEvent={action("onFiredDrillEvent")}
+                    onDrill={action("onFiredDrillEvent")}
                     config={{
                         type: "bubble",
                         mdObject: dataSet.mdObject,
@@ -757,7 +757,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Treemap with drilling on one measure from two</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "treemap",
                             mdObject: dataSetWithManyMeasure.mdObject,
@@ -779,7 +779,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Treemap with drilling on view by attribute and logging to console</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "treemap",
                             mdObject: dataSet.mdObject,
@@ -799,7 +799,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Treemap with drilling on segment by attribute element and logging to console</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "treemap",
                             mdObject: dataSet.mdObject,
@@ -881,7 +881,7 @@ storiesOf("Internal/Drilldown", module)
                 <p>Heatmap with standard onFiredDrillEvent callback</p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={action("onFiredDrillEvent")}
+                        onDrill={action("onFiredDrillEvent")}
                         config={{
                             type: "heatmap",
                         }}
@@ -902,7 +902,7 @@ storiesOf("Internal/Drilldown", module)
                 </p>
                 {wrap(
                     <Visualization
-                        onFiredDrillEvent={onFiredDrillEvent}
+                        onDrill={onFiredDrillEvent}
                         config={{
                             type: "heatmap",
                         }}

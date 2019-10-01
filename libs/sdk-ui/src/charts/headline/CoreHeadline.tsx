@@ -61,7 +61,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
                             <HeadlineTransformation
                                 dataView={dataView}
                                 onAfterRender={afterRender}
-                                onFiredDrillEvent={onDrill}
+                                onDrill={onDrill}
                                 drillableItems={drillableItems}
                                 config={config}
                             />

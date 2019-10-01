@@ -25,7 +25,7 @@ export interface IVisualizationProps {
     drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
     locale?: string;
 
-    onFiredDrillEvent?: OnFiredDrillEvent2;
+    onDrill?: OnFiredDrillEvent2;
     afterRender?: () => void;
     onDataTooLarge(): void;
     onNegativeValues(): void;
@@ -37,7 +37,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
     public static defaultProps = {
         locale: "en-US",
         numericSymbols: [] as string[],
-        onFiredDrillEvent: () => true,
+        onDrill: () => true,
         afterRender: noop,
     };
 
@@ -77,7 +77,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                 config,
                 dataView,
                 drillableItems,
-                onFiredDrillEvent,
+                onDrill,
                 afterRender,
                 onDataTooLarge,
                 onNegativeValues,
@@ -95,7 +95,7 @@ export class Visualization extends React.Component<IVisualizationProps> {
                     locale={locale}
                     dataView={dataView}
                     afterRender={afterRender}
-                    onFiredDrillEvent={onFiredDrillEvent}
+                    onDrill={onDrill}
                     onDataTooLarge={onDataTooLarge}
                     onNegativeValues={onNegativeValues}
                     onLegendReady={onLegendReady}

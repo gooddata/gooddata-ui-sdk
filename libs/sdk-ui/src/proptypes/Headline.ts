@@ -14,7 +14,7 @@ export const HeadlinePropTypes = {
     drillableItems: PropTypes.arrayOf(
         PropTypes.oneOfType([DrillableItemPropType, DrillablePredicatePropType]),
     ),
-    onFiredDrillEvent: PropTypes.func,
+    onDrill: PropTypes.func,
     stickyHeader: PropTypes.number,
     ErrorComponent: PropTypes.func,
     LoadingComponent: PropTypes.func,

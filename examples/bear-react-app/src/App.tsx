@@ -52,7 +52,7 @@ const App: React.FC = () => {
                                     height: 300,
                                 },
                             }}
-                            onFiredDrillEvent={e => {
+                            onDrill={e => {
                                 console.log("AAAAA", e);
                             }}
                             filters={

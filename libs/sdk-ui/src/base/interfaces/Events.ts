@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { IExportConfig, IExportResponse } from "@gooddata/gd-bear-client";
-import { IDrillEventCallback, IDrillEventCallback2 } from "./DrillEvents";
+import { IDrillEventCallback2 } from "./DrillEvents";
 import { RuntimeError } from "../errors/RuntimeError";
 
 export interface ILoadingState {
@@ -10,7 +10,6 @@ export interface ILoadingState {
 export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnLoadingFinish = (result: object) => void;
-export type OnFiredDrillEvent = IDrillEventCallback;
 export type OnFiredDrillEvent2 = IDrillEventCallback2;
 
 export interface IExtendedExportConfig extends IExportConfig {
@@ -36,5 +35,5 @@ export interface IEvents {
     onExportReady?: OnExportReady;
     onLoadingChanged?: OnLoadingChanged;
     onLoadingFinish?: OnLoadingFinish;
-    onFiredDrillEvent?: OnFiredDrillEvent;
+    onDrill?: OnFiredDrillEvent2;
 }

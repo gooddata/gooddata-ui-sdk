@@ -89,7 +89,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
                                 afterRender={afterRender}
                                 onDataTooLarge={onDataTooLarge}
                                 onNegativeValues={this.props.onNegativeValues}
-                                onFiredDrillEvent={this.props.onDrill}
+                                onDrill={this.props.onDrill}
                                 onLegendReady={this.props.onLegendReady}
                                 pushData={pushData}
                             />

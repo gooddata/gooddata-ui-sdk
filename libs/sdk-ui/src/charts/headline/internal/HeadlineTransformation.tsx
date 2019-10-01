@@ -20,7 +20,7 @@ export interface IHeadlineTransformationProps {
     drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
     config?: IChartConfig;
 
-    onFiredDrillEvent?: IDrillEventCallback2;
+    onDrill?: IDrillEventCallback2;
     onAfterRender?: () => void;
 }
 
@@ -32,7 +32,7 @@ export interface IHeadlineTransformationProps {
 class HeadlineTransformation extends React.Component<IHeadlineTransformationProps & InjectedIntlProps> {
     public static defaultProps: Partial<IHeadlineTransformationProps> = {
         drillableItems: [],
-        onFiredDrillEvent: () => true,
+        onDrill: () => true,
         onAfterRender: noop,
     };
 
@@ -53,17 +53,17 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
             <Headline
                 data={dataWithUpdatedDrilling}
                 config={config}
-                onFiredDrillEvent={this.handleFiredDrillEvent}
+                onDrill={this.handleFiredDrillEvent}
                 onAfterRender={onAfterRender}
             />
         );
     }
 
     private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {
-        const { onFiredDrillEvent, dataView } = this.props;
+        const { onDrill, dataView } = this.props;
         const drillEventData = buildDrillEventData(item, dataView);
 
-        fireDrillEvent(onFiredDrillEvent, drillEventData, target);
+        fireDrillEvent(onDrill, drillEventData, target);
     }
 }
 

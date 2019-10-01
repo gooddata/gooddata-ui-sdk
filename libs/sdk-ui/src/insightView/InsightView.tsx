@@ -82,6 +82,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         ErrorComponent,
         filters: [],
         LoadingComponent,
+        pushData: noop,
         visualizationProps: {
             custom: {},
             dimensions: {
@@ -163,12 +164,8 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
                         this.props.onLoadingChanged({ isLoading });
                     }
                 },
-                pushData: noop, // TODO
-                onFiredDrillEvent: e => {
-                    console.log("IN", e);
-
-                    this.props.onFiredDrillEvent(e);
-                },
+                pushData: this.props.pushData,
+                onDrill: this.props.onDrill,
                 onExportReady: this.props.onExportReady,
                 onLoadingFinish: this.props.onLoadingFinish,
             },

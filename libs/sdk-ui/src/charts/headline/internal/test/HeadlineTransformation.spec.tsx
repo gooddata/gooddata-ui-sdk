@@ -57,7 +57,7 @@ describe("HeadlineTransformation", () => {
             },
         });
         expect(props.onAfterRender).toEqual(onAfterRender);
-        expect(props.onFiredDrillEvent).toBeDefined();
+        expect(props.onDrill).toBeDefined();
     });
 
     it("should pass all required props to Headline component and enable drilling identified by identifier", () => {
@@ -84,7 +84,7 @@ describe("HeadlineTransformation", () => {
             },
         });
         expect(props.onAfterRender).toEqual(onAfterRender);
-        expect(props.onFiredDrillEvent).toBeDefined();
+        expect(props.onDrill).toBeDefined();
     });
 
     it("should pass primary, secondary and tertiary items to Headline component", () => {
@@ -156,7 +156,7 @@ describe("HeadlineTransformation", () => {
                 isDrillable: false,
             },
         });
-        expect(props.onFiredDrillEvent).toBeDefined();
+        expect(props.onDrill).toBeDefined();
     });
 
     it("should call afterRender callback on componentDidMount & componentDidUpdate", () => {
@@ -188,7 +188,7 @@ describe("HeadlineTransformation", () => {
                             uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
                         },
                     ],
-                    onFiredDrillEvent: drillEventFunction,
+                    onDrill: drillEventFunction,
                 });
 
                 const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
@@ -216,7 +216,7 @@ describe("HeadlineTransformation", () => {
                             uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
                         },
                     ],
-                    onFiredDrillEvent: drillEventFunction,
+                    onDrill: drillEventFunction,
                 });
 
                 const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
@@ -239,7 +239,7 @@ describe("HeadlineTransformation", () => {
                             uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
                         },
                     ],
-                    onFiredDrillEvent: drillEventFunction,
+                    onDrill: drillEventFunction,
                 });
 
                 const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
@@ -260,7 +260,7 @@ describe("HeadlineTransformation", () => {
                             identifier: "af2Ewj9Re2vK",
                         },
                     ],
-                    onFiredDrillEvent: drillEventFunction,
+                    onDrill: drillEventFunction,
                 });
 
                 const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
@@ -285,7 +285,7 @@ describe("HeadlineTransformation", () => {
                             identifier: "afSEwRwdbMeQ",
                         },
                     ],
-                    onFiredDrillEvent: drillEventFunction,
+                    onDrill: drillEventFunction,
                 });
 
                 const primaryValue = wrapper.find(".s-headline-secondary-item");

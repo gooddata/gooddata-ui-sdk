@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import Highcharts from "../highchartsEntryPoint";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
@@ -23,14 +23,19 @@ describe("getOptionalStackingConfiguration", () => {
     });
 
     it("should set drillConfig to X axis", () => {
-        const afm: AFM.IAfm = {
+        const dataView = dummyDataView({
             attributes: [],
-            measures: [],
+            buckets: [],
+            dimensions: [],
             filters: [],
-        };
+            measures: [],
+            sortBy: [],
+            workspace: "",
+        });
+
         const drillConfig: IDrillConfig = {
-            afm,
-            onFiredDrillEvent: () => false,
+            dataView,
+            onDrill: () => false,
         };
         const result = setDrillConfigToXAxis(drillConfig);
         expect(result.xAxis[0].drillConfig).toEqual(drillConfig);

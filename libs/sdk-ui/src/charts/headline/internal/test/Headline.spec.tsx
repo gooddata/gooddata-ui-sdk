@@ -38,9 +38,9 @@ describe("Headline", () => {
 
     describe("with primary value", () => {
         it("should not produce any event upon click when fire handler but primary value is not drillable", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -53,13 +53,13 @@ describe("Headline", () => {
             const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
             primaryValue.simulate("click");
 
-            expect(onFiredDrillEvent).toHaveBeenCalledTimes(0);
+            expect(onDrill).toHaveBeenCalledTimes(0);
         });
 
         it("should produce correct event upon click when fire handler is set and primary value is drillable", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -73,7 +73,7 @@ describe("Headline", () => {
             const primaryValue = wrapper.find(".s-headline-primary-item .headline-value-wrapper");
             primaryValue.simulate("click", { target: "elementTarget" });
 
-            expect(onFiredDrillEvent).toBeCalledWith(
+            expect(onDrill).toBeCalledWith(
                 {
                     localIdentifier: "m1",
                     value: "42",
@@ -84,9 +84,9 @@ describe("Headline", () => {
         });
 
         it("should have primary value written out as link even when the drillable value is invalid", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -105,8 +105,8 @@ describe("Headline", () => {
             expect(primaryValueLink.exists()).toBe(true);
             expect(primaryValueText).toEqual("–");
 
-            expect(onFiredDrillEvent).toHaveBeenCalledTimes(1);
-            expect(onFiredDrillEvent).toBeCalledWith(
+            expect(onDrill).toHaveBeenCalledTimes(1);
+            expect(onDrill).toBeCalledWith(
                 {
                     localIdentifier: "m1",
                     value: null,
@@ -254,9 +254,9 @@ describe("Headline", () => {
 
     describe("with secondary value", () => {
         it("should not produce any event upon click when fire handler but secondary value is not drillable", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -285,13 +285,13 @@ describe("Headline", () => {
             const secondaryValue = wrapper.find(".s-headline-secondary-item .s-headline-value");
             secondaryValue.simulate("click");
 
-            expect(onFiredDrillEvent).toHaveBeenCalledTimes(0);
+            expect(onDrill).toHaveBeenCalledTimes(0);
         });
 
         it("should produce correct event upon click when fire handler is set and secondary value is drillable", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -321,7 +321,7 @@ describe("Headline", () => {
             const secondaryValue = wrapper.find(".s-headline-secondary-item .s-headline-value");
             secondaryValue.simulate("click", { target: "elementTarget" });
 
-            expect(onFiredDrillEvent).toBeCalledWith(
+            expect(onDrill).toBeCalledWith(
                 {
                     localIdentifier: "m2",
                     value: "4321",
@@ -332,9 +332,9 @@ describe("Headline", () => {
         });
 
         it("should have secondary value written out as link even when the drillable value is invalid", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -369,8 +369,8 @@ describe("Headline", () => {
             expect(secondaryValue.exists()).toBe(true);
             expect(secondaryValueText).toEqual("–");
 
-            expect(onFiredDrillEvent).toHaveBeenCalledTimes(1);
-            expect(onFiredDrillEvent).toBeCalledWith(
+            expect(onDrill).toHaveBeenCalledTimes(1);
+            expect(onDrill).toBeCalledWith(
                 {
                     localIdentifier: "m2",
                     value: null,
@@ -631,9 +631,9 @@ describe("Headline", () => {
 
     describe("with tertiary value", () => {
         it("should have written out as formatted value when correct value is provided", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",
@@ -663,9 +663,9 @@ describe("Headline", () => {
         });
 
         it("should have written out as dash when undefined value is provided", () => {
-            const onFiredDrillEvent = jest.fn();
+            const onDrill = jest.fn();
             const wrapper = createComponent({
-                onFiredDrillEvent,
+                onDrill,
                 data: {
                     primaryItem: {
                         localIdentifier: "m1",

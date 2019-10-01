@@ -2,6 +2,7 @@
 import get = require("lodash/get");
 import set = require("lodash/set");
 import noop = require("lodash/noop");
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
     escapeCategories,
     formatOverlapping,
@@ -16,7 +17,6 @@ import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
 } from "../../chartOptionsBuilder";
-import { AFM } from "@gooddata/gd-bear-model";
 import { IDrillConfig } from "../../../../base/interfaces/DrillEvents";
 
 function getData(dataValues: ISeriesDataItem[]) {
@@ -751,14 +751,19 @@ describe("getCustomizedConfiguration", () => {
     describe("get X axis with drill config", () => {
         const chartTypes = supportedStackingAttributesChartTypes.map((chartType: string) => [chartType]);
 
-        const afm: AFM.IAfm = {
+        const dataView = dummyDataView({
             attributes: [],
-            measures: [],
+            buckets: [],
+            dimensions: [],
             filters: [],
-        };
+            measures: [],
+            sortBy: [],
+            workspace: "",
+        });
+
         const drillConfig: IDrillConfig = {
-            afm,
-            onFiredDrillEvent: () => false,
+            dataView,
+            onDrill: () => false,
         };
 
         it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
