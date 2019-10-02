@@ -18,6 +18,12 @@
 
 -   BucketExecutor component is not present in SDK 8; use Execute component
 
+-   Visualization component is not present in SDK 8; use InsightView component instead
+
+    -   the insight to be shown can no longer be specified by its URI, use its identifier instead
+    -   the props were changed (see below)
+    -   detailed migration TBD
+
 #### Public API changes
 
 -   Charts no longer have the sdk prop
