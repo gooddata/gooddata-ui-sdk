@@ -10,6 +10,8 @@ import {
     IAttribute,
 } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { convertReferencesToUris } from "./ReferenceConverter";
+import { deserializeProperties } from "./PropertiesConverter";
 
 const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
 const isUri = (identifier: string) => REG_URI_OBJ.test(identifier);
@@ -112,14 +114,17 @@ export const convertVisualization = (
     visualization: VisualizationObject.IVisualization,
     visualizationClassIdentifier: string,
 ): IInsight => {
-    const { content, meta } = visualization.visualizationObject;
+    const withResolvedReferences = convertReferencesToUris(visualization.visualizationObject);
+    const { content, meta } = withResolvedReferences;
+    const parsedProperties = deserializeProperties(content.properties);
+
     return {
         insight: {
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? content.filters.map(convertFilter) : [],
             identifier: meta.identifier!, // TODO can identifier really be undefined?
-            properties: {}, // TODO
-            sorts: [], // TODO
+            properties: parsedProperties,
+            sorts: parsedProperties.sortItems || [],
             title: meta.title,
             uri: meta.uri,
             visualizationClassIdentifier,

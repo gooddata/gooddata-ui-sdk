@@ -69,6 +69,7 @@ import {
     IInsight,
     insightBuckets,
     insightHasDataDefined,
+    insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IChartConfig, ColorUtils } from "../../../../highcharts";
@@ -135,7 +136,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        const visualizationProperties = insight.insight.properties;
+        const visualizationProperties = insightProperties(insight);
         this.options = options;
         this.visualizationProperties = getSupportedProperties(
             visualizationProperties,

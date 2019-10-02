@@ -1,29 +1,27 @@
 // (C) 2007-2019 GoodData Corporation
-
-// TODO: remove, this is handled in gdc-backend-bear
-
+import { VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import isEmpty from "lodash/isEmpty";
-import omit from "lodash/omit";
-import isArray from "lodash/isArray";
-import isObject from "lodash/isObject";
-import isString from "lodash/isString";
-import stringify from "json-stable-stringify";
-import { v4 as uuid } from "uuid";
-
-import { IProperties } from "./interfaces";
-import { isUri } from "./DataLayer/helpers/uri";
+import isEmpty = require("lodash/isEmpty");
+import omit = require("lodash/omit");
+import isArray = require("lodash/isArray");
+import isObject = require("lodash/isObject");
+import isString = require("lodash/isString");
+import * as uuid from "uuid";
+import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
 
 /*
  * Helpers
  */
+const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
+const isUri = (identifier: string) => REG_URI_OBJ.test(identifier);
+
 const getReferenceValue = (id: string, references: VisualizationObject.IReferenceItems) => references[id];
 const getReferenceId = (value: string, references: VisualizationObject.IReferenceItems) =>
     Object.keys(references).find(id => references[id] === value);
 
 type IdGenerator = () => string;
 
-const defaultIdGenerator: IdGenerator = () => uuid().replace(/-/g, "");
+const defaultIdGenerator: IdGenerator = () => uuid.v4().replace(/-/g, "");
 
 type StringTransformation = (value: string) => string;
 
@@ -49,12 +47,12 @@ const traverse = (obj: any, convert: StringTransformation): any => {
 };
 
 interface IConversionResult {
-    convertedProperties: IProperties;
+    convertedProperties: VisualizationProperties;
     convertedReferences: VisualizationObject.IReferenceItems;
 }
 
 type ConversionFunction = (
-    originalProperties: IProperties,
+    originalProperties: VisualizationProperties,
     originalReferences: VisualizationObject.IReferenceItems,
     idGenerator: IdGenerator,
 ) => IConversionResult;
@@ -79,7 +77,7 @@ const createConverter = (conversionFunction: ConversionFunction): ReferenceConve
     }
 
     // prepare result objects
-    const originalProperties: IProperties = JSON.parse(properties);
+    const originalProperties = deserializeProperties(properties);
     const originalReferences = content.references || {};
 
     const { convertedProperties, convertedReferences } = conversionFunction(
@@ -95,7 +93,7 @@ const createConverter = (conversionFunction: ConversionFunction): ReferenceConve
         ...mdObject,
         content: {
             ...(omit(mdObject.content, "references") as VisualizationObject.IVisualizationObjectContent),
-            properties: stringify(convertedProperties),
+            properties: serializeProperties(convertedProperties),
             ...referencesProp,
         },
     };
