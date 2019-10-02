@@ -12,7 +12,7 @@ import {
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties } from "./PropertiesConverter";
-import { isUri } from "@gooddata/gd-bear-client/lib/DataLayer/helpers/uri"; // TODO: should client export this function?
+import { DataLayer } from "@gooddata/gd-bear-client";
 
 const convertAttributeElements = (items: string[]): AttributeElements => {
     if (!items.length) {
@@ -20,7 +20,7 @@ const convertAttributeElements = (items: string[]): AttributeElements => {
     }
     // we assume that all the items either use uris, or values, not both, since there no way of representing the mixed variant
     const first = items[0];
-    return isUri(first) ? { uris: items } : { values: items };
+    return DataLayer.Uri.isUri(first) ? { uris: items } : { values: items };
 };
 
 const convertFilter = (filter: VisualizationObject.VisualizationObjectFilter): IFilter => {
