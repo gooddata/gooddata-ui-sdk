@@ -13,6 +13,7 @@ export interface IWithExecution<T, R extends object> {
         | IWithLoadingEvents<T, DataViewFacade>
         | ((props: T) => IWithLoadingEvents<T, DataViewFacade>);
     loadOnMount?: boolean;
+    shouldRefetch?: (prevProps: T, nextProps: T) => boolean;
 }
 
 /**
@@ -24,6 +25,7 @@ export function withExecution<T, R extends object>({
     mapResultToProps,
     eventsOrFactory,
     loadOnMount,
+    shouldRefetch,
 }: IWithExecution<T, R>) {
     return (WrappedComponent: React.ComponentType<T & R>) =>
         withLoading({
@@ -45,5 +47,6 @@ export function withExecution<T, R extends object>({
             mapResultToProps,
             loadOnMount,
             eventsOrFactory,
+            shouldRefetch,
         })(WrappedComponent);
 }
