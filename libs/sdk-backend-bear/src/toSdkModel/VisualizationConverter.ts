@@ -12,9 +12,7 @@ import {
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties } from "./PropertiesConverter";
-
-const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
-const isUri = (identifier: string) => REG_URI_OBJ.test(identifier);
+import { isUri } from "@gooddata/gd-bear-client/lib/DataLayer/helpers/uri"; // TODO: should client export this function?
 
 const convertAttributeElements = (items: string[]): AttributeElements => {
     if (!items.length) {

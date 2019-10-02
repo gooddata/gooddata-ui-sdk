@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { isUri } from "@gooddata/gd-bear-client/lib/DataLayer/helpers/uri"; // TODO: should client export this function?
 import isEmpty = require("lodash/isEmpty");
 import omit = require("lodash/omit");
 import isArray = require("lodash/isArray");
@@ -12,9 +13,6 @@ import { deserializeProperties, serializeProperties } from "./PropertiesConverte
 /*
  * Helpers
  */
-const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
-const isUri = (identifier: string) => REG_URI_OBJ.test(identifier);
-
 const getReferenceValue = (id: string, references: VisualizationObject.IReferenceItems) => references[id];
 const getReferenceId = (value: string, references: VisualizationObject.IReferenceItems) =>
     Object.keys(references).find(id => references[id] === value);
