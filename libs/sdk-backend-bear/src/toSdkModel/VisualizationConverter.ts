@@ -18,6 +18,7 @@ const convertAttributeElements = (items: string[]): AttributeElements => {
     if (!items.length) {
         return { values: [] }; // TODO is this OK or we want to throw?
     }
+    // we assume that all the items either use uris, or values, not both, since there no way of representing the mixed variant
     const first = items[0];
     return isUri(first) ? { uris: items } : { values: items };
 };
