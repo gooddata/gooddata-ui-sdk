@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
+import last = require("lodash/last");
 import noop = require("lodash/noop");
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -51,8 +52,9 @@ const VisualizationsCatalog = {
 
 const getVisualizationForInsight = (insight: IInsight) => {
     const visClassIdentifier = insightVisualizationClassIdentifier(insight);
+    // the identifiers follow the "local.visualizationType" format
     const split = visClassIdentifier.split(".");
-    const key = split[split.length - 1] as keyof typeof VisualizationsCatalog;
+    const key = last(split) as keyof typeof VisualizationsCatalog;
     return VisualizationsCatalog[key];
 };
 
@@ -134,11 +136,12 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
     private setupVisualization = async () => {
         this.startLoading();
 
+        // the visualization we may have from earlier is no longer valid -> get rid of it
+        this.unmountVisualization();
+
         this.insight = await this.getInsight();
 
         if (!this.insight) {
-            // the visualization we may have from earlier is no longer valid -> get rid of it
-            this.unmountVisualization();
             return;
         }
 
