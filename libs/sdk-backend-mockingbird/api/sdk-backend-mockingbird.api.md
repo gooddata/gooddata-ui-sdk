@@ -21,7 +21,9 @@ export function dummyBackend(config?: AnalyticalBackendConfig): IAnalyticalBacke
 // @internal
 export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView;
 
 // Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
