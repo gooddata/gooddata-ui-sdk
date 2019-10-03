@@ -45,4 +45,14 @@ export const Executor = withExecution({
             onLoadingStart,
         };
     },
+    shouldRefetch: (prevProps, nextProps) => {
+        const relevantProps: Array<keyof IExecutorProps> = [
+            "onError",
+            "onLoadingChanged",
+            "onLoadingFinish",
+            "onLoadingStart",
+            "execution",
+        ];
+        return relevantProps.some(propName => prevProps[propName] !== nextProps[propName]);
+    },
 })(CoreExecutor);

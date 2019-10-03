@@ -2,6 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
+import { makeCancelable, ICancelablePromise, CancelError } from "../promise/CancelablePromise";
 
 //
 // Public interface
@@ -38,6 +39,7 @@ export interface IWithLoading<T, P, R extends object> {
     mapResultToProps: (result: WithLoadingResult<P>) => R;
     eventsOrFactory?: IWithLoadingEvents<T, P> | ((props: T) => IWithLoadingEvents<T, P>);
     loadOnMount?: boolean;
+    shouldRefetch?: (prevProps: T, nextProps: T) => boolean;
 }
 
 /**
@@ -48,7 +50,6 @@ export type WithLoadingState<T> = {
     isLoading: boolean;
     error: Error | undefined;
     result: T | undefined;
-    promise: ICancelablePromise<T> | undefined;
 };
 
 /**
@@ -60,14 +61,16 @@ export function withLoading<T, P, R extends object>({
     mapResultToProps,
     loadOnMount = true,
     eventsOrFactory = {},
+    shouldRefetch = () => false,
 }: IWithLoading<T, P, R>) {
     return (WrappedComponent: React.ComponentType<T & R>): React.ComponentClass<T> => {
         class WithLoading extends React.Component<T, WithLoadingState<P>> {
+            private cancelablePromise: ICancelablePromise<P> | undefined;
+
             public state: WithLoadingState<P> = {
                 error: undefined,
                 isLoading: false,
                 result: undefined,
-                promise: undefined,
             };
 
             constructor(props: T) {
@@ -76,7 +79,6 @@ export function withLoading<T, P, R extends object>({
                 this.startLoading = this.startLoading.bind(this);
                 this.setError = this.setError.bind(this);
                 this.setResult = this.setResult.bind(this);
-                this.setPromise = this.setPromise.bind(this);
                 this.getEvents = this.getEvents.bind(this);
             }
 
@@ -96,13 +98,6 @@ export function withLoading<T, P, R extends object>({
                     onLoadingFinish,
                     onLoadingStart,
                 };
-            }
-
-            private setPromise(promise: ICancelablePromise<P>) {
-                this.setState(state => ({
-                    ...state,
-                    promise,
-                }));
             }
 
             private startLoading() {
@@ -134,28 +129,29 @@ export function withLoading<T, P, R extends object>({
                 this.setState(state => ({
                     ...state,
                     isLoading: false,
+                    error: undefined,
                     result,
                 }));
             }
 
             private async fetch() {
+                if (this.cancelablePromise) {
+                    this.cancelablePromise.cancel();
+                }
                 this.startLoading();
-                let result;
                 const promise = promiseFactory(this.props);
-                const cancelablePromise = makeCancelable(promise);
-                this.setPromise(cancelablePromise);
-
+                this.cancelablePromise = makeCancelable(promise);
+                let result;
                 try {
-                    result = await cancelablePromise.promise;
+                    result = await this.cancelablePromise.promise;
                 } catch (err) {
-                    if (!err.isCanceled) {
+                    if (err instanceof CancelError) {
                         this.setError(err);
                     }
                     return;
                 }
 
                 this.setResult(result);
-
                 return result;
             }
 
@@ -165,10 +161,16 @@ export function withLoading<T, P, R extends object>({
                 }
             }
 
+            public componentDidUpdate(prevProps: T) {
+                if (shouldRefetch(prevProps, this.props)) {
+                    this.cancelablePromise.cancel();
+                    this.fetch();
+                }
+            }
+
             public componentWillUnmount() {
-                const { promise } = this.state;
-                if (promise) {
-                    promise.cancel();
+                if (this.cancelablePromise) {
+                    this.cancelablePromise.cancel();
                 }
             }
 
@@ -188,32 +190,5 @@ export function withLoading<T, P, R extends object>({
         hoistNonReactStatics(WithLoading, WrappedComponent);
 
         return WithLoading;
-    };
-}
-
-//
-// internals
-//
-
-interface ICancelablePromise<T> {
-    promise: Promise<T>;
-    cancel: () => void;
-}
-
-function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
-    let hasCanceled = false;
-
-    const wrappedPromise = new Promise<T>((resolve, reject) => {
-        promise.then(
-            val => (hasCanceled ? reject({ isCanceled: true }) : resolve(val)),
-            error => (hasCanceled ? reject({ isCanceled: true }) : reject(error)),
-        );
-    });
-
-    return {
-        promise: wrappedPromise,
-        cancel() {
-            hasCanceled = true;
-        },
     };
 }
