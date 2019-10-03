@@ -4,12 +4,13 @@ import * as uuid from "uuid";
 import last = require("lodash/last");
 import noop = require("lodash/noop");
 
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IFilter,
     insightProperties,
     insightVisualizationClassIdentifier,
+    IColorPalette,
 } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, IVisCallbacks } from "../internal/interfaces/Visualization";
@@ -79,18 +80,13 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
+    private colorPalette: IColorPalette | undefined;
 
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
         filters: [],
         LoadingComponent,
         pushData: noop,
-        visualizationProps: {
-            custom: {},
-            dimensions: {
-                height: 300, // TODO: what should this be?
-            },
-        },
     };
 
     public state: IInsightViewState = {
@@ -130,7 +126,18 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         if (!this.visualization) {
             return;
         }
-        this.visualization.update(this.props.visualizationProps, this.insight, this.getExecutionFactory());
+
+        this.visualization.update(
+            {
+                ...this.props.visualizationProps,
+                config: {
+                    ...(this.props.visualizationProps && this.props.visualizationProps.config),
+                    colorPalette: this.colorPalette,
+                },
+            },
+            this.insight,
+            this.getExecutionFactory(),
+        );
     };
 
     private setupVisualization = async () => {
@@ -174,23 +181,44 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
             },
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,
+            environment: "dashboards", // TODO get rid of this
             locale: this.props.visualizationProps ? this.props.visualizationProps.locale : undefined,
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
         });
     };
 
-    private getInsight = async () => {
+    private getRemoteResource = async <T extends {}>(
+        resourceObtainer: (workspace: IAnalyticalWorkspace) => Promise<T>,
+    ) => {
         try {
-            return await this.props.backend
-                .workspace(this.props.workspace)
-                .metadata()
-                .getInsight(this.props.id);
+            return await resourceObtainer(this.props.backend.workspace(this.props.workspace));
         } catch (e) {
             this.setError(new RuntimeError(e.message, e));
             this.stopLoading();
             return undefined;
         }
+    };
+
+    private getInsight = () => {
+        return this.getRemoteResource<IInsight>(workspace => workspace.metadata().getInsight(this.props.id));
+    };
+
+    private getColorPaletteFromProject = () => {
+        return this.getRemoteResource<IColorPalette>(workspace => workspace.styling().colorPalette());
+    };
+
+    private updateColorPalette = async () => {
+        if (
+            this.props.visualizationProps &&
+            this.props.visualizationProps.config &&
+            this.props.visualizationProps.config.colorPalette
+        ) {
+            this.colorPalette = this.props.visualizationProps.config.colorPalette;
+            return;
+        }
+
+        this.colorPalette = await this.getColorPaletteFromProject();
     };
 
     private getExecutionFactory = () => {
@@ -202,6 +230,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
 
     private componentDidMountInner = async () => {
         await this.setupVisualization();
+        await this.updateColorPalette();
         return this.updateVisualization();
     };
 
@@ -213,6 +242,11 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         const needsNewSetup = this.props.id !== prevProps.id || this.props.workspace !== prevProps.workspace;
         if (needsNewSetup) {
             await this.setupVisualization();
+        }
+
+        const needsNewColorPalette = this.props.workspace !== prevProps.workspace;
+        if (needsNewColorPalette) {
+            await this.updateColorPalette();
         }
 
         return this.updateVisualization();

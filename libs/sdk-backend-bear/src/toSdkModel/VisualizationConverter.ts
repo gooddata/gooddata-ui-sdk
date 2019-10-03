@@ -121,7 +121,7 @@ export const convertVisualization = (
         insight: {
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? content.filters.map(convertFilter) : [],
-            identifier: meta.identifier!, // TODO can identifier really be undefined?
+            identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
             properties: parsedProperties,
             sorts: parsedProperties.sortItems || [],
             title: meta.title,

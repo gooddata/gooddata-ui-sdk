@@ -9,7 +9,7 @@ export const convertVisualizationClass = (
     return {
         visualizationClass: {
             ...content,
-            identifier: meta.identifier!, // TODO this will never be falsy right?
+            identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
             title: meta.title,
             uri: meta.uri,
         },
