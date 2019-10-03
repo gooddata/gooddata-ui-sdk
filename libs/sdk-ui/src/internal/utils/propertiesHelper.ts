@@ -79,7 +79,7 @@ export function getSupportedProperties(
     visualizationProperties: IVisualizationProperties,
     supportedPropertiesList: string[],
 ): IVisualizationProperties {
-    const controls = get(visualizationProperties, "controls", {});
+    const controls = get(visualizationProperties, "properties.controls", {});
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
 
     return isEmpty(supportedControls)
