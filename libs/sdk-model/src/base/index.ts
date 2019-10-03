@@ -71,3 +71,12 @@ export function isUriQualifier(obj: any): obj is IObjUriQualifier {
 export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier {
     return !isEmpty(obj) && (obj as IObjIdentifierQualifier).identifier !== undefined;
 }
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function objectQualifierValue(obj: ObjQualifier): string {
+    return isIdentifierQualifier(obj) ? obj.identifier : obj.uri;
+}

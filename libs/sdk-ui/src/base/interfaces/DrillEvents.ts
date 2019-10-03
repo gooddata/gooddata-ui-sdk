@@ -111,7 +111,7 @@ export interface IDrillEventContext {
     points?: IDrillPoint[];
 }
 
-// IDrillEvent is a parameter of the onFiredDrillEvent is callback
+// IDrillEvent is a parameter of the onDrill is callback
 export interface IDrillEvent {
     executionContext: AFM.IAfm;
     drillContext: IDrillEventContext;
@@ -141,5 +141,5 @@ export interface ICellDrillEvent {
 
 export interface IDrillConfig {
     dataView: IDataView;
-    onFiredDrillEvent: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent2;
 }

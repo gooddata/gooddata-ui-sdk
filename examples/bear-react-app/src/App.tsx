@@ -7,6 +7,7 @@ import { AreaChart, BarChart, BubbleChart, DonutChart, Executor, Kpi, PieChart }
 import "./App.css";
 import { backend, initialize } from "./backend";
 import { AgentName, AvgDuration, EndpointName, SumOfCalls, workspace } from "./model";
+import InsightViewDemo from "./InsightViewDemo";
 
 initialize();
 const analyticalBackend = backend();
@@ -16,6 +17,12 @@ const App: React.FC = () => {
     return (
         <div className="App">
             <Container>
+                <Row>
+                    <Col>
+                        <InsightViewDemo backend={analyticalBackend} workspace={workspace} />
+                    </Col>
+                </Row>
+
                 <Row>
                     <Col>
                         <Executor

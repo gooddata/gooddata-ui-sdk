@@ -69,6 +69,7 @@ import {
     IInsight,
     insightBuckets,
     insightHasDataDefined,
+    insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IChartConfig, ColorUtils } from "../../../../highcharts";
@@ -135,7 +136,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        const visualizationProperties = insight.insight.properties;
+        const visualizationProperties = insightProperties(insight);
         this.options = options;
         this.visualizationProperties = getSupportedProperties(
             visualizationProperties,
@@ -249,6 +250,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === "dashboards" ? height : undefined;
         const afterRender = get(this.callbacks, "afterRender", noop);
+        const onDrill = get(this.callbacks, "onDrill", noop);
         const { drillableItems } = custom;
         const supportedControls = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
@@ -264,6 +266,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 execution={execution}
                 afterRender={afterRender}
                 drillableItems={drillableItems}
+                onDrill={onDrill}
                 onError={this.onError}
                 onExportReady={this.onExportReady}
                 onLoadingChanged={this.onLoadingChanged}

@@ -19,8 +19,14 @@ import {
     dimensionFingerprint,
     IAttribute,
     IMeasure,
+    isAttributeFilter,
+    IAttributeFilter,
+    IDateFilter,
+    filterQualifierValue,
 } from "@gooddata/sdk-model";
 import isEmpty = require("lodash/isEmpty");
+import partition = require("lodash/partition");
+import unionBy = require("lodash/unionBy");
 import SparkMD5 from "spark-md5";
 
 /*
@@ -121,6 +127,29 @@ export function newDefFromInsight(workspace: string, insight: IInsight): IExecut
     return defWithFilters(def, insightFilters(insight));
 }
 
+// TODO: where to place these helper functions?
+const separateFiltersByType = (filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] => {
+    return partition(filters, isAttributeFilter);
+};
+
+const mergeFilters = (originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] => {
+    if (!addedFilters || !addedFilters.length) {
+        return originalFilters;
+    }
+
+    const [originalAttributeFilters, originalDateFilters] = separateFiltersByType(originalFilters);
+    const [addedAttributeFilters, addedDateFilters] = separateFiltersByType(addedFilters);
+
+    // concat attribute filters
+    const attributeFilters = [...originalAttributeFilters, ...addedAttributeFilters];
+
+    // merge date filters by date dataset qualifier
+    // added date filters should win, so they are specified first, unionBy prefers items from the first argument
+    const dateFilters = unionBy(addedDateFilters, originalDateFilters, filterQualifierValue);
+
+    return [...attributeFilters, ...dateFilters];
+};
+
 /**
  * Creates new execution definition by merging new filters into an existing definition.
  *
@@ -134,11 +163,9 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
         return def;
     }
 
-    // TODO: adapt our existing filter merging logic
-
     return {
         ...def,
-        filters: def.filters.concat(filters),
+        filters: mergeFilters(def.filters, filters),
     };
 }
 

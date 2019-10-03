@@ -127,6 +127,9 @@ export function filterFingerprint(filter: IFilter): string;
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
+export function filterQualifierValue(filter: IFilter): string;
+
+// @public
 export type GuidType = "guid";
 
 // @public
@@ -367,6 +370,9 @@ export function insightSorts(insight: IInsight): SortItem[];
 
 // @public
 export function insightTotals(insight: IInsight): ITotal[];
+
+// @public
+export function insightVisualizationClassIdentifier(insight: IInsight): string;
 
 // @public
 export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
@@ -622,6 +628,9 @@ export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: So
 
 // @public
 export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
+
+// @public
+export function objectQualifierValue(obj: ObjQualifier): string;
 
 // @public
 export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;

@@ -83,7 +83,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call point drill context (non-group) when event.points given but null", () => {
-        const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
         const pointClickEventDataWithNullPoints: Highcharts.DrilldownEventObject = {
             ...pointClickEventData,
@@ -104,7 +104,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call default fire event on point click and fire correct data", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -151,7 +151,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it('should fire correct data with property "value" for treemap and heatmap', () => {
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(
@@ -232,7 +232,7 @@ describe("Drilldown Eventing", () => {
             points: pointsWithEmptyValues,
         } as any;
 
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(
@@ -271,7 +271,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should correctly handle z coordinate of point", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
         const pointClickWitZEventData = cloneDeep(pointClickEventData);
 
@@ -327,18 +327,18 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call user defined callback on point click", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
+        const drillConfig = { dataView, onDrill: jest.fn() };
         const target = { dispatchEvent: () => true };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 
-        expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        expect(drillConfig.onDrill).toHaveBeenCalled();
     });
 
     it("should call both default fire event and user defined callback on point click", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
+        const drillConfig = { dataView, onDrill: jest.fn() };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -346,11 +346,11 @@ describe("Drilldown Eventing", () => {
         jest.runAllTimers();
 
         expect(target.dispatchEvent).toHaveBeenCalled();
-        expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        expect(drillConfig.onDrill).toHaveBeenCalled();
     });
 
     it("should only call user defined callback on point click", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: jest.fn().mockReturnValue(false) };
+        const drillConfig = { dataView, onDrill: jest.fn().mockReturnValue(false) };
         const target = { dispatchEvent: jest.fn() };
 
         chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
@@ -358,11 +358,11 @@ describe("Drilldown Eventing", () => {
         jest.runAllTimers();
 
         expect(target.dispatchEvent).not.toHaveBeenCalled();
-        expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+        expect(drillConfig.onDrill).toHaveBeenCalled();
     });
 
     it("should call fire event on label click", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
         const clickedPoint: Partial<IHighchartsPointObject> = {
             x: 1,
@@ -414,7 +414,7 @@ describe("Drilldown Eventing", () => {
     });
 
     it("should call fire event on cell click", () => {
-        const drillConfig = { dataView, onFiredDrillEvent: () => true };
+        const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
         const cellClickEventData = {
             columnIndex: 1,
@@ -528,7 +528,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should fire drill event (non-group) when point value is null and return empty string for value", () => {
-            const drillConfig = { dataView, onFiredDrillEvent: jest.fn() };
+            const drillConfig = { dataView, onDrill: jest.fn() };
             const target = { dispatchEvent: jest.fn() };
             const pointClickEventDataWithPointNullValue: Highcharts.DrilldownEventObject = {
                 ...pointClickEventData,
@@ -548,7 +548,7 @@ describe("Drilldown Eventing", () => {
 
             const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
             expect(drillContext.value).toEqual("");
-            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillConfig.onDrill).toHaveBeenCalled();
         });
     });
 
@@ -592,7 +592,7 @@ describe("Drilldown Eventing", () => {
         } as any;
 
         it("should return chart type for each point", () => {
-            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: jest.fn() };
+            const drillConfig: IDrillConfig = { dataView, onDrill: jest.fn() };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: columnPoint,
@@ -605,7 +605,7 @@ describe("Drilldown Eventing", () => {
 
             const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
 
-            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillConfig.onDrill).toHaveBeenCalled();
             expect(drillContext).toEqual({
                 type: VisualizationTypes.COMBO,
                 element: "label",
@@ -627,7 +627,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should fire event on cell click and fire correct data", () => {
-            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
+            const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: linePoint,
@@ -653,7 +653,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should NOT add chart type for each point if it is not Combo chart", () => {
-            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: jest.fn() };
+            const drillConfig: IDrillConfig = { dataView, onDrill: jest.fn() };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: columnPoint,
@@ -666,7 +666,7 @@ describe("Drilldown Eventing", () => {
 
             const drillContext = target.dispatchEvent.mock.calls[0][0].detail.drillContext;
 
-            expect(drillConfig.onFiredDrillEvent).toHaveBeenCalled();
+            expect(drillConfig.onDrill).toHaveBeenCalled();
             expect(drillContext).toEqual({
                 type: VisualizationTypes.COLUMN,
                 element: "label",
@@ -681,7 +681,7 @@ describe("Drilldown Eventing", () => {
         });
 
         it("should NOT add elementChartType on cell click if it is not Combo chart", () => {
-            const drillConfig: IDrillConfig = { dataView, onFiredDrillEvent: () => true };
+            const drillConfig: IDrillConfig = { dataView, onDrill: () => true };
             const target: any = { dispatchEvent: jest.fn() };
             const pointClickEventData: Highcharts.DrilldownEventObject = {
                 point: linePoint,

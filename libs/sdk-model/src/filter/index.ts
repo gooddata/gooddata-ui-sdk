@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { ObjQualifier } from "../base";
+import { ObjQualifier, objectQualifierValue } from "../base";
 import isEmpty = require("lodash/isEmpty");
 
 /**
@@ -216,4 +216,22 @@ export function attributeElementsIsEmpty(attributeElements: AttributeElements): 
     }
 
     return isEmpty(attributeElements.values.length);
+}
+
+/**
+ * TODO: SDK8: Add docs
+ *
+ * @public
+ */
+export function filterQualifierValue(filter: IFilter): string {
+    if (isDateFilter(filter)) {
+        if (isAbsoluteDateFilter(filter)) {
+            return objectQualifierValue(filter.absoluteDateFilter.dataSet);
+        }
+        return objectQualifierValue(filter.relativeDateFilter.dataSet);
+    }
+    if (isPositiveAttributeFilter(filter)) {
+        return objectQualifierValue(filter.positiveAttributeFilter.displayForm);
+    }
+    return objectQualifierValue(filter.negativeAttributeFilter.displayForm);
 }

@@ -22,6 +22,7 @@ export {
     ObjQualifierWithLocal,
     isUriQualifier,
     isIdentifierQualifier,
+    objectQualifierValue,
 } from "./base";
 
 export {
@@ -77,6 +78,7 @@ export {
     attributeElementsIsEmpty,
     filterIsEmpty,
     filterFingerprint,
+    filterQualifierValue,
 } from "./filter";
 
 export {
@@ -170,6 +172,7 @@ export {
     insightBucket,
     insightTotals,
     insightFilters,
+    insightVisualizationClassIdentifier,
     insightWithProperties,
     insightWithSorts,
     visClassUrl,

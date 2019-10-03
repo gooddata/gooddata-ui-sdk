@@ -11,6 +11,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
 import { AuthenticatedSdkProvider } from "./commonTypes";
+import { BearWorkspaceMetadata } from "./metadata";
+import { BearWorkspaceStyling } from "./styling";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authSdk: AuthenticatedSdkProvider, public readonly workspace: string) {}
@@ -28,10 +30,10 @@ export class BearWorkspace implements IAnalyticalWorkspace {
     }
 
     public metadata(): IWorkspaceMetadata {
-        throw new NotImplemented("metadata service not yet implemented");
+        return new BearWorkspaceMetadata(this.authSdk, this.workspace);
     }
 
     public styling(): IWorkspaceStyling {
-        throw new NotImplemented("styling service not yet implemented");
+        return new BearWorkspaceStyling(this.authSdk, this.workspace);
     }
 }

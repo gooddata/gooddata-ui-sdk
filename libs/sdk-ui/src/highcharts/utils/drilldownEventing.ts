@@ -49,10 +49,10 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
     }
 }
 
-function fireEvent(onFiredDrillEvent: OnFiredDrillEvent2, data: any, target: EventTarget) {
-    const returnValue = onFiredDrillEvent(data);
+function fireEvent(onDrill: OnFiredDrillEvent2, data: any, target: EventTarget) {
+    const returnValue = onDrill(data);
 
-    // if user-specified onFiredDrillEvent fn returns false, do not fire default DOM event
+    // if user-specified onDrill fn returns false, do not fire default DOM event
     if (returnValue !== false) {
         const event = new CustomEvent("drill", {
             detail: data,
@@ -130,7 +130,7 @@ const chartClickDebounced = debounce(
         target: EventTarget,
         chartType: ChartType,
     ) => {
-        const { dataView, onFiredDrillEvent } = drillConfig;
+        const { dataView, onDrill } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;
 
@@ -147,7 +147,7 @@ const chartClickDebounced = debounce(
             drillContext,
         };
 
-        fireEvent(onFiredDrillEvent, data, target);
+        fireEvent(onDrill, data, target);
     },
 );
 
@@ -167,7 +167,7 @@ const tickLabelClickDebounce = debounce(
         target: EventTarget,
         chartType: ChartType,
     ): void => {
-        const { dataView, onFiredDrillEvent } = drillConfig;
+        const { dataView, onDrill } = drillConfig;
         const sanitizedPoints = sanitizeContextPoints(chartType, points);
         const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => ({
             x: point.x,
@@ -184,7 +184,7 @@ const tickLabelClickDebounce = debounce(
             drillContext,
         };
 
-        fireEvent(onFiredDrillEvent, data, target);
+        fireEvent(onDrill, data, target);
     },
 );
 
@@ -208,7 +208,7 @@ export function tickLabelClick(
 }
 
 export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {
-    const { dataView, onFiredDrillEvent } = drillConfig;
+    const { dataView, onDrill } = drillConfig;
     const { columnIndex, rowIndex, row, intersection } = event;
 
     const drillContext: IDrillEventContextTable = {
@@ -224,7 +224,7 @@ export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, tar
         drillContext,
     };
 
-    fireEvent(onFiredDrillEvent, data, target);
+    fireEvent(onDrill, data, target);
 }
 
 export function createDrillIntersectionElement(

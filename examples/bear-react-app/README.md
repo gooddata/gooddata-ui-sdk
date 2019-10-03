@@ -4,6 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 -   Install dependencies using `pnpm install`
 -   Make sure to start dev server using `HTTPS=true pnpm start`; our cookies are HTTPS only, dev proxy must be https
+-   Create a `.env` file in the root wit the following contents to authenticate (this file will not be committed to git, don't worry):
+
+```
+REACT_APP_GD_USERNAME=your_username
+REACT_APP_GD_PASSWORD=your password
+```
 
 ## Available Scripts
 

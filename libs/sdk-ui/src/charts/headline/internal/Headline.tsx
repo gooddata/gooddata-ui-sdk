@@ -23,7 +23,7 @@ export type IHeadlineFiredDrillEvent = (
 export interface IHeadlineVisualizationProps {
     data: IHeadlineData;
     config?: IChartConfig;
-    onFiredDrillEvent?: IHeadlineFiredDrillEvent;
+    onDrill?: IHeadlineFiredDrillEvent;
     onAfterRender?: () => void;
 }
 
@@ -32,7 +32,7 @@ export interface IHeadlineVisualizationProps {
  */
 export default class Headline extends React.Component<IHeadlineVisualizationProps> {
     public static defaultProps: Partial<IHeadlineVisualizationProps> = {
-        onFiredDrillEvent: () => true,
+        onDrill: () => true,
         onAfterRender: noop,
         config: {},
     };
@@ -95,16 +95,16 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         elementType: HeadlineElementType,
         elementTarget: EventTarget,
     ) {
-        const { onFiredDrillEvent } = this.props;
+        const { onDrill } = this.props;
 
-        if (onFiredDrillEvent) {
+        if (onDrill) {
             const itemContext = {
                 localIdentifier: item.localIdentifier,
                 value: item.value,
                 element: elementType,
             };
 
-            onFiredDrillEvent(itemContext, elementTarget);
+            onDrill(itemContext, elementTarget);
         }
     }
 

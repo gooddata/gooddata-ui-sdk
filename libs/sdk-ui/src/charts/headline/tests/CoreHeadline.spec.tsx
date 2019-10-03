@@ -39,7 +39,7 @@ describe("Headline", () => {
                     },
                     onAfterRender: wrapperProps.afterRender,
                     drillableItems: wrapperProps.drillableItems,
-                    onFiredDrillEvent: drillEventCallback,
+                    onDrill: drillEventCallback,
                 });
             });
         });

@@ -69,6 +69,8 @@ const CoreComponents: ICoreComponents = {
 };
 */
 
+import { InsightView } from "./insightView/InsightView";
+
 export {
     AttributeElements,
     AttributeFilter,
@@ -125,4 +127,5 @@ export {
     HeaderPredicateFactory,
     MappingHeader,
     withJsxExport,
+    InsightView,
 };

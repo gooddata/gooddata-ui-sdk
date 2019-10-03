@@ -277,6 +277,16 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
 }
 
 /**
+ * Gets visualization class identifier of an insight.
+ *
+ * @param insight - insight to get vis properties for
+ * @public
+ */
+export function insightVisualizationClassIdentifier(insight: IInsight): string {
+    return insight.insight.visualizationClassIdentifier;
+}
+
+/**
  * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
  *
  * @param insight - insight to work with
