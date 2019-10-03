@@ -4,8 +4,8 @@ export namespace Execution {
         measureHeaderItem: {
             /* not in new stack yet
             identifier?: string;
+            */
             format: string;
-             */
             localIdentifier: string;
             name: string;
         };
