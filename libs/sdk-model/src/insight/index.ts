@@ -273,8 +273,7 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
         return {};
     }
 
-    // for backwards compatibility, we need to return the object in the { properties: values } format
-    return { properties: insight.insight.properties };
+    return insight.insight.properties;
 }
 
 /**

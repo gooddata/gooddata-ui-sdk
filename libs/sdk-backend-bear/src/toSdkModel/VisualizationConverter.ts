@@ -122,7 +122,7 @@ export const convertVisualization = (
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? content.filters.map(convertFilter) : [],
             identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
-            properties: parsedProperties,
+            properties: { properties: parsedProperties },
             sorts: parsedProperties.sortItems || [],
             title: meta.title,
             uri: meta.uri,
