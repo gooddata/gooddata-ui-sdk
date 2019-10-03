@@ -41,7 +41,7 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,
                                     name: m.measureHeaderItem.name,
-                                    format: "#",
+                                    format: m.measureHeaderItem.format,
                                 },
                             };
 
