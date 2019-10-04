@@ -54,10 +54,10 @@
         }
     },
     "dependencies": {
-        "@gooddata/gd-bear-client": "^8.0.0",
-        "@gooddata/gd-bear-model": "^8.0.0",
-        "@gooddata/sdk-backend-spi": "^8.0.0",
-        "@gooddata/sdk-model": "^8.0.0",
+        "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",
+        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "lodash": "^4.17.15",
         "rimraf": "^3.0.0"
     },

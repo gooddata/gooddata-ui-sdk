@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "8.0.0",
+    "version": "8.0.0-alpha.0",
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-spi",
@@ -54,7 +54,7 @@
         }
     },
     "dependencies": {
-        "@gooddata/sdk-model": "^8.0.0",
+        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "lodash": "^4.17.15",
         "spark-md5": "^3.0.0"
     },
