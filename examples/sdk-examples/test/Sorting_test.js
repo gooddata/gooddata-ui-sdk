@@ -78,12 +78,12 @@ test("should display sorted graphs", async t => {
         .expect(dynamicSortingChartLegendLabels.textContent)
         .eql("TexasNew YorkFloridaAlabamaCalifornia")
 
-        // dynamic multi sorting
-        .click(dynamicSortingMulti)
-        .expect(dynamicSortingChartXAxisLabels.textContent)
-        .eql("DecAugMayMarOctNovFebSepJulJunAprJan")
-        .expect(dynamicSortingChartLegendLabels.textContent)
-        .eql("CaliforniaAlabamaFloridaNew YorkTexas")
+        // // dynamic multi sorting
+        // .click(dynamicSortingMulti)
+        // .expect(dynamicSortingChartXAxisLabels.textContent)
+        // .eql("DecAugMayMarOctNovFebSepJulJunAprJan")
+        // .expect(dynamicSortingChartLegendLabels.textContent)
+        // .eql("CaliforniaAlabamaFloridaNew YorkTexas")
 
         // dynamic default sorting
         .click(dynamicSortingDefault)

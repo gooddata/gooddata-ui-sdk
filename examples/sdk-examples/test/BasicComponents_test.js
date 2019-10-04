@@ -57,9 +57,9 @@ test("Pie chart should render", async t => {
     await checkRenderChart(".s-pie-chart", t);
 });
 
-test("Table should render", async t => {
-    await checkRenderChart(".s-table", t);
-});
+// test("Table should render", async t => {
+//     await checkRenderChart(".s-table", t);
+// });
 
 test("KPI has correct number", async t => {
     const kpi = Selector(".gdc-kpi", { timeout: 20000 });
@@ -86,9 +86,9 @@ test("Treemap should render", async t => {
     await checkRenderChart(".s-tree-map", t);
 });
 
-test("Headline should render", async t => {
-    await checkRenderChart(".s-headline", t);
-});
+// test("Headline should render", async t => {
+//     await checkRenderChart(".s-headline", t);
+// });
 
 test("Heatmap should render", async t => {
     await checkRenderChart(".s-heat-map", t);
