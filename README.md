@@ -22,7 +22,7 @@ Progress and tasks are tracked in RAIL-1791.
 3.  Clone and bootstrap
 
     ```bash
-    git clone git@github.com:lupko/gooddata-ui-sdk.git
+    git clone git@github.com:gooddata/gooddata-ui-sdk.git
     cd gooddata-ui-sdk
     nvm install
     nvm use

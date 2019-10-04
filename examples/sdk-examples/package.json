@@ -3,7 +3,7 @@
     "version": "7.2.0-beta.19",
     "description": "GoodData React Components Examples",
     "private": true,
-    "repository": "git@github.com:lupko/gooddata-ui-sdk.git",
+    "repository": "git@github.com:gooddata/gooddata-ui-sdk.git",
     "author": "GoodData Corporation",
     "license": "BSD-3-Clause",
     "files": [
