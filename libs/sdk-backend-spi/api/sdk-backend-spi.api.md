@@ -152,7 +152,7 @@ export function defForItems(workspace: string, items: AttributeOrMeasure[], filt
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
 
 // @public
-export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition;
+export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
 
 // @public
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];

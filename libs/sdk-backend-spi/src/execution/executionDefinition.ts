@@ -173,18 +173,18 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
  * Creates new execution definition by merging new sort items into an existing definition.
  *
  * @param def - existing definition
- * @param sorts - array of sort items to add to definition
+ * @param sortBy - array of sort items to add to definition
  * @returns always new instance
  * @public
  */
-export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition {
-    if (!sorts || isEmpty(sorts)) {
+export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition {
+    if (!sortBy || isEmpty(sortBy)) {
         return def;
     }
 
     return {
         ...def,
-        sortBy: def.sortBy.concat(sorts),
+        sortBy,
     };
 }
 
