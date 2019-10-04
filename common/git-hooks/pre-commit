@@ -8,7 +8,7 @@ COMMAND="common/temp/node_modules/.bin/pretty-quick"
 echo --------------------------------------------
 echo Starting Git hook: pre-commit
 
-if [[ -f ${COMMAND} ]]; then
+if [ -f ${COMMAND} ]; then
   echo Invoking ${COMMAND}
   ${COMMAND} --staged
 else
