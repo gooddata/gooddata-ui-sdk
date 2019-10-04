@@ -5,6 +5,7 @@ import {
     DataViewError,
     IDataView,
     IExecutionDefinition,
+    IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
@@ -24,6 +25,7 @@ export class BearExecutionResult implements IExecutionResult {
     constructor(
         private readonly authSdk: AuthenticatedSdkProvider,
         public readonly definition: IExecutionDefinition,
+        private readonly execFactory: IExecutionFactory,
         private readonly execResponse: Execution.IExecutionResponse,
     ) {
         this.dimensions = execResponse.dimensions;
@@ -51,7 +53,7 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        throw new NotImplemented("not yet implemented");
+        return this.execFactory.forDefinition(this.definition);
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {

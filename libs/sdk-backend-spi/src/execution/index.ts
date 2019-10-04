@@ -18,6 +18,14 @@ import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
  */
 export interface IExecutionFactory {
     /**
+     * Prepares a new execution for the provided execution definition.
+     *
+     * @param def - execution definition
+     * @returns new prepareted execution
+     */
+    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+
+    /**
      * Prepares a new execution for a list of attributes and measures, optionally filtered using the
      * provided filters.
      *

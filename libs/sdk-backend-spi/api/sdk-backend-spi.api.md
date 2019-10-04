@@ -301,6 +301,7 @@ export interface IExecutionDefinition {
 // @public
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition): IPreparedExecution;
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;

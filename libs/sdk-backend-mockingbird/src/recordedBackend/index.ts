@@ -146,6 +146,9 @@ function recordedExecutionFactory(
     recordings: WorkspaceRecordings = {},
 ): IExecutionFactory {
     return {
+        forDefinition(def: IExecutionDefinition): IPreparedExecution {
+            return recordedPreparedExecution(def, recordings);
+        },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
             return recordedPreparedExecution(defForItems(workspace, items, filters), recordings);
         },

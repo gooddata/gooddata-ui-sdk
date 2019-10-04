@@ -139,6 +139,9 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
 
 function dummyExecutionFactory(workspace: string): IExecutionFactory {
     return {
+        forDefinition(def: IExecutionDefinition): IPreparedExecution {
+            return dummyPreparedExecution(def);
+        },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
             return dummyPreparedExecution(defForItems(workspace, items, filters));
         },

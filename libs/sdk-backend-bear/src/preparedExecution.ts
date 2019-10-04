@@ -10,6 +10,7 @@ import {
     IExecutionResult,
     IPreparedExecution,
     defaultDimensionsGenerator,
+    IExecutionFactory,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 import { IDimension, SortItem } from "@gooddata/sdk-model";
@@ -18,12 +19,13 @@ import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
 export class BearPreparedExecution implements IPreparedExecution {
-    public readonly definition: IExecutionDefinition;
     private _fingerprint: string | undefined;
 
-    constructor(private readonly authSdk: AuthenticatedSdkProvider, def: IExecutionDefinition) {
-        this.definition = def;
-
+    constructor(
+        private readonly authSdk: AuthenticatedSdkProvider,
+        public readonly definition: IExecutionDefinition,
+        private readonly executionFactory: IExecutionFactory,
+    ) {
         if (isEmpty(this.definition.dimensions)) {
             this.definition = {
                 ...this.definition,
@@ -41,7 +43,12 @@ export class BearPreparedExecution implements IPreparedExecution {
         return sdk.execution
             .getExecutionResponse(this.definition.workspace, afmExecution)
             .then(response => {
-                return new BearExecutionResult(this.authSdk, this.definition, response);
+                return new BearExecutionResult(
+                    this.authSdk,
+                    this.definition,
+                    this.executionFactory,
+                    response,
+                );
             })
             .catch(e => {
                 throw new ExecutionError("An error has occurred while doing execution on backend", e);
@@ -49,11 +56,19 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return new BearPreparedExecution(this.authSdk, defWithDimensions(this.definition, dimsOrGen));
+        return new BearPreparedExecution(
+            this.authSdk,
+            defWithDimensions(this.definition, dimsOrGen),
+            this.executionFactory,
+        );
     }
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return new BearPreparedExecution(this.authSdk, defWithSorting(this.definition, items));
+        return new BearPreparedExecution(
+            this.authSdk,
+            defWithSorting(this.definition, items),
+            this.executionFactory,
+        );
     }
 
     public fingerprint(): string {

@@ -7,6 +7,7 @@ import {
     IExecutionFactory,
     IPreparedExecution,
     NotImplemented,
+    IExecutionDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
@@ -14,6 +15,10 @@ import { TigerPreparedExecution } from "./preparedExecution";
 
 export class TigerExecution implements IExecutionFactory {
     constructor(private readonly axios: AxiosInstance, private readonly workspace: string) {}
+
+    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
+        return new TigerPreparedExecution(this.axios, def);
+    }
 
     public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
         const def = defForItems(this.workspace, items, filters);
