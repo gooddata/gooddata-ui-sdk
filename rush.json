@@ -314,42 +314,50 @@
         {
             "packageName": "@gooddata/sdk-backend-mockingbird",
             "projectFolder": "libs/sdk-backend-mockingbird",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-tiger",
             "projectFolder": "libs/sdk-backend-tiger",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-bear",
             "projectFolder": "libs/sdk-backend-bear",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-model",
             "projectFolder": "libs/sdk-model",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-spi",
             "projectFolder": "libs/sdk-backend-spi",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/gd-bear-client",
             "projectFolder": "libs/gd-bear-client",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/gd-bear-model",
             "projectFolder": "libs/gd-bear-model",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui",
             "projectFolder": "libs/sdk-ui",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-skel-tsx",
