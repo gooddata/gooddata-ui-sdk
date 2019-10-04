@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-backend-bear",
+            "comment": "",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-backend-bear",
+    "email": "dan.homola@gooddata.com"
+}
