@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as fixtures from "../../../../stories/test_data/fixtures";
-import { createAgGridDataSource, executionToAGGridAdapter } from "../agGridDataSource";
+import { createAgGridDatasource, executionToAGGridAdapter } from "../agGridDataSource";
 import { GroupingProviderFactory } from "../GroupingProvider";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
 
@@ -26,7 +26,7 @@ describe("getGridDataSource", () => {
         const getExecution = () => pivotTableWithColumnAndRowAttributes;
         const groupingProvider = GroupingProviderFactory.createProvider(true);
 
-        const gridDataSource = createAgGridDataSource(
+        const gridDataSource = createAgGridDatasource(
             resultSpec,
             getPage,
             getExecution,

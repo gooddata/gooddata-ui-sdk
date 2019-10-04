@@ -1,27 +1,26 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, Execution } from "@gooddata/gd-bear-model";
 import { getIdsFromUri, getParsedFields } from "./agGridUtils";
-import {
-    FIELD_SEPARATOR,
-    FIELD_TYPE_ATTRIBUTE,
-    FIELD_TYPE_MEASURE,
-    ID_SEPARATOR,
-    ROW_ATTRIBUTE_COLUMN,
-} from "./agGridConst";
+import { FIELD_SEPARATOR, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
 import { assortDimensionHeaders, identifyResponseHeader } from "./agGridHeaders";
-import { ISortedByColumnIndexes, ISortModelItem } from "./agGridTypes";
-import invariant = require("invariant");
+import { ISortModelItem } from "./agGridTypes";
 import { ColDef } from "ag-grid-community";
-import { SortItem, SortDirection } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeSortItem,
+    IMeasureSortItem,
+    isMeasureLocator,
+    SortDirection,
+    SortItem,
+} from "@gooddata/sdk-model";
+import { IAttributeHeader, IExecutionResult, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import invariant = require("invariant");
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
  */
 
 export const getAttributeSortItemFieldAndDirection = (
-    sortItem: AFM.IAttributeSortItem,
-    attributeHeaders: Execution.IAttributeHeader[],
+    sortItem: IAttributeSortItem,
+    attributeHeaders: IAttributeHeader[],
 ): [string, string] => {
     const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
 
@@ -35,12 +34,12 @@ export const getAttributeSortItemFieldAndDirection = (
 };
 
 export const getMeasureSortItemFieldAndDirection = (
-    sortItem: AFM.IMeasureSortItem,
-    measureHeaderItems: Execution.IMeasureHeaderItem[],
+    sortItem: IMeasureSortItem,
+    measureHeaderItems: IMeasureHeaderItem[],
 ): [string, string] => {
     const keys: string[] = [];
     sortItem.measureSortItem.locators.forEach(locator => {
-        if (AFM.isMeasureLocatorItem(locator)) {
+        if (isMeasureLocator(locator)) {
             const measureSortHeaderIndex = measureHeaderItems.findIndex(
                 measureHeaderItem =>
                     measureHeaderItem.measureHeaderItem.localIdentifier ===
@@ -60,11 +59,11 @@ export const getMeasureSortItemFieldAndDirection = (
 };
 
 export const getSortItemByColId = (
-    dv: DataViewFacade,
+    result: IExecutionResult,
     colId: string,
     direction: SortDirection,
-): AFM.IMeasureSortItem | AFM.IAttributeSortItem => {
-    const dimensions = dv.dimensions();
+): IMeasureSortItem | IAttributeSortItem => {
+    const { dimensions } = result;
 
     const fields = getParsedFields(colId);
     const [lastFieldType, lastFieldId] = fields[fields.length - 1];
@@ -93,11 +92,9 @@ export const getSortItemByColId = (
         const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
             // first item is type which should be always 'a'
             const [, fieldId, fieldValueId] = field;
-            const attributeHeaderMatch = attributeHeaders.find(
-                (attributeHeader: Execution.IAttributeHeader) => {
-                    return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
-                },
-            );
+            const attributeHeaderMatch = attributeHeaders.find((attributeHeader: IAttributeHeader) => {
+                return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
+            });
             invariant(
                 attributeHeaderMatch,
                 `Could not find matching attribute header to field ${field.join(ID_SEPARATOR)}`,
@@ -126,31 +123,10 @@ export const getSortItemByColId = (
     invariant(false, `could not find header matching ${colId}`);
 };
 
-export function isSortedByFirstAttibute(columnDefs: ColDef[], sorts: SortItem[]): boolean {
-    const sortedColumnIndexes: ISortedByColumnIndexes = columnDefs.reduce(
-        (sortStack: ISortedByColumnIndexes, columnDef: ColDef, columnIndex: number) => {
-            if (columnDef.sort) {
-                sortStack.all.push(columnIndex);
-                if (columnDef.type === ROW_ATTRIBUTE_COLUMN) {
-                    sortStack.attributes.push(columnIndex);
-                }
-            }
-            return sortStack;
-        },
-        { attributes: [], all: [] },
-    );
-
-    const sortedByFirstAttribute =
-        sortedColumnIndexes.attributes[0] === 0 && sortedColumnIndexes.all.length === 1;
-    const isSorted = sortedColumnIndexes.all.length > 0 || sorts.length > 0;
-
-    return sortedByFirstAttribute || !isSorted;
-}
-
-export function getSortsFromModel(sortModel: ISortModelItem[], dv: DataViewFacade): SortItem[] {
+export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutionResult): SortItem[] {
     return sortModel.map((sortModelItem: ISortModelItem) => {
         const { colId, sort } = sortModelItem;
-        const sortHeader = getSortItemByColId(dv, colId, sort);
+        const sortHeader = getSortItemByColId(result, colId, sort);
         invariant(sortHeader, `unable to find sort item by field ${colId}`);
         return sortHeader;
     });

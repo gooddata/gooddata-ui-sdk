@@ -1,19 +1,21 @@
 // (C) 2019 GoodData Corporation
-import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
-import { DataViewFacade, IAttributeHeader } from '@gooddata/sdk-backend-spi';
-import { ITotal, TotalType } from '@gooddata/sdk-model';
-import * as classNames from 'classnames';
-import * as React from 'react';
+import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
+import { DataViewFacade, IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { ITotal, TotalType } from "@gooddata/sdk-model";
+import * as classNames from "classnames";
+import * as React from "react";
 
-import { getNthAttributeHeader, getNthAttributeLocalIdentifier, } from '../../base/helpers/executionResultHelper';
-import Menu from '../menu/Menu';
-import { IOnOpenedChangeParams } from '../menu/MenuSharedTypes';
-import { IMenuAggregationClickConfig } from '../types';
-import menuHelper from './aggregationsMenuHelper';
-import AggregationsSubMenu from './AggregationsSubMenu';
-import { FIELD_TYPE_ATTRIBUTE } from './agGridConst';
-import { getParsedFields } from './agGridUtils';
-import { AVAILABLE_TOTALS } from './utils';
+import {
+    getNthAttributeHeader,
+    getNthAttributeLocalIdentifier,
+} from "../../base/helpers/executionResultHelper";
+import Menu from "../menu/Menu";
+import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
+import { IMenuAggregationClickConfig } from "../types";
+import menuHelper from "./aggregationsMenuHelper";
+import AggregationsSubMenu from "./AggregationsSubMenu";
+import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
+import { getParsedFields } from "./agGridUtils";
 
 export interface IColumnTotal {
     type: TotalType;

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { getIdsFromUri } from "./agGridUtils";
+import { getIdsFromUri, getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
 import {
     FIELD_SEPARATOR,
     FIELD_TYPE_ATTRIBUTE,
@@ -10,7 +10,14 @@ import {
     ROW_SUBTOTAL,
     ROW_TOTAL,
 } from "./agGridConst";
-import { IGridHeader, IGridRow, IGridTotalsRow } from "./agGridTypes";
+import {
+    IAgGridPage,
+    IGridAdapterOptions,
+    IGridHeader,
+    IGridRow,
+    IGridTotalsRow,
+    TableHeaders,
+} from "./agGridTypes";
 import {
     DataValue,
     DataViewFacade,
@@ -21,6 +28,7 @@ import {
     isResultAttributeHeaderItem,
     isResultTotalHeaderItem,
 } from "@gooddata/sdk-backend-spi";
+import { getMinimalRowData } from "./agGridHeaders";
 import invariant = require("invariant");
 import zipObject = require("lodash/zipObject");
 import InjectedIntl = ReactIntl.InjectedIntl;
@@ -185,3 +193,40 @@ export const getRowTotals = (
         };
     });
 };
+
+export function createRowData(
+    headers: TableHeaders,
+    dv: DataViewFacade,
+    intl: InjectedIntl,
+    options: IGridAdapterOptions = {},
+): IAgGridPage {
+    const { addLoadingRenderer = null } = options;
+    const headerItems = dv.headerItems();
+    const dimensions = dv.definition.dimensions;
+
+    const { rowHeaders, rowFields, colFields, allHeaders } = headers;
+
+    if (addLoadingRenderer) {
+        const leafColumnDefs = getTreeLeaves(allHeaders);
+        if (leafColumnDefs[0]) {
+            leafColumnDefs[0].cellRenderer = addLoadingRenderer;
+        }
+    }
+
+    const minimalRowData: DataValue[][] = getMinimalRowData(dv.twoDimData(), headerItems[0]);
+
+    const subtotalStyles = getSubtotalStyles(dimensions ? dimensions[0] : null);
+    const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) =>
+        getRow(dataRow, dataRowIndex, colFields, rowHeaders, headerItems[0], subtotalStyles, intl),
+    );
+
+    const columnKeys = [...rowFields, ...colFields];
+
+    const rowTotals = getRowTotals(dv, columnKeys, intl);
+
+    return {
+        columnDefs: allHeaders,
+        rowData,
+        rowTotals,
+    };
+}

@@ -1,56 +1,72 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { Execution } from "@gooddata/gd-bear-model";
 import { getMappingHeaderName } from "../../base/helpers/mappingHeader";
 import { unwrap } from "../../base/helpers/utils";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { getIdsFromUri } from "./agGridUtils";
-import range = require("lodash/range");
-import clone = require("lodash/clone");
-import { FIELD_SEPARATOR, ID_SEPARATOR, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
-import { assignDrillItemsAndType } from "./agGridDrilling";
-import { IColumnDefOptions, IGridHeader } from "./agGridTypes";
-import invariant = require("invariant");
+import { getIdsFromUri, getTreeLeaves } from "./agGridUtils";
 import {
-    IHeader,
-    IResultDimension,
+    COLUMN_GROUPING_DELIMITER,
+    FIELD_SEPARATOR,
+    ID_SEPARATOR,
+    ROW_ATTRIBUTE_COLUMN,
+} from "./agGridConst";
+import { assignDrillItemsAndType } from "./agGridDrilling";
+import { IColumnDefOptions, IGridAdapterOptions, IGridHeader, TableHeaders } from "./agGridTypes";
+import {
+    DataValue,
+    DataViewFacade,
     IAttributeHeader,
+    IDataView,
+    IHeader,
     IMeasureHeaderItem,
+    IResultDimension,
+    IResultHeaderItem,
     isAttributeHeader,
     isMeasureGroupHeader,
-    IResultHeaderItem,
+    isResultAttributeHeaderItem,
+    isResultMeasureHeaderItem,
+    isResultTotalHeaderItem,
 } from "@gooddata/sdk-backend-spi";
+import { isAttributeSort, isMeasureSort } from "@gooddata/sdk-model";
+import {
+    assignSorting,
+    getAttributeSortItemFieldAndDirection,
+    getMeasureSortItemFieldAndDirection,
+} from "./agGridSorting";
+import range = require("lodash/range");
+import clone = require("lodash/clone");
+import invariant = require("invariant");
 
 /*
  * All code related to transforming headers from our backend to ag-grid specific data structures
  */
 
-export const identifyHeader = (header: Execution.IResultHeaderItem) => {
-    if (Execution.isAttributeHeaderItem(header)) {
+export const identifyHeader = (header: IResultHeaderItem) => {
+    if (isResultAttributeHeaderItem(header)) {
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
     }
-    if (Execution.isMeasureHeaderItem(header)) {
+    if (isResultMeasureHeaderItem(header)) {
         return `m${ID_SEPARATOR}${header.measureHeaderItem.order}`;
     }
-    if (Execution.isTotalHeaderItem(header)) {
+    if (isResultTotalHeaderItem(header)) {
         return `t${ID_SEPARATOR}${header.totalHeaderItem.type}`;
     }
     invariant(false, `Unknown header type: ${JSON.stringify(header)}`);
 };
 
-export const identifyResponseHeader = (header: Execution.IHeader) => {
-    if (Execution.isAttributeHeader(header)) {
+export const identifyResponseHeader = (header: IHeader) => {
+    if (isAttributeHeader(header)) {
         // response headers have no value id
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
     }
-    if (Execution.isMeasureGroupHeader(header)) {
+    if (isMeasureGroupHeader(header)) {
         // trying to identify a measure group would be ambiguous
         return null;
     }
     invariant(false, `Unknown response header type: ${JSON.stringify(header)}`);
 };
 
-export const headerToGrid = (header: Execution.IResultHeaderItem, fieldPrefix = "") => {
+export const headerToGrid = (header: IResultHeaderItem, fieldPrefix = "") => {
     const internalHeader = unwrap(header);
     return {
         headerName: internalHeader.name,
@@ -59,7 +75,7 @@ export const headerToGrid = (header: Execution.IResultHeaderItem, fieldPrefix = 
 };
 
 export const shouldMergeHeaders = (
-    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    resultHeaderDimension: IResultHeaderItem[][],
     headerIndex: number,
     headerItemIndex: number,
 ): boolean => {
@@ -77,7 +93,7 @@ export const shouldMergeHeaders = (
 };
 
 export const mergeHeaderEndIndex = (
-    resultHeaderDimension: Execution.IResultHeaderItem[][],
+    resultHeaderDimension: IResultHeaderItem[][],
     headerIndex: number,
     headerItemStartIndex: number,
 ): number => {
@@ -144,11 +160,11 @@ export const getColumnHeaders = (
 };
 
 export const getRowHeaders = (
-    rowDimensionHeaders: Execution.IAttributeHeader[],
+    rowDimensionHeaders: IAttributeHeader[],
     columnDefOptions: IColumnDefOptions,
     makeRowGroups: boolean,
 ): IGridHeader[] => {
-    return rowDimensionHeaders.map((attributeHeader: Execution.IAttributeHeader) => {
+    return rowDimensionHeaders.map((attributeHeader: IAttributeHeader) => {
         const rowGroupProps = makeRowGroups
             ? {
                   rowGroup: true,
@@ -169,11 +185,9 @@ export const getRowHeaders = (
     });
 };
 
-export const getFields = (dataHeaders: Execution.IResultHeaderItem[][]) => {
+export const getFields = (dataHeaders: IResultHeaderItem[][]) => {
     return range((dataHeaders[0] || []).length).map((cellIndex: number) => {
-        const fieldList = dataHeaders.map((header: Execution.IResultHeaderItem[]) =>
-            identifyHeader(header[cellIndex]),
-        );
+        const fieldList = dataHeaders.map((header: IResultHeaderItem[]) => identifyHeader(header[cellIndex]));
         return fieldList.join(FIELD_SEPARATOR);
     }) as string[];
 };
@@ -198,15 +212,93 @@ export const assortDimensionHeaders = (dimensions: IResultDimension[]) => {
     };
 };
 
-export const getMinimalRowData = (
-    data: Execution.DataValue[][],
-    rowHeaderItems: Execution.IResultHeaderItem[][],
-) => {
+export const getMinimalRowData = (data: DataValue[][], rowHeaderItems: IResultHeaderItem[][]) => {
     const numberOfRowHeaderItems = (rowHeaderItems[0] || []).length;
 
     return data.length > 0
         ? data
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
-          (Array(numberOfRowHeaderItems).fill([null]) as Execution.DataValue[][]);
+          (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
 };
+
+export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {
+    const dv = new DataViewFacade(dataView);
+    const dimensions = dv.dimensions();
+    const headerItems = dv.headerItems();
+    const { columnDefOptions, makeRowGroups = false } = options;
+
+    const sorting = dv.definition.sortBy;
+    const sortingMap = {};
+    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+    sorting.forEach(sortItem => {
+        if (isAttributeSort(sortItem)) {
+            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeHeaders);
+            sortingMap[field] = direction;
+        }
+        if (isMeasureSort(sortItem)) {
+            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureHeaderItems);
+            sortingMap[field] = direction;
+        }
+    });
+
+    const columnAttributeHeaderCount = dimensions[1].headers.filter(
+        (header: IHeader) => !!(header as IAttributeHeader).attributeHeader,
+    ).length;
+
+    const columnHeaders: IGridHeader[] = getColumnHeaders(
+        headerItems[1],
+        dimensions[1].headers,
+        columnDefOptions,
+    );
+
+    const groupColumnHeaders: IGridHeader[] =
+        columnAttributeHeaderCount > 0
+            ? [
+                  {
+                      headerName: dimensions[1].headers
+                          .filter(header => isAttributeHeader(header))
+                          .map((header: IAttributeHeader) => {
+                              return getMappingHeaderName(header);
+                          })
+                          .filter((item: string) => item !== null)
+                          .join(COLUMN_GROUPING_DELIMITER),
+                      field: "columnGroupLabel",
+                      children: columnHeaders,
+                      drillItems: [],
+                  },
+              ]
+            : columnHeaders;
+
+    const rowHeaders: IGridHeader[] =
+        // There are supposed to be only attribute headers on the first dimension
+        getRowHeaders(dimensions[0].headers as IAttributeHeader[], columnDefOptions, makeRowGroups);
+
+    const allHeaders: IGridHeader[] = [...rowHeaders, ...groupColumnHeaders].map((column, index) => {
+        if (column.children) {
+            getTreeLeaves(column).forEach((leafColumn, leafColumnIndex) => {
+                leafColumn.index = index + leafColumnIndex;
+                assignSorting(leafColumn, sortingMap);
+            });
+        }
+        column.index = index;
+        assignSorting(column, sortingMap);
+        return column;
+    });
+
+    const colFields: string[] = getFields(headerItems[1]);
+    const rowFields: string[] = rowHeaders.map(header => header.field);
+
+    const leafColumnDefs = getTreeLeaves(allHeaders);
+    if (leafColumnDefs[0]) {
+        leafColumnDefs[0].cellRenderer = "loadingRenderer";
+    }
+
+    return {
+        rowHeaders,
+        colHeaders: groupColumnHeaders,
+        allHeaders,
+        rowFields,
+        colFields,
+    };
+}

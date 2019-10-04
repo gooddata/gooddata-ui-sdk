@@ -30,15 +30,16 @@ import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {
+    AVAILABLE_TOTALS,
     COLUMN_ATTRIBUTE_COLUMN,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_SUBTOTAL,
     ROW_TOTAL,
 } from "./impl/agGridConst";
-import { createAgGridDataSource, createTableHeaders } from "./impl/agGridDataSource";
+import { createAgGridDatasource, AgGridDatasource } from "./impl/agGridDataSource";
 import { getDrillIntersection, getDrillRowData } from "./impl/agGridDrilling";
-import { getSortsFromModel, isSortedByFirstAttibute } from "./impl/agGridSorting";
+import { getSortsFromModel } from "./impl/agGridSorting";
 import {
     ICustomGridOptions,
     IGridCellEvent,
@@ -56,7 +57,6 @@ import {
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
 import ColumnHeader from "./impl/ColumnHeader";
-import { GroupingProviderFactory, IGroupingProvider } from "./impl/GroupingProvider";
 import { RowLoadingElement } from "./impl/RowLoadingElement";
 import {
     initializeStickyRow,
@@ -67,9 +67,10 @@ import {
 } from "./impl/stickyRowHandler";
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
-import { AVAILABLE_TOTALS as renderedTotalTypesOrder } from "./impl/utils";
 
 import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
+import { createTableHeaders } from "./impl/agGridHeaders";
+import { IGroupingProvider } from "./impl/GroupingProvider";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
@@ -81,7 +82,6 @@ export interface ICorePivotTableState {
     columnTotals: ITotal[];
     agGridRerenderNumber: number;
     desiredHeight: number | undefined;
-    sortedByFirstAttribute: boolean;
 }
 
 const DEFAULT_ROW_HEIGHT = 28;
@@ -110,17 +110,17 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         groupRows: true,
     };
 
-    private _pendingAsync: Promise<void>;
     private containerRef: HTMLDivElement;
+
+    private pendingInit: Promise<void>;
 
     private gridApi: GridApi = null;
     private gridOptions: ICustomGridOptions = null;
     private tableHeaders: TableHeaders = null;
-    private agGridDataSource: IDatasource = null;
-    private result: IExecutionResult = null;
-    private visibleData: DataViewFacade = null;
+    private agGridDataSource: AgGridDatasource = null;
 
-    private groupingProvider: IGroupingProvider = null;
+    private currentResult: IExecutionResult = null;
+    private visibleData: DataViewFacade = null;
 
     private lastScrollPosition: IScrollPosition = {
         top: 0,
@@ -133,18 +133,14 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     constructor(props: ICorePivotTableProps) {
         super(props);
 
-        const { execution, config, groupRows } = props;
+        const { execution, config } = props;
 
         this.state = {
             tableReady: false,
             columnTotals: cloneDeep(defTotals(execution.definition, 0)),
             agGridRerenderNumber: 1,
             desiredHeight: config.maxHeight,
-
-            sortedByFirstAttribute: true,
         };
-
-        this.setGroupingProvider(groupRows);
     }
 
     private reinitialize = (execution: IPreparedExecution): void => {
@@ -157,10 +153,10 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 this.gridOptions = null;
                 this.tableHeaders = null;
                 this.agGridDataSource = null;
-                this.result = null;
+                this.currentResult = null;
                 this.visibleData = null;
 
-                this.initialize(execution);
+                this.pendingInit = this.initialize(execution);
             },
         );
     };
@@ -168,31 +164,31 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     private initialize(execution: IPreparedExecution): Promise<void> {
         return execution.execute().then(result => {
             // TODO: externalize into constants
-            this._pendingAsync = result.readWindow([0, 0], [this.props.pageSize, 1000]).then(dataView => {
-                this._pendingAsync = null;
+            this.pendingInit = result.readWindow([0, 0], [this.props.pageSize, 1000]).then(dataView => {
+                if (!this.pendingInit) {
+                    return;
+                }
+
+                this.pendingInit = null;
 
                 this.tableHeaders = createTableHeaders(dataView);
-                this.result = result;
+                this.currentResult = result;
                 this.visibleData = new DataViewFacade(dataView);
-                this.agGridDataSource = createAgGridDataSource(
-                    this.tableHeaders,
-                    this.visibleData,
-                    this.getGridApi,
-                    () => this.groupingProvider,
+                this.agGridDataSource = createAgGridDatasource(
                     {
+                        headers: this.tableHeaders,
+                        getGroupRows: () => this.props.groupRows,
+                        getColumnTotals: this.getColumnTotals,
                         onPageLoaded: this.onPageLoaded,
                     },
+                    this.visibleData,
+                    this.getGridApi,
                     this.props.intl,
                 );
 
                 this.setGridDataSource(this.agGridDataSource);
 
-                const sortedByFirstAttribute = isSortedByFirstAttibute(
-                    this.tableHeaders.allHeaders,
-                    this.visibleData.definition.sortBy,
-                );
-
-                this.setState({ tableReady: true, sortedByFirstAttribute });
+                this.setState({ tableReady: true });
             });
         });
     }
@@ -202,35 +198,23 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             this.containerRef.addEventListener("mousedown", this.preventHeaderResizerEvents);
         }
 
-        this._pendingAsync = this.initialize(this.props.execution);
+        this.pendingInit = this.initialize(this.props.execution);
     }
     public componentWillUnmount() {
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
         }
 
-        if (this._pendingAsync) {
-            // TODO: cancel promise
-        }
-    }
-
-    public UNSAFE_componentWillUpdate(nextProps: ICorePivotTableProps, nextState: ICorePivotTableState) {
-        // TODO: get rid of this unsafe lifecycle
-        if (
-            this.props.groupRows !== nextProps.groupRows ||
-            this.state.sortedByFirstAttribute !== nextState.sortedByFirstAttribute
-        ) {
-            this.setGroupingProvider(nextProps.groupRows && nextState.sortedByFirstAttribute);
-        }
+        // if there is async init happening, this will make it have no effect in the end
+        this.pendingInit = null;
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
-        // TODO: handle totals coming from menu
-
         if (
             !prevProps.execution.equals(this.props.execution) ||
             prevProps.drillableItems !== this.props.drillableItems
         ) {
+            // change of prep execution or drillable items leads to full reset of the all ag-grid stuff
             this.reinitialize(this.props.execution);
         }
 
@@ -301,14 +285,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.containerRef = container;
     };
 
-    private setGroupingProvider = (sortedByFirstAttr: boolean) => {
-        this.groupingProvider = GroupingProviderFactory.createProvider(sortedByFirstAttr);
-    };
-
-    private updateGrouping = (): void => {
-        this.setGroupingProvider(this.props.groupRows && this.state.sortedByFirstAttribute);
-    };
-
     private getColumnTotals = () => {
         return this.state.columnTotals;
     };
@@ -330,20 +306,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         );
     }
 
-    private onPageLoaded = (dv: DataViewFacade): void => {
-        this.visibleData = dv;
-        // TODO: make sure change in sorts disables grouping
-        this.updateDesiredHeight(dv);
-
-        /*
-                const sortedByFirstAttribute = isSortedByFirstAttibute(columnDefs, resultSpec);
-                this.setState({
-                    columnDefs,
-                    sortedByFirstAttribute,
-                });
-         */
-    };
-
     private setGridDataSource(dataSource: IDatasource) {
         if (this.gridApi) {
             this.gridApi.setDatasource(dataSource);
@@ -351,17 +313,33 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     }
 
     //
-    // event handlers
+    // event handlers - internal & funny stuff
     //
 
-    private onGridReady = (params: GridReadyEvent) => {
-        this.gridApi = params.api;
-        this.setGridDataSource(this.agGridDataSource);
-        this.updateDesiredHeight(this.visibleData);
+    private onPageLoaded = (dv: DataViewFacade): void => {
+        this.currentResult = dv.result();
+        this.visibleData = dv;
 
-        if (this.props.groupRows) {
-            initializeStickyRow(this.gridApi);
-        }
+        this.updateDesiredHeight(dv);
+    };
+
+    private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
+        const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
+
+        this.props.pushData({
+            properties: {
+                totals: newColumnTotals,
+            },
+        });
+
+        // tslint:disable-next-line:no-console
+        console.log("new totals", newColumnTotals);
+
+        this.setState({ columnTotals: newColumnTotals }, () => {
+            // make ag-grid refresh data
+            // see: https://www.ag-grid.com/javascript-grid-infinite-scrolling/#changing-the-datasource
+            this.setGridDataSource(this.agGridDataSource);
+        });
     };
 
     private startWatchingTableRendered = () => {
@@ -380,6 +358,20 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.watchingTimeoutId = null;
 
         this.props.afterRender();
+    };
+
+    //
+    // event handlers - ag-grid
+    //
+
+    private onGridReady = (params: GridReadyEvent) => {
+        this.gridApi = params.api;
+        this.setGridDataSource(this.agGridDataSource);
+        this.updateDesiredHeight(this.visibleData);
+
+        if (this.props.groupRows) {
+            initializeStickyRow(this.gridApi);
+        }
     };
 
     private onFirstDataRendered = () => {
@@ -471,21 +463,8 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.updateDesiredHeight(this.visibleData);
     };
 
-    private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
-        const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
-
-        this.props.pushData({
-            properties: {
-                totals: newColumnTotals,
-            },
-        });
-        this.setState({ columnTotals: newColumnTotals });
-
-        this.updateGrouping();
-    };
-
     private sortChanged = (event: SortChangedEvent): void => {
-        if (!this.visibleData) {
+        if (!this.currentResult) {
             // tslint:disable-next-line:no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
@@ -499,17 +478,13 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 sort: col.getSort() as SortDirection,
             }));
 
-        const sortItems = getSortsFromModel(sortModel, this.visibleData);
+        const sortItems = getSortsFromModel(sortModel, this.currentResult);
 
         this.props.pushData({
             properties: {
                 sortItems,
             },
         });
-
-        // TODO: likely not good as-is.. because state holds 'sortedByFirstAttr' and at this moment that field
-        //  is not updated
-        this.updateGrouping();
     };
 
     private onBodyScroll = (event: BodyScrollEvent) => {
@@ -532,12 +507,26 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private createGridOptions = (): ICustomGridOptions => {
         const tableHeaders = this.tableHeaders;
-        const dv = this.visibleData;
         const { pageSize } = this.props;
-
-        const actualPageSize = Math.min(pageSize, dv.firstDimSize());
+        const totalRowCount = this.visibleData.firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
         const menu = get(this.props, ["config", "menu"]);
+
+        /*
+         * This is a half-workaround around the visual weirdness where upon load/sort ag-grid renders full
+         * page of empty rows and then possibly shrinks back to the actual size of data obtained from backend.
+         *
+         * since the code knows total count of all data on all pages already, it is possible to set the effective
+         * page size to minimum of the requested page size and the total of all data => thus eliminating this
+         * effect.
+         *
+         * the only dumb thing about this approach is that dynamically added subtotals (via menu) kick this
+         * slightly out of balance as extra rows get added and ag-grid needs to load additional pages... and so an
+         * extra buffer of couple of rows in case it is possible add subtotals. while there will be some expanding
+         * and shrinking, it will not be so big.
+         */
+        const extraTotalsBuffer = this.props.config && this.props.config.menu ? 10 : 0;
+        const effectivePageSize = Math.min(pageSize, totalRowCount + extraTotalsBuffer);
 
         const commonHeaderComponentParams = {
             onMenuAggregationClick: this.onMenuAggregationClick,
@@ -582,11 +571,11 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
             // infinite scrolling model
             rowModelType: "infinite",
-            paginationPageSize: actualPageSize,
-            cacheOverflowSize: actualPageSize,
-            cacheBlockSize: actualPageSize,
+            paginationPageSize: effectivePageSize,
+            cacheOverflowSize: effectivePageSize,
+            cacheBlockSize: effectivePageSize,
             maxConcurrentDatasourceRequests: 1,
-            infiniteInitialRowCount: actualPageSize,
+            infiniteInitialRowCount: effectivePageSize,
             maxBlocksInCache: 10,
             onGridReady: this.onGridReady,
             onFirstDataRendered: this.onFirstDataRendered,
@@ -606,7 +595,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                             // params.data is undefined when rows are in loading state
                             params.data &&
                             params.data.colSpan &&
-                            renderedTotalTypesOrder.find(
+                            AVAILABLE_TOTALS.find(
                                 (item: string) => item === params.data[params.data.colSpan.headerKey],
                             )
                         ) {
@@ -633,7 +622,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                         return params.value !== undefined
                             ? getMeasureCellFormattedValue(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.result),
+                                  getMeasureFormat(params.colDef, this.currentResult),
                                   separators,
                               )
                             : null;
@@ -642,7 +631,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                         return params.value !== undefined
                             ? getMeasureCellStyle(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.result),
+                                  getMeasureFormat(params.colDef, this.currentResult),
                                   separators,
                                   true,
                               )
@@ -693,8 +682,8 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
         const attributeId = colDef.field;
         const isPinnedRow = cellClassParams.node.isRowPinned();
-        const hiddenCell = !isPinnedRow && this.groupingProvider.isRepeatedValue(attributeId, rowIndex);
-        const rowSeparator = !hiddenCell && this.groupingProvider.isGroupBoundary(rowIndex);
+        const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(attributeId, rowIndex);
+        const rowSeparator = !hiddenCell && this.getGroupingProvider().isGroupBoundary(rowIndex);
         const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
 
         return classNames(
@@ -736,6 +725,9 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     //
     // misc :)
     //
+    private getGroupingProvider(): IGroupingProvider {
+        return this.agGridDataSource.getGroupingProvider();
+    }
 
     private getDrillablePredicates(): IHeaderPredicate2[] {
         return convertDrillableItemsToPredicates2(this.props.drillableItems);
@@ -767,7 +759,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 this.lastScrollPosition,
                 DEFAULT_ROW_HEIGHT,
                 this.getGridApi(),
-                this.groupingProvider,
+                this.getGroupingProvider(),
                 ApiWrapper,
             );
         }

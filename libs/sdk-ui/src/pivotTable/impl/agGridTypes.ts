@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { CellEvent, ColDef, GridOptions } from "ag-grid-community";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { ITotal, SortDirection } from "@gooddata/sdk-model";
 
 export interface IGridRow {
     headerItemMap: {
@@ -53,7 +53,7 @@ export interface IAgGridPage {
 
 export interface ISortModelItem {
     colId: string;
-    sort: AFM.SortDirection;
+    sort: SortDirection;
 }
 
 export interface ICustomGridOptions extends GridOptions {
@@ -73,7 +73,10 @@ export type TableHeaders = {
     colFields: string[];
 };
 
-export type DatasourceCallbacks = {
+export type DatasourceConfig = {
+    headers: TableHeaders;
+    getGroupRows: () => boolean;
+    getColumnTotals: () => ITotal[];
     onPageLoaded: OnPageLoaded;
 };
 

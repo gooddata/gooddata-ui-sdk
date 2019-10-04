@@ -1,30 +1,21 @@
 // (C) 2019 GoodData Corporation
-import { IMeasureHeaderItem } from '@gooddata/sdk-backend-spi';
-import { ITotal, TotalType } from '@gooddata/sdk-model';
-import * as invariant from 'invariant';
-import { IMenuAggregationClickConfig } from '../types';
-import { IColumnTotal } from './AggregationsMenu';
+import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { ITotal, TotalType } from "@gooddata/sdk-model";
+import * as invariant from "invariant";
+import { IMenuAggregationClickConfig } from "../types";
+import { IColumnTotal } from "./AggregationsMenu";
 
-import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from './agGridConst';
-import { AVAILABLE_TOTALS } from './utils';
-import intersection = require('lodash/intersection');
-import isEqual = require('lodash/isEqual');
-import sortBy = require('lodash/sortBy');
-import uniq = require('lodash/uniq');
+import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
+import intersection = require("lodash/intersection");
+import isEqual = require("lodash/isEqual");
+import sortBy = require("lodash/sortBy");
+import uniq = require("lodash/uniq");
 
-function getTotalsForMeasureAndType(
-    totals: ITotal[],
-    type: TotalType,
-    measureLocalIdentifier: string,
-) {
+function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(total => total.measureIdentifier === measureLocalIdentifier && total.type === type);
 }
 
-function getAttributeIntersection(
-    totals: ITotal[],
-    type: TotalType,
-    measureLocalIdentifiers: string[],
-) {
+function getAttributeIntersection(totals: ITotal[], type: TotalType, measureLocalIdentifiers: string[]) {
     const attributeGroups: string[][] = measureLocalIdentifiers.map((measure: string) => {
         const filteredTotals = getTotalsForMeasureAndType(totals, type, measure);
         return filteredTotals.map(total => total.attributeIdentifier);
@@ -45,10 +36,7 @@ function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentif
     return sameMeasureLocalIdentifiers.length === measureLocalIdentifiers2.length;
 }
 
-function getTotalsForAttributeHeader(
-    totals: ITotal[],
-    measureLocalIdentifiers: string[],
-): IColumnTotal[] {
+function getTotalsForAttributeHeader(totals: ITotal[], measureLocalIdentifiers: string[]): IColumnTotal[] {
     return AVAILABLE_TOTALS.reduce((columnTotals: IColumnTotal[], type: TotalType) => {
         const uniqueMeasureLocalIdentifiers = getUniqueMeasures(totals, type);
         if (areMeasuresSame(uniqueMeasureLocalIdentifiers, measureLocalIdentifiers)) {
@@ -122,10 +110,7 @@ function includeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]) {
     return [...columnTotals, ...columnTotalsChangedUnique];
 }
 
-function excludeTotals(
-    columnTotals: ITotal[],
-    columnTotalsChanged: ITotal[],
-): ITotal[] {
+function excludeTotals(columnTotals: ITotal[], columnTotalsChanged: ITotal[]): ITotal[] {
     return columnTotals.filter(
         total => !columnTotalsChanged.find(totalChanged => isEqual(totalChanged, total)),
     );

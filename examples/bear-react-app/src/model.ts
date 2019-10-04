@@ -41,3 +41,10 @@ export const EndpointName: IAttribute = {
         localIdentifier: "endpoint_name",
     },
 };
+
+export const StatusCode: IAttribute = {
+    attribute: {
+        displayForm: { identifier: "label.status.status" },
+        localIdentifier: "status_code",
+    },
+};

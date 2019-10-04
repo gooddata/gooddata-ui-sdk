@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { ICellRendererParams } from "ag-grid-community";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
 import { getMappingHeaderUri } from "../../base/helpers/mappingHeader";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import {
@@ -18,8 +17,10 @@ import {
     IExecutionDefinition,
     IExecutionResult,
     isTotalHeader,
+    isMeasureGroupHeader,
 } from "@gooddata/sdk-backend-spi";
 import escape = require("lodash/escape");
+import { IDimension } from "@gooddata/sdk-model";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
@@ -139,15 +140,11 @@ export const indexOfTreeNode = (
     return null;
 };
 
-export function isMeasureColumnReadyToRender(params: any, execution: Execution.IExecutionResponses): boolean {
-    return Boolean(params && params.value !== undefined && execution && execution.executionResponse);
-}
-
 export function getMeasureFormat(gridHeader: IGridHeader, result: IExecutionResult): string {
     const headers = result.dimensions[1].headers;
     const header = headers[headers.length - 1];
 
-    if (!Execution.isMeasureGroupHeader(header)) {
+    if (!isMeasureGroupHeader(header)) {
         throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
     }
 
@@ -155,7 +152,7 @@ export function getMeasureFormat(gridHeader: IGridHeader, result: IExecutionResu
     return header.measureGroupHeader.items[measureIndex].measureHeaderItem.format;
 }
 
-export function getSubtotalStyles(dimension: AFM.IDimension): string[] {
+export function getSubtotalStyles(dimension: IDimension): string[] {
     if (!dimension || !dimension.totals) {
         return [];
     }

@@ -1,5 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
+import { TotalType } from "@gooddata/sdk-model";
+
 export const ROW_ATTRIBUTE_COLUMN = "ROW_ATTRIBUTE_COLUMN";
 export const COLUMN_ATTRIBUTE_COLUMN = "COLUMN_ATTRIBUTE_COLUMN";
 export const MEASURE_COLUMN = "MEASURE_COLUMN";
@@ -13,3 +15,4 @@ export const DOT_PLACEHOLDER = "DOT";
 export const ROW_TOTAL = "rowTotal";
 export const ROW_SUBTOTAL = "rowSubtotal";
 export const COLUMN_GROUPING_DELIMITER = " › ";
+export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
