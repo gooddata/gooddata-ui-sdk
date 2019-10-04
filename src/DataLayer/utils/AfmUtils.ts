@@ -141,6 +141,22 @@ export function isDateFilter(filter: AFM.CompatibilityFilter): filter is AFM.Dat
 }
 
 /**
+ * Returns true if filter is negative attribute filter and has no selected elements,
+ * meaning that this is "Select all"
+ *
+ * @method isAttributeFilterSelectAll
+ * @param {AFM.FilterItem} filter
+ * @returns {boolean}
+ */
+export function isAttributeFilterSelectAll(filter: AFM.FilterItem): boolean {
+    if (AFM.isNegativeAttributeFilter(filter)) {
+        return filter.negativeAttributeFilter.notIn.length === 0;
+    }
+
+    return false;
+}
+
+/**
  * Returns true if measure has dateFilters
  *
  * @method hasMetricDateFilters
