@@ -101,12 +101,13 @@ const CoreKpi: React.StatelessComponent<IKpiProps & InjectedIntlProps> = props =
                 }
 
                 const measureData = getMeasureData(result);
+                const measureFormat = measure.measure.format || getMeasureFormat(result);
 
                 return (
                     <FormattedNumber
                         className="gdc-kpi"
                         number={measureData}
-                        format={measure.measure.format}
+                        format={measureFormat}
                         separators={separators}
                     />
                 );
@@ -124,6 +125,13 @@ const getMeasureData = (result: DataViewFacade) => {
     }
 
     return parseFloat(measure);
+};
+
+const getMeasureFormat = (result: DataViewFacade) => {
+    const headerItems = result.measureGroupHeaderItems();
+    const format = get(headerItems, [0, "measureHeaderItem", "format"]);
+
+    return format;
 };
 
 const IntlKpi = injectIntl(CoreKpi);

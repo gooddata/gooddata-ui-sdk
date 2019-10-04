@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { makeCancelable, ICancelablePromise, CancelError } from "../promise/CancelablePromise";
+import { makeCancelable, ICancelablePromise } from "../promise/CancelablePromise";
 
 //
 // Public interface
@@ -145,9 +145,7 @@ export function withLoading<T, P, R extends object>({
                 try {
                     result = await this.cancelablePromise.promise;
                 } catch (err) {
-                    if (err instanceof CancelError) {
-                        this.setError(err);
-                    }
+                    this.setError(err);
                     return;
                 }
 
