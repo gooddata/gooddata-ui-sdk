@@ -1,13 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { factory } from "@gooddata/gd-bear-client";
-import { VisualizationObject, AFM } from "@gooddata/gd-bear-model";
-import { PivotTable } from "../types";
-import { M1 } from "../../charts/tests/fixtures/buckets";
+import { PivotTable } from "../PivotTable";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IMeasure } from "@gooddata/sdk-model";
 
 describe("PivotTable", () => {
-    const measure: VisualizationObject.IMeasure = {
+    const measure: IMeasure = {
         measure: {
             localIdentifier: "m1",
             definition: {
@@ -20,30 +19,12 @@ describe("PivotTable", () => {
         },
     };
 
-    const attribute: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "attribute1",
-            },
-        },
-    };
-
-    const attribute2: VisualizationObject.IVisualizationAttribute = {
-        visualizationAttribute: {
-            localIdentifier: "a2",
-            displayForm: {
-                identifier: "attribute2",
-            },
-        },
-    };
-
     function renderShallowComponent(customProps = {}) {
         return shallow(
             <PivotTable
-                projectId="foo"
-                measures={[M1]}
-                sdk={factory({ domain: "example.com" })}
+                backend={dummyBackend()}
+                workspace="testWorkspace"
+                measures={[measure]}
                 {...customProps}
             />,
         );
@@ -52,138 +33,5 @@ describe("PivotTable", () => {
     it("should render with custom SDK", () => {
         const wrapper = renderShallowComponent();
         expect(wrapper).toHaveLength(1);
-    });
-
-    it("should render table and convert the buckets to AFM and resultSpec", () => {
-        const wrapper = shallow(<PivotTable projectId="foo" measures={[measure]} rows={[attribute]} />);
-
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-            ],
-        };
-
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ],
-        };
-
-        expect(wrapper).toHaveLength(1);
-        expect(wrapper.prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.prop("resultSpec")).toEqual(expectedResultSpec);
-    });
-    it("should render table and convert the buckets to AFM and resultSpec", () => {
-        const wrapper = shallow(<PivotTable projectId="foo" measures={[measure]} rows={[attribute]} />);
-
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-            ],
-        };
-
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ],
-        };
-
-        expect(wrapper).toHaveLength(1);
-        expect(wrapper.prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.prop("resultSpec")).toEqual(expectedResultSpec);
-    });
-
-    it("should render table with pivot buckets and convert the buckets to AFM and resultSpec", () => {
-        const wrapper = shallow(
-            <PivotTable projectId="foo" measures={[measure]} rows={[attribute]} columns={[attribute2]} />,
-        );
-
-        const expectedAfm: AFM.IAfm = {
-            measures: [
-                {
-                    localIdentifier: "m1",
-                    definition: {
-                        measure: {
-                            item: {
-                                identifier: "xyz123",
-                            },
-                        },
-                    },
-                },
-            ],
-            attributes: [
-                {
-                    localIdentifier: "a1",
-                    displayForm: {
-                        identifier: "attribute1",
-                    },
-                },
-                {
-                    localIdentifier: "a2",
-                    displayForm: {
-                        identifier: "attribute2",
-                    },
-                },
-            ],
-        };
-
-        const expectedResultSpec = {
-            dimensions: [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["a2", "measureGroup"],
-                },
-            ],
-        };
-
-        expect(wrapper).toHaveLength(1);
-        expect(wrapper.prop("afm")).toEqual(expectedAfm);
-        expect(wrapper.prop("resultSpec")).toEqual(expectedResultSpec);
     });
 });

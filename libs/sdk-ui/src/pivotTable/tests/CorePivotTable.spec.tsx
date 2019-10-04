@@ -6,114 +6,36 @@ import noop = require("lodash/noop");
 
 import {
     CorePivotTable,
-    PivotTableInner,
-    IPivotTableInnerProps,
     WATCHING_TABLE_RENDERED_INTERVAL,
     WATCHING_TABLE_RENDERED_MAX_TIME,
 } from "../CorePivotTable";
-import {
-    oneMeasureDataSource,
-    oneAttributeOneMeasureDataSource,
-    twoMeasuresOneDimensionDataSource,
-    executionObjectWithTotalsDataSource,
-} from "../../charts/tests/mocks";
-import { AgGridReact } from "ag-grid-react";
 import { getParsedFields } from "../impl/agGridUtils";
-import { GroupingProviderFactory } from "../impl/GroupingProvider";
 import * as stickyRowHandler from "../impl/stickyRowHandler";
-import { oneAttributeOneMeasureSortByMeasureExecutionObject } from "../../execution/fixtures/ExecuteAfm.fixtures";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
+import { ICorePivotTableProps } from "../types";
+import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MasterIndex } from "../../../__mocks__/recordings/playlist";
+import { headlineWithOneMeasure } from "../../../__mocks__/fixtures";
 
 const intl = createIntlMock();
 
-describe("PivotTable", () => {
+describe("CorePivotTable", () => {
+    const backend = recordedBackend(MasterIndex);
+    const singleMeasureExec = prepareExecution(backend, headlineWithOneMeasure.definition);
+
     function renderComponent(
-        customProps: Partial<IPivotTableInnerProps> = {},
-        dataSource = oneMeasureDataSource,
+        customProps: Partial<ICorePivotTableProps> = {},
+        execution: IPreparedExecution = singleMeasureExec,
     ) {
-        return mount(
-            <CorePivotTable
-                dataSource={dataSource}
-                updateTotals={noop as any}
-                getPage={noop as any}
-                intl={intl}
-                {...customProps}
-            />,
-        );
+        return mount(<CorePivotTable execution={execution} intl={intl} {...customProps} />);
     }
 
-    function getTableInstance(customProps: Partial<IPivotTableInnerProps> = {}) {
+    function getTableInstance(customProps: Partial<ICorePivotTableProps> = {}) {
         const wrapper = renderComponent(customProps);
-        const table = wrapper.find(PivotTableInner);
+        const table = wrapper.find(CorePivotTable);
         return table.instance() as any;
     }
-
-    it("should render PivotTableInner", () => {
-        const wrapper = renderComponent();
-        expect(wrapper.find(PivotTableInner)).toHaveLength(1);
-    });
-
-    describe("groupRows for attribute columns", () => {
-        let createProvider: jest.SpyInstance;
-
-        function renderComponentForGrouping(customProps: Partial<IPivotTableInnerProps> = {}) {
-            return renderComponent(customProps, oneAttributeOneMeasureDataSource);
-        }
-
-        beforeEach(() => {
-            createProvider = jest.spyOn(GroupingProviderFactory, "createProvider");
-        });
-
-        afterEach(() => {
-            createProvider.mockRestore();
-        });
-
-        // tslint:disable-next-line:max-line-length
-        it("should group rows when sorted by first attribute (default sort)", () => {
-            renderComponentForGrouping();
-
-            expect(createProvider).toHaveBeenCalledTimes(1);
-            expect(createProvider).toHaveBeenCalledWith(true);
-        });
-
-        it("should NOT group rows when not sorted by first attribute", done => {
-            // check second async invocation since we are waiting for datasource to be updated with specified resultSpec
-            const onDataSourceUpdateSuccess = () => {
-                expect(createProvider).toHaveBeenCalledTimes(2);
-                expect(createProvider).toHaveBeenNthCalledWith(2, false);
-                done();
-            };
-
-            renderComponentForGrouping({
-                resultSpec: oneAttributeOneMeasureSortByMeasureExecutionObject.execution.resultSpec,
-                onDataSourceUpdateSuccess,
-            });
-        });
-
-        it("should NOT group rows when grouping switched by property after render", () => {
-            const wrapper = renderComponentForGrouping();
-
-            wrapper.setProps({
-                groupRows: false,
-            });
-
-            expect(createProvider).toHaveBeenCalledTimes(2);
-            expect(createProvider).toHaveBeenNthCalledWith(2, false);
-        });
-    });
-
-    describe("isTableHidden", () => {
-        it("should return true if columnDefs are empty", () => {
-            const table = getTableInstance();
-            expect(table.isTableHidden()).toEqual(true);
-        });
-
-        it("should return false if columnDefs are not empty", () => {
-            const table = getTableInstance();
-            table.setState({ columnDefs: [{ field: "field_id" }] });
-            expect(table.isTableHidden()).toEqual(false);
-        });
-    });
 
     describe("onModelUpdated", () => {
         let updateStickyRowPosition: jest.SpyInstance;
@@ -230,38 +152,6 @@ describe("PivotTable", () => {
             expect(table.watchingTimeoutId).toBe(null);
 
             expect(afterRender).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe("Reset agGridReact", () => {
-        it("should reset component when datasource AFM has changed except nativeTotals", () => {
-            const wrapper = renderComponent({
-                dataSource: twoMeasuresOneDimensionDataSource,
-            });
-
-            const agGridComponent = wrapper.find(AgGridReact);
-            const agGridComponentKey = agGridComponent.key();
-
-            wrapper.setProps({
-                dataSource: executionObjectWithTotalsDataSource,
-            });
-
-            const currentInnerComponent = wrapper.find(AgGridReact);
-            expect(currentInnerComponent.key()).not.toEqual(agGridComponentKey);
-        });
-
-        it("should NOT reset component when datasource AFM has not changed", () => {
-            const wrapper = renderComponent();
-
-            const agGridComponent = wrapper.find(AgGridReact);
-            const agGridComponentKey = agGridComponent.key();
-
-            wrapper.setProps({
-                resultSpec: { dimensions: [] },
-            });
-
-            const currentInnerComponent = wrapper.find(AgGridReact);
-            expect(currentInnerComponent.key()).toEqual(agGridComponentKey);
         });
     });
 });
