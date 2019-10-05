@@ -502,7 +502,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     };
 
     //
-    // grid options & styling
+    // grid options & styling; TODO: refactor to move all this outside of the file
     //
 
     private createGridOptions = (): ICustomGridOptions => {

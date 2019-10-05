@@ -53,6 +53,11 @@ export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
     return cell && (cell as IAttributeCell).uri !== undefined;
 }
 
+export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
+    backend: IAnalyticalBackend;
+    workspace: string;
+}
+
 export interface IPivotTableBucketProps {
     measures?: AttributeOrMeasure[];
     rows?: IAttribute[];
@@ -62,16 +67,11 @@ export interface IPivotTableBucketProps {
     sortBy?: SortItem[];
 }
 
-export interface IPivotTableProps extends ICorePivotTableProps, IPivotTableBucketProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
+export interface ICorePivotTableProps extends IPivotTableBaseProps, InjectedIntlProps {
+    execution: IPreparedExecution;
 }
 
-export interface ICorePivotTableProps
-    extends IVisualizationProps,
-        IVisualizationCallbacks,
-        InjectedIntlProps {
-    execution: IPreparedExecution;
+export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     pageSize?: number;
     config?: IPivotTableConfig;
     groupRows?: boolean;

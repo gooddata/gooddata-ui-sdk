@@ -18,7 +18,11 @@ import {
 import { IPivotTableBucketProps, IPivotTableProps } from "./types";
 import omit = require("lodash/omit");
 import { IntlWrapper } from "../base/translations/IntlWrapper";
-import { IntlTranslationsProvider, ITranslationsComponentProps } from '../base/translations/TranslationsProvider';
+import {
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "../base/translations/TranslationsProvider";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 /**
@@ -31,19 +35,14 @@ export class PivotTable extends React.Component<IPivotTableProps> {
     };
 
     public render() {
-        const { backend, workspace, filters, sortBy, exportTitle } = this.props;
+        const { exportTitle } = this.props;
 
         const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
             this.props,
             ["measures", "rows", "columns", "totals", "filters", "sortBy"],
         );
 
-        const execution = backend
-            .workspace(workspace)
-            .execution()
-            .forBuckets(getBuckets(this.props), filters)
-            .withDimensions(pivotDimensions)
-            .withSorting(...sortBy);
+        const execution = prepareExecution(this.props);
 
         return (
             <IntlWrapper locale={this.props.locale}>
@@ -54,13 +53,32 @@ export class PivotTable extends React.Component<IPivotTableProps> {
                                 {...newProps}
                                 intl={translationProps.intl}
                                 execution={execution}
-                                exportTitle={exportTitle} />
+                                exportTitle={exportTitle}
+                            />
                         );
                     }}
                 </IntlTranslationsProvider>
             </IntlWrapper>
         );
     }
+}
+
+/**
+ * Prepares new execution matching pivot table props.
+ *
+ * @param props - pivot table props
+ * @returns new prepared execution
+ * @internal
+ */
+export function prepareExecution(props: IPivotTableProps): IPreparedExecution {
+    const { backend, workspace, filters, sortBy } = props;
+
+    return backend
+        .workspace(workspace)
+        .execution()
+        .forBuckets(getBuckets(props), filters)
+        .withDimensions(pivotDimensions)
+        .withSorting(...sortBy);
 }
 
 function getBuckets(props: IPivotTableBucketProps): IBucket[] {
