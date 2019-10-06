@@ -3,7 +3,7 @@ import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import { context, measureHeaders } from "../../factory/tests/HeaderPredicateFactory.mock";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
-import { convertDrillableItemsToPredicates2, isSomeHeaderPredicateMatched2 } from "../headerPredicate";
+import { convertDrillableItemsToPredicates2, isSomeHeaderPredicateMatched2 } from "../drilling";
 import { emptyFacade } from "../../../../__mocks__/fixtures";
 
 describe("isSomeHeaderPredicateMatched", () => {

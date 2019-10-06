@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { convertDrillableItemsToPredicates2 } from "../../../base/helpers/headerPredicate";
+import { convertDrillableItemsToPredicates2 } from "../../../base/helpers/drilling";
 import { IChartConfig } from "../../../highcharts";
 import { IDrillableItem, IDrillEventCallback2 } from "../../../base/interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";

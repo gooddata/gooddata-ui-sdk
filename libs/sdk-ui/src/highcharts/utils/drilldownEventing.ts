@@ -11,14 +11,11 @@ import {
 } from "../../base/constants/visualizationTypes";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
 import {
-    ICellDrillEvent,
     IDrillConfig,
     IDrillEvent2,
     IDrillEventContext,
     IDrillEventContextGroup,
     IDrillEventContextPoint,
-    IDrillEventContextTable,
-    IDrillEventIntersectionElement,
     IDrillPoint,
 } from "../../base/interfaces/DrillEvents";
 import { OnFiredDrillEvent2 } from "../../base/interfaces/Events";
@@ -205,45 +202,4 @@ export function tickLabelClick(
     chartType: ChartType,
 ) {
     tickLabelClickDebounce(drillConfig, points, target, chartType);
-}
-
-export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {
-    const { dataView, onDrill } = drillConfig;
-    const { columnIndex, rowIndex, row, intersection } = event;
-
-    const drillContext: IDrillEventContextTable = {
-        type: VisualizationTypes.TABLE,
-        element: "cell",
-        columnIndex,
-        rowIndex,
-        row,
-        intersection,
-    };
-    const data: IDrillEvent2 = {
-        dataView,
-        drillContext,
-    };
-
-    fireEvent(onDrill, data, target);
-}
-
-export function createDrillIntersectionElement(
-    id: string,
-    title: string,
-    uri?: string,
-    identifier?: string,
-): IDrillEventIntersectionElement {
-    const element: IDrillEventIntersectionElement = {
-        id: id || "",
-        title: title || "",
-    };
-
-    if (uri || identifier) {
-        element.header = {
-            uri: uri || "",
-            identifier: identifier || "",
-        };
-    }
-
-    return element;
 }

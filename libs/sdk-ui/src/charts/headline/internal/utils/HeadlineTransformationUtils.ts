@@ -7,9 +7,11 @@ import { DataValue, DataViewFacade, IDataView, IMeasureHeaderItem } from "@goodd
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
-import { createDrillIntersectionElement } from "../../../../highcharts";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { isSomeHeaderPredicateMatched2 } from "../../../../base/helpers/headerPredicate";
+import {
+    isSomeHeaderPredicateMatched2,
+    createDrillIntersectionElement,
+} from "../../../../base/helpers/drilling";
 import {
     IDrillEvent2,
     IDrillEventCallback2,

@@ -3,7 +3,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import * as React from "react";
 
-import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
+import { convertDrillableItemsToPredicates2 } from "../../base/helpers/drilling";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { OnFiredDrillEvent2, OnLegendReady } from "../../base/interfaces/Events";
 import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";

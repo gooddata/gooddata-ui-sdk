@@ -14,19 +14,16 @@ import { AgGridReact } from "ag-grid-react";
 import * as classNames from "classnames";
 import * as CustomEvent from "custom-event";
 import * as React from "react";
-import { ErrorComponent } from "..";
 
 import "../../styles/css/pivotTable.css";
 import { VisualizationTypes } from "../base/constants/visualizationTypes";
 import { getScrollbarWidth } from "../base/helpers/domUtils";
-import {
-    convertDrillableItemsToPredicates2,
-    isSomeHeaderPredicateMatched2,
-} from "../base/helpers/headerPredicate";
+import { convertDrillableItemsToPredicates2, isSomeHeaderPredicateMatched2 } from "../base/helpers/drilling";
 import { IDrillEvent2, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
 import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import { LoadingComponent } from "../base/simple/LoadingComponent";
+import { ErrorComponent } from "../base/simple/ErrorComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {

@@ -9,7 +9,6 @@ import {
 import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
-import { createDrillIntersectionElement } from "../../highcharts";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";
@@ -26,6 +25,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { measureUriOrQualifier } from "../../base/helpers/measures";
 import get = require("lodash/get");
+import { createDrillIntersectionElement } from "../../base/helpers/drilling";
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {

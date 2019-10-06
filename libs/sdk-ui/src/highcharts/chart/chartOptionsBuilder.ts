@@ -28,7 +28,7 @@ import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../base/helpers/executionResultHelper";
-import { isSomeHeaderPredicateMatched2 } from "../../base/helpers/headerPredicate";
+import { createDrillIntersectionElement, isSomeHeaderPredicateMatched2 } from "../../base/helpers/drilling";
 import { unwrap } from "../../base/helpers/utils";
 
 import {
@@ -61,7 +61,6 @@ import {
     parseValue,
     stringifyChartTypes,
 } from "../utils/common";
-import { createDrillIntersectionElement } from "../utils/drilldownEventing";
 import {
     canComboChartBeStackedInPercent,
     getComboChartSeries,

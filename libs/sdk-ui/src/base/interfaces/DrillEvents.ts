@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { TableRowForDrilling } from "../../pivotTable/types";
 import {
     ChartElementType,
     ChartType,
@@ -122,13 +121,6 @@ export interface IHighchartsParentTick {
 
 export interface IHighchartsCategoriesTree {
     tick: IHighchartsParentTick;
-}
-
-export interface ICellDrillEvent {
-    columnIndex: number;
-    rowIndex: number;
-    row: TableRowForDrilling;
-    intersection: IDrillEventIntersectionElement[];
 }
 
 export interface IDrillConfig {
