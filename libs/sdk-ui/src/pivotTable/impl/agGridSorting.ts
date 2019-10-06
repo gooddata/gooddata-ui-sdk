@@ -1,62 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import { getIdsFromUri, getParsedFields } from "./agGridUtils";
-import { FIELD_SEPARATOR, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
-import { assortDimensionHeaders, identifyResponseHeader } from "./agGridHeaders";
+import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGridConst";
+import { assortDimensionHeaders } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
-import { ColDef } from "ag-grid-community";
-import {
-    IAttributeSortItem,
-    IMeasureSortItem,
-    isMeasureLocator,
-    SortDirection,
-    SortItem,
-} from "@gooddata/sdk-model";
-import { IAttributeHeader, IExecutionResult, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IAttributeSortItem, IMeasureSortItem, SortDirection, SortItem } from "@gooddata/sdk-model";
+import { IAttributeHeader, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import invariant = require("invariant");
 
 /*
  * All code related to sorting the ag-grid backed Pivot Table is concentrated here
  */
-
-export const getAttributeSortItemFieldAndDirection = (
-    sortItem: IAttributeSortItem,
-    attributeHeaders: IAttributeHeader[],
-): [string, string] => {
-    const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
-
-    const sortHeader = attributeHeaders.find(
-        header => header.attributeHeader.localIdentifier === localIdentifier,
-    );
-    invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
-
-    const field = identifyResponseHeader(sortHeader);
-    return [field, sortItem.attributeSortItem.direction];
-};
-
-export const getMeasureSortItemFieldAndDirection = (
-    sortItem: IMeasureSortItem,
-    measureHeaderItems: IMeasureHeaderItem[],
-): [string, string] => {
-    const keys: string[] = [];
-    sortItem.measureSortItem.locators.forEach(locator => {
-        if (isMeasureLocator(locator)) {
-            const measureSortHeaderIndex = measureHeaderItems.findIndex(
-                measureHeaderItem =>
-                    measureHeaderItem.measureHeaderItem.localIdentifier ===
-                    locator.measureLocatorItem.measureIdentifier,
-            );
-            keys.push(`m${ID_SEPARATOR}${measureSortHeaderIndex}`);
-        } else {
-            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element).join(
-                ID_SEPARATOR,
-            )}`;
-            keys.push(key);
-        }
-    });
-    const field = keys.join(FIELD_SEPARATOR);
-    const direction = sortItem.measureSortItem.direction;
-    return [field, direction];
-};
 
 export const getSortItemByColId = (
     result: IExecutionResult,
@@ -131,10 +84,3 @@ export function getSortsFromModel(sortModel: ISortModelItem[], result: IExecutio
         return sortHeader;
     });
 }
-
-export const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): void => {
-    const direction = sortingMap[colDef.field];
-    if (direction) {
-        colDef.sort = direction;
-    }
-};

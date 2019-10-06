@@ -27,12 +27,14 @@ import {
     isResultMeasureHeaderItem,
     isResultTotalHeaderItem,
 } from "@gooddata/sdk-backend-spi";
-import { isAttributeSort, isMeasureSort } from "@gooddata/sdk-model";
 import {
-    assignSorting,
-    getAttributeSortItemFieldAndDirection,
-    getMeasureSortItemFieldAndDirection,
-} from "./agGridSorting";
+    IAttributeSortItem,
+    IMeasureSortItem,
+    isAttributeSort,
+    isMeasureLocator,
+    isMeasureSort,
+} from "@gooddata/sdk-model";
+import { ColDef } from "ag-grid-community";
 import range = require("lodash/range");
 import clone = require("lodash/clone");
 import invariant = require("invariant");
@@ -220,6 +222,61 @@ export const getMinimalRowData = (data: DataValue[][], rowHeaderItems: IResultHe
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
           (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
+};
+
+const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): void => {
+    const direction = sortingMap[colDef.field];
+    if (direction) {
+        colDef.sort = direction;
+    }
+};
+
+/**
+ * exported due to tests
+ * @internal
+ */
+export const getAttributeSortItemFieldAndDirection = (
+    sortItem: IAttributeSortItem,
+    attributeHeaders: IAttributeHeader[],
+): [string, string] => {
+    const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
+
+    const sortHeader = attributeHeaders.find(
+        header => header.attributeHeader.localIdentifier === localIdentifier,
+    );
+    invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
+
+    const field = identifyResponseHeader(sortHeader);
+    return [field, sortItem.attributeSortItem.direction];
+};
+
+/**
+ * exported due to tests
+ * @internal
+ */
+export const getMeasureSortItemFieldAndDirection = (
+    sortItem: IMeasureSortItem,
+    measureHeaderItems: IMeasureHeaderItem[],
+): [string, string] => {
+    const keys: string[] = [];
+    sortItem.measureSortItem.locators.forEach(locator => {
+        if (isMeasureLocator(locator)) {
+            const measureSortHeaderIndex = measureHeaderItems.findIndex(
+                measureHeaderItem =>
+                    measureHeaderItem.measureHeaderItem.localIdentifier ===
+                    locator.measureLocatorItem.measureIdentifier,
+            );
+            keys.push(`m${ID_SEPARATOR}${measureSortHeaderIndex}`);
+        } else {
+            const key = `a${ID_SEPARATOR}${getIdsFromUri(locator.attributeLocatorItem.element).join(
+                ID_SEPARATOR,
+            )}`;
+            keys.push(key);
+        }
+    });
+    const field = keys.join(FIELD_SEPARATOR);
+    const direction = sortItem.measureSortItem.direction;
+    return [field, direction];
 };
 
 export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {

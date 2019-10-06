@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import * as fixtures from "../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../__mocks__/fixtures";
 import {
     assortDimensionHeaders,
     headerToGrid,
@@ -12,32 +12,29 @@ import {
     getMinimalRowData,
     mergeHeaderEndIndex,
     shouldMergeHeaders,
+    getAttributeSortItemFieldAndDirection,
+    getMeasureSortItemFieldAndDirection,
 } from "../agGridHeaders";
-import { IResultHeaderItem, isAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeHeader, IResultHeaderItem, isAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
-        expect(
-            identifyHeader(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0],
-            ),
-        ).toBe("a_2210_6340109");
+        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0])).toBe(
+            "a_2210_6340109",
+        );
     });
 
     it("should return correct field key for a measure header", () => {
-        expect(
-            identifyHeader(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0],
-            ),
-        ).toBe("m_0");
+        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0])).toBe(
+            "m_0",
+        );
     });
 });
 describe("identifyResponseHeader", () => {
     it("should return correct field key for an attribute response header", () => {
         expect(
-            identifyResponseHeader(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers[0],
-            ),
+            identifyResponseHeader(fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0)[0]),
         ).toBe("a_2211");
     });
 });
@@ -45,19 +42,13 @@ describe("identifyResponseHeader", () => {
 describe("headerToGrid", () => {
     it("should return correct grid header for an attribute header with correct prefix", () => {
         expect(
-            headerToGrid(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0],
-                "prefix_",
-            ),
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0], "prefix_"),
         ).toEqual({ field: "prefix_a_2210_6340109", headerName: "Alabama" });
     });
 
     it("should return correct grid header for a measure header with correct prefix", () => {
         expect(
-            headerToGrid(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0],
-                "prefix_",
-            ),
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0], "prefix_"),
         ).toEqual({ field: "prefix_m_0", headerName: "$ Franchise Fees" });
     });
 });
@@ -66,8 +57,8 @@ describe("getColumnHeaders", () => {
     it("should return hierarchical column headers", () => {
         expect(
             getColumnHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1],
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[1].headers,
+                fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(1),
             ),
         ).toMatchSnapshot();
     });
@@ -77,7 +68,7 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeHeader[],
                 {},
                 false,
             ),
@@ -127,7 +118,7 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers with row group settings and extended by custom options", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeHeader[],
                 { type: "custom" },
                 true,
             ),
@@ -182,9 +173,7 @@ describe("getRowHeaders", () => {
 
 describe("getFields", () => {
     it("should return an array of all column fields", () => {
-        expect(
-            getFields(fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1]),
-        ).toEqual([
+        expect(getFields(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1])).toEqual([
             "a_2009_1-a_2071_1-m_0",
             "a_2009_1-a_2071_1-m_1",
             "a_2009_1-a_2071_1-m_2",
@@ -239,7 +228,7 @@ describe("getFields", () => {
 
 describe("assortDimensionHeaders", () => {
     it("should return attribute and measure dimension headers", () => {
-        const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+        const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
         const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
         expect(attributeHeaders).toHaveLength(4);
         expect(attributeHeaders.filter(header => isAttributeHeader(header))).toHaveLength(4);
@@ -252,22 +241,16 @@ describe("assortDimensionHeaders", () => {
 
 describe("getMinimalRowData", () => {
     it("should return a two-dimensional array of empty values when no measure data are available", () => {
-        expect(
-            getMinimalRowData(
-                [],
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0],
-            ),
-        ).toEqual([[null], [null], [null], [null], [null], [null]]);
+        expect(getMinimalRowData([], fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0])).toEqual(
+            [[null], [null], [null], [null], [null], [null]],
+        );
     });
 
     it("should return a identical data if measure data is available", () => {
         const data = [[1], [2], [3]];
-        expect(
-            getMinimalRowData(
-                data,
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0],
-            ),
-        ).toBe(data);
+        expect(getMinimalRowData(data, fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0])).toBe(
+            data,
+        );
     });
 });
 
@@ -338,5 +321,57 @@ describe("conversion from header matrix to hierarchy", () => {
             expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 2)).toBe(3);
             expect(mergeHeaderEndIndex(resultHeaderDimension, stateHeaderIndex, 3)).toBe(3);
         });
+    });
+});
+
+describe("getAttributeSortItemFieldAndDirection", () => {
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
+    const { attributeHeaders } = assortDimensionHeaders(dimensions);
+    const attributeSortItem: IAttributeSortItem = {
+        attributeSortItem: {
+            direction: "asc",
+            attributeIdentifier: "state",
+        },
+    };
+    it("should return matching key and direction from attributeHeaders", () => {
+        expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeHeaders)).toEqual([
+            "a_2211",
+            "asc",
+        ]);
+    });
+});
+
+describe("getMeasureSortItemFieldAndDirection", () => {
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
+    const { measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const measureSortItem: IMeasureSortItem = {
+        measureSortItem: {
+            direction: "desc",
+            locators: [
+                {
+                    attributeLocatorItem: {
+                        attributeIdentifier: "date.aam81lMifn6q",
+                        element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                    },
+                },
+                {
+                    attributeLocatorItem: {
+                        attributeIdentifier: "date.abm81lMifn6q",
+                        element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                    },
+                },
+                {
+                    measureLocatorItem: {
+                        measureIdentifier: "aaEGaXAEgB7U",
+                    },
+                },
+            ],
+        },
+    };
+    it("should return matching key and direction from attributeHeaders", () => {
+        expect(getMeasureSortItemFieldAndDirection(measureSortItem, measureHeaderItems)).toEqual([
+            "a_2009_1-a_2071_1-m_-1",
+            "desc",
+        ]);
     });
 });

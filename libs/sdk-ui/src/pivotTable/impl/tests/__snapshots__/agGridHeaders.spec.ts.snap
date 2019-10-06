@@ -103,7 +103,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -158,7 +158,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -213,7 +213,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -331,7 +331,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -386,7 +386,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -441,7 +441,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -559,7 +559,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -614,7 +614,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -669,7 +669,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -795,7 +795,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -850,7 +850,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -905,7 +905,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -1023,7 +1023,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -1078,7 +1078,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -1133,7 +1133,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -1251,7 +1251,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -1306,7 +1306,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -1361,7 +1361,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -1487,7 +1487,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -1542,7 +1542,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -1597,7 +1597,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -1715,7 +1715,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -1770,7 +1770,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -1825,7 +1825,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -1943,7 +1943,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -1998,7 +1998,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -2053,7 +2053,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -2179,7 +2179,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -2234,7 +2234,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -2289,7 +2289,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -2407,7 +2407,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -2462,7 +2462,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -2517,7 +2517,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
@@ -2635,7 +2635,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aabHeqImaK0d",
                   "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
                   "name": "$ Franchise Fees (Ad Royalty)",
@@ -2690,7 +2690,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
                   "identifier": "aaDHcv6wevkl",
                   "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
                   "name": "$ Franchise Fees (Initial Franchise Fee)",
@@ -2745,7 +2745,7 @@ Array [
               },
               Object {
                 "measureHeaderItem": Object {
-                  "format": "[>=0]$#,##0;[<0]-$#,##0",
+                  "format": "$#,##0.00",
                   "identifier": "aaWGcgnsfxIg",
                   "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
                   "name": "$ Franchise Fees (Ongoing Royalty)",
