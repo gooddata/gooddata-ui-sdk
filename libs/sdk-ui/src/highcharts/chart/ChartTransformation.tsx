@@ -4,8 +4,8 @@ import * as invariant from "invariant";
 import * as React from "react";
 
 import { convertDrillableItemsToPredicates } from "../../base/helpers/drilling";
-import { IDrillableItem } from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent2, OnLegendReady } from "../../base/interfaces/Events";
+import { IDrillableItem, OnFiredDrillEvent } from "../../base/interfaces/DrillEvents";
+import { OnLegendReady } from "../../base/interfaces/Events";
 import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
@@ -33,7 +33,7 @@ export interface IChartTransformationProps {
 
     dataView: IDataView;
 
-    onDrill: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent;
     onLegendReady: OnLegendReady;
 
     afterRender(): void;

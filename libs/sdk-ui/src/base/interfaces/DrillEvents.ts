@@ -10,7 +10,6 @@ import {
     VisElementType,
     VisType,
 } from "../constants/visualizationTypes";
-import { OnFiredDrillEvent2 } from "./Events";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -123,7 +122,9 @@ export interface IHighchartsCategoriesTree {
     tick: IHighchartsParentTick;
 }
 
+export type OnFiredDrillEvent = IDrillEventCallback;
+
 export interface IDrillConfig {
     dataView: IDataView;
-    onDrill: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent;
 }

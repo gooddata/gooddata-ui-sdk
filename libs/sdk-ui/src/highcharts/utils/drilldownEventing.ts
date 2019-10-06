@@ -17,8 +17,8 @@ import {
     IDrillEventContextGroup,
     IDrillEventContextPoint,
     IDrillPoint,
+    OnFiredDrillEvent,
 } from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent2 } from "../../base/interfaces/Events";
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
@@ -46,7 +46,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
     }
 }
 
-function fireEvent(onDrill: OnFiredDrillEvent2, data: any, target: EventTarget) {
+function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
     const returnValue = onDrill(data);
 
     // if user-specified onDrill fn returns false, do not fire default DOM event

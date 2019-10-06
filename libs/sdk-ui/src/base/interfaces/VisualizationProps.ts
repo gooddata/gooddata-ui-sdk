@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 
-import { IDrillableItem } from "./DrillEvents";
+import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
 import { IHeaderPredicate } from "./HeaderPredicate";
 import * as React from "react";
 import { IErrorProps } from "../simple/ErrorComponent";
 import { ILoadingProps } from "../simple/LoadingComponent";
-import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "./Events";
+import { OnError, OnExportReady, OnLoadingChanged } from "./Events";
 import { IPushData } from "./PushData";
 
 /**
@@ -62,7 +62,7 @@ export interface IVisualizationCallbacks {
     /**
      * Called when user triggers a drill on a visualization.
      */
-    onDrill?: OnFiredDrillEvent2;
+    onDrill?: OnFiredDrillEvent;
 
     /**
      * @internal
