@@ -9,7 +9,6 @@ import * as React from "react";
 import Measure from "react-measure";
 import { render, unmountComponentAtNode } from "react-dom";
 import { InjectedIntl } from "react-intl";
-import produce from "immer";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
@@ -289,80 +288,69 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         referencePoint: IReferencePoint,
         previousReferencePoint?: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        return Promise.resolve(
-            produce<IExtendedReferencePoint>(
-                referencePoint as IExtendedReferencePoint,
-                referencePointDraft => {
-                    referencePointDraft.uiConfig = cloneDeep(DEFAULT_PIVOT_TABLE_UICONFIG);
+        const clonedReferencePoint = cloneDeep(referencePoint);
+        const newReferencePoint: IExtendedReferencePoint = {
+            ...clonedReferencePoint,
+            uiConfig: cloneDeep(DEFAULT_PIVOT_TABLE_UICONFIG),
+        };
 
-                    const buckets = referencePointDraft.buckets;
-                    const measures = getAllItemsByType(buckets, [METRIC]);
-                    const rowAttributes = getRowAttributes(buckets);
-                    const previousRowAttributes =
-                        previousReferencePoint && getRowAttributes(previousReferencePoint.buckets);
+        const buckets = newReferencePoint.buckets;
+        const measures = getAllItemsByType(buckets, [METRIC]);
+        const rowAttributes = getRowAttributes(buckets);
+        const previousRowAttributes =
+            previousReferencePoint && getRowAttributes(previousReferencePoint.buckets);
 
-                    const columnAttributes = getColumnAttributes(buckets);
+        const columnAttributes = getColumnAttributes(buckets);
 
-                    const totals = getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE);
+        const totals = getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE);
 
-                    referencePointDraft.buckets = removeDuplicateBucketItems([
-                        {
-                            localIdentifier: BucketNames.MEASURES,
-                            items: measures,
-                        },
-                        {
-                            localIdentifier: BucketNames.ATTRIBUTE,
-                            items: rowAttributes,
-                            // This is needed because at the beginning totals property is
-                            // missing from buckets. If we would pass empty array or
-                            // totals: undefined, reference points would differ.
-                            ...(totals.length > 0 ? { totals } : null),
-                        },
-                        {
-                            localIdentifier: BucketNames.COLUMNS,
-                            items: columnAttributes,
-                        },
-                    ]);
+        newReferencePoint.buckets = removeDuplicateBucketItems([
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: measures,
+            },
+            {
+                localIdentifier: BucketNames.ATTRIBUTE,
+                items: rowAttributes,
+                // This is needed because at the beginning totals property is
+                // missing from buckets. If we would pass empty array or
+                // totals: undefined, reference points would differ.
+                ...(totals.length > 0 ? { totals } : null),
+            },
+            {
+                localIdentifier: BucketNames.COLUMNS,
+                items: columnAttributes,
+            },
+        ]);
 
-                    const originalSortItems: SortItem[] = get(
-                        referencePointDraft.properties,
-                        "sortItems",
-                        [],
-                    );
+        const originalSortItems: SortItem[] = get(newReferencePoint.properties, "sortItems", []);
 
-                    referencePointDraft.properties = {
-                        sortItems: addDefaultSort(
-                            adaptReferencePointSortItemsToPivotTable(
-                                originalSortItems,
-                                measures,
-                                rowAttributes,
-                                columnAttributes,
-                            ),
-                            referencePointDraft.filters
-                                ? flatMap(referencePointDraft.filters.items, item => item.filters)
-                                : [],
-                            rowAttributes,
-                            previousRowAttributes,
-                        ),
-                    };
-
-                    setPivotTableUiConfig(referencePointDraft, this.intl, VisualizationTypes.TABLE);
-                    configurePercent(referencePointDraft, false);
-                    configureOverTimeComparison(referencePointDraft);
-                    Object.assign(
-                        referencePointDraft,
-                        getReferencePointWithSupportedProperties(
-                            referencePointDraft,
-                            this.supportedPropertiesList,
-                        ),
-                    );
-                    referencePointDraft.filters = sanitizeUnusedFilters(
-                        referencePointDraft,
-                        referencePoint,
-                    ).filters;
-                },
+        newReferencePoint.properties = {
+            sortItems: addDefaultSort(
+                adaptReferencePointSortItemsToPivotTable(
+                    originalSortItems,
+                    measures,
+                    rowAttributes,
+                    columnAttributes,
+                ),
+                newReferencePoint.filters
+                    ? flatMap(newReferencePoint.filters.items, item => item.filters)
+                    : [],
+                rowAttributes,
+                previousRowAttributes,
             ),
+        };
+
+        setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE);
+        configurePercent(newReferencePoint, false);
+        configureOverTimeComparison(newReferencePoint);
+        Object.assign(
+            newReferencePoint,
+            getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),
         );
+        newReferencePoint.filters = sanitizeUnusedFilters(newReferencePoint, referencePoint).filters;
+
+        return Promise.resolve(newReferencePoint);
     }
 
     protected renderVisualization(
