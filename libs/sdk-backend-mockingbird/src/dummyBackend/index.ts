@@ -94,8 +94,8 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
     return {
         definition,
         result: execResult,
-        headerItems: [[[]]],
-        data: [[]],
+        headerItems: [],
+        data: [],
         offset: [0, 0],
         count: [0, 0],
         totalCount: [0, 0],

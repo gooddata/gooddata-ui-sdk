@@ -175,8 +175,9 @@ function recordedDataView(
     return {
         definition,
         result,
-        headerItems: afmResult.headerItems ? afmResult.headerItems : [[[]]],
-        data: afmResult.data ? afmResult.data : [[]],
+        headerItems: afmResult.headerItems ? afmResult.headerItems : [],
+        data: afmResult.data,
+        totals: afmResult.totals,
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
         totalCount: afmResult.paging.total,
