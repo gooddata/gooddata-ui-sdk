@@ -5,7 +5,7 @@ import { IErrorProps } from "../base/simple/ErrorComponent";
 import { ILoadingProps } from "../base/simple/LoadingComponent";
 import { IChartConfig } from "../highcharts";
 import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "../base/interfaces/Events";
-import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
 import { IDrillableItem } from "../base/interfaces/DrillEvents";
 import { IPushData } from "../base/interfaces/PushData";
 import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";
@@ -26,7 +26,7 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     /**
      * Configure chart drillability; e.g. which parts of the
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Configure chart's behavior and appearance.

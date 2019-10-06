@@ -33,7 +33,7 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
     return (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 
-export type IDrillEventCallback2 = (event: IDrillEvent2) => void | boolean;
+export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 
 // Intersection element
 export interface IDrillEventIntersectionElement {
@@ -108,7 +108,7 @@ export interface IDrillEventContext {
     points?: IDrillPoint[];
 }
 
-export interface IDrillEvent2 {
+export interface IDrillEvent {
     dataView: IDataView;
     drillContext: IDrillEventContext;
 }

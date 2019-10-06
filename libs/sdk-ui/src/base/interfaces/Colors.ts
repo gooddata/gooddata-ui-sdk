@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IHeaderPredicate2 } from "./HeaderPredicate";
+import { IHeaderPredicate } from "./HeaderPredicate";
 import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { IMappingHeader } from "./MappingHeader";
 
@@ -10,7 +10,7 @@ import { IMappingHeader } from "./MappingHeader";
  */
 export interface IColorMapping {
     // sent to SDK
-    predicate: IHeaderPredicate2;
+    predicate: IHeaderPredicate;
     color: IColorItem;
 }
 

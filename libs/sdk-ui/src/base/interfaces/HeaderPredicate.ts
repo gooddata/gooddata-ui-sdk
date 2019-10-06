@@ -8,14 +8,14 @@ import { IDrillableItem } from "./DrillEvents";
  */
 
 // keep & rename
-export interface IHeaderPredicateContext2 {
+export interface IHeaderPredicateContext {
     dv: DataViewFacade;
 }
 
 // keep & rename
-export type IHeaderPredicate2 = (header: IMappingHeader, context: IHeaderPredicateContext2) => boolean;
+export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;
 
 // keep
-export function isHeaderPredicate(item: IDrillableItem | IHeaderPredicate2): item is IHeaderPredicate2 {
+export function isHeaderPredicate(item: IDrillableItem | IHeaderPredicate): item is IHeaderPredicate {
     return typeof item === "function";
 }

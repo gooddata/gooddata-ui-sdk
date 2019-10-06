@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IHeaderPredicateContext2 } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 import { IAttributeHeader, IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 
@@ -180,6 +180,6 @@ export const attributeHeaderItem: IResultAttributeHeaderItem = {
     },
 };
 
-export const context: IHeaderPredicateContext2 = {
+export const context: IHeaderPredicateContext = {
     dv: barChartForDrillTests,
 };

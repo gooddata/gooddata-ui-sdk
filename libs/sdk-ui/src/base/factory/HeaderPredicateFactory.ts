@@ -5,7 +5,7 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "../helpers/mappingHeader";
-import { IHeaderPredicate2, IHeaderPredicateContext2 } from "../interfaces/HeaderPredicate";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../interfaces/MappingHeader";
 import {
     DataViewFacade,
@@ -25,8 +25,8 @@ import {
 function arithmeticMeasureLocalIdentifierDeepMatch(
     dv: DataViewFacade,
     operandLocalIdentifier: string,
-    predicate: IHeaderPredicate2,
-    context: IHeaderPredicateContext2,
+    predicate: IHeaderPredicate,
+    context: IHeaderPredicateContext,
 ): boolean {
     const operand: IMeasure = dv.measure(operandLocalIdentifier);
     const operandHeader: IMeasureHeaderItem = dv.measureGroupHeaderItem(operandLocalIdentifier);
@@ -58,8 +58,8 @@ function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: IMeasure, dv:
     return getMasterMeasureOperandIdentifiers(masterMeasure);
 }
 
-function composedFromQualifier(predicate: IHeaderPredicate2): IHeaderPredicate2 {
-    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
+function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         if (!isMeasureHeaderItem(header)) {
             return false;
         }
@@ -109,7 +109,7 @@ function matchMeasureIdentifier(identifier: string, measure: IMeasure): boolean 
 function matchDerivedMeasureByMasterUri(
     uri: string,
     measure: IMeasure,
-    context: IHeaderPredicateContext2,
+    context: IHeaderPredicateContext,
 ): boolean {
     const { dv } = context;
     const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
@@ -132,7 +132,7 @@ function matchDerivedMeasureByMasterUri(
 function matchDerivedMeasureByMasterIdentifier(
     identifier: string,
     measure: IMeasure,
-    context: IHeaderPredicateContext2,
+    context: IHeaderPredicateContext,
 ): boolean {
     const { dv } = context;
     const masterMeasureLocalIdentifier = measureMasterIdentifier(measure);
@@ -152,8 +152,8 @@ function matchDerivedMeasureByMasterIdentifier(
     return false;
 }
 
-export function uriMatch(uri: string): IHeaderPredicate2 {
-    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
+export function uriMatch(uri: string): IHeaderPredicate {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
 
         if (matchHeaderUri(uri, header)) {
@@ -177,8 +177,8 @@ export function uriMatch(uri: string): IHeaderPredicate2 {
     };
 }
 
-export function identifierMatch(identifier: string): IHeaderPredicate2 {
-    return (header: IMappingHeader, context: IHeaderPredicateContext2): boolean => {
+export function identifierMatch(identifier: string): IHeaderPredicate {
+    return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
         if (isResultAttributeHeaderItem(header)) {
             return false;
@@ -206,16 +206,16 @@ export function identifierMatch(identifier: string): IHeaderPredicate2 {
     };
 }
 
-export function attributeItemNameMatch(name: string): IHeaderPredicate2 {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
+export function attributeItemNameMatch(name: string): IHeaderPredicate {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         return isResultAttributeHeaderItem(header)
             ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
             : false;
     };
 }
 
-export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate2 {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
+export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
             return false;
         }
@@ -224,10 +224,10 @@ export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate2
     };
 }
 
-export function composedFromUri(uri: string): IHeaderPredicate2 {
+export function composedFromUri(uri: string): IHeaderPredicate {
     return composedFromQualifier(uriMatch(uri));
 }
 
-export function composedFromIdentifier(identifier: string): IHeaderPredicate2 {
+export function composedFromIdentifier(identifier: string): IHeaderPredicate {
     return composedFromQualifier(identifierMatch(identifier));
 }

@@ -2,7 +2,7 @@
 import sdk from "@gooddata/gd-bear-client";
 import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
-import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
 import * as HeaderPredicateFactory from "../../../base/factory/HeaderPredicateFactory";
 
 describe("convertPostMessageToDrillablePredicates", () => {
@@ -10,7 +10,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     let composedFromUriSpy: SpyInstance;
     let getUrisFromIdentifiersMock: SpyInstance;
 
-    function checkResult(result: IHeaderPredicate2[], responsesCount: number) {
+    function checkResult(result: IHeaderPredicate[], responsesCount: number) {
         expect(result).toHaveLength(responsesCount);
         result.forEach(predicate => {
             expect(typeof predicate).toBe("function");

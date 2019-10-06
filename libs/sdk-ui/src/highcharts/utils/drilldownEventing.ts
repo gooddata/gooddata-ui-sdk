@@ -12,7 +12,7 @@ import {
 import { getVisualizationType } from "../../base/helpers/visualizationType";
 import {
     IDrillConfig,
-    IDrillEvent2,
+    IDrillEvent,
     IDrillEventContext,
     IDrillEventContextGroup,
     IDrillEventContextPoint,
@@ -139,7 +139,7 @@ const chartClickDebounced = debounce(
             drillContext = composeDrillContextPoint(point, type);
         }
 
-        const data: IDrillEvent2 = {
+        const data: IDrillEvent = {
             dataView,
             drillContext,
         };
@@ -176,7 +176,7 @@ const tickLabelClickDebounce = debounce(
             element: "label",
             points: contextPoints,
         };
-        const data: IDrillEvent2 = {
+        const data: IDrillEvent = {
             dataView,
             drillContext,
         };

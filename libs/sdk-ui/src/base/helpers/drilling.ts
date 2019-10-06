@@ -7,22 +7,22 @@ import {
     isDrillableItemIdentifier,
     isDrillableItemUri,
 } from "../interfaces/DrillEvents";
-import { IHeaderPredicate2, isHeaderPredicate } from "../interfaces/HeaderPredicate";
+import { IHeaderPredicate, isHeaderPredicate } from "../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../interfaces/MappingHeader";
 
-export function isSomeHeaderPredicateMatched2(
-    drillablePredicates: IHeaderPredicate2[],
+export function isSomeHeaderPredicateMatched(
+    drillablePredicates: IHeaderPredicate[],
     header: IMappingHeader,
     dv: DataViewFacade,
 ): boolean {
-    return drillablePredicates.some((drillablePredicate: IHeaderPredicate2) =>
+    return drillablePredicates.some((drillablePredicate: IHeaderPredicate) =>
         drillablePredicate(header, { dv }),
     );
 }
 
-export function convertDrillableItemsToPredicates2(
-    drillableItems: Array<IDrillableItem | IHeaderPredicate2>,
-): IHeaderPredicate2[] {
+export function convertDrillableItemsToPredicates(
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>,
+): IHeaderPredicate[] {
     return drillableItems.map((drillableItem: IDrillableItem) => {
         if (isDrillableItemUri(drillableItem)) {
             return uriMatch(drillableItem.uri);

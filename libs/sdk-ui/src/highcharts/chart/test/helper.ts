@@ -14,7 +14,7 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../../../base/constants/dimensions";
 
-import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
 import { IChartOptions } from "../../Config";
 
 export function generateChartOptions(
@@ -23,7 +23,7 @@ export function generateChartOptions(
         type: "column",
         stacking: false,
     },
-    drillableItems: IHeaderPredicate2[] = [],
+    drillableItems: IHeaderPredicate[] = [],
 ): IChartOptions {
     return getChartOptions(dv.dataView, config, drillableItems);
 }

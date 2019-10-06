@@ -28,7 +28,7 @@ import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../base/helpers/executionResultHelper";
-import { createDrillIntersectionElement, isSomeHeaderPredicateMatched2 } from "../../base/helpers/drilling";
+import { createDrillIntersectionElement, isSomeHeaderPredicateMatched } from "../../base/helpers/drilling";
 import { unwrap } from "../../base/helpers/utils";
 
 import {
@@ -44,7 +44,7 @@ import {
     ISeriesItemConfig,
 } from "../Config";
 import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
@@ -1009,7 +1009,7 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
 export function getDrillableSeries(
     dv: DataViewFacade,
     series: any,
-    drillableItems: IHeaderPredicate2[],
+    drillableItems: IHeaderPredicate[],
     viewByAttributes: IUnwrappedAttributeHeadersWithItems[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: VisType,
@@ -1096,7 +1096,7 @@ export function getDrillableSeries(
                 );
 
                 const drilldown: boolean = drillableHooks.some(drillableHook =>
-                    isSomeHeaderPredicateMatched2(drillableItems, drillableHook, dv),
+                    isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
                 );
 
                 const drillableProps: any = {
@@ -1577,7 +1577,7 @@ function getTooltipFactory(
 export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
-    drillableItems: IHeaderPredicate2[],
+    drillableItems: IHeaderPredicate[],
 ): IChartOptions {
     const dv = new DataViewFacade(dataView);
 

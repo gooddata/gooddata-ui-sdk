@@ -18,9 +18,9 @@ import * as React from "react";
 import "../../styles/css/pivotTable.css";
 import { VisualizationTypes } from "../base/constants/visualizationTypes";
 import { getScrollbarWidth } from "../base/helpers/domUtils";
-import { convertDrillableItemsToPredicates2, isSomeHeaderPredicateMatched2 } from "../base/helpers/drilling";
-import { IDrillEvent2, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
+import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../base/helpers/drilling";
+import { IDrillEvent, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
+import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { ErrorComponent } from "../base/simple/ErrorComponent";
@@ -414,7 +414,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             : colDef.drillItems;
 
         const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
-            isSomeHeaderPredicateMatched2(drillablePredicates, drillItem, dv),
+            isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
         );
 
         if (drillableHeaders.length === 0) {
@@ -434,7 +434,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             row,
             intersection,
         };
-        const drillEvent: IDrillEvent2 = {
+        const drillEvent: IDrillEvent = {
             dataView: dv.dataView, // TODO: this may be stale data at the moment (update to current page)
             drillContext,
         };
@@ -673,7 +673,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 : colDef.drillItems;
 
             hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
-                isSomeHeaderPredicateMatched2(drillablePredicates, drillItem, dv),
+                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
             );
         }
 
@@ -726,8 +726,8 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         return this.agGridDataSource.getGroupingProvider();
     }
 
-    private getDrillablePredicates(): IHeaderPredicate2[] {
-        return convertDrillableItemsToPredicates2(this.props.drillableItems);
+    private getDrillablePredicates(): IHeaderPredicate[] {
+        return convertDrillableItemsToPredicates(this.props.drillableItems);
     }
 
     private isStickyRowAvailable(): boolean {

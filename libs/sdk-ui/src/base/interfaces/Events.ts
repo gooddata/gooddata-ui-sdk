@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IDrillEventCallback2 } from "./DrillEvents";
+import { IDrillEventCallback } from "./DrillEvents";
 import { RuntimeError } from "../errors/RuntimeError";
 import { IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 
@@ -10,7 +10,7 @@ export interface ILoadingState {
 export type OnError = (error: RuntimeError) => void;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 export type OnLoadingFinish = (result: object) => void;
-export type OnFiredDrillEvent2 = IDrillEventCallback2;
+export type OnFiredDrillEvent2 = IDrillEventCallback;
 
 export interface IExtendedExportConfig extends IExportConfig {
     includeFilterContext?: boolean;
