@@ -262,6 +262,7 @@ function updateVisualizationObjectTitles(
  * @returns {VisualizationObject.IVisualizationObjectContent}
  *
  * @internal
+ * TODO: SDK8: this needs to be incorporated into InsightView (it was in Vis Uri component before)
  */
 export function fillMissingTitles(
     mdObject: IVisualizationObjectContent,

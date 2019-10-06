@@ -1,15 +1,16 @@
 // (C) 2019 GoodData Corporation
-import { AFM, Execution } from "@gooddata/gd-bear-model";
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { IColumnTotal } from "../AggregationsMenu";
 import { IMenuAggregationClickConfig } from "../../types";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../agGridConst";
+import { ITotal } from "@gooddata/sdk-model";
+import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {
         it("should return empty totals for measure when no total defined", () => {
             const measure = "m1";
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m2",
@@ -22,7 +23,7 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return totals for measure when multiple totals defined", () => {
             const measure = "m1";
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -49,7 +50,7 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return total for measure when total defined for multiple attributes", () => {
             const measure = "m1";
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -74,7 +75,7 @@ describe("aggregationsMenuHelper", () => {
     describe("getTotalsForAttributeHeader", () => {
         it("should return empty totals when totals are not defined for all measures", () => {
             const measures = ["m1", "m2"];
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -92,7 +93,7 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return empty totals when totals are defined for all measures but different attributes", () => {
             const measures = ["m1", "m2"];
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -110,7 +111,7 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return sum total when totals are defined for all measures and single attribute", () => {
             const measures = ["m1", "m2"];
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -133,7 +134,7 @@ describe("aggregationsMenuHelper", () => {
 
         it("should return sum, min totals when totals are defined for single measure", () => {
             const measures = ["m1"];
-            const totals: AFM.ITotalItem[] = [
+            const totals: ITotal[] = [
                 {
                     type: "sum",
                     measureIdentifier: "m1",
@@ -165,7 +166,7 @@ describe("aggregationsMenuHelper", () => {
             const lastFieldId = "whatever";
 
             it("should return empty list when no measure header items provided", () => {
-                const measureGroupHeaderItems: Execution.IMeasureHeaderItem[] = [];
+                const measureGroupHeaderItems: IMeasureHeaderItem[] = [];
 
                 expect(
                     aggregationsMenuHelper.getHeaderMeasureLocalIdentifiers(
@@ -177,7 +178,7 @@ describe("aggregationsMenuHelper", () => {
             });
 
             it("should return measure identifiers when multiple measure headers provided", () => {
-                const measureGroupHeaderItems: Execution.IMeasureHeaderItem[] = [
+                const measureGroupHeaderItems: IMeasureHeaderItem[] = [
                     {
                         measureHeaderItem: {
                             localIdentifier: "foo",
@@ -207,7 +208,7 @@ describe("aggregationsMenuHelper", () => {
         describe("measure header", () => {
             const lastFieldType = FIELD_TYPE_MEASURE;
             const lastFieldId = 0;
-            const measureGroupHeaderItems: Execution.IMeasureHeaderItem[] = [
+            const measureGroupHeaderItems: IMeasureHeaderItem[] = [
                 {
                     measureHeaderItem: {
                         localIdentifier: "foo",
@@ -304,7 +305,7 @@ describe("aggregationsMenuHelper", () => {
 
     describe("getUpdatedColumnTotals", () => {
         it("should add grandtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [];
+            const columnTotals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a1",
@@ -313,7 +314,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
             ];
 
@@ -322,7 +323,7 @@ describe("aggregationsMenuHelper", () => {
             expect(result).toEqual(expectedColumns);
         });
         it("should add grandtotal for every measure", () => {
-            const columnTotals: AFM.ITotalItem[] = [];
+            const columnTotals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a1",
@@ -331,7 +332,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
@@ -341,7 +342,7 @@ describe("aggregationsMenuHelper", () => {
             expect(result).toEqual(expectedColumns);
         });
         it("should remove grandtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [
+            const columnTotals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
             ];
 
@@ -352,14 +353,14 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [];
+            const expectedColumns: ITotal[] = [];
 
             const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should remove grandtotal for every measure", () => {
-            const columnTotals: AFM.ITotalItem[] = [
+            const columnTotals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
@@ -371,14 +372,14 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [];
+            const expectedColumns: ITotal[] = [];
 
             const result = getUpdatedColumnTotals(columnTotals, menuAggregationClickConfig);
 
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove other types of grandtotals", () => {
-            const columnTotals: AFM.ITotalItem[] = [
+            const columnTotals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
             ];
@@ -390,7 +391,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "avg" },
             ];
 
@@ -399,7 +400,7 @@ describe("aggregationsMenuHelper", () => {
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove grandtotals of different measure", () => {
-            const columnTotals: AFM.ITotalItem[] = [
+            const columnTotals: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
@@ -411,7 +412,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a1", measureIdentifier: "m2", type: "sum" },
             ];
 
@@ -420,7 +421,7 @@ describe("aggregationsMenuHelper", () => {
             expect(result).toEqual(expectedColumns);
         });
         it("should add subtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [];
+            const columnTotals: ITotal[] = [];
 
             const menuAggregationClickConfig: IMenuAggregationClickConfig = {
                 attributeIdentifier: "a2",
@@ -429,7 +430,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
             ];
 
@@ -438,7 +439,7 @@ describe("aggregationsMenuHelper", () => {
             expect(result).toEqual(expectedColumns);
         });
         it("should not remove subtotals of same type when removing grandtotal", () => {
-            const columnTotals: AFM.ITotalItem[] = [
+            const columnTotals: ITotal[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
             ];
@@ -450,7 +451,7 @@ describe("aggregationsMenuHelper", () => {
                 type: "sum",
             };
 
-            const expectedColumns: AFM.ITotalItem[] = [
+            const expectedColumns: ITotal[] = [
                 { attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" },
                 { attributeIdentifier: "a3", measureIdentifier: "m1", type: "sum" },
             ];

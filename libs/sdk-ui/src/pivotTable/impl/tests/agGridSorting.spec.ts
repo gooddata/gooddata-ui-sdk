@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { AFM } from "@gooddata/gd-bear-model";
 import { assortDimensionHeaders } from "../agGridHeaders";
 import {
     getAttributeSortItemFieldAndDirection,
@@ -10,11 +9,12 @@ import {
     getSortsFromModel,
 } from "../agGridSorting";
 import * as fixtures from "../../../../__mocks__/fixtures";
+import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("getAttributeSortItemFieldAndDirection", () => {
     const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
     const { attributeHeaders } = assortDimensionHeaders(dimensions);
-    const attributeSortItem: AFM.IAttributeSortItem = {
+    const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: {
             direction: "asc",
             attributeIdentifier: "state",
@@ -31,7 +31,7 @@ describe("getAttributeSortItemFieldAndDirection", () => {
 describe("getMeasureSortItemFieldAndDirection", () => {
     const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
     const { measureHeaderItems } = assortDimensionHeaders(dimensions);
-    const measureSortItem: AFM.IMeasureSortItem = {
+    const measureSortItem: IMeasureSortItem = {
         measureSortItem: {
             direction: "desc",
             locators: [

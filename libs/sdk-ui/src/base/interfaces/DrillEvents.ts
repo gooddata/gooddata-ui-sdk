@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { AFM } from "@gooddata/gd-bear-model";
 import { TableRowForDrilling } from "../../pivotTable/types";
 import {
     ChartElementType,
@@ -35,7 +34,6 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
     return (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 
-export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 export type IDrillEventCallback2 = (event: IDrillEvent2) => void | boolean;
 
 // Intersection element
@@ -109,12 +107,6 @@ export interface IDrillEventContext {
     intersection?: IDrillEventIntersectionElement[];
     // A collection of chart series points (if available)
     points?: IDrillPoint[];
-}
-
-// IDrillEvent is a parameter of the onDrill is callback
-export interface IDrillEvent {
-    executionContext: AFM.IAfm;
-    drillContext: IDrillEventContext;
 }
 
 export interface IDrillEvent2 {

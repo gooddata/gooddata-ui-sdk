@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
 import { mount } from "enzyme";
 import * as React from "react";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
@@ -13,7 +12,7 @@ describe("AggregationsMenu", () => {
     const intlMock = createIntlMock();
     const attributeColumnId = "a_6_2-m_0";
     const getDataView = () => pivotTableWithColumnAndRowAttributes;
-    const getTotals = () => [] as AFM.ITotalItem[];
+    const getTotals = () => [] as ITotal[];
     const onMenuOpenedChange = jest.fn();
     const onAggregationSelect = jest.fn();
 

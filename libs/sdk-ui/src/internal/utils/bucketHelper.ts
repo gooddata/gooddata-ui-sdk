@@ -17,7 +17,6 @@ import { InjectedIntl } from "react-intl";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import * as BucketNames from "../../base/constants/bucketNames";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 
 import {
     IBucketFilter,
@@ -49,6 +48,7 @@ import {
     IInsight,
     insightBuckets,
     isSimpleMeasure,
+    ITotal,
 } from "@gooddata/sdk-model";
 
 export function removeUnusedFilters(filters: IFiltersBucketItem[], unusedBucketItems: IBucketItem[]) {
@@ -388,10 +388,7 @@ export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFu
     });
 }
 
-export function getTotalsFromBucket(
-    buckets: IBucketOfFun[],
-    bucketName: string,
-): VisualizationObject.IVisualizationTotal[] {
+export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string): ITotal[] {
     const selectedBucket = buckets.find(bucket => bucket.localIdentifier === bucketName);
     return get(selectedBucket, "totals", []);
 }

@@ -11,7 +11,7 @@ import { ErrorStates, ErrorCodes } from "./base/constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
 // import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
+import { IHeaderPredicate2 } from "./base/interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./base/interfaces/PushData";
 import { AttributeFilter } from "./filters/AttributeFilter/AttributeFilter";
 import { AttributeElements } from "./filters/AttributeFilter/AttributeElements";
@@ -106,7 +106,7 @@ export {
     OverTimeComparisonTypes,
     SortsHelper,
     ColorUtils,
-    IHeaderPredicate,
+    IHeaderPredicate2,
     HeaderPredicateFactory,
     MappingHeader,
     withJsxExport,

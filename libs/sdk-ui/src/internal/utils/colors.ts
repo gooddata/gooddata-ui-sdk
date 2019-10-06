@@ -7,13 +7,16 @@ import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 
-import { Execution } from "@gooddata/gd-bear-model";
 import { IColorAssignment } from "../../base/interfaces/Colors";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import { ColorUtils } from "../../highcharts";
-import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import {
+    IMeasureHeaderItem,
+    isMeasureHeaderItem,
+    isResultAttributeHeaderItem,
+} from "@gooddata/sdk-backend-spi";
 import { IColorItem, IColorMappingProperty, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
 
 function getItemName(item: IColoredItem): string {
@@ -62,7 +65,7 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
     return inputItems;
 }
 
-function getMeasureMappingIdentifier(item: Execution.IMeasureHeaderItem): string {
+function getMeasureMappingIdentifier(item: IMeasureHeaderItem): string {
     return item.measureHeaderItem.localIdentifier;
 }
 

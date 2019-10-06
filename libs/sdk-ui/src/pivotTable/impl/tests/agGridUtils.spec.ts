@@ -11,7 +11,7 @@ import {
 } from "../agGridUtils";
 import cloneDeep = require("lodash/cloneDeep");
 import identity = require("lodash/identity");
-import { AFM } from "@gooddata/gd-bear-model";
+import { IDimension } from "@gooddata/sdk-model";
 
 describe("getIdsFromUri", () => {
     it("should return array of attribute id and attribute value id", () => {
@@ -93,14 +93,14 @@ describe("cellRenderer", () => {
 
 describe("getSubtotalStyles", () => {
     it("should return empty array if no totals are present", () => {
-        const dimension: AFM.IDimension = {
+        const dimension: IDimension = {
             itemIdentifiers: ["a1", "a2", "a3"],
         };
         const resultSubtotalStyles = getSubtotalStyles(dimension);
         expect(resultSubtotalStyles).toEqual([]);
     });
     it("should return null on first attribute", () => {
-        const dimension: AFM.IDimension = {
+        const dimension: IDimension = {
             itemIdentifiers: ["a1", "a2"],
             totals: [
                 {
@@ -119,7 +119,7 @@ describe("getSubtotalStyles", () => {
         expect(resultSubtotalStyles).toEqual([null, "even"]);
     });
     it("should alternate subtotal style", () => {
-        const dimension: AFM.IDimension = {
+        const dimension: IDimension = {
             itemIdentifiers: ["a1", "a2", "a3", "a4", "a5"],
             totals: [
                 {

@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { Execution } from "@gooddata/gd-bear-model";
 import * as fixtures from "../../../../stories/test_data/fixtures";
 import {
     assortDimensionHeaders,
@@ -14,6 +13,7 @@ import {
     mergeHeaderEndIndex,
     shouldMergeHeaders,
 } from "../agGridHeaders";
+import { IResultHeaderItem, isAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
@@ -242,7 +242,7 @@ describe("assortDimensionHeaders", () => {
         const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
         const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
         expect(attributeHeaders).toHaveLength(4);
-        expect(attributeHeaders.filter(header => Execution.isAttributeHeader(header))).toHaveLength(4);
+        expect(attributeHeaders.filter(header => isAttributeHeader(header))).toHaveLength(4);
         expect(measureHeaderItems).toHaveLength(4);
         expect(measureHeaderItems.filter(header => header.hasOwnProperty("measureHeaderItem"))).toHaveLength(
             4,
@@ -306,7 +306,7 @@ describe("conversion from header matrix to hierarchy", () => {
         },
     };
 
-    const resultHeaderDimension: Execution.IResultHeaderItem[][] = [
+    const resultHeaderDimension: IResultHeaderItem[][] = [
         [alabamaHeader, alabamaHeader, californiaHeader, californiaHeader],
         [year2017Header, year2017Header, year2017Header, year2017Header],
         [costsHeader, revenuesHeader, costsHeader, revenuesHeader],

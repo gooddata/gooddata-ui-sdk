@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { Execution } from "@gooddata/gd-bear-model";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
@@ -12,7 +11,7 @@ import {
 } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";
-import { IResultMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IHeader, IResultMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
 
@@ -21,9 +20,7 @@ const intl = createIntlMock();
 
 describe("getMeasureDrillItem", () => {
     it("should return measure drill item based on response headers", () => {
-        const responseHeaders: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
-            1,
-        );
+        const responseHeaders: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(1);
         const header: IResultMeasureHeaderItem = {
             measureHeaderItem: {
                 name: "not important",
@@ -43,12 +40,8 @@ describe("getMeasureDrillItem", () => {
         expect(getMeasureDrillItem(responseHeaders, header)).toEqual(expectedDrillHeader);
     });
     it("should return null if the header cannot be found", () => {
-        const responseHeaders1: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
-            0,
-        );
-        const responseHeaders2: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
-            1,
-        );
+        const responseHeaders1: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(0);
+        const responseHeaders2: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(1);
         const header: IResultMeasureHeaderItem = {
             measureHeaderItem: {
                 name: "not important",
