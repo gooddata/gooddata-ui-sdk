@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { InjectedIntl, MessageValue } from "react-intl";
-import { IDropdownItem } from "../components/configurationControls/DropdownControl";
+import { IDropdownItem } from "../interfaces/Dropdown";
 
 export function getTranslation(
     translationId: string,
