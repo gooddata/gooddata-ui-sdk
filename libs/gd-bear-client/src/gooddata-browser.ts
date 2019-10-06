@@ -2,9 +2,6 @@
 import "isomorphic-fetch";
 import { factory, SDK } from "./gooddata";
 import { ApiResponse, ApiResponseError, ApiNetworkError } from "./xhr";
-import * as referenceHandling from "./referenceHandling";
-
-import * as DataLayer from "./DataLayer";
 
 const factoryBrowser = factory(fetch.bind(window));
 
@@ -12,13 +9,11 @@ const factoryBrowser = factory(fetch.bind(window));
 // relies on cookies, so it will work in browser environment automatically.
 
 // For node see `gooddata-node.js` file.
-export { factoryBrowser as factory, SDK, DataLayer };
+export { factoryBrowser as factory, SDK };
 
 // Allow to reuse our ApiResponse and API response errors
 export { ApiResponse, ApiResponseError, ApiNetworkError };
-
-// explicitly export TypeGuards as they cannot be exported using the export * syntax when there is also a default export
-export { referenceHandling };
+export { isUri } from "./util";
 
 export * from "./interfaces";
 

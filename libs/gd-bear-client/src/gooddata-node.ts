@@ -3,9 +3,7 @@ const fetchCookie = require("fetch-cookie"); // tslint:disable-line:no-var-requi
 import nodeFetch from "node-fetch";
 
 import { factory, SDK } from "./gooddata";
-import * as DataLayer from "./DataLayer";
 import { ApiResponse, ApiResponseError, ApiNetworkError } from "./xhr";
-import * as referenceHandling from "./referenceHandling";
 
 const factoryNode = factory(fetchCookie(nodeFetch as any));
 
@@ -13,12 +11,11 @@ const factoryNode = factory(fetchCookie(nodeFetch as any));
 // This is necessary in order to preserve cookies between requests like it would be
 // done in the browser environment. Otherwise the SDK would forget about authentication
 // immediately.
-export { factoryNode as factory, SDK, DataLayer };
+export { factoryNode as factory, SDK };
 
 export { ApiResponse, ApiResponseError, ApiNetworkError };
+export { isUri } from "./util";
 
-// explicitly export TypeGuards as they cannot be exported using the export * syntax when there is also a default export
-export { referenceHandling };
 export * from "./interfaces";
 
 export default factoryNode();
