@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import { AFM } from "@gooddata/gd-bear-model/dist/index";
 
 import {
     PluggablePivotTable,
@@ -11,9 +10,9 @@ import {
     addDefaultSort,
     isSortItemVisible,
 } from "../PluggablePivotTable";
-import * as testMocks from "../../../../../../internal/mocks/testMocks";
-import * as referencePointMocks from "../../../../../../internal/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../../../internal/mocks/uiConfigMocks";
+import * as testMocks from "../../../../mocks/testMocks";
+import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import {
     IVisConstruct,
     IBucketOfFun,
@@ -25,20 +24,22 @@ import {
     IFiltersBucketItem,
     IBucketFilter,
     IBucketFilterElement,
-} from "../../../../../../internal/interfaces/Visualization";
+} from "../../../../interfaces/Visualization";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
-import { IDrillableItem } from "../../../../../../base/interfaces/DrillEvents";
-import { CorePivotTable } from "../../../../../../pivotTable/CorePivotTable";
-import { DEFAULT_LOCALE } from "../../../../../../base/constants/localization";
+import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
+import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
+import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],
     rows: IBucketItem[] = [],
     columns: IBucketItem[] = [],
     filterItems: IFiltersBucketItem[] = [],
-    sortItems: AFM.SortItem[] = [],
+    sortItems: SortItem[] = [],
     measuresIsShowInPercentEnabled = false,
 ): IExtendedReferencePoint => ({
     buckets: [
@@ -119,7 +120,7 @@ const getMockReferencePoint = (
 });
 
 // sortItems based on referencePointMocks.simpleStackedReferencePoint
-const validMeasureSort: AFM.IMeasureSortItem = {
+const validMeasureSort: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -138,21 +139,21 @@ const validMeasureSort: AFM.IMeasureSortItem = {
     },
 };
 
-const validAttributeSort: AFM.IAttributeSortItem = {
+const validAttributeSort: IAttributeSortItem = {
     attributeSortItem: {
         attributeIdentifier: "a1",
         direction: "desc",
     },
 };
 
-const invalidAttributeSort: AFM.IAttributeSortItem = {
+const invalidAttributeSort: IAttributeSortItem = {
     attributeSortItem: {
         attributeIdentifier: "invalid",
         direction: "desc",
     },
 };
 
-const invalidMeasureSortInvalidMeasure: AFM.IMeasureSortItem = {
+const invalidMeasureSortInvalidMeasure: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -171,7 +172,7 @@ const invalidMeasureSortInvalidMeasure: AFM.IMeasureSortItem = {
     },
 };
 
-const invalidMeasureSortInvalidAttribute: AFM.IMeasureSortItem = {
+const invalidMeasureSortInvalidAttribute: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -190,7 +191,7 @@ const invalidMeasureSortInvalidAttribute: AFM.IMeasureSortItem = {
     },
 };
 
-const invalidMeasureSortTooManyLocators: AFM.IMeasureSortItem = {
+const invalidMeasureSortTooManyLocators: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -215,7 +216,7 @@ const invalidMeasureSortTooManyLocators: AFM.IMeasureSortItem = {
     },
 };
 
-const invalidMeasureSortLocatorsTooShort: AFM.IMeasureSortItem = {
+const invalidMeasureSortLocatorsTooShort: IMeasureSortItem = {
     measureSortItem: {
         direction: "asc",
         locators: [
@@ -229,8 +230,13 @@ const invalidMeasureSortLocatorsTooShort: AFM.IMeasureSortItem = {
 };
 
 describe("PluggablePivotTable", () => {
+    const backend = dummyBackend();
+    const executionFactory = backend.workspace("PROJECTID").execution();
+
     const defaultProps = {
         projectId: "PROJECTID",
+        backend,
+        visualizationProperties: {},
         element: "#tableElement",
         configPanelElement: null as string,
         callbacks: {
@@ -257,8 +263,6 @@ describe("PluggablePivotTable", () => {
             const locale: ILocale = DEFAULT_LOCALE;
             const drillableItems: IDrillableItem[] = [];
             return {
-                dataSource: testMocks.dummyDataSource,
-                resultSpec: testMocks.dummyTableResultSpec,
                 locale,
                 custom: {
                     drillableItems,
@@ -298,7 +302,7 @@ describe("PluggablePivotTable", () => {
             const renderSpy = spyOnRender();
 
             const options = getDefaultOptions();
-            pivotTable.update({ ...options, dataSource: null }, {}, testMocks.emptyMdObject);
+            pivotTable.update({ ...options }, testMocks.emptyInsight, executionFactory);
 
             expect(renderSpy).toHaveBeenCalledTimes(0);
 
@@ -313,7 +317,7 @@ describe("PluggablePivotTable", () => {
             const renderSpy = spyOnRender();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, {}, testMocks.emptyMdObject);
+            pivotTable.update(options, testMocks.dummyInsight, executionFactory);
 
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
@@ -326,18 +330,14 @@ describe("PluggablePivotTable", () => {
             };
             const props: any = createElementSpy.mock.calls[0][1];
             expect(props.afterRender).toEqual(defaultProps.callbacks.afterRender);
-            expect(props.dataSource).toEqual(testMocks.dummyDataSource);
             expect(props.drillableItems).toEqual(options.custom.drillableItems);
-            expect(props.height).toEqual(options.dimensions.height);
             expect(props.locale).toEqual(options.locale);
             expect(props.config).toEqual(defaultConfig);
             expect(props.intl).toBeTruthy();
             expect(props.onError).toEqual(defaultProps.callbacks.onError);
             expect(props.onLoadingChanged).toEqual(defaultProps.callbacks.onLoadingChanged);
             expect(props.pushData).toEqual(defaultProps.callbacks.pushData);
-            expect(props.totals).toEqual([]);
             expect(props.totalsEditAllowed).toEqual(options.custom.totalsEditAllowed);
-            expect(props.resultSpec).toEqual(options.resultSpec);
             expect(props.ErrorComponent).toEqual(null);
             expect(props.LoadingComponent).toEqual(null);
 
@@ -384,7 +384,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedSortItems: AFM.SortItem[] = sourceReferencePoint.properties.sortItems;
+                    const expectedSortItems: SortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
             });
@@ -425,7 +425,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with filtered sortItems (in this case identical)", () => {
                 return extendedReferencePointPromise.then(extendedReferencePoint => {
-                    const expectedSortItems: AFM.SortItem[] = sourceReferencePoint.properties.sortItems;
+                    const expectedSortItems: SortItem[] = sourceReferencePoint.properties.sortItems;
                     expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
                 });
             });
@@ -449,7 +449,7 @@ describe("PluggablePivotTable", () => {
                     validMeasureSort,
                 ],
             );
-            const expectedSortItems: AFM.SortItem[] = [validAttributeSort, validMeasureSort];
+            const expectedSortItems: SortItem[] = [validAttributeSort, validMeasureSort];
 
             const extendedReferencePointPromise: Promise<
                 IExtendedReferencePoint
@@ -798,7 +798,7 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
         true,
     );
 
-    const sourceSortItems: AFM.SortItem[] = [
+    const sourceSortItems: SortItem[] = [
         invalidAttributeSort,
         invalidMeasureSortInvalidMeasure,
         invalidMeasureSortInvalidAttribute,
@@ -813,7 +813,7 @@ describe("adaptReferencePointSortItemsToPivotTable", () => {
     const columnAttributes: IBucketItem[] = mockPivotTableReferencePoint.buckets[2].items;
 
     it("should remove invalid sort items", async () => {
-        const expectedSortItems: AFM.SortItem[] = [validAttributeSort, validMeasureSort];
+        const expectedSortItems: SortItem[] = [validAttributeSort, validMeasureSort];
 
         expect(
             adaptReferencePointSortItemsToPivotTable(
@@ -850,18 +850,18 @@ describe("addDefaultSort", () => {
     const productRowId = "38f1d87b8b7c42c1b9a37395a24f7313";
     const productRow = rowFor(productRowId, "attr.product");
 
-    const sortFor = (localId: string, direction: AFM.SortDirection): AFM.SortItem => ({
+    const sortFor = (localId: string, direction: SortDirection): SortItem => ({
         attributeSortItem: {
             attributeIdentifier: localId,
             direction,
         },
     });
 
-    const defaultSortFor = (localId: string): AFM.SortItem => sortFor(localId, "asc");
+    const defaultSortFor = (localId: string): SortItem => sortFor(localId, "asc");
 
     describe("with no filters specified", () => {
         it("should not add the default sort if no row is specified", () => {
-            const expected: AFM.SortItem[] = [];
+            const expected: SortItem[] = [];
             const actual = addDefaultSort([], [], [], []);
             expect(actual).toEqual(expected);
         });
@@ -921,7 +921,7 @@ describe("addDefaultSort", () => {
             expect(actual).toEqual(expected);
         });
         it("should not change sorts when there is a measure sort", () => {
-            const measureSort: AFM.IMeasureSortItem = {
+            const measureSort: IMeasureSortItem = {
                 measureSortItem: {
                     direction: "asc",
                     locators: [],
@@ -941,7 +941,7 @@ describe("addDefaultSort", () => {
     it("should add default sort if existing measure sort is not visible due to filters (RAIL-1275)", () => {
         const expected = [sortFor(accountRowId, "asc")];
         const uri = "/gdc/md/mockproject/obj/attr.country/elements?id=1";
-        const measureSort: AFM.IMeasureSortItem = {
+        const measureSort: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [
@@ -1015,7 +1015,7 @@ describe("isSortVisible", () => {
 
         const matchingUri = "/gdc/md/mockproject/obj/attr.movie_genre/elements?id=1";
         const notMatchingUri = "/gdc/md/mockproject/obj/attr.movie_genre/elements?id=123";
-        const sortItem: AFM.IMeasureSortItem = {
+        const sortItem: IMeasureSortItem = {
             measureSortItem: {
                 direction: "asc",
                 locators: [

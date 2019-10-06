@@ -9,48 +9,66 @@ import * as React from "react";
 import Measure from "react-measure";
 import { render, unmountComponentAtNode } from "react-dom";
 import { InjectedIntl } from "react-intl";
-import { AFM, VisualizationObject } from "@gooddata/gd-bear-model/dist/index";
 import produce from "immer";
-import { configurePercent, configureOverTimeComparison } from "../../../../../internal/utils/bucketConfig";
-import UnsupportedConfigurationPanel from "../../../../../internal/components/configurationPanels/UnsupportedConfigurationPanel";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
-import * as VisEvents from "../../../../../base/interfaces/Events";
-import * as BucketNames from "../../../../../base/constants/bucketNames";
+import * as VisEvents from "../../../../base/interfaces/Events";
+import * as BucketNames from "../../../../base/constants/bucketNames";
 import {
-    IReferencePoint,
+    IBucketFilter,
+    IBucketItem,
+    IBucketOfFun,
     IExtendedReferencePoint,
+    ILocale,
+    IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
     IVisProps,
-    ILocale,
     IVisualizationProperties,
-    IBucketItem,
-    IBucketOfFun,
-    IBucketFilter,
-} from "../../../../../internal/interfaces/Visualization";
+} from "../../../interfaces/Visualization";
 
-import { ATTRIBUTE, DATE, METRIC } from "../../../../../internal/constants/bucket";
+import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
 
 import {
-    sanitizeUnusedFilters,
     getAllItemsByType,
-    getTotalsFromBucket,
     getItemsFromBuckets,
+    getTotalsFromBucket,
     removeDuplicateBucketItems,
-} from "../../../../../internal/utils/bucketHelper";
+    sanitizeUnusedFilters,
+} from "../../../utils/bucketHelper";
 
-import { setPivotTableUiConfig } from "../../../../../internal/utils/uiConfigHelpers/pivotTableUiConfigHelper";
-import { createInternalIntl } from "../../../../../internal/utils/internalIntlProvider";
-import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../../../internal/constants/uiConfig";
-import { AbstractPluggableVisualization } from "../../../../../internal/components/pluggableVisualizations/AbstractPluggableVisualization";
-import { getReferencePointWithSupportedProperties } from "../../../../../internal/utils/propertiesHelper";
+import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
+import { generateDimensions } from "../../../../base/helpers/dimensions";
+import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
-    VisualizationTypes,
-    VisualizationEnvironment,
-} from "../../../../../base/constants/visualizationTypes";
-import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
-import { generateDimensions } from "../../../../../base/helpers/dimensions";
-import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
+    attributeId,
+    bucketAttributes,
+    bucketsFind,
+    bucketsMeasures,
+    IAttributeSortItem,
+    IBucket,
+    IDimension,
+    IInsight,
+    IMeasureSortItem,
+    insightBuckets,
+    insightHasDataDefined,
+    insightProperties,
+    isAttributeSort,
+    isMeasureLocator,
+    isMeasureSort,
+    measureId,
+    SortItem,
+} from "@gooddata/sdk-model";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { createSorts } from "../../../utils/sort";
+import { ICorePivotTableProps } from "../../../../pivotTable/types";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -71,22 +89,22 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
 function adaptSortItemsToPivotTable(
-    originalSortItems: AFM.SortItem[],
+    originalSortItems: SortItem[],
     measureLocalIdentifiers: string[],
     rowAttributeLocalIdentifiers: string[],
     columnAttributeLocalIdentifiers: string[],
-): AFM.SortItem[] {
+): SortItem[] {
     const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
 
-    return originalSortItems.reduce((sortItems: AFM.SortItem[], sortItem: AFM.SortItem) => {
-        if (AFM.isMeasureSortItem(sortItem)) {
+    return originalSortItems.reduce((sortItems: SortItem[], sortItem: SortItem) => {
+        if (isMeasureSort(sortItem)) {
             // filter out invalid locators
-            const filteredSortItem: AFM.IMeasureSortItem = {
+            const filteredSortItem: IMeasureSortItem = {
                 measureSortItem: {
                     ...sortItem.measureSortItem,
                     locators: sortItem.measureSortItem.locators.filter(locator => {
                         // filter out invalid measure locators
-                        if (AFM.isMeasureLocatorItem(locator)) {
+                        if (isMeasureLocator(locator)) {
                             return includes(
                                 measureLocalIdentifiers,
                                 locator.measureLocatorItem.measureIdentifier,
@@ -103,9 +121,7 @@ function adaptSortItemsToPivotTable(
 
             // keep sortItem if measureLocator is present and locators are correct length
             if (
-                filteredSortItem.measureSortItem.locators.some(locator =>
-                    AFM.isMeasureLocatorItem(locator),
-                ) &&
+                filteredSortItem.measureSortItem.locators.some(locator => isMeasureLocator(locator)) &&
                 filteredSortItem.measureSortItem.locators.length ===
                     columnAttributeLocalIdentifiers.length + 1
             ) {
@@ -123,11 +139,11 @@ function adaptSortItemsToPivotTable(
 }
 
 export function adaptReferencePointSortItemsToPivotTable(
-    originalSortItems: AFM.SortItem[],
+    originalSortItems: SortItem[],
     measures: IBucketItem[],
     rowAttributes: IBucketItem[],
     columnAttributes: IBucketItem[],
-): AFM.SortItem[] {
+): SortItem[] {
     const measureLocalIdentifiers = measures.map(measure => measure.localIdentifier);
     const rowAttributeLocalIdentifiers = rowAttributes.map(rowAttribute => rowAttribute.localIdentifier);
     const columnAttributeLocalIdentifiers = columnAttributes.map(
@@ -142,24 +158,13 @@ export function adaptReferencePointSortItemsToPivotTable(
     );
 }
 
-const bucketItemGetter = <T extends VisualizationObject.BucketItem>(bucketId: string) => (
-    buckets: VisualizationObject.IBucket[],
-) => flatMap(buckets.filter(b => b.localIdentifier === bucketId), i => i.items) as T[];
-
-const getMeasures = bucketItemGetter<VisualizationObject.IMeasure>(BucketNames.MEASURES);
-const getRows = bucketItemGetter<VisualizationObject.IVisualizationAttribute>(BucketNames.ATTRIBUTE);
-const getColumns = bucketItemGetter<VisualizationObject.IVisualizationAttribute>(BucketNames.COLUMNS);
-
-function adaptMdObjectSortItemsToPivotTable(
-    originalSortItems: AFM.SortItem[],
-    buckets: VisualizationObject.IBucket[],
-): AFM.SortItem[] {
-    const measureLocalIdentifiers = getMeasures(buckets).map(measure => measure.measure.localIdentifier);
-    const rowAttributeLocalIdentifiers = getRows(buckets).map(
-        rowAttribute => rowAttribute.visualizationAttribute.localIdentifier,
+function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], buckets: IBucket[]): SortItem[] {
+    const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureId);
+    const rowAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.ATTRIBUTE)).map(
+        attributeId,
     );
-    const columnAttributeLocalIdentifiers = getColumns(buckets).map(
-        columnAttribute => columnAttribute.visualizationAttribute.localIdentifier,
+    const columnAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.COLUMNS)).map(
+        attributeId,
     );
 
     return adaptSortItemsToPivotTable(
@@ -170,35 +175,34 @@ function adaptMdObjectSortItemsToPivotTable(
     );
 }
 
-const isAttributeSortItemVisible = (_sortItem: AFM.IAttributeSortItem, _filters: IBucketFilter[]): boolean =>
+const isAttributeSortItemVisible = (_sortItem: IAttributeSortItem, _filters: IBucketFilter[]): boolean =>
     true;
 
-const isMeasureSortItemMatchedByFilter = (sortItem: AFM.IMeasureSortItem, filter: IBucketFilter): boolean =>
+const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IBucketFilter): boolean =>
     filter.selectedElements.some(selectedElement =>
         sortItem.measureSortItem.locators.some(
             locator =>
-                !AFM.isMeasureLocatorItem(locator) &&
-                locator.attributeLocatorItem.element === selectedElement.uri,
+                !isMeasureLocator(locator) && locator.attributeLocatorItem.element === selectedElement.uri,
         ),
     );
 
-const isMeasureSortItemVisible = (sortItem: AFM.IMeasureSortItem, filters: IBucketFilter[]): boolean =>
+const isMeasureSortItemVisible = (sortItem: IMeasureSortItem, filters: IBucketFilter[]): boolean =>
     filters.reduce((isVisible, filter) => {
         const shouldBeMatched = !filter.isInverted;
         return isVisible && shouldBeMatched === isMeasureSortItemMatchedByFilter(sortItem, filter);
     }, true);
 
-export const isSortItemVisible = (sortItem: AFM.SortItem, filters: IBucketFilter[]): boolean =>
-    AFM.isAttributeSortItem(sortItem)
+export const isSortItemVisible = (sortItem: SortItem, filters: IBucketFilter[]): boolean =>
+    isAttributeSort(sortItem)
         ? isAttributeSortItemVisible(sortItem, filters)
         : isMeasureSortItemVisible(sortItem, filters);
 
 export function addDefaultSort(
-    sortItems: AFM.SortItem[],
+    sortItems: SortItem[],
     filters: IBucketFilter[],
     rowAttributes: IBucketItem[],
     previousRowAttributes?: IBucketItem[],
-): AFM.SortItem[] {
+): SortItem[] {
     // cannot construct default sort without a row
     if (rowAttributes.length < 1) {
         return sortItems;
@@ -212,7 +216,7 @@ export function addDefaultSort(
             return false;
         }
         // non attribute sort is definitely custom
-        if (!AFM.isAttributeSortItem(sortItem)) {
+        if (!isAttributeSort(sortItem)) {
             return true;
         }
         // asc sort on first row is considered default
@@ -246,6 +250,7 @@ export function addDefaultSort(
 }
 
 export class PluggablePivotTable extends AbstractPluggableVisualization {
+    // @ts-ignore
     private projectId: string;
     private element: string;
     private configPanelElement: string;
@@ -274,14 +279,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    public update(
-        options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
-    ) {
-        this.visualizationProperties = visualizationProperties;
-        this.renderVisualization(options, visualizationProperties, mdObject);
-        this.renderConfigurationPanel(mdObject);
+    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
+        this.visualizationProperties = insightProperties(insight);
+        this.renderVisualization(options, insight, executionFactory);
+        this.renderConfigurationPanel(insight);
     }
 
     public getExtendedReferencePoint(
@@ -323,7 +324,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         },
                     ]);
 
-                    const originalSortItems: AFM.SortItem[] = get(
+                    const originalSortItems: SortItem[] = get(
                         referencePointDraft.properties,
                         "sortItems",
                         [],
@@ -366,106 +367,97 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        visualizationProperties: IVisualizationProperties,
-        mdObject: VisualizationObject.IVisualizationObjectContent,
+        insight: IInsight,
+        executionFactory: IExecutionFactory,
     ) {
-        const { dataSource } = options;
+        if (!insightHasDataDefined(insight)) {
+            // there is nothing in the insight's bucket that can be visualized
+            // bail out
+            return;
+        }
 
-        if (dataSource) {
-            const { resultSpec, locale, custom, dimensions, config } = options;
-            const { height } = dimensions;
-            const { drillableItems } = custom;
-            const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const { locale, custom, dimensions, config } = options;
+        const { height } = dimensions;
+        const { drillableItems } = custom;
+        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
 
-            const resultSpecWithDimensions: AFM.IResultSpec = {
-                ...resultSpec,
-                dimensions: this.getDimensions(mdObject),
-            };
+        const execution = executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getDimensions(insight))
+            .withSorting(...createSorts(VisualizationTypes.TABLE, insight));
 
-            const sorts: AFM.SortItem[] = get(visualizationProperties, "sortItems", []) as AFM.SortItem[];
-
-            const resultSpecWithSorts = resultSpecWithDimensions.sorts
-                ? resultSpecWithDimensions
-                : {
-                      ...resultSpecWithDimensions,
-                      sorts,
-                  };
-
-            const rowsBucket = mdObject.buckets.find(
-                bucket => bucket.localIdentifier === BucketNames.ATTRIBUTE,
-            );
-            const totals: VisualizationObject.IVisualizationTotal[] = (rowsBucket && rowsBucket.totals) || [];
-
-            let configUpdated = config;
-            if (this.environment !== "dashboards") {
-                // Menu aggregations turned off in KD
-                configUpdated = merge(
-                    {
-                        menu: {
-                            aggregations: true,
-                            aggregationsSubMenu: true,
-                        },
+        let configUpdated = config;
+        if (this.environment !== "dashboards") {
+            // Menu aggregations turned off in KD
+            configUpdated = merge(
+                {
+                    menu: {
+                        aggregations: true,
+                        aggregationsSubMenu: true,
                     },
-                    configUpdated,
-                );
-            }
+                },
+                configUpdated,
+            );
+        }
 
-            const pivotTableProps = {
-                projectId: this.projectId,
-                drillableItems,
-                totals,
-                config: configUpdated,
-                height,
-                locale,
-                dataSource,
-                resultSpec: resultSpecWithSorts,
-                afterRender,
-                onLoadingChanged,
-                pushData,
-                onError,
-                onExportReady: this.onExportReady,
-                LoadingComponent: null as any,
-                ErrorComponent: null as any,
-                intl: this.intl,
-            };
+        const pivotTableProps: ICorePivotTableProps = {
+            execution,
+            drillableItems,
+            config: configUpdated,
+            locale,
+            afterRender,
+            onLoadingChanged,
+            pushData,
+            onError,
+            onExportReady: this.onExportReady,
+            LoadingComponent: null as any,
+            ErrorComponent: null as any,
+            intl: this.intl,
+        };
 
-            if (this.environment === "dashboards") {
-                if (isNil(height)) {
-                    render(
-                        <Measure client={true}>
-                            {({ measureRef, contentRect }: any) => {
-                                const usedHeight = Math.floor(contentRect.client.height || 0);
-                                const pivotWrapperStyle = {
-                                    height: "100%",
-                                    textAlign: "left",
-                                };
+        // TODO: SDK8: check the height handling; previously, code was passing height prop down to core
+        //  pivot table; now.. this component had this prop but it seems to me that it was never taken
+        //  into account (it had the prop because it inherited from same base as charts). Checked the history
+        //  and it seems that CorePivotTable never used the 'height' prop
 
-                                return (
-                                    <div
-                                        ref={measureRef}
-                                        style={pivotWrapperStyle}
-                                        className="gd-table-dashboard-wrapper"
-                                    >
-                                        <CorePivotTable {...pivotTableProps} height={usedHeight} />
-                                    </div>
-                                );
-                            }}
-                        </Measure>,
-                        document.querySelector(this.element),
-                    );
-
-                    return;
-                }
-
+        if (this.environment === "dashboards") {
+            if (isNil(height)) {
                 render(
-                    <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
-                        <CorePivotTable {...pivotTableProps} />
-                    </div>,
+                    <Measure client={true}>
+                        {({ measureRef, contentRect }: any) => {
+                            const usedHeight = Math.floor(contentRect.client.height || 0);
+                            const pivotWrapperStyle = {
+                                height: "100%",
+                                textAlign: "left",
+                            };
+
+                            // TODO: SDK8: height={usedHeight} was passed here but seems it was never taken
+                            //  into account by core pivot table (see above)
+                            return (
+                                <div
+                                    ref={measureRef}
+                                    style={pivotWrapperStyle}
+                                    className="gd-table-dashboard-wrapper"
+                                >
+                                    <CorePivotTable {...pivotTableProps} config={{ maxHeight: usedHeight }} />
+                                </div>
+                            );
+                        }}
+                    </Measure>,
                     document.querySelector(this.element),
                 );
-            } else {
-                render(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
+
+                return;
             }
+
+            render(
+                <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
+                    <CorePivotTable {...pivotTableProps} />
+                </div>,
+                document.querySelector(this.element),
+            );
+        } else {
+            render(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
         }
     }
 
@@ -476,7 +468,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected renderConfigurationPanel(mdObject: VisualizationObject.IVisualizationObjectContent) {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             const properties: IVisualizationProperties = get(
                 this.visualizationProperties,
@@ -488,7 +480,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             const sanitizedProperties = properties.sortItems
                 ? {
                       ...properties,
-                      sortItems: adaptMdObjectSortItemsToPivotTable(properties.sortItems, mdObject.buckets),
+                      sortItems: adaptMdObjectSortItemsToPivotTable(
+                          properties.sortItems,
+                          insightBuckets(insight),
+                      ),
                   }
                 : properties;
 
@@ -503,7 +498,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(mdObject: VisualizationObject.IVisualizationObjectContent): AFM.IDimension[] {
-        return generateDimensions(mdObject, VisualizationTypes.TABLE);
+    protected getDimensions(insight: IInsight): IDimension[] {
+        return generateDimensions(insight, VisualizationTypes.TABLE);
     }
 }
