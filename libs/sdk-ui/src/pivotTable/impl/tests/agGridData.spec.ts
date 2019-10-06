@@ -1,9 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { AFM } from "@gooddata/gd-bear-model";
-import * as fixtures from "../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../__mocks__/fixtures";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
-import { getRowHeaders, getFields } from "../agGridHeaders";
+import { createTableHeaders } from "../agGridHeaders";
 import { getRow, getRowTotals } from "../agGridData";
 
 const intl = createIntlMock();
@@ -11,22 +10,8 @@ const intl = createIntlMock();
 describe("getRowTotals", () => {
     it("should return total rows", () => {
         const fixture = fixtures.pivotTableWithColumnRowAttributesAndTotals;
-        const rowFields: string[] = getRowHeaders(
-            fixture.executionResponse.dimensions[0].headers,
-            {},
-            false,
-        ).map(header => header.field);
-        const columnFields: string[] = getFields(fixture.executionResult.headerItems[1]);
-        expect(
-            getRowTotals(
-                fixture.executionResult.totals,
-                [...rowFields, ...columnFields],
-                fixture.executionResponse.dimensions[0].headers,
-                fixture.executionRequest.resultSpec,
-                fixture.executionRequest.afm.measures.map((measure: AFM.IMeasure) => measure.localIdentifier),
-                intl,
-            ),
-        ).toEqual([
+        const tableHeaders = createTableHeaders(fixture.dataView, { makeRowGroups: false });
+        expect(getRowTotals(fixture, [...tableHeaders.rowFields, ...tableHeaders.colFields], intl)).toEqual([
             {
                 "a_2009_1-a_2071_1-m_0": "1566006.57195",
                 "a_2009_1-a_2071_1-m_1": "150708.58845",
@@ -97,42 +82,25 @@ describe("getRowTotals", () => {
     });
     it("should return null when no totals are defined", () => {
         const fixture = fixtures.pivotTableWithColumnAndRowAttributes;
-        const rowFields: string[] = getRowHeaders(
-            fixture.executionResponse.dimensions[0].headers,
-            {},
-            false,
-        ).map(header => header.field);
-        const columnFields: string[] = getFields(fixture.executionResult.headerItems[1]);
-        expect(
-            getRowTotals(
-                fixture.executionResult.totals,
-                [...rowFields, ...columnFields],
-                fixture.executionResponse.dimensions[0].headers,
-                fixture.executionRequest.resultSpec,
-                fixture.executionRequest.afm.measures.map((measure: AFM.IMeasure) => measure.localIdentifier),
-                intl,
-            ),
-        ).toBe(null);
+        const tableHeaders = createTableHeaders(fixture.dataView, { makeRowGroups: false });
+        expect(getRowTotals(fixture, [...tableHeaders.rowFields, ...tableHeaders.colFields], intl)).toBe(
+            null,
+        );
     });
 });
 
 describe("getRow", () => {
     it("should return a grid row", () => {
-        const headerItems = fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems;
-        const rowHeaders = getRowHeaders(
-            fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers,
-            {},
-            false,
-        );
-
-        const columnFields: string[] = getFields(headerItems[1]);
+        const dv = fixtures.pivotTableWithColumnAndRowAttributes;
+        const headerItems = dv.headerItems();
+        const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
             getRow(
-                fixtures.pivotTableWithColumnAndRowAttributes.executionResult.data[0],
+                dv.twoDimData()[0],
                 0,
-                columnFields,
-                rowHeaders,
+                tableHeaders.colFields,
+                tableHeaders.rowHeaders,
                 headerItems[0],
                 [],
                 intl,
@@ -205,22 +173,16 @@ describe("getRow", () => {
         });
     });
     it("should return subtotal row", () => {
-        const headerItems =
-            fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResult.headerItems;
-        const rowHeaders = getRowHeaders(
-            fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResponse.dimensions[0].headers,
-            {},
-            false,
-        );
-
-        const columnFields: string[] = getFields(headerItems[1]);
+        const dv = fixtures.pivotTableWith2Metrics4AttributesSubtotals;
+        const headerItems = dv.headerItems();
+        const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
             getRow(
-                fixtures.pivotTableWithTwoMetricsFourAttributesSubtotals.executionResult.data[0],
+                dv.twoDimData()[0],
                 3,
-                columnFields,
-                rowHeaders,
+                tableHeaders.colFields,
+                tableHeaders.rowHeaders,
                 headerItems[0],
                 [null, null, null, "even"],
                 intl,

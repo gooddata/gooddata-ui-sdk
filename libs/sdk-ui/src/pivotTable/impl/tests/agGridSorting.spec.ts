@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { AFM } from "@gooddata/gd-bear-model";
-import * as fixtures from "../../../../stories/test_data/fixtures";
 import { assortDimensionHeaders } from "../agGridHeaders";
 import {
     getAttributeSortItemFieldAndDirection,
@@ -10,11 +9,10 @@ import {
     getSortItemByColId,
     getSortsFromModel,
 } from "../agGridSorting";
-
-const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
+import * as fixtures from "../../../../__mocks__/fixtures";
 
 describe("getAttributeSortItemFieldAndDirection", () => {
-    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
     const { attributeHeaders } = assortDimensionHeaders(dimensions);
     const attributeSortItem: AFM.IAttributeSortItem = {
         attributeSortItem: {
@@ -31,7 +29,7 @@ describe("getAttributeSortItemFieldAndDirection", () => {
 });
 
 describe("getMeasureSortItemFieldAndDirection", () => {
-    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions;
+    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
     const { measureHeaderItems } = assortDimensionHeaders(dimensions);
     const measureSortItem: AFM.IMeasureSortItem = {
         measureSortItem: {
@@ -81,14 +79,15 @@ describe("assignSorting", () => {
 });
 
 describe("getSortItemByColId", () => {
+    const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
     it("should return an attributeSortItem", () => {
-        expect(getSortItemByColId(pivotTableWithColumnAndRowAttributes, "a_2211", "asc")).toEqual({
+        expect(getSortItemByColId(pivotTableWithColumnAndRowAttributes.result(), "a_2211", "asc")).toEqual({
             attributeSortItem: { attributeIdentifier: "state", direction: "asc" },
         });
     });
     it("should return a measureSortItem", () => {
         expect(
-            getSortItemByColId(pivotTableWithColumnAndRowAttributes, "a_2009_1-a_2071_1-m_0", "asc"),
+            getSortItemByColId(pivotTableWithColumnAndRowAttributes.result(), "a_2009_1-a_2071_1-m_0", "asc"),
         ).toEqual({
             measureSortItem: {
                 direction: "asc",
@@ -117,6 +116,8 @@ describe("getSortItemByColId", () => {
 });
 
 describe("getSortsFromModel", () => {
+    const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
+
     it("should return sortItems for row attribute sort", () => {
         const sortModel: any[] = [
             {
@@ -124,7 +125,7 @@ describe("getSortsFromModel", () => {
                 sort: "asc",
             },
         ];
-        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual([
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes.result())).toEqual([
             {
                 attributeSortItem: {
                     attributeIdentifier: "state",
@@ -140,7 +141,7 @@ describe("getSortsFromModel", () => {
                 sort: "asc",
             },
         ];
-        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes)).toEqual([
+        expect(getSortsFromModel(sortModel, pivotTableWithColumnAndRowAttributes.result())).toEqual([
             {
                 measureSortItem: {
                     direction: "asc",

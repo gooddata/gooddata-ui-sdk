@@ -6,13 +6,17 @@ import {
     getMeasureCellStyle,
 } from "../tableCell";
 import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
+import { pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
+import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
 
-import { TABLE_HEADERS_2A_3M } from "../../highcharts/table/fixtures/2attributes3measures";
+const rowHeaders = pivotTableWithColumnAndRowAttributes.dimensionHeaders(0);
+const measureHeaders = pivotTableWithColumnAndRowAttributes.measureGroupHeaderItems();
 
-const ATTRIBUTE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[0];
-const FIRST_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[2];
-const SECOND_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[3];
-const THIRD_MEASURE_HEADER: IMappingHeader = TABLE_HEADERS_2A_3M[4];
+const ATTRIBUTE_HEADER: IMappingHeader = rowHeaders[0] as IAttributeHeader;
+const FIRST_MEASURE_HEADER: IMappingHeader = measureHeaders[0];
+const SECOND_MEASURE_HEADER: IMappingHeader = measureHeaders[1];
+const THIRD_MEASURE_HEADER: IMappingHeader = measureHeaders[2];
+const FOURTH_MEASURE_HEADER: IMappingHeader = measureHeaders[3];
 
 describe("Table utils - Cell", () => {
     describe("getCellClassNames", () => {
@@ -48,7 +52,7 @@ describe("Table utils - Cell", () => {
         it("should get style and formattedValue for measure without color", () => {
             expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89")).toEqual({
                 style: {},
-                formattedValue: "$1,234,567.89",
+                formattedValue: "$1,234,568",
             });
         });
 
@@ -57,7 +61,7 @@ describe("Table utils - Cell", () => {
                 style: {
                     color: "#FF0000",
                 },
-                formattedValue: "$9,876,543.21",
+                formattedValue: "$9,876,543",
             });
         });
 
@@ -67,7 +71,7 @@ describe("Table utils - Cell", () => {
                     backgroundColor: "#ffff00",
                     color: "#FF0000",
                 },
-                formattedValue: "$9,876,543.21",
+                formattedValue: "$9,876,543",
             });
         });
 
@@ -76,7 +80,7 @@ describe("Table utils - Cell", () => {
                 style: {
                     color: "#FF0000",
                 },
-                formattedValue: "$9,876,543.21",
+                formattedValue: "$9,876,543",
             });
         });
 
@@ -86,14 +90,14 @@ describe("Table utils - Cell", () => {
                     backgroundColor: "#ffff00",
                     color: "#FF0000",
                 },
-                formattedValue: "$9,876,543.21",
+                formattedValue: "$9,876,543",
             });
         });
 
         it("should NOT apply color or backgroundColor whe the argument applyColor is false", () => {
             expect(getCellStyleAndFormattedValue(THIRD_MEASURE_HEADER, "9876543.21", false)).toEqual({
                 style: {},
-                formattedValue: "$9,876,543.21",
+                formattedValue: "$9,876,543",
             });
         });
 
@@ -110,20 +114,20 @@ describe("Table utils - Cell", () => {
         it("should get style and formattedValue if separators are not defined (integer number)", () => {
             expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567")).toEqual({
                 style: {},
-                formattedValue: "$1,234,567.00",
+                formattedValue: "$1,234,567",
             });
         });
 
         it("should get style and formattedValue if separators are not defined (float number)", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89")).toEqual({
+            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.49")).toEqual({
                 style: {},
-                formattedValue: "$1,234,567.89",
+                formattedValue: "$1,234,567",
             });
         });
 
         it("should get style and formattedValue if separators are dot and comma (small integer number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "123", undefined, {
+                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "123", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -135,7 +139,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are dot and comma (big integer number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567", undefined, {
+                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -147,7 +151,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are dot and comma (float number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -159,7 +163,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are empty strings", () => {
             expect(
-                getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
                     thousand: "",
                     decimal: "",
                 }),
@@ -171,7 +175,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are spaces", () => {
             expect(
-                getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
                     thousand: " ",
                     decimal: " ",
                 }),

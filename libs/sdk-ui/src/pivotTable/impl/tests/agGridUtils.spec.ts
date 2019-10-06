@@ -8,7 +8,6 @@ import {
     getTreeLeaves,
     getSubtotalStyles,
     cellRenderer,
-    generateAgGridComponentKey,
 } from "../agGridUtils";
 import cloneDeep = require("lodash/cloneDeep");
 import identity = require("lodash/identity");
@@ -208,21 +207,5 @@ describe("indexOfTreeNode", () => {
     it("should return return null if the node is not found", () => {
         const node = {};
         expect(indexOfTreeNode(node, tree)).toEqual(null);
-    });
-});
-
-describe("generateAgGridComponentKey", () => {
-    it("should generate agGrid component key from AFM without nativeTotals", () => {
-        const afm: AFM.IAfm = {
-            measures: [],
-            attributes: [],
-            filters: [],
-            nativeTotals: [],
-        };
-
-        const key = generateAgGridComponentKey(afm, 1);
-
-        const expectedKey = 'agGridKey-{"attributes":[],"filters":[],"measures":[]}-1';
-        expect(key).toEqual(expectedKey);
     });
 });

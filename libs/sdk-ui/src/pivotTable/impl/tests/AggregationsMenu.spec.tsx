@@ -2,17 +2,17 @@
 import { AFM } from "@gooddata/gd-bear-model";
 import { mount } from "enzyme";
 import * as React from "react";
-import { EXECUTION_RESPONSE_2A_3M } from "../../../visualizations/table/fixtures/2attributes3measures";
-import { EXECUTION_RESPONSE_2M } from "../../../visualizations/table/fixtures/2measures";
-import { AVAILABLE_TOTALS } from "../utils";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
+import { AVAILABLE_TOTALS } from "../agGridConst";
+import { pivotTableWith3Metrics, pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
+import { ITotal } from "@gooddata/sdk-model";
 
 describe("AggregationsMenu", () => {
     const intlMock = createIntlMock();
     const attributeColumnId = "a_6_2-m_0";
-    const getExecutionResponse = () => EXECUTION_RESPONSE_2A_3M;
+    const getDataView = () => pivotTableWithColumnAndRowAttributes;
     const getTotals = () => [] as AFM.ITotalItem[];
     const onMenuOpenedChange = jest.fn();
     const onAggregationSelect = jest.fn();
@@ -25,7 +25,7 @@ describe("AggregationsMenu", () => {
                 isMenuButtonVisible={true}
                 showSubmenu={false}
                 colId={attributeColumnId}
-                getExecutionResponse={getExecutionResponse}
+                getDataView={getDataView}
                 getTotals={getTotals}
                 onMenuOpenedChange={onMenuOpenedChange}
                 onAggregationSelect={onAggregationSelect}
@@ -48,17 +48,17 @@ describe("AggregationsMenu", () => {
         expect(wrapper.find(".s-menu-aggregation").length).toBe(AVAILABLE_TOTALS.length);
     });
 
-    it('should render "sum" as only selected item', () => {
-        const totals: AFM.ITotalItem[] = [
+    it('should render "sum" as only selected item in main menu', () => {
+        const totals: ITotal[] = [
             {
                 type: "sum",
-                attributeIdentifier: "1st_attr_df_local_identifier",
-                measureIdentifier: "1st_measure_local_identifier",
+                attributeIdentifier: "state", // first row attribute => grand totals, selected right in menu
+                measureIdentifier: "franchiseFeesIdentifier",
             },
             {
                 type: "min",
-                attributeIdentifier: "2nd_attr_df_local_identifier",
-                measureIdentifier: "1st_measure_local_identifier",
+                attributeIdentifier: "location", // second row attr => subtotals, selected in submenu
+                measureIdentifier: "franchiseFeesIdentifier",
             },
         ];
         const wrapper = render({ getTotals: () => totals });
@@ -105,7 +105,7 @@ describe("AggregationsMenu", () => {
     it("should not render any submenu when there is no row attribute", () => {
         const wrapper = render({
             showSubmenu: true,
-            getExecutionResponse: () => EXECUTION_RESPONSE_2M,
+            getDataView: () => pivotTableWith3Metrics,
         });
 
         expect(wrapper.find(AggregationsSubMenu).length).toBe(0);

@@ -1,27 +1,30 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { Execution } from "@gooddata/gd-bear-model";
-import * as fixtures from "../../../../stories/test_data/fixtures";
+import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
-import { executionToAGGridAdapter } from "../agGridDataSource";
 import {
-    getMeasureDrillItem,
     assignDrillItemsAndType,
     getDrillIntersection,
     getDrillRowData,
+    getMeasureDrillItem,
 } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";
+import { IResultMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { createTableHeaders } from "../agGridHeaders";
+import { createRowData } from "../agGridData";
 
 const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();
 
 describe("getMeasureDrillItem", () => {
     it("should return measure drill item based on response headers", () => {
-        const responseHeaders: Execution.IHeader[] =
-            fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
-        const header: Execution.IResultMeasureHeaderItem = {
+        const responseHeaders: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            1,
+        );
+        const header: IResultMeasureHeaderItem = {
             measureHeaderItem: {
                 name: "not important",
                 order: 0,
@@ -40,11 +43,13 @@ describe("getMeasureDrillItem", () => {
         expect(getMeasureDrillItem(responseHeaders, header)).toEqual(expectedDrillHeader);
     });
     it("should return null if the header cannot be found", () => {
-        const responseHeaders1: Execution.IHeader[] =
-            fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[0].headers;
-        const responseHeaders2: Execution.IHeader[] =
-            fixtures.barChartWithStackByAndOnlyOneStack.executionResponse.dimensions[1].headers;
-        const header: Execution.IResultMeasureHeaderItem = {
+        const responseHeaders1: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            0,
+        );
+        const responseHeaders2: Execution.IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            1,
+        );
+        const header: IResultMeasureHeaderItem = {
             measureHeaderItem: {
                 name: "not important",
                 order: 99,
@@ -62,10 +67,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader =
-            fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[1][2][0];
-        const responseHeaders =
-            fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[1].headers;
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(1);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
@@ -88,10 +91,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader =
-            fixtures.pivotTableWithColumnAndRowAttributes.executionResult.headerItems[0][0][0];
-        const responseHeaders =
-            fixtures.pivotTableWithColumnAndRowAttributes.executionResponse.dimensions[0].headers;
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
@@ -124,19 +125,14 @@ describe("assignDrillItemsAndType", () => {
 });
 
 describe("getDrillIntersection", () => {
-    const afm = pivotTableWithColumnAndRowAttributes.executionRequest.afm;
-    const { columnDefs, rowData } = executionToAGGridAdapter(
-        {
-            executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-            executionResult: pivotTableWithColumnAndRowAttributes.executionResult,
-        },
-        {},
-        intl,
-    );
+    const tableHeaders = createTableHeaders(pivotTableWithColumnAndRowAttributes.dataView);
+    const { rowData } = createRowData(tableHeaders, pivotTableWithColumnAndRowAttributes, intl);
+    const columnDefs = tableHeaders.allHeaders;
+
     it("should return intersection of row attribute and row attribute value for row header cell", async () => {
         const rowColDef = columnDefs[0]; // row header
         const drillItems = [...rowColDef.drillItems, rowData[0].headerItemMap[rowColDef.field]];
-        const intersection = getDrillIntersection(drillItems, afm);
+        const intersection = getDrillIntersection(drillItems, pivotTableWithColumnAndRowAttributes);
         expect(intersection).toEqual([
             {
                 header: {
@@ -159,7 +155,7 @@ describe("getDrillIntersection", () => {
 
     it("should return intersection of all column header attributes and values and a measure for column header cell", async () => {
         const colDef = getTreeLeaves(columnDefs)[3]; // column leaf header
-        const intersection = getDrillIntersection(colDef.drillItems, afm);
+        const intersection = getDrillIntersection(colDef.drillItems, pivotTableWithColumnAndRowAttributes);
         expect(intersection).toEqual([
             {
                 header: {
@@ -215,7 +211,7 @@ describe("getDrillIntersection", () => {
                 },
             },
         ];
-        const intersection = getDrillIntersection(drillItems, afm);
+        const intersection = getDrillIntersection(drillItems, pivotTableWithColumnAndRowAttributes);
         expect(intersection).toEqual([
             {
                 id: "am1",
@@ -226,15 +222,11 @@ describe("getDrillIntersection", () => {
 });
 
 describe("getDrillRowData", () => {
+    const tableHeaders = createTableHeaders(pivotTableWithColumnAndRowAttributes.dataView);
+    const { rowData } = createRowData(tableHeaders, pivotTableWithColumnAndRowAttributes, intl);
+    const columnDefs = tableHeaders.allHeaders;
+
     it("should return an array of row data", async () => {
-        const { columnDefs, rowData } = executionToAGGridAdapter(
-            {
-                executionResponse: pivotTableWithColumnAndRowAttributes.executionResponse,
-                executionResult: pivotTableWithColumnAndRowAttributes.executionResult,
-            },
-            {},
-            intl,
-        );
         const leafColumnDefs = getTreeLeaves(columnDefs);
         const drillRow = getDrillRowData(leafColumnDefs, rowData[0]);
         expect(drillRow).toEqual([

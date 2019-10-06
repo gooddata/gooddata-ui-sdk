@@ -218,4 +218,4 @@ const TARGET_DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
  * use these recorded executions.
  */
 
-main(SOURCE_DIR, TARGET_DIR, "headline_with_two_measures");
+main(SOURCE_DIR, TARGET_DIR, "pivot_table_with_2_metrics_4_attributes_subtotals");
