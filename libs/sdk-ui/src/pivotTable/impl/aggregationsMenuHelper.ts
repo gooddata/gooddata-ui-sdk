@@ -3,13 +3,13 @@ import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as invariant from "invariant";
 import { IMenuAggregationClickConfig } from "../types";
-import { IColumnTotal } from "./AggregationsMenu";
 
 import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "./agGridConst";
 import intersection = require("lodash/intersection");
 import isEqual = require("lodash/isEqual");
 import sortBy = require("lodash/sortBy");
 import uniq = require("lodash/uniq");
+import { IColumnTotal } from "./aggregationsMenuTypes";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(total => total.measureIdentifier === measureLocalIdentifier && total.type === type);

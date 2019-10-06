@@ -16,11 +16,7 @@ import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 import { getParsedFields } from "./agGridUtils";
-
-export interface IColumnTotal {
-    type: TotalType;
-    attributes: string[];
-}
+import { IColumnTotal } from "./aggregationsMenuTypes";
 
 export interface IAggregationsMenuProps {
     intl: ReactIntl.InjectedIntl;

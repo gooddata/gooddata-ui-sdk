@@ -2,8 +2,8 @@
 import { mount } from "enzyme";
 import * as React from "react";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
-import { IColumnTotal } from "../AggregationsMenu";
 import AggregationsSubMenu, { IAggregationsSubMenuProps } from "../AggregationsSubMenu";
+import { IColumnTotal } from "../aggregationsMenuTypes";
 
 describe("AggregationsSubMenu", () => {
     const intlMock = createIntlMock();

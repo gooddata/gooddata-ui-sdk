@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
-import { IColumnTotal } from "../AggregationsMenu";
 import { IMenuAggregationClickConfig } from "../../types";
 import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE } from "../agGridConst";
 import { ITotal } from "@gooddata/sdk-model";
 import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IColumnTotal } from "../aggregationsMenuTypes";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {

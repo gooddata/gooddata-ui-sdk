@@ -1,15 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
-import { Header, Item, ItemsWrapper } from '@gooddata/goodstrap/lib/List/MenuList';
-import { IAttributeHeader } from '@gooddata/sdk-backend-spi';
-import { TotalType } from '@gooddata/sdk-model';
-import * as classNames from 'classnames';
-import * as React from 'react';
+import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
+import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { TotalType } from "@gooddata/sdk-model";
+import * as classNames from "classnames";
+import * as React from "react";
 
-import { getNthAttributeLocalIdentifier, getNthAttributeName, } from '../../base/helpers/executionResultHelper';
-import SubMenu from '../menu/SubMenu';
-import { IMenuAggregationClickConfig } from '../types';
-import { IColumnTotal } from './AggregationsMenu';
-import menuHelper from './aggregationsMenuHelper';
+import {
+    getNthAttributeLocalIdentifier,
+    getNthAttributeName,
+} from "../../base/helpers/executionResultHelper";
+import SubMenu from "../menu/SubMenu";
+import { IMenuAggregationClickConfig } from "../types";
+import menuHelper from "./aggregationsMenuHelper";
+import { IColumnTotal } from "./aggregationsMenuTypes";
 
 const MENU_HEADER_OFFSET = -36;
 
@@ -75,44 +78,39 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
     private renderSubMenuItems() {
         const { totalType, rowAttributeHeaders, measureLocalIdentifiers, columnTotals } = this.props;
 
-        return rowAttributeHeaders.map(
-            (_attributeHeader: IAttributeHeader, headerIndex: number) => {
-                const attributeLocalIdentifier = getNthAttributeLocalIdentifier(
-                    rowAttributeHeaders,
-                    headerIndex,
-                );
-                const isSelected = menuHelper.isTotalEnabledForAttribute(
-                    attributeLocalIdentifier,
-                    totalType,
-                    columnTotals,
-                );
-                const onClick = () =>
-                    this.props.onAggregationSelect({
-                        type: totalType,
-                        measureIdentifiers: measureLocalIdentifiers,
-                        include: !isSelected,
-                        attributeIdentifier: attributeLocalIdentifier,
-                    });
+        return rowAttributeHeaders.map((_attributeHeader: IAttributeHeader, headerIndex: number) => {
+            const attributeLocalIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, headerIndex);
+            const isSelected = menuHelper.isTotalEnabledForAttribute(
+                attributeLocalIdentifier,
+                totalType,
+                columnTotals,
+            );
+            const onClick = () =>
+                this.props.onAggregationSelect({
+                    type: totalType,
+                    measureIdentifiers: measureLocalIdentifiers,
+                    include: !isSelected,
+                    attributeIdentifier: attributeLocalIdentifier,
+                });
 
-                const attributeName = this.getAttributeName(rowAttributeHeaders, headerIndex);
-                return (
-                    <Item checked={isSelected} key={attributeLocalIdentifier}>
-                        <div
-                            onClick={onClick}
-                            className={classNames(
-                                "gd-aggregation-menu-item-inner",
-                                "s-menu-aggregation-inner",
-                                this.getSubtotalNameTestClass(attributeLocalIdentifier),
-                                {
-                                    "s-menu-aggregation-inner-selected": isSelected,
-                                },
-                            )}
-                        >
-                            {attributeName}
-                        </div>
-                    </Item>
-                );
-            },
-        );
+            const attributeName = this.getAttributeName(rowAttributeHeaders, headerIndex);
+            return (
+                <Item checked={isSelected} key={attributeLocalIdentifier}>
+                    <div
+                        onClick={onClick}
+                        className={classNames(
+                            "gd-aggregation-menu-item-inner",
+                            "s-menu-aggregation-inner",
+                            this.getSubtotalNameTestClass(attributeLocalIdentifier),
+                            {
+                                "s-menu-aggregation-inner-selected": isSelected,
+                            },
+                        )}
+                    >
+                        {attributeName}
+                    </div>
+                </Item>
+            );
+        });
     }
 }
