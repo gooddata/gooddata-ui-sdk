@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { DataViewFacade, defTotals, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
-import { ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
+import { COLS_PER_PAGE, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { getSortsFromModel } from "./agGridSorting";
 import { DatasourceConfig, ISortModelItem, TableHeaders } from "./agGridTypes";
 import { GroupingProviderFactory, IGroupingProvider } from "./GroupingProvider";
@@ -26,7 +26,6 @@ export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
     private destroyed: boolean = false;
     private currentResult: IExecutionResult;
-    private sinkPromises: boolean = false;
     private grouping: IGroupingProvider;
 
     constructor(
@@ -55,7 +54,7 @@ export class AgGridDatasource implements IDatasource {
     };
 
     private processData = (dv: DataViewFacade, params: IGetRowsParams): void => {
-        if (!dv || this.sinkPromises) {
+        if (!dv) {
             return null;
         }
 
@@ -140,10 +139,6 @@ export class AgGridDatasource implements IDatasource {
 
     public destroy = (): void => {
         if (this.destroyed) {
-            // tslint:disable-next-line:no-console
-            console.log("cleaning up data source");
-
-            // TODO: see if this is still needed
             return;
         }
 
@@ -160,8 +155,6 @@ export class AgGridDatasource implements IDatasource {
             return;
         }
 
-        // TODO: handle addition of totals.. somehow; perhaps the component should be responsible for re-executing
-        //  with totals?
         const result = this.currentResult;
         const definition = result.definition;
         const currentSorts = definition.sortBy;
@@ -188,7 +181,7 @@ export class AgGridDatasource implements IDatasource {
             this.processData(this.initialDv, params);
         } else {
             result
-                .readWindow([startRow, 0], [endRow - startRow, undefined])
+                .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                 .then(data => {
                     this.processData(new DataViewFacade(data), params);
                 })

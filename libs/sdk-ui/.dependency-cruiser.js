@@ -249,7 +249,8 @@ options = {
              for a complete list
         */
         doNotFollow: {
-            path: ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories).*",
+            path:
+                ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories|spec|test|tests).*",
             dependencyTypes: ["npm", "npm-dev", "npm-optional", "npm-peer", "npm-bundled", "npm-no-pkg"],
         },
 
@@ -259,7 +260,8 @@ options = {
                     leave out if you want to exclude neither (recommended!)
         */
         exclude: {
-            path: ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories).*",
+            path:
+                ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories|spec|test|tests).*",
             //, dynamic: true
         },
 

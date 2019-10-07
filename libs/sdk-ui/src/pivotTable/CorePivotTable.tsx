@@ -1,5 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import { DataViewFacade, defTotals, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    DataViewFacade,
+    defFingerprint,
+    defTotals,
+    IExecutionResult,
+    IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
 import { ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
     BodyScrollEvent,
@@ -22,20 +28,22 @@ import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from 
 import { IDrillEvent, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
-import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { ErrorComponent } from "../base/simple/ErrorComponent";
+import { LoadingComponent } from "../base/simple/LoadingComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {
     AVAILABLE_TOTALS,
+    COLS_PER_PAGE,
     COLUMN_ATTRIBUTE_COLUMN,
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
     ROW_SUBTOTAL,
     ROW_TOTAL,
 } from "./impl/agGridConst";
-import { createAgGridDatasource, AgGridDatasource } from "./impl/agGridDataSource";
+import { AgGridDatasource, createAgGridDatasource } from "./impl/agGridDataSource";
 import { getDrillIntersection, getDrillRowData } from "./impl/agGridDrilling";
+import { createTableHeaders } from "./impl/agGridHeaders";
 import { getSortsFromModel } from "./impl/agGridSorting";
 import {
     ICustomGridOptions,
@@ -54,6 +62,7 @@ import {
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
 import ColumnHeader from "./impl/ColumnHeader";
+import { IGroupingProvider } from "./impl/GroupingProvider";
 import { RowLoadingElement } from "./impl/RowLoadingElement";
 import {
     initializeStickyRow,
@@ -66,8 +75,6 @@ import {
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
 import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
-import { createTableHeaders } from "./impl/agGridHeaders";
-import { IGroupingProvider } from "./impl/GroupingProvider";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
@@ -118,6 +125,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private currentResult: IExecutionResult = null;
     private visibleData: DataViewFacade = null;
+    private currentFingerprint: string = null;
 
     private lastScrollPosition: IScrollPosition = {
         top: 0,
@@ -152,6 +160,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 this.agGridDataSource = null;
                 this.currentResult = null;
                 this.visibleData = null;
+                this.currentFingerprint = null;
 
                 this.pendingInit = this.initialize(execution);
             },
@@ -160,33 +169,36 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private initialize(execution: IPreparedExecution): Promise<void> {
         return execution.execute().then(result => {
-            // TODO: externalize into constants
-            this.pendingInit = result.readWindow([0, 0], [this.props.pageSize, 1000]).then(dataView => {
-                if (!this.pendingInit) {
-                    return;
-                }
+            this.pendingInit = result
+                .readWindow([0, 0], [this.props.pageSize, COLS_PER_PAGE])
+                .then(dataView => {
+                    if (!this.pendingInit) {
+                        return;
+                    }
 
-                this.pendingInit = null;
+                    this.pendingInit = null;
 
-                this.tableHeaders = createTableHeaders(dataView);
-                this.currentResult = result;
-                this.visibleData = new DataViewFacade(dataView);
-                this.agGridDataSource = createAgGridDatasource(
-                    {
-                        headers: this.tableHeaders,
-                        getGroupRows: () => this.props.groupRows,
-                        getColumnTotals: this.getColumnTotals,
-                        onPageLoaded: this.onPageLoaded,
-                    },
-                    this.visibleData,
-                    this.getGridApi,
-                    this.props.intl,
-                );
+                    this.tableHeaders = createTableHeaders(dataView);
+                    this.currentResult = result;
+                    this.visibleData = new DataViewFacade(dataView);
+                    this.currentFingerprint = defFingerprint(this.currentResult.definition);
 
-                this.setGridDataSource(this.agGridDataSource);
+                    this.agGridDataSource = createAgGridDatasource(
+                        {
+                            headers: this.tableHeaders,
+                            getGroupRows: () => this.props.groupRows,
+                            getColumnTotals: this.getColumnTotals,
+                            onPageLoaded: this.onPageLoaded,
+                        },
+                        this.visibleData,
+                        this.getGridApi,
+                        this.props.intl,
+                    );
 
-                this.setState({ tableReady: true });
-            });
+                    this.setGridDataSource(this.agGridDataSource);
+
+                    this.setState({ tableReady: true });
+                });
         });
     }
 
@@ -197,6 +209,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
         this.pendingInit = this.initialize(this.props.execution);
     }
+
     public componentWillUnmount() {
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
@@ -207,11 +220,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
-        if (
-            !prevProps.execution.equals(this.props.execution) ||
-            prevProps.drillableItems !== this.props.drillableItems
-        ) {
-            // change of prep execution or drillable items leads to full reset of the all ag-grid stuff
+        if (this.isReinitNeeded(prevProps)) {
             this.reinitialize(this.props.execution);
         }
 
@@ -247,7 +256,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 >
                     <AgGridReact
                         {...this.gridOptions}
-                        // TODO: revisit; there is gridApi.refreshHeaders(), maybe that works?
                         // To force Ag grid rerender because AFAIK there is no way
                         // to tell Ag grid header cell to rerender
                         key={generateAgGridComponentKey(
@@ -266,6 +274,32 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private isTableHidden() {
         return !this.state.tableReady;
+    }
+
+    /**
+     * Tests whether reinitialization of ag-grid is needed after the update. Currently there are two
+     * conditions:
+     *
+     * - drilling has changed
+     *
+     * OR
+     *
+     * - prepared execution has changed AND the new prep execution definition does not match currently shown
+     *   data.
+     *
+     * @param prevProps
+     */
+    private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
+        const drillingIsSame = prevProps.drillableItems === this.props.drillableItems;
+
+        if (!drillingIsSame) {
+            return true;
+        }
+
+        const prepExecutionSame = this.props.execution.equals(prevProps.execution);
+        const fingerprintSame = this.currentFingerprint === this.props.execution.fingerprint();
+
+        return !prepExecutionSame && !fingerprintSame;
     }
 
     private forceRerender() {
@@ -316,6 +350,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     private onPageLoaded = (dv: DataViewFacade): void => {
         this.currentResult = dv.result();
         this.visibleData = dv;
+        this.currentFingerprint = defFingerprint(this.currentResult.definition);
 
         this.updateDesiredHeight(dv);
     };
@@ -435,7 +470,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             intersection,
         };
         const drillEvent: IDrillEvent = {
-            dataView: dv.dataView, // TODO: this may be stale data at the moment (update to current page)
+            dataView: dv.dataView,
             drillContext,
         };
 
@@ -499,7 +534,8 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     };
 
     //
-    // grid options & styling; TODO: refactor to move all this outside of the file
+    // grid options & styling;
+    // TODO: refactor to move all this outside of the file
     //
 
     private createGridOptions = (): ICustomGridOptions => {

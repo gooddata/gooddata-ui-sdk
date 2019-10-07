@@ -16,3 +16,4 @@ export const ROW_TOTAL = "rowTotal";
 export const ROW_SUBTOTAL = "rowSubtotal";
 export const COLUMN_GROUPING_DELIMITER = " › ";
 export const AVAILABLE_TOTALS: TotalType[] = ["sum", "max", "min", "avg", "med", "nat"];
+export const COLS_PER_PAGE: number = 1000;
