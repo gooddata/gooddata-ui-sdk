@@ -22,7 +22,7 @@ Progress and tasks are tracked in RAIL-1791.
 3.  Clone and bootstrap
 
     ```bash
-    git clone git@github.com:lupko/gooddata-ui-sdk.git
+    git clone git@github.com:gooddata/gooddata-ui-sdk.git
     cd gooddata-ui-sdk
     nvm install
     nvm use
@@ -159,9 +159,15 @@ proceeding.
 After that, we have a couple of skeleton projects to bootstrap development of new SDK packages. See [skel](skel) directory for
 more information. Bear in mind the naming conventions described in the developer's guide.
 
-#### How do I publish new version of packages
+#### How do I describe my changes for the CHANGELOG?
 
-TODO
+Simply run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
+
+There will probably be a check step in the future that will make sure you ran the `rush change` command.
+
+#### How do I publish new version of packages?
+
+For detailed description of the release process, please see [Release process](docs/releases.md).
 
 ### Troubleshooting
 

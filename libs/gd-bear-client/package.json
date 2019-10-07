@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/gd-bear-client",
-    "version": "8.0.0",
+    "version": "8.0.0-alpha.0",
     "author": "GoodData",
     "description": "GoodData JavaScript SDK",
     "license": "BSD-3-Clause",
@@ -54,20 +54,20 @@
         }
     },
     "dependencies": {
-        "@gooddata/gd-bear-model": "^8.0.0",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
         "fetch-cookie": "^0.7.0",
         "invariant": "^2.2.2",
         "isomorphic-fetch": "^2.2.1",
         "json-stable-stringify": "^1.0.1",
-        "lodash": "^4.7.11",
+        "lodash": "^4.17.15",
         "md5": "^2.2.1",
         "node-fetch": "^1.7.3",
         "qs": "^6.5.1",
         "rxjs": "^5.5.6",
-        "uuid": "^3.2.1"
+        "uuid": "^3.3.3"
     },
     "devDependencies": {
-        "@gooddata/tslint-config": "^1.0.0",
+        "@gooddata/tslint-config": "1.0.0",
         "@types/fast-levenshtein": "0.0.1",
         "@types/fetch-mock": "^5.*",
         "@types/invariant": "^2.2.29",
@@ -78,7 +78,7 @@
         "@types/md5": "^2.1.32",
         "@types/node-fetch": "^1.6.7",
         "@types/qs": "^6.5.1",
-        "@types/uuid": "^3.4.4",
+        "@types/uuid": "^3.4.5",
         "async": "^2.1.5",
         "awesome-typescript-loader": "^5.2.1",
         "fast-levenshtein": "^2.0.6",
@@ -87,7 +87,7 @@
         "jest-junit": "^3.0.0",
         "js-object-pretty-print": "^0.2.0",
         "lodash-webpack-plugin": "^0.11.0",
-        "prettier": "^1.18.2",
+        "prettier": "~1.18.2",
         "ts-jest": "^24.1.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",

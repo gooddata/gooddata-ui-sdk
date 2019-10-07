@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/gd-bear-model",
-    "version": "8.0.0",
+    "version": "8.0.0-alpha.0",
     "description": "TypeScript definition files for GoodData platform",
     "typings": "dist/index.d.ts",
     "main": "dist/index.js",
@@ -59,15 +59,15 @@
     },
     "homepage": "https://github.com/gooddata/gooddata-typings#readme",
     "dependencies": {
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "@gooddata/tslint-config": "^1.0.0",
+        "@gooddata/tslint-config": "1.0.0",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
-        "prettier": "^1.18.2",
+        "prettier": "~1.18.2",
         "ts-jest": "^24.1.0",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",

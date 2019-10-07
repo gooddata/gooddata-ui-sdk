@@ -16,7 +16,7 @@
      * path segment in the "$schema" field for all your Rush config files.  This will ensure
      * correct error-underlining and tab-completion for editors such as VS Code.
      */
-    "rushVersion": "5.11.2",
+    "rushVersion": "5.14.0",
 
     /**
      * The next field selects which package manager should be installed and determines its version.
@@ -26,7 +26,7 @@
      * Specify one of: "pnpmVersion", "npmVersion", or "yarnVersion".  See the Rush documentation
      * for details about these alternatives.
      */
-    "pnpmVersion": "3.7.5",
+    "pnpmVersion": "3.8.1",
 
     // "npmVersion": "4.5.0",
     // "yarnVersion": "1.9.4",
@@ -45,7 +45,7 @@
          * The default value is false to avoid legacy compatibility issues.
          * It is strongly recommended to set strictPeerDependencies=true.
          */
-        // "strictPeerDependencies": true,
+        "strictPeerDependencies": true,
 
         /**
          * Configures the strategy used to select versions during installation.
@@ -96,7 +96,7 @@
      * version. In those cases, you will need to add an entry to the "allowedAlternativeVersions"
      * section of the common-versions.json.
      */
-    // "ensureConsistentVersions": true,
+    "ensureConsistentVersions": true,
 
     /**
      * Large monorepos can become intimidating for newcomers if project folder paths don't follow
@@ -212,7 +212,7 @@
          * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
          * to retrieve the latest activity for the remote master branch.
          */
-        "url": "https://github.com/lupko/gooddata-ui-sdk"
+        "url": "git@github.com:gooddata/gooddata-ui-sdk.git"
     },
 
     /**
@@ -314,42 +314,58 @@
         {
             "packageName": "@gooddata/sdk-backend-mockingbird",
             "projectFolder": "libs/sdk-backend-mockingbird",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-tiger",
             "projectFolder": "libs/sdk-backend-tiger",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-bear",
             "projectFolder": "libs/sdk-backend-bear",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-model",
             "projectFolder": "libs/sdk-model",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-backend-spi",
             "projectFolder": "libs/sdk-backend-spi",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/gd-bear-client",
             "projectFolder": "libs/gd-bear-client",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/gd-bear-model",
             "projectFolder": "libs/gd-bear-model",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui",
             "projectFolder": "libs/sdk-ui",
-            "reviewCategory": "production"
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-skel-tsx",

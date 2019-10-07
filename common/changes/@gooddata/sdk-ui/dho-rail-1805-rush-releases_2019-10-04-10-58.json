@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui",
+            "comment": "",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui",
+    "email": "dan.homola@gooddata.com"
+}

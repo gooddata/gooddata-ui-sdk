@@ -67,3 +67,4 @@ common/temp/**
 package-deps.json
 libs/**/src/**/*.js
 libs/**/src/**/*.jsx
+.rush/temp/**

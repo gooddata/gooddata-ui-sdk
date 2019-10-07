@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/gd-bear-model",
+            "comment": "",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/gd-bear-model",
+    "email": "dan.homola@gooddata.com"
+}
