@@ -26,8 +26,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
 
-const nullPromise: Promise<null> = new Promise(r => r(null));
-const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 
 /**
@@ -99,11 +97,6 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
         offset: [0, 0],
         count: [0, 0],
         totalCount: [0, 0],
-        advance: noop,
-        pageDown: noop,
-        pageUp: noop,
-        pageLeft: noop,
-        pageRight: noop,
         fingerprint(): string {
             return fp;
         },

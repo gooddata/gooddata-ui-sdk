@@ -233,7 +233,6 @@ export interface IAttributeHeader {
 
 // @public
 export interface IDataView {
-    advance(...dims: number[]): Promise<IDataView | null>;
     readonly count: number[];
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
@@ -242,10 +241,6 @@ export interface IDataView {
     fingerprint(): string;
     readonly headerItems: IResultHeaderItem[][][];
     readonly offset: number[];
-    pageDown(): Promise<IDataView | null>;
-    pageLeft(): Promise<IDataView | null>;
-    pageRight(): Promise<IDataView | null>;
-    pageUp(): Promise<IDataView | null>;
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     // (undocumented)

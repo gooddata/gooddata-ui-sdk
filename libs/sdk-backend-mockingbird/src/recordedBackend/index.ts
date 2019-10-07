@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import { Execution } from "@gooddata/gd-bear-model";
 import {
     AnalyticalBackendConfig,
     DataViewFacade,
@@ -25,10 +26,7 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
-import { Execution } from "@gooddata/gd-bear-model";
 
-const nullPromise: Promise<null> = new Promise(r => r(null));
-const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 
 /**
@@ -181,11 +179,6 @@ function recordedDataView(
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
         totalCount: afmResult.paging.total,
-        advance: noop,
-        pageDown: noop,
-        pageUp: noop,
-        pageLeft: noop,
-        pageRight: noop,
         fingerprint(): string {
             return fp;
         },

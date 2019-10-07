@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 
+import { Execution } from "@gooddata/gd-bear-model";
 import {
     DataValue,
     DataViewError,
@@ -12,11 +13,9 @@ import {
     IPreparedExecution,
     IResultDimension,
     IResultHeaderItem,
-    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
-import { AuthenticatedSdkProvider } from "./commonTypes";
-import { Execution } from "@gooddata/gd-bear-model";
 import SparkMD5 from "spark-md5";
+import { AuthenticatedSdkProvider } from "./commonTypes";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
@@ -139,26 +138,6 @@ class BearDataView implements IDataView {
         this.offset = dataResult.paging.offset;
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
-    }
-
-    public advance(..._dims: number[]): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageDown(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageLeft(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageRight(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageUp(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
     }
 
     public fingerprint(): string {

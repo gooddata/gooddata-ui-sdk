@@ -279,56 +279,6 @@ export interface IDataView {
     readonly result: IExecutionResult;
 
     /**
-     * Asynchronously gets data view adjacent to this one in specified dimensions.
-     *
-     * @param dims - dimensions to advance on. this is an array of length same as the number of dimensions in the
-     *        result. the value of the advancement indicates where to move:
-     *        less than zero = 0 move back,
-     *        0 = do not move,
-     *        greater than 0 move forward.
-     *        the advancement is done with the limits defined in the current data view.
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    advance(...dims: number[]): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets next page of two dimensional result (table).
-     *
-     * This is same as calling advance(1, 0, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageUp(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets previous page of two dimensional result (table)
-     *
-     * This is same as calling advance(-1, 0, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageDown(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets page to the left of current page in two dimensional result (table)
-     *
-     * This is same as calling advance(0, -1, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageLeft(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets page to the right of the current page in two dimensional result (table)
-     *
-     * This is same as calling advance(0, 1, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageRight(): Promise<IDataView | null>;
-
-    /**
      * Tests if this data view is same as the other data view.
      *
      * @param other - other data view

@@ -142,26 +142,6 @@ class TigerDataView implements IDataView {
         this._fingerprint = `${result.fingerprint()}/*`;
     }
 
-    public advance(..._dims: number[]): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageDown(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageLeft(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageRight(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageUp(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
     public fingerprint(): string {
         return this._fingerprint;
     }
