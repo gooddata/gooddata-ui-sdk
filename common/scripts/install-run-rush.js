@@ -15,50 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const fs = require("fs");
 const install_run_1 = require("./install-run");
-const PACKAGE_NAME = "@microsoft/rush";
-const RUSH_PREVIEW_VERSION = "RUSH_PREVIEW_VERSION";
+const PACKAGE_NAME = '@microsoft/rush';
+const RUSH_PREVIEW_VERSION = 'RUSH_PREVIEW_VERSION';
 function _getRushVersion() {
     const rushPreviewVersion = process.env[RUSH_PREVIEW_VERSION];
     if (rushPreviewVersion !== undefined) {
-        console.log(
-            `Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`,
-        );
+        console.log(`Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`);
         return rushPreviewVersion;
     }
     const rushJsonFolder = install_run_1.findRushJsonFolder();
     const rushJsonPath = path.join(rushJsonFolder, install_run_1.RUSH_JSON_FILENAME);
     try {
-        const rushJsonContents = fs.readFileSync(rushJsonPath, "utf-8");
+        const rushJsonContents = fs.readFileSync(rushJsonPath, 'utf-8');
         // Use a regular expression to parse out the rushVersion value because rush.json supports comments,
         // but JSON.parse does not and we don't want to pull in more dependencies than we need to in this script.
         const rushJsonMatches = rushJsonContents.match(/\"rushVersion\"\s*\:\s*\"([0-9a-zA-Z.+\-]+)\"/);
         return rushJsonMatches[1];
-    } catch (e) {
-        throw new Error(
-            `Unable to determine the required version of Rush from rush.json (${rushJsonFolder}). ` +
-                "The 'rushVersion' field is either not assigned in rush.json or was specified " +
-                "using an unexpected syntax.",
-        );
+    }
+    catch (e) {
+        throw new Error(`Unable to determine the required version of Rush from rush.json (${rushJsonFolder}). ` +
+            'The \'rushVersion\' field is either not assigned in rush.json or was specified ' +
+            'using an unexpected syntax.');
     }
 }
 function _run() {
-    const [
-        nodePath,
-        /* Ex: /bin/node */ scriptPath,
-        /* /repo/common/scripts/install-run-rush.js */ ...packageBinArgs /* [build, --to, myproject] */
-    ] = process.argv;
+    const [nodePath, /* Ex: /bin/node */ scriptPath, /* /repo/common/scripts/install-run-rush.js */ ...packageBinArgs /* [build, --to, myproject] */] = process.argv;
     // Detect if this script was directly invoked, or if the install-run-rushx script was invokved to select the
     // appropriate binary inside the rush package to run
     const scriptName = path.basename(scriptPath);
-    const bin = scriptName.toLowerCase() === "install-run-rushx.js" ? "rushx" : "rush";
+    const bin = scriptName.toLowerCase() === 'install-run-rushx.js' ? 'rushx' : 'rush';
     if (!nodePath || !scriptPath) {
-        throw new Error("Unexpected exception: could not detect node path or script path");
+        throw new Error('Unexpected exception: could not detect node path or script path');
     }
     if (process.argv.length < 3) {
         console.log(`Usage: ${scriptName} <command> [args...]`);
-        if (scriptName === "install-run-rush.js") {
+        if (scriptName === 'install-run-rush.js') {
             console.log(`Example: ${scriptName} build --to myproject`);
-        } else {
+        }
+        else {
             console.log(`Example: ${scriptName} custom-command`);
         }
         process.exit(1);
