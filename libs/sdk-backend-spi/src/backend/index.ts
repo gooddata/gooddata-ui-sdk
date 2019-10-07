@@ -196,7 +196,5 @@ export function prepareExecution(
     return backend
         .workspace(definition.workspace)
         .execution()
-        .forItems([...definition.attributes, ...definition.measures], definition.filters)
-        .withDimensions(...definition.dimensions)
-        .withSorting(...definition.sortBy);
+        .forDefinition(definition);
 }
