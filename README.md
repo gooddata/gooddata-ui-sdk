@@ -161,32 +161,13 @@ more information. Bear in mind the naming conventions described in the developer
 
 #### How do I describe my changes for the CHANGELOG?
 
-Simply run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. There will probably be a check step in the future that will make sure you ran the `rush change` command.
+Simply run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
+
+There will probably be a check step in the future that will make sure you ran the `rush change` command.
 
 #### How do I publish new version of packages?
 
-First, you need to update the version. To specify which version you want to create, edit the `"nextBump"` property in `common/config/version-policies.json`.
-Then bump the version:
-
-```bash
-rush version --bump
-```
-
-This will update package.json files in all the packages. Also, if you are creating non-prerelease version, this will update CHANGELOGS. Commit this.
-
-Next, run the publish in dry-run mode:
-
-```bash
-rush publish --include-all
-```
-
-This will show you if everything works. Then, if the previous command ran successfully and you are completely sure what you are doing, run
-
-```bash
-rush publish --include-all -p
-```
-
-That will publish the packages to NPM.
+For detailed description of the release process, please see [Release process](docs/releases.md).
 
 ### Troubleshooting
 
