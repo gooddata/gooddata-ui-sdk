@@ -2,10 +2,10 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { convertDrillableItemsToPredicates2 } from "../../../base/helpers/headerPredicate";
+import { convertDrillableItemsToPredicates } from "../../../base/helpers/drilling";
 import { IChartConfig } from "../../../highcharts";
-import { IDrillableItem, IDrillEventCallback2 } from "../../../base/interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../../base/interfaces/HeaderPredicate";
+import { IDrillableItem, IDrillEventCallback } from "../../../base/interfaces/DrillEvents";
+import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
 import {
     applyDrillableItems,
@@ -17,10 +17,10 @@ import noop = require("lodash/noop");
 
 export interface IHeadlineTransformationProps {
     dataView: IDataView;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     config?: IChartConfig;
 
-    onDrill?: IDrillEventCallback2;
+    onDrill?: IDrillEventCallback;
     onAfterRender?: () => void;
 }
 
@@ -46,7 +46,7 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
         const { intl, drillableItems, dataView, config, onAfterRender } = this.props;
 
         const data = getHeadlineData(dataView, intl);
-        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
 
         return (

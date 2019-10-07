@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { VisType } from "../base/constants/visualizationTypes";
 import {
     ColorAxisOptions,
@@ -64,8 +63,8 @@ export interface IChartConfig extends IMeasuresStackConfig {
     separators?: ISeparators;
     dataLabels?: IDataLabelsConfig;
     dualAxis?: boolean;
-    primaryChartType?: VisualizationObject.VisualizationType;
-    secondaryChartType?: VisualizationObject.VisualizationType;
+    primaryChartType?: string;
+    secondaryChartType?: string;
 }
 
 export interface IStackLabels {
@@ -131,7 +130,7 @@ export interface ISeriesItem {
     color?: string;
     userOptions?: any;
     visible?: boolean;
-    type?: VisualizationObject.VisualizationType | string;
+    type?: string;
     isDrillable?: boolean;
     legendIndex?: number;
     yAxis?: number;

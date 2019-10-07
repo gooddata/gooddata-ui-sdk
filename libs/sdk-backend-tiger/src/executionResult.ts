@@ -110,6 +110,7 @@ class TigerDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
     public readonly headerItems: IResultHeaderItem[][][];
+    public readonly totalCount: number[];
     public readonly count: number[];
     public readonly offset: number[];
     public readonly result: IExecutionResult;
@@ -126,6 +127,9 @@ class TigerDataView implements IDataView {
         this.headerItems = transfomedResult.headerItems;
         this.offset = transfomedResult.offset;
         this.count = transfomedResult.count;
+        // TODO: this is ok for now when tiger can only return all data and does not allow paging through
+        //  results. the count is equal to totalCount.
+        this.totalCount = transfomedResult.count;
 
         /*
         this.totals = dataResult.totals ? dataResult.totals : [[[]]];

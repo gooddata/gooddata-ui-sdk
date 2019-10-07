@@ -23,6 +23,8 @@ import {
     IAttributeFilter,
     IDateFilter,
     filterQualifierValue,
+    dimensionTotals,
+    ITotal,
 } from "@gooddata/sdk-model";
 import isEmpty = require("lodash/isEmpty");
 import partition = require("lodash/partition");
@@ -127,12 +129,11 @@ export function newDefFromInsight(workspace: string, insight: IInsight): IExecut
     return defWithFilters(def, insightFilters(insight));
 }
 
-// TODO: where to place these helper functions?
-const separateFiltersByType = (filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] => {
+function separateFiltersByType(filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] {
     return partition(filters, isAttributeFilter);
-};
+}
 
-const mergeFilters = (originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] => {
+function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] {
     if (!addedFilters || !addedFilters.length) {
         return originalFilters;
     }
@@ -148,7 +149,7 @@ const mergeFilters = (originalFilters: IFilter[], addedFilters: IFilter[] | unde
     const dateFilters = unionBy(addedDateFilters, originalDateFilters, filterQualifierValue);
 
     return [...attributeFilters, ...dateFilters];
-};
+}
 
 /**
  * Creates new execution definition by merging new filters into an existing definition.
@@ -173,19 +174,36 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
  * Creates new execution definition by merging new sort items into an existing definition.
  *
  * @param def - existing definition
- * @param sorts - array of sort items to add to definition
+ * @param sortBy - array of sort items to add to definition
  * @returns always new instance
  * @public
  */
-export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition {
-    if (!sorts || isEmpty(sorts)) {
+export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition {
+    if (!sortBy || isEmpty(sortBy)) {
         return def;
     }
 
     return {
         ...def,
-        sortBy: def.sortBy.concat(sorts),
+        sortBy,
     };
+}
+
+/**
+ * Gets totals from particular dimension in the provided execution definition.
+ *
+ * @param def - definition to get totals from
+ * @param dimIdx - dimension index
+ * @returns empty list if no definition or dimension with the provided index not defined or if there are no
+ *  totals in the dimension
+ * @public
+ */
+export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[] {
+    if (!def || !def.dimensions[dimIdx]) {
+        return [];
+    }
+
+    return dimensionTotals(def.dimensions[dimIdx]);
 }
 
 /**

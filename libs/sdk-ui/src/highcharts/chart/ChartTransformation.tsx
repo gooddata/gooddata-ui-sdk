@@ -3,10 +3,10 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import * as React from "react";
 
-import { convertDrillableItemsToPredicates2 } from "../../base/helpers/headerPredicate";
-import { IDrillableItem } from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent2, OnLegendReady } from "../../base/interfaces/Events";
-import { IHeaderPredicate2 } from "../../base/interfaces/HeaderPredicate";
+import { convertDrillableItemsToPredicates } from "../../base/helpers/drilling";
+import { IDrillableItem, OnFiredDrillEvent } from "../../base/interfaces/DrillEvents";
+import { OnLegendReady } from "../../base/interfaces/Events";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";
@@ -26,14 +26,14 @@ export function renderHighCharts(props: IHighChartsRendererProps) {
 
 export interface IChartTransformationProps {
     config: IChartConfig;
-    drillableItems: Array<IDrillableItem | IHeaderPredicate2>;
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
     width: number;
     locale: string;
 
     dataView: IDataView;
 
-    onDrill: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent;
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
@@ -100,7 +100,7 @@ export default class ChartTransformation extends React.Component<
         const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData } = props;
 
         const chartConfig = this.getChartConfig(props);
-        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         this.chartOptions = getChartOptions(dataView, chartConfig, drillablePredicates);
         const validationResult = validateData(chartConfig.limits, this.chartOptions);

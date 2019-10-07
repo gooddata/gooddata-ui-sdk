@@ -11,17 +11,14 @@ import {
 } from "../../base/constants/visualizationTypes";
 import { getVisualizationType } from "../../base/helpers/visualizationType";
 import {
-    ICellDrillEvent,
     IDrillConfig,
-    IDrillEvent2,
+    IDrillEvent,
     IDrillEventContext,
     IDrillEventContextGroup,
     IDrillEventContextPoint,
-    IDrillEventContextTable,
-    IDrillEventIntersectionElement,
     IDrillPoint,
+    OnFiredDrillEvent,
 } from "../../base/interfaces/DrillEvents";
-import { OnFiredDrillEvent2 } from "../../base/interfaces/Events";
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
@@ -49,7 +46,7 @@ export function getClickableElementNameByChartType(type: VisType): ChartElementT
     }
 }
 
-function fireEvent(onDrill: OnFiredDrillEvent2, data: any, target: EventTarget) {
+function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
     const returnValue = onDrill(data);
 
     // if user-specified onDrill fn returns false, do not fire default DOM event
@@ -142,7 +139,7 @@ const chartClickDebounced = debounce(
             drillContext = composeDrillContextPoint(point, type);
         }
 
-        const data: IDrillEvent2 = {
+        const data: IDrillEvent = {
             dataView,
             drillContext,
         };
@@ -179,7 +176,7 @@ const tickLabelClickDebounce = debounce(
             element: "label",
             points: contextPoints,
         };
-        const data: IDrillEvent2 = {
+        const data: IDrillEvent = {
             dataView,
             drillContext,
         };
@@ -205,45 +202,4 @@ export function tickLabelClick(
     chartType: ChartType,
 ) {
     tickLabelClickDebounce(drillConfig, points, target, chartType);
-}
-
-export function cellClick(drillConfig: IDrillConfig, event: ICellDrillEvent, target: EventTarget) {
-    const { dataView, onDrill } = drillConfig;
-    const { columnIndex, rowIndex, row, intersection } = event;
-
-    const drillContext: IDrillEventContextTable = {
-        type: VisualizationTypes.TABLE,
-        element: "cell",
-        columnIndex,
-        rowIndex,
-        row,
-        intersection,
-    };
-    const data: IDrillEvent2 = {
-        dataView,
-        drillContext,
-    };
-
-    fireEvent(onDrill, data, target);
-}
-
-export function createDrillIntersectionElement(
-    id: string,
-    title: string,
-    uri?: string,
-    identifier?: string,
-): IDrillEventIntersectionElement {
-    const element: IDrillEventIntersectionElement = {
-        id: id || "",
-        title: title || "",
-    };
-
-    if (uri || identifier) {
-        element.header = {
-            uri: uri || "",
-            identifier: identifier || "",
-        };
-    }
-
-    return element;
 }

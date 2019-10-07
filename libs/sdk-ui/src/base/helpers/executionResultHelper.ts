@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
+import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "./types";
-import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/gd-bear-model";
 
 //
 // TODO: move all this code to data view facade.
+//
 //
 
 function findInDimensionHeaders(
@@ -107,14 +107,4 @@ export function getNthAttributeLocalIdentifier(
 export function getNthAttributeName(rowAttributeHeaders: IAttributeHeader[], headerIndex: number): string {
     const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
     return attributeHeader && attributeHeader.formOf.name;
-}
-
-export function getNthDimensionHeaders(
-    executionResponse: Execution.IExecutionResponse,
-    headerIndex: number,
-): Execution.IHeader[] {
-    if (executionResponse.dimensions.length && executionResponse.dimensions[headerIndex]) {
-        return executionResponse.dimensions[headerIndex].headers;
-    }
-    return null;
 }

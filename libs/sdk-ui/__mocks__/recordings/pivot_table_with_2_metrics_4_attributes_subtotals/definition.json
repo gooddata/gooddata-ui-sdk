@@ -1,0 +1,105 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1027"
+                },
+                "localIdentifier": "a1"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/64727"
+                },
+                "localIdentifier": "a2"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1024"
+                },
+                "localIdentifier": "a3"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/1094"
+                },
+                "localIdentifier": "a4"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m1",
+                "alias": "m1",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/9211"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "m2",
+                "alias": "m2",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/ux8xk21n3al4qr1akoz7j6xkl5dt1dqj/obj/9203"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a1", "a2", "a3", "a4"],
+            "totals": [
+                {
+                    "measureIdentifier": "m1",
+                    "type": "sum",
+                    "attributeIdentifier": "a1"
+                },
+                {
+                    "measureIdentifier": "m1",
+                    "type": "max",
+                    "attributeIdentifier": "a1"
+                },
+                {
+                    "measureIdentifier": "m1",
+                    "type": "nat",
+                    "attributeIdentifier": "a2"
+                },
+                {
+                    "measureIdentifier": "m1",
+                    "type": "nat",
+                    "attributeIdentifier": "a4"
+                },
+                {
+                    "measureIdentifier": "m2",
+                    "type": "nat",
+                    "attributeIdentifier": "a4"
+                }
+            ]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

@@ -1,7 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM } from "@gooddata/gd-bear-model";
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { TableRowForDrilling } from "../../_defunct/pivotTable/PivotTable";
 import {
     ChartElementType,
     ChartType,
@@ -12,7 +10,6 @@ import {
     VisElementType,
     VisType,
 } from "../constants/visualizationTypes";
-import { OnFiredDrillEvent2 } from "./Events";
 
 export interface IDrillableItemUri {
     uri: string;
@@ -36,7 +33,6 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
 }
 
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
-export type IDrillEventCallback2 = (event: IDrillEvent2) => void | boolean;
 
 // Intersection element
 export interface IDrillEventIntersectionElement {
@@ -111,13 +107,7 @@ export interface IDrillEventContext {
     points?: IDrillPoint[];
 }
 
-// IDrillEvent is a parameter of the onDrill is callback
 export interface IDrillEvent {
-    executionContext: AFM.IAfm;
-    drillContext: IDrillEventContext;
-}
-
-export interface IDrillEvent2 {
     dataView: IDataView;
     drillContext: IDrillEventContext;
 }
@@ -132,14 +122,9 @@ export interface IHighchartsCategoriesTree {
     tick: IHighchartsParentTick;
 }
 
-export interface ICellDrillEvent {
-    columnIndex: number;
-    rowIndex: number;
-    row: TableRowForDrilling;
-    intersection: IDrillEventIntersectionElement[];
-}
+export type OnFiredDrillEvent = IDrillEventCallback;
 
 export interface IDrillConfig {
     dataView: IDataView;
-    onDrill: OnFiredDrillEvent2;
+    onDrill: OnFiredDrillEvent;
 }

@@ -2,7 +2,6 @@
 import noop = require("lodash/noop");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
-import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { PluggableComboChart } from "../PluggableComboChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import {
@@ -341,7 +340,7 @@ describe("PluggableComboChart", () => {
                 const comboChart = createComponent(defaultProps);
                 const clonedReferencePoint = cloneDeep(refPoint);
                 const refPoints: Array<Promise<IExtendedReferencePoint>> = COLUMN_AREA_LINE.map(
-                    (chartType: VisualizationObject.VisualizationType) => {
+                    (chartType: string) => {
                         clonedReferencePoint.buckets.forEach(
                             (bucket: IBucketOfFun) => (bucket.chartType = chartType),
                         );

@@ -4,17 +4,18 @@ import * as React from "react";
 import { IErrorProps } from "../base/simple/ErrorComponent";
 import { ILoadingProps } from "../base/simple/LoadingComponent";
 import { IChartConfig } from "../highcharts";
-import { OnError, OnExportReady, OnFiredDrillEvent2, OnLoadingChanged } from "../base/interfaces/Events";
-import { IHeaderPredicate2 } from "../base/interfaces/HeaderPredicate";
-import { IDrillableItem } from "../base/interfaces/DrillEvents";
+import { OnError, OnExportReady, OnLoadingChanged } from "../base/interfaces/Events";
+import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
+import { IDrillableItem, OnFiredDrillEvent } from "../base/interfaces/DrillEvents";
 import { IPushData } from "../base/interfaces/PushData";
+import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";
 
 /**
  * Props applicable for all charts
  *
  * @public
  */
-export interface ICommonChartProps extends IChartCallbacks {
+export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
     /**
      * Set Locale for chart localization.
      *
@@ -25,7 +26,7 @@ export interface ICommonChartProps extends IChartCallbacks {
     /**
      * Configure chart drillability; e.g. which parts of the
      */
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate2>;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Configure chart's behavior and appearance.
@@ -54,7 +55,7 @@ export interface ICommonChartProps extends IChartCallbacks {
  *
  * @public
  */
-export interface IChartCallbacks {
+export interface IChartCallbacks extends IVisualizationCallbacks {
     /**
      * Called when an error occurs while loading data for the chart.
      */
@@ -73,7 +74,7 @@ export interface IChartCallbacks {
     /**
      * Called when user triggers a drill on a chart.
      */
-    onDrill?: OnFiredDrillEvent2;
+    onDrill?: OnFiredDrillEvent;
 
     /**
      * @internal

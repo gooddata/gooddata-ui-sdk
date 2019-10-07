@@ -146,6 +146,9 @@ function recordedExecutionFactory(
     recordings: WorkspaceRecordings = {},
 ): IExecutionFactory {
     return {
+        forDefinition(def: IExecutionDefinition): IPreparedExecution {
+            return recordedPreparedExecution(def, recordings);
+        },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
             return recordedPreparedExecution(defForItems(workspace, items, filters), recordings);
         },
@@ -172,10 +175,12 @@ function recordedDataView(
     return {
         definition,
         result,
-        headerItems: afmResult.headerItems ? afmResult.headerItems : [[[]]],
-        data: afmResult.data ? afmResult.data : [[]],
+        headerItems: afmResult.headerItems ? afmResult.headerItems : [],
+        data: afmResult.data,
+        totals: afmResult.totals,
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
+        totalCount: afmResult.paging.total,
         advance: noop,
         pageDown: noop,
         pageUp: noop,

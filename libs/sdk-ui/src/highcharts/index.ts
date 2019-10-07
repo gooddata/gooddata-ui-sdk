@@ -10,7 +10,6 @@ export { FLUID_LEGEND_THRESHOLD } from "./chart/HighChartsRenderer";
 export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
 
 // TODO: SDK8: this should go away; its exported for drills
-export { createDrillIntersectionElement } from "./utils/drilldownEventing";
 
 export { isLineChart, isAreaChart } from "./utils/common";
 

@@ -76,6 +76,42 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
     return new DataViewFacade(dummyDataView(definition));
 }
 
+/**
+ * Creates a new, empty data view for the provided execution definition. The definition will be retained as-is, data
+ * will be empty.
+ *
+ * @param definition - execution definition
+ * @param result - optionally a result to link with the data view, if not provided an execution result will be
+ *  created
+ * @returns new instance of data view
+ * @internal
+ */
+export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
+    const execResult = result ? result : dummyExecutionResult(definition);
+
+    const fp = defFingerprint(definition) + "/emptyView";
+
+    return {
+        definition,
+        result: execResult,
+        headerItems: [],
+        data: [],
+        offset: [0, 0],
+        count: [0, 0],
+        totalCount: [0, 0],
+        advance: noop,
+        pageDown: noop,
+        pageUp: noop,
+        pageLeft: noop,
+        pageRight: noop,
+        fingerprint(): string {
+            return fp;
+        },
+        equals(other: IDataView): boolean {
+            return fp === other.fingerprint();
+        },
+    };
+}
 //
 // Internals
 //
@@ -103,6 +139,9 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
 
 function dummyExecutionFactory(workspace: string): IExecutionFactory {
     return {
+        forDefinition(def: IExecutionDefinition): IPreparedExecution {
+            return dummyPreparedExecution(def);
+        },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
             return dummyPreparedExecution(defForItems(workspace, items, filters));
         },
@@ -114,38 +153,6 @@ function dummyExecutionFactory(workspace: string): IExecutionFactory {
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
-        },
-    };
-}
-
-/**
- * Creates a new DataView according to the result provided
- * @param definition - execution definition
- * @param result - desired execution result
- * @internal
- */
-export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
-    const execResult = result ? result : dummyExecutionResult(definition);
-
-    const fp = defFingerprint(definition) + "/emptyView";
-
-    return {
-        definition,
-        result: execResult,
-        headerItems: [[[]]],
-        data: [[]],
-        offset: [0, 0],
-        count: [0, 0],
-        advance: noop,
-        pageDown: noop,
-        pageUp: noop,
-        pageLeft: noop,
-        pageRight: noop,
-        fingerprint(): string {
-            return fp;
-        },
-        equals(other: IDataView): boolean {
-            return fp === other.fingerprint();
         },
     };
 }

@@ -33,7 +33,7 @@ const baseAnimationDuration = 1.4;
  * [LoadingComponent](http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html)
  * is a component that renders a default loading indicator
  */
-export class LoadingComponent extends React.Component<ILoadingProps, null> {
+export class LoadingComponent extends React.Component<ILoadingProps> {
     public static defaultProps: Partial<ILoadingProps> = {
         className: "s-loading",
         color: "#94a1ad",

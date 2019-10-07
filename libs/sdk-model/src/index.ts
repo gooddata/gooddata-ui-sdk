@@ -33,6 +33,7 @@ export {
     newDimension,
     dimensionFingerprint,
     MeasureGroupIdentifier,
+    dimensionSetTotals,
 } from "./base/dimension";
 
 export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";

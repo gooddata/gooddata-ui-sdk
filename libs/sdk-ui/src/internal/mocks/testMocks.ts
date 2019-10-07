@@ -1,52 +1,13 @@
 // (C) 2019 GoodData Corporation
-import { DataLayer } from "@gooddata/gd-bear-client";
-import { AFM, Execution, VisualizationObject } from "@gooddata/gd-bear-model";
 import * as BucketNames from "../../base/constants/bucketNames";
 import { IInsight, IVisualizationClass } from "@gooddata/sdk-model";
 import { attribute } from "../../base/helpers/model";
-
-export const emptyExecutionResponse: Execution.IExecutionResponses = {
-    executionResponse: {
-        dimensions: [],
-        links: {
-            executionResult: "",
-        },
-    },
-    executionResult: null,
-};
-
-export const dummyDataSource: DataLayer.DataSource.IDataSource<Execution.IExecutionResponses> = {
-    getData: () => Promise.resolve(emptyExecutionResponse),
-    getPage: () => Promise.resolve(emptyExecutionResponse),
-    getAfm: () => ({}),
-    getFingerprint: () => "{}",
-};
-
-export const dummyTableResultSpec: AFM.IResultSpec = {
-    dimensions: [
-        {
-            itemIdentifiers: [],
-        },
-        {
-            itemIdentifiers: [],
-        },
-    ],
-    sorts: [],
-};
 
 //
 // Test insights
 //
 
 export const EMPTY_TITLE = "empty_title";
-
-export const emptyMdObject: VisualizationObject.IVisualizationObjectContent = {
-    buckets: [],
-    filters: [],
-    visualizationClass: {
-        uri: "/gdc/md/mockproject/obj/column",
-    },
-};
 
 export const emptyInsight: IInsight = {
     insight: {

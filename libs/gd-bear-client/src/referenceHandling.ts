@@ -12,7 +12,7 @@ import stringify from "json-stable-stringify";
 import { v4 as uuid } from "uuid";
 
 import { IProperties } from "./interfaces";
-import { isUri } from "./DataLayer/helpers/uri";
+import { isUri } from "./util";
 
 /*
  * Helpers

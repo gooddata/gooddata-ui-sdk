@@ -22,7 +22,7 @@ import {
 } from "../../../../../../__mocks__/fixtures";
 import { IHeadlineData } from "../../../Headlines";
 import { identifierMatch, uriMatch } from "../../../../../base/factory/HeaderPredicateFactory";
-import { IDrillEvent2 } from "../../../../../base/interfaces/DrillEvents";
+import { IDrillEvent } from "../../../../../base/interfaces/DrillEvents";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {
@@ -577,7 +577,7 @@ describe("HeadlineTransformationUtils", () => {
                 dispatchEvent: eventHandler,
             };
 
-            fireDrillEvent(undefined, eventData as IDrillEvent2, (target as any) as EventTarget);
+            fireDrillEvent(undefined, eventData as IDrillEvent, (target as any) as EventTarget);
 
             expect(eventHandler).toHaveBeenCalledTimes(1);
             expect(eventHandler).toHaveBeenCalledWith(
@@ -603,7 +603,7 @@ describe("HeadlineTransformationUtils", () => {
             };
             const drillEventFunction = jest.fn(() => true);
 
-            fireDrillEvent(drillEventFunction, eventData as IDrillEvent2, (target as any) as EventTarget);
+            fireDrillEvent(drillEventFunction, eventData as IDrillEvent, (target as any) as EventTarget);
 
             expect(drillEventFunction).toHaveBeenCalledTimes(1);
             expect(eventHandler).toHaveBeenCalledTimes(1);
@@ -631,7 +631,7 @@ describe("HeadlineTransformationUtils", () => {
 
             const drillEventFunction = jest.fn(() => false);
 
-            fireDrillEvent(drillEventFunction, eventData as IDrillEvent2, (target as any) as EventTarget);
+            fireDrillEvent(drillEventFunction, eventData as IDrillEvent, (target as any) as EventTarget);
 
             expect(eventHandler).toHaveBeenCalledTimes(0);
             expect(drillEventFunction).toHaveBeenCalledTimes(1);

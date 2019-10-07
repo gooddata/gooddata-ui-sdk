@@ -1,0 +1,105 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.restaurantlocation.locationstate"
+                },
+                "localIdentifier": "label.restaurantlocation.locationstate"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.restaurantlocation.locationname"
+                },
+                "localIdentifier": "label.restaurantlocation.locationname"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.menuitem.menucategory"
+                },
+                "localIdentifier": "label.menuitem.menucategory"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "date.aam81lMifn6q"
+                },
+                "localIdentifier": "date.aam81lMifn6q"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "date.abm81lMifn6q"
+                },
+                "localIdentifier": "date.abm81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "aaEGaXAEgB7U",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaEGaXAEgB7U"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "aabHeqImaK0d",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aabHeqImaK0d"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": [
+                "label.restaurantlocation.locationstate",
+                "label.restaurantlocation.locationname",
+                "label.menuitem.menucategory"
+            ],
+            "totals": [
+                {
+                    "measureIdentifier": "aaEGaXAEgB7U",
+                    "type": "sum",
+                    "attributeIdentifier": "label.restaurantlocation.locationstate"
+                },
+                {
+                    "measureIdentifier": "aabHeqImaK0d",
+                    "type": "sum",
+                    "attributeIdentifier": "label.restaurantlocation.locationstate"
+                },
+                {
+                    "measureIdentifier": "aaEGaXAEgB7U",
+                    "type": "avg",
+                    "attributeIdentifier": "label.restaurantlocation.locationstate"
+                }
+            ]
+        },
+        {
+            "itemIdentifiers": ["date.aam81lMifn6q", "date.abm81lMifn6q", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

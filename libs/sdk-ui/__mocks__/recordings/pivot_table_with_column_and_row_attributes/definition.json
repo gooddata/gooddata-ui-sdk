@@ -1,0 +1,102 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.restaurantlocation.locationstate"
+                },
+                "localIdentifier": "state"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.restaurantlocation.locationname"
+                },
+                "localIdentifier": "location"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "date.aam81lMifn6q"
+                },
+                "localIdentifier": "year"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "date.abm81lMifn6q"
+                },
+                "localIdentifier": "month"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "franchiseFeesIdentifier",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaEGaXAEgB7U"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "franchiseFeesAdRoyaltyIdentifier",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aabHeqImaK0d"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "franchiseFeesInitialFranchiseFeeIdentifier",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaDHcv6wevkl"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        },
+        {
+            "measure": {
+                "localIdentifier": "franchiseFeesIdentifierOngoingRoyalty",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaWGcgnsfxIg"
+                        },
+                        "filters": []
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["state", "location"]
+        },
+        {
+            "itemIdentifiers": ["year", "month", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

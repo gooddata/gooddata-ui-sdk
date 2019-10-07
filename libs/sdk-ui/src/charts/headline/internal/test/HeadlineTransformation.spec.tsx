@@ -2,7 +2,6 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import HeadlineTransformation, { IHeadlineTransformationProps } from "../HeadlineTransformation";
-import { SINGLE_URI_METRIC_EXECUTION_REQUEST } from "./fixtures/one_measure";
 import Headline from "../Headline";
 import { withIntl } from "../../../../base/helpers/intlUtils";
 import {
@@ -11,12 +10,12 @@ import {
     headlineWithTwoMeasures,
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../__mocks__/fixtures";
-import noop = require("lodash/noop");
 import {
-    DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
+    DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
 } from "./fixtures/drill_event_data";
+import noop = require("lodash/noop");
 
 describe("HeadlineTransformation", () => {
     function createComponent(props: IHeadlineTransformationProps) {
@@ -169,7 +168,7 @@ describe("HeadlineTransformation", () => {
         expect(onAfterRender).toHaveBeenCalledTimes(1);
 
         wrapper.setProps({
-            executionRequest: SINGLE_URI_METRIC_EXECUTION_REQUEST,
+            dataView: headlineWithOneMeasure.dataView,
         });
 
         expect(onAfterRender).toHaveBeenCalledTimes(2);

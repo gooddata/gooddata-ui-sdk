@@ -2,16 +2,16 @@
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import { context, measureHeaders } from "../../factory/tests/HeaderPredicateFactory.mock";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { IHeaderPredicate2 } from "../../interfaces/HeaderPredicate";
-import { convertDrillableItemsToPredicates2, isSomeHeaderPredicateMatched2 } from "../headerPredicate";
+import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../drilling";
 import { emptyFacade } from "../../../../__mocks__/fixtures";
 
 describe("isSomeHeaderPredicateMatched", () => {
     it("should return true when some of predicates match header", () => {
         const header: IMappingHeader = { attributeHeaderItem: { uri: "uri", name: "name" } };
-        const drillablePredicates: IHeaderPredicate2[] = [jest.fn(() => false), jest.fn(() => true)];
+        const drillablePredicates: IHeaderPredicate[] = [jest.fn(() => false), jest.fn(() => true)];
 
-        expect(isSomeHeaderPredicateMatched2(drillablePredicates, header, emptyFacade)).toBe(true);
+        expect(isSomeHeaderPredicateMatched(drillablePredicates, header, emptyFacade)).toBe(true);
         expect(drillablePredicates[0]).toBeCalledWith(header, {
             dv: emptyFacade,
         });
@@ -22,9 +22,9 @@ describe("isSomeHeaderPredicateMatched", () => {
 
     it("should return false when none of predicates match header", () => {
         const header: IMappingHeader = { attributeHeaderItem: { uri: "uri", name: "name" } };
-        const drillablePredicates: IHeaderPredicate2[] = [jest.fn(() => false), jest.fn(() => false)];
+        const drillablePredicates: IHeaderPredicate[] = [jest.fn(() => false), jest.fn(() => false)];
 
-        expect(isSomeHeaderPredicateMatched2(drillablePredicates, header, emptyFacade)).toBe(false);
+        expect(isSomeHeaderPredicateMatched(drillablePredicates, header, emptyFacade)).toBe(false);
         expect(drillablePredicates[0]).toBeCalledWith(header, {
             dv: emptyFacade,
         });
@@ -35,9 +35,9 @@ describe("isSomeHeaderPredicateMatched", () => {
 
     it("should return false when no of predicates provided", () => {
         const header: IMappingHeader = { attributeHeaderItem: { uri: "uri", name: "name" } };
-        const drillablePredicates: IHeaderPredicate2[] = [];
+        const drillablePredicates: IHeaderPredicate[] = [];
 
-        expect(isSomeHeaderPredicateMatched2(drillablePredicates, header, emptyFacade)).toBe(false);
+        expect(isSomeHeaderPredicateMatched(drillablePredicates, header, emptyFacade)).toBe(false);
     });
 });
 
@@ -45,7 +45,7 @@ describe("convertDrillableItemsToPredicates", () => {
     it("should convert legacy drillable items to drillable predicates", () => {
         const drillableItems = [{ uri: "/some-uri" }, { identifier: "some-identifier" }];
 
-        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach(predicate => {
@@ -62,7 +62,7 @@ describe("convertDrillableItemsToPredicates", () => {
             headerPredicateFactory.identifierMatch("identifier"),
         ];
 
-        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
         expect(drillablePredicates).toHaveLength(drillableItems.length);
         drillablePredicates.forEach(predicate => {
@@ -74,14 +74,14 @@ describe("convertDrillableItemsToPredicates", () => {
     it("should match converted legacy drillable item with uri", () => {
         const drillableItems = [{ uri: "/uriBasedMeasureUri" }];
 
-        const [predicate] = convertDrillableItemsToPredicates2(drillableItems);
+        const [predicate] = convertDrillableItemsToPredicates(drillableItems);
         expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
     });
 
     it("should match converted legacy drillable item with identifier", () => {
         const drillableItems = [{ identifier: "uriBasedMeasureIdentifier" }];
 
-        const [predicate] = convertDrillableItemsToPredicates2(drillableItems);
+        const [predicate] = convertDrillableItemsToPredicates(drillableItems);
         expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
     });
 
@@ -93,7 +93,7 @@ describe("convertDrillableItemsToPredicates", () => {
             },
         ];
 
-        const drillablePredicates = convertDrillableItemsToPredicates2(drillableItems);
+        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         drillablePredicates.forEach(predicate => {
             expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
         });

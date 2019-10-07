@@ -7,17 +7,19 @@ import { DataValue, DataViewFacade, IDataView, IMeasureHeaderItem } from "@goodd
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
-import { createDrillIntersectionElement } from "../../../../highcharts";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { isSomeHeaderPredicateMatched2 } from "../../../../base/helpers/headerPredicate";
 import {
-    IDrillEvent2,
-    IDrillEventCallback2,
+    isSomeHeaderPredicateMatched,
+    createDrillIntersectionElement,
+} from "../../../../base/helpers/drilling";
+import {
+    IDrillEvent,
+    IDrillEventCallback,
     IDrillEventContextHeadline,
 } from "../../../../base/interfaces/DrillEvents";
-import { IHeaderPredicate2 } from "../../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../../base/interfaces/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
-import { measureUriOrQualifier } from "../../../_commons/measures";
+import { measureUriOrQualifier } from "../../../../base/helpers/measures";
 import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
@@ -127,7 +129,7 @@ export function getHeadlineData(dataView: IDataView, intl: InjectedIntl): IHeadl
  */
 export function applyDrillableItems(
     headlineData: IHeadlineData,
-    drillableItems: IHeaderPredicate2[],
+    drillableItems: IHeaderPredicate[],
     dataView: IDataView,
 ): IHeadlineData {
     const dv = new DataViewFacade(dataView);
@@ -136,11 +138,11 @@ export function applyDrillableItems(
     const [primaryItemHeader, secondaryItemHeader] = dv.measureGroupHeaderItems();
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
-        primaryItem.isDrillable = isSomeHeaderPredicateMatched2(drillableItems, primaryItemHeader, dv);
+        primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
     }
 
     if (!isEmpty(secondaryItem) && !isEmpty(secondaryItemHeader)) {
-        secondaryItem.isDrillable = isSomeHeaderPredicateMatched2(drillableItems, secondaryItemHeader, dv);
+        secondaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, secondaryItemHeader, dv);
     }
 
     return data;
@@ -157,7 +159,7 @@ export function applyDrillableItems(
 export function buildDrillEventData(
     itemContext: IHeadlineDrillItemContext,
     dataView: IDataView,
-): IDrillEvent2 {
+): IDrillEvent {
     const dv = new DataViewFacade(dataView);
     const measureHeaderItem = dv.measureGroupHeaderItem(itemContext.localIdentifier);
     if (!measureHeaderItem) {
@@ -198,8 +200,8 @@ export function buildDrillEventData(
  * @param target - The target where the built event must be dispatched.
  */
 export function fireDrillEvent(
-    drillEventFunction: IDrillEventCallback2,
-    drillEventData: IDrillEvent2,
+    drillEventFunction: IDrillEventCallback,
+    drillEventData: IDrillEvent,
     target: EventTarget,
 ) {
     const shouldDispatchPostMessage = drillEventFunction && drillEventFunction(drillEventData);

@@ -5,8 +5,7 @@ import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison
 import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
 import { IColorPalette } from "../../base/interfaces/Colors";
 import * as VisEvents from "../../base/interfaces/Events";
-import { IInsight, VisualizationProperties } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { IInsight, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export type ILocale =
@@ -111,14 +110,13 @@ export interface IFiltersBucketItem extends IBucketItem {
 }
 
 // TODO: SDK8: rename this :) the original name IBucket conflicted with what we have in model;
-// TODO: SDK8: vis object types should not be used here
 // this interface and all the other similar interface (bucket item, filters etc) are specifically used
 // in the reference point
 export interface IBucketOfFun {
     localIdentifier: string;
     items: IBucketItem[];
-    totals?: VisualizationObject.IVisualizationTotal[];
-    chartType?: VisualizationObject.VisualizationType;
+    totals?: ITotal[];
+    chartType?: string;
 }
 
 export interface IFilters {

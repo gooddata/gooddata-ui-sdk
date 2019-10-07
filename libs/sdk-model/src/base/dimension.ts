@@ -65,6 +65,21 @@ export function dimensionTotals(dim: IDimension): ITotal[] {
 }
 
 /**
+ * Creates a new dimension which has same items as the provided dimension but different totals.
+ *
+ * @param dim - dimension to inherit item identifiers from
+ * @param totals - totals to have in the new dimension
+ * @returns new dimension
+ * @public
+ */
+export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDimension {
+    return {
+        itemIdentifiers: dim.itemIdentifiers,
+        totals,
+    };
+}
+
+/**
  * Creates new two dimensional specification where each dimension will have the provided set of
  * identifiers.
  *

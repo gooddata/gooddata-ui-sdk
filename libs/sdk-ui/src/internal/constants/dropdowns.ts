@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IDropdownItem } from "../components/configurationControls/DropdownControl";
+import { IDropdownItem } from "../interfaces/Dropdown";
 
 export const rotationDropdownItems: IDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },

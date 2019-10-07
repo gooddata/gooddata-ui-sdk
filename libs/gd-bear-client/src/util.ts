@@ -99,6 +99,16 @@ export const handleHeadPolling = (
     });
 };
 
+const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
+
+/**
+ * Tests whether the provided string looks like a URI of a metadata object on GoodData platform
+ *
+ * @param value - string to test
+ * @public
+ */
+export const isUri = (value: string) => REG_URI_OBJ.test(value);
+
 /**
  * Builds query string from plain object
  * (Refactored from admin/routes.js)

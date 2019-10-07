@@ -3,7 +3,7 @@ import { IColor, IColorItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import { IChartConfig } from "../Config";
-import { IHeaderPredicate2, IHeaderPredicateContext2 } from "../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
 import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../base/interfaces/Colors";
@@ -138,8 +138,8 @@ export function getRgbStringFromRGB(color: IColor) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 
-export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate2 {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext2): boolean => {
+export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate {
+    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (isResultAttributeHeaderItem(header)) {
             return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
         }

@@ -6,13 +6,9 @@ import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
 import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
 import { SeriesChartTypes } from "../../constants/series";
-import {
-    cellClick,
-    chartClick,
-    createDrillIntersectionElement,
-    getClickableElementNameByChartType,
-} from "../drilldownEventing";
+import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
+import { createDrillIntersectionElement } from "../../../base/helpers/drilling";
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
@@ -407,51 +403,6 @@ describe("Drilldown Eventing", () => {
                                 },
                             },
                         ],
-                    },
-                ],
-            },
-        });
-    });
-
-    it("should call fire event on cell click", () => {
-        const drillConfig = { dataView, onDrill: () => true };
-        const target = { dispatchEvent: jest.fn() };
-        const cellClickEventData = {
-            columnIndex: 1,
-            rowIndex: 2,
-            row: ["3"],
-            intersection: [
-                {
-                    id: "id1",
-                    title: "title1",
-                    header: {
-                        identifier: "identifier1",
-                        uri: "uri1",
-                    },
-                },
-            ],
-        };
-
-        cellClick(drillConfig, cellClickEventData, (target as any) as EventTarget);
-
-        expect(target.dispatchEvent).toHaveBeenCalled();
-
-        expect(target.dispatchEvent.mock.calls[0][0].detail).toEqual({
-            dataView,
-            drillContext: {
-                type: "table",
-                element: "cell",
-                columnIndex: 1,
-                rowIndex: 2,
-                row: ["3"],
-                intersection: [
-                    {
-                        id: "id1",
-                        title: "title1",
-                        header: {
-                            identifier: "identifier1",
-                            uri: "uri1",
-                        },
                     },
                 ],
             },

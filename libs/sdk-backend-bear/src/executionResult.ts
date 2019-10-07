@@ -5,6 +5,7 @@ import {
     DataViewError,
     IDataView,
     IExecutionDefinition,
+    IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
@@ -24,6 +25,7 @@ export class BearExecutionResult implements IExecutionResult {
     constructor(
         private readonly authSdk: AuthenticatedSdkProvider,
         public readonly definition: IExecutionDefinition,
+        private readonly execFactory: IExecutionFactory,
         private readonly execResponse: Execution.IExecutionResponse,
     ) {
         this.dimensions = execResponse.dimensions;
@@ -51,7 +53,7 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        throw new NotImplemented("not yet implemented");
+        return this.execFactory.forDefinition(this.definition);
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
@@ -119,18 +121,20 @@ class BearDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
     public readonly headerItems: IResultHeaderItem[][][];
+    public readonly totalCount: number[];
     public readonly count: number[];
     public readonly offset: number[];
     public readonly result: IExecutionResult;
-    public readonly totals: DataValue[][][];
+    public readonly totals?: DataValue[][][];
     private readonly _fingerprint: string;
 
     constructor(result: IExecutionResult, dataResult: Execution.IExecutionResult) {
         this.result = result;
         this.definition = result.definition;
         this.data = dataResult.data;
-        this.headerItems = dataResult.headerItems ? dataResult.headerItems : [[[]]];
-        this.totals = dataResult.totals ? dataResult.totals : [[[]]];
+        this.headerItems = dataResult.headerItems ? dataResult.headerItems : [];
+        this.totals = dataResult.totals;
+        this.totalCount = dataResult.paging.total;
         this.count = dataResult.paging.count;
         this.offset = dataResult.paging.offset;
 

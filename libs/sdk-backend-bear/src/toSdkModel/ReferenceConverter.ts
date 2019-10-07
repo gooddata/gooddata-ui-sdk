@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
-import { DataLayer } from "@gooddata/gd-bear-client";
+import { isUri } from "@gooddata/gd-bear-client";
 import isEmpty = require("lodash/isEmpty");
 import omit = require("lodash/omit");
 import isArray = require("lodash/isArray");
@@ -131,7 +131,7 @@ const createUriToReferenceConverter = (
     return {
         convertedReferences,
         conversion: (value: string) => {
-            if (!DataLayer.Uri.isUri(value)) {
+            if (!isUri(value)) {
                 return value;
             }
 

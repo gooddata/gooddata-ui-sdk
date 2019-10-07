@@ -160,7 +160,7 @@ options = {
             comment: "An invalid dependency from non-internal to internal module",
             severity: "error",
             from: {
-                pathNot: "^(src/internal)",
+                pathNot: "^(src/internal|src/insightView)",
             },
             to: {
                 path: "^(src/internal)",
@@ -212,13 +212,24 @@ options = {
         },
         {
             name: "internal-dependencies",
-            comment: "Charts must only depend on base and highcharts.",
+            comment: "Pluggable visualization deps.",
             severity: "error",
             from: {
                 path: "src/internal",
             },
             to: {
-                pathNot: "^(src/internal|src/base|src/charts|src/highcharts)",
+                pathNot: "^(src/internal|src/base|src/charts|src/highcharts|src/pivotTable)",
+            },
+        },
+        {
+            name: "pivot-dependencies",
+            comment: "Pivot Table must only depend on base",
+            severity: "error",
+            from: {
+                path: "src/pivot",
+            },
+            to: {
+                pathNot: "^(src/pivot|src/base|styles)",
             },
         },
         {
@@ -238,7 +249,8 @@ options = {
              for a complete list
         */
         doNotFollow: {
-            path: ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories).*",
+            path:
+                ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories|spec|test|tests).*",
             dependencyTypes: ["npm", "npm-dev", "npm-optional", "npm-peer", "npm-bundled", "npm-no-pkg"],
         },
 
@@ -248,7 +260,8 @@ options = {
                     leave out if you want to exclude neither (recommended!)
         */
         exclude: {
-            path: ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories).*",
+            path:
+                ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories|spec|test|tests).*",
             //, dynamic: true
         },
 

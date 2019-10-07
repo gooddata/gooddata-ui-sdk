@@ -32,7 +32,6 @@ import { PieChart } from "./charts/pieChart/PieChart";
 import { Treemap } from "./charts/treemap/Treemap";
 import { DonutChart } from "./charts/donutChart/DonutChart";
 import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
-// import { PivotTable } from "./_defunct/pivotTable/PivotTable";
 import { Headline } from "./charts/headline/Headline";
 import { ScatterPlot } from "./charts/scatterPlot/ScatterPlot";
 import { ComboChart } from "./charts/comboChart/ComboChart";
@@ -50,27 +49,11 @@ import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./base/interfaces/MappingHeader";
 // import { BucketExecutor } from "./execution/BucketExecutor";
 
+export { PivotTable, IPivotTableConfig, IPivotTableBucketProps, IMenu } from "./pivotTable";
+
 import { IColorPalette, IColorPaletteItem } from "./base/interfaces/Colors";
 
-/**
- * CoreComponents
- * A collection of BaseChart, Headline, Table, ScatterPlot, FunnelChart
- * TODO: SDK8: revisit
- * @internal
- */
-/*
-const CoreComponents: ICoreComponents = {
-    BaseChart: CoreBaseChart,
-    Headline: CoreHeadline,
-    Table: CoreTable,
-    PivotTable: CorePivotTable,
-    ScatterPlot: CoreScatterPlot,
-    FunnelChart: CoreFunnelChart,
-};
-*/
-
 import { InsightView } from "./insightView/InsightView";
-
 export {
     AttributeElements,
     AttributeFilter,

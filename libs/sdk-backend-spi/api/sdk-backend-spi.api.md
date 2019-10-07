@@ -12,6 +12,7 @@ import { IDimension } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
@@ -79,15 +80,21 @@ export class DataViewFacade {
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
+    dimensionHeaders(dimIdx: number): IHeader[];
+    // (undocumented)
     dimensions(): IResultDimension[];
     // (undocumented)
     fingerprint(): () => string;
+    // (undocumented)
+    firstDimSize(): number;
     // (undocumented)
     hasAttributes(): boolean;
     // (undocumented)
     hasBuckets(): boolean;
     // (undocumented)
     hasMeasures(): boolean;
+    // (undocumented)
+    hasTotals(): boolean;
     // (undocumented)
     headerItems(): IResultHeaderItem[][][];
     // (undocumented)
@@ -109,7 +116,13 @@ export class DataViewFacade {
     // (undocumented)
     measures(): IMeasure[];
     // (undocumented)
+    result(): IExecutionResult;
+    // (undocumented)
+    secondDimSize(): number;
+    // (undocumented)
     singleDimData(): DataValue[];
+    // (undocumented)
+    totals(): DataValue[][][] | undefined;
     // (undocumented)
     twoDimData(): DataValue[][];
 }
@@ -139,7 +152,10 @@ export function defForItems(workspace: string, items: AttributeOrMeasure[], filt
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
 
 // @public
-export function defSetSorts(def: IExecutionDefinition, sorts?: SortItem[]): IExecutionDefinition;
+export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
+
+// @public
+export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 
 // Warning: (ae-internal-missing-underscore) The name "defWithDimensions" should be prefixed with an underscore because the declaration is marked as @internal
 // 
@@ -231,6 +247,7 @@ export interface IDataView {
     pageRight(): Promise<IDataView | null>;
     pageUp(): Promise<IDataView | null>;
     readonly result: IExecutionResult;
+    readonly totalCount: number[];
     // (undocumented)
     readonly totals?: DataValue[][][];
 }
@@ -284,6 +301,7 @@ export interface IExecutionDefinition {
 // @public
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition): IPreparedExecution;
     forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;

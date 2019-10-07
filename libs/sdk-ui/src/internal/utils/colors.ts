@@ -1,19 +1,22 @@
 // (C) 2019 GoodData Corporation
-import produce from "immer";
 import get = require("lodash/get");
 import set = require("lodash/set");
 import isEqual = require("lodash/isEqual");
 import uniqBy = require("lodash/uniqBy");
 import isEmpty = require("lodash/isEmpty");
+import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 
-import { Execution } from "@gooddata/gd-bear-model";
 import { IColorAssignment } from "../../base/interfaces/Colors";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import { ColorUtils } from "../../highcharts";
-import { isMeasureHeaderItem, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import {
+    IMeasureHeaderItem,
+    isMeasureHeaderItem,
+    isResultAttributeHeaderItem,
+} from "@gooddata/sdk-backend-spi";
 import { IColorItem, IColorMappingProperty, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
 
 function getItemName(item: IColoredItem): string {
@@ -62,7 +65,7 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
     return inputItems;
 }
 
-function getMeasureMappingIdentifier(item: Execution.IMeasureHeaderItem): string {
+function getMeasureMappingIdentifier(item: IMeasureHeaderItem): string {
     return item.measureHeaderItem.localIdentifier;
 }
 
@@ -77,10 +80,10 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
     const previousColorMapping = get(properties, "controls.colorMapping", []);
 
     const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
+    const newProperties = cloneDeep(properties);
+    set(newProperties, "controls.colorMapping", mergedMapping);
 
-    return produce(properties, newProperties => {
-        set(newProperties, "controls.colorMapping", mergedMapping);
-    });
+    return newProperties;
 }
 
 export function getProperties(

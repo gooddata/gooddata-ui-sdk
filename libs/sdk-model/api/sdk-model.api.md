@@ -116,6 +116,9 @@ export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule
 export function dimensionFingerprint(dim: IDimension): string;
 
 // @public
+export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
+
+// @public
 export function dimensionTotals(dim: IDimension): ITotal[];
 
 // Warning: (ae-internal-missing-underscore) The name "filterFingerprint" should be prefixed with an underscore because the declaration is marked as @internal

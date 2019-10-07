@@ -1552,6 +1552,21 @@ export const pieChartWithMetricsOnly = recordedDataFacade(rec.PieChartWithMetric
 export const pieChartWithMetricsOnlyFundata = recordedDataFacade(rec.PieChartWithMetricsOnlyFundata);
 
 //
+// Pivot table recordings
+//
+export const pivotTableWith2Metrics4AttributesSubtotals = recordedDataFacade(
+    rec.PivotTableWith2Metrics4AttributesSubtotals,
+);
+export const pivotTableWith3Metrics = recordedDataFacade(rec.PivotTableWith3Metrics);
+export const pivotTableWithColumnAndRowAttributes = recordedDataFacade(
+    rec.PivotTableWithColumnAndRowAttributes,
+);
+export const pivotTableWithColumnRowAttributesAndTotals = recordedDataFacade(
+    rec.PivotTableWithColumnRowAttributesAndTotals,
+);
+export const pivotTableWithSubtotals = recordedDataFacade(rec.PivotTableWithSubtotals);
+
+//
 // Scatter plot recording
 //
 

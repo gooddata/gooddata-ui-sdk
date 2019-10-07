@@ -9,9 +9,11 @@ import {
     isPreviousPeriodMeasure,
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
-import { IDataView } from "./index";
+import { IExecutionDefinition } from "./executionDefinition";
+import { IDataView, IExecutionResult } from "./index";
 import {
     DataValue,
+    IHeader,
     IMeasureGroupHeader,
     IMeasureHeaderItem,
     IResultAttributeHeaderItem,
@@ -20,7 +22,6 @@ import {
     isMeasureGroupHeader,
     isResultAttributeHeaderItem,
 } from "./results";
-import { IExecutionDefinition } from "./executionDefinition";
 import isArray = require("lodash/isArray");
 
 type BucketIndex = {
@@ -179,6 +180,12 @@ export class DataViewFacade {
         return this.dataView.result.dimensions;
     }
 
+    public dimensionHeaders(dimIdx: number): IHeader[] {
+        const dim = this.dataView.result.dimensions[dimIdx];
+
+        return dim && dim.headers ? dim.headers : [];
+    }
+
     public headerItems(): IResultHeaderItem[][][] {
         return this.dataView.headerItems;
     }
@@ -219,6 +226,14 @@ export class DataViewFacade {
     // data ops
     //
 
+    public firstDimSize(): number {
+        return this.dataView.totalCount[0];
+    }
+
+    public secondDimSize(): number {
+        return this.dataView.totalCount[1];
+    }
+
     public dataAt(index: number): DataValue | DataValue[] {
         return this.dataView.data[index];
     }
@@ -258,6 +273,18 @@ export class DataViewFacade {
         }
 
         return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
+    }
+
+    public totals(): DataValue[][][] | undefined {
+        return this.dataView.totals;
+    }
+
+    public hasTotals(): boolean {
+        return this.dataView.totals !== undefined;
+    }
+
+    public result(): IExecutionResult {
+        return this.dataView.result;
     }
 
     public fingerprint() {
