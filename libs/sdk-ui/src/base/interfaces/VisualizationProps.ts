@@ -21,7 +21,7 @@ export interface IVisualizationProps {
     locale?: string;
 
     /**
-     * Configure drillability; e.g. which parts of the
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
      */
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 

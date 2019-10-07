@@ -1,6 +1,11 @@
 // (C) 2019 GoodData Corporation
 import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
-import { IExecutionDefinition, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    defWithFilters,
+    IExecutionDefinition,
+    IExecutionFactory,
+    IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
 
 export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     constructor(
@@ -9,7 +14,7 @@ export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     ) {}
 
     public forDefinition = (def: IExecutionDefinition): IPreparedExecution => {
-        return this.factory.forDefinition(def);
+        return this.factory.forDefinition(defWithFilters(def, this.presetFilters));
     };
     public forItems = (items: AttributeOrMeasure[], filters: IFilter[] = []): IPreparedExecution => {
         return this.factory.forItems(items, [...this.presetFilters, ...filters]);

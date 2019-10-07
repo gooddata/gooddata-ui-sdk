@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { DataViewFacade } from '@gooddata/sdk-backend-spi';
-import { ITotal } from '@gooddata/sdk-model';
-import { ColGroupDef, IHeaderGroupParams } from 'ag-grid-community';
-import * as React from 'react';
-import { IMenu, IMenuAggregationClickConfig } from '../types';
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { ITotal } from "@gooddata/sdk-model";
+import { ColGroupDef, IHeaderGroupParams } from "ag-grid-community";
+import * as React from "react";
+import { IMenu, IMenuAggregationClickConfig } from "../types";
 
-import HeaderCell, { ALIGN_LEFT } from './HeaderCell';
+import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
 
 export interface IProps extends IHeaderGroupParams {
     menu?: IMenu;

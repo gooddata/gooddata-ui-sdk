@@ -23,19 +23,19 @@ export class TigerExecution implements IExecutionFactory {
     public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
         const def = defForItems(this.workspace, items, filters);
 
-        return new TigerPreparedExecution(this.axios, def);
+        return this.forDefinition(def);
     }
 
     public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
         const def = defForBuckets(this.workspace, buckets, filters);
 
-        return new TigerPreparedExecution(this.axios, def);
+        return this.forDefinition(def);
     }
 
     public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
         const def = defForInsight(this.workspace, insight, filters);
 
-        return new TigerPreparedExecution(this.axios, def);
+        return this.forDefinition(def);
     }
 
     public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {

@@ -30,7 +30,6 @@ export class AgGridDatasource implements IDatasource {
 
     constructor(
         private readonly config: DatasourceConfig,
-        // @ts-ignore
         private readonly initialDv: DataViewFacade,
         private readonly gridApiProvider: GridApiProvider,
         private readonly intl: InjectedIntl,

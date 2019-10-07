@@ -194,6 +194,7 @@ export const getFields = (dataHeaders: IResultHeaderItem[][]) => {
     }) as string[];
 };
 
+// TODO: move this to data view facade / sanitize / make more generic
 export const assortDimensionHeaders = (dimensions: IResultDimension[]) => {
     const dimensionHeaders: IHeader[] = dimensions.reduce(
         (headers: IHeader[], dimension: IResultDimension) => [...headers, ...dimension.headers],

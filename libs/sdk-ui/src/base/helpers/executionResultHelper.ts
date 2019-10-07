@@ -1,10 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from '@gooddata/sdk-backend-spi';
-import * as invariant from 'invariant';
-import { IUnwrappedAttributeHeadersWithItems } from './types';
+import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
+import * as invariant from "invariant";
+import { IUnwrappedAttributeHeadersWithItems } from "./types";
 
 //
 // TODO: move all this code to data view facade.
+//
 //
 
 function findInDimensionHeaders(

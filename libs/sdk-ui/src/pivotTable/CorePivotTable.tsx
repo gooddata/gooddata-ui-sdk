@@ -116,7 +116,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private containerRef: HTMLDivElement;
 
-    private pendingInit: Promise<void>;
+    private unmounted: boolean = false;
 
     private gridApi: GridApi = null;
     private gridOptions: ICustomGridOptions = null;
@@ -162,43 +162,43 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 this.visibleData = null;
                 this.currentFingerprint = null;
 
-                this.pendingInit = this.initialize(execution);
+                this.initialize(execution);
             },
         );
     };
 
-    private initialize(execution: IPreparedExecution): Promise<void> {
-        return execution.execute().then(result => {
-            this.pendingInit = result
-                .readWindow([0, 0], [this.props.pageSize, COLS_PER_PAGE])
-                .then(dataView => {
-                    if (!this.pendingInit) {
-                        return;
-                    }
+    private initialize(execution: IPreparedExecution): void {
+        execution.execute().then(result => {
+            result.readWindow([0, 0], [this.props.pageSize, COLS_PER_PAGE]).then(dataView => {
+                if (this.unmounted) {
+                    /*
+                     * Stop right now if the component gets unmounted while it is still being
+                     * initialized.
+                     */
+                    return;
+                }
 
-                    this.pendingInit = null;
+                this.tableHeaders = createTableHeaders(dataView);
+                this.currentResult = result;
+                this.visibleData = new DataViewFacade(dataView);
+                this.currentFingerprint = defFingerprint(this.currentResult.definition);
 
-                    this.tableHeaders = createTableHeaders(dataView);
-                    this.currentResult = result;
-                    this.visibleData = new DataViewFacade(dataView);
-                    this.currentFingerprint = defFingerprint(this.currentResult.definition);
+                this.agGridDataSource = createAgGridDatasource(
+                    {
+                        headers: this.tableHeaders,
+                        getGroupRows: () => this.props.groupRows,
+                        getColumnTotals: this.getColumnTotals,
+                        onPageLoaded: this.onPageLoaded,
+                    },
+                    this.visibleData,
+                    this.getGridApi,
+                    this.props.intl,
+                );
 
-                    this.agGridDataSource = createAgGridDatasource(
-                        {
-                            headers: this.tableHeaders,
-                            getGroupRows: () => this.props.groupRows,
-                            getColumnTotals: this.getColumnTotals,
-                            onPageLoaded: this.onPageLoaded,
-                        },
-                        this.visibleData,
-                        this.getGridApi,
-                        this.props.intl,
-                    );
+                this.setGridDataSource(this.agGridDataSource);
 
-                    this.setGridDataSource(this.agGridDataSource);
-
-                    this.setState({ tableReady: true });
-                });
+                this.setState({ tableReady: true });
+            });
         });
     }
 
@@ -207,7 +207,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             this.containerRef.addEventListener("mousedown", this.preventHeaderResizerEvents);
         }
 
-        this.pendingInit = this.initialize(this.props.execution);
+        this.initialize(this.props.execution);
     }
 
     public componentWillUnmount() {
@@ -215,8 +215,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             this.containerRef.removeEventListener("mousedown", this.preventHeaderResizerEvents);
         }
 
-        // if there is async init happening, this will make it have no effect in the end
-        this.pendingInit = null;
+        this.unmounted = true;
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
@@ -363,9 +362,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 totals: newColumnTotals,
             },
         });
-
-        // tslint:disable-next-line:no-console
-        console.log("new totals", newColumnTotals);
 
         this.setState({ columnTotals: newColumnTotals }, () => {
             // make ag-grid refresh data

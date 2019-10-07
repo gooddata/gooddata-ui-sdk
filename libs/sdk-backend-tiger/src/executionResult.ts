@@ -127,8 +127,8 @@ class TigerDataView implements IDataView {
         this.headerItems = transfomedResult.headerItems;
         this.offset = transfomedResult.offset;
         this.count = transfomedResult.count;
-        // NOTE: this is ok for now when tiger can only return all data and does not allow paging through
-        // results. the count is equal to totalCount.
+        // TODO: this is ok for now when tiger can only return all data and does not allow paging through
+        //  results. the count is equal to totalCount.
         this.totalCount = transfomedResult.count;
 
         /*
