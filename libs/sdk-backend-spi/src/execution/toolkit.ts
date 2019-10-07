@@ -15,8 +15,6 @@ import {
     newDimension,
     newTwoDimensional,
     SortItem,
-} from "@gooddata/sdk-model";
-import {
     defSetDimensions,
     defSetSorts,
     defWithFilters,
@@ -24,7 +22,7 @@ import {
     newDefFromBuckets,
     newDefFromInsight,
     newDefFromItems,
-} from "./executionDefinition";
+} from "@gooddata/sdk-model";
 import { DimensionGenerator } from "./index";
 import isEmpty = require("lodash/isEmpty");
 

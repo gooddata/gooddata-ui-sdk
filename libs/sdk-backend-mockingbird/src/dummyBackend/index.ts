@@ -2,7 +2,6 @@
 import {
     AnalyticalBackendConfig,
     DataViewFacade,
-    defFingerprint,
     defForBuckets,
     defForInsight,
     defForItems,
@@ -13,7 +12,6 @@ import {
     IAnalyticalWorkspace,
     IDataView,
     IElementQueryFactory,
-    IExecutionDefinition,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -24,7 +22,16 @@ import {
     IWorkspaceStyling,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    IBucket,
+    IDimension,
+    IFilter,
+    IInsight,
+    SortItem,
+    IExecutionDefinition,
+    defFingerprint,
+} from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 

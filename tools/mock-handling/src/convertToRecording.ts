@@ -3,7 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 import rimraf from "rimraf";
 import { ExecuteAFM, Execution } from "@gooddata/gd-bear-model";
-import { defForItems, defSetDimensions, defSetSorts, IExecutionDefinition } from "@gooddata/sdk-backend-spi";
+import { defForItems } from "@gooddata/sdk-backend-spi";
 import {
     AttributeElements,
     IAttribute,
@@ -15,6 +15,9 @@ import {
     IPoPMeasureDefinition,
     IPositiveAttributeFilter,
     SortItem,
+    defSetDimensions,
+    defSetSorts,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
 type TestDataFiles = {

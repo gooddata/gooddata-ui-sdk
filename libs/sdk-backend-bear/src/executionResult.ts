@@ -5,7 +5,6 @@ import {
     DataValue,
     DataViewError,
     IDataView,
-    IExecutionDefinition,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -16,6 +15,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import SparkMD5 from "spark-md5";
 import { AuthenticatedSdkProvider } from "./commonTypes";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];

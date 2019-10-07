@@ -1,8 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
 import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
-import { IBucket, IInsight, IMeasure } from "@gooddata/sdk-model";
+import { IBucket, IInsight, IMeasure, newDefFromBuckets } from "@gooddata/sdk-model";
 
 import * as rec from "./recordings/playlist";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;

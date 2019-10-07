@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory, IPreparedExecution } from "../execution";
 import { IFeatureFlagsQuery } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
 import { IWorkspaceStyling } from "../styling";
-import { IExecutionDefinition } from "../execution/executionDefinition";
 
 /**
  * TODO: SDK8: add public doc

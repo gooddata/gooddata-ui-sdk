@@ -1,7 +1,14 @@
 // (C) 2019 GoodData Corporation
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    IBucket,
+    IDimension,
+    IFilter,
+    IInsight,
+    SortItem,
+    IExecutionDefinition,
+} from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
-import { IExecutionDefinition } from "./executionDefinition";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
 
 /**

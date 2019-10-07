@@ -23,7 +23,7 @@ import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
-import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,

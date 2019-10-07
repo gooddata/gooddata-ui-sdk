@@ -2,7 +2,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-backend-spi";
+import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 
 const _COPYRIGHT = `// (C) 2019-${new Date().getFullYear()} GoodData Corporation`;
 const _WARNING = `// THIS FILE WAS AUTO-GENERATED ON ${new Date().toISOString()}; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING`;

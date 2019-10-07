@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { emptyDef, prepareExecution } from "@gooddata/sdk-backend-spi";
+import { prepareExecution } from "@gooddata/sdk-backend-spi";
+import { emptyDef } from "@gooddata/sdk-model";
 
 export class DummyComponent extends React.Component<any, any> {
     public render() {

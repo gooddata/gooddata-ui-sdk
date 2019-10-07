@@ -1,41 +1,37 @@
 // (C) 2019 GoodData Corporation
-import {
-    attributeFingerprint,
-    AttributeOrMeasure,
-    bucketsAttributes,
-    bucketsMeasures,
-    IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    insightBuckets,
-    insightFilters,
-    isAttribute,
-    isMeasure,
-    SortItem,
-    measureFingerprint,
-    filterFingerprint,
-    sortFingerprint,
-    dimensionFingerprint,
-    IAttribute,
-    IMeasure,
-    isAttributeFilter,
-    IAttributeFilter,
-    IDateFilter,
-    filterQualifierValue,
-    dimensionTotals,
-    ITotal,
-} from "@gooddata/sdk-model";
 import isEmpty = require("lodash/isEmpty");
 import partition = require("lodash/partition");
 import unionBy = require("lodash/unionBy");
 import SparkMD5 from "spark-md5";
-
-/*
- * TODO: SDK8: revisit whether this is the right location
- *  it does appear like that to me; it does not fit the model package as it is not about the domain model but
- *  rather part of the interface with the backend.
- */
+import {
+    AttributeOrMeasure,
+    bucketsAttributes,
+    bucketsMeasures,
+    dimensionTotals,
+    filterQualifierValue,
+    IAttribute,
+    IAttributeFilter,
+    IBucket,
+    IDateFilter,
+    IDimension,
+    IFilter,
+    IInsight,
+    IMeasure,
+    insightBuckets,
+    insightFilters,
+    isAttribute,
+    isAttributeFilter,
+    isMeasure,
+    ITotal,
+    SortItem,
+} from "..";
+import {
+    attributeFingerprint,
+    dimensionFingerprint,
+    filterFingerprint,
+    measureFingerprint,
+    sortFingerprint,
+} from "./fingerprints";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will

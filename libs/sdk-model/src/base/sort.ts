@@ -260,12 +260,3 @@ export function newMeasureSort(
         },
     };
 }
-
-/**
- * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
- *
- * @internal
- */
-export function sortFingerprint(sort: SortItem): string {
-    return JSON.stringify(sort);
-}

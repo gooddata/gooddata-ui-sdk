@@ -55,7 +55,8 @@
     },
     "dependencies": {
         "lodash": "^4.17.15",
-        "ts-invariant": "^0.4.4"
+        "ts-invariant": "^0.4.4",
+        "spark-md5": "^3.0.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
@@ -63,6 +64,7 @@
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
         "@types/node": "^10.14.18",
+        "@types/spark-md5": "^3.0.1",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "~1.18.2",

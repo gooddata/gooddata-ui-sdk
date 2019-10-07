@@ -1,12 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
-import {
-    DataViewFacade,
-    defFingerprint,
-    defTotals,
-    IExecutionResult,
-    IPreparedExecution,
-} from "@gooddata/sdk-backend-spi";
-import { ITotal, SortDirection } from "@gooddata/sdk-model";
+import { DataViewFacade, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ITotal, SortDirection, defFingerprint, defTotals } from "@gooddata/sdk-model";
 import {
     BodyScrollEvent,
     ColumnResizedEvent,

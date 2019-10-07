@@ -9,10 +9,10 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
@@ -130,9 +130,6 @@ export class DataViewFacade {
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
 
-// @public
-export function defFingerprint(def: IExecutionDefinition): string;
-
 // Warning: (ae-internal-missing-underscore) The name "defForBuckets" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
@@ -148,22 +145,10 @@ export function defForInsight(workspace: string, insight: IInsight, filters?: IF
 // @internal
 export function defForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
-// @public
-export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
-
-// @public
-export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
-
-// @public
-export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
-
 // Warning: (ae-internal-missing-underscore) The name "defWithDimensions" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
 export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
-
-// @public
-export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
 
 // Warning: (ae-internal-missing-underscore) The name "defWithSorting" should be prefixed with an underscore because the declaration is marked as @internal
 // 
@@ -178,9 +163,6 @@ export type Element = {
     readonly value: string;
     readonly uri?: string;
 };
-
-// @public
-export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
 export class ExecutionError extends AnalyticalBackendError {
@@ -273,24 +255,6 @@ export interface IElementQueryResult {
     next(): IElementQueryResult;
     // (undocumented)
     readonly offset: number;
-}
-
-// @public
-export interface IExecutionDefinition {
-    // (undocumented)
-    readonly attributes: IAttribute[];
-    // (undocumented)
-    readonly buckets: IBucket[];
-    // (undocumented)
-    readonly dimensions: IDimension[];
-    // (undocumented)
-    readonly filters: IFilter[];
-    // (undocumented)
-    readonly measures: IMeasure[];
-    // (undocumented)
-    readonly sortBy: SortItem[];
-    // (undocumented)
-    readonly workspace: string;
 }
 
 // @public
@@ -477,15 +441,6 @@ export interface IWorkspaceStyling {
     // (undocumented)
     colorPalette(): Promise<IColorPaletteItem[]>;
 }
-
-// @public
-export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition;
-
-// @public
-export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition;
-
-// @public
-export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition;
 
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {

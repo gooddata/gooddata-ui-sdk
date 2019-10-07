@@ -7,9 +7,8 @@ import {
     IExecutionFactory,
     IPreparedExecution,
     NotImplemented,
-    IExecutionDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IBucket, IFilter, IInsight, IExecutionDefinition } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
 import { TigerPreparedExecution } from "./preparedExecution";
 

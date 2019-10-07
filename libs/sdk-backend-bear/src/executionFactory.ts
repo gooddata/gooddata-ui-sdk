@@ -4,12 +4,11 @@ import {
     defForBuckets,
     defForInsight,
     defForItems,
-    IExecutionDefinition,
     IExecutionFactory,
     IPreparedExecution,
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
+import { AttributeOrMeasure, IBucket, IFilter, IInsight, IExecutionDefinition } from "@gooddata/sdk-model";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearPreparedExecution } from "./preparedExecution";
 

@@ -13,8 +13,8 @@ import {
     isAttribute,
     ITotal,
     totalIsNative,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
-import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;

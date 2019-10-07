@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { DataViewFacade, defTotals, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
 import { COLS_PER_PAGE, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { getSortsFromModel } from "./agGridSorting";
@@ -9,7 +9,7 @@ import { createRowData } from "./agGridData";
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./agGridDataSourceUtils";
 import isEqual = require("lodash/isEqual");
 import InjectedIntl = ReactIntl.InjectedIntl;
-import { dimensionSetTotals, ITotal, SortItem } from "@gooddata/sdk-model";
+import { dimensionSetTotals, ITotal, SortItem, defTotals } from "@gooddata/sdk-model";
 
 export function createAgGridDatasource(
     config: DatasourceConfig,

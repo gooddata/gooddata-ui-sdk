@@ -1,16 +1,14 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    defFingerprint,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
     ExecutionError,
-    IExecutionDefinition,
     IExecutionResult,
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { IDimension, SortItem } from "@gooddata/sdk-model";
+import { IDimension, SortItem, defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
 import { TigerExecutionResult } from "./executionResult";
 import { executeAfm } from "./gd-tiger-client/execution";

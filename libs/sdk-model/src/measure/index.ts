@@ -279,15 +279,6 @@ export function measureIdentifier(measure: IMeasure): string | undefined {
 }
 
 /**
- * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
- *
- * @internal
- */
-export function measureFingerprint(measure: IMeasure): string {
-    return JSON.stringify(measure);
-}
-
-/**
  * Tests whether the measure is set to compute ratio.
  *
  * @param measure - measure to to test

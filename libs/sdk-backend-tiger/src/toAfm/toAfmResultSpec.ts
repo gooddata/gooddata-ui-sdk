@@ -14,8 +14,9 @@ import {
     isUriQualifier,
     totalIsNative,
     MeasureGroupIdentifier,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
-import { IExecutionDefinition, NotSupported } from "@gooddata/sdk-backend-spi";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 
 function convertAttribute(attribute: IAttribute, _idx: number): string {

@@ -17,19 +17,6 @@ export {
     DimensionGenerator,
 } from "./execution";
 
-export {
-    IExecutionDefinition,
-    defFingerprint,
-    defWithFilters,
-    defSetSorts,
-    defSetDimensions,
-    emptyDef,
-    newDefFromBuckets,
-    newDefFromInsight,
-    newDefFromItems,
-    defTotals,
-} from "./execution/executionDefinition";
-
 export { DataViewFacade } from "./execution/facade";
 
 export {
