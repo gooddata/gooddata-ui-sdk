@@ -153,7 +153,9 @@ export function withLoading<T, P, R extends object>({
             }
 
             public componentDidMount() {
-                if (loadOnMount) {
+                const _loadOnMount =
+                    typeof loadOnMount === "function" ? loadOnMount(this.props) : loadOnMount;
+                if (_loadOnMount) {
                     this.fetch();
                 }
             }
