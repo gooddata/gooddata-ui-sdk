@@ -9,6 +9,7 @@ import {
     bucketsFind,
     IBucket,
     IDimension,
+    IExecutionDefinition,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { ATTRIBUTE, STACK, VIEW } from "../../base/constants/bucketNames";
@@ -37,20 +38,21 @@ function stackedDimensions(buckets: IBucket[]): IDimension[] {
     );
 }
 
-export function defaultDimensions(buckets: IBucket[]): IDimension[] {
-    return newTwoDimensional([MEASUREGROUP], bucketsAttributes(buckets).map(attributeId));
+export function defaultDimensions(def: IExecutionDefinition): IDimension[] {
+    return newTwoDimensional([MEASUREGROUP], bucketsAttributes(def.buckets).map(attributeId));
 }
 
-export function stackedChartDimensions(buckets: IBucket[]): IDimension[] {
-    return isStackedChart(buckets) ? stackedDimensions(buckets) : defaultDimensions(buckets);
+export function stackedChartDimensions(def: IExecutionDefinition): IDimension[] {
+    const { buckets } = def;
+    return isStackedChart(buckets) ? stackedDimensions(buckets) : defaultDimensions(def);
 }
 
-export function pointyChartDimensions(buckets: IBucket[]): IDimension[] {
-    return newTwoDimensional(bucketsAttributes(buckets).map(attributeId), [MEASUREGROUP]);
+export function pointyChartDimensions(def: IExecutionDefinition): IDimension[] {
+    return newTwoDimensional(bucketsAttributes(def.buckets).map(attributeId), [MEASUREGROUP]);
 }
 
-export function roundChartDimensions(buckets: IBucket[]): IDimension[] {
-    const attributes = bucketsAttributes(buckets).map(attributeId);
+export function roundChartDimensions(def: IExecutionDefinition): IDimension[] {
+    const attributes = bucketsAttributes(def.buckets).map(attributeId);
 
     if (attributes.length === 0) {
         return newTwoDimensional([], [MEASUREGROUP]);
@@ -59,9 +61,9 @@ export function roundChartDimensions(buckets: IBucket[]): IDimension[] {
     return newTwoDimensional([MEASUREGROUP], attributes);
 }
 
-export function heatmapDimensions(buckets: IBucket[]): IDimension[] {
-    const view: IBucket = bucketsFind(buckets, VIEW);
-    const stack: IBucket = bucketsFind(buckets, STACK);
+export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
+    const view: IBucket = bucketsFind(def.buckets, VIEW);
+    const stack: IBucket = bucketsFind(def.buckets, STACK);
 
     if (bucketIsEmpty(stack)) {
         return newTwoDimensional(bucketAttributes(view).map(attributeId), [MEASUREGROUP]);
@@ -75,8 +77,8 @@ export function heatmapDimensions(buckets: IBucket[]): IDimension[] {
     );
 }
 
-export function treemapDimensions(buckets: IBucket[]): IDimension[] {
-    const attributes = bucketsAttributes(buckets);
+export function treemapDimensions(def: IExecutionDefinition): IDimension[] {
+    const attributes = bucketsAttributes(def.buckets);
 
     if (attributes.length === 1) {
         return newTwoDimensional([MEASUREGROUP], attributes.map(attributeId));

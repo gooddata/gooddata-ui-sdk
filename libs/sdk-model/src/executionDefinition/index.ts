@@ -46,7 +46,7 @@ export interface IExecutionDefinition {
  *
  * @public
  */
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
+export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 /**
  * Creates new, empty execution definition for the provided workspace.

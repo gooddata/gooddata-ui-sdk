@@ -130,7 +130,7 @@ export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): 
 export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
 
 // @public
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
+export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;

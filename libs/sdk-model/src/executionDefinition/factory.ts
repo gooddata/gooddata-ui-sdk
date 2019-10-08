@@ -165,7 +165,7 @@ function toDimensions(
     const maybeGenerator = dimsOrGen[0];
 
     if (typeof maybeGenerator === "function") {
-        return maybeGenerator(def.buckets);
+        return maybeGenerator(def);
     }
 
     return dimsOrGen.filter(isDimension);
