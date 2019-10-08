@@ -3,7 +3,6 @@ import setWith = require("lodash/setWith");
 import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
-import { Observable } from "rxjs/Rx";
 import { numberFormat } from "@gooddata/numberjs";
 
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
@@ -25,22 +24,6 @@ export const immutableSet = (dataSet: any, path: any, newValue: any) =>
 
 export const repeatItemsNTimes = (array: any[], n: number) =>
     new Array(n).fill(null).reduce(result => [...result, ...array], []);
-
-export function subscribeEvent(event: any, debounce: any, func: any, target: any = window): any {
-    if (debounce > 0) {
-        return Observable.fromEvent(target, event)
-            .debounceTime(debounce)
-            .subscribe(func);
-    }
-
-    return Observable.fromEvent(target, event).subscribe(func);
-}
-
-export function subscribeEvents(func: any, events: any[], target: any = window) {
-    return events.map((event: any) => {
-        return subscribeEvent(event.name, event.debounce, func, target);
-    });
-}
 
 export const unEscapeAngleBrackets = (str: string) =>
     str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");

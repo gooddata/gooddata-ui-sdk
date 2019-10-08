@@ -87,7 +87,6 @@
         "react-dom-factories": "^1.0.2",
         "react-intl": "^2.4.0",
         "react-measure": "^2.3.0",
-        "rxjs": "^5.5.6",
         "stringify-object": "^2.4.0",
         "uuid": "^3.3.3"
     },
