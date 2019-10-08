@@ -17,7 +17,7 @@ import {
     DimensionGenerator,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-import { AuthenticatedSdkProvider } from "./commonTypes";
+import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
@@ -25,7 +25,7 @@ export class BearPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
 
     constructor(
-        private readonly authSdk: AuthenticatedSdkProvider,
+        private readonly authCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
     ) {
@@ -40,27 +40,28 @@ export class BearPreparedExecution implements IPreparedExecution {
     public async execute(): Promise<IExecutionResult> {
         checkDefIsExecutable(this.definition);
 
-        const sdk = await this.authSdk();
         const afmExecution = toAfmExecution(this.definition);
 
-        return sdk.execution
-            .getExecutionResponse(this.definition.workspace, afmExecution)
-            .then(response => {
-                return new BearExecutionResult(
-                    this.authSdk,
-                    this.definition,
-                    this.executionFactory,
-                    response,
-                );
-            })
-            .catch(e => {
-                throw new ExecutionError("An error has occurred while doing execution on backend", e);
-            });
+        return this.authCall(sdk =>
+            sdk.execution
+                .getExecutionResponse(this.definition.workspace, afmExecution)
+                .then(response => {
+                    return new BearExecutionResult(
+                        this.authCall,
+                        this.definition,
+                        this.executionFactory,
+                        response,
+                    );
+                })
+                .catch(e => {
+                    throw new ExecutionError("An error has occurred while doing execution on backend", e);
+                }),
+        );
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
         return new BearPreparedExecution(
-            this.authSdk,
+            this.authCall,
             defWithDimensions(this.definition, dimsOrGen),
             this.executionFactory,
         );
@@ -68,7 +69,7 @@ export class BearPreparedExecution implements IPreparedExecution {
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
         return new BearPreparedExecution(
-            this.authSdk,
+            this.authCall,
             defWithSorting(this.definition, items),
             this.executionFactory,
         );

@@ -11,14 +11,14 @@ import {
     newDefForInsight,
     newDefForItems,
 } from "@gooddata/sdk-model";
-import { AuthenticatedSdkProvider } from "./commonTypes";
+import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearPreparedExecution } from "./preparedExecution";
 
 export class BearExecution implements IExecutionFactory {
-    constructor(private readonly authSdk: AuthenticatedSdkProvider, private readonly workspace: string) {}
+    constructor(private readonly authCall: AuthenticatedCallGuard, private readonly workspace: string) {}
 
     public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return new BearPreparedExecution(this.authSdk, def, this);
+        return new BearPreparedExecution(this.authCall, def, this);
     }
 
     public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {

@@ -20,7 +20,6 @@ import { SortItem } from '@gooddata/sdk-model';
 // @public
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
-    readonly username?: string;
 };
 
 // @public
@@ -34,6 +33,17 @@ export abstract class AnalyticalBackendError extends Error {
 
 // @public
 export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
+
+// @public
+export type AuthenticatedPrincipal = {
+    userId: string;
+    userMeta?: any;
+};
+
+// @public
+export type AuthenticationContext = {
+    client: any;
+};
 
 // @public
 export type BackendCapabilities = {
@@ -141,11 +151,12 @@ export class ExecutionError extends AnalyticalBackendError {
 
 // @public
 export interface IAnalyticalBackend {
+    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
     readonly capabilities: BackendCapabilities;
     readonly config: AnalyticalBackendConfig;
-    isAuthenticated(): Promise<boolean>;
+    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
-    withCredentials(username: string, password: string): IAnalyticalBackend;
+    withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
 }
@@ -181,6 +192,11 @@ export interface IAttributeHeader {
             name: string;
         };
     };
+}
+
+// @public
+export interface IAuthenticationProvider {
+    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
 }
 
 // @public

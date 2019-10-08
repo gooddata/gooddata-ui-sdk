@@ -14,7 +14,6 @@ import { IWorkspaceStyling } from "../styling";
  */
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
-    readonly username?: string;
 };
 
 /**
@@ -64,30 +63,47 @@ export interface IAnalyticalBackend {
     onHostname(hostname: string): IAnalyticalBackend;
 
     /**
-     * Sets credentials to use for authentication against the backend.
-     *
-     * @param username - user name, typically an email address
-     * @param password - password, do not give this to anyone
-     * @returns a new instance, set up with the provided credentials
-     */
-    withCredentials(username: string, password: string): IAnalyticalBackend;
-
-    /**
      * Sets telemetry information that SHOULD be sent to backend to track component usage.
      *
      * @param componentName - name of component
      * @param props - props
-     * @returns a new instance, set up with the provided telemetry
+     * @returns a new instance of backend, set up with the provided telemetry
      */
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
 
     /**
-     * Tests authentication against this backend. This requires network communication and is thus
-     * asynchronous.
+     * Sets authentication provider to be used when backend discovers current session is
+     * not authenticated.
      *
-     * @returns promise of authentication status - true if auth, false if not
+     * @param provider - authentication provider to use
+     * @returns a new instance of backend, set up with the provider
      */
-    isAuthenticated(): Promise<boolean>;
+    withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
+
+    /**
+     * Tests authentication against this backend. This requires network communication and is thus
+     * asynchronous. If the current backend (or session it lives in) is not authenticated, then
+     * this method MUST NOT call the authentication provider.
+     *
+     * @returns promise of authenticated principal is returned if authenticated, null is returned if not authenticated.
+     */
+    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
+
+    /**
+     * Triggers authentication process against the backend.
+     *
+     * If the 'force' parameter is specified, then the method MUST always lead to a call to the authentication
+     * provider.
+     *
+     * If the 'force' parameter is not specified, then the method MAY lead to a call to the authentication provider -
+     * if the backend lives in an already authenticated session, principal is returned. If the session is not
+     * authenticated, then the provider WILL BE called.
+     *
+     * @param force - indicates whether authentication should be forced = must always be done even if the current
+     *  session is already authenticated; defaults to false
+     * @returns promise of authenticated principal, or rejection if authentication has failed.
+     */
+    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
 
     /**
      * Returns an analytical workspace available on this backend.
@@ -173,6 +189,55 @@ export type BackendCapabilities = {
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
+};
+
+/**
+ * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
+ * the current session is not authentication.
+ *
+ * @public
+ */
+export interface IAuthenticationProvider {
+    /**
+     * Perform authentication.
+     *
+     * @param context - context in which the authentication is done
+     */
+    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+}
+
+/**
+ * Describes context in which the authentication is done. To cater for custom authentication schemes.
+ * the API client of the underlying backend IS exposed anonymously to the provider - the provider SHOULD use
+ * the provided API client to exercise any backend-specific authentication mechanisms.
+ *
+ * @public
+ */
+export type AuthenticationContext = {
+    /**
+     * API client used to communicate with the backend - this can be used to perform any backend-specific,
+     * non-standard authentication.
+     */
+    client: any;
+};
+
+/**
+ * Describes user, which is currently authenticated to the backend.
+ *
+ * @public
+ */
+export type AuthenticatedPrincipal = {
+    /**
+     * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
+     * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
+     * valid email and so on).
+     */
+    userId: string;
+
+    /**
+     * Backend-specific user metadata.
+     */
+    userMeta?: any;
 };
 
 //

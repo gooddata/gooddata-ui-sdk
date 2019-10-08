@@ -1,4 +1,4 @@
-import bearFactory from "@gooddata/sdk-backend-bear";
+import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 let _BACKEND: IAnalyticalBackend;
@@ -10,7 +10,7 @@ export function initialize() {
     _BACKEND = bearFactory();
 
     if (username && password) {
-        _BACKEND = _BACKEND.withCredentials(username, password);
+        _BACKEND = _BACKEND.withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
     }
 }
 

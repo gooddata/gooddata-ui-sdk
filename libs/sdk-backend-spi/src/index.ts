@@ -7,6 +7,9 @@ export {
     AnalyticalBackendConfig,
     AnalyticalBackendFactory,
     prepareExecution,
+    IAuthenticationProvider,
+    AuthenticationContext,
+    AuthenticatedPrincipal,
 } from "./backend";
 
 export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";

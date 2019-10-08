@@ -4,6 +4,7 @@ import {
     DataViewFacade,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
     IDataView,
     IElementQueryFactory,
     IExecutionFactory,
@@ -15,22 +16,23 @@ import {
     IWorkspaceMetadata,
     IWorkspaceStyling,
     NotSupported,
+    AuthenticatedPrincipal,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
-    IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    SortItem,
-    IExecutionDefinition,
     defFingerprint,
-    newDefForBuckets,
-    newDefForInsight,
-    newDefForItems,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
+    IBucket,
+    IDimension,
+    IExecutionDefinition,
+    IFilter,
+    IInsight,
+    newDefForBuckets,
+    newDefForInsight,
+    newDefForItems,
+    SortItem,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
@@ -57,14 +59,18 @@ export function dummyBackend(config: AnalyticalBackendConfig = defaultConfig): I
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
-        withCredentials(username: string, _password: string): IAnalyticalBackend {
-            return dummyBackend({ ...config, username });
+        withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
+            return this;
         },
         workspace(id: string): IAnalyticalWorkspace {
             return dummyWorkspace(id);
         },
-        isAuthenticated(): Promise<boolean> {
-            return new Promise(r => r(true));
+        authenticate(): Promise<AuthenticatedPrincipal> {
+            return Promise.resolve({ userId: "dummyUser" });
+        },
+
+        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+            return Promise.resolve({ userId: "dummyUser" });
         },
     };
 

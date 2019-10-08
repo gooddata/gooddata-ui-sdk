@@ -5,7 +5,10 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
+import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 
 // @public
 export type BearBackendConfig = {
@@ -17,6 +20,13 @@ export type BearBackendConfig = {
 function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
 export default bearFactory;
+
+// @public
+export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvider {
+    constructor(username: string, password: string);
+    // (undocumented)
+    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    }
 
 
 // (No @packageDocumentation comment for this package)

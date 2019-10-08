@@ -13,16 +13,16 @@ import {
     IResultDimension,
     IResultHeaderItem,
 } from "@gooddata/sdk-backend-spi";
-import SparkMD5 from "spark-md5";
-import { AuthenticatedSdkProvider } from "./commonTypes";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+import SparkMD5 from "spark-md5";
+import { AuthenticatedCallGuard } from "./commonTypes";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
     private readonly _fingerprint: string;
 
     constructor(
-        private readonly authSdk: AuthenticatedSdkProvider,
+        private readonly authCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly execFactory: IExecutionFactory,
         private readonly execResponse: Execution.IExecutionResponse,
@@ -32,21 +32,22 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async readAll(): Promise<IDataView> {
-        const sdk = await this.authSdk();
-
-        return this.asDataView(sdk.execution.getExecutionResult(this.execResponse.links.executionResult));
+        return this.asDataView(
+            this.authCall(sdk => sdk.execution.getExecutionResult(this.execResponse.links.executionResult)),
+        );
     }
 
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {
         const saneOffset = sanitizeOffset(offset);
         const saneSize = sanitizeSize(size);
-        const sdk = await this.authSdk();
 
         return this.asDataView(
-            sdk.execution.getPartialExecutionResult(
-                this.execResponse.links.executionResult,
-                saneSize,
-                saneOffset,
+            this.authCall(sdk =>
+                sdk.execution.getPartialExecutionResult(
+                    this.execResponse.links.executionResult,
+                    saneSize,
+                    saneOffset,
+                ),
             ),
         );
     }
@@ -56,12 +57,12 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        const sdk = await this.authSdk();
-
-        return sdk.report.exportResult(
-            this.definition.workspace,
-            this.execResponse.links.executionResult,
-            options,
+        return this.authCall(sdk =>
+            sdk.report.exportResult(
+                this.definition.workspace,
+                this.execResponse.links.executionResult,
+                options,
+            ),
         );
     }
 

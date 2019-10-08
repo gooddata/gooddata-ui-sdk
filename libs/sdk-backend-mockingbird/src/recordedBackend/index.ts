@@ -2,9 +2,11 @@
 import { Execution } from "@gooddata/gd-bear-model";
 import {
     AnalyticalBackendConfig,
+    AuthenticatedPrincipal,
     DataViewFacade,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
     IDataView,
     IElementQueryFactory,
     IExecutionFactory,
@@ -90,14 +92,18 @@ export function recordedBackend(
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
-        withCredentials(username: string, _password: string): IAnalyticalBackend {
-            return recordedBackend(index, { ...config, username });
+        withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
+            return this;
         },
+
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index[id]);
         },
-        isAuthenticated(): Promise<boolean> {
-            return new Promise(r => r(true));
+        authenticate(): Promise<AuthenticatedPrincipal> {
+            return Promise.resolve({ userId: "recordedUser" });
+        },
+        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+            return Promise.resolve({ userId: "recordedUser" });
         },
     };
 
