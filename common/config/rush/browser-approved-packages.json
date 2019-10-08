@@ -375,10 +375,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "rxjs",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "sass-loader",
       "allowedCategories": [ "production", "tools" ]
     },
