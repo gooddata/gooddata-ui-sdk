@@ -9,13 +9,7 @@ export {
     prepareExecution,
 } from "./backend";
 
-export {
-    IExecutionFactory,
-    IPreparedExecution,
-    IExecutionResult,
-    IDataView,
-    DimensionGenerator,
-} from "./execution";
+export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";
 
 export { DataViewFacade } from "./execution/facade";
 
@@ -39,15 +33,6 @@ export {
     isResultMeasureHeaderItem,
     isResultTotalHeaderItem,
 } from "./execution/results";
-
-export {
-    defForItems,
-    defForBuckets,
-    defForInsight,
-    defWithDimensions,
-    defWithSorting,
-    defaultDimensionsGenerator,
-} from "./execution/toolkit";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
 

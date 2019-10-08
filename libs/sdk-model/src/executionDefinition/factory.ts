@@ -1,41 +1,34 @@
 // (C) 2019 GoodData Corporation
+import { attributeId, isAttribute } from "../attribute";
 import {
-    attributeId,
+    IDimension,
+    isDimension,
+    MeasureGroupIdentifier,
+    newDimension,
+    newTwoDimensional,
+} from "../base/dimension";
+import { SortItem } from "../base/sort";
+import {
     AttributeOrMeasure,
     bucketAttributes,
     bucketMeasures,
     bucketsAttributes,
     bucketsIsEmpty,
     IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    isDimension,
-    MeasureGroupIdentifier,
-    newDimension,
-    newTwoDimensional,
-    SortItem,
+    bucketsMeasures,
+} from "../buckets";
+import { IFilter } from "../filter";
+import { IInsight, insightBuckets, insightFilters, insightSorts } from "../insight";
+import {
     defSetDimensions,
     defSetSorts,
     defWithFilters,
     IExecutionDefinition,
-    newDefFromBuckets,
-    newDefFromInsight,
-    newDefFromItems,
-} from "@gooddata/sdk-model";
-import { DimensionGenerator } from "./index";
+    DimensionGenerator,
+    emptyDef,
+} from "./index";
 import isEmpty = require("lodash/isEmpty");
-
-/*
- * This toolkit module defines reusable functions that MUST be used to build execution definition in
- * the various methods exposed by IExecutionFactory and IPreparedExecution. While the technicalities
- * of those implementations MAY vary from backend to backend, the domain agnostic concerns MUST be handled
- * with these functions.
- *
- * NOTE: going for this MVP way now; we may eventually expand this toolkit to a set of template classes / whatever
- * that provides guidelines and controls. Going further, there may even be a base package that can be common for
- * all backend implementations (preferred in the long run, we can keep it simple for now).
- */
+import { isMeasure } from "../measure";
 
 /**
  * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the
@@ -46,14 +39,20 @@ import isEmpty = require("lodash/isEmpty");
  * @param workspace - workspace to execute against, must not be empty
  * @param items - list of attributes and measures, must not be empty
  * @param filters - list of filters, may not be provided
- * @internal
+ * @public
  */
-export function defForItems(
+export function newDefForItems(
     workspace: string,
     items: AttributeOrMeasure[],
     filters?: IFilter[],
 ): IExecutionDefinition {
-    return defWithFilters(newDefFromItems(workspace, items), filters);
+    const def: IExecutionDefinition = {
+        ...emptyDef(workspace),
+        attributes: items.filter(isAttribute),
+        measures: items.filter(isMeasure),
+    };
+
+    return defWithFilters(def, filters);
 }
 
 /**
@@ -71,14 +70,21 @@ export function defForItems(
  * @param workspace - workspace to execute against, must not be empty
  * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
  * @param filters - optional, may not be provided
- * @internal
+ * @public
  */
-export function defForBuckets(
+export function newDefForBuckets(
     workspace: string,
     buckets: IBucket[],
     filters?: IFilter[],
 ): IExecutionDefinition {
-    return defWithFilters(newDefFromBuckets(workspace, buckets), filters);
+    const def: IExecutionDefinition = {
+        ...emptyDef(workspace),
+        buckets,
+        attributes: bucketsAttributes(buckets),
+        measures: bucketsMeasures(buckets),
+    };
+
+    return defWithFilters(def, filters);
 }
 
 /**
@@ -89,19 +95,29 @@ export function defForBuckets(
  * Additionally, an optional list of additional filters WILL be merged with the filters already defined in
  * the insight.
  *
+ * - Attributes and measures from insight's buckets are distributed into definition attributes and measures
+ *   in natural order.
+ * - Insight filters are added into definition
+ * - Insight sorts are added into definition
+ * - Insight totals are added into definition
+ *
  * This function MUST be used to implement IExecutionFactory.forInsight();
  *
  * @param workspace - workspace to execute against, must not be empty
  * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
  * @param filters - optional, may not be provided
- * @internal
+ * @public
  */
-export function defForInsight(
+export function newDefForInsight(
     workspace: string,
     insight: IInsight,
     filters?: IFilter[],
 ): IExecutionDefinition {
-    return defWithFilters(newDefFromInsight(workspace, insight), filters);
+    const def = newDefForBuckets(workspace, insightBuckets(insight));
+    const extraFilters = filters ? filters : [];
+    const filteredDef = defWithFilters(def, [...insightFilters(insight), ...extraFilters]);
+
+    return defSetSorts(filteredDef, insightSorts(insight));
 }
 
 /**
@@ -112,7 +128,7 @@ export function defForInsight(
  * @param definition - definition to alter with sorting
  * @param sorts - items to sort by
  * @returns new execution with the updated sorts
- * @internal
+ * @public
  */
 export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition {
     return defSetSorts(definition, sorts);
@@ -129,7 +145,7 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem
  * @param definition - execution definition to alter
  * @param dims - dimensions to set
  * @returns new execution with the updated dimensions
- * @internal
+ * @public
  */
 export function defWithDimensions(
     definition: IExecutionDefinition,

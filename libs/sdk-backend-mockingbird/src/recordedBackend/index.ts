@@ -3,12 +3,6 @@ import { Execution } from "@gooddata/gd-bear-model";
 import {
     AnalyticalBackendConfig,
     DataViewFacade,
-    defForBuckets,
-    defForInsight,
-    defForItems,
-    defWithDimensions,
-    defWithSorting,
-    DimensionGenerator,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IDataView,
@@ -32,6 +26,12 @@ import {
     SortItem,
     IExecutionDefinition,
     defFingerprint,
+    newDefForBuckets,
+    newDefForInsight,
+    newDefForItems,
+    defWithDimensions,
+    defWithSorting,
+    DimensionGenerator,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
@@ -155,13 +155,13 @@ function recordedExecutionFactory(
             return recordedPreparedExecution(def, recordings);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForItems(workspace, items, filters), recordings);
+            return recordedPreparedExecution(newDefForItems(workspace, items, filters), recordings);
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForBuckets(workspace, buckets, filters), recordings);
+            return recordedPreparedExecution(newDefForBuckets(workspace, buckets, filters), recordings);
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForInsight(workspace, insight, filters), recordings);
+            return recordedPreparedExecution(newDefForInsight(workspace, insight, filters), recordings);
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { defForItems } from "@gooddata/sdk-backend-spi";
+import { newDefForItems } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
 import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
@@ -16,7 +16,7 @@ describe("Drilldown Eventing", () => {
     const ADHOC_MEASURE_LOCAL_IDENTIFIER = "m1";
     const ADHOC_MEASURE_URI = "/gdc/md/projectId/obj/2";
     const dataView = dummyDataView(
-        defForItems("testWorkspace", [
+        newDefForItems("testWorkspace", [
             {
                 measure: {
                     localIdentifier: ADHOC_MEASURE_LOCAL_IDENTIFIER,

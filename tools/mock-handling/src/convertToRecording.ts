@@ -1,13 +1,12 @@
 // (C) 2019 GoodData Corporation
-import * as path from "path";
-import * as fs from "fs";
-import rimraf from "rimraf";
 import { ExecuteAFM, Execution } from "@gooddata/gd-bear-model";
-import { defForItems } from "@gooddata/sdk-backend-spi";
 import {
     AttributeElements,
+    defSetDimensions,
+    defSetSorts,
     IAttribute,
     IDimension,
+    IExecutionDefinition,
     IFilter,
     IMeasure,
     IMeasureDefinition,
@@ -15,10 +14,11 @@ import {
     IPoPMeasureDefinition,
     IPositiveAttributeFilter,
     SortItem,
-    defSetDimensions,
-    defSetSorts,
-    IExecutionDefinition,
+    newDefForItems,
 } from "@gooddata/sdk-model";
+import * as fs from "fs";
+import * as path from "path";
+import rimraf from "rimraf";
 
 type TestDataFiles = {
     request: IExecutionDefinition;
@@ -175,7 +175,7 @@ function transformRequestToExecDef(req: ExecuteAFM.IExecution): IExecutionDefini
     const { sorts, dimensions } = explodeResultSpec(req.execution.resultSpec);
 
     return defSetDimensions(
-        defSetSorts(defForItems("testWorkspace", [...attrs, ...measures], filters), sorts),
+        defSetSorts(newDefForItems("testWorkspace", [...attrs, ...measures], filters), sorts),
         dimensions,
     );
 }

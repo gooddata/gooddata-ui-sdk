@@ -140,9 +140,7 @@ export {
 
 export {
     IExecutionDefinition,
-    newDefFromItems,
-    newDefFromInsight,
-    newDefFromBuckets,
+    DimensionGenerator,
     emptyDef,
     defWithFilters,
     defFingerprint,
@@ -150,6 +148,15 @@ export {
     defSetSorts,
     defTotals,
 } from "./executionDefinition";
+
+export {
+    newDefForItems,
+    newDefForBuckets,
+    newDefForInsight,
+    defWithDimensions,
+    defWithSorting,
+    defaultDimensionsGenerator,
+} from "./executionDefinition/factory";
 
 export {
     GuidType,

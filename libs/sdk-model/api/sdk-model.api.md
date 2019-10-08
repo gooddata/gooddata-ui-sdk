@@ -106,6 +106,9 @@ export enum ComputeRatioRule {
 export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
+export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
+
+// @public
 export function defFingerprint(def: IExecutionDefinition): string;
 
 // @public
@@ -118,7 +121,16 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IEx
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 
 // @public
+export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
+
+// @public
 export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
+
+// @public
+export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
+
+// @public
+export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 // @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
@@ -640,13 +652,13 @@ export function newAttributeSort(attributeOrId: IAttribute | string, sortDirecti
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
-export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition;
+export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition;
+export function newDefForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition;
+export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
 export function newDimension(ids?: Identifier[]): IDimension;

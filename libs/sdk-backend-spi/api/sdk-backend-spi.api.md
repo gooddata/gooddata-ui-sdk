@@ -5,6 +5,7 @@
 ```ts
 
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPaletteItem } from '@gooddata/sdk-model';
@@ -126,37 +127,6 @@ export class DataViewFacade {
     // (undocumented)
     twoDimData(): DataValue[][];
 }
-
-// @public
-export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
-
-// Warning: (ae-internal-missing-underscore) The name "defForBuckets" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defForInsight" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defForItems" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defWithDimensions" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defWithSorting" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
-
-// @public
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 // @public
 export type Element = {

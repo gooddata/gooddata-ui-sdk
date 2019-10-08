@@ -1,16 +1,21 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    defaultDimensionsGenerator,
-    defWithDimensions,
-    defWithSorting,
-    DimensionGenerator,
     ExecutionError,
     IExecutionFactory,
     IExecutionResult,
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
-import { defFingerprint, IDimension, IExecutionDefinition, SortItem } from "@gooddata/sdk-model";
+import {
+    defFingerprint,
+    IDimension,
+    IExecutionDefinition,
+    SortItem,
+    defaultDimensionsGenerator,
+    defWithDimensions,
+    defWithSorting,
+    DimensionGenerator,
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { AuthenticatedSdkProvider } from "./commonTypes";
 import { BearExecutionResult } from "./executionResult";

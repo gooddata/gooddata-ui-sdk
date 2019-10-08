@@ -7,6 +7,7 @@ import {
     IInsight,
     SortItem,
     IExecutionDefinition,
+    DimensionGenerator,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
@@ -83,13 +84,6 @@ export interface IExecutionFactory {
      */
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
-
-/**
- * Function transforming a list of buckets (with attributes and measures) into execution dimension descriptors.
- *
- * @public
- */
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 /**
  * Prepared execution already knows what data to calculate and allows to specify how the data should be
