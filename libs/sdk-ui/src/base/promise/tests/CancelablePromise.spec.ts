@@ -1,27 +1,11 @@
 // (C) 2019 GoodData Corporation
 import { makeCancelable, CancelError } from "../CancelablePromise";
-
-interface IDummyPromise<R, E> {
-    willResolve?: boolean;
-    result?: R;
-    error?: E;
-}
-
-const createDummyPromise = <R, E>({ willResolve = true, result, error }: IDummyPromise<R, E> = {}) =>
-    new Promise<R>((resolve, reject) => {
-        setTimeout(() => {
-            if (willResolve) {
-                resolve(result);
-            } else {
-                reject(error);
-            }
-        }, 100);
-    });
+import { createDummyPromise } from "./toolkit";
 
 describe("CancelablePromise", () => {
     it("should throw instanceof CancelError with correct message when cancel was invoked before promise resolution", async () => {
         const CANCEL_REASON = "Canceled before promise resolution";
-        const dummyPromise = createDummyPromise();
+        const dummyPromise = createDummyPromise({ delay: 100 });
         const cancelableDummyPromise = makeCancelable(dummyPromise);
 
         cancelableDummyPromise.cancel(CANCEL_REASON);
@@ -41,6 +25,7 @@ describe("CancelablePromise", () => {
         const RESULT = "RESULT";
         const dummyPromise = createDummyPromise({
             result: RESULT,
+            delay: 100,
         });
         const cancelableDummyPromise = makeCancelable(dummyPromise);
         const result = await cancelableDummyPromise.promise;
@@ -55,6 +40,7 @@ describe("CancelablePromise", () => {
         const dummyPromise = createDummyPromise({
             error: ERROR,
             willResolve: false,
+            delay: 100,
         });
         const cancelableDummyPromise = makeCancelable(dummyPromise);
         let error;
