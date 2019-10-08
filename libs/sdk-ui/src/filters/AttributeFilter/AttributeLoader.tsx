@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import { IAttributeDisplayForm } from "./model";
 
 export interface IAttributeLoaderMetadataProps {
@@ -64,16 +63,6 @@ function getAttributeDisplayForm(
 }
 
 export class AttributeLoader extends React.PureComponent<IAttributeLoaderProps, IAttributeLoaderState> {
-    public static propTypes = {
-        projectId: PropTypes.string.isRequired,
-        uri: PropTypes.string,
-        identifier: PropTypes.string,
-        metadata: PropTypes.shape({
-            getObjectDetails: PropTypes.func.isRequired,
-            getObjectUri: PropTypes.func.isRequired,
-        }).isRequired,
-    };
-
     public static defaultProps: Partial<IAttributeLoaderProps> = {
         uri: null,
         identifier: null,

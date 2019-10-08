@@ -1,20 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
-
-import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports
-export { Requireable };
-
-export const LoadingPropTypes = {
-    className: PropTypes.string,
-    color: PropTypes.string,
-    speed: PropTypes.number,
-    inline: PropTypes.bool,
-    height: PropTypes.any,
-    width: PropTypes.any,
-    imageHeight: PropTypes.any,
-    imageWidth: PropTypes.any,
-};
 
 export interface ILoadingProps {
     className?: string;
@@ -44,8 +29,6 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
         imageHeight: 8,
         imageWidth: undefined,
     };
-
-    public static propTypes = LoadingPropTypes;
 
     public render() {
         const { inline, width, height, imageWidth, imageHeight, color, speed, className } = this.props;

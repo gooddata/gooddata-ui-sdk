@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import { SDK, factory as createSdk, IValidElementsResponse, IElement } from "@gooddata/gd-bear-client";
 import { IValidElementsOptions } from "@gooddata/gd-bear-client/lib/metadata";
 import { AFM } from "@gooddata/gd-bear-model";
@@ -88,13 +87,6 @@ const defaultChildren = ({ validElements, loadMore, isLoading, error }: IAttribu
  * is a component that lists attribute values using a children function
  */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
-    public static propTypes = {
-        projectId: PropTypes.string.isRequired,
-        uri: PropTypes.string,
-        identifier: PropTypes.string,
-        options: PropTypes.object,
-    };
-
     public static defaultProps: Partial<IAttributeElementsProps> = {
         projectId: null,
         uri: null,
