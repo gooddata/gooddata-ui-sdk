@@ -16,6 +16,7 @@ export interface IExecutorProps {
     onLoadingStart?: (props?: IExecutorProps) => void;
     onLoadingChanged?: (isLoading?: boolean, props?: IExecutorProps) => void;
     onLoadingFinish?: (result?: DataViewFacade, props?: IExecutorProps) => void;
+    loadOnMount?: boolean;
 }
 
 type Props = IExecutorProps & WithLoadingResult<DataViewFacade>;
@@ -55,4 +56,5 @@ export const Executor = withExecution({
         ];
         return relevantProps.some(propName => prevProps[propName] !== nextProps[propName]);
     },
+    loadOnMount: ({ loadOnMount = true }) => loadOnMount,
 })(CoreExecutor);
