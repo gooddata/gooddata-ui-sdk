@@ -69,7 +69,7 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
         const dot3Styles = {
             ...dotStyles,
             transformOrigin: "32px 4px",
-            animationDelay: 0,
+            animationDelay: "0",
         };
 
         return (
