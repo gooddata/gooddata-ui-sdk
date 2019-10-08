@@ -1,19 +1,17 @@
 // (C) 2019 GoodData Corporation
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/hoc/withLoading";
+import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/promise/withLoading";
 
 /**
  * TODO: SDK8: add docs
  * @public
  */
 export interface IWithExecution<T, R extends object> {
-    executionOrFactory: IPreparedExecution | ((props: T) => IPreparedExecution);
+    execution: IPreparedExecution | ((props?: T) => IPreparedExecution);
     mapResultToProps: (result: WithLoadingResult<DataViewFacade>) => R;
-    eventsOrFactory?:
-        | IWithLoadingEvents<T, DataViewFacade>
-        | ((props: T) => IWithLoadingEvents<T, DataViewFacade>);
-    loadOnMount?: boolean;
-    shouldRefetch?: (prevProps: T, nextProps: T) => boolean;
+    events?: IWithLoadingEvents<T, DataViewFacade> | ((props?: T) => IWithLoadingEvents<T, DataViewFacade>);
+    loadOnMount?: boolean | ((props?: T) => boolean);
+    shouldRefetch?: (prevProps?: T, nextProps?: T) => boolean;
 }
 
 /**
@@ -21,24 +19,24 @@ export interface IWithExecution<T, R extends object> {
  * @public
  */
 export function withExecution<T, R extends object>({
-    executionOrFactory,
+    execution,
     mapResultToProps,
-    eventsOrFactory,
+    events,
     loadOnMount,
     shouldRefetch,
 }: IWithExecution<T, R>) {
     return (WrappedComponent: React.ComponentType<T & R>) =>
         withLoading({
             promiseFactory: async (props: T) => {
-                let execution;
+                let _execution;
 
-                if (typeof executionOrFactory === "function") {
-                    execution = executionOrFactory(props);
+                if (typeof execution === "function") {
+                    _execution = execution(props);
                 } else {
-                    execution = executionOrFactory;
+                    _execution = execution;
                 }
 
-                const executionResult = await execution.execute();
+                const executionResult = await _execution.execute();
                 const dataView = await executionResult.readAll();
                 const dataViewFacade = new DataViewFacade(dataView);
 
@@ -46,7 +44,7 @@ export function withExecution<T, R extends object>({
             },
             mapResultToProps,
             loadOnMount,
-            eventsOrFactory,
+            events,
             shouldRefetch,
         })(WrappedComponent);
 }
