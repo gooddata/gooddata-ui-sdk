@@ -22,6 +22,7 @@ import {
     getDateFilterDateDataSet,
     unwrapArithmeticMeasure,
     isArithmeticMeasure,
+    isAttributeFilterSelectAll,
 } from "../AfmUtils";
 import { Granularities } from "../../constants/granularities";
 import * as fixture from "../../fixtures/Afm.fixtures";
@@ -100,6 +101,58 @@ describe("AFM utils", () => {
                 },
             };
             expect(isAttributeFilter(absoluteDateFilter)).toEqual(false);
+        });
+    });
+
+    describe("isAttributeFilterSelectAll", () => {
+        it("should return true for negative attribute filter without elements", () => {
+            const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: "filter",
+                    },
+                    notIn: [],
+                },
+            };
+            expect(isAttributeFilterSelectAll(negativeAttributeFilter)).toEqual(true);
+        });
+
+        it("should return false for negative attribute filter with elements", () => {
+            const negativeAttributeFilter: AFM.INegativeAttributeFilter = {
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: "filter",
+                    },
+                    notIn: ["1"],
+                },
+            };
+            expect(isAttributeFilterSelectAll(negativeAttributeFilter)).toEqual(false);
+        });
+
+        it("should return false for positive attribute filter", () => {
+            const positiveAttributeFilter: AFM.IPositiveAttributeFilter = {
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: "filter",
+                    },
+                    in: ["1", "2"],
+                },
+            };
+            expect(isAttributeFilterSelectAll(positiveAttributeFilter)).toEqual(false);
+        });
+
+        it("should return false for date filter", () => {
+            const relativeDateFilter: AFM.IRelativeDateFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        identifier: "filter",
+                    },
+                    from: 1,
+                    to: 2,
+                    granularity: Granularities.YEAR,
+                },
+            };
+            expect(isAttributeFilterSelectAll(relativeDateFilter)).toEqual(false);
         });
     });
 
