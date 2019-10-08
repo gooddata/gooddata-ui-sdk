@@ -12,6 +12,8 @@ export {
     attributeIdentifier,
 } from "./attribute";
 
+export { newAttribute } from "./attribute/factories";
+
 export {
     Identifier,
     IObjUriQualifier,
@@ -79,6 +81,13 @@ export {
 } from "./filter";
 
 export {
+    newAbsoluteDateFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newRelativeDateFilter,
+} from "./filter/factories";
+
+export {
     IMeasureDefinitionType,
     IMeasureDefinition,
     ArithmeticMeasureOperator,
@@ -108,6 +117,14 @@ export {
     measureArithmeticOperands,
     measureDisableComputeRatio,
 } from "./measure";
+
+export {
+    IPreviousPeriodDateDataSetSimple,
+    newArithmeticMeasure,
+    newMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "./measure/factories";
 
 export {
     AttributeOrMeasure,
