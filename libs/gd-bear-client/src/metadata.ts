@@ -8,7 +8,6 @@ import { ExecuteAFM, VisualizationObject } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import { IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection } from "./interfaces";
-import { convertUrisToReferences, convertReferencesToUris } from "./referenceHandling";
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -68,7 +67,7 @@ export class MetadataModule {
                     get(result, ["objects", "items"]).map((item: any) => {
                         if (item.visualizationObject) {
                             return {
-                                visualizationObject: convertReferencesToUris(item.visualizationObject),
+                                visualizationObject: item.visualizationObject,
                             };
                         }
                         return item;
@@ -732,7 +731,7 @@ export class MetadataModule {
             (visualizationObject: VisualizationObject.IVisualizationObjectResponse) => {
                 const mdObject = visualizationObject.visualizationObject;
                 return {
-                    visualizationObject: convertReferencesToUris(mdObject),
+                    visualizationObject: mdObject,
                 };
             },
         );
@@ -745,8 +744,7 @@ export class MetadataModule {
      * @param {String} visualizationUri
      */
     public saveVisualization(projectId: string, visualization: VisualizationObject.IVisualization) {
-        const converted = convertUrisToReferences(visualization.visualizationObject);
-        return this.createObject(projectId, { visualizationObject: converted });
+        return this.createObject(projectId, { visualizationObject: visualization.visualizationObject });
     }
 
     /**
@@ -760,8 +758,9 @@ export class MetadataModule {
         visualizationUri: string,
         visualization: VisualizationObject.IVisualization,
     ) {
-        const converted = convertUrisToReferences(visualization.visualizationObject);
-        return this.updateObject(projectId, visualizationUri, { visualizationObject: converted });
+        return this.updateObject(projectId, visualizationUri, {
+            visualizationObject: visualization.visualizationObject,
+        });
     }
 
     /**

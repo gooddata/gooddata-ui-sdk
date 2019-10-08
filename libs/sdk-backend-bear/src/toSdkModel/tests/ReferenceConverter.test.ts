@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
-import { convertReferencesToUris, convertUrisToReferences } from "../src/referenceHandling";
-import * as fixtures from "./fixtures/referenceHandling";
+// (C) 2019 GoodData Corporation
+import { convertReferencesToUris, convertUrisToReferences } from "../ReferenceConverter";
+import * as fixtures from "./ReferenceConverter.fixtures";
 
 describe("reference handling", () => {
     describe("convertReferencesToUris", () => {

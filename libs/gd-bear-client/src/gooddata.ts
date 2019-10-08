@@ -13,7 +13,6 @@ import { AdminModule } from "./admin";
 
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { getAttributesDisplayForms } from "./utils/visualizationObjectHelper";
-import { convertReferencesToUris, ReferenceConverter } from "./referenceHandling";
 
 /**
  * # JS SDK
@@ -47,7 +46,6 @@ export class SDK {
     public utils: {
         loadAttributesMap: any;
         getAttributesDisplayForms: any;
-        convertReferencesToUris: ReferenceConverter;
     };
 
     constructor(private fetchMethod: typeof fetch, config = {}) {
@@ -68,7 +66,6 @@ export class SDK {
         this.utils = {
             loadAttributesMap: attributesMapLoaderModule.loadAttributesMap.bind(attributesMapLoaderModule),
             getAttributesDisplayForms,
-            convertReferencesToUris,
         };
     }
 

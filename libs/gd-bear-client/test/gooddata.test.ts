@@ -73,7 +73,6 @@ describe("factory", () => {
 
         expect(sdk.utils).toMatchObject({
             getAttributesDisplayForms: expect.any(Function),
-            convertReferencesToUris: expect.any(Function),
         });
     });
 });
