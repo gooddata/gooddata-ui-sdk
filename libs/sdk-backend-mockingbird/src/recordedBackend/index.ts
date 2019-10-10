@@ -1,19 +1,14 @@
 // (C) 2019 GoodData Corporation
+import { Execution } from "@gooddata/gd-bear-model";
 import {
     AnalyticalBackendConfig,
+    AuthenticatedPrincipal,
     DataViewFacade,
-    defFingerprint,
-    defForBuckets,
-    defForInsight,
-    defForItems,
-    defWithDimensions,
-    defWithSorting,
-    DimensionGenerator,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
     IDataView,
     IElementQueryFactory,
-    IExecutionDefinition,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -24,11 +19,23 @@ import {
     IWorkspaceStyling,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
-import { Execution } from "@gooddata/gd-bear-model";
+import {
+    AttributeOrMeasure,
+    IBucket,
+    IDimension,
+    IFilter,
+    IInsight,
+    SortItem,
+    IExecutionDefinition,
+    defFingerprint,
+    newDefForBuckets,
+    newDefForInsight,
+    newDefForItems,
+    defWithDimensions,
+    defWithSorting,
+    DimensionGenerator,
+} from "@gooddata/sdk-model";
 
-const nullPromise: Promise<null> = new Promise(r => r(null));
-const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 
 /**
@@ -85,14 +92,18 @@ export function recordedBackend(
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
-        withCredentials(username: string, _password: string): IAnalyticalBackend {
-            return recordedBackend(index, { ...config, username });
+        withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
+            return this;
         },
+
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index[id]);
         },
-        isAuthenticated(): Promise<boolean> {
-            return new Promise(r => r(true));
+        authenticate(): Promise<AuthenticatedPrincipal> {
+            return Promise.resolve({ userId: "recordedUser" });
+        },
+        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+            return Promise.resolve({ userId: "recordedUser" });
         },
     };
 
@@ -150,13 +161,13 @@ function recordedExecutionFactory(
             return recordedPreparedExecution(def, recordings);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForItems(workspace, items, filters), recordings);
+            return recordedPreparedExecution(newDefForItems(workspace, items, filters), recordings);
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForBuckets(workspace, buckets, filters), recordings);
+            return recordedPreparedExecution(newDefForBuckets(workspace, buckets, filters), recordings);
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(defForInsight(workspace, insight, filters), recordings);
+            return recordedPreparedExecution(newDefForInsight(workspace, insight, filters), recordings);
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
@@ -181,11 +192,6 @@ function recordedDataView(
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
         totalCount: afmResult.paging.total,
-        advance: noop,
-        pageDown: noop,
-        pageUp: noop,
-        pageLeft: noop,
-        pageRight: noop,
         fingerprint(): string {
             return fp;
         },

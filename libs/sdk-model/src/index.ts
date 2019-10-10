@@ -7,7 +7,6 @@ export {
     AttributePredicate,
     anyAttribute,
     idMatchAttribute,
-    attributeFingerprint,
     attributesFind,
     attributeUri,
     attributeIdentifier,
@@ -31,7 +30,6 @@ export {
     dimensionTotals,
     newTwoDimensional,
     newDimension,
-    dimensionFingerprint,
     MeasureGroupIdentifier,
     dimensionSetTotals,
 } from "./base/dimension";
@@ -52,7 +50,6 @@ export {
     isAttributeSort,
     newMeasureSort,
     newAttributeSort,
-    sortFingerprint,
     SortEntityIds,
     sortEntityIds,
 } from "./base/sort";
@@ -78,7 +75,6 @@ export {
     isAttributeElementsByValue,
     attributeElementsIsEmpty,
     filterIsEmpty,
-    filterFingerprint,
     filterQualifierValue,
 } from "./filter";
 
@@ -106,7 +102,6 @@ export {
     anyMeasure,
     idMatchMeasure,
     measureDoesComputeRatio,
-    measureFingerprint,
     measureUri,
     measureIdentifier,
     measureMasterIdentifier,
@@ -142,6 +137,26 @@ export {
     computeRatioRules,
     BucketPredicate,
 } from "./buckets";
+
+export {
+    IExecutionDefinition,
+    DimensionGenerator,
+    emptyDef,
+    defWithFilters,
+    defFingerprint,
+    defSetDimensions,
+    defSetSorts,
+    defTotals,
+} from "./executionDefinition";
+
+export {
+    newDefForItems,
+    newDefForBuckets,
+    newDefForInsight,
+    defWithDimensions,
+    defWithSorting,
+    defaultDimensionsGenerator,
+} from "./executionDefinition/factory";
 
 export {
     GuidType,

@@ -5,21 +5,21 @@
 ```ts
 
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
 // @public
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
-    readonly username?: string;
 };
 
 // @public
@@ -33,6 +33,17 @@ export abstract class AnalyticalBackendError extends Error {
 
 // @public
 export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
+
+// @public
+export type AuthenticatedPrincipal = {
+    userId: string;
+    userMeta?: any;
+};
+
+// @public
+export type AuthenticationContext = {
+    client: any;
+};
 
 // @public
 export type BackendCapabilities = {
@@ -128,59 +139,10 @@ export class DataViewFacade {
 }
 
 // @public
-export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
-
-// @public
-export function defFingerprint(def: IExecutionDefinition): string;
-
-// Warning: (ae-internal-missing-underscore) The name "defForBuckets" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defForInsight" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defForItems" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
-
-// @public
-export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
-
-// @public
-export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
-
-// @public
-export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
-
-// Warning: (ae-internal-missing-underscore) The name "defWithDimensions" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
-
-// @public
-export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
-
-// Warning: (ae-internal-missing-underscore) The name "defWithSorting" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
-
-// @public
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
-
-// @public
 export type Element = {
     readonly value: string;
     readonly uri?: string;
 };
-
-// @public
-export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
 export class ExecutionError extends AnalyticalBackendError {
@@ -189,11 +151,12 @@ export class ExecutionError extends AnalyticalBackendError {
 
 // @public
 export interface IAnalyticalBackend {
+    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
     readonly capabilities: BackendCapabilities;
     readonly config: AnalyticalBackendConfig;
-    isAuthenticated(): Promise<boolean>;
+    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
-    withCredentials(username: string, password: string): IAnalyticalBackend;
+    withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
 }
@@ -232,8 +195,12 @@ export interface IAttributeHeader {
 }
 
 // @public
+export interface IAuthenticationProvider {
+    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+}
+
+// @public
 export interface IDataView {
-    advance(...dims: number[]): Promise<IDataView | null>;
     readonly count: number[];
     // (undocumented)
     readonly data: DataValue[][] | DataValue[];
@@ -242,10 +209,6 @@ export interface IDataView {
     fingerprint(): string;
     readonly headerItems: IResultHeaderItem[][][];
     readonly offset: number[];
-    pageDown(): Promise<IDataView | null>;
-    pageLeft(): Promise<IDataView | null>;
-    pageRight(): Promise<IDataView | null>;
-    pageUp(): Promise<IDataView | null>;
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     // (undocumented)
@@ -278,24 +241,6 @@ export interface IElementQueryResult {
     next(): IElementQueryResult;
     // (undocumented)
     readonly offset: number;
-}
-
-// @public
-export interface IExecutionDefinition {
-    // (undocumented)
-    readonly attributes: IAttribute[];
-    // (undocumented)
-    readonly buckets: IBucket[];
-    // (undocumented)
-    readonly dimensions: IDimension[];
-    // (undocumented)
-    readonly filters: IFilter[];
-    // (undocumented)
-    readonly measures: IMeasure[];
-    // (undocumented)
-    readonly sortBy: SortItem[];
-    // (undocumented)
-    readonly workspace: string;
 }
 
 // @public
@@ -482,15 +427,6 @@ export interface IWorkspaceStyling {
     // (undocumented)
     colorPalette(): Promise<IColorPaletteItem[]>;
 }
-
-// @public
-export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition;
-
-// @public
-export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition;
-
-// @public
-export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition;
 
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {

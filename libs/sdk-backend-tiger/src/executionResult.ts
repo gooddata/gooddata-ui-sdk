@@ -4,7 +4,6 @@ import {
     DataValue,
     DataViewError,
     IDataView,
-    IExecutionDefinition,
     IExecutionResult,
     IExportConfig,
     IExportResult,
@@ -20,6 +19,7 @@ import { transformResultDimensions } from "./fromAfm/dimensions";
 import { transformExecutionResult } from "./fromAfm/result";
 import { executionResult } from "./gd-tiger-client/execution";
 import { Execution } from "./gd-tiger-model/Execution";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 export class TigerExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
@@ -140,26 +140,6 @@ class TigerDataView implements IDataView {
         */
 
         this._fingerprint = `${result.fingerprint()}/*`;
-    }
-
-    public advance(..._dims: number[]): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageDown(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageLeft(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageRight(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageUp(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
     }
 
     public fingerprint(): string {

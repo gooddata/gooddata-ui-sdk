@@ -2,18 +2,11 @@
 import {
     AnalyticalBackendConfig,
     DataViewFacade,
-    defFingerprint,
-    defForBuckets,
-    defForInsight,
-    defForItems,
-    defWithDimensions,
-    defWithSorting,
-    DimensionGenerator,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
     IDataView,
     IElementQueryFactory,
-    IExecutionDefinition,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -23,11 +16,25 @@ import {
     IWorkspaceMetadata,
     IWorkspaceStyling,
     NotSupported,
+    AuthenticatedPrincipal,
 } from "@gooddata/sdk-backend-spi";
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    defFingerprint,
+    defWithDimensions,
+    defWithSorting,
+    DimensionGenerator,
+    IBucket,
+    IDimension,
+    IExecutionDefinition,
+    IFilter,
+    IInsight,
+    newDefForBuckets,
+    newDefForInsight,
+    newDefForItems,
+    SortItem,
+} from "@gooddata/sdk-model";
 
-const nullPromise: Promise<null> = new Promise(r => r(null));
-const noop: (..._: any[]) => Promise<null> = _ => nullPromise;
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 
 /**
@@ -52,14 +59,18 @@ export function dummyBackend(config: AnalyticalBackendConfig = defaultConfig): I
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
-        withCredentials(username: string, _password: string): IAnalyticalBackend {
-            return dummyBackend({ ...config, username });
+        withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
+            return this;
         },
         workspace(id: string): IAnalyticalWorkspace {
             return dummyWorkspace(id);
         },
-        isAuthenticated(): Promise<boolean> {
-            return new Promise(r => r(true));
+        authenticate(): Promise<AuthenticatedPrincipal> {
+            return Promise.resolve({ userId: "dummyUser" });
+        },
+
+        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+            return Promise.resolve({ userId: "dummyUser" });
         },
     };
 
@@ -99,11 +110,6 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
         offset: [0, 0],
         count: [0, 0],
         totalCount: [0, 0],
-        advance: noop,
-        pageDown: noop,
-        pageUp: noop,
-        pageLeft: noop,
-        pageRight: noop,
         fingerprint(): string {
             return fp;
         },
@@ -143,13 +149,13 @@ function dummyExecutionFactory(workspace: string): IExecutionFactory {
             return dummyPreparedExecution(def);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defForItems(workspace, items, filters));
+            return dummyPreparedExecution(newDefForItems(workspace, items, filters));
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defForBuckets(workspace, buckets, filters));
+            return dummyPreparedExecution(newDefForBuckets(workspace, buckets, filters));
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(defForInsight(workspace, insight, filters));
+            return dummyPreparedExecution(newDefForInsight(workspace, insight, filters));
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");

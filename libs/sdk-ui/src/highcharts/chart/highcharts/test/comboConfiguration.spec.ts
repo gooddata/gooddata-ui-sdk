@@ -4,13 +4,12 @@ import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { MEASURES, SECONDARY_MEASURES } from "../../../../base/constants/bucketNames";
-import { defForBuckets } from "@gooddata/sdk-backend-spi";
-import { newBucket } from "@gooddata/sdk-model";
+import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
 
 describe("Combo Configuration", () => {
     const { COLUMN, LINE, AREA } = VisualizationTypes;
     function getDefinition(bucketId: string) {
-        return defForBuckets("test", [
+        return newDefForBuckets("test", [
             newBucket(
                 bucketId,
                 {

@@ -1,8 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
 import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { newDefFromBuckets } from "@gooddata/sdk-backend-spi";
-import { IBucket, IInsight, IMeasure } from "@gooddata/sdk-model";
+import { IBucket, IInsight, IMeasure, newDefForBuckets } from "@gooddata/sdk-model";
 
 import * as rec from "./recordings/playlist";
 import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
@@ -1354,7 +1353,7 @@ export const comboVizObjectContent: VisualizationObject.IVisualizationObjectCont
 
 export const testWorkspace = "testWorkspace";
 
-export const emptyFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, []));
+export const emptyFacade = dummyDataFacade(newDefForBuckets(testWorkspace, []));
 
 export const newMeasures: IMeasure[] = [
     {
@@ -1411,7 +1410,7 @@ export const comboBuckets: IBucket[] = [
     },
 ];
 
-export const comboFacade = dummyDataFacade(newDefFromBuckets(testWorkspace, comboBuckets));
+export const comboFacade = dummyDataFacade(newDefForBuckets(testWorkspace, comboBuckets));
 
 //
 // Area chart fixtures

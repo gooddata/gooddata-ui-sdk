@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 
+import invariant from "ts-invariant";
 import { Identifier } from "./index";
 import { ITotal } from "./totals";
 import isEmpty = require("lodash/isEmpty");
-import invariant from "ts-invariant";
 
 /**
  * Dimensions specify how to organize the results of an execution in a data view. Imagine an attribute in columns vs. rows.
@@ -121,13 +121,4 @@ export function newDimension(ids: Identifier[] = []): IDimension {
     return {
         itemIdentifiers: ids,
     };
-}
-
-/**
- * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
- *
- * @internal
- */
-export function dimensionFingerprint(dim: IDimension): string {
-    return JSON.stringify(dim);
 }

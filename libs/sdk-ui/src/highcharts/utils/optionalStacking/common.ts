@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
     bucketMeasures,
@@ -9,6 +8,7 @@ import {
     IMeasure,
     isMeasure,
     measureDoesComputeRatio,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { MEASURES } from "../../../base/constants/bucketNames";
 import { IChartConfig } from "../../Config";

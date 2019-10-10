@@ -1,41 +1,29 @@
 // (C) 2019 GoodData Corporation
-import {
-    attributeFingerprint,
-    AttributeOrMeasure,
-    bucketsAttributes,
-    bucketsMeasures,
-    IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    insightBuckets,
-    insightFilters,
-    isAttribute,
-    isMeasure,
-    SortItem,
-    measureFingerprint,
-    filterFingerprint,
-    sortFingerprint,
-    dimensionFingerprint,
-    IAttribute,
-    IMeasure,
-    isAttributeFilter,
-    IAttributeFilter,
-    IDateFilter,
-    filterQualifierValue,
-    dimensionTotals,
-    ITotal,
-} from "@gooddata/sdk-model";
 import isEmpty = require("lodash/isEmpty");
 import partition = require("lodash/partition");
 import unionBy = require("lodash/unionBy");
 import SparkMD5 from "spark-md5";
-
-/*
- * TODO: SDK8: revisit whether this is the right location
- *  it does appear like that to me; it does not fit the model package as it is not about the domain model but
- *  rather part of the interface with the backend.
- */
+import {
+    dimensionTotals,
+    filterQualifierValue,
+    IAttribute,
+    IAttributeFilter,
+    IBucket,
+    IDateFilter,
+    IDimension,
+    IFilter,
+    IMeasure,
+    isAttributeFilter,
+    ITotal,
+    SortItem,
+} from "..";
+import {
+    attributeFingerprint,
+    dimensionFingerprint,
+    filterFingerprint,
+    measureFingerprint,
+    sortFingerprint,
+} from "./fingerprints";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will
@@ -54,6 +42,13 @@ export interface IExecutionDefinition {
 }
 
 /**
+ * Function transforming a list of buckets (with attributes and measures) into execution dimension descriptors.
+ *
+ * @public
+ */
+export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
+
+/**
  * Creates new, empty execution definition for the provided workspace.
  *
  * @param workspace - workspace to calculate on
@@ -70,63 +65,6 @@ export function emptyDef(workspace: string): IExecutionDefinition {
         filters: [],
         sortBy: [],
     };
-}
-
-/**
- * Creates a new execution definition for workspace and a set of attributes and measures.
- *
- * @param workspace - workspace to calculate on
- * @param items - mix of attributes and measures
- * @returns always new instance
- * @public
- */
-export function newDefFromItems(workspace: string, items: AttributeOrMeasure[]): IExecutionDefinition {
-    return {
-        ...emptyDef(workspace),
-        attributes: items.filter(isAttribute),
-        measures: items.filter(isMeasure),
-    };
-}
-
-/**
- * Creates a new execution definition for workspace and a set of buckets. Attributes and measures from all the buckets
- * are distributed into attributes and measures in the definition in 'natural' order. Items are placed into respective
- * arrays in the order in which they appear in the buckets. Items from first bucket appear before items from
- * second bucket and so on.
- *
- * @param workspace - workspace to calculate on
- * @param buckets - buckets
- * @returns always new instance
- * @public
- */
-export function newDefFromBuckets(workspace: string, buckets: IBucket[]): IExecutionDefinition {
-    return {
-        ...emptyDef(workspace),
-        buckets,
-        attributes: bucketsAttributes(buckets),
-        measures: bucketsMeasures(buckets),
-    };
-}
-
-/**
- * Creates a new execution definition for workspace and an insight:
- *
- * - Attributes and measures from insight's buckets are distributed into definition attributes and measures
- *   in natural order.
- * - Insight filters are added into definition
- * - Insight sorts are added into definition
- * - Insight totals are added into definition
- *
- * @param workspace - workspace to calculate on
- * @param insight - insight to create definition for
- * @returns always new instance
- * @public
- */
-export function newDefFromInsight(workspace: string, insight: IInsight): IExecutionDefinition {
-    const def = newDefFromBuckets(workspace, insightBuckets(insight));
-
-    // TODO: add sorts
-    return defWithFilters(def, insightFilters(insight));
 }
 
 function separateFiltersByType(filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] {

@@ -5,11 +5,11 @@ import {
     IAttribute,
     IBucket,
     IMeasure,
+    IExecutionDefinition,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
-import { IExecutionDefinition } from "./executionDefinition";
 import { IDataView, IExecutionResult } from "./index";
 import {
     DataValue,

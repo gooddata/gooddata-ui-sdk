@@ -1,11 +1,13 @@
 // (C) 2019 GoodData Corporation
-import { AttributeOrMeasure, IBucket, IFilter, IInsight } from "@gooddata/sdk-model";
 import {
+    AttributeOrMeasure,
+    IBucket,
+    IFilter,
+    IInsight,
     defWithFilters,
     IExecutionDefinition,
-    IExecutionFactory,
-    IPreparedExecution,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     constructor(

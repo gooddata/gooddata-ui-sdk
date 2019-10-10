@@ -128,17 +128,6 @@ export function attributeIdentifier(attribute: IAttribute): string | undefined {
 }
 
 /**
- * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
- *
- * @internal
- */
-export function attributeFingerprint(attribute: IAttribute): string {
-    invariant(attribute, "attribute must not be undefined");
-
-    return JSON.stringify(attribute);
-}
-
-/**
  * Given list of attributes, returns first-found attribute matching the provided predicate.
  *
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute

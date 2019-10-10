@@ -22,11 +22,6 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 // @public
 export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
 
-// Warning: (ae-internal-missing-underscore) The name "attributeFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function attributeFingerprint(attribute: IAttribute): string;
-
 // @public
 export function attributeId(attribute: IAttribute): string;
 
@@ -110,10 +105,32 @@ export enum ComputeRatioRule {
 // @public
 export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
-// Warning: (ae-internal-missing-underscore) The name "dimensionFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function dimensionFingerprint(dim: IDimension): string;
+// @public
+export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
+
+// @public
+export function defFingerprint(def: IExecutionDefinition): string;
+
+// @public
+export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
+
+// @public
+export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition;
+
+// @public
+export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
+
+// @public
+export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
+
+// @public
+export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
+
+// @public
+export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem[]): IExecutionDefinition;
+
+// @public
+export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
@@ -121,10 +138,8 @@ export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimensi
 // @public
 export function dimensionTotals(dim: IDimension): ITotal[];
 
-// Warning: (ae-internal-missing-underscore) The name "filterFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function filterFingerprint(filter: IFilter): string;
+// @public
+export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -260,6 +275,24 @@ export const idMatchBucket: (id: string) => BucketPredicate;
 
 // @public
 export const idMatchMeasure: (id: string) => MeasurePredicate;
+
+// @public
+export interface IExecutionDefinition {
+    // (undocumented)
+    readonly attributes: IAttribute[];
+    // (undocumented)
+    readonly buckets: IBucket[];
+    // (undocumented)
+    readonly dimensions: IDimension[];
+    // (undocumented)
+    readonly filters: IFilter[];
+    // (undocumented)
+    readonly measures: IMeasure[];
+    // (undocumented)
+    readonly sortBy: SortItem[];
+    // (undocumented)
+    readonly workspace: string;
+}
 
 // @public
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -587,11 +620,6 @@ export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
 // @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
-// Warning: (ae-internal-missing-underscore) The name "measureFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function measureFingerprint(measure: IMeasure): string;
-
 // @public
 export const MeasureGroupIdentifier = "measureGroup";
 
@@ -622,6 +650,15 @@ export function newAttributeSort(attributeOrId: IAttribute | string, sortDirecti
 
 // @public
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
+
+// @public
+export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
+
+// @public
+export function newDefForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
+
+// @public
+export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
 export function newDimension(ids?: Identifier[]): IDimension;
@@ -660,11 +697,6 @@ export type SortEntityIds = {
 // 
 // @internal
 export function sortEntityIds(sort: SortItem): SortEntityIds;
-
-// Warning: (ae-internal-missing-underscore) The name "sortFingerprint" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal
-export function sortFingerprint(sort: SortItem): string;
 
 // @public
 export type SortItem = IAttributeSortItem | IMeasureSortItem;

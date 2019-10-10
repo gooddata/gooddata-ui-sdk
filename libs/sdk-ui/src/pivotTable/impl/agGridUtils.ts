@@ -12,15 +12,9 @@ import {
     ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
-import {
-    defFingerprint,
-    IExecutionDefinition,
-    IExecutionResult,
-    isTotalHeader,
-    isMeasureGroupHeader,
-} from "@gooddata/sdk-backend-spi";
+import { IExecutionResult, isTotalHeader, isMeasureGroupHeader } from "@gooddata/sdk-backend-spi";
+import { IDimension, defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import escape = require("lodash/escape");
-import { IDimension } from "@gooddata/sdk-model";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.

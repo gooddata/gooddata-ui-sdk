@@ -5,8 +5,7 @@ import { IChartConfig } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { isLineChart } from "../../utils/common";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
-import { IExecutionDefinition } from "@gooddata/sdk-backend-spi";
-import { bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";
+import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";
 import get = require("lodash/get");
 
 const { COLUMN, LINE } = VisualizationTypes;

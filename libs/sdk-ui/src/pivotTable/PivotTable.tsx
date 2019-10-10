@@ -12,6 +12,7 @@ import {
     bucketTotals,
     IBucket,
     IDimension,
+    IExecutionDefinition,
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
@@ -92,7 +93,8 @@ function getBuckets(props: IPivotTableBucketProps): IBucket[] {
     ];
 }
 
-function pivotDimensions(buckets: IBucket[]): IDimension[] {
+function pivotDimensions(def: IExecutionDefinition): IDimension[] {
+    const { buckets } = def;
     const row = bucketsFind(buckets, ATTRIBUTE);
     const columns = bucketsFind(buckets, COLUMNS);
     const measures = bucketsFind(buckets, MEASURES);

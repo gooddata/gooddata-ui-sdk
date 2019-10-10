@@ -40,7 +40,8 @@ import {
 import { IChartConfig, IChartOptions, IPointData } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
-import { DataViewFacade, emptyDef } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { emptyDef } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { IColorPaletteItem } from "../../../base/interfaces/Colors";
 import { uriMatch } from "../../../base/factory/HeaderPredicateFactory";

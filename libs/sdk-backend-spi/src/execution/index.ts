@@ -1,7 +1,15 @@
 // (C) 2019 GoodData Corporation
-import { AttributeOrMeasure, IBucket, IDimension, IFilter, IInsight, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    IBucket,
+    IDimension,
+    IFilter,
+    IInsight,
+    SortItem,
+    IExecutionDefinition,
+    DimensionGenerator,
+} from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
-import { IExecutionDefinition } from "./executionDefinition";
 import { DataValue, IResultDimension, IResultHeaderItem } from "./results";
 
 /**
@@ -76,13 +84,6 @@ export interface IExecutionFactory {
      */
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
 }
-
-/**
- * Function transforming a list of buckets (with attributes and measures) into execution dimension descriptors.
- *
- * @public
- */
-export type DimensionGenerator = (buckets: IBucket[]) => IDimension[];
 
 /**
  * Prepared execution already knows what data to calculate and allows to specify how the data should be
@@ -277,56 +278,6 @@ export interface IDataView {
      * Result of the execution that calculated data for this view.
      */
     readonly result: IExecutionResult;
-
-    /**
-     * Asynchronously gets data view adjacent to this one in specified dimensions.
-     *
-     * @param dims - dimensions to advance on. this is an array of length same as the number of dimensions in the
-     *        result. the value of the advancement indicates where to move:
-     *        less than zero = 0 move back,
-     *        0 = do not move,
-     *        greater than 0 move forward.
-     *        the advancement is done with the limits defined in the current data view.
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    advance(...dims: number[]): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets next page of two dimensional result (table).
-     *
-     * This is same as calling advance(1, 0, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageUp(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets previous page of two dimensional result (table)
-     *
-     * This is same as calling advance(-1, 0, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageDown(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets page to the left of current page in two dimensional result (table)
-     *
-     * This is same as calling advance(0, -1, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageLeft(): Promise<IDataView | null>;
-
-    /**
-     * Convenience method that gets page to the right of the current page in two dimensional result (table)
-     *
-     * This is same as calling advance(0, 1, 0).
-     *
-     * @returns promise of new data view or null if end of data reached
-     */
-    pageRight(): Promise<IDataView | null>;
 
     /**
      * Tests if this data view is same as the other data view.

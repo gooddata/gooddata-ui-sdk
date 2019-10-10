@@ -4,6 +4,8 @@ import {
     BackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
+    AuthenticatedPrincipal,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import { newAxios } from "./gd-tiger-client/axios";
@@ -82,19 +84,21 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerBackend({ ...this.config, hostname }, this.implConfig, this.telemetry);
     }
 
-    public withCredentials(_username: string, _password: string): IAnalyticalBackend {
-        // TODO: no auth for tiger yet
-        return this;
-    }
-
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
         return new TigerBackend(this.config, this.implConfig, { componentName, props: Object.keys(props) });
     }
 
-    public isAuthenticated(): Promise<boolean> {
-        return new Promise(resolve => {
-            resolve(true);
-        });
+    public withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
+        // TODO: no authentication for tiger yet.
+        return this;
+    }
+
+    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+        return Promise.resolve({ userId: "anonymouse" });
+    }
+
+    public authenticate(): Promise<AuthenticatedPrincipal> {
+        return Promise.resolve({ userId: "anonymouse" });
     }
 
     public workspace(id: string): IAnalyticalWorkspace {

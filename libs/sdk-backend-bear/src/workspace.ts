@@ -10,19 +10,19 @@ import {
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
-import { AuthenticatedSdkProvider } from "./commonTypes";
+import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearWorkspaceMetadata } from "./metadata";
 import { BearWorkspaceStyling } from "./styling";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
-    constructor(private readonly authSdk: AuthenticatedSdkProvider, public readonly workspace: string) {}
+    constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
     public elements(): IElementQueryFactory {
         throw new NotImplemented("element query not yet implemented");
     }
 
     public execution(): IExecutionFactory {
-        return new BearExecution(this.authSdk, this.workspace);
+        return new BearExecution(this.authCall, this.workspace);
     }
 
     public featureFlags(): IFeatureFlagsQuery {
@@ -30,10 +30,10 @@ export class BearWorkspace implements IAnalyticalWorkspace {
     }
 
     public metadata(): IWorkspaceMetadata {
-        return new BearWorkspaceMetadata(this.authSdk, this.workspace);
+        return new BearWorkspaceMetadata(this.authCall, this.workspace);
     }
 
     public styling(): IWorkspaceStyling {
-        return new BearWorkspaceStyling(this.authSdk, this.workspace);
+        return new BearWorkspaceStyling(this.authCall, this.workspace);
     }
 }

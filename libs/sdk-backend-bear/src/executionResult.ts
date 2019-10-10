@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 
+import { Execution } from "@gooddata/gd-bear-model";
 import {
     DataValue,
     DataViewError,
     IDataView,
-    IExecutionDefinition,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -12,18 +12,17 @@ import {
     IPreparedExecution,
     IResultDimension,
     IResultHeaderItem,
-    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
-import { AuthenticatedSdkProvider } from "./commonTypes";
-import { Execution } from "@gooddata/gd-bear-model";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
+import { AuthenticatedCallGuard } from "./commonTypes";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IResultDimension[];
     private readonly _fingerprint: string;
 
     constructor(
-        private readonly authSdk: AuthenticatedSdkProvider,
+        private readonly authCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly execFactory: IExecutionFactory,
         private readonly execResponse: Execution.IExecutionResponse,
@@ -33,21 +32,22 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async readAll(): Promise<IDataView> {
-        const sdk = await this.authSdk();
-
-        return this.asDataView(sdk.execution.getExecutionResult(this.execResponse.links.executionResult));
+        return this.asDataView(
+            this.authCall(sdk => sdk.execution.getExecutionResult(this.execResponse.links.executionResult)),
+        );
     }
 
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {
         const saneOffset = sanitizeOffset(offset);
         const saneSize = sanitizeSize(size);
-        const sdk = await this.authSdk();
 
         return this.asDataView(
-            sdk.execution.getPartialExecutionResult(
-                this.execResponse.links.executionResult,
-                saneSize,
-                saneOffset,
+            this.authCall(sdk =>
+                sdk.execution.getPartialExecutionResult(
+                    this.execResponse.links.executionResult,
+                    saneSize,
+                    saneOffset,
+                ),
             ),
         );
     }
@@ -57,12 +57,12 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        const sdk = await this.authSdk();
-
-        return sdk.report.exportResult(
-            this.definition.workspace,
-            this.execResponse.links.executionResult,
-            options,
+        return this.authCall(sdk =>
+            sdk.report.exportResult(
+                this.definition.workspace,
+                this.execResponse.links.executionResult,
+                options,
+            ),
         );
     }
 
@@ -139,26 +139,6 @@ class BearDataView implements IDataView {
         this.offset = dataResult.paging.offset;
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
-    }
-
-    public advance(..._dims: number[]): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageDown(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageLeft(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageRight(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
-    }
-
-    public pageUp(): Promise<IDataView | null> {
-        throw new NotImplemented("not yet implemented");
     }
 
     public fingerprint(): string {

@@ -7,28 +7,12 @@ export {
     AnalyticalBackendConfig,
     AnalyticalBackendFactory,
     prepareExecution,
+    IAuthenticationProvider,
+    AuthenticationContext,
+    AuthenticatedPrincipal,
 } from "./backend";
 
-export {
-    IExecutionFactory,
-    IPreparedExecution,
-    IExecutionResult,
-    IDataView,
-    DimensionGenerator,
-} from "./execution";
-
-export {
-    IExecutionDefinition,
-    defFingerprint,
-    defWithFilters,
-    defSetSorts,
-    defSetDimensions,
-    emptyDef,
-    newDefFromBuckets,
-    newDefFromInsight,
-    newDefFromItems,
-    defTotals,
-} from "./execution/executionDefinition";
+export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";
 
 export { DataViewFacade } from "./execution/facade";
 
@@ -52,15 +36,6 @@ export {
     isResultMeasureHeaderItem,
     isResultTotalHeaderItem,
 } from "./execution/results";
-
-export {
-    defForItems,
-    defForBuckets,
-    defForInsight,
-    defWithDimensions,
-    defWithSorting,
-    defaultDimensionsGenerator,
-} from "./execution/toolkit";
 
 export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
 

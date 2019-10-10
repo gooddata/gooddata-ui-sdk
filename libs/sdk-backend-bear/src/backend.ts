@@ -2,14 +2,17 @@
 import { factory as createSdk, SDK } from "@gooddata/gd-bear-client";
 import {
     AnalyticalBackendConfig,
+    AuthenticatedPrincipal,
+    AuthenticationContext,
     BackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAuthenticationProvider,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
-import { AuthenticatedSdkProvider } from "./commonTypes";
+import { AsyncCall, isApiResponseError } from "./commonTypes";
 import { BearWorkspace } from "./workspace";
+import isEmpty = require("lodash/isEmpty");
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -67,34 +70,24 @@ export class BearBackend implements IAnalyticalBackend {
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
+    private readonly authProvider: AuthProviderCallGuard | undefined;
     private readonly sdk: SDK;
-    private readonly deferredAuth: Promise<any> | undefined;
 
     constructor(
         config?: AnalyticalBackendConfig,
         implConfig?: BearBackendConfig,
         telemetry?: TelemetryData,
-        deferredAuth?: Promise<any>,
+        authProvider?: AuthProviderCallGuard,
     ) {
         this.config = configSanitize(config);
         this.implConfig = bearConfigSanitize(implConfig);
         this.telemetry = telemetrySanitize(telemetry);
-
+        this.authProvider = authProvider;
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
-        this.deferredAuth = deferredAuth;
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
         return new BearBackend({ ...this.config, hostname }, this.implConfig, this.telemetry);
-    }
-
-    public withCredentials(username: string, password: string): IAnalyticalBackend {
-        return new BearBackend(
-            { ...this.config, username },
-            this.implConfig,
-            this.telemetry,
-            this.sdk.user.login(username, password),
-        );
     }
 
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
@@ -102,45 +95,162 @@ export class BearBackend implements IAnalyticalBackend {
             this.config,
             this.implConfig,
             { componentName, props: Object.keys(props) },
-            this.deferredAuth,
+            this.authProvider,
         );
     }
 
-    public isAuthenticated(): Promise<boolean> {
-        if (!this.deferredAuth) {
-            return new Promise(resolve => {
-                resolve(false);
+    public withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend {
+        const guardedAuthProvider = new AuthProviderCallGuard(provider);
+
+        return new BearBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
+    }
+
+    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+        return new Promise((resolve, reject) => {
+            this.sdk.user
+                .getCurrentProfile()
+                .then(res => {
+                    resolve(currentProfileToPrincipalInformation(res));
+                })
+                .catch(err => {
+                    if (isNotAuthenticatedError(err)) {
+                        resolve(null);
+                    }
+
+                    reject(err);
+                });
+        });
+    }
+
+    public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
+        if (!force) {
+            return this.authCall(sdk => {
+                return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
             });
         }
 
-        return this.deferredAuth.then(_ => true).catch(_ => false);
+        return this.triggerAuthentication(true);
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
-        if (!this.deferredAuth) {
-            throw new NotAuthenticated("Backend is not set up with credentials.");
-        }
-
-        return new BearWorkspace(this.get, id);
+        return new BearWorkspace(this.authCall, id);
     }
 
-    public get: AuthenticatedSdkProvider = () => {
-        if (!this.deferredAuth) {
-            throw new NotAuthenticated("Backend is not set up with credentials.");
+    /**
+     * Perform API call that requires authentication; if the current session is not authenticated, then
+     * call out to the provider to authenticate.
+     *
+     * @param call - a call which requires an authenticated session
+     */
+    public authCall = <T>(call: AsyncCall<T>): Promise<T> => {
+        return call(this.sdk).catch(err => {
+            if (!isNotAuthenticatedError(err)) {
+                throw err;
+            }
+
+            return this.triggerAuthentication()
+                .then(_ => {
+                    return call(this.sdk);
+                })
+                .catch(err2 => {
+                    throw new NotAuthenticated("Current session is not authenticated.", err2);
+                });
+        });
+    };
+
+    private triggerAuthentication = (reset: boolean = false): Promise<AuthenticatedPrincipal> => {
+        if (!this.authProvider) {
+            return Promise.reject(
+                new NotAuthenticated("Backend is not set up with authentication provider."),
+            );
         }
 
-        return this.deferredAuth
-            .then(_ => {
-                return this.sdk;
+        if (reset) {
+            this.authProvider.reset();
+        }
+
+        return this.authProvider.authenticate({ client: this.sdk });
+    };
+}
+
+/**
+ * This implementation of authentication provider does login with fixed username and password.
+ *
+ * @public
+ */
+export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvider {
+    constructor(private readonly username: string, private readonly password: string) {}
+
+    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+        const sdk = context.client as SDK;
+
+        await sdk.user.login(this.username, this.password);
+
+        // retrieve full info about the authenticated user
+        return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+    }
+}
+
+//
+// internals
+//
+
+/**
+ * This implementation of auth provider ensures, that the auth provider is called exactly once in the happy path
+ * execution where provider successfully authenticates a principal.
+ *
+ * If underlying provider fails, subsequent calls that need authentication will land in the provider.
+ *
+ * This class encapsulates the stateful nature of interaction of the provider across multiple different instances
+ * of the bear backend, all of which are set with the same provider. All instances of the backend should be
+ * subject to the same authentication flow AND the call to the authentication provider should be synchronized
+ * through this scoped instance.
+ */
+class AuthProviderCallGuard implements IAuthenticationProvider {
+    private inflightRequest: Promise<AuthenticatedPrincipal> | undefined;
+    private principal: AuthenticatedPrincipal | undefined;
+
+    constructor(private readonly realProvider: IAuthenticationProvider) {}
+
+    public reset = (): void => {
+        this.principal = undefined;
+    };
+
+    public authenticate = (context: AuthenticationContext): Promise<AuthenticatedPrincipal> => {
+        if (this.principal) {
+            return Promise.resolve(this.principal);
+        }
+
+        if (this.inflightRequest) {
+            return this.inflightRequest;
+        }
+
+        this.inflightRequest = this.realProvider
+            .authenticate(context)
+            .then(res => {
+                this.principal = res;
+                this.inflightRequest = undefined;
+
+                return res;
             })
-            .catch(e => {
-                const hostname = this.config.hostname ? this.config.hostname : "'same-origin'";
-                const user = this.config.username ? this.config.username : "unknown";
-                throw new NotAuthenticated(
-                    `Authentication to hostname ${hostname} as user ${user} has failed`,
-                    e,
-                );
+            .catch(err => {
+                this.inflightRequest = undefined;
+
+                throw err;
             });
+
+        return this.inflightRequest;
+    };
+}
+
+function isNotAuthenticatedError(err: any): boolean {
+    return isApiResponseError(err) && err.response === 401;
+}
+
+function currentProfileToPrincipalInformation(obj: any): AuthenticatedPrincipal {
+    return {
+        userId: obj.login,
+        userMeta: obj,
     };
 }
 
