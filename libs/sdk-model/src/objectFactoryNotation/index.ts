@@ -51,16 +51,18 @@ const ARRAY_JOINER = ", ";
 
 const getObjQualifierValue = (value: ObjQualifier): string => (value as any).uri || (value as any).identifier;
 
+type Converter<T> = (input: T) => string;
+
 // dot suffix handling e. g. ".localIdentifier(...)"
 // is curried explicitly to allow easier composition in cases where more than one dot suffix is supported
-const addStringDotItem = (identifier: string, helperName = identifier) => (objToConvert: any) => (
+const addStringBuilderSegment = (identifier: string, helperName = identifier) => (objToConvert: any) => (
     value: string,
 ) => (objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value);
 
-const addAggregation = addStringDotItem("aggregation");
-const addAlias = addStringDotItem("alias");
-const addFormat = addStringDotItem("format");
-const addTitle = addStringDotItem("title");
+const addAggregation = addStringBuilderSegment("aggregation");
+const addAlias = addStringBuilderSegment("alias");
+const addFormat = addStringBuilderSegment("format");
+const addTitle = addStringBuilderSegment("title");
 
 const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
     filters ? `${value}.filters(${filters.map(factoryNotationFor).join(ARRAY_JOINER)})` : value;
@@ -68,12 +70,12 @@ const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
 const addRatio = ({ computeRatio }: { computeRatio?: boolean }) => (value: string) =>
     computeRatio ? `${value}.ratio()` : value;
 
-// converters for each supported object to Model notation string
-type Converter<T> = (input: T) => string;
-const getBuilder = <T>(defaultBuilder: string, decorators: Array<Converter<T>>) => {
-    const builder = flow(decorators)(defaultBuilder);
+const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Converter<T>>) => {
+    const builder = flow(builderSegmentHandlers)(defaultBuilder);
     return builder === defaultBuilder ? "undefined" : builder;
 };
+
+// converters for each supported object to Model notation string
 const convertAttribute: Converter<IAttribute> = ({ attribute }) => {
     const builder = getBuilder("a => a", [addAlias(attribute)]);
     return `newAttribute("${getObjQualifierValue(attribute.displayForm)}", ${builder}, "${
