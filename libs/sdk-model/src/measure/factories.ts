@@ -13,6 +13,10 @@ import {
 } from ".";
 import { IFilter } from "../filter";
 
+/**
+ * Simplified Previous Period Data DataSet specification
+ * @public
+ */
 export interface IPreviousPeriodDateDataSetSimple {
     dataSet: string;
     periodsAgo: number;
@@ -125,7 +129,8 @@ type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
  * Creates a new measure with the specified identifier and optional modifications and localIdentifier.
  * @param identifier - identifier of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_${identifier}'
+ * @param localIdentifier - optional local identifier, defaults to 'm_$\{identifier\}'
+ * @public
  */
 export function newMeasure(
     identifier: string,
@@ -141,7 +146,8 @@ export function newMeasure(
  * @param measureIdentifiers - identifiers of the measures to be included in this arithmetic measure
  * @param operator - operator of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_${all_measure_identifiers}'
+ * @param localIdentifier - optional local identifier, defaults to 'm_$\{all_measure_identifiers\}'
+ * @public
  */
 export function newArithmeticMeasure(
     measureIdentifiers: string[],
@@ -158,7 +164,8 @@ export function newArithmeticMeasure(
  * @param identifier - identifier of the measure
  * @param popAttributeIdentifier - identifier of the PoP attribute
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_${identifier}_${popAttributeIdentifier}'
+ * @param localIdentifier - optional local identifier, defaults to 'm_$\{identifier\}_$\{popAttributeIdentifier\}'
+ * @public
  */
 export function newPopMeasure(
     identifier: string,
@@ -175,7 +182,8 @@ export function newPopMeasure(
  * @param measureIdentifier - identifier of the measure to create Previous Period measure for
  * @param dateDataSets - date data sets to use in the Previous Period calculation
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_${measureIdentifier}_previous_period'
+ * @param localIdentifier - optional local identifier, defaults to 'm_$\{measureIdentifier\}_previous_period'
+ * @public
  */
 export function newPreviousPeriodMeasure(
     measureIdentifier: string,

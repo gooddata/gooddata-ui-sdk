@@ -33,7 +33,8 @@ type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
  * Creates a new attribute with the specified display form identifier and optional modifications and localIdentifier.
  * @param identifier - identifier of the attribute display form
  * @param modifications - optional modifications (e.g. alias, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'a_${identifier}'
+ * @param localIdentifier - optional local identifier, defaults to 'a_$\{identifier\}'
+ * @public
  */
 export function newAttribute(
     identifier: string,

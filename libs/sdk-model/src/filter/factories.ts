@@ -11,6 +11,7 @@ import {
  * Creates a new positive attribute filter.
  * @param identifier - identifier of the attribute display form to filter on
  * @param inValues - values to filter for
+ * @public
  */
 export function newPositiveAttributeFilter(
     identifier: string,
@@ -28,6 +29,7 @@ export function newPositiveAttributeFilter(
  * Creates a new negative attribute filter.
  * @param identifier - identifier of the attribute display form to filter on
  * @param notInValues - values to filter out
+ * @public
  */
 export function newNegativeAttributeFilter(
     identifier: string,
@@ -46,6 +48,7 @@ export function newNegativeAttributeFilter(
  * @param identifier - identifier of the date data set to filter on
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
+ * @public
  */
 export function newAbsoluteDateFilter(identifier: string, from: string, to: string): IAbsoluteDateFilter {
     return {
@@ -63,6 +66,7 @@ export function newAbsoluteDateFilter(identifier: string, from: string, to: stri
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @public
  */
 export function newRelativeDateFilter(
     identifier: string,

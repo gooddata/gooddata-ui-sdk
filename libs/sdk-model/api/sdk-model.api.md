@@ -461,6 +461,14 @@ export interface IPreviousPeriodDateDataSet {
 }
 
 // @public
+export interface IPreviousPeriodDateDataSetSimple {
+    // (undocumented)
+    dataSet: string;
+    // (undocumented)
+    periodsAgo: number;
+}
+
+// @public
 export interface IPreviousPeriodMeasureDefinition {
     // (undocumented)
     previousPeriodMeasure: {
@@ -646,6 +654,20 @@ export type MeasurePredicate = (measure: IMeasure) => boolean;
 export function measureUri(measure: IMeasure): string | undefined;
 
 // @public
+export function newAbsoluteDateFilter(identifier: string, from: string, to: string): IAbsoluteDateFilter;
+
+// Warning: (ae-forgotten-export) The symbol "MeasureModifications" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ArithmeticMeasureBuilder" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function newArithmeticMeasure(measureIdentifiers: string[], operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>, localIdentifier?: string): IMeasure<IArithmeticMeasureDefinition>;
+
+// Warning: (ae-forgotten-export) The symbol "AttributeModifications" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function newAttribute(identifier: string, modifications?: AttributeModifications, localIdentifier?: string): IAttribute;
+
+// @public
 export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
@@ -663,8 +685,32 @@ export function newDefForItems(workspace: string, items: AttributeOrMeasure[], f
 // @public
 export function newDimension(ids?: Identifier[]): IDimension;
 
+// Warning: (ae-forgotten-export) The symbol "MeasureBuilder" needs to be exported by the entry point index.d.ts
+// 
 // @public
-export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection): IMeasureSortItem;
+export function newMeasure(identifier: string, modifications?: MeasureModifications<MeasureBuilder>, localIdentifier?: string): IMeasure<IMeasureDefinition>;
+
+// @public
+export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection, attributeLocators?: Array<IAttributeLocatorItem["attributeLocatorItem"]>): IMeasureSortItem;
+
+// @public
+export function newNegativeAttributeFilter(identifier: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;
+
+// Warning: (ae-forgotten-export) The symbol "PoPMeasureBuilder" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function newPopMeasure(identifier: string, popAttributeIdentifier: string, modifications?: MeasureModifications<PoPMeasureBuilder>, localIdentifier?: string): IMeasure<IPoPMeasureDefinition>;
+
+// @public
+export function newPositiveAttributeFilter(identifier: string, inValues: AttributeElements): IPositiveAttributeFilter;
+
+// Warning: (ae-forgotten-export) The symbol "PreviousPeriodMeasureBuilder" needs to be exported by the entry point index.d.ts
+// 
+// @public
+export function newPreviousPeriodMeasure(measureIdentifier: string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>, localIdentifier?: string): IMeasure<IPreviousPeriodMeasureDefinition>;
+
+// @public
+export function newRelativeDateFilter(identifier: string, granularity: string, from: number, to: number): IRelativeDateFilter;
 
 // @public
 export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
