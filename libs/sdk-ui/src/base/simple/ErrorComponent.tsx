@@ -1,17 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
-import { Requireable } from "prop-types"; // tslint:disable-line:no-duplicate-imports
-export { Requireable };
-
-export const ErrorPropTypes = {
-    icon: PropTypes.string,
-    message: PropTypes.string.isRequired,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    width: PropTypes.any,
-    height: PropTypes.any,
-};
 
 export interface IErrorProps {
     code?: string;
@@ -45,8 +33,6 @@ export class ErrorComponent extends React.Component<IErrorProps, null> {
             fontFamily: "avenir, Helvetica Neue, arial, sans-serif",
         },
     };
-
-    public static propTypes = ErrorPropTypes;
 
     public render() {
         const { className, style, width, height, message, description, icon } = this.props;

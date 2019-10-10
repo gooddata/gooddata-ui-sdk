@@ -1,12 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import { SDK, factory as createSdk } from "@gooddata/gd-bear-client";
-import pick = require("lodash/pick");
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { injectIntl } from "react-intl";
-import { AttributeDropdown, AttributeDropdownWrapped } from "./AttributeDropdown";
+import { AttributeDropdown } from "./AttributeDropdown";
 import { AttributeLoader } from "./AttributeLoader";
 import { IAttributeDisplayForm } from "./model";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
@@ -45,17 +43,6 @@ const DefaultFilterError = injectIntl(({ intl }) => {
  * is a component that renders a dropdown populated with attribute values
  */
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
-    public static propTypes = {
-        uri: PropTypes.string,
-        identifier: PropTypes.string,
-        projectId: PropTypes.string,
-        onApply: PropTypes.func.isRequired,
-        fullscreenOnMobile: PropTypes.bool,
-        FilterLoading: PropTypes.func,
-        FilterError: PropTypes.func,
-        locale: PropTypes.string,
-    };
-
     public static defaultProps: Partial<IAttributeFilterProps> = {
         uri: null,
         identifier: null,
@@ -107,14 +94,17 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
             return <this.props.FilterLoading />;
         }
 
-        const dropdownProps: any = pick(this.props, Object.keys(AttributeDropdownWrapped.propTypes));
+        const { projectId, onApply, fullscreenOnMobile } = this.props;
+
         const isUsingIdentifier = this.props.identifier !== null;
         const { md } = this.sdk;
         return (
             <AttributeDropdown
                 attributeDisplayForm={attributeDisplayForm}
                 metadata={md}
-                {...dropdownProps}
+                projectId={projectId}
+                onApply={onApply}
+                fullscreenOnMobile={fullscreenOnMobile}
                 isUsingIdentifier={isUsingIdentifier}
             />
         );

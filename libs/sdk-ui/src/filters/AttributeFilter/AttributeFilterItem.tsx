@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import * as classNames from "classnames";
 
 export interface ISource {
@@ -21,19 +20,6 @@ export interface IAttributeFilterItemProps {
 }
 
 export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps> {
-    public static propTypes = {
-        classname: PropTypes.string,
-        item: PropTypes.shape({
-            selected: PropTypes.bool,
-            onSelect: PropTypes.func,
-            source: PropTypes.shape({
-                uri: PropTypes.string,
-                title: PropTypes.string,
-                empty: PropTypes.bool,
-            }),
-        }),
-    };
-
     public static defaultProps: Partial<IAttributeFilterItemProps> = {
         item: null,
         classname: "",

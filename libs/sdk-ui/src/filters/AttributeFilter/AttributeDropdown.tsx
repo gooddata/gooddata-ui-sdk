@@ -1,12 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import DataSource from "@gooddata/goodstrap/lib/DataSource/DataSource";
-import { injectIntl, intlShape, InjectedIntlProps, InjectedIntl } from "react-intl";
+import { injectIntl, InjectedIntlProps, InjectedIntl } from "react-intl";
 import { IValidElementsResponse, IElement } from "@gooddata/gd-bear-client";
 import * as classNames from "classnames";
 import last = require("lodash/last");
@@ -144,25 +143,6 @@ export class AttributeDropdownWrapped extends React.PureComponent<
     IAttributeDropdownProps & InjectedIntlProps,
     IAttributeDropdownState
 > {
-    public static propTypes = {
-        attributeDisplayForm: PropTypes.object.isRequired,
-        projectId: PropTypes.string.isRequired,
-        isUsingIdentifier: PropTypes.bool,
-        intl: intlShape.isRequired,
-
-        onApply: PropTypes.func.isRequired,
-        fullscreenOnMobile: PropTypes.bool,
-
-        getListItem: PropTypes.func,
-        getListLoading: PropTypes.func,
-        getListError: PropTypes.func,
-        getListNoResults: PropTypes.func,
-
-        metadata: PropTypes.shape({
-            getValidElements: PropTypes.func.isRequired,
-        }).isRequired,
-    };
-
     public static defaultProps = {
         fullscreenOnMobile: false,
         isUsingIdentifier: false,
