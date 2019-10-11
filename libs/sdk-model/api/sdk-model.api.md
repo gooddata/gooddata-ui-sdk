@@ -142,6 +142,9 @@ export function dimensionTotals(dim: IDimension): ITotal[];
 export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
+export const factoryNotationFor: (data: any) => string;
+
+// @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public

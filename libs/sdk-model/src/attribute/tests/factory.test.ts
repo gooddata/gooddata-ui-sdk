@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import { newAttribute } from "../factories";
+import { newAttribute } from "../factory";
 import { IAttribute } from "..";
 
-describe("Attributes", () => {
+describe("attribute factory", () => {
     describe("visualizationAttribute", () => {
         it("should return a simple attribute", () => {
             const expected: IAttribute = {

@@ -4,9 +4,9 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-} from "../factories";
+} from "../factory";
 
-describe("filters", () => {
+describe("filter factory", () => {
     describe("newPositiveAttributeFilter", () => {
         it("should generate correct uri filter", () => {
             expect(newPositiveAttributeFilter("foo", { uris: ["bar", "baz"] })).toEqual({

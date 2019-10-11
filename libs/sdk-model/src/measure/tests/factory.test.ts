@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { newPositiveAttributeFilter } from "../../filter/factories";
-import { newArithmeticMeasure, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factories";
+import { newPositiveAttributeFilter } from "../../filter/factory";
+import { newArithmeticMeasure, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
 import {
     IMeasure,
     IMeasureDefinition,

@@ -12,7 +12,7 @@ export {
     attributeIdentifier,
 } from "./attribute";
 
-export { newAttribute } from "./attribute/factories";
+export { newAttribute } from "./attribute/factory";
 
 export {
     Identifier,
@@ -85,7 +85,7 @@ export {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-} from "./filter/factories";
+} from "./filter/factory";
 
 export {
     IMeasureDefinitionType,
@@ -124,7 +124,7 @@ export {
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-} from "./measure/factories";
+} from "./measure/factory";
 
 export {
     AttributeOrMeasure,
@@ -210,3 +210,5 @@ export {
     insightWithSorts,
     visClassUrl,
 } from "./insight";
+
+export { factoryNotationFor } from "./objectFactoryNotation";
