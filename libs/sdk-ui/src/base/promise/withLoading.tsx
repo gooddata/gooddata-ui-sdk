@@ -2,7 +2,7 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import hoistNonReactStatics = require("hoist-non-react-statics");
-import { makeCancelable, ICancelablePromise } from "../promise/CancelablePromise";
+import { makeCancelable, ICancelablePromise } from "./CancelablePromise";
 
 //
 // Public interface
@@ -35,11 +35,11 @@ export interface IWithLoadingEvents<T, P> {
  * @public
  */
 export interface IWithLoading<T, P, R extends object> {
-    promiseFactory: (props: T) => Promise<P>;
-    mapResultToProps: (result: WithLoadingResult<P>) => R;
-    eventsOrFactory?: IWithLoadingEvents<T, P> | ((props: T) => IWithLoadingEvents<T, P>);
-    loadOnMount?: boolean;
-    shouldRefetch?: (prevProps: T, nextProps: T) => boolean;
+    promiseFactory: (props?: T) => Promise<P>;
+    mapResultToProps?: (result: WithLoadingResult<P>) => R;
+    events?: IWithLoadingEvents<T, P> | ((props?: T) => IWithLoadingEvents<T, P>);
+    loadOnMount?: boolean | ((props?: T) => boolean);
+    shouldRefetch?: (prevProps?: T, nextProps?: T) => boolean;
 }
 
 /**
@@ -60,7 +60,7 @@ export function withLoading<T, P, R extends object>({
     promiseFactory,
     mapResultToProps,
     loadOnMount = true,
-    eventsOrFactory = {},
+    events = {},
     shouldRefetch = () => false,
 }: IWithLoading<T, P, R>) {
     return (WrappedComponent: React.ComponentType<T & R>): React.ComponentClass<T> => {
@@ -83,14 +83,13 @@ export function withLoading<T, P, R extends object>({
             }
 
             private getEvents() {
-                const events =
-                    typeof eventsOrFactory === "function" ? eventsOrFactory(this.props) : eventsOrFactory;
+                const parsedEvents = typeof events === "function" ? events(this.props) : events;
                 const {
                     onError = noop,
                     onLoadingChanged = noop,
                     onLoadingFinish = noop,
                     onLoadingStart = noop,
-                } = events;
+                } = parsedEvents;
 
                 return {
                     onError,
@@ -154,7 +153,9 @@ export function withLoading<T, P, R extends object>({
             }
 
             public componentDidMount() {
-                if (loadOnMount) {
+                const _loadOnMount =
+                    typeof loadOnMount === "function" ? loadOnMount(this.props) : loadOnMount;
+                if (_loadOnMount) {
                     this.fetch();
                 }
             }

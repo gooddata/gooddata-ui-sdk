@@ -2,7 +2,7 @@
 import React from "react";
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult } from "../base/hoc/withLoading";
+import { WithLoadingResult } from "../base/promise/withLoading";
 
 /**
  * TODO: SDK8: add docs
@@ -16,6 +16,7 @@ export interface IExecutorProps {
     onLoadingStart?: (props?: IExecutorProps) => void;
     onLoadingChanged?: (isLoading?: boolean, props?: IExecutorProps) => void;
     onLoadingFinish?: (result?: DataViewFacade, props?: IExecutorProps) => void;
+    loadOnMount?: boolean;
 }
 
 type Props = IExecutorProps & WithLoadingResult<DataViewFacade>;
@@ -34,9 +35,9 @@ const CoreExecutor: React.StatelessComponent<Props> = ({ children, error, isLoad
  * @public
  */
 export const Executor = withExecution({
-    executionOrFactory: (props: IExecutorProps) => props.execution,
+    execution: (props: IExecutorProps) => props.execution,
     mapResultToProps: r => r,
-    eventsOrFactory: props => {
+    events: props => {
         const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart } = props;
         return {
             onError,
@@ -55,4 +56,5 @@ export const Executor = withExecution({
         ];
         return relevantProps.some(propName => prevProps[propName] !== nextProps[propName]);
     },
+    loadOnMount: ({ loadOnMount = true }) => loadOnMount,
 })(CoreExecutor);

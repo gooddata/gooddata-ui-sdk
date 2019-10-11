@@ -26,11 +26,11 @@ dependencies:
   '@storybook/react': 5.0.11_38426ca4931878f35d8c29cb5cd2ec94
   '@storybook/theming': 5.0.11_react-dom@16.10.2+react@16.10.2
   '@types/classnames': 2.2.3
-  '@types/enzyme': 3.1.13
-  '@types/enzyme-adapter-react-16': 1.0.3
+  '@types/enzyme': 3.10.3
+  '@types/enzyme-adapter-react-16': 1.0.5
   '@types/fast-levenshtein': 0.0.1
   '@types/fetch-mock': 5.12.2
-  '@types/hoist-non-react-statics': 3.0.1
+  '@types/hoist-non-react-statics': 3.3.1
   '@types/invariant': 2.2.30
   '@types/isomorphic-fetch': 0.0.34
   '@types/jest': 24.0.18
@@ -39,11 +39,11 @@ dependencies:
   '@types/md5': 2.1.33
   '@types/node': 10.14.20
   '@types/node-fetch': 1.6.9
-  '@types/prop-types': 15.5.2
+  '@types/prop-types': 15.7.3
   '@types/qs': 6.5.3
-  '@types/react': 16.0.34
-  '@types/react-dom': 16.0.3
-  '@types/react-intl': 2.3.5
+  '@types/react': 16.9.5
+  '@types/react-dom': 16.9.1
+  '@types/react-intl': 2.3.18
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
   '@types/rimraf': 2.0.2
@@ -2542,19 +2542,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-x15/Io+JdzrkM9gnX6SWUs/EmqQzd65TD9tcZIAQ1VIdb93XErNuYmB7Yho8JUCE189ipUSESsWvGvYXRRIvYA==
-  /@types/enzyme-adapter-react-16/1.0.3:
+  /@types/enzyme-adapter-react-16/1.0.5:
     dependencies:
-      '@types/enzyme': 3.1.13
+      '@types/enzyme': 3.10.3
     dev: false
     resolution:
-      integrity: sha512-9eRLBsC/Djkys05BdTWgav8v6fSCjyzjNuLwG2sfa2b2g/VAN10luP0zB0VwtOWFQ0LGjIboJJvIsVdU5gqRmg==
-  /@types/enzyme/3.1.13:
+      integrity: sha512-K7HLFTkBDN5RyRmU90JuYt8OWEY2iKUn43SDWEoBOXd/PowUWjLZ3Q6qMBiQuZeFYK/TOstaZxsnI0fXoAfLpg==
+  /@types/enzyme/3.10.3:
     dependencies:
       '@types/cheerio': 0.22.13
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
     dev: false
     resolution:
-      integrity: sha512-TwzKKiX5sGh/WweucxPXb8zjMLlLekGtBQw0ihk1HSj14zZuioG3Gql3jbxxb1YDRLbT4WQyzWG/h4Y7eCdw1g==
+      integrity: sha512-f/Kcb84sZOSZiBPCkr4He9/cpuSLcKRyQaEE20Q30Prx0Dn6wcyMAWI0yofL6yvd9Ht9G7EVkQeRqK0n5w8ILw==
   /@types/events/3.0.0:
     dev: false
     resolution:
@@ -2575,12 +2575,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
-  /@types/hoist-non-react-statics/3.0.1:
+  /@types/hoist-non-react-statics/3.3.1:
     dependencies:
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
+      hoist-non-react-statics: 3.3.0
     dev: false
     resolution:
-      integrity: sha512-3wTz66vV+WatOAjMST+hKCmo01KYPFgnsu+QeLcn0FuwPCoymX6aj1a4RvFCdVsfh2m0hfTPhE/zTv4M28ho1Q==
+      integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
   /@types/invariant/2.2.30:
     dev: false
     resolution:
@@ -2652,10 +2653,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-kaYyLYf6ICn6/isAyD4K1MyWWd5Q3JgH6bnMN089LUx88+s4W8GvK9Q6JMBVu5vsFFp7pMdSxdKmlBXwH/VFRg==
-  /@types/prop-types/15.5.2:
+  /@types/prop-types/15.7.3:
     dev: false
     resolution:
-      integrity: sha512-pQRkAVoxiuUrLq8+CDwiQX4pTCep/PmmNgBbjIwnnsd/HoYjGpR81+FFPE030lvNXgR0haaAU6eoRtztWDE4Xw==
+      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   /@types/q/1.5.2:
     dev: false
     resolution:
@@ -2664,33 +2665,35 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Jugo5V/1bS0fRhy2z8+cUAHEyWOATaz4rbyLVvcFs7+dXp5HfwpEwzF1Q11bB10ApUqHf+yTauxI0UXQDwGrbA==
-  /@types/react-dom/16.0.3:
+  /@types/react-dom/16.9.1:
     dependencies:
-      '@types/node': 10.14.20
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
     dev: false
     resolution:
-      integrity: sha512-xAvZiGhQlEhjStoKktoai8CelXVFBaSN6JX4vy1UQioRba3c2vum1TGzR0thHoEauZtIwzWg8mos0AHu2ne4jw==
-  /@types/react-intl/2.3.5:
+      integrity: sha512-1S/akvkKr63qIUWVu5IKYou2P9fHLb/P2VAwyxVV85JGaGZTcUniMiTuIqM3lXFB25ej6h+CYEQ27ERVwi6eGA==
+  /@types/react-intl/2.3.18:
     dev: false
     resolution:
-      integrity: sha512-leX6ersyLFk3q2FU+v7vCXMqFb/tW6ctUVnZOkX7WWwWlR5sgJzA7W6M0NP/9Dj8I76I1KXpsyFyZ14gZSBE2w==
+      integrity: sha512-DVNJs49zUxKRZng8VuILE886Yihdsf3yLr5vHk9zJrmF8SyRSK3sxNSvikAKxNkv9hX55XBTJShz6CkJnbNjgg==
   /@types/react-measure/2.0.5:
     dependencies:
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
     dev: false
     resolution:
       integrity: sha512-T1Bpt8FlWbDhoInUaNrjTOiVRpRJmrRcqhFJxLGBq1VjaqBLHCvUPapgdKMWEIX4Oqsa1SSKjtNkNJGy6WAAZg==
   /@types/react-portal/4.0.1:
     dependencies:
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
     dev: false
     resolution:
       integrity: sha512-TSovGKM9EGAF20wA5nvpm/89JMg2rqxxB+SpzlmrWj/iQGll0RZsKEmfAlghhywHeiLd5I/wGoS64y2YX9VPkw==
-  /@types/react/16.0.34:
+  /@types/react/16.9.5:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.7
     dev: false
     resolution:
-      integrity: sha512-Ee66fX2qMsDnDq7sPnDtq1bGoo479j6Fo1BlSnne+L5rp6ndzBUgz72+MRNuN56zg9uuteRCkJAMdDJEX2Uqig==
+      integrity: sha512-jQ12VMiFOWYlp+j66dghOWcmDDwhca0bnlcTxS4Qz/fh5gi6wpaZDthPEu/Gc/YlAuO87vbiUXL8qKstFvuOaA==
   /@types/rimraf/2.0.2:
     dependencies:
       '@types/glob': 7.1.1
@@ -2716,7 +2719,7 @@ packages:
       integrity: sha512-CWxGz2pXav9PHcwrtXmkuH+xJL7sAu2AmIGEbkdT3Xs5jzBPZUEDEN//ZF7o6IOPP/tdXU37K1hrVMt9TDO0Bw==
   /@types/storybook__react/4.0.1:
     dependencies:
-      '@types/react': 16.0.34
+      '@types/react': 16.9.5
       '@types/webpack-env': 1.14.0
     dev: false
     resolution:
@@ -15041,15 +15044,15 @@ packages:
       '@storybook/addons': 5.0.11
       '@storybook/react': 5.0.11_38426ca4931878f35d8c29cb5cd2ec94
       '@storybook/theming': 5.0.11_react-dom@16.10.2+react@16.10.2
-      '@types/enzyme': 3.1.13
-      '@types/enzyme-adapter-react-16': 1.0.3
+      '@types/enzyme': 3.10.3
+      '@types/enzyme-adapter-react-16': 1.0.5
       '@types/jest': 24.0.18
       '@types/lodash': 4.14.142
       '@types/node': 10.14.20
-      '@types/prop-types': 15.5.2
-      '@types/react': 16.0.34
-      '@types/react-dom': 16.0.3
-      '@types/react-intl': 2.3.5
+      '@types/prop-types': 15.7.3
+      '@types/react': 16.9.5
+      '@types/react-dom': 16.9.1
+      '@types/react-intl': 2.3.18
       '@types/storybook__addon-actions': 3.4.2
       '@types/storybook__react': 4.0.1
       '@types/stringify-object': 3.2.0
@@ -15082,7 +15085,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-QGZ47Xto+TZw2cOeNgc7SC1BbESvi14iBrDCUb1n3Y4orP5CAh9WUznHMAoD/7nb4vw4r0SZOHakyp0LyhEx9A==
+      integrity: sha512-HJHCOOQLNnBHVppOV9smgebNne1oh776Pn0bhDvTLpHV0VZR1MQxwMhig+Tq8pIMC4azpKnGePyYvVnSrYmiNA==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz_webpack@4.41.0':
@@ -15100,18 +15103,18 @@ packages:
       '@storybook/react': 5.0.11_38426ca4931878f35d8c29cb5cd2ec94
       '@storybook/theming': 5.0.11_react-dom@16.10.2+react@16.10.2
       '@types/classnames': 2.2.3
-      '@types/enzyme': 3.1.13
-      '@types/enzyme-adapter-react-16': 1.0.3
-      '@types/hoist-non-react-statics': 3.0.1
+      '@types/enzyme': 3.10.3
+      '@types/enzyme-adapter-react-16': 1.0.5
+      '@types/hoist-non-react-statics': 3.3.1
       '@types/invariant': 2.2.30
       '@types/jest': 24.0.18
       '@types/json-stable-stringify': 1.0.32
       '@types/lodash': 4.14.142
       '@types/node': 10.14.20
-      '@types/prop-types': 15.5.2
-      '@types/react': 16.0.34
-      '@types/react-dom': 16.0.3
-      '@types/react-intl': 2.3.5
+      '@types/prop-types': 15.7.3
+      '@types/react': 16.9.5
+      '@types/react-dom': 16.9.1
+      '@types/react-intl': 2.3.18
       '@types/react-measure': 2.0.5
       '@types/react-portal': 4.0.1
       '@types/storybook__addon-actions': 3.4.2
@@ -15166,7 +15169,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-hOeqysaZIxjDyfGoJwoibsKtAVj/fuTj6X20tGgpHlFXjWrdFz5ihswNuDT9DsBP94VWvcv8GzjLtl8tJDf8zQ==
+      integrity: sha512-+YnwU9+WQ8N9AeNGkCsthab1hHOlUFP4KlwciXaYp/FsgYcuZsuMSLK1hOBT0SzCWOzaQJ8vlrLsg2BM7oZ0yw==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 specifiers:
@@ -15197,11 +15200,11 @@ specifiers:
   '@storybook/react': 5.0.11
   '@storybook/theming': 5.0.11
   '@types/classnames': 2.2.3
-  '@types/enzyme': 3.1.13
-  '@types/enzyme-adapter-react-16': 1.0.3
+  '@types/enzyme': ^3.10.3
+  '@types/enzyme-adapter-react-16': ^1.0.5
   '@types/fast-levenshtein': 0.0.1
   '@types/fetch-mock': ^5.*
-  '@types/hoist-non-react-statics': 3.0.1
+  '@types/hoist-non-react-statics': ^3.3.1
   '@types/invariant': ^2.2.29
   '@types/isomorphic-fetch': ^0.0.34
   '@types/jest': ^24.0.6
@@ -15210,11 +15213,11 @@ specifiers:
   '@types/md5': ^2.1.32
   '@types/node': ^10.14.18
   '@types/node-fetch': ^1.6.7
-  '@types/prop-types': 15.5.2
+  '@types/prop-types': ^15.7.3
   '@types/qs': ^6.5.1
-  '@types/react': 16.0.34
-  '@types/react-dom': 16.0.3
-  '@types/react-intl': 2.3.5
+  '@types/react': ^16.9.5
+  '@types/react-dom': ^16.9.1
+  '@types/react-intl': ^2.3.5
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
   '@types/rimraf': ^2.0.2
