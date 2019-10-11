@@ -414,7 +414,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     <Measure client={true}>
                         {({ measureRef, contentRect }: any) => {
                             const usedHeight = Math.floor(contentRect.client.height || 0);
-                            const pivotWrapperStyle = {
+                            const pivotWrapperStyle: React.CSSProperties = {
                                 height: "100%",
                                 textAlign: "left",
                             };
