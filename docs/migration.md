@@ -56,4 +56,8 @@
     -   use primaryMeasures and secondaryMeasures
 
 -   Execute component public API has changed
+
+    -   TODO: add description & migration guide
+
+-   Model helpers replaced by factory functions and moved to sdk-model
     -   TODO: add description & migration guide
