@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Treemap, Model } from "@gooddata/sdk-ui";
+import { Treemap } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -12,14 +13,11 @@ import {
 } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const numberOfChecks = Model.measure(numberOfChecksIdentifier)
-    .format("#,##0")
-    .alias("# Checks")
-    .localIdentifier("numberOfChecks");
+const numberOfChecks = newMeasure(numberOfChecksIdentifier, m => m.format("#,##0").alias("# Checks"));
 
-const locationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState");
+const locationState = newAttribute(locationStateDisplayFormIdentifier);
 
-const locationCity = Model.attribute(locationCityDisplayFormIdentifier).localIdentifier("locationCity");
+const locationCity = newAttribute(locationCityDisplayFormIdentifier);
 
 const style = { height: 300 };
 

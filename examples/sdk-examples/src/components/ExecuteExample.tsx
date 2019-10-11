@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { Executor, LoadingComponent, ErrorComponent, Model } from "@gooddata/sdk-ui";
+import { Executor, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { newMeasure } from "@gooddata/sdk-model";
 import get from "lodash/get";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
@@ -45,7 +46,7 @@ export const ExecuteExample: React.FC = () => {
         </p>
     );
 
-    const measure = Model.measure(willFail ? null : totalSalesIdentifier).localIdentifier("measure");
+    const measure = newMeasure(willFail ? null : totalSalesIdentifier);
 
     const execution = backend
         .workspace(projectId)

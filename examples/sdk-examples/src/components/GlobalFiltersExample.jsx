@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import * as React from "react";
 import { PropTypes } from "prop-types";
-import { AttributeElements, Kpi, BarChart, PieChart, Model } from "@gooddata/sdk-ui";
+import { AttributeElements, Kpi, BarChart, PieChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { SidebarItem } from "../components/utils/SidebarItem";
 import { EmployeeCard } from "../components/GlobalFiltersComponents/EmployeeCard";
 import { KpiMetricBox } from "../components/GlobalFiltersComponents/KpiMetricBox";
@@ -91,19 +92,13 @@ export class EmployeeProfile extends React.Component {
             </div>
         );
 
-        const employeeFilter = Model.positiveAttributeFilter(employeeNameIdentifier, [selectedEmployeeUri]);
+        const employeeFilter = newPositiveAttributeFilter(employeeNameIdentifier, [selectedEmployeeUri]);
 
-        const measures = [
-            Model.measure(averageDailyTotalSales)
-                .alias("$ Avg Daily Total Sales")
-                .localIdentifier("averageDailyTotalSales"),
-        ];
-        const menuCategoryAttribute = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
-            "menuCategory",
+        const measures = [newMeasure(averageDailyTotalSales, m => m.alias("$ Avg Daily Total Sales"))];
+        const menuCategoryAttribute = newAttribute(menuCategoryAttributeDFIdentifier);
+        const menuItemNameAttribute = newAttribute(menuItemNameAttributeDFIdentifier, a =>
+            a.alias("Menu Item name"),
         );
-        const menuItemNameAttribute = Model.attribute(menuItemNameAttributeDFIdentifier)
-            .alias("Menu Item name")
-            .localIdentifier("menuItemName");
 
         const selectedEmployee = validElements.items.find(item => item.element.uri === selectedEmployeeUri)
             .element;

@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { BarChart, Model, IChartConfig } from "@gooddata/sdk-ui";
+import { BarChart, IChartConfig } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -20,16 +21,11 @@ interface IBarChartDynamicExampleState {
     customSeparatorUsed: boolean;
 }
 
-const amount = Model.measure(totalSalesIdentifier)
-    .format("#,##0")
-    .alias("$ Total Sales")
-    .localIdentifier("totalSales");
+const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+const locationResort = newAttribute(locationResortIdentifier);
 
-const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
-    menuCategoryAttributeDFIdentifier,
-);
+const menuCategory = newAttribute(menuCategoryAttributeDFIdentifier);
 
 const style = { height: 300 };
 

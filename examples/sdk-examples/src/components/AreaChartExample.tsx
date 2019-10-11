@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { AreaChart, Model } from "@gooddata/sdk-ui";
+import { AreaChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -22,21 +23,25 @@ const localIdentifiers = {
     monthDate: "monthDate",
 };
 const measures = [
-    Model.measure(franchiseFeesIdentifier)
-        .format("#,##0")
-        .localIdentifier(localIdentifiers.franchiseFees),
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .format("#,##0")
-        .localIdentifier(localIdentifiers.franchiseFeesAdRoyalty),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .format("#,##0")
-        .localIdentifier(localIdentifiers.franchiseFeesInitialFranchiseFee),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .format("#,##0")
-        .localIdentifier(localIdentifiers.franchiseFeesIdentifierOngoingRoyalty),
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), localIdentifiers.franchiseFees),
+    newMeasure(
+        franchiseFeesAdRoyaltyIdentifier,
+        m => m.format("#,##0"),
+        localIdentifiers.franchiseFeesAdRoyalty,
+    ),
+    newMeasure(
+        franchiseFeesInitialFranchiseFeeIdentifier,
+        m => m.format("#,##0"),
+        localIdentifiers.franchiseFeesInitialFranchiseFee,
+    ),
+    newMeasure(
+        franchiseFeesIdentifierOngoingRoyalty,
+        m => m.format("#,##0"),
+        localIdentifiers.franchiseFeesIdentifierOngoingRoyalty,
+    ),
 ];
 
-const viewBy = Model.attribute(monthDateIdentifier).localIdentifier(localIdentifiers.monthDate);
+const viewBy = newAttribute(monthDateIdentifier, undefined, localIdentifiers.monthDate);
 
 const style = { height: 300 };
 

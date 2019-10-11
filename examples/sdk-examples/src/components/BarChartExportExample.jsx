@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { BarChart, Model } from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -19,14 +20,11 @@ export class BarChartExportExample extends Component {
     }
 
     render() {
-        const amount = Model.measure(totalSalesIdentifier)
-            .format("#,##0")
-            .alias("$ Total Sales")
-            .localIdentifier("totalSales");
+        const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+        const locationResort = newAttribute(locationResortIdentifier);
 
-        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+        const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
             <ExampleWithExport>

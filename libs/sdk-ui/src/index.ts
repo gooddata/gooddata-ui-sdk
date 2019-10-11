@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as VisEvents from "./base/interfaces/Events";
 import CatalogHelper from "./base/helpers/CatalogHelper";
-import * as Model from "./base/helpers/model";
 // import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { ErrorComponent } from "./base/simple/ErrorComponent";
 import { LoadingComponent } from "./base/simple/LoadingComponent";
@@ -59,7 +58,6 @@ export {
     BarChart,
     BucketNames,
     CatalogHelper,
-    Model,
     ChartType,
     ColumnChart,
     ScatterPlot,

@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -29,18 +30,22 @@ export class TableExportExample extends Component {
 
     render() {
         const measures = [
-            Model.measure(franchiseFeesIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifier"),
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
+            newMeasure(
+                franchiseFeesAdRoyaltyIdentifier,
+                m => m.format("#,##0"),
+                "franchiseFeesAdRoyaltyIdentifier",
+            ),
+            newMeasure(
+                franchiseFeesInitialFranchiseFeeIdentifier,
+                m => m.format("#,##0"),
+                "franchiseFeesInitialFranchiseFeeIdentifier",
+            ),
+            newMeasure(
+                franchiseFeesIdentifierOngoingRoyalty,
+                m => m.format("#,##0"),
+                "franchiseFeesIdentifierOngoingRoyalty",
+            ),
         ];
 
         const totals = [
@@ -66,9 +71,9 @@ export class TableExportExample extends Component {
             },
         ];
 
-        const attributes = [Model.attribute(monthDateIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(monthDateIdentifier, undefined, "month")];
 
-        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+        const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
             <ExampleWithExport>

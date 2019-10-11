@@ -4,7 +4,8 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { screenshotWrap } from "@gooddata/test-storybook";
 
-import { Model, PivotTable } from "../../src";
+import { PivotTable } from "../../src";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 import { onErrorHandler } from "../mocks";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import {
@@ -376,15 +377,17 @@ storiesOf("Core components/PivotTable", module)
     )
     .add("subtotals - all labels", () => {
         const measures = [
-            Model.measure("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2352").localIdentifier("m1"),
+            // TODO replace uri by identifier
+            newMeasure("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2352", undefined, "m1"),
         ];
 
         const attributes = [
-            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2188").localIdentifier("a1"),
-            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2197").localIdentifier("a2"),
-            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211").localIdentifier("a3"),
-            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2005").localIdentifier("a4"),
-            Model.attribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205").localIdentifier("a5"),
+            // TODO replace uri by identifier
+            newAttribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2188", undefined, "a1"),
+            newAttribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2197", undefined, "a2"),
+            newAttribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211", undefined, "a3"),
+            newAttribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2005", undefined, "a4"),
+            newAttribute("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205", undefined, "a5"),
         ];
 
         const totals: VisualizationInput.ITotal[] = [
@@ -435,14 +438,15 @@ storiesOf("Core components/PivotTable", module)
         );
     })
     .add("subtotals - two measures, two row attributes", () => {
+        // TODO replace uri by identifier
         const measures = [
-            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1144").localIdentifier("m1"),
-            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1145").localIdentifier("m2"),
+            newMeasure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1144", undefined, "m1"),
+            newMeasure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1145", undefined, "m2"),
         ];
-
+        // TODO replace uri by identifier
         const attributes = [
-            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1024").localIdentifier("a1"),
-            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1027").localIdentifier("a2"),
+            newAttribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1024", undefined, "a1"),
+            newAttribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1027", undefined, "a2"),
         ];
 
         const totals: VisualizationInput.ITotal[] = [
@@ -473,14 +477,15 @@ storiesOf("Core components/PivotTable", module)
         );
     })
     .add("grand total and subtotal - two measures, two row attributes", () => {
+        // TODO replace uri by identifier
         const measures = [
-            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1144").localIdentifier("m1"),
-            Model.measure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1145").localIdentifier("m2"),
+            newMeasure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1144", undefined, "m1"),
+            newMeasure("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1145", undefined, "m2"),
         ];
-
+        // TODO replace uri by identifier
         const attributes = [
-            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1024").localIdentifier("a1"),
-            Model.attribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1027").localIdentifier("a2"),
+            newAttribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1024", undefined, "a1"),
+            newAttribute("/gdc/md/aiugpog6irti75nk93qc1wd1t2wl3xfs/obj/1027", undefined, "a2"),
         ];
 
         const totals: VisualizationInput.ITotal[] = [

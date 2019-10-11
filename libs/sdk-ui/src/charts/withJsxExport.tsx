@@ -5,8 +5,7 @@ import isString = require("lodash/isString");
 import toPairs = require("lodash/toPairs");
 // @ts-ignore The typings are not compatible with current react typings and upgrade is not feasible now
 import hoistNonReactStatics = require("hoist-non-react-statics");
-
-import { getModelNotationFor } from "../base/helpers/model/objectToModelNotation";
+import { factoryNotationFor } from "@gooddata/sdk-model";
 
 const getDisplayName = (WrappedComponent: React.ComponentType): string =>
     WrappedComponent.displayName || WrappedComponent.name || "Component";
@@ -20,7 +19,7 @@ export const withJsxExport = <T extends {}>(Component: React.ComponentType<T>) =
                 // we ignore functions as there is no bullet-proof to serialize them
                 .filter(([_, value]) => !isFunction(value))
                 .map(([key, value]) =>
-                    isString(value) ? `${key}="${value}"` : `${key}={${getModelNotationFor(value)}}`,
+                    isString(value) ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
                 );
             const paddedPropDeclarations = stringifiedProps.join("\n").replace(/^/gm, "    ");
             return `<${getDisplayName(Component)}\n${paddedPropDeclarations}\n/>`;

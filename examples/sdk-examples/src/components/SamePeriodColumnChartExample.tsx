@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import { ColumnChart, Model } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newPopMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -24,14 +25,12 @@ export const SamePeriodColumnChartExample: React.FC = () => {
                 backend={backend}
                 workspace={projectId}
                 measures={[
-                    Model.popMeasure("totalSales", yearDateDataSetAttributeIdentifier)
-                        .localIdentifier("totalSalesPeriod")
-                        .alias("$ Total Sales - SP year ago"),
-                    Model.measure(totalSalesIdentifier)
-                        .localIdentifier("totalSales")
-                        .alias("$ Total Sales"),
+                    newPopMeasure("totalSales", yearDateDataSetAttributeIdentifier, m =>
+                        m.alias("$ Total Sales - SP year ago"),
+                    ),
+                    newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales")),
                 ]}
-                viewBy={Model.attribute(quarterDateIdentifier).localIdentifier("quarter")}
+                viewBy={newAttribute(quarterDateIdentifier)}
             />
         </div>
     );

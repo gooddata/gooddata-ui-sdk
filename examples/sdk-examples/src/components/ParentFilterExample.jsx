@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { AttributeElements, BarChart, Model } from "@gooddata/sdk-ui";
+import { AttributeElements, BarChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
 import "@gooddata/sdk-ui/styles/css/main.css";
@@ -48,7 +49,7 @@ export class ParentFilterExample extends Component {
 
         if (stateFilterValues.length) {
             visFilters.push(
-                Model.positiveAttributeFilter(
+                newPositiveAttributeFilter(
                     locationStateDisplayFormIdentifier,
                     stateFilterValues.map(filter => filter.value),
                 ),
@@ -56,21 +57,18 @@ export class ParentFilterExample extends Component {
         }
         if (cityFilterValues.length) {
             visFilters.push(
-                Model.positiveAttributeFilter(
+                newPositiveAttributeFilter(
                     locationCityDisplayFormIdentifier,
                     cityFilterValues.map(filter => filter.value),
                 ),
             );
         }
 
-        const measureTotalSales = Model.measure(totalSalesIdentifier)
-            .format("#,##0")
-            .alias("$ Total Sales")
-            .localIdentifier("totalSales");
-
-        const viewByLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
-            "location_name",
+        const measureTotalSales = newMeasure(totalSalesIdentifier, m =>
+            m.format("#,##0").alias("$ Total Sales"),
         );
+
+        const viewByLocationName = newAttribute(locationNameDisplayFormIdentifier);
 
         return (
             <div style={{ height: 500 }}>

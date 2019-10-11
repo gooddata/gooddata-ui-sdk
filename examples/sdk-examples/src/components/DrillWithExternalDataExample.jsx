@@ -10,8 +10,8 @@ import {
     LoadingComponent,
     ErrorComponent,
     HeaderPredicateFactory,
-    Model,
 } from "@gooddata/sdk-ui";
+import { newMeasure, newPositiveAttributeFilter, newAttribute } from "@gooddata/sdk-model";
 import {
     projectId,
     employeeNameIdentifier,
@@ -145,9 +145,7 @@ export class DrillWithExternalDataExample extends React.Component {
             .then(res => res.json())
             .then(({ gender }) => {
                 return fetch(
-                    `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${
-                        employee.id
-                    }`,
+                    `https://randomuser.me/api/?nat=us&inc=dob,cell,registered,location&gender=${gender}&seed=gooddata-${employee.id}`,
                 )
                     .then(res => res.json())
                     .then(
@@ -180,27 +178,18 @@ export class DrillWithExternalDataExample extends React.Component {
     getFilters = (state, location) => {
         const filters = [];
         if (state) {
-            filters.push(Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [state.uri]));
+            filters.push(newPositiveAttributeFilter(locationStateDisplayFormIdentifier, [state.uri]));
         }
         if (location) {
-            filters.push(Model.positiveAttributeFilter(locationNameDisplayFormIdentifier, [location.uri]));
+            filters.push(newPositiveAttributeFilter(locationNameDisplayFormIdentifier, [location.uri]));
         }
         return filters;
     };
 
     getMeasure = (identifier, localIdentifier, alias) =>
-        Model.measure(identifier)
-            .localIdentifier(localIdentifier)
-            .alias(alias);
+        newMeasure(identifier, m => m.alias(alias), localIdentifier);
 
-    getAttribute = (identifier, localIdentifier) => ({
-        visualizationAttribute: {
-            localIdentifier,
-            displayForm: {
-                identifier,
-            },
-        },
-    });
+    getAttribute = (identifier, localIdentifier) => newAttribute(identifier, undefined, localIdentifier);
 
     renderEmployeeDetails = employeeData => {
         if (employeeData.isError) {

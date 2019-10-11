@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import { ColumnChart, Model } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newMeasureSort } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -18,9 +19,9 @@ export const MeasureSortingExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={projectId}
-                measures={[Model.measure(totalSalesIdentifier).localIdentifier(totalSalesIdentifier)]}
-                viewBy={Model.attribute(monthDateIdentifier).localIdentifier(monthDateIdentifier)}
-                sortBy={[Model.measureSortItem(totalSalesIdentifier, "desc")]}
+                measures={[newMeasure(totalSalesIdentifier, undefined, totalSalesIdentifier)]}
+                viewBy={newAttribute(monthDateIdentifier)}
+                sortBy={[newMeasureSort(totalSalesIdentifier, "desc")]}
             />
         </div>
     );

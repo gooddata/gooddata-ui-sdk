@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Headline, Model } from "@gooddata/sdk-ui";
+import { Headline } from "@gooddata/sdk-ui";
+import { newMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -19,21 +20,19 @@ export class PreviousPeriodHeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = Model.measure(totalSalesIdentifier)
-            .localIdentifier("totalSales")
-            .alias("$ Total Sales");
-        const secondaryMeasure = Model.previousPeriodMeasure("totalSales", [
-            { dataSet: dateDataSetUri, periodsAgo: 1 },
-        ])
-            .alias("$ Total Sales - period ago")
-            .localIdentifier("totalSalesPeriod");
+        const primaryMeasure = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales"), "totalSales");
+        const secondaryMeasure = newPreviousPeriodMeasure(
+            "totalSales",
+            [{ dataSet: dateDataSetUri, periodsAgo: 1 }],
+            m => m.alias("$ Total Sales - period ago"),
+        );
         return (
             <div style={{ height: 125 }} className="s-headline">
                 <Headline
                     projectId={projectId}
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
-                    filters={[Model.relativeDateFilter(dateDataSetUri, "GDC.time.year", -2, -1)]}
+                    filters={[newRelativeDateFilter(dateDataSetUri, "GDC.time.year", -2, -1)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { Component } from "react";
 import propTypes from "prop-types";
-import { BucketExecutor, ErrorComponent, Model } from "@gooddata/sdk-ui";
+import { BucketExecutor, ErrorComponent } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import { totalSalesIdentifier, projectId, locationStateDisplayFormIdentifier } from "../utils/fixtures";
 
@@ -45,7 +46,7 @@ CustomErrorComponent.propTypes = {
 const presets = {
     kpi: {
         props: {
-            dimensions: [[Model.measure(totalSalesIdentifier)]],
+            dimensions: [[newMeasure(totalSalesIdentifier)]],
         },
         label: "KPI",
         // eslint-disable-next-line react/prop-types
@@ -65,7 +66,7 @@ const presets = {
     },
     attributeValueList: {
         props: {
-            dimensions: [[Model.attribute(locationStateDisplayFormIdentifier)]],
+            dimensions: [[newAttribute(locationStateDisplayFormIdentifier)]],
         },
         label: "List of States",
         // eslint-disable-next-line react/prop-types
@@ -80,8 +81,8 @@ const presets = {
     pagedExecution: {
         props: {
             dimensions: [
-                [Model.attribute(locationStateDisplayFormIdentifier)],
-                [Model.measure(totalSalesIdentifier)],
+                [newAttribute(locationStateDisplayFormIdentifier)],
+                [newMeasure(totalSalesIdentifier)],
             ],
             initialPaging: {
                 offset: [0, 0],
@@ -132,7 +133,7 @@ const presets = {
     },
     onDemandExecution: {
         props: {
-            dimensions: [[Model.measure(totalSalesIdentifier)]],
+            dimensions: [[newMeasure(totalSalesIdentifier)]],
             autoLoadFirstPage: false,
             ErrorComponent: CustomErrorComponent,
         },
@@ -173,7 +174,7 @@ const presets = {
     error: {
         props: {
             // Invalid measure identifier will cause an error
-            dimensions: [[Model.measure("invalid")]],
+            dimensions: [[newMeasure("invalid")]],
             ErrorComponent: CustomErrorComponent,
         },
         label: "Error",

@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -26,18 +27,22 @@ export class TableExample extends Component {
 
     render() {
         const measures = [
-            Model.measure(franchiseFeesIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifier"),
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
+            newMeasure(
+                franchiseFeesAdRoyaltyIdentifier,
+                m => m.format("#,##0"),
+                "franchiseFeesAdRoyaltyIdentifier",
+            ),
+            newMeasure(
+                franchiseFeesInitialFranchiseFeeIdentifier,
+                m => m.format("#,##0"),
+                "franchiseFeesInitialFranchiseFeeIdentifier",
+            ),
+            newMeasure(
+                franchiseFeesIdentifierOngoingRoyalty,
+                m => m.format("#,##0"),
+                "franchiseFeesIdentifierOngoingRoyalty",
+            ),
         ];
 
         const totals = [
@@ -63,7 +68,7 @@ export class TableExample extends Component {
             },
         ];
 
-        const attributes = [Model.attribute(monthDateIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(monthDateIdentifier, undefined, "month")];
 
         return (
             <div style={{ height: 300 }} className="s-table">

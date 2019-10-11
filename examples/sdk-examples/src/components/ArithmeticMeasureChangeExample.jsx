@@ -1,7 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import {
+    newAttribute,
+    newMeasure,
+    newPreviousPeriodMeasure,
+    newArithmeticMeasure,
+    newAbsoluteDateFilter,
+} from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -19,33 +26,28 @@ export class ArithmeticMeasureChangeExample extends Component {
     }
 
     render() {
-        const totalSalesYearAgoBucketItem = Model.previousPeriodMeasure("totalSales", [
-            { dataSet: dateDataSetUri, periodsAgo: 1 },
-        ])
-            .alias("$ Total Sales - year ago")
-            .localIdentifier("totalSales_sp");
+        const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
+            "totalSales",
+            [{ dataSet: dateDataSetUri, periodsAgo: 1 }],
+            m => m.alias("$ Total Sales - year ago"),
+        );
 
-        const totalSalesBucketItem = Model.measure(totalSalesIdentifier)
-            .localIdentifier("totalSales")
-            .alias("$ Total Sales");
+        const totalSalesBucketItem = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales"));
 
-        const measures = [
-            totalSalesYearAgoBucketItem,
-            totalSalesBucketItem,
-            Model.arithmeticMeasure(
-                [
-                    totalSalesBucketItem.measure.localIdentifier,
-                    totalSalesYearAgoBucketItem.measure.localIdentifier,
-                ],
-                "change",
-            )
-                .title("% Total Sales Change")
-                .localIdentifier("totalSalesChange"),
-        ];
+        const changeMeasure = newArithmeticMeasure(
+            [
+                totalSalesBucketItem.measure.localIdentifier,
+                totalSalesYearAgoBucketItem.measure.localIdentifier,
+            ],
+            "change",
+            m => m.title("% Total Sales Change"),
+        );
 
-        const attributes = [Model.attribute(monthDateIdentifier).localIdentifier("month")];
+        const measures = [totalSalesYearAgoBucketItem, totalSalesBucketItem, changeMeasure];
 
-        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+        const attributes = [newAttribute(monthDateIdentifier)];
+
+        const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
             <div style={{ height: 200 }} className="s-table">

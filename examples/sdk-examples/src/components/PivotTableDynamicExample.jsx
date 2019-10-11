@@ -1,6 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { PivotTable, Table, HeaderPredicateFactory, Model } from "@gooddata/sdk-ui";
+import { PivotTable, Table, HeaderPredicateFactory } from "@gooddata/sdk-ui";
+import {
+    newMeasure,
+    newAttribute,
+    newPositiveAttributeFilter,
+    newRelativeDateFilter,
+    newMeasureSort,
+} from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -20,21 +27,29 @@ import {
 import { createColumnTotal } from "../utils/helpers";
 import { ElementWithParam } from "./utils/ElementWithParam";
 
-const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
-const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier).localIdentifier(
+const measureFranchiseFees = newMeasure(franchiseFeesIdentifier, undefined, franchiseFeesIdentifier);
+const measureAdRoyalty = newMeasure(
+    franchiseFeesAdRoyaltyIdentifier,
+    undefined,
     franchiseFeesAdRoyaltyIdentifier,
 );
-const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier(
+const attributeLocationState = newAttribute(
+    locationStateDisplayFormIdentifier,
+    undefined,
     locationStateDisplayFormIdentifier,
 );
-const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
+const attributeLocationName = newAttribute(
+    locationNameDisplayFormIdentifier,
+    undefined,
     locationNameDisplayFormIdentifier,
 );
-const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
+const attributeMenuCategory = newAttribute(
+    menuCategoryAttributeDFIdentifier,
+    undefined,
     menuCategoryAttributeDFIdentifier,
 );
-const attributeQuarter = Model.attribute(quarterDateIdentifier).localIdentifier(quarterDateIdentifier);
-const attributeMonth = Model.attribute(monthDateIdentifier).localIdentifier(monthDateIdentifier);
+const attributeQuarter = newAttribute(quarterDateIdentifier, undefined, quarterDateIdentifier);
+const attributeMonth = newAttribute(monthDateIdentifier, undefined, monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -204,19 +219,19 @@ const filterPresets = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [
+        filterItem: newPositiveAttributeFilter(locationStateDisplayFormIdentifier, [
             locationStateAttributeCaliforniaUri,
         ]),
     },
     lastYear: {
         label: "Last year",
         key: "lastYear",
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
+        filterItem: newRelativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
     },
     noData: {
         label: "No Data",
         key: "noData",
-        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
+        filterItem: newRelativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
     },
     franchiseFeesCalifornia: {
         label: "Franchise Fees California",
@@ -225,10 +240,11 @@ const filterPresets = {
     },
 };
 
-const franchiseFeesCalifornia = Model.measure(franchiseFeesIdentifier)
-    .localIdentifier("franchiseFeesCalifornia")
-    .alias("FranchiseFees (California)")
-    .filters(filterPresets.attributeCalifornia.filterItem);
+const franchiseFeesCalifornia = newMeasure(
+    franchiseFeesIdentifier,
+    m => m.alias("FranchiseFees (California)").filters(filterPresets.attributeCalifornia.filterItem),
+    "franchiseFeesCalifornia",
+);
 
 const sortingPresets = {
     noSort: {
@@ -239,18 +255,18 @@ const sortingPresets = {
     byMenuCategory: {
         label: "By Menu Category ASC",
         key: "byMenuCategory",
-        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, "asc")],
+        sortBy: [newAttributeSort(menuCategoryAttributeDFIdentifier, "asc")],
     },
     byLocationState: {
         label: "By Location State DESC",
         key: "byLocationState",
-        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, "desc")],
+        sortBy: [newAttributeSort(locationStateDisplayFormIdentifier, "desc")],
     },
     byQ1JanFranchiseFees: {
         label: "by Q1 / Jan / FranchiseFees DESC",
         key: "byQ1JanFranchiseFees",
         sortBy: [
-            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
+            newMeasureSort(franchiseFeesIdentifier, "desc", [
                 {
                     attributeIdentifier: quarterDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -259,15 +275,15 @@ const sortingPresets = {
                     attributeIdentifier: monthDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
                 },
-            ),
+            ]),
         ],
     },
     byLocationStateAndQ1JanFranchiseFees: {
         label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
         key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            Model.attributeSortItem(locationStateDisplayFormIdentifier, "asc"),
-            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
+            newAttributeSort(locationStateDisplayFormIdentifier, "asc"),
+            newMeasureSort(franchiseFeesIdentifier, "desc", [
                 {
                     attributeIdentifier: quarterDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -276,7 +292,7 @@ const sortingPresets = {
                     attributeIdentifier: monthDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
                 },
-            ),
+            ]),
         ],
     },
 };

@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { LineChart, AttributeFilter, Model, ErrorComponent } from "@gooddata/sdk-ui";
+import { LineChart, AttributeFilter, ErrorComponent } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -84,12 +85,14 @@ export class AttributeFilterExample extends Component {
     render() {
         const { filters, error } = this.state;
 
-        const totalSales = Model.measure(totalSalesIdentifier)
-            .format("#,##0")
-            .alias("$ Total Sales")
-            .localIdentifier("totalSales");
+        const totalSales = newMeasure(totalSalesIdentifier, m =>
+            m
+                .format("#,##0")
+                .alias("$ Total Sales")
+                .localIdentifier("totalSales"),
+        );
 
-        const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+        const locationResort = newAttribute(locationResortIdentifier);
 
         return (
             <div className="s-attribute-filter">

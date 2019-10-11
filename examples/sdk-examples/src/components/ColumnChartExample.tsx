@@ -1,19 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import { ColumnChart, Model } from "@gooddata/sdk-ui";
+import { ColumnChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const totalSales = Model.measure(totalSalesIdentifier)
-    .format("#,##0")
-    .alias("$ Total Sales")
-    .localIdentifier("totalSales");
+const totalSales = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-const month = Model.attribute(monthDateIdentifier).localIdentifier("month");
+const month = newAttribute(monthDateIdentifier);
 
 const style = { height: 300 };
 

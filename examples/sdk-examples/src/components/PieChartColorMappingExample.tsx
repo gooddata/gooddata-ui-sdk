@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PieChart, Model, IChartConfig } from "@gooddata/sdk-ui";
+import { PieChart, IChartConfig } from "@gooddata/sdk-ui";
+import { newMeasure } from "@gooddata/sdk-model";
 import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
@@ -14,15 +15,17 @@ import {
 import { useBackend } from "../backend";
 
 const measures = [
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .localIdentifier("franchiseFeesAdRoyaltyIdentifier")
-        .format("#,##0"),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier")
-        .format("#,##0"),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .localIdentifier("franchiseFeesIdentifierOngoingRoyalty")
-        .format("#,##0"),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0"), "franchiseFeesAdRoyaltyIdentifier"),
+    newMeasure(
+        franchiseFeesInitialFranchiseFeeIdentifier,
+        m => m.format("#,##0"),
+        "franchiseFeesInitialFranchiseFeeIdentifier",
+    ),
+    newMeasure(
+        franchiseFeesIdentifierOngoingRoyalty,
+        m => m.format("#,##0"),
+        "franchiseFeesIdentifierOngoingRoyalty",
+    ),
 ];
 
 const chartConfig: IChartConfig = {
