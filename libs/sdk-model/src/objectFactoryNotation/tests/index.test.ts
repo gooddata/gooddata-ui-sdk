@@ -200,8 +200,7 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
-        // TODO
-        xit("should handle measure with a filter", () => {
+        it("should handle measure with a filter", () => {
             const input: IMeasure = {
                 measure: {
                     definition: {
