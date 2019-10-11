@@ -1,16 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import { getDefaultTreemapSortFromBuckets } from "../sorts";
-import { newBucket } from "@gooddata/sdk-model";
+import { newBucket, newMeasure, newAttribute } from "@gooddata/sdk-model";
 import { SEGMENT, VIEW } from "../../constants/bucketNames";
-import { measure } from "../model/measures";
-import { attribute } from "../model/attributes";
 
 describe("sorts", () => {
-    const measure1 = measure("mid1")
-        .localIdentifier("m1")
-        .alias("Measure m1");
-    const attribute1 = attribute("aid1").localIdentifier("a1");
-    const attribute2 = attribute("aid2").localIdentifier("a2");
+    const measure1 = newMeasure("mid1", m => m.localId("m1").alias("Measure m1"));
+    const attribute1 = newAttribute("aid1", a => a.localId("a1"));
+    const attribute2 = newAttribute("aid2", a => a.localId("a2"));
     const viewBucket = newBucket(VIEW, attribute1);
     const segmentBucket = newBucket(SEGMENT, attribute2);
     const emptySegmentBucket = newBucket(SEGMENT);

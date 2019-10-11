@@ -1,18 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
-import { measure } from "../../../../base/helpers/model";
 import { IChartConfig } from "../../../Config";
 import * as fixtures from "../../../../../__mocks__/fixtures";
 import { getSanitizedStackingConfig, sanitizeConfig } from "../common";
-import { IMeasure } from "@gooddata/sdk-model";
+import { IMeasure, newMeasure } from "@gooddata/sdk-model";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {
-    return measure(name).localIdentifier(name);
+    return newMeasure(name, m => m.localId(name));
 });
 
 function createMeasureWithRatio(name: string): IMeasure {
-    return measure(name)
-        .localIdentifier(name)
-        .ratio();
+    return newMeasure(name, m => m.localId(name).ratio());
 }
 
 describe("sanitizeConfig", () => {

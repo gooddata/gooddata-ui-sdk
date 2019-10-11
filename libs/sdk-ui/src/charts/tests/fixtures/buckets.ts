@@ -1,14 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import { measure } from "../../../base/helpers/model";
-import { IMeasure } from "@gooddata/sdk-model";
+import { IMeasure, newMeasure } from "@gooddata/sdk-model";
 
-export const M1: IMeasure = measure("m1").localIdentifier("m1");
-export const M1WithRatio: IMeasure = measure("m1")
-    .localIdentifier("m1")
-    .ratio();
+export const M1: IMeasure = newMeasure("m1", m => m.localId("m1"));
+export const M1WithRatio: IMeasure = newMeasure("m1", m => m.localId("m1").ratio());
 
-export const M2: IMeasure = measure("m2").localIdentifier("m2");
+export const M2: IMeasure = newMeasure("m2", m => m.localId("m2"));
 
-export const M3: IMeasure = measure("m3").localIdentifier("m3");
+export const M3: IMeasure = newMeasure("m3", m => m.localId("m3"));
 
-export const M4: IMeasure = measure("m4").localIdentifier("m4");
+export const M4: IMeasure = newMeasure("m4", m => m.localId("m4"));

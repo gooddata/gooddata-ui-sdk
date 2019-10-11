@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as BucketNames from "../../base/constants/bucketNames";
-import { IInsight, IVisualizationClass } from "@gooddata/sdk-model";
-import { attribute } from "../../base/helpers/model";
+import { IInsight, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
 //
 // Test insights
@@ -28,7 +27,7 @@ export const dummyInsight: IInsight = {
         buckets: [
             {
                 localIdentifier: "attribute",
-                items: [attribute("attr1").localIdentifier("a1")],
+                items: [newAttribute("attr1", a => a.localId("a1"))],
             },
         ],
         filters: [],

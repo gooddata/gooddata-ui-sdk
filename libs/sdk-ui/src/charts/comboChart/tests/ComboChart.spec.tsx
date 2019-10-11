@@ -4,10 +4,9 @@ import { shallow } from "enzyme";
 import { ComboChart } from "../ComboChart";
 import { M1, M2, M3, M4 } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../highcharts";
-import { measure } from "../../../base/helpers/model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreComboChart } from "../CoreComboChart";
-import { IMeasure } from "@gooddata/sdk-model";
+import { IMeasure, newMeasure } from "@gooddata/sdk-model";
 
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
@@ -52,13 +51,8 @@ describe("ComboChart", () => {
         }
 
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
-        const M5 = measure("m5")
-            .localIdentifier("m5")
-            .build();
-        const M5WithRatio = measure("m5ratio")
-            .localIdentifier("m5ratio")
-            .ratio()
-            .build();
+        const M5 = newMeasure("m5", m => m.localId("m5"));
+        const M5WithRatio = newMeasure("m5ratio", m => m.localId("m5ratio").ratio());
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
             const wrapper = renderChart([M5], [], config);
@@ -82,12 +76,8 @@ describe("ComboChart", () => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
-                    measure("m5")
-                        .localIdentifier("m5")
-                        .build(),
-                    measure("m5ratio")
-                        .localIdentifier("m5ratio")
-                        .build(),
+                    newMeasure("m5", m => m.localId("m5")),
+                    newMeasure("m5ratio", m => m.localId("m5ratio")),
                 ];
 
                 expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -95,22 +85,15 @@ describe("ComboChart", () => {
         );
 
         it("should ignore computeRatio when dual axis is OFF and # of measures > 1", () => {
-            const M1WithRatio = measure("m1ratio")
-                .localIdentifier("m1ratio")
-                .ratio()
-                .build();
+            const M1WithRatio = newMeasure("m1ratio", m => m.localId("m1ratio").ratio());
             const wrapper = renderChart([M1WithRatio], [M5WithRatio], {
                 ...config,
                 dualAxis: false,
             });
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                measure("m1ratio")
-                    .localIdentifier("m1ratio")
-                    .build(),
-                measure("m5ratio")
-                    .localIdentifier("m5ratio")
-                    .build(),
+                newMeasure("m1ratio", m => m.localId("m1ratio")),
+                newMeasure("m5ratio", m => m.localId("m5ratio")),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -122,12 +105,7 @@ describe("ComboChart", () => {
                 dualAxis: false,
             });
             const execution = wrapper.find(CoreComboChart).prop("execution");
-            const expectedMeasure = [
-                measure("m5ratio")
-                    .localIdentifier("m5ratio")
-                    .ratio()
-                    .build(),
-            ];
+            const expectedMeasure = [newMeasure("m5ratio", m => m.localId("m5ratio").ratio())];
 
             expect(execution.definition.measures).toEqual(expectedMeasure);
         });
