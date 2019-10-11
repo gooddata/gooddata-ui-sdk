@@ -32,21 +32,20 @@ export class ArithmeticMeasureMultiplicationExample extends Component {
         };
 
         const measures = [
-            newMeasure(
-                numberOfRestaurantsIdentifier,
-                m => m.format("#,##0"),
-                localIdentifiers.numberOfRestaurants,
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
             ),
-            newMeasure(
-                averageRestaurantDailyCostsIdentifier,
-                m => m.format("#,##0"),
-                localIdentifiers.averageRestaurantDailyCosts,
+            newMeasure(averageRestaurantDailyCostsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.averageRestaurantDailyCosts),
             ),
             newArithmeticMeasure(
                 [localIdentifiers.numberOfRestaurants, localIdentifiers.averageRestaurantDailyCosts],
                 "multiplication",
-                m => m.format("#,##0").title("$ Avg State Daily Costs"),
-                localIdentifiers.averageStateDailyCosts,
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Avg State Daily Costs")
+                        .localId(localIdentifiers.averageStateDailyCosts),
             ),
         ];
 

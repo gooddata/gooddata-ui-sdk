@@ -32,17 +32,18 @@ export class ArithmeticMeasureRatioExample extends Component {
         };
 
         const measures = [
-            newMeasure(
-                numberOfRestaurantsIdentifier,
-                m => m.format("#,##0"),
-                localIdentifiers.numberOfRestaurants,
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
             ),
-            newMeasure(totalSalesIdentifier, m => m.format("#,##0"), localIdentifiers.totalSales),
+            newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
             newArithmeticMeasure(
                 [localIdentifiers.numberOfRestaurants, localIdentifiers.totalSales],
                 "ratio",
-                m => m.format("#,##0").title("$ Avg State Daily Sales"),
-                localIdentifiers.averageRestaurantSales,
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Avg State Daily Sales")
+                        .localId(localIdentifiers.averageRestaurantSales),
             ),
         ];
 

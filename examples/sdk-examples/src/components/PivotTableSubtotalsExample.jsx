@@ -21,28 +21,22 @@ import {
 export class PivotTableSubtotalsExample extends Component {
     render() {
         const measures = [
-            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
-            newMeasure(
-                franchiseFeesAdRoyaltyIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesAdRoyaltyIdentifier",
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesInitialFranchiseFeeIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesInitialFranchiseFeeIdentifier",
+            newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesIdentifierOngoingRoyalty,
-                m => m.format("#,##0"),
-                "franchiseFeesIdentifierOngoingRoyalty",
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
             ),
         ];
 
         const attributes = [
             newAttribute(locationStateDisplayFormIdentifier),
-            newAttribute(locationNameDisplayFormIdentifier, undefined, "locationName"),
-            newAttribute(menuCategoryAttributeDFIdentifier, undefined, "menu"),
+            newAttribute(locationNameDisplayFormIdentifier, a => a.localId("locationName")),
+            newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
         ];
 
         const totals = [

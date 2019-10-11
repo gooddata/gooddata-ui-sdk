@@ -20,7 +20,9 @@ export class PreviousPeriodHeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales"), "totalSales");
+        const primaryMeasure = newMeasure(totalSalesIdentifier, m =>
+            m.alias("$ Total Sales").localId("totalSales"),
+        );
         const secondaryMeasure = newPreviousPeriodMeasure(
             "totalSales",
             [{ dataSet: dateDataSetUri, periodsAgo: 1 }],

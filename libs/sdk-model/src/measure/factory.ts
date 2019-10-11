@@ -24,10 +24,8 @@ export interface IPreviousPeriodDateDataSetSimple {
 
 class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
     public measure: IMeasure<T>["measure"];
-    constructor(localIdentifier: string) {
-        this.measure = {
-            localIdentifier,
-        } as any; // definition is added in subclass
+    constructor() {
+        this.measure = {} as any; // definition is added in subclass
     }
 
     public alias = (alias: string) => {
@@ -37,6 +35,11 @@ class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T
 
     public format = (format: string) => {
         this.measure.format = format;
+        return this;
+    };
+
+    public localId = (localId: string) => {
+        this.measure.localIdentifier = localId;
         return this;
     };
 
@@ -51,13 +54,14 @@ class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T
 }
 
 class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
-    constructor(identifier: string, localIdentifier: string) {
-        super(localIdentifier);
+    constructor(measureId: string) {
+        super();
         this.measure.definition = {
             measureDefinition: {
-                item: { identifier },
+                item: { identifier: measureId },
             },
         };
+        this.measure.localIdentifier = `m_${measureId}`;
     }
 
     public aggregation = (aggregation: MeasureAggregation) => {
@@ -77,41 +81,39 @@ class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 }
 
 class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
-    constructor(measureIdentifiers: string[], localIdentifier: string, operator: ArithmeticMeasureOperator) {
-        super(localIdentifier);
+    constructor(measureIds: string[], operator: ArithmeticMeasureOperator) {
+        super();
         this.measure.definition = {
             arithmeticMeasure: {
-                measureIdentifiers,
+                measureIdentifiers: measureIds,
                 operator,
             },
         };
+        this.measure.localIdentifier = `m_${measureIds.join("_")}`;
     }
 }
 
 class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
-    constructor(measureIdentifier: string, localIdentifier: string, popAttribute: string) {
-        super(localIdentifier);
+    constructor(measureId: string, popAttributeId: string) {
+        super();
         this.measure.definition = {
             popMeasureDefinition: {
-                measureIdentifier,
+                measureIdentifier: measureId,
                 popAttribute: {
-                    identifier: popAttribute,
+                    identifier: popAttributeId,
                 },
             },
         };
+        this.measure.localIdentifier = `m_${measureId}_${popAttributeId}`;
     }
 }
 
 class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
-    constructor(
-        measureIdentifier: string,
-        localIdentifier: string,
-        dateDataSets: IPreviousPeriodDateDataSetSimple[],
-    ) {
-        super(localIdentifier);
+    constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]) {
+        super();
         this.measure.definition = {
             previousPeriodMeasure: {
-                measureIdentifier,
+                measureIdentifier: measureId,
                 dateDataSets: dateDataSets.map(
                     (d): IPreviousPeriodDateDataSet => ({
                         ...d,
@@ -120,6 +122,7 @@ class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMea
                 ),
             },
         };
+        this.measure.localIdentifier = `m_${measureId}_previous_period`;
     }
 }
 
@@ -127,70 +130,62 @@ type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 /**
  * Creates a new measure with the specified identifier and optional modifications and localIdentifier.
- * @param identifier - identifier of the measure
+ * @param measureId - identifier of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_$\{identifier\}'
  * @public
  */
 export function newMeasure(
-    identifier: string,
+    measureId: string,
     modifications: MeasureModifications<MeasureBuilder> = identity,
-    localIdentifier = `m_${identifier}`,
 ): IMeasure<IMeasureDefinition> {
-    const builder = new MeasureBuilder(identifier, localIdentifier);
+    const builder = new MeasureBuilder(measureId);
     return modifications(builder).build();
 }
 
 /**
  * Creates a new arithmetic measure with the specified measure identifiers and operator and optional modifications and localIdentifier.
- * @param measureIdentifiers - identifiers of the measures to be included in this arithmetic measure
+ * @param measureIds - identifiers of the measures to be included in this arithmetic measure
  * @param operator - operator of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_$\{all_measure_identifiers\}'
  * @public
  */
 export function newArithmeticMeasure(
-    measureIdentifiers: string[],
+    measureIds: string[],
     operator: ArithmeticMeasureOperator,
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
-    localIdentifier = `m_${measureIdentifiers.join("_")}`,
 ): IMeasure<IArithmeticMeasureDefinition> {
-    const builder = new ArithmeticMeasureBuilder(measureIdentifiers, localIdentifier, operator);
+    const builder = new ArithmeticMeasureBuilder(measureIds, operator);
     return modifications(builder).build();
 }
 
 /**
  * Creates a new PoP measure with the specified identifier and PoP attribute identifier and optional modifications and localIdentifier.
- * @param identifier - identifier of the measure
- * @param popAttributeIdentifier - identifier of the PoP attribute
+ * @param measureId - identifier of the measure
+ * @param popAttributeId - identifier of the PoP attribute
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_$\{identifier\}_$\{popAttributeIdentifier\}'
  * @public
  */
 export function newPopMeasure(
-    identifier: string,
-    popAttributeIdentifier: string,
+    measureId: string,
+    popAttributeId: string,
     modifications: MeasureModifications<PoPMeasureBuilder> = identity,
-    localIdentifier = `m_${identifier}_${popAttributeIdentifier}`,
 ): IMeasure<IPoPMeasureDefinition> {
-    const builder = new PoPMeasureBuilder(identifier, localIdentifier, popAttributeIdentifier);
+    const builder = new PoPMeasureBuilder(measureId, popAttributeId);
     return modifications(builder).build();
 }
 
 /**
  * Creates a new Previous Period measure with the specified measure identifier and date data sets and optional modifications and localIdentifier.
- * @param measureIdentifier - identifier of the measure to create Previous Period measure for
+ * @param measureId - identifier of the measure to create Previous Period measure for
  * @param dateDataSets - date data sets to use in the Previous Period calculation
  * @param modifications - optional modifications (e.g. alias, title, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'm_$\{measureIdentifier\}_previous_period'
  * @public
  */
 export function newPreviousPeriodMeasure(
-    measureIdentifier: string,
+    measureId: string,
     dateDataSets: IPreviousPeriodDateDataSetSimple[],
     modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
-    localIdentifier = `m_${measureIdentifier}_previous_period`,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
-    const builder = new PreviousPeriodMeasureBuilder(measureIdentifier, localIdentifier, dateDataSets);
+    const builder = new PreviousPeriodMeasureBuilder(measureId, dateDataSets);
     return modifications(builder).build();
 }

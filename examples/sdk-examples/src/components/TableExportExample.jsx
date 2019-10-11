@@ -30,21 +30,15 @@ export class TableExportExample extends Component {
 
     render() {
         const measures = [
-            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
-            newMeasure(
-                franchiseFeesAdRoyaltyIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesAdRoyaltyIdentifier",
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesInitialFranchiseFeeIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesInitialFranchiseFeeIdentifier",
+            newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesIdentifierOngoingRoyalty,
-                m => m.format("#,##0"),
-                "franchiseFeesIdentifierOngoingRoyalty",
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
             ),
         ];
 
@@ -71,7 +65,7 @@ export class TableExportExample extends Component {
             },
         ];
 
-        const attributes = [newAttribute(monthDateIdentifier, undefined, "month")];
+        const attributes = [newAttribute(monthDateIdentifier, a => a.localId("month"))];
 
         const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 

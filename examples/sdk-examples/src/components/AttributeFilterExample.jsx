@@ -89,7 +89,7 @@ export class AttributeFilterExample extends Component {
             m
                 .format("#,##0")
                 .alias("$ Total Sales")
-                .localIdentifier("totalSales"),
+                .localId("totalSales"),
         );
 
         const locationResort = newAttribute(locationResortIdentifier);

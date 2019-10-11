@@ -33,33 +33,38 @@ export class ArithmeticMeasureSumExample extends Component {
         };
 
         const measures = [
-            newMeasure(
-                franchiseFeesAdRoyaltyIdentifier,
-                m => m.format("#,##0"),
-                localIdentifiers.franchiseFeesAdRoyalty,
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.franchiseFeesAdRoyalty),
             ),
-            newMeasure(
-                franchiseFeesIdentifierOngoingRoyalty,
-                m => m.format("#,##0"),
-                localIdentifiers.franchiseFeesOngoingRoyalty,
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId(localIdentifiers.franchiseFeesOngoingRoyalty),
             ),
             newArithmeticMeasure(
                 [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
                 "sum",
-                m => m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),
-                localIdentifiers.franchiseFeesSum,
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Sum")
+                        .localId(localIdentifiers.franchiseFeesSum),
             ),
             newArithmeticMeasure(
                 [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
                 "sum",
-                m => m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),
-                localIdentifiers.franchiseFeesSum,
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Sum")
+                        .localId(localIdentifiers.franchiseFeesSum),
             ),
             newArithmeticMeasure(
                 [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
                 "difference",
-                m => m.format("#,##0").title("$ Ongoing / Ad Royalty Difference"),
-                localIdentifiers.franchiseFeesDifference,
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Difference")
+                        .localId(localIdentifiers.franchiseFeesDifference),
             ),
         ];
 

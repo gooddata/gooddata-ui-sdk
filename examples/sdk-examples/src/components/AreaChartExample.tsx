@@ -23,25 +23,19 @@ const localIdentifiers = {
     monthDate: "monthDate",
 };
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), localIdentifiers.franchiseFees),
-    newMeasure(
-        franchiseFeesAdRoyaltyIdentifier,
-        m => m.format("#,##0"),
-        localIdentifiers.franchiseFeesAdRoyalty,
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId(localIdentifiers.franchiseFees)),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+        m.format("#,##0").localId(localIdentifiers.franchiseFeesAdRoyalty),
     ),
-    newMeasure(
-        franchiseFeesInitialFranchiseFeeIdentifier,
-        m => m.format("#,##0"),
-        localIdentifiers.franchiseFeesInitialFranchiseFee,
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+        m.format("#,##0").localId(localIdentifiers.franchiseFeesInitialFranchiseFee),
     ),
-    newMeasure(
-        franchiseFeesIdentifierOngoingRoyalty,
-        m => m.format("#,##0"),
-        localIdentifiers.franchiseFeesIdentifierOngoingRoyalty,
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+        m.format("#,##0").localId(localIdentifiers.franchiseFeesIdentifierOngoingRoyalty),
     ),
 ];
 
-const viewBy = newAttribute(monthDateIdentifier, undefined, localIdentifiers.monthDate);
+const viewBy = newAttribute(monthDateIdentifier, a => a.localId(localIdentifiers.monthDate));
 
 const style = { height: 300 };
 

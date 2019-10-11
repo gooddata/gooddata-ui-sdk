@@ -62,6 +62,7 @@ const addStringBuilderSegment = (identifier: string, helperName = identifier) =>
 const addAggregation = addStringBuilderSegment("aggregation");
 const addAlias = addStringBuilderSegment("alias");
 const addFormat = addStringBuilderSegment("format");
+const addLocalId = addStringBuilderSegment("localIdentifier", "localId");
 const addTitle = addStringBuilderSegment("title");
 
 const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
@@ -77,15 +78,14 @@ const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Con
 
 // converters for each supported object to Model notation string
 const convertAttribute: Converter<IAttribute> = ({ attribute }) => {
-    const builder = getBuilder("a => a", [addAlias(attribute)]);
-    return `newAttribute("${getObjQualifierValue(attribute.displayForm)}", ${builder}, "${
-        attribute.localIdentifier
-    }")`;
+    const builder = getBuilder("a => a", [addAlias(attribute), addLocalId(attribute)]);
+    return `newAttribute("${getObjQualifierValue(attribute.displayForm)}", ${builder})`;
 };
 
 const baseMeasureDotAdders = (measure: IMeasure["measure"]) => [
     addAlias(measure),
     addFormat(measure),
+    addLocalId(measure),
     addTitle(measure),
 ];
 
@@ -96,23 +96,21 @@ const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasure
         addFilters(definition.measureDefinition),
         addRatio(definition.measureDefinition),
     ]);
-    return `newMeasure("${getObjQualifierValue(definition.measureDefinition.item)}", ${builder}, "${
-        measure.localIdentifier
-    }")`;
+    return `newMeasure("${getObjQualifierValue(definition.measureDefinition.item)}", ${builder})`;
 };
 
 const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) => {
     const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
     return `newArithmeticMeasure(${stringify(definition.arithmeticMeasure.measureIdentifiers)}, "${
         definition.arithmeticMeasure.operator
-    }", ${builder}, "${measure.localIdentifier}")`;
+    }", ${builder})`;
 };
 
 const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasureDefinition) => {
     const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
     return `newPopMeasure("${definition.popMeasureDefinition.measureIdentifier}", "${getObjQualifierValue(
         definition.popMeasureDefinition.popAttribute,
-    )}", ${builder}, "${measure.localIdentifier}")`;
+    )}", ${builder})`;
 };
 
 const convertPreviousPeriodMeasure = (
@@ -129,7 +127,7 @@ const convertPreviousPeriodMeasure = (
                     periodsAgo: s.periodsAgo,
                 }),
             )
-            .join(ARRAY_JOINER)}], ${builder}, "${measure.localIdentifier}")`;
+            .join(ARRAY_JOINER)}], ${builder})`;
 };
 
 const convertMeasure: Converter<IMeasure> = ({ measure }) => {

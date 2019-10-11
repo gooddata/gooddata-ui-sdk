@@ -27,29 +27,21 @@ import {
 import { createColumnTotal } from "../utils/helpers";
 import { ElementWithParam } from "./utils/ElementWithParam";
 
-const measureFranchiseFees = newMeasure(franchiseFeesIdentifier, undefined, franchiseFeesIdentifier);
-const measureAdRoyalty = newMeasure(
-    franchiseFeesAdRoyaltyIdentifier,
-    undefined,
-    franchiseFeesAdRoyaltyIdentifier,
+const measureFranchiseFees = newMeasure(franchiseFeesIdentifier, m => m.localId(franchiseFeesIdentifier));
+const measureAdRoyalty = newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+    m.localId(franchiseFeesAdRoyaltyIdentifier),
 );
-const attributeLocationState = newAttribute(
-    locationStateDisplayFormIdentifier,
-    undefined,
-    locationStateDisplayFormIdentifier,
+const attributeLocationState = newAttribute(locationStateDisplayFormIdentifier, a =>
+    a.localId(locationStateDisplayFormIdentifier),
 );
-const attributeLocationName = newAttribute(
-    locationNameDisplayFormIdentifier,
-    undefined,
-    locationNameDisplayFormIdentifier,
+const attributeLocationName = newAttribute(locationNameDisplayFormIdentifier, a =>
+    a.localId(locationNameDisplayFormIdentifier),
 );
-const attributeMenuCategory = newAttribute(
-    menuCategoryAttributeDFIdentifier,
-    undefined,
-    menuCategoryAttributeDFIdentifier,
+const attributeMenuCategory = newAttribute(menuCategoryAttributeDFIdentifier, a =>
+    a.localId(menuCategoryAttributeDFIdentifier),
 );
-const attributeQuarter = newAttribute(quarterDateIdentifier, undefined, quarterDateIdentifier);
-const attributeMonth = newAttribute(monthDateIdentifier, undefined, monthDateIdentifier);
+const attributeQuarter = newAttribute(quarterDateIdentifier, a => a.localId(quarterDateIdentifier));
+const attributeMonth = newAttribute(monthDateIdentifier, a => a.localId(monthDateIdentifier));
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -240,10 +232,11 @@ const filterPresets = {
     },
 };
 
-const franchiseFeesCalifornia = newMeasure(
-    franchiseFeesIdentifier,
-    m => m.alias("FranchiseFees (California)").filters(filterPresets.attributeCalifornia.filterItem),
-    "franchiseFeesCalifornia",
+const franchiseFeesCalifornia = newMeasure(franchiseFeesIdentifier, m =>
+    m
+        .alias("FranchiseFees (California)")
+        .filters(filterPresets.attributeCalifornia.filterItem)
+        .localId("franchiseFeesCalifornia"),
 );
 
 const sortingPresets = {

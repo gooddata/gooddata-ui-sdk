@@ -19,7 +19,7 @@ export const MeasureSortingExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={projectId}
-                measures={[newMeasure(totalSalesIdentifier, undefined, totalSalesIdentifier)]}
+                measures={[newMeasure(totalSalesIdentifier, m => m.localId(totalSalesIdentifier))]}
                 viewBy={newAttribute(monthDateIdentifier)}
                 sortBy={[newMeasureSort(totalSalesIdentifier, "desc")]}
             />

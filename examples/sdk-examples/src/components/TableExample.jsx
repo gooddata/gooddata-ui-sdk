@@ -27,21 +27,15 @@ export class TableExample extends Component {
 
     render() {
         const measures = [
-            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
-            newMeasure(
-                franchiseFeesAdRoyaltyIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesAdRoyaltyIdentifier",
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesInitialFranchiseFeeIdentifier,
-                m => m.format("#,##0"),
-                "franchiseFeesInitialFranchiseFeeIdentifier",
+            newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
             ),
-            newMeasure(
-                franchiseFeesIdentifierOngoingRoyalty,
-                m => m.format("#,##0"),
-                "franchiseFeesIdentifierOngoingRoyalty",
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
             ),
         ];
 
@@ -68,7 +62,7 @@ export class TableExample extends Component {
             },
         ];
 
-        const attributes = [newAttribute(monthDateIdentifier, undefined, "month")];
+        const attributes = [newAttribute(monthDateIdentifier, a => a.localId("month"))];
 
         return (
             <div style={{ height: 300 }} className="s-table">

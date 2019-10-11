@@ -30,7 +30,7 @@ export class PivotTableSortingExample extends Component {
         const attributes = [
             newAttribute(locationStateDisplayFormIdentifier),
             newAttribute(locationNameDisplayFormIdentifier),
-            newAttribute(menuCategoryAttributeDFIdentifier, undefined, "menu"),
+            newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
         ];
 
         const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];

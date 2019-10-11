@@ -20,10 +20,8 @@ export const AttributeSortingExample: React.FC = () => {
                 backend={backend}
                 workspace={projectId}
                 measures={[newMeasure(totalSalesIdentifier)]}
-                viewBy={newAttribute(
-                    locationCityDisplayFormIdentifier,
-                    undefined,
-                    locationCityDisplayFormIdentifier,
+                viewBy={newAttribute(locationCityDisplayFormIdentifier, a =>
+                    a.localId(locationCityDisplayFormIdentifier),
                 )}
                 sortBy={[newAttributeSort(locationCityDisplayFormIdentifier, "desc")]}
             />

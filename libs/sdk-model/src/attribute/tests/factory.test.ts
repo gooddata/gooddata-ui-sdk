@@ -29,7 +29,7 @@ describe("attribute factory", () => {
             expect(newAttribute("foo", a => a.alias("alias"))).toEqual(expected);
         });
 
-        it("should return an attribute with a custom localIdentifier", () => {
+        it("should return an attribute with a custom localId", () => {
             const expected: IAttribute = {
                 attribute: {
                     displayForm: {
@@ -38,7 +38,7 @@ describe("attribute factory", () => {
                     localIdentifier: "custom",
                 },
             };
-            expect(newAttribute("foo", undefined, "custom")).toEqual(expected);
+            expect(newAttribute("foo", a => a.localId("custom"))).toEqual(expected);
         });
     });
 });

@@ -20,7 +20,7 @@ interface IDynamicMeasuresExampleState {
 }
 
 const getNewMeasureDefinition = (measureItem: any, index: number) => {
-    return newMeasure(measureItem.link, m => m.format("#,##0"), `m${index}`);
+    return newMeasure(measureItem.link, m => m.format("#,##0").localId(`m${index}`));
 };
 
 const getMeasureListByTag = (tag: string) => sdk.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`);

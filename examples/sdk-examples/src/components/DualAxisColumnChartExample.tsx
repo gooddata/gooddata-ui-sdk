@@ -16,19 +16,23 @@ const totalCostsLocalIdentifier = "totalCosts";
 const totalSalesLocalIdentifier = "totalSales";
 const locationStateLocalIdentifier = "locationState";
 
-const totalCosts = newMeasure(
-    totalCostsIdentifier,
-    m => m.format("#,##0").alias("$ Total Costs"),
-    totalCostsLocalIdentifier,
+const totalCosts = newMeasure(totalCostsIdentifier, m =>
+    m
+        .format("#,##0")
+        .alias("$ Total Costs")
+        .localId(totalCostsLocalIdentifier),
 );
 
-const totalSales = newMeasure(
-    totalSalesIdentifier,
-    m => m.format("#,##0").alias("$ Total Sales"),
-    totalSalesLocalIdentifier,
+const totalSales = newMeasure(totalSalesIdentifier, m =>
+    m
+        .format("#,##0")
+        .alias("$ Total Sales")
+        .localId(totalSalesLocalIdentifier),
 );
 
-const localState = newAttribute(locationStateDisplayFormIdentifier, undefined, locationStateLocalIdentifier);
+const localState = newAttribute(locationStateDisplayFormIdentifier, a =>
+    a.localId(locationStateLocalIdentifier),
+);
 
 const config = {
     secondary_yaxis: {

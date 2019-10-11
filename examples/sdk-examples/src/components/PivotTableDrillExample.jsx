@@ -19,29 +19,27 @@ import {
 } from "../utils/fixtures";
 
 const measures = [
-    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"), "franchiseFeesIdentifier"),
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0"), "franchiseFeesAdRoyaltyIdentifier"),
-    newMeasure(
-        franchiseFeesInitialFranchiseFeeIdentifier,
-        m => m.format("#,##0"),
-        "franchiseFeesInitialFranchiseFeeIdentifier",
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
     ),
-    newMeasure(
-        franchiseFeesIdentifierOngoingRoyalty,
-        m => m.format("#,##0"),
-        "franchiseFeesIdentifierOngoingRoyalty",
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
+    ),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
     ),
 ];
 
 const attributes = [
-    newAttribute(locationStateDisplayFormIdentifier, undefined, "state"),
-    newAttribute(locationNameDisplayFormIdentifier, undefined, "name"),
-    newAttribute(menuCategoryAttributeDFIdentifier, undefined, "menu"),
+    newAttribute(locationStateDisplayFormIdentifier, a => a.localId("state")),
+    newAttribute(locationNameDisplayFormIdentifier, a => a.localId("name")),
+    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
 ];
 
 const columns = [
-    newAttribute(quarterDateIdentifier, undefined, "quarter"),
-    newAttribute(monthDateIdentifier, undefined, "month"),
+    newAttribute(quarterDateIdentifier, a => a.localId("quarter")),
+    newAttribute(monthDateIdentifier, a => a.localId("month")),
 ];
 
 const totals = [

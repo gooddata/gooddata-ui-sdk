@@ -9,17 +9,17 @@ import {
 
 /**
  * Creates a new positive attribute filter.
- * @param identifier - identifier of the attribute display form to filter on
+ * @param displayFormId - identifier of the attribute display form to filter on
  * @param inValues - values to filter for
  * @public
  */
 export function newPositiveAttributeFilter(
-    identifier: string,
+    displayFormId: string,
     inValues: AttributeElements,
 ): IPositiveAttributeFilter {
     return {
         positiveAttributeFilter: {
-            displayForm: { identifier },
+            displayForm: { identifier: displayFormId },
             in: inValues,
         },
     };
@@ -27,17 +27,17 @@ export function newPositiveAttributeFilter(
 
 /**
  * Creates a new negative attribute filter.
- * @param identifier - identifier of the attribute display form to filter on
+ * @param displayFormId - identifier of the attribute display form to filter on
  * @param notInValues - values to filter out
  * @public
  */
 export function newNegativeAttributeFilter(
-    identifier: string,
+    displayFormId: string,
     notInValues: string[] | AttributeElements,
 ): INegativeAttributeFilter {
     return {
         negativeAttributeFilter: {
-            displayForm: { identifier },
+            displayForm: { identifier: displayFormId },
             notIn: notInValues as AttributeElements,
         },
     };
@@ -45,15 +45,15 @@ export function newNegativeAttributeFilter(
 
 /**
  * Creates a new absolute date filter.
- * @param identifier - identifier of the date data set to filter on
+ * @param dateDataSetId - identifier of the date data set to filter on
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
  * @public
  */
-export function newAbsoluteDateFilter(identifier: string, from: string, to: string): IAbsoluteDateFilter {
+export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter {
     return {
         absoluteDateFilter: {
-            dataSet: { identifier },
+            dataSet: { identifier: dateDataSetId },
             from,
             to,
         },
@@ -62,21 +62,21 @@ export function newAbsoluteDateFilter(identifier: string, from: string, to: stri
 
 /**
  * Creates a new relative date filter.
- * @param identifier - identifier of the date data set to filter on
+ * @param dateDataSetId - identifier of the date data set to filter on
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @public
  */
 export function newRelativeDateFilter(
-    identifier: string,
+    dateDataSetId: string,
     granularity: string,
     from: number,
     to: number,
 ): IRelativeDateFilter {
     return {
         relativeDateFilter: {
-            dataSet: { identifier },
+            dataSet: { identifier: dateDataSetId },
             granularity,
             from,
             to,

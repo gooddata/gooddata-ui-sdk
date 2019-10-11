@@ -187,9 +187,9 @@ export class DrillWithExternalDataExample extends React.Component {
     };
 
     getMeasure = (identifier, localIdentifier, alias) =>
-        newMeasure(identifier, m => m.alias(alias), localIdentifier);
+        newMeasure(identifier, m => m.alias(alias).localId(localIdentifier));
 
-    getAttribute = (identifier, localIdentifier) => newAttribute(identifier, undefined, localIdentifier);
+    getAttribute = (identifier, localIdentifier) => newAttribute(identifier, a => a.localId(localIdentifier));
 
     renderEmployeeDetails = employeeData => {
         if (employeeData.isError) {

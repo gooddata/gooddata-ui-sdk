@@ -54,12 +54,10 @@ export class ArithmeticMeasureDrillingExample extends Component {
         };
 
         const measures = [
-            newMeasure(
-                numberOfRestaurantsIdentifier,
-                m => m.format("#,##0"),
-                localIdentifiers.numberOfRestaurants,
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
             ),
-            newMeasure(totalSalesIdentifier, m => m.format("#,##0"), localIdentifiers.totalSales),
+            newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
             newArithmeticMeasure(
                 [localIdentifiers.totalSales, localIdentifiers.numberOfRestaurants],
                 "ratio",

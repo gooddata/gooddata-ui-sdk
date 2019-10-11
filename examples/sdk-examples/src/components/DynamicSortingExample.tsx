@@ -227,12 +227,10 @@ export const DynamicSortingExample: React.FC = () => {
                 <ColumnChart
                     backend={backend}
                     workspace={projectId}
-                    measures={[newMeasure(totalSalesIdentifier, undefined, totalSalesIdentifier)]}
-                    viewBy={newAttribute(monthDateIdentifier, undefined, monthDateIdentifier)}
-                    stackBy={newAttribute(
-                        locationStateDisplayFormIdentifier,
-                        undefined,
-                        locationStateDisplayFormIdentifier,
+                    measures={[newMeasure(totalSalesIdentifier, m => m.localId(totalSalesIdentifier))]}
+                    viewBy={newAttribute(monthDateIdentifier, a => a.localId(monthDateIdentifier))}
+                    stackBy={newAttribute(locationStateDisplayFormIdentifier, a =>
+                        a.localId(locationStateDisplayFormIdentifier),
                     )}
                     sortBy={sortOption.sortBy(direction)}
                 />

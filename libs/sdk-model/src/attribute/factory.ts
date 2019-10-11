@@ -5,10 +5,10 @@ import { IAttribute } from ".";
 class AttributeBuilder implements IAttribute {
     public attribute: IAttribute["attribute"];
 
-    constructor(displayFormIdentifier: string, localIdentifier: string) {
+    constructor(displayFormId: string) {
         this.attribute = {
-            displayForm: { identifier: displayFormIdentifier },
-            localIdentifier,
+            displayForm: { identifier: displayFormId },
+            localIdentifier: `a_${displayFormId}`,
         };
     }
 
@@ -17,8 +17,8 @@ class AttributeBuilder implements IAttribute {
         return this;
     };
 
-    public localIdentifier = (localIdentifier: string) => {
-        this.attribute.localIdentifier = localIdentifier;
+    public localId = (localId: string) => {
+        this.attribute.localIdentifier = localId;
         return this;
     };
 
@@ -31,16 +31,14 @@ type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
 
 /**
  * Creates a new attribute with the specified display form identifier and optional modifications and localIdentifier.
- * @param identifier - identifier of the attribute display form
+ * @param displayFormId - identifier of the attribute display form
  * @param modifications - optional modifications (e.g. alias, etc.)
- * @param localIdentifier - optional local identifier, defaults to 'a_$\{identifier\}'
  * @public
  */
 export function newAttribute(
-    identifier: string,
+    displayFormId: string,
     modifications: AttributeModifications = identity,
-    localIdentifier = `a_${identifier}`,
 ): IAttribute {
-    const builder = new AttributeBuilder(identifier, localIdentifier);
+    const builder = new AttributeBuilder(displayFormId);
     return modifications(builder).build();
 }

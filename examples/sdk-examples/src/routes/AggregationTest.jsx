@@ -16,7 +16,7 @@ import {
     projectId,
 } from "../utils/fixtures";
 
-const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum"), totalSalesIdentifier);
+const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum").localId(totalSalesIdentifier));
 
 const locationResort = newAttribute(locationResortIdentifier);
 const month = newAttribute(monthDateIdentifier);
@@ -26,7 +26,7 @@ const franchiseFeesMeasures = [
     franchiseFeesAdRoyaltyIdentifier,
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
-].map(identifier => newMeasure(identifier, m => m.aggregation("sum"), identifier));
+].map(identifier => newMeasure(identifier, m => m.aggregation("sum").localId(identifier)));
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {

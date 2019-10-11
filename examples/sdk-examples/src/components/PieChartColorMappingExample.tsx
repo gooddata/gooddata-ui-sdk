@@ -15,16 +15,14 @@ import {
 import { useBackend } from "../backend";
 
 const measures = [
-    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0"), "franchiseFeesAdRoyaltyIdentifier"),
-    newMeasure(
-        franchiseFeesInitialFranchiseFeeIdentifier,
-        m => m.format("#,##0"),
-        "franchiseFeesInitialFranchiseFeeIdentifier",
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
     ),
-    newMeasure(
-        franchiseFeesIdentifierOngoingRoyalty,
-        m => m.format("#,##0"),
-        "franchiseFeesIdentifierOngoingRoyalty",
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
+    ),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
     ),
 ];
 

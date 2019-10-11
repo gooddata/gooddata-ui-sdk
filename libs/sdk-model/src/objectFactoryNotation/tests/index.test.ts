@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import { factoryNotationFor } from "..";
 import { IAttribute } from "../../attribute";
-import { newAttribute } from "../../attribute/factories";
+import { newAttribute } from "../../attribute/factory";
 import { IMeasure } from "../../measure";
 import {
     newMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-} from "../../measure/factories";
+} from "../../measure/factory";
 import {
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
@@ -20,7 +20,7 @@ import {
     newRelativeDateFilter,
     newPositiveAttributeFilter,
     newNegativeAttributeFilter,
-} from "../../filter/factories";
+} from "../../filter/factory";
 import { IAttributeSortItem, newAttributeSort, newMeasureSort, IMeasureSortItem } from "../../base/sort";
 
 // object with all the factory functions to be DI'd into the testing function

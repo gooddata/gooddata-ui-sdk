@@ -55,7 +55,7 @@ describe("measure factories", () => {
                     localIdentifier: "custom",
                 },
             };
-            expect(newMeasure("foo", undefined, "custom")).toEqual(expected);
+            expect(newMeasure("foo", m => m.localId("custom"))).toEqual(expected);
         });
         it("should return a measure with format", () => {
             const expected: IMeasure<IMeasureDefinition> = {
