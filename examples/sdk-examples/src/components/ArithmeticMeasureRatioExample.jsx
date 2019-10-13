@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -26,27 +27,27 @@ export class ArithmeticMeasureRatioExample extends Component {
     render() {
         const localIdentifiers = {
             numberOfRestaurants: "numberOfRestaurants",
-            averageRestaurantDailyCosts: "averageRestaurantDailyCosts",
+            totalSales: "totalSales",
             averageRestaurantSales: "averageRestaurantSales",
         };
 
         const measures = [
-            Model.measure(numberOfRestaurantsIdentifier)
-                .localIdentifier(localIdentifiers.numberOfRestaurants)
-                .format("#,##0"),
-            Model.measure(totalSalesIdentifier)
-                .localIdentifier(localIdentifiers.averageRestaurantDailyCosts)
-                .format("#,##0"),
-            Model.arithmeticMeasure(
-                [localIdentifiers.numberOfRestaurants, localIdentifiers.averageRestaurantDailyCosts],
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
+            ),
+            newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
+            newArithmeticMeasure(
+                [localIdentifiers.numberOfRestaurants, localIdentifiers.totalSales],
                 "ratio",
-            )
-                .localIdentifier(localIdentifiers.averageRestaurantSales)
-                .format("#,##0")
-                .title("$ Avg State Daily Sales"),
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Avg State Daily Sales")
+                        .localId(localIdentifiers.averageRestaurantSales),
+            ),
         ];
 
-        const attributes = [Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(locationStateDisplayFormIdentifier)];
 
         return (
             <div style={{ height: 200 }} className="s-table">

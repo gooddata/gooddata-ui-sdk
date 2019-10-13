@@ -1,32 +1,64 @@
 // (C) 2019 GoodData Corporation
-import { getModelNotationFor } from "../objectToModelNotation";
-import * as Model from "../index";
+import { factoryNotationFor } from "..";
+import { IAttribute } from "../../attribute";
+import { newAttribute } from "../../attribute/factory";
+import { IMeasure } from "../../measure";
 import {
-    IAttribute,
-    IMeasure,
-    IAttributeSortItem,
-    IMeasureSortItem,
+    newMeasure,
+    newArithmeticMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "../../measure/factory";
+import {
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
     IAbsoluteDateFilter,
     IRelativeDateFilter,
-} from "@gooddata/sdk-model";
+} from "../../filter";
+import {
+    newAbsoluteDateFilter,
+    newRelativeDateFilter,
+    newPositiveAttributeFilter,
+    newNegativeAttributeFilter,
+} from "../../filter/factory";
+import { IAttributeSortItem, newAttributeSort, newMeasureSort, IMeasureSortItem } from "../../base/sort";
+
+// object with all the factory functions to be DI'd into the testing function
+const factories = {
+    newAttribute,
+
+    newMeasure,
+    newArithmeticMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+
+    newAbsoluteDateFilter,
+    newRelativeDateFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+
+    newAttributeSort,
+    newMeasureSort,
+};
 
 /**
  * Makes sure that evaluating the model notation results in the provided object.
- * @param modelNotation
+ * @param factoryNotation
  * @param expected
  */
-const testModelNotation = (modelNotation: string, expected: any) => {
+const testModelNotation = (factoryNotation: string, expected: any) => {
     // tslint:disable-next-line: function-constructor We need this to perform the test and since this is in test code this should be OK.
-    const f = new Function("Model", `return ${modelNotation}`);
-    const actual = f(Model);
+    const f = new Function(
+        "factories",
+        `const {${Object.keys(factories).join(",")}} = factories;  return ${factoryNotation}`,
+    );
+    const actual = f(factories);
     expect(actual).toMatchObject(expected);
 };
 
-describe("getModelNotationFor", () => {
+describe("factoryNotationFor", () => {
     describe("unknown objects", () => {
-        it.each([
+        const testCases: Array<[any, any]> = [
             [undefined, undefined],
             [null, null],
             [true, true],
@@ -34,8 +66,9 @@ describe("getModelNotationFor", () => {
             [42, 42],
             [[], "[]"],
             [{ foo: "bar" }, '{foo: "bar"}'],
-        ])(`should not touch irrelevant input %p`, (value: any, expectedValue: any) => {
-            expect(getModelNotationFor(value)).toEqual(expectedValue);
+        ];
+        it.each(testCases)(`should not touch irrelevant input %p`, (value: any, expectedValue: any) => {
+            expect(factoryNotationFor(value)).toEqual(expectedValue);
         });
     });
     describe("attributes", () => {
@@ -48,19 +81,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
-            testModelNotation(actual, input);
-        });
-        it("should handle attribute with uri", () => {
-            const input: IAttribute = {
-                attribute: {
-                    displayForm: {
-                        uri: "/gdc/md/PROJECT/obj/42",
-                    },
-                    localIdentifier: "bar",
-                },
-            };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle attribute with alias", () => {
@@ -73,7 +94,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -91,7 +112,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with alias", () => {
@@ -108,7 +129,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with format", () => {
@@ -125,7 +146,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with title", () => {
@@ -142,7 +163,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with computeRatio: true", () => {
@@ -159,7 +180,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with aggregation", () => {
@@ -176,7 +197,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure with a filter", () => {
@@ -202,7 +223,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -219,7 +240,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -236,9 +257,10 @@ describe("getModelNotationFor", () => {
                         },
                     },
                     localIdentifier: "bar",
+                    alias: "alias",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -262,7 +284,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic previous period measure without dataSets", () => {
@@ -277,7 +299,7 @@ describe("getModelNotationFor", () => {
                     localIdentifier: "bar",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -289,7 +311,7 @@ describe("getModelNotationFor", () => {
                     direction: "asc",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle attribute sort item with aggregation", () => {
@@ -300,7 +322,7 @@ describe("getModelNotationFor", () => {
                     aggregation: "sum",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic measure sort item", () => {
@@ -316,7 +338,7 @@ describe("getModelNotationFor", () => {
                     ],
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle measure sort item with attribute locators", () => {
@@ -338,7 +360,7 @@ describe("getModelNotationFor", () => {
                     ],
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });
@@ -352,7 +374,7 @@ describe("getModelNotationFor", () => {
                     in: { uris: ["a", "b", "c"] },
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle textual positive attribute filter", () => {
@@ -364,7 +386,7 @@ describe("getModelNotationFor", () => {
                     in: { values: ["a", "b", "c"] },
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic negative attribute filter", () => {
@@ -376,7 +398,7 @@ describe("getModelNotationFor", () => {
                     notIn: { values: ["a", "b", "c"] },
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic absolute date filter", () => {
@@ -389,7 +411,7 @@ describe("getModelNotationFor", () => {
                     to: "2019-12-31",
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
         it("should handle basic relative date filter", () => {
@@ -403,7 +425,7 @@ describe("getModelNotationFor", () => {
                     to: 42,
                 },
             };
-            const actual = getModelNotationFor(input);
+            const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
     });

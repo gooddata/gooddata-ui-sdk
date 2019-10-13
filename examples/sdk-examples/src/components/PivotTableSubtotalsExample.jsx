@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { PivotTable, Model } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -20,24 +21,22 @@ import {
 export class PivotTableSubtotalsExample extends Component {
     render() {
         const measures = [
-            Model.measure(franchiseFeesIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifier"),
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
+            ),
+            newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+                m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
+            ),
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
+            ),
         ];
 
         const attributes = [
-            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState"),
-            Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("locationName"),
-            Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
+            newAttribute(locationStateDisplayFormIdentifier),
+            newAttribute(locationNameDisplayFormIdentifier, a => a.localId("locationName")),
+            newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
         ];
 
         const totals = [
@@ -63,10 +62,7 @@ export class PivotTableSubtotalsExample extends Component {
             },
         ];
 
-        const columns = [
-            Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
-            Model.attribute(monthDateIdentifier).localIdentifier("month"),
-        ];
+        const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
 
         return (
             <div style={{ height: 500 }} className="s-pivot-table-row-grouping">

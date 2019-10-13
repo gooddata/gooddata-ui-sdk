@@ -1,11 +1,18 @@
-// (C) 2018 GoodData Corporation
-import { positiveAttributeFilter, attributeFilter } from "../filters";
-import { measure, arithmeticMeasure, popMeasure, previousPeriodMeasure } from "../measures";
+// (C) 2019 GoodData Corporation
+import { newPositiveAttributeFilter } from "../../filter/factory";
+import { newArithmeticMeasure, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
+import {
+    IMeasure,
+    IMeasureDefinition,
+    IArithmeticMeasureDefinition,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+} from "..";
 
-describe("Measures", () => {
-    describe("measure", () => {
+describe("measure factories", () => {
+    describe("newMeasure", () => {
         it("should return a simple measure", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -14,12 +21,13 @@ describe("Measures", () => {
                             },
                         },
                     },
+                    localIdentifier: "m_foo",
                 },
             };
-            expect(measure("foo")).toMatchObject(expected);
+            expect(newMeasure("foo")).toEqual(expected);
         });
         it("should return a measure with alias", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     alias: "bar",
                     definition: {
@@ -29,12 +37,13 @@ describe("Measures", () => {
                             },
                         },
                     },
+                    localIdentifier: "m_foo",
                 },
             };
-            expect(measure("foo").alias("bar")).toMatchObject(expected);
+            expect(newMeasure("foo", m => m.alias("bar"))).toEqual(expected);
         });
         it("should return a measure with custom localIdentifier", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -46,10 +55,10 @@ describe("Measures", () => {
                     localIdentifier: "custom",
                 },
             };
-            expect(measure("foo").localIdentifier("custom")).toMatchObject(expected);
+            expect(newMeasure("foo", m => m.localId("custom"))).toEqual(expected);
         });
         it("should return a measure with format", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -59,12 +68,13 @@ describe("Measures", () => {
                         },
                     },
                     format: "bar",
+                    localIdentifier: "m_foo",
                 },
             };
-            expect(measure("foo").format("bar")).toMatchObject(expected);
+            expect(newMeasure("foo", m => m.format("bar"))).toEqual(expected);
         });
         it("should return a measure with title", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     title: "bar",
                     definition: {
@@ -74,12 +84,13 @@ describe("Measures", () => {
                             },
                         },
                     },
+                    localIdentifier: "m_foo",
                 },
             };
-            expect(measure("foo").title("bar")).toMatchObject(expected);
+            expect(newMeasure("foo", m => m.title("bar"))).toEqual(expected);
         });
         it("should return a measure with a filter", () => {
-            const expected = {
+            const expected: IMeasure<IMeasureDefinition> = {
                 measure: {
                     definition: {
                         measureDefinition: {
@@ -98,58 +109,35 @@ describe("Measures", () => {
                             ],
                         },
                     },
+                    localIdentifier: "m_foo",
                 },
             };
-            expect(measure("foo").filters(positiveAttributeFilter("filter", ["baz"]))).toMatchObject(
-                expected,
-            );
-        });
-
-        it("should return a measure with a text filter", () => {
-            const expected = {
-                measure: {
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                identifier: "foo",
-                            },
-                            filters: [
-                                {
-                                    positiveAttributeFilter: {
-                                        displayForm: {
-                                            identifier: "filter",
-                                        },
-                                        in: { values: ["val1"] },
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            };
-            expect(measure("foo").filters(attributeFilter("filter").in("val1"))).toMatchObject(expected);
+            expect(
+                newMeasure("foo", m => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
+            ).toEqual(expected);
         });
     });
 
-    describe("arithmeticMeasure", () => {
+    describe("newArithmeticMeasure", () => {
         it("should return a simple arithmetic measure", () => {
-            const expected = {
+            const expected: IMeasure<IArithmeticMeasureDefinition> = {
                 measure: {
                     definition: {
                         arithmeticMeasure: {
-                            measureIdentifiers: ["foo"],
+                            measureIdentifiers: ["foo", "bar"],
                             operator: "sum",
                         },
                     },
+                    localIdentifier: "m_foo_bar",
                 },
             };
-            expect(arithmeticMeasure(["foo"], "sum")).toMatchObject(expected);
+            expect(newArithmeticMeasure(["foo", "bar"], "sum")).toEqual(expected);
         });
     });
 
-    describe("popMeasure", () => {
+    describe("newPopMeasure", () => {
         it("should return a simple PoP measure", () => {
-            const expected = {
+            const expected: IMeasure<IPoPMeasureDefinition> = {
                 measure: {
                     definition: {
                         popMeasureDefinition: {
@@ -157,30 +145,16 @@ describe("Measures", () => {
                             popAttribute: { identifier: "attr" },
                         },
                     },
+                    localIdentifier: "m_foo_attr",
                 },
             };
-            expect(popMeasure("foo", "attr")).toMatchObject(expected);
+            expect(newPopMeasure("foo", "attr")).toEqual(expected);
         });
     });
 
-    describe("previousPeriodMeasure", () => {
-        it("should return a simple PP measure when supplied with ObjectQualifiers", () => {
-            const expected = {
-                measure: {
-                    definition: {
-                        previousPeriodMeasure: {
-                            measureIdentifier: "foo",
-                            dateDataSets: [{ dataSet: { identifier: "bar" }, periodsAgo: 3 }],
-                        },
-                    },
-                },
-            };
-            expect(
-                previousPeriodMeasure("foo", [{ dataSet: { identifier: "bar" }, periodsAgo: 3 }]),
-            ).toMatchObject(expected);
-        });
+    describe("newPreviousPeriodMeasure", () => {
         it("should return a simple PP measure when supplied with strings", () => {
-            const expected = {
+            const expected: IMeasure<IPreviousPeriodMeasureDefinition> = {
                 measure: {
                     definition: {
                         previousPeriodMeasure: {
@@ -188,9 +162,10 @@ describe("Measures", () => {
                             dateDataSets: [{ dataSet: { identifier: "bar" }, periodsAgo: 3 }],
                         },
                     },
+                    localIdentifier: "m_foo_previous_period",
                 },
             };
-            expect(previousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])).toMatchObject(expected);
+            expect(newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])).toEqual(expected);
         });
     });
 });

@@ -5,21 +5,18 @@ import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
 import stringifyObject = require("stringify-object");
+import { ObjQualifier } from "../base";
 import {
+    isMeasureLocator,
     IAttributeLocatorItem,
-    ObjQualifier,
-    IAttribute,
-    IMeasure,
-    IMeasureDefinition,
-    IArithmeticMeasureDefinition,
-    IPoPMeasureDefinition,
-    IPreviousPeriodMeasureDefinition,
-    isMeasureDefinition,
-    isArithmeticMeasureDefinition,
-    isPreviousPeriodMeasureDefinition,
-    isPoPMeasureDefinition,
+    isAttributeSort,
+    isMeasureSort,
+    IAttributeSortItem,
+    IMeasureSortItem,
     IMeasureLocatorItem,
-    isMeasure,
+} from "../base/sort";
+import {
+    IFilter,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isPositiveAttributeFilter,
@@ -28,15 +25,20 @@ import {
     IRelativeDateFilter,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
-    isAttribute,
-    isMeasureSort,
-    isAttributeSort,
-    isMeasureLocator,
-    IMeasureSortItem,
-    IAttributeSortItem,
-    LocatorItem,
-    IFilter,
-} from "@gooddata/sdk-model";
+} from "../filter";
+import {
+    isMeasureDefinition,
+    isArithmeticMeasureDefinition,
+    isPoPMeasureDefinition,
+    isPreviousPeriodMeasureDefinition,
+    isMeasure,
+    IMeasure,
+    IMeasureDefinition,
+    IArithmeticMeasureDefinition,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+} from "../measure";
+import { isAttribute, IAttribute } from "../attribute";
 
 const stringify = (input: any) =>
     stringifyObject(input, {
@@ -49,85 +51,84 @@ const ARRAY_JOINER = ", ";
 
 const getObjQualifierValue = (value: ObjQualifier): string => (value as any).uri || (value as any).identifier;
 
+type Converter<T> = (input: T) => string;
+
 // dot suffix handling e. g. ".localIdentifier(...)"
 // is curried explicitly to allow easier composition in cases where more than one dot suffix is supported
-const addStringDotItem = (identifier: string, helperName = identifier) => (objToConvert: any) => (
+const addStringBuilderSegment = (identifier: string, helperName = identifier) => (objToConvert: any) => (
     value: string,
 ) => (objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value);
 
-const addAggregation = addStringDotItem("aggregation");
-const addAlias = addStringDotItem("alias");
-const addFormat = addStringDotItem("format");
-const addLocalIdentifier = addStringDotItem("localIdentifier");
-const addTitle = addStringDotItem("title");
+const addAggregation = addStringBuilderSegment("aggregation");
+const addAlias = addStringBuilderSegment("alias");
+const addFormat = addStringBuilderSegment("format");
+const addLocalId = addStringBuilderSegment("localIdentifier", "localId");
+const addTitle = addStringBuilderSegment("title");
 
 const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
-    filters ? `${value}.filters(${filters.map(getModelNotationFor).join(ARRAY_JOINER)})` : value;
-
-const addLocators = ({ locators }: { locators?: LocatorItem[] }) => (value: string) => {
-    const attributeLocators = locators.filter(l => !isMeasureLocator(l)) as IAttributeLocatorItem[];
-    return attributeLocators && attributeLocators.length
-        ? `${value}.attributeLocators(${attributeLocators
-              .map(a => stringify(a.attributeLocatorItem))
-              .join(ARRAY_JOINER)})`
-        : value;
-};
+    filters ? `${value}.filters(${filters.map(factoryNotationFor).join(ARRAY_JOINER)})` : value;
 
 const addRatio = ({ computeRatio }: { computeRatio?: boolean }) => (value: string) =>
     computeRatio ? `${value}.ratio()` : value;
 
+const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Converter<T>>) => {
+    const builder = flow(builderSegmentHandlers)(defaultBuilder);
+    return builder === defaultBuilder ? "undefined" : builder;
+};
+
 // converters for each supported object to Model notation string
-type Converter<T> = (input: T) => string;
-const convertAttribute: Converter<IAttribute> = ({ attribute }) =>
-    flow([addAlias(attribute), addLocalIdentifier(attribute)])(
-        `Model.attribute("${getObjQualifierValue(attribute.displayForm)}")`,
-    );
+const convertAttribute: Converter<IAttribute> = ({ attribute }) => {
+    const builder = getBuilder("a => a", [addAlias(attribute), addLocalId(attribute)]);
+    return `newAttribute("${getObjQualifierValue(attribute.displayForm)}", ${builder})`;
+};
 
 const baseMeasureDotAdders = (measure: IMeasure["measure"]) => [
     addAlias(measure),
     addFormat(measure),
-    addLocalIdentifier(measure),
+    addLocalId(measure),
     addTitle(measure),
 ];
 
-const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasureDefinition) =>
-    flow([
+const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasureDefinition) => {
+    const builder = getBuilder("m => m", [
         ...baseMeasureDotAdders(measure),
         addAggregation(definition.measureDefinition),
         addFilters(definition.measureDefinition),
         addRatio(definition.measureDefinition),
-    ])(`Model.measure("${getObjQualifierValue(definition.measureDefinition.item)}")`);
+    ]);
+    return `newMeasure("${getObjQualifierValue(definition.measureDefinition.item)}", ${builder})`;
+};
 
-const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) =>
-    flow(baseMeasureDotAdders(measure))(
-        `Model.arithmeticMeasure(${stringify(definition.arithmeticMeasure.measureIdentifiers)}, "${
-            definition.arithmeticMeasure.operator
-        }")`,
-    );
+const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) => {
+    const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
+    return `newArithmeticMeasure(${stringify(definition.arithmeticMeasure.measureIdentifiers)}, "${
+        definition.arithmeticMeasure.operator
+    }", ${builder})`;
+};
 
-const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasureDefinition) =>
-    flow(baseMeasureDotAdders(measure))(
-        `Model.popMeasure("${definition.popMeasureDefinition.measureIdentifier}", "${getObjQualifierValue(
-            definition.popMeasureDefinition.popAttribute,
-        )}")`,
-    );
+const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasureDefinition) => {
+    const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
+    return `newPopMeasure("${definition.popMeasureDefinition.measureIdentifier}", "${getObjQualifierValue(
+        definition.popMeasureDefinition.popAttribute,
+    )}", ${builder})`;
+};
 
 const convertPreviousPeriodMeasure = (
     measure: IMeasure["measure"],
     definition: IPreviousPeriodMeasureDefinition,
-) =>
-    flow(baseMeasureDotAdders(measure))(
-        `Model.previousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${definition
-            .previousPeriodMeasure.dateDataSets &&
-            definition.previousPeriodMeasure.dateDataSets
-                .map(s =>
-                    stringify({
-                        dataSet: getObjQualifierValue(s.dataSet),
-                        periodsAgo: s.periodsAgo,
-                    }),
-                )
-                .join(ARRAY_JOINER)}])`,
-    );
+) => {
+    const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
+    return `newPreviousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${definition
+        .previousPeriodMeasure.dateDataSets &&
+        definition.previousPeriodMeasure.dateDataSets
+            .map(s =>
+                stringify({
+                    dataSet: getObjQualifierValue(s.dataSet),
+                    periodsAgo: s.periodsAgo,
+                }),
+            )
+            .join(ARRAY_JOINER)}], ${builder})`;
+};
 
 const convertMeasure: Converter<IMeasure> = ({ measure }) => {
     const { definition } = measure;
@@ -140,51 +141,61 @@ const convertMeasure: Converter<IMeasure> = ({ measure }) => {
     } else if (isPreviousPeriodMeasureDefinition(definition)) {
         return convertPreviousPeriodMeasure(measure, definition);
     }
+    throw new Error("Unknown measure type");
 };
 
 const convertAttributeSortItem: Converter<IAttributeSortItem> = ({ attributeSortItem }) =>
-    addAggregation(attributeSortItem)(
-        `Model.attributeSortItem("${attributeSortItem.attributeIdentifier}", "${attributeSortItem.direction}")`,
-    );
+    `newAttributeSort("${attributeSortItem.attributeIdentifier}", "${
+        attributeSortItem.direction
+    }", ${!!attributeSortItem.aggregation})`;
 
 const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }) => {
-    const measureLocator = measureSortItem.locators.find(l => isMeasureLocator(l)) as IMeasureLocatorItem;
-    return addLocators(measureSortItem)(
-        `Model.measureSortItem("${measureLocator.measureLocatorItem.measureIdentifier}", "${measureSortItem.direction}")`,
-    );
+    const locators = measureSortItem.locators || [];
+    const measureLocator = locators.find(l => isMeasureLocator(l)) as IMeasureLocatorItem;
+    const attributeLocators = locators.filter(l => !isMeasureLocator(l)) as IAttributeLocatorItem[];
+    const unwrappedAttributeLocators = attributeLocators.map(a => a.attributeLocatorItem);
+
+    return `newMeasureSort("${measureLocator.measureLocatorItem.measureIdentifier}", "${
+        measureSortItem.direction
+    }", ${stringify(unwrappedAttributeLocators)})`;
 };
 
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
     absoluteDateFilter: { dataSet, from, to },
 }) => {
     const args = [getObjQualifierValue(dataSet), from, to].filter(identity).map(stringify);
-    return `Model.absoluteDateFilter(${args.join(ARRAY_JOINER)})`;
+    return `newAbsoluteDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
     const args = [getObjQualifierValue(dataSet), granularity, from, to].filter(identity).map(stringify);
-    return `Model.relativeDateFilter(${args.join(ARRAY_JOINER)})`;
+    return `newRelativeDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({
     positiveAttributeFilter: { displayForm, in: inValues },
 }) => {
     const args = [getObjQualifierValue(displayForm), inValues].filter(identity).map(stringify);
-    return `Model.positiveAttributeFilter(${args.join(ARRAY_JOINER)})`;
+    return `newPositiveAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
     negativeAttributeFilter: { displayForm, notIn },
 }) => {
     const args = [getObjQualifierValue(displayForm), notIn].filter(identity).map(stringify);
-    return `Model.negativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
+    return `newNegativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
-export const getModelNotationFor = (data: any): string => {
+/**
+ * Returns a code for generating the provided input using convenience factory methods where possible.
+ * @param data - data to return the generating code for
+ * @public
+ */
+export const factoryNotationFor = (data: any): string => {
     if (isArray(data)) {
-        return `[${data.map(getModelNotationFor).join(ARRAY_JOINER)}]`;
+        return `[${data.map(factoryNotationFor).join(ARRAY_JOINER)}]`;
     } else if (isAttribute(data)) {
         return convertAttribute(data);
     } else if (isMeasure(data)) {

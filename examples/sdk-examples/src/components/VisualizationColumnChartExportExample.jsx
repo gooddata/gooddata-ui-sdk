@@ -1,14 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
 import "@gooddata/sdk-ui/styles/css/main.css";
-import { Model, Visualization } from "@gooddata/sdk-ui";
+import { Visualization } from "@gooddata/sdk-ui";
+import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import ExampleWithExport from "./utils/ExampleWithExport";
 
 import { columnVisualizationIdentifier, dateDataSetUri, projectId } from "../utils/fixtures";
 
 export class VisualizationColumnChartExportExample extends Component {
     render() {
-        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+        const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
             <ExampleWithExport>

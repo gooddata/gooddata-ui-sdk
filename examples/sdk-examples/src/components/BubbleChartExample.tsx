@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { BubbleChart, Model } from "@gooddata/sdk-ui";
+import { BubbleChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -13,17 +14,13 @@ import {
 } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const xMeasure = Model.measure(franchiseFeesIdentifier)
-    .format("#,##0")
-    .localIdentifier("franchiseFees");
+const xMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"));
 
-const yMeasure = Model.measure(franchisedSalesIdentifier)
-    .format("#,##0")
-    .localIdentifier("franchisedSales");
+const yMeasure = newMeasure(franchisedSalesIdentifier, m => m.format("#,##0"));
 
-const size = Model.measure(averageCheckSizeByServer).localIdentifier("averageCheckSizeByServer");
+const size = newMeasure(averageCheckSizeByServer);
 
-const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+const locationResort = newAttribute(locationResortIdentifier);
 
 const style = { height: 300 };
 

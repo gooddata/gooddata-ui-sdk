@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { PieChart, Model } from "@gooddata/sdk-ui";
+import { PieChart } from "@gooddata/sdk-ui";
+import { newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -29,15 +30,9 @@ const chartConfig = {
 const legendItemStyle = { display: "flex", margin: "10px 0", cursor: "pointer" };
 
 const measures = [
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .localIdentifier("franchiseFeesAdRoyaltyIdentifier")
-        .format("#,##0"),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier")
-        .format("#,##0"),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .localIdentifier("franchiseFeesIdentifierOngoingRoyalty")
-        .format("#,##0"),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
 ];
 
 const style = { height: 300 };
@@ -81,7 +76,7 @@ export const CustomLegendExample: React.FC = () => {
                 </div>
             )}
             <div style={style} className="s-pie-chart">
-                {/* 
+                {/*
                 // @ts-ignore */}
                 <PieChart
                     backend={backend}

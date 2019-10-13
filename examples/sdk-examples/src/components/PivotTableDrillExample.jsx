@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { PivotTable, HeaderPredicateFactory, Model } from "@gooddata/sdk-ui";
+import { PivotTable, HeaderPredicateFactory } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -18,29 +19,27 @@ import {
 } from "../utils/fixtures";
 
 const measures = [
-    Model.measure(franchiseFeesIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesIdentifier"),
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0").localId("franchiseFeesIdentifier")),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesAdRoyaltyIdentifier"),
+    ),
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m =>
+        m.format("#,##0").localId("franchiseFeesInitialFranchiseFeeIdentifier"),
+    ),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+        m.format("#,##0").localId("franchiseFeesIdentifierOngoingRoyalty"),
+    ),
 ];
 
 const attributes = [
-    Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("state"),
-    Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("name"),
-    Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
+    newAttribute(locationStateDisplayFormIdentifier, a => a.localId("state")),
+    newAttribute(locationNameDisplayFormIdentifier, a => a.localId("name")),
+    newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
 ];
 
 const columns = [
-    Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
-    Model.attribute(monthDateIdentifier).localIdentifier("month"),
+    newAttribute(quarterDateIdentifier, a => a.localId("quarter")),
+    newAttribute(monthDateIdentifier, a => a.localId("month")),
 ];
 
 const totals = [

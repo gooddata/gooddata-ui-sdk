@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LineChart, Model } from "@gooddata/sdk-ui";
+import { LineChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -17,21 +18,13 @@ import { CUSTOM_COLOR_PALETTE } from "../utils/colors";
 import { useBackend } from "../backend";
 
 const measures = [
-    Model.measure(franchiseFeesIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFees"),
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesAdRoyalty"),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesInitialFranchiseFee"),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesOngoingRoyalty"),
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
 ];
 
-const trendBy = Model.attribute(monthDateIdentifier).localIdentifier("a1");
+const trendBy = newAttribute(monthDateIdentifier);
 
 const chartConfig = { colorPalette: CUSTOM_COLOR_PALETTE };
 

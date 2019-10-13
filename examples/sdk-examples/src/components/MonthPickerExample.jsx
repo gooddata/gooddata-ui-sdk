@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { PureComponent } from "react";
-import { ColumnChart, ErrorComponent, Model } from "@gooddata/sdk-ui";
+import { ColumnChart, ErrorComponent } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
@@ -78,12 +79,9 @@ export class MonthPickerExample extends PureComponent {
     render() {
         const { from, to, error } = this.state;
 
-        const totalSales = Model.measure(totalSalesIdentifier)
-            .format("#,##0")
-            .alias("$ Total Sales")
-            .localIdentifier("totalSales");
+        const totalSales = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-        const locationResort = Model.attribute(monthOfYearDateIdentifier).localIdentifier("monthOfYearDate");
+        const locationResort = newAttribute(monthOfYearDateIdentifier);
 
         const filters = [
             {

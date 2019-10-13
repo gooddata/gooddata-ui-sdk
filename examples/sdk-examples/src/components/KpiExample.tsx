@@ -1,13 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-import React, { Component } from "react";
-import { Kpi, Model } from "@gooddata/sdk-ui";
+import React from "react";
+import { Kpi } from "@gooddata/sdk-ui";
+import { newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const totalSales = Model.measure(totalSalesIdentifier);
+const totalSales = newMeasure(totalSalesIdentifier);
 
 export const KpiExample = () => {
     const backend = useBackend();

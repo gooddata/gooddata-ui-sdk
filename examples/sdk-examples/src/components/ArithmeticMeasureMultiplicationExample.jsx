@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -31,22 +32,24 @@ export class ArithmeticMeasureMultiplicationExample extends Component {
         };
 
         const measures = [
-            Model.measure(numberOfRestaurantsIdentifier)
-                .localIdentifier(localIdentifiers.numberOfRestaurants)
-                .format("#,##0"),
-            Model.measure(averageRestaurantDailyCostsIdentifier)
-                .localIdentifier(localIdentifiers.averageRestaurantDailyCosts)
-                .format("#,##0"),
-            Model.arithmeticMeasure(
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
+            ),
+            newMeasure(averageRestaurantDailyCostsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.averageRestaurantDailyCosts),
+            ),
+            newArithmeticMeasure(
                 [localIdentifiers.numberOfRestaurants, localIdentifiers.averageRestaurantDailyCosts],
                 "multiplication",
-            )
-                .localIdentifier(localIdentifiers.averageStateDailyCosts)
-                .format("#,##0")
-                .title("$ Avg State Daily Costs"),
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Avg State Daily Costs")
+                        .localId(localIdentifiers.averageStateDailyCosts),
+            ),
         ];
 
-        const attributes = [Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(locationStateDisplayFormIdentifier)];
 
         return (
             <div style={{ height: 200 }} className="s-table">

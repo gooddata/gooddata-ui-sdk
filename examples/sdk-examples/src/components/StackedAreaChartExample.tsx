@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { AreaChart, Model } from "@gooddata/sdk-ui";
+import { AreaChart } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -15,21 +16,13 @@ import {
 import { useBackend } from "../backend";
 
 const measures = [
-    Model.measure(franchiseFeesIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFees"),
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesAdRoyalty"),
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesInitialFranchiseFee"),
-    Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesOngoingRoyalty"),
+    newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
+    newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
 ];
 
-const viewBy = Model.attribute(monthDateIdentifier).localIdentifier("month");
+const viewBy = newAttribute(monthDateIdentifier);
 
 const chartConfig = {
     stacking: true,

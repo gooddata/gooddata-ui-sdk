@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Heatmap, Model } from "@gooddata/sdk-ui";
+import { Heatmap } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -12,14 +13,11 @@ import {
 } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const totalSales = Model.measure(totalSalesIdentifier)
-    .format("#,##0")
-    .alias("$ Total Sales")
-    .localIdentifier("totalSales");
+const totalSales = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-const menuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menuCategory");
+const menuCategory = newAttribute(menuCategoryAttributeDFIdentifier);
 
-const locationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState");
+const locationState = newAttribute(locationStateDisplayFormIdentifier);
 
 const style = { height: 300 };
 

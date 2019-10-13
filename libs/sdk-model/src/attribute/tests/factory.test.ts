@@ -1,8 +1,8 @@
-// (C) 2018 GoodData Corporation
-import { attribute } from "../attributes";
-import { IAttribute } from "@gooddata/sdk-model";
+// (C) 2019 GoodData Corporation
+import { newAttribute } from "../factory";
+import { IAttribute } from "..";
 
-describe("Attributes", () => {
+describe("attribute factory", () => {
     describe("visualizationAttribute", () => {
         it("should return a simple attribute", () => {
             const expected: IAttribute = {
@@ -10,26 +10,26 @@ describe("Attributes", () => {
                     displayForm: {
                         identifier: "foo",
                     },
-                    localIdentifier: "va_0",
+                    localIdentifier: "a_foo",
                 },
             };
-            expect(attribute("foo")).toMatchObject(expected);
+            expect(newAttribute("foo")).toEqual(expected);
         });
 
-        it("should return a simple attribute with alias", () => {
+        it("should return an attribute with an alias", () => {
             const expected: IAttribute = {
                 attribute: {
                     alias: "alias",
                     displayForm: {
                         identifier: "foo",
                     },
-                    localIdentifier: "va_1",
+                    localIdentifier: "a_foo",
                 },
             };
-            expect(attribute("foo").alias("alias")).toMatchObject(expected);
+            expect(newAttribute("foo", a => a.alias("alias"))).toEqual(expected);
         });
 
-        it("should return a simple attribute with custom localIdentifier", () => {
+        it("should return an attribute with a custom localId", () => {
             const expected: IAttribute = {
                 attribute: {
                     displayForm: {
@@ -38,7 +38,7 @@ describe("Attributes", () => {
                     localIdentifier: "custom",
                 },
             };
-            expect(attribute("foo").localIdentifier("custom")).toMatchObject(expected);
+            expect(newAttribute("foo", a => a.localId("custom"))).toEqual(expected);
         });
     });
 });

@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Table, HeaderPredicateFactory, Model } from "@gooddata/sdk-ui";
+import { Table, HeaderPredicateFactory } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -53,22 +54,18 @@ export class ArithmeticMeasureDrillingExample extends Component {
         };
 
         const measures = [
-            Model.measure(numberOfRestaurantsIdentifier)
-                .localIdentifier(localIdentifiers.numberOfRestaurants)
-                .format("#,##0"),
-            Model.measure(totalSalesIdentifier)
-                .localIdentifier(localIdentifiers.totalSales)
-                .format("#,##0"),
-            Model.arithmeticMeasure(
+            newMeasure(numberOfRestaurantsIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.numberOfRestaurants),
+            ),
+            newMeasure(totalSalesIdentifier, m => m.format("#,##0").localId(localIdentifiers.totalSales)),
+            newArithmeticMeasure(
                 [localIdentifiers.totalSales, localIdentifiers.numberOfRestaurants],
                 "ratio",
-            )
-                .localIdentifier(localIdentifiers.averageRestaurantSales)
-                .format("#,##0")
-                .title("$ Avg Restaurant Sales"),
+                m => m.format("#,##0").title("$ Avg Restaurant Sales"),
+            ),
         ];
 
-        const attributes = [Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(locationStateDisplayFormIdentifier)];
 
         const drillNotificationComponent = () => {
             const averageSales = drillEvent.drillContext.row[drillEvent.drillContext.columnIndex];

@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { Executor, LoadingComponent, ErrorComponent, Model } from "@gooddata/sdk-ui";
+import { Executor, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { newAttribute } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
@@ -30,8 +31,8 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
         .workspace(projectId)
         .execution()
         .forItems([
-            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState"),
-            Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("location"),
+            newAttribute(locationStateDisplayFormIdentifier),
+            newAttribute(locationNameDisplayFormIdentifier),
         ]);
 
     return (

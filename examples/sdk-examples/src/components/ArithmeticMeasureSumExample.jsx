@@ -1,7 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React, { Component } from "react";
-import { Table, Model } from "@gooddata/sdk-ui";
+import { Table } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -32,29 +33,42 @@ export class ArithmeticMeasureSumExample extends Component {
         };
 
         const measures = [
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .localIdentifier(localIdentifiers.franchiseFeesAdRoyalty)
-                .format("#,##0"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-                .localIdentifier(localIdentifiers.franchiseFeesOngoingRoyalty)
-                .format("#,##0"),
-            Model.arithmeticMeasure(
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
+                m.format("#,##0").localId(localIdentifiers.franchiseFeesAdRoyalty),
+            ),
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m =>
+                m.format("#,##0").localId(localIdentifiers.franchiseFeesOngoingRoyalty),
+            ),
+            newArithmeticMeasure(
                 [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
                 "sum",
-            )
-                .localIdentifier(localIdentifiers.franchiseFeesSum)
-                .format("#,##0")
-                .title("$ Ongoing / Ad Royalty Sum"),
-            Model.arithmeticMeasure(
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Sum")
+                        .localId(localIdentifiers.franchiseFeesSum),
+            ),
+            newArithmeticMeasure(
+                [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
+                "sum",
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Sum")
+                        .localId(localIdentifiers.franchiseFeesSum),
+            ),
+            newArithmeticMeasure(
                 [localIdentifiers.franchiseFeesOngoingRoyalty, localIdentifiers.franchiseFeesAdRoyalty],
                 "difference",
-            )
-                .localIdentifier(localIdentifiers.franchiseFeesDifference)
-                .format("#,##0")
-                .title("$ Ongoing / Ad Royalty Difference"),
+                m =>
+                    m
+                        .format("#,##0")
+                        .title("$ Ongoing / Ad Royalty Difference")
+                        .localId(localIdentifiers.franchiseFeesDifference),
+            ),
         ];
 
-        const attributes = [Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("month")];
+        const attributes = [newAttribute(locationStateDisplayFormIdentifier)];
 
         return (
             <div style={{ height: 200 }} className="s-table">

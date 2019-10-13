@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { Headline, Model } from "@gooddata/sdk-ui";
+import { Headline } from "@gooddata/sdk-ui";
+import { newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -18,13 +19,9 @@ export class HeadlineExample extends Component {
     }
 
     render() {
-        const primaryMeasure = Model.measure(franchiseFeesIdentifier)
-            .format("#,##0")
-            .localIdentifier("franchiseFees");
+        const primaryMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"));
 
-        const secondaryMeasure = Model.measure(franchiseFeesAdRoyaltyIdentifier)
-            .format("#,##0")
-            .localIdentifier("franchiseFeesAdRoyalty");
+        const secondaryMeasure = newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0"));
 
         return (
             <div className="s-headline" style={{ display: "flex" }}>

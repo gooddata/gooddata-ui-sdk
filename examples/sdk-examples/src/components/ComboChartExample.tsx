@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ComboChart, Model } from "@gooddata/sdk-ui";
+import { ComboChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -12,19 +13,11 @@ import {
 } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const columnMeasures = [
-    Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
-];
+const columnMeasures = [newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0"))];
 
-const lineMeasures = [
-    Model.measure(franchiseFeesAdRoyaltyIdentifier)
-        .format("#,##0")
-        .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
-];
+const lineMeasures = [newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0"))];
 
-const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("location_resort");
+const locationResort = newAttribute(locationResortIdentifier);
 
 const style = { height: 300 };
 

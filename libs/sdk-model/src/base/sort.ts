@@ -238,12 +238,14 @@ export function newAttributeSort(
  *
  * @param measureOrId - measure to sort by
  * @param sortDirection - asc or desc
+ * @param attributeLocators - optional attribute locators
  * @returns always new instance
  * @public
  */
 export function newMeasureSort(
     measureOrId: IMeasure | string,
     sortDirection: SortDirection,
+    attributeLocators: Array<IAttributeLocatorItem["attributeLocatorItem"]> = [],
 ): IMeasureSortItem {
     const id: string = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
 
@@ -251,6 +253,7 @@ export function newMeasureSort(
         measureSortItem: {
             direction: sortDirection,
             locators: [
+                ...attributeLocators.map(attributeLocatorItem => ({ attributeLocatorItem })),
                 {
                     measureLocatorItem: {
                         measureIdentifier: id,

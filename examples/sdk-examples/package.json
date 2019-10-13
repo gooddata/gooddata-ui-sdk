@@ -61,6 +61,7 @@
         "@gooddata/goodstrap": "^63.1.1",
         "@gooddata/sdk-backend-bear": "file:../../libs/sdk-backend-bear",
         "@gooddata/sdk-backend-spi": "file:../../libs/sdk-backend-spi",
+        "@gooddata/sdk-model": "file:../../libs/sdk-model",
         "@gooddata/sdk-ui": "file:../../libs/sdk-ui",
         "@types/node": "^12.7.7",
         "babel-polyfill": "^6.26.0",

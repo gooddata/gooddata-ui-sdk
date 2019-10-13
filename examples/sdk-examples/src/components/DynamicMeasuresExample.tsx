@@ -1,13 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import {
-    LineChart,
-    ColumnChart,
-    ErrorComponent,
-    LoadingComponent,
-    Model,
-    IChartConfig,
-} from "@gooddata/sdk-ui";
+import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, IChartConfig } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute } from "@gooddata/sdk-model";
+
 import sdk from "@gooddata/gd-bear-client";
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -24,10 +19,8 @@ interface IDynamicMeasuresExampleState {
     };
 }
 
-const getNewMeasureDefinition = (measureItem, index) => {
-    return Model.measure(measureItem.link)
-        .format("#,##0")
-        .localIdentifier(`m${index}`);
+const getNewMeasureDefinition = (measureItem: any, index: number) => {
+    return newMeasure(measureItem.link, m => m.format("#,##0").localId(`m${index}`));
 };
 
 const getMeasureListByTag = (tag: string) => sdk.xhr.get(`/gdc/md/${projectId}/tags/${franchiseFeesTag}`);
@@ -146,7 +139,7 @@ export const DynamicMeasuresExample: React.FC = () => {
         const measures = selectedMeasures.map(getNewMeasureDefinition);
 
         if (selectedMeasures.length) {
-            const attribute = Model.attribute(monthDateIdentifier).localIdentifier("month");
+            const attribute = newAttribute(monthDateIdentifier);
 
             content = (
                 <div className="graph-wrapper">

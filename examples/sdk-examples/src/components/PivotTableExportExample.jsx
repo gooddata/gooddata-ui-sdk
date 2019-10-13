@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { PivotTable, Model } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui";
+import { newMeasure, newAttribute, newAttributeSort, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
@@ -23,34 +24,23 @@ import {
 export class PivotTableExportExample extends Component {
     render() {
         const measures = [
-            Model.measure(franchiseFeesIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFees"),
-            Model.measure(franchiseFeesAdRoyaltyIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesAdRoyalty"),
-            Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesInitialFranchiseFee"),
-            Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-                .format("#,##0")
-                .localIdentifier("franchiseFeesOngoingRoyalty"),
+            newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),
+            newMeasure(franchiseFeesAdRoyaltyIdentifier, m => m.format("#,##0")),
+            newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0")),
+            newMeasure(franchiseFeesIdentifierOngoingRoyalty, m => m.format("#,##0")),
         ];
 
         const attributes = [
-            Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("locationState"),
-            Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("locationName"),
-            Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
+            newAttribute(locationStateDisplayFormIdentifier),
+            newAttribute(locationNameDisplayFormIdentifier),
+            newAttribute(menuCategoryAttributeDFIdentifier, a => a.localId("menu")),
         ];
 
-        const columns = [
-            Model.attribute(quarterDateIdentifier).localIdentifier("quarter"),
-            Model.attribute(monthDateIdentifier).localIdentifier("month"),
-        ];
+        const columns = [newAttribute(quarterDateIdentifier), newAttribute(monthDateIdentifier)];
 
-        const sortBy = [Model.attributeSortItem("menu", "asc")];
+        const sortBy = [newAttributeSort("menu", "asc")];
 
-        const filters = [Model.absoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
+        const filters = [newAbsoluteDateFilter(dateDataSetUri, "2017-01-01", "2017-12-31")];
 
         return (
             <ExampleWithExport>

@@ -1,18 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { BarChart, Model } from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, locationResortIdentifier, projectId } from "../utils/fixtures";
 import { useBackend } from "../backend";
 
-const amount = Model.measure(totalSalesIdentifier)
-    .format("#,##0")
-    .alias("$ Total Sales")
-    .localIdentifier("totalSales");
+const amount = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 
-const locationResort = Model.attribute(locationResortIdentifier).localIdentifier("locationResort");
+const locationResort = newAttribute(locationResortIdentifier);
 
 const style = { height: 300 };
 
