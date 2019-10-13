@@ -244,7 +244,7 @@ class AuthProviderCallGuard implements IAuthenticationProvider {
 }
 
 function isNotAuthenticatedError(err: any): boolean {
-    return isApiResponseError(err) && err.response === 401;
+    return isApiResponseError(err) && err.response.status === 401;
 }
 
 function currentProfileToPrincipalInformation(obj: any): AuthenticatedPrincipal {
