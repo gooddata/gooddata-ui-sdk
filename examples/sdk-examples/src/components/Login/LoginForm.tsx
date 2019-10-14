@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2019 GoodData Corporation
 import React from "react";
 import { Link } from "react-router-dom";
 import { withFormik, FormikProps } from "formik";
 import Yup from "yup";
-import CustomLoading from "./CustomLoading";
-import CustomError from "./CustomError";
+import CustomLoading from "../utils/CustomLoading";
+import CustomError from "../utils/CustomError";
 
 interface IFormValues {
     email?: string;
@@ -12,11 +12,11 @@ interface IFormValues {
 }
 
 interface ILoginProps {
-    email: string;
-    password: string;
+    email?: string;
+    password?: string;
     isLoading: boolean;
     apiError: string | null;
-    logIn: (email: string, password: string) => Promise<void>;
+    logIn: (email: string, password: string) => Promise<any>;
 }
 
 const enhance = withFormik<ILoginProps, IFormValues>({
@@ -58,7 +58,7 @@ export const LoginFormUncontrolled: React.FC<ILoginProps & FormikProps<IFormValu
     return (
         <div className="Login">
             {/* language=CSS */}
-            <style jsx>{`
+            <style jsx={true}>{`
                 .Login {
                     max-width: 400px;
                     margin: 20px auto;

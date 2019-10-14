@@ -18,7 +18,7 @@ import MultipleDomains from "./MultipleDomains";
 import DrillWithExternalData from "./DrillWithExternalData";
 import PivotTableDrilling from "./PivotTableDrilling";
 import Registration from "./Registration";
-import Login from "./Login";
+import { Login } from "../components/Login/Login";
 // import PivotTable from "./PivotTable";
 // import PivotTableDemo from "./PivotTableDemo";
 // import PivotTableDynamic from "./PivotTableDynamic";

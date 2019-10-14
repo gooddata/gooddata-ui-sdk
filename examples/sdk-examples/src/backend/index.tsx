@@ -1,11 +1,11 @@
-import React, { createContext, useContext } from 'react';
+// (C) 2019 GoodData Corporation
+import React, { createContext, useContext } from "react";
+import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
+import { ENV_CREDENTIALS } from "../constants";
 
-import bearFactory from '@gooddata/sdk-backend-bear';
-
-const username = process.env.GD_USERNAME;
-const password = process.env.GD_PASSWORD;
-
-export const backend = bearFactory().withCredentials(username, password);
+export const backend = bearFactory().withAuthentication(
+    new FixedLoginAndPasswordAuthProvider(ENV_CREDENTIALS.username, ENV_CREDENTIALS.password),
+);
 
 export const BackendContext = createContext(bearFactory());
 
