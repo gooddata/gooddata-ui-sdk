@@ -300,6 +300,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/catalog-export",
+            "projectFolder": "tools/catalog-export",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/schema-gen",
             "projectFolder": "tools/schema-gen",
             "reviewCategory": "tools",
