@@ -117,6 +117,7 @@ export type Catalog = {
 };
 
 export type ProjectMetadata = {
+    projectId: string;
     catalog: Catalog;
     dateDataSets: DateDataSet[];
     insights: ObjectMeta[];

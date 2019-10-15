@@ -95,10 +95,12 @@ async function run() {
 
         const filePath = path.resolve(output || (await requestFilePath()));
 
-        exportMetadataToCatalog(projectId, filePath);
+        await exportMetadataToCatalog(projectId, filePath);
 
         logSuccess("All data have been successfuly exported");
         logBox(chalk`The result is located at {bold ${filePath}}`);
+
+        process.exit(0);
     } catch (err) {
         if (isCatalogExportError(err)) {
             logError(`${err.message}`);

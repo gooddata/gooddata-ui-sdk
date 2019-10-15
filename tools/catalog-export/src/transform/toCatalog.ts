@@ -38,6 +38,7 @@ interface IDataSet {
 }
 
 interface ICatalog {
+    projectId: string;
     measures?: TitleToItemMap;
     visualizations: TitleToItemMap;
     attributes: IAttrs;
@@ -196,6 +197,7 @@ export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog
     const visualizations = createVisualizations(projectMeta);
 
     const newCatalog: ICatalog = {
+        projectId: projectMeta.projectId,
         ...measuresProp,
         attributes,
         visualizations,

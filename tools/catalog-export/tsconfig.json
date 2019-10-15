@@ -10,8 +10,7 @@
         "strictNullChecks": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "resolveJsonModule": true
+        "noImplicitReturns": true
     },
     "exclude": ["node_modules", "dist"]
 }

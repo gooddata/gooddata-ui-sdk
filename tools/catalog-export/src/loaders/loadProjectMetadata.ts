@@ -29,6 +29,7 @@ export async function loadProjectMetadata(projectId: string): Promise<ProjectMet
         spinner.succeed("Insights loaded");
 
         return {
+            projectId,
             catalog,
             dateDataSets,
             insights,
