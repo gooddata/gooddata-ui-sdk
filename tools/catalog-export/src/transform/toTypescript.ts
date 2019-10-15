@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { Attribute, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
+import { Attribute, DateDataSet, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -9,27 +9,75 @@ import {
     VariableStatementStructure,
 } from "ts-morph";
 import { createUniqueVariableName, TakenNamesMap } from "./titles";
+import { flatMap } from "lodash";
 
-type TypescriptOutput = {
+export type TypescriptOutput = {
     project: Project;
     sourceFile: SourceFile;
 };
 
-let TakenVariableNames: TakenNamesMap = {};
+//
+// Internal functions to build variable names for various
+//
+
+let GlobalNameScope: TakenNamesMap = {};
+
+type NamingStrategy = (title: string, scope: TakenNamesMap) => string;
+
+type AttributeNaming = {
+    attribute: NamingStrategy;
+    displayForm: NamingStrategy;
+};
+
+const DefaultNaming: AttributeNaming = {
+    attribute: uniqueVariable,
+    displayForm: uniqueVariable,
+};
+
+const DateDataSetNaming: AttributeNaming = {
+    attribute: dateAttributeSwitcharoo,
+    displayForm: dateDisplayFormStrip,
+};
 
 /**
  * This is a wrapper on top of createUniqueVariableName() which mutates the input map of used
  * variable names.
  *
  * @param title - md object title
- * @param takenMap - map of taken names, defaults to the global TakenVariableNames
+ * @param nameScope - scope containing already taken variable names, defaults to global scope
  */
-function uniqueVariable(title: string, takenMap: TakenNamesMap = TakenVariableNames): string {
-    const variableName = createUniqueVariableName(title, takenMap);
-    TakenVariableNames[variableName] = true;
+function uniqueVariable(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+    const variableName = createUniqueVariableName(title, nameScope);
+    nameScope[variableName] = true;
 
     return variableName;
 }
+
+/**
+ * This is a wrapper on top of uniqueVariable. It is useful when naming date data set attributes. They have
+ * a convention where date data set name is in parenthesis at the end of the attr/df title. This function
+ * takes the ds name and moves it at the beginning of the title. That way all variables for same date data set
+ * start with the same prefix.
+ *
+ * @param title - title to play with
+ * @param nameScope - scope containing already taken variable names
+ */
+function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+    const datasetStart = title.lastIndexOf("(");
+    const switchedTitle = `${title.substr(datasetStart)} ${title.substr(0, datasetStart)}`;
+
+    return uniqueVariable(switchedTitle, nameScope);
+}
+
+function dateDisplayFormStrip(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+    const metaStart = title.indexOf("(");
+
+    return uniqueVariable(title.substr(0, metaStart), nameScope);
+}
+
+//
+// Transformation to ts-morph structures
+//
 
 function initialize(outputFile: string): TypescriptOutput {
     const project = new Project({});
@@ -48,10 +96,14 @@ function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
     };
 }
 
-function generateAttributeDisplayForm(displayForm: DisplayForm, attributeVariableName: string): string {
-    const localNameScope: TakenNamesMap = {};
+function generateAttributeDisplayForm(
+    displayForm: DisplayForm,
+    attributeVariableName: string,
+    nameScope: TakenNamesMap,
+    naming: AttributeNaming,
+): string {
     const { meta } = displayForm;
-    const dfVariableName = uniqueVariable(meta.title, localNameScope);
+    const dfVariableName = naming.displayForm(meta.title, nameScope);
     let variableName = attributeVariableName === dfVariableName ? "Default" : dfVariableName;
 
     if (variableName.startsWith(attributeVariableName)) {
@@ -61,9 +113,12 @@ function generateAttributeDisplayForm(displayForm: DisplayForm, attributeVariabl
     return `/** \n* Display Form Title: ${meta.title}  \n* Display Form ID: ${meta.identifier}\n*/\n${variableName}: newAttribute('${meta.identifier}')`;
 }
 
-function generateAttribute(attribute: Attribute): OptionalKind<VariableStatementStructure> {
+function generateAttribute(
+    attribute: Attribute,
+    naming: AttributeNaming = DefaultNaming,
+): OptionalKind<VariableStatementStructure> {
     const { meta } = attribute.attribute;
-    const variableName = uniqueVariable(meta.title);
+    const variableName = naming.attribute(meta.title, GlobalNameScope);
     const { displayForms } = attribute.attribute.content;
 
     if (displayForms.length === 1) {
@@ -88,8 +143,9 @@ function generateAttribute(attribute: Attribute): OptionalKind<VariableStatement
         /*
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
+        const localNameScope: TakenNamesMap = {};
         const displayFormInits: string[] = attribute.attribute.content.displayForms.map(df =>
-            generateAttributeDisplayForm(df, variableName),
+            generateAttributeDisplayForm(df, variableName, localNameScope, naming),
         );
 
         return {
@@ -109,7 +165,7 @@ function generateAttribute(attribute: Attribute): OptionalKind<VariableStatement
 function generateAttributes(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return projectMeta.catalog.attributes.map(generateAttribute);
+    return projectMeta.catalog.attributes.map(a => generateAttribute(a));
 }
 
 function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStatementStructure> {
@@ -172,8 +228,38 @@ function generateMeasures(
     return fromMetrics.concat(fromFacts);
 }
 
-export async function transformToTypescript(projectMeta: ProjectMetadata, outputFile: string): Promise<void> {
-    TakenVariableNames = {};
+function generateDateDataSet(dd: DateDataSet): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+    const { content } = dd.dateDataSet;
+
+    return content.attributes.map(a => generateAttribute(a, DateDataSetNaming));
+}
+
+function generateDateDataSets(
+    projectMeta: ProjectMetadata,
+): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+    return flatMap(projectMeta.dateDataSets.map(generateDateDataSet));
+}
+
+/**
+ * Transforms project metadata into model definitions in TypeScript. The resulting TS source file will contain
+ * constant declarations for the various objects in the metadata:
+ *
+ * - Attributes with single display form are transformed to constants initialized with respective newAttribute()
+ * - Attributes with multiple display forms are transformed to constants initialized to map of df name => newAttribute()
+ * - Metrics (MAQL) will be transformed to constants initialized with respective newMeasure()
+ * - Metrics from facts will be transformed to constants initialized to map of aggregation => newMeasure()
+ * - Date data set attributes will be transformed using the same logic as normal attributes, albeit with slightly
+ *   modified variable naming strategy
+ *
+ * @param projectMeta - project metadata to transform to typescript
+ * @param outputFile - output typescript file
+ * @return return of the transformation process, new file is not saved at this point
+ */
+export async function transformToTypescript(
+    projectMeta: ProjectMetadata,
+    outputFile: string,
+): Promise<TypescriptOutput> {
+    GlobalNameScope = {};
 
     const output = initialize(outputFile);
     const { sourceFile } = output;
@@ -181,6 +267,7 @@ export async function transformToTypescript(projectMeta: ProjectMetadata, output
     sourceFile.addImportDeclaration(generateSdkModelImports());
     sourceFile.addVariableStatements(generateAttributes(projectMeta));
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
+    sourceFile.addVariableStatements(generateDateDataSets(projectMeta));
 
-    return output.project.save();
+    return output;
 }
