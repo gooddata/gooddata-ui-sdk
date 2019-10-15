@@ -28,6 +28,7 @@ export interface IPreviousPeriodDateDataSetSimple {
  */
 export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
     public measure: IMeasure<T>["measure"];
+    protected customLocalId: boolean = false;
     constructor() {
         this.measure = {} as any; // definition is added in subclass
     }
@@ -44,6 +45,7 @@ export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMe
 
     public localId = (localId: string) => {
         this.measure.localIdentifier = localId;
+        this.customLocalId = true;
         return this;
     };
 
@@ -62,7 +64,7 @@ export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMe
  * @public
  */
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
-    constructor(measureId: string) {
+    constructor(private readonly measureId: string) {
         super();
         this.measure.definition = {
             measureDefinition: {
@@ -74,7 +76,9 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 
     public aggregation = (aggregation: MeasureAggregation) => {
         this.measure.definition.measureDefinition.aggregation = aggregation;
-
+        if (!this.customLocalId) {
+            this.measure.localIdentifier = `m_${this.measureId}_${aggregation}`;
+        }
         return this;
     };
 

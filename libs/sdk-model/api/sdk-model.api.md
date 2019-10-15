@@ -671,6 +671,8 @@ export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMe
     // (undocumented)
     build: () => IMeasure<T>;
     // (undocumented)
+    protected customLocalId: boolean;
+    // (undocumented)
     format: (format: string) => this;
     // (undocumented)
     localId: (localId: string) => this;
