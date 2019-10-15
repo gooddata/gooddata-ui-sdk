@@ -135,6 +135,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/prettier",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/prop-types",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -433,6 +437,10 @@
     {
       "name": "ts-loader",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "ts-morph",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "ts-node",

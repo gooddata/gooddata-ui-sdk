@@ -13,6 +13,7 @@ import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
 import { isCatalogExportError } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
+import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 
 program
     .version(pkg.version)
@@ -95,7 +96,11 @@ async function run() {
 
         const filePath = path.resolve(output || (await requestFilePath()));
 
-        await exportMetadataToCatalog(projectId, filePath);
+        if (filePath.endsWith(".ts")) {
+            await exportMetadataToTypescript(projectId, filePath);
+        } else {
+            await exportMetadataToCatalog(projectId, filePath);
+        }
 
         logSuccess("All data have been successfuly exported");
         logBox(chalk`The result is located at {bold ${filePath}}`);

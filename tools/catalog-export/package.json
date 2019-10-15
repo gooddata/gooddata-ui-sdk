@@ -56,16 +56,19 @@
         }
     },
     "dependencies": {
+        "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
+        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "lodash": "^4.17.15",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
         "inquirer": "^6.5.2",
         "ora": "^4.0.2",
+        "prettier": "~1.18.2",
         "prompt": "^1.0.0",
         "p-map": "^3.0.0",
         "strip-ansi": "^5.2.0",
-        "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
-        "@gooddata/gd-bear-model": "^8.0.0-alpha.0"
+        "ts-morph": "^4.2.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
@@ -73,6 +76,7 @@
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
         "@types/node": "^10.14.18",
+        "@types/prettier": "~1.18.2",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "~1.18.2",
