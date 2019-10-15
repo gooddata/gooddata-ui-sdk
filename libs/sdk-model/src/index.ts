@@ -12,7 +12,7 @@ export {
     attributeIdentifier,
 } from "./attribute";
 
-export { newAttribute } from "./attribute/factory";
+export { newAttribute, AttributeBuilder, AttributeModifications } from "./attribute/factory";
 
 export {
     Identifier,
@@ -120,6 +120,12 @@ export {
 
 export {
     IPreviousPeriodDateDataSetSimple,
+    ArithmeticMeasureBuilder,
+    MeasureBuilder,
+    MeasureModifications,
+    PoPMeasureBuilder,
+    PreviousPeriodMeasureBuilder,
+    MeasureBuilderBase,
     newArithmeticMeasure,
     newMeasure,
     newPopMeasure,

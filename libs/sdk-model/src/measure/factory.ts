@@ -22,7 +22,11 @@ export interface IPreviousPeriodDateDataSetSimple {
     periodsAgo: number;
 }
 
-class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
     public measure: IMeasure<T>["measure"];
     constructor() {
         this.measure = {} as any; // definition is added in subclass
@@ -53,7 +57,11 @@ class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T
     };
 }
 
-class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     constructor(measureId: string) {
         super();
         this.measure.definition = {
@@ -66,6 +74,7 @@ class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 
     public aggregation = (aggregation: MeasureAggregation) => {
         this.measure.definition.measureDefinition.aggregation = aggregation;
+
         return this;
     };
 
@@ -80,7 +89,11 @@ class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     };
 }
 
-class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
     constructor(measureIds: string[], operator: ArithmeticMeasureOperator) {
         super();
         this.measure.definition = {
@@ -93,7 +106,11 @@ class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefi
     }
 }
 
-class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
     constructor(measureId: string, popAttributeId: string) {
         super();
         this.measure.definition = {
@@ -108,7 +125,11 @@ class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
     }
 }
 
-class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
     constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]) {
         super();
         this.measure.definition = {
@@ -126,7 +147,11 @@ class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMea
     }
 }
 
-type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 /**
  * Creates a new measure with the specified identifier and optional modifications and localIdentifier.

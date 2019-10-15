@@ -2,7 +2,11 @@
 import identity = require("lodash/identity");
 import { IAttribute } from ".";
 
-class AttributeBuilder implements IAttribute {
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export class AttributeBuilder implements IAttribute {
     public attribute: IAttribute["attribute"];
 
     constructor(displayFormId: string) {
@@ -27,7 +31,11 @@ class AttributeBuilder implements IAttribute {
     };
 }
 
-type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
 
 /**
  * Creates a new attribute with the specified display form identifier and optional modifications and localIdentifier.
