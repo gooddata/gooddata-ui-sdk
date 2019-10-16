@@ -27,7 +27,7 @@ import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasure from "./ArithmeticMeasure";
 import Export from "./Export";
-// import VisualizationByIdentifier from "./VisualizationByIdentifier";
+import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
     // { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
@@ -45,11 +45,11 @@ export const advancedUseCasesRoutes = [
 ];
 
 export const visualizationUseCasesRoutes = [
-    // {
-    //     path: "/visualization/visualization-by-identifier",
-    //     title: "Visualization by identifier",
-    //     Component: VisualizationByIdentifier,
-    // },
+    {
+        path: "/visualization/visualization-by-identifier",
+        title: "Visualization by identifier",
+        Component: VisualizationByIdentifier,
+    },
 ];
 
 export const drillingUseCasesRoutes = [
@@ -72,13 +72,13 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
     // { path: "/pivot-table", title: "Pivot Table", Component: PivotTableDemo },
-    // {
-    //     path: "/visualization",
-    //     pathMatch: "full",
-    //     redirectTo: visualizationUseCasesRoutes[0].path,
-    //     title: "Visualization Component",
-    //     Component: VisualizationUseCasesRoutes,
-    // },
+    {
+        path: "/visualization",
+        pathMatch: "full",
+        redirectTo: visualizationUseCasesRoutes[0].path,
+        title: "Visualization Component",
+        Component: VisualizationUseCasesRoutes,
+    },
     { path: "/sorting", title: "Sorting", Component: Sorting },
     {
         path: "/time-over-time-comparison",
@@ -137,7 +137,7 @@ export const topNavigationRoutes = [{ path: "/", title: "Live Examples", Compone
 
 export const routes = [
     ...sideNavigationRoutes,
-    // ...visualizationUseCasesRoutes,
+    ...visualizationUseCasesRoutes,
     ...advancedUseCasesRoutes,
     // ...drillingUseCasesRoutes,
     // ...nextRoutes,
