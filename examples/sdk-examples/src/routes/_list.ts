@@ -27,7 +27,6 @@ import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasure from "./ArithmeticMeasure";
 import Export from "./Export";
-// import VisualizationByUri from "./VisualizationByUri";
 // import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
@@ -46,11 +45,6 @@ export const advancedUseCasesRoutes = [
 ];
 
 export const visualizationUseCasesRoutes = [
-    // {
-    //     path: "/visualization/visualization-by-uri",
-    //     title: "Visualization by URI",
-    //     Component: VisualizationByUri,
-    // },
     // {
     //     path: "/visualization/visualization-by-identifier",
     //     title: "Visualization by identifier",
