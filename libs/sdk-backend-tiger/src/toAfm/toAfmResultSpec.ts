@@ -14,31 +14,29 @@ import {
     isUriQualifier,
     totalIsNative,
     MeasureGroupIdentifier,
-    IExecutionDefinition,
+    IExecutionDefinition
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 
-function convertAttribute(attribute: IAttribute, _idx: number): string {
-    // const alias = attribute.attribute.alias;
-    // const aliasProp = alias ? { alias } : {};
+function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
+    const alias = attribute.attribute.alias;
+    const aliasProp = alias ? { alias } : {};
     const displayFromQualifier = attribute.attribute.displayForm;
 
     if (isUriQualifier(displayFromQualifier)) {
         throw new NotSupported("Tiger backend does not allow specifying display forms by URI");
     }
 
-    return displayFromQualifier.identifier;
-    /*
     return {
         displayForm: displayFromQualifier,
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
-    };*/
+    };
 }
 
 function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
-    const attributes: string[] = def.attributes.map(convertAttribute);
+    const attributes: ExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
     const attrProp = attributes.length ? { attributes } : {};
 
     const measures: ExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
@@ -94,10 +92,10 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
 }
 
 function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
-    return def.dimensions.map(dim => {
-        const newItems = dim.itemIdentifiers.map(item => {
+    def.dimensions.forEach(dim => {
+        dim.itemIdentifiers.forEach(item => {
             if (item === MeasureGroupIdentifier) {
-                return item;
+                return;
             }
 
             const attr = attributesFind(def.attributes, item);
@@ -111,19 +109,15 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
             if (isUriQualifier(attrQualifier)) {
                 throw new NotSupported("tiger does not support attributes specified by uri");
             }
-
-            return attrQualifier.identifier;
         });
 
         if (dim.totals) {
             throw new NotSupported("Tiger backend does not support totals.");
         }
-
-        return {
-            itemIdentifiers: newItems,
-        };
     });
+    return def.dimensions;
 }
+
 
 function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
     if (!isEmpty(def.sortBy)) {

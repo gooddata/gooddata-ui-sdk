@@ -23,12 +23,12 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
                         uri: `/fakeAttrUri/${h.attributeHeader.identifier}`,
                         identifier: h.attributeHeader.identifier,
                         formOf: {
-                            identifier: h.attributeHeader.identifier,
-                            name: h.attributeHeader.identifier,
-                            uri: `/fakeDfUri/${h.attributeHeader.identifier}`,
+                            identifier: h.attributeHeader.formOf.identifier,
+                            name: h.attributeHeader.formOf.name,
+                            uri: `/fakeDfUri/${h.attributeHeader.formOf.identifier}`,
                         },
-                        localIdentifier: h.attributeHeader.identifier,
-                        name: h.attributeHeader.identifier,
+                        localIdentifier: h.attributeHeader.localIdentifier,
+                        name: h.attributeHeader.name,
                     },
                 };
 
