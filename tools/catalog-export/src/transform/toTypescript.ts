@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { Attribute, DateDataSet, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
+import { flatMap } from "lodash";
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -8,8 +8,8 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
+import { Attribute, DateDataSet, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
 import { createUniqueVariableName, TakenNamesMap } from "./titles";
-import { flatMap } from "lodash";
 
 export type TypescriptOutput = {
     project: Project;
@@ -17,7 +17,16 @@ export type TypescriptOutput = {
 };
 
 //
-// Internal functions to build variable names for various
+// Constants
+//
+
+// const FILE_DIRECTIVES = ['/* tslint:disable:file-header */'];
+// const FILE_HEADER = `// THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()};`;
+const INSIGHT_MAP_VARNAME = "Insights";
+const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
+
+//
+// Variable naming support & strategies
 //
 
 let GlobalNameScope: TakenNamesMap = {};
@@ -40,8 +49,8 @@ const DateDataSetNaming: AttributeNaming = {
 };
 
 /**
- * This is a wrapper on top of createUniqueVariableName() which mutates the input map of used
- * variable names.
+ * This is a wrapper on top of createUniqueVariableName() which mutates the input name scope - it enters
+ * the variable name into the scope.
  *
  * @param title - md object title
  * @param nameScope - scope containing already taken variable names, defaults to global scope
@@ -54,7 +63,7 @@ function uniqueVariable(title: string, nameScope: TakenNamesMap = GlobalNameScop
 }
 
 /**
- * This is a wrapper on top of uniqueVariable. It is useful when naming date data set attributes. They have
+ * This is a wrapper on top of uniqueVariable and is useful when naming date data set attributes. They have
  * a convention where date data set name is in parenthesis at the end of the attr/df title. This function
  * takes the ds name and moves it at the beginning of the title. That way all variables for same date data set
  * start with the same prefix.
@@ -69,6 +78,14 @@ function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesMap = Globa
     return uniqueVariable(switchedTitle, nameScope);
 }
 
+/**
+ * This is a wrapper on top of uniqueVariable and is useful for stripping date data set display forms off
+ * superfluous stuff such as example format & date dimension name. It assumes that the format of
+ * display form names is "Something (Example) (DD Name)"
+ *
+ * @param title - display form title
+ * @param nameScope - name scope in which to keep var names unique
+ */
 function dateDisplayFormStrip(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
     const metaStart = title.indexOf("(");
 
@@ -186,12 +203,10 @@ function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStateme
     };
 }
 
-const aggregations = ["sum", "count", "avg", "min", "max", "median", "runsum"];
-
 function generateFactAggregations(fact: Fact): string[] {
     const { meta } = fact.fact;
 
-    return aggregations.map(aggregation => {
+    return FACT_AGGREGATIONS.map(aggregation => {
         const jsDoc = `/** \n* Fact Title: ${meta.title}  \n* Fact ID: ${meta.identifier}\n * Fact Aggregation: ${aggregation}\n*/`;
         const name = aggregation.charAt(0).toUpperCase() + aggregation.substr(1);
 
@@ -240,6 +255,27 @@ function generateDateDataSets(
     return flatMap(projectMeta.dateDataSets.map(generateDateDataSet));
 }
 
+function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableStatementStructure> {
+    const insightInitializer: string[] = projectMeta.insights.map(insight => {
+        const propName = uniqueVariable(insight.title);
+        const jsDoc = `/** \n* Insight Title: ${insight.title}  \n* Insight ID: ${insight.identifier}\n*/`;
+
+        return `${jsDoc}\n${propName}: '${insight.identifier}'`;
+    });
+
+    return {
+        declarationKind: VariableDeclarationKind.Const,
+        isExported: true,
+        declarations: [
+            {
+                name: INSIGHT_MAP_VARNAME,
+                type: "{[title: string]: string}",
+                initializer: `{ ${insightInitializer.join(",")} }`,
+            },
+        ],
+    };
+}
+
 /**
  * Transforms project metadata into model definitions in TypeScript. The resulting TS source file will contain
  * constant declarations for the various objects in the metadata:
@@ -268,6 +304,7 @@ export async function transformToTypescript(
     sourceFile.addVariableStatements(generateAttributes(projectMeta));
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
     sourceFile.addVariableStatements(generateDateDataSets(projectMeta));
+    sourceFile.addVariableStatement(generateInsights(projectMeta));
 
     return output;
 }
