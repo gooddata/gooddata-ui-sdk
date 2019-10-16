@@ -131,6 +131,16 @@ function generateAttributeDisplayForm(
     return `/** \n* Display Form Title: ${meta.title}  \n* Display Form ID: ${meta.identifier}\n*/\n${variableName}: newAttribute('${meta.identifier}')`;
 }
 
+/**
+ * Generates attribute definitions. Works as follows:
+ *
+ * - If the attribute has single display form, generates a constant of DfTitle => newAttribute(id)
+ * - If the attribute has multiple display forms, generates a constant that is an object mapping different
+ *   DfTitles => newAttribute(dfId)
+ *
+ * @param attribute - attribute to generate definitions for
+ * @param naming - naming scope to ensure variable name uniqueness
+ */
 function generateAttribute(
     attribute: Attribute,
     naming: AttributeNaming = DefaultNaming,
@@ -235,6 +245,15 @@ function generateMeasuresFromFacts(fact: Fact): OptionalKind<VariableStatementSt
     };
 }
 
+/**
+ * Generates simple measures from metrics and facts defined in the project.
+ *
+ * - For metrics (MAQL stuff) this will generate constant with MeasureTitle = newMeasure(id)
+ * - For facts, this will generate constant initialized to an object which defines all possible
+ *   aggregations of the measure.
+ *
+ * @param projectMeta
+ */
 function generateMeasures(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
@@ -244,6 +263,12 @@ function generateMeasures(
     return fromMetrics.concat(fromFacts);
 }
 
+/**
+ * Keeping it simple for now - generate per-attr constants for each attribute in date data set. For now there's
+ * no thing that connects all date data sets under one umbrella.
+ *
+ * @param dd - date data set.
+ */
 function generateDateDataSet(dd: DateDataSet): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const { content } = dd.dateDataSet;
 
@@ -256,6 +281,11 @@ function generateDateDataSets(
     return flatMap(projectMeta.dateDataSets.map(generateDateDataSet));
 }
 
+/**
+ * Declares a constant initialized to object mapping InsightTitle => insight identifier.
+ *
+ * @param projectMeta - project metadata containing the insights
+ */
 function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableStatementStructure> {
     const insightInitializer: string[] = projectMeta.insights.map(insight => {
         const propName = uniqueVariable(insight.title);
