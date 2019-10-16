@@ -1,0 +1,1027 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loadProjectMetadata should load date data sets 1`] = `
+Array [
+  Object {
+    "dateDataSet": Object {
+      "content": Object {
+        "attributes": Array [
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aag81lMifn6q",
+                      "tags": "",
+                      "title": "Year (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.year",
+                "tags": "date year",
+                "title": "Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aam81lMifn6q",
+                      "tags": "",
+                      "title": "default (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.quarter.in.year",
+                "tags": "date quarter year",
+                "title": "Quarter (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaA81lMifn6q",
+                      "tags": "",
+                      "title": "Week #/Year (W1/2010) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaw81lMifn6q",
+                      "tags": "",
+                      "title": "Week Starting (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aau81lMifn6q",
+                      "tags": "",
+                      "title": "From - To (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aay81lMifn6q",
+                      "tags": "",
+                      "title": "Week #/Year (Cont.) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaC81lMifn6q",
+                      "tags": "",
+                      "title": "Wk/Qtr/Year (Cont.) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aas81lMifn6q",
+                      "tags": "",
+                      "title": "Wk/Qtr/Year (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.week",
+                "tags": "date week",
+                "title": "Week (Sun-Sat)/Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaI81lMifn6q",
+                      "tags": "",
+                      "title": "Number US (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.week.in.year",
+                "tags": "date week year",
+                "title": "Week (Sun-Sat) (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaO81lMifn6q",
+                      "tags": "",
+                      "title": "Number US (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.week.in.quarter",
+                "tags": "date quarter week",
+                "title": "Week (Sun-Sat) of Qtr (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aa281lMifn6q",
+                      "tags": "",
+                      "title": "Week #/Year (W1/2010) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaY81lMifn6q",
+                      "tags": "",
+                      "title": "Week Starting (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aaW81lMifn6q",
+                      "tags": "",
+                      "title": "From - To (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.euweek",
+                "tags": "date eu week",
+                "title": "Week (Mon-Sun)/Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aba81lMifn6q",
+                      "tags": "",
+                      "title": "Number EU (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.euweek.in.year",
+                "tags": "date eu week year",
+                "title": "Week (Mon-Sun) (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abg81lMifn6q",
+                      "tags": "",
+                      "title": "Number EU (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.euweek.in.quarter",
+                "tags": "date eu quarter week",
+                "title": "Week (Mon-Sun) of Qtr (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abm81lMifn6q",
+                      "tags": "",
+                      "title": "Short (Jan) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abs81lMifn6q",
+                      "tags": "",
+                      "title": "Long (January) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abq81lMifn6q",
+                      "tags": "",
+                      "title": "Number (M1) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abo81lMifn6q",
+                      "tags": "",
+                      "title": "M/Q (M1/Q1) (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.month.in.year",
+                "tags": "date month year",
+                "title": "Month (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aby81lMifn6q",
+                      "tags": "",
+                      "title": "Number (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.month.in.quarter",
+                "tags": "date month quarter",
+                "title": "Month of Quarter (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abE81lMifn6q",
+                      "tags": "",
+                      "title": "default (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.day.in.year",
+                "tags": "date day year",
+                "title": "Day of Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abK81lMifn6q",
+                      "tags": "",
+                      "title": "Short (Sun) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abO81lMifn6q",
+                      "tags": "",
+                      "title": "Long (Sunday) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abM81lMifn6q",
+                      "tags": "",
+                      "title": "Number (1=Sunday) (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.day.in.week",
+                "tags": "date day week",
+                "title": "Day of Week (Sun-Sat) (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abU81lMifn6q",
+                      "tags": "",
+                      "title": "Short (Mon) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abY81lMifn6q",
+                      "tags": "",
+                      "title": "Long (Monday) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.abW81lMifn6q",
+                      "tags": "",
+                      "title": "Number (1=Monday) (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.day.in.euweek",
+                "tags": "date day eu week",
+                "title": "Day of Week (Mon-Sun) (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.ab481lMifn6q",
+                      "tags": "",
+                      "title": "default (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.day.in.quarter",
+                "tags": "date day quarter",
+                "title": "Day of Quarter (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aca81lMifn6q",
+                      "tags": "",
+                      "title": "default (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.day.in.month",
+                "tags": "date day month",
+                "title": "Day of Month (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.aci81lMifn6q",
+                      "tags": "",
+                      "title": "US Short (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.quarter",
+                "tags": "date quarter",
+                "title": "Quarter/Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.act81lMifn6q",
+                      "tags": "",
+                      "title": "Short (Jan 2010) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.acx81lMifn6q",
+                      "tags": "",
+                      "title": "Long (January 2010) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.acv81lMifn6q",
+                      "tags": "",
+                      "title": "Number (1/2010) (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.month",
+                "tags": "date month",
+                "title": "Month/Year (Timeline)",
+              },
+            },
+          },
+          Object {
+            "attribute": Object {
+              "content": Object {
+                "displayForms": Array [
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.mmddyyyy",
+                      "tags": "",
+                      "title": "mm/dd/yyyy (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.yyyymmdd",
+                      "tags": "",
+                      "title": "yyyy-mm-dd (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.mdyy",
+                      "tags": "",
+                      "title": "m/d/yy (no leading zeroes) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.long",
+                      "tags": "",
+                      "title": "Long (Mon, Jan 1, 2010) (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.ddmmyyyy",
+                      "tags": "",
+                      "title": "dd/mm/yyyy (Timeline)",
+                    },
+                  },
+                  Object {
+                    "meta": Object {
+                      "identifier": "timeline.date.eddmmyyyy",
+                      "tags": "",
+                      "title": "dd-mm-yyyy (Timeline)",
+                    },
+                  },
+                ],
+              },
+              "meta": Object {
+                "identifier": "timeline.date",
+                "tags": "date",
+                "title": "Date (Timeline)",
+              },
+            },
+          },
+        ],
+      },
+      "meta": Object {
+        "identifier": "timeline.dataset.dt",
+        "tags": "",
+        "title": "Date (Timeline)",
+      },
+    },
+  },
+]
+`;
+
+exports[`loadProjectMetadata should load ldm 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "content": Object {
+          "dimension": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5202",
+          "displayForms": Array [
+            Object {
+              "content": Object {
+                "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5029]",
+                "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5208",
+              },
+              "links": Object {
+                "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5209/elements",
+              },
+              "meta": Object {
+                "author": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
+                "category": "attributeDisplayForm",
+                "contributor": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
+                "created": "2019-03-12 10:59:01",
+                "deprecated": "0",
+                "identifier": "label.orders.channel",
+                "isProduction": 1,
+                "summary": "",
+                "tags": "",
+                "title": "Channel",
+                "updated": "2019-03-12 10:59:01",
+                "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5209",
+              },
+            },
+          ],
+          "fk": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5014",
+              "multivalue": false,
+              "type": "col",
+            },
+          ],
+          "pk": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5027",
+              "type": "col",
+            },
+          ],
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
+          "category": "attribute",
+          "contributor": "/gdc/account/profile/785e4edc1c8dda4783bcd76147547ed9",
+          "created": "2019-03-12 10:59:01",
+          "deprecated": "0",
+          "identifier": "attr.orders.channel",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "",
+          "title": "Channel",
+          "updated": "2019-03-12 10:59:01",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/5208",
+        },
+      },
+    },
+    Object {
+      "attribute": Object {
+        "content": Object {
+          "dimension": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/161",
+          "displayForms": Array [
+            Object {
+              "content": Object {
+                "default": 1,
+                "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/153]",
+                "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/686",
+              },
+              "links": Object {
+                "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/688/elements",
+              },
+              "meta": Object {
+                "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+                "category": "attributeDisplayForm",
+                "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+                "created": "2018-04-27 11:13:08",
+                "deprecated": "0",
+                "identifier": "label.employee.employeename",
+                "isProduction": 1,
+                "summary": "",
+                "tags": "",
+                "title": "Employee Name",
+                "updated": "2018-05-15 16:18:26",
+                "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/688",
+              },
+            },
+            Object {
+              "content": Object {
+                "expression": "[/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/155]",
+                "formOf": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/686",
+                "type": "GDC.link",
+              },
+              "links": Object {
+                "elements": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/687/elements",
+              },
+              "meta": Object {
+                "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+                "category": "attributeDisplayForm",
+                "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+                "created": "2018-04-27 11:13:08",
+                "deprecated": "0",
+                "identifier": "label.employee.employeename.employeeurl",
+                "isProduction": 1,
+                "summary": "",
+                "tags": "",
+                "title": "Employee URL",
+                "updated": "2018-05-15 16:18:26",
+                "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/687",
+              },
+            },
+          ],
+          "fk": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/9",
+              "multivalue": false,
+              "type": "col",
+            },
+          ],
+          "linkAttributeDF": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/687",
+          "pk": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/151",
+              "type": "col",
+            },
+          ],
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+          "category": "attribute",
+          "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+          "created": "2018-04-27 11:13:08",
+          "deprecated": "0",
+          "identifier": "attr.employee.employeename",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "",
+          "title": "Employee Name",
+          "updated": "2018-05-15 16:18:26",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/686",
+        },
+      },
+    },
+  ],
+  "facts": Array [
+    Object {
+      "fact": Object {
+        "content": Object {
+          "expr": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/24",
+              "type": "col",
+            },
+          ],
+          "folders": Array [
+            "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/164",
+          ],
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+          "category": "fact",
+          "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+          "created": "2018-04-27 11:13:09",
+          "deprecated": "0",
+          "identifier": "fact.salesdetailfact.menuitemsales",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "",
+          "title": "$ Menu Item Sales",
+          "updated": "2018-05-15 16:18:26",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/706",
+        },
+      },
+    },
+    Object {
+      "fact": Object {
+        "content": Object {
+          "expr": Array [
+            Object {
+              "data": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/82",
+              "type": "col",
+            },
+          ],
+          "folders": Array [
+            "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/163",
+          ],
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+          "category": "fact",
+          "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+          "created": "2018-04-27 11:13:08",
+          "deprecated": "0",
+          "identifier": "fact.restaurantcostsfact.cost",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "",
+          "title": "Cost",
+          "updated": "2018-05-15 16:18:26",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/704",
+        },
+      },
+    },
+  ],
+  "metrics": Array [
+    Object {
+      "metric": Object {
+        "content": Object {
+          "expression": "SELECT COUNT([/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289])  BY [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289], ALL OTHER WHERE [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289] BETWEEN [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]-3 AND [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]",
+          "format": "#,##0.00",
+          "tree": Object {
+            "content": Array [
+              Object {
+                "content": Array [
+                  Object {
+                    "content": Array [
+                      Object {
+                        "position": Object {
+                          "column": 27,
+                          "line": 1,
+                        },
+                        "type": "attribute object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                      },
+                    ],
+                    "position": Object {
+                      "column": 21,
+                      "line": 1,
+                    },
+                    "type": "function",
+                    "value": "COUNT",
+                  },
+                ],
+                "position": Object {
+                  "column": 21,
+                  "line": 1,
+                },
+                "type": "expression",
+              },
+              Object {
+                "content": Array [
+                  Object {
+                    "position": Object {
+                      "column": 84,
+                      "line": 1,
+                    },
+                    "type": "attribute object",
+                    "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                  },
+                  Object {
+                    "content": Array [],
+                    "position": Object {
+                      "column": 137,
+                      "line": 1,
+                    },
+                    "type": "all other",
+                  },
+                ],
+                "position": Object {
+                  "column": 81,
+                  "line": 1,
+                },
+                "type": "by",
+              },
+              Object {
+                "content": Array [
+                  Object {
+                    "content": Array [
+                      Object {
+                        "position": Object {
+                          "column": 153,
+                          "line": 1,
+                        },
+                        "type": "attribute object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                      },
+                      Object {
+                        "content": Array [
+                          Object {
+                            "position": Object {
+                              "column": 213,
+                              "line": 1,
+                            },
+                            "type": "metric object",
+                            "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
+                          },
+                          Object {
+                            "position": Object {
+                              "column": 265,
+                              "line": 1,
+                            },
+                            "type": "number",
+                            "value": "3",
+                          },
+                        ],
+                        "position": Object {
+                          "column": 264,
+                          "line": 1,
+                        },
+                        "type": "-",
+                      },
+                      Object {
+                        "position": Object {
+                          "column": 271,
+                          "line": 1,
+                        },
+                        "type": "metric object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
+                      },
+                    ],
+                    "position": Object {
+                      "column": 205,
+                      "line": 1,
+                    },
+                    "type": "between",
+                  },
+                ],
+                "position": Object {
+                  "column": 147,
+                  "line": 1,
+                },
+                "type": "where",
+              },
+            ],
+            "position": Object {
+              "column": 14,
+              "line": 1,
+            },
+            "type": "metric",
+          },
+        },
+        "links": Object {
+          "explain2": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/867/explain2",
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+          "category": "metric",
+          "contributor": "/gdc/account/profile/9bf17dfc423644e9bf92925bab65a3e9",
+          "created": "2018-04-27 14:19:09",
+          "deprecated": "0",
+          "identifier": "aaIHiWZjfWNA",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "hidden",
+          "title": "_Filter Last 4 Quarter",
+          "updated": "2018-08-09 14:13:28",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/867",
+        },
+      },
+    },
+    Object {
+      "metric": Object {
+        "content": Object {
+          "expression": "SELECT COUNT([/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289])  BY [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289], ALL OTHER WHERE [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289] = [/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789]",
+          "folders": Array [
+            "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/788",
+          ],
+          "format": "#,##0.00",
+          "tree": Object {
+            "content": Array [
+              Object {
+                "content": Array [
+                  Object {
+                    "content": Array [
+                      Object {
+                        "position": Object {
+                          "column": 27,
+                          "line": 1,
+                        },
+                        "type": "attribute object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                      },
+                    ],
+                    "position": Object {
+                      "column": 21,
+                      "line": 1,
+                    },
+                    "type": "function",
+                    "value": "COUNT",
+                  },
+                ],
+                "position": Object {
+                  "column": 21,
+                  "line": 1,
+                },
+                "type": "expression",
+              },
+              Object {
+                "content": Array [
+                  Object {
+                    "position": Object {
+                      "column": 84,
+                      "line": 1,
+                    },
+                    "type": "attribute object",
+                    "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                  },
+                  Object {
+                    "content": Array [],
+                    "position": Object {
+                      "column": 137,
+                      "line": 1,
+                    },
+                    "type": "all other",
+                  },
+                ],
+                "position": Object {
+                  "column": 81,
+                  "line": 1,
+                },
+                "type": "by",
+              },
+              Object {
+                "content": Array [
+                  Object {
+                    "content": Array [
+                      Object {
+                        "position": Object {
+                          "column": 153,
+                          "line": 1,
+                        },
+                        "type": "attribute object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/289",
+                      },
+                      Object {
+                        "position": Object {
+                          "column": 207,
+                          "line": 1,
+                        },
+                        "type": "metric object",
+                        "value": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/789",
+                      },
+                    ],
+                    "position": Object {
+                      "column": 205,
+                      "line": 1,
+                    },
+                    "type": "=",
+                  },
+                ],
+                "position": Object {
+                  "column": 147,
+                  "line": 1,
+                },
+                "type": "where",
+              },
+            ],
+            "position": Object {
+              "column": 14,
+              "line": 1,
+            },
+            "type": "metric",
+          },
+        },
+        "links": Object {
+          "explain2": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/880/explain2",
+        },
+        "meta": Object {
+          "author": "/gdc/account/profile/8d381a33fff78cf82392c837246d362e",
+          "category": "metric",
+          "contributor": "/gdc/account/profile/ea6a1e8992361e1401d9accc9789cb5a",
+          "created": "2018-04-27 14:19:09",
+          "deprecated": "0",
+          "identifier": "aaiF4bffe4yn",
+          "isProduction": 1,
+          "summary": "",
+          "tags": "hidden",
+          "title": "_Filter Quarter",
+          "updated": "2018-05-24 09:05:24",
+          "uri": "/gdc/md/xxoajsqvo85zw3t786qljpxd0xkiena2/obj/880",
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`loadProjectMetadata should load visualizations 1`] = `
+Array [
+  Object {
+    "identifier": "abhJpedgcfU2",
+    "tags": "",
+    "title": "Labor Costs vs Scheduled Costs",
+  },
+  Object {
+    "identifier": "acPWDTL2bJeX",
+    "tags": "",
+    "title": "Total Sales by City",
+  },
+  Object {
+    "identifier": "aaBN5UG3dXu4",
+    "tags": "",
+    "title": "$ Total Sales by Location",
+  },
+]
+`;

@@ -14,7 +14,31 @@ export const anyBucket: BucketPredicate;
 export const anyMeasure: MeasurePredicate;
 
 // @public
+export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+    constructor(measureIds: string[], operator: ArithmeticMeasureOperator);
+}
+
+// @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+
+// @public
+export class AttributeBuilder implements IAttribute {
+    constructor(displayFormId: string);
+    // (undocumented)
+    alias: (alias: string) => this;
+    // (undocumented)
+    attribute: IAttribute["attribute"];
+    // (undocumented)
+    build: () => {
+        attribute: {
+            localIdentifier: string;
+            displayForm: import("..").ObjQualifier;
+            alias?: string | undefined;
+        };
+    };
+    // (undocumented)
+    localId: (localId: string) => this;
+}
 
 // @public
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
@@ -34,6 +58,9 @@ export type AttributeInBucket = {
     idx: number;
     attribute: IAttribute;
 };
+
+// @public
+export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
 
 // @public
 export type AttributeOrMeasure = IMeasure | IAttribute;
@@ -626,6 +653,36 @@ export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "medi
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
 
 // @public
+export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
+    constructor(measureId: string);
+    // (undocumented)
+    aggregation: (aggregation: MeasureAggregation) => this;
+    // (undocumented)
+    filters: (...filters: IFilter[]) => this;
+    // (undocumented)
+    ratio: () => this;
+}
+
+// @public
+export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+    constructor();
+    // (undocumented)
+    alias: (alias: string) => this;
+    // (undocumented)
+    build: () => IMeasure<T>;
+    // (undocumented)
+    protected customLocalId: boolean;
+    // (undocumented)
+    format: (format: string) => this;
+    // (undocumented)
+    localId: (localId: string) => this;
+    // (undocumented)
+    measure: IMeasure<T>["measure"];
+    // (undocumented)
+    title: (title: string) => this;
+}
+
+// @public
 export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
 
 // @public
@@ -651,6 +708,9 @@ export type MeasureInBucket = {
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
 
 // @public
+export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
+
+// @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
 
 // @public
@@ -659,14 +719,9 @@ export function measureUri(measure: IMeasure): string | undefined;
 // @public
 export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter;
 
-// Warning: (ae-forgotten-export) The symbol "MeasureModifications" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ArithmeticMeasureBuilder" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function newArithmeticMeasure(measureIds: string[], operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
-// Warning: (ae-forgotten-export) The symbol "AttributeModifications" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function newAttribute(displayFormId: string, modifications?: AttributeModifications): IAttribute;
 
@@ -688,8 +743,6 @@ export function newDefForItems(workspace: string, items: AttributeOrMeasure[], f
 // @public
 export function newDimension(ids?: Identifier[]): IDimension;
 
-// Warning: (ae-forgotten-export) The symbol "MeasureBuilder" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
@@ -699,16 +752,12 @@ export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: So
 // @public
 export function newNegativeAttributeFilter(displayFormId: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;
 
-// Warning: (ae-forgotten-export) The symbol "PoPMeasureBuilder" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function newPopMeasure(measureId: string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
 export function newPositiveAttributeFilter(displayFormId: string, inValues: AttributeElements): IPositiveAttributeFilter;
 
-// Warning: (ae-forgotten-export) The symbol "PreviousPeriodMeasureBuilder" needs to be exported by the entry point index.d.ts
-// 
 // @public
 export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
@@ -726,6 +775,16 @@ export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
 
 // @public
 export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
+
+// @public
+export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+    constructor(measureId: string, popAttributeId: string);
+}
+
+// @public
+export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+    constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]);
+}
 
 // @public
 export type RGBType = "rgb";

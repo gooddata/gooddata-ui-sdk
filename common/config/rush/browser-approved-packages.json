@@ -99,6 +99,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/inquirer",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/invariant",
       "allowedCategories": [ "production" ]
     },
@@ -129,6 +133,10 @@
     {
       "name": "@types/node-fetch",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/prettier",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@types/prop-types",
@@ -211,12 +219,20 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "classnames",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "commander",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "css-loader",
@@ -275,6 +291,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "inquirer",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "invariant",
       "allowedCategories": [ "production" ]
     },
@@ -331,8 +351,20 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "ora",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "p-map",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "prettier",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "prompt",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "prop-types",
@@ -387,6 +419,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "strip-ansi",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "style-loader",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -401,6 +437,10 @@
     {
       "name": "ts-loader",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "ts-morph",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "ts-node",

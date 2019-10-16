@@ -26,6 +26,38 @@ describe("measure factories", () => {
             };
             expect(newMeasure("foo")).toEqual(expected);
         });
+        it("should return a simple measure with different aggregation", () => {
+            const expected: IMeasure<IMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "foo",
+                            },
+                            aggregation: "sum",
+                        },
+                    },
+                    localIdentifier: "m_foo_sum",
+                },
+            };
+            expect(newMeasure("foo", m => m.aggregation("sum"))).toEqual(expected);
+        });
+        it("should honor custom-set localId for simple measures with aggregation", () => {
+            const expected: IMeasure<IMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "foo",
+                            },
+                            aggregation: "sum",
+                        },
+                    },
+                    localIdentifier: "bar",
+                },
+            };
+            expect(newMeasure("foo", m => m.localId("bar").aggregation("sum"))).toEqual(expected);
+        });
         it("should return a measure with alias", () => {
             const expected: IMeasure<IMeasureDefinition> = {
                 measure: {

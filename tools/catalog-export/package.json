@@ -1,0 +1,89 @@
+{
+    "name": "@gooddata/catalog-export",
+    "version": "8.0.0",
+    "author": "GoodData",
+    "description": "GoodData SDK Catalog Export tooling",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/catalog-export",
+    "license": "BSD-3-Clause",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "bin": {
+        "gdc-catalog-export": "dist/index.js"
+    },
+    "files": [
+        "dist",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{src,test}/**/*.ts"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest.setup.ts"
+        ],
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
+        "testPathIgnorePatterns": [
+            ",/node_modules/",
+            "/dist/"
+        ],
+        "collectCoverageFrom": [
+            "src/**/*.{ts}",
+            "!**/*.d.ts"
+        ],
+        "collectCoverage": false,
+        "coverageReporters": [
+            "html"
+        ],
+        "globals": {
+            "ts-jest": {
+                "packageJson": "package.json"
+            }
+        }
+    },
+    "dependencies": {
+        "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
+        "lodash": "^4.17.15",
+        "chalk": "^2.4.2",
+        "commander": "^3.0.2",
+        "inquirer": "^6.5.2",
+        "ora": "^4.0.2",
+        "prettier": "~1.18.2",
+        "prompt": "^1.0.0",
+        "p-map": "^3.0.0",
+        "strip-ansi": "^5.2.0",
+        "ts-morph": "^4.2.0"
+    },
+    "devDependencies": {
+        "@gooddata/tslint-config": "1.0.0",
+        "@gooddata/sdk-model": "^8.0.0-alpha.0",
+        "@types/inquirer": "^6.5.0",
+        "@types/jest": "^24.0.6",
+        "@types/lodash": "^4.14.123",
+        "@types/node": "^10.14.18",
+        "@types/prettier": "~1.18.2",
+        "jest": "^24.7.1",
+        "jest-junit": "^3.0.0",
+        "prettier": "~1.18.2",
+        "ts-jest": "^24.1.0",
+        "ts-node": "^8.4.1",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.6.3"
+    }
+}
