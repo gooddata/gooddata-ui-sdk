@@ -39,7 +39,7 @@ function titleToVariableName(title: string): string {
     return variableName;
 }
 
-export type TakenNamesMap = { [name: string]: any };
+export type TakenNamesSet = { [name: string]: any };
 
 /**
  * Given a metadata object title, this function figures out the ideal name for the variable that should
@@ -53,7 +53,7 @@ export type TakenNamesMap = { [name: string]: any };
  * @param title - object title
  * @param scope - uniqueness scope
  */
-export function createUniqueVariableName(title: string, scope: TakenNamesMap = {}): string {
+export function createUniqueVariableName(title: string, scope: TakenNamesSet = {}): string {
     const variableName = titleToVariableName(title);
 
     return createUniqueName(variableName, scope);
@@ -73,7 +73,7 @@ export function createUniqueName(name: string, scope: any): string {
     let num: number = 1;
 
     while (has(scope, uniqueName)) {
-        uniqueName = `${name}${num}`;
+        uniqueName = `${name}_${num}`;
         num++;
     }
 

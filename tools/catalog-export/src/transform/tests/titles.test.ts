@@ -29,15 +29,15 @@ describe("createUniqueVariableName", () => {
 
     describe("uniqueness guarantees", () => {
         it("should append 1 if name is taken", () => {
-            expect(createUniqueVariableName("Something", { Something: true })).toEqual("Something1");
+            expect(createUniqueVariableName("Something", { Something: true })).toEqual("Something_1");
         });
         it("should append 2 if names are taken", () => {
-            expect(createUniqueVariableName("Something", { Something: true, Something1: true })).toEqual(
-                "Something2",
+            expect(createUniqueVariableName("Something", { Something: true, Something_1: true })).toEqual(
+                "Something_2",
             );
         });
         it("should work with transformed title", () => {
-            expect(createUniqueVariableName("something", { Something: true })).toEqual("Something1");
+            expect(createUniqueVariableName("something", { Something: true })).toEqual("Something_1");
         });
     });
 });
@@ -45,11 +45,11 @@ describe("createUniqueVariableName", () => {
 describe("createUniqueName", () => {
     describe("uniqueness guarantees", () => {
         it("should append 1 if name is taken", () => {
-            expect(createUniqueName("Something", { Something: true })).toEqual("Something1");
+            expect(createUniqueName("Something", { Something: true })).toEqual("Something_1");
         });
         it("should append 2 if names are taken", () => {
-            expect(createUniqueName("Something", { Something: true, Something1: true })).toEqual(
-                "Something2",
+            expect(createUniqueName("Something", { Something: true, Something_1: true })).toEqual(
+                "Something_2",
             );
         });
     });

@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { flatMap } from "lodash";
+import { flatten } from "lodash";
 import {
     ImportDeclarationStructure,
     OptionalKind,
@@ -9,7 +9,7 @@ import {
     VariableStatementStructure,
 } from "ts-morph";
 import { Attribute, DateDataSet, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
-import { createUniqueVariableName, TakenNamesMap } from "./titles";
+import { createUniqueVariableName, TakenNamesSet } from "./titles";
 
 export type TypescriptOutput = {
     project: Project;
@@ -29,9 +29,9 @@ const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsu
 // Variable naming support & strategies
 //
 
-let GlobalNameScope: TakenNamesMap = {};
+let GlobalNameScope: TakenNamesSet = {};
 
-type NamingStrategy = (title: string, scope: TakenNamesMap) => string;
+type NamingStrategy = (title: string, scope: TakenNamesSet) => string;
 
 type AttributeNaming = {
     attribute: NamingStrategy;
@@ -55,7 +55,7 @@ const DateDataSetNaming: AttributeNaming = {
  * @param title - md object title
  * @param nameScope - scope containing already taken variable names, defaults to global scope
  */
-function uniqueVariable(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+function uniqueVariable(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
     const variableName = createUniqueVariableName(title, nameScope);
     nameScope[variableName] = true;
 
@@ -71,7 +71,7 @@ function uniqueVariable(title: string, nameScope: TakenNamesMap = GlobalNameScop
  * @param title - title to play with
  * @param nameScope - scope containing already taken variable names
  */
-function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
     const datasetStart = title.lastIndexOf("(");
     const switchedTitle = `${title.substr(datasetStart)} ${title.substr(0, datasetStart)}`;
 
@@ -86,7 +86,7 @@ function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesMap = Globa
  * @param title - display form title
  * @param nameScope - name scope in which to keep var names unique
  */
-function dateDisplayFormStrip(title: string, nameScope: TakenNamesMap = GlobalNameScope): string {
+function dateDisplayFormStrip(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
     const metaStart = title.indexOf("(");
 
     return uniqueVariable(title.substr(0, metaStart), nameScope);
@@ -117,7 +117,7 @@ function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
 function generateAttributeDisplayForm(
     displayForm: DisplayForm,
     attributeVariableName: string,
-    nameScope: TakenNamesMap,
+    nameScope: TakenNamesSet,
     naming: AttributeNaming,
 ): string {
     const { meta } = displayForm;
@@ -171,7 +171,7 @@ function generateAttribute(
         /*
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
-        const localNameScope: TakenNamesMap = {};
+        const localNameScope: TakenNamesSet = {};
         const displayFormInits: string[] = attribute.attribute.content.displayForms.map(df =>
             generateAttributeDisplayForm(df, variableName, localNameScope, naming),
         );
@@ -208,7 +208,7 @@ function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStateme
             {
                 name: variableName,
                 type: "IMeasure<IMeasureDefinition>",
-                initializer: `newMeasure('${metric.metric.meta.identifier}')`,
+                initializer: `newMeasure('${meta.identifier}')`,
             },
         ],
     };
@@ -278,7 +278,7 @@ function generateDateDataSet(dd: DateDataSet): ReadonlyArray<OptionalKind<Variab
 function generateDateDataSets(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return flatMap(projectMeta.dateDataSets.map(generateDateDataSet));
+    return flatten(projectMeta.dateDataSets.map(generateDateDataSet));
 }
 
 /**

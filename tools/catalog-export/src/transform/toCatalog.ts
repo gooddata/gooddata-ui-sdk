@@ -56,16 +56,18 @@ function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.catalog.metrics.forEach(metric => {
-        const uniqueTitle = createUniqueName(metric.metric.meta.title, newMapping);
+        const { title, identifier, tags } = metric.metric.meta;
+        const uniqueTitle = createUniqueName(title, newMapping);
         newMapping[uniqueTitle] = {
-            identifier: metric.metric.meta.identifier,
-            tags: metric.metric.meta.tags,
+            identifier,
+            tags,
         };
     });
 
     projectMeta.catalog.facts.forEach(fact => {
-        const uniqueTitle = createUniqueName(fact.fact.meta.title, newMapping);
-        newMapping[uniqueTitle] = { identifier: fact.fact.meta.identifier, tags: fact.fact.meta.tags };
+        const { title, identifier, tags } = fact.fact.meta;
+        const uniqueTitle = createUniqueName(title, newMapping);
+        newMapping[uniqueTitle] = { identifier, tags };
     });
 
     return newMapping;
@@ -80,10 +82,11 @@ function createAttributes(attributes: Attribute[]): IAttrs {
         let firstDisplayForm: IIdentifierWithTags | undefined;
 
         attr.attribute.content.displayForms.forEach(df => {
-            const uniqueDfTitle = createUniqueName(df.meta.title, newDisplayForms);
+            const { title, identifier, tags } = df.meta;
+            const uniqueDfTitle = createUniqueName(title, newDisplayForms);
             const newDisplayForm: IIdentifierWithTags = {
-                identifier: df.meta.identifier,
-                tags: df.meta.tags,
+                identifier,
+                tags,
             };
 
             if (!firstDisplayForm) {
@@ -94,9 +97,10 @@ function createAttributes(attributes: Attribute[]): IAttrs {
         });
 
         if (firstDisplayForm) {
+            const { identifier, tags } = attr.attribute.meta;
             const newAttr: IAttrItem = {
-                identifier: attr.attribute.meta.identifier,
-                tags: attr.attribute.meta.tags,
+                identifier,
+                tags,
                 defaultDisplayForm: firstDisplayForm,
                 displayForms: newDisplayForms,
             };
@@ -116,11 +120,12 @@ function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
     const newDataSets: TitleToDataSet = {};
 
     projectMeta.dateDataSets.forEach(dd => {
-        const uniqueDsTitle = createUniqueName(dd.dateDataSet.meta.title, newDataSets);
+        const { title, identifier, tags } = dd.dateDataSet.meta;
+        const uniqueDsTitle = createUniqueName(title, newDataSets);
         const attributes: IAttrs = createAttributes(dd.dateDataSet.content.attributes);
         const newDataSet: IDataSet = {
-            identifier: dd.dateDataSet.meta.identifier,
-            tags: dd.dateDataSet.meta.tags,
+            identifier,
+            tags,
             attributes,
         };
 
@@ -134,8 +139,9 @@ function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.insights.forEach(insight => {
-        const uniqueTitle = createUniqueName(insight.title, newMapping);
-        newMapping[uniqueTitle] = { identifier: insight.identifier, tags: insight.tags };
+        const { title, identifier, tags } = insight;
+        const uniqueTitle = createUniqueName(title, newMapping);
+        newMapping[uniqueTitle] = { identifier, tags };
     });
 
     return newMapping;
@@ -184,7 +190,7 @@ function mergeData(
             let resultItem = newItem;
             if (existingTitle) {
                 subItemKeys.forEach(subItemKey => {
-                    if (Object.prototype.hasOwnProperty.call(resultItem, subItemKey)) {
+                    if (resultItem.hasOwnProperty(subItemKey)) {
                         resultItem = mergeData(resultItem, existingItems[existingTitle], [subItemKey]);
                     }
                 });

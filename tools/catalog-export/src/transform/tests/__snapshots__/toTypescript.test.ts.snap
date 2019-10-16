@@ -135,7 +135,7 @@ export const TimelineWeekSunSatYear: {[df: string]: IAttribute} = { /**
     * Display Form Title: Week #/Year (Cont.) (Timeline)  
     * Display Form ID: timeline.aay81lMifn6q
     */
-    WeekNrYear1: newAttribute('timeline.aay81lMifn6q'),/** 
+    WeekNrYear_1: newAttribute('timeline.aay81lMifn6q'),/** 
     * Display Form Title: Wk/Qtr/Year (Cont.) (Timeline)  
     * Display Form ID: timeline.aaC81lMifn6q
     */
@@ -143,7 +143,7 @@ export const TimelineWeekSunSatYear: {[df: string]: IAttribute} = { /**
     * Display Form Title: Wk/Qtr/Year (Timeline)  
     * Display Form ID: timeline.aas81lMifn6q
     */
-    WkQtrYear1: newAttribute('timeline.aas81lMifn6q') };
+    WkQtrYear_1: newAttribute('timeline.aas81lMifn6q') };
 /**
  * Attribute Title: Week (Sun-Sat) (Timeline)
  * Display Form ID: timeline.week.in.year
@@ -282,7 +282,7 @@ export const TimelineDate: {[df: string]: IAttribute} = { /**
     * Display Form Title: dd-mm-yyyy (Timeline)  
     * Display Form ID: timeline.date.eddmmyyyy
     */
-    DdMmYyyy1: newAttribute('timeline.date.eddmmyyyy') };
+    DdMmYyyy_1: newAttribute('timeline.date.eddmmyyyy') };
 export const Insights: {[title: string]: string} = { /** 
     * Insight Title: Labor Costs vs Scheduled Costs  
     * Insight ID: abhJpedgcfU2
