@@ -20,7 +20,7 @@ import {
     projectId,
 } from "../utils/fixtures";
 import { SortDirection } from "@gooddata/gd-bear-client";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 interface ISortOption {
     key: string;

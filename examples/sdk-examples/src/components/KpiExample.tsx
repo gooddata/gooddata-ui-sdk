@@ -6,7 +6,7 @@ import { newMeasure } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const totalSales = newMeasure(totalSalesIdentifier);
 

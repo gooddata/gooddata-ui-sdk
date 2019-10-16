@@ -12,7 +12,7 @@ import {
     projectId,
 } from "../utils/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../utils/colors";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 interface IBarChartDynamicExampleState {
     config: IChartConfig;

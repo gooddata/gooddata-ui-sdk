@@ -12,7 +12,7 @@ import {
     averageCheckSizeByServer,
     locationResortIdentifier,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const xMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"));
 

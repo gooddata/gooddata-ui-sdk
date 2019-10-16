@@ -26,6 +26,7 @@ const defaultContext: IAuthContext = {
 };
 
 export const AuthContext = createContext<IAuthContext>(defaultContext);
+
 export const AuthProvider: React.FC = ({ children }) => {
     const {
         onLoginStart,
@@ -95,3 +96,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+export const useBackend = () => {
+    const { backend } = useAuth();
+    return backend;
+};

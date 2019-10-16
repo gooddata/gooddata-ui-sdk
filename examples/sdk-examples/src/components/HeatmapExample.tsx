@@ -11,7 +11,7 @@ import {
     menuCategoryAttributeDFIdentifier,
     locationStateDisplayFormIdentifier,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const totalSales = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 

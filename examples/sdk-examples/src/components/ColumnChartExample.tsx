@@ -7,7 +7,7 @@ import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { totalSalesIdentifier, monthDateIdentifier, projectId } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const totalSales = newMeasure(totalSalesIdentifier, m => m.format("#,##0").alias("$ Total Sales"));
 

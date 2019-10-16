@@ -10,7 +10,7 @@ import {
     locationStateDisplayFormIdentifier,
     locationNameDisplayFormIdentifier,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const getAttributeHeaderItemName = x => x.attributeHeaderItem.name;
 const withIndex = fn => {

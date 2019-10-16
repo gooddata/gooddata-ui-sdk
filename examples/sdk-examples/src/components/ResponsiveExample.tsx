@@ -6,7 +6,7 @@ import "@gooddata/sdk-ui/styles/css/main.css";
 import Measure from "react-measure";
 
 import { projectId, totalSalesIdentifier, locationResortIdentifier } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 interface IResponsiveExampleState {
     size: [number, number];

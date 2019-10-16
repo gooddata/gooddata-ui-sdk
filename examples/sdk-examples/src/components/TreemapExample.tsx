@@ -11,7 +11,7 @@ import {
     locationStateDisplayFormIdentifier,
     projectId,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const numberOfChecks = newMeasure(numberOfChecksIdentifier, m => m.format("#,##0").alias("# Checks"));
 

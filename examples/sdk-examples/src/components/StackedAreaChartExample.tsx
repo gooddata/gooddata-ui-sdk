@@ -13,7 +13,7 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const measures = [
     newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),

@@ -11,7 +11,7 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     locationResortIdentifier,
 } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const columnMeasures = [newMeasure(franchiseFeesInitialFranchiseFeeIdentifier, m => m.format("#,##0"))];
 

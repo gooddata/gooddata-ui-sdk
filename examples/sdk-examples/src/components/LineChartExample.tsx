@@ -15,7 +15,7 @@ import {
 } from "../utils/fixtures";
 
 import { CUSTOM_COLOR_PALETTE } from "../utils/colors";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 const measures = [
     newMeasure(franchiseFeesIdentifier, m => m.format("#,##0")),

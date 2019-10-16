@@ -5,7 +5,7 @@ import { newMeasure } from "@gooddata/sdk-model";
 import get from "lodash/get";
 
 import { totalSalesIdentifier, projectId } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 interface IExecuteExampleState {
     executionNumber: number;

@@ -9,7 +9,7 @@ import "@gooddata/sdk-ui/styles/css/main.css";
 import { Layout } from "./utils/Layout";
 import { SidebarItem } from "./utils/SidebarItem";
 import { monthDateIdentifier, projectId, franchiseFeesTag } from "../utils/fixtures";
-import { useBackend } from "../backend";
+import { useBackend } from "../context/auth";
 
 interface IDynamicMeasuresExampleState {
     measureList: null | any[];
