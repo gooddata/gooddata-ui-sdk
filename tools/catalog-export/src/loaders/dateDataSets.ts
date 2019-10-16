@@ -14,7 +14,9 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
     const dateDataSets: DateDataSet[] = [];
     const attributeUriToDs: { [uri: string]: DateDataSet } = {};
 
-    (await gooddata.md.getObjectsByQuery(projectId, { category: "dataSet" }))
+    const dataSets = await gooddata.md.getObjectsByQuery(projectId, { category: "dataSet" });
+
+    dataSets
         .filter(ds => get(ds, "dataSet.content.urn", "").endsWith(":date"))
         .forEach(ds => {
             const newDs: DateDataSet = {
@@ -38,7 +40,9 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
             });
         });
 
-    (await gooddata.md.getObjects(projectId, Object.keys(attributeUriToDs))).forEach((attr: any) => {
+    const objects = await gooddata.md.getObjects(projectId, Object.keys(attributeUriToDs));
+
+    objects.forEach((attr: any) => {
         const dataSet = attributeUriToDs[attr.attribute.meta.uri];
         const newDfs: DisplayForm[] = attr.attribute.content.displayForms.map((df: any) => {
             return {
