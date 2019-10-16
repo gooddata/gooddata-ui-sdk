@@ -141,41 +141,56 @@ function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     return newMapping;
 }
 
+/**
+ * Merges new and existing catalog by item identifiers. The logic is as follows:
+ *
+ * - If the item with same identifier is in the existing catalog, the title from the existing
+ *   catalog SHOULD be retained
+ *
+ * - The title for existing item will be retained unless it conflicts with title for another
+ *   an item in the new catalog. In that case item from existing catalog will have the title
+ *   changed, sequence number will be added
+ *
+ * - Merging is done recursively if item is an object with predefined keys (df, attributes) =>
+ *   this is thus currently triggered for date data sets and attributes.
+ *
+ * @param newCatalog - newly generated catalog
+ * @param existingCatalog - existing catalog contents (may be empty)
+ * @param mergePaths - top level properties to merge on
+ * @param subItemKeys - second level properties to merge on recursively
+ */
 function mergeData(
-    original: any,
-    current: any,
+    newCatalog: any,
+    existingCatalog: any,
     mergePaths = ["visualizations", "measures", "attributes", "dateDataSets"],
     subItemKeys = ["displayForms", "attributes"],
 ): ICatalog {
-    const result = cloneDeep(current);
-    // for each path
+    const result = cloneDeep(newCatalog);
+
     mergePaths.forEach(path => {
-        // clear path
         set(result, path, {});
-        const currentItems = get(current, path);
-        const originalItems = get(original, path);
-        // for each item in current
-        forOwn(currentItems, (currentItem, currentItemKey) => {
-            // try to lookup original key
-            const matchingKey = findKey(originalItems, item => item.identifier === currentItem.identifier);
-            // insert found items with original keys
-            // insert unmatched items with current key
-            let resultItem = currentItem;
-            if (matchingKey) {
-                // look for subItemKeys and process them recursively
+        const newItems = get(newCatalog, path);
+        const existingItems = get(existingCatalog, path);
+
+        forOwn(newItems, (newItem, newItemKey) => {
+            const existingTitle = findKey(existingItems, item => item.identifier === newItem.identifier);
+            const resolvedTitle = existingTitle ? existingTitle : newItemKey;
+            const nonConflictingTitle = createUniqueName(resolvedTitle, get(result, path));
+
+            if (resolvedTitle !== nonConflictingTitle) {
+                console.warn("resolving duplicate key", resolvedTitle, "into", nonConflictingTitle); // eslint-disable-line no-console
+            }
+
+            let resultItem = newItem;
+            if (existingTitle) {
                 subItemKeys.forEach(subItemKey => {
                     if (Object.prototype.hasOwnProperty.call(resultItem, subItemKey)) {
-                        resultItem = mergeData(originalItems[matchingKey], resultItem, [subItemKey]);
+                        resultItem = mergeData(resultItem, existingItems[existingTitle], [subItemKey]);
                     }
                 });
             }
-            // check and resolve key conflicts
-            const resolvedKey = matchingKey || currentItemKey;
-            const nonConflictKey = createUniqueName(resolvedKey, get(result, path));
-            if (resolvedKey !== nonConflictKey) {
-                console.warn("resolving duplicate key", resolvedKey, "into", nonConflictKey); // eslint-disable-line no-console
-            }
-            set(result, [path, nonConflictKey], resultItem);
+
+            set(result, [path, nonConflictingTitle], resultItem);
         });
     });
 
@@ -205,7 +220,7 @@ export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog
     };
 
     if (existingCatalog) {
-        return mergeData(existingCatalog, newCatalog);
+        return mergeData(newCatalog, existingCatalog);
     }
 
     return newCatalog;
