@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformToCatalog creates new catalog 1`] = `
+"import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from \\"@gooddata/sdk-model\\";
+
+/**
+ * Attribute Title: Channel
+ * Display Form ID: attr.orders.channel
+ */
+export const Channel: IAttribute = newAttribute('label.orders.channel');
+export const EmployeeName: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Employee Name  
+    * Display Form ID: label.employee.employeename
+    */
+    Default: newAttribute('label.employee.employeename'),/** 
+    * Display Form Title: Employee URL  
+    * Display Form ID: label.employee.employeename.employeeurl
+    */
+    EmployeeURL: newAttribute('label.employee.employeename.employeeurl') };
+/**
+ * Metric Title: _Filter Last 4 Quarter
+ * Metric ID: aaIHiWZjfWNA
+ * Metric Type: MAQL Metric
+ */
+export const FilterLast4Quarter: IMeasure<IMeasureDefinition> = newMeasure('aaIHiWZjfWNA');
+/**
+ * Metric Title: _Filter Quarter
+ * Metric ID: aaiF4bffe4yn
+ * Metric Type: MAQL Metric
+ */
+export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure('aaiF4bffe4yn');
+/**
+ * Fact Title: $ Menu Item Sales
+ * Fact ID: fact.salesdetailfact.menuitemsales
+ */
+export const $MenuItemSales: {[measure: string]: IMeasure<IMeasureDefinition>} = { /** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: sum
+    */
+    Sum: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('sum')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: count
+    */
+    Count: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('count')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: avg
+    */
+    Avg: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('avg')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: min
+    */
+    Min: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('min')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: max
+    */
+    Max: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('max')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: median
+    */
+    Median: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('median')),/** 
+    * Fact Title: $ Menu Item Sales  
+    * Fact ID: fact.salesdetailfact.menuitemsales
+     * Fact Aggregation: runsum
+    */
+    Runsum: newMeasure('fact.salesdetailfact.menuitemsales', m => m.aggregation('runsum')) } ;
+/**
+ * Fact Title: Cost
+ * Fact ID: fact.restaurantcostsfact.cost
+ */
+export const Cost: {[measure: string]: IMeasure<IMeasureDefinition>} = { /** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: sum
+    */
+    Sum: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('sum')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: count
+    */
+    Count: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('count')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: avg
+    */
+    Avg: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('avg')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: min
+    */
+    Min: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('min')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: max
+    */
+    Max: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('max')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: median
+    */
+    Median: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('median')),/** 
+    * Fact Title: Cost  
+    * Fact ID: fact.restaurantcostsfact.cost
+     * Fact Aggregation: runsum
+    */
+    Runsum: newMeasure('fact.restaurantcostsfact.cost', m => m.aggregation('runsum')) } ;
+/**
+ * Attribute Title: Year (Timeline)
+ * Display Form ID: timeline.year
+ */
+export const TimelineYear: IAttribute = newAttribute('timeline.aag81lMifn6q');
+/**
+ * Attribute Title: Quarter (Timeline)
+ * Display Form ID: timeline.quarter.in.year
+ */
+export const TimelineQuarter: IAttribute = newAttribute('timeline.aam81lMifn6q');
+export const TimelineWeekSunSatYear: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Week #/Year (W1/2010) (Timeline)  
+    * Display Form ID: timeline.aaA81lMifn6q
+    */
+    WeekNrYear: newAttribute('timeline.aaA81lMifn6q'),/** 
+    * Display Form Title: Week Starting (Timeline)  
+    * Display Form ID: timeline.aaw81lMifn6q
+    */
+    WeekStarting: newAttribute('timeline.aaw81lMifn6q'),/** 
+    * Display Form Title: From - To (Timeline)  
+    * Display Form ID: timeline.aau81lMifn6q
+    */
+    FromTo: newAttribute('timeline.aau81lMifn6q'),/** 
+    * Display Form Title: Week #/Year (Cont.) (Timeline)  
+    * Display Form ID: timeline.aay81lMifn6q
+    */
+    WeekNrYear1: newAttribute('timeline.aay81lMifn6q'),/** 
+    * Display Form Title: Wk/Qtr/Year (Cont.) (Timeline)  
+    * Display Form ID: timeline.aaC81lMifn6q
+    */
+    WkQtrYear: newAttribute('timeline.aaC81lMifn6q'),/** 
+    * Display Form Title: Wk/Qtr/Year (Timeline)  
+    * Display Form ID: timeline.aas81lMifn6q
+    */
+    WkQtrYear1: newAttribute('timeline.aas81lMifn6q') };
+/**
+ * Attribute Title: Week (Sun-Sat) (Timeline)
+ * Display Form ID: timeline.week.in.year
+ */
+export const TimelineWeekSunSat: IAttribute = newAttribute('timeline.aaI81lMifn6q');
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Timeline)
+ * Display Form ID: timeline.week.in.quarter
+ */
+export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute('timeline.aaO81lMifn6q');
+export const TimelineWeekMonSunYear: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Week #/Year (W1/2010) (Timeline)  
+    * Display Form ID: timeline.aa281lMifn6q
+    */
+    WeekNrYear: newAttribute('timeline.aa281lMifn6q'),/** 
+    * Display Form Title: Week Starting (Timeline)  
+    * Display Form ID: timeline.aaY81lMifn6q
+    */
+    WeekStarting: newAttribute('timeline.aaY81lMifn6q'),/** 
+    * Display Form Title: From - To (Timeline)  
+    * Display Form ID: timeline.aaW81lMifn6q
+    */
+    FromTo: newAttribute('timeline.aaW81lMifn6q') };
+/**
+ * Attribute Title: Week (Mon-Sun) (Timeline)
+ * Display Form ID: timeline.euweek.in.year
+ */
+export const TimelineWeekMonSun: IAttribute = newAttribute('timeline.aba81lMifn6q');
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Timeline)
+ * Display Form ID: timeline.euweek.in.quarter
+ */
+export const TimelineWeekMonSunOfQtr: IAttribute = newAttribute('timeline.abg81lMifn6q');
+export const TimelineMonth: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Short (Jan) (Timeline)  
+    * Display Form ID: timeline.abm81lMifn6q
+    */
+    Short: newAttribute('timeline.abm81lMifn6q'),/** 
+    * Display Form Title: Long (January) (Timeline)  
+    * Display Form ID: timeline.abs81lMifn6q
+    */
+    Long: newAttribute('timeline.abs81lMifn6q'),/** 
+    * Display Form Title: Number (M1) (Timeline)  
+    * Display Form ID: timeline.abq81lMifn6q
+    */
+    Number: newAttribute('timeline.abq81lMifn6q'),/** 
+    * Display Form Title: M/Q (M1/Q1) (Timeline)  
+    * Display Form ID: timeline.abo81lMifn6q
+    */
+    MQ: newAttribute('timeline.abo81lMifn6q') };
+/**
+ * Attribute Title: Month of Quarter (Timeline)
+ * Display Form ID: timeline.month.in.quarter
+ */
+export const TimelineMonthOfQuarter: IAttribute = newAttribute('timeline.aby81lMifn6q');
+/**
+ * Attribute Title: Day of Year (Timeline)
+ * Display Form ID: timeline.day.in.year
+ */
+export const TimelineDayOfYear: IAttribute = newAttribute('timeline.abE81lMifn6q');
+export const TimelineDayOfWeekSunSat: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Short (Sun) (Timeline)  
+    * Display Form ID: timeline.abK81lMifn6q
+    */
+    Short: newAttribute('timeline.abK81lMifn6q'),/** 
+    * Display Form Title: Long (Sunday) (Timeline)  
+    * Display Form ID: timeline.abO81lMifn6q
+    */
+    Long: newAttribute('timeline.abO81lMifn6q'),/** 
+    * Display Form Title: Number (1=Sunday) (Timeline)  
+    * Display Form ID: timeline.abM81lMifn6q
+    */
+    Number: newAttribute('timeline.abM81lMifn6q') };
+export const TimelineDayOfWeekMonSun: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Short (Mon) (Timeline)  
+    * Display Form ID: timeline.abU81lMifn6q
+    */
+    Short: newAttribute('timeline.abU81lMifn6q'),/** 
+    * Display Form Title: Long (Monday) (Timeline)  
+    * Display Form ID: timeline.abY81lMifn6q
+    */
+    Long: newAttribute('timeline.abY81lMifn6q'),/** 
+    * Display Form Title: Number (1=Monday) (Timeline)  
+    * Display Form ID: timeline.abW81lMifn6q
+    */
+    Number: newAttribute('timeline.abW81lMifn6q') };
+/**
+ * Attribute Title: Day of Quarter (Timeline)
+ * Display Form ID: timeline.day.in.quarter
+ */
+export const TimelineDayOfQuarter: IAttribute = newAttribute('timeline.ab481lMifn6q');
+/**
+ * Attribute Title: Day of Month (Timeline)
+ * Display Form ID: timeline.day.in.month
+ */
+export const TimelineDayOfMonth: IAttribute = newAttribute('timeline.aca81lMifn6q');
+/**
+ * Attribute Title: Quarter/Year (Timeline)
+ * Display Form ID: timeline.quarter
+ */
+export const TimelineQuarterYear: IAttribute = newAttribute('timeline.aci81lMifn6q');
+export const TimelineMonthYear: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: Short (Jan 2010) (Timeline)  
+    * Display Form ID: timeline.act81lMifn6q
+    */
+    Short: newAttribute('timeline.act81lMifn6q'),/** 
+    * Display Form Title: Long (January 2010) (Timeline)  
+    * Display Form ID: timeline.acx81lMifn6q
+    */
+    Long: newAttribute('timeline.acx81lMifn6q'),/** 
+    * Display Form Title: Number (1/2010) (Timeline)  
+    * Display Form ID: timeline.acv81lMifn6q
+    */
+    Number: newAttribute('timeline.acv81lMifn6q') };
+export const TimelineDate: {[df: string]: IAttribute} = { /** 
+    * Display Form Title: mm/dd/yyyy (Timeline)  
+    * Display Form ID: timeline.date.mmddyyyy
+    */
+    MmDdYyyy: newAttribute('timeline.date.mmddyyyy'),/** 
+    * Display Form Title: yyyy-mm-dd (Timeline)  
+    * Display Form ID: timeline.date.yyyymmdd
+    */
+    YyyyMmDd: newAttribute('timeline.date.yyyymmdd'),/** 
+    * Display Form Title: m/d/yy (no leading zeroes) (Timeline)  
+    * Display Form ID: timeline.date.mdyy
+    */
+    MDYy: newAttribute('timeline.date.mdyy'),/** 
+    * Display Form Title: Long (Mon, Jan 1, 2010) (Timeline)  
+    * Display Form ID: timeline.date.long
+    */
+    Long: newAttribute('timeline.date.long'),/** 
+    * Display Form Title: dd/mm/yyyy (Timeline)  
+    * Display Form ID: timeline.date.ddmmyyyy
+    */
+    DdMmYyyy: newAttribute('timeline.date.ddmmyyyy'),/** 
+    * Display Form Title: dd-mm-yyyy (Timeline)  
+    * Display Form ID: timeline.date.eddmmyyyy
+    */
+    DdMmYyyy1: newAttribute('timeline.date.eddmmyyyy') };
+export const Insights: {[title: string]: string} = { /** 
+    * Insight Title: Labor Costs vs Scheduled Costs  
+    * Insight ID: abhJpedgcfU2
+    */
+    LaborCostsVsScheduledCosts: 'abhJpedgcfU2',/** 
+    * Insight Title: Total Sales by City  
+    * Insight ID: acPWDTL2bJeX
+    */
+    TotalSalesByCity: 'acPWDTL2bJeX',/** 
+    * Insight Title: $ Total Sales by Location  
+    * Insight ID: aaBN5UG3dXu4
+    */
+    $TotalSalesByLocation: 'aaBN5UG3dXu4' };
+"
+`;

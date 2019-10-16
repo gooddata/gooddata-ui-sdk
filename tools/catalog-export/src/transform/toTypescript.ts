@@ -292,10 +292,7 @@ function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableSt
  * @param outputFile - output typescript file
  * @return return of the transformation process, new file is not saved at this point
  */
-export async function transformToTypescript(
-    projectMeta: ProjectMetadata,
-    outputFile: string,
-): Promise<TypescriptOutput> {
+export function transformToTypescript(projectMeta: ProjectMetadata, outputFile: string): TypescriptOutput {
     GlobalNameScope = {};
 
     const output = initialize(outputFile);

@@ -12,11 +12,9 @@ import * as fs from "fs";
  */
 export async function exportMetadataToTypescript(projectId: string, outputFile: string): Promise<void> {
     const projectMetadata = await loadProjectMetadata(projectId);
-    const output = await transformToTypescript(projectMetadata, outputFile);
+    const output = transformToTypescript(projectMetadata, outputFile);
 
-    output.project.saveSync();
-
-    const generatedTypescript = fs.readFileSync(outputFile, { encoding: "utf-8" });
+    const generatedTypescript = output.sourceFile.getFullText();
     const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
 
     fs.writeFileSync(outputFile, formattedTypescript, { encoding: "utf-8" });
