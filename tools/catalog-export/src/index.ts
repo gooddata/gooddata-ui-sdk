@@ -20,7 +20,6 @@ program
     .option("--project-id <id>", "Project id for which you want to export the catalog.")
     .option("--project-name <value>", "Project name for which you want to export the catalog.")
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
-    .option("--password <value>", "Your password that you use to log in to GoodData platform.")
     .option(
         "--output <value>",
         `Output file (defaults to ${DEFAULT_OUTPUT_FILE_NAME}). The output file will be created in current working directory`,
