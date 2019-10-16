@@ -20,8 +20,8 @@ export type TypescriptOutput = {
 // Constants
 //
 
-// const FILE_DIRECTIVES = ['/* tslint:disable:file-header */'];
-// const FILE_HEADER = `// THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()};`;
+const FILE_DIRECTIVES = ["/* tslint:disable:file-header */"];
+const FILE_HEADER = `// THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()};`;
 const INSIGHT_MAP_VARNAME = "Insights";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
 
@@ -110,6 +110,7 @@ function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
     return {
         moduleSpecifier: "@gooddata/sdk-model",
         namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition"],
+        leadingTrivia: [...FILE_DIRECTIVES, FILE_HEADER],
     };
 }
 
