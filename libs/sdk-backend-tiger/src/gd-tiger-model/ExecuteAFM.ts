@@ -8,7 +8,7 @@ export namespace ExecuteAFM {
     }
 
     export interface IAfm {
-        attributes?: string[];
+        attributes?: IAttribute[];
         measures?: IMeasure[];
         filters?: CompatibilityFilter[];
         // native totals not yet supported by NAS

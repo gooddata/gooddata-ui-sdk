@@ -2,9 +2,7 @@
 export namespace Execution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
-            /* not in new stack yet
             identifier?: string;
-            */
             format: string;
             localIdentifier: string;
             name: string;
@@ -28,14 +26,14 @@ export namespace Execution {
     export interface IAttributeHeader {
         attributeHeader: {
             identifier: string;
-            /* not in new stack yet
             localIdentifier: string;
             name: string;
-            totalItems?: ITotalHeaderItem[];
+            /* not in new stack yet
+            totalItems?: ITotalHeaderItem[]; */
             formOf: {
                 identifier: string;
                 name: string;
-            };*/
+            };
         };
     }
 
