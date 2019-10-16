@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ProjectMetadata, Attribute } from "../base/types";
-import { createUniqueTitle } from "./titles";
+import { createUniqueName } from "./titles";
 import { get, set, cloneDeep, findKey, forOwn, isEmpty } from "lodash";
 /*
  * This transformation takes project metadata and creates an object that matches the required input of CatalogHelper.
@@ -56,7 +56,7 @@ function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.catalog.metrics.forEach(metric => {
-        const uniqueTitle = createUniqueTitle(newMapping, metric.metric.meta.title);
+        const uniqueTitle = createUniqueName(metric.metric.meta.title, newMapping);
         newMapping[uniqueTitle] = {
             identifier: metric.metric.meta.identifier,
             tags: metric.metric.meta.tags,
@@ -64,7 +64,7 @@ function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
     });
 
     projectMeta.catalog.facts.forEach(fact => {
-        const uniqueTitle = createUniqueTitle(newMapping, fact.fact.meta.title);
+        const uniqueTitle = createUniqueName(fact.fact.meta.title, newMapping);
         newMapping[uniqueTitle] = { identifier: fact.fact.meta.identifier, tags: fact.fact.meta.tags };
     });
 
@@ -75,12 +75,12 @@ function createAttributes(attributes: Attribute[]): IAttrs {
     const newAttrs: IAttrs = {};
 
     attributes.forEach(attr => {
-        const uniqueAttrTitle = createUniqueTitle(newAttrs, attr.attribute.meta.title);
+        const uniqueAttrTitle = createUniqueName(attr.attribute.meta.title, newAttrs);
         const newDisplayForms: IDisplayForms = {};
         let firstDisplayForm: IIdentifierWithTags | undefined;
 
         attr.attribute.content.displayForms.forEach(df => {
-            const uniqueDfTitle = createUniqueTitle(newDisplayForms, df.meta.title);
+            const uniqueDfTitle = createUniqueName(df.meta.title, newDisplayForms);
             const newDisplayForm: IIdentifierWithTags = {
                 identifier: df.meta.identifier,
                 tags: df.meta.tags,
@@ -116,7 +116,7 @@ function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
     const newDataSets: TitleToDataSet = {};
 
     projectMeta.dateDataSets.forEach(dd => {
-        const uniqueDsTitle = createUniqueTitle(newDataSets, dd.dateDataSet.meta.title);
+        const uniqueDsTitle = createUniqueName(dd.dateDataSet.meta.title, newDataSets);
         const attributes: IAttrs = createAttributes(dd.dateDataSet.content.attributes);
         const newDataSet: IDataSet = {
             identifier: dd.dateDataSet.meta.identifier,
@@ -134,7 +134,7 @@ function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.insights.forEach(insight => {
-        const uniqueTitle = createUniqueTitle(newMapping, insight.title);
+        const uniqueTitle = createUniqueName(insight.title, newMapping);
         newMapping[uniqueTitle] = { identifier: insight.identifier, tags: insight.tags };
     });
 
@@ -171,7 +171,7 @@ function mergeData(
             }
             // check and resolve key conflicts
             const resolvedKey = matchingKey || currentItemKey;
-            const nonConflictKey = createUniqueTitle(get(result, path), resolvedKey);
+            const nonConflictKey = createUniqueName(resolvedKey, get(result, path));
             if (resolvedKey !== nonConflictKey) {
                 console.warn("resolving duplicate key", resolvedKey, "into", nonConflictKey); // eslint-disable-line no-console
             }

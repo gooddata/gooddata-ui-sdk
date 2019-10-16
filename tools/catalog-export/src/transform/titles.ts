@@ -1,15 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { has } from "lodash";
 
-export function createUniqueTitle(obj: any, itemName: string, orig: string = "", num: number = 1): string {
-    const name = orig || itemName;
-    if (has(obj, itemName)) {
-        return createUniqueTitle(obj, `${name}(${num})`, name, num + 1);
-    }
-
-    return itemName;
-}
-
 const NonAlphaNumRegex = /[^\w\d$]+/g;
 
 function titleToVariableName(title: string): string {
@@ -60,15 +51,29 @@ export type TakenNamesMap = { [name: string]: any };
  * indicates the name is used.
  *
  * @param title - object title
- * @param taken - mapping of used variable names to whatever you see fit.
+ * @param scope - uniqueness scope
  */
-export function createUniqueVariableName(title: string, taken: TakenNamesMap = {}): string {
+export function createUniqueVariableName(title: string, scope: TakenNamesMap = {}): string {
     const variableName = titleToVariableName(title);
-    let uniqueName: string = variableName;
+
+    return createUniqueName(variableName, scope);
+}
+
+/**
+ * Ensure provided name is unique within the desired scope. The scope is expected to be an object which contains
+ * key per name that is already used within some logical scope. The value associated with the key is irrelevant.
+ *
+ * Uniqueness is ensured by appending a sequence number to the input name.
+ *
+ * @param name - name to ensure uniqueness of
+ * @param scope - uniqueness scope
+ */
+export function createUniqueName(name: string, scope: any): string {
+    let uniqueName: string = name;
     let num: number = 1;
 
-    while (has(taken, uniqueName)) {
-        uniqueName = `${variableName}${num}`;
+    while (has(scope, uniqueName)) {
+        uniqueName = `${name}${num}`;
         num++;
     }
 

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { createUniqueVariableName } from "../titles";
+import { createUniqueName, createUniqueVariableName } from "../titles";
 
 describe("createUniqueVariableName", () => {
     describe("title transformation", () => {
@@ -38,6 +38,19 @@ describe("createUniqueVariableName", () => {
         });
         it("should work with transformed title", () => {
             expect(createUniqueVariableName("something", { Something: true })).toEqual("Something1");
+        });
+    });
+});
+
+describe("createUniqueName", () => {
+    describe("uniqueness guarantees", () => {
+        it("should append 1 if name is taken", () => {
+            expect(createUniqueName("Something", { Something: true })).toEqual("Something1");
+        });
+        it("should append 2 if names are taken", () => {
+            expect(createUniqueName("Something", { Something: true, Something1: true })).toEqual(
+                "Something2",
+            );
         });
     });
 });
