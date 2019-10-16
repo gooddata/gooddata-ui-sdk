@@ -58,7 +58,6 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
-        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "lodash": "^4.17.15",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
@@ -72,6 +71,7 @@
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
+        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "@types/inquirer": "^6.5.0",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
