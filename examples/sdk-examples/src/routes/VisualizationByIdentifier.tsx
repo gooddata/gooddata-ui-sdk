@@ -11,7 +11,7 @@ import { VisualizationLineByIdentifierExample } from "../components/Visualizatio
 import { VisualizationAreaByIdentifierExample } from "../components/VisualizationAreaByIdentifierExample";
 import { VisualizationHeadlineByIdentifierExample } from "../components/VisualizationHeadlineByIdentifierExample";
 import { VisualizationScatterByIdentifierExample } from "../components/VisualizationScatterByIdentifierExample";
-// import VisualizationBubbleExample from "../components/VisualizationBubbleByIdentifierExample";
+import { VisualizationBubbleByIdentifierExample } from "../components/VisualizationBubbleByIdentifierExample";
 // import VisualizationPieExample from "../components/VisualizationPieByIdentifierExample";
 // import VisualizationDonutExample from "../components/VisualizationDonutByIdentifierExample";
 // import VisualizationTreemapExample from "../components/VisualizationTreemapByIdentifierExample";
@@ -25,7 +25,7 @@ import VisualizationLineByIdentifierExampleSRC from "!raw-loader!../components/V
 import VisualizationAreaByIdentifierExampleSRC from "!raw-loader!../components/VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationHeadlineByIdentifierExampleSRC from "!raw-loader!../components/VisualizationHeadlineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationScatterByIdentifierExampleSRC from "!raw-loader!../components/VisualizationScatterByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationBubbleExampleSRC from "!raw-loader!../components/VisualizationBubbleByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationBubbleByIdentifierExampleSRC from "!raw-loader!../components/VisualizationBubbleByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationPieExampleSRC from "!raw-loader!../components/VisualizationPieByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationDonutExampleSRC from "!raw-loader!../components/VisualizationDonutByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationTreemapExampleSRC from "!raw-loader!../components/VisualizationTreemapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -103,12 +103,14 @@ export const VisualizationByIdentifier = () => (
         />
 
         <hr className="separator" />
-        {/*
         <h2 id="bubble">Bubble Chart</h2>
-        <ExampleWithSource for={VisualizationBubbleExample} source={VisualizationBubbleExampleSRC} />
+        <ExampleWithSource
+            for={VisualizationBubbleByIdentifierExample}
+            source={VisualizationBubbleByIdentifierExampleSRC}
+        />
 
         <hr className="separator" />
-
+        {/*
         <h2 id="pie">Pie Chart</h2>
         <ExampleWithSource for={VisualizationPieExample} source={VisualizationPieExampleSRC} />
 
