@@ -15,7 +15,7 @@ import { VisualizationBubbleByIdentifierExample } from "../components/Visualizat
 import { VisualizationPieByIdentifierExample } from "../components/VisualizationPieByIdentifierExample";
 import { VisualizationDonutByIdentifierExample } from "../components/VisualizationDonutByIdentifierExample";
 import { VisualizationTreemapByIdentifierExample } from "../components/VisualizationTreemapByIdentifierExample";
-// import VisualizationHeatmapExample from "../components/VisualizationHeatmapByIdentifierExample";
+import { VisualizationHeatmapByIdentifierExample } from "../components/VisualizationHeatmapByIdentifierExample";
 
 import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!../components/VisualizationColumnChartByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationTableExampleSRC from "!raw-loader!../components/VisualizationTableByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -29,7 +29,7 @@ import VisualizationBubbleByIdentifierExampleSRC from "!raw-loader!../components
 import VisualizationPieByIdentifierExampleSRC from "!raw-loader!../components/VisualizationPieByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationDonutByIdentifierExampleSRC from "!raw-loader!../components/VisualizationDonutByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationTreemapByIdentifierExampleSRC from "!raw-loader!../components/VisualizationTreemapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationHeatmapExampleSRC from "!raw-loader!../components/VisualizationHeatmapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationHeatmapByIdentifierExampleSRC from "!raw-loader!../components/VisualizationHeatmapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const VisualizationByIdentifier = () => (
     <div>
@@ -133,10 +133,12 @@ export const VisualizationByIdentifier = () => (
         />
 
         <hr className="separator" />
-        {/*
 
         <h2 id="heatmap">Heatmap</h2>
-        <ExampleWithSource for={VisualizationHeatmapExample} source={VisualizationHeatmapExampleSRC} /> */}
+        <ExampleWithSource
+            for={VisualizationHeatmapByIdentifierExample}
+            source={VisualizationHeatmapByIdentifierExampleSRC}
+        />
     </div>
 );
 
