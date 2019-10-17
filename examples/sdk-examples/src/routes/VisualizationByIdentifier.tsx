@@ -8,7 +8,7 @@ import { VisualizationColumnChartByIdentifierExample } from "../components/Visua
 // import CustomVisualizationExample from "../components/CustomVisualizationExample";
 import { VisualizationBarByIdentifierExample } from "../components/VisualizationBarByIdentifierExample";
 import { VisualizationLineByIdentifierExample } from "../components/VisualizationLineByIdentifierExample";
-// import VisualizationAreaExample from "../components/VisualizationAreaByIdentifierExample";
+import { VisualizationAreaByIdentifierExample } from "../components/VisualizationAreaByIdentifierExample";
 // import VisualizationHeadlineExample from "../components/VisualizationHeadlineByIdentifierExample";
 // import VisualizationScatterExample from "../components/VisualizationScatterByIdentifierExample";
 // import VisualizationBubbleExample from "../components/VisualizationBubbleByIdentifierExample";
@@ -22,7 +22,7 @@ import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!../compo
 // import CustomVisualizationExampleSRC from "!raw-loader!../components/CustomVisualizationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationBarByIdentifierExampleSrc from "!raw-loader!../components/VisualizationBarByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationLineByIdentifierExampleSRC from "!raw-loader!../components/VisualizationLineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationAreaExampleSRC from "!raw-loader!../components/VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationAreaByIdentifierExampleSRC from "!raw-loader!../components/VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationHeadlineExampleSRC from "!raw-loader!../components/VisualizationHeadlineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationScatterExampleSRC from "!raw-loader!../components/VisualizationScatterByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationBubbleExampleSRC from "!raw-loader!../components/VisualizationBubbleByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -79,12 +79,15 @@ export const VisualizationByIdentifier = () => (
         />
 
         <hr className="separator" />
-        {/*
+
         <h2 id="area">Stacked Area Chart</h2>
-        <ExampleWithSource for={VisualizationAreaExample} source={VisualizationAreaExampleSRC} />
+        <ExampleWithSource
+            for={VisualizationAreaByIdentifierExample}
+            source={VisualizationAreaByIdentifierExampleSRC}
+        />
 
         <hr className="separator" />
-
+        {/*
         <h2 id="headline">Headline</h2>
         <ExampleWithSource for={VisualizationHeadlineExample} source={VisualizationHeadlineExampleSRC} />
 
