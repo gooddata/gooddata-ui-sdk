@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui";
 import "@gooddata/sdk-ui/styles/css/main.css";
 
-import { projectId, columnVisualizationIdentifier } from "../utils/fixtures";
+import { projectId, headlineVisualizationIdentifier } from "../utils/fixtures";
 import { useBackend } from "../context/auth";
 
 const style = { height: 300 };
@@ -16,14 +16,15 @@ const visualizationProps = {
     },
 };
 
-export const VisualizationColumnChartByIdentifierExample: React.FC = () => {
+export const VisualizationHeadlineByIdentifierExample: React.FC = () => {
     const backend = useBackend();
+
     return (
-        <div style={style} className="s-visualization-chart">
+        <div style={style} className="s-visualization-headline">
             <InsightView
                 backend={backend}
                 workspace={projectId}
-                id={columnVisualizationIdentifier}
+                id={headlineVisualizationIdentifier}
                 visualizationProps={visualizationProps}
             />
         </div>

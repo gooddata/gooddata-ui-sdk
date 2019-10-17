@@ -7,7 +7,6 @@ import { projectId, barVisualizationIdentifier } from "../utils/fixtures";
 import { useBackend } from "../context/auth";
 
 const style = { height: 300 };
-
 const visualizationProps = {
     custom: {
         drillableItems: [],
