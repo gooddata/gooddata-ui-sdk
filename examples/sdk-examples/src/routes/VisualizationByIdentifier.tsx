@@ -10,7 +10,7 @@ import { VisualizationBarByIdentifierExample } from "../components/Visualization
 import { VisualizationLineByIdentifierExample } from "../components/VisualizationLineByIdentifierExample";
 import { VisualizationAreaByIdentifierExample } from "../components/VisualizationAreaByIdentifierExample";
 import { VisualizationHeadlineByIdentifierExample } from "../components/VisualizationHeadlineByIdentifierExample";
-// import VisualizationScatterExample from "../components/VisualizationScatterByIdentifierExample";
+import { VisualizationScatterByIdentifierExample } from "../components/VisualizationScatterByIdentifierExample";
 // import VisualizationBubbleExample from "../components/VisualizationBubbleByIdentifierExample";
 // import VisualizationPieExample from "../components/VisualizationPieByIdentifierExample";
 // import VisualizationDonutExample from "../components/VisualizationDonutByIdentifierExample";
@@ -24,7 +24,7 @@ import VisualizationBarByIdentifierExampleSrc from "!raw-loader!../components/Vi
 import VisualizationLineByIdentifierExampleSRC from "!raw-loader!../components/VisualizationLineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationAreaByIdentifierExampleSRC from "!raw-loader!../components/VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import VisualizationHeadlineByIdentifierExampleSRC from "!raw-loader!../components/VisualizationHeadlineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationScatterExampleSRC from "!raw-loader!../components/VisualizationScatterByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationScatterByIdentifierExampleSRC from "!raw-loader!../components/VisualizationScatterByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationBubbleExampleSRC from "!raw-loader!../components/VisualizationBubbleByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationPieExampleSRC from "!raw-loader!../components/VisualizationPieByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationDonutExampleSRC from "!raw-loader!../components/VisualizationDonutByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -95,12 +95,15 @@ export const VisualizationByIdentifier = () => (
         />
 
         <hr className="separator" />
-        {/*
+
         <h2 id="scatter">Scatter Plot</h2>
-        <ExampleWithSource for={VisualizationScatterExample} source={VisualizationScatterExampleSRC} />
+        <ExampleWithSource
+            for={VisualizationScatterByIdentifierExample}
+            source={VisualizationScatterByIdentifierExampleSRC}
+        />
 
         <hr className="separator" />
-
+        {/*
         <h2 id="bubble">Bubble Chart</h2>
         <ExampleWithSource for={VisualizationBubbleExample} source={VisualizationBubbleExampleSRC} />
 
