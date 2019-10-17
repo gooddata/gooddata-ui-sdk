@@ -8,13 +8,14 @@ import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
-import { IColorPalette } from '@gooddata/sdk-model';
+import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
 // @public
@@ -67,19 +68,19 @@ export class DataViewError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @alpha
+// @public
 export class DataViewFacade {
     constructor(dataView: IDataView);
     // (undocumented)
-    allHeaders(): IResultHeader[][][];
-    // (undocumented)
-    attributeHeaders(): IResultAttributeHeader[][][];
+    attributeHeaders(): IResultAttributeHeaderItem[][][];
     // (undocumented)
     attributes(): IAttribute[];
-    bucket(localId: string): IBucket | undefined;
+    // (undocumented)
+    bucket(id: string): IBucket | undefined;
     // (undocumented)
     bucketCount(): number;
-    bucketMeasures(localId: string): IMeasure[];
+    // (undocumented)
+    bucketMeasures(id: string): IMeasure[];
     // (undocumented)
     buckets(): IBucket[];
     // (undocumented)
@@ -91,33 +92,50 @@ export class DataViewFacade {
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
-    dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[];
+    dimensionHeaders(dimIdx: number): IHeader[];
     // (undocumented)
-    dimensions(): IDimensionDescriptor[];
+    dimensions(): IResultDimension[];
     // (undocumented)
     fingerprint(): () => string;
     // (undocumented)
     firstDimSize(): number;
     // (undocumented)
     hasAttributes(): boolean;
-    hasBuckets(): boolean;
-    hasTotals(): boolean;
-    isBucketEmpty(localId: string): boolean;
-    isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
-    masterMeasureForDerived(localId: string): IMeasure | undefined;
-    measure(localId: string): IMeasure | undefined;
-    measureDescriptor(localId: string): IMeasureDescriptor | undefined;
-    measureDescriptors(): IMeasureDescriptor[];
     // (undocumented)
-    measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
-    measureIndex(localId: string): number;
+    hasBuckets(): boolean;
+    // (undocumented)
+    hasMeasures(): boolean;
+    // (undocumented)
+    hasTotals(): boolean;
+    // (undocumented)
+    headerItems(): IResultHeaderItem[][][];
+    // (undocumented)
+    isBucketEmpty(id: string): boolean;
+    // (undocumented)
+    isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean;
+    // (undocumented)
+    masterMeasureForDerived(id: string): IMeasure | undefined;
+    // (undocumented)
+    measure(id: string): IMeasure | undefined;
+    // (undocumented)
+    measureGroupHeader(): IMeasureGroupHeader | undefined;
+    // (undocumented)
+    measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined;
+    // (undocumented)
+    measureGroupHeaderItems(): IMeasureHeaderItem[];
+    // (undocumented)
+    measureIndex(id: string): number;
     // (undocumented)
     measures(): IMeasure[];
     // (undocumented)
     result(): IExecutionResult;
+    // (undocumented)
+    secondDimSize(): number;
+    // (undocumented)
     singleDimData(): DataValue[];
     // (undocumented)
     totals(): DataValue[][][] | undefined;
+    // (undocumented)
     twoDimData(): DataValue[][];
 }
 
@@ -146,24 +164,29 @@ export interface IAnalyticalBackend {
 
 // @public
 export interface IAnalyticalWorkspace {
+    // (undocumented)
     elements(): IElementQueryFactory;
+    // (undocumented)
     execution(): IExecutionFactory;
+    // (undocumented)
+    featureFlags(): IFeatureFlagsQuery;
+    // (undocumented)
     metadata(): IWorkspaceMetadata;
-    settings(): IWorkspaceSettingsService;
-    styling(): IWorkspaceStylingService;
+    // (undocumented)
+    styling(): IWorkspaceStyling;
     // (undocumented)
     readonly workspace: string;
 }
 
 // @public
-export interface IAttributeDescriptor {
+export interface IAttributeHeader {
     // (undocumented)
     attributeHeader: {
         uri: string;
         identifier: string;
         localIdentifier: string;
         name: string;
-        totalItems?: ITotalDescriptor[];
+        totalItems?: ITotalHeaderItem[];
         formOf: {
             uri: string;
             identifier: string;
@@ -180,34 +203,29 @@ export interface IAuthenticationProvider {
 // @public
 export interface IDataView {
     readonly count: number[];
+    // (undocumented)
     readonly data: DataValue[][] | DataValue[];
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
-    readonly headerItems: IResultHeader[][][];
+    readonly headerItems: IResultHeaderItem[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
+    // (undocumented)
     readonly totals?: DataValue[][][];
 }
 
 // @public
-export interface IDimensionDescriptor {
-    // (undocumented)
-    headers: IDimensionItemDescriptor[];
-}
-
-// @public
-export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
-
-// @public
 export interface IElementQuery {
     // (undocumented)
-    query(): IElementQueryResult;
+    query(): Promise<IElementQueryResult>;
     // (undocumented)
     withLimit(limit: number): IElementQuery;
     // (undocumented)
     withOffset(offset: number): IElementQuery;
+    // (undocumented)
+    withOptions(options: IElementQueryOptions): IElementQuery;
 }
 
 // @public
@@ -217,13 +235,33 @@ export interface IElementQueryFactory {
 }
 
 // @public
+export interface IElementQueryOptions {
+    // (undocumented)
+    complement?: boolean;
+    // (undocumented)
+    filter?: string;
+    // (undocumented)
+    includeTotalCountWithoutFilters?: boolean;
+    // (undocumented)
+    order?: SortDirection;
+    // (undocumented)
+    prompt?: string;
+    // (undocumented)
+    restrictiveDefinition?: string;
+    // (undocumented)
+    restrictiveDefinitionContent?: object;
+    // (undocumented)
+    uris?: string[];
+}
+
+// @public
 export interface IElementQueryResult {
     // (undocumented)
     readonly elements: Element[];
     // (undocumented)
     readonly limit: number;
     // (undocumented)
-    next(): IElementQueryResult;
+    next(): Promise<IElementQueryResult>;
     // (undocumented)
     readonly offset: number;
 }
@@ -240,7 +278,7 @@ export interface IExecutionFactory {
 // @public
 export interface IExecutionResult {
     readonly definition: IExecutionDefinition;
-    readonly dimensions: IDimensionDescriptor[];
+    readonly dimensions: IResultDimension[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
@@ -251,9 +289,13 @@ export interface IExecutionResult {
 
 // @public
 export interface IExportConfig {
+    // (undocumented)
     format?: "xlsx" | "csv" | "raw";
+    // (undocumented)
     mergeHeaders?: boolean;
+    // (undocumented)
     showFilters?: IFilter[];
+    // (undocumented)
     title?: string;
 }
 
@@ -264,7 +306,31 @@ export interface IExportResult {
 }
 
 // @public
-export interface IMeasureDescriptor {
+export interface IFeatureFlags {
+    // (undocumented)
+    [key: string]: number | boolean | string;
+}
+
+// @public
+export interface IFeatureFlagsQuery {
+    // (undocumented)
+    query(): Promise<IFeatureFlags>;
+}
+
+// @public
+export type IHeader = IMeasureGroupHeader | IAttributeHeader;
+
+// @public
+export interface IMeasureGroupHeader {
+    // (undocumented)
+    measureGroupHeader: {
+        items: IMeasureHeaderItem[];
+        totalItems?: ITotalHeaderItem[];
+    };
+}
+
+// @public
+export interface IMeasureHeaderItem {
     // (undocumented)
     measureHeaderItem: {
         uri?: string;
@@ -272,15 +338,6 @@ export interface IMeasureDescriptor {
         localIdentifier: string;
         name: string;
         format: string;
-    };
-}
-
-// @public
-export interface IMeasureGroupDescriptor {
-    // (undocumented)
-    measureGroupHeader: {
-        items: IMeasureDescriptor[];
-        totalItems?: ITotalDescriptor[];
     };
 }
 
@@ -296,7 +353,7 @@ export interface IPreparedExecution {
 }
 
 // @public
-export interface IResultAttributeHeader {
+export interface IResultAttributeHeaderItem {
     // (undocumented)
     attributeHeaderItem: {
         uri: string;
@@ -305,10 +362,16 @@ export interface IResultAttributeHeader {
 }
 
 // @public
-export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
+export interface IResultDimension {
+    // (undocumented)
+    headers: IHeader[];
+}
 
 // @public
-export interface IResultMeasureHeader {
+export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+
+// @public
+export interface IResultMeasureHeaderItem {
     // (undocumented)
     measureHeaderItem: {
         name: string;
@@ -317,7 +380,7 @@ export interface IResultMeasureHeader {
 }
 
 // @public
-export interface IResultTotalHeader {
+export interface IResultTotalHeaderItem {
     // (undocumented)
     totalHeaderItem: {
         name: string;
@@ -329,7 +392,7 @@ export interface IResultTotalHeader {
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
 
 // @public
-export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
+export function isAttributeHeader(obj: any): obj is IAttributeHeader;
 
 // @public
 export function isDataViewError(obj: any): obj is DataViewError;
@@ -338,10 +401,10 @@ export function isDataViewError(obj: any): obj is DataViewError;
 export function isExecutionError(obj: any): obj is ExecutionError;
 
 // @public
-export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
+export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader;
 
 // @public
-export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor;
+export function isMeasureHeaderItem(obj: any): obj is IMeasureHeaderItem;
 
 // @public
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
@@ -353,19 +416,19 @@ export function isNotImplemented(obj: any): obj is NotImplemented;
 export function isNotSupported(obj: any): obj is NotSupported;
 
 // @public
-export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
+export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem;
 
 // @public
-export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader;
+export function isResultMeasureHeaderItem(obj: any): obj is IResultMeasureHeaderItem;
 
 // @public
-export function isResultTotalHeader(obj: any): obj is IResultTotalHeader;
+export function isResultTotalHeaderItem(obj: any): obj is IResultTotalHeaderItem;
 
 // @public
-export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
+export function isTotalHeader(obj: any): obj is ITotalHeaderItem;
 
 // @public
-export interface ITotalDescriptor {
+export interface ITotalHeaderItem {
     // (undocumented)
     totalHeaderItem: {
         name: string;
@@ -383,19 +446,9 @@ export interface IWorkspaceMetadata {
 }
 
 // @public
-export interface IWorkspaceSettings {
-    [key: string]: number | boolean | string;
-    workspace: string;
-}
-
-// @public
-export interface IWorkspaceSettingsService {
-    query(): Promise<IWorkspaceSettings>;
-}
-
-// @public
-export interface IWorkspaceStylingService {
-    colorPalette(): Promise<IColorPalette>;
+export interface IWorkspaceStyling {
+    // (undocumented)
+    colorPalette(): Promise<IColorPaletteItem[]>;
 }
 
 // @public

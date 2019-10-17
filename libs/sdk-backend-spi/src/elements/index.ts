@@ -1,4 +1,21 @@
 // (C) 2019 GoodData Corporation
+import { SortDirection } from "@gooddata/sdk-model";
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IElementQueryOptions {
+    order?: SortDirection;
+    filter?: string;
+    prompt?: string;
+    uris?: string[];
+    complement?: boolean;
+    includeTotalCountWithoutFilters?: boolean;
+    restrictiveDefinition?: string;
+    restrictiveDefinitionContent?: object;
+    // afm?: ExecuteAFM.IAfm; // TODO what should we do with this?
+}
 
 /**
  * TODO: SDK8: add docs
@@ -17,7 +34,9 @@ export interface IElementQuery {
 
     withOffset(offset: number): IElementQuery;
 
-    query(): IElementQueryResult;
+    withOptions(options: IElementQueryOptions): IElementQuery;
+
+    query(): Promise<IElementQueryResult>;
 }
 
 /**
@@ -29,7 +48,7 @@ export interface IElementQueryResult {
     readonly limit: number;
     readonly offset: number;
 
-    next(): IElementQueryResult;
+    next(): Promise<IElementQueryResult>;
 }
 
 /**
