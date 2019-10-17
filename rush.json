@@ -300,6 +300,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/reference-workspace",
+            "projectFolder": "tools/reference-workspace",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/catalog-export",
             "projectFolder": "tools/catalog-export",
             "reviewCategory": "tools",
