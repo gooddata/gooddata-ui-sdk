@@ -6,7 +6,7 @@ import ExampleWithSource from "../components/utils/ExampleWithSource";
 import { VisualizationColumnChartByIdentifierExample } from "../components/VisualizationColumnChartByIdentifierExample";
 // import VisualizationTableExample from "../components/VisualizationTableByIdentifierExample";
 // import CustomVisualizationExample from "../components/CustomVisualizationExample";
-// import VisualizationBarExample from "../components/VisualizationBarByIdentifierExample";
+import { VisualizationBarByIdentifierExample } from "../components/VisualizationBarByIdentifierExample";
 // import VisualizationLineExample from "../components/VisualizationLineByIdentifierExample";
 // import VisualizationAreaExample from "../components/VisualizationAreaByIdentifierExample";
 // import VisualizationHeadlineExample from "../components/VisualizationHeadlineByIdentifierExample";
@@ -17,10 +17,10 @@ import { VisualizationColumnChartByIdentifierExample } from "../components/Visua
 // import VisualizationTreemapExample from "../components/VisualizationTreemapByIdentifierExample";
 // import VisualizationHeatmapExample from "../components/VisualizationHeatmapByIdentifierExample";
 
-import VisualizationColumnChartExampleSRC from "!raw-loader!../components/VisualizationColumnChartByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!../components/VisualizationColumnChartByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationTableExampleSRC from "!raw-loader!../components/VisualizationTableByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import CustomVisualizationExampleSRC from "!raw-loader!../components/CustomVisualizationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationBarExampleSRC from "!raw-loader!../components/VisualizationBarByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationBarByIdentifierExampleSrc from "!raw-loader!../components/VisualizationBarByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationLineExampleSRC from "!raw-loader!../components/VisualizationLineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationAreaExampleSRC from "!raw-loader!../components/VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 // import VisualizationHeadlineExampleSRC from "!raw-loader!../components/VisualizationHeadlineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -45,29 +45,33 @@ export const VisualizationByIdentifier = () => (
         <h2 id="column-chart">Column Chart</h2>
         <ExampleWithSource
             for={VisualizationColumnChartByIdentifierExample}
-            source={VisualizationColumnChartExampleSRC}
+            source={VisualizationColumnChartByIdentifierExampleSRC}
         />
-        {/* 
-        <hr className="separator" />
 
+        <hr className="separator" />
+        {/*         
         <h2 id="table">Table</h2>
         <ExampleWithSource for={VisualizationTableExample} source={VisualizationTableExampleSRC} />
-
-        <hr className="separator" />
-
+        
+        <hr className="separator" /> 
         <h2 id="custom">Custom Visualization</h2>
         <p>
             Using <a href="https://github.com/recharts/recharts">Recharts library</a>
         </p>
         <ExampleWithSource for={CustomVisualizationExample} source={CustomVisualizationExampleSRC} />
 
+       
         <hr className="separator" />
+        */}
 
         <h2 id="bar">Bar Chart</h2>
-        <ExampleWithSource for={VisualizationBarExample} source={VisualizationBarExampleSRC} />
+        <ExampleWithSource
+            for={VisualizationBarByIdentifierExample}
+            source={VisualizationBarByIdentifierExampleSrc}
+        />
 
         <hr className="separator" />
-
+        {/*
         <h2 id="line">Line Chart</h2>
         <ExampleWithSource for={VisualizationLineExample} source={VisualizationLineExampleSRC} />
 
