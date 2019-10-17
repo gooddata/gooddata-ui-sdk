@@ -351,3 +351,39 @@ export function measureArithmeticOperands(measure: IMeasure): string[] | undefin
 
     return measure.measure.definition.arithmeticMeasure.measureIdentifiers;
 }
+
+/**
+ * Gets arithmetic operator from the provided measure. If the measure is not an arithmetic measure, then
+ * undefined is returned.
+ *
+ * @param measure - measure to get arithmetic operator from
+ * @returns arithmetic operator of the measure, or undefined if measure is not arithmetic
+ * @public
+ */
+export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined {
+    if (!isArithmeticMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.arithmeticMeasure.operator;
+}
+
+/**
+ * Gets measure alias.
+ * @param measure - measure to get the alias of
+ * @returns measure alias if specified, undefined otherwise
+ * @public
+ */
+export function measureAlias(measure: IMeasure): string | undefined {
+    return measure.measure.alias;
+}
+
+/**
+ * Gets measure title.
+ * @param measure - measure to get the title of
+ * @returns measure title if specified, undefined otherwise
+ * @public
+ */
+export function measureTitle(measure: IMeasure): string | undefined {
+    return measure.measure.title;
+}

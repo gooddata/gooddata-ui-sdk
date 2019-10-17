@@ -11,6 +11,13 @@ import {
     isPreviousPeriodMeasure,
     isArithmeticMeasure,
     isSimpleMeasure,
+    measureId,
+    measureAlias,
+    measureTitle,
+    measureArithmeticOperands,
+    measureArithmeticOperator,
+    insightBuckets,
+    bucketItems,
 } from "@gooddata/sdk-model";
 import { string as stringUtils } from "@gooddata/js-utils";
 
@@ -71,7 +78,9 @@ function findTitleForDerivedMeasure(
 
 function buildMeasureTitle(measure: IMeasure): IMeasureTitleProps | null {
     if (isSimpleMeasure(measure)) {
-        const { localIdentifier, title, alias } = measure.measure;
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
+        const title = measureTitle(measure);
 
         return {
             localIdentifier,
@@ -90,14 +99,16 @@ function buildArithmeticMeasureTitle(
     maxArithmeticMeasureTitleLength: number,
 ): IMeasureTitleProps | null {
     if (isArithmeticMeasure(measure)) {
-        const { alias, localIdentifier } = measure.measure;
-        const arithmeticMeasure = measure.measure.definition.arithmeticMeasure;
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
+        const measureIdentifiers = measureArithmeticOperands(measure);
+        const operator = measureArithmeticOperator(measure);
 
-        if (containsMeasureTitleItems(measureTitleProps, arithmeticMeasure.measureIdentifiers)) {
+        if (containsMeasureTitleItems(measureTitleProps, measureIdentifiers)) {
             const fullLengthTitle = titleFactory.getTitle(
                 {
-                    operator: arithmeticMeasure.operator,
-                    masterMeasureLocalIdentifiers: arithmeticMeasure.measureIdentifiers,
+                    operator,
+                    masterMeasureLocalIdentifiers: measureIdentifiers,
                 },
                 measureTitleProps,
             );
@@ -123,7 +134,8 @@ function buildDerivedMeasureTitle(
     suffixFactory: DerivedMeasureTitleSuffixFactory,
 ): IMeasureTitleProps | null {
     if (isPoPMeasure(measure) || isPreviousPeriodMeasure(measure)) {
-        const { alias, localIdentifier } = measure.measure;
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
 
         const masterMeasureIdentifier = measureMasterIdentifier(measure);
         if (containsMeasureTitleItem(measureTitleProps, masterMeasureIdentifier)) {
@@ -153,7 +165,8 @@ function buildMeasureTitles(
         isMeasureTitlePropsChanged = false;
 
         measures.forEach(measure => {
-            if (!containsMeasureTitleItem(measureTitleProps, measure.measure.localIdentifier)) {
+            const measureLocalId = measureId(measure);
+            if (!containsMeasureTitleItem(measureTitleProps, measureLocalId)) {
                 const newMeasureTitleProp =
                     buildMeasureTitle(measure) ||
                     buildArithmeticMeasureTitle(
@@ -180,7 +193,8 @@ function updateBucketItemTitle(
     measureTitleProps: IMeasureTitleProps[],
 ): AttributeOrMeasure {
     if (isMeasure(bucketItem)) {
-        const measureTitleProp = findMeasureTitleItem(measureTitleProps, bucketItem.measure.localIdentifier);
+        const measureLocalId = measureId(bucketItem);
+        const measureTitleProp = findMeasureTitleItem(measureTitleProps, measureLocalId);
         if (measureTitleProp !== null) {
             const { title, alias } = measureTitleProp;
 
@@ -199,9 +213,10 @@ function updateBucketItemTitle(
 }
 
 function updateBucketTitles(bucket: IBucket, measureTitleProps: IMeasureTitleProps[]): IBucket {
+    const items = bucketItems(bucket);
     return {
         ...bucket,
-        items: bucket.items.map(bucketItem => updateBucketItemTitle(bucketItem, measureTitleProps)),
+        items: items.map(bucketItem => updateBucketItemTitle(bucketItem, measureTitleProps)),
     };
 }
 
@@ -209,10 +224,11 @@ function updateVisualizationObjectTitles(
     insight: IInsight,
     measureTitleProps: IMeasureTitleProps[],
 ): IInsight {
+    const buckets = insightBuckets(insight);
     return {
         insight: {
             ...insight.insight,
-            buckets: insight.insight.buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
+            buckets: buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
         },
     };
 }

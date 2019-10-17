@@ -1,5 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
-import { IInsight, insightBucket, insightMeasures, bucketMeasures } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    insightBucket,
+    insightMeasures,
+    bucketMeasures,
+    idMatchMeasure,
+} from "@gooddata/sdk-model";
 import { fillMissingTitles } from "../measureTitleHelper";
 import {
     insightWithPoP,
@@ -16,9 +22,7 @@ describe("measureTitleHelper", () => {
 
         function getMeasureTitle(insight: IInsight, localIdentifier: string): string {
             const measures = insightMeasures(insight);
-            const matchingMeasure = measures.find(
-                measure => measure.measure.localIdentifier === localIdentifier,
-            );
+            const matchingMeasure = measures.find(idMatchMeasure(localIdentifier));
 
             return matchingMeasure === undefined ? undefined : matchingMeasure.measure.title;
         }
