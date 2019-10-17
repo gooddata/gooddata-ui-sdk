@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import React, { Component } from "react";
+import React from "react";
 import { InsightView } from "@gooddata/sdk-ui";
 import "@gooddata/sdk-ui/styles/css/main.css";
 
-import { projectId, donutVisualizationIdentifier } from "../utils/fixtures";
+import { projectId, treemapVisualizationIdentifier } from "../utils/fixtures";
 import { useBackend } from "../context/auth";
 
 const style = { height: 300 };
@@ -16,14 +16,15 @@ const visualizationProps = {
     },
 };
 
-export const VisualizationDonutByIdentifierExample: React.FC = () => {
+export const VisualizationTreemapByIdentifierExample: React.FC = () => {
     const backend = useBackend();
+
     return (
-        <div style={style} className="s-visualization-chart">
+        <div style={style} className="s-visualization-treemap">
             <InsightView
                 backend={backend}
                 workspace={projectId}
-                id={donutVisualizationIdentifier}
+                id={treemapVisualizationIdentifier}
                 visualizationProps={visualizationProps}
             />
         </div>
