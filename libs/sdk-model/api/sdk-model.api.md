@@ -730,7 +730,10 @@ export function newArithmeticMeasure(measureIds: string[], operator: ArithmeticM
 export function newAttribute(displayFormId: string, modifications?: AttributeModifications): IAttribute;
 
 // @public
-export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
+export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
+
+// @public
+export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
 export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
@@ -751,7 +754,7 @@ export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimen
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
-export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
+export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
 export function newNegativeAttributeFilter(displayFormId: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;

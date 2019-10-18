@@ -53,6 +53,7 @@ export {
     isAttributeSort,
     newMeasureSort,
     newAttributeSort,
+    newAttributeLocator,
     SortEntityIds,
     sortEntityIds,
 } from "./base/sort";
