@@ -14,7 +14,7 @@ import {
 } from "../buckets";
 import { IFilter } from "../filter";
 import { IMeasure, measureId } from "../measure";
-import { attributeId, IAttribute } from "../attribute";
+import { attributeLocalId, IAttribute } from "../attribute";
 import { ITotal } from "../base/totals";
 
 /**
@@ -229,7 +229,7 @@ export function insightSorts(insight: IInsight): SortItem[] {
         return [];
     }
 
-    const attributeIds = insightAttributes(insight).map(attributeId);
+    const attributeIds = insightAttributes(insight).map(attributeLocalId);
     const measureIds = insightMeasures(insight).map(measureId);
 
     function contains(arr1: string[], arr2: string[]): boolean {

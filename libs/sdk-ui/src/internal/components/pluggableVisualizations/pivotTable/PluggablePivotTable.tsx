@@ -47,7 +47,7 @@ import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
 import { generateDimensions } from "../../../../base/helpers/dimensions";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
-    attributeId,
+    attributeLocalId,
     bucketAttributes,
     bucketsFind,
     bucketsMeasures,
@@ -160,10 +160,10 @@ export function adaptReferencePointSortItemsToPivotTable(
 function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], buckets: IBucket[]): SortItem[] {
     const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureId);
     const rowAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.ATTRIBUTE)).map(
-        attributeId,
+        attributeLocalId,
     );
     const columnAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.COLUMNS)).map(
-        attributeId,
+        attributeLocalId,
     );
 
     return adaptSortItemsToPivotTable(

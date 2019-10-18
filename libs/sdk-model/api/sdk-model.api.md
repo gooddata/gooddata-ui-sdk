@@ -47,9 +47,6 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
 export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
 
 // @public
-export function attributeId(attribute: IAttribute): string;
-
-// @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
 
 // @public
@@ -58,6 +55,9 @@ export type AttributeInBucket = {
     idx: number;
     attribute: IAttribute;
 };
+
+// @public
+export function attributeLocalId(attribute: IAttribute): string;
 
 // @public
 export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;

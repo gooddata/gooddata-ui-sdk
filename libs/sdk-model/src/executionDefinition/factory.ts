@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { attributeId, isAttribute } from "../attribute";
+import { attributeLocalId, isAttribute } from "../attribute";
 import {
     IDimension,
     isDimension,
@@ -178,15 +178,15 @@ function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
         if (bucketMeasures(firstBucket).length) {
             return newTwoDimensional(
                 [MeasureGroupIdentifier],
-                bucketAttributes(firstBucket).map(attributeId),
+                bucketAttributes(firstBucket).map(attributeLocalId),
             );
         }
 
-        return [newDimension(bucketAttributes(firstBucket).map(attributeId))];
+        return [newDimension(bucketAttributes(firstBucket).map(attributeLocalId))];
     }
 
-    const firstDim = bucketAttributes(firstBucket).map(attributeId);
-    const secondDim = bucketsAttributes(otherBuckets).map(attributeId);
+    const firstDim = bucketAttributes(firstBucket).map(attributeLocalId);
+    const secondDim = bucketsAttributes(otherBuckets).map(attributeLocalId);
 
     if (bucketMeasures(firstBucket).length) {
         firstDim.push(MeasureGroupIdentifier);
@@ -199,10 +199,10 @@ function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
 
 function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDimension[] {
     if (definition.measures.length) {
-        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeId));
+        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeLocalId));
     }
 
-    return [newDimension(definition.attributes.map(attributeId))];
+    return [newDimension(definition.attributes.map(attributeLocalId))];
 }
 
 /**

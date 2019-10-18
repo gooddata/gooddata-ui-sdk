@@ -5,7 +5,7 @@ import { ExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
-    attributeId,
+    attributeLocalId,
     bucketItems,
     bucketsFindAttribute,
     dimensionTotals,
@@ -72,7 +72,7 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
         const rollupAttributes = bucketItems(attribute.bucket)
             .slice(0, attribute.idx)
             .filter(isAttribute)
-            .map(attributeId);
+            .map(attributeLocalId);
 
         // and create native total such, that it rolls up all those attributes
         return {

@@ -5,7 +5,7 @@ import { Subtract } from "../base/typings/subtract";
 import { CorePivotTable } from "./CorePivotTable";
 import { ATTRIBUTE, COLUMNS, MEASURES } from "../base/constants/bucketNames";
 import {
-    attributeId,
+    attributeLocalId,
     bucketAttributes,
     bucketIsEmpty,
     bucketsFind,
@@ -99,8 +99,8 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const columns = bucketsFind(buckets, COLUMNS);
     const measures = bucketsFind(buckets, MEASURES);
 
-    const rowAttributeIds = bucketAttributes(row).map(attributeId);
-    const columnAttributeIds = bucketAttributes(columns).map(attributeId);
+    const rowAttributeIds = bucketAttributes(row).map(attributeLocalId);
+    const columnAttributeIds = bucketAttributes(columns).map(attributeLocalId);
 
     const measuresItemIdentifiers = !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
 

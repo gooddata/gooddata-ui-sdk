@@ -89,7 +89,7 @@ export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =
  * @returns value of local identifier
  * @public
  */
-export function attributeId(attribute: IAttribute): string {
+export function attributeLocalId(attribute: IAttribute): string {
     invariant(attribute, "attribute must not be undefined");
 
     return attribute.attribute.localIdentifier;

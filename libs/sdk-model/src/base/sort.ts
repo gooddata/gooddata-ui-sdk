@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { Identifier } from ".";
-import { attributeId, IAttribute } from "../attribute";
+import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureId } from "../measure";
 import isEmpty = require("lodash/isEmpty");
 
@@ -212,7 +212,7 @@ export function newAttributeSort(
     sortDirection: SortDirection,
     aggregation: boolean = false,
 ): IAttributeSortItem {
-    const id: string = typeof attributeOrId === "string" ? attributeOrId : attributeId(attributeOrId);
+    const id: string = typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
 
     if (!aggregation) {
         return {

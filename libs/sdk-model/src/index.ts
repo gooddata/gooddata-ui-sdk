@@ -3,7 +3,7 @@
 export {
     IAttribute,
     isAttribute,
-    attributeId,
+    attributeLocalId,
     AttributePredicate,
     anyAttribute,
     idMatchAttribute,

@@ -4,7 +4,7 @@ import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
-    attributeId,
+    attributeLocalId,
     attributesFind,
     bucketItems,
     bucketsFindAttribute,
@@ -14,7 +14,7 @@ import {
     isUriQualifier,
     totalIsNative,
     MeasureGroupIdentifier,
-    IExecutionDefinition
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
@@ -81,7 +81,7 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
         const rollupAttributes = bucketItems(attribute.bucket)
             .slice(0, attribute.idx)
             .filter(isAttribute)
-            .map(attributeId);
+            .map(attributeLocalId);
 
         // and create native total such, that it rolls up all those attributes
         return {
@@ -117,7 +117,6 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
     });
     return def.dimensions;
 }
-
 
 function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
     if (!isEmpty(def.sortBy)) {
