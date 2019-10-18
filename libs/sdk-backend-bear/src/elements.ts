@@ -10,9 +10,15 @@ import { AuthenticatedCallGuard } from "./commonTypes";
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public forObject(objectId: string): IElementQuery {
-        return new BearWorkspaceElementsQuery(this.authCall, objectId, this.workspace);
+    public forObject(identifier: string): IElementQuery {
+        return new BearWorkspaceElementsQuery(this.authCall, identifier, this.workspace);
     }
+}
+
+// TODO move or replace
+function getObjectIdFromUri(uri: string): string {
+    const match = /\/obj\/([^$\/\?]*)/.exec(uri);
+    return match ? match[1] : "";
 }
 
 class BearWorkspaceElementsQuery implements IElementQuery {
@@ -20,9 +26,12 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     private offset: number | undefined;
     private options: IElementQueryOptions | undefined;
 
+    // cached value of objectId corresponding to identifier
+    private objectId: string | undefined;
+
     constructor(
         private readonly authCall: AuthenticatedCallGuard,
-        private readonly objectId: string,
+        private readonly identifier: string,
         private readonly workspace: string,
     ) {}
 
@@ -45,14 +54,28 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
+    private async getObjectId(): Promise<string> {
+        if (!this.objectId) {
+            const uri = await this.authCall(sdk =>
+                sdk.md
+                    .getUrisFromIdentifiers(this.workspace, [this.identifier])
+                    .then(result => result[0].uri),
+            );
+            this.objectId = getObjectIdFromUri(uri);
+        }
+
+        return this.objectId;
+    }
+
     private async queryWorker(
         offset: number | undefined,
         limit: number | undefined,
         options: IElementQueryOptions | undefined,
     ): Promise<IElementQueryResult> {
         const mergedOptions = { ...options, limit, offset };
+        const objectId = await this.getObjectId();
         const data = await this.authCall(sdk =>
-            sdk.md.getValidElements(this.workspace, this.objectId, mergedOptions),
+            sdk.md.getValidElements(this.workspace, objectId, mergedOptions),
         );
 
         const { items, paging } = data.validElements;

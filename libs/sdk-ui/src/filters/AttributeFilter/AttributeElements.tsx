@@ -1,86 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { SDK, factory as createSdk, IValidElementsResponse, IElement } from "@gooddata/gd-bear-client";
-import { IValidElementsOptions } from "@gooddata/gd-bear-client/lib/metadata";
-import { AFM } from "@gooddata/gd-bear-model";
-import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
-import { getObjectIdFromUri, setTelemetryHeaders } from "../../base/helpers/utils";
-import { ErrorStates } from "../../base/constants/errorStates";
+import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 
-export interface IPaging {
-    count: number;
-    offset: number;
-    total: number;
-}
+import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
+import { IAttributeElementsChildren } from "./model";
 
 export interface IAttributeElementsProps {
-    sdk?: SDK;
-    projectId: string;
-    uri?: string;
-    identifier?: string;
-    options?: IValidElementsOptions;
+    backend: IAnalyticalBackend;
+    workspace: string;
+    identifier: string;
 
-    children?(props: IAttributeElementsChildren): any;
-}
-
-export interface IValidElements {
-    items: IElement[];
-    paging: IPaging;
-    elementsMeta: {
-        attribute: string;
-        attributeDisplayForm: string;
-        filter: string;
-        order: AFM.SortDirection;
-    };
+    limit?: number;
+    offset?: number;
+    options?: IElementQueryOptions;
+    children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
 export interface IAttributeElementsState {
-    validElements?: IValidElements;
+    validElements?: IElementQueryResult;
     isLoading: boolean;
     error?: any;
 }
-
-export interface IAttributeElementsChildren {
-    validElements: IValidElements;
-    loadMore: () => void;
-    isLoading: boolean;
-    error: any;
-}
-
-const defaultChildren = ({ validElements, loadMore, isLoading, error }: IAttributeElementsChildren) => {
-    const paging: Partial<IPaging> = validElements ? validElements.paging : {};
-    const { offset = 0, count = null, total = null } = paging;
-    const nextOffset = count + offset;
-    if (error) {
-        return <div>{error}</div>;
-    }
-    return (
-        <div>
-            <p>
-                Use children function to map {"{"} validElements, loadMore, isLoading {"} "}
-                to your React components.
-            </p>
-            <button
-                className="gd-button gd-button-secondary"
-                onClick={loadMore as any}
-                disabled={isLoading || offset + count === total}
-            >
-                More
-            </button>
-            <h2>validElements</h2>
-            <pre>
-                isLoading: {isLoading.toString()}
-                offset: {offset}
-                count: {count}
-                total: {total}
-                nextOffset: {nextOffset}
-                validElements:
-                {JSON.stringify(validElements, null, "\t")}
-            </pre>
-        </div>
-    );
-};
 
 /**
  * AttributeElements
@@ -88,149 +29,73 @@ const defaultChildren = ({ validElements, loadMore, isLoading, error }: IAttribu
  */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     public static defaultProps: Partial<IAttributeElementsProps> = {
-        projectId: null,
-        uri: null,
-        identifier: null,
         options: null,
-        children: defaultChildren,
+        children: AttributeElementsDefaultChildren,
     };
 
-    private uri?: string = null;
-    private getValidElementsPromise?: Promise<any> = null;
+    public state: IAttributeElementsState = {
+        validElements: null,
+        isLoading: true,
+        error: null,
+    };
 
-    private sdk: SDK;
-
-    constructor(props: IAttributeElementsProps) {
-        super(props);
-
-        this.state = {
-            validElements: null,
-            isLoading: true,
-            error: null,
-        };
-
-        const sdk = props.sdk || createSdk();
-        this.sdk = sdk.clone();
-        setTelemetryHeaders(this.sdk, "AttributeElements", props);
-
-        this.loadMore = this.loadMore.bind(this);
-    }
+    private getBackend = () => {
+        return this.props.backend.withTelemetry("AttributeElements", this.props);
+    };
 
     public componentDidMount() {
-        this.getValidElements(this.props, get(this.props, "options.offset", 0));
+        this.getValidElements();
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeElementsProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk.clone();
-            setTelemetryHeaders(this.sdk, "AttributeElements", nextProps);
-        }
+    public componentDidUpdate(prevProps: IAttributeElementsProps): void {
+        const needsInvalidation =
+            this.props.identifier !== prevProps.identifier ||
+            this.props.workspace !== prevProps.workspace ||
+            !isEqual(this.props.options, prevProps.options);
 
-        if (
-            this.props.uri !== nextProps.uri ||
-            this.props.identifier !== nextProps.identifier ||
-            this.props.projectId !== nextProps.projectId ||
-            !isEqual(this.props.options, nextProps.options)
-        ) {
-            this.uri = null; // invalidate
-            this.setState({
-                isLoading: true,
-                validElements: null, // invalidate
-            });
-            this.getValidElements(nextProps, get(nextProps, "options.offset", 0));
+        if (needsInvalidation) {
+            this.setState({ validElements: null, error: null, isLoading: false });
+            this.getValidElements();
         }
     }
 
-    public loadMore(event?: any): void {
-        if (event) {
-            event.preventDefault();
-        }
+    public loadMore = async () => {
         // do not execute while still loading
         if (this.state.isLoading) {
             return;
         }
-        this.setState({
-            isLoading: true,
-        });
-        const offset = get(this.state, "validElements.paging.offset", 0);
-        const count = get(this.state, "validElements.paging.count", 0);
-        const nextOffset = offset + count;
-        this.getValidElements(this.props, nextOffset);
-    }
 
-    public getValidElements(props: IAttributeElementsProps, offset: number): void {
-        const { projectId, options, identifier } = props;
-        const optionsWithUpdatedPaging = {
-            ...options,
-            offset,
-        };
+        this.setState({ isLoading: true });
 
-        const uriPromise = new Promise((resolve, reject) => {
-            return props.uri || this.uri
-                ? resolve(props.uri || this.uri)
-                : this.sdk.md.getUrisFromIdentifiers(projectId, [identifier]).then(
-                      result => {
-                          this.uri = result[0].uri;
-                          resolve(this.uri);
-                      },
-                      error => {
-                          reject(error);
-                      },
-                  );
-        });
+        const moreItems = await this.state.validElements.next();
 
-        let currentGetValidElementsPromise: Promise<any> = null;
-        // The promise needs to reset here because we are not setting it synchroneously
-        // and even this small delay is sometimes too late
-        this.getValidElementsPromise = null;
+        this.setState(state => ({
+            ...state,
+            isLoading: false,
+            validElements: {
+                ...state.validElements,
+                ...moreItems,
+                elements: [...state.validElements.elements, ...moreItems.elements],
+            },
+        }));
+    };
 
-        uriPromise
-            .then((uri: string) => {
-                const objectId = getObjectIdFromUri(uri);
-                currentGetValidElementsPromise = this.sdk.md.getValidElements(
-                    projectId,
-                    objectId, // This is misdocumented as identifier, but is in fact objectId
-                    optionsWithUpdatedPaging,
-                );
-                this.getValidElementsPromise = currentGetValidElementsPromise;
-                return this.getValidElementsPromise;
-            })
-            .then((response: IValidElementsResponse) => {
-                if (this.getValidElementsPromise !== currentGetValidElementsPromise) {
-                    return Promise.reject(ErrorStates.CANCELLED);
-                }
-                const items = [
-                    ...get(this.state, "validElements.items", []),
-                    ...response.validElements.items,
-                ];
-                const offset = get(
-                    this.state,
-                    "validElements.paging.offset",
-                    parseInt(response.validElements.paging.offset, 10) || 0,
-                );
-                const mergedResponse = {
-                    ...response.validElements,
-                    items,
-                    paging: {
-                        total: parseInt(response.validElements.paging.total, 10),
-                        offset,
-                        count: items.length,
-                    },
-                };
-                this.setState({
-                    validElements: mergedResponse,
-                    isLoading: false,
-                });
-            })
-            .catch(error => {
-                if (error !== ErrorStates.CANCELLED) {
-                    this.setState({
-                        error,
-                        isLoading: false,
-                    });
-                }
-            });
-    }
+    public getValidElements = async () => {
+        const { workspace, options, identifier, offset, limit } = this.props;
+
+        this.setState({ isLoading: true });
+
+        const elements = await this.getBackend()
+            .workspace(workspace)
+            .elements()
+            .forObject(identifier)
+            .withOffset(offset || 0)
+            .withLimit(limit || 50) // TODO defaults
+            .withOptions(options)
+            .query();
+
+        this.setState({ validElements: elements, isLoading: false });
+    };
 
     public render() {
         const { validElements, isLoading, error } = this.state;
