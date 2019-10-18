@@ -1,53 +1,38 @@
 // (C) 2007-2018 GoodData Corporation
-import get = require("lodash/get");
-import flatMap = require("lodash/flatMap");
-
-import { VisualizationObject, Localization } from "@gooddata/gd-bear-model";
+import {
+    IInsight,
+    IBucket,
+    AttributeOrMeasure,
+    isMeasure,
+    IMeasure,
+    insightMeasures,
+    measureMasterIdentifier,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+    isArithmeticMeasure,
+    isSimpleMeasure,
+    measureId,
+    measureAlias,
+    measureTitle,
+    measureArithmeticOperands,
+    measureArithmeticOperator,
+    insightBuckets,
+    bucketItems,
+} from "@gooddata/sdk-model";
 import { string as stringUtils } from "@gooddata/js-utils";
 
 import DerivedMeasureTitleSuffixFactory from "../factory/DerivedMeasureTitleSuffixFactory";
 import ArithmeticMeasureTitleFactory from "../factory/ArithmeticMeasureTitleFactory";
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
-import IMeasure = VisualizationObject.IMeasure;
-import IBucket = VisualizationObject.IBucket;
-import BucketItem = VisualizationObject.BucketItem;
-import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
-import isMeasure = VisualizationObject.isMeasure;
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { IMeasureTitleProps } from "../interfaces/MeasureTitle";
+import { ILocale } from "../../internal/interfaces/Visualization";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 
-function getAllMeasures(mdObject: IVisualizationObjectContent): IMeasure[] {
-    const buckets: IBucket[] = get<IVisualizationObjectContent, "buckets", IBucket[]>(
-        mdObject,
-        "buckets",
-        [],
-    );
-    const allBucketItems = flatMap<IBucket, BucketItem>(buckets, (bucket: IBucket) => bucket.items);
-
-    return allBucketItems.reduce((measureItems, bucketItem) => {
-        if (VisualizationObject.isMeasure(bucketItem)) {
-            measureItems.push(bucketItem);
-        }
-
-        return measureItems;
-    }, []);
-}
-
-function getMasterMeasureIdentifier(definition: IMeasureDefinitionType): string | null {
-    if (VisualizationObject.isPopMeasureDefinition(definition)) {
-        return definition.popMeasureDefinition.measureIdentifier;
-    } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
-        return definition.previousPeriodMeasure.measureIdentifier;
-    }
-    return null;
-}
-
-function findOverTimeComparisonType(measureDefinitionType: IMeasureDefinitionType): OverTimeComparisonType {
-    if (VisualizationObject.isPopMeasureDefinition(measureDefinitionType)) {
+function findOverTimeComparisonType(measure: IMeasure): OverTimeComparisonType {
+    if (isPoPMeasure(measure)) {
         return OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR;
-    } else if (VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinitionType)) {
+    } else if (isPreviousPeriodMeasure(measure)) {
         return OverTimeComparisonTypes.PREVIOUS_PERIOD;
     }
     return OverTimeComparisonTypes.NOTHING;
@@ -72,12 +57,12 @@ function findMeasureTitleItem(
 }
 
 function findTitleForDerivedMeasure(
-    measureDefinitionType: IMeasureDefinitionType,
+    measure: IMeasure,
     measureTitleProps: IMeasureTitleProps[],
     suffixFactory: DerivedMeasureTitleSuffixFactory,
 ): string {
-    const masterMeasureIdentifier = getMasterMeasureIdentifier(measureDefinitionType);
-    if (masterMeasureIdentifier === null) {
+    const masterMeasureIdentifier = measureMasterIdentifier(measure);
+    if (!masterMeasureIdentifier) {
         return undefined;
     }
 
@@ -87,13 +72,15 @@ function findTitleForDerivedMeasure(
     }
 
     const derivedMeasureTitleBase = measureProps.alias || measureProps.title || "";
-    const overTimeComparisonType = findOverTimeComparisonType(measureDefinitionType);
+    const overTimeComparisonType = findOverTimeComparisonType(measure);
     return derivedMeasureTitleBase + suffixFactory.getSuffix(overTimeComparisonType);
 }
 
-function buildMeasureTitle(bucketItem: IMeasure): IMeasureTitleProps | null {
-    if (VisualizationObject.isMeasureDefinition(bucketItem.measure.definition)) {
-        const { localIdentifier, title, alias } = bucketItem.measure;
+function buildMeasureTitle(measure: IMeasure): IMeasureTitleProps | null {
+    if (isSimpleMeasure(measure)) {
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
+        const title = measureTitle(measure);
 
         return {
             localIdentifier,
@@ -106,20 +93,22 @@ function buildMeasureTitle(bucketItem: IMeasure): IMeasureTitleProps | null {
 }
 
 function buildArithmeticMeasureTitle(
-    bucketItem: IMeasure,
+    measure: IMeasure,
     measureTitleProps: IMeasureTitleProps[],
     titleFactory: ArithmeticMeasureTitleFactory,
     maxArithmeticMeasureTitleLength: number,
 ): IMeasureTitleProps | null {
-    if (VisualizationObject.isArithmeticMeasureDefinition(bucketItem.measure.definition)) {
-        const { alias, localIdentifier } = bucketItem.measure;
-        const arithmeticMeasure = bucketItem.measure.definition.arithmeticMeasure;
+    if (isArithmeticMeasure(measure)) {
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
+        const measureIdentifiers = measureArithmeticOperands(measure);
+        const operator = measureArithmeticOperator(measure);
 
-        if (containsMeasureTitleItems(measureTitleProps, arithmeticMeasure.measureIdentifiers)) {
+        if (containsMeasureTitleItems(measureTitleProps, measureIdentifiers)) {
             const fullLengthTitle = titleFactory.getTitle(
                 {
-                    operator: arithmeticMeasure.operator,
-                    masterMeasureLocalIdentifiers: arithmeticMeasure.measureIdentifiers,
+                    operator,
+                    masterMeasureLocalIdentifiers: measureIdentifiers,
                 },
                 measureTitleProps,
             );
@@ -140,22 +129,19 @@ function buildArithmeticMeasureTitle(
 }
 
 function buildDerivedMeasureTitle(
-    bucketItem: IMeasure,
+    measure: IMeasure,
     measureTitleProps: IMeasureTitleProps[],
     suffixFactory: DerivedMeasureTitleSuffixFactory,
 ): IMeasureTitleProps | null {
-    if (
-        VisualizationObject.isPopMeasureDefinition(bucketItem.measure.definition) ||
-        VisualizationObject.isPreviousPeriodMeasureDefinition(bucketItem.measure.definition)
-    ) {
-        const { alias, localIdentifier } = bucketItem.measure;
-        const definition = bucketItem.measure.definition;
+    if (isPoPMeasure(measure) || isPreviousPeriodMeasure(measure)) {
+        const alias = measureAlias(measure);
+        const localIdentifier = measureId(measure);
 
-        const masterMeasureIdentifier = getMasterMeasureIdentifier(definition);
+        const masterMeasureIdentifier = measureMasterIdentifier(measure);
         if (containsMeasureTitleItem(measureTitleProps, masterMeasureIdentifier)) {
             return {
                 localIdentifier,
-                title: findTitleForDerivedMeasure(definition, measureTitleProps, suffixFactory),
+                title: findTitleForDerivedMeasure(measure, measureTitleProps, suffixFactory),
                 alias,
             };
         }
@@ -165,8 +151,8 @@ function buildDerivedMeasureTitle(
 }
 
 function buildMeasureTitles(
-    measureBucketItems: VisualizationObject.IMeasure[],
-    locale: Localization.ILocale,
+    measures: IMeasure[],
+    locale: ILocale,
     maxArithmeticMeasureTitleLength: number,
 ): IMeasureTitleProps[] {
     const titleFactory = new ArithmeticMeasureTitleFactory(locale);
@@ -178,17 +164,18 @@ function buildMeasureTitles(
     while (isMeasureTitlePropsChanged) {
         isMeasureTitlePropsChanged = false;
 
-        measureBucketItems.forEach(bucketItem => {
-            if (!containsMeasureTitleItem(measureTitleProps, bucketItem.measure.localIdentifier)) {
+        measures.forEach(measure => {
+            const measureLocalId = measureId(measure);
+            if (!containsMeasureTitleItem(measureTitleProps, measureLocalId)) {
                 const newMeasureTitleProp =
-                    buildMeasureTitle(bucketItem) ||
+                    buildMeasureTitle(measure) ||
                     buildArithmeticMeasureTitle(
-                        bucketItem,
+                        measure,
                         measureTitleProps,
                         titleFactory,
                         maxArithmeticMeasureTitleLength,
                     ) ||
-                    buildDerivedMeasureTitle(bucketItem, measureTitleProps, suffixFactory);
+                    buildDerivedMeasureTitle(measure, measureTitleProps, suffixFactory);
 
                 if (newMeasureTitleProp !== null) {
                     measureTitleProps.push(newMeasureTitleProp);
@@ -202,11 +189,12 @@ function buildMeasureTitles(
 }
 
 function updateBucketItemTitle(
-    bucketItem: VisualizationObject.BucketItem,
+    bucketItem: AttributeOrMeasure,
     measureTitleProps: IMeasureTitleProps[],
-): BucketItem {
+): AttributeOrMeasure {
     if (isMeasure(bucketItem)) {
-        const measureTitleProp = findMeasureTitleItem(measureTitleProps, bucketItem.measure.localIdentifier);
+        const measureLocalId = measureId(bucketItem);
+        const measureTitleProp = findMeasureTitleItem(measureTitleProps, measureLocalId);
         if (measureTitleProp !== null) {
             const { title, alias } = measureTitleProp;
 
@@ -224,23 +212,24 @@ function updateBucketItemTitle(
     return bucketItem;
 }
 
-function updateBucketTitles(
-    bucket: VisualizationObject.IBucket,
-    measureTitleProps: IMeasureTitleProps[],
-): VisualizationObject.IBucket {
+function updateBucketTitles(bucket: IBucket, measureTitleProps: IMeasureTitleProps[]): IBucket {
+    const items = bucketItems(bucket);
     return {
         ...bucket,
-        items: bucket.items.map(bucketItem => updateBucketItemTitle(bucketItem, measureTitleProps)),
+        items: items.map(bucketItem => updateBucketItemTitle(bucketItem, measureTitleProps)),
     };
 }
 
 function updateVisualizationObjectTitles(
-    mdObject: IVisualizationObjectContent,
+    insight: IInsight,
     measureTitleProps: IMeasureTitleProps[],
-): IVisualizationObjectContent {
+): IInsight {
+    const buckets = insightBuckets(insight);
     return {
-        ...mdObject,
-        buckets: mdObject.buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
+        insight: {
+            ...insight.insight,
+            buckets: buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
+        },
     };
 }
 
@@ -254,22 +243,21 @@ function updateVisualizationObjectTitles(
  * have the title built from the current names of the referenced master measures and type of the arithmetic
  * operation.
  *
- * @param {VisualizationObject.IVisualizationObjectContent} mdObject - metadata object that must be processed.
+ * @param {IInsight} insight - insight that must be processed.
  * @param {Localization.ILocale} locale - locale used for localization of the measure titles.
  * @param {number} maxArithmeticMeasureTitleLength - maximum length of generated arithmetic measures titles.
  * Longer names will be shortened. Default value is 50 characters.
  *
- * @returns {VisualizationObject.IVisualizationObjectContent}
+ * @returns {IInsight}
  *
  * @internal
- * TODO: SDK8: this needs to be incorporated into InsightView (it was in Vis Uri component before)
  */
 export function fillMissingTitles(
-    mdObject: IVisualizationObjectContent,
-    locale: Localization.ILocale,
+    insight: IInsight,
+    locale: ILocale,
     maxArithmeticMeasureTitleLength: number = DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH,
-): IVisualizationObjectContent {
-    const measureBucketItems = getAllMeasures(mdObject);
-    const measureTitleProps = buildMeasureTitles(measureBucketItems, locale, maxArithmeticMeasureTitleLength);
-    return updateVisualizationObjectTitles(mdObject, measureTitleProps);
+): IInsight {
+    const measures = insightMeasures(insight);
+    const measureTitleProps = buildMeasureTitles(measures, locale, maxArithmeticMeasureTitleLength);
+    return updateVisualizationObjectTitles(insight, measureTitleProps);
 }

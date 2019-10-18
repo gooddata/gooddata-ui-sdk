@@ -650,7 +650,13 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
+export function measureAlias(measure: IMeasure): string | undefined;
+
+// @public
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined;
+
+// @public
+export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined;
 
 // @public
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
@@ -712,6 +718,9 @@ export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 // @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
+
+// @public
+export function measureTitle(measure: IMeasure): string | undefined;
 
 // @public
 export function measureUri(measure: IMeasure): string | undefined;
