@@ -245,7 +245,7 @@ export function newAttributeSort(
 export function newMeasureSort(
     measureOrId: IMeasure | string,
     sortDirection: SortDirection,
-    attributeLocators: Array<IAttributeLocatorItem["attributeLocatorItem"]> = [],
+    attributeLocators: IAttributeLocatorItem[] = [],
 ): IMeasureSortItem {
     const id: string = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
 
@@ -253,7 +253,7 @@ export function newMeasureSort(
         measureSortItem: {
             direction: sortDirection,
             locators: [
-                ...attributeLocators.map(attributeLocatorItem => ({ attributeLocatorItem })),
+                ...attributeLocators,
                 {
                     measureLocatorItem: {
                         measureIdentifier: id,

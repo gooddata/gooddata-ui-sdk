@@ -751,7 +751,7 @@ export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimen
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
-export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection, attributeLocators?: Array<IAttributeLocatorItem["attributeLocatorItem"]>): IMeasureSortItem;
+export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
 export function newNegativeAttributeFilter(displayFormId: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;
