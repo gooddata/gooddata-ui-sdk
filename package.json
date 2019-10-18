@@ -103,6 +103,7 @@
     "webpack-dev-server": "1.16.1"
   },
   "dependencies": {
+    "@gooddata/frontend-npm-scripts": "1.1.0",
     "@gooddata/typings": "^2.18.0",
     "es6-promise": "^3.0.2",
     "fetch-cookie": "^0.7.0",
@@ -124,6 +125,10 @@
   "lint-staged": {
     "{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}": [
       "prettier --write",
+      "git add"
+    ],
+    "{src,test}/**/*.{ts,js,tsx,jsx,scss}": [
+      "npx gdc-fix-copyright",
       "git add"
     ]
   }
