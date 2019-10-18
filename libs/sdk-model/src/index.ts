@@ -30,6 +30,7 @@ export {
     IDimension,
     isDimension,
     dimensionTotals,
+    DimensionItem,
     newTwoDimensional,
     newDimension,
     MeasureGroupIdentifier,

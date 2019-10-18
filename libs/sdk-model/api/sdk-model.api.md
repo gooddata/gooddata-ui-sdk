@@ -160,6 +160,9 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
+export type DimensionItem = Identifier | ITotal;
+
+// @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
 
 // @public
@@ -750,7 +753,7 @@ export function newDefForInsight(workspace: string, insight: IInsight, filters?:
 export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDimension(ids?: Identifier[]): IDimension;
+export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
 
 // @public
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
@@ -774,7 +777,7 @@ export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPrevi
 export function newRelativeDateFilter(dateDataSetId: string, granularity: string, from: number, to: number): IRelativeDateFilter;
 
 // @public
-export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
+export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
 export function objectQualifierValue(obj: ObjQualifier): string;
