@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
+import invariant from "ts-invariant";
 
 /**
  * Type for all identifiers.
@@ -10,73 +11,94 @@ import isEmpty = require("lodash/isEmpty");
 export type Identifier = string;
 
 /**
- * TODO: SDK8: Add docs
+ * Model object reference using object's URI.
+ *
+ * NOTE: using URI references is discouraged. URIs are workspace-specific and thus any application
+ * which references model objects using their URI will not work on multiple workspaces.
  *
  * @public
  */
-export interface IObjUriQualifier {
+export type UriRef = {
     uri: string;
-}
+};
 
 /**
- * TODO: SDK8: Add docs
+ * Model object reference using object's unique identifier.
+ *
+ * NOTE: this is preferred way to reference model objects.
  *
  * @public
  */
-export interface IObjIdentifierQualifier {
+export type IdentifierRef = {
     identifier: Identifier;
-}
+};
 
 /**
- * TODO: SDK8: Add docs
+ * Model object reference using object's local identifier. This type of referencing can be used for objects
+ * that are defined together within the same scope - such as within same execution.
  *
  * @public
  */
-export interface IObjLocalIdentifierQualifier {
+export type LocalIdRef = {
     localIdentifier: Identifier;
-}
+};
 
 /**
- * TODO: SDK8: Add docs
+ * Model object reference. Objects can be referenced by their URI or by identifier.
+ *
+ * NOTE: using URI references is discouraged. URIs are workspace-specific and thus any application
+ * which references model objects using their URI will not work on multiple workspaces.
  *
  * @public
  */
-export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+export type ObjRef = UriRef | IdentifierRef;
 
 /**
- * TODO: SDK8: Add docs
+ * Model object reference with support of referencing objects living in the same scope using their
+ * local identifier.
  *
  * @public
  */
-export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
+export type ObjRefInScope = ObjRef | LocalIdRef;
 
 //
 // Type guards
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether object is an URI Reference.
  *
  * @public
  */
-export function isUriQualifier(obj: any): obj is IObjUriQualifier {
-    return !isEmpty(obj) && (obj as IObjUriQualifier).uri !== undefined;
+export function isUriRef(obj: any): obj is UriRef {
+    return !isEmpty(obj) && (obj as UriRef).uri !== undefined;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether object is an Identifier Reference.
  *
  * @public
  */
-export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier {
-    return !isEmpty(obj) && (obj as IObjIdentifierQualifier).identifier !== undefined;
+export function isIdentifierRef(obj: any): obj is IdentifierRef {
+    return !isEmpty(obj) && (obj as IdentifierRef).identifier !== undefined;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether object is a localId Reference.
  *
  * @public
  */
-export function objectQualifierValue(obj: ObjQualifier): string {
-    return isIdentifierQualifier(obj) ? obj.identifier : obj.uri;
+export function isLocalIdRef(obj: any): obj is LocalIdRef {
+    return !isEmpty(obj) && (obj as LocalIdRef).localIdentifier !== undefined;
+}
+
+/**
+ * Retrieves value of object reference.
+ *
+ * @public
+ */
+export function objectRefValue(objRef: ObjRef): string {
+    invariant(objRef, "object reference must not be undefined");
+
+    return isIdentifierRef(objRef) ? objRef.identifier : objRef.uri;
 }

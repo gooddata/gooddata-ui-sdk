@@ -5,7 +5,7 @@ import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
 import stringifyObject = require("stringify-object");
-import { ObjQualifier } from "../base";
+import { ObjRef } from "../base";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,
@@ -49,7 +49,7 @@ const stringify = (input: any) =>
 
 const ARRAY_JOINER = ", ";
 
-const getObjQualifierValue = (value: ObjQualifier): string => (value as any).uri || (value as any).identifier;
+const getObjQualifierValue = (value: ObjRef): string => (value as any).uri || (value as any).identifier;
 
 type Converter<T> = (input: T) => string;
 

@@ -11,7 +11,7 @@ import {
     dimensionTotals,
     IAttribute,
     isAttribute,
-    isUriQualifier,
+    isUriRef,
     totalIsNative,
     MeasureGroupIdentifier,
     IExecutionDefinition,
@@ -22,14 +22,14 @@ import isEmpty = require("lodash/isEmpty");
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
-    const displayFromQualifier = attribute.attribute.displayForm;
+    const displayFromRef = attribute.attribute.displayForm;
 
-    if (isUriQualifier(displayFromQualifier)) {
+    if (isUriRef(displayFromRef)) {
         throw new NotSupported("Tiger backend does not allow specifying display forms by URI");
     }
 
     return {
-        displayForm: displayFromQualifier,
+        displayForm: displayFromRef,
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
     };
@@ -104,9 +104,9 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
                 throw new Error(`invalid invariant: dimension specifies undefined attr ${item}`);
             }
 
-            const attrQualifier = attr.attribute.displayForm;
+            const attrRef = attr.attribute.displayForm;
 
-            if (isUriQualifier(attrQualifier)) {
+            if (isUriRef(attrRef)) {
                 throw new NotSupported("tiger does not support attributes specified by uri");
             }
         });

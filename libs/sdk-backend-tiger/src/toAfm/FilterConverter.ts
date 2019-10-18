@@ -12,15 +12,15 @@ import {
     isAttributeElementsByValue,
     isAttributeFilter,
     isPositiveAttributeFilter,
-    isUriQualifier,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
-    const attributeQualifier = filter.positiveAttributeFilter.displayForm;
+    const attributeRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
 
-    if (isUriQualifier(attributeQualifier)) {
+    if (isUriRef(attributeRef)) {
         throw new NotSupported("Tiger backend does not allow specifying attributes by URI.");
     }
 
@@ -30,7 +30,7 @@ function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPo
 
     return {
         positiveAttributeFilter: {
-            displayForm: attributeQualifier,
+            displayForm: attributeRef,
             in: attributeElements,
         },
     };
@@ -41,10 +41,10 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
         return null;
     }
 
-    const attributeQualifier = filter.negativeAttributeFilter.displayForm;
+    const attributeRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
 
-    if (isUriQualifier(attributeQualifier)) {
+    if (isUriRef(attributeRef)) {
         throw new NotSupported("Tiger backend does not allow specifying attributes by URI.");
     }
 
@@ -54,7 +54,7 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
 
     return {
         negativeAttributeFilter: {
-            displayForm: attributeQualifier,
+            displayForm: attributeRef,
             notIn: attributeElements,
         },
     };
@@ -75,15 +75,15 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
         return null;
     }
 
-    const dataSetQualifier = absoluteDateFilter.dataSet;
+    const dateSetRef = absoluteDateFilter.dataSet;
 
-    if (isUriQualifier(dataSetQualifier)) {
+    if (isUriRef(dateSetRef)) {
         throw new NotSupported("Tiger backend does not allow specifying date data set by URI.");
     }
 
     return {
         absoluteDateFilter: {
-            dataSet: dataSetQualifier,
+            dataSet: dateSetRef,
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
         },
@@ -97,15 +97,15 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
         return null;
     }
 
-    const dataSetQualifier = relativeDateFilter.dataSet;
+    const dataSetRef = relativeDateFilter.dataSet;
 
-    if (isUriQualifier(dataSetQualifier)) {
+    if (isUriRef(dataSetRef)) {
         throw new NotSupported("Tiger backend does not allow specifying date data set by URI.");
     }
 
     return {
         relativeDateFilter: {
-            dataSet: dataSetQualifier,
+            dataSet: dataSetRef,
             granularity: relativeDateFilter.granularity,
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),

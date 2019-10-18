@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { ObjQualifier, objectQualifierValue } from "../base";
+import { ObjRef, objectRefValue } from "../base";
 import isEmpty = require("lodash/isEmpty");
 
 /**
@@ -34,7 +34,7 @@ export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByVa
  */
 export interface IPositiveAttributeFilter {
     positiveAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         in: AttributeElements;
     };
 }
@@ -46,7 +46,7 @@ export interface IPositiveAttributeFilter {
  */
 export interface INegativeAttributeFilter {
     negativeAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         notIn: AttributeElements;
     };
 }
@@ -58,7 +58,7 @@ export interface INegativeAttributeFilter {
  */
 export interface IAbsoluteDateFilter {
     absoluteDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         from: string;
         to: string;
     };
@@ -71,7 +71,7 @@ export interface IAbsoluteDateFilter {
  */
 export interface IRelativeDateFilter {
     relativeDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         granularity: string;
         from: number;
         to: number;
@@ -217,12 +217,12 @@ export function attributeElementsIsEmpty(attributeElements: AttributeElements): 
 export function filterQualifierValue(filter: IFilter): string {
     if (isDateFilter(filter)) {
         if (isAbsoluteDateFilter(filter)) {
-            return objectQualifierValue(filter.absoluteDateFilter.dataSet);
+            return objectRefValue(filter.absoluteDateFilter.dataSet);
         }
-        return objectQualifierValue(filter.relativeDateFilter.dataSet);
+        return objectRefValue(filter.relativeDateFilter.dataSet);
     }
     if (isPositiveAttributeFilter(filter)) {
-        return objectQualifierValue(filter.positiveAttributeFilter.displayForm);
+        return objectRefValue(filter.positiveAttributeFilter.displayForm);
     }
-    return objectQualifierValue(filter.negativeAttributeFilter.displayForm);
+    return objectRefValue(filter.negativeAttributeFilter.displayForm);
 }

@@ -16,14 +16,14 @@ export { newAttribute, AttributeBuilder, AttributeModifications } from "./attrib
 
 export {
     Identifier,
-    IObjUriQualifier,
-    IObjIdentifierQualifier,
-    IObjLocalIdentifierQualifier,
-    ObjQualifier,
-    ObjQualifierWithLocal,
-    isUriQualifier,
-    isIdentifierQualifier,
-    objectQualifierValue,
+    UriRef,
+    IdentifierRef,
+    LocalIdRef,
+    ObjRef,
+    ObjRefInScope,
+    isUriRef,
+    isIdentifierRef,
+    objectRefValue,
 } from "./base";
 
 export {

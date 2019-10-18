@@ -32,7 +32,7 @@ export class AttributeBuilder implements IAttribute {
     build: () => {
         attribute: {
             localIdentifier: string;
-            displayForm: import("..").ObjQualifier;
+            displayForm: import("..").ObjRef;
             alias?: string | undefined;
         };
     };
@@ -187,7 +187,7 @@ export type GuidType = "guid";
 export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         from: string;
         to: string;
     };
@@ -207,7 +207,7 @@ export interface IAttribute {
     // (undocumented)
     attribute: {
         localIdentifier: Identifier;
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         alias?: string;
     };
 }
@@ -295,6 +295,11 @@ export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 export type Identifier = string;
 
 // @public
+export type IdentifierRef = {
+    identifier: Identifier;
+};
+
+// @public
 export interface IDimension {
     itemIdentifiers: Identifier[];
     totals?: ITotal[];
@@ -371,7 +376,7 @@ export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionT
 export interface IMeasureDefinition {
     // (undocumented)
     measureDefinition: {
-        item: ObjQualifier;
+        item: ObjRef;
         aggregation?: MeasureAggregation;
         filters?: IFilter[];
         computeRatio?: boolean;
@@ -402,7 +407,7 @@ export interface IMeasureSortItem {
 export interface INegativeAttributeFilter {
     // (undocumented)
     negativeAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         notIn: AttributeElements;
     };
 }
@@ -450,29 +455,11 @@ export function insightWithProperties(insight: IInsight, properties: Visualizati
 export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight;
 
 // @public
-export interface IObjIdentifierQualifier {
-    // (undocumented)
-    identifier: Identifier;
-}
-
-// @public
-export interface IObjLocalIdentifierQualifier {
-    // (undocumented)
-    localIdentifier: Identifier;
-}
-
-// @public
-export interface IObjUriQualifier {
-    // (undocumented)
-    uri: string;
-}
-
-// @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
     popMeasureDefinition: {
         measureIdentifier: Identifier;
-        popAttribute: ObjQualifier;
+        popAttribute: ObjRef;
     };
 }
 
@@ -480,7 +467,7 @@ export interface IPoPMeasureDefinition {
 export interface IPositiveAttributeFilter {
     // (undocumented)
     positiveAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         in: AttributeElements;
     };
 }
@@ -488,7 +475,7 @@ export interface IPositiveAttributeFilter {
 // @public
 export interface IPreviousPeriodDateDataSet {
     // (undocumented)
-    dataSet: ObjQualifier;
+    dataSet: ObjRef;
     // (undocumented)
     periodsAgo: number;
 }
@@ -514,7 +501,7 @@ export interface IPreviousPeriodMeasureDefinition {
 export interface IRelativeDateFilter {
     // (undocumented)
     relativeDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         granularity: string;
         from: number;
         to: number;
@@ -569,7 +556,7 @@ export function isDimension(obj: any): obj is IDimension;
 export function isGuidColorItem(obj: any): obj is IGuidColorItem;
 
 // @public
-export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier;
+export function isIdentifierRef(obj: any): obj is IdentifierRef;
 
 // @public
 export function isInsight(obj: any): obj is IInsight;
@@ -617,7 +604,7 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
 export function isTotal(obj: any): obj is ITotal;
 
 // @public
-export function isUriQualifier(obj: any): obj is IObjUriQualifier;
+export function isUriRef(obj: any): obj is UriRef;
 
 // @public
 export interface ITotal {
@@ -645,6 +632,11 @@ export interface IVisualizationClass {
         orderIndex?: number;
     };
 }
+
+// @public
+export type LocalIdRef = {
+    localIdentifier: Identifier;
+};
 
 // @public
 export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
@@ -780,13 +772,13 @@ export function newRelativeDateFilter(dateDataSetId: string, granularity: string
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export function objectQualifierValue(obj: ObjQualifier): string;
+export function objectRefValue(objRef: ObjRef): string;
 
 // @public
-export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+export type ObjRef = UriRef | IdentifierRef;
 
 // @public
-export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
+export type ObjRefInScope = ObjRef | LocalIdRef;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
@@ -826,6 +818,11 @@ export function totalIsNative(total: ITotal): boolean;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
+
+// @public
+export type UriRef = {
+    uri: string;
+};
 
 // @public
 export function visClassUrl(vc: IVisualizationClass): string;

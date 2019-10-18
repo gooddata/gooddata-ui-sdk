@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { Identifier, isIdentifierQualifier, isUriQualifier, ObjQualifier } from "../base";
+import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
 import { IFilter } from "../filter";
 import unset = require("lodash/unset");
 import cloneDeep = require("lodash/cloneDeep");
@@ -58,7 +58,7 @@ export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "medi
  */
 export interface IMeasureDefinition {
     measureDefinition: {
-        item: ObjQualifier;
+        item: ObjRef;
         aggregation?: MeasureAggregation;
         filters?: IFilter[];
         computeRatio?: boolean;
@@ -92,7 +92,7 @@ export interface IArithmeticMeasureDefinition {
 export interface IPoPMeasureDefinition {
     popMeasureDefinition: {
         measureIdentifier: Identifier;
-        popAttribute: ObjQualifier;
+        popAttribute: ObjRef;
     };
 }
 
@@ -114,7 +114,7 @@ export interface IPreviousPeriodMeasureDefinition {
  * @public
  */
 export interface IPreviousPeriodDateDataSet {
-    dataSet: ObjQualifier;
+    dataSet: ObjRef;
     periodsAgo: number;
 }
 
@@ -257,7 +257,7 @@ export function measureUri(measure: IMeasure): string | undefined {
 
     const qualifier = measure.measure.definition.measureDefinition.item;
 
-    return isUriQualifier(qualifier) ? qualifier.uri : undefined;
+    return isUriRef(qualifier) ? qualifier.uri : undefined;
 }
 
 /**
@@ -275,7 +275,7 @@ export function measureIdentifier(measure: IMeasure): string | undefined {
 
     const qualifier = measure.measure.definition.measureDefinition.item;
 
-    return isIdentifierQualifier(qualifier) ? qualifier.identifier : undefined;
+    return isIdentifierRef(qualifier) ? qualifier.identifier : undefined;
 }
 
 /**
