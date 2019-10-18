@@ -309,7 +309,7 @@
             "packageName": "@gooddata/catalog-export",
             "projectFolder": "tools/catalog-export",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/schema-gen",
