@@ -1,0 +1,225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newAttributeLocator should create locator for attr 1`] = `
+Object {
+  "attributeLocatorItem": Object {
+    "attributeIdentifier": "localId",
+    "element": "value",
+  },
+}
+`;
+
+exports[`newAttributeLocator should create locator for attr object 1`] = `
+Object {
+  "attributeLocatorItem": Object {
+    "attributeIdentifier": "a_label.account.id",
+    "element": "value",
+  },
+}
+`;
+
+exports[`newAttributeSort should create asc sort by default 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeSort should create asc sort for attribute 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "localId1",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeSort should create asc sort for attribute object 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newAttributeSort should create desc sort for attribute 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "localId1",
+    "direction": "desc",
+  },
+}
+`;
+
+exports[`newAttributeSort should create desc sort for attribute object 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "desc",
+  },
+}
+`;
+
+exports[`newAttributeSort should create sort with aggregation 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "aggregation": "sum",
+    "attributeIdentifier": "a_label.account.id",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`newMeasureSort should create asc sort by default 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "asc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`newMeasureSort should create asc sort for measure 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "asc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "localId1",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`newMeasureSort should create asc sort for measure object 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "asc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`newMeasureSort should create desc sort for measure 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "desc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "localId1",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`newMeasureSort should create desc sort for measure and attribute locators 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "desc",
+    "locators": Array [
+      Object {
+        "attributeLocatorItem": Object {
+          "attributeIdentifier": "a_label.account.id",
+          "element": "value",
+        },
+      },
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "localId1",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`newMeasureSort should create desc sort for measure object 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "desc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`sortEntityIds should get empty result if input null 1`] = `
+Object {
+  "allIdentifiers": Array [],
+  "attributeIdentifiers": Array [],
+  "measureIdentifiers": Array [],
+}
+`;
+
+exports[`sortEntityIds should get empty result if input undefined 1`] = `
+Object {
+  "allIdentifiers": Array [],
+  "attributeIdentifiers": Array [],
+  "measureIdentifiers": Array [],
+}
+`;
+
+exports[`sortEntityIds should get local ids from attribute sort 1`] = `
+Object {
+  "allIdentifiers": Array [
+    "a_label.account.id",
+  ],
+  "attributeIdentifiers": Array [
+    "a_label.account.id",
+  ],
+  "measureIdentifiers": Array [],
+}
+`;
+
+exports[`sortEntityIds should get local ids from measure sort with just measure locator 1`] = `
+Object {
+  "allIdentifiers": Array [
+    "m_afSEwRwdbMeQ",
+  ],
+  "attributeIdentifiers": Array [],
+  "measureIdentifiers": Array [
+    "m_afSEwRwdbMeQ",
+  ],
+}
+`;
+
+exports[`sortEntityIds should get local ids from measure sort with measure locator and attribute locators 1`] = `
+Object {
+  "allIdentifiers": Array [
+    "a_label.account.id",
+    "m_afSEwRwdbMeQ",
+  ],
+  "attributeIdentifiers": Array [
+    "a_label.account.id",
+  ],
+  "measureIdentifiers": Array [
+    "m_afSEwRwdbMeQ",
+  ],
+}
+`;
