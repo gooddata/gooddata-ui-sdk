@@ -21,7 +21,7 @@ export type TypescriptOutput = {
 //
 
 const FILE_DIRECTIVES = ["/* tslint:disable:file-header */", "/* tslint:disable:variable-name */"];
-const FILE_HEADER = `// THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()};`;
+const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 const INSIGHT_MAP_VARNAME = "Insights";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
 
@@ -98,7 +98,13 @@ function dateDisplayFormStrip(title: string, nameScope: TakenNamesSet = GlobalNa
 
 function initialize(outputFile: string): TypescriptOutput {
     const project = new Project({});
-    const sourceFile = project.createSourceFile(outputFile);
+    const sourceFile = project.createSourceFile(
+        outputFile,
+        {
+            leadingTrivia: [...FILE_DIRECTIVES, FILE_HEADER],
+        },
+        { overwrite: true },
+    );
 
     return {
         project,
@@ -110,7 +116,6 @@ function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
     return {
         moduleSpecifier: "@gooddata/sdk-model",
         namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition"],
-        leadingTrivia: [...FILE_DIRECTIVES, FILE_HEADER],
     };
 }
 
@@ -182,7 +187,6 @@ function generateAttribute(
             declarations: [
                 {
                     name: variableName,
-                    type: "{[df: string]: IAttribute}",
                     initializer: `{ ${displayFormInits.join(",")} }`,
                 },
             ],
@@ -238,7 +242,6 @@ function generateMeasuresFromFacts(fact: Fact): OptionalKind<VariableStatementSt
         declarations: [
             {
                 name: variableName,
-                type: "{[measure: string]: IMeasure<IMeasureDefinition>}",
                 initializer: `{ ${aggregationInits.join(",")} } `,
             },
         ],
@@ -300,7 +303,6 @@ function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableSt
         declarations: [
             {
                 name: INSIGHT_MAP_VARNAME,
-                type: "{[title: string]: string}",
                 initializer: `{ ${insightInitializer.join(",")} }`,
             },
         ],

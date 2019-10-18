@@ -8,7 +8,7 @@ exports[`transformToCatalog creates new catalog 1`] = `
  * Display Form ID: attr.orders.channel
  */
 export const Channel: IAttribute = newAttribute('label.orders.channel');
-export const EmployeeName: {[df: string]: IAttribute} = { /** 
+export const EmployeeName = { /** 
     * Display Form Title: Employee Name  
     * Display Form ID: label.employee.employeename
     */
@@ -33,7 +33,7 @@ export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure('aaiF4bffe
  * Fact Title: $ Menu Item Sales
  * Fact ID: fact.salesdetailfact.menuitemsales
  */
-export const $MenuItemSales: {[measure: string]: IMeasure<IMeasureDefinition>} = { /** 
+export const $MenuItemSales = { /** 
     * Fact Title: $ Menu Item Sales  
     * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: sum
@@ -73,7 +73,7 @@ export const $MenuItemSales: {[measure: string]: IMeasure<IMeasureDefinition>} =
  * Fact Title: Cost
  * Fact ID: fact.restaurantcostsfact.cost
  */
-export const Cost: {[measure: string]: IMeasure<IMeasureDefinition>} = { /** 
+export const Cost = { /** 
     * Fact Title: Cost  
     * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: sum
@@ -119,7 +119,7 @@ export const TimelineYear: IAttribute = newAttribute('timeline.aag81lMifn6q');
  * Display Form ID: timeline.quarter.in.year
  */
 export const TimelineQuarter: IAttribute = newAttribute('timeline.aam81lMifn6q');
-export const TimelineWeekSunSatYear: {[df: string]: IAttribute} = { /** 
+export const TimelineWeekSunSatYear = { /** 
     * Display Form Title: Week #/Year (W1/2010) (Timeline)  
     * Display Form ID: timeline.aaA81lMifn6q
     */
@@ -154,7 +154,7 @@ export const TimelineWeekSunSat: IAttribute = newAttribute('timeline.aaI81lMifn6
  * Display Form ID: timeline.week.in.quarter
  */
 export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute('timeline.aaO81lMifn6q');
-export const TimelineWeekMonSunYear: {[df: string]: IAttribute} = { /** 
+export const TimelineWeekMonSunYear = { /** 
     * Display Form Title: Week #/Year (W1/2010) (Timeline)  
     * Display Form ID: timeline.aa281lMifn6q
     */
@@ -177,7 +177,7 @@ export const TimelineWeekMonSun: IAttribute = newAttribute('timeline.aba81lMifn6
  * Display Form ID: timeline.euweek.in.quarter
  */
 export const TimelineWeekMonSunOfQtr: IAttribute = newAttribute('timeline.abg81lMifn6q');
-export const TimelineMonth: {[df: string]: IAttribute} = { /** 
+export const TimelineMonth = { /** 
     * Display Form Title: Short (Jan) (Timeline)  
     * Display Form ID: timeline.abm81lMifn6q
     */
@@ -204,7 +204,7 @@ export const TimelineMonthOfQuarter: IAttribute = newAttribute('timeline.aby81lM
  * Display Form ID: timeline.day.in.year
  */
 export const TimelineDayOfYear: IAttribute = newAttribute('timeline.abE81lMifn6q');
-export const TimelineDayOfWeekSunSat: {[df: string]: IAttribute} = { /** 
+export const TimelineDayOfWeekSunSat = { /** 
     * Display Form Title: Short (Sun) (Timeline)  
     * Display Form ID: timeline.abK81lMifn6q
     */
@@ -217,7 +217,7 @@ export const TimelineDayOfWeekSunSat: {[df: string]: IAttribute} = { /**
     * Display Form ID: timeline.abM81lMifn6q
     */
     Number: newAttribute('timeline.abM81lMifn6q') };
-export const TimelineDayOfWeekMonSun: {[df: string]: IAttribute} = { /** 
+export const TimelineDayOfWeekMonSun = { /** 
     * Display Form Title: Short (Mon) (Timeline)  
     * Display Form ID: timeline.abU81lMifn6q
     */
@@ -245,7 +245,7 @@ export const TimelineDayOfMonth: IAttribute = newAttribute('timeline.aca81lMifn6
  * Display Form ID: timeline.quarter
  */
 export const TimelineQuarterYear: IAttribute = newAttribute('timeline.aci81lMifn6q');
-export const TimelineMonthYear: {[df: string]: IAttribute} = { /** 
+export const TimelineMonthYear = { /** 
     * Display Form Title: Short (Jan 2010) (Timeline)  
     * Display Form ID: timeline.act81lMifn6q
     */
@@ -258,7 +258,7 @@ export const TimelineMonthYear: {[df: string]: IAttribute} = { /**
     * Display Form ID: timeline.acv81lMifn6q
     */
     Number: newAttribute('timeline.acv81lMifn6q') };
-export const TimelineDate: {[df: string]: IAttribute} = { /** 
+export const TimelineDate = { /** 
     * Display Form Title: mm/dd/yyyy (Timeline)  
     * Display Form ID: timeline.date.mmddyyyy
     */
@@ -283,7 +283,7 @@ export const TimelineDate: {[df: string]: IAttribute} = { /**
     * Display Form ID: timeline.date.eddmmyyyy
     */
     DdMmYyyy_1: newAttribute('timeline.date.eddmmyyyy') };
-export const Insights: {[title: string]: string} = { /** 
+export const Insights = { /** 
     * Insight Title: Labor Costs vs Scheduled Costs  
     * Insight ID: abhJpedgcfU2
     */

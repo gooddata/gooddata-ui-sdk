@@ -1,9 +1,9 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-// THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-17T14:42:41.833Z;
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-18T09:24:24.067Z; */
 import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
 
-export const Account: { [df: string]: IAttribute } = {
+export const Account = {
     /**
      * Display Form Title: Name
      * Display Form ID: label.account.id.name
@@ -14,7 +14,7 @@ export const Account: { [df: string]: IAttribute } = {
      * Display Form ID: label.account.id
      */ Default: newAttribute("label.account.id"),
 };
-export const Activity: { [df: string]: IAttribute } = {
+export const Activity = {
     /**
      * Display Form Title: Subject
      * Display Form ID: label.activity.id.subject
@@ -70,7 +70,7 @@ export const IsWon: IAttribute = newAttribute("label.stage.iswon");
  * Display Form ID: attr.opportunitysnapshot.id
  */
 export const OppSnapshot: IAttribute = newAttribute("label.opportunitysnapshot.id");
-export const Opportunity: { [df: string]: IAttribute } = {
+export const Opportunity = {
     /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.opportunity.id.name
@@ -90,7 +90,7 @@ export const Opportunity: { [df: string]: IAttribute } = {
  * Display Form ID: attr.activity.priority
  */
 export const Priority: IAttribute = newAttribute("label.activity.priority");
-export const Product: { [df: string]: IAttribute } = {
+export const Product = {
     /**
      * Display Form Title: Product Name
      * Display Form ID: label.product.id.name
@@ -106,7 +106,7 @@ export const Product: { [df: string]: IAttribute } = {
  * Display Form ID: attr.owner.region
  */
 export const Region: IAttribute = newAttribute("label.owner.region");
-export const SalesRep: { [df: string]: IAttribute } = {
+export const SalesRep = {
     /**
      * Display Form Title: Owner Name
      * Display Form ID: label.owner.id.name
@@ -122,7 +122,7 @@ export const SalesRep: { [df: string]: IAttribute } = {
  * Display Form ID: attr.stagehistory.id
  */
 export const StageHistory: IAttribute = newAttribute("label.stagehistory.id");
-export const StageName: { [df: string]: IAttribute } = {
+export const StageName = {
     /**
      * Display Form Title: Stage Name
      * Display Form ID: label.stage.name.stagename
@@ -385,7 +385,7 @@ export const Won: IMeasure<IMeasureDefinition> = newMeasure("afSEwRwdbMeQ");
  * Fact Title: Activity (Date)
  * Fact ID: dt.activity.activity
  */
-export const ActivityDate: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const ActivityDate = {
     /**
      * Fact Title: Activity (Date)
      * Fact ID: dt.activity.activity
@@ -427,7 +427,7 @@ export const ActivityDate: { [measure: string]: IMeasure<IMeasureDefinition> } =
  * Fact Title: Amount
  * Fact ID: fact.opportunitysnapshot.amount
  */
-export const Amount_1: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const Amount_1 = {
     /**
      * Fact Title: Amount
      * Fact ID: fact.opportunitysnapshot.amount
@@ -469,7 +469,7 @@ export const Amount_1: { [measure: string]: IMeasure<IMeasureDefinition> } = {
  * Fact Title: Days to Close
  * Fact ID: fact.opportunitysnapshot.daystoclose
  */
-export const DaysToClose: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const DaysToClose = {
     /**
      * Fact Title: Days to Close
      * Fact ID: fact.opportunitysnapshot.daystoclose
@@ -511,7 +511,7 @@ export const DaysToClose: { [measure: string]: IMeasure<IMeasureDefinition> } = 
  * Fact Title: Duration
  * Fact ID: fact.stagehistory.duration
  */
-export const Duration: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const Duration = {
     /**
      * Fact Title: Duration
      * Fact ID: fact.stagehistory.duration
@@ -553,7 +553,7 @@ export const Duration: { [measure: string]: IMeasure<IMeasureDefinition> } = {
  * Fact Title: Opp. Close (Date)
  * Fact ID: dt.opportunitysnapshot.closedate
  */
-export const OppCloseDate: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const OppCloseDate = {
     /**
      * Fact Title: Opp. Close (Date)
      * Fact ID: dt.opportunitysnapshot.closedate
@@ -595,7 +595,7 @@ export const OppCloseDate: { [measure: string]: IMeasure<IMeasureDefinition> } =
  * Fact Title: Opp. Created (Date)
  * Fact ID: dt.opportunity.oppcreated
  */
-export const OppCreatedDate: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const OppCreatedDate = {
     /**
      * Fact Title: Opp. Created (Date)
      * Fact ID: dt.opportunity.oppcreated
@@ -637,7 +637,7 @@ export const OppCreatedDate: { [measure: string]: IMeasure<IMeasureDefinition> }
  * Fact Title: Opp. Snapshot (Date)
  * Fact ID: dt.opportunitysnapshot.snapshotdate
  */
-export const OppSnapshotDate: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const OppSnapshotDate = {
     /**
      * Fact Title: Opp. Snapshot (Date)
      * Fact ID: dt.opportunitysnapshot.snapshotdate
@@ -679,7 +679,7 @@ export const OppSnapshotDate: { [measure: string]: IMeasure<IMeasureDefinition> 
  * Fact Title: Probability
  * Fact ID: fact.opportunitysnapshot.probability
  */
-export const Probability_1: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const Probability_1 = {
     /**
      * Fact Title: Probability
      * Fact ID: fact.opportunitysnapshot.probability
@@ -721,7 +721,7 @@ export const Probability_1: { [measure: string]: IMeasure<IMeasureDefinition> } 
  * Fact Title: Timeline (Date)
  * Fact ID: dt.timeline.timeline
  */
-export const TimelineDate: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const TimelineDate = {
     /**
      * Fact Title: Timeline (Date)
      * Fact ID: dt.timeline.timeline
@@ -763,7 +763,7 @@ export const TimelineDate: { [measure: string]: IMeasure<IMeasureDefinition> } =
  * Fact Title: Velocity
  * Fact ID: fact.stagehistory.velocity
  */
-export const Velocity: { [measure: string]: IMeasure<IMeasureDefinition> } = {
+export const Velocity = {
     /**
      * Fact Title: Velocity
      * Fact ID: fact.stagehistory.velocity
@@ -801,7 +801,7 @@ export const Velocity: { [measure: string]: IMeasure<IMeasureDefinition> } = {
      * Fact Aggregation: runsum
      */ Runsum: newMeasure("fact.stagehistory.velocity", m => m.aggregation("runsum")),
 };
-export const CreatedDate: { [df: string]: IAttribute } = {
+export const CreatedDate = {
     /**
      * Display Form Title: mm/dd/yyyy (Created)
      * Display Form ID: created.date.mmddyyyy
@@ -828,7 +828,7 @@ export const CreatedDate: { [df: string]: IAttribute } = {
      * Display Form ID: created.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("created.date.eddmmyyyy"),
 };
-export const CreatedDayOfWeekMonSun: { [df: string]: IAttribute } = {
+export const CreatedDayOfWeekMonSun = {
     /**
      * Display Form Title: Short (Mon) (Created)
      * Display Form ID: created.abU81lMifn6q
@@ -843,7 +843,7 @@ export const CreatedDayOfWeekMonSun: { [df: string]: IAttribute } = {
      * Display Form ID: created.abW81lMifn6q
      */ Number: newAttribute("created.abW81lMifn6q"),
 };
-export const CreatedMonthYear: { [df: string]: IAttribute } = {
+export const CreatedMonthYear = {
     /**
      * Display Form Title: Short (Jan 2010) (Created)
      * Display Form ID: created.act81lMifn6q
@@ -858,7 +858,7 @@ export const CreatedMonthYear: { [df: string]: IAttribute } = {
      * Display Form ID: created.acv81lMifn6q
      */ Number: newAttribute("created.acv81lMifn6q"),
 };
-export const CreatedMonth: { [df: string]: IAttribute } = {
+export const CreatedMonth = {
     /**
      * Display Form Title: Short (Jan) (Created)
      * Display Form ID: created.abm81lMifn6q
@@ -882,7 +882,7 @@ export const CreatedMonth: { [df: string]: IAttribute } = {
  * Display Form ID: created.euweek.in.year
  */
 export const CreatedWeekMonSun: IAttribute = newAttribute("created.aba81lMifn6q");
-export const CreatedWeekMonSunYear: { [df: string]: IAttribute } = {
+export const CreatedWeekMonSunYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Created)
      * Display Form ID: created.aa281lMifn6q
@@ -929,7 +929,7 @@ export const CreatedWeekSunSatOfQtr: IAttribute = newAttribute("created.aaO81lMi
  * Display Form ID: created.quarter.in.year
  */
 export const CreatedQuarter: IAttribute = newAttribute("created.aam81lMifn6q");
-export const CreatedWeekSunSatYear: { [df: string]: IAttribute } = {
+export const CreatedWeekSunSatYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Created)
      * Display Form ID: created.aaA81lMifn6q
@@ -961,7 +961,7 @@ export const CreatedWeekSunSatYear: { [df: string]: IAttribute } = {
  * Display Form ID: created.day.in.year
  */
 export const CreatedDayOfYear: IAttribute = newAttribute("created.abE81lMifn6q");
-export const CreatedDayOfWeekSunSat: { [df: string]: IAttribute } = {
+export const CreatedDayOfWeekSunSat = {
     /**
      * Display Form Title: Short (Sun) (Created)
      * Display Form ID: created.abK81lMifn6q
@@ -1001,7 +1001,7 @@ export const CreatedYear: IAttribute = newAttribute("created.aag81lMifn6q");
  * Display Form ID: created.month.in.quarter
  */
 export const CreatedMonthOfQuarter: IAttribute = newAttribute("created.aby81lMifn6q");
-export const ClosedDate: { [df: string]: IAttribute } = {
+export const ClosedDate = {
     /**
      * Display Form Title: mm/dd/yyyy (Closed)
      * Display Form ID: closed.date.mmddyyyy
@@ -1028,7 +1028,7 @@ export const ClosedDate: { [df: string]: IAttribute } = {
      * Display Form ID: closed.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("closed.date.eddmmyyyy"),
 };
-export const ClosedDayOfWeekMonSun: { [df: string]: IAttribute } = {
+export const ClosedDayOfWeekMonSun = {
     /**
      * Display Form Title: Short (Mon) (Closed)
      * Display Form ID: closed.abU81lMifn6q
@@ -1043,7 +1043,7 @@ export const ClosedDayOfWeekMonSun: { [df: string]: IAttribute } = {
      * Display Form ID: closed.abW81lMifn6q
      */ Number: newAttribute("closed.abW81lMifn6q"),
 };
-export const ClosedMonthYear: { [df: string]: IAttribute } = {
+export const ClosedMonthYear = {
     /**
      * Display Form Title: Short (Jan 2010) (Closed)
      * Display Form ID: closed.act81lMifn6q
@@ -1058,7 +1058,7 @@ export const ClosedMonthYear: { [df: string]: IAttribute } = {
      * Display Form ID: closed.acv81lMifn6q
      */ Number: newAttribute("closed.acv81lMifn6q"),
 };
-export const ClosedMonth: { [df: string]: IAttribute } = {
+export const ClosedMonth = {
     /**
      * Display Form Title: Short (Jan) (Closed)
      * Display Form ID: closed.abm81lMifn6q
@@ -1082,7 +1082,7 @@ export const ClosedMonth: { [df: string]: IAttribute } = {
  * Display Form ID: closed.euweek.in.year
  */
 export const ClosedWeekMonSun: IAttribute = newAttribute("closed.aba81lMifn6q");
-export const ClosedWeekMonSunYear: { [df: string]: IAttribute } = {
+export const ClosedWeekMonSunYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Closed)
      * Display Form ID: closed.aa281lMifn6q
@@ -1129,7 +1129,7 @@ export const ClosedWeekSunSatOfQtr: IAttribute = newAttribute("closed.aaO81lMifn
  * Display Form ID: closed.quarter.in.year
  */
 export const ClosedQuarter: IAttribute = newAttribute("closed.aam81lMifn6q");
-export const ClosedWeekSunSatYear: { [df: string]: IAttribute } = {
+export const ClosedWeekSunSatYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Closed)
      * Display Form ID: closed.aaA81lMifn6q
@@ -1161,7 +1161,7 @@ export const ClosedWeekSunSatYear: { [df: string]: IAttribute } = {
  * Display Form ID: closed.day.in.year
  */
 export const ClosedDayOfYear: IAttribute = newAttribute("closed.abE81lMifn6q");
-export const ClosedDayOfWeekSunSat: { [df: string]: IAttribute } = {
+export const ClosedDayOfWeekSunSat = {
     /**
      * Display Form Title: Short (Sun) (Closed)
      * Display Form ID: closed.abK81lMifn6q
@@ -1201,7 +1201,7 @@ export const ClosedYear: IAttribute = newAttribute("closed.aag81lMifn6q");
  * Display Form ID: closed.month.in.quarter
  */
 export const ClosedMonthOfQuarter: IAttribute = newAttribute("closed.aby81lMifn6q");
-export const SnapshotDate: { [df: string]: IAttribute } = {
+export const SnapshotDate = {
     /**
      * Display Form Title: mm/dd/yyyy (Snapshot)
      * Display Form ID: snapshot.date.mmddyyyy
@@ -1228,7 +1228,7 @@ export const SnapshotDate: { [df: string]: IAttribute } = {
      * Display Form ID: snapshot.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("snapshot.date.eddmmyyyy"),
 };
-export const SnapshotDayOfWeekMonSun: { [df: string]: IAttribute } = {
+export const SnapshotDayOfWeekMonSun = {
     /**
      * Display Form Title: Short (Mon) (Snapshot)
      * Display Form ID: snapshot.abU81lMifn6q
@@ -1243,7 +1243,7 @@ export const SnapshotDayOfWeekMonSun: { [df: string]: IAttribute } = {
      * Display Form ID: snapshot.abW81lMifn6q
      */ Number: newAttribute("snapshot.abW81lMifn6q"),
 };
-export const SnapshotMonthYear: { [df: string]: IAttribute } = {
+export const SnapshotMonthYear = {
     /**
      * Display Form Title: Short (Jan 2010) (Snapshot)
      * Display Form ID: snapshot.act81lMifn6q
@@ -1258,7 +1258,7 @@ export const SnapshotMonthYear: { [df: string]: IAttribute } = {
      * Display Form ID: snapshot.acv81lMifn6q
      */ Number: newAttribute("snapshot.acv81lMifn6q"),
 };
-export const SnapshotMonth: { [df: string]: IAttribute } = {
+export const SnapshotMonth = {
     /**
      * Display Form Title: Short (Jan) (Snapshot)
      * Display Form ID: snapshot.abm81lMifn6q
@@ -1282,7 +1282,7 @@ export const SnapshotMonth: { [df: string]: IAttribute } = {
  * Display Form ID: snapshot.euweek.in.year
  */
 export const SnapshotWeekMonSun: IAttribute = newAttribute("snapshot.aba81lMifn6q");
-export const SnapshotWeekMonSunYear: { [df: string]: IAttribute } = {
+export const SnapshotWeekMonSunYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Snapshot)
      * Display Form ID: snapshot.aa281lMifn6q
@@ -1329,7 +1329,7 @@ export const SnapshotWeekSunSatOfQtr: IAttribute = newAttribute("snapshot.aaO81l
  * Display Form ID: snapshot.quarter.in.year
  */
 export const SnapshotQuarter: IAttribute = newAttribute("snapshot.aam81lMifn6q");
-export const SnapshotWeekSunSatYear: { [df: string]: IAttribute } = {
+export const SnapshotWeekSunSatYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Snapshot)
      * Display Form ID: snapshot.aaA81lMifn6q
@@ -1361,7 +1361,7 @@ export const SnapshotWeekSunSatYear: { [df: string]: IAttribute } = {
  * Display Form ID: snapshot.day.in.year
  */
 export const SnapshotDayOfYear: IAttribute = newAttribute("snapshot.abE81lMifn6q");
-export const SnapshotDayOfWeekSunSat: { [df: string]: IAttribute } = {
+export const SnapshotDayOfWeekSunSat = {
     /**
      * Display Form Title: Short (Sun) (Snapshot)
      * Display Form ID: snapshot.abK81lMifn6q
@@ -1401,7 +1401,7 @@ export const SnapshotYear: IAttribute = newAttribute("snapshot.aag81lMifn6q");
  * Display Form ID: snapshot.month.in.quarter
  */
 export const SnapshotMonthOfQuarter: IAttribute = newAttribute("snapshot.aby81lMifn6q");
-export const ActivityDate_1: { [df: string]: IAttribute } = {
+export const ActivityDate_1 = {
     /**
      * Display Form Title: mm/dd/yyyy (Activity)
      * Display Form ID: activity.date.mmddyyyy
@@ -1428,7 +1428,7 @@ export const ActivityDate_1: { [df: string]: IAttribute } = {
      * Display Form ID: activity.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("activity.date.eddmmyyyy"),
 };
-export const ActivityDayOfWeekMonSun: { [df: string]: IAttribute } = {
+export const ActivityDayOfWeekMonSun = {
     /**
      * Display Form Title: Short (Mon) (Activity)
      * Display Form ID: activity.abU81lMifn6q
@@ -1443,7 +1443,7 @@ export const ActivityDayOfWeekMonSun: { [df: string]: IAttribute } = {
      * Display Form ID: activity.abW81lMifn6q
      */ Number: newAttribute("activity.abW81lMifn6q"),
 };
-export const ActivityMonthYear: { [df: string]: IAttribute } = {
+export const ActivityMonthYear = {
     /**
      * Display Form Title: Short (Jan 2010) (Activity)
      * Display Form ID: activity.act81lMifn6q
@@ -1458,7 +1458,7 @@ export const ActivityMonthYear: { [df: string]: IAttribute } = {
      * Display Form ID: activity.acv81lMifn6q
      */ Number: newAttribute("activity.acv81lMifn6q"),
 };
-export const ActivityMonth: { [df: string]: IAttribute } = {
+export const ActivityMonth = {
     /**
      * Display Form Title: Short (Jan) (Activity)
      * Display Form ID: activity.abm81lMifn6q
@@ -1482,7 +1482,7 @@ export const ActivityMonth: { [df: string]: IAttribute } = {
  * Display Form ID: activity.euweek.in.year
  */
 export const ActivityWeekMonSun: IAttribute = newAttribute("activity.aba81lMifn6q");
-export const ActivityWeekMonSunYear: { [df: string]: IAttribute } = {
+export const ActivityWeekMonSunYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Activity)
      * Display Form ID: activity.aa281lMifn6q
@@ -1529,7 +1529,7 @@ export const ActivityWeekSunSatOfQtr: IAttribute = newAttribute("activity.aaO81l
  * Display Form ID: activity.quarter.in.year
  */
 export const ActivityQuarter: IAttribute = newAttribute("activity.aam81lMifn6q");
-export const ActivityWeekSunSatYear: { [df: string]: IAttribute } = {
+export const ActivityWeekSunSatYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Activity)
      * Display Form ID: activity.aaA81lMifn6q
@@ -1561,7 +1561,7 @@ export const ActivityWeekSunSatYear: { [df: string]: IAttribute } = {
  * Display Form ID: activity.day.in.year
  */
 export const ActivityDayOfYear: IAttribute = newAttribute("activity.abE81lMifn6q");
-export const ActivityDayOfWeekSunSat: { [df: string]: IAttribute } = {
+export const ActivityDayOfWeekSunSat = {
     /**
      * Display Form Title: Short (Sun) (Activity)
      * Display Form ID: activity.abK81lMifn6q
@@ -1601,7 +1601,7 @@ export const ActivityYear: IAttribute = newAttribute("activity.aag81lMifn6q");
  * Display Form ID: activity.month.in.quarter
  */
 export const ActivityMonthOfQuarter: IAttribute = newAttribute("activity.aby81lMifn6q");
-export const TimelineDate_1: { [df: string]: IAttribute } = {
+export const TimelineDate_1 = {
     /**
      * Display Form Title: mm/dd/yyyy (Timeline)
      * Display Form ID: timeline.date.mmddyyyy
@@ -1628,7 +1628,7 @@ export const TimelineDate_1: { [df: string]: IAttribute } = {
      * Display Form ID: timeline.date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
 };
-export const TimelineDayOfWeekMonSun: { [df: string]: IAttribute } = {
+export const TimelineDayOfWeekMonSun = {
     /**
      * Display Form Title: Short (Mon) (Timeline)
      * Display Form ID: timeline.abU81lMifn6q
@@ -1643,7 +1643,7 @@ export const TimelineDayOfWeekMonSun: { [df: string]: IAttribute } = {
      * Display Form ID: timeline.abW81lMifn6q
      */ Number: newAttribute("timeline.abW81lMifn6q"),
 };
-export const TimelineMonthYear: { [df: string]: IAttribute } = {
+export const TimelineMonthYear = {
     /**
      * Display Form Title: Short (Jan 2010) (Timeline)
      * Display Form ID: timeline.act81lMifn6q
@@ -1658,7 +1658,7 @@ export const TimelineMonthYear: { [df: string]: IAttribute } = {
      * Display Form ID: timeline.acv81lMifn6q
      */ Number: newAttribute("timeline.acv81lMifn6q"),
 };
-export const TimelineMonth: { [df: string]: IAttribute } = {
+export const TimelineMonth = {
     /**
      * Display Form Title: Short (Jan) (Timeline)
      * Display Form ID: timeline.abm81lMifn6q
@@ -1682,7 +1682,7 @@ export const TimelineMonth: { [df: string]: IAttribute } = {
  * Display Form ID: timeline.euweek.in.year
  */
 export const TimelineWeekMonSun: IAttribute = newAttribute("timeline.aba81lMifn6q");
-export const TimelineWeekMonSunYear: { [df: string]: IAttribute } = {
+export const TimelineWeekMonSunYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Timeline)
      * Display Form ID: timeline.aa281lMifn6q
@@ -1729,7 +1729,7 @@ export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute("timeline.aaO81l
  * Display Form ID: timeline.quarter.in.year
  */
 export const TimelineQuarter: IAttribute = newAttribute("timeline.aam81lMifn6q");
-export const TimelineWeekSunSatYear: { [df: string]: IAttribute } = {
+export const TimelineWeekSunSatYear = {
     /**
      * Display Form Title: Week #/Year (W1/2010) (Timeline)
      * Display Form ID: timeline.aaA81lMifn6q
@@ -1761,7 +1761,7 @@ export const TimelineWeekSunSatYear: { [df: string]: IAttribute } = {
  * Display Form ID: timeline.day.in.year
  */
 export const TimelineDayOfYear: IAttribute = newAttribute("timeline.abE81lMifn6q");
-export const TimelineDayOfWeekSunSat: { [df: string]: IAttribute } = {
+export const TimelineDayOfWeekSunSat = {
     /**
      * Display Form Title: Short (Sun) (Timeline)
      * Display Form ID: timeline.abK81lMifn6q
@@ -1801,4 +1801,4 @@ export const TimelineYear: IAttribute = newAttribute("timeline.aag81lMifn6q");
  * Display Form ID: timeline.month.in.quarter
  */
 export const TimelineMonthOfQuarter: IAttribute = newAttribute("timeline.aby81lMifn6q");
-export const Insights: { [title: string]: string } = {};
+export const Insights = {};
