@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import ArithmeticMeasureSumExample from "../components/ArithmeticMeasureSumExample";
-import ArithmeticMeasureMultiplicationExample from "../components/ArithmeticMeasureMultiplicationExample";
-import ArithmeticMeasureRatioExample from "../components/ArithmeticMeasureRatioExample";
-import ArithmeticMeasureChangeExample from "../components/ArithmeticMeasureChangeExample";
-import ArithmeticMeasureDrillingExample from "../components/ArithmeticMeasureDrillingExample";
+import { ArithmeticMeasureSumExample } from "../components/ArithmeticMeasureSumExample";
+import { ArithmeticMeasureMultiplicationExample } from "../components/ArithmeticMeasureMultiplicationExample";
+import { ArithmeticMeasureRatioExample } from "../components/ArithmeticMeasureRatioExample";
+import { ArithmeticMeasureChangeExample } from "../components/ArithmeticMeasureChangeExample";
+import { ArithmeticMeasureDrillingExample } from "../components/ArithmeticMeasureDrillingExample";
 
 import ArithmeticMeasureSumExampleSrc from "!raw-loader!../components/ArithmeticMeasureSumExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ArithmeticMeasureMultiplicationExampleSrc from "!raw-loader!../components/ArithmeticMeasureMultiplicationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
@@ -16,7 +16,7 @@ import ArithmeticMeasureRatioExampleSrc from "!raw-loader!../components/Arithmet
 import ArithmeticMeasureChangeExampleSrc from "!raw-loader!../components/ArithmeticMeasureChangeExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import ArithmeticMeasureDrillingExampleSrc from "!raw-loader!../components/ArithmeticMeasureDrillingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const ArithmeticMeasure = () => (
+export const ArithmeticMeasure: React.FC = () => (
     <div>
         <h1>Arithmetic Measures</h1>
         <p>

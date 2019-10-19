@@ -25,7 +25,7 @@ import PivotTableDynamic from "./PivotTableDynamic";
 import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
-import ArithmeticMeasure from "./ArithmeticMeasure";
+import ArithmeticMeasures from "./ArithmeticMeasures";
 import Export from "./Export";
 import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
@@ -90,7 +90,7 @@ export const sideNavigationRoutes = [
     //     title: "Attribute Filter Components",
     //     Component: AttributeFilter,
     // },
-    // { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasure },
+    { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasures },
     { path: "/execute", title: "Execute Component", Component: Execute },
     {
         path: "/advanced",
@@ -120,7 +120,7 @@ export const hiddenPaths = [
     { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
-    { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
 
