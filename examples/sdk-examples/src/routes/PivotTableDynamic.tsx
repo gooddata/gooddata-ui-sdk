@@ -3,7 +3,7 @@ import React from "react";
 
 import PivotTableDynamicExample from "../components/PivotTableDynamicExample";
 
-export const PivotTableDynamic = () => (
+export const PivotTableDynamic: React.FC = () => (
     <div>
         <h1>Pivot Table Dynamic example</h1>
 

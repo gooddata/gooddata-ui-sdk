@@ -19,9 +19,9 @@ import DrillWithExternalData from "./DrillWithExternalData";
 import PivotTableDrilling from "./PivotTableDrilling";
 import Registration from "./Registration";
 import { Login } from "../components/Login/Login";
-// import PivotTable from "./PivotTable";
-// import PivotTableDemo from "./PivotTableDemo";
-// import PivotTableDynamic from "./PivotTableDynamic";
+import { PivotTable } from "./PivotTable";
+import { PivotTableDemo } from "./PivotTableDemo";
+import PivotTableDynamic from "./PivotTableDynamic";
 import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
@@ -71,7 +71,7 @@ const NextRoutes = props => WithSubRoutes({ ...props, subRoutes: nextRoutes });
 
 export const sideNavigationRoutes = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
-    // { path: "/pivot-table", title: "Pivot Table", Component: PivotTableDemo },
+    { path: "/pivot-table", title: "Pivot Table", Component: PivotTableDemo },
     {
         path: "/visualization",
         pathMatch: "full",
@@ -119,8 +119,8 @@ export const sideNavigationRoutes = [
 export const hiddenPaths = [
     { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
-    // { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
-    // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
+    { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
     { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
 
@@ -141,7 +141,7 @@ export const routes = [
     ...advancedUseCasesRoutes,
     // ...drillingUseCasesRoutes,
     // ...nextRoutes,
-    // ...hiddenPaths,
+    ...hiddenPaths,
     // ...backendInfoRoutes,
 ];
 
