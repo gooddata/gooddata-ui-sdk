@@ -1,7 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-/* eslint-disable react/jsx-closing-tag-location */
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
 /* We do not actually store gender, avatar nor startDate in the platform, only the name.
  * We enrich employee data with custom data to showcase a trivial
@@ -130,13 +128,13 @@ const employeeAdditionalInfo = [
     },
 ];
 
-export const EmployeeCard = ({ name }) => {
+export const EmployeeCard = ({ name }: { name: string }) => {
     const { avatarUrl, gender, startDate } = employeeAdditionalInfo.find(info => info.name === name) || {};
 
     return (
         <div className="employee-card">
             {/* language=CSS */}
-            <style jsx>{`
+            <style jsx={true}>{`
                 .rounded-avatar {
                     object-fit: cover;
                     border-radius: 50%;
@@ -188,8 +186,4 @@ export const EmployeeCard = ({ name }) => {
             </div>
         </div>
     );
-};
-
-EmployeeCard.propTypes = {
-    name: PropTypes.string.isRequired,
 };

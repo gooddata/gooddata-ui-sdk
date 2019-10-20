@@ -5,7 +5,7 @@ import Sorting from "./Sorting";
 import TimeOverTimeComparison from "./TimeOverTimeComparison";
 import BasicComponents from "./BasicComponents";
 import ComboChart from "./ComboChart";
-import GlobalFilters from "./GlobalFilters";
+import { GlobalFilters } from "./GlobalFilters";
 import Execute from "./Execute";
 import BucketExecutor from "./BucketExecutor";
 // import DatePicker from "./DatePicker";
@@ -30,7 +30,7 @@ import Export from "./Export";
 import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 export const advancedUseCasesRoutes = [
-    // { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
+    { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
     // { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },

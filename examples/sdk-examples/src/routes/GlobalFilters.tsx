@@ -1,15 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-/* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import GlobalFiltersExample from "../components/GlobalFiltersExample";
-import GlobalFiltersExampleSRC from "!raw-loader!../components/GlobalFiltersExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import { GlobalFiltersExample } from "../components/GlobalFiltersExample/GlobalFiltersExample";
+import GlobalFiltersExampleSRC from "!raw-loader!../components/GlobalFiltersExample/GlobalFiltersExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const GlobalFilters = () => (
+export const GlobalFilters: React.FC = () => (
     <div className="example-wrapper">
         {/* language=CSS */}
-        <style jsx>{`
+        <style jsx={true}>{`
             .example-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -35,5 +34,3 @@ export const GlobalFilters = () => (
         <ExampleWithSource for={GlobalFiltersExample} source={GlobalFiltersExampleSRC} />
     </div>
 );
-
-export default GlobalFilters;

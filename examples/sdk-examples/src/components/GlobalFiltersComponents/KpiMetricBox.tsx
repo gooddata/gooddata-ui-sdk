@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
-/* eslint-disable react/jsx-closing-tag-location */
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
-export const KpiMetricBox = ({ title, children }) => {
+interface IKpieMetricBoxProps {
+    title: string;
+    children: React.ReactNode;
+}
+
+export const KpiMetricBox = ({ title, children }: IKpieMetricBoxProps) => {
     return (
         <div className="kpi-metric">
             {/* language=CSS */}
-            <style jsx>{`
+            <style jsx={true}>{`
                 .kpi-metric {
                     min-width: 200px;
                     text-align: center;
@@ -43,9 +46,4 @@ export const KpiMetricBox = ({ title, children }) => {
             ) : null}
         </div>
     );
-};
-
-KpiMetricBox.propTypes = {
-    title: PropTypes.string.isRequired,
-    children: PropTypes.any.isRequired,
 };
