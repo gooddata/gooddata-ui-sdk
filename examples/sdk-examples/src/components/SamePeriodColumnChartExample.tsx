@@ -14,6 +14,14 @@ import {
 } from "../utils/fixtures";
 import { useBackend } from "../context/auth";
 
+const totalSales = newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales"));
+const totalSalesYearAgo = newPopMeasure(
+    totalSales.measure.localIdentifier,
+    yearDateDataSetAttributeIdentifier,
+    m => m.alias("$ Total Sales - SP year ago"),
+);
+const viewBy = newAttribute(quarterDateIdentifier);
+
 const style = { height: 300 };
 
 export const SamePeriodColumnChartExample: React.FC = () => {
@@ -24,13 +32,8 @@ export const SamePeriodColumnChartExample: React.FC = () => {
             <ColumnChart
                 backend={backend}
                 workspace={projectId}
-                measures={[
-                    newPopMeasure("totalSales", yearDateDataSetAttributeIdentifier, m =>
-                        m.alias("$ Total Sales - SP year ago"),
-                    ),
-                    newMeasure(totalSalesIdentifier, m => m.alias("$ Total Sales")),
-                ]}
-                viewBy={newAttribute(quarterDateIdentifier)}
+                measures={[totalSales, totalSalesYearAgo]}
+                viewBy={viewBy}
             />
         </div>
     );

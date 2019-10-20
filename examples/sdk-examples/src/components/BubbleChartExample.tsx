@@ -9,7 +9,7 @@ import {
     projectId,
     franchiseFeesIdentifier,
     franchisedSalesIdentifier,
-    averageCheckSizeByServer,
+    averageCheckSizeByServerIdentifier,
     locationResortIdentifier,
 } from "../utils/fixtures";
 import { useBackend } from "../context/auth";
@@ -18,7 +18,7 @@ const xMeasure = newMeasure(franchiseFeesIdentifier, m => m.format("#,##0"));
 
 const yMeasure = newMeasure(franchisedSalesIdentifier, m => m.format("#,##0"));
 
-const size = newMeasure(averageCheckSizeByServer);
+const size = newMeasure(averageCheckSizeByServerIdentifier);
 
 const locationResort = newAttribute(locationResortIdentifier);
 
