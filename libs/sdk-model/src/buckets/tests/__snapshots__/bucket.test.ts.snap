@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newBucket should create bucket with mix of attributes and measures 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id.name",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+  ],
+  "localIdentifier": "mixedBucket",
+}
+`;
+
+exports[`newBucket should create bucket with multiple attributes 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id.name",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+  ],
+  "localIdentifier": "attributeBucket",
+}
+`;
+
+exports[`newBucket should create bucket with multiple measures 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+  ],
+  "localIdentifier": "measureBucket",
+}
+`;
+
+exports[`newBucket should create bucket with single attribute 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id",
+        },
+        "localIdentifier": "a_label.account.id",
+      },
+    },
+  ],
+  "localIdentifier": "attributeBucket",
+}
+`;
+
+exports[`newBucket should create bucket with single measure 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "localIdentifier": "measureBucket",
+}
+`;
+
+exports[`newBucket should create bucket with totals 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id.name",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+  ],
+  "localIdentifier": "totalsBucket",
+  "totals": Array [
+    Object {
+      "attributeIdentifier": "a_label.account.id.name",
+      "measureIdentifier": "m_afSEwRwdbMeQ",
+      "type": "sum",
+    },
+  ],
+}
+`;
+
+exports[`newBucket should create bucket with totals when items not in bucket 1`] = `
+Object {
+  "items": Array [],
+  "localIdentifier": "totalsBucket",
+  "totals": Array [
+    Object {
+      "attributeIdentifier": "a_label.account.id.name",
+      "measureIdentifier": "m_afSEwRwdbMeQ",
+      "type": "sum",
+    },
+  ],
+}
+`;
+
+exports[`newBucket should create empty bucket 1`] = `
+Object {
+  "items": Array [],
+  "localIdentifier": "emptyBucket",
+}
+`;
