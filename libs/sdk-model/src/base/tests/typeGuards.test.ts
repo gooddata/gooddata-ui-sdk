@@ -5,6 +5,7 @@ import { isDimension, MeasureGroupIdentifier, newDimension } from "../dimension"
 import { Won } from "../../../__mocks__/model";
 import { isIdentifierRef, isLocalIdRef, isUriRef } from "../index";
 import { isAttributeLocator, isAttributeSort, isMeasureLocator, isMeasureSort } from "../sort";
+import { isTotal } from "../totals";
 
 describe("dimension type guard", () => {
     describe("isDimension", () => {
@@ -119,6 +120,18 @@ describe("dimension type guard", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isMeasureLocator(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isTotal", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "measure", Won],
+            [true, "total", { type: "sum", measureIdentifier: "localId1", attributeIdentifier: "localId2" }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isTotal(input)).toBe(expectedResult);
         });
     });
 });
