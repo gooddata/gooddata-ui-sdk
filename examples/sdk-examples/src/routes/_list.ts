@@ -2,7 +2,7 @@
 import AboutThisProject from "./AboutThisProject";
 import Sorting from "./Sorting";
 import TimeOverTimeComparison from "./TimeOverTimeComparison";
-import BasicComponents from "./BasicComponents";
+import { BasicComponents } from "./BasicComponents";
 import ComboChart from "./ComboChart";
 import { GlobalFilters } from "./GlobalFilters";
 import Execute from "./Execute";
@@ -23,12 +23,12 @@ import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasures from "./ArithmeticMeasures";
-import Export from "./Export";
 import VisualizationByIdentifier from "./VisualizationByIdentifier";
 
 // import AttributeFilter from "./AttributeFilter";
 // import ParentFilter from "./ParentFilter";
 // import PivotTableDynamic from "./PivotTableDynamic";
+// import Export from "./Export";
 
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
