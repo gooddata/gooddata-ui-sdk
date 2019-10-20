@@ -326,7 +326,7 @@ export enum ComputeRatioRule {
  * @returns new list with modified measures; the original list and measures in it are left intact
  * @public
  */
-export function computeRatioRules<T extends AttributeOrMeasure>(
+export function applyRatioRule<T extends AttributeOrMeasure>(
     items: T[],
     rule: ComputeRatioRule = ComputeRatioRule.SINGLE_MEASURE_ONLY,
 ): T[] {
@@ -338,7 +338,9 @@ export function computeRatioRules<T extends AttributeOrMeasure>(
         return items;
     }
 
-    if (items.length > 1 || rule === ComputeRatioRule.NEVER) {
+    const numberOfMeasures = items.filter(isMeasure).length;
+
+    if (numberOfMeasures > 1 || rule === ComputeRatioRule.NEVER) {
         return items.map(disableComputeRatio);
     }
 

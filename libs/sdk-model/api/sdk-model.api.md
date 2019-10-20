@@ -14,6 +14,9 @@ export const anyBucket: BucketPredicate;
 export const anyMeasure: MeasurePredicate;
 
 // @public
+export function applyRatioRule<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
+
+// @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
     constructor(measureIds: string[], operator: ArithmeticMeasureOperator);
 }
@@ -131,9 +134,6 @@ export enum ComputeRatioRule {
     NEVER = 0,
     SINGLE_MEASURE_ONLY = 1
 }
-
-// @public
-export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];

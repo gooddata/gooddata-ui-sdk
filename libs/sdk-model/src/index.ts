@@ -155,7 +155,7 @@ export {
     bucketTotals,
     bucketItems,
     BucketPredicate,
-    computeRatioRules,
+    applyRatioRule,
     ComputeRatioRule,
 } from "./buckets";
 
