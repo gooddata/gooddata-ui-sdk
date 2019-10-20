@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import identity = require("lodash/identity");
+import cloneDeep = require("lodash/cloneDeep");
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
@@ -10,8 +11,10 @@ import {
     IPreviousPeriodDateDataSet,
     IPreviousPeriodMeasureDefinition,
     MeasureAggregation,
+    measureIdentifier,
 } from ".";
 import { IFilter } from "../filter";
+import { Identifier } from "../base";
 
 /**
  * Simplified Previous Period Data DataSet specification
@@ -29,8 +32,10 @@ export interface IPreviousPeriodDateDataSetSimple {
 export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
     public measure: IMeasure<T>["measure"];
     protected customLocalId: boolean = false;
+
     constructor() {
-        this.measure = {} as any; // definition is added in subclass
+        // definition is added in subclass
+        this.measure = {} as any;
     }
 
     public alias = (alias: string) => {
@@ -64,14 +69,24 @@ export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMe
  * @public
  */
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
-    constructor(private readonly measureId: string) {
+    private readonly measureId: Identifier;
+
+    constructor(measureOrId: IMeasure<IMeasureDefinition> | string) {
         super();
-        this.measure.definition = {
-            measureDefinition: {
-                item: { identifier: measureId },
-            },
-        };
-        this.measure.localIdentifier = `m_${measureId}`;
+
+        if (typeof measureOrId === "string") {
+            this.measure.definition = {
+                measureDefinition: {
+                    item: { identifier: measureOrId },
+                },
+            };
+            this.measure.localIdentifier = `m_${measureOrId}`;
+            this.measureId = measureOrId;
+        } else {
+            this.measure = cloneDeep(measureOrId.measure);
+            this.customLocalId = true;
+            this.measureId = measureIdentifier(measureOrId)!;
+        }
     }
 
     public aggregation = (aggregation: MeasureAggregation) => {
@@ -168,6 +183,26 @@ export function newMeasure(
     modifications: MeasureModifications<MeasureBuilder> = identity,
 ): IMeasure<IMeasureDefinition> {
     const builder = new MeasureBuilder(measureId);
+
+    return modifications(builder).build();
+}
+
+/**
+ * Creates a new simple measure by applying modifications on top of an existing measure.
+ *
+ * This operation is immutable and will not alter the input measure.
+ *
+ * @param measure - measure to use as template for the new measure
+ * @param modifications - modifications to apply
+ * @returns new instance
+ * @public
+ */
+export function modifyMeasure(
+    measure: IMeasure<IMeasureDefinition>,
+    modifications: MeasureModifications<MeasureBuilder> = identity,
+): IMeasure<IMeasureDefinition> {
+    const builder = new MeasureBuilder(measure);
+
     return modifications(builder).build();
 }
 
@@ -184,6 +219,7 @@ export function newArithmeticMeasure(
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
 ): IMeasure<IArithmeticMeasureDefinition> {
     const builder = new ArithmeticMeasureBuilder(measureIds, operator);
+
     return modifications(builder).build();
 }
 
@@ -200,6 +236,7 @@ export function newPopMeasure(
     modifications: MeasureModifications<PoPMeasureBuilder> = identity,
 ): IMeasure<IPoPMeasureDefinition> {
     const builder = new PoPMeasureBuilder(measureId, popAttributeId);
+
     return modifications(builder).build();
 }
 
@@ -216,5 +253,6 @@ export function newPreviousPeriodMeasure(
     modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
     const builder = new PreviousPeriodMeasureBuilder(measureId, dateDataSets);
+
     return modifications(builder).build();
 }

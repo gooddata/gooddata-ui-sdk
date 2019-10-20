@@ -654,7 +654,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 
 // @public
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
-    constructor(measureId: string);
+    constructor(measureOrId: IMeasure<IMeasureDefinition> | string);
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
@@ -718,6 +718,9 @@ export function measureTitle(measure: IMeasure): string | undefined;
 
 // @public
 export function measureUri(measure: IMeasure): string | undefined;
+
+// @public
+export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter;

@@ -131,8 +131,9 @@ export {
     PoPMeasureBuilder,
     PreviousPeriodMeasureBuilder,
     MeasureBuilderBase,
-    newArithmeticMeasure,
     newMeasure,
+    modifyMeasure,
+    newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "./measure/factory";

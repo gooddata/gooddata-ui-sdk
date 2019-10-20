@@ -1,12 +1,19 @@
 // (C) 2019 GoodData Corporation
 import { newPositiveAttributeFilter } from "../../filter/factory";
-import { newArithmeticMeasure, newMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
+import {
+    modifyMeasure,
+    newArithmeticMeasure,
+    newMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "../factory";
 import {
     IMeasure,
     IMeasureDefinition,
     IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    measureId,
 } from "..";
 
 describe("measure factories", () => {
@@ -147,6 +154,51 @@ describe("measure factories", () => {
             expect(
                 newMeasure("foo", m => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
             ).toEqual(expected);
+        });
+    });
+
+    describe("modifyMeasure", () => {
+        const ExistingMeasure = newMeasure("measure1", m => m.localId("measure1"));
+
+        it("should not modify input measure", () => {
+            modifyMeasure(ExistingMeasure, m => m.localId("measure2"));
+
+            expect(measureId(ExistingMeasure)).toEqual("measure1");
+        });
+
+        it("should create new measure with modified local id", () => {
+            const expected: IMeasure<IMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "measure1",
+                            },
+                        },
+                    },
+                    localIdentifier: "measure2",
+                },
+            };
+
+            expect(modifyMeasure(ExistingMeasure, m => m.localId("measure2"))).toEqual(expected);
+        });
+
+        it("should create new measure with modified aggregation and same local id", () => {
+            const expected: IMeasure<IMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "measure1",
+                            },
+                            aggregation: "min",
+                        },
+                    },
+                    localIdentifier: "measure1",
+                },
+            };
+
+            expect(modifyMeasure(ExistingMeasure, m => m.aggregation("min"))).toEqual(expected);
         });
     });
 
