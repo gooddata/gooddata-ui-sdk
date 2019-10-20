@@ -8,7 +8,7 @@ import ComboChart from "./ComboChart";
 import { GlobalFilters } from "./GlobalFilters";
 import Execute from "./Execute";
 import BucketExecutor from "./BucketExecutor";
-// import DatePicker from "./DatePicker";
+import { DatePicker } from "./DatePicker";
 import ResponsiveChart from "./ResponsiveChart";
 import DynamicMeasures from "./DynamicMeasures";
 import CustomLegend from "./CustomLegend";
@@ -32,7 +32,7 @@ import VisualizationByIdentifier from "./VisualizationByIdentifier";
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
     { path: "/advanced/dynamic-measures", title: "Dynamic Measures", Component: DynamicMeasures },
-    // { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
+    { path: "/advanced/date-picker", title: "Date Picker", Component: DatePicker },
     { path: "/advanced/responsive", title: "Responsive Chart", Component: ResponsiveChart },
     { path: "/advanced/custom-legend", title: "Custom Legend", Component: CustomLegend },
     // { path: "/advanced/parent-filter", title: "Parent Filter", Component: ParentFilter },

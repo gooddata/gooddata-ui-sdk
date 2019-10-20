@@ -2,13 +2,13 @@
 import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import DatePickerExample from "../components/DatePickerExample";
-import MonthPickerExample from "../components/MonthPickerExample";
+import { DatePickerExample } from "../components/DatePickerExample";
+import { MonthPickerExample } from "../components/MonthPickerExample";
 
 import DatePickerExampleSRC from "!raw-loader!../components/DatePickerExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import MonthPickerExampleSRC from "!raw-loader!../components/MonthPickerExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
-export const DatePicker = () => (
+export const DatePicker: React.FC = () => (
     <div>
         <h1>Date Picker</h1>
 
@@ -29,5 +29,3 @@ export const DatePicker = () => (
         <ExampleWithSource for={MonthPickerExample} source={MonthPickerExampleSRC} />
     </div>
 );
-
-export default DatePicker;
