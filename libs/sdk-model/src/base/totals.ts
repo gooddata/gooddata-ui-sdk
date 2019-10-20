@@ -1,28 +1,43 @@
 // (C) 2019 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
-/**
- * TODO: SDK8: Add docs
- *
- * @public
- */
+import { IMeasure, measureId } from "../measure";
+import { attributeLocalId, IAttribute } from "../attribute";
+import invariant from "ts-invariant";
+import { Identifier } from "./index";
 
 /**
- * TODO: SDK8: Add docs
+ * Supported types of totals.
  *
  * @public
  */
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
 
 /**
- * TODO: SDK8: Add docs
+ * Describes type and granularity for calculation of Totals. Total is calculated for particular measure
+ * and on some granularity - specified by an attribute by which the measure is sliced by.
  *
  * @public
  */
 export interface ITotal {
+    /**
+     * Type of total calculation.
+     */
     type: TotalType;
-    measureIdentifier: string;
-    attributeIdentifier: string;
+
+    /**
+     * Local identifier of measure for which to calculate total.
+     */
+    measureIdentifier: Identifier;
+
+    /**
+     * Local identifier of attribute - specifies granularity of the calculation.
+     */
+    attributeIdentifier: Identifier;
+
+    /**
+     * Optionally specifies custom name for the calculated total. This will be included in result metadata.
+     */
     alias?: string;
 }
 
@@ -31,7 +46,7 @@ export interface ITotal {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type-guard checking whether an object is a Total.
  *
  * @public
  */
@@ -44,10 +59,43 @@ export function isTotal(obj: any): obj is ITotal {
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Creates a new total.
+ *
+ * @param type - type of total, one of the enumerated types
+ * @param measureOrId - measure instance OR measure local identifier
+ * @param attributeOrId - attribute instance OR attribute local identifier
+ * @param alias - optionally provide custom name (alias) for the total; this will be included in the computed results
+ * @returns new total
+ * @public
+ */
+export function newTotal(
+    type: TotalType,
+    measureOrId: IMeasure | string,
+    attributeOrId: IAttribute | string,
+    alias?: string,
+): ITotal {
+    invariant(type, "total type must be specified");
+    invariant(measureOrId, "measure or measure local id must be specified");
+    invariant(attributeOrId, "attribute or attribute local id must be specified");
+
+    const measureIdentifier = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
+    const attributeIdentifier =
+        typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
+    const aliasProp = alias ? { alias } : {};
+
+    return {
+        type,
+        measureIdentifier,
+        attributeIdentifier,
+        ...aliasProp,
+    };
+}
+
+/**
+ * Tests whether total instance represents a native total = a roll-up total.
  *
  * @public
  */
 export function totalIsNative(total: ITotal): boolean {
-    return total.type === "nat";
+    return total ? total.type === "nat" : false;
 }

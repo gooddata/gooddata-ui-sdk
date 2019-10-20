@@ -37,7 +37,7 @@ export {
     dimensionSetTotals,
 } from "./base/dimension";
 
-export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
+export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./base/totals";
 
 export {
     SortDirection,

@@ -608,13 +608,9 @@ export function isUriRef(obj: any): obj is UriRef;
 
 // @public
 export interface ITotal {
-    // (undocumented)
     alias?: string;
-    // (undocumented)
-    attributeIdentifier: string;
-    // (undocumented)
-    measureIdentifier: string;
-    // (undocumented)
+    attributeIdentifier: Identifier;
+    measureIdentifier: Identifier;
     type: TotalType;
 }
 
@@ -770,6 +766,9 @@ export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPrevi
 
 // @public
 export function newRelativeDateFilter(dateDataSetId: string, granularity: string, from: number, to: number): IRelativeDateFilter;
+
+// @public
+export function newTotal(type: TotalType, measureOrId: IMeasure | string, attributeOrId: IAttribute | string, alias?: string): ITotal;
 
 // @public
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
