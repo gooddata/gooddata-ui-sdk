@@ -8,15 +8,7 @@ import {
     newTwoDimensional,
 } from "../base/dimension";
 import { SortItem } from "../base/sort";
-import {
-    AttributeOrMeasure,
-    bucketAttributes,
-    bucketMeasures,
-    bucketsAttributes,
-    bucketsIsEmpty,
-    IBucket,
-    bucketsMeasures,
-} from "../buckets";
+import { AttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
 import { IFilter } from "../filter";
 import { IInsight, insightBuckets, insightFilters, insightSorts } from "../insight";
 import {
@@ -29,6 +21,7 @@ import {
 } from "./index";
 import isEmpty = require("lodash/isEmpty");
 import { isMeasure } from "../measure";
+import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
 
 /**
  * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the

@@ -87,6 +87,9 @@ export function bucketIsEmpty(bucket: IBucket): boolean;
 export function bucketItems(bucket: IBucket): AttributeOrMeasure[];
 
 // @public
+export function bucketMeasure(bucket: IBucket, idOrFun?: string | MeasurePredicate): IMeasure | undefined;
+
+// @public
 export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): IMeasure[];
 
 // @public
@@ -102,10 +105,10 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[];
 export function bucketsFind(buckets: IBucket[], idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
-export function bucketsFindAttribute(buckets: IBucket[], idOrFun: string | AttributePredicate): AttributeInBucket | undefined;
+export function bucketsFindAttribute(buckets: IBucket[], idOrFun?: string | AttributePredicate): AttributeInBucket | undefined;
 
 // @public
-export function bucketsFindMeasure(buckets: IBucket[], idOrFun: string | MeasurePredicate): MeasureInBucket | undefined;
+export function bucketsFindMeasure(buckets: IBucket[], idOrFun?: string | MeasurePredicate): MeasureInBucket | undefined;
 
 // @public
 export function bucketsIsEmpty(buckets: IBucket[]): boolean;
@@ -732,7 +735,7 @@ export function newAttributeLocator(attributeOrId: IAttribute | string, element:
 export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
 
 // @public
-export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
+export function newBucket(localId: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
 export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;

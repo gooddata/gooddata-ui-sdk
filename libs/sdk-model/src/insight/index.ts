@@ -2,20 +2,18 @@
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
+import { anyBucket, BucketPredicate, IBucket } from "../buckets";
+import { IFilter } from "../filter";
+import { IMeasure, measureId } from "../measure";
+import { attributeLocalId, IAttribute } from "../attribute";
+import { ITotal } from "../base/totals";
 import {
-    anyBucket,
-    BucketPredicate,
     bucketsAttributes,
     bucketsById,
     bucketsFind,
     bucketsMeasures,
     bucketsTotals,
-    IBucket,
-} from "../buckets";
-import { IFilter } from "../filter";
-import { IMeasure, measureId } from "../measure";
-import { attributeLocalId, IAttribute } from "../attribute";
-import { ITotal } from "../base/totals";
+} from "../buckets/bucketArray";
 
 /**
  * TODO: SDK8: add public doc

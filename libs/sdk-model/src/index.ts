@@ -149,22 +149,26 @@ export {
     bucketIsEmpty,
     bucketAttributes,
     bucketAttribute,
+    bucketMeasure,
     bucketMeasures,
     bucketTotals,
     bucketItems,
-    bucketsAttributes,
-    bucketsMeasures,
-    bucketsById,
-    bucketsIsEmpty,
-    bucketsItems,
-    bucketsFind,
-    bucketsFindAttribute,
-    bucketsFindMeasure,
-    bucketsTotals,
-    ComputeRatioRule,
-    computeRatioRules,
     BucketPredicate,
+    computeRatioRules,
+    ComputeRatioRule,
 } from "./buckets";
+
+export {
+    bucketsFind,
+    bucketsMeasures,
+    bucketsIsEmpty,
+    bucketsAttributes,
+    bucketsFindMeasure,
+    bucketsById,
+    bucketsFindAttribute,
+    bucketsItems,
+    bucketsTotals,
+} from "./buckets/bucketArray";
 
 export {
     IExecutionDefinition,
