@@ -1,15 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-/* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import ExampleWithSource from "../components/utils/ExampleWithSource";
 
-import DrillWithExternalDataExample from "../components/DrillWithExternalDataExample";
-import DrillWithExternalDataExampleSRC from "!raw-loader!../components/DrillWithExternalDataExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import { DrillWithExternalDataExample } from "../components/DrillWithExternalDataExample/DrillWithExternalDataExample";
+import DrillWithExternalDataExampleSRC from "!raw-loader!../components/DrillWithExternalDataExample/DrillWithExternalDataExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const DrillWithExternalData = () => (
     <div className="example-wrapper">
         {/* language=CSS */}
-        <style jsx>{`
+        <style jsx={true}>{`
             .example-wrapper {
                 display: flex;
                 flex-direction: column;
@@ -33,5 +32,3 @@ export const DrillWithExternalData = () => (
         <ExampleWithSource for={DrillWithExternalDataExample} source={DrillWithExternalDataExampleSRC} />
     </div>
 );
-
-export default DrillWithExternalData;

@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import AboutThisProject from "./AboutThisProject";
-import AttributeFilter from "./AttributeFilter";
 import Sorting from "./Sorting";
 import TimeOverTimeComparison from "./TimeOverTimeComparison";
 import BasicComponents from "./BasicComponents";
@@ -12,22 +11,24 @@ import { DatePicker } from "./DatePicker";
 import ResponsiveChart from "./ResponsiveChart";
 import DynamicMeasures from "./DynamicMeasures";
 import CustomLegend from "./CustomLegend";
-import ParentFilter from "./ParentFilter";
 import LoadingAndError from "./LoadingAndError";
 import MultipleDomains from "./MultipleDomains";
-import DrillWithExternalData from "./DrillWithExternalData";
-import PivotTableDrilling from "./PivotTableDrilling";
+import { DrillWithExternalData } from "./DrillWithExternalData";
+import { PivotTableDrilling } from "./PivotTableDrilling";
 import Registration from "./Registration";
 import { Login } from "../components/Login/Login";
 import { PivotTable } from "./PivotTable";
 import { PivotTableDemo } from "./PivotTableDemo";
-import PivotTableDynamic from "./PivotTableDynamic";
 import AggregationTest from "./AggregationTest";
 import WithSubRoutes from "./WithSubRoutes";
 import ChartConfiguration from "./ChartConfiguration";
 import ArithmeticMeasures from "./ArithmeticMeasures";
 import Export from "./Export";
 import VisualizationByIdentifier from "./VisualizationByIdentifier";
+
+// import AttributeFilter from "./AttributeFilter";
+// import ParentFilter from "./ParentFilter";
+// import PivotTableDynamic from "./PivotTableDynamic";
 
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
@@ -100,20 +101,20 @@ export const sideNavigationRoutes = [
         Component: AdvancedUseCasesRoutes,
     },
     // { path: "/export", title: "Export", Component: Export },
-    // {
-    //     path: "/drilling",
-    //     pathMatch: "full",
-    //     redirectTo: drillingUseCasesRoutes[0].path,
-    //     title: "Drilling",
-    //     Component: DrillingUseCasesRoutes,
-    // },
-    // {
-    //     path: "/next",
-    //     pathMatch: "full",
-    //     redirectTo: nextRoutes[0].path,
-    //     title: "Next",
-    //     Component: NextRoutes,
-    // },
+    {
+        path: "/drilling",
+        pathMatch: "full",
+        redirectTo: drillingUseCasesRoutes[0].path,
+        title: "Drilling",
+        Component: DrillingUseCasesRoutes,
+    },
+    {
+        path: "/next",
+        pathMatch: "full",
+        redirectTo: nextRoutes[0].path,
+        title: "Next",
+        Component: NextRoutes,
+    },
 ];
 
 export const hiddenPaths = [
@@ -139,10 +140,10 @@ export const routes = [
     ...sideNavigationRoutes,
     ...visualizationUseCasesRoutes,
     ...advancedUseCasesRoutes,
-    // ...drillingUseCasesRoutes,
-    // ...nextRoutes,
+    ...drillingUseCasesRoutes,
+    ...nextRoutes,
     ...hiddenPaths,
-    // ...backendInfoRoutes,
+    ...backendInfoRoutes,
 ];
 
 const components = routes.map(r => r.Component);
