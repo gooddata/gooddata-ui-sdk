@@ -3,16 +3,16 @@ import React, { useEffect } from "react";
 import ReactGA from "react-ga";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 
-import { CustomError } from "./components/utils/CustomError";
-import CustomLoading from "./components/utils/CustomLoading";
-import Header from "./components/utils/Header";
-import Menu from "./components/utils/Menu";
+import { CustomError } from "./components/CustomError";
+import CustomLoading from "./components/CustomLoading";
+import Header from "./components/Header";
+import Menu from "./components/Menu";
 
 import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./routes/_list";
 
 import { useAuth, AuthStatus } from "./context/auth";
 
-import { BASEPATH } from "./constants";
+import { BASEPATH } from "./constants/env";
 import { history } from "./history";
 
 export const App: React.FC = () => {

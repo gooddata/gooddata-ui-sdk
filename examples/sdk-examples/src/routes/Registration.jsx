@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import RegistrationComponent from "../components/utils/Registration";
+import RegistrationComponent from "../components/Registration";
 
 export const Registration = props => (
     <div>

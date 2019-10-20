@@ -14,7 +14,7 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
     projectId,
-} from "../utils/fixtures";
+} from "../constants/fixtures";
 
 const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum").localId(totalSalesIdentifier));
 

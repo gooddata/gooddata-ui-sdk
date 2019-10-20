@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import ExampleWithSource from "../components/utils/ExampleWithSource";
+import ExampleWithSource from "../components/ExampleWithSource";
 
-import BucketExecutorExample from "../components/BucketExecutorExample";
+import BucketExecutorExample from "../examples/BucketExecutorExample";
 import BucketExecutorExampleSRC from "!raw-loader!../components/BucketExecutorExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 
 export const BucketExecutor = () => (
