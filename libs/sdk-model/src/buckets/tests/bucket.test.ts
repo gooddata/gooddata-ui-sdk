@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import {
+    applyRatioRule,
     AttributeOrMeasure,
     bucketAttribute,
     bucketAttributes,
@@ -9,6 +10,7 @@ import {
     bucketMeasure,
     bucketMeasures,
     bucketTotals,
+    ComputeRatioRule,
     newBucket,
 } from "../index";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
@@ -16,6 +18,7 @@ import { InvariantError } from "ts-invariant";
 import { ITotal, newTotal } from "../../base/totals";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
 import { idMatchMeasure, IMeasure, measureId } from "../../measure";
+import { modifyMeasure } from "../..";
 
 describe("newBucket", () => {
     const Scenarios: Array<[string, any, any[]]> = [
@@ -200,5 +203,67 @@ describe("bucketTotals", () => {
 
     it.each(Scenarios)("should return %s", (_desc, bucketArg, expectedResult) => {
         expect(bucketTotals(bucketArg)).toEqual(expectedResult);
+    });
+});
+
+describe("applyRatioRule", () => {
+    const MeasureWithRatio1 = modifyMeasure(Won, m => m.ratio());
+    const MeasureWithRatio2 = modifyMeasure(Velocity.Avg, m => m.ratio());
+
+    const Scenarios: Array<[string, any, any, any]> = [
+        ["empty array if undefined input", undefined, undefined, []],
+        ["empty array if null input", null, undefined, []],
+        [
+            "apply SINGLE rule by default",
+            [MeasureWithRatio1],
+            ComputeRatioRule.SINGLE_MEASURE_ONLY,
+            [MeasureWithRatio1],
+        ],
+        [
+            "keep all ratios if rule is ALWAYS",
+            [MeasureWithRatio1, MeasureWithRatio2],
+            ComputeRatioRule.ANY_MEASURE,
+            [MeasureWithRatio1, MeasureWithRatio2],
+        ],
+        [
+            "reset all ratios if rule is NEVER",
+            [MeasureWithRatio1, MeasureWithRatio2],
+            ComputeRatioRule.NEVER,
+            [Won, Velocity.Avg],
+        ],
+        [
+            "reset all ratios if rule is SINGLE and there are two ratio measures",
+            [MeasureWithRatio1, MeasureWithRatio2],
+            ComputeRatioRule.SINGLE_MEASURE_ONLY,
+            [Won, Velocity.Avg],
+        ],
+        [
+            "keep ratio of single ratio measure",
+            [MeasureWithRatio1],
+            ComputeRatioRule.SINGLE_MEASURE_ONLY,
+            [MeasureWithRatio1],
+        ],
+        [
+            "keep ratio of single ratio measure when mixed with attributes",
+            [MeasureWithRatio1, Account.Name],
+            ComputeRatioRule.SINGLE_MEASURE_ONLY,
+            [MeasureWithRatio1, Account.Name],
+        ],
+        [
+            "retain attributes as-is when SINGLE rule",
+            [Activity.Subject, MeasureWithRatio1, Account.Name],
+            ComputeRatioRule.SINGLE_MEASURE_ONLY,
+            [Activity.Subject, MeasureWithRatio1, Account.Name],
+        ],
+        [
+            "retain attributes as-is when NEVER rule",
+            [Activity.Subject, MeasureWithRatio1, Account.Name],
+            ComputeRatioRule.NEVER,
+            [Activity.Subject, Won, Account.Name],
+        ],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, itemsArg, ruleArg, expectedResult) => {
+        expect(applyRatioRule(itemsArg, ruleArg)).toEqual(expectedResult);
     });
 });
