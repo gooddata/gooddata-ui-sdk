@@ -87,6 +87,7 @@ export {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
+    DateGranularity,
 } from "./filter/factory";
 
 export {
@@ -174,7 +175,6 @@ export {
 export {
     IExecutionDefinition,
     DimensionGenerator,
-    emptyDef,
     defWithFilters,
     defFingerprint,
     defSetDimensions,
@@ -189,6 +189,7 @@ export {
     defWithDimensions,
     defWithSorting,
     defaultDimensionsGenerator,
+    emptyDef,
 } from "./executionDefinition/factory";
 
 export {

@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import { Account } from "../../../__mocks__/model";
 import {
     newAbsoluteDateFilter,
     newNegativeAttributeFilter,
@@ -29,6 +30,28 @@ describe("filter factory", () => {
                 },
             });
         });
+
+        it("should generate correct value filter when input is array of values", () => {
+            expect(newPositiveAttributeFilter("foo", ["bar", "baz"])).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: "foo",
+                    },
+                    in: { values: ["bar", "baz"] },
+                },
+            });
+        });
+
+        it("should generate correct filter attribute object is on input", () => {
+            expect(newPositiveAttributeFilter(Account.Name, ["bar", "baz"])).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        identifier: "label.account.id.name",
+                    },
+                    in: { values: ["bar", "baz"] },
+                },
+            });
+        });
     });
 
     describe("newNegativeAttributeFilter", () => {
@@ -47,6 +70,26 @@ describe("filter factory", () => {
                 negativeAttributeFilter: {
                     displayForm: {
                         identifier: "foo",
+                    },
+                    notIn: { values: ["bar", "baz"] },
+                },
+            });
+        });
+        it("should generate correct textual filter when input is array of values", () => {
+            expect(newNegativeAttributeFilter("foo", ["bar", "baz"])).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: "foo",
+                    },
+                    notIn: { values: ["bar", "baz"] },
+                },
+            });
+        });
+        it("should generate correct filter when input is IAttribute instance", () => {
+            expect(newNegativeAttributeFilter(Account.Name, ["bar", "baz"])).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        identifier: "label.account.id.name",
                     },
                     notIn: { values: ["bar", "baz"] },
                 },

@@ -9,19 +9,38 @@ import {
 } from "../base/dimension";
 import { SortItem } from "../base/sort";
 import { AttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
+import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
 import { IFilter } from "../filter";
 import { IInsight, insightBuckets, insightFilters, insightSorts } from "../insight";
+import { isMeasure } from "../measure";
 import {
     defSetDimensions,
     defSetSorts,
     defWithFilters,
-    IExecutionDefinition,
     DimensionGenerator,
-    emptyDef,
+    IExecutionDefinition,
 } from "./index";
 import isEmpty = require("lodash/isEmpty");
-import { isMeasure } from "../measure";
-import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
+import invariant from "ts-invariant";
+
+/**
+ * Creates new, empty execution definition for the provided workspace.
+ *
+ * @param workspace - workspace to calculate on
+ * @returns always new instance
+ * @public
+ */
+export function emptyDef(workspace: string): IExecutionDefinition {
+    return {
+        workspace,
+        buckets: [],
+        attributes: [],
+        measures: [],
+        dimensions: [],
+        filters: [],
+        sortBy: [],
+    };
+}
 
 /**
  * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the
@@ -37,8 +56,11 @@ import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/b
 export function newDefForItems(
     workspace: string,
     items: AttributeOrMeasure[],
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(items, "items to create exec def from must be specified");
+
     const def: IExecutionDefinition = {
         ...emptyDef(workspace),
         attributes: items.filter(isAttribute),
@@ -68,8 +90,11 @@ export function newDefForItems(
 export function newDefForBuckets(
     workspace: string,
     buckets: IBucket[],
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(buckets, "buckets to create exec def from must be specified");
+
     const def: IExecutionDefinition = {
         ...emptyDef(workspace),
         buckets,
@@ -104,8 +129,11 @@ export function newDefForBuckets(
 export function newDefForInsight(
     workspace: string,
     insight: IInsight,
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(insight, "insight to create exec def from must be specified");
+
     const def = newDefForBuckets(workspace, insightBuckets(insight));
     const extraFilters = filters ? filters : [];
     const filteredDef = defWithFilters(def, [...insightFilters(insight), ...extraFilters]);

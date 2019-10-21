@@ -48,25 +48,6 @@ export interface IExecutionDefinition {
  */
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
-/**
- * Creates new, empty execution definition for the provided workspace.
- *
- * @param workspace - workspace to calculate on
- * @returns always new instance
- * @public
- */
-export function emptyDef(workspace: string): IExecutionDefinition {
-    return {
-        workspace,
-        buckets: [],
-        attributes: [],
-        measures: [],
-        dimensions: [],
-        filters: [],
-        sortBy: [],
-    };
-}
-
 function separateFiltersByType(filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] {
     return partition(filters, isAttributeFilter);
 }
@@ -97,7 +78,7 @@ function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | unde
  * @returns always new instance
  * @public
  */
-export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition {
+export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = []): IExecutionDefinition {
     if (!filters || isEmpty(filters)) {
         return def;
     }

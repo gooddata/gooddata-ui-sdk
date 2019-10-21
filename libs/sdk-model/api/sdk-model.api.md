@@ -136,6 +136,15 @@ export enum ComputeRatioRule {
 }
 
 // @public
+export const DateGranularity: {
+    date: string;
+    week: string;
+    month: string;
+    quarter: string;
+    year: string;
+};
+
+// @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
 
 // @public
@@ -759,13 +768,13 @@ export function newMeasure(measureId: string, modifications?: MeasureModificatio
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
-export function newNegativeAttributeFilter(displayFormId: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrId: IAttribute | string, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
 export function newPopMeasure(measureId: string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(displayFormId: string, inValues: AttributeElements): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrId: IAttribute | string, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
