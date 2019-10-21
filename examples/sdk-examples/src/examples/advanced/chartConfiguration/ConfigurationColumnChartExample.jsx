@@ -2,8 +2,6 @@
 import React, { Component } from "react";
 import { Visualization } from "@gooddata/sdk-ui";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { columnsVisualizationIdentifier, projectId } from "../../../constants/fixtures";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 

@@ -4,7 +4,6 @@ import { AttributeElements, BarChart } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
-import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     projectId,

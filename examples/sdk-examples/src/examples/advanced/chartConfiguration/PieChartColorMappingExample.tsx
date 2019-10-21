@@ -4,8 +4,6 @@ import { PieChart, IChartConfig } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     projectId,
     franchiseFeesAdRoyaltyIdentifier,

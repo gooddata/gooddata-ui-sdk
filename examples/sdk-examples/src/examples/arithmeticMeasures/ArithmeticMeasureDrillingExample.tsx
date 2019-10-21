@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { PivotTable, HeaderPredicateFactory } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     projectId,
     locationStateDisplayFormIdentifier,

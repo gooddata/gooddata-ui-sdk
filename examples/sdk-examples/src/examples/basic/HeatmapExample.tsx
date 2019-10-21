@@ -3,8 +3,6 @@ import React from "react";
 import { Heatmap } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     projectId,
     totalSalesIdentifier,

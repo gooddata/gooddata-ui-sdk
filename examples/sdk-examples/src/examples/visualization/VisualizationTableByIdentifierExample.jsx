@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import "@gooddata/sdk-ui/styles/css/main.css";
+
 import { Visualization } from "@gooddata/sdk-ui";
 
 import { projectId, tableVisualizationIdentifier } from "../../constants/fixtures";

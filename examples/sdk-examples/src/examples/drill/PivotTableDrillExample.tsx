@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { PivotTable, HeaderPredicateFactory } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute, ITotal } from "@gooddata/sdk-model";
-import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     projectId,

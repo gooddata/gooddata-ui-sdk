@@ -5,9 +5,6 @@ import { newMeasure, newAttribute, newRelativeDateFilter } from "@gooddata/sdk-m
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-import "react-datepicker/dist/react-datepicker.css";
-
 import {
     totalSalesIdentifier,
     monthOfYearDateIdentifier,

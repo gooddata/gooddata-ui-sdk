@@ -9,8 +9,6 @@ import {
     newMeasureSort,
 } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     projectId,
     quarterDateIdentifier,

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
-import "@gooddata/sdk-ui/styles/css/main.css";
+
 import Measure from "react-measure";
 
 import { projectId, totalSalesIdentifier, locationResortIdentifier } from "../../../constants/fixtures";

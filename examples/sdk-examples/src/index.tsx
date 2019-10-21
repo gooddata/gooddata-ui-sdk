@@ -2,7 +2,10 @@
 import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
+
+import "@gooddata/sdk-ui/styles/css/main.css";
 import "@gooddata/goodstrap/lib/styles.scss";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { App } from "./App";
 import { AppProviders } from "./context";

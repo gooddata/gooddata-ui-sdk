@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { BarChart } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import ExampleWithExport from "./ExampleWithExport";
 import {
     dateDataSetUri,

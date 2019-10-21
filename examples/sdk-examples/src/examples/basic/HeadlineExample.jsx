@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     projectId,
     franchiseFeesIdentifier,

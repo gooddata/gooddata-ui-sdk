@@ -3,8 +3,6 @@ import React from "react";
 import { Kpi } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { totalSalesIdentifier, projectId } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 

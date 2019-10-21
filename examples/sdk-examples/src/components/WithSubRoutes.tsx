@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import PropTypes from "prop-types";
-import "@gooddata/sdk-ui/styles/css/main.css";
+
 import { Link, Redirect } from "react-router-dom";
 
 export const WithSubRoutes = ({ subRoutes, match, location: { pathname } }) => {

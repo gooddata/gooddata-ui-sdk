@@ -4,7 +4,6 @@ import { LineChart, ColumnChart, ErrorComponent, LoadingComponent, IChartConfig 
 import { newMeasure, newAttribute } from "@gooddata/sdk-model";
 
 import sdk from "@gooddata/gd-bear-client";
-import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";

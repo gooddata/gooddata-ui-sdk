@@ -1,8 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 const baseAnimationDuration = 1.8;
 
 interface ICustomLoadingProps {

@@ -4,8 +4,6 @@ import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure, newAttributeSort } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { totalSalesIdentifier, locationCityDisplayFormIdentifier, projectId } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";
 

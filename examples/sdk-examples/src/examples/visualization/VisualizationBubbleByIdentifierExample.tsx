@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { InsightView } from "@gooddata/sdk-ui";
-import "@gooddata/sdk-ui/styles/css/main.css";
 
 import { projectId, bubbleVisualizationIdentifier } from "../../constants/fixtures";
 import { useBackend } from "../../context/auth";

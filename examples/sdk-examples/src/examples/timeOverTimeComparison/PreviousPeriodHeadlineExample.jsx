@@ -4,8 +4,6 @@ import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui";
 import { newMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { totalSalesIdentifier, dateDataSetUri, projectId } from "../../constants/fixtures";
 
 export class PreviousPeriodHeadlineExample extends Component {

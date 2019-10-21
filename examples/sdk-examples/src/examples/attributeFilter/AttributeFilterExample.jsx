@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { LineChart, AttributeFilter, ErrorComponent } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import {
     totalSalesIdentifier,
     locationResortIdentifier,

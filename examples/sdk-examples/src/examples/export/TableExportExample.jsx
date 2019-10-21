@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { Table } from "@gooddata/sdk-ui";
 import { newMeasure, newAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import ExampleWithExport from "./ExampleWithExport";
 
 import {

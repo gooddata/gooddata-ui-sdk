@@ -9,7 +9,6 @@ import {
     IAttributeSortItem,
     IMeasureSortItem,
 } from "@gooddata/sdk-model";
-import "@gooddata/sdk-ui/styles/css/main.css";
 
 import {
     totalSalesIdentifier,

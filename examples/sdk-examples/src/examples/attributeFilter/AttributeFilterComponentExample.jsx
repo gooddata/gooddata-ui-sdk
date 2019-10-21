@@ -2,8 +2,6 @@
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { employeeNameIdentifier, projectId } from "../../constants/fixtures";
 
 export class AttributeFilterComponentExample extends Component {

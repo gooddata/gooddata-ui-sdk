@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 interface ICustomErrorProps {
     message: string;
     height?: string | number;

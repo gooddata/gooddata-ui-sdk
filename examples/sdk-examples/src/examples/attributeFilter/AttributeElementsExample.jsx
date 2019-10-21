@@ -3,8 +3,6 @@ import React, { Component } from "react";
 import { AttributeElements } from "@gooddata/sdk-ui";
 import PropTypes from "prop-types";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-
 import { employeeNameIdentifier, projectId } from "../../constants/fixtures";
 
 export class AttributeFilterItem extends Component {
