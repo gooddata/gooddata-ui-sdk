@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import { Velocity, Won } from "../../../__mocks__/model";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import {
     modifyMeasure,
@@ -13,7 +14,7 @@ import {
     IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
-    measureId,
+    measureLocalId,
 } from "..";
 
 describe("measure factories", () => {
@@ -163,7 +164,7 @@ describe("measure factories", () => {
         it("should not modify input measure", () => {
             modifyMeasure(ExistingMeasure, m => m.localId("measure2"));
 
-            expect(measureId(ExistingMeasure)).toEqual("measure1");
+            expect(measureLocalId(ExistingMeasure)).toEqual("measure1");
         });
 
         it("should create new measure with modified local id", () => {
@@ -217,6 +218,21 @@ describe("measure factories", () => {
             };
             expect(newArithmeticMeasure(["foo", "bar"], "sum")).toEqual(expected);
         });
+
+        it("should return a simple arithmetic measure from two measure objects", () => {
+            const expected: IMeasure<IArithmeticMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        arithmeticMeasure: {
+                            measureIdentifiers: ["m_afSEwRwdbMeQ", "m_fact.stagehistory.velocity_min"],
+                            operator: "sum",
+                        },
+                    },
+                    localIdentifier: "m_m_afSEwRwdbMeQ_m_fact.stagehistory.velocity_min",
+                },
+            };
+            expect(newArithmeticMeasure([Won, Velocity.Min], "sum")).toEqual(expected);
+        });
     });
 
     describe("newPopMeasure", () => {
@@ -234,6 +250,21 @@ describe("measure factories", () => {
             };
             expect(newPopMeasure("foo", "attr")).toEqual(expected);
         });
+
+        it("should return a simple PoP measure object", () => {
+            const expected: IMeasure<IPoPMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        popMeasureDefinition: {
+                            measureIdentifier: "m_afSEwRwdbMeQ",
+                            popAttribute: { identifier: "attr" },
+                        },
+                    },
+                    localIdentifier: "m_m_afSEwRwdbMeQ_attr",
+                },
+            };
+            expect(newPopMeasure(Won, "attr")).toEqual(expected);
+        });
     });
 
     describe("newPreviousPeriodMeasure", () => {
@@ -250,6 +281,21 @@ describe("measure factories", () => {
                 },
             };
             expect(newPreviousPeriodMeasure("foo", [{ dataSet: "bar", periodsAgo: 3 }])).toEqual(expected);
+        });
+
+        it("should return a simple PP measure when supplied with objects", () => {
+            const expected: IMeasure<IPreviousPeriodMeasureDefinition> = {
+                measure: {
+                    definition: {
+                        previousPeriodMeasure: {
+                            measureIdentifier: "m_afSEwRwdbMeQ",
+                            dateDataSets: [{ dataSet: { identifier: "bar" }, periodsAgo: 3 }],
+                        },
+                    },
+                    localIdentifier: "m_m_afSEwRwdbMeQ_previous_period",
+                },
+            };
+            expect(newPreviousPeriodMeasure(Won, [{ dataSet: "bar", periodsAgo: 3 }])).toEqual(expected);
         });
     });
 });
