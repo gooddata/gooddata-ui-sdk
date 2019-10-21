@@ -133,9 +133,6 @@ export interface IPoPMeasureDefinition {
  */
 export interface IPreviousPeriodMeasureDefinition {
     previousPeriodMeasure: {
-        /**
-         *
-         */
         measureIdentifier: Identifier;
         dateDataSets: IPreviousPeriodDateDataSet[];
     };

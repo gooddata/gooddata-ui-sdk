@@ -203,7 +203,7 @@ export function sortEntityIds(sort: SortItem): SortEntityIds {
  * can be either specified by value or by reference using its local identifier.
  *
  * @param attributeOrId - attribute to sort by
- * @param sortDirection - asc or desc, defaults to ASC
+ * @param sortDirection - asc or desc, defaults to "asc"
  * @param aggregation - TODO
  * @returns always new item
  * @public
@@ -240,7 +240,7 @@ export function newAttributeSort(
  * can be either specified by value or by reference using its local identifier.
  *
  * @param measureOrId - measure to sort by
- * @param sortDirection - asc or desc, defaults to ASC
+ * @param sortDirection - asc or desc, defaults to "asc"
  * @param attributeLocators - optional attribute locators
  * @returns new sort item
  * @public

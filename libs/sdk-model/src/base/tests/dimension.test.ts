@@ -26,8 +26,12 @@ const DimensionWithoutTotals = newDimension(["localId1"]);
 describe("newDimension", () => {
     const Scenarios: Array<[string, any, any]> = [
         ["create empty dimension if no input provided", undefined, undefined],
-        ["create a valid dimension without totals", ["localId1", "localId2"], undefined],
-        ["create a valid dimension without totals", ["localId1", "localId2"], []],
+        [
+            "create a valid dimension without totals when totals arg undef",
+            ["localId1", "localId2"],
+            undefined,
+        ],
+        ["create a valid dimension without totals when totals arg empty", ["localId1", "localId2"], []],
         [
             "create a valid dimension when input arg is mix of identifiers and totals",
             ["localId1", Total1],
@@ -37,8 +41,8 @@ describe("newDimension", () => {
         ["create a valid dimension when totals are in both args ", ["localId1", Total1], [Total2]],
     ];
 
-    it.each(Scenarios)("should %s", (_desc, firstArg, secondArg) => {
-        expect(newDimension(firstArg, secondArg)).toMatchSnapshot();
+    it.each(Scenarios)("should %s", (_desc, itemsArg, totalsArg) => {
+        expect(newDimension(itemsArg, totalsArg)).toMatchSnapshot();
     });
 });
 
@@ -72,8 +76,8 @@ describe("dimensionSetTotals", () => {
         ["clear totals when no second arg", DimensionWithTotals, undefined],
     ];
 
-    it.each(Scenarios)("should %s", (_desc, firstArg, secondArg) => {
-        expect(dimensionSetTotals(firstArg, secondArg)).toMatchSnapshot();
+    it.each(Scenarios)("should %s", (_desc, dimArg, totalsArg) => {
+        expect(dimensionSetTotals(dimArg, totalsArg)).toMatchSnapshot();
     });
 });
 

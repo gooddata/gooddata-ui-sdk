@@ -35,7 +35,7 @@ export interface IDimension {
  */
 export const MeasureGroupIdentifier = "measureGroup";
 
-const isMeasureGroupIdentifier = (id: any) => id === MeasureGroupIdentifier;
+const isMeasureGroupIdentifier = (itemOrTotal: DimensionItem) => itemOrTotal === MeasureGroupIdentifier;
 
 //
 // Type guards
@@ -95,8 +95,8 @@ export type DimensionItem = Identifier | ITotal;
  *
  * The 'measureGroup' identifier MAY be specified in only one of the dimensions.
  *
- * @param dim1Input - items to put into first dimension, this can be item identifiers or totals
- * @param dim2Input - items to put into second dimension, this can be item identifiers or totals
+ * @param dim1Input - items to put into the first dimension, this can be item identifiers or totals
+ * @param dim2Input - items to put into the second dimension, this can be item identifiers or totals
  * @returns array with exactly two dimensions
  * @public
  */

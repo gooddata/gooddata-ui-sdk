@@ -75,15 +75,15 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
         return null;
     }
 
-    const dateSetRef = absoluteDateFilter.dataSet;
+    const dataSetRef = absoluteDateFilter.dataSet;
 
-    if (isUriRef(dateSetRef)) {
+    if (isUriRef(dataSetRef)) {
         throw new NotSupported("Tiger backend does not allow specifying date data set by URI.");
     }
 
     return {
         absoluteDateFilter: {
-            dataSet: dateSetRef,
+            dataSet: dataSetRef,
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
         },

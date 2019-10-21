@@ -185,7 +185,7 @@ export function insightBucket(
 }
 
 /**
- * Gets buckets for the insight. If ids are provided, then only returns buckets matching the IDs.
+ * Gets buckets for the insight. If ids are provided, then only returns buckets matching the ids.
  *
  * @param insight - insight to work with
  * @param ids - local identifiers of buckets

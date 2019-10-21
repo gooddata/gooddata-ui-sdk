@@ -16,6 +16,7 @@ import {
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure";
 import { ITotal } from "../base/totals";
+import flatMap = require("lodash/flatMap");
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.
@@ -36,7 +37,7 @@ export function bucketsAttributes(
         return [];
     }
 
-    return buckets.map(b => bucketAttributes(b, predicate)).reduce((acc, items) => acc.concat(items), []);
+    return flatMap(buckets, b => bucketAttributes(b, predicate));
 }
 
 /**
@@ -55,7 +56,7 @@ export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate 
         return [];
     }
 
-    return buckets.map(b => bucketMeasures(b, predicate)).reduce((acc, items) => acc.concat(items), []);
+    return flatMap(buckets, b => bucketMeasures(b, predicate));
 }
 
 /**
@@ -186,7 +187,7 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
         return [];
     }
 
-    return buckets.reduce((acc, b) => acc.concat(bucketItems(b)), [] as AttributeOrMeasure[]);
+    return flatMap(buckets, b => bucketItems(b));
 }
 
 /**
@@ -201,7 +202,7 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[] {
         return [];
     }
 
-    return buckets.reduce((acc, b) => acc.concat(bucketTotals(b)), [] as ITotal[]);
+    return flatMap(buckets, b => bucketTotals(b));
 }
 
 /**
