@@ -17,15 +17,14 @@ import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 
 import { Login } from "../components/login/Login";
-import Registration from "./Registration";
-import WithSubRoutes from "./WithSubRoutes";
-import AboutThisProject from "./AboutThisProject";
+import { Registration } from "../components/registration";
+import { WithSubRoutes } from "../components/WithSubRoutes";
+import { AboutThisProject } from "../components/AboutThisProject";
 
 // import AttributeFilter from "./AttributeFilter";
 // import ParentFilter from "./ParentFilter";
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import Export from "./Export";
-// import BucketExecutor from "./BucketExecutor";
 // import MultipleDomains from "./MultipleDomains";
 // import AggregationTest from "./AggregationTest";
 
@@ -134,19 +133,7 @@ export const routes = [
     ...backendInfoRoutes,
 ];
 
-const components = routes.map(r => r.Component);
-
 export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
     href: path,
     title,
 }));
-
-export default {
-    visualizationUseCasesRoutes,
-    advancedUseCasesRoutes,
-    drillingUseCasesRoutes,
-    sideNavigationRoutes,
-    routes,
-    navigation,
-    components,
-};

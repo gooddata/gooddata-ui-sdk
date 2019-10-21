@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import ExampleWithSource from "../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { ArithmeticMeasureSumExample } from "./ArithmeticMeasureSumExample";
 import { ArithmeticMeasureMultiplicationExample } from "./ArithmeticMeasureMultiplicationExample";

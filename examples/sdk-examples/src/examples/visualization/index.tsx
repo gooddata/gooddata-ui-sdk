@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import ExampleWithSource from "../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { VisualizationColumnChartByIdentifierExample } from "./VisualizationColumnChartByIdentifierExample";
 // import VisualizationTableExample from "../components/VisualizationTableByIdentifierExample";

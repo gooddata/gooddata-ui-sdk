@@ -7,7 +7,7 @@ import { has } from "lodash";
 import { withFormik } from "formik";
 import Yup from "yup";
 import ReCAPTCHA from "react-google-recaptcha";
-import CustomLoading from "./CustomLoading";
+import { CustomLoading } from "../CustomLoading";
 
 export const errorMap = {
     gdc1051: "password",

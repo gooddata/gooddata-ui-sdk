@@ -12,5 +12,3 @@ export const PivotTableDynamic: React.FC = () => (
         <PivotTableDynamicExample />
     </div>
 );
-
-export default PivotTableDynamic;

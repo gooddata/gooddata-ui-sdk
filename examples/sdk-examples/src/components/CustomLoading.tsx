@@ -1,14 +1,32 @@
 // (C) 2007-2019 GoodData Corporation
-
 import React from "react";
-import PropTypes from "prop-types";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
 const baseAnimationDuration = 1.8;
 
-export const CustomLoading = ({ label, inline, height, width, imageHeight, imageWidth, color, speed }) => {
-    const wrapperStyle = {
+interface ICustomLoadingProps {
+    color?: string;
+    speed?: number;
+    inline?: boolean;
+    height?: string | number;
+    width?: string | number;
+    imageHeight?: string | number;
+    imageWidth?: string | number;
+    label?: string;
+}
+
+export const CustomLoading: React.FC<ICustomLoadingProps> = ({
+    label = null,
+    inline = false,
+    height = "100%",
+    width,
+    imageHeight = 38,
+    imageWidth,
+    color = "#14b2e2",
+    speed = 1,
+}) => {
+    const wrapperStyle: React.CSSProperties = {
         textAlign: "center",
         display: inline ? "inline-flex" : "flex",
         flexDirection: "column",
@@ -47,7 +65,7 @@ export const CustomLoading = ({ label, inline, height, width, imageHeight, image
     return (
         <div className="s-loading" style={wrapperStyle}>
             <svg alt="loading…" style={svgStyle} x="0px" y="0px" viewBox="0 0 38 38">
-                <style scoped>
+                <style scoped={true}>
                     {`
                     @keyframes GDC-pump {
                         0%   {transform: scaleY(0.33)}
@@ -65,25 +83,3 @@ export const CustomLoading = ({ label, inline, height, width, imageHeight, image
         </div>
     );
 };
-CustomLoading.propTypes = {
-    color: PropTypes.string,
-    speed: PropTypes.number,
-    inline: PropTypes.bool,
-    height: PropTypes.any,
-    width: PropTypes.any,
-    imageHeight: PropTypes.any,
-    imageWidth: PropTypes.any,
-    label: PropTypes.string,
-};
-CustomLoading.defaultProps = {
-    color: "#14b2e2",
-    speed: 1,
-    inline: false,
-    height: "100%",
-    width: undefined,
-    imageHeight: 38,
-    imageWidth: undefined,
-    label: null,
-};
-
-export default CustomLoading;

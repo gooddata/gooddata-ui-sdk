@@ -1,11 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
 import React from "react";
-import PropTypes from "prop-types";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
-export const CustomError = ({ message, height }) => (
+interface ICustomErrorProps {
+    message: string;
+    height?: string | number;
+}
+
+export const CustomError: React.FC<ICustomErrorProps> = ({ message, height }) => (
     <div
         className="s-error"
         style={{
@@ -33,12 +37,3 @@ export const CustomError = ({ message, height }) => (
         </div>
     </div>
 );
-CustomError.propTypes = {
-    message: PropTypes.string.isRequired,
-    height: PropTypes.any,
-};
-CustomError.defaultProps = {
-    height: undefined,
-};
-
-export default CustomError;

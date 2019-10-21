@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import RegistrationComponent from "../components/Registration";
+import RegistrationComponent from "./Registration";
 
-export const Registration = props => (
+export const Registration: React.FC = props => (
     <div>
-        <style jsx>
+        <style jsx={true}>
             {`
                 h1,
                 p {
@@ -24,5 +24,3 @@ export const Registration = props => (
         <RegistrationComponent {...props} />
     </div>
 );
-
-export default Registration;

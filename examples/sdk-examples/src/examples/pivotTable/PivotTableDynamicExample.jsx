@@ -24,7 +24,7 @@ import {
     monthDateIdentifierJanuary,
     dateDatasetIdentifier,
 } from "../../constants/fixtures";
-import { ElementWithParam } from "../../components/ElementWithParam";
+import { ElementWithParam } from "./ElementWithParam";
 
 export const createColumnTotal = (measureLocalIdentifier, attributeLocalIdentifier, type = "sum") => {
     return {

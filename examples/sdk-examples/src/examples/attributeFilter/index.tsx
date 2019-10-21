@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import ExampleWithSource from "../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
 import AttributeElementsExample from "./AttributeElementsExample";

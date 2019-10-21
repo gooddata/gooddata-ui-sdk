@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import ExampleWithSource from "../../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { BarChartDynamicExample } from "./BarChartDynamicExample";
 import BarChartDynamicExampleSRC from "!raw-loader!./BarChartDynamicExample"; // eslint-disable-line

@@ -4,11 +4,11 @@ import ReactGA from "react-ga";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 
 import { CustomError } from "./components/CustomError";
-import CustomLoading from "./components/CustomLoading";
-import Header from "./components/Header";
-import Menu from "./components/Menu";
+import { CustomLoading } from "./components/CustomLoading";
+import { Header } from "./components/Header";
+import { Menu } from "./components/Menu";
 
-import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./routes/_list";
+import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./constants/routes";
 
 import { useAuth, AuthStatus } from "./context/auth";
 

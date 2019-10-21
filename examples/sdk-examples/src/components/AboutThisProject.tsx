@@ -5,7 +5,7 @@ import { projectId } from "../constants/fixtures";
 
 const logicalDataModel = require("../static/logicalDataModel.png");
 
-export const AboutThisProject = () => (
+export const AboutThisProject: React.FC = () => (
     <div>
         <h1>About This Project</h1>
         <p>
@@ -85,5 +85,3 @@ export const AboutThisProject = () => (
         <p>and many more.</p>
     </div>
 );
-
-export default AboutThisProject;

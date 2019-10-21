@@ -16,5 +16,3 @@ export const Route404 = () => (
         height={200}
     />
 );
-
-export default Route404;

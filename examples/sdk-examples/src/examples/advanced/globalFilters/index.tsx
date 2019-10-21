@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import ExampleWithSource from "../../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { GlobalFiltersExample } from "./GlobalFiltersExample";
 import GlobalFiltersExampleSRC from "!raw-loader!./GlobalFiltersExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first

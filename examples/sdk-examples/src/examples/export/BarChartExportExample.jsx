@@ -5,7 +5,7 @@ import { newAttribute, newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-m
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
-import ExampleWithExport from "../../components/ExampleWithExport";
+import ExampleWithExport from "./ExampleWithExport";
 import {
     dateDataSetUri,
     locationResortIdentifier,

@@ -5,7 +5,7 @@ import { newMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 
-import ExampleWithExport from "../../components/ExampleWithExport";
+import ExampleWithExport from "./ExampleWithExport";
 import {
     dateDataSetUri,
     franchiseFeesIdentifier,

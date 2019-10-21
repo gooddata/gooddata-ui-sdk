@@ -3,8 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { withFormik, FormikProps } from "formik";
 import Yup from "yup";
-import CustomLoading from "../CustomLoading";
-import CustomError from "../CustomError";
+import { CustomLoading } from "../CustomLoading";
+import { CustomError } from "../CustomError";
 
 interface IFormValues {
     email?: string;

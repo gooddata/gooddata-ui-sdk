@@ -3,11 +3,14 @@
 import React from "react";
 import get from "lodash/get";
 import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
-import PropTypes from "prop-types";
 
 const DOWNLOADER_ID = "downloader";
 
-export class ExampleWithExport extends React.Component {
+interface IExampleWithExportProps {
+    children: () => {}; // TODO
+}
+
+export class ExampleWithExport extends React.Component<IExampleWithExportProps> {
     constructor(props) {
         super(props);
 
@@ -133,9 +136,5 @@ export class ExampleWithExport extends React.Component {
         );
     }
 }
-
-ExampleWithExport.propTypes = {
-    children: PropTypes.func.isRequired,
-};
 
 export default ExampleWithExport;

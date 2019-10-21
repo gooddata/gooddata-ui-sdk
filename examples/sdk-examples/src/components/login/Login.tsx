@@ -5,8 +5,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import { useAuth, AuthStatus } from "../../context/auth";
 import { ENV_CREDENTIALS } from "../../constants/env";
 
-import CustomLoading from "../CustomLoading";
-import CustomError from "../CustomError";
+import { CustomLoading } from "../CustomLoading";
+import { CustomError } from "../CustomError";
 
 import { LoginForm } from "./LoginForm";
 import { useDemoProjectAuth } from "./state";

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 
-import ExampleWithSource from "../../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { LoadingExample } from "./LoadingExample";
 import LoadingExampleSRC from "!raw-loader!./LoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first

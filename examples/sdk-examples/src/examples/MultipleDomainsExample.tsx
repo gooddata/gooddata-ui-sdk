@@ -130,5 +130,3 @@ export class MultipleDomainsExample extends Component {
         );
     }
 }
-
-export default MultipleDomainsExample;

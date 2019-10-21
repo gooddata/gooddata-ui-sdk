@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "@gooddata/sdk-ui/styles/css/main.css";
 import { Visualization } from "@gooddata/sdk-ui";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
-import ExampleWithExport from "../../components/ExampleWithExport";
+import ExampleWithExport from "./ExampleWithExport";
 
 import { columnVisualizationIdentifier, dateDataSetUri, projectId } from "../../constants/fixtures";
 

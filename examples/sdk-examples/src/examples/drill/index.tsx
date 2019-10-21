@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import ExampleWithSource from "../../components/ExampleWithSource";
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
 import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
 import { DrillWithExternalDataExample } from "./DrillWithExternalDataExample";

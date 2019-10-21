@@ -45,5 +45,3 @@ WithSubRoutes.propTypes = {
         pathname: PropTypes.string.isRequired,
     }).isRequired,
 };
-
-export default WithSubRoutes;

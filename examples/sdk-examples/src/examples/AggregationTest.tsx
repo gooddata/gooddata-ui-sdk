@@ -91,5 +91,3 @@ export class AggregationTest extends Component {
         );
     }
 }
-
-export default AggregationTest;
