@@ -18,6 +18,7 @@ export function applyRatioRule<T extends AttributeOrMeasure>(items: T[], rule?: 
 
 // @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+    // @internal
     constructor(measureIds: string[], operator: ArithmeticMeasureOperator);
 }
 
@@ -26,6 +27,7 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 
 // @public
 export class AttributeBuilder implements IAttribute {
+    // @internal
     constructor(displayFormId: string);
     // (undocumented)
     alias: (alias: string) => this;
@@ -657,6 +659,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 
 // @public
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
+    // @internal
     constructor(measureOrId: IMeasure<IMeasureDefinition> | string);
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
@@ -667,8 +670,9 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 }
 
 // @public
-export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
-    constructor();
+export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+    // @internal
+    protected constructor();
     // (undocumented)
     alias: (alias: string) => this;
     // (undocumented)
@@ -793,11 +797,13 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+    // @internal
     constructor(measureId: string, popAttributeId: string);
 }
 
 // @public
 export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+    // @internal
     constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]);
 }
 

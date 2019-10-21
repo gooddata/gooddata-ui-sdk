@@ -3,12 +3,18 @@ import identity = require("lodash/identity");
 import { IAttribute } from ".";
 
 /**
- * TODO: SDK8: add docs
+ * Builder for attributes.
+ *
+ * Do not instantiate this class directly. Instead use {@link newAttribute}.
+ *
  * @public
  */
 export class AttributeBuilder implements IAttribute {
     public attribute: IAttribute["attribute"];
 
+    /**
+     * @internal
+     */
     constructor(displayFormId: string) {
         this.attribute = {
             displayForm: { identifier: displayFormId },
@@ -32,7 +38,8 @@ export class AttributeBuilder implements IAttribute {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Function that will be called to perform modifications of an attribute before it is fully constructed.
+ *
  * @public
  */
 export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;

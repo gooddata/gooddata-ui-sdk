@@ -27,14 +27,22 @@ export interface IPreviousPeriodDateDataSetSimple {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Abstract base class for measure builders. Measure builders allow for incremental, fluent construction
+ * (and optionally modification) of measures.
+ *
+ * You should not be instantiating the builders directly. Instead, rely on the different functions to
+ * create different types of measures.
+ *
  * @public
  */
-export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
     public measure: IMeasure<T>["measure"];
     protected customLocalId: boolean = false;
 
-    constructor() {
+    /**
+     * @internal
+     */
+    protected constructor() {
         // definition is added in subclass
         this.measure = {} as any;
     }
@@ -66,12 +74,18 @@ export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMe
 }
 
 /**
- * TODO: SDK8: add docs
+ * Builder for simple measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newMeasure} or {@link modifyMeasure} functions.
+ *
  * @public
  */
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     private readonly measureId: Identifier;
 
+    /**
+     * @internal
+     */
     constructor(measureOrId: IMeasure<IMeasureDefinition> | string) {
         super();
 
@@ -110,10 +124,16 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Builder for arithmetic measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newArithmeticMeasure}.
+ *
  * @public
  */
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+    /**
+     * @internal
+     */
     constructor(measureIds: string[], operator: ArithmeticMeasureOperator) {
         super();
         this.measure.definition = {
@@ -127,10 +147,16 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
 }
 
 /**
- * TODO: SDK8: add docs
+ * Builder for period-over-period measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newPopMeasure}.
+ *
  * @public
  */
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+    /**
+     * @internal
+     */
     constructor(measureId: string, popAttributeId: string) {
         super();
         this.measure.definition = {
@@ -146,10 +172,16 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
 }
 
 /**
- * TODO: SDK8: add docs
+ * Builder for previous period measures.
+ *
+ * Do not instantiate this builder directly, instead use {@link newPreviousPeriodMeasure}.
+ *
  * @public
  */
 export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+    /**
+     * @internal
+     */
     constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]) {
         super();
         this.measure.definition = {
@@ -168,7 +200,8 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
 }
 
 /**
- * TODO: SDK8: add docs
+ * Function that will be called to perform modifications of measure before it is fully constructed.
+ *
  * @public
  */
 export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;

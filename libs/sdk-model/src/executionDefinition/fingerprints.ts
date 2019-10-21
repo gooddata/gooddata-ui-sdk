@@ -23,8 +23,6 @@ export function filterFingerprint(filter: IFilter): string {
 }
 
 /**
- * TODO move and hide this; fingerprint calculation only make sense in the context of the entire execution
- *
  * @internal
  */
 export function measureFingerprint(measure: IMeasure): string {
