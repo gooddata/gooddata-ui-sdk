@@ -1,3 +1,7 @@
 {
-    "extends": ["../../tslint.json"]
+    "extends": ["../../tslint.json"],
+    "rules": {
+        "jsx-boolean-value": [true, "never"],
+        "jsx-no-lambda": false
+    }
 }
