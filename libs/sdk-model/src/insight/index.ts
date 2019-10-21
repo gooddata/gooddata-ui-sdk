@@ -16,43 +16,127 @@ import {
 } from "../buckets/bucketArray";
 
 /**
- * TODO: SDK8: add public doc
+ * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
+ * and can be embedded using UI SDK.
+ *
+ * Insight contains all metadata needed to construct its visualization and perform execution to obtain data
+ * for that visualization.
  *
  * @public
  */
 export interface IInsight {
     insight: {
+        /**
+         * Unique identifier of the Insight
+         */
         identifier: string;
+
+        /**
+         * Link to the insight.
+         */
         uri?: string;
+
+        /**
+         * User-assigned title of this insight
+         */
         title: string;
+
+        /**
+         * Identifier of the visualization class that should be used to render this insight.
+         */
         visualizationClassIdentifier: string;
+
+        /**
+         * Buckets of attributes, measures and totals to render on the visualization.
+         */
         buckets: IBucket[];
+
+        /**
+         * Filters to apply on the data.
+         */
         filters: IFilter[];
+
+        /**
+         * Sorting to apply on the data.
+         */
         sorts: SortItem[];
+
+        /**
+         * Visualization-specific properties. This object MAY contain customization metadata for this insight such as:
+         *
+         * - what axis to display on a chart
+         * - whether to display legend
+         * - how to color the chart
+         *
+         * These properties vary from visualization to visualization. Backend does not process the properties in
+         * any way.
+         */
         properties: VisualizationProperties;
     };
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Visualization class is essentially a descriptor for particular type of visualization - say bar chart
+ * or table. Each available visualization type is described by a class stored in the metadata. The available
+ * classes influence what visualizations can users select in Analytical Designer.
  *
  * @public
  */
 export interface IVisualizationClass {
     visualizationClass: {
+        /**
+         * Unique identifier of the visualization.
+         */
         identifier: string;
+
+        /**
+         * Link to visualization class object.
+         */
         uri?: string;
+
+        /**
+         * Human readable name of the visualization (Bar Chart, Pivot Table)
+         */
         title: string;
+
+        /**
+         * Link to where visualization's assets reside.
+         *
+         * This MAY contain URLs such as 'local:bar', 'local:table' - such URLs indicate that the visualization
+         * is bundled with the GoodData.UI SDK.
+         */
         url: string;
+
+        /**
+         * Visualization icon to display in Analytical Designer.
+         */
         icon: string;
+
+        /**
+         * Visualization icon to display when user selects the visualization in Analytical Designer.
+         */
         iconSelected: string;
+
+        /**
+         * Checksum for subresource integrity checking.
+         *
+         * {@link https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity}
+         */
         checksum: string;
+
+        /**
+         * Override ordering in the visualization catalog.
+         */
         orderIndex?: number;
     };
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Visualization-specific properties.
+ *
+ * These are modelled in generic fashion as they vary visualization by visualization.
+ *
+ * TODO: add links to properties supported by our visualizations.
  *
  * @public
  */
@@ -65,7 +149,7 @@ export type VisualizationProperties = {
 //
 
 /**
- * TODO: SDK8: add public doc
+ * Type guard checking whether the provided object is an Insight.
  *
  * @public
  */
