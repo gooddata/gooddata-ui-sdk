@@ -254,12 +254,12 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
  *
  * @param attributeElements - object to test
  * @returns true if empty = attribute elements not specified in any way (URI or value)
- * @public
+ * @internal
  */
-export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
+function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
     if (isAttributeElementsByRef(attributeElements)) {
-        return isEmpty(attributeElements.uris.length);
+        return isEmpty(attributeElements.uris);
     }
 
-    return isEmpty(attributeElements.values.length);
+    return isEmpty(attributeElements.values);
 }

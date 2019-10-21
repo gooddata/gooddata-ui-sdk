@@ -77,7 +77,6 @@ export {
     isAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
-    attributeElementsIsEmpty,
     filterIsEmpty,
 } from "./filter";
 

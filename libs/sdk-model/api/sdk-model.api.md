@@ -47,9 +47,6 @@ export class AttributeBuilder implements IAttribute {
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
-export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
-
-// @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
 
 // @public
