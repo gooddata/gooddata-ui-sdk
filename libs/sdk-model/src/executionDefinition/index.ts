@@ -1,22 +1,9 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import partition = require("lodash/partition");
-import unionBy = require("lodash/unionBy");
 import SparkMD5 from "spark-md5";
-import {
-    dimensionTotals,
-    filterQualifierValue,
-    IAttribute,
-    IAttributeFilter,
-    IBucket,
-    IDateFilter,
-    IDimension,
-    IFilter,
-    IMeasure,
-    isAttributeFilter,
-    ITotal,
-    SortItem,
-} from "..";
+import invariant from "ts-invariant";
+import { dimensionTotals, IAttribute, IBucket, IDimension, IFilter, IMeasure, ITotal, SortItem } from "..";
+import { mergeFilters } from "../filter/filterMerge";
 import {
     attributeFingerprint,
     dimensionFingerprint,
@@ -24,7 +11,6 @@ import {
     measureFingerprint,
     sortFingerprint,
 } from "./fingerprints";
-import invariant from "ts-invariant";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will
@@ -48,28 +34,6 @@ export interface IExecutionDefinition {
  * @public
  */
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
-
-function separateFiltersByType(filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] {
-    return partition(filters, isAttributeFilter);
-}
-
-function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] {
-    if (!addedFilters || !addedFilters.length) {
-        return originalFilters;
-    }
-
-    const [originalAttributeFilters, originalDateFilters] = separateFiltersByType(originalFilters);
-    const [addedAttributeFilters, addedDateFilters] = separateFiltersByType(addedFilters);
-
-    // concat attribute filters
-    const attributeFilters = [...originalAttributeFilters, ...addedAttributeFilters];
-
-    // merge date filters by date dataset qualifier
-    // added date filters should win, so they are specified first, unionBy prefers items from the first argument
-    const dateFilters = unionBy(addedDateFilters, originalDateFilters, filterQualifierValue);
-
-    return [...attributeFilters, ...dateFilters];
-}
 
 /**
  * Creates new execution definition by merging new filters into an existing definition.

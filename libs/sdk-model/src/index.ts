@@ -79,7 +79,6 @@ export {
     isAttributeElementsByValue,
     attributeElementsIsEmpty,
     filterIsEmpty,
-    filterQualifierValue,
 } from "./filter";
 
 export {
@@ -87,7 +86,6 @@ export {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
-    DateGranularity,
 } from "./filter/factory";
 
 export {
@@ -229,3 +227,4 @@ export {
 } from "./insight";
 
 export { factoryNotationFor } from "./objectFactoryNotation";
+export { DateGranularity } from "./filter";

@@ -190,9 +190,6 @@ export const factoryNotationFor: (data: any) => string;
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
-export function filterQualifierValue(filter: IFilter): string;
-
-// @public
 export type GuidType = "guid";
 
 // @public

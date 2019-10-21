@@ -77,19 +77,6 @@ export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: s
 }
 
 /**
- * Defines date data set granularities that can be used in relative date filter.
- *
- * @public
- */
-export const DateGranularity = {
-    date: "GDC.time.date",
-    week: "GDC.time.week_us",
-    month: "GDC.time.month",
-    quarter: "GDC.time.quarter",
-    year: "GDC.time.year",
-};
-
-/**
  * Creates a new relative date filter.
  *
  * @param dateDataSetId - identifier of the date data set to filter on
