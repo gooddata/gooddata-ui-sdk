@@ -24,6 +24,7 @@ import {
     measureFingerprint,
     sortFingerprint,
 } from "./fingerprints";
+import invariant from "ts-invariant";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will
@@ -79,6 +80,8 @@ function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | unde
  * @public
  */
 export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = []): IExecutionDefinition {
+    invariant(def, "execution definition to add more filters to must be defined");
+
     if (!filters || isEmpty(filters)) {
         return def;
     }
@@ -97,10 +100,8 @@ export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = [
  * @returns always new instance
  * @public
  */
-export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IExecutionDefinition {
-    if (!sortBy || isEmpty(sortBy)) {
-        return def;
-    }
+export function defSetSorts(def: IExecutionDefinition, sortBy: SortItem[] = []): IExecutionDefinition {
+    invariant(def, "execution definition to set sorts in must be defined");
 
     return {
         ...def,
@@ -118,6 +119,8 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IEx
  * @public
  */
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[] {
+    invariant(def, "execution definition to get totals for must be defined");
+
     if (!def || !def.dimensions[dimIdx]) {
         return [];
     }
@@ -133,10 +136,11 @@ export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[] {
  * @returns always new instance
  * @public
  */
-export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition {
-    if (!dimensions || isEmpty(dimensions)) {
-        return def;
-    }
+export function defSetDimensions(
+    def: IExecutionDefinition,
+    dimensions: IDimension[] = [],
+): IExecutionDefinition {
+    invariant(def, "execution definition to set dimension for must be defined");
 
     return {
         ...def,
@@ -150,6 +154,8 @@ export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimens
  * @public
  */
 export function defFingerprint(def: IExecutionDefinition): string {
+    invariant(def, "execution definition to calculate fingerprint for must be defined");
+
     const hasher = new SparkMD5();
 
     /*
