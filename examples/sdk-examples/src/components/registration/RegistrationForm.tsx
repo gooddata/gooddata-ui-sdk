@@ -1,12 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { PropTypes } from "prop-types";
-import { withRouter, Redirect, Link } from "react-router-dom";
-import sdk from "@gooddata/gd-bear-client";
-import { has } from "lodash";
-import { withFormik } from "formik";
-import Yup from "yup";
+import { Redirect, Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
+import has from "lodash/has";
+import { withFormik, FormikProps } from "formik";
+import Yup from "yup";
 import { CustomLoading } from "../CustomLoading";
 
 export const errorMap = {
@@ -14,22 +12,103 @@ export const errorMap = {
     gdc1052: "email",
 };
 
-export const transformApiError = ({ errorCode, message } = {}) =>
+export const transformApiError = ({ errorCode, message }) =>
     has(errorMap, errorCode) ? { [errorMap[errorCode]]: message } : null;
 
-export const RegistrationForm = props => {
+interface IRegistrationFormValues {
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    company: string;
+    captcha: string;
+    termsOfUse: boolean;
+}
+
+interface IRegistrationFormProps {
+    redirectUri?: string;
+    isLoggedIn: boolean;
+    register: (username: string, password: string, firstName: string, lastName: string) => Promise<any>;
+}
+
+const enhance = withFormik<IRegistrationFormProps, IRegistrationFormValues>({
+    mapPropsToValues: () => ({
+        email: "",
+        firstName: "",
+        lastName: "",
+        password: "",
+        company: "",
+        captcha: "",
+        termsOfUse: false,
+    }),
+    validationSchema: Yup.object().shape({
+        email: Yup.string()
+            .email("Invalid e-mail address")
+            .required("E-mail is required"),
+        firstName: Yup.string().required("First name is required"),
+        lastName: Yup.string().required("Last name is required"),
+        password: Yup.string().required("Password is required"),
+        company: Yup.string().required("Company is required"),
+        captcha: Yup.string().required("CAPTCHA is required"),
+        termsOfUse: Yup.bool()
+            .oneOf([true], "You must agree with the terms of use")
+            .required("You must agree with the terms of use"),
+    }),
+    handleSubmit: (
+        { email, password, firstName, lastName },
+        { setSubmitting, setStatus, setErrors, props: { register } },
+    ) => {
+        setStatus({
+            error: null,
+            isLoading: true,
+        });
+        register(email, password, firstName, lastName)
+            .then(response => {
+                setSubmitting(false);
+                setStatus({ response });
+            })
+            .catch(error => {
+                const status: any = {
+                    response: null,
+                    isLoading: false,
+                };
+                if (error.responseBody) {
+                    const errorResponse = JSON.parse(error.responseBody);
+                    const errors = transformApiError(errorResponse.error); // Try to assign errors to input fields
+                    if (errors) {
+                        setErrors(errors);
+                        status.error = null;
+                    }
+                }
+                if (status.error !== null) {
+                    // if not possible to pair errors to inputs, render error message above submit button
+                    status.error = {
+                        message: "Registration error",
+                        description: error.message,
+                    };
+                }
+                setStatus(status);
+                setSubmitting(false);
+            });
+    },
+    displayName: "RegistrationForm", // helps with React DevTools
+});
+
+const CoreRegistrationForm: React.FC<
+    IRegistrationFormProps & FormikProps<IRegistrationFormValues>
+> = props => {
     const {
         values,
         touched,
-        status,
+        status = {},
         errors,
         isSubmitting,
         handleChange,
         handleBlur,
         handleSubmit,
         setFieldValue,
-        redirectUri,
-        isLoggedIn,
+        redirectUri = "/",
+        isLoggedIn = null,
     } = props;
 
     if (status.response) {
@@ -177,7 +256,7 @@ export const RegistrationForm = props => {
                         className="input-checkbox"
                         type="checkbox"
                         id="termsOfUse"
-                        value={values.termsOfUse}
+                        checked={values.termsOfUse}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     />
@@ -226,7 +305,7 @@ export const RegistrationForm = props => {
                     className={`gd-button gd-button-primary gd-button-important${
                         isSubmitting ? " disabled" : ""
                     }`}
-                    tabIndex="-1"
+                    tabIndex={-1}
                     type="submit"
                 >
                     Register
@@ -235,93 +314,5 @@ export const RegistrationForm = props => {
         </form>
     );
 };
-RegistrationForm.propTypes = {
-    status: PropTypes.object,
-    values: PropTypes.object.isRequired,
-    touched: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    handleChange: PropTypes.func.isRequired,
-    handleBlur: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    setFieldValue: PropTypes.func.isRequired,
-    redirectUri: PropTypes.string,
-    isLoggedIn: PropTypes.bool,
-};
-RegistrationForm.defaultProps = {
-    status: {},
-    redirectUri: "/",
-    isLoggedIn: null,
-};
 
-export const Registration = withFormik({
-    mapPropsToValues: () => ({
-        email: "",
-        firstName: "",
-        lastName: "",
-        password: "",
-        company: "",
-        captcha: "",
-        termsOfUse: false,
-    }),
-    validationSchema: Yup.object().shape({
-        email: Yup.string()
-            .email("Invalid e-mail address")
-            .required("E-mail is required"),
-        firstName: Yup.string().required("First name is required"),
-        lastName: Yup.string().required("Last name is required"),
-        password: Yup.string().required("Password is required"),
-        company: Yup.string().required("Company is required"),
-        captcha: Yup.string().required("CAPTCHA is required"),
-        termsOfUse: Yup.bool()
-            .oneOf([true], "You must agree with the terms of use")
-            .required("You must agree with the terms of use"),
-    }),
-    handleSubmit: ({ email, password, firstName, lastName }, { setSubmitting, setStatus, setErrors }) => {
-        setStatus({
-            error: null,
-            isLoading: true,
-        });
-        sdk.xhr
-            .post("/api/register", {
-                data: {
-                    login: email,
-                    password,
-                    email,
-                    verifyPassword: password,
-                    firstName,
-                    lastName,
-                },
-            })
-            .then(response => {
-                setSubmitting(false);
-                setStatus({ response });
-            })
-            .catch(error => {
-                const status = {
-                    response: null,
-                    isLoading: false,
-                };
-                if (error.responseBody) {
-                    const errorResponse = JSON.parse(error.responseBody);
-                    const errors = transformApiError(errorResponse.error); // Try to assign errors to input fields
-                    if (errors) {
-                        setErrors(errors);
-                        status.error = null;
-                    }
-                }
-                if (status.error !== null) {
-                    // if not possible to pair errors to inputs, render error message above submit button
-                    status.error = {
-                        message: "Registration error",
-                        description: error.message,
-                    };
-                }
-                setStatus(status);
-                setSubmitting(false);
-            });
-    },
-    displayName: "RegistrationForm", // helps with React DevTools
-})(RegistrationForm);
-
-export default withRouter(Registration);
+export const RegistrationForm = enhance(CoreRegistrationForm);

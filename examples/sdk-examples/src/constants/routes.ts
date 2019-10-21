@@ -16,7 +16,7 @@ import { LoadingAndError } from "../examples/advanced/loadingAndError";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 
-import { Login } from "../components/login/Login";
+import { Login } from "../components/login";
 import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";

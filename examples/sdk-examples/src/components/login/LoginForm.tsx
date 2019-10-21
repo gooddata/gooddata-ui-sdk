@@ -42,7 +42,7 @@ const enhance = withFormik<ILoginProps, IFormValues>({
     displayName: "LoginForm", // helps with React DevTools
 });
 
-export const LoginFormUncontrolled: React.FC<ILoginProps & FormikProps<IFormValues>> = props => {
+const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = props => {
     const {
         values,
         touched,
@@ -58,7 +58,7 @@ export const LoginFormUncontrolled: React.FC<ILoginProps & FormikProps<IFormValu
     return (
         <div className="Login">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .Login {
                     max-width: 400px;
                     margin: 20px auto;
@@ -169,4 +169,4 @@ export const LoginFormUncontrolled: React.FC<ILoginProps & FormikProps<IFormValu
     );
 };
 
-export const LoginForm = enhance(LoginFormUncontrolled);
+export const LoginForm = enhance(CoreLoginForm);

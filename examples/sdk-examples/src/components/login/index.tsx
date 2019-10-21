@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React, { CSSProperties } from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { useAuth, AuthStatus } from "../../context/auth";
 import { ENV_CREDENTIALS } from "../../constants/env";
@@ -22,7 +22,7 @@ const verticalCenterStyle: CSSProperties = {
     alignItems: "stretch",
 };
 
-const CoreLogin: React.FC = () => {
+export const Login: React.FC = () => {
     const { login, authStatus } = useAuth();
     const { authStatus: demoProjectAuthStatus, error } = useDemoProjectAuth();
 
@@ -64,5 +64,3 @@ const CoreLogin: React.FC = () => {
         />
     );
 };
-
-export const Login = withRouter(CoreLogin);

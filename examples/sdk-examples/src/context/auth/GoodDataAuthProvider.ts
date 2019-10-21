@@ -11,6 +11,19 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         return sdk.user.login(username, password);
     }
 
+    public async register(username: string, password: string, firstName: string, lastName: string) {
+        return sdk.xhr.post("/api/register", {
+            data: {
+                login: username,
+                password,
+                email: username,
+                verifyPassword: password,
+                firstName,
+                lastName,
+            },
+        });
+    }
+
     public async authenticate() {
         const user = await sdk.user.getCurrentProfile();
 

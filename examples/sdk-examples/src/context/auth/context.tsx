@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext, useEffect } from "react";
 import bearFactory from "@gooddata/sdk-backend-bear";
-import sdk from "@gooddata/gd-bear-client";
 
 import { GoodDataAuthProvider } from "./GoodDataAuthProvider";
 import { IAuthState, IAuthContext, AuthStatus } from "./types";
@@ -35,6 +34,9 @@ export const AuthProvider: React.FC = ({ children }) => {
         onLogoutStart,
         onLogoutSuccess,
         onLogoutError,
+        onRegisterStart,
+        onRegisterSuccess,
+        onRegisterError,
         authStatus,
         authError,
     } = useAuthState(initialState);
@@ -54,7 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const logout = async () => {
         onLogoutStart();
         try {
-            await sdk.user.logout();
+            await authProvider.logout();
             onLogoutSuccess();
         } catch (err) {
             onLogoutError(err);
@@ -62,8 +64,16 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
     };
 
-    const register = async () => {
-        console.log("perform register now");
+    const register = async (username: string, password: string, firstName: string, lastName: string) => {
+        onRegisterStart();
+        try {
+            const result = await authProvider.register(username, password, firstName, lastName);
+            onRegisterSuccess();
+            return result;
+        } catch (err) {
+            onRegisterError(err);
+            throw err;
+        }
     };
 
     useEffect(() => {

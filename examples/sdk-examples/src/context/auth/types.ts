@@ -21,5 +21,5 @@ export interface IAuthContext {
     backend: IAnalyticalBackend;
     login: (username: string, password: string) => Promise<any>;
     logout: () => Promise<void>;
-    register: () => Promise<void>;
+    register: (username: string, password: string, firstName: string, lastName: string) => Promise<any>;
 }
