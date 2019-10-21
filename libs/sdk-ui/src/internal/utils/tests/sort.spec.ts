@@ -21,7 +21,7 @@ import {
     insightWithSingleMeasureAndViewByAndStack,
     insightWithTwoMeasuresAndViewBy,
 } from "../../mocks/testMocks";
-import { IAttributeSortItem, IMeasureSortItem, insightWithSorts, SortItem } from "@gooddata/sdk-model";
+import { IAttributeSortItem, IMeasureSortItem, insightSetSorts, SortItem } from "@gooddata/sdk-model";
 
 const attributeSort: IAttributeSortItem = {
     attributeSortItem: {
@@ -177,7 +177,7 @@ describe("createSorts", () => {
                 },
             },
         ];
-        const testInsight = insightWithSorts(insightWithSingleMeasure, sortItems);
+        const testInsight = insightSetSorts(insightWithSingleMeasure, sortItems);
 
         expect(createSorts("table", testInsight)).toEqual(sortItems);
     });
@@ -198,7 +198,7 @@ describe("createSorts", () => {
             },
         ];
 
-        const testInsight = insightWithSorts(emptyInsight, sortItems);
+        const testInsight = insightSetSorts(emptyInsight, sortItems);
 
         expect(createSorts("table", testInsight)).toEqual([]);
     });

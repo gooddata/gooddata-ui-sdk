@@ -28,7 +28,7 @@ export class InsightBuilder {
             buckets: [],
             filters: [],
             sorts: [],
-            properties: [],
+            properties: {},
             identifier: "random",
         };
     }

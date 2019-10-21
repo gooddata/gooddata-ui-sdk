@@ -14,6 +14,7 @@ import {
     bucketsMeasures,
     bucketsTotals,
 } from "../buckets/bucketArray";
+import invariant from "ts-invariant";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -184,8 +185,7 @@ export function insightBucket(
 }
 
 /**
- * Gets all buckets matching the provided ids from an insight. If no ids are provided, then all buckets are
- * returned
+ * Gets buckets for the insight. If ids are provided, then only returns buckets matching the IDs.
  *
  * @param insight - insight to work with
  * @param ids - local identifiers of buckets
@@ -197,7 +197,7 @@ export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
         return [];
     }
 
-    if (!ids || !ids.length) {
+    if (isEmpty(ids)) {
         return insight.insight.buckets;
     }
 
@@ -365,18 +365,21 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
  * @public
  */
 export function insightVisualizationClassIdentifier(insight: IInsight): string {
+    invariant(insight, "insight to get vis class identifier from must be defined");
+
     return insight.insight.visualizationClassIdentifier;
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different properties. New
+ * properties will be used in the new insight as-is, no merging with existing properties.
  *
  * @param insight - insight to work with
  * @param properties - new properties to have on the new insight
  * @returns always new instance
  * @public
  */
-export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight {
+export function insightSetProperties(insight: IInsight, properties: VisualizationProperties = {}): IInsight {
     return {
         insight: {
             ...insight.insight,
@@ -386,14 +389,15 @@ export function insightWithProperties(insight: IInsight, properties: Visualizati
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different sorts.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different sorts. New
+ * sorts will be used in the new insight as-is, no merging with existing sorts.
  *
  * @param insight - insight to work with
  * @param sorts - new sorts to apply
  * @returns always new instance
  * @public
  */
-export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight {
+export function insightSetSorts(insight: IInsight, sorts: SortItem[] = []): IInsight {
     return {
         insight: {
             ...insight.insight,
@@ -414,5 +418,7 @@ export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight
  * @public
  */
 export function visClassUrl(vc: IVisualizationClass): string {
+    invariant(vc, "vis class to get URL from must be defined");
+
     return vc.visualizationClass.url;
 }

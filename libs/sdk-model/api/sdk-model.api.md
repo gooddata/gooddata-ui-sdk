@@ -446,6 +446,12 @@ export function insightMeasures(insight: IInsight): IMeasure[];
 export function insightProperties(insight: IInsight): VisualizationProperties;
 
 // @public
+export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
+
+// @public
+export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
+
+// @public
 export function insightSorts(insight: IInsight): SortItem[];
 
 // @public
@@ -453,12 +459,6 @@ export function insightTotals(insight: IInsight): ITotal[];
 
 // @public
 export function insightVisualizationClassIdentifier(insight: IInsight): string;
-
-// @public
-export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
-
-// @public
-export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight;
 
 // @public
 export interface IPoPMeasureDefinition {

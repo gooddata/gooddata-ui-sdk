@@ -220,8 +220,8 @@ export {
     insightTotals,
     insightFilters,
     insightVisualizationClassIdentifier,
-    insightWithProperties,
-    insightWithSorts,
+    insightSetProperties,
+    insightSetSorts,
     visClassUrl,
 } from "./insight";
 

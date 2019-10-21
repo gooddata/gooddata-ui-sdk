@@ -9,7 +9,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { insightWithProperties } from "@gooddata/sdk-model";
+import { insightSetProperties } from "@gooddata/sdk-model";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -172,7 +172,7 @@ describe("PluggableAreaChart", () => {
                           },
                       }
                     : {};
-            const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
+            const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
             const expected = stackMeasures === null ? true : stackMeasures;
             chart.update(options, testInsight, executionFactory);
             const renderCallsCount = spyOnRender.mock.calls.length;
@@ -205,7 +205,7 @@ describe("PluggableAreaChart", () => {
                 },
             };
 
-            const testInsight = insightWithProperties(
+            const testInsight = insightSetProperties(
                 testMocks.insightWithSingleMeasureAndTwoViewBy,
                 visualizationProperties,
             );
@@ -237,7 +237,7 @@ describe("PluggableAreaChart", () => {
                 stackMeasuresToPercent: false,
             });
 
-            const testInsight = insightWithProperties(
+            const testInsight = insightSetProperties(
                 testMocks.insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );

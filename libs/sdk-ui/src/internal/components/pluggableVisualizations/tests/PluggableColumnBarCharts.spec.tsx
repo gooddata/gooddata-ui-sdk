@@ -13,7 +13,7 @@ import {
 import { AXIS } from "../../../constants/axis";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { insightWithProperties } from "@gooddata/sdk-model";
+import { insightSetProperties } from "@gooddata/sdk-model";
 
 describe("PluggableColumnBarCharts", () => {
     const defaultProps: IVisConstruct = {
@@ -283,7 +283,7 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 },
             };
-            const testInsight = insightWithProperties(
+            const testInsight = insightSetProperties(
                 testMocks.insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );
@@ -306,7 +306,7 @@ describe("PluggableColumnBarCharts", () => {
                     },
                 },
             };
-            const testInsight = insightWithProperties(
+            const testInsight = insightSetProperties(
                 testMocks.insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );
