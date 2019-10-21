@@ -4,9 +4,12 @@ import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
 import { IFilter } from "../filter";
 import unset = require("lodash/unset");
 import cloneDeep = require("lodash/cloneDeep");
+import invariant from "ts-invariant";
 
 /**
- * TODO: SDK8: Add docs
+ * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and
+ * previous period measure. See the respective definitions for more information on what can be achieved
+ * using them.
  *
  * @public
  */
@@ -270,7 +273,9 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
  * @returns string identifier
  * @public
  */
-export function measureId(measure: IMeasure): string {
+export function measureLocalId(measure: IMeasure): string {
+    invariant(measure, "measure to get local id from must be defined");
+
     return measure.measure.localIdentifier;
 }
 
@@ -318,13 +323,12 @@ export function measureIdentifier(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureDoesComputeRatio(measure: IMeasure): boolean {
-    if (isSimpleMeasure(measure)) {
-        const computeRatio = measure.measure.definition.measureDefinition.computeRatio;
-
-        return computeRatio ? computeRatio : false;
+    if (!isSimpleMeasure(measure)) {
+        return false;
     }
 
-    return false;
+    const computeRatio = measure.measure.definition.measureDefinition.computeRatio;
+    return computeRatio ? computeRatio : false;
 }
 
 /**
@@ -402,11 +406,16 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 
 /**
  * Gets measure alias.
+ *
  * @param measure - measure to get the alias of
  * @returns measure alias if specified, undefined otherwise
  * @public
  */
 export function measureAlias(measure: IMeasure): string | undefined {
+    if (!measure) {
+        return;
+    }
+
     return measure.measure.alias;
 }
 
@@ -417,5 +426,9 @@ export function measureAlias(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureTitle(measure: IMeasure): string | undefined {
+    if (!measure) {
+        return;
+    }
+
     return measure.measure.title;
 }

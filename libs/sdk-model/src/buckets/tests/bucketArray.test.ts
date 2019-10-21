@@ -13,7 +13,7 @@ import {
     bucketsMeasures,
     bucketsTotals,
 } from "../bucketArray";
-import { idMatchMeasure, IMeasure, measureId } from "../../measure";
+import { idMatchMeasure, IMeasure, measureLocalId } from "../../measure";
 import { ITotal, newTotal } from "../../base/totals";
 
 const Total1 = newTotal("sum", Won, Account.Name);
@@ -174,13 +174,13 @@ describe("bucketsFindMeasure", () => {
         [
             "measure by custom predicate",
             [AttributeBucket3, MixedBucket1, MeasureBucket3],
-            idMatchMeasure(measureId(Velocity.Min)),
+            idMatchMeasure(measureLocalId(Velocity.Min)),
             { bucket: MeasureBucket3, idx: 1, measure: Velocity.Min },
         ],
         [
             "measure by local id",
             [AttributeBucket3, MixedBucket1, MeasureBucket3],
-            measureId(Velocity.Min),
+            measureLocalId(Velocity.Min),
             { bucket: MeasureBucket3, idx: 1, measure: Velocity.Min },
         ],
     ];

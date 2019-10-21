@@ -695,9 +695,6 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean;
 export const MeasureGroupIdentifier = "measureGroup";
 
 // @public
-export function measureId(measure: IMeasure): string;
-
-// @public
 export function measureIdentifier(measure: IMeasure): string | undefined;
 
 // @public
@@ -706,6 +703,9 @@ export type MeasureInBucket = {
     idx: number;
     measure: IMeasure;
 };
+
+// @public
+export function measureLocalId(measure: IMeasure): string;
 
 // @public
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
@@ -729,7 +729,7 @@ export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modificatio
 export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter;
 
 // @public
-export function newArithmeticMeasure(measureIds: string[], operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
+export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | string>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
 export function newAttribute(displayFormId: string, modifications?: AttributeModifications): IAttribute;
@@ -765,13 +765,13 @@ export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: S
 export function newNegativeAttributeFilter(attributeOrId: IAttribute | string, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
-export function newPopMeasure(measureId: string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function newPopMeasure(measureOrId: IMeasure | string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
 export function newPositiveAttributeFilter(attributeOrId: IAttribute | string, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
-export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
+export function newPreviousPeriodMeasure(measureIdOrId: IMeasure | string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
 export function newRelativeDateFilter(dateDataSetId: string, granularity: string, from: number, to: number): IRelativeDateFilter;

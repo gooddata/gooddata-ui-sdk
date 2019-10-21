@@ -106,7 +106,7 @@ export {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
-    measureId,
+    measureLocalId,
     MeasurePredicate,
     anyMeasure,
     idMatchMeasure,

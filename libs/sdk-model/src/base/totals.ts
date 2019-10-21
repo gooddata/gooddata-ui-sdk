@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
-import { IMeasure, measureId } from "../measure";
+import { IMeasure, measureLocalId } from "../measure";
 import { attributeLocalId, IAttribute } from "../attribute";
 import invariant from "ts-invariant";
 import { Identifier } from "./index";
@@ -78,7 +78,7 @@ export function newTotal(
     invariant(measureOrId, "measure or measure local id must be specified");
     invariant(attributeOrId, "attribute or attribute local id must be specified");
 
-    const measureIdentifier = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
+    const measureIdentifier = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
     const attributeIdentifier =
         typeof attributeOrId === "string" ? attributeOrId : attributeLocalId(attributeOrId);
     const aliasProp = alias ? { alias } : {};

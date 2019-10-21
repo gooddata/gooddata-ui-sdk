@@ -4,7 +4,7 @@ import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
 import { anyBucket, BucketPredicate, IBucket } from "../buckets";
 import { IFilter } from "../filter";
-import { IMeasure, measureId } from "../measure";
+import { IMeasure, measureLocalId } from "../measure";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { ITotal } from "../base/totals";
 import {
@@ -312,7 +312,7 @@ export function insightSorts(insight: IInsight): SortItem[] {
     }
 
     const attributeIds = insightAttributes(insight).map(attributeLocalId);
-    const measureIds = insightMeasures(insight).map(measureId);
+    const measureIds = insightMeasures(insight).map(measureLocalId);
 
     function contains(arr1: string[], arr2: string[]): boolean {
         return intersection(arr1, arr2).length === arr2.length;

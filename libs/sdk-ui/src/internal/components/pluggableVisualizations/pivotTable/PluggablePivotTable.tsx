@@ -62,7 +62,7 @@ import {
     isAttributeSort,
     isMeasureLocator,
     isMeasureSort,
-    measureId,
+    measureLocalId,
     SortItem,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -158,7 +158,7 @@ export function adaptReferencePointSortItemsToPivotTable(
 }
 
 function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], buckets: IBucket[]): SortItem[] {
-    const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureId);
+    const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureLocalId);
     const rowAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.ATTRIBUTE)).map(
         attributeLocalId,
     );

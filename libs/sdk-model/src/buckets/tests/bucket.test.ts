@@ -17,7 +17,7 @@ import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
 import { InvariantError } from "ts-invariant";
 import { ITotal, newTotal } from "../../base/totals";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
-import { idMatchMeasure, IMeasure, measureId } from "../../measure";
+import { idMatchMeasure, IMeasure, measureLocalId } from "../../measure";
 import { modifyMeasure } from "../..";
 
 describe("newBucket", () => {
@@ -140,7 +140,7 @@ describe("bucketMeasure", () => {
         [
             "measure by local id if predicate is a string",
             BucketWithManyMeasures,
-            measureId(Velocity.Sum),
+            measureLocalId(Velocity.Sum),
             Velocity.Sum,
         ],
         ["no measure if no predicate match", BucketWithManyMeasures, () => false, undefined],
@@ -168,7 +168,7 @@ describe("bucketMeasures", () => {
         [
             "single measure matching predicate",
             BucketWithManyMeasures,
-            idMatchMeasure(measureId(Velocity.Sum)),
+            idMatchMeasure(measureLocalId(Velocity.Sum)),
             [Velocity.Sum],
         ],
         ["measures in mixed bucket", BucketWithMeasureAndAttr, undefined, [Won]],

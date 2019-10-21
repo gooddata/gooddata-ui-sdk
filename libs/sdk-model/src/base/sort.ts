@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { Identifier } from ".";
 import { attributeLocalId, IAttribute } from "../attribute";
-import { IMeasure, measureId } from "../measure";
+import { IMeasure, measureLocalId } from "../measure";
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
 
@@ -252,7 +252,7 @@ export function newMeasureSort(
 ): IMeasureSortItem {
     invariant(measureOrId, "measure to create sort for must be defined");
 
-    const id: string = typeof measureOrId === "string" ? measureOrId : measureId(measureOrId);
+    const id: string = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
 
     return {
         measureSortItem: {

@@ -12,6 +12,7 @@ import {
     IPreviousPeriodMeasureDefinition,
     MeasureAggregation,
     measureIdentifier,
+    measureLocalId,
 } from ".";
 import { IFilter } from "../filter";
 import { Identifier } from "../base";
@@ -208,16 +209,17 @@ export function modifyMeasure(
 
 /**
  * Creates a new arithmetic measure with the specified measure identifiers and operator and optional modifications and localIdentifier.
- * @param measureIds - identifiers of the measures to be included in this arithmetic measure
+ * @param measuresOrIds - measures or identifiers of the measures to be included in this arithmetic measure
  * @param operator - operator of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newArithmeticMeasure(
-    measureIds: string[],
+    measuresOrIds: ReadonlyArray<IMeasure | string>,
     operator: ArithmeticMeasureOperator,
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
 ): IMeasure<IArithmeticMeasureDefinition> {
+    const measureIds = measuresOrIds.map(m => (typeof m === "string" ? m : measureLocalId(m)));
     const builder = new ArithmeticMeasureBuilder(measureIds, operator);
 
     return modifications(builder).build();
@@ -225,16 +227,17 @@ export function newArithmeticMeasure(
 
 /**
  * Creates a new PoP measure with the specified identifier and PoP attribute identifier and optional modifications and localIdentifier.
- * @param measureId - identifier of the measure
+ * @param measureOrId - measure or identifier of the measure
  * @param popAttributeId - identifier of the PoP attribute
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newPopMeasure(
-    measureId: string,
+    measureOrId: IMeasure | string,
     popAttributeId: string,
     modifications: MeasureModifications<PoPMeasureBuilder> = identity,
 ): IMeasure<IPoPMeasureDefinition> {
+    const measureId = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
     const builder = new PoPMeasureBuilder(measureId, popAttributeId);
 
     return modifications(builder).build();
@@ -242,16 +245,17 @@ export function newPopMeasure(
 
 /**
  * Creates a new Previous Period measure with the specified measure identifier and date data sets and optional modifications and localIdentifier.
- * @param measureId - identifier of the measure to create Previous Period measure for
+ * @param measureIdOrId - measure or identifier of the measure to create Previous Period measure for
  * @param dateDataSets - date data sets to use in the Previous Period calculation
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newPreviousPeriodMeasure(
-    measureId: string,
+    measureIdOrId: IMeasure | string,
     dateDataSets: IPreviousPeriodDateDataSetSimple[],
     modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
+    const measureId = typeof measureIdOrId === "string" ? measureIdOrId : measureLocalId(measureIdOrId);
     const builder = new PreviousPeriodMeasureBuilder(measureId, dateDataSets);
 
     return modifications(builder).build();
