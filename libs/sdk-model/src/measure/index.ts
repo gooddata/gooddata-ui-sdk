@@ -17,7 +17,8 @@ export type IMeasureDefinitionType =
     | IPreviousPeriodMeasureDefinition;
 
 /**
- * TODO: SDK8: Add docs
+ * All types of measures have a set of common properties; those are defined here. The measure-type-specific
+ * information is stored in the measure definition.
  *
  * @public
  */
@@ -32,7 +33,8 @@ export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionT
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Subset of IMeasure interface which defines properties that MAY be used to provide human readable
+ * description of the measure.
  *
  * @public
  */
@@ -45,35 +47,53 @@ export interface IMeasureTitle {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Simple measures created from facts can use these types of aggregations.
  *
  * @public
  */
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
 
 /**
- * TODO: SDK8: Add docs
+ * Simple measures are defined from existing MAQL measures or logical data model facts. Measures created
+ * from facts MAY specify aggregation function to apply during execution.
  *
  * @public
  */
 export interface IMeasureDefinition {
     measureDefinition: {
+        /**
+         * Reference to MAQL metric or LDM fact object.
+         */
         item: ObjRef;
+
+        /**
+         * Aggregation to apply when calculating from LDM facts. If aggregation is provided for MAQL measures,
+         * it will be ignored.
+         */
         aggregation?: MeasureAggregation;
+
+        /**
+         * Filters to apply in scope of this measure's calculation.
+         */
         filters?: IFilter[];
+
+        /**
+         * Indicates whether the measure should be calculated as % of total instead of actual values.
+         */
         computeRatio?: boolean;
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Simple math operators for arithmetic measure construction.
  *
  * @public
  */
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
 /**
- * TODO: SDK8: Add docs
+ * Arithmetic measures are created by composing two or more other measures and defining arithmetic
+ * to apply on their values.
  *
  * @public
  */
@@ -85,8 +105,11 @@ export interface IArithmeticMeasureDefinition {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Defines Period-Over-Period measure (or Time-over-Time). This is a derived measure that calculates value
+ * of a measure referenced by measureIdentifier in previous period. The period to calculate value for will be
+ * determined from the specified date data set's attribute - popAttribute.
  *
+ * TODO: enhance, add examples
  * @public
  */
 export interface IPoPMeasureDefinition {
@@ -97,19 +120,27 @@ export interface IPoPMeasureDefinition {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * This is a derived measure that calculates value of a measure referenced by measureIdentifier for previous
+ * period. Period is determined from filter setting of the specified date data sets. The time period for
+ * this derived measure will be shifted forward or backward according to the specified periodAgo number
+ *
+ * TODO: enhance, add examples
  *
  * @public
  */
 export interface IPreviousPeriodMeasureDefinition {
     previousPeriodMeasure: {
+        /**
+         *
+         */
         measureIdentifier: Identifier;
         dateDataSets: IPreviousPeriodDateDataSet[];
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * This is used to specify previous period. Previous period is current time period shifted forward or backward
+ * one or more times. The current time period is calculated from filter setting for the provided date data set.
  *
  * @public
  */
@@ -121,6 +152,7 @@ export interface IPreviousPeriodDateDataSet {
 //
 //
 //
+
 /**
  * Defines function signature for measure predicates.
  *
