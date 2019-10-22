@@ -6,6 +6,6 @@
         "prefer-conditional-expression": false
     },
     "linterOptions": {
-        "exclude": ["examples/**"]
+        "exclude": ["examples/(bear|tiger)-react-app/**"]
     }
 }

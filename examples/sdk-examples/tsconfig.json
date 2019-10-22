@@ -7,6 +7,6 @@
         "esModuleInterop": true,
         "outDir": "dist"
     },
-    "include": ["src/index.tsx", "typings"],
+    "include": ["src", "typings"],
     "exclude": ["node_modules", "dist"]
 }

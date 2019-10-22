@@ -6,6 +6,7 @@ const CircularDependencyPlugin = require("circular-dependency-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
 const StatsPlugin = require("stats-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -86,6 +87,10 @@ module.exports = async (env, argv) => {
         }),
         new SimplestProgressPlugin(),
         new Dotenv(),
+        new ForkTsCheckerWebpackPlugin({
+            tslint: true,
+            reportFiles: ["src/**/*.{ts,tsx}"],
+        }),
     ];
 
     if (isProduction) {
