@@ -202,7 +202,6 @@ export interface IAuthenticationProvider {
 // @public
 export interface IDataView {
     readonly count: number[];
-    // (undocumented)
     readonly data: DataValue[][] | DataValue[];
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
@@ -211,7 +210,6 @@ export interface IDataView {
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
-    // (undocumented)
     readonly totals?: DataValue[][][];
 }
 
@@ -266,13 +264,9 @@ export interface IExecutionResult {
 
 // @public
 export interface IExportConfig {
-    // (undocumented)
     format?: "xlsx" | "csv" | "raw";
-    // (undocumented)
     mergeHeaders?: boolean;
-    // (undocumented)
     showFilters?: IFilter[];
-    // (undocumented)
     title?: string;
 }
 
@@ -338,7 +332,7 @@ export interface IResultAttributeHeaderItem {
     };
 }
 
-// @public
+// @public (undocumented)
 export interface IResultDimension {
     // (undocumented)
     headers: IHeader[];

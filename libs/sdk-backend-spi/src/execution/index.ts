@@ -263,10 +263,35 @@ export interface IDataView {
     readonly totalCount: number[];
 
     /**
-     * TODO: find a way to describe these :)
+     * Headers are metadata for the data in this view. There are headers for each dimension and in
+     * each dimension headers are further sliced by the attribute or measureGroup or total to which the data
+     * belongs.
+     *
+     * Thus:
+     *
+     * - Top array contains 0 to N per-dimension arrays, one for each requested dimension (if any)
+     * - The per-dimension arrays then contain per-slice array, one for each attribute or measure group in the dimension
+     * - The per-slice-array then contains the actual result header metadata such as attribute elements or measure
+     *   name
      */
     readonly headerItems: IResultHeaderItem[][][];
+
+    /**
+     * The calculated data. Dimensionality of the data matches the dimensions requested at execution time.
+     */
     readonly data: DataValue[][] | DataValue[];
+
+    /**
+     * Grand totals included in this data view. Grand totals are included for each dimension; within each
+     * dimension there is one entry per requested total and for each requested total there are list of values.
+     *
+     * Thus:
+     *
+     * - Top array contains 0 to N per-dimension arrays
+     * - Each per-dimension array contains one per-total entry for each requested total
+     * - Each per-total entry contains array of calculated values, cardinality of this matches the cardinality
+     *   of the data in the respective dimension.
+     */
     readonly totals?: DataValue[][][];
 
     /**

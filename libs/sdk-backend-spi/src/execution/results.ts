@@ -3,13 +3,29 @@
 import isEmpty = require("lodash/isEmpty");
 
 /**
- * TODO: SDK8: add docs
+ * Single calculated data value. The data value may be 'null' - the semantics here are same as with
+ * SQL nulls. The calculated numeric value WILL be returned in string representation - this is to
+ * prevent float number precision errors.
+ *
+ * TODO: we should probably get rid of number variant
  * @public
  */
 export type DataValue = null | string | number;
 
 /**
- * TODO: SDK8: add docs
+ * Describes measure group and its contents.
+ * @public
+ */
+export interface IMeasureGroupHeader {
+    measureGroupHeader: {
+        items: IMeasureHeaderItem[];
+        totalItems?: ITotalHeaderItem[];
+    };
+}
+
+/**
+ * Describes measure included in a dimension.
+ *
  * @public
  */
 export interface IMeasureHeaderItem {
@@ -23,7 +39,8 @@ export interface IMeasureHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Describes total included in a dimension.
+ *
  * @public
  */
 export interface ITotalHeaderItem {
@@ -33,18 +50,8 @@ export interface ITotalHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IMeasureGroupHeader {
-    measureGroupHeader: {
-        items: IMeasureHeaderItem[];
-        totalItems?: ITotalHeaderItem[];
-    };
-}
-
-/**
- * TODO: SDK8: add docs
+ * Describes attribute slicing of a dimension.
+ *
  * @public
  */
 export interface IAttributeHeader {
@@ -63,13 +70,31 @@ export interface IAttributeHeader {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Headers describing contents of a dimension.
+ *
  * @public
  */
 export type IHeader = IMeasureGroupHeader | IAttributeHeader;
 
 /**
- * TODO: SDK8: add docs
+ * Describes what LDM objects were used to obtain data and metadata for the dimension of a cross-tabulated result.
+ *
+ * This best best demonstrated using examples.
+ *
+ * 1. Execution was done for attribute A1 and measures M1 and M2. Both attribute and measureGroup are in single
+ *    dimension.
+ *
+ * The result dimension will contain two headers, first will be header describing the attribute {@link IAttributeHeader},
+ * followed by {@link IMeasureGroupHeader}. The measure group header contains two items - one for each requested
+ * measure.
+ *
+ * 2. Execution was done for attributes A1 and A2, measures M1 and M2. Attribute A1 is in first dimension and
+ *    the remainder of objects (A2 and measureGroup) is in second dimension.
+ *
+ * There will be two result dimension descriptors. First descriptor will specify single header for A1 attribute,
+ * second descriptor will have two headers, first will be header for attribute A2 and then measure group header
+ * with two items.
+ *
  * @public
  */
 export interface IResultDimension {
