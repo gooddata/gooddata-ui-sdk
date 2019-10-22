@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { Identifier, isUriQualifier, ObjQualifier, isIdentifierQualifier } from "../base";
+import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../base";
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
 
@@ -37,7 +37,7 @@ export interface IAttribute {
          * -  Display for URLs are not supported by all GoodData backends == this makes any application that uses
          *    URL-specified display form backend-specific
          */
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
 
         /**
          * This is user-assigned alias of the attribute; it is opaque for the backend. When backend returns
@@ -89,7 +89,7 @@ export const idMatchAttribute: (id: string) => AttributePredicate = id => attr =
  * @returns value of local identifier
  * @public
  */
-export function attributeId(attribute: IAttribute): string {
+export function attributeLocalId(attribute: IAttribute): string {
     invariant(attribute, "attribute must not be undefined");
 
     return attribute.attribute.localIdentifier;
@@ -107,7 +107,7 @@ export function attributeUri(attribute: IAttribute): string | undefined {
         return undefined;
     }
 
-    return isUriQualifier(attribute.attribute.displayForm) ? attribute.attribute.displayForm.uri : undefined;
+    return isUriRef(attribute.attribute.displayForm) ? attribute.attribute.displayForm.uri : undefined;
 }
 
 /**
@@ -122,7 +122,7 @@ export function attributeIdentifier(attribute: IAttribute): string | undefined {
         return undefined;
     }
 
-    return isIdentifierQualifier(attribute.attribute.displayForm)
+    return isIdentifierRef(attribute.attribute.displayForm)
         ? attribute.attribute.displayForm.identifier
         : undefined;
 }

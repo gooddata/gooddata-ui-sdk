@@ -10,7 +10,7 @@ import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartC
 import { VisualizationEnvironment } from "../../../../../base/constants/visualizationTypes";
 import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, insightWithProperties } from "@gooddata/sdk-model";
+import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
 import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
 
@@ -149,7 +149,7 @@ describe("PluggableBaseChart", () => {
                 },
             },
         };
-        const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
 
         visualization.update(options, testInsight, executionFactory);
 
@@ -185,7 +185,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        const testInsight = insightWithProperties(testMocks.insightWithStacking, visualizationProperties);
+        const testInsight = insightSetProperties(testMocks.insightWithStacking, visualizationProperties);
 
         visualization.update(options, testInsight, executionFactory);
 
@@ -243,7 +243,7 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = { controls: { legend: {} } };
-        const testInsight = insightWithProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
 
         visualization.update(options, testInsight, executionFactory);
 

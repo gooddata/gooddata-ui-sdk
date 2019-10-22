@@ -1,19 +1,12 @@
 // (C) 2019 GoodData Corporation
 
 import { isGuidColorItem, isRgbColorItem } from "../index";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 
 describe("color type guards", () => {
-    const STD_INVALID: Array<[boolean, string, any]> = [
-        [false, "null", null],
-        [false, "undefined", undefined],
-        [false, "empty object", {}],
-        [false, "array", []],
-        [false, "string", "bleh"],
-    ];
-
     describe("isGuidColorItem", () => {
         const TEST_DATA: Array<[boolean, string, any]> = [
-            ...STD_INVALID,
+            ...InvalidInputTestCases,
             [false, "rgb color", { type: "rgb", value: { r: 127, g: 127, b: 127 } }],
             [true, "guid color", { type: "guid", value: "myGuid" }],
         ];
@@ -25,7 +18,7 @@ describe("color type guards", () => {
 
     describe("isRgbColorItem", () => {
         const TEST_DATA: Array<[boolean, string, any]> = [
-            ...STD_INVALID,
+            ...InvalidInputTestCases,
             [true, "rgb color", { type: "rgb", value: { r: 127, g: 127, b: 127 } }],
             [false, "guid color", { type: "guid", value: "myGuid" }],
         ];

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    attributeId,
+    attributeLocalId,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
@@ -30,7 +30,7 @@ function stackedDimensions(buckets: IBucket[]): IDimension[] {
         ? stackByAttribute.attribute.localIdentifier
         : undefined;
 
-    const viewByAttributeLocalIdentifiers = viewByAttributes && viewByAttributes.map(attributeId);
+    const viewByAttributeLocalIdentifiers = viewByAttributes && viewByAttributes.map(attributeLocalId);
 
     return newTwoDimensional(
         stackByAttributeLocalIdentifier ? [stackByAttributeLocalIdentifier] : [],
@@ -39,7 +39,7 @@ function stackedDimensions(buckets: IBucket[]): IDimension[] {
 }
 
 export function defaultDimensions(def: IExecutionDefinition): IDimension[] {
-    return newTwoDimensional([MEASUREGROUP], bucketsAttributes(def.buckets).map(attributeId));
+    return newTwoDimensional([MEASUREGROUP], bucketsAttributes(def.buckets).map(attributeLocalId));
 }
 
 export function stackedChartDimensions(def: IExecutionDefinition): IDimension[] {
@@ -48,11 +48,11 @@ export function stackedChartDimensions(def: IExecutionDefinition): IDimension[] 
 }
 
 export function pointyChartDimensions(def: IExecutionDefinition): IDimension[] {
-    return newTwoDimensional(bucketsAttributes(def.buckets).map(attributeId), [MEASUREGROUP]);
+    return newTwoDimensional(bucketsAttributes(def.buckets).map(attributeLocalId), [MEASUREGROUP]);
 }
 
 export function roundChartDimensions(def: IExecutionDefinition): IDimension[] {
-    const attributes = bucketsAttributes(def.buckets).map(attributeId);
+    const attributes = bucketsAttributes(def.buckets).map(attributeLocalId);
 
     if (attributes.length === 0) {
         return newTwoDimensional([], [MEASUREGROUP]);
@@ -66,13 +66,13 @@ export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
     const stack: IBucket = bucketsFind(def.buckets, STACK);
 
     if (bucketIsEmpty(stack)) {
-        return newTwoDimensional(bucketAttributes(view).map(attributeId), [MEASUREGROUP]);
+        return newTwoDimensional(bucketAttributes(view).map(attributeLocalId), [MEASUREGROUP]);
     }
 
     return newTwoDimensional(
-        bucketAttributes(view).map(attributeId),
+        bucketAttributes(view).map(attributeLocalId),
         bucketAttributes(stack)
-            .map(attributeId)
+            .map(attributeLocalId)
             .concat([MEASUREGROUP]),
     );
 }
@@ -81,8 +81,8 @@ export function treemapDimensions(def: IExecutionDefinition): IDimension[] {
     const attributes = bucketsAttributes(def.buckets);
 
     if (attributes.length === 1) {
-        return newTwoDimensional([MEASUREGROUP], attributes.map(attributeId));
+        return newTwoDimensional([MEASUREGROUP], attributes.map(attributeLocalId));
     }
 
-    return newTwoDimensional(attributes.map(attributeId), [MEASUREGROUP]);
+    return newTwoDimensional(attributes.map(attributeLocalId), [MEASUREGROUP]);
 }

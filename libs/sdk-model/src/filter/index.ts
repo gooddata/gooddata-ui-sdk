@@ -1,9 +1,13 @@
 // (C) 2019 GoodData Corporation
-import { ObjQualifier, objectQualifierValue } from "../base";
+import { ObjRef } from "../base";
 import isEmpty = require("lodash/isEmpty");
 
 /**
- * TODO: SDK8: Add docs
+ * Attribute elements specified by their URI.
+ *
+ * NOTE: using attribute element URIs is discouraged - the URIs contain identifier of a workspace and thus
+ * bind the attribute element to that workspace. The analytical application built using URIs will not work
+ * across workspaces.
  *
  * @public
  */
@@ -12,7 +16,7 @@ export interface IAttributeElementsByRef {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Attribute elements specified by their textual value.
  *
  * @public
  */
@@ -21,57 +25,90 @@ export interface IAttributeElementsByValue {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Attribute elements are used in positive and negative attribute filters. They can be specified either
+ * using URI (discouraged) or using textual values of the attribute elements.
  *
  * @public
  */
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 /**
- * TODO: SDK8: Add docs
+ * Positive attribute filter essentially adds an `IN <set>` condition to the execution on the backend. When
+ * the condition is applied on attribute display form which is included in execution, it essentially limits the
+ * attribute elements that will be returned in the results: only those elements that are in the provided list
+ * will be returned.
+ *
+ * The filter can be specified even for attributes that are not included in the execution - such a filter then
+ * MAY influence the results of the execution indirectly: if the execution definition specifies MAQL measures that
+ * use the filtered attribute.
  *
  * @public
  */
 export interface IPositiveAttributeFilter {
     positiveAttributeFilter: {
-        displayForm: ObjQualifier;
+        /**
+         * Display form whose attribute elements are included in the 'in' list.
+         */
+        displayForm: ObjRef;
         in: AttributeElements;
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Negative attribute filter essentially adds an `NOT IN <set>` condition to the execution on the backend. When
+ * the condition is applied on attribute display form which is included in execution, it essentially limits the
+ * attribute elements that will be returned in the results: only those elements that ARE NOT in the provided list
+ * will be returned.
+ *
+ * The filter can be specified even for attributes that are not included in the execution - such a filter then
+ * MAY influence the results of the execution indirectly: if the execution definition specifies MAQL measures that
+ * use the filtered attribute.
  *
  * @public
  */
 export interface INegativeAttributeFilter {
     negativeAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         notIn: AttributeElements;
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Filters results to an absolute date range - from one fixed date to another.
  *
  * @public
  */
 export interface IAbsoluteDateFilter {
     absoluteDateFilter: {
-        dataSet: ObjQualifier;
+        /**
+         * Date data set for filtering
+         */
+        dataSet: ObjRef;
+
+        /**
+         * Start date (including): this is in format DDMMYYYY
+         * TODO: double-check date format
+         */
         from: string;
+
+        /**
+         * End date (including): this is in format DDMMYYYY
+         * TODO: double-check date format
+         */
         to: string;
     };
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Filters results to a relative date range. The relative filtering is always done on some granularity - this specifies
+ * the units in the 'from' and 'to' fields.
  *
+ * {@link DateGranularity}
  * @public
  */
 export interface IRelativeDateFilter {
     relativeDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         granularity: string;
         from: number;
         to: number;
@@ -79,21 +116,35 @@ export interface IRelativeDateFilter {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Defines date data set granularities that can be used in relative date filter.
+ *
+ * @public
+ */
+export const DateGranularity = {
+    date: "GDC.time.date",
+    week: "GDC.time.week_us",
+    month: "GDC.time.month",
+    quarter: "GDC.time.quarter",
+    year: "GDC.time.year",
+};
+
+/**
+ * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
+ * by the filters.
  *
  * @public
  */
 export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
 
 /**
- * TODO: SDK8: Add docs
+ * Date filters limit the range of results to data within relative or absolute date range.
  *
  * @public
  */
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
 /**
- * TODO: SDK8: Add docs
+ * All possible filters.
  *
  * @public
  */
@@ -108,7 +159,7 @@ export type IFilter =
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a positive attribute filter.
  *
  * @public
  */
@@ -117,7 +168,7 @@ export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFi
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a negative attribute filter.
  *
  * @public
  */
@@ -126,7 +177,7 @@ export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFi
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is an absolute date filter.
  *
  * @public
  */
@@ -135,7 +186,7 @@ export function isAbsoluteDateFilter(obj: any): obj is IAbsoluteDateFilter {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a relative date filter.
  *
  * @public
  */
@@ -144,7 +195,7 @@ export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is an attribute filter.
  *
  * @public
  */
@@ -153,7 +204,7 @@ export function isAttributeFilter(obj: any): obj is IAttributeFilter {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a date filter.
  *
  * @public
  */
@@ -162,7 +213,7 @@ export function isDateFilter(obj: any): obj is IDateFilter {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is list of attribute elements specified by URI reference.
  *
  * @public
  */
@@ -171,7 +222,7 @@ export function isAttributeElementsByRef(obj: any): obj is IAttributeElementsByR
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is list of attribute elements specified by their text value.
  *
  * @public
  */
@@ -184,8 +235,10 @@ export function isAttributeElementsByValue(obj: any): obj is IAttributeElementsB
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Tests whether the provided attribute element does not specify any attribute elements.
  *
+ * @param filter - attribute filter to test
+ * @returns true if empty = no attribute elements
  * @public
  */
 export function filterIsEmpty(filter: IAttributeFilter): boolean {
@@ -197,32 +250,16 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Tests whether the attribute elements object is empty.
  *
- * @public
+ * @param attributeElements - object to test
+ * @returns true if empty = attribute elements not specified in any way (URI or value)
+ * @internal
  */
-export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
+function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
     if (isAttributeElementsByRef(attributeElements)) {
-        return isEmpty(attributeElements.uris.length);
+        return isEmpty(attributeElements.uris);
     }
 
-    return isEmpty(attributeElements.values.length);
-}
-
-/**
- * TODO: SDK8: Add docs
- *
- * @public
- */
-export function filterQualifierValue(filter: IFilter): string {
-    if (isDateFilter(filter)) {
-        if (isAbsoluteDateFilter(filter)) {
-            return objectQualifierValue(filter.absoluteDateFilter.dataSet);
-        }
-        return objectQualifierValue(filter.relativeDateFilter.dataSet);
-    }
-    if (isPositiveAttributeFilter(filter)) {
-        return objectQualifierValue(filter.positiveAttributeFilter.displayForm);
-    }
-    return objectQualifierValue(filter.negativeAttributeFilter.displayForm);
+    return isEmpty(attributeElements.values);
 }

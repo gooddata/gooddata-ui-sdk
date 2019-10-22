@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import {
     AttributeOrMeasure,
-    computeRatioRules,
+    applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
@@ -58,7 +58,7 @@ export function ColumnChart(props: IColumnChartProps): JSX.Element {
 const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnChartProps> = {
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
-        const measures = computeRatioRules(props.measures);
+        const measures = applyRatioRule(props.measures);
         const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT); // could be one or two attributes
 
         return [

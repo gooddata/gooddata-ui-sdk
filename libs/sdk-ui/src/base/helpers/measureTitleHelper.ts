@@ -11,7 +11,7 @@ import {
     isPreviousPeriodMeasure,
     isArithmeticMeasure,
     isSimpleMeasure,
-    measureId,
+    measureLocalId,
     measureAlias,
     measureTitle,
     measureArithmeticOperands,
@@ -79,7 +79,7 @@ function findTitleForDerivedMeasure(
 function buildMeasureTitle(measure: IMeasure): IMeasureTitleProps | null {
     if (isSimpleMeasure(measure)) {
         const alias = measureAlias(measure);
-        const localIdentifier = measureId(measure);
+        const localIdentifier = measureLocalId(measure);
         const title = measureTitle(measure);
 
         return {
@@ -100,7 +100,7 @@ function buildArithmeticMeasureTitle(
 ): IMeasureTitleProps | null {
     if (isArithmeticMeasure(measure)) {
         const alias = measureAlias(measure);
-        const localIdentifier = measureId(measure);
+        const localIdentifier = measureLocalId(measure);
         const measureIdentifiers = measureArithmeticOperands(measure);
         const operator = measureArithmeticOperator(measure);
 
@@ -135,7 +135,7 @@ function buildDerivedMeasureTitle(
 ): IMeasureTitleProps | null {
     if (isPoPMeasure(measure) || isPreviousPeriodMeasure(measure)) {
         const alias = measureAlias(measure);
-        const localIdentifier = measureId(measure);
+        const localIdentifier = measureLocalId(measure);
 
         const masterMeasureIdentifier = measureMasterIdentifier(measure);
         if (containsMeasureTitleItem(measureTitleProps, masterMeasureIdentifier)) {
@@ -165,8 +165,8 @@ function buildMeasureTitles(
         isMeasureTitlePropsChanged = false;
 
         measures.forEach(measure => {
-            const measureLocalId = measureId(measure);
-            if (!containsMeasureTitleItem(measureTitleProps, measureLocalId)) {
+            const localId = measureLocalId(measure);
+            if (!containsMeasureTitleItem(measureTitleProps, localId)) {
                 const newMeasureTitleProp =
                     buildMeasureTitle(measure) ||
                     buildArithmeticMeasureTitle(
@@ -193,8 +193,8 @@ function updateBucketItemTitle(
     measureTitleProps: IMeasureTitleProps[],
 ): AttributeOrMeasure {
     if (isMeasure(bucketItem)) {
-        const measureLocalId = measureId(bucketItem);
-        const measureTitleProp = findMeasureTitleItem(measureTitleProps, measureLocalId);
+        const localId = measureLocalId(bucketItem);
+        const measureTitleProp = findMeasureTitleItem(measureTitleProps, localId);
         if (measureTitleProp !== null) {
             const { title, alias } = measureTitleProp;
 

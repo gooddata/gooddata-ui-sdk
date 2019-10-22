@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { attributeId, isAttribute } from "../attribute";
+import { attributeLocalId, isAttribute } from "../attribute";
 import {
     IDimension,
     isDimension,
@@ -8,27 +8,39 @@ import {
     newTwoDimensional,
 } from "../base/dimension";
 import { SortItem } from "../base/sort";
-import {
-    AttributeOrMeasure,
-    bucketAttributes,
-    bucketMeasures,
-    bucketsAttributes,
-    bucketsIsEmpty,
-    IBucket,
-    bucketsMeasures,
-} from "../buckets";
+import { AttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
+import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
 import { IFilter } from "../filter";
 import { IInsight, insightBuckets, insightFilters, insightSorts } from "../insight";
+import { isMeasure } from "../measure";
 import {
     defSetDimensions,
     defSetSorts,
     defWithFilters,
-    IExecutionDefinition,
     DimensionGenerator,
-    emptyDef,
+    IExecutionDefinition,
 } from "./index";
 import isEmpty = require("lodash/isEmpty");
-import { isMeasure } from "../measure";
+import invariant from "ts-invariant";
+
+/**
+ * Creates new, empty execution definition for the provided workspace.
+ *
+ * @param workspace - workspace to calculate on
+ * @returns always new instance
+ * @public
+ */
+export function emptyDef(workspace: string): IExecutionDefinition {
+    return {
+        workspace,
+        buckets: [],
+        attributes: [],
+        measures: [],
+        dimensions: [],
+        filters: [],
+        sortBy: [],
+    };
+}
 
 /**
  * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the
@@ -44,8 +56,11 @@ import { isMeasure } from "../measure";
 export function newDefForItems(
     workspace: string,
     items: AttributeOrMeasure[],
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(items, "items to create exec def from must be specified");
+
     const def: IExecutionDefinition = {
         ...emptyDef(workspace),
         attributes: items.filter(isAttribute),
@@ -75,8 +90,11 @@ export function newDefForItems(
 export function newDefForBuckets(
     workspace: string,
     buckets: IBucket[],
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(buckets, "buckets to create exec def from must be specified");
+
     const def: IExecutionDefinition = {
         ...emptyDef(workspace),
         buckets,
@@ -111,8 +129,11 @@ export function newDefForBuckets(
 export function newDefForInsight(
     workspace: string,
     insight: IInsight,
-    filters?: IFilter[],
+    filters: IFilter[] = [],
 ): IExecutionDefinition {
+    invariant(workspace, "workspace to create exec def for must be specified");
+    invariant(insight, "insight to create exec def from must be specified");
+
     const def = newDefForBuckets(workspace, insightBuckets(insight));
     const extraFilters = filters ? filters : [];
     const filteredDef = defWithFilters(def, [...insightFilters(insight), ...extraFilters]);
@@ -178,15 +199,15 @@ function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
         if (bucketMeasures(firstBucket).length) {
             return newTwoDimensional(
                 [MeasureGroupIdentifier],
-                bucketAttributes(firstBucket).map(attributeId),
+                bucketAttributes(firstBucket).map(attributeLocalId),
             );
         }
 
-        return [newDimension(bucketAttributes(firstBucket).map(attributeId))];
+        return [newDimension(bucketAttributes(firstBucket).map(attributeLocalId))];
     }
 
-    const firstDim = bucketAttributes(firstBucket).map(attributeId);
-    const secondDim = bucketsAttributes(otherBuckets).map(attributeId);
+    const firstDim = bucketAttributes(firstBucket).map(attributeLocalId);
+    const secondDim = bucketsAttributes(otherBuckets).map(attributeLocalId);
 
     if (bucketMeasures(firstBucket).length) {
         firstDim.push(MeasureGroupIdentifier);
@@ -199,10 +220,10 @@ function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
 
 function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDimension[] {
     if (definition.measures.length) {
-        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeId));
+        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeLocalId));
     }
 
-    return [newDimension(definition.attributes.map(attributeId))];
+    return [newDimension(definition.attributes.map(attributeLocalId))];
 }
 
 /**

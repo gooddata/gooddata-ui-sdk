@@ -7,6 +7,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@gooddata/catalog-export",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@gooddata/gd-bear-client",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -21,6 +25,10 @@
     {
       "name": "@gooddata/js-utils",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/mock-handling",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@gooddata/mock-js",

@@ -14,7 +14,11 @@ export const anyBucket: BucketPredicate;
 export const anyMeasure: MeasurePredicate;
 
 // @public
+export function applyRatioRule<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
+
+// @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+    // @internal
     constructor(measureIds: string[], operator: ArithmeticMeasureOperator);
 }
 
@@ -23,6 +27,7 @@ export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" 
 
 // @public
 export class AttributeBuilder implements IAttribute {
+    // @internal
     constructor(displayFormId: string);
     // (undocumented)
     alias: (alias: string) => this;
@@ -32,7 +37,7 @@ export class AttributeBuilder implements IAttribute {
     build: () => {
         attribute: {
             localIdentifier: string;
-            displayForm: import("..").ObjQualifier;
+            displayForm: import("..").ObjRef;
             alias?: string | undefined;
         };
     };
@@ -44,12 +49,6 @@ export class AttributeBuilder implements IAttribute {
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
-export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean;
-
-// @public
-export function attributeId(attribute: IAttribute): string;
-
-// @public
 export function attributeIdentifier(attribute: IAttribute): string | undefined;
 
 // @public
@@ -58,6 +57,9 @@ export type AttributeInBucket = {
     idx: number;
     attribute: IAttribute;
 };
+
+// @public
+export function attributeLocalId(attribute: IAttribute): string;
 
 // @public
 export type AttributeModifications = (builder: AttributeBuilder) => AttributeBuilder;
@@ -87,6 +89,9 @@ export function bucketIsEmpty(bucket: IBucket): boolean;
 export function bucketItems(bucket: IBucket): AttributeOrMeasure[];
 
 // @public
+export function bucketMeasure(bucket: IBucket, idOrFun?: string | MeasurePredicate): IMeasure | undefined;
+
+// @public
 export function bucketMeasures(bucket: IBucket, predicate?: MeasurePredicate): IMeasure[];
 
 // @public
@@ -102,10 +107,10 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[];
 export function bucketsFind(buckets: IBucket[], idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
-export function bucketsFindAttribute(buckets: IBucket[], idOrFun: string | AttributePredicate): AttributeInBucket | undefined;
+export function bucketsFindAttribute(buckets: IBucket[], idOrFun?: string | AttributePredicate): AttributeInBucket | undefined;
 
 // @public
-export function bucketsFindMeasure(buckets: IBucket[], idOrFun: string | MeasurePredicate): MeasureInBucket | undefined;
+export function bucketsFindMeasure(buckets: IBucket[], idOrFun?: string | MeasurePredicate): MeasureInBucket | undefined;
 
 // @public
 export function bucketsIsEmpty(buckets: IBucket[]): boolean;
@@ -130,7 +135,13 @@ export enum ComputeRatioRule {
 }
 
 // @public
-export function computeRatioRules<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
+export const DateGranularity: {
+    date: string;
+    week: string;
+    month: string;
+    quarter: string;
+    year: string;
+};
 
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
@@ -160,6 +171,9 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem
 export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 
 // @public
+export type DimensionItem = Identifier | ITotal;
+
+// @public
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
 
 // @public
@@ -175,16 +189,13 @@ export const factoryNotationFor: (data: any) => string;
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
-export function filterQualifierValue(filter: IFilter): string;
-
-// @public
 export type GuidType = "guid";
 
 // @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         from: string;
         to: string;
     };
@@ -204,7 +215,7 @@ export interface IAttribute {
     // (undocumented)
     attribute: {
         localIdentifier: Identifier;
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         alias?: string;
     };
 }
@@ -292,6 +303,11 @@ export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 export type Identifier = string;
 
 // @public
+export type IdentifierRef = {
+    identifier: Identifier;
+};
+
+// @public
 export interface IDimension {
     itemIdentifiers: Identifier[];
     totals?: ITotal[];
@@ -368,7 +384,7 @@ export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionT
 export interface IMeasureDefinition {
     // (undocumented)
     measureDefinition: {
-        item: ObjQualifier;
+        item: ObjRef;
         aggregation?: MeasureAggregation;
         filters?: IFilter[];
         computeRatio?: boolean;
@@ -399,7 +415,7 @@ export interface IMeasureSortItem {
 export interface INegativeAttributeFilter {
     // (undocumented)
     negativeAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         notIn: AttributeElements;
     };
 }
@@ -432,6 +448,12 @@ export function insightMeasures(insight: IInsight): IMeasure[];
 export function insightProperties(insight: IInsight): VisualizationProperties;
 
 // @public
+export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
+
+// @public
+export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
+
+// @public
 export function insightSorts(insight: IInsight): SortItem[];
 
 // @public
@@ -441,35 +463,11 @@ export function insightTotals(insight: IInsight): ITotal[];
 export function insightVisualizationClassIdentifier(insight: IInsight): string;
 
 // @public
-export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight;
-
-// @public
-export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight;
-
-// @public
-export interface IObjIdentifierQualifier {
-    // (undocumented)
-    identifier: Identifier;
-}
-
-// @public
-export interface IObjLocalIdentifierQualifier {
-    // (undocumented)
-    localIdentifier: Identifier;
-}
-
-// @public
-export interface IObjUriQualifier {
-    // (undocumented)
-    uri: string;
-}
-
-// @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
     popMeasureDefinition: {
         measureIdentifier: Identifier;
-        popAttribute: ObjQualifier;
+        popAttribute: ObjRef;
     };
 }
 
@@ -477,7 +475,7 @@ export interface IPoPMeasureDefinition {
 export interface IPositiveAttributeFilter {
     // (undocumented)
     positiveAttributeFilter: {
-        displayForm: ObjQualifier;
+        displayForm: ObjRef;
         in: AttributeElements;
     };
 }
@@ -485,7 +483,7 @@ export interface IPositiveAttributeFilter {
 // @public
 export interface IPreviousPeriodDateDataSet {
     // (undocumented)
-    dataSet: ObjQualifier;
+    dataSet: ObjRef;
     // (undocumented)
     periodsAgo: number;
 }
@@ -511,7 +509,7 @@ export interface IPreviousPeriodMeasureDefinition {
 export interface IRelativeDateFilter {
     // (undocumented)
     relativeDateFilter: {
-        dataSet: ObjQualifier;
+        dataSet: ObjRef;
         granularity: string;
         from: number;
         to: number;
@@ -566,7 +564,7 @@ export function isDimension(obj: any): obj is IDimension;
 export function isGuidColorItem(obj: any): obj is IGuidColorItem;
 
 // @public
-export function isIdentifierQualifier(obj: any): obj is IObjIdentifierQualifier;
+export function isIdentifierRef(obj: any): obj is IdentifierRef;
 
 // @public
 export function isInsight(obj: any): obj is IInsight;
@@ -614,17 +612,13 @@ export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
 export function isTotal(obj: any): obj is ITotal;
 
 // @public
-export function isUriQualifier(obj: any): obj is IObjUriQualifier;
+export function isUriRef(obj: any): obj is UriRef;
 
 // @public
 export interface ITotal {
-    // (undocumented)
     alias?: string;
-    // (undocumented)
-    attributeIdentifier: string;
-    // (undocumented)
-    measureIdentifier: string;
-    // (undocumented)
+    attributeIdentifier: Identifier;
+    measureIdentifier: Identifier;
     type: TotalType;
 }
 
@@ -644,6 +638,11 @@ export interface IVisualizationClass {
 }
 
 // @public
+export type LocalIdRef = {
+    localIdentifier: Identifier;
+};
+
+// @public
 export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
@@ -660,7 +659,8 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 
 // @public
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
-    constructor(measureId: string);
+    // @internal
+    constructor(measureOrId: IMeasure<IMeasureDefinition> | string);
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
@@ -670,8 +670,9 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 }
 
 // @public
-export class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
-    constructor();
+export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+    // @internal
+    protected constructor();
     // (undocumented)
     alias: (alias: string) => this;
     // (undocumented)
@@ -698,9 +699,6 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean;
 export const MeasureGroupIdentifier = "measureGroup";
 
 // @public
-export function measureId(measure: IMeasure): string;
-
-// @public
 export function measureIdentifier(measure: IMeasure): string | undefined;
 
 // @public
@@ -709,6 +707,9 @@ export type MeasureInBucket = {
     idx: number;
     measure: IMeasure;
 };
+
+// @public
+export function measureLocalId(measure: IMeasure): string;
 
 // @public
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
@@ -726,19 +727,25 @@ export function measureTitle(measure: IMeasure): string | undefined;
 export function measureUri(measure: IMeasure): string | undefined;
 
 // @public
+export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
+
+// @public
 export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter;
 
 // @public
-export function newArithmeticMeasure(measureIds: string[], operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
+export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | string>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
 export function newAttribute(displayFormId: string, modifications?: AttributeModifications): IAttribute;
 
 // @public
-export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection: SortDirection, aggregation?: boolean): IAttributeSortItem;
+export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
 
 // @public
-export function newBucket(id: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
+export function newAttributeSort(attributeOrId: IAttribute | string, sortDirection?: SortDirection, aggregation?: boolean): IAttributeSortItem;
+
+// @public
+export function newBucket(localId: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
 // @public
 export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
@@ -750,48 +757,53 @@ export function newDefForInsight(workspace: string, insight: IInsight, filters?:
 export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDimension(ids?: Identifier[]): IDimension;
+export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
 
 // @public
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
-export function newMeasureSort(measureOrId: IMeasure | string, sortDirection: SortDirection, attributeLocators?: Array<IAttributeLocatorItem["attributeLocatorItem"]>): IMeasureSortItem;
+export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
-export function newNegativeAttributeFilter(displayFormId: string, notInValues: string[] | AttributeElements): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrId: IAttribute | string, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
-export function newPopMeasure(measureId: string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function newPopMeasure(measureOrId: IMeasure | string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(displayFormId: string, inValues: AttributeElements): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrId: IAttribute | string, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
-export function newPreviousPeriodMeasure(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
+export function newPreviousPeriodMeasure(measureIdOrId: IMeasure | string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
 export function newRelativeDateFilter(dateDataSetId: string, granularity: string, from: number, to: number): IRelativeDateFilter;
 
 // @public
-export function newTwoDimensional(dim1Ids: Identifier[], dim2Ids: Identifier[]): IDimension[];
+export function newTotal(type: TotalType, measureOrId: IMeasure | string, attributeOrId: IAttribute | string, alias?: string): ITotal;
 
 // @public
-export function objectQualifierValue(obj: ObjQualifier): string;
+export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
+export function objectRefValue(objRef: ObjRef): string;
 
 // @public
-export type ObjQualifierWithLocal = ObjQualifier | IObjLocalIdentifierQualifier;
+export type ObjRef = UriRef | IdentifierRef;
+
+// @public
+export type ObjRefInScope = ObjRef | LocalIdRef;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+    // @internal
     constructor(measureId: string, popAttributeId: string);
 }
 
 // @public
 export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+    // @internal
     constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]);
 }
 
@@ -823,6 +835,11 @@ export function totalIsNative(total: ITotal): boolean;
 
 // @public
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
+
+// @public
+export type UriRef = {
+    uri: string;
+};
 
 // @public
 export function visClassUrl(vc: IVisualizationClass): string;

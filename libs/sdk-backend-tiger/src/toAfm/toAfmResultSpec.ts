@@ -4,17 +4,17 @@ import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
-    attributeId,
+    attributeLocalId,
     attributesFind,
     bucketItems,
     bucketsFindAttribute,
     dimensionTotals,
     IAttribute,
     isAttribute,
-    isUriQualifier,
+    isUriRef,
     totalIsNative,
     MeasureGroupIdentifier,
-    IExecutionDefinition
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
@@ -22,14 +22,14 @@ import isEmpty = require("lodash/isEmpty");
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
-    const displayFromQualifier = attribute.attribute.displayForm;
+    const displayFromRef = attribute.attribute.displayForm;
 
-    if (isUriQualifier(displayFromQualifier)) {
+    if (isUriRef(displayFromRef)) {
         throw new NotSupported("Tiger backend does not allow specifying display forms by URI");
     }
 
     return {
-        displayForm: displayFromQualifier,
+        displayForm: displayFromRef,
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
     };
@@ -81,7 +81,7 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
         const rollupAttributes = bucketItems(attribute.bucket)
             .slice(0, attribute.idx)
             .filter(isAttribute)
-            .map(attributeId);
+            .map(attributeLocalId);
 
         // and create native total such, that it rolls up all those attributes
         return {
@@ -104,9 +104,9 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
                 throw new Error(`invalid invariant: dimension specifies undefined attr ${item}`);
             }
 
-            const attrQualifier = attr.attribute.displayForm;
+            const attrRef = attr.attribute.displayForm;
 
-            if (isUriQualifier(attrQualifier)) {
+            if (isUriRef(attrRef)) {
                 throw new NotSupported("tiger does not support attributes specified by uri");
             }
         });
@@ -117,7 +117,6 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
     });
     return def.dimensions;
 }
-
 
 function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
     if (!isEmpty(def.sortBy)) {

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import {
     AttributeOrMeasure,
-    computeRatioRules,
+    applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
@@ -59,7 +59,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const { measures, viewBy, stackBy } = getBucketsProps(props);
-        const sanitizedMeasures = computeRatioRules(measures);
+        const sanitizedMeasures = applyRatioRule(measures);
         return [
             newBucket(MEASURES, ...sanitizedMeasures),
             newBucket(ATTRIBUTE, ...viewBy),

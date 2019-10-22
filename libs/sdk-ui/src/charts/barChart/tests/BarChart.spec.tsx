@@ -6,7 +6,7 @@ import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
-    attributeId,
+    attributeLocalId,
     AttributeOrMeasure,
     IAttribute,
     IMeasure,
@@ -85,8 +85,8 @@ describe("BarChart", () => {
         );
 
         const exceptedDimensions = newTwoDimensional(
-            [attributeId(attribute2)],
-            [attributeId(attribute), MeasureGroupIdentifier],
+            [attributeLocalId(attribute2)],
+            [attributeLocalId(attribute), MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreBarChart)).toHaveLength(1);

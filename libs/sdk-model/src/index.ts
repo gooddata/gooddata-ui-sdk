@@ -3,7 +3,7 @@
 export {
     IAttribute,
     isAttribute,
-    attributeId,
+    attributeLocalId,
     AttributePredicate,
     anyAttribute,
     idMatchAttribute,
@@ -16,27 +16,28 @@ export { newAttribute, AttributeBuilder, AttributeModifications } from "./attrib
 
 export {
     Identifier,
-    IObjUriQualifier,
-    IObjIdentifierQualifier,
-    IObjLocalIdentifierQualifier,
-    ObjQualifier,
-    ObjQualifierWithLocal,
-    isUriQualifier,
-    isIdentifierQualifier,
-    objectQualifierValue,
+    UriRef,
+    IdentifierRef,
+    LocalIdRef,
+    ObjRef,
+    ObjRefInScope,
+    isUriRef,
+    isIdentifierRef,
+    objectRefValue,
 } from "./base";
 
 export {
     IDimension,
     isDimension,
     dimensionTotals,
+    DimensionItem,
     newTwoDimensional,
     newDimension,
     MeasureGroupIdentifier,
     dimensionSetTotals,
 } from "./base/dimension";
 
-export { TotalType, ITotal, isTotal, totalIsNative } from "./base/totals";
+export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./base/totals";
 
 export {
     SortDirection,
@@ -52,6 +53,7 @@ export {
     isAttributeSort,
     newMeasureSort,
     newAttributeSort,
+    newAttributeLocator,
     SortEntityIds,
     sortEntityIds,
 } from "./base/sort";
@@ -75,9 +77,7 @@ export {
     isAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
-    attributeElementsIsEmpty,
     filterIsEmpty,
-    filterQualifierValue,
 } from "./filter";
 
 export {
@@ -106,7 +106,7 @@ export {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
     isArithmeticMeasureDefinition,
-    measureId,
+    measureLocalId,
     MeasurePredicate,
     anyMeasure,
     idMatchMeasure,
@@ -129,8 +129,9 @@ export {
     PoPMeasureBuilder,
     PreviousPeriodMeasureBuilder,
     MeasureBuilderBase,
-    newArithmeticMeasure,
     newMeasure,
+    modifyMeasure,
+    newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "./measure/factory";
@@ -147,27 +148,30 @@ export {
     bucketIsEmpty,
     bucketAttributes,
     bucketAttribute,
+    bucketMeasure,
     bucketMeasures,
     bucketTotals,
     bucketItems,
-    bucketsAttributes,
-    bucketsMeasures,
-    bucketsById,
-    bucketsIsEmpty,
-    bucketsItems,
-    bucketsFind,
-    bucketsFindAttribute,
-    bucketsFindMeasure,
-    bucketsTotals,
-    ComputeRatioRule,
-    computeRatioRules,
     BucketPredicate,
+    applyRatioRule,
+    ComputeRatioRule,
 } from "./buckets";
+
+export {
+    bucketsFind,
+    bucketsMeasures,
+    bucketsIsEmpty,
+    bucketsAttributes,
+    bucketsFindMeasure,
+    bucketsById,
+    bucketsFindAttribute,
+    bucketsItems,
+    bucketsTotals,
+} from "./buckets/bucketArray";
 
 export {
     IExecutionDefinition,
     DimensionGenerator,
-    emptyDef,
     defWithFilters,
     defFingerprint,
     defSetDimensions,
@@ -182,6 +186,7 @@ export {
     defWithDimensions,
     defWithSorting,
     defaultDimensionsGenerator,
+    emptyDef,
 } from "./executionDefinition/factory";
 
 export {
@@ -215,9 +220,10 @@ export {
     insightTotals,
     insightFilters,
     insightVisualizationClassIdentifier,
-    insightWithProperties,
-    insightWithSorts,
+    insightSetProperties,
+    insightSetSorts,
     visClassUrl,
 } from "./insight";
 
 export { factoryNotationFor } from "./objectFactoryNotation";
+export { DateGranularity } from "./filter";

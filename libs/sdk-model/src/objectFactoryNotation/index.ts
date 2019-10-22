@@ -5,7 +5,7 @@ import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
 import stringifyObject = require("stringify-object");
-import { ObjQualifier } from "../base";
+import { ObjRef } from "../base";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,
@@ -49,7 +49,7 @@ const stringify = (input: any) =>
 
 const ARRAY_JOINER = ", ";
 
-const getObjQualifierValue = (value: ObjQualifier): string => (value as any).uri || (value as any).identifier;
+const getObjQualifierValue = (value: ObjRef): string => (value as any).uri || (value as any).identifier;
 
 type Converter<T> = (input: T) => string;
 
@@ -153,11 +153,10 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
     const locators = measureSortItem.locators || [];
     const measureLocator = locators.find(l => isMeasureLocator(l)) as IMeasureLocatorItem;
     const attributeLocators = locators.filter(l => !isMeasureLocator(l)) as IAttributeLocatorItem[];
-    const unwrappedAttributeLocators = attributeLocators.map(a => a.attributeLocatorItem);
 
     return `newMeasureSort("${measureLocator.measureLocatorItem.measureIdentifier}", "${
         measureSortItem.direction
-    }", ${stringify(unwrappedAttributeLocators)})`;
+    }", ${stringify(attributeLocators)})`;
 };
 
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({

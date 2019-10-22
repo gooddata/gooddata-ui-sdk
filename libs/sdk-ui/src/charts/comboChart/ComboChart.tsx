@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import {
     ComputeRatioRule,
-    computeRatioRules,
+    applyRatioRule,
     IAttribute,
     IFilter,
     IMeasure,
@@ -68,8 +68,8 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 
         return {
             ...props,
-            primaryMeasures: computeRatioRules(primaryMeasures, computeRatioRule),
-            secondaryMeasures: computeRatioRules(secondaryMeasures, computeRatioRule),
+            primaryMeasures: applyRatioRule(primaryMeasures, computeRatioRule),
+            secondaryMeasures: applyRatioRule(secondaryMeasures, computeRatioRule),
         };
     },
     bucketsFactory: props => {

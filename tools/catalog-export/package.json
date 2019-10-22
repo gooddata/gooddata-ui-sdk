@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "8.0.0",
+    "version": "8.0.0-alpha.0",
     "author": "GoodData",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/catalog-export",
@@ -71,7 +71,6 @@
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
-        "@gooddata/sdk-model": "^8.0.0-alpha.0",
         "@types/inquirer": "^6.5.0",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",

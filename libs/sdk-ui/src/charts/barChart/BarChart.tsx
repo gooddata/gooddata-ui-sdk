@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import {
     AttributeOrMeasure,
-    computeRatioRules,
+    applyRatioRule,
     IAttribute,
     IFilter,
     newBucket,
@@ -56,7 +56,7 @@ export function BarChart(props: IBarChartProps): JSX.Element {
 const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps> = {
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
-        const measures = computeRatioRules(props.measures);
+        const measures = applyRatioRule(props.measures);
         const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
 
         return [

@@ -2,59 +2,142 @@
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
+import { anyBucket, BucketPredicate, IBucket } from "../buckets";
+import { IFilter } from "../filter";
+import { IMeasure, measureLocalId } from "../measure";
+import { attributeLocalId, IAttribute } from "../attribute";
+import { ITotal } from "../base/totals";
 import {
-    anyBucket,
-    BucketPredicate,
     bucketsAttributes,
     bucketsById,
     bucketsFind,
     bucketsMeasures,
     bucketsTotals,
-    IBucket,
-} from "../buckets";
-import { IFilter } from "../filter";
-import { IMeasure, measureId } from "../measure";
-import { attributeId, IAttribute } from "../attribute";
-import { ITotal } from "../base/totals";
+} from "../buckets/bucketArray";
+import invariant from "ts-invariant";
 
 /**
- * TODO: SDK8: add public doc
+ * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
+ * and can be embedded using UI SDK.
+ *
+ * Insight contains all metadata needed to construct its visualization and perform execution to obtain data
+ * for that visualization.
  *
  * @public
  */
 export interface IInsight {
     insight: {
+        /**
+         * Unique identifier of the Insight
+         */
         identifier: string;
+
+        /**
+         * Link to the insight.
+         */
         uri?: string;
+
+        /**
+         * User-assigned title of this insight
+         */
         title: string;
+
+        /**
+         * Identifier of the visualization class that should be used to render this insight.
+         */
         visualizationClassIdentifier: string;
+
+        /**
+         * Buckets of attributes, measures and totals to render on the visualization.
+         */
         buckets: IBucket[];
+
+        /**
+         * Filters to apply on the data.
+         */
         filters: IFilter[];
+
+        /**
+         * Sorting to apply on the data.
+         */
         sorts: SortItem[];
+
+        /**
+         * Visualization-specific properties. This object MAY contain customization metadata for this insight such as:
+         *
+         * - what axis to display on a chart
+         * - whether to display legend
+         * - how to color the chart
+         *
+         * These properties vary from visualization to visualization. Backend does not process the properties in
+         * any way.
+         */
         properties: VisualizationProperties;
     };
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Visualization class is essentially a descriptor for particular type of visualization - say bar chart
+ * or table. Each available visualization type is described by a class stored in the metadata. The available
+ * classes influence what visualizations can users select in Analytical Designer.
  *
  * @public
  */
 export interface IVisualizationClass {
     visualizationClass: {
+        /**
+         * Unique identifier of the visualization.
+         */
         identifier: string;
+
+        /**
+         * Link to visualization class object.
+         */
         uri?: string;
+
+        /**
+         * Human readable name of the visualization (Bar Chart, Pivot Table)
+         */
         title: string;
+
+        /**
+         * Link to where visualization's assets reside.
+         *
+         * This MAY contain URLs such as 'local:bar', 'local:table' - such URLs indicate that the visualization
+         * is bundled with the GoodData.UI SDK.
+         */
         url: string;
+
+        /**
+         * Visualization icon to display in Analytical Designer.
+         */
         icon: string;
+
+        /**
+         * Visualization icon to display when user selects the visualization in Analytical Designer.
+         */
         iconSelected: string;
+
+        /**
+         * Checksum for subresource integrity checking.
+         *
+         * {@link https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity}
+         */
         checksum: string;
+
+        /**
+         * Override ordering in the visualization catalog.
+         */
         orderIndex?: number;
     };
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Visualization-specific properties.
+ *
+ * These are modelled in generic fashion as they vary visualization by visualization.
+ *
+ * TODO: add links to properties supported by our visualizations.
  *
  * @public
  */
@@ -67,7 +150,7 @@ export type VisualizationProperties = {
 //
 
 /**
- * TODO: SDK8: add public doc
+ * Type guard checking whether the provided object is an Insight.
  *
  * @public
  */
@@ -102,8 +185,7 @@ export function insightBucket(
 }
 
 /**
- * Gets all buckets matching the provided ids from an insight. If no ids are provided, then all buckets are
- * returned
+ * Gets buckets for the insight. If ids are provided, then only returns buckets matching the ids.
  *
  * @param insight - insight to work with
  * @param ids - local identifiers of buckets
@@ -115,7 +197,7 @@ export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
         return [];
     }
 
-    if (!ids || !ids.length) {
+    if (isEmpty(ids)) {
         return insight.insight.buckets;
     }
 
@@ -229,8 +311,8 @@ export function insightSorts(insight: IInsight): SortItem[] {
         return [];
     }
 
-    const attributeIds = insightAttributes(insight).map(attributeId);
-    const measureIds = insightMeasures(insight).map(measureId);
+    const attributeIds = insightAttributes(insight).map(attributeLocalId);
+    const measureIds = insightMeasures(insight).map(measureLocalId);
 
     function contains(arr1: string[], arr2: string[]): boolean {
         return intersection(arr1, arr2).length === arr2.length;
@@ -283,18 +365,21 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
  * @public
  */
 export function insightVisualizationClassIdentifier(insight: IInsight): string {
+    invariant(insight, "insight to get vis class identifier from must be defined");
+
     return insight.insight.visualizationClassIdentifier;
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different properties. New
+ * properties will be used in the new insight as-is, no merging with existing properties.
  *
  * @param insight - insight to work with
  * @param properties - new properties to have on the new insight
  * @returns always new instance
  * @public
  */
-export function insightWithProperties(insight: IInsight, properties: VisualizationProperties): IInsight {
+export function insightSetProperties(insight: IInsight, properties: VisualizationProperties = {}): IInsight {
     return {
         insight: {
             ...insight.insight,
@@ -304,14 +389,15 @@ export function insightWithProperties(insight: IInsight, properties: Visualizati
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different sorts.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different sorts. New
+ * sorts will be used in the new insight as-is, no merging with existing sorts.
  *
  * @param insight - insight to work with
  * @param sorts - new sorts to apply
  * @returns always new instance
  * @public
  */
-export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight {
+export function insightSetSorts(insight: IInsight, sorts: SortItem[] = []): IInsight {
     return {
         insight: {
             ...insight.insight,
@@ -332,5 +418,7 @@ export function insightWithSorts(insight: IInsight, sorts: SortItem[]): IInsight
  * @public
  */
 export function visClassUrl(vc: IVisualizationClass): string {
+    invariant(vc, "vis class to get URL from must be defined");
+
     return vc.visualizationClass.url;
 }
