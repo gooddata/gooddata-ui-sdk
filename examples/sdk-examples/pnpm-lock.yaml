@@ -25,7 +25,7 @@ dependencies:
   react-select: 1.3.0_react-dom@16.10.2+react@16.10.2
   react-syntax-highlighter: 6.1.2_react@16.10.2
   react-test-renderer: 16.10.2_react@16.10.2
-  recharts: 1.8.3_react-dom@16.10.2+react@16.10.2
+  recharts: 1.8.4_react-dom@16.10.2+react@16.10.2
   yup: 0.24.1
 devDependencies:
   '@babel/core': 7.6.4
@@ -38,7 +38,7 @@ devDependencies:
   '@babel/preset-typescript': 7.6.0_@babel+core@7.6.4
   '@babel/runtime': 7.6.3
   '@gooddata/mock-js': 1.34.0
-  '@gooddata/tslint-config': 1.0.0_typescript@3.6.4
+  '@gooddata/tslint-config': 1.0.0_typescript@3.6.3
   '@types/react': 16.9.9
   '@types/react-dom': 16.9.2
   babel-loader: 8.0.6_@babel+core@7.6.4+webpack@4.41.2
@@ -66,9 +66,9 @@ devDependencies:
   supertest: 3.4.2
   testcafe: 1.6.0
   testcafe-live: 0.1.4_testcafe@1.6.0
-  tslint: 5.14.0_typescript@3.6.4
+  tslint: 5.14.0_typescript@3.6.3
   tslint-config-prettier: 1.18.0
-  typescript: 3.6.4
+  typescript: 3.6.3
   webpack: 4.41.2_webpack@4.41.2
   webpack-cli: 3.3.9_webpack@4.41.2
   webpack-dev-server: 3.8.2_webpack@4.41.2
@@ -980,12 +980,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-w4Hz+PfWp3smOuoyyBep033aOx4ffCyY9Wi86r2idCHxnHdPsiIYMAI7wdVm+51ul1JaA7n3BBP8BesuFB9gzA==
-  /@gooddata/tslint-config/1.0.0_typescript@3.6.4:
+  /@gooddata/tslint-config/1.0.0_typescript@3.6.3:
     dependencies:
-      tslint: 5.14.0_typescript@3.6.4
-      tslint-eslint-rules: 5.4.0_tslint@5.14.0+typescript@3.6.4
-      tslint-microsoft-contrib: 6.1.0_tslint@5.14.0+typescript@3.6.4
-      tslint-react: 3.6.0_tslint@5.14.0+typescript@3.6.4
+      tslint: 5.14.0_typescript@3.6.3
+      tslint-eslint-rules: 5.4.0_tslint@5.14.0+typescript@3.6.3
+      tslint-microsoft-contrib: 6.1.0_tslint@5.14.0+typescript@3.6.3
+      tslint-react: 3.6.0_tslint@5.14.0+typescript@3.6.3
     dev: true
     peerDependencies:
       typescript: '*'
@@ -2786,7 +2786,7 @@ packages:
   /browserslist/1.7.7:
     dependencies:
       caniuse-db: 1.0.30001002
-      electron-to-chromium: 1.3.289
+      electron-to-chromium: 1.3.292
     deprecated: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
     dev: true
     hasBin: true
@@ -2795,7 +2795,7 @@ packages:
   /browserslist/3.2.8:
     dependencies:
       caniuse-lite: 1.0.30001002
-      electron-to-chromium: 1.3.289
+      electron-to-chromium: 1.3.292
     dev: true
     hasBin: true
     resolution:
@@ -2803,8 +2803,8 @@ packages:
   /browserslist/4.7.1:
     dependencies:
       caniuse-lite: 1.0.30001002
-      electron-to-chromium: 1.3.289
-      node-releases: 1.1.36
+      electron-to-chromium: 1.3.292
+      node-releases: 1.1.37
     dev: true
     hasBin: true
     resolution:
@@ -4241,10 +4241,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
-  /electron-to-chromium/1.3.289:
+  /electron-to-chromium/1.3.292:
     dev: true
     resolution:
-      integrity: sha512-39GEOWgTxtMDk/WjIQLg4W/l1s4FZdiMCqUBLjd92tAXsBPDFLwuwCba5OGhuTdVYm6E128TZIqSnMpeocUlCQ==
+      integrity: sha512-hqkem5ANpt6mxVXmhAmlbdG8iicuyM/jEYgmP1tiHPeOLyZoTyGUzrDmJS/xyrrZy9frkW1uQcubicu7f6DS5g==
   /elegant-spinner/1.0.1:
     dev: true
     engines:
@@ -7745,12 +7745,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-M4UBGcs4jeOK9CjTsYwkvH6/MzuUmGCyTW+kCY7uO+1ZVr0+FHGdPdIf5CCLqAaxnRrWidyoQlNkMIIVwbKB8Q==
-  /node-releases/1.1.36:
+  /node-releases/1.1.37:
     dependencies:
       semver: 6.3.0
     dev: true
     resolution:
-      integrity: sha512-ggXhX6QGyJSjj3r+6ml2LqqC28XOWmKtpb+a15/Zpr9V3yoNazxJNlcQDS9bYaid5FReEWHEgToH1mwoUceWwg==
+      integrity: sha512-0EOsAEdn6S2vQdDGBWBpmClm5BCkXVkVOURdnhfg7//rxI2XbleRdKig87WuBrk+0PHZ4OhO58fRm9mzWW4jNw==
   /node-sass/4.12.0:
     dependencies:
       async-foreach: 0.1.3
@@ -9447,7 +9447,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-p/cKt7j17D1CImLgX2f5+6IXLbRHGUQkogIp06VUoci/XkhOQiGSzUrsD1uRmiI7jha4u8XNFOjkHkzzBPivMg==
-  /recharts/1.8.3_react-dom@16.10.2+react@16.10.2:
+  /recharts/1.8.4_react-dom@16.10.2+react@16.10.2:
     dependencies:
       classnames: 2.2.6
       core-js: 2.6.10
@@ -9467,7 +9467,7 @@ packages:
       react: ^15.0.0 || ^16.0.0
       react-dom: ^15.0.0 || ^16.0.0
     resolution:
-      integrity: sha512-DS/nVYeONyIopOp7Ib5VFCcJAzm908ddo05hDhWq0H3wmxtnwT6NWm2F2GnFUksZiVTE4r0MgeLzxYR+6hVBPA==
+      integrity: sha512-ANZ8DJ6kd8PWCDd4Auth73VfloEaqpwu5i+5iYMBm9VpNx5vohR8KbwquOvz2jM19YPFHAJZZg7BQS5+CARuHg==
   /redent/1.0.0:
     dependencies:
       indent-string: 2.1.0
@@ -11208,42 +11208,42 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-xPw9PgNPLG3iKRxmK7DWr+Ea/SzrvfHtjFt5LBl61gk2UBG/DB9kCXRjv+xyIU1rUtnayLeMUVJBcMX8Z17nDg==
-  /tslint-eslint-rules/5.4.0_tslint@5.14.0+typescript@3.6.4:
+  /tslint-eslint-rules/5.4.0_tslint@5.14.0+typescript@3.6.3:
     dependencies:
       doctrine: 0.7.2
       tslib: 1.9.0
-      tslint: 5.14.0_typescript@3.6.4
-      tsutils: 3.17.1_typescript@3.6.4
-      typescript: 3.6.4
+      tslint: 5.14.0_typescript@3.6.3
+      tsutils: 3.17.1_typescript@3.6.3
+      typescript: 3.6.3
     dev: true
     peerDependencies:
       tslint: ^5.0.0
       typescript: ^2.2.0 || ^3.0.0
     resolution:
       integrity: sha512-WlSXE+J2vY/VPgIcqQuijMQiel+UtmXS+4nvK4ZzlDiqBfXse8FAvkNnTcYhnQyOTW5KFM+uRRGXxYhFpuBc6w==
-  /tslint-microsoft-contrib/6.1.0_tslint@5.14.0+typescript@3.6.4:
+  /tslint-microsoft-contrib/6.1.0_tslint@5.14.0+typescript@3.6.3:
     dependencies:
-      tslint: 5.14.0_typescript@3.6.4
-      tsutils: 2.28.0_typescript@3.6.4
-      typescript: 3.6.4
+      tslint: 5.14.0_typescript@3.6.3
+      tsutils: 2.28.0_typescript@3.6.3
+      typescript: 3.6.3
     dev: true
     peerDependencies:
       tslint: ^5.1.0
       typescript: ^2.1.0 || ^3.0.0
     resolution:
       integrity: sha512-8DgmiPTgNQSYTjrKKv/h1aHnDd7EkGAjTxatrjfSDp5jUXENGI7Qj7qi7T8xBdTZN9Z3nb80u0NhdBBOMcQFHg==
-  /tslint-react/3.6.0_tslint@5.14.0+typescript@3.6.4:
+  /tslint-react/3.6.0_tslint@5.14.0+typescript@3.6.3:
     dependencies:
-      tslint: 5.14.0_typescript@3.6.4
-      tsutils: 2.29.0_typescript@3.6.4
-      typescript: 3.6.4
+      tslint: 5.14.0_typescript@3.6.3
+      tsutils: 2.29.0_typescript@3.6.3
+      typescript: 3.6.3
     dev: true
     peerDependencies:
       tslint: ^5.1.0
       typescript: '>=2.1.0 || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev'
     resolution:
       integrity: sha512-AIv1QcsSnj7e9pFir6cJ6vIncTqxfqeFF3Lzh8SuuBljueYzEAtByuB6zMaD27BL0xhMEqsZ9s5eHuCONydjBw==
-  /tslint/5.14.0_typescript@3.6.4:
+  /tslint/5.14.0_typescript@3.6.3:
     dependencies:
       babel-code-frame: 6.26.0
       builtin-modules: 1.1.1
@@ -11257,8 +11257,8 @@ packages:
       resolve: 1.12.0
       semver: 5.7.1
       tslib: 1.10.0
-      tsutils: 2.29.0_typescript@3.6.4
-      typescript: 3.6.4
+      tsutils: 2.29.0_typescript@3.6.3
+      typescript: 3.6.3
     dev: true
     engines:
       node: '>=4.8.0'
@@ -11267,28 +11267,28 @@ packages:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev'
     resolution:
       integrity: sha512-IUla/ieHVnB8Le7LdQFRGlVJid2T/gaJe5VkjzRVSRR6pA2ODYrnfR1hmxi+5+au9l50jBwpbBL34txgv4NnTQ==
-  /tsutils/2.28.0_typescript@3.6.4:
+  /tsutils/2.28.0_typescript@3.6.3:
     dependencies:
       tslib: 1.10.0
-      typescript: 3.6.4
+      typescript: 3.6.3
     dev: true
     peerDependencies:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
     resolution:
       integrity: sha512-bh5nAtW0tuhvOJnx1GLRn5ScraRLICGyJV5wJhtRWOLsxW70Kk5tZtpK3O/hW6LDnqKS9mlUMPZj9fEMJ0gxqA==
-  /tsutils/2.29.0_typescript@3.6.4:
+  /tsutils/2.29.0_typescript@3.6.3:
     dependencies:
       tslib: 1.10.0
-      typescript: 3.6.4
+      typescript: 3.6.3
     dev: true
     peerDependencies:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
     resolution:
       integrity: sha512-g5JVHCIJwzfISaXpXE1qvNalca5Jwob6FjI4AoPlqMusJ6ftFE7IkkFoMhVLRgK+4Kx3gkzb8UZK5t5yTTvEmA==
-  /tsutils/3.17.1_typescript@3.6.4:
+  /tsutils/3.17.1_typescript@3.6.3:
     dependencies:
       tslib: 1.9.0
-      typescript: 3.6.4
+      typescript: 3.6.3
     dev: true
     engines:
       node: '>= 6'
@@ -11345,6 +11345,13 @@ packages:
     dev: true
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+  /typescript/3.6.3:
+    dev: true
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-N7bceJL1CtRQ2RiG0AQME13ksR7DiuQh/QehubYcghzv20tnh+MQnQIuJddTmsbqYj+dztchykemz0zFzlvdQw==
   /typescript/3.6.4:
     dev: true
     engines:
@@ -12137,7 +12144,7 @@ specifiers:
   testcafe-live: ^0.1.4
   tslint: 5.14.0
   tslint-config-prettier: ^1.18.0
-  typescript: ^3.6.3
+  typescript: 3.6.3
   webpack: ^4.30.0
   webpack-cli: ^3.3.2
   webpack-dev-server: ^3.3.1
