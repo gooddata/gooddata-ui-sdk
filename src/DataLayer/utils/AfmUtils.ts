@@ -292,12 +292,14 @@ function isDateFilterAllTime(dateFilter: AFM.DateFilterItem): boolean {
  * @param {AFM.IAfm} afm
  * @param {AFM.AttributeFilterItem[]} attributeFilters
  * @param {AFM.DateFilterItem} dateFilter
+ * @param {AFM.IMeasureValueFilter[]} measureValueFilters
  * @return {AFM.IAfm}
  */
 export function appendFilters(
     afm: AFM.IAfm,
     attributeFilters: AFM.AttributeFilterItem[],
     dateFilter?: AFM.DateFilterItem,
+    measureValueFilters?: AFM.IMeasureValueFilter[],
 ): AFM.IAfm {
     const dateFilters: AFM.DateFilterItem[] =
         dateFilter && !isDateFilterAllTime(dateFilter) ? [dateFilter] : [];
@@ -321,9 +323,14 @@ export function appendFilters(
         dateFilters.push(afmDateFilter);
     }
 
-    const afmAttributeFilters = afmFilters.filter(filter => !AFM.isDateFilter(filter));
+    const afmNonDateFilters = afmFilters.filter(filter => !AFM.isDateFilter(filter));
 
-    const filters = compact([...afmAttributeFilters, ...attributeFilters, ...dateFilters]);
+    const filters = compact([
+        ...afmNonDateFilters,
+        ...attributeFilters,
+        ...dateFilters,
+        ...(measureValueFilters || []),
+    ]);
 
     if (filters.length || (afm.filters && afm.filters.length)) {
         return {

@@ -60,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@gooddata/frontend-npm-scripts": "1.1.0",
     "@gooddata/tslint-config": "^1.0.0",
     "@types/fast-levenshtein": "0.0.1",
     "@types/fetch-mock": "5.*",
@@ -103,8 +104,7 @@
     "webpack-dev-server": "1.16.1"
   },
   "dependencies": {
-    "@gooddata/frontend-npm-scripts": "1.1.0",
-    "@gooddata/typings": "^2.18.0",
+    "@gooddata/typings": "^2.19.0",
     "es6-promise": "^3.0.2",
     "fetch-cookie": "^0.7.0",
     "invariant": "^2.2.2",
