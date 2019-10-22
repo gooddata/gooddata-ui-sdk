@@ -6,8 +6,8 @@ import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
  * @internal
  */
 export interface IFormattedNumberProps {
-    className: string;
-    number: number | string;
+    className?: string;
+    value: number | string;
     format?: string;
     separators?: ISeparators;
 }
@@ -19,12 +19,11 @@ const DEFAULT_FORMAT = "#,#.##";
  */
 export const FormattedNumber: React.StatelessComponent<IFormattedNumberProps> = ({
     className,
-    // tslint:disable-next-line:variable-name
-    number,
+    value,
     format = DEFAULT_FORMAT,
     separators,
 }) => {
-    const formattedNumber = numberFormat(number, format, undefined, separators);
+    const formattedNumber = numberFormat(value, format, undefined, separators);
     const { label, color, backgroundColor } = colors2Object(formattedNumber);
     return (
         <span className={className} style={{ color, backgroundColor }}>

@@ -106,7 +106,7 @@ const CoreKpi: React.StatelessComponent<IKpiProps & InjectedIntlProps> = props =
                 return (
                     <FormattedNumber
                         className="gdc-kpi"
-                        number={measureData}
+                        value={measureData}
                         format={measureFormat}
                         separators={separators}
                     />
