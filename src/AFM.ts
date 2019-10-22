@@ -334,4 +334,8 @@ export namespace AFM {
     export function isMeasureValueFilter(filter: AFM.CompatibilityFilter): filter is AFM.IMeasureValueFilter {
         return !isEmpty(filter) && (filter as AFM.IMeasureValueFilter).measureValueFilter !== undefined;
     }
+
+    export function isExpressionFilter(filter: AFM.CompatibilityFilter): filter is AFM.IExpressionFilter {
+        return !isEmpty(filter) && (filter as AFM.IExpressionFilter).value !== undefined;
+    }
 }

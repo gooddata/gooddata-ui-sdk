@@ -365,6 +365,10 @@ export namespace ExecuteAFM {
             && (filter as ExecuteAFM.IMeasureValueFilter).measureValueFilter !== undefined;
     }
 
+    export function isExpressionFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IExpressionFilter {
+        return !isEmpty(filter) && (filter as ExecuteAFM.IExpressionFilter).value !== undefined;
+    }
+
     export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[] {
         return attributeElements !== undefined && attributeElements instanceof Array;
     }
