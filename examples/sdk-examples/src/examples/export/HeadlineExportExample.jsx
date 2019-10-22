@@ -13,12 +13,10 @@ import {
 
 export class HeadlineExportExample extends Component {
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         console.info("HeadlineExportExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         console.info("HeadlineExportExample onError", ...params);
     }
 

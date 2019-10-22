@@ -7,9 +7,9 @@ import { MeasureSortingExample } from "./MeasureSortingExample";
 import { AttributeSortingExample } from "./AttributeSortingExample";
 import { DynamicSortingExample } from "./DynamicSortingExample";
 
-import MeasureSortingExampleSRC from "!raw-loader!./MeasureSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import AttributeSortingExampleSRC from "!raw-loader!./AttributeSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import DynamicSortingExampleSRC from "!raw-loader!./DynamicSortingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureSortingExampleSRC from "!raw-loader!./MeasureSortingExample";
+import AttributeSortingExampleSRC from "!raw-loader!./AttributeSortingExample";
+import DynamicSortingExampleSRC from "!raw-loader!./DynamicSortingExample";
 
 export const Sorting: React.FC = () => (
     <div>

@@ -16,7 +16,7 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({ for: Comp
 
     return (
         <div className="example-with-source">
-            <style jsx={true}>{`
+            <style jsx>{`
                 .example-with-source {
                     flex: 1 0 auto;
                     display: flex;

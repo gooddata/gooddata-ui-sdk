@@ -10,7 +10,7 @@ export const KpiMetricBox = ({ title, children }: IKpieMetricBoxProps) => {
     return (
         <div className="kpi-metric">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .kpi-metric {
                     min-width: 200px;
                     text-align: center;

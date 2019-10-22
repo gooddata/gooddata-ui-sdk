@@ -73,7 +73,7 @@ export const MonthPickerExample: React.FC = () => {
 
     return (
         <div className="s-month-picker">
-            <style jsx={true}>{`
+            <style jsx>{`
                 label {
                     display: inline-block;
                     vertical-align: top;

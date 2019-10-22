@@ -4,13 +4,13 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { LoadingExample } from "./LoadingExample";
-import LoadingExampleSRC from "!raw-loader!./LoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import LoadingExampleSRC from "!raw-loader!./LoadingExample";
 
 import { CustomisedLoadingExample } from "./CustomisedLoadingExample";
-import CustomisedLoadingExampleSRC from "!raw-loader!./CustomisedLoadingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import CustomisedLoadingExampleSRC from "!raw-loader!./CustomisedLoadingExample";
 
 import { ErrorExample } from "./ErrorExample";
-import ErrorExampleSRC from "!raw-loader!./ErrorExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ErrorExampleSRC from "!raw-loader!./ErrorExample";
 
 export const LoadingAndError: React.FC = () => (
     <div>

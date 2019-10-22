@@ -1,6 +1,4 @@
 // Globals injected by webpack
-declare var BASEPATH: string;
-
 declare module "*.png" {
     const contents: string;
     export = contents;

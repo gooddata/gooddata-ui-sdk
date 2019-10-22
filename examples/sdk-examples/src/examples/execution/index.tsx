@@ -5,8 +5,8 @@ import { ExecuteExample } from "./ExecuteExample";
 import { ExecuteAttributeValuesExample } from "./ExecuteAttributeValuesExample";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-import ExecuteExampleSRC from "!raw-loader!./ExecuteExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ExecuteAttributeValuesExampleSRC from "!raw-loader!./ExecuteAttributeValuesExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ExecuteExampleSRC from "!raw-loader!./ExecuteExample";
+import ExecuteAttributeValuesExampleSRC from "!raw-loader!./ExecuteAttributeValuesExample";
 
 export const Execute: React.FC = () => (
     <div>

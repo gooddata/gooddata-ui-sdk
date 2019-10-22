@@ -26,7 +26,7 @@ interface ISortOption {
     label: string;
     overrideDirection?: SortDirection | null;
     description: (dir?: SortDirection) => string;
-    sortBy: (dir?: SortDirection) => (IAttributeSortItem | IMeasureSortItem)[];
+    sortBy: (dir?: SortDirection) => Array<IAttributeSortItem | IMeasureSortItem>;
 }
 
 interface IDynamicSortingExampleState {

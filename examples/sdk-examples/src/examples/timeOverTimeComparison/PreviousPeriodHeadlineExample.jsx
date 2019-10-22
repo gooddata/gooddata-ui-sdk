@@ -8,12 +8,10 @@ import { totalSalesIdentifier, dateDataSetUri, projectId } from "../../constants
 
 export class PreviousPeriodHeadlineExample extends Component {
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         return console.log("PreviousPeriodHeadlineExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         return console.log("PreviousPeriodHeadlineExample onError", ...params);
     }
 

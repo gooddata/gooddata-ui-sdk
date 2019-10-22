@@ -8,11 +8,11 @@ import PivotTableExportExample from "./PivotTableExportExample";
 import VisualizationColumnChartExportExample from "./VisualizationColumnChartExportExample";
 import HeadlineExportExample from "./HeadlineExportExample";
 
-import BarChartExportExampleSRC from "!raw-loader!./BarChartExportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import TableExportExampleSRC from "!raw-loader!./TableExportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationColumnChartExportExampleSRC from "!raw-loader!./VisualizationColumnChartExportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import BarChartExportExampleSRC from "!raw-loader!./BarChartExportExample";
+import TableExportExampleSRC from "!raw-loader!./TableExportExample";
+import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample";
+import VisualizationColumnChartExportExampleSRC from "!raw-loader!./VisualizationColumnChartExportExample";
+import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample";
 
 export const Export = () => (
     <div>

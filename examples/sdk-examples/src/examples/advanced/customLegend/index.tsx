@@ -3,7 +3,7 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { CustomLegendExample } from "./CustomLegendExample";
-import CustomLegendExampleSRC from "!raw-loader!./CustomLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import CustomLegendExampleSRC from "!raw-loader!./CustomLegendExample";
 
 export const CustomLegend = () => (
     <div>

@@ -59,7 +59,7 @@ export const DatePickerExample: React.FC = () => {
 
     return (
         <div className="s-date-picker">
-            <style jsx={true}>{`
+            <style jsx>{`
                 label {
                     display: inline-block;
                     vertical-align: top;

@@ -16,7 +16,7 @@ import { BASEPATH } from "./constants/env";
 import { history } from "./history";
 
 export const App: React.FC = () => {
-    const { authError, authStatus, logout, login } = useAuth();
+    const { authError, authStatus, logout } = useAuth();
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
@@ -25,7 +25,7 @@ export const App: React.FC = () => {
     return (
         <Router basepath={BASEPATH} history={history}>
             <div className="mainWrapper">
-                <style jsx={true}>{`
+                <style jsx>{`
                     :global(html),
                     :global(body),
                     :global(.root) {
@@ -142,18 +142,7 @@ export const App: React.FC = () => {
                             <div className="flexWrapper">
                                 <Switch>
                                     {userRoutes.map(({ title, path, Component, ...routeProps }) => (
-                                        <Route
-                                            key={path}
-                                            path={path}
-                                            // tslint:disable-next-line:jsx-no-lambda
-                                            component={() => (
-                                                <Component
-                                                    isLoggedIn={authStatus === AuthStatus.AUTHORIZED}
-                                                    onLogin={login}
-                                                />
-                                            )}
-                                            {...routeProps}
-                                        />
+                                        <Route key={path} path={path} component={Component} {...routeProps} />
                                     ))}
                                     {authStatus === AuthStatus.UNAUTHORIZED && (
                                         <Redirect

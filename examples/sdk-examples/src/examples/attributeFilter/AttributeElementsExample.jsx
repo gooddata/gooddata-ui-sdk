@@ -12,7 +12,6 @@ export class AttributeFilterItem extends Component {
     };
 
     onChange(uri) {
-        // eslint-disable-next-line no-console
         return event => console.log("AttributeFilterItem onChange", uri, event.target.value === "on");
     }
 

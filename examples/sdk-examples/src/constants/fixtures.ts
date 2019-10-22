@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import { BACKEND_URL } from "./env";
 
 const demoProject = {
     "https://secure.gooddata.com": "k26dtejorcqlqf11crn6imbeevp2q4kg",
@@ -8,16 +9,18 @@ const demoProject = {
     "https://developer.na.gooddata.com": "xms7ga4tf3g3nzucd8380o2bev8oeknp",
 };
 
-const backendUrl = BACKEND_URL; // eslint-disable-line no-undef
+const backendUrl = BACKEND_URL;
 const demoProjectId = demoProject[backendUrl];
+
 if (!demoProjectId) {
-    console.error(`[fixtures.js] ProjectId for backend "${backendUrl}" is not in `, demoProject); // eslint-disable-line no-console
+    // tslint:disable-next-line no-console
+    console.error(`[fixtures.js] ProjectId for backend "${backendUrl}" is not in `, demoProject);
 }
 
-console.log("The /gdc proxy is connected to: ", backendUrl, " with projectId: ", demoProjectId); // eslint-disable-line no-console
+// tslint:disable-next-line no-console
+console.log("The /gdc proxy is connected to: ", backendUrl, " with projectId: ", demoProjectId);
 
 // your projectId would be probably static (you may ignore the code above)
-
 export const backendUrlForInfo = backendUrl;
 export const projectId = demoProjectId;
 

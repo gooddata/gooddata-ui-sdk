@@ -2,9 +2,9 @@
 import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
-import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
 import { DrillWithExternalDataExample } from "./DrillWithExternalDataExample";
-import DrillWithExternalDataExampleSRC from "!raw-loader!./DrillWithExternalDataExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import DrillWithExternalDataExampleSRC from "!raw-loader!./DrillWithExternalDataExample";
 
 export const PivotTableDrilling: React.FC = () => (
     <div>
@@ -17,7 +17,7 @@ export const PivotTableDrilling: React.FC = () => (
 export const DrillWithExternalData = () => (
     <div className="example-wrapper">
         {/* language=CSS */}
-        <style jsx={true}>{`
+        <style jsx>{`
             .example-wrapper {
                 display: flex;
                 flex-direction: column;

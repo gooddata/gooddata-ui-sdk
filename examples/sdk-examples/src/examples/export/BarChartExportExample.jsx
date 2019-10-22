@@ -13,12 +13,10 @@ import {
 
 export class BarChartExportExample extends Component {
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         console.info("BarChartExportExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         console.info("BarChartExportExample onLoadingChanged", ...params);
     }
 

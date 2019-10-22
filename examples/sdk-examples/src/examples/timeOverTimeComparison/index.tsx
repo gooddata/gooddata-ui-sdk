@@ -6,8 +6,8 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { SamePeriodColumnChartExample } from "./SamePeriodColumnChartExample";
 import PreviousPeriodHeadlineExample from "./PreviousPeriodHeadlineExample";
 
-import SamePeriodColumnChartExampleSrc from "!raw-loader!./SamePeriodColumnChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import PreviousPeriodHeadlineExampleSrc from "!raw-loader!./PreviousPeriodHeadlineExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import SamePeriodColumnChartExampleSrc from "!raw-loader!./SamePeriodColumnChartExample";
+import PreviousPeriodHeadlineExampleSrc from "!raw-loader!./PreviousPeriodHeadlineExample";
 
 export const TimeOverTimeComparison: React.FC = () => (
     <div>

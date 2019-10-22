@@ -42,7 +42,7 @@ export const PivotTableRowGroupingExample: React.FC = () => {
                 rows={attributes}
                 columns={columns}
                 pageSize={20}
-                groupRows={true}
+                groupRows
             />
         </div>
     );

@@ -3,12 +3,12 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { GlobalFiltersExample } from "./GlobalFiltersExample";
-import GlobalFiltersExampleSRC from "!raw-loader!./GlobalFiltersExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import GlobalFiltersExampleSRC from "!raw-loader!./GlobalFiltersExample";
 
 export const GlobalFilters: React.FC = () => (
     <div className="example-wrapper">
         {/* language=CSS */}
-        <style jsx={true}>{`
+        <style jsx>{`
             .example-wrapper {
                 display: flex;
                 flex-direction: column;

@@ -12,11 +12,11 @@ import {
 import { useBackend } from "../../../context/auth";
 
 interface ICustomChartExampleState {
-    legendItems: {
+    legendItems: Array<{
         color: string;
         name: string;
         onClick: () => void;
-    }[];
+    }>;
 }
 
 const chartConfig = {
@@ -52,11 +52,7 @@ export const CustomLegendExample: React.FC = () => {
                 <div className="s-custom-legend">
                     {legendItems.map(({ color, name, onClick }, idx) => {
                         return (
-                            <div
-                                key={idx} // eslint-disable-line react/no-array-index-key
-                                onClick={onClick}
-                                style={legendItemStyle}
-                            >
+                            <div key={idx} onClick={onClick} style={legendItemStyle}>
                                 <div
                                     style={{
                                         width: 0,

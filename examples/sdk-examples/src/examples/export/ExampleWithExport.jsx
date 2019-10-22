@@ -6,11 +6,7 @@ import ExportDialog from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
 
 const DOWNLOADER_ID = "downloader";
 
-interface IExampleWithExportProps {
-    children: () => {}; // TODO
-}
-
-export class ExampleWithExport extends React.Component<IExampleWithExportProps> {
+export class ExampleWithExport extends React.Component {
     constructor(props) {
         super(props);
 

@@ -4,7 +4,7 @@ import { keyBy, mapValues } from "lodash";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/gd-bear-client";
 
-import { totalSalesIdentifier, projectId } from "../constants/fixtures";
+import { totalSalesIdentifier, projectId } from "../../../constants/fixtures";
 
 export class MultipleDomainsExample extends Component {
     constructor() {
@@ -32,7 +32,7 @@ export class MultipleDomainsExample extends Component {
             })
             .catch(error => {
                 this.setState({ sdk2LoginError: error.toString() });
-                console.log(error); // eslint-disable-line no-console
+                console.log(error);
             });
 
         e.preventDefault();

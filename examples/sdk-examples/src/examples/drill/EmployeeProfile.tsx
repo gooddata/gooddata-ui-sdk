@@ -31,7 +31,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({
     const menOrWomen = gender === "male" ? "men" : "women";
     return (
         <div className="employeeProfile s-employee-profile">
-            <style jsx={true}>{`
+            <style jsx>{`
                 .employeeProfile {
                     display: flex;
                     margin-top: 20px;

@@ -10,11 +10,11 @@ import { ArithmeticMeasureRatioExample } from "./ArithmeticMeasureRatioExample";
 import { ArithmeticMeasureChangeExample } from "./ArithmeticMeasureChangeExample";
 import { ArithmeticMeasureDrillingExample } from "./ArithmeticMeasureDrillingExample";
 
-import ArithmeticMeasureSumExampleSrc from "!raw-loader!./ArithmeticMeasureSumExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ArithmeticMeasureMultiplicationExampleSrc from "!raw-loader!./ArithmeticMeasureMultiplicationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ArithmeticMeasureRatioExampleSrc from "!raw-loader!./ArithmeticMeasureRatioExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ArithmeticMeasureChangeExampleSrc from "!raw-loader!./ArithmeticMeasureChangeExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ArithmeticMeasureDrillingExampleSrc from "!raw-loader!./ArithmeticMeasureDrillingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import ArithmeticMeasureSumExampleSrc from "!raw-loader!./ArithmeticMeasureSumExample";
+import ArithmeticMeasureMultiplicationExampleSrc from "!raw-loader!./ArithmeticMeasureMultiplicationExample";
+import ArithmeticMeasureRatioExampleSrc from "!raw-loader!./ArithmeticMeasureRatioExample";
+import ArithmeticMeasureChangeExampleSrc from "!raw-loader!./ArithmeticMeasureChangeExample";
+import ArithmeticMeasureDrillingExampleSrc from "!raw-loader!./ArithmeticMeasureDrillingExample";
 
 export const ArithmeticMeasures: React.FC = () => (
     <div>

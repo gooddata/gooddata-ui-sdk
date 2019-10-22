@@ -17,7 +17,7 @@ export const Layout: React.FC<ILayoutProps> = ({
 }) => (
     <div className="wrapper">
         {/* language=CSS */}
-        <style jsx={true}>{`
+        <style jsx>{`
             .wrapper {
                 display: grid;
                 grid-template-columns: ${sidebarWidth} ${contentWidth};

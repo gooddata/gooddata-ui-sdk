@@ -261,7 +261,7 @@ const CoreRegistrationForm: React.FC<
                         onBlur={handleBlur}
                     />
                     I agree with the GoodData{" "}
-                    <a href="http://www.gooddata.com/terms.html" rel="noopener noreferrer" target="_blank">
+                    <a href="https://www.gooddata.com/terms.html" rel="noopener noreferrer" target="_blank">
                         Terms of Use
                     </a>
                 </label>

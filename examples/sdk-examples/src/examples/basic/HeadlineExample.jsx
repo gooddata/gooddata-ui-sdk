@@ -11,12 +11,10 @@ import {
 
 export class HeadlineExample extends Component {
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         return console.log("ColumnChartExample onLoadingChanged", ...params);
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         return console.log("ColumnChartExample onError", ...params);
     }
 

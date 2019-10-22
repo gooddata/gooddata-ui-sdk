@@ -5,9 +5,9 @@ import { Helmet } from "react-helmet";
 import { NavLink, Link, withRouter } from "react-router-dom";
 import { CustomLoading } from "./CustomLoading";
 import { projectId, backendUrlForInfo } from "../constants/fixtures";
-
-const favicon = require("../static/favicon.ico");
-const logo = require("../static/gooddata.svg");
+import favicon from "../static/favicon.ico";
+import logo from "../static/gooddata.svg";
+import { BASEPATH } from "../constants/env";
 
 const appName = "GoodData.UI Examples";
 
@@ -132,7 +132,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
     return (
         <div className="page">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .page {
                     width: 100%;
                     text-align: center;

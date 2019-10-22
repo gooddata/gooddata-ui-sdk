@@ -5,8 +5,8 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 import { DatePickerExample } from "./DatePickerExample";
 import { MonthPickerExample } from "./MonthPickerExample";
 
-import DatePickerExampleSRC from "!raw-loader!./DatePickerExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MonthPickerExampleSRC from "!raw-loader!./MonthPickerExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import DatePickerExampleSRC from "!raw-loader!./DatePickerExample";
+import MonthPickerExampleSRC from "!raw-loader!./MonthPickerExample";
 
 export const DatePicker: React.FC = () => (
     <div>

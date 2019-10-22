@@ -134,7 +134,7 @@ export const EmployeeCard = ({ name }: { name: string }) => {
     return (
         <div className="employee-card">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .rounded-avatar {
                     object-fit: cover;
                     border-radius: 50%;

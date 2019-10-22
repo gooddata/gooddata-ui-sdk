@@ -21,7 +21,7 @@ import {
     locationStateAttributeCaliforniaUri,
     monthDateIdentifierJanuary,
     dateDatasetIdentifier,
-} from "../../constants/fixtures";
+} from "../../../constants/fixtures";
 import { ElementWithParam } from "./ElementWithParam";
 
 export const createColumnTotal = (measureLocalIdentifier, attributeLocalIdentifier, type = "sum") => {
@@ -463,7 +463,6 @@ export class PivotTableDrillingExample extends Component {
     };
 
     onDrill = drillEvent => {
-        // eslint-disable-next-line no-console
         console.log(
             "onFiredDrillEvent",
             drillEvent,

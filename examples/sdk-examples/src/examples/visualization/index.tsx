@@ -17,19 +17,19 @@ import { VisualizationDonutByIdentifierExample } from "./VisualizationDonutByIde
 import { VisualizationTreemapByIdentifierExample } from "./VisualizationTreemapByIdentifierExample";
 import { VisualizationHeatmapByIdentifierExample } from "./VisualizationHeatmapByIdentifierExample";
 
-import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!./VisualizationColumnChartByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import VisualizationTableExampleSRC from "!raw-loader!./VisualizationTableByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import CustomVisualizationExampleSRC from "!raw-loader!./CustomVisualizationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationBarByIdentifierExampleSrc from "!raw-loader!./VisualizationBarByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationLineByIdentifierExampleSRC from "!raw-loader!./VisualizationLineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationAreaByIdentifierExampleSRC from "!raw-loader!./VisualizationAreaByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationHeadlineByIdentifierExampleSRC from "!raw-loader!./VisualizationHeadlineByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationScatterByIdentifierExampleSRC from "!raw-loader!./VisualizationScatterByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationBubbleByIdentifierExampleSRC from "!raw-loader!./VisualizationBubbleByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationPieByIdentifierExampleSRC from "!raw-loader!./VisualizationPieByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationDonutByIdentifierExampleSRC from "!raw-loader!./VisualizationDonutByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationTreemapByIdentifierExampleSRC from "!raw-loader!./VisualizationTreemapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import VisualizationHeatmapByIdentifierExampleSRC from "!raw-loader!./VisualizationHeatmapByIdentifierExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!./VisualizationColumnChartByIdentifierExample";
+// import VisualizationTableExampleSRC from "!raw-loader!./VisualizationTableByIdentifierExample";
+// import CustomVisualizationExampleSRC from "!raw-loader!./CustomVisualizationExample";
+import VisualizationBarByIdentifierExampleSrc from "!raw-loader!./VisualizationBarByIdentifierExample";
+import VisualizationLineByIdentifierExampleSRC from "!raw-loader!./VisualizationLineByIdentifierExample";
+import VisualizationAreaByIdentifierExampleSRC from "!raw-loader!./VisualizationAreaByIdentifierExample";
+import VisualizationHeadlineByIdentifierExampleSRC from "!raw-loader!./VisualizationHeadlineByIdentifierExample";
+import VisualizationScatterByIdentifierExampleSRC from "!raw-loader!./VisualizationScatterByIdentifierExample";
+import VisualizationBubbleByIdentifierExampleSRC from "!raw-loader!./VisualizationBubbleByIdentifierExample";
+import VisualizationPieByIdentifierExampleSRC from "!raw-loader!./VisualizationPieByIdentifierExample";
+import VisualizationDonutByIdentifierExampleSRC from "!raw-loader!./VisualizationDonutByIdentifierExample";
+import VisualizationTreemapByIdentifierExampleSRC from "!raw-loader!./VisualizationTreemapByIdentifierExample";
+import VisualizationHeatmapByIdentifierExampleSRC from "!raw-loader!./VisualizationHeatmapByIdentifierExample";
 
 export const Visualization = () => (
     <div>

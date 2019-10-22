@@ -219,7 +219,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
     return (
         <div className="layout-wrapper">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .layout-wrapper {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

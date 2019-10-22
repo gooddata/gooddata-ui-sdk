@@ -19,21 +19,21 @@ import { TableExample } from "./TableExample";
 // import { HeadlineExample } from "../components/HeadlineExample";
 import { KpiExample } from "./KpiExample";
 
-import BarChartExampleSRC from "!raw-loader!./BarChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ColumnChartExampleSRC from "!raw-loader!./ColumnChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import LineChartExampleSRC from "!raw-loader!./LineChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import AreaChartExampleSRC from "!raw-loader!./AreaChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import StackedAreaChartExampleSRC from "!raw-loader!./StackedAreaChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import PieChartExampleSRC from "!raw-loader!./PieChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import DonutChartExampleSRC from "!raw-loader!./DonutChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ComboChartExampleSRC from "!raw-loader!./ComboChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import ScatterPlotExampleSRC from "!raw-loader!./ScatterPlotExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import BubbleChartExampleSRC from "!raw-loader!./BubbleChartExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import TreemapExampleSRC from "!raw-loader!./TreemapExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import HeatmapExampleSRC from "!raw-loader!./HeatmapExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import TableExampleSRC from "!raw-loader!./TableExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-// import HeadlineExampleSRC from "!raw-loader!./HeadlineExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import KpiExampleSRC from "!raw-loader!./KpiExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import BarChartExampleSRC from "!raw-loader!./BarChartExample";
+import ColumnChartExampleSRC from "!raw-loader!./ColumnChartExample";
+import LineChartExampleSRC from "!raw-loader!./LineChartExample";
+import AreaChartExampleSRC from "!raw-loader!./AreaChartExample";
+import StackedAreaChartExampleSRC from "!raw-loader!./StackedAreaChartExample";
+import PieChartExampleSRC from "!raw-loader!./PieChartExample";
+import DonutChartExampleSRC from "!raw-loader!./DonutChartExample";
+import ComboChartExampleSRC from "!raw-loader!./ComboChartExample";
+import ScatterPlotExampleSRC from "!raw-loader!./ScatterPlotExample";
+import BubbleChartExampleSRC from "!raw-loader!./BubbleChartExample";
+import TreemapExampleSRC from "!raw-loader!./TreemapExample";
+import HeatmapExampleSRC from "!raw-loader!./HeatmapExample";
+import TableExampleSRC from "!raw-loader!./TableExample";
+// import HeadlineExampleSRC from "!raw-loader!./HeadlineExample";
+import KpiExampleSRC from "!raw-loader!./KpiExample";
 
 export const BasicComponents: React.FC = () => (
     <div>

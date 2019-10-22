@@ -6,7 +6,6 @@ import { employeeNameIdentifier, projectId } from "../../constants/fixtures";
 
 export class AttributeFilterComponentExample extends Component {
     onApply(...params) {
-        // eslint-disable-next-line no-console
         console.log("AttributeFilterComponentExample onApply", ...params);
     }
 

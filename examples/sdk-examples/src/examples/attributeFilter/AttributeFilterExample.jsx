@@ -22,12 +22,10 @@ export class AttributeFilterExample extends Component {
     }
 
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     }
 
     onApply(filter) {
-        // eslint-disable-next-line no-console
         console.log("AttributeFilterExample onApply", filter);
         this.setState({ filters: [], error: null });
         if (filter.in) {
@@ -38,7 +36,6 @@ export class AttributeFilterExample extends Component {
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     }
 

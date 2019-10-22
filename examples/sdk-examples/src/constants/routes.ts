@@ -21,10 +21,11 @@ import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
 
+// import Export from "./Export";
 // import AttributeFilter from "./AttributeFilter";
 // import ParentFilter from "./ParentFilter";
+
 // import PivotTableDynamic from "./PivotTableDynamic";
-// import Export from "./Export";
 // import MultipleDomains from "./MultipleDomains";
 // import AggregationTest from "./AggregationTest";
 
@@ -108,9 +109,7 @@ export const sideNavigationRoutes = [
 export const hiddenPaths = [
     // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
-    // { path: "/hidden/pivot-table", title: "Pivot Table", Component: PivotTable },
     // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
-    // { path: "/hidden/bucket-executor", title: "Bucket Executor Example", Component: BucketExecutor },
 ];
 
 export const backendInfoRoutes = [

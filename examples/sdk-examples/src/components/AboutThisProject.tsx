@@ -1,9 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-
 import { projectId } from "../constants/fixtures";
-
-const logicalDataModel = require("../static/logicalDataModel.png");
+import logicalDataModel from "../static/logicalDataModel.png";
 
 export const AboutThisProject: React.FC = () => (
     <div>

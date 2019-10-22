@@ -16,7 +16,7 @@ export const SidebarItem: React.FC<ISidebarItemProps> = ({ label, id, isSelected
 
     return (
         <li className="list-item-wrap">
-            <style jsx={true}>{`
+            <style jsx>{`
                 li {
                     margin: 0 -20px 0 -10px;
                     position: relative;

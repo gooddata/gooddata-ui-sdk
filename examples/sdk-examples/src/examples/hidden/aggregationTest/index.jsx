@@ -12,7 +12,7 @@ import {
     franchiseFeesInitialFranchiseFeeIdentifier,
     franchiseFeesIdentifierOngoingRoyalty,
     projectId,
-} from "../constants/fixtures";
+} from "../../../constants/fixtures";
 
 const totalSales = newMeasure(totalSalesIdentifier, m => m.aggregation("sum").localId(totalSalesIdentifier));
 
@@ -28,12 +28,10 @@ const franchiseFeesMeasures = [
 
 export class AggregationTest extends Component {
     onLoadingChanged(...params) {
-        // eslint-disable-next-line no-console
         console.info("onLoadingChanged", ...params);
     }
 
     onError(...params) {
-        // eslint-disable-next-line no-console
         console.info("onLoadingChanged", ...params);
     }
 

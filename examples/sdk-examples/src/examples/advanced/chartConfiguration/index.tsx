@@ -3,15 +3,15 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { BarChartDynamicExample } from "./BarChartDynamicExample";
-import BarChartDynamicExampleSRC from "!raw-loader!./BarChartDynamicExample"; // eslint-disable-line
+import BarChartDynamicExampleSRC from "!raw-loader!./BarChartDynamicExample";
 import ConfigurationColumnChartExample from "./ConfigurationColumnChartExample";
-import ConfigurationColumnChartExampleSRC from "!raw-loader!./ConfigurationColumnChartExample"; // eslint-disable-line
+import ConfigurationColumnChartExampleSRC from "!raw-loader!./ConfigurationColumnChartExample";
 import { PieChartColorMappingExample } from "./PieChartColorMappingExample";
-import PieChartColorMappingExampleSRC from "!raw-loader!./PieChartColorMappingExample"; // eslint-disable-line
+import PieChartColorMappingExampleSRC from "!raw-loader!./PieChartColorMappingExample";
 import { DualAxisColumnChartExample } from "./DualAxisColumnChartExample";
-import DualAxisColumnChartExampleSRC from "!raw-loader!./DualAxisColumnChartExample"; // eslint-disable-line
+import DualAxisColumnChartExampleSRC from "!raw-loader!./DualAxisColumnChartExample";
 import VisualizationDualAxisBarChartExample from "./VisualizationDualAxisBarChartExample";
-import VisualizationDualAxisBarChartExampleSRC from "!raw-loader!./VisualizationDualAxisBarChartExample"; // eslint-disable-line
+import VisualizationDualAxisBarChartExampleSRC from "!raw-loader!./VisualizationDualAxisBarChartExample";
 
 export const ChartConfiguration = () => (
     <div>

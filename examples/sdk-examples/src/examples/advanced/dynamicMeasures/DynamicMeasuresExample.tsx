@@ -95,7 +95,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     const loadingBlock = (
         <div className="loading-block">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .loading-block {
                     height: 100%;
                     min-height: 300px;
@@ -111,7 +111,7 @@ export const DynamicMeasuresExample: React.FC = () => {
     const sidebar = measureList ? (
         <div className="s-dynamic-measures-sidebar">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 h3 {
                     margin-top: 0;
                 }
@@ -150,7 +150,7 @@ export const DynamicMeasuresExample: React.FC = () => {
             content = (
                 <div className="graph-wrapper">
                     {/* language=CSS */}
-                    <style jsx={true}>{`
+                    <style jsx>{`
                         .graph-wrapper {
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

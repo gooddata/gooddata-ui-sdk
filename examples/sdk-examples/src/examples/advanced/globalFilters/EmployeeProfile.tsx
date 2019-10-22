@@ -80,7 +80,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
 
     const sidebar = (
         <div>
-            <style jsx={true}>
+            <style jsx>
                 {`
                     ul {
                         list-style-type: none;
@@ -107,7 +107,7 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
     return (
         <div className="layout-wrapper">
             {/* language=CSS */}
-            <style jsx={true}>{`
+            <style jsx>{`
                 .layout-wrapper {
                     display: flex;
                     flex: 1 0 auto;
@@ -159,9 +159,8 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     filters={[employeeFilter]}
                                     measure={averageDailyTotalSales}
                                     workspace={projectId}
-                                    // tslint:disable-next-line
                                     LoadingComponent={(...otherProps) => (
-                                        <CustomLoading inline={true} imageHeight={20} {...otherProps} />
+                                        <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
                                     ErrorComponent={CustomError}
                                 />
@@ -173,9 +172,8 @@ export const EmployeeProfile: React.FC<IEmployeeProfileProps> = ({ validElements
                                     filters={[employeeFilter]}
                                     measure={averageCheckSizeByServer}
                                     workspace={projectId}
-                                    // tslint:disable-next-line
                                     LoadingComponent={(...otherProps) => (
-                                        <CustomLoading inline={true} imageHeight={20} {...otherProps} />
+                                        <CustomLoading inline imageHeight={20} {...otherProps} />
                                     )}
                                     ErrorComponent={CustomError}
                                 />

@@ -79,7 +79,7 @@ export const PivotTableSubtotalsExample: React.FC = () => {
                 columns={columns}
                 totals={totals}
                 pageSize={20}
-                groupRows={true}
+                groupRows
             />
         </div>
     );

@@ -7,9 +7,9 @@ import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
 import AttributeElementsExample from "./AttributeElementsExample";
 import AttributeFilterExample from "./AttributeFilterExample";
 
-import AttributeFilterComponentExampleSRC from "!raw-loader!./AttributeFilterComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import AttributeElementsExampleSRC from "!raw-loader!./AttributeElementsExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import AttributeFilterExampleSRC from "!raw-loader!./AttributeFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import AttributeFilterComponentExampleSRC from "!raw-loader!./AttributeFilterComponentExample";
+import AttributeElementsExampleSRC from "!raw-loader!./AttributeElementsExample";
+import AttributeFilterExampleSRC from "!raw-loader!./AttributeFilterExample";
 
 export const AttributeFilter = () => (
     <div>

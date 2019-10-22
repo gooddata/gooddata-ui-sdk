@@ -62,8 +62,8 @@ export const CustomLoading: React.FC<ICustomLoadingProps> = ({
 
     return (
         <div className="s-loading" style={wrapperStyle}>
-            <svg alt="loading…" style={svgStyle} x="0px" y="0px" viewBox="0 0 38 38">
-                <style scoped={true}>
+            <svg style={svgStyle} x="0px" y="0px" viewBox="0 0 38 38">
+                <style scoped>
                     {`
                     @keyframes GDC-pump {
                         0%   {transform: scaleY(0.33)}
