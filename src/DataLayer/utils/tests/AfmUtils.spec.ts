@@ -325,8 +325,38 @@ describe("AFM utils", () => {
         it("should not modify afm if there are no filters", () => {
             const afm: AFM.IAfm = {};
             const expectedAfm: AFM.IAfm = {};
-            const enriched = appendFilters(afm, [], undefined);
+            const enriched = appendFilters(afm, []);
             expect(enriched).toEqual(expectedAfm);
+        });
+
+        it("should return measure value filters if only these filters are provided", () => {
+            const afm: AFM.IAfm = {};
+            const enriched = appendFilters(afm, [], undefined, [fixture.measureValueFilter1]);
+            expect(enriched.filters).toEqual([fixture.measureValueFilter1]);
+        });
+
+        it("should return all filters merged when all types are provided", () => {
+            const afm: AFM.IAfm = {
+                filters: [
+                    fixture.absoluteDateFilter1,
+                    fixture.positiveAttributeFilter,
+                    fixture.measureValueFilter1,
+                ],
+            };
+            const enriched = appendFilters(
+                afm,
+                [fixture.negativeAttributeFilter],
+                fixture.absoluteDateFilter2,
+                [fixture.measureValueFilter2],
+            );
+            expect(enriched.filters).toEqual([
+                fixture.positiveAttributeFilter,
+                fixture.measureValueFilter1,
+                fixture.negativeAttributeFilter,
+                fixture.absoluteDateFilter2,
+                fixture.absoluteDateFilter1,
+                fixture.measureValueFilter2,
+            ]);
         });
     });
 

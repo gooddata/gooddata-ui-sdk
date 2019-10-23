@@ -325,3 +325,31 @@ export const afmWWithMeasuresWithAttributeFilters: INormalizedAFM = {
     measures: [simpleMeasureWithAttributeFilters],
     filters: [],
 };
+
+export const measureValueFilter1: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "m1",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 42,
+            },
+        },
+    },
+};
+
+export const measureValueFilter2: AFM.IMeasureValueFilter = {
+    measureValueFilter: {
+        measure: {
+            localIdentifier: "m2",
+        },
+        condition: {
+            comparison: {
+                operator: "GREATER_THAN",
+                value: 420,
+            },
+        },
+    },
+};
