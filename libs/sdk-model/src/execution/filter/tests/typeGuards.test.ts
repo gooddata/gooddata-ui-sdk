@@ -20,6 +20,8 @@ import {
     isPositiveAttributeFilter,
     isRangeCondition,
     isRelativeDateFilter,
+    isComparisonConditionOperator,
+    isRangeConditionOperator,
 } from "../index";
 
 describe("filter type guards", () => {
@@ -139,6 +141,18 @@ describe("filter type guards", () => {
         });
     });
 
+    describe("isComparisonConditionOperator", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "comparison condition", "EQUAL_TO"],
+            [false, "range condition", "BETWEEN"],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isComparisonConditionOperator(input)).toBe(expectedResult);
+        });
+    });
+
     describe("isRangeCondition", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
@@ -148,6 +162,18 @@ describe("filter type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isRangeCondition(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isRangeConditionOperator", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "comparison condition", "EQUAL_TO"],
+            [true, "range condition", "BETWEEN"],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isRangeConditionOperator(input)).toBe(expectedResult);
         });
     });
 });

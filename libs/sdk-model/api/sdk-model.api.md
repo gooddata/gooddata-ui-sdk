@@ -818,6 +818,9 @@ export function isColorFromPalette(obj: any): obj is IColorFromPalette;
 export function isComparisonCondition(obj: any): obj is IComparisonCondition;
 
 // @public
+export function isComparisonConditionOperator(obj: any): obj is ComparisonConditionOperator;
+
+// @public
 export function isDateFilter(obj: any): obj is IDateFilter;
 
 // @public
@@ -864,6 +867,9 @@ export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPer
 
 // @public
 export function isRangeCondition(obj: any): obj is IRangeCondition;
+
+// @public
+export function isRangeConditionOperator(obj: any): obj is RangeConditionOperator;
 
 // @public
 export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;

@@ -287,12 +287,28 @@ export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter {
 }
 
 /**
- * Type guard checking whether the provided object is a measure value filter's comparison condition .
+ * Type guard checking whether the provided object is a measure value filter's comparison condition.
  *
  * @public
  */
 export function isComparisonCondition(obj: any): obj is IComparisonCondition {
     return !isEmpty(obj) && (obj as IComparisonCondition).comparison !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided operator is a measure value filter's comparison operator.
+ *
+ * @public
+ */
+export function isComparisonConditionOperator(obj: any): obj is ComparisonConditionOperator {
+    return (
+        obj === "GREATER_THAN" ||
+        obj === "GREATER_THAN_OR_EQUAL_TO" ||
+        obj === "LESS_THAN" ||
+        obj === "LESS_THAN_OR_EQUAL_TO" ||
+        obj === "EQUAL_TO" ||
+        obj === "NOT_EQUAL_TO"
+    );
 }
 
 /**
@@ -302,6 +318,15 @@ export function isComparisonCondition(obj: any): obj is IComparisonCondition {
  */
 export function isRangeCondition(obj: any): obj is IRangeCondition {
     return !isEmpty(obj) && (obj as IRangeCondition).range !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a measure value filter's range condition operator.
+ *
+ * @public
+ */
+export function isRangeConditionOperator(obj: any): obj is RangeConditionOperator {
+    return obj === "BETWEEN" || obj === "NOT_BETWEEN";
 }
 
 /**
