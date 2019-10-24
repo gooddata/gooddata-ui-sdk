@@ -36,7 +36,7 @@ export interface IWithLoadingEvents<T, P> {
  */
 export interface IWithLoading<T, P, R extends object> {
     promiseFactory: (props?: T) => Promise<P>;
-    mapResultToProps?: (result: WithLoadingResult<P>) => R;
+    mapResultToProps?: (result: WithLoadingResult<P>, props?: T) => R;
     events?: IWithLoadingEvents<T, P> | ((props?: T) => IWithLoadingEvents<T, P>);
     loadOnMount?: boolean | ((props?: T) => boolean);
     shouldRefetch?: (prevProps?: T, nextProps?: T) => boolean;
@@ -162,7 +162,6 @@ export function withLoading<T, P, R extends object>({
 
             public componentDidUpdate(prevProps: T) {
                 if (shouldRefetch(prevProps, this.props)) {
-                    this.cancelablePromise.cancel();
                     this.fetch();
                 }
             }
@@ -175,12 +174,15 @@ export function withLoading<T, P, R extends object>({
 
             public render() {
                 const { result, isLoading, error } = this.state;
-                const injectedProps = mapResultToProps({
-                    result,
-                    isLoading,
-                    error,
-                    fetch: this.fetch,
-                });
+                const injectedProps = mapResultToProps(
+                    {
+                        result,
+                        isLoading,
+                        error,
+                        fetch: this.fetch,
+                    },
+                    this.props,
+                );
 
                 return <WrappedComponent {...this.props} {...injectedProps} />;
             }
