@@ -1,6 +1,6 @@
 dependencies:
   '@babel/core': 7.6.2
-  '@gooddata/goodstrap': 63.5.0_react-dom@16.10.2+react@16.10.2
+  '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2
   '@gooddata/js-utils': 3.5.0
   '@gooddata/mock-js': 1.34.0
   '@gooddata/numberjs': 3.2.2
@@ -1581,6 +1581,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EXxN64agfUqqIGeEjI5dL5z0Sw0ZwWo1mLTi4mQowCZ42O59b7DRpZAnTC6OqdF28wMBMFKNb/4uFGrVaigSpg==
+  /@babel/runtime/7.6.3:
+    dependencies:
+      regenerator-runtime: 0.13.3
+    dev: false
+    resolution:
+      integrity: sha512-kq6anf9JGjW8Nt5rYfEuGRaEAaH1mkv3Bbu6rYvLOpPh/RusSJXuKPEAoZ7L7gybZkchE8+NV5g9vKF4AGAtsA==
   /@babel/template/7.6.0:
     dependencies:
       '@babel/code-frame': 7.5.5
@@ -1731,7 +1737,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6PYY5DVdAY1ifaQW6XYTnOMihmBVT27elqSjEoodchsGjzYlEsTQMcEhSud99kVawatyTZRTiVkJ/c6lwbQ7nA==
-  /@gooddata/goodstrap/63.5.0_react-dom@16.10.2+react@16.10.2:
+  /@gooddata/goodstrap/64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2:
     dependencies:
       '@gooddata/js-utils': 3.5.0
       babel-runtime: 6.25.0
@@ -1745,7 +1751,7 @@ packages:
       kefir: 3.8.6
       lodash: 4.17.15
       moment: 2.24.0
-      moment-timezone: 0.5.26
+      moment-timezone: 0.5.27
       prop-types: 15.7.2
       querystringify: 2.1.1
       react: 16.10.2
@@ -1765,7 +1771,7 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-VHC0diDkNIpoEpzAIWQa4+Kq5ivk5/Wzh7IJ8Ip2QJ4QX2CdG8pUziuvIf7ZFohFHzu+CoDnEnXqOE97IiP8lg==
+      integrity: sha512-U6OSE9iDTcgLLmf0wT7G3K5Vc4y6FgUN4b4JLgJB2izti2I0XgesaUJk5O7cuqHgdkdXDnvsKgf2yNBbrxC2MA==
   /@gooddata/js-utils/3.5.0:
     dependencies:
       js-cookie: 2.2.1
@@ -3922,7 +3928,7 @@ packages:
       integrity: sha512-mwCk/u2wuiO8qQqblN5PlDa44taY0acq7hw6W+a70W522P7a9mIcdggL1fe5/LgAT7tqCq46q9wwhqaMoYKslQ==
   /babel-runtime/6.25.0:
     dependencies:
-      core-js: 2.6.9
+      core-js: 2.6.10
       regenerator-runtime: 0.10.5
     dev: false
     resolution:
@@ -5053,6 +5059,11 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
+  /core-js/2.6.10:
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
   /core-js/2.6.9:
     dev: false
     requiresBuild: true
@@ -5855,7 +5866,7 @@ packages:
       integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   /dom-helpers/3.4.0:
     dependencies:
-      '@babel/runtime': 7.6.2
+      '@babel/runtime': 7.6.3
     dev: false
     resolution:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -9927,12 +9938,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-uxHCj5Pw9psZiC1znjU2qPsubt6haCSsN9m7xmIdoTciEgfxUkE1vhtDvjHPuOXEZrVJhjKgkmkP+w73rRuelQ==
-  /moment-timezone/0.5.26:
+  /moment-timezone/0.5.27:
     dependencies:
       moment: 2.24.0
     dev: false
     resolution:
-      integrity: sha512-sFP4cgEKTCymBBKgoxZjYzlSovC20Y6J7y3nanDc5RoBIXKlZhoYwBoZGe3flwU6A372AcRwScH8KiwV6zjy1g==
+      integrity: sha512-EIKQs7h5sAsjhPCqN6ggx6cEbs94GK050254TIJySD1bzoM5JTYDwAU1IoVOeTOL6Gm27kYJ51/uuvq1kIlrbw==
   /moment/2.24.0:
     dev: false
     resolution:
@@ -15274,7 +15285,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-91dwdQNFuFVv2X+8wMDYzCWGViFdhTinW5nIOTa/TPV8Xtq36EexcsEMnx/7Xbhy/W/xl+CqjWzMaNkpH0CZyw==
+      integrity: sha512-eObDpEsLfW4wXqMbmQTiYy/IGINtjGIVvpbqmouZC+qRYYOqyZSn78eNZmOynLZwiuS9WnpRodMPPRIhEu/ekw==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
@@ -15382,7 +15393,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-Lw0NZElWyvEnHZiJi7/eTNfh99xx6xp9AkbKymkU3ZbvmEYN0W/lLoidHXKOxc8MDboxLy3Oeqd73J3caUepEw==
+      integrity: sha512-9yVS7v7eJLOcRue11n+DocyivIpE77FAsza9YRrOaTkM6VPtbMZ9TaDZH1rJ99/x+GTbhk+X5xZS3+KWBnCFZA==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/schema-gen.tgz':
@@ -15603,7 +15614,7 @@ packages:
   'file:projects/sdk-ui.tgz_prop-types@15.7.2+webpack@4.41.0':
     dependencies:
       '@babel/core': 7.6.2
-      '@gooddata/goodstrap': 63.5.0_react-dom@16.10.2+react@16.10.2
+      '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2
       '@gooddata/js-utils': 3.5.0
       '@gooddata/mock-js': 1.34.0
       '@gooddata/numberjs': 3.2.2
@@ -15680,13 +15691,13 @@ packages:
       prop-types: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-U61bn0QMoL7JVM9gKsgcuKih+YY8ETwpucIFRALTqH4eVHs0iq7+7NJtKxB4zowk2QAHuy/9lVWk4nTYcPQNLA==
+      integrity: sha512-nGTFHIVdhQM19BByc66STEtr6uWW5qcJTN+hAub1wLNNTQGN/oBK+nWD2lcxvAr020BZhZlrta81zadDde2VGg==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
   '@babel/core': ^7.4.4
-  '@gooddata/goodstrap': ^63.1.1
+  '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z
   '@gooddata/js-utils': ^3.4.0
   '@gooddata/mock-js': ^1.31.0
   '@gooddata/numberjs': ^3.1.2

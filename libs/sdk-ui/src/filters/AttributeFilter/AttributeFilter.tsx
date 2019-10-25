@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { SDK, factory as createSdk } from "@gooddata/gd-bear-client";
+import { IAnalyticalBackend, Element } from "@gooddata/sdk-backend-spi";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { injectIntl } from "react-intl";
@@ -8,17 +9,21 @@ import { AttributeDropdown } from "./AttributeDropdown";
 import { AttributeLoader } from "./AttributeLoader";
 import { IAttributeDisplayForm } from "./model";
 import { setTelemetryHeaders } from "../../base/helpers/utils";
+import { AttributeDropdown as AttributeDropdownNew } from "./AttributeDropdown/AttributeDropdown";
 
 export interface IAttributeFilterProps {
+    backend: IAnalyticalBackend;
+    // workspace: string;
+    identifier: string;
+
     sdk?: SDK;
     uri?: string;
-    identifier?: string;
     projectId?: string;
     metadata?: {
         getObjectUri: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
         getObjectDetails: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
     };
-    onApply: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+    onApply: (selectedItems: Element[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
     locale?: string;
     FilterLoading?: any;
@@ -72,13 +77,22 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
     }
 
     public render() {
-        const { locale, projectId, uri, identifier } = this.props;
+        const { locale, projectId, uri, identifier, backend, onApply } = this.props;
         const { md } = this.sdk;
         return (
             <IntlWrapper locale={locale}>
-                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
-                    {props => this.renderContent(props)}
-                </AttributeLoader>
+                <div>
+                    <AttributeDropdownNew
+                        identifier={identifier}
+                        backend={backend}
+                        workspace={projectId}
+                        onApply={onApply}
+                        title="FOO" // TODO
+                    />
+                    <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
+                        {props => this.renderContent(props)}
+                    </AttributeLoader>
+                </div>
             </IntlWrapper>
         );
     }

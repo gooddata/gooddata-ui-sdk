@@ -11,6 +11,8 @@ import {
     Kpi,
     PieChart,
     LoadingComponent,
+    AttributeElements,
+    AttributeFilter,
 } from "@gooddata/sdk-ui";
 
 import "./App.css";
@@ -40,6 +42,23 @@ const Dashboard: React.FC = () => {
             <Row>
                 <Col>
                     <InsightViewDemo backend={analyticalBackend} workspace={workspace} />
+                </Col>
+            </Row>
+
+            <Row>
+                <Col>
+                    <AttributeElements
+                        backend={analyticalBackend}
+                        workspace={workspace}
+                        identifier="label.method.method"
+                        limit={3}
+                    />
+                    <AttributeFilter
+                        backend={analyticalBackend}
+                        // workspace={workspace}
+                        projectId={workspace}
+                        identifier="label.method.method"
+                    />
                 </Col>
             </Row>
 

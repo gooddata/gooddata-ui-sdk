@@ -47,6 +47,7 @@ export interface IElementQueryResult {
     readonly elements: Element[];
     readonly limit: number;
     readonly offset: number;
+    readonly totalItemsCount: number;
 
     next(): Promise<IElementQueryResult>;
 }
@@ -56,6 +57,6 @@ export interface IElementQueryResult {
  * @public
  */
 export type Element = {
-    readonly value: string;
+    readonly title: string;
     readonly uri?: string;
 };

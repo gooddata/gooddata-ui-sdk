@@ -89,6 +89,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
             elements: [],
             limit: count,
             offset: total,
+            totalItemsCount: total,
             next: () => Promise.resolve(emptyResult),
         };
 
@@ -96,6 +97,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
             elements: items.map((element: { element: Element }) => element.element), // TODO helper
             limit: count,
             offset: serverOffset,
+            totalItemsCount: total,
             next: hasNextPage
                 ? () => this.queryWorker(offset + count, limit, options)
                 : () => Promise.resolve(emptyResult),
