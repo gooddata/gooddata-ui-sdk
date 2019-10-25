@@ -191,6 +191,9 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
                 this.setGridDataSource(this.agGridDataSource);
 
+                this.props.onExportReady(
+                    this.visibleData.dataView.result.export.bind(this.visibleData.dataView.result),
+                );
                 this.setState({ tableReady: true });
             });
         });
@@ -341,7 +344,11 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     //
 
     private onPageLoaded = (dv: DataViewFacade): void => {
-        this.currentResult = dv.result();
+        const currentResult = dv.result();
+        if (!this.currentResult.equals(currentResult)) {
+            this.props.onExportReady(currentResult.export.bind(currentResult));
+        }
+        this.currentResult = currentResult;
         this.visibleData = dv;
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
 

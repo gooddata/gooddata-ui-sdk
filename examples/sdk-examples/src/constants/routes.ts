@@ -15,13 +15,13 @@ import { CustomLegend } from "../examples/advanced/customLegend";
 import { LoadingAndError } from "../examples/advanced/loadingAndError";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
+import { Export } from "../examples/export";
 
 import { Login } from "../components/login";
 import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
 
-// import Export from "./Export";
 // import AttributeFilter from "./AttributeFilter";
 // import ParentFilter from "./ParentFilter";
 
@@ -96,7 +96,7 @@ export const sideNavigationRoutes = [
         title: "Advanced Use Cases",
         Component: AdvancedUseCasesRoutes,
     },
-    // { path: "/export", title: "Export", Component: Export },
+    { path: "/export", title: "Export", Component: Export },
     {
         path: "/drilling",
         pathMatch: "full",
