@@ -8,7 +8,7 @@ import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/prom
  */
 export interface IWithExecution<T, R extends object> {
     execution: IPreparedExecution | ((props?: T) => IPreparedExecution);
-    mapResultToProps: (result: WithLoadingResult<DataViewFacade>) => R;
+    mapResultToProps: (result: WithLoadingResult<DataViewFacade>, props?: T) => R;
     events?: IWithLoadingEvents<T, DataViewFacade> | ((props?: T) => IWithLoadingEvents<T, DataViewFacade>);
     loadOnMount?: boolean | ((props?: T) => boolean);
     shouldRefetch?: (prevProps?: T, nextProps?: T) => boolean;

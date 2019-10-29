@@ -6,11 +6,12 @@ import { injectIntl, InjectedIntl } from "react-intl";
 import { ErrorStates } from "../../base/constants/errorStates";
 import { RuntimeError } from "../../base/errors/RuntimeError";
 import { convertErrors } from "../../base/helpers/errorHandlers";
-import { ILoadingState } from "../../base/interfaces/Events";
+import { ILoadingState, IExportFunction, IExtendedExportConfig } from "../../base/interfaces/Events";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
+import { IExportResponse, ApiResponseError } from "@gooddata/gd-bear-client";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -44,6 +45,11 @@ export interface ILoadingInjectedProps {
 
     // TODO: SDK8: take this out of here
     intl: InjectedIntl;
+
+    /**
+     * Callback to trigger when export is ready
+     */
+    onExportReady(exportFunction: IExportFunction): void;
 
     /**
      * Callback to trigger if the chart cannot visualize the data because it is too large.
@@ -132,12 +138,21 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private onError(error: RuntimeError, execution = this.props.execution) {
+            const { onExportReady } = this.props;
             if (this.props.execution.equals(execution)) {
                 this.setState({ error: error.getMessage(), dataView: null });
                 this.onLoadingChanged({ isLoading: false });
-                // TODO: SDK8: integrate exports. call onExportReady with error function
+                if (onExportReady) {
+                    onExportReady(this.createExportErrorFunction(error));
+                }
                 this.props.onError(error);
             }
+        }
+
+        private createExportErrorFunction(error: RuntimeError | ApiResponseError | Error): IExportFunction {
+            return (_exportConfig: IExtendedExportConfig): Promise<IExportResponse> => {
+                return Promise.reject(error);
+            };
         }
 
         private onDataTooLarge() {
@@ -149,6 +164,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
+            const { onExportReady } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
 
@@ -167,8 +183,10 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
                 this.setState({ dataView, executionResult });
                 this.onLoadingChanged({ isLoading: false });
+                if (onExportReady) {
+                    onExportReady(dataView.result.export.bind(dataView.result));
+                }
                 // TODO: SDK8: push data
-                // TODO: SDK8: push export function
             } catch (error) {
                 this.onError(convertErrors(error));
             }

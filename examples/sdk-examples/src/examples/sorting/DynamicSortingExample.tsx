@@ -8,6 +8,7 @@ import {
     newMeasureSort,
     IAttributeSortItem,
     IMeasureSortItem,
+    newAttributeLocator,
 } from "@gooddata/sdk-model";
 
 import {
@@ -113,10 +114,10 @@ export const DynamicSortingExample: React.FC = () => {
                 )} order.`,
             sortBy: dir => [
                 newMeasureSort(totalSalesIdentifier, dir, [
-                    {
-                        attributeIdentifier: locationStateDisplayFormIdentifier,
-                        element: locationStateAttributeCaliforniaUri,
-                    },
+                    newAttributeLocator(
+                        locationStateDisplayFormIdentifier,
+                        locationStateAttributeCaliforniaUri,
+                    ),
                 ]),
             ],
         },
@@ -129,10 +130,7 @@ export const DynamicSortingExample: React.FC = () => {
                 )} order.`,
             sortBy: dir => [
                 newMeasureSort(totalSalesIdentifier, dir, [
-                    {
-                        attributeIdentifier: monthDateIdentifier,
-                        element: monthDateIdentifierJanuary,
-                    },
+                    newAttributeLocator(monthDateIdentifier, monthDateIdentifierJanuary),
                 ]),
             ],
         },
@@ -143,16 +141,13 @@ export const DynamicSortingExample: React.FC = () => {
             description: () => "You can combine multiple sortItems together, even mix different directions.",
             sortBy: () => [
                 newMeasureSort(totalSalesIdentifier, "asc", [
-                    {
-                        attributeIdentifier: locationStateDisplayFormIdentifier,
-                        element: locationStateAttributeCaliforniaUri,
-                    },
+                    newAttributeLocator(
+                        locationStateDisplayFormIdentifier,
+                        locationStateAttributeCaliforniaUri,
+                    ),
                 ]),
                 newMeasureSort(totalSalesIdentifier, "desc", [
-                    {
-                        attributeIdentifier: monthDateIdentifier,
-                        element: monthDateIdentifierJanuary,
-                    },
+                    newAttributeLocator(monthDateIdentifier, monthDateIdentifierJanuary),
                 ]),
             ],
         },
