@@ -191,9 +191,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
                 this.setGridDataSource(this.agGridDataSource);
 
-                this.props.onExportReady(
-                    this.visibleData.dataView.result.export.bind(this.visibleData.dataView.result),
-                );
+                this.props.onExportReady(this.currentResult.export.bind(this.currentResult));
                 this.setState({ tableReady: true });
             });
         });
