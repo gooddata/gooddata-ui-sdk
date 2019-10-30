@@ -33,7 +33,7 @@ export namespace VisualizationInput {
         measureDefinition: {
             item: ObjQualifier;
             aggregation?: MeasureAggregation;
-            filters?: IFilter[];
+            filters?: IMeasureFilter[];
             computeRatio?: boolean;
         };
     }
@@ -54,12 +54,20 @@ export namespace VisualizationInput {
     export type INegativeAttributeFilter = AFM.INegativeAttributeFilter;
     export type IAbsoluteDateFilter = VisualizationObject.IVisualizationObjectAbsoluteDateFilter;
     export type IRelativeDateFilter = VisualizationObject.IVisualizationObjectRelativeDateFilter;
+    export type IMeasureValueFilter = VisualizationObject.IMeasureValueFilter;
+
+    export type IMeasureFilter =
+        | IAbsoluteDateFilter
+        | IRelativeDateFilter
+        | IPositiveAttributeFilter
+        | INegativeAttributeFilter;
 
     export type IFilter =
         | IAbsoluteDateFilter
         | IRelativeDateFilter
         | IPositiveAttributeFilter
-        | INegativeAttributeFilter;
+        | INegativeAttributeFilter
+        | IMeasureValueFilter;
 
     export type ISort = AFM.IAttributeSortItem | AFM.IMeasureSortItem;
     export type ITotal = VisualizationObject.IVisualizationTotal;
@@ -104,6 +112,10 @@ export namespace VisualizationInput {
 
     export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter {
         return VisualizationObject.isRelativeDateFilter(obj);
+    }
+
+    export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter {
+        return VisualizationObject.isMeasureValueFilter(obj);
     }
 
     export function isSort(obj: any): obj is ISort {
