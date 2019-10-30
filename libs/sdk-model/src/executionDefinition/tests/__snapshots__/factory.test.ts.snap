@@ -337,6 +337,82 @@ Object {
 }
 `;
 
+exports[`newDefForBuckets should create def with measure value filter 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.activity.id.subject",
+        },
+        "localIdentifier": "a_label.activity.id.subject",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.activity.id.subject",
+            },
+            "localIdentifier": "a_label.activity.id.subject",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.stagehistory.velocity",
+                },
+              },
+            },
+            "localIdentifier": "m_fact.stagehistory.velocity_sum",
+          },
+        },
+      ],
+      "localIdentifier": "mixedBucket",
+    },
+  ],
+  "dimensions": Array [],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`newDefForBuckets should create def with mixed filters 1`] = `
 Object {
   "attributes": Array [
@@ -399,6 +475,19 @@ Object {
         "from": 0,
         "granularity": "GDC.time.month",
         "to": -10,
+      },
+    },
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
       },
     },
   ],
@@ -785,6 +874,95 @@ Object {
 }
 `;
 
+exports[`newDefForInsight should create def with extra measure filter merged with insight filter 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.activity.id.subject",
+        },
+        "localIdentifier": "a_label.activity.id.subject",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.activity.id.subject",
+            },
+            "localIdentifier": "a_label.activity.id.subject",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.stagehistory.velocity",
+                },
+              },
+            },
+            "localIdentifier": "m_fact.stagehistory.velocity_sum",
+          },
+        },
+      ],
+      "localIdentifier": "mixedBucket",
+    },
+  ],
+  "dimensions": Array [],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    },
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.stagehistory.velocity",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.stagehistory.velocity_sum",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`newDefForInsight should create def with filters merged in 1`] = `
 Object {
   "attributes": Array [
@@ -847,6 +1025,19 @@ Object {
         "from": 0,
         "granularity": "GDC.time.month",
         "to": -10,
+      },
+    },
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
       },
     },
   ],
@@ -1146,6 +1337,41 @@ Object {
 }
 `;
 
+exports[`newDefForItems should create def with measure value filter 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.account.id.name",
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+    },
+  ],
+  "buckets": Array [],
+  "dimensions": Array [],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
+      },
+    },
+  ],
+  "measures": Array [],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`newDefForItems should create def with mixed filters 1`] = `
 Object {
   "attributes": Array [
@@ -1181,6 +1407,19 @@ Object {
         "from": 0,
         "granularity": "GDC.time.month",
         "to": -10,
+      },
+    },
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "EQUAL_TO",
+            "value": 11,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_afSEwRwdbMeQ",
+        },
       },
     },
   ],

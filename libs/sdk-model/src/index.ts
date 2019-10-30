@@ -66,7 +66,9 @@ export {
     INegativeAttributeFilter,
     IAbsoluteDateFilter,
     IRelativeDateFilter,
+    IMeasureValueFilter,
     IFilter,
+    IMeasureFilter,
     IDateFilter,
     IAttributeFilter,
     isAbsoluteDateFilter,
@@ -74,9 +76,17 @@ export {
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
     isDateFilter,
+    isMeasureValueFilter,
+    ComparisonConditionOperator,
+    IComparisonCondition,
+    IRangeCondition,
+    MeasureValueFilterCondition,
+    RangeConditionOperator,
     isAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
+    isComparisonCondition,
+    isRangeCondition,
     filterIsEmpty,
 } from "./filter";
 
@@ -85,6 +95,7 @@ export {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
+    newMeasureValueFilter,
 } from "./filter/factory";
 
 export {

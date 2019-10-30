@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import identity = require("lodash/identity");
 import cloneDeep = require("lodash/cloneDeep");
+import identity = require("lodash/identity");
 import {
     ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
@@ -14,8 +14,8 @@ import {
     measureIdentifier,
     measureLocalId,
 } from ".";
-import { IFilter } from "../filter";
 import { Identifier } from "../base";
+import { IMeasureFilter } from "../filter";
 
 /**
  * Simplified Previous Period Data DataSet specification
@@ -117,7 +117,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
         return this;
     };
 
-    public filters = (...filters: IFilter[]) => {
+    public filters = (...filters: IMeasureFilter[]) => {
         this.measure.definition.measureDefinition.filters = filters;
         return this;
     };

@@ -2,26 +2,28 @@
 import { factoryNotationFor } from "..";
 import { IAttribute } from "../../attribute";
 import { newAttribute } from "../../attribute/factory";
-import { IMeasure } from "../../measure";
+import { IAttributeSortItem, IMeasureSortItem, newAttributeSort, newMeasureSort } from "../../base/sort";
 import {
-    newMeasure,
-    newArithmeticMeasure,
-    newPopMeasure,
-    newPreviousPeriodMeasure,
-} from "../../measure/factory";
-import {
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
     IAbsoluteDateFilter,
+    IMeasureValueFilter,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
     IRelativeDateFilter,
 } from "../../filter";
 import {
     newAbsoluteDateFilter,
-    newRelativeDateFilter,
-    newPositiveAttributeFilter,
     newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newRelativeDateFilter,
+    newMeasureValueFilter,
 } from "../../filter/factory";
-import { IAttributeSortItem, newAttributeSort, newMeasureSort, IMeasureSortItem } from "../../base/sort";
+import { IMeasure } from "../../measure";
+import {
+    newArithmeticMeasure,
+    newMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "../../measure/factory";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {
@@ -36,6 +38,7 @@ const factories = {
     newRelativeDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    newMeasureValueFilter,
 
     newAttributeSort,
     newMeasureSort,
@@ -426,6 +429,47 @@ describe("factoryNotationFor", () => {
                 },
             };
             const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+
+        it("should handle measure value filter with comparison", () => {
+            const input: IMeasureValueFilter = {
+                measureValueFilter: {
+                    measure: {
+                        localIdentifier: "foo",
+                    },
+                    condition: {
+                        comparison: {
+                            operator: "EQUAL_TO",
+                            value: 11,
+                        },
+                    },
+                },
+            };
+
+            const actual = factoryNotationFor(input);
+
+            testModelNotation(actual, input);
+        });
+
+        it("should handle measure value filter with range", () => {
+            const input: IMeasureValueFilter = {
+                measureValueFilter: {
+                    measure: {
+                        localIdentifier: "foo",
+                    },
+                    condition: {
+                        range: {
+                            operator: "BETWEEN",
+                            from: 0,
+                            to: 100,
+                        },
+                    },
+                },
+            };
+
+            const actual = factoryNotationFor(input);
+
             testModelNotation(actual, input);
         });
     });

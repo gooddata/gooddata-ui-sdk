@@ -25,6 +25,10 @@ import {
     IRelativeDateFilter,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
+    isMeasureValueFilter,
+    IMeasureValueFilter,
+    isComparisonCondition,
+    isRangeCondition,
 } from "../filter";
 import {
     isMeasureDefinition,
@@ -187,6 +191,20 @@ const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
     return `newNegativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
+const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
+    measureValueFilter: { measure, condition },
+}) => {
+    const ref = stringify(measure);
+
+    if (isComparisonCondition(condition)) {
+        return `newMeasureValueFilter(${ref}, "${condition.comparison.operator}", ${condition.comparison.value})`;
+    } else if (isRangeCondition(condition)) {
+        return `newMeasureValueFilter(${ref}, "${condition.range.operator}", ${condition.range.from}, ${condition.range.to})`;
+    }
+
+    return `{ measureValueFilter: { measure: ${ref} }`;
+};
+
 /**
  * Returns a code for generating the provided input using convenience factory methods where possible.
  * @param data - data to return the generating code for
@@ -211,6 +229,8 @@ export const factoryNotationFor = (data: any): string => {
         return convertPositiveAttributeFilter(data);
     } else if (isNegativeAttributeFilter(data)) {
         return convertNegativeAttributeFilter(data);
+    } else if (isMeasureValueFilter(data)) {
+        return convertMeasureValueFilter(data);
     }
 
     return isObject(data) || isString(data) ? stringify(data) : data;

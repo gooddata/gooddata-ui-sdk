@@ -97,8 +97,14 @@ export function isLocalIdRef(obj: any): obj is LocalIdRef {
  *
  * @public
  */
-export function objectRefValue(objRef: ObjRef): string {
+export function objectRefValue(objRef: ObjRef | ObjRefInScope): string {
     invariant(objRef, "object reference must not be undefined");
 
-    return isIdentifierRef(objRef) ? objRef.identifier : objRef.uri;
+    if (isIdentifierRef(objRef)) {
+        return objRef.identifier;
+    } else if (isUriRef(objRef)) {
+        return objRef.uri;
+    }
+
+    return objRef.localIdentifier;
 }

@@ -4,15 +4,20 @@ import {
     IAttributeFilter,
     IDateFilter,
     IFilter,
+    IMeasureValueFilter,
     isAbsoluteDateFilter,
     isAttributeFilter,
     isDateFilter,
+    isMeasureValueFilter,
     isPositiveAttributeFilter,
 } from "./index";
-import partition = require("lodash/partition");
 import unionBy = require("lodash/unionBy");
 
 function filterObjectRef(filter: IFilter): string {
+    if (isMeasureValueFilter(filter)) {
+        return objectRefValue(filter.measureValueFilter.measure);
+    }
+
     if (isDateFilter(filter)) {
         if (isAbsoluteDateFilter(filter)) {
             return objectRefValue(filter.absoluteDateFilter.dataSet);
@@ -23,11 +28,34 @@ function filterObjectRef(filter: IFilter): string {
     if (isPositiveAttributeFilter(filter)) {
         return objectRefValue(filter.positiveAttributeFilter.displayForm);
     }
+
     return objectRefValue(filter.negativeAttributeFilter.displayForm);
 }
 
-function separateFiltersByType(filters: IFilter[]): [IAttributeFilter[], IDateFilter[]] {
-    return partition(filters, isAttributeFilter);
+type FilterByType = {
+    attribute: IAttributeFilter[];
+    date: IDateFilter[];
+    measureValue: IMeasureValueFilter[];
+};
+
+function separateFiltersByType(filters: IFilter[]): FilterByType {
+    const result: FilterByType = {
+        attribute: [],
+        date: [],
+        measureValue: [],
+    };
+
+    filters.forEach(f => {
+        if (isAttributeFilter(f)) {
+            result.attribute.push(f);
+        } else if (isDateFilter(f)) {
+            result.date.push(f);
+        } else {
+            result.measureValue.push(f);
+        }
+    });
+
+    return result;
 }
 
 /**
@@ -49,15 +77,18 @@ export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[]
         return originalFilters;
     }
 
-    const [originalAttributeFilters, originalDateFilters] = separateFiltersByType(originalFilters);
-    const [addedAttributeFilters, addedDateFilters] = separateFiltersByType(addedFilters);
+    const original = separateFiltersByType(originalFilters);
+    const added = separateFiltersByType(addedFilters);
 
     // concat attribute filters
-    const attributeFilters = [...originalAttributeFilters, ...addedAttributeFilters];
+    const attributeFilters = [...original.attribute, ...added.attribute];
 
     // merge date filters by date dataset qualifier
     // added date filters should win, so they are specified first, unionBy prefers items from the first argument
-    const dateFilters = unionBy(addedDateFilters, originalDateFilters, filterObjectRef);
+    const dateFilters = unionBy(added.date, original.date, filterObjectRef);
 
-    return [...attributeFilters, ...dateFilters];
+    // concat measure value filters
+    const measureValueFilters = [...original.measureValue, ...added.measureValue];
+
+    return [...attributeFilters, ...dateFilters, ...measureValueFilters];
 }

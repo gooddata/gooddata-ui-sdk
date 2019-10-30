@@ -15,6 +15,7 @@ import {
     IPositiveAttributeFilter,
     SortItem,
     newDefForItems,
+    IMeasureFilter,
 } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
@@ -73,6 +74,30 @@ function isExpressionFilter(obj: any): obj is ExecuteAFM.IExpressionFilter {
     return obj && (obj as ExecuteAFM.IExpressionFilter).value !== undefined;
 }
 
+function transformMeasureFilter(f: ExecuteAFM.FilterItem): IMeasureFilter {
+    if (ExecuteAFM.isPositiveAttributeFilter(f)) {
+        const newFilter: IPositiveAttributeFilter = {
+            positiveAttributeFilter: {
+                displayForm: f.positiveAttributeFilter.displayForm,
+                in: transformAttrElements(f.positiveAttributeFilter.in),
+            },
+        };
+
+        return newFilter;
+    } else if (ExecuteAFM.isNegativeAttributeFilter(f)) {
+        const newFilter: INegativeAttributeFilter = {
+            negativeAttributeFilter: {
+                displayForm: f.negativeAttributeFilter.displayForm,
+                notIn: transformAttrElements(f.negativeAttributeFilter.notIn),
+            },
+        };
+
+        return newFilter;
+    }
+
+    return f;
+}
+
 function transformFilters(filters: ExecuteAFM.CompatibilityFilter[] = []): IFilter[] {
     if (!filters.length) {
         return [];
@@ -83,28 +108,20 @@ function transformFilters(filters: ExecuteAFM.CompatibilityFilter[] = []): IFilt
             throw new Error("get out of here ;)");
         }
 
-        if (ExecuteAFM.isPositiveAttributeFilter(f)) {
-            const newFilter: IPositiveAttributeFilter = {
-                positiveAttributeFilter: {
-                    displayForm: f.positiveAttributeFilter.displayForm,
-                    in: transformAttrElements(f.positiveAttributeFilter.in),
-                },
-            };
-
-            return newFilter;
-        } else if (ExecuteAFM.isNegativeAttributeFilter(f)) {
-            const newFilter: INegativeAttributeFilter = {
-                negativeAttributeFilter: {
-                    displayForm: f.negativeAttributeFilter.displayForm,
-                    notIn: transformAttrElements(f.negativeAttributeFilter.notIn),
-                },
-            };
-
-            return newFilter;
+        if (ExecuteAFM.isMeasureValueFilter(f)) {
+            return f;
         }
 
-        return f;
+        return transformMeasureFilter(f);
     });
+}
+
+function transformMeasureFilters(filters: ExecuteAFM.FilterItem[] = []): IMeasureFilter[] {
+    if (!filters.length) {
+        return [];
+    }
+
+    return filters.map(transformMeasureFilter);
 }
 
 function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
@@ -124,7 +141,7 @@ function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
                     definition: {
                         measureDefinition: {
                             ...definition.measure,
-                            filters: transformFilters(definition.measure.filters),
+                            filters: transformMeasureFilters(definition.measure.filters),
                         },
                     },
                 },
