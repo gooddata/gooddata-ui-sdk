@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
-import isEmpty = require("lodash/isEmpty");
-import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
-import { IFilter } from "../filter";
-import unset = require("lodash/unset");
 import cloneDeep = require("lodash/cloneDeep");
+import isEmpty = require("lodash/isEmpty");
+import unset = require("lodash/unset");
 import invariant from "ts-invariant";
+import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
+import { IMeasureFilter } from "../filter";
 
 /**
  * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and
@@ -78,7 +78,7 @@ export interface IMeasureDefinition {
         /**
          * Filters to apply in scope of this measure's calculation.
          */
-        filters?: IFilter[];
+        filters?: IMeasureFilter[];
 
         /**
          * Indicates whether the measure should be calculated as % of total instead of actual values.

@@ -2,7 +2,7 @@
 import compact = require("lodash/compact");
 import isEmpty = require("lodash/isEmpty");
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { convertFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
     attributeLocalId,
@@ -34,7 +34,7 @@ function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
     const measuresProp = measures.length ? { measures } : {};
 
     const filters: ExecuteAFM.CompatibilityFilter[] = def.filters
-        ? compact(def.filters.map(convertVisualizationObjectFilter))
+        ? compact(def.filters.map(convertFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

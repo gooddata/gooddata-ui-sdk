@@ -5,9 +5,12 @@ import {
     IAbsoluteDateFilter,
     IAttributeFilter,
     IFilter,
+    IMeasureFilter,
+    IMeasureValueFilter,
     IRelativeDateFilter,
     isAbsoluteDateFilter,
     isAttributeFilter,
+    isMeasureValueFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
@@ -53,7 +56,25 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
     };
 }
 
-export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.FilterItem | null {
+export function convertMeasureValueFilter(
+    filter: IMeasureValueFilter,
+): ExecuteAFM.IMeasureValueFilter | null {
+    if (filter.measureValueFilter.condition === undefined) {
+        return null;
+    }
+
+    return filter;
+}
+
+export function convertFilter(filter: IFilter): ExecuteAFM.ExtendedFilter | null {
+    if (isMeasureValueFilter(filter)) {
+        return convertMeasureValueFilter(filter);
+    }
+
+    return convertMeasureFilter(filter);
+}
+
+export function convertMeasureFilter(filter: IMeasureFilter): ExecuteAFM.FilterItem | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {

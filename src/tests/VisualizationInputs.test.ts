@@ -1,29 +1,23 @@
-// (C) 2007-2019 GoodData Corporation
-import { VisualizationObject } from "../VisualizationObject";
-import IMeasure = VisualizationObject.IMeasure;
-import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
-import BucketItem = VisualizationObject.BucketItem;
-import VisualizationObjectExtendedFilter = VisualizationObject.VisualizationObjectExtendedFilter;
-import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
-import VisualizationObjectDateFilter = VisualizationObject.VisualizationObjectDateFilter;
-import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
-import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
+// (C) 2019 GoodData Corporation
+import { VisualizationInput } from "../VisualizationInput";
+import IMeasure = VisualizationInput.IMeasure;
+import IMeasureDefinitionType = VisualizationInput.IMeasureDefinitionType;
+import IArithmeticMeasureDefinition = VisualizationInput.IArithmeticMeasureDefinition;
 
 describe("VisualizationObject", () => {
     describe("isMeasure", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasure(null);
+            const result = VisualizationInput.isMeasure(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasure(undefined);
+            const result = VisualizationInput.isMeasure(undefined);
             expect(result).toEqual(false);
         });
 
         it("should return false when visualization attribute is tested", () => {
-            const attribute: IVisualizationAttribute = {
+            const attribute: VisualizationInput.IAttribute = {
                 visualizationAttribute: {
                     localIdentifier: "m1",
                     displayForm: {
@@ -31,7 +25,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasure(attribute);
+            const result = VisualizationInput.isMeasure(attribute);
             expect(result).toEqual(false);
         });
 
@@ -48,19 +42,19 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasure(measure);
+            const result = VisualizationInput.isMeasure(measure);
             expect(result).toEqual(true);
         });
     });
 
-    describe("isVisualizationAttribute", () => {
+    describe("isAttribute", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isVisualizationAttribute(null);
+            const result = VisualizationInput.isAttribute(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isVisualizationAttribute(undefined);
+            const result = VisualizationInput.isAttribute(undefined);
             expect(result).toEqual(false);
         });
 
@@ -77,12 +71,12 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isVisualizationAttribute(measure);
+            const result = VisualizationInput.isAttribute(measure);
             expect(result).toEqual(false);
         });
 
         it("should return true when visualization attribute is tested", () => {
-            const attribute: IVisualizationAttribute = {
+            const attribute: VisualizationInput.IAttribute = {
                 visualizationAttribute: {
                     localIdentifier: "m1",
                     displayForm: {
@@ -90,19 +84,19 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isVisualizationAttribute(attribute);
+            const result = VisualizationInput.isAttribute(attribute);
             expect(result).toEqual(true);
         });
     });
 
     describe("isMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasureDefinition(null);
+            const result = VisualizationInput.isMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasureDefinition(undefined);
+            const result = VisualizationInput.isMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -114,7 +108,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -125,7 +119,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -138,7 +132,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -156,19 +150,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isArithmeticMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isArithmeticMeasureDefinition(null);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isArithmeticMeasureDefinition(undefined);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -180,7 +174,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -191,7 +185,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -204,7 +198,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -222,19 +216,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isPopMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPopMeasureDefinition(null);
+            const result = VisualizationInput.isPopMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPopMeasureDefinition(undefined);
+            const result = VisualizationInput.isPopMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -246,7 +240,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -257,7 +251,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -270,7 +264,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -288,19 +282,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isPreviousPeriodMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(null);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(undefined);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -312,7 +306,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -323,7 +317,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -336,7 +330,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -354,77 +348,24 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
-            expect(result).toEqual(true);
-        });
-    });
-
-    describe("isAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAttributeFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when relative date filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
-                relativeDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    granularity: "GDC.time.year",
-                    from: -1,
-                    to: -1,
-                },
-            };
-            const result = VisualizationObject.isAttributeFilter(filter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when negative attribute filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
-                negativeAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/date",
-                    },
-                    notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = VisualizationObject.isAttributeFilter(filter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return true when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/attribute",
-                    },
-                    in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = VisualizationObject.isAttributeFilter(filter);
+            const result = VisualizationInput.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
     });
 
     describe("isPositiveAttributeFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPositiveAttributeFilter(null);
+            const result = VisualizationInput.isPositiveAttributeFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPositiveAttributeFilter(undefined);
+            const result = VisualizationInput.isPositiveAttributeFilter(undefined);
             expect(result).toEqual(false);
         });
 
         it("should return false when negative attribute filter is tested", () => {
-            const filter: VisualizationObjectAttributeFilter = {
+            const filter: VisualizationInput.INegativeAttributeFilter = {
                 negativeAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/date",
@@ -432,12 +373,12 @@ describe("VisualizationObject", () => {
                     notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isPositiveAttributeFilter(filter);
+            const result = VisualizationInput.isPositiveAttributeFilter(filter);
             expect(result).toEqual(false);
         });
 
         it("should return true when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectAttributeFilter = {
+            const filter: VisualizationInput.IPositiveAttributeFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/attribute",
@@ -445,24 +386,24 @@ describe("VisualizationObject", () => {
                     in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isPositiveAttributeFilter(filter);
+            const result = VisualizationInput.isPositiveAttributeFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isAbsoluteDateFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAbsoluteDateFilter(null);
+            const result = VisualizationInput.isAbsoluteDateFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAbsoluteDateFilter(undefined);
+            const result = VisualizationInput.isAbsoluteDateFilter(undefined);
             expect(result).toEqual(false);
         });
 
         it("should return false when relative date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: VisualizationInput.IRelativeDateFilter = {
                 relativeDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -472,12 +413,12 @@ describe("VisualizationObject", () => {
                     to: -1,
                 },
             };
-            const result = VisualizationObject.isAbsoluteDateFilter(filter);
+            const result = VisualizationInput.isAbsoluteDateFilter(filter);
             expect(result).toEqual(false);
         });
 
         it("should return true when absolute date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: VisualizationInput.IAbsoluteDateFilter = {
                 absoluteDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -486,24 +427,24 @@ describe("VisualizationObject", () => {
                     to: "2018-07-11",
                 },
             };
-            const result = VisualizationObject.isAbsoluteDateFilter(filter);
+            const result = VisualizationInput.isAbsoluteDateFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isRelativeDateFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isRelativeDateFilter(null);
+            const result = VisualizationInput.isRelativeDateFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isRelativeDateFilter(undefined);
+            const result = VisualizationInput.isRelativeDateFilter(undefined);
             expect(result).toEqual(false);
         });
 
         it("should return false when absolute date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: VisualizationInput.IAbsoluteDateFilter = {
                 absoluteDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -512,12 +453,12 @@ describe("VisualizationObject", () => {
                     to: "to end",
                 },
             };
-            const result = VisualizationObject.isRelativeDateFilter(filter);
+            const result = VisualizationInput.isRelativeDateFilter(filter);
             expect(result).toEqual(false);
         });
 
         it("should return true when relative date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: VisualizationInput.IRelativeDateFilter = {
                 relativeDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -527,78 +468,36 @@ describe("VisualizationObject", () => {
                     to: -1,
                 },
             };
-            const result = VisualizationObject.isRelativeDateFilter(filter);
-            expect(result).toEqual(true);
-        });
-    });
-
-    describe("isAttribute", () => {
-        it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAttribute(null);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAttribute(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure is tested", () => {
-            const measure: BucketItem = {
-                measure: {
-                    localIdentifier: "m1",
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                uri: "/gdc/mock/measure",
-                            },
-                        },
-                    },
-                },
-            };
-            const result = VisualizationObject.isAttribute(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when visualization attribute is tested", () => {
-            const attribute: BucketItem = {
-                visualizationAttribute: {
-                    localIdentifier: "m1",
-                    displayForm: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = VisualizationObject.isAttribute(attribute);
+            const result = VisualizationInput.isRelativeDateFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isMeasureValueFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasureValueFilter(null);
+            const result = VisualizationInput.isMeasureValueFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasureValueFilter(undefined);
+            const result = VisualizationInput.isMeasureValueFilter(undefined);
             expect(result).toEqual(false);
         });
 
         it("should return true when measure value filter is tested", () => {
-            const filter: VisualizationObjectExtendedFilter = {
+            const filter: VisualizationInput.IMeasureValueFilter = {
                 measureValueFilter: {
                     measure: {
-                        uri: "/gdc/mock/date",
+                        uri: "/gdc/mock/measure",
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureValueFilter(filter);
+            const result = VisualizationInput.isMeasureValueFilter(filter);
             expect(result).toEqual(true);
         });
 
         it("should return false when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectExtendedFilter = {
+            const filter: VisualizationInput.IPositiveAttributeFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/attribute",
@@ -606,7 +505,7 @@ describe("VisualizationObject", () => {
                     in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isMeasureValueFilter(filter);
+            const result = VisualizationInput.isMeasureValueFilter(filter);
             expect(result).toEqual(false);
         });
     });

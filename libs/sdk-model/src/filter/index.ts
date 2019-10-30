@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { ObjRef } from "../base";
+import { ObjRef, ObjRefInScope } from "../base";
 import isEmpty = require("lodash/isEmpty");
 
 /**
@@ -144,11 +144,75 @@ export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilt
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
 /**
+ * @public
+ */
+export type ComparisonConditionOperator =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
+
+/**
+ * @public
+ */
+export interface IComparisonCondition {
+    comparison: {
+        operator: ComparisonConditionOperator;
+        value: number;
+    };
+}
+
+/**
+ * @public
+ */
+export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+/**
+ * @public
+ */
+export interface IRangeCondition {
+    range: {
+        operator: RangeConditionOperator;
+        from: number;
+        to: number;
+    };
+}
+
+/**
+ * @public
+ */
+export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
+/**
+ * @public
+ */
+export interface IMeasureValueFilter {
+    measureValueFilter: {
+        measure: ObjRefInScope;
+        condition?: MeasureValueFilterCondition;
+    };
+}
+
+/**
  * All possible filters.
  *
  * @public
  */
 export type IFilter =
+    | IAbsoluteDateFilter
+    | IRelativeDateFilter
+    | IPositiveAttributeFilter
+    | INegativeAttributeFilter
+    | IMeasureValueFilter;
+
+/**
+ * All possible filters that can be specified for a simple measure.
+ *
+ * @public
+ */
+export type IMeasureFilter =
     | IAbsoluteDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
@@ -210,6 +274,33 @@ export function isAttributeFilter(obj: any): obj is IAttributeFilter {
  */
 export function isDateFilter(obj: any): obj is IDateFilter {
     return isRelativeDateFilter(obj) || isAbsoluteDateFilter(obj);
+}
+
+/**
+ * Type guard checking whether the provided object is a measure value filter.
+ *
+ * @public
+ */
+export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter {
+    return !isEmpty(obj) && (obj as IMeasureValueFilter).measureValueFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a measure value filter's comparison condition .
+ *
+ * @public
+ */
+export function isComparisonCondition(obj: any): obj is IComparisonCondition {
+    return !isEmpty(obj) && (obj as IComparisonCondition).comparison !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a measure value filter's range condition.
+ *
+ * @public
+ */
+export function isRangeCondition(obj: any): obj is IRangeCondition {
+    return !isEmpty(obj) && (obj as IRangeCondition).range !== undefined;
 }
 
 /**

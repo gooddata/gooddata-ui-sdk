@@ -1,9 +1,10 @@
 // (C) 2019 GoodData Corporation
 
-import { Account, Activity } from "../../../__mocks__/model";
+import { Account, Activity, Won } from "../../../__mocks__/model";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import {
     newAbsoluteDateFilter,
+    newMeasureValueFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
@@ -11,11 +12,14 @@ import {
 import {
     DateGranularity,
     isAbsoluteDateFilter,
-    isNegativeAttributeFilter,
-    isPositiveAttributeFilter,
-    isRelativeDateFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
+    isComparisonCondition,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
+    isRangeCondition,
+    isRelativeDateFilter,
 } from "../index";
 
 describe("filter type guards", () => {
@@ -26,6 +30,8 @@ describe("filter type guards", () => {
             [false, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
             [false, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
             [false, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [false, "measure value filter - comparison", newMeasureValueFilter(Won, "EQUAL_TO", 11)],
+            [false, "measure value filter - range", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
@@ -40,6 +46,8 @@ describe("filter type guards", () => {
             [true, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
             [false, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
             [false, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [false, "measure value filter - comparison", newMeasureValueFilter(Won, "EQUAL_TO", 11)],
+            [false, "measure value filter - range", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
@@ -54,6 +62,8 @@ describe("filter type guards", () => {
             [false, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
             [true, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
             [false, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [false, "measure value filter - comparison", newMeasureValueFilter(Won, "EQUAL_TO", 11)],
+            [false, "measure value filter - range", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
@@ -68,10 +78,28 @@ describe("filter type guards", () => {
             [false, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
             [false, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
             [true, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [false, "measure value filter - comparison", newMeasureValueFilter(Won, "EQUAL_TO", 11)],
+            [false, "measure value filter - range", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isAbsoluteDateFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("newMeasureValueFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "positive filter", newPositiveAttributeFilter(Account.Name, ["value"])],
+            [false, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
+            [false, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
+            [false, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [true, "measure value filter - comparison", newMeasureValueFilter(Won, "EQUAL_TO", 11)],
+            [true, "measure value filter - range", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isMeasureValueFilter(input)).toBe(expectedResult);
         });
     });
 
@@ -96,6 +124,30 @@ describe("filter type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isAttributeElementsByValue(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isComparisonCondition", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "comparison condition", { comparison: { operator: "EQUAL_TO", value: 11 } }],
+            [false, "range condition", { range: { operator: "BETWEEN", from: 0, to: 100 } }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isComparisonCondition(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isRangeCondition", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "comparison condition", { comparison: { operator: "EQUAL_TO", value: 11 } }],
+            [true, "range condition", { range: { operator: "BETWEEN", from: 0, to: 100 } }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isRangeCondition(input)).toBe(expectedResult);
         });
     });
 });

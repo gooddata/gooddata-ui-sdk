@@ -8,6 +8,7 @@ import {
     IFilter,
     AttributeElements,
     IAttribute,
+    IMeasureFilter,
 } from "@gooddata/sdk-model";
 import { VisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
@@ -23,7 +24,20 @@ const convertAttributeElements = (items: string[]): AttributeElements => {
     return isUri(first) ? { uris: items } : { values: items };
 };
 
-const convertFilter = (filter: VisualizationObject.VisualizationObjectFilter): IFilter => {
+const convertFilter = (filter: VisualizationObject.VisualizationObjectExtendedFilter): IFilter => {
+    if (VisualizationObject.isMeasureValueFilter(filter)) {
+        return {
+            measureValueFilter: {
+                condition: filter.measureValueFilter.condition,
+                measure: filter.measureValueFilter.measure,
+            },
+        };
+    }
+
+    return convertMeasureFilter(filter);
+};
+
+const convertMeasureFilter = (filter: VisualizationObject.VisualizationObjectFilter): IMeasureFilter => {
     if (VisualizationObject.isAttributeFilter(filter)) {
         if (VisualizationObject.isPositiveAttributeFilter(filter)) {
             return {
@@ -75,7 +89,7 @@ const convertMeasureDefinition = (
     return {
         measureDefinition: {
             ...definition.measureDefinition,
-            filters: filters ? filters.map(convertFilter) : [],
+            filters: filters ? filters.map(convertMeasureFilter) : [],
         },
     };
 };

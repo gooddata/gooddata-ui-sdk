@@ -34,18 +34,21 @@
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.ts"
         ],
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
+        "testRegex": "\\.test.ts$",
         "testPathIgnorePatterns": [
-            ",/node_modules/",
+            "/node_modules/",
             "/dist/"
         ],
         "collectCoverageFrom": [
-            "src/**/*.{ts}",
-            "!**/*.d.ts"
+            "src/**/*.ts"
         ],
-        "collectCoverage": false,
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ],
+        "collectCoverage": true,
         "coverageReporters": [
-            "html"
+            "html",
+            "json"
         ],
         "globals": {
             "ts-jest": {

@@ -127,6 +127,9 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 // @public
 export function bucketTotals(bucket: IBucket): ITotal[];
 
+// @public (undocumented)
+export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+
 // @public
 export enum ComputeRatioRule {
     ANY_MEASURE = 2,
@@ -296,6 +299,15 @@ export interface IColorPaletteItem {
     guid: string;
 }
 
+// @public (undocumented)
+export interface IComparisonCondition {
+    // (undocumented)
+    comparison: {
+        operator: ComparisonConditionOperator;
+        value: number;
+    };
+}
+
 // @public
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
@@ -341,7 +353,7 @@ export interface IExecutionDefinition {
 }
 
 // @public
-export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter;
 
 // @public
 export interface IGuidColorItem {
@@ -386,13 +398,16 @@ export interface IMeasureDefinition {
     measureDefinition: {
         item: ObjRef;
         aggregation?: MeasureAggregation;
-        filters?: IFilter[];
+        filters?: IMeasureFilter[];
         computeRatio?: boolean;
     };
 }
 
 // @public
 export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
+
+// @public
+export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @public
 export interface IMeasureLocatorItem {
@@ -408,6 +423,15 @@ export interface IMeasureSortItem {
     measureSortItem: {
         direction: SortDirection;
         locators: LocatorItem[];
+    };
+}
+
+// @public (undocumented)
+export interface IMeasureValueFilter {
+    // (undocumented)
+    measureValueFilter: {
+        measure: ObjRefInScope;
+        condition?: MeasureValueFilterCondition;
     };
 }
 
@@ -505,6 +529,16 @@ export interface IPreviousPeriodMeasureDefinition {
     };
 }
 
+// @public (undocumented)
+export interface IRangeCondition {
+    // (undocumented)
+    range: {
+        operator: RangeConditionOperator;
+        from: number;
+        to: number;
+    };
+}
+
 // @public
 export interface IRelativeDateFilter {
     // (undocumented)
@@ -555,6 +589,9 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 export function isBucket(obj: any): obj is IBucket;
 
 // @public
+export function isComparisonCondition(obj: any): obj is IComparisonCondition;
+
+// @public
 export function isDateFilter(obj: any): obj is IDateFilter;
 
 // @public
@@ -582,6 +619,9 @@ export function isMeasureLocator(obj: any): obj is IMeasureLocatorItem;
 export function isMeasureSort(obj: any): obj is IMeasureSortItem;
 
 // @public
+export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter;
+
+// @public
 export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter;
 
 // @public
@@ -598,6 +638,9 @@ export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeri
 
 // @public
 export function isPreviousPeriodMeasureDefinition(obj: any): obj is IPreviousPeriodMeasureDefinition;
+
+// @public
+export function isRangeCondition(obj: any): obj is IRangeCondition;
 
 // @public
 export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
@@ -664,7 +707,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
-    filters: (...filters: IFilter[]) => this;
+    filters: (...filters: IMeasureFilter[]) => this;
     // (undocumented)
     ratio: () => this;
 }
@@ -726,6 +769,9 @@ export function measureTitle(measure: IMeasure): string | undefined;
 // @public
 export function measureUri(measure: IMeasure): string | undefined;
 
+// @public (undocumented)
+export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
 // @public
 export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
@@ -766,6 +812,9 @@ export function newMeasure(measureId: string, modifications?: MeasureModificatio
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
+export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: ComparisonConditionOperator | RangeConditionOperator, val1: number, val2?: number): IMeasureValueFilter;
+
+// @public
 export function newNegativeAttributeFilter(attributeOrId: IAttribute | string, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
@@ -787,7 +836,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | string, attrib
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export function objectRefValue(objRef: ObjRef): string;
+export function objectRefValue(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -806,6 +855,9 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
     // @internal
     constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]);
 }
+
+// @public (undocumented)
+export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
 // @public
 export type RGBType = "rgb";

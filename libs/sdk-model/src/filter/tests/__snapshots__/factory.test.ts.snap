@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filter factory newAbsoluteDateFilter should generate correct filter 1`] = `
+Object {
+  "absoluteDateFilter": Object {
+    "dataSet": Object {
+      "identifier": "foo",
+    },
+    "from": "2018-01-01",
+    "to": "2018-12-31",
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate comparison filter for measure identifier 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "comparison": Object {
+        "operator": "EQUAL_TO",
+        "value": 11,
+      },
+    },
+    "measure": Object {
+      "identifier": "measureObjIdentifier",
+    },
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate comparison filter for measure object 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "comparison": Object {
+        "operator": "EQUAL_TO",
+        "value": 11,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate range filter for measure object 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "range": Object {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+      },
+    },
+    "measure": Object {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
+exports[`filter factory newMeasureValueFilter should generate ranger filter for measure identifier 1`] = `
+Object {
+  "measureValueFilter": Object {
+    "condition": Object {
+      "range": Object {
+        "from": 0,
+        "operator": "BETWEEN",
+        "to": 100,
+      },
+    },
+    "measure": Object {
+      "identifier": "measureObjIdentifier",
+    },
+  },
+}
+`;
+
+exports[`filter factory newNegativeAttributeFilter should generate correct filter 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "notIn": Object {
+      "uris": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newNegativeAttributeFilter should generate correct filter when input is IAttribute instance 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "label.account.id.name",
+    },
+    "notIn": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newNegativeAttributeFilter should generate correct textual filter 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "notIn": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newNegativeAttributeFilter should generate correct textual filter when input is array of values 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "notIn": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newPositiveAttributeFilter should generate correct filter attribute object is on input 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "label.account.id.name",
+    },
+    "in": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newPositiveAttributeFilter should generate correct uri filter 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "in": Object {
+      "uris": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newPositiveAttributeFilter should generate correct value filter 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "in": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newPositiveAttributeFilter should generate correct value filter when input is array of values 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "in": Object {
+      "values": Array [
+        "bar",
+        "baz",
+      ],
+    },
+  },
+}
+`;
+
+exports[`filter factory newRelativeDateFilter should generate correct filter 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": "foo",
+    },
+    "from": 1,
+    "granularity": "quarter",
+    "to": 3,
+  },
+}
+`;

@@ -12,9 +12,9 @@ import {
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { convertMeasureFilter } from "./FilterConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
-import { convertVisualizationObjectFilter } from "./FilterConverter";
 
 export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
     const {
@@ -55,7 +55,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
     const { measureDefinition } = definition;
 
     const filters: ExecuteAFM.FilterItem[] = measureDefinition.filters
-        ? compact(measureDefinition.filters.map(convertVisualizationObjectFilter))
+        ? compact(measureDefinition.filters.map(convertMeasureFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

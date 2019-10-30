@@ -7,6 +7,7 @@ import {
     newBucket,
     newDefForBuckets,
     newDefForInsight,
+    newMeasureValueFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
 } from "../..";
@@ -25,6 +26,7 @@ describe("emptyDef", () => {
 
 const PositiveFilter = newPositiveAttributeFilter(Account.Name, ["myAccount"]);
 const RelativeDateFilter = newRelativeDateFilter("myDs", DateGranularity.month, 0, -10);
+const MeasureValueFilter = newMeasureValueFilter(Won, "EQUAL_TO", 11);
 const EmptyBucket = newBucket("emptyBucket");
 const AttributeBucket = newBucket("attributeBucket", Account.Name);
 const AttributeBucket2 = newBucket("attributeBucket", Department);
@@ -45,7 +47,8 @@ describe("newDefForItems", () => {
         ],
         ["def with attr filter", [Account.Name], [PositiveFilter]],
         ["def with date filter", [Account.Name], [RelativeDateFilter]],
-        ["def with mixed filters", [Account.Name], [RelativeDateFilter, PositiveFilter]],
+        ["def with measure value filter", [Account.Name], [MeasureValueFilter]],
+        ["def with mixed filters", [Account.Name], [RelativeDateFilter, PositiveFilter, MeasureValueFilter]],
     ];
 
     it.each(Scenarios)("should create %s", (_desc, itemArgs, filterArgs) => {
@@ -66,7 +69,8 @@ describe("newDefForBuckets", () => {
         ],
         ["def with attr filter", [MixedBucket], [PositiveFilter]],
         ["def with date filter", [MixedBucket], [RelativeDateFilter]],
-        ["def with mixed filters", [MixedBucket], [RelativeDateFilter, PositiveFilter]],
+        ["def with measure value filter", [MixedBucket], [MeasureValueFilter]],
+        ["def with mixed filters", [MixedBucket], [RelativeDateFilter, PositiveFilter, MeasureValueFilter]],
     ];
 
     it.each(Scenarios)("should create %s", (_desc, bucketArgs, filterArgs) => {
@@ -80,6 +84,9 @@ describe("newDefForInsight", () => {
     const InsightWithBucketsAndFilters = newInsight(VisClassId, m =>
         m.buckets([MixedBucket]).filters([PositiveFilter]),
     );
+    const InsightWithBucketsAndMeasureValueFilter = newInsight(VisClassId, m =>
+        m.buckets([MixedBucket]).filters([MeasureValueFilter]),
+    );
     const InsightWithSorts = newInsight(VisClassId, m => m.buckets([MixedBucket]).sorts([AttributeSort]));
 
     const Scenarios: Array<[string, any, any]> = [
@@ -92,7 +99,16 @@ describe("newDefForInsight", () => {
             InsightWithBucketsAndFilters,
             [RelativeDateFilter],
         ],
-        ["def with filters merged in", InsightWithSorts, [PositiveFilter, RelativeDateFilter]],
+        [
+            "def with extra measure filter merged with insight filter",
+            InsightWithBucketsAndMeasureValueFilter,
+            [MeasureValueFilter],
+        ],
+        [
+            "def with filters merged in",
+            InsightWithSorts,
+            [PositiveFilter, RelativeDateFilter, MeasureValueFilter],
+        ],
     ];
 
     it.each(Scenarios)("should create %s", (_desc, insightArg, filterArgs) => {

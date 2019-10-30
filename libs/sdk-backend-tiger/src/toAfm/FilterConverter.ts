@@ -12,6 +12,7 @@ import {
     isAttributeElementsByValue,
     isAttributeFilter,
     isPositiveAttributeFilter,
+    isRelativeDateFilter,
     isUriRef,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
@@ -118,7 +119,9 @@ export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.Fi
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {
         return convertAbsoluteDateFilter(filter);
-    } else {
+    } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter);
+    } else {
+        throw new NotSupported("Tiger backend does not support measure value filters");
     }
 }
