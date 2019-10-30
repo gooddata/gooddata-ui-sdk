@@ -11,6 +11,30 @@ The REST API versions in the table are just for your information as the values a
 |     \>= 10.0.0      |        3         |
 |      <= 9.0.1       |        2         |
 
+<a name="11.19.3"></a>
+
+## 2019-10-08 Version [11.19.3](https://github.com/gooddata/gooddata-js/compare/v11.19.2...v11.19.3)
+
+-   add util for checking "Select all" filter
+
+<a name="11.19.2"></a>
+
+## 2019-09-27 Version [11.19.2](https://github.com/gooddata/gooddata-js/compare/v11.19.1...v11.19.2)
+
+-   extend IValidElementsResponse interface to include support for total count with filters
+
+<a name="11.19.1"></a>
+
+## 2019-09-19 Version [11.19.1](https://github.com/gooddata/gooddata-js/compare/v11.19.0...v11.19.1)
+
+-   upgrade GoodData typings
+
+<a name="11.19.0"></a>
+
+## 2019-09-16 Version [11.19.0](https://github.com/gooddata/gooddata-js/compare/v11.18.2...v11.19.0)
+
+-   add measure value filters
+
 <a name="11.18.2"></a>
 
 ## 2019-08-27 Version [11.18.2](https://github.com/gooddata/gooddata-js/compare/v11.18.1...v11.18.2)
