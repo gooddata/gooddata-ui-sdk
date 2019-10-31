@@ -31,7 +31,7 @@ describe("findMeasureGroupInDimensions", () => {
 
 describe("findAttributeInDimension", () => {
     const dimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
-    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.headerItems();
+    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.allHeaders();
     it("should return the view by attribute header with header items", () => {
         const returnValue = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],

@@ -20,13 +20,13 @@ import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
-        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0])).toBe(
+        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0])).toBe(
             "a_2210_6340109",
         );
     });
 
     it("should return correct field key for a measure header", () => {
-        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0])).toBe(
+        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1][2][0])).toBe(
             "m_0",
         );
     });
@@ -34,7 +34,9 @@ describe("identifyHeader", () => {
 describe("identifyResponseHeader", () => {
     it("should return correct field key for an attribute response header", () => {
         expect(
-            identifyResponseHeader(fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0)[0]),
+            identifyResponseHeader(
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0)[0],
+            ),
         ).toBe("a_2211");
     });
 });
@@ -42,13 +44,13 @@ describe("identifyResponseHeader", () => {
 describe("headerToGrid", () => {
     it("should return correct grid header for an attribute header with correct prefix", () => {
         expect(
-            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0], "prefix_"),
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0], "prefix_"),
         ).toEqual({ field: "prefix_a_2210_6340109", headerName: "Alabama" });
     });
 
     it("should return correct grid header for a measure header with correct prefix", () => {
         expect(
-            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0], "prefix_"),
+            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1][2][0], "prefix_"),
         ).toEqual({ field: "prefix_m_0", headerName: "$ Franchise Fees" });
     });
 });
@@ -57,8 +59,8 @@ describe("getColumnHeaders", () => {
     it("should return hierarchical column headers", () => {
         expect(
             getColumnHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1],
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(1),
+                fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(1),
             ),
         ).toMatchSnapshot();
     });
@@ -68,7 +70,9 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeDescriptor[],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
+                    0,
+                ) as IAttributeDescriptor[],
                 {},
                 false,
             ),
@@ -118,7 +122,9 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers with row group settings and extended by custom options", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeDescriptor[],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
+                    0,
+                ) as IAttributeDescriptor[],
                 { type: "custom" },
                 true,
             ),
@@ -173,7 +179,7 @@ describe("getRowHeaders", () => {
 
 describe("getFields", () => {
     it("should return an array of all column fields", () => {
-        expect(getFields(fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1])).toEqual([
+        expect(getFields(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1])).toEqual([
             "a_2009_1-a_2071_1-m_0",
             "a_2009_1-a_2071_1-m_1",
             "a_2009_1-a_2071_1-m_2",
@@ -241,14 +247,19 @@ describe("assortDimensionHeaders", () => {
 
 describe("getMinimalRowData", () => {
     it("should return a two-dimensional array of empty values when no measure data are available", () => {
-        expect(getMinimalRowData([], fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0])).toEqual(
-            [[null], [null], [null], [null], [null], [null]],
-        );
+        expect(getMinimalRowData([], fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0])).toEqual([
+            [null],
+            [null],
+            [null],
+            [null],
+            [null],
+            [null],
+        ]);
     });
 
     it("should return a identical data if measure data is available", () => {
         const data = [[1], [2], [3]];
-        expect(getMinimalRowData(data, fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0])).toBe(
+        expect(getMinimalRowData(data, fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0])).toBe(
             data,
         );
     });

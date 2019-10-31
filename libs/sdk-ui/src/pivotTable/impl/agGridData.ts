@@ -138,7 +138,7 @@ export const getRowTotals = (
 
     const totals = dv.totals();
     const headers = dv.dimensions()[0].headers;
-    const measureIds = dv.measureGroupHeaderItems().map(m => m.measureHeaderItem.localIdentifier);
+    const measureIds = dv.measureDescriptors().map(m => m.measureHeaderItem.localIdentifier);
     const totalDefs = dv.definition.dimensions[0].totals;
 
     return totals[0].map((totalRow: string[], totalIndex: number) => {
@@ -201,7 +201,7 @@ export function createRowData(
     options: IGridAdapterOptions = {},
 ): IAgGridPage {
     const { addLoadingRenderer = null } = options;
-    const headerItems = dv.headerItems();
+    const headerItems = dv.allHeaders();
     const dimensions = dv.definition.dimensions;
 
     const { rowHeaders, rowFields, colFields, allHeaders } = headers;

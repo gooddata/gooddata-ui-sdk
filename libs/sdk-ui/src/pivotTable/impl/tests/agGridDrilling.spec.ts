@@ -20,7 +20,7 @@ const intl = createIntlMock();
 
 describe("getMeasureDrillItem", () => {
     it("should return measure drill item based on response headers", () => {
-        const responseHeaders: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+        const responseHeaders: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionItemDescriptors(
             1,
         );
         const header: IResultMeasureHeader = {
@@ -42,10 +42,10 @@ describe("getMeasureDrillItem", () => {
         expect(getMeasureDrillItem(responseHeaders, header)).toEqual(expectedDrillHeader);
     });
     it("should return null if the header cannot be found", () => {
-        const responseHeaders1: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+        const responseHeaders1: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionItemDescriptors(
             0,
         );
-        const responseHeaders2: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+        const responseHeaders2: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionItemDescriptors(
             1,
         );
         const header: IResultMeasureHeader = {
@@ -66,8 +66,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[1][2][0];
-        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(1);
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1][2][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(1);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
@@ -90,8 +90,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.headerItems()[0][0][0];
-        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0);
+        const currentHeader = fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0];
+        const responseHeaders = fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);

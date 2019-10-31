@@ -29,7 +29,7 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     context: IHeaderPredicateContext,
 ): boolean {
     const operand: IMeasure = dv.measure(operandLocalIdentifier);
-    const operandHeader: IMeasureDescriptor = dv.measureGroupHeaderItem(operandLocalIdentifier);
+    const operandHeader: IMeasureDescriptor = dv.measureDescriptor(operandLocalIdentifier);
 
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
@@ -116,7 +116,7 @@ function matchDerivedMeasureByMasterUri(
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = dv.measureGroupHeaderItem(masterMeasureLocalIdentifier);
+        const masterMeasureHeader = dv.measureDescriptor(masterMeasureLocalIdentifier);
 
         if (matchHeaderUri(uri, masterMeasureHeader)) {
             return true;
@@ -139,7 +139,7 @@ function matchDerivedMeasureByMasterIdentifier(
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = dv.measureGroupHeaderItem(masterMeasureLocalIdentifier);
+        const masterMeasureHeader = dv.measureDescriptor(masterMeasureLocalIdentifier);
 
         if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
             return true;

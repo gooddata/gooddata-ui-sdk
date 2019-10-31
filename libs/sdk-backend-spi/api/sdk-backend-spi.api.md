@@ -67,19 +67,19 @@ export class DataViewError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @public
+// @alpha
 export class DataViewFacade {
     constructor(dataView: IDataView);
+    // (undocumented)
+    allHeaders(): IResultHeader[][][];
     // (undocumented)
     attributeHeaders(): IResultAttributeHeader[][][];
     // (undocumented)
     attributes(): IAttribute[];
-    // (undocumented)
-    bucket(id: string): IBucket | undefined;
+    bucket(localId: string): IBucket | undefined;
     // (undocumented)
     bucketCount(): number;
-    // (undocumented)
-    bucketMeasures(id: string): IMeasure[];
+    bucketMeasures(localId: string): IMeasure[];
     // (undocumented)
     buckets(): IBucket[];
     // (undocumented)
@@ -91,7 +91,7 @@ export class DataViewFacade {
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
-    dimensionHeaders(dimIdx: number): IDimensionItemDescriptor[];
+    dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[];
     // (undocumented)
     dimensions(): IDimensionDescriptor[];
     // (undocumented)
@@ -100,41 +100,24 @@ export class DataViewFacade {
     firstDimSize(): number;
     // (undocumented)
     hasAttributes(): boolean;
-    // (undocumented)
     hasBuckets(): boolean;
-    // (undocumented)
-    hasMeasures(): boolean;
-    // (undocumented)
     hasTotals(): boolean;
+    isBucketEmpty(localId: string): boolean;
+    isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
+    masterMeasureForDerived(localId: string): IMeasure | undefined;
+    measure(localId: string): IMeasure | undefined;
+    measureDescriptor(localId: string): IMeasureDescriptor | undefined;
+    measureDescriptors(): IMeasureDescriptor[];
     // (undocumented)
-    headerItems(): IResultHeader[][][];
-    // (undocumented)
-    isBucketEmpty(id: string): boolean;
-    // (undocumented)
-    isDerivedMeasure(measureHeader: IMeasureDescriptor): boolean;
-    // (undocumented)
-    masterMeasureForDerived(id: string): IMeasure | undefined;
-    // (undocumented)
-    measure(id: string): IMeasure | undefined;
-    // (undocumented)
-    measureGroupHeader(): IMeasureGroupDescriptor | undefined;
-    // (undocumented)
-    measureGroupHeaderItem(id: string): IMeasureDescriptor | undefined;
-    // (undocumented)
-    measureGroupHeaderItems(): IMeasureDescriptor[];
-    // (undocumented)
-    measureIndex(id: string): number;
+    measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
+    measureIndex(localId: string): number;
     // (undocumented)
     measures(): IMeasure[];
     // (undocumented)
     result(): IExecutionResult;
-    // (undocumented)
-    secondDimSize(): number;
-    // (undocumented)
     singleDimData(): DataValue[];
     // (undocumented)
     totals(): DataValue[][][] | undefined;
-    // (undocumented)
     twoDimData(): DataValue[][];
 }
 
@@ -163,15 +146,10 @@ export interface IAnalyticalBackend {
 
 // @public
 export interface IAnalyticalWorkspace {
-    // (undocumented)
     elements(): IElementQueryFactory;
-    // (undocumented)
     execution(): IExecutionFactory;
-    // (undocumented)
     featureFlags(): IFeatureFlagsQuery;
-    // (undocumented)
     metadata(): IWorkspaceMetadata;
-    // (undocumented)
     styling(): IWorkspaceStyling;
     // (undocumented)
     readonly workspace: string;

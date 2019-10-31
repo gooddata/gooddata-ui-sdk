@@ -41,13 +41,13 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
-        const rowAttributeHeaders = dv.dimensionHeaders(0) as IAttributeDescriptor[];
+        const rowAttributeHeaders = dv.dimensionItemDescriptors(0) as IAttributeDescriptor[];
         const isOneRowTable = rowAttributeHeaders.length === 0;
         if (isOneRowTable) {
             return null;
         }
 
-        const measureGroupHeader = dv.measureGroupHeader();
+        const measureGroupHeader = dv.measureGroupDescriptor();
         if (!measureGroupHeader) {
             return null;
         }

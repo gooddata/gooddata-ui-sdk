@@ -9,8 +9,8 @@ import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 
-const rowHeaders = pivotTableWithColumnAndRowAttributes.dimensionHeaders(0);
-const measureHeaders = pivotTableWithColumnAndRowAttributes.measureGroupHeaderItems();
+const rowHeaders = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0);
+const measureHeaders = pivotTableWithColumnAndRowAttributes.measureDescriptors();
 
 const ATTRIBUTE_HEADER: IMappingHeader = rowHeaders[0] as IAttributeDescriptor;
 const FIRST_MEASURE_HEADER: IMappingHeader = measureHeaders[0];
