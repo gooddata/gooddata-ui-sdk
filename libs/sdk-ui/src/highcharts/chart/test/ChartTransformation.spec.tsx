@@ -9,7 +9,7 @@ import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig } from "../../Config";
 import { getRgbString } from "../../utils/color";
-import { IColorPaletteItem } from "../../../base/interfaces/Colors";
+import { IColorPaletteItem } from "@gooddata/sdk-model";
 
 describe("ChartTransformation", () => {
     const defaultProps = {
