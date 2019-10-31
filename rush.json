@@ -222,9 +222,7 @@
         /**
          * The list of shell commands to run before the Rush installation starts
          */
-        "preRushInstall": [
-            // "common/scripts/pre-rush-install.js"
-        ],
+        "preRushInstall": ["common/scripts/bootstrap-catalog-export.sh"],
 
         /**
          * The list of shell commands to run after the Rush installation finishes
