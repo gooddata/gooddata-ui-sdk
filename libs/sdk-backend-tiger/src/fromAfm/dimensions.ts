@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import {
-    IAttributeHeader,
-    IMeasureGroupHeader,
-    IMeasureHeaderItem,
-    IResultDimension,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IMeasureDescriptor,
+    IDimensionDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { Execution } from "../gd-tiger-model/Execution";
 import isAttributeHeader = Execution.isAttributeHeader;
 
-function transformDimension(dim: Execution.IResultDimension): IResultDimension {
+function transformDimension(dim: Execution.IResultDimension): IDimensionDescriptor {
     return {
         headers: dim.headers.map(header => {
             const h = header;
@@ -18,7 +18,7 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
                 //  perhaps it makes sense. perhaps the URIs should be always present and should be coming from
                 //  new stack as well? anyway, making URIs optional in the domain model will mean waterfall of fun
                 //  changes across public interface of the SDK (drilling etc)
-                const attrHeader: IAttributeHeader = {
+                const attrHeader: IAttributeDescriptor = {
                     attributeHeader: {
                         uri: `/fakeAttrUri/${h.attributeHeader.identifier}`,
                         identifier: h.attributeHeader.identifier,
@@ -34,10 +34,10 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
 
                 return attrHeader;
             } else {
-                const measureHeader: IMeasureGroupHeader = {
+                const measureHeader: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
                         items: h.measureGroupHeader.items.map(m => {
-                            const newItem: IMeasureHeaderItem = {
+                            const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,
                                     name: m.measureHeaderItem.name,
@@ -62,6 +62,6 @@ function transformDimension(dim: Execution.IResultDimension): IResultDimension {
  * @param dimensions - dimensions from execution result
  * @returns dimensions as used in the unified model
  */
-export function transformResultDimensions(dimensions: Execution.IResultDimension[]): IResultDimension[] {
+export function transformResultDimensions(dimensions: Execution.IResultDimension[]): IDimensionDescriptor[] {
     return dimensions.map(transformDimension);
 }

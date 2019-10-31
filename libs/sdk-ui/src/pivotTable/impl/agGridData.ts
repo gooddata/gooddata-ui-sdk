@@ -21,12 +21,12 @@ import {
 import {
     DataValue,
     DataViewFacade,
-    IAttributeHeader,
-    IHeader,
-    IResultHeaderItem,
-    isAttributeHeader,
-    isResultAttributeHeaderItem,
-    isResultTotalHeaderItem,
+    IAttributeDescriptor,
+    IDimensionItemDescriptor,
+    IResultHeader,
+    isAttributeDescriptor,
+    isResultAttributeHeader,
+    isResultTotalHeader,
 } from "@gooddata/sdk-backend-spi";
 import { getMinimalRowData } from "./agGridHeaders";
 import invariant = require("invariant");
@@ -37,12 +37,12 @@ import InjectedIntl = ReactIntl.InjectedIntl;
  * All code related to transforming data from our backend to ag-grid structures
  */
 
-const getSubtotalLabelCellIndex = (resultHeaderItems: IResultHeaderItem[][], rowIndex: number): number => {
-    return resultHeaderItems.findIndex(headerItem => isResultTotalHeaderItem(headerItem[rowIndex]));
+const getSubtotalLabelCellIndex = (resultHeaderItems: IResultHeader[][], rowIndex: number): number => {
+    return resultHeaderItems.findIndex(headerItem => isResultTotalHeader(headerItem[rowIndex]));
 };
 
 const getCell = (
-    rowHeaderData: IResultHeaderItem[][],
+    rowHeaderData: IResultHeader[][],
     rowIndex: number,
     rowHeader: IGridHeader,
     rowHeaderIndex: number,
@@ -50,7 +50,7 @@ const getCell = (
 ): {
     field: string;
     value: string;
-    rowHeaderDataItem: IResultHeaderItem;
+    rowHeaderDataItem: IResultHeader;
     isSubtotal: boolean;
 } => {
     const rowHeaderDataItem = rowHeaderData[rowHeaderIndex][rowIndex];
@@ -60,14 +60,14 @@ const getCell = (
         isSubtotal: false,
     };
 
-    if (isResultAttributeHeaderItem(rowHeaderDataItem)) {
+    if (isResultAttributeHeader(rowHeaderDataItem)) {
         return {
             ...cell,
             value: rowHeaderDataItem.attributeHeaderItem.name,
         };
     }
 
-    if (isResultTotalHeaderItem(rowHeaderDataItem)) {
+    if (isResultTotalHeader(rowHeaderDataItem)) {
         const totalName = rowHeaderDataItem.totalHeaderItem.name;
         return {
             ...cell,
@@ -90,7 +90,7 @@ export const getRow = (
     rowIndex: number,
     columnFields: string[],
     rowHeaders: IGridHeader[],
-    rowHeaderData: IResultHeaderItem[][],
+    rowHeaderData: IResultHeader[][],
     subtotalStyles: string[],
     intl: InjectedIntl,
 ): IGridRow => {
@@ -160,11 +160,11 @@ export const getRowTotals = (
         const [totalAttributeKey] = attributeKeys;
         const totalAttributeId: string = totalAttributeKey.split(ID_SEPARATOR).pop();
 
-        const totalHeader: IAttributeHeader = headers.find(
-            (header: IHeader) =>
-                isAttributeHeader(header) &&
+        const totalHeader: IAttributeDescriptor = headers.find(
+            (header: IDimensionItemDescriptor) =>
+                isAttributeDescriptor(header) &&
                 getIdsFromUri(header.attributeHeader.uri)[0] === totalAttributeId,
-        ) as IAttributeHeader;
+        ) as IAttributeDescriptor;
 
         invariant(totalHeader, `Could not find header for ${totalAttributeKey}`);
 

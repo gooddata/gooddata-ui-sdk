@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { DataViewFacade, IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
@@ -41,7 +41,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
-        const rowAttributeHeaders = dv.dimensionHeaders(0) as IAttributeHeader[];
+        const rowAttributeHeaders = dv.dimensionHeaders(0) as IAttributeDescriptor[];
         const isOneRowTable = rowAttributeHeaders.length === 0;
         if (isOneRowTable) {
             return null;
@@ -139,7 +139,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
-        rowAttributeHeaders: IAttributeHeader[],
+        rowAttributeHeaders: IAttributeDescriptor[],
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
         const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, 0);

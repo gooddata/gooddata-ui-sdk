@@ -4,7 +4,7 @@ import { FIELD_TYPE_ATTRIBUTE, FIELD_TYPE_MEASURE, ID_SEPARATOR } from "./agGrid
 import { assortDimensionHeaders } from "./agGridHeaders";
 import { ISortModelItem } from "./agGridTypes";
 import { IAttributeSortItem, IMeasureSortItem, SortDirection, SortItem } from "@gooddata/sdk-model";
-import { IAttributeHeader, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import invariant = require("invariant");
 
 /*
@@ -45,7 +45,7 @@ export const getSortItemByColId = (
         const attributeLocators = fields.slice(0, -1).map((field: string[]) => {
             // first item is type which should be always 'a'
             const [, fieldId, fieldValueId] = field;
-            const attributeHeaderMatch = attributeHeaders.find((attributeHeader: IAttributeHeader) => {
+            const attributeHeaderMatch = attributeHeaders.find((attributeHeader: IAttributeDescriptor) => {
                 return getIdsFromUri(attributeHeader.attributeHeader.formOf.uri)[0] === fieldId;
             });
             invariant(

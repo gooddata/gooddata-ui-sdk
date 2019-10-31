@@ -7,38 +7,38 @@ import {
     attributeHeader,
 } from "../../factory/tests/HeaderPredicateFactory.mock";
 import {
-    isAttributeHeader,
-    isMeasureHeaderItem,
-    isResultAttributeHeaderItem,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 
 describe("isMappingHeaderMeasureItem", () => {
     it("should return true when object contains measureHeaderItem", () => {
-        expect(isMeasureHeaderItem(measureHeaders.uriBasedMeasure)).toEqual(true);
+        expect(isMeasureDescriptor(measureHeaders.uriBasedMeasure)).toEqual(true);
     });
 
     it("should return false measureHeaderItem when object does not contain measureHeaderItem", () => {
-        expect(isMeasureHeaderItem(attributeHeaderItem)).toEqual(false);
+        expect(isMeasureDescriptor(attributeHeaderItem)).toEqual(false);
     });
 });
 
 describe("isMappingHeaderAttribute", () => {
     it("should return true when object contains attributeHeader", () => {
-        expect(isAttributeHeader(attributeHeader)).toEqual(true);
+        expect(isAttributeDescriptor(attributeHeader)).toEqual(true);
     });
 
     it("should return false when measureHeaderItem when object does not contain measureHeaderItem", () => {
-        expect(isAttributeHeader(attributeHeaderItem)).toEqual(false);
+        expect(isAttributeDescriptor(attributeHeaderItem)).toEqual(false);
     });
 });
 
 describe("isMappingHeaderAttributeItem", () => {
     it("should return true when object contains attributeHeaderItem", () => {
-        expect(isResultAttributeHeaderItem(attributeHeaderItem)).toEqual(true);
+        expect(isResultAttributeHeader(attributeHeaderItem)).toEqual(true);
     });
 
     it("should return false when object does not contain attributeHeaderItem", () => {
-        expect(isResultAttributeHeaderItem(measureHeaders.uriBasedMeasure)).toEqual(false);
+        expect(isResultAttributeHeader(measureHeaders.uriBasedMeasure)).toEqual(false);
     });
 });
 

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IColor, IColorItem } from "@gooddata/sdk-model";
-import { DataViewFacade, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import { IChartConfig } from "../Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
@@ -140,7 +140,7 @@ export function getRgbStringFromRGB(color: IColor) {
 
 export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        if (isResultAttributeHeaderItem(header)) {
+        if (isResultAttributeHeader(header)) {
             return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
         }
 

@@ -8,8 +8,8 @@ import {
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultDimension,
-    IResultHeaderItem,
+    IDimensionDescriptor,
+    IResultHeader,
     NotImplemented,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -22,7 +22,7 @@ import { Execution } from "./gd-tiger-model/Execution";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 export class TigerExecutionResult implements IExecutionResult {
-    public readonly dimensions: IResultDimension[];
+    public readonly dimensions: IDimensionDescriptor[];
     private readonly resultId: string;
     private readonly _fingerprint: string;
 
@@ -109,7 +109,7 @@ type DataViewFactory = (promisedRes: Promise<Execution.IExecutionResult | null>)
 class TigerDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
-    public readonly headerItems: IResultHeaderItem[][][];
+    public readonly headerItems: IResultHeader[][][];
     public readonly totalCount: number[];
     public readonly count: number[];
     public readonly offset: number[];

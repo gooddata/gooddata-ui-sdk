@@ -71,7 +71,7 @@ export class DataViewError extends AnalyticalBackendError {
 export class DataViewFacade {
     constructor(dataView: IDataView);
     // (undocumented)
-    attributeHeaders(): IResultAttributeHeaderItem[][][];
+    attributeHeaders(): IResultAttributeHeader[][][];
     // (undocumented)
     attributes(): IAttribute[];
     // (undocumented)
@@ -91,9 +91,9 @@ export class DataViewFacade {
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
-    dimensionHeaders(dimIdx: number): IHeader[];
+    dimensionHeaders(dimIdx: number): IDimensionItemDescriptor[];
     // (undocumented)
-    dimensions(): IResultDimension[];
+    dimensions(): IDimensionDescriptor[];
     // (undocumented)
     fingerprint(): () => string;
     // (undocumented)
@@ -107,21 +107,21 @@ export class DataViewFacade {
     // (undocumented)
     hasTotals(): boolean;
     // (undocumented)
-    headerItems(): IResultHeaderItem[][][];
+    headerItems(): IResultHeader[][][];
     // (undocumented)
     isBucketEmpty(id: string): boolean;
     // (undocumented)
-    isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean;
+    isDerivedMeasure(measureHeader: IMeasureDescriptor): boolean;
     // (undocumented)
     masterMeasureForDerived(id: string): IMeasure | undefined;
     // (undocumented)
     measure(id: string): IMeasure | undefined;
     // (undocumented)
-    measureGroupHeader(): IMeasureGroupHeader | undefined;
+    measureGroupHeader(): IMeasureGroupDescriptor | undefined;
     // (undocumented)
-    measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined;
+    measureGroupHeaderItem(id: string): IMeasureDescriptor | undefined;
     // (undocumented)
-    measureGroupHeaderItems(): IMeasureHeaderItem[];
+    measureGroupHeaderItems(): IMeasureDescriptor[];
     // (undocumented)
     measureIndex(id: string): number;
     // (undocumented)
@@ -178,14 +178,14 @@ export interface IAnalyticalWorkspace {
 }
 
 // @public
-export interface IAttributeHeader {
+export interface IAttributeDescriptor {
     // (undocumented)
     attributeHeader: {
         uri: string;
         identifier: string;
         localIdentifier: string;
         name: string;
-        totalItems?: ITotalHeaderItem[];
+        totalItems?: ITotalDescriptor[];
         formOf: {
             uri: string;
             identifier: string;
@@ -206,12 +206,21 @@ export interface IDataView {
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
-    readonly headerItems: IResultHeaderItem[][][];
+    readonly headerItems: IResultHeader[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
     readonly totals?: DataValue[][][];
 }
+
+// @public
+export interface IDimensionDescriptor {
+    // (undocumented)
+    headers: IDimensionItemDescriptor[];
+}
+
+// @public
+export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
 // @public
 export interface IElementQuery {
@@ -253,7 +262,7 @@ export interface IExecutionFactory {
 // @public
 export interface IExecutionResult {
     readonly definition: IExecutionDefinition;
-    readonly dimensions: IResultDimension[];
+    readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
@@ -289,19 +298,7 @@ export interface IFeatureFlagsQuery {
 }
 
 // @public
-export type IHeader = IMeasureGroupHeader | IAttributeHeader;
-
-// @public
-export interface IMeasureGroupHeader {
-    // (undocumented)
-    measureGroupHeader: {
-        items: IMeasureHeaderItem[];
-        totalItems?: ITotalHeaderItem[];
-    };
-}
-
-// @public
-export interface IMeasureHeaderItem {
+export interface IMeasureDescriptor {
     // (undocumented)
     measureHeaderItem: {
         uri?: string;
@@ -309,6 +306,15 @@ export interface IMeasureHeaderItem {
         localIdentifier: string;
         name: string;
         format: string;
+    };
+}
+
+// @public
+export interface IMeasureGroupDescriptor {
+    // (undocumented)
+    measureGroupHeader: {
+        items: IMeasureDescriptor[];
+        totalItems?: ITotalDescriptor[];
     };
 }
 
@@ -324,7 +330,7 @@ export interface IPreparedExecution {
 }
 
 // @public
-export interface IResultAttributeHeaderItem {
+export interface IResultAttributeHeader {
     // (undocumented)
     attributeHeaderItem: {
         uri: string;
@@ -332,17 +338,11 @@ export interface IResultAttributeHeaderItem {
     };
 }
 
-// @public (undocumented)
-export interface IResultDimension {
-    // (undocumented)
-    headers: IHeader[];
-}
+// @public
+export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
 
 // @public
-export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
-
-// @public
-export interface IResultMeasureHeaderItem {
+export interface IResultMeasureHeader {
     // (undocumented)
     measureHeaderItem: {
         name: string;
@@ -351,7 +351,7 @@ export interface IResultMeasureHeaderItem {
 }
 
 // @public
-export interface IResultTotalHeaderItem {
+export interface IResultTotalHeader {
     // (undocumented)
     totalHeaderItem: {
         name: string;
@@ -363,7 +363,7 @@ export interface IResultTotalHeaderItem {
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError;
 
 // @public
-export function isAttributeHeader(obj: any): obj is IAttributeHeader;
+export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 
 // @public
 export function isDataViewError(obj: any): obj is DataViewError;
@@ -372,10 +372,10 @@ export function isDataViewError(obj: any): obj is DataViewError;
 export function isExecutionError(obj: any): obj is ExecutionError;
 
 // @public
-export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader;
+export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
 
 // @public
-export function isMeasureHeaderItem(obj: any): obj is IMeasureHeaderItem;
+export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor;
 
 // @public
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
@@ -387,19 +387,19 @@ export function isNotImplemented(obj: any): obj is NotImplemented;
 export function isNotSupported(obj: any): obj is NotSupported;
 
 // @public
-export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem;
+export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
 
 // @public
-export function isResultMeasureHeaderItem(obj: any): obj is IResultMeasureHeaderItem;
+export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader;
 
 // @public
-export function isResultTotalHeaderItem(obj: any): obj is IResultTotalHeaderItem;
+export function isResultTotalHeader(obj: any): obj is IResultTotalHeader;
 
 // @public
-export function isTotalHeader(obj: any): obj is ITotalHeaderItem;
+export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
 
 // @public
-export interface ITotalHeaderItem {
+export interface ITotalDescriptor {
     // (undocumented)
     totalHeaderItem: {
         name: string;

@@ -11,7 +11,7 @@ import {
 } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";
-import { IHeader, IResultMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IDimensionItemDescriptor, IResultMeasureHeader } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
 
@@ -20,8 +20,10 @@ const intl = createIntlMock();
 
 describe("getMeasureDrillItem", () => {
     it("should return measure drill item based on response headers", () => {
-        const responseHeaders: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(1);
-        const header: IResultMeasureHeaderItem = {
+        const responseHeaders: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            1,
+        );
+        const header: IResultMeasureHeader = {
             measureHeaderItem: {
                 name: "not important",
                 order: 0,
@@ -40,9 +42,13 @@ describe("getMeasureDrillItem", () => {
         expect(getMeasureDrillItem(responseHeaders, header)).toEqual(expectedDrillHeader);
     });
     it("should return null if the header cannot be found", () => {
-        const responseHeaders1: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(0);
-        const responseHeaders2: IHeader[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(1);
-        const header: IResultMeasureHeaderItem = {
+        const responseHeaders1: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            0,
+        );
+        const responseHeaders2: IDimensionItemDescriptor[] = fixtures.barChartWithStackByAndOnlyOneStack.dimensionHeaders(
+            1,
+        );
+        const header: IResultMeasureHeader = {
             measureHeaderItem: {
                 name: "not important",
                 order: 99,

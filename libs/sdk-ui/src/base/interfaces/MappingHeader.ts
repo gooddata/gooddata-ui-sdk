@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    IAttributeHeader,
-    ITotalHeaderItem,
-    IMeasureHeaderItem,
-    IResultAttributeHeaderItem,
+    IAttributeDescriptor,
+    ITotalDescriptor,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -11,7 +11,7 @@ import {
  * @public
  */
 export type IMappingHeader =
-    | IAttributeHeader
-    | IResultAttributeHeaderItem
-    | IMeasureHeaderItem
-    | ITotalHeaderItem;
+    | IAttributeDescriptor
+    | IResultAttributeHeader
+    | IMeasureDescriptor
+    | ITotalDescriptor;

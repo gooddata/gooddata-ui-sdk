@@ -1,17 +1,17 @@
 // (C) 2019 GoodData Corporation
-import { DataValue, IResultAttributeHeaderItem, IResultHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataValue, IResultAttributeHeader, IResultHeader } from "@gooddata/sdk-backend-spi";
 import { Execution } from "../gd-tiger-model/Execution";
 import isArray = require("lodash/isArray");
 import isAttributeHeaderItem = Execution.isAttributeHeaderItem;
 
 export type TransformerResult = {
-    readonly headerItems: IResultHeaderItem[][][];
+    readonly headerItems: IResultHeader[][][];
     readonly data: DataValue[][] | DataValue[];
     readonly offset: number[];
     readonly count: number[];
 };
 
-function transformHeaderItems(headerItems?: Execution.IResultHeaderItem[][][]): IResultHeaderItem[][][] {
+function transformHeaderItems(headerItems?: Execution.IResultHeaderItem[][][]): IResultHeader[][][] {
     if (!headerItems) {
         return [[[]]];
     }
@@ -19,11 +19,11 @@ function transformHeaderItems(headerItems?: Execution.IResultHeaderItem[][][]): 
     return headerItems.map(dim => {
         return dim.map(dimHeaders => {
             return dimHeaders.map(
-                (headerItem): IResultHeaderItem => {
+                (headerItem): IResultHeader => {
                     const item = headerItem;
 
                     if (isAttributeHeaderItem(item)) {
-                        const newItem: IResultAttributeHeaderItem = {
+                        const newItem: IResultAttributeHeader = {
                             attributeHeaderItem: {
                                 uri: `/fake/${item.attributeHeaderItem.name}`,
                                 name: item.attributeHeaderItem.name,

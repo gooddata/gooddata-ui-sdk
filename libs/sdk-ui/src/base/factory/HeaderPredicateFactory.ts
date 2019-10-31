@@ -9,9 +9,9 @@ import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderP
 import { IMappingHeader } from "../interfaces/MappingHeader";
 import {
     DataViewFacade,
-    IMeasureHeaderItem,
-    isMeasureHeaderItem,
-    isResultAttributeHeaderItem,
+    IMeasureDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
@@ -29,7 +29,7 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     context: IHeaderPredicateContext,
 ): boolean {
     const operand: IMeasure = dv.measure(operandLocalIdentifier);
-    const operandHeader: IMeasureHeaderItem = dv.measureGroupHeaderItem(operandLocalIdentifier);
+    const operandHeader: IMeasureDescriptor = dv.measureGroupHeaderItem(operandLocalIdentifier);
 
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
@@ -60,7 +60,7 @@ function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: IMeasure, dv:
 
 function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
-        if (!isMeasureHeaderItem(header)) {
+        if (!isMeasureDescriptor(header)) {
             return false;
         }
 
@@ -160,7 +160,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
             return true;
         }
 
-        if (!isMeasureHeaderItem(header)) {
+        if (!isMeasureDescriptor(header)) {
             return false;
         }
 
@@ -180,7 +180,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
 export function identifierMatch(identifier: string): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
-        if (isResultAttributeHeaderItem(header)) {
+        if (isResultAttributeHeader(header)) {
             return false;
         }
 
@@ -188,7 +188,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return true;
         }
 
-        if (!isMeasureHeaderItem(header)) {
+        if (!isMeasureDescriptor(header)) {
             return false;
         }
 
@@ -208,7 +208,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
 
 export function attributeItemNameMatch(name: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        return isResultAttributeHeaderItem(header)
+        return isResultAttributeHeader(header)
             ? header.attributeHeaderItem && header.attributeHeaderItem.name === name
             : false;
     };

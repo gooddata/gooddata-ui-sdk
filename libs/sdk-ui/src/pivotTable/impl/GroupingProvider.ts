@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import max = require("lodash/max");
 import { IGridRow } from "./agGridTypes";
-import { isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 interface IAttributesRowItemUris {
     [columnId: string]: string[];
@@ -83,7 +83,7 @@ class AttributeGroupingProvider implements IGroupingProvider {
 
             pageRows.forEach((row: IGridRow, rowIndex: number) => {
                 const headerItem = row.headerItemMap[columnId];
-                if (isResultAttributeHeaderItem(headerItem)) {
+                if (isResultAttributeHeader(headerItem)) {
                     const attributeItemUri = headerItem.attributeHeaderItem.uri;
                     this.itemUris[columnId][rowIndex + rowOffset] = attributeItemUri;
                 }

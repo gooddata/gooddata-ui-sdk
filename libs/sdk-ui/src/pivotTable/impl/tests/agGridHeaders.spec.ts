@@ -15,7 +15,7 @@ import {
     getAttributeSortItemFieldAndDirection,
     getMeasureSortItemFieldAndDirection,
 } from "../agGridHeaders";
-import { IAttributeHeader, IResultHeaderItem, isAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IResultHeader, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("identifyHeader", () => {
@@ -68,7 +68,7 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeHeader[],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeDescriptor[],
                 {},
                 false,
             ),
@@ -118,7 +118,7 @@ describe("getRowHeaders", () => {
     it("should return an array of grid headers with row group settings and extended by custom options", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeHeader[],
+                fixtures.pivotTableWithColumnAndRowAttributes.dimensionHeaders(0) as IAttributeDescriptor[],
                 { type: "custom" },
                 true,
             ),
@@ -231,7 +231,7 @@ describe("assortDimensionHeaders", () => {
         const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
         const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
         expect(attributeHeaders).toHaveLength(4);
-        expect(attributeHeaders.filter(header => isAttributeHeader(header))).toHaveLength(4);
+        expect(attributeHeaders.filter(header => isAttributeDescriptor(header))).toHaveLength(4);
         expect(measureHeaderItems).toHaveLength(4);
         expect(measureHeaderItems.filter(header => header.hasOwnProperty("measureHeaderItem"))).toHaveLength(
             4,
@@ -289,7 +289,7 @@ describe("conversion from header matrix to hierarchy", () => {
         },
     };
 
-    const resultHeaderDimension: IResultHeaderItem[][] = [
+    const resultHeaderDimension: IResultHeader[][] = [
         [alabamaHeader, alabamaHeader, californiaHeader, californiaHeader],
         [year2017Header, year2017Header, year2017Header, year2017Header],
         [costsHeader, revenuesHeader, costsHeader, revenuesHeader],

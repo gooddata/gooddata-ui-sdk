@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
-import { IAttributeHeader, IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
-export const measureHeaders: { [key: string]: IMeasureHeaderItem } = {
+export const measureHeaders: { [key: string]: IMeasureDescriptor } = {
     uriBasedMeasure: {
         measureHeaderItem: {
             uri: "/uriBasedMeasureUri",
@@ -159,7 +159,7 @@ export const measureHeaders: { [key: string]: IMeasureHeaderItem } = {
     },
 };
 
-export const attributeHeader: IAttributeHeader = {
+export const attributeHeader: IAttributeDescriptor = {
     attributeHeader: {
         uri: "/attributeUri",
         identifier: "attributeIdentifier",
@@ -173,7 +173,7 @@ export const attributeHeader: IAttributeHeader = {
     },
 };
 
-export const attributeHeaderItem: IResultAttributeHeaderItem = {
+export const attributeHeaderItem: IResultAttributeHeader = {
     attributeHeaderItem: {
         uri: "/attributeItemUri",
         name: "attributeItemName",

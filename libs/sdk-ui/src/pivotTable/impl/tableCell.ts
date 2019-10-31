@@ -11,7 +11,7 @@ import {
     MeasureCell,
     TableCell,
 } from "../types";
-import { isMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { isMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 function getFormattedNumber(cellContent: MeasureCell, format: string, separators: ISeparators): string {
     const parsedNumber: string | number =
@@ -81,7 +81,7 @@ export function getCellStyleAndFormattedValue(
         };
     }
 
-    const measureFormat = isMeasureHeaderItem(header) ? header.measureHeaderItem.format : "";
+    const measureFormat = isMeasureDescriptor(header) ? header.measureHeaderItem.format : "";
 
     return {
         style: getMeasureCellStyle(cellContent, measureFormat, separators, applyColor),

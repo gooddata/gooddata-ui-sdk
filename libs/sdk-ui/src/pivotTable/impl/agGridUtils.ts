@@ -12,7 +12,7 @@ import {
     ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
-import { IExecutionResult, isTotalHeader, isMeasureGroupHeader } from "@gooddata/sdk-backend-spi";
+import { IExecutionResult, isTotalDescriptor, isMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { IDimension, defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import escape = require("lodash/escape");
 
@@ -52,7 +52,7 @@ export const getRowNodeId = (item: any) => {
         .map(key => {
             const mappingHeader: IMappingHeader = item.headerItemMap[key];
 
-            if (isTotalHeader(mappingHeader)) {
+            if (isTotalDescriptor(mappingHeader)) {
                 return `${key}${ID_SEPARATOR}${mappingHeader.totalHeaderItem.name}`;
             }
 
@@ -138,7 +138,7 @@ export function getMeasureFormat(gridHeader: IGridHeader, result: IExecutionResu
     const headers = result.dimensions[1].headers;
     const header = headers[headers.length - 1];
 
-    if (!isMeasureGroupHeader(header)) {
+    if (!isMeasureGroupDescriptor(header)) {
         throw new Error(`Cannot get measure format from header ${Object.keys(header)}`);
     }
 

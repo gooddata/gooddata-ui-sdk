@@ -10,15 +10,15 @@ import {
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultDimension,
-    IResultHeaderItem,
+    IDimensionDescriptor,
+    IResultHeader,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { AuthenticatedCallGuard } from "./commonTypes";
 
 export class BearExecutionResult implements IExecutionResult {
-    public readonly dimensions: IResultDimension[];
+    public readonly dimensions: IDimensionDescriptor[];
     private readonly _fingerprint: string;
 
     constructor(
@@ -120,7 +120,7 @@ type DataViewFactory = (promisedRes: Promise<Execution.IExecutionResult | null>)
 class BearDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
     public readonly definition: IExecutionDefinition;
-    public readonly headerItems: IResultHeaderItem[][][];
+    public readonly headerItems: IResultHeader[][][];
     public readonly totalCount: number[];
     public readonly count: number[];
     public readonly offset: number[];

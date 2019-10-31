@@ -3,11 +3,11 @@ import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import {
     DataValue,
     DataViewFacade,
-    IAttributeHeader,
+    IAttributeDescriptor,
     IDataView,
-    IMeasureGroupHeader,
-    IMeasureHeaderItem,
-    IResultAttributeHeaderItem,
+    IMeasureGroupDescriptor,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 import { isMeasureDefinition } from "@gooddata/sdk-model";
 import * as cx from "classnames";
@@ -266,7 +266,7 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
 export function getSeriesItemData(
     seriesItem: string[],
     seriesIndex: number,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
@@ -327,7 +327,7 @@ export function getSeriesItemData(
 
 export function getHeatmapSeries(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
 ) {
     const data: IPointData[] = [];
     dv.twoDimData().forEach((rowItem: DataValue[], rowItemIndex: number) => {
@@ -406,7 +406,7 @@ function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {
 
 export function getBubbleChartSeries(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ) {
@@ -489,7 +489,7 @@ function isLastSerie(seriesIndex: number, dataLength: number) {
 
 export function getTreemapStackedSeriesDataWithViewBy(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
@@ -498,7 +498,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     const leafs: any = [];
     let rootId = -1;
     let uncoloredLeafs: any = [];
-    let lastRoot: IResultAttributeHeaderItem["attributeHeaderItem"] = null;
+    let lastRoot: IResultAttributeHeader["attributeHeaderItem"] = null;
 
     const executionResultData = dv.twoDimData();
     const dataLength = executionResultData.length;
@@ -533,7 +533,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
 
 export function getTreemapStackedSeriesDataWithMeasures(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ): any[] {
@@ -584,7 +584,7 @@ export function getTreemapStackedSeriesDataWithMeasures(
 
 export function getTreemapStackedSeries(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     colorStrategy: IColorStrategy,
@@ -603,7 +603,7 @@ export function getTreemapStackedSeries(
     }
 
     const seriesName = measureGroup.items
-        .map((wrappedMeasure: IMeasureHeaderItem) => {
+        .map((wrappedMeasure: IMeasureDescriptor) => {
             return unwrap(wrappedMeasure).name;
         })
         .join(", ");
@@ -621,7 +621,7 @@ export function getTreemapStackedSeries(
 
 export function getSeries(
     dv: DataViewFacade,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
@@ -661,7 +661,7 @@ export function getSeries(
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
             // Pie charts with measures only have a single series which name would is ambiguous
             seriesItemConfig.name = measureGroup.items
-                .map((wrappedMeasure: IMeasureHeaderItem) => {
+                .map((wrappedMeasure: IMeasureDescriptor) => {
                     return unwrap(wrappedMeasure).name;
                 })
                 .join(", ");
@@ -964,9 +964,9 @@ export function getDrillIntersection(
 }
 
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
-    let viewByItemHeader: IResultAttributeHeaderItem = null;
+    let viewByItemHeader: IResultAttributeHeader = null;
     let viewByItem = null;
-    let viewByAttributeHeader: IAttributeHeader = null;
+    let viewByAttributeHeader: IAttributeDescriptor = null;
 
     if (viewByAttribute) {
         viewByItemHeader = viewByAttribute.items[viewByIndex];
@@ -985,9 +985,9 @@ function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByI
 }
 
 function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stackByIndex: number) {
-    let stackByItemHeader: IResultAttributeHeaderItem = null;
+    let stackByItemHeader: IResultAttributeHeader = null;
     let stackByItem = null;
-    let stackByAttributeHeader: IAttributeHeader = null;
+    let stackByAttributeHeader: IAttributeDescriptor = null;
 
     if (stackByAttribute) {
         // stackBy item index is always equal to seriesIndex
@@ -1136,7 +1136,7 @@ export function getDrillableSeries(
 
 function getCategories(
     type: string,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
 ) {
@@ -1162,7 +1162,7 @@ function getCategories(
 
     if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
         // Pie or Treemap chart with measures only (no viewByAttribute) needs to list
-        return measureGroup.items.map((wrappedMeasure: IMeasureHeaderItem) => unwrap(wrappedMeasure).name);
+        return measureGroup.items.map((wrappedMeasure: IMeasureDescriptor) => unwrap(wrappedMeasure).name);
         // Pie chart categories are later sorted by seriesItem pointValue
     }
     return [];
@@ -1193,10 +1193,10 @@ function getStackingConfig(
 }
 
 function preprocessMeasureGroupItems(
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     defaultValues: any,
 ): any[] {
-    return measureGroup.items.map((item: IMeasureHeaderItem, index: number) => {
+    return measureGroup.items.map((item: IMeasureDescriptor, index: number) => {
         const unwrapped = unwrap(item);
         return index
             ? {
@@ -1213,7 +1213,7 @@ function preprocessMeasureGroupItems(
 function getXAxes(
     dv: DataViewFacade,
     config: IChartConfig,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
     const { type } = config;
@@ -1251,7 +1251,7 @@ function getXAxes(
     ];
 }
 
-function getMeasureFormatKey(measureGroupItems: IMeasureHeaderItem[]) {
+function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
     const percentageFormat = getMeasureFormat(
         measureGroupItems.find((measure: any) => {
             return isPercentage(getMeasureFormat(measure));
@@ -1275,7 +1275,7 @@ function isPercentage(format: string) {
 function getYAxes(
     dv: DataViewFacade,
     config: IChartConfig,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     stackByAttribute: any,
 ): IAxis[] {
     const { type } = config;
@@ -1377,12 +1377,12 @@ interface IMeasuresInAxes {
 
 function assignMeasuresToAxes(
     secondMeasures: string[],
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
 ): IMeasuresInAxes {
     return measureGroup.items.reduce(
         (
             result: any,
-            { measureHeaderItem: { name, format, localIdentifier } }: IMeasureHeaderItem,
+            { measureHeaderItem: { name, format, localIdentifier } }: IMeasureDescriptor,
             index,
         ) => {
             if (includes(secondMeasures, localIdentifier)) {
@@ -1798,7 +1798,7 @@ export function getChartOptions(
     }
 
     if (isBubbleChart(type)) {
-        const measures: IMeasureHeaderItem[] = [];
+        const measures: IMeasureDescriptor[] = [];
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 

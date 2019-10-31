@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
-import { DataValue, DataViewFacade, IDataView, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
@@ -23,7 +23,7 @@ import { measureUriOrQualifier } from "../../../../base/helpers/measures";
 import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
-    measureHeaderItem: IMeasureHeaderItem["measureHeaderItem"];
+    measureHeaderItem: IMeasureDescriptor["measureHeaderItem"];
     value: DataValue;
 }
 

@@ -7,7 +7,7 @@ import {
     isGuidColorItem,
     isRgbColorItem,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
 import { DEFAULT_COLOR_PALETTE } from "../Config";
@@ -178,7 +178,7 @@ export class MeasureColorStrategy extends ColorStrategy {
     }
 
     private mapMeasureColor(
-        headerItem: IMeasureHeaderItem,
+        headerItem: IMeasureDescriptor,
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
         colorAssignment: IColorMapping[],
@@ -260,7 +260,7 @@ function getAtributeColorAssignment(
     dv: DataViewFacade,
 ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
-    const uniqItems: IResultAttributeHeaderItem[] = uniqBy<IResultAttributeHeaderItem>(
+    const uniqItems: IResultAttributeHeader[] = uniqBy<IResultAttributeHeader>(
         attribute.items,
         "attributeHeaderItem.uri",
     );

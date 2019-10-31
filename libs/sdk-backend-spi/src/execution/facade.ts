@@ -13,14 +13,14 @@ import {
 import { IDataView, IExecutionResult } from "./index";
 import {
     DataValue,
-    IHeader,
-    IMeasureGroupHeader,
-    IMeasureHeaderItem,
-    IResultAttributeHeaderItem,
-    IResultDimension,
-    IResultHeaderItem,
-    isMeasureGroupHeader,
-    isResultAttributeHeaderItem,
+    IDimensionItemDescriptor,
+    IMeasureGroupDescriptor,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
+    IDimensionDescriptor,
+    IResultHeader,
+    isMeasureGroupDescriptor,
+    isResultAttributeHeader,
 } from "./results";
 import isArray = require("lodash/isArray");
 
@@ -29,7 +29,7 @@ type BucketIndex = {
 };
 
 type MeasureGroupHeaderIndex = {
-    [id: string]: IMeasureHeaderItem;
+    [id: string]: IMeasureDescriptor;
 };
 
 function buildBucketIndex(dataView: IDataView): BucketIndex {
@@ -40,9 +40,9 @@ function buildBucketIndex(dataView: IDataView): BucketIndex {
     }, {});
 }
 
-function findMeasureGroupHeader(dataView: IDataView): IMeasureGroupHeader | undefined {
+function findMeasureGroupHeader(dataView: IDataView): IMeasureGroupDescriptor | undefined {
     for (const dim of dataView.result.dimensions) {
-        const measureGroupHeader = dim.headers.find(isMeasureGroupHeader);
+        const measureGroupHeader = dim.headers.find(isMeasureGroupDescriptor);
 
         if (measureGroupHeader) {
             return measureGroupHeader;
@@ -52,7 +52,7 @@ function findMeasureGroupHeader(dataView: IDataView): IMeasureGroupHeader | unde
     return undefined;
 }
 
-function buildMeasureHeaderIndex(measureGroup: IMeasureGroupHeader | undefined): MeasureGroupHeaderIndex {
+function buildMeasureHeaderIndex(measureGroup: IMeasureGroupDescriptor | undefined): MeasureGroupHeaderIndex {
     const items =
         measureGroup && measureGroup.measureGroupHeader.items ? measureGroup.measureGroupHeader.items : [];
 
@@ -80,7 +80,7 @@ export class DataViewFacade {
     /*
      * Derived property; measure group header found in dimensions
      */
-    private readonly _measureGroupHeader: IMeasureGroupHeader | undefined;
+    private readonly _measureGroupHeader: IMeasureGroupDescriptor | undefined;
     /*
      * Derived property; measure local id => measure group header item
      */
@@ -176,43 +176,43 @@ export class DataViewFacade {
     // header ops
     //
 
-    public dimensions(): IResultDimension[] {
+    public dimensions(): IDimensionDescriptor[] {
         return this.dataView.result.dimensions;
     }
 
-    public dimensionHeaders(dimIdx: number): IHeader[] {
+    public dimensionHeaders(dimIdx: number): IDimensionItemDescriptor[] {
         const dim = this.dataView.result.dimensions[dimIdx];
 
         return dim && dim.headers ? dim.headers : [];
     }
 
-    public headerItems(): IResultHeaderItem[][][] {
+    public headerItems(): IResultHeader[][][] {
         return this.dataView.headerItems;
     }
 
-    public attributeHeaders(): IResultAttributeHeaderItem[][][] {
-        return this.dataView.headerItems.map((dimension: IResultHeaderItem[][]) => {
+    public attributeHeaders(): IResultAttributeHeader[][][] {
+        return this.dataView.headerItems.map((dimension: IResultHeader[][]) => {
             return dimension.filter(headerList =>
-                isResultAttributeHeaderItem(headerList[0]),
-            ) as IResultAttributeHeaderItem[][];
+                isResultAttributeHeader(headerList[0]),
+            ) as IResultAttributeHeader[][];
         });
     }
 
-    public measureGroupHeader(): IMeasureGroupHeader | undefined {
+    public measureGroupHeader(): IMeasureGroupDescriptor | undefined {
         return this._measureGroupHeader;
     }
 
-    public measureGroupHeaderItems(): IMeasureHeaderItem[] {
+    public measureGroupHeaderItems(): IMeasureDescriptor[] {
         const header = this.measureGroupHeader();
 
         return header ? header.measureGroupHeader.items : [];
     }
 
-    public measureGroupHeaderItem(id: string): IMeasureHeaderItem | undefined {
+    public measureGroupHeaderItem(id: string): IMeasureDescriptor | undefined {
         return this._measureHeaderById[id];
     }
 
-    public isDerivedMeasure(measureHeader: IMeasureHeaderItem): boolean {
+    public isDerivedMeasure(measureHeader: IMeasureDescriptor): boolean {
         return this.dataView.definition.measures.some((measure: IMeasure) => {
             if (measure.measure.localIdentifier !== measureHeader.measureHeaderItem.localIdentifier) {
                 return false;

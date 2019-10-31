@@ -8,10 +8,10 @@ import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeUri, measureUri } from "@gooddata/sdk-model";
 import { uriMatch } from "../../../../base/factory/HeaderPredicateFactory";
 import { DEFAULT_COLOR_PALETTE } from "../../../Config";
-import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 
 describe("getCategoriesForTwoAttributes", () => {
-    const attributeHeader: IAttributeHeader["attributeHeader"] = {
+    const attributeHeader: IAttributeDescriptor["attributeHeader"] = {
         uri: "uri",
         identifier: "identifier",
         localIdentifier: "localIdentifier",

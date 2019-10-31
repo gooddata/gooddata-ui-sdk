@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
@@ -21,7 +21,7 @@ export interface IAggregationsSubMenuProps {
     totalType: TotalType;
     toggler: JSX.Element;
     isMenuOpened?: boolean;
-    rowAttributeHeaders: IAttributeHeader[];
+    rowAttributeHeaders: IAttributeDescriptor[];
     measureLocalIdentifiers: string[];
     columnTotals: IColumnTotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
@@ -49,14 +49,14 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
     }
 
     private getPreviousAttributeName(
-        rowAttributeHeaders: IAttributeHeader[],
+        rowAttributeHeaders: IAttributeDescriptor[],
         attributeHeaderIndex: number,
     ): string {
         return getNthAttributeName(rowAttributeHeaders, attributeHeaderIndex - 1);
     }
 
     private getAttributeName(
-        rowAttributeHeaders: IAttributeHeader[],
+        rowAttributeHeaders: IAttributeDescriptor[],
         afmAttributeHeaderIndex: number,
     ): string {
         const { intl } = this.props;
@@ -78,7 +78,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
     private renderSubMenuItems() {
         const { totalType, rowAttributeHeaders, measureLocalIdentifiers, columnTotals } = this.props;
 
-        return rowAttributeHeaders.map((_attributeHeader: IAttributeHeader, headerIndex: number) => {
+        return rowAttributeHeaders.map((_attributeHeader: IAttributeDescriptor, headerIndex: number) => {
             const attributeLocalIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, headerIndex);
             const isSelected = menuHelper.isTotalEnabledForAttribute(
                 attributeLocalIdentifier,
