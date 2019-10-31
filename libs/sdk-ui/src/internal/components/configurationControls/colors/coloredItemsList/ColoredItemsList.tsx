@@ -3,8 +3,7 @@ import * as React from "react";
 import * as CustomEvent from "custom-event";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import { IColorItem } from "@gooddata/sdk-model";
-import { IColorPalette } from "../../../../../base/interfaces/Colors";
+import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
 import ColoredItem from "./ColoredItem";
 import { getSearchedItems } from "../../../../utils/colors";
@@ -17,7 +16,7 @@ const DROPDOWN_BODY_WIDTH = 218;
 export interface IColoredItemsListOwnProps {
     colorPalette: IColorPalette;
     inputItems: IColoredItem[];
-    onSelect: (selectedColorItem: IColoredItem, color: IColorItem) => void;
+    onSelect: (selectedColorItem: IColoredItem, color: IColor) => void;
     showCustomPicker?: boolean;
     disabled?: boolean;
     isLoading?: boolean;
@@ -100,7 +99,7 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
         return this.props.inputItems.length > SEARCHFIELD_VISIBILITY_THRESHOLD && !this.props.isLoading;
     };
 
-    private onSelect = (selectedColorItem: IColoredItem, color: IColorItem) => {
+    private onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
         this.props.onSelect(selectedColorItem, color);
     };
 }

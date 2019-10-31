@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IColor, IColorItem } from "@gooddata/sdk-model";
+import { IRgbColorValue, IColor } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
@@ -16,8 +16,8 @@ import "../../../../../styles/internal/css/config_panel.css";
 import { SmallScreenDecorator } from "../../../../utils/SmallScreenDecorator";
 
 export interface IColoredItem {
-    colorItem: IColorItem;
-    color: IColor;
+    colorItem: IColor;
+    color: IRgbColorValue;
     mappingHeader?: MappingHeader.IMappingHeader;
 }
 

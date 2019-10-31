@@ -49,8 +49,6 @@ import * as MappingHeader from "./base/interfaces/MappingHeader";
 
 export { PivotTable, IPivotTableConfig, IPivotTableBucketProps, IMenu } from "./pivotTable";
 
-import { IColorPalette, IColorPaletteItem } from "./base/interfaces/Colors";
-
 import { InsightView } from "./insightView/InsightView";
 export {
     AttributeElements,
@@ -75,8 +73,6 @@ export {
     IDrillableItem,
     ILegendConfig,
     IChartConfig,
-    IColorPalette,
-    IColorPaletteItem,
     IPushData,
     IColorsData,
     LoadingComponent,

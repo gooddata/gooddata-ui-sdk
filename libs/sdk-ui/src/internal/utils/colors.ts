@@ -13,7 +13,7 @@ import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/interfaces/MappingHeader";
 import { ColorUtils } from "../../highcharts";
 import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IColorItem, IColorMappingProperty, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
+import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 
 function getItemName(item: IColoredItem): string {
     let name = "";
@@ -42,13 +42,13 @@ export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[
 
     if (colors && colors.colorAssignments) {
         inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
-            if (isGuidColorItem(assignmentItem.color)) {
+            if (isColorFromPalette(assignmentItem.color)) {
                 return {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,
                     color: ColorUtils.getColorByGuid(colors.colorPalette, assignmentItem.color.value, index),
                 };
-            } else if (isRgbColorItem(assignmentItem.color)) {
+            } else if (isRgbColor(assignmentItem.color)) {
                 return {
                     colorItem: assignmentItem.color,
                     mappingHeader: assignmentItem.headerItem,
@@ -65,8 +65,8 @@ function getMeasureMappingIdentifier(item: IMeasureDescriptor): string {
     return item.measureHeaderItem.localIdentifier;
 }
 
-function mergeColorMappingToProperties(properties: IVisualizationProperties, id: string, color: IColorItem) {
-    const colorMapping: IColorMappingProperty[] = [
+function mergeColorMappingToProperties(properties: IVisualizationProperties, id: string, color: IColor) {
+    const colorMapping: IColorMappingItem[] = [
         {
             id,
             color,
@@ -85,7 +85,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
 export function getProperties(
     properties: IVisualizationProperties,
     item: MappingHeader.IMappingHeader,
-    color: IColorItem,
+    color: IColor,
 ): IVisualizationProperties {
     if (isMeasureDescriptor(item)) {
         const id = getMeasureMappingIdentifier(item);
@@ -107,39 +107,37 @@ export function getValidProperties(
         return properties;
     }
 
-    const reducedColorMapping = properties.controls.colorMapping.filter(
-        (mappingItem: IColorMappingProperty) => {
-            const { id } = mappingItem;
-            const colorValue = mappingItem.color.value;
+    const reducedColorMapping = properties.controls.colorMapping.filter((mappingItem: IColorMappingItem) => {
+        const { id } = mappingItem;
+        const colorValue = mappingItem.color.value;
 
-            const isMeasureInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
-                if (isMeasureDescriptor(colorAssignment.headerItem)) {
-                    return (
-                        colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
-                        isEqual(colorAssignment.color.value, colorValue)
-                    );
-                }
-
-                return false;
-            });
-
-            if (isMeasureInAssignment) {
-                return true;
+        const isMeasureInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
+            if (isMeasureDescriptor(colorAssignment.headerItem)) {
+                return (
+                    colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
+                    isEqual(colorAssignment.color.value, colorValue)
+                );
             }
 
-            const isAttributeInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
-                if (isResultAttributeHeader(colorAssignment.headerItem)) {
-                    return colorAssignment.headerItem.attributeHeaderItem.uri === id;
-                }
+            return false;
+        });
 
-                return false;
-            });
+        if (isMeasureInAssignment) {
+            return true;
+        }
 
-            if (isAttributeInAssignment) {
-                return true;
+        const isAttributeInAssignment = colorAssignments.find((colorAssignment: IColorAssignment) => {
+            if (isResultAttributeHeader(colorAssignment.headerItem)) {
+                return colorAssignment.headerItem.attributeHeaderItem.uri === id;
             }
-        },
-    );
+
+            return false;
+        });
+
+        if (isAttributeInAssignment) {
+            return true;
+        }
+    });
 
     return {
         ...properties,

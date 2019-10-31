@@ -19,9 +19,9 @@ import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IColorItem, RGBType } from "@gooddata/sdk-model";
+import { IColor, RgbType, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import range = require("lodash/range");
-import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../../base/interfaces/Colors";
+import { IColorMapping } from "../../../base/interfaces/Colors";
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -46,7 +46,7 @@ describe("isValidMappedColor", () => {
     ];
 
     it("should return true if color item is in palette", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "guid",
             value: "01",
         };
@@ -55,7 +55,7 @@ describe("isValidMappedColor", () => {
     });
 
     it("should return false if color item is not in palette", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "guid",
             value: "xx",
         };
@@ -64,7 +64,7 @@ describe("isValidMappedColor", () => {
     });
 
     it("should return true if color item is rgb", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "rgb",
             value: {
                 r: 255,
@@ -236,7 +236,7 @@ describe("ColorFactory", () => {
                     predicate: (headerItem: IResultAttributeHeader) =>
                         headerItem.attributeHeaderItem && headerItem.attributeHeaderItem.uri === "invalid",
                     color: {
-                        type: "rgb" as RGBType,
+                        type: "rgb" as RgbType,
                         value: {
                             r: 0,
                             g: 0,
@@ -250,7 +250,7 @@ describe("ColorFactory", () => {
                         headerItem.attributeHeaderItem.uri ===
                             "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1237",
                     color: {
-                        type: "rgb" as RGBType,
+                        type: "rgb" as RgbType,
                         value: {
                             r: 0,
                             g: 0,

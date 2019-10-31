@@ -1,8 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IColorItem } from "@gooddata/sdk-model";
-import { IColorPalette } from "../../../../../base/interfaces/Colors";
+import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
@@ -13,7 +12,7 @@ export interface IColoredItemProps {
     colorPalette: IColorPalette;
     className?: string;
     item?: IColoredItemDropdownItem;
-    onSelect?: (source: IColoredItem, color: IColorItem) => void;
+    onSelect?: (source: IColoredItem, color: IColor) => void;
     showCustomPicker?: boolean;
     isSelected?: boolean;
     disabled?: boolean;
@@ -51,7 +50,7 @@ class ColoredItem extends React.PureComponent<IColoredItemProps & InjectedIntlPr
         return <div className="gd-list-item gd-list-item-not-loaded" />;
     }
 
-    private onColorSelected = (color: IColorItem) => {
+    private onColorSelected = (color: IColor) => {
         const { item, onSelect } = this.props;
         if (onSelect) {
             onSelect(item.source, color);

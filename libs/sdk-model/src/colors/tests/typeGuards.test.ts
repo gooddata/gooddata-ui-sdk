@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { isGuidColorItem, isRgbColorItem } from "../index";
+import { isColorFromPalette, isRgbColor } from "../index";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 
 describe("color type guards", () => {
@@ -12,7 +12,7 @@ describe("color type guards", () => {
         ];
 
         it.each(TEST_DATA)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isGuidColorItem(input)).toBe(expectedResult);
+            expect(isColorFromPalette(input)).toBe(expectedResult);
         });
     });
 
@@ -24,7 +24,7 @@ describe("color type guards", () => {
         ];
 
         it.each(TEST_DATA)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isRgbColorItem(input)).toBe(expectedResult);
+            expect(isRgbColor(input)).toBe(expectedResult);
         });
     });
 });

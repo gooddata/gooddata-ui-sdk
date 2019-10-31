@@ -3,10 +3,10 @@ import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 import * as MappingHeader from "../../../base/interfaces/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
-import { GuidType, IColorItem } from "@gooddata/sdk-model";
+import { GuidType, IColor } from "@gooddata/sdk-model";
 
 describe("color utils", () => {
-    const color1: IColorItem = {
+    const color1: IColor = {
         type: "guid",
         value: "guid1",
     };

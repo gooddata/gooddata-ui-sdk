@@ -9,7 +9,8 @@ import {
     SVGAttributes,
     SVGDOMElement,
 } from "./chart/highcharts/highchartsEntryPoint";
-import { IColorAssignment, IColorMapping, IColorPalette } from "../base/interfaces/Colors";
+import { IColorAssignment, IColorMapping } from "../base/interfaces/Colors";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
 

@@ -8,7 +8,7 @@ import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
-import { IColorPaletteItem } from '@gooddata/sdk-model';
+import { IColorPalette } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -395,7 +395,7 @@ export interface IWorkspaceSettingsService {
 
 // @public
 export interface IWorkspaceStylingService {
-    colorPalette(): Promise<IColorPaletteItem[]>;
+    colorPalette(): Promise<IColorPalette>;
 }
 
 // @public

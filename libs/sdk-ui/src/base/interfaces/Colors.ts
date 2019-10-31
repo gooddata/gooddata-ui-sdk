@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import { IHeaderPredicate } from "./HeaderPredicate";
-import { IColor, IColorItem } from "@gooddata/sdk-model";
+import { IColor } from "@gooddata/sdk-model";
 import { IMappingHeader } from "./MappingHeader";
 
 /**
@@ -11,7 +11,7 @@ import { IMappingHeader } from "./MappingHeader";
 export interface IColorMapping {
     // sent to SDK
     predicate: IHeaderPredicate;
-    color: IColorItem;
+    color: IColor;
 }
 
 /**
@@ -21,20 +21,5 @@ export interface IColorMapping {
 export interface IColorAssignment {
     // << send from SDK up
     headerItem: IMappingHeader;
-    color: IColorItem;
+    color: IColor;
 }
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IColorPaletteItem {
-    guid: string;
-    fill: IColor;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IColorPalette extends Array<IColorPaletteItem> {}

@@ -2,12 +2,11 @@
 import * as React from "react";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IColor, IColorItem, isGuidColorItem, isRgbColorItem } from "@gooddata/sdk-model";
+import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import * as uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";
-import { IColorPalette } from "../../../../../base/interfaces/Colors";
 
 export enum IconPosition {
     Down,
@@ -20,10 +19,10 @@ export interface ISelectableChild {
 }
 
 export interface IColorDropdownProps {
-    selectedColorItem?: IColorItem;
+    selectedColorItem?: IColor;
     colorPalette: IColorPalette;
     showCustomPicker: boolean;
-    onColorSelected: (color: IColorItem) => void;
+    onColorSelected: (color: IColor) => void;
 }
 
 export interface IColorDropdownState {
@@ -31,7 +30,7 @@ export interface IColorDropdownState {
     dropdownVersion: DropdownVersionType;
 }
 
-const COLOR_FOR_UNKNOWN_ITEM: IColor = {
+const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     r: 255,
     g: 0,
     b: 0,
@@ -108,7 +107,7 @@ class ColorDropdown extends React.PureComponent<
     }
 
     private getSelectedGuidFromColorItem(): string {
-        if (isGuidColorItem(this.props.selectedColorItem)) {
+        if (isColorFromPalette(this.props.selectedColorItem)) {
             return this.props.selectedColorItem.value;
         }
 
@@ -126,8 +125,8 @@ class ColorDropdown extends React.PureComponent<
         );
     }
 
-    private getSelectedColorFromPalette(): IColor {
-        if (isGuidColorItem(this.props.selectedColorItem)) {
+    private getSelectedColorFromPalette(): IRgbColorValue {
+        if (isColorFromPalette(this.props.selectedColorItem)) {
             const selected = this.props.colorPalette.find((item: any) => {
                 return item.guid === this.props.selectedColorItem.value;
             });
@@ -137,15 +136,15 @@ class ColorDropdown extends React.PureComponent<
             }
         }
 
-        if (isRgbColorItem(this.props.selectedColorItem)) {
+        if (isRgbColor(this.props.selectedColorItem)) {
             return this.props.selectedColorItem.value;
         }
 
         return COLOR_FOR_UNKNOWN_ITEM;
     }
 
-    private onColorPickerSubmit = (color: IColor) => {
-        const item: IColorItem = {
+    private onColorPickerSubmit = (color: IRgbColorValue) => {
+        const item: IColor = {
             type: "rgb",
             value: color,
         };
@@ -173,7 +172,7 @@ class ColorDropdown extends React.PureComponent<
         this.toggleDropdown();
     };
 
-    private onColorSelected = (color: IColorItem) => {
+    private onColorSelected = (color: IColor) => {
         this.setState({
             isDropdownOpen: false,
             dropdownVersion: DropdownVersionType.ColorPalette,

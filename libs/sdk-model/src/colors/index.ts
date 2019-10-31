@@ -3,102 +3,90 @@
 import isEmpty = require("lodash/isEmpty");
 
 /**
- * TODO: SDK8: Add docs
+ * RGB Color value specification.
  *
  * @public
  */
-export interface IColor {
+export interface IRgbColorValue {
     r: number;
     g: number;
     b: number;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * An item in user-defined color palette. Item is essentially mapping of user-assigned
+ * color identifier to an RGB Color value.
  *
  * @public
  */
 export interface IColorPaletteItem {
     guid: string;
-    fill: IColor;
+    fill: IRgbColorValue;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * User-defined color palette. Colors from the palette can be used as input to charts and naturally
+ * influence the coloring strategy for the chart.
  *
  * @public
  */
 export type IColorPalette = IColorPaletteItem[];
 
 /**
- * TODO: SDK8: Add docs
- *
  * @public
  */
 export type GuidType = "guid";
 
 /**
- * TODO: SDK8: Add docs
- *
  * @public
  */
-export type RGBType = "rgb";
+export type RgbType = "rgb";
 
 /**
- * TODO: SDK8: Add docs
+ * Color defined by referencing an item in the user-defined color palette.
  *
  * @public
  */
-export interface IGuidColorItem {
+export interface IColorFromPalette {
     type: GuidType;
     value: string;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Color defined used RGB values.
  *
  * @public
  */
-export interface IRGBColorItem {
-    type: RGBType;
-    value: IColor;
+export interface IRgbColor {
+    type: RgbType;
+    value: IRgbColorValue;
 }
 
 /**
- * TODO: SDK8: Add docs
+ * A color. It can be specified by referencing an item from from user-defined color palette or by RGB Value.
  *
  * @public
  */
-export type IColorItem = IGuidColorItem | IRGBColorItem;
-
-/**
- * TODO: SDK8: Add docs
- *
- * @public
- */
-export interface IColorMappingProperty {
-    id: string;
-    color: IColorItem;
-}
+export type IColor = IColorFromPalette | IRgbColor;
 
 //
 // Type guards
 //
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a {@link IColorFromPalette}
  *
  * @public
  */
-export function isGuidColorItem(obj: any): obj is IGuidColorItem {
-    return !isEmpty(obj) && (obj as IGuidColorItem).type === "guid";
+export function isColorFromPalette(obj: any): obj is IColorFromPalette {
+    return !isEmpty(obj) && (obj as IColorFromPalette).type === "guid";
 }
 
 /**
- * TODO: SDK8: Add docs
+ * Type guard checking whether the provided object is a {@link IRgbColor}
  *
  * @public
  */
-export function isRgbColorItem(obj: any): obj is IRGBColorItem {
-    return !isEmpty(obj) && (obj as IRGBColorItem).type === "rgb";
+export function isRgbColor(obj: any): obj is IRgbColor {
+    return !isEmpty(obj) && (obj as IRgbColor).type === "rgb";
 }

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IColorPaletteItem } from "@gooddata/sdk-model";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to workspace styling settings such as color palette.
@@ -15,5 +15,5 @@ export interface IWorkspaceStylingService {
     /**
      * Asynchronously returns items in the color palette.
      */
-    colorPalette(): Promise<IColorPaletteItem[]>;
+    colorPalette(): Promise<IColorPalette>;
 }

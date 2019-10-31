@@ -1,11 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import {
+    IRgbColorValue,
     IColor,
-    IColorItem,
-    IGuidColorItem,
-    RGBType,
-    isGuidColorItem,
-    isRgbColorItem,
+    IColorFromPalette,
+    RgbType,
+    isColorFromPalette,
+    isRgbColor,
+    IColorPalette,
+    IColorPaletteItem,
 } from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
@@ -26,12 +28,7 @@ import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
 import uniqBy = require("lodash/uniqBy");
-import {
-    IColorAssignment,
-    IColorMapping,
-    IColorPalette,
-    IColorPaletteItem,
-} from "../../base/interfaces/Colors";
+import { IColorAssignment, IColorMapping } from "../../base/interfaces/Colors";
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;
@@ -102,7 +99,7 @@ export abstract class ColorStrategy implements IColorStrategy {
         _stackByAttribute: any,
     ): string[] {
         return colorAssignment.map((map, index: number) => {
-            const color = isGuidColorItem(map.color)
+            const color = isColorFromPalette(map.color)
                 ? getColorByGuid(colorPalette, map.color.value, index)
                 : map.color.value;
             return getRgbStringFromRGB(color);
@@ -118,7 +115,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     ): ICreateColorAssignmentReturnValue;
 }
 
-const emptyColorPaletteItem: IGuidColorItem = { type: "guid", value: "none" };
+const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };
 
 export class MeasureColorStrategy extends ColorStrategy {
     protected createColorAssignment(
@@ -186,7 +183,7 @@ export class MeasureColorStrategy extends ColorStrategy {
     ): IColorAssignment {
         const mappedColor = getColorFromMapping(headerItem, colorAssignment, dv);
 
-        const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
+        const color: IColor = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
             : {
                   type: "guid",
@@ -235,18 +232,18 @@ export class MeasureColorStrategy extends ColorStrategy {
     }
 
     private getDerivedMeasureColorAssignment(
-        sourceMeasureColor: IColorItem,
+        sourceMeasureColor: IColor,
         colorPalette: IColorPalette,
         measureItemIndex: number,
         mapItem: IColorAssignment,
     ) {
-        const rgbColor = isGuidColorItem(sourceMeasureColor)
+        const rgbColor = isColorFromPalette(sourceMeasureColor)
             ? getColorByGuid(colorPalette, sourceMeasureColor.value, measureItemIndex)
             : sourceMeasureColor.value;
         return {
             ...mapItem,
             color: {
-                type: "rgb" as RGBType,
+                type: "rgb" as RgbType,
                 value: getLighterColorFromRGB(rgbColor, 0.6),
             },
         };
@@ -268,7 +265,7 @@ function getAtributeColorAssignment(
     return uniqItems.map(headerItem => {
         const mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
 
-        const color: IColorItem = isValidMappedColor(mappedColor, colorPalette)
+        const color: IColor = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
             : {
                   type: "guid",
@@ -283,7 +280,7 @@ function getAtributeColorAssignment(
     });
 }
 
-export function isValidMappedColor(colorItem: IColorItem, colorPalette: IColorPalette) {
+export function isValidMappedColor(colorItem: IColor, colorPalette: IColorPalette) {
     if (!colorItem) {
         return false;
     }
@@ -295,7 +292,7 @@ export function isValidMappedColor(colorItem: IColorItem, colorPalette: IColorPa
     return true;
 }
 
-function isColorItemInPalette(colorItem: IColorItem, colorPalette: IColorPalette) {
+function isColorItemInPalette(colorItem: IColor, colorPalette: IColorPalette) {
     return colorPalette.some((paletteItem: IColorPaletteItem) => {
         return colorItem.type === "guid" && colorItem.value === paletteItem.guid;
     });
@@ -354,22 +351,22 @@ export class HeatmapColorStrategy extends ColorStrategy {
     }
 
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[]): string[] {
-        if (isRgbColorItem(colorAssignment[0].color)) {
+        if (isRgbColor(colorAssignment[0].color)) {
             if (isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR)) {
                 return HEATMAP_BLUE_COLOR_PALETTE;
             }
         }
 
-        if (isGuidColorItem(colorAssignment[0].color)) {
+        if (isColorFromPalette(colorAssignment[0].color)) {
             return this.getCustomHeatmapColorPalette(
                 getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0),
             );
         }
 
-        return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IColor);
+        return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IRgbColorValue);
     }
 
-    private getCustomHeatmapColorPalette(baseColor: IColor): HighChartColorPalette {
+    private getCustomHeatmapColorPalette(baseColor: IRgbColorValue): HighChartColorPalette {
         const { r, g, b } = baseColor;
         const colorItemsCount = 6;
         const channels = [r, g, b];
@@ -457,7 +454,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
         const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
         const measureHeaderItem = measureGroup.items[0];
         const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, dv);
-        const color: IColorItem = isValidMappedColor(measureColorMapping, colorPalette)
+        const color: IColor = isValidMappedColor(measureColorMapping, colorPalette)
             ? measureColorMapping
             : { type: "guid", value: colorPalette[0].guid };
         return [
@@ -474,9 +471,9 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
         viewByAttribute: any,
     ): string[] {
         const length = viewByAttribute ? viewByAttribute.items.length : 1;
-        const color = isGuidColorItem(colorAssignment[0].color)
+        const color = isColorFromPalette(colorAssignment[0].color)
             ? getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0)
-            : (colorAssignment[0].color.value as IColor);
+            : (colorAssignment[0].color.value as IRgbColorValue);
         const colorString = getRgbStringFromRGB(color);
         return Array(length).fill(colorString);
     }

@@ -64,7 +64,7 @@ import * as VisEvents from "../../../../base/interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
-    IColorMappingProperty,
+    IColorMappingItem,
     IDimension,
     IInsight,
     insightBuckets,
@@ -481,7 +481,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     private buildVisualizationConfig(config: any, supportedControls: any): IChartConfig {
-        const colorMapping: IColorMappingProperty[] = get(supportedControls, "colorMapping");
+        const colorMapping: IColorMappingItem[] = get(supportedControls, "colorMapping");
 
         const validColorMapping =
             colorMapping &&

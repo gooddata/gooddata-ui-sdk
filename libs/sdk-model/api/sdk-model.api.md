@@ -191,7 +191,7 @@ export const factoryNotationFor: (data: any) => string;
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
-// @public
+// @public (undocumented)
 export type GuidType = "guid";
 
 // @public
@@ -268,22 +268,20 @@ export interface IBucket {
 }
 
 // @public
-export interface IColor {
+export type IColor = IColorFromPalette | IRgbColor;
+
+// @public
+export interface IColorFromPalette {
     // (undocumented)
-    b: number;
+    type: GuidType;
     // (undocumented)
-    g: number;
-    // (undocumented)
-    r: number;
+    value: string;
 }
 
 // @public
-export type IColorItem = IGuidColorItem | IRGBColorItem;
-
-// @public
-export interface IColorMappingProperty {
+export interface IColorMappingItem {
     // (undocumented)
-    color: IColorItem;
+    color: IColor;
     // (undocumented)
     id: string;
 }
@@ -294,7 +292,7 @@ export type IColorPalette = IColorPaletteItem[];
 // @public
 export interface IColorPaletteItem {
     // (undocumented)
-    fill: IColor;
+    fill: IRgbColorValue;
     // (undocumented)
     guid: string;
 }
@@ -354,14 +352,6 @@ export interface IExecutionDefinition {
 
 // @public
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter;
-
-// @public
-export interface IGuidColorItem {
-    // (undocumented)
-    type: GuidType;
-    // (undocumented)
-    value: string;
-}
 
 // @public
 export interface IInsight {
@@ -551,11 +541,21 @@ export interface IRelativeDateFilter {
 }
 
 // @public
-export interface IRGBColorItem {
+export interface IRgbColor {
     // (undocumented)
-    type: RGBType;
+    type: RgbType;
     // (undocumented)
-    value: IColor;
+    value: IRgbColorValue;
+}
+
+// @public
+export interface IRgbColorValue {
+    // (undocumented)
+    b: number;
+    // (undocumented)
+    g: number;
+    // (undocumented)
+    r: number;
 }
 
 // @public
@@ -589,6 +589,9 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 export function isBucket(obj: any): obj is IBucket;
 
 // @public
+export function isColorFromPalette(obj: any): obj is IColorFromPalette;
+
+// @public
 export function isComparisonCondition(obj: any): obj is IComparisonCondition;
 
 // @public
@@ -596,9 +599,6 @@ export function isDateFilter(obj: any): obj is IDateFilter;
 
 // @public
 export function isDimension(obj: any): obj is IDimension;
-
-// @public
-export function isGuidColorItem(obj: any): obj is IGuidColorItem;
 
 // @public
 export function isIdentifierRef(obj: any): obj is IdentifierRef;
@@ -646,7 +646,7 @@ export function isRangeCondition(obj: any): obj is IRangeCondition;
 export function isRelativeDateFilter(obj: any): obj is IRelativeDateFilter;
 
 // @public
-export function isRgbColorItem(obj: any): obj is IRGBColorItem;
+export function isRgbColor(obj: any): obj is IRgbColor;
 
 // @public
 export function isSimpleMeasure(obj: any): obj is IMeasure<IMeasureDefinition>;
@@ -859,8 +859,8 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
-// @public
-export type RGBType = "rgb";
+// @public (undocumented)
+export type RgbType = "rgb";
 
 // @public
 export type SortDirection = "asc" | "desc";
