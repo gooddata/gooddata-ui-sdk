@@ -11,7 +11,7 @@ import {
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IFeatureFlagsQuery,
+    IWorkspaceSettingsService,
     IPreparedExecution,
     IWorkspaceMetadata,
     IWorkspaceStyling,
@@ -131,7 +131,7 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
         },
-        featureFlags(): IFeatureFlagsQuery {
+        settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {

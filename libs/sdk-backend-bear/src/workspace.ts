@@ -4,7 +4,7 @@ import {
     IAnalyticalWorkspace,
     IElementQueryFactory,
     IExecutionFactory,
-    IFeatureFlagsQuery,
+    IWorkspaceSettingsService,
     IWorkspaceMetadata,
     IWorkspaceStyling,
     NotImplemented,
@@ -25,7 +25,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearExecution(this.authCall, this.workspace);
     }
 
-    public featureFlags(): IFeatureFlagsQuery {
+    public settings(): IWorkspaceSettingsService {
         throw new NotImplemented("feature flags query not yet implemented");
     }
 

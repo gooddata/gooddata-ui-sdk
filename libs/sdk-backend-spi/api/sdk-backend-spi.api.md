@@ -148,8 +148,8 @@ export interface IAnalyticalBackend {
 export interface IAnalyticalWorkspace {
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
-    featureFlags(): IFeatureFlagsQuery;
     metadata(): IWorkspaceMetadata;
+    settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStyling;
     // (undocumented)
     readonly workspace: string;
@@ -261,18 +261,6 @@ export interface IExportConfig {
 export interface IExportResult {
     // (undocumented)
     uri: string;
-}
-
-// @public
-export interface IFeatureFlags {
-    // (undocumented)
-    [key: string]: number | boolean | string;
-}
-
-// @public
-export interface IFeatureFlagsQuery {
-    // (undocumented)
-    query(): Promise<IFeatureFlags>;
 }
 
 // @public
@@ -392,6 +380,17 @@ export interface IWorkspaceMetadata {
     getVisualizationClass(id: string): Promise<IVisualizationClass>;
     // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
+}
+
+// @public
+export interface IWorkspaceSettings {
+    [key: string]: number | boolean | string;
+    workspace: string;
+}
+
+// @public
+export interface IWorkspaceSettingsService {
+    query(): Promise<IWorkspaceSettings>;
 }
 
 // @public

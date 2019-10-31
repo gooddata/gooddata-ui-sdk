@@ -3,7 +3,7 @@
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory, IPreparedExecution } from "../execution";
-import { IFeatureFlagsQuery } from "../featureFlags";
+import { IWorkspaceSettingsService } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
 import { IWorkspaceStyling } from "../styling";
 
@@ -151,7 +151,7 @@ export interface IAnalyticalWorkspace {
     /**
      * Returns service that can be used to obtain settings that are currently in effect for the workspace.
      */
-    featureFlags(): IFeatureFlagsQuery;
+    settings(): IWorkspaceSettingsService;
 }
 
 /**

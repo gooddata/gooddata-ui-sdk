@@ -4,7 +4,7 @@ import {
     IAnalyticalWorkspace,
     IElementQueryFactory,
     IExecutionFactory,
-    IFeatureFlagsQuery,
+    IWorkspaceSettingsService,
     IWorkspaceMetadata,
     IWorkspaceStyling,
     NotImplemented,
@@ -23,7 +23,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return new TigerExecution(this.axios, this.workspace);
     }
 
-    public featureFlags(): IFeatureFlagsQuery {
+    public settings(): IWorkspaceSettingsService {
         throw new NotImplemented("feature flags query not yet implemented");
     }
 

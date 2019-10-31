@@ -37,7 +37,7 @@ export {
     isResultTotalHeader,
 } from "./execution/results";
 
-export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
+export { IWorkspaceSettingsService, IWorkspaceSettings } from "./featureFlags";
 
 export { IWorkspaceMetadata } from "./metadata";
 
