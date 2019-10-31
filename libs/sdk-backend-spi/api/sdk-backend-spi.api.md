@@ -150,7 +150,7 @@ export interface IAnalyticalWorkspace {
     execution(): IExecutionFactory;
     metadata(): IWorkspaceMetadata;
     settings(): IWorkspaceSettingsService;
-    styling(): IWorkspaceStyling;
+    styling(): IWorkspaceStylingService;
     // (undocumented)
     readonly workspace: string;
 }
@@ -394,8 +394,7 @@ export interface IWorkspaceSettingsService {
 }
 
 // @public
-export interface IWorkspaceStyling {
-    // (undocumented)
+export interface IWorkspaceStylingService {
     colorPalette(): Promise<IColorPaletteItem[]>;
 }
 

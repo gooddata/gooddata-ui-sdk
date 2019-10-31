@@ -16,7 +16,7 @@ import {
     IWorkspaceSettingsService,
     IPreparedExecution,
     IWorkspaceMetadata,
-    IWorkspaceStyling,
+    IWorkspaceStylingService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -146,7 +146,7 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
         metadata(): IWorkspaceMetadata {
             throw new NotSupported("not supported");
         },
-        styling(): IWorkspaceStyling {
+        styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
     };

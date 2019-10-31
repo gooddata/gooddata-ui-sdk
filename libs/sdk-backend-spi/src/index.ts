@@ -45,7 +45,7 @@ export { IElementQueryFactory, IElementQueryResult, IElementQuery, Element } fro
 
 export { IExportConfig, IExportResult } from "./export";
 
-export { IWorkspaceStyling } from "./styling";
+export { IWorkspaceStylingService } from "./styling";
 
 export {
     AnalyticalBackendError,

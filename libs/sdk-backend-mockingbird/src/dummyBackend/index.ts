@@ -14,7 +14,7 @@ import {
     IWorkspaceSettingsService,
     IPreparedExecution,
     IWorkspaceMetadata,
-    IWorkspaceStyling,
+    IWorkspaceStylingService,
     NotSupported,
     AuthenticatedPrincipal,
 } from "@gooddata/sdk-backend-spi";
@@ -137,7 +137,7 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
         metadata(): IWorkspaceMetadata {
             throw new NotSupported("not supported");
         },
-        styling(): IWorkspaceStyling {
+        styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
     };

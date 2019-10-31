@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import { IWorkspaceStyling } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "./commonTypes";
 
-export class BearWorkspaceStyling implements IWorkspaceStyling {
+export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
     public colorPalette = async (): Promise<IColorPaletteItem[]> => {

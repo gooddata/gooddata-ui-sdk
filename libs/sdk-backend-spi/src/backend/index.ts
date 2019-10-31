@@ -5,7 +5,7 @@ import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory, IPreparedExecution } from "../execution";
 import { IWorkspaceSettingsService } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
-import { IWorkspaceStyling } from "../styling";
+import { IWorkspaceStylingService } from "../styling";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -139,7 +139,7 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to obtain workspace styling settings. These settings specify for instance
      * what colors should be used in the charts.
      */
-    styling(): IWorkspaceStyling;
+    styling(): IWorkspaceStylingService;
 
     /**
      * Returns service that can be used to query attribute elements for attributes defined in this workspace. For
