@@ -4,9 +4,9 @@ import {
     IAnalyticalWorkspace,
     IElementQueryFactory,
     IExecutionFactory,
-    IFeatureFlagsQuery,
+    IWorkspaceSettingsService,
     IWorkspaceMetadata,
-    IWorkspaceStyling,
+    IWorkspaceStylingService,
     NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
@@ -25,7 +25,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearExecution(this.authCall, this.workspace);
     }
 
-    public featureFlags(): IFeatureFlagsQuery {
+    public settings(): IWorkspaceSettingsService {
         throw new NotImplemented("feature flags query not yet implemented");
     }
 
@@ -33,7 +33,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearWorkspaceMetadata(this.authCall, this.workspace);
     }
 
-    public styling(): IWorkspaceStyling {
+    public styling(): IWorkspaceStylingService {
         return new BearWorkspaceStyling(this.authCall, this.workspace);
     }
 }

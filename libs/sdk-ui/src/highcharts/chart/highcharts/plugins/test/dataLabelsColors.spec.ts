@@ -3,7 +3,7 @@ import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
 import { getRgbString } from "../../../../utils/color";
 import { DEFAULT_COLOR_PALETTE } from "../../../../Config";
-import { IColorPaletteItem } from "../../../../../base/interfaces/Colors";
+import { IColorPaletteItem } from "@gooddata/sdk-model";
 
 describe("dataLabelsColors", () => {
     describe("isWhiteNotContrastEnough", () => {

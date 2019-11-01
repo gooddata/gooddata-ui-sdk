@@ -1,16 +1,15 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { IColorPaletteItem, IColorPalette } from "../../../../../base/interfaces/Colors";
 import * as classNames from "classnames";
 import ColorPaletteItem from "./ColorPaletteItem";
-import { IColorItem } from "@gooddata/sdk-model";
+import { IColor, IColorPaletteItem, IColorPalette } from "@gooddata/sdk-model";
 
 const MAX_SMALL_PALETTE_SIZE = 20;
 
 export interface IColorPaletteProps {
     selectedColorGuid?: string;
     colorPalette: IColorPalette;
-    onColorSelected: (color: IColorItem) => void;
+    onColorSelected: (color: IColor) => void;
 }
 
 export default class ColorPalette extends React.PureComponent<IColorPaletteProps> {
@@ -50,7 +49,7 @@ export default class ColorPalette extends React.PureComponent<IColorPaletteProps
         return this.props.selectedColorGuid === guid;
     }
 
-    private onColorSelected = (color: IColorItem) => {
+    private onColorSelected = (color: IColor) => {
         this.props.onColorSelected(color);
     };
 }

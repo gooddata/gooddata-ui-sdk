@@ -3,12 +3,13 @@
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IElementQueryFactory } from "../elements";
 import { IExecutionFactory, IPreparedExecution } from "../execution";
-import { IFeatureFlagsQuery } from "../featureFlags";
+import { IWorkspaceSettingsService } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
-import { IWorkspaceStyling } from "../styling";
+import { IWorkspaceStylingService } from "../styling";
 
 /**
- * TODO: SDK8: add public doc
+ * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
+ * any and all analytical backend implementations are specified here.
  *
  * @public
  */
@@ -115,22 +116,42 @@ export interface IAnalyticalBackend {
 }
 
 /**
- * TODO: SDK8: add public doc
+ * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
+ * used to inspect and modify the workspace and run executions to obtain analytics for the workspace.
  *
  * @public
  */
 export interface IAnalyticalWorkspace {
     readonly workspace: string;
 
-    featureFlags(): IFeatureFlagsQuery;
-
+    /**
+     * Returns execution factory - which is an entry point to triggering executions and thus obtaining
+     * analytics from the workspace.
+     */
     execution(): IExecutionFactory;
 
-    elements(): IElementQueryFactory;
-
+    /**
+     * Returns service that can be used to perform read and write operations on subset of workspace's metadata.
+     */
     metadata(): IWorkspaceMetadata;
 
-    styling(): IWorkspaceStyling;
+    /**
+     * Returns service that can be used to obtain workspace styling settings. These settings specify for instance
+     * what colors should be used in the charts.
+     */
+    styling(): IWorkspaceStylingService;
+
+    /**
+     * Returns service that can be used to query attribute elements for attributes defined in this workspace. For
+     * instance if workspace has data set Employee with attribute Name, then this service can be used to retrieve
+     * names of all employees.
+     */
+    elements(): IElementQueryFactory;
+
+    /**
+     * Returns service that can be used to obtain settings that are currently in effect for the workspace.
+     */
+    settings(): IWorkspaceSettingsService;
 }
 
 /**

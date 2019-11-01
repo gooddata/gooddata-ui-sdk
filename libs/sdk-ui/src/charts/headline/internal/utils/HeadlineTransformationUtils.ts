@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
-import { DataValue, DataViewFacade, IDataView, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
@@ -23,7 +23,7 @@ import { measureUriOrQualifier } from "../../../../base/helpers/measures";
 import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
-    measureHeaderItem: IMeasureHeaderItem["measureHeaderItem"];
+    measureHeaderItem: IMeasureDescriptor["measureHeaderItem"];
     value: DataValue;
 }
 
@@ -76,7 +76,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: Injec
 }
 
 function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
-    const headerItems = dv.measureGroupHeaderItems();
+    const headerItems = dv.measureDescriptors();
     const data = dv.singleDimData();
 
     return headerItems.map((item, index) => {
@@ -135,7 +135,7 @@ export function applyDrillableItems(
     const dv = new DataViewFacade(dataView);
     const data = cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
-    const [primaryItemHeader, secondaryItemHeader] = dv.measureGroupHeaderItems();
+    const [primaryItemHeader, secondaryItemHeader] = dv.measureDescriptors();
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
@@ -161,7 +161,7 @@ export function buildDrillEventData(
     dataView: IDataView,
 ): IDrillEvent {
     const dv = new DataViewFacade(dataView);
-    const measureHeaderItem = dv.measureGroupHeaderItem(itemContext.localIdentifier);
+    const measureHeaderItem = dv.measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

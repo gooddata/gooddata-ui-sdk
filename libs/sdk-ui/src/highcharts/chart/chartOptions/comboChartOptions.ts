@@ -2,7 +2,7 @@
 import set = require("lodash/set");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
-import { DataViewFacade, IMeasureGroupHeader, IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
 import { IChartConfig, ISeriesItem } from "../../Config";
@@ -42,14 +42,14 @@ function getMeasureIndices(bucketItems: AttributeOrMeasure[], measureGroupIdenti
 
 export function getComboChartSeries(
     config: IChartConfig,
-    measureGroup: IMeasureGroupHeader["measureGroupHeader"],
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     series: ISeriesItem[],
     dv: DataViewFacade,
 ): ISeriesItem[] {
     const updatedSeries = cloneDeep(series);
     const measureBuckets = {};
     const types = [config.primaryChartType, config.secondaryChartType];
-    const measureGroupIdentifiers = measureGroup.items.map((item: IMeasureHeaderItem) =>
+    const measureGroupIdentifiers = measureGroup.items.map((item: IMeasureDescriptor) =>
         get(item, ["measureHeaderItem", "localIdentifier"], ""),
     );
 

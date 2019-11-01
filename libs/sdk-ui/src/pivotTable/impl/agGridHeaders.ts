@@ -15,17 +15,17 @@ import { IColumnDefOptions, IGridAdapterOptions, IGridHeader, TableHeaders } fro
 import {
     DataValue,
     DataViewFacade,
-    IAttributeHeader,
+    IAttributeDescriptor,
     IDataView,
-    IHeader,
-    IMeasureHeaderItem,
-    IResultDimension,
-    IResultHeaderItem,
-    isAttributeHeader,
-    isMeasureGroupHeader,
-    isResultAttributeHeaderItem,
-    isResultMeasureHeaderItem,
-    isResultTotalHeaderItem,
+    IDimensionItemDescriptor,
+    IMeasureDescriptor,
+    IDimensionDescriptor,
+    IResultHeader,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeSortItem,
@@ -43,32 +43,32 @@ import invariant = require("invariant");
  * All code related to transforming headers from our backend to ag-grid specific data structures
  */
 
-export const identifyHeader = (header: IResultHeaderItem) => {
-    if (isResultAttributeHeaderItem(header)) {
+export const identifyHeader = (header: IResultHeader) => {
+    if (isResultAttributeHeader(header)) {
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeaderItem.uri).join(ID_SEPARATOR)}`;
     }
-    if (isResultMeasureHeaderItem(header)) {
+    if (isResultMeasureHeader(header)) {
         return `m${ID_SEPARATOR}${header.measureHeaderItem.order}`;
     }
-    if (isResultTotalHeaderItem(header)) {
+    if (isResultTotalHeader(header)) {
         return `t${ID_SEPARATOR}${header.totalHeaderItem.type}`;
     }
     invariant(false, `Unknown header type: ${JSON.stringify(header)}`);
 };
 
-export const identifyResponseHeader = (header: IHeader) => {
-    if (isAttributeHeader(header)) {
+export const identifyResponseHeader = (header: IDimensionItemDescriptor) => {
+    if (isAttributeDescriptor(header)) {
         // response headers have no value id
         return `a${ID_SEPARATOR}${getIdsFromUri(header.attributeHeader.uri)[0]}`;
     }
-    if (isMeasureGroupHeader(header)) {
+    if (isMeasureGroupDescriptor(header)) {
         // trying to identify a measure group would be ambiguous
         return null;
     }
     invariant(false, `Unknown response header type: ${JSON.stringify(header)}`);
 };
 
-export const headerToGrid = (header: IResultHeaderItem, fieldPrefix = "") => {
+export const headerToGrid = (header: IResultHeader, fieldPrefix = "") => {
     const internalHeader = unwrap(header);
     return {
         headerName: internalHeader.name,
@@ -77,7 +77,7 @@ export const headerToGrid = (header: IResultHeaderItem, fieldPrefix = "") => {
 };
 
 export const shouldMergeHeaders = (
-    resultHeaderDimension: IResultHeaderItem[][],
+    resultHeaderDimension: IResultHeader[][],
     headerIndex: number,
     headerItemIndex: number,
 ): boolean => {
@@ -95,7 +95,7 @@ export const shouldMergeHeaders = (
 };
 
 export const mergeHeaderEndIndex = (
-    resultHeaderDimension: IResultHeaderItem[][],
+    resultHeaderDimension: IResultHeader[][],
     headerIndex: number,
     headerItemStartIndex: number,
 ): number => {
@@ -113,8 +113,8 @@ export const mergeHeaderEndIndex = (
  * for each span of identical headers in a row, the function is called recursively to assign child items
  */
 export const getColumnHeaders = (
-    resultHeaderDimension: IResultHeaderItem[][],
-    responseHeaders: IHeader[],
+    resultHeaderDimension: IResultHeader[][],
+    responseHeaders: IDimensionItemDescriptor[],
     columnDefOptions: IColumnDefOptions = {},
     headerIndex = 0,
     headerItemStartIndex = 0,
@@ -162,11 +162,11 @@ export const getColumnHeaders = (
 };
 
 export const getRowHeaders = (
-    rowDimensionHeaders: IAttributeHeader[],
+    rowDescriptors: IAttributeDescriptor[],
     columnDefOptions: IColumnDefOptions,
     makeRowGroups: boolean,
 ): IGridHeader[] => {
-    return rowDimensionHeaders.map((attributeHeader: IAttributeHeader) => {
+    return rowDescriptors.map((attributeHeader: IAttributeDescriptor) => {
         const rowGroupProps = makeRowGroups
             ? {
                   rowGroup: true,
@@ -187,35 +187,38 @@ export const getRowHeaders = (
     });
 };
 
-export const getFields = (dataHeaders: IResultHeaderItem[][]) => {
+export const getFields = (dataHeaders: IResultHeader[][]) => {
     return range((dataHeaders[0] || []).length).map((cellIndex: number) => {
-        const fieldList = dataHeaders.map((header: IResultHeaderItem[]) => identifyHeader(header[cellIndex]));
+        const fieldList = dataHeaders.map((header: IResultHeader[]) => identifyHeader(header[cellIndex]));
         return fieldList.join(FIELD_SEPARATOR);
     }) as string[];
 };
 
 // TODO: move this to data view facade / sanitize / make more generic
-export const assortDimensionHeaders = (dimensions: IResultDimension[]) => {
-    const dimensionHeaders: IHeader[] = dimensions.reduce(
-        (headers: IHeader[], dimension: IResultDimension) => [...headers, ...dimension.headers],
+export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) => {
+    const dimensionHeaders: IDimensionItemDescriptor[] = dimensions.reduce(
+        (headers: IDimensionItemDescriptor[], dimension: IDimensionDescriptor) => [
+            ...headers,
+            ...dimension.headers,
+        ],
         [],
     );
-    const attributeHeaders: IAttributeHeader[] = [];
-    const measureHeaderItems: IMeasureHeaderItem[] = [];
-    dimensionHeaders.forEach((dimensionHeader: IHeader) => {
-        if (isAttributeHeader(dimensionHeader)) {
-            attributeHeaders.push(dimensionHeader);
-        } else if (isMeasureGroupHeader(dimensionHeader)) {
-            measureHeaderItems.push(...dimensionHeader.measureGroupHeader.items);
+    const attributeDescriptors: IAttributeDescriptor[] = [];
+    const measureDescriptors: IMeasureDescriptor[] = [];
+    dimensionHeaders.forEach((dimensionHeader: IDimensionItemDescriptor) => {
+        if (isAttributeDescriptor(dimensionHeader)) {
+            attributeDescriptors.push(dimensionHeader);
+        } else if (isMeasureGroupDescriptor(dimensionHeader)) {
+            measureDescriptors.push(...dimensionHeader.measureGroupHeader.items);
         }
     });
     return {
-        attributeHeaders,
-        measureHeaderItems,
+        attributeDescriptors,
+        measureDescriptors,
     };
 };
 
-export const getMinimalRowData = (data: DataValue[][], rowHeaderItems: IResultHeaderItem[][]) => {
+export const getMinimalRowData = (data: DataValue[][], rowHeaderItems: IResultHeader[][]) => {
     const numberOfRowHeaderItems = (rowHeaderItems[0] || []).length;
 
     return data.length > 0
@@ -238,11 +241,11 @@ const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): v
  */
 export const getAttributeSortItemFieldAndDirection = (
     sortItem: IAttributeSortItem,
-    attributeHeaders: IAttributeHeader[],
+    attributeDescriptors: IAttributeDescriptor[],
 ): [string, string] => {
     const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
 
-    const sortHeader = attributeHeaders.find(
+    const sortHeader = attributeDescriptors.find(
         header => header.attributeHeader.localIdentifier === localIdentifier,
     );
     invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
@@ -257,12 +260,12 @@ export const getAttributeSortItemFieldAndDirection = (
  */
 export const getMeasureSortItemFieldAndDirection = (
     sortItem: IMeasureSortItem,
-    measureHeaderItems: IMeasureHeaderItem[],
+    measureDescriptors: IMeasureDescriptor[],
 ): [string, string] => {
     const keys: string[] = [];
     sortItem.measureSortItem.locators.forEach(locator => {
         if (isMeasureLocator(locator)) {
-            const measureSortHeaderIndex = measureHeaderItems.findIndex(
+            const measureSortHeaderIndex = measureDescriptors.findIndex(
                 measureHeaderItem =>
                     measureHeaderItem.measureHeaderItem.localIdentifier ===
                     locator.measureLocatorItem.measureIdentifier,
@@ -283,25 +286,25 @@ export const getMeasureSortItemFieldAndDirection = (
 export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {
     const dv = new DataViewFacade(dataView);
     const dimensions = dv.dimensions();
-    const headerItems = dv.headerItems();
+    const headerItems = dv.allHeaders();
     const { columnDefOptions, makeRowGroups = false } = options;
 
     const sorting = dv.definition.sortBy;
     const sortingMap = {};
-    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
     sorting.forEach(sortItem => {
         if (isAttributeSort(sortItem)) {
-            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeHeaders);
+            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeDescriptors);
             sortingMap[field] = direction;
         }
         if (isMeasureSort(sortItem)) {
-            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureHeaderItems);
+            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureDescriptors);
             sortingMap[field] = direction;
         }
     });
 
     const columnAttributeHeaderCount = dimensions[1].headers.filter(
-        (header: IHeader) => !!(header as IAttributeHeader).attributeHeader,
+        (dimItem: IDimensionItemDescriptor) => !!(dimItem as IAttributeDescriptor).attributeHeader,
     ).length;
 
     const columnHeaders: IGridHeader[] = getColumnHeaders(
@@ -315,9 +318,9 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
             ? [
                   {
                       headerName: dimensions[1].headers
-                          .filter(header => isAttributeHeader(header))
-                          .map((header: IAttributeHeader) => {
-                              return getMappingHeaderName(header);
+                          .filter(dimItem => isAttributeDescriptor(dimItem))
+                          .map((attributeDescriptor: IAttributeDescriptor) => {
+                              return getMappingHeaderName(attributeDescriptor);
                           })
                           .filter((item: string) => item !== null)
                           .join(COLUMN_GROUPING_DELIMITER),
@@ -330,7 +333,7 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
 
     const rowHeaders: IGridHeader[] =
         // There are supposed to be only attribute headers on the first dimension
-        getRowHeaders(dimensions[0].headers as IAttributeHeader[], columnDefOptions, makeRowGroups);
+        getRowHeaders(dimensions[0].headers as IAttributeDescriptor[], columnDefOptions, makeRowGroups);
 
     const allHeaders: IGridHeader[] = [...rowHeaders, ...groupColumnHeaders].map((column, index) => {
         if (column.children) {

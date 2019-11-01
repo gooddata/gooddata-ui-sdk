@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IColorItem } from "@gooddata/sdk-model";
+import { IColor } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
 import * as React from "react";
 import { DEFAULT_COLOR_PALETTE } from "../../../../../base/constants/defaultColors";
@@ -77,7 +77,7 @@ describe("ColorsSection", () => {
 
     it("should call pushData on Reset Colors button click", () => {
         const pushData = jest.fn();
-        const color1: IColorItem = {
+        const color1: IColor = {
             type: "guid",
             value: "guid1",
         };

@@ -42,7 +42,7 @@ describe("AggregationsSubMenu", () => {
             <AggregationsSubMenu
                 intl={intlMock}
                 totalType="sum"
-                rowAttributeHeaders={attributeHeaders}
+                rowAttributeDescriptors={attributeHeaders}
                 columnTotals={[]}
                 measureLocalIdentifiers={["m1"]}
                 onAggregationSelect={onAggregationSelect}

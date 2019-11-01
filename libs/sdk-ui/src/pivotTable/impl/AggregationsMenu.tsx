@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { DataViewFacade, IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
 
 import {
-    getNthAttributeHeader,
+    getNthAttributeDescriptor,
     getNthAttributeLocalIdentifier,
 } from "../../base/helpers/executionResultHelper";
 import Menu from "../menu/Menu";
@@ -41,13 +41,13 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             return null;
         }
 
-        const rowAttributeHeaders = dv.dimensionHeaders(0) as IAttributeHeader[];
-        const isOneRowTable = rowAttributeHeaders.length === 0;
+        const rowAttributeDescriptors = dv.dimensionItemDescriptors(0) as IAttributeDescriptor[];
+        const isOneRowTable = rowAttributeDescriptors.length === 0;
         if (isOneRowTable) {
             return null;
         }
 
-        const measureGroupHeader = dv.measureGroupHeader();
+        const measureGroupHeader = dv.measureGroupDescriptor();
         if (!measureGroupHeader) {
             return null;
         }
@@ -83,7 +83,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                         {this.renderMainMenuItems(
                             totalsForHeader,
                             measureLocalIdentifiers,
-                            rowAttributeHeaders,
+                            rowAttributeDescriptors,
                         )}
                     </div>
                 </ItemsWrapper>
@@ -139,10 +139,10 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
-        rowAttributeHeaders: IAttributeHeader[],
+        rowAttributeDescriptors: IAttributeDescriptor[],
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
-        const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeHeaders, 0);
+        const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeDescriptors, 0);
 
         return AVAILABLE_TOTALS.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
@@ -150,16 +150,16 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 totalType,
                 columnTotals,
             );
-            const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, 0);
+            const attributeDescriptor = getNthAttributeDescriptor(rowAttributeDescriptors, 0);
             const onClick = () =>
                 this.props.onAggregationSelect({
                     type: totalType,
                     measureIdentifiers: measureLocalIdentifiers,
                     include: !isSelected,
-                    attributeIdentifier: attributeHeader.localIdentifier,
+                    attributeIdentifier: attributeDescriptor.localIdentifier,
                 });
             const itemClassNames = this.getItemClassNames(totalType);
-            const renderSubmenu = showSubmenu && rowAttributeHeaders.length > 0;
+            const renderSubmenu = showSubmenu && rowAttributeDescriptors.length > 0;
             const toggler = this.renderMenuItemContent(totalType, onClick, isSelected, renderSubmenu);
 
             return (
@@ -168,7 +168,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                         <AggregationsSubMenu
                             intl={intl}
                             totalType={totalType}
-                            rowAttributeHeaders={rowAttributeHeaders}
+                            rowAttributeDescriptors={rowAttributeDescriptors}
                             columnTotals={columnTotals}
                             measureLocalIdentifiers={measureLocalIdentifiers}
                             onAggregationSelect={onAggregationSelect}

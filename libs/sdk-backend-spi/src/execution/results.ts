@@ -3,16 +3,34 @@
 import isEmpty = require("lodash/isEmpty");
 
 /**
- * TODO: SDK8: add docs
+ * Single calculated data value. The data value may be 'null' - the semantics here are same as with
+ * SQL nulls. The calculated numeric value WILL be returned in string representation - this is to
+ * prevent float number precision errors.
+ *
+ * TODO: we should probably get rid of number variant
  * @public
  */
 export type DataValue = null | string | number;
 
 /**
- * TODO: SDK8: add docs
+ * Describes measure group and its contents.
  * @public
  */
-export interface IMeasureHeaderItem {
+export interface IMeasureGroupDescriptor {
+    // TODO: rename this to measureGroupDescriptor ... the goal is to get rid of the overused 'header' nomenclature
+    measureGroupHeader: {
+        items: IMeasureDescriptor[];
+        totalItems?: ITotalDescriptor[];
+    };
+}
+
+/**
+ * Describes measure included in a dimension.
+ *
+ * @public
+ */
+export interface IMeasureDescriptor {
+    // TODO: rename this to measureDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     measureHeaderItem: {
         uri?: string;
         identifier?: string;
@@ -23,37 +41,30 @@ export interface IMeasureHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Describes total included in a dimension.
+ *
  * @public
  */
-export interface ITotalHeaderItem {
+export interface ITotalDescriptor {
+    // TODO: rename this to totalDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     totalHeaderItem: {
         name: string;
     };
 }
 
 /**
- * TODO: SDK8: add docs
+ * Describes attribute slicing of a dimension.
+ *
  * @public
  */
-export interface IMeasureGroupHeader {
-    measureGroupHeader: {
-        items: IMeasureHeaderItem[];
-        totalItems?: ITotalHeaderItem[];
-    };
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IAttributeHeader {
+export interface IAttributeDescriptor {
+    // TODO: rename this to attributeDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     attributeHeader: {
         uri: string;
         identifier: string;
         localIdentifier: string;
         name: string;
-        totalItems?: ITotalHeaderItem[];
+        totalItems?: ITotalDescriptor[];
         formOf: {
             uri: string;
             identifier: string;
@@ -63,24 +74,53 @@ export interface IAttributeHeader {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Headers describing contents of a dimension.
+ *
  * @public
  */
-export type IHeader = IMeasureGroupHeader | IAttributeHeader;
+export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
 /**
- * TODO: SDK8: add docs
+ * Dimension descriptor is the output counter-part of the dimension specification that was included in the
+ * execution definition.
+ *
+ * It describes in further detail the LDM objects which were used to obtain data and metadata for the dimension
+ * in the cross-tabulated result.
+ *
+ * The information is provided in a form of attribute or measure group descriptors. The contract is that the
+ * descriptors appear in the same order as they were specified in the execution definition.
+ *
+ * This best best demonstrated using examples.
+ *
+ * 1. Execution was done for attribute A1 and measures M1 and M2. Both attribute and measureGroup are in single
+ *    dimension.
+ *
+ * The result dimension will contain two headers, first will be header describing the attribute {@link IAttributeDescriptor},
+ * followed by {@link IMeasureGroupDescriptor}. The measure group header contains two items - one for each requested
+ * measure.
+ *
+ * 2. Execution was done for attributes A1 and A2, measures M1 and M2. Attribute A1 is in first dimension and
+ *    the remainder of objects (A2 and measureGroup) is in second dimension.
+ *
+ * There will be two result dimension descriptors. First descriptor will specify single header for A1 attribute,
+ * second descriptor will have two headers, first will be header for attribute A2 and then measure group header
+ * with two items.
+ *
  * @public
  */
-export interface IResultDimension {
-    headers: IHeader[];
+export interface IDimensionDescriptor {
+    // TODO: consider renaming this to itemDescriptors or something ...
+    //  the goal is to get rid of the overused 'header' nomenclature
+    headers: IDimensionItemDescriptor[];
 }
 
 /**
- * TODO: SDK8: add docs
+ * Attribute header specifies name and URI of the attribute element to which the calculated measure
+ * values in the particular data view slice belong.
+ *
  * @public
  */
-export interface IResultAttributeHeaderItem {
+export interface IResultAttributeHeader {
     attributeHeaderItem: {
         uri: string;
         name: string;
@@ -88,10 +128,14 @@ export interface IResultAttributeHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
+ *
+ * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it
+ * can be used to obtain further information about the measure.
+ *
  * @public
  */
-export interface IResultMeasureHeaderItem {
+export interface IResultMeasureHeader {
     measureHeaderItem: {
         name: string;
         order: number;
@@ -99,10 +143,11 @@ export interface IResultMeasureHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Total header specifies name and type of total to which the calculated values in particular data view slice belong.
+ *
  * @public
  */
-export interface IResultTotalHeaderItem {
+export interface IResultTotalHeader {
     totalHeaderItem: {
         name: string;
         type: string;
@@ -110,78 +155,86 @@ export interface IResultTotalHeaderItem {
 }
 
 /**
- * TODO: SDK8: add docs
+ * Result headers provide metadata about data included in the data view. They are integral part of the data view
+ * and are organized in per-dimension and per-dimension-item arrays.
+ *
+ * @remarks see IDataView for further detail on the organization.
+ *
  * @public
  */
-export type IResultHeaderItem =
-    | IResultAttributeHeaderItem
-    | IResultMeasureHeaderItem
-    | IResultTotalHeaderItem;
+export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
 
 //
 // Type guards
 //
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IAttributeDescriptor}.
+ *
  * @public
  */
-export function isAttributeHeader(obj: any): obj is IAttributeHeader {
-    return !isEmpty(obj) && (obj as IAttributeHeader).attributeHeader !== undefined;
+export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor {
+    return !isEmpty(obj) && (obj as IAttributeDescriptor).attributeHeader !== undefined;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IMeasureGroupDescriptor}.
+ *
  * @public
  */
-export function isMeasureGroupHeader(obj: any): obj is IMeasureGroupHeader {
-    return !isEmpty(obj) && (obj as IMeasureGroupHeader).measureGroupHeader !== undefined;
+export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor {
+    return !isEmpty(obj) && (obj as IMeasureGroupDescriptor).measureGroupHeader !== undefined;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IMeasureDescriptor}.
+ *
  * @public
  */
-export function isMeasureHeaderItem(obj: any): obj is IMeasureHeaderItem {
-    return !isEmpty(obj) && (obj as IMeasureHeaderItem).measureHeaderItem !== undefined;
+export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor {
+    return !isEmpty(obj) && (obj as IMeasureDescriptor).measureHeaderItem !== undefined;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link ITotalDescriptor}.
+ *
  * @public
  */
-export function isTotalHeader(obj: any): obj is ITotalHeaderItem {
-    return !isEmpty(obj) && (obj as ITotalHeaderItem).totalHeaderItem !== undefined;
+export function isTotalDescriptor(obj: any): obj is ITotalDescriptor {
+    return !isEmpty(obj) && (obj as ITotalDescriptor).totalHeaderItem !== undefined;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IResultAttributeHeader}.
+ *
  * @public
  */
-export function isResultAttributeHeaderItem(obj: any): obj is IResultAttributeHeaderItem {
-    return !isEmpty(obj) && (obj as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader {
+    return !isEmpty(obj) && (obj as IResultAttributeHeader).attributeHeaderItem !== undefined;
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IResultMeasureHeader}.
+ *
  * @public
  */
-export function isResultMeasureHeaderItem(obj: any): obj is IResultMeasureHeaderItem {
+export function isResultMeasureHeader(obj: any): obj is IResultMeasureHeader {
     return (
         !isEmpty(obj) &&
-        (obj as IResultMeasureHeaderItem).measureHeaderItem !== undefined &&
-        (obj as IResultMeasureHeaderItem).measureHeaderItem.order !== undefined
+        (obj as IResultMeasureHeader).measureHeaderItem !== undefined &&
+        (obj as IResultMeasureHeader).measureHeaderItem.order !== undefined
     );
 }
 
 /**
- * TODO: SDK8: add docs
+ * Type-guard testing whether the provided object is an instance of {@link IResultTotalHeader}.
+ *
  * @public
  */
-export function isResultTotalHeaderItem(obj: any): obj is IResultTotalHeaderItem {
+export function isResultTotalHeader(obj: any): obj is IResultTotalHeader {
     return (
         !isEmpty(obj) &&
-        (obj as IResultTotalHeaderItem).totalHeaderItem !== undefined &&
-        (obj as IResultTotalHeaderItem).totalHeaderItem.type !== undefined
+        (obj as IResultTotalHeader).totalHeaderItem !== undefined &&
+        (obj as IResultTotalHeader).totalHeaderItem.type !== undefined
     );
 }

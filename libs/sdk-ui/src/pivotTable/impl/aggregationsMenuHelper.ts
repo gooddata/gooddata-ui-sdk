@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IMeasureHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as invariant from "invariant";
 import { IMenuAggregationClickConfig } from "../types";
@@ -74,7 +74,7 @@ function getTotalsForMeasureHeader(totals: ITotal[], measureLocalIdentifier: str
 }
 
 function getHeaderMeasureLocalIdentifiers(
-    measureGroupHeaderItems: IMeasureHeaderItem[],
+    measureGroupHeaderItems: IMeasureDescriptor[],
     lastFieldType: string,
     lastFieldId: string | number,
 ): string[] {

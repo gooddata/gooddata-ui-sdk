@@ -18,26 +18,26 @@ export { DataViewFacade } from "./execution/facade";
 
 export {
     DataValue,
-    IMeasureHeaderItem,
-    IHeader,
-    IResultDimension,
-    IAttributeHeader,
-    IMeasureGroupHeader,
-    IResultAttributeHeaderItem,
-    IResultHeaderItem,
-    IResultMeasureHeaderItem,
-    IResultTotalHeaderItem,
-    ITotalHeaderItem,
-    isAttributeHeader,
-    isMeasureGroupHeader,
-    isTotalHeader,
-    isMeasureHeaderItem,
-    isResultAttributeHeaderItem,
-    isResultMeasureHeaderItem,
-    isResultTotalHeaderItem,
+    IMeasureDescriptor,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultAttributeHeader,
+    IResultHeader,
+    IResultMeasureHeader,
+    IResultTotalHeader,
+    ITotalDescriptor,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isTotalDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
 } from "./execution/results";
 
-export { IFeatureFlagsQuery, IFeatureFlags } from "./featureFlags";
+export { IWorkspaceSettingsService, IWorkspaceSettings } from "./featureFlags";
 
 export { IWorkspaceMetadata } from "./metadata";
 
@@ -45,7 +45,7 @@ export { IElementQueryFactory, IElementQueryResult, IElementQuery, Element } fro
 
 export { IExportConfig, IExportResult } from "./export";
 
-export { IWorkspaceStyling } from "./styling";
+export { IWorkspaceStylingService } from "./styling";
 
 export {
     AnalyticalBackendError,

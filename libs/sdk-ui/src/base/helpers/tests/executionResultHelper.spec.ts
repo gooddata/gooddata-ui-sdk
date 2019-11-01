@@ -3,15 +3,15 @@
 import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../constants/dimensions";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IAttributeHeader, IMeasureGroupHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 
 describe("findMeasureGroupInDimensions", () => {
     const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
-        const expectedValue = (sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers[1] as IMeasureGroupHeader)
-            .measureGroupHeader;
+        const expectedValue = (sampleDimensions[VIEW_BY_DIMENSION_INDEX]
+            .headers[1] as IMeasureGroupDescriptor).measureGroupHeader;
         expect(returnValue).toBe(expectedValue);
     });
 
@@ -31,14 +31,14 @@ describe("findMeasureGroupInDimensions", () => {
 
 describe("findAttributeInDimension", () => {
     const dimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
-    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.headerItems();
+    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.allHeaders();
     it("should return the view by attribute header with header items", () => {
         const returnValue = findAttributeInDimension(
             dimensions[VIEW_BY_DIMENSION_INDEX],
             headerItems[VIEW_BY_DIMENSION_INDEX],
         );
         const expectedValue = {
-            ...(dimensions[VIEW_BY_DIMENSION_INDEX].headers[0] as IAttributeHeader).attributeHeader,
+            ...(dimensions[VIEW_BY_DIMENSION_INDEX].headers[0] as IAttributeDescriptor).attributeHeader,
             items: headerItems[VIEW_BY_DIMENSION_INDEX][0],
         };
         expect(returnValue).toEqual(expectedValue);
@@ -49,7 +49,7 @@ describe("findAttributeInDimension", () => {
             headerItems[STACK_BY_DIMENSION_INDEX],
         );
         const expectedValue = {
-            ...(dimensions[STACK_BY_DIMENSION_INDEX].headers[0] as IAttributeHeader).attributeHeader,
+            ...(dimensions[STACK_BY_DIMENSION_INDEX].headers[0] as IAttributeDescriptor).attributeHeader,
             items: headerItems[STACK_BY_DIMENSION_INDEX][0],
         };
         expect(returnValue).toEqual(expectedValue);

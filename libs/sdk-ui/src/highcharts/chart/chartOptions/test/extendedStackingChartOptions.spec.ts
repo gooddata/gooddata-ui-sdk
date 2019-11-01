@@ -8,10 +8,10 @@ import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeUri, measureUri } from "@gooddata/sdk-model";
 import { uriMatch } from "../../../../base/factory/HeaderPredicateFactory";
 import { DEFAULT_COLOR_PALETTE } from "../../../Config";
-import { IAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 
 describe("getCategoriesForTwoAttributes", () => {
-    const attributeHeader: IAttributeHeader["attributeHeader"] = {
+    const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {
         uri: "uri",
         identifier: "identifier",
         localIdentifier: "localIdentifier",
@@ -25,7 +25,7 @@ describe("getCategoriesForTwoAttributes", () => {
 
     it("should return categories for two attributes", () => {
         const viewByAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [
                 {
                     attributeHeaderItem: {
@@ -60,7 +60,7 @@ describe("getCategoriesForTwoAttributes", () => {
             ],
         };
         const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [
                 {
                     attributeHeaderItem: {
@@ -114,7 +114,7 @@ describe("getCategoriesForTwoAttributes", () => {
 
     it("should return categories when attribute names have numerical values", () => {
         const viewByAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [
                 {
                     attributeHeaderItem: {
@@ -137,7 +137,7 @@ describe("getCategoriesForTwoAttributes", () => {
             ],
         };
         const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [
                 {
                     attributeHeaderItem: {
@@ -179,11 +179,11 @@ describe("getCategoriesForTwoAttributes", () => {
 
     it("should return empty category", () => {
         const viewByAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [],
         };
         const viewByParentAttribute: IUnwrappedAttributeHeadersWithItems = {
-            ...attributeHeader,
+            ...attributeDescriptor,
             items: [],
         };
         const categories = getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute);

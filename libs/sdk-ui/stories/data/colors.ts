@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IColorPalette } from "../../src/index";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 export const CUSTOM_COLORS: string[] = [
     "rgb(195, 49, 73)",

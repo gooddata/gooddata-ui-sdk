@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
 import { IUnwrappedAttributeHeadersWithItems } from "../../../base/helpers/types";
-import { IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 type NameAndCategories = {
     name: string;
@@ -35,7 +35,7 @@ export function getCategoriesForTwoAttributes(
     const combinedResult = parent.reduce(
         (
             result: { [property: string]: NameAndCategories },
-            parentAttr: IResultAttributeHeaderItem,
+            parentAttr: IResultAttributeHeader,
             index: number,
         ) => {
             const uri: string = get(parentAttr, "attributeHeaderItem.uri", "");

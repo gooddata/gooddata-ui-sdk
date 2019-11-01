@@ -41,9 +41,8 @@ import { IChartConfig, IChartOptions, IPointData } from "../../Config";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { emptyDef } from "@gooddata/sdk-model";
+import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { IColorPaletteItem } from "../../../base/interfaces/Colors";
 import { uriMatch } from "../../../base/factory/HeaderPredicateFactory";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);

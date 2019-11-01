@@ -71,6 +71,7 @@ export {
     IMeasureFilter,
     IDateFilter,
     IAttributeFilter,
+    DateGranularity,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isPositiveAttributeFilter,
@@ -202,22 +203,22 @@ export {
 
 export {
     GuidType,
-    RGBType,
+    RgbType,
+    IRgbColorValue,
     IColor,
-    IColorItem,
-    IColorMappingProperty,
     IColorPalette,
     IColorPaletteItem,
-    IGuidColorItem,
-    IRGBColorItem,
-    isGuidColorItem,
-    isRgbColorItem,
+    IColorFromPalette,
+    IRgbColor,
+    isColorFromPalette,
+    isRgbColor,
 } from "./colors";
 
 export {
     IInsight,
     IVisualizationClass,
     VisualizationProperties,
+    IColorMappingItem,
     isInsight,
     insightMeasures,
     insightHasMeasures,
@@ -237,4 +238,3 @@ export {
 } from "./insight";
 
 export { factoryNotationFor } from "./objectFactoryNotation";
-export { DateGranularity } from "./filter";

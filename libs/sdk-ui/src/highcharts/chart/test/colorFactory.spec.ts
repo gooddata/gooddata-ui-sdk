@@ -18,10 +18,10 @@ import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 import { CUSTOM_COLOR_PALETTE } from "../../../../stories/data/colors";
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IMeasureHeaderItem, IResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
-import { IColorItem, RGBType } from "@gooddata/sdk-model";
+import { IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IColor, RgbType, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import range = require("lodash/range");
-import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../../base/interfaces/Colors";
+import { IColorMapping } from "../../../base/interfaces/Colors";
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -46,7 +46,7 @@ describe("isValidMappedColor", () => {
     ];
 
     it("should return true if color item is in palette", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "guid",
             value: "01",
         };
@@ -55,7 +55,7 @@ describe("isValidMappedColor", () => {
     });
 
     it("should return false if color item is not in palette", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "guid",
             value: "xx",
         };
@@ -64,7 +64,7 @@ describe("isValidMappedColor", () => {
     });
 
     it("should return true if color item is rgb", () => {
-        const colorItem: IColorItem = {
+        const colorItem: IColor = {
             type: "rgb",
             value: {
                 r: 255,
@@ -223,7 +223,7 @@ describe("ColorFactory", () => {
             ];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeader) =>
                         headerItem.attributeHeaderItem &&
                         headerItem.attributeHeaderItem.uri ===
                             "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1225",
@@ -233,10 +233,10 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeader) =>
                         headerItem.attributeHeaderItem && headerItem.attributeHeaderItem.uri === "invalid",
                     color: {
-                        type: "rgb" as RGBType,
+                        type: "rgb" as RgbType,
                         value: {
                             r: 0,
                             g: 0,
@@ -245,12 +245,12 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeader) =>
                         headerItem.attributeHeaderItem &&
                         headerItem.attributeHeaderItem.uri ===
                             "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1237",
                     color: {
-                        type: "rgb" as RGBType,
+                        type: "rgb" as RgbType,
                         value: {
                             r: 0,
                             g: 0,
@@ -410,7 +410,7 @@ describe("ColorFactory", () => {
             const type = "column";
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure_1",
                     color: {
                         type: "guid",
@@ -418,7 +418,7 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountPopMeasure_1",
                     color: {
                         type: "guid",
@@ -426,7 +426,7 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure_2",
                     color: {
                         type: "guid",
@@ -514,7 +514,7 @@ describe("ColorFactory", () => {
 
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMetric",
                     color: {
                         type: "guid",
@@ -658,7 +658,7 @@ describe("ColorFactory", () => {
             ];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "amountMeasure",
                     color: {
                         type: "guid",
@@ -691,7 +691,7 @@ describe("ColorFactory", () => {
             const expectedColors = ["rgb(0,0,0)"];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "784a5018a51049078e8f7e86247e08a3",
                     color: {
                         type: "rgb",
@@ -726,7 +726,7 @@ describe("ColorFactory", () => {
             const expectedColors = ["rgb(0,0,0)"];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IResultAttributeHeaderItem) =>
+                    predicate: (headerItem: IResultAttributeHeader) =>
                         headerItem.attributeHeaderItem.uri ===
                         "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1224",
                     color: {
@@ -764,7 +764,7 @@ describe("ColorFactory", () => {
             const expectedColor = "rgb(0,0,0)";
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureHeaderItem) =>
+                    predicate: (headerItem: IMeasureDescriptor) =>
                         headerItem.measureHeaderItem.localIdentifier === "33bd337ed5534fd383861f11ff657b23",
                     color: {
                         type: "rgb",

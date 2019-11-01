@@ -92,7 +92,7 @@ describe("getRowTotals", () => {
 describe("getRow", () => {
     it("should return a grid row", () => {
         const dv = fixtures.pivotTableWithColumnAndRowAttributes;
-        const headerItems = dv.headerItems();
+        const headerItems = dv.allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
@@ -174,7 +174,7 @@ describe("getRow", () => {
     });
     it("should return subtotal row", () => {
         const dv = fixtures.pivotTableWith2Metrics4AttributesSubtotals;
-        const headerItems = dv.headerItems();
+        const headerItems = dv.allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(

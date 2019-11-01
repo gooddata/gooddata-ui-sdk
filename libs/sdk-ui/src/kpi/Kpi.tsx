@@ -128,7 +128,7 @@ const getMeasureData = (result: DataViewFacade) => {
 };
 
 const getMeasureFormat = (result: DataViewFacade) => {
-    const headerItems = result.measureGroupHeaderItems();
+    const headerItems = result.measureDescriptors();
     const format = get(headerItems, [0, "measureHeaderItem", "format"]);
 
     return format;

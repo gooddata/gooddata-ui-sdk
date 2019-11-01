@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
-import { IColorItem } from "@gooddata/sdk-model";
+import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownProps, IconPosition } from "../ColorDropdown";
@@ -93,7 +93,7 @@ describe("ColorDropdown", () => {
         "should render ColorPalette and not select any ColorPaletteItem after item button click" +
             "when selectedColorItem is RGBColor",
         () => {
-            const selectedColorItem: IColorItem = {
+            const selectedColorItem: IColor = {
                 type: "rgb",
                 value: {
                     r: 20,

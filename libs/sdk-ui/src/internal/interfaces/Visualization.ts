@@ -3,9 +3,8 @@ import { ISeparators } from "@gooddata/numberjs";
 import { IDrillableItem } from "../../base/interfaces/DrillEvents";
 import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison";
 import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
-import { IColorPalette } from "../../base/interfaces/Colors";
 import * as VisEvents from "../../base/interfaces/Events";
-import { IInsight, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
+import { IInsight, ITotal, VisualizationProperties, IColorPalette } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export type ILocale =

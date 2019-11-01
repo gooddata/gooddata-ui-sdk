@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { IColor, IColorItem } from "@gooddata/sdk-model";
-import { DataViewFacade, isResultAttributeHeaderItem } from "@gooddata/sdk-backend-spi";
+import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
+import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import { IChartConfig } from "../Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
-import { IColorMapping, IColorPalette, IColorPaletteItem } from "../../base/interfaces/Colors";
+import { IColorMapping } from "../../base/interfaces/Colors";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
 
@@ -26,7 +26,7 @@ export const HEATMAP_BLUE_COLOR_PALETTE = [
     "rgb(0,110,145)",
 ];
 
-export const DEFAULT_HEATMAP_BLUE_COLOR: IColor = {
+export const DEFAULT_HEATMAP_BLUE_COLOR: IRgbColorValue = {
     r: 0,
     g: 110,
     b: 145,
@@ -61,7 +61,7 @@ export function getLighterColor(color: string, percent: number) {
     return formatColor(lighter(R, percent), lighter(G, percent), lighter(B, percent));
 }
 
-export function getLighterColorFromRGB(color: IColor, percent: number) {
+export function getLighterColorFromRGB(color: IRgbColorValue, percent: number) {
     const { r, g, b } = color;
 
     return {
@@ -119,7 +119,7 @@ export function getColorFromMapping(
     mappingHeader: IMappingHeader,
     colorMapping: IColorMapping[],
     dv: DataViewFacade,
-): IColorItem {
+): IColor {
     if (!colorMapping) {
         return undefined;
     }
@@ -134,13 +134,13 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
     return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
 }
 
-export function getRgbStringFromRGB(color: IColor) {
+export function getRgbStringFromRGB(color: IRgbColorValue) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 
 export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
-        if (isResultAttributeHeaderItem(header)) {
+        if (isResultAttributeHeader(header)) {
             return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
         }
 

@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as classNames from "classnames";
-import { IColor } from "@gooddata/sdk-model";
+import { IRgbColorValue } from "@gooddata/sdk-model";
 import { ISelectableChild, IconPosition } from "../colorDropdown/ColorDropdown";
 
 export interface IColoredItemContentProps extends ISelectableChild {
-    color: IColor;
+    color: IRgbColorValue;
     text: string;
 }
 

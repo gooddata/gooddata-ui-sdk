@@ -3,42 +3,42 @@ import { isHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import {
     attributeHeaderItem,
-    measureHeaders,
-    attributeHeader,
+    measureDescriptors,
+    attributeDescriptor,
 } from "../../factory/tests/HeaderPredicateFactory.mock";
 import {
-    isAttributeHeader,
-    isMeasureHeaderItem,
-    isResultAttributeHeaderItem,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
 
 describe("isMappingHeaderMeasureItem", () => {
     it("should return true when object contains measureHeaderItem", () => {
-        expect(isMeasureHeaderItem(measureHeaders.uriBasedMeasure)).toEqual(true);
+        expect(isMeasureDescriptor(measureDescriptors.uriBasedMeasure)).toEqual(true);
     });
 
     it("should return false measureHeaderItem when object does not contain measureHeaderItem", () => {
-        expect(isMeasureHeaderItem(attributeHeaderItem)).toEqual(false);
+        expect(isMeasureDescriptor(attributeHeaderItem)).toEqual(false);
     });
 });
 
 describe("isMappingHeaderAttribute", () => {
     it("should return true when object contains attributeHeader", () => {
-        expect(isAttributeHeader(attributeHeader)).toEqual(true);
+        expect(isAttributeDescriptor(attributeDescriptor)).toEqual(true);
     });
 
     it("should return false when measureHeaderItem when object does not contain measureHeaderItem", () => {
-        expect(isAttributeHeader(attributeHeaderItem)).toEqual(false);
+        expect(isAttributeDescriptor(attributeHeaderItem)).toEqual(false);
     });
 });
 
 describe("isMappingHeaderAttributeItem", () => {
     it("should return true when object contains attributeHeaderItem", () => {
-        expect(isResultAttributeHeaderItem(attributeHeaderItem)).toEqual(true);
+        expect(isResultAttributeHeader(attributeHeaderItem)).toEqual(true);
     });
 
     it("should return false when object does not contain attributeHeaderItem", () => {
-        expect(isResultAttributeHeaderItem(measureHeaders.uriBasedMeasure)).toEqual(false);
+        expect(isResultAttributeHeader(measureDescriptors.uriBasedMeasure)).toEqual(false);
     });
 });
 

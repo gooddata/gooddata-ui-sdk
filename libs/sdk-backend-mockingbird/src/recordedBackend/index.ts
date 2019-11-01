@@ -13,10 +13,10 @@ import {
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IFeatureFlagsQuery,
+    IWorkspaceSettingsService,
     IPreparedExecution,
     IWorkspaceMetadata,
-    IWorkspaceStyling,
+    IWorkspaceStylingService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -140,13 +140,13 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
         },
-        featureFlags(): IFeatureFlagsQuery {
+        settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {
             throw new NotSupported("not supported");
         },
-        styling(): IWorkspaceStyling {
+        styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
     };

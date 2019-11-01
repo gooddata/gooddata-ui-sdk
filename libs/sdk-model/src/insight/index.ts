@@ -15,6 +15,7 @@ import {
     bucketsTotals,
 } from "../buckets/bucketArray";
 import invariant from "ts-invariant";
+import { IColor } from "../colors";
 
 /**
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
@@ -144,6 +145,17 @@ export interface IVisualizationClass {
 export type VisualizationProperties = {
     [key: string]: any;
 };
+
+/**
+ * An item in color mapping definition for an insight. The color mapping is stored in properties of those
+ * insights that can be colored AND have color mapping specified by the user.
+ *
+ * @public
+ */
+export interface IColorMappingItem {
+    id: string;
+    color: IColor;
+}
 
 //
 // Type guards

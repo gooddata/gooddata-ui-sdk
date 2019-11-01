@@ -1,5 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttributeHeader, IMeasureGroupHeader, IResultDimension } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IDimensionDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "./types";
 
@@ -9,10 +13,10 @@ import { IUnwrappedAttributeHeadersWithItems } from "./types";
 //
 
 function findInDimensionHeaders(
-    dimensions: IResultDimension[],
+    dimensions: IDimensionDescriptor[],
     headerCallback: (
-        headerType: string,
-        header: any,
+        descriptorType: string,
+        descriptor: any,
         dimensionIndex: number,
         headerIndex: number,
         headerCount: number,
@@ -21,9 +25,9 @@ function findInDimensionHeaders(
     let returnValue: any = null;
     dimensions.some((dimension: any, dimensionIndex: number) => {
         dimension.headers.some(
-            (wrappedHeader: IMeasureGroupHeader | IAttributeHeader, headerIndex: number) => {
-                const headerType = Object.keys(wrappedHeader)[0];
-                const header = wrappedHeader[headerType];
+            (wrappedDescriptor: IMeasureGroupDescriptor | IAttributeDescriptor, headerIndex: number) => {
+                const headerType = Object.keys(wrappedDescriptor)[0];
+                const header = wrappedDescriptor[headerType];
                 const headerCount = dimension.headers.length;
                 returnValue = headerCallback(headerType, header, dimensionIndex, headerIndex, headerCount);
                 return !!returnValue;
@@ -35,18 +39,18 @@ function findInDimensionHeaders(
 }
 
 export function findMeasureGroupInDimensions(
-    dimensions: IResultDimension[],
-): IMeasureGroupHeader["measureGroupHeader"] {
+    dimensions: IDimensionDescriptor[],
+): IMeasureGroupDescriptor["measureGroupHeader"] {
     return findInDimensionHeaders(
         dimensions,
         (
-            headerType: string,
-            header: IMeasureGroupHeader["measureGroupHeader"],
+            descriptorType: string,
+            descriptor: IMeasureGroupDescriptor["measureGroupHeader"],
             _dimensionIndex: number,
             headerIndex: number,
             headerCount: number,
         ) => {
-            const measureGroupHeader = headerType === "measureGroupHeader" ? header : null;
+            const measureGroupHeader = descriptorType === "measureGroupHeader" ? descriptor : null;
             if (measureGroupHeader) {
                 invariant(
                     headerIndex === headerCount - 1,
@@ -66,17 +70,17 @@ export function findAttributeInDimension(
     return findInDimensionHeaders(
         [dimension],
         (
-            headerType: string,
-            header: IAttributeHeader["attributeHeader"],
+            descriptorType: string,
+            descriptor: IAttributeDescriptor["attributeHeader"],
             _dimensionIndex: number,
             headerIndex: number,
         ) => {
             if (
-                headerType === "attributeHeader" &&
+                descriptorType === "attributeHeader" &&
                 (indexInDimension === undefined || indexInDimension === headerIndex)
             ) {
                 return {
-                    ...header,
+                    ...descriptor,
                     // attribute items are delivered separately from attributeHeaderItems
                     items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0],
                 };
@@ -86,25 +90,28 @@ export function findAttributeInDimension(
     );
 }
 
-export function getNthAttributeHeader(
-    attributeHeaders: IAttributeHeader[],
+export function getNthAttributeDescriptor(
+    attributeDescriptors: IAttributeDescriptor[],
     headerIndex: number,
-): IAttributeHeader["attributeHeader"] {
-    if (attributeHeaders.length && attributeHeaders[headerIndex]) {
-        return attributeHeaders[headerIndex].attributeHeader;
+): IAttributeDescriptor["attributeHeader"] {
+    if (attributeDescriptors.length && attributeDescriptors[headerIndex]) {
+        return attributeDescriptors[headerIndex].attributeHeader;
     }
     return null;
 }
 
 export function getNthAttributeLocalIdentifier(
-    rowAttributeHeaders: IAttributeHeader[],
+    attributeDescriptors: IAttributeDescriptor[],
     headerIndex: number,
 ): string {
-    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
-    return attributeHeader && attributeHeader.localIdentifier;
+    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
+    return attributeDescriptor && attributeDescriptor.localIdentifier;
 }
 
-export function getNthAttributeName(rowAttributeHeaders: IAttributeHeader[], headerIndex: number): string {
-    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
-    return attributeHeader && attributeHeader.formOf.name;
+export function getNthAttributeName(
+    attributeDescriptors: IAttributeDescriptor[],
+    headerIndex: number,
+): string {
+    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
+    return attributeDescriptor && attributeDescriptor.formOf.name;
 }

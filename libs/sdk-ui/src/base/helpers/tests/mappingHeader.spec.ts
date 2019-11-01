@@ -6,18 +6,18 @@ import {
     getMappingHeaderUri,
 } from "../mappingHeader";
 import {
-    attributeHeader,
+    attributeDescriptor,
     attributeHeaderItem,
-    measureHeaders,
+    measureDescriptors,
 } from "../../factory/tests/HeaderPredicateFactory.mock";
 
 describe("getMappingHeaderLocalIdentifier", () => {
     it("should return localIdentifier from attributeHeader", () => {
-        expect(getMappingHeaderLocalIdentifier(attributeHeader)).toBe("attributeLocalIdentifier");
+        expect(getMappingHeaderLocalIdentifier(attributeDescriptor)).toBe("attributeLocalIdentifier");
     });
 
     it("should return localIdentifier from measureHeader", () => {
-        expect(getMappingHeaderLocalIdentifier(measureHeaders.uriBasedMeasure)).toBe(
+        expect(getMappingHeaderLocalIdentifier(measureDescriptors.uriBasedMeasure)).toBe(
             "uriBasedMeasureLocalIdentifier",
         );
     });
@@ -29,7 +29,7 @@ describe("getMappingHeaderLocalIdentifier", () => {
 
 describe("getMappingHeaderName", () => {
     it("should return name from formOf of attributeHeader", () => {
-        expect(getMappingHeaderName(attributeHeader)).toBe("attributeElementName");
+        expect(getMappingHeaderName(attributeDescriptor)).toBe("attributeElementName");
     });
 
     it("should return name from attributeHeaderItem", () => {
@@ -37,17 +37,19 @@ describe("getMappingHeaderName", () => {
     });
 
     it("should return name from measureHeaders.uriBasedMeasure", () => {
-        expect(getMappingHeaderName(measureHeaders.uriBasedMeasure)).toBe("uriBasedMeasureName");
+        expect(getMappingHeaderName(measureDescriptors.uriBasedMeasure)).toBe("uriBasedMeasureName");
     });
 });
 
 describe("getMappingHeaderIndentifier", () => {
     it("should return identifier from attributeHeader", () => {
-        expect(getMappingHeaderIdentifier(attributeHeader)).toBe("attributeIdentifier");
+        expect(getMappingHeaderIdentifier(attributeDescriptor)).toBe("attributeIdentifier");
     });
 
     it("should return identifier from measureHeader", () => {
-        expect(getMappingHeaderIdentifier(measureHeaders.uriBasedMeasure)).toBe("uriBasedMeasureIdentifier");
+        expect(getMappingHeaderIdentifier(measureDescriptors.uriBasedMeasure)).toBe(
+            "uriBasedMeasureIdentifier",
+        );
     });
 
     it("should throw error when object is not attributeHeader or measureHeaders.uriBasedMeasure", () => {
@@ -57,7 +59,7 @@ describe("getMappingHeaderIndentifier", () => {
 
 describe("getMappingHeaderUri", () => {
     it("should return uri from attributeHeader", () => {
-        expect(getMappingHeaderUri(attributeHeader)).toBe("/attributeUri");
+        expect(getMappingHeaderUri(attributeDescriptor)).toBe("/attributeUri");
     });
 
     it("should return uri from attributeHeaderItem", () => {
@@ -65,6 +67,6 @@ describe("getMappingHeaderUri", () => {
     });
 
     it("should return uri from measureHeaders.uriBasedMeasure", () => {
-        expect(getMappingHeaderUri(measureHeaders.uriBasedMeasure)).toBe("/uriBasedMeasureUri");
+        expect(getMappingHeaderUri(measureDescriptors.uriBasedMeasure)).toBe("/uriBasedMeasureUri");
     });
 });
