@@ -107,10 +107,10 @@ export const assignDrillItemsAndType = (
         // attribute value uri
         drillItems.push(currentHeader);
         // attribute uri and identifier
-        const attributeResponseHeader = responseHeaders[
+        const attributeDescriptor = responseHeaders[
             headerIndex % responseHeaders.length
         ] as IAttributeDescriptor;
-        drillItems.push(attributeResponseHeader);
+        drillItems.push(attributeDescriptor);
         // This is where we could assign drillItems if we want to start drilling on column headers
         // It needs to have an empty array for some edge cases like column attributes without measures
     } else if (isResultMeasureHeader(currentHeader)) {

@@ -18,7 +18,7 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                 //  perhaps it makes sense. perhaps the URIs should be always present and should be coming from
                 //  new stack as well? anyway, making URIs optional in the domain model will mean waterfall of fun
                 //  changes across public interface of the SDK (drilling etc)
-                const attrHeader: IAttributeDescriptor = {
+                const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
                         uri: `/fakeAttrUri/${h.attributeHeader.identifier}`,
                         identifier: h.attributeHeader.identifier,
@@ -32,9 +32,9 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                     },
                 };
 
-                return attrHeader;
+                return attrDescriptor;
             } else {
-                const measureHeader: IMeasureGroupDescriptor = {
+                const measureDescriptor: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
                         items: h.measureGroupHeader.items.map(m => {
                             const newItem: IMeasureDescriptor = {
@@ -50,7 +50,7 @@ function transformDimension(dim: Execution.IResultDimension): IDimensionDescript
                     },
                 };
 
-                return measureHeader;
+                return measureDescriptor;
             }
         }),
     };

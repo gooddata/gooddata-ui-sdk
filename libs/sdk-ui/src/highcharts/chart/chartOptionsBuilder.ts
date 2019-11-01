@@ -964,45 +964,45 @@ export function getDrillIntersection(
 }
 
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
-    let viewByItemHeader: IResultAttributeHeader = null;
+    let viewByHeader: IResultAttributeHeader = null;
     let viewByItem = null;
-    let viewByAttributeHeader: IAttributeDescriptor = null;
+    let viewByAttributeDescriptor: IAttributeDescriptor = null;
 
     if (viewByAttribute) {
-        viewByItemHeader = viewByAttribute.items[viewByIndex];
+        viewByHeader = viewByAttribute.items[viewByIndex];
         viewByItem = {
-            ...unwrap(viewByItemHeader),
+            ...unwrap(viewByHeader),
             attribute: viewByAttribute,
         };
-        viewByAttributeHeader = { attributeHeader: viewByAttribute };
+        viewByAttributeDescriptor = { attributeHeader: viewByAttribute };
     }
 
     return {
-        viewByItemHeader,
+        viewByHeader,
         viewByItem,
-        viewByAttributeHeader,
+        viewByAttributeDescriptor,
     };
 }
 
 function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stackByIndex: number) {
-    let stackByItemHeader: IResultAttributeHeader = null;
+    let stackByHeader: IResultAttributeHeader = null;
     let stackByItem = null;
-    let stackByAttributeHeader: IAttributeDescriptor = null;
+    let stackByAttributeDescriptor: IAttributeDescriptor = null;
 
     if (stackByAttribute) {
         // stackBy item index is always equal to seriesIndex
-        stackByItemHeader = stackByAttribute.items[stackByIndex];
+        stackByHeader = stackByAttribute.items[stackByIndex];
         stackByItem = {
-            ...unwrap(stackByItemHeader),
+            ...unwrap(stackByHeader),
             attribute: stackByAttribute,
         };
-        stackByAttributeHeader = { attributeHeader: stackByAttribute };
+        stackByAttributeDescriptor = { attributeHeader: stackByAttribute };
     }
 
     return {
-        stackByItemHeader,
+        stackByHeader,
         stackByItem,
-        stackByAttributeHeader,
+        stackByAttributeDescriptor,
     };
 }
 
@@ -1059,21 +1059,21 @@ export function getDrillableSeries(
                     stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
                 }
 
-                const { stackByItemHeader, stackByItem, stackByAttributeHeader } = getStackBy(
+                const { stackByHeader, stackByItem, stackByAttributeDescriptor } = getStackBy(
                     stackByAttribute,
                     stackByIndex,
                 );
 
                 const {
                     viewByItem: viewByChildItem,
-                    viewByItemHeader: viewByChildItemHeader,
-                    viewByAttributeHeader: viewByChildAttributeHeader,
+                    viewByHeader: viewByChildHeader,
+                    viewByAttributeDescriptor: viewByChildAttributeDescriptor,
                 } = getViewBy(viewByChildAttribute, viewByIndex);
 
                 const {
                     viewByItem: viewByParentItem,
-                    viewByItemHeader: viewByParentItemHeader,
-                    viewByAttributeHeader: viewByParentdAttributeHeader,
+                    viewByHeader: viewByParentHeader,
+                    viewByAttributeDescriptor: viewByParentdAttributeDescriptor,
                 } = getViewBy(viewByParentAttribute, viewByIndex);
 
                 // point is drillable if a drillableItem matches:
@@ -1085,12 +1085,12 @@ export function getDrillableSeries(
                 const drillableHooks: IMappingHeader[] = without(
                     [
                         ...measureHeaders,
-                        viewByChildAttributeHeader,
-                        viewByChildItemHeader,
-                        viewByParentdAttributeHeader,
-                        viewByParentItemHeader,
-                        stackByAttributeHeader,
-                        stackByItemHeader,
+                        viewByChildAttributeDescriptor,
+                        viewByChildHeader,
+                        viewByParentdAttributeDescriptor,
+                        viewByParentHeader,
+                        stackByAttributeDescriptor,
+                        stackByHeader,
                     ],
                     null,
                 );

@@ -165,20 +165,20 @@ describe("aggregationsMenuHelper", () => {
             const lastFieldType = FIELD_TYPE_ATTRIBUTE;
             const lastFieldId = "whatever";
 
-            it("should return empty list when no measure header items provided", () => {
-                const measureGroupHeaderItems: IMeasureDescriptor[] = [];
+            it("should return empty list when no measure descriptors provided", () => {
+                const measureDescriptors: IMeasureDescriptor[] = [];
 
                 expect(
                     aggregationsMenuHelper.getHeaderMeasureLocalIdentifiers(
-                        measureGroupHeaderItems,
+                        measureDescriptors,
                         lastFieldType,
                         lastFieldId,
                     ),
                 ).toEqual([]);
             });
 
-            it("should return measure identifiers when multiple measure headers provided", () => {
-                const measureGroupHeaderItems: IMeasureDescriptor[] = [
+            it("should return measure identifiers when multiple measure descriptors provided", () => {
+                const measureDescriptors: IMeasureDescriptor[] = [
                     {
                         measureHeaderItem: {
                             localIdentifier: "foo",
@@ -197,7 +197,7 @@ describe("aggregationsMenuHelper", () => {
 
                 expect(
                     aggregationsMenuHelper.getHeaderMeasureLocalIdentifiers(
-                        measureGroupHeaderItems,
+                        measureDescriptors,
                         lastFieldType,
                         lastFieldId,
                     ),
@@ -208,7 +208,7 @@ describe("aggregationsMenuHelper", () => {
         describe("measure header", () => {
             const lastFieldType = FIELD_TYPE_MEASURE;
             const lastFieldId = 0;
-            const measureGroupHeaderItems: IMeasureDescriptor[] = [
+            const measureDescriptors: IMeasureDescriptor[] = [
                 {
                     measureHeaderItem: {
                         localIdentifier: "foo",
@@ -240,17 +240,17 @@ describe("aggregationsMenuHelper", () => {
                 expect(
                     aggregationsMenuHelper.getHeaderMeasureLocalIdentifiers.bind(
                         this,
-                        measureGroupHeaderItems,
+                        measureDescriptors,
                         "X",
                         lastFieldId,
                     ),
                 ).toThrowError();
             });
 
-            it("should return first measure identifier when multiple measure headers provided", () => {
+            it("should return first measure identifier when multiple measure descriptors provided", () => {
                 expect(
                     aggregationsMenuHelper.getHeaderMeasureLocalIdentifiers(
-                        measureGroupHeaderItems,
+                        measureDescriptors,
                         lastFieldType,
                         lastFieldId,
                     ),

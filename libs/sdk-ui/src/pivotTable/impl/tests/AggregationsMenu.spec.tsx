@@ -93,7 +93,7 @@ describe("AggregationsMenu", () => {
 
         expect(subMenu.props()).toMatchObject({
             totalType: "sum",
-            rowAttributeHeaders: [
+            rowAttributeDescriptors: [
                 expect.objectContaining({ attributeHeader: expect.anything() }),
                 expect.objectContaining({ attributeHeader: expect.anything() }),
             ],

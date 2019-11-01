@@ -15,8 +15,8 @@ import { IUnwrappedAttributeHeadersWithItems } from "./types";
 function findInDimensionHeaders(
     dimensions: IDimensionDescriptor[],
     headerCallback: (
-        headerType: string,
-        header: any,
+        descriptorType: string,
+        descriptor: any,
         dimensionIndex: number,
         headerIndex: number,
         headerCount: number,
@@ -25,9 +25,9 @@ function findInDimensionHeaders(
     let returnValue: any = null;
     dimensions.some((dimension: any, dimensionIndex: number) => {
         dimension.headers.some(
-            (wrappedHeader: IMeasureGroupDescriptor | IAttributeDescriptor, headerIndex: number) => {
-                const headerType = Object.keys(wrappedHeader)[0];
-                const header = wrappedHeader[headerType];
+            (wrappedDescriptor: IMeasureGroupDescriptor | IAttributeDescriptor, headerIndex: number) => {
+                const headerType = Object.keys(wrappedDescriptor)[0];
+                const header = wrappedDescriptor[headerType];
                 const headerCount = dimension.headers.length;
                 returnValue = headerCallback(headerType, header, dimensionIndex, headerIndex, headerCount);
                 return !!returnValue;
@@ -44,13 +44,13 @@ export function findMeasureGroupInDimensions(
     return findInDimensionHeaders(
         dimensions,
         (
-            headerType: string,
-            header: IMeasureGroupDescriptor["measureGroupHeader"],
+            descriptorType: string,
+            descriptor: IMeasureGroupDescriptor["measureGroupHeader"],
             _dimensionIndex: number,
             headerIndex: number,
             headerCount: number,
         ) => {
-            const measureGroupHeader = headerType === "measureGroupHeader" ? header : null;
+            const measureGroupHeader = descriptorType === "measureGroupHeader" ? descriptor : null;
             if (measureGroupHeader) {
                 invariant(
                     headerIndex === headerCount - 1,
@@ -70,17 +70,17 @@ export function findAttributeInDimension(
     return findInDimensionHeaders(
         [dimension],
         (
-            headerType: string,
-            header: IAttributeDescriptor["attributeHeader"],
+            descriptorType: string,
+            descriptor: IAttributeDescriptor["attributeHeader"],
             _dimensionIndex: number,
             headerIndex: number,
         ) => {
             if (
-                headerType === "attributeHeader" &&
+                descriptorType === "attributeHeader" &&
                 (indexInDimension === undefined || indexInDimension === headerIndex)
             ) {
                 return {
-                    ...header,
+                    ...descriptor,
                     // attribute items are delivered separately from attributeHeaderItems
                     items: attributeHeaderItemsDimension[indexInDimension ? indexInDimension : 0],
                 };
@@ -90,28 +90,28 @@ export function findAttributeInDimension(
     );
 }
 
-export function getNthAttributeHeader(
-    attributeHeaders: IAttributeDescriptor[],
+export function getNthAttributeDescriptor(
+    attributeDescriptors: IAttributeDescriptor[],
     headerIndex: number,
 ): IAttributeDescriptor["attributeHeader"] {
-    if (attributeHeaders.length && attributeHeaders[headerIndex]) {
-        return attributeHeaders[headerIndex].attributeHeader;
+    if (attributeDescriptors.length && attributeDescriptors[headerIndex]) {
+        return attributeDescriptors[headerIndex].attributeHeader;
     }
     return null;
 }
 
 export function getNthAttributeLocalIdentifier(
-    rowAttributeHeaders: IAttributeDescriptor[],
+    attributeDescriptors: IAttributeDescriptor[],
     headerIndex: number,
 ): string {
-    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
-    return attributeHeader && attributeHeader.localIdentifier;
+    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
+    return attributeDescriptor && attributeDescriptor.localIdentifier;
 }
 
 export function getNthAttributeName(
-    rowAttributeHeaders: IAttributeDescriptor[],
+    attributeDescriptors: IAttributeDescriptor[],
     headerIndex: number,
 ): string {
-    const attributeHeader = getNthAttributeHeader(rowAttributeHeaders, headerIndex);
-    return attributeHeader && attributeHeader.formOf.name;
+    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
+    return attributeDescriptor && attributeDescriptor.formOf.name;
 }

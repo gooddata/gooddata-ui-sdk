@@ -3,8 +3,8 @@ import { isHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import {
     attributeHeaderItem,
-    measureHeaders,
-    attributeHeader,
+    measureDescriptors,
+    attributeDescriptor,
 } from "../../factory/tests/HeaderPredicateFactory.mock";
 import {
     isAttributeDescriptor,
@@ -14,7 +14,7 @@ import {
 
 describe("isMappingHeaderMeasureItem", () => {
     it("should return true when object contains measureHeaderItem", () => {
-        expect(isMeasureDescriptor(measureHeaders.uriBasedMeasure)).toEqual(true);
+        expect(isMeasureDescriptor(measureDescriptors.uriBasedMeasure)).toEqual(true);
     });
 
     it("should return false measureHeaderItem when object does not contain measureHeaderItem", () => {
@@ -24,7 +24,7 @@ describe("isMappingHeaderMeasureItem", () => {
 
 describe("isMappingHeaderAttribute", () => {
     it("should return true when object contains attributeHeader", () => {
-        expect(isAttributeDescriptor(attributeHeader)).toEqual(true);
+        expect(isAttributeDescriptor(attributeDescriptor)).toEqual(true);
     });
 
     it("should return false when measureHeaderItem when object does not contain measureHeaderItem", () => {
@@ -38,7 +38,7 @@ describe("isMappingHeaderAttributeItem", () => {
     });
 
     it("should return false when object does not contain attributeHeaderItem", () => {
-        expect(isResultAttributeHeader(measureHeaders.uriBasedMeasure)).toEqual(false);
+        expect(isResultAttributeHeader(measureDescriptors.uriBasedMeasure)).toEqual(false);
     });
 });
 

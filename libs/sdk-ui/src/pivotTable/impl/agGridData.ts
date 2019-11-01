@@ -160,18 +160,19 @@ export const getRowTotals = (
         const [totalAttributeKey] = attributeKeys;
         const totalAttributeId: string = totalAttributeKey.split(ID_SEPARATOR).pop();
 
-        const totalHeader: IAttributeDescriptor = headers.find(
-            (header: IDimensionItemDescriptor) =>
-                isAttributeDescriptor(header) &&
-                getIdsFromUri(header.attributeHeader.uri)[0] === totalAttributeId,
+        const totalAttrDescriptor: IAttributeDescriptor = headers.find(
+            (dimItem: IDimensionItemDescriptor) =>
+                isAttributeDescriptor(dimItem) &&
+                getIdsFromUri(dimItem.attributeHeader.uri)[0] === totalAttributeId,
         ) as IAttributeDescriptor;
 
-        invariant(totalHeader, `Could not find header for ${totalAttributeKey}`);
+        invariant(totalAttrDescriptor, `Could not find header for ${totalAttributeKey}`);
 
         const measureCells = zipObject(measureKeys, totalRow);
 
-        const grandTotalName = totalHeader.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
-        const grandTotalAttributeIdentifier = totalHeader.attributeHeader.localIdentifier;
+        const grandTotalName =
+            totalAttrDescriptor.attributeHeader.totalItems[totalIndex].totalHeaderItem.name;
+        const grandTotalAttributeIdentifier = totalAttrDescriptor.attributeHeader.localIdentifier;
 
         // create measure ids in the form of "m_index" for measures having the current type of grand total
         // this makes it easier to match against in the cell renderer

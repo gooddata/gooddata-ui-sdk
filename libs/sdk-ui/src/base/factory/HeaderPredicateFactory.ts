@@ -29,7 +29,7 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     context: IHeaderPredicateContext,
 ): boolean {
     const operand: IMeasure = dv.measure(operandLocalIdentifier);
-    const operandHeader: IMeasureDescriptor = dv.measureDescriptor(operandLocalIdentifier);
+    const operandDescriptor: IMeasureDescriptor = dv.measureDescriptor(operandLocalIdentifier);
 
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
@@ -39,7 +39,7 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
         );
     }
 
-    return predicate(operandHeader, context);
+    return predicate(operandDescriptor, context);
 }
 
 function getMasterMeasureOperandIdentifiers(measure: IMeasure): string[] {

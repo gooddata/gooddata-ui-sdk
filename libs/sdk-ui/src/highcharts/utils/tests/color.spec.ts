@@ -8,10 +8,10 @@ import {
     normalizeColorToRGB,
 } from "../color";
 import {
-    attributeHeader,
+    attributeDescriptor,
     attributeHeaderItem,
     context,
-    measureHeaders,
+    measureDescriptors,
 } from "../../../base/factory/tests/HeaderPredicateFactory.mock";
 import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 
@@ -97,20 +97,20 @@ describe("getColorMappingPredicate", () => {
         it("should match predicate when measure local identifier matches and measureHeaderItem tested", () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate("uriBasedMeasureLocalIdentifier");
 
-            expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(true);
+            expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(true);
         });
 
         // tslint:disable-next-line:max-line-length
         it("should not match predicate when measure local identifier does not match and measureHeaderItem tested", () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate("someOtherMeasure.localIdentifier");
 
-            expect(predicate(measureHeaders.uriBasedMeasure, context)).toEqual(false);
+            expect(predicate(measureDescriptors.uriBasedMeasure, context)).toEqual(false);
         });
 
         it("should not match predicate when referenced uri matches and attributeHeader tested", () => {
             const predicate: IHeaderPredicate = getColorMappingPredicate("/attributeItemUri");
 
-            expect(predicate(attributeHeader, {} as any)).toEqual(false);
+            expect(predicate(attributeDescriptor, {} as any)).toEqual(false);
         });
 
         it("should match predicate when referenced uri matches and attributeItemHeader tested", () => {

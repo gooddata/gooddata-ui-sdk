@@ -2,7 +2,7 @@
 
 import * as fixtures from "../../../../__mocks__/fixtures";
 import {
-    assortDimensionHeaders,
+    assortDimensionDescriptors,
     headerToGrid,
     identifyHeader,
     identifyResponseHeader,
@@ -232,14 +232,14 @@ describe("getFields", () => {
     });
 });
 
-describe("assortDimensionHeaders", () => {
+describe("assortDimensionDescriptors", () => {
     it("should return attribute and measure dimension headers", () => {
         const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
-        const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
-        expect(attributeHeaders).toHaveLength(4);
-        expect(attributeHeaders.filter(header => isAttributeDescriptor(header))).toHaveLength(4);
-        expect(measureHeaderItems).toHaveLength(4);
-        expect(measureHeaderItems.filter(header => header.hasOwnProperty("measureHeaderItem"))).toHaveLength(
+        const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
+        expect(attributeDescriptors).toHaveLength(4);
+        expect(attributeDescriptors.filter(header => isAttributeDescriptor(header))).toHaveLength(4);
+        expect(measureDescriptors).toHaveLength(4);
+        expect(measureDescriptors.filter(header => header.hasOwnProperty("measureHeaderItem"))).toHaveLength(
             4,
         );
     });
@@ -337,15 +337,15 @@ describe("conversion from header matrix to hierarchy", () => {
 
 describe("getAttributeSortItemFieldAndDirection", () => {
     const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
-    const { attributeHeaders } = assortDimensionHeaders(dimensions);
+    const { attributeDescriptors } = assortDimensionDescriptors(dimensions);
     const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: {
             direction: "asc",
             attributeIdentifier: "state",
         },
     };
-    it("should return matching key and direction from attributeHeaders", () => {
-        expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeHeaders)).toEqual([
+    it("should return matching key and direction from attributeDescriptors", () => {
+        expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeDescriptors)).toEqual([
             "a_2211",
             "asc",
         ]);
@@ -354,7 +354,7 @@ describe("getAttributeSortItemFieldAndDirection", () => {
 
 describe("getMeasureSortItemFieldAndDirection", () => {
     const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
-    const { measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const { measureDescriptors } = assortDimensionDescriptors(dimensions);
     const measureSortItem: IMeasureSortItem = {
         measureSortItem: {
             direction: "desc",
@@ -379,8 +379,8 @@ describe("getMeasureSortItemFieldAndDirection", () => {
             ],
         },
     };
-    it("should return matching key and direction from attributeHeaders", () => {
-        expect(getMeasureSortItemFieldAndDirection(measureSortItem, measureHeaderItems)).toEqual([
+    it("should return matching key and direction from measure descriptors", () => {
+        expect(getMeasureSortItemFieldAndDirection(measureSortItem, measureDescriptors)).toEqual([
             "a_2009_1-a_2071_1-m_-1",
             "desc",
         ]);

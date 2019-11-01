@@ -3,7 +3,7 @@ import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
-export const measureHeaders: { [key: string]: IMeasureDescriptor } = {
+export const measureDescriptors: { [key: string]: IMeasureDescriptor } = {
     uriBasedMeasure: {
         measureHeaderItem: {
             uri: "/uriBasedMeasureUri",
@@ -159,7 +159,7 @@ export const measureHeaders: { [key: string]: IMeasureDescriptor } = {
     },
 };
 
-export const attributeHeader: IAttributeDescriptor = {
+export const attributeDescriptor: IAttributeDescriptor = {
     attributeHeader: {
         uri: "/attributeUri",
         identifier: "attributeIdentifier",

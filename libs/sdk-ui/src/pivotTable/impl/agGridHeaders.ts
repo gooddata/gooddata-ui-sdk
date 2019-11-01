@@ -162,11 +162,11 @@ export const getColumnHeaders = (
 };
 
 export const getRowHeaders = (
-    rowDimensionHeaders: IAttributeDescriptor[],
+    rowDescriptors: IAttributeDescriptor[],
     columnDefOptions: IColumnDefOptions,
     makeRowGroups: boolean,
 ): IGridHeader[] => {
-    return rowDimensionHeaders.map((attributeHeader: IAttributeDescriptor) => {
+    return rowDescriptors.map((attributeHeader: IAttributeDescriptor) => {
         const rowGroupProps = makeRowGroups
             ? {
                   rowGroup: true,
@@ -195,7 +195,7 @@ export const getFields = (dataHeaders: IResultHeader[][]) => {
 };
 
 // TODO: move this to data view facade / sanitize / make more generic
-export const assortDimensionHeaders = (dimensions: IDimensionDescriptor[]) => {
+export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) => {
     const dimensionHeaders: IDimensionItemDescriptor[] = dimensions.reduce(
         (headers: IDimensionItemDescriptor[], dimension: IDimensionDescriptor) => [
             ...headers,
@@ -203,18 +203,18 @@ export const assortDimensionHeaders = (dimensions: IDimensionDescriptor[]) => {
         ],
         [],
     );
-    const attributeHeaders: IAttributeDescriptor[] = [];
-    const measureHeaderItems: IMeasureDescriptor[] = [];
+    const attributeDescriptors: IAttributeDescriptor[] = [];
+    const measureDescriptors: IMeasureDescriptor[] = [];
     dimensionHeaders.forEach((dimensionHeader: IDimensionItemDescriptor) => {
         if (isAttributeDescriptor(dimensionHeader)) {
-            attributeHeaders.push(dimensionHeader);
+            attributeDescriptors.push(dimensionHeader);
         } else if (isMeasureGroupDescriptor(dimensionHeader)) {
-            measureHeaderItems.push(...dimensionHeader.measureGroupHeader.items);
+            measureDescriptors.push(...dimensionHeader.measureGroupHeader.items);
         }
     });
     return {
-        attributeHeaders,
-        measureHeaderItems,
+        attributeDescriptors,
+        measureDescriptors,
     };
 };
 
@@ -241,11 +241,11 @@ const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): v
  */
 export const getAttributeSortItemFieldAndDirection = (
     sortItem: IAttributeSortItem,
-    attributeHeaders: IAttributeDescriptor[],
+    attributeDescriptors: IAttributeDescriptor[],
 ): [string, string] => {
     const localIdentifier = sortItem.attributeSortItem.attributeIdentifier;
 
-    const sortHeader = attributeHeaders.find(
+    const sortHeader = attributeDescriptors.find(
         header => header.attributeHeader.localIdentifier === localIdentifier,
     );
     invariant(sortHeader, `Could not find sortHeader with localIdentifier ${localIdentifier}`);
@@ -260,12 +260,12 @@ export const getAttributeSortItemFieldAndDirection = (
  */
 export const getMeasureSortItemFieldAndDirection = (
     sortItem: IMeasureSortItem,
-    measureHeaderItems: IMeasureDescriptor[],
+    measureDescriptors: IMeasureDescriptor[],
 ): [string, string] => {
     const keys: string[] = [];
     sortItem.measureSortItem.locators.forEach(locator => {
         if (isMeasureLocator(locator)) {
-            const measureSortHeaderIndex = measureHeaderItems.findIndex(
+            const measureSortHeaderIndex = measureDescriptors.findIndex(
                 measureHeaderItem =>
                     measureHeaderItem.measureHeaderItem.localIdentifier ===
                     locator.measureLocatorItem.measureIdentifier,
@@ -291,20 +291,20 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
 
     const sorting = dv.definition.sortBy;
     const sortingMap = {};
-    const { attributeHeaders, measureHeaderItems } = assortDimensionHeaders(dimensions);
+    const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
     sorting.forEach(sortItem => {
         if (isAttributeSort(sortItem)) {
-            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeHeaders);
+            const [field, direction] = getAttributeSortItemFieldAndDirection(sortItem, attributeDescriptors);
             sortingMap[field] = direction;
         }
         if (isMeasureSort(sortItem)) {
-            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureHeaderItems);
+            const [field, direction] = getMeasureSortItemFieldAndDirection(sortItem, measureDescriptors);
             sortingMap[field] = direction;
         }
     });
 
     const columnAttributeHeaderCount = dimensions[1].headers.filter(
-        (header: IDimensionItemDescriptor) => !!(header as IAttributeDescriptor).attributeHeader,
+        (dimItem: IDimensionItemDescriptor) => !!(dimItem as IAttributeDescriptor).attributeHeader,
     ).length;
 
     const columnHeaders: IGridHeader[] = getColumnHeaders(
@@ -318,9 +318,9 @@ export function createTableHeaders(dataView: IDataView, options: IGridAdapterOpt
             ? [
                   {
                       headerName: dimensions[1].headers
-                          .filter(header => isAttributeDescriptor(header))
-                          .map((header: IAttributeDescriptor) => {
-                              return getMappingHeaderName(header);
+                          .filter(dimItem => isAttributeDescriptor(dimItem))
+                          .map((attributeDescriptor: IAttributeDescriptor) => {
+                              return getMappingHeaderName(attributeDescriptor);
                           })
                           .filter((item: string) => item !== null)
                           .join(COLUMN_GROUPING_DELIMITER),

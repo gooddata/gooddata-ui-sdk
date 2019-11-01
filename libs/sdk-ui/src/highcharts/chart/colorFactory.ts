@@ -175,13 +175,13 @@ export class MeasureColorStrategy extends ColorStrategy {
     }
 
     private mapMeasureColor(
-        headerItem: IMeasureDescriptor,
+        descriptor: IMeasureDescriptor,
         currentColorPaletteIndex: number,
         colorPalette: IColorPalette,
         colorAssignment: IColorMapping[],
         dv: DataViewFacade,
     ): IColorAssignment {
-        const mappedColor = getColorFromMapping(headerItem, colorAssignment, dv);
+        const mappedColor = getColorFromMapping(descriptor, colorAssignment, dv);
 
         const color: IColor = isValidMappedColor(mappedColor, colorPalette)
             ? mappedColor
@@ -191,7 +191,7 @@ export class MeasureColorStrategy extends ColorStrategy {
               };
 
         return {
-            headerItem,
+            headerItem: descriptor,
             color,
         };
     }
