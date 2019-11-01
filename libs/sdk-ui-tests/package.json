@@ -1,0 +1,85 @@
+{
+    "name": "@gooddata/sdk-ui-tests",
+    "version": "8.0.0-alpha.0",
+    "description": "GoodData SDK TypeScript & React skeleton",
+    "main": "dist/index.js",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-tests",
+    "author": "GoodData Corporation",
+    "license": "BSD-3-Clause",
+    "files": [
+        "dist",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check",
+        "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
+        "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
+        "test-storybook": "npm run build && test-storybook"
+    },
+    "typings": "dist/index.d.ts",
+    "jest": {
+        "preset": "ts-jest",
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest.setup.ts"
+        ],
+        "testRegex": "(/tests/.*|(\\.|/)(test))\\.tsx?$",
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "/dist/"
+        ],
+        "globals": {
+            "ts-jest": {
+                "packageJson": "package.json"
+            }
+        }
+    },
+    "dependencies": {
+        "@gooddata/reference-workspace": "^8.0.0-alpha.0",
+        "@gooddata/sdk-backend-mockingbird": "^8.0.0-alpha.0",
+        "@gooddata/test-storybook": "~3.1.1",
+        "enzyme": "^3.10.0",
+        "enzyme-adapter-react-16": "^1.15.1",
+        "jest": "^24.7.1",
+        "jest-junit": "^3.0.0",
+        "lodash": "^4.17.15",
+        "ts-jest": "^24.1.0"
+    },
+    "peerDependencies": {
+        "@gooddata/sdk-ui": "^8.0.0-alpha.0",
+        "react": "^16.10.0",
+        "react-dom": "^16.10.0",
+        "typescript": ">= 2.5.3"
+    },
+    "devDependencies": {
+        "@gooddata/sdk-ui": "^8.0.0-alpha.0",
+        "@gooddata/tslint-config": "1.0.0",
+        "@types/enzyme": "^3.10.3",
+        "@types/enzyme-adapter-react-16": "^1.0.5",
+        "@types/jest": "^24.0.6",
+        "@types/lodash": "^4.14.123",
+        "@types/node": "^10.14.18",
+        "@types/react": "^16.9.11",
+        "@types/react-dom": "^16.9.3",
+        "@types/react-intl": "^2.3.5",
+        "prettier": "~1.18.2",
+        "react": "^16.10.0",
+        "react-dom": "^16.10.0",
+        "ts-node": "^8.4.1",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.6.3"
+    }
+}
