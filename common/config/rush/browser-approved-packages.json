@@ -39,6 +39,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/reference-workspace",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-backend-mockingbird",
       "allowedCategories": [ "production" ]
     },
@@ -49,6 +53,10 @@
     {
       "name": "@gooddata/sdk-model",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/test-storybook",
@@ -433,6 +441,14 @@
     {
       "name": "style-loader",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "testcafe",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "testcafe-live",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "ts-invariant",
