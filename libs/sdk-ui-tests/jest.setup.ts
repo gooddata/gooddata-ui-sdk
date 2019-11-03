@@ -1,8 +1,5 @@
 // (C) 2019 GoodData Corporation
-// tslint:disable:no-console
+import enzyme = require("enzyme");
+import Adapter = require("enzyme-adapter-react-16");
 
-const consoleError = console.error;
-console.error = (err: any, ...args: any) => {
-    consoleError(err, ...args);
-    throw new Error(err);
-};
+enzyme.configure({ adapter: new Adapter() });

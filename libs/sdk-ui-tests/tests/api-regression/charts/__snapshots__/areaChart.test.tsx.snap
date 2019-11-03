@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AreaChart API should work for single measure 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "execution": Object {
+    "definition": Object {
+      "attributes": Array [],
+      "buckets": Array [
+        Object {
+          "items": Array [
+            Object {
+              "measure": Object {
+                "definition": Object {
+                  "measureDefinition": Object {
+                    "item": Object {
+                      "identifier": "afSEwRwdbMeQ",
+                    },
+                  },
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ",
+              },
+            },
+          ],
+          "localIdentifier": "measures",
+        },
+        Object {
+          "items": Array [],
+          "localIdentifier": "attribute",
+        },
+        Object {
+          "items": Array [],
+          "localIdentifier": "stack",
+        },
+      ],
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "measureGroup",
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [],
+        },
+      ],
+      "filters": Array [],
+      "measures": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "sortBy": Array [],
+      "workspace": "testWorkspace",
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`AreaChart API should work for single measure with viewBy 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "execution": Object {
+    "definition": Object {
+      "attributes": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.account.id.name",
+            },
+            "localIdentifier": "a_label.account.id.name",
+          },
+        },
+      ],
+      "buckets": Array [
+        Object {
+          "items": Array [
+            Object {
+              "measure": Object {
+                "definition": Object {
+                  "measureDefinition": Object {
+                    "item": Object {
+                      "identifier": "afSEwRwdbMeQ",
+                    },
+                  },
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ",
+              },
+            },
+          ],
+          "localIdentifier": "measures",
+        },
+        Object {
+          "items": Array [
+            Object {
+              "attribute": Object {
+                "displayForm": Object {
+                  "identifier": "label.account.id.name",
+                },
+                "localIdentifier": "a_label.account.id.name",
+              },
+            },
+          ],
+          "localIdentifier": "attribute",
+        },
+        Object {
+          "items": Array [],
+          "localIdentifier": "stack",
+        },
+      ],
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "measureGroup",
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.account.id.name",
+          ],
+        },
+      ],
+      "filters": Array [],
+      "measures": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "sortBy": Array [],
+      "workspace": "testWorkspace",
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`AreaChart API should work for single measure with viewBy and stackBy 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "execution": Object {
+    "definition": Object {
+      "attributes": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.account.id.name",
+            },
+            "localIdentifier": "a_label.account.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.activity.activitytype",
+            },
+            "localIdentifier": "a_label.activity.activitytype",
+          },
+        },
+      ],
+      "buckets": Array [
+        Object {
+          "items": Array [
+            Object {
+              "measure": Object {
+                "definition": Object {
+                  "measureDefinition": Object {
+                    "item": Object {
+                      "identifier": "afSEwRwdbMeQ",
+                    },
+                  },
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ",
+              },
+            },
+          ],
+          "localIdentifier": "measures",
+        },
+        Object {
+          "items": Array [
+            Object {
+              "attribute": Object {
+                "displayForm": Object {
+                  "identifier": "label.account.id.name",
+                },
+                "localIdentifier": "a_label.account.id.name",
+              },
+            },
+          ],
+          "localIdentifier": "attribute",
+        },
+        Object {
+          "items": Array [
+            Object {
+              "attribute": Object {
+                "displayForm": Object {
+                  "identifier": "label.activity.activitytype",
+                },
+                "localIdentifier": "a_label.activity.activitytype",
+              },
+            },
+          ],
+          "localIdentifier": "stack",
+        },
+      ],
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.activity.activitytype",
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [
+            "a_label.account.id.name",
+            "measureGroup",
+          ],
+        },
+      ],
+      "filters": Array [],
+      "measures": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "sortBy": Array [],
+      "workspace": "testWorkspace",
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;

@@ -4,6 +4,7 @@
         "declaration": true,
         "jsx": "react",
         "lib": ["es7", "dom"],
+        "esModuleInterop": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "noImplicitAny": true,
