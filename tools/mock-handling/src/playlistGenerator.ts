@@ -3,12 +3,15 @@
 import * as fs from "fs";
 import * as path from "path";
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
+import union from "lodash/union";
 
 const _COPYRIGHT = `// (C) 2019-${new Date().getFullYear()} GoodData Corporation`;
 const _WARNING = `// THIS FILE WAS AUTO-GENERATED ON ${new Date().toISOString()}; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING`;
 const _TSLINT = "// tslint:disable:variable-name";
 
-type RecordingEntry = {
+const EXECUTION_FOLDER = "execution";
+
+type ExecutionRecordingEntry = {
     name: string;
     def: IExecutionDefinition;
     constant: string;
@@ -21,7 +24,7 @@ function makeNameNice(dirName: string): string {
         .join("");
 }
 
-function recordingEntry(dirName: string, dir: string): RecordingEntry | null {
+function executionRecordingEntry(dirName: string, dir: string): ExecutionRecordingEntry | null {
     const defPath = path.join(dir, "definition.json");
     const responsePath = path.join(dir, "response.json");
     const resultPath = path.join(dir, "result.json");
@@ -37,9 +40,9 @@ function recordingEntry(dirName: string, dir: string): RecordingEntry | null {
     const name = makeNameNice(dirName);
     const def = JSON.parse(fs.readFileSync(defPath, { encoding: "utf-8" })) as IExecutionDefinition;
     const constant = `export const ${name} = {
-    definition: require('./${dirName}/definition.json'),
-    response: require('./${dirName}/response.json'),
-    result: require('./${dirName}/result.json'),
+    definition: require('./${EXECUTION_FOLDER}/${dirName}/definition.json'),
+    response: require('./${EXECUTION_FOLDER}/${dirName}/response.json'),
+    result: require('./${EXECUTION_FOLDER}/${dirName}/result.json'),
 };
     `;
 
@@ -50,17 +53,19 @@ function recordingEntry(dirName: string, dir: string): RecordingEntry | null {
     };
 }
 
-function isRecording(obj: any): obj is RecordingEntry {
+function isExecutionRecording(obj: any): obj is ExecutionRecordingEntry {
     return obj !== null;
 }
 
 function main(dir: string) {
     if (!fs.existsSync(dir)) {
+        console.log(path.resolve(dir));
+
         console.log(`ERROR: Recordings directory ${dir} does not exist`);
     }
 
-    const entries = fs
-        .readdirSync(dir, { withFileTypes: true })
+    const executionRecordingEntries = fs
+        .readdirSync(path.join(dir, EXECUTION_FOLDER), { withFileTypes: true })
         .map(maybeDir => {
             if (!maybeDir.isDirectory()) {
                 return null;
@@ -68,37 +73,60 @@ function main(dir: string) {
 
             console.log("INFO: Found possible playlist entry: ", maybeDir.name);
 
-            return recordingEntry(maybeDir.name, path.join(dir, maybeDir.name));
+            return executionRecordingEntry(maybeDir.name, path.join(dir, EXECUTION_FOLDER, maybeDir.name));
         })
-        .filter(isRecording);
+        .filter(isExecutionRecording);
 
-    if (!entries.length) {
+    if (!executionRecordingEntries.length) {
         console.log("WARN: No recordings found. Doing nothing");
 
         return;
     }
     const playlist = path.join(dir, "playlist.ts");
 
-    const recordingsMap = entries.reduce((acc: any, entry: RecordingEntry) => {
-        const {
-            def,
-            def: { workspace },
-        } = entry;
-        let workspaceDir = acc[workspace];
+    const executionRecordingsMap = executionRecordingEntries.reduce(
+        (acc: any, entry: ExecutionRecordingEntry) => {
+            const {
+                def,
+                def: { workspace },
+            } = entry;
+            let workspaceDir = acc[workspace];
 
-        if (!workspaceDir) {
-            acc[workspace] = {};
-            workspaceDir = acc[workspace];
+            if (!workspaceDir) {
+                acc[workspace] = {};
+                workspaceDir = acc[workspace];
+            }
+
+            workspaceDir["fp_" + defFingerprint(def)] = entry.name;
+
+            return acc;
+        },
+        {},
+    );
+
+    const metadataRecordingsMap: any = {
+        // TODO
+    };
+
+    const executionWorkspaces = Object.keys(executionRecordingsMap);
+    const metadataWorkspaces = Object.keys(metadataRecordingsMap);
+
+    const workspaces = union(executionWorkspaces, metadataWorkspaces);
+
+    const workspaceContentsMap = workspaces.reduce((acc: any, workspace) => {
+        acc[workspace] = {};
+        if (executionRecordingsMap[workspace]) {
+            acc[workspace].execution = executionRecordingsMap[workspace];
         }
-
-        workspaceDir["fp_" + defFingerprint(def)] = entry.name;
-
+        if (metadataRecordingsMap[workspace]) {
+            acc[workspace].metadata = metadataRecordingsMap[workspace];
+        }
         return acc;
     }, {});
 
-    const constants = entries.map(entry => entry.constant).join("\n");
+    const constants = executionRecordingEntries.map(entry => entry.constant).join("\n");
     const masterIndex = `// initialize recorded backend with this\nexport const MasterIndex = ${JSON.stringify(
-        recordingsMap,
+        workspaceContentsMap,
         null,
         4,
     ).replace(/"/g, "")};`;
@@ -110,7 +138,7 @@ function main(dir: string) {
     console.log("SUCCESS: Created", playlist);
 }
 
-const DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
+const DIR = "../../libs/sdk-ui/__mocks__/recordings/";
 
 /**
  * Given a directory, this program will pounce around, look for all subdirectories that contain the definition, response

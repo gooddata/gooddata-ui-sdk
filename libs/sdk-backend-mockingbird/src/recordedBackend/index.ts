@@ -52,7 +52,9 @@ export type RecordingIndex = {
  * @internal
  */
 export type WorkspaceRecordings = {
-    [fp: string]: ExecutionRecording;
+    execution?: {
+        [fp: string]: ExecutionRecording;
+    };
 };
 
 /**
@@ -250,7 +252,7 @@ function recordedPreparedExecution(
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
-                const recording = recordings["fp_" + fp];
+                const recording = recordings.execution && recordings.execution["fp_" + fp];
 
                 if (!recording) {
                     reject(new Error("Recording not found"));
