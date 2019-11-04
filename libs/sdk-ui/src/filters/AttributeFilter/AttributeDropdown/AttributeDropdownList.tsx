@@ -10,7 +10,7 @@ import { AttributeFilterItem } from "./AttributeFilterItem";
 const ITEM_HEIGHT = 28;
 const LIST_WIDTH = 208;
 const MAX_SELECTION_SIZE = 500;
-export const VISIBLE_ITEMS_COUNT = 3; // 10;
+export const VISIBLE_ITEMS_COUNT = 10;
 
 const ListLoading = () => {
     return (
