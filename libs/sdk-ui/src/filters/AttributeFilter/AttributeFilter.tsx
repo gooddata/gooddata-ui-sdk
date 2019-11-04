@@ -30,6 +30,12 @@ export interface IAttributeFilterProps {
     FilterError?: any;
 }
 
+interface IAttributeFilterState {
+    title: string;
+    isLoading: boolean;
+    error?: any;
+}
+
 const DefaultFilterLoading = injectIntl(({ intl }) => {
     return (
         <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
@@ -47,7 +53,7 @@ const DefaultFilterError = injectIntl(({ intl }) => {
  * AttributeFilter
  * is a component that renders a dropdown populated with attribute values
  */
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
+export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
     public static defaultProps: Partial<IAttributeFilterProps> = {
         uri: null,
         identifier: null,
@@ -59,7 +65,16 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         fullscreenOnMobile: false,
     };
 
+    public state: IAttributeFilterState = {
+        title: "FOO",
+        error: undefined,
+        isLoading: false,
+    };
+
     private sdk: SDK;
+    private getBackend = () => {
+        return this.props.backend.withTelemetry("AttributeFilter", this.props);
+    };
 
     constructor(props: IAttributeFilterProps) {
         super(props);
@@ -69,6 +84,19 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         setTelemetryHeaders(this.sdk, "AttributeFilter", props);
     }
 
+    public componentDidMount(): void {
+        this.loadAttributeTitle();
+    }
+
+    public componentDidUpdate(prevProps: IAttributeFilterProps): void {
+        const needsNewTitleLoad =
+            prevProps.identifier !== this.props.identifier || prevProps.projectId !== this.props.projectId;
+
+        if (needsNewTitleLoad) {
+            this.loadAttributeTitle(true);
+        }
+    }
+
     public UNSAFE_componentWillReceiveProps(nextProps: IAttributeFilterProps) {
         if (nextProps.sdk && this.sdk !== nextProps.sdk) {
             this.sdk = nextProps.sdk.clone();
@@ -76,19 +104,56 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> 
         }
     }
 
+    private loadAttributeTitle = async (force = false) => {
+        if (!force && this.state.isLoading) {
+            return;
+        }
+
+        const { identifier, projectId } = this.props;
+
+        this.setState({ error: null, isLoading: true });
+
+        try {
+            const displayForm = await this.getBackend()
+                .workspace(projectId)
+                .metadata()
+                .getAttributeDisplayForm(identifier);
+
+            this.setState({ title: displayForm.title, error: null, isLoading: false });
+        } catch (error) {
+            this.setState({ title: "", error, isLoading: false });
+        }
+    };
+
     public render() {
-        const { locale, projectId, uri, identifier, backend, onApply } = this.props;
+        const {
+            locale,
+            projectId,
+            uri,
+            identifier,
+            backend,
+            onApply,
+            FilterError,
+            FilterLoading,
+        } = this.props;
+        const { title, error, isLoading } = this.state;
         const { md } = this.sdk;
         return (
             <IntlWrapper locale={locale}>
                 <div>
-                    <AttributeDropdownNew
-                        identifier={identifier}
-                        backend={backend}
-                        workspace={projectId}
-                        onApply={onApply}
-                        title="FOO" // TODO
-                    />
+                    {isLoading ? (
+                        <FilterLoading />
+                    ) : error ? (
+                        <FilterError error={error} />
+                    ) : (
+                        <AttributeDropdownNew
+                            identifier={identifier}
+                            backend={backend}
+                            workspace={projectId}
+                            onApply={onApply}
+                            title={title}
+                        />
+                    )}
                     <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
                         {props => this.renderContent(props)}
                     </AttributeLoader>
