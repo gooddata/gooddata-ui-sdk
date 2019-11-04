@@ -4,7 +4,7 @@ import { injectIntl } from "react-intl";
 import { IAnalyticalBackend, Element } from "@gooddata/sdk-backend-spi";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
-import { AttributeDropdown as AttributeDropdownNew } from "./AttributeDropdown/AttributeDropdown";
+import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 
 export interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
@@ -34,7 +34,7 @@ const DefaultFilterLoading = injectIntl(({ intl }) => {
 
 const DefaultFilterError = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
-    return <div className="gd-message error">{text}</div>;
+    return <div className="gd-message error s-button-error">{text}</div>;
 });
 
 /**
@@ -42,7 +42,7 @@ const DefaultFilterError = injectIntl(({ intl }) => {
  * for specified attribute display form.
  */
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
-    public static defaultProps: Partial<IAttributeFilterProps> = {
+    public static defaultProps = {
         locale: "en-US",
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError,
@@ -87,8 +87,6 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 .metadata()
                 .getAttributeDisplayForm(identifier);
 
-            console.log("AAA", displayForm);
-
             this.setState({ title: displayForm.title, error: null, isLoading: false });
         } catch (error) {
             this.setState({ title: "", error, isLoading: false });
@@ -105,7 +103,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 ) : error ? (
                     <FilterError error={error} />
                 ) : (
-                    <AttributeDropdownNew
+                    <AttributeDropdown
                         identifier={identifier}
                         backend={backend}
                         workspace={workspace}
