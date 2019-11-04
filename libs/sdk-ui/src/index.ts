@@ -30,8 +30,6 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfac
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./base/interfaces/MappingHeader";
 
-export { PivotTable, IPivotTableConfig, IPivotTableBucketProps, IMenu } from "./pivotTable";
-
 import { InsightView } from "./insightView/InsightView";
 
 export {
@@ -72,3 +70,4 @@ export {
 
 export * from "./charts";
 export * from "./highcharts";
+export * from "./pivotTable";
