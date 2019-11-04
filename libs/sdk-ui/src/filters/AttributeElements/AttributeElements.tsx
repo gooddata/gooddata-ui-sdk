@@ -65,36 +65,44 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             return;
         }
 
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, error: null });
 
-        const moreItems = await this.state.validElements.next();
+        try {
+            const moreItems = await this.state.validElements.next();
 
-        this.setState(state => ({
-            ...state,
-            isLoading: false,
-            validElements: {
-                ...state.validElements,
-                ...moreItems,
-                elements: [...state.validElements.elements, ...moreItems.elements],
-            },
-        }));
+            this.setState(state => ({
+                ...state,
+                isLoading: false,
+                validElements: {
+                    ...state.validElements,
+                    ...moreItems,
+                    elements: [...state.validElements.elements, ...moreItems.elements],
+                },
+            }));
+        } catch (error) {
+            this.setState({ isLoading: false, error });
+        }
     };
 
     public getValidElements = async () => {
         const { workspace, options, identifier, offset, limit } = this.props;
 
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, error: null });
 
-        const elements = await this.getBackend()
-            .workspace(workspace)
-            .elements()
-            .forObject(identifier)
-            .withOffset(offset || 0)
-            .withLimit(limit || 50) // TODO defaults
-            .withOptions(options)
-            .query();
+        try {
+            const elements = await this.getBackend()
+                .workspace(workspace)
+                .elements()
+                .forObject(identifier)
+                .withOffset(offset || 0)
+                .withLimit(limit || 50) // TODO defaults
+                .withOptions(options)
+                .query();
 
-        this.setState({ validElements: elements, isLoading: false });
+            this.setState({ validElements: elements, isLoading: false });
+        } catch (error) {
+            this.setState({ isLoading: false, error });
+        }
     };
 
     public render() {
