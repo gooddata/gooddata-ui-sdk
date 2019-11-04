@@ -87,6 +87,8 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 .metadata()
                 .getAttributeDisplayForm(identifier);
 
+            console.log("AAA", displayForm);
+
             this.setState({ title: displayForm.title, error: null, isLoading: false });
         } catch (error) {
             this.setState({ title: "", error, isLoading: false });

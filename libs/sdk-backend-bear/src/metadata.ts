@@ -48,7 +48,11 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     public getAttributeDisplayForm = async (id: string): Promise<IAttributeDisplayForm> => {
         const displayFormUri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
         const displayFormDetails = await this.authCall(sdk => sdk.md.getObjectDetails(displayFormUri));
+
         return {
+            attribute: {
+                uri: displayFormDetails.attributeDisplayForm.content.formOf,
+            },
             id: displayFormDetails.attributeDisplayForm.meta.identifier,
             title: displayFormDetails.attributeDisplayForm.meta.title,
         };

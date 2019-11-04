@@ -114,7 +114,7 @@ export function attributeUri(attribute: IAttribute): string | undefined {
  * Gets identifier of attribute's display form to use and get attribute element values from.
  *
  * @param attribute - attribute to work with, may be undefined == result is undefined
- * @returns display form identifier as tring, undefined if display for not specified using identifier
+ * @returns display form identifier as string, undefined if display for not specified using identifier
  * @public
  */
 export function attributeIdentifier(attribute: IAttribute): string | undefined {
