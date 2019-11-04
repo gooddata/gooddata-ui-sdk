@@ -4,7 +4,7 @@ import isEqual = require("lodash/isEqual");
 import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
-import { IAttributeElementsChildren } from "./model";
+import { IAttributeElementsChildren } from "./types";
 
 export interface IAttributeElementsProps {
     backend: IAnalyticalBackend;

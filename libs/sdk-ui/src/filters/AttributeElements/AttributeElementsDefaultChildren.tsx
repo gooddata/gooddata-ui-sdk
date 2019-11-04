@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { IAttributeElementsChildren } from "./model";
+import { IAttributeElementsChildren } from "./types";
 
 export const AttributeElementsDefaultChildren: React.FC<IAttributeElementsChildren> = ({
     validElements,

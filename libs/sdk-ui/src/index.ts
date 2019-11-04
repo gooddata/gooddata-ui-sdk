@@ -13,7 +13,7 @@ import { IDrillableItem } from "./base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./base/interfaces/PushData";
 import { AttributeFilter } from "./filters/AttributeFilter/AttributeFilter";
-import { AttributeElements } from "./filters/AttributeFilter/AttributeElements";
+import { AttributeElements } from "./filters/AttributeElements/AttributeElements";
 import { generateDimensions } from "./base/helpers/dimensions";
 import * as BucketNames from "./base/constants/bucketNames";
 import * as MeasureTitleHelper from "./base/helpers/measureTitleHelper";
