@@ -34,6 +34,8 @@ import {
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
+    IAttributeDisplayForm,
+    IVisualizationClass,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
@@ -54,6 +56,9 @@ export type RecordingIndex = {
 export type WorkspaceRecordings = {
     execution?: {
         [fp: string]: ExecutionRecording;
+    };
+    metadata?: {
+        attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
     };
 };
 
@@ -146,7 +151,7 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {
-            throw new NotSupported("not supported");
+            return recordedWorkspaceMetadata(recordings);
         },
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
@@ -266,6 +271,32 @@ function recordedPreparedExecution(
         },
         equals(other: IPreparedExecution): boolean {
             return fp === other.fingerprint();
+        },
+    };
+}
+
+function recordedWorkspaceMetadata(recordings: WorkspaceRecordings = {}): IWorkspaceMetadata {
+    return {
+        getAttributeDisplayForm: async (id: string): Promise<IAttributeDisplayForm> => {
+            const recording =
+                recordings.metadata &&
+                recordings.metadata.attributeDisplayForm &&
+                recordings.metadata.attributeDisplayForm[id.replace(/\./g, "_")];
+
+            if (!recording) {
+                throw new Error("Recording not found");
+            }
+
+            return recording;
+        },
+        getInsight(_id: string): Promise<IInsight> {
+            throw new NotSupported("not supported");
+        },
+        getVisualizationClass(_id: string): Promise<IVisualizationClass> {
+            throw new NotSupported("not supported");
+        },
+        getVisualizationClasses(): Promise<IVisualizationClass[]> {
+            throw new NotSupported("not supported");
         },
     };
 }

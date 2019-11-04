@@ -10,6 +10,8 @@ const _WARNING = `// THIS FILE WAS AUTO-GENERATED ON ${new Date().toISOString()}
 const _TSLINT = "// tslint:disable:variable-name";
 
 const EXECUTION_FOLDER = "execution";
+const METADATA_FOLDER = "metadata";
+const ATTRIBUTE_DISPLAY_FORM_FOLDER = "attributeDisplayForm";
 
 type ExecutionRecordingEntry = {
     name: string;
@@ -55,6 +57,51 @@ function executionRecordingEntry(dirName: string, dir: string): ExecutionRecordi
 
 function isExecutionRecording(obj: any): obj is ExecutionRecordingEntry {
     return obj !== null;
+}
+
+function getMetadataEntries(dir: string) {
+    const metadataWorkspaces = fs
+        .readdirSync(path.join(dir, METADATA_FOLDER), { withFileTypes: true })
+        .filter(maybeDir => maybeDir.isDirectory());
+
+    const attributeDisplayFormEntries = metadataWorkspaces.reduce(
+        (acc, workspace) => {
+            // console.log("INFO: Found possible attribute display form playlist entry: ", workspace.name);
+
+            acc[workspace.name] = fs
+                .readdirSync(
+                    path.resolve(dir, METADATA_FOLDER, workspace.name, ATTRIBUTE_DISPLAY_FORM_FOLDER),
+                )
+                .reduce(
+                    (workspaceDisplayForms, definition) => {
+                        const sanitizedName = path.parse(definition).name.replace(/\./g, "_");
+                        workspaceDisplayForms[
+                            sanitizedName
+                        ] = `require('./${METADATA_FOLDER}/${workspace.name}/${ATTRIBUTE_DISPLAY_FORM_FOLDER}/${definition}')`;
+                        return workspaceDisplayForms;
+                    },
+                    {} as any,
+                );
+
+            return acc;
+        },
+        {} as any,
+    );
+
+    const attributeDisplayFormWorkspaces = Object.keys(attributeDisplayFormEntries);
+
+    const workspaces = union(attributeDisplayFormWorkspaces /* TODO others */);
+
+    return workspaces.reduce(
+        (acc, workspace) => {
+            acc[workspace] = {};
+            if (attributeDisplayFormEntries[workspace]) {
+                acc[workspace].attributeDisplayForm = attributeDisplayFormEntries[workspace];
+            }
+            return acc;
+        },
+        {} as any,
+    );
 }
 
 function main(dir: string) {
@@ -104,9 +151,9 @@ function main(dir: string) {
         {},
     );
 
-    const metadataRecordingsMap: any = {
-        // TODO
-    };
+    const metadataRecordingsMap: any = getMetadataEntries(dir);
+
+    console.log("AAAAA", metadataRecordingsMap);
 
     const executionWorkspaces = Object.keys(executionRecordingsMap);
     const metadataWorkspaces = Object.keys(metadataRecordingsMap);

@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-11-04T13:26:40.800Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-11-04T14:20:38.863Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./execution/area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -392,6 +392,11 @@ export const MasterIndex = {
             fp_305a452e274067e6c5a81bfbb040aaf5: TreemapWithOneMetric,
             fp_4b5b81db22b54c8005c3d40d4e7d139c: TreemapWithThreeMetrics,
             fp_d81a1d01654699ff102ae5be3839bcde: TreemapWithTwoMetricsAndStackByAttribute,
+        },
+        metadata: {
+            attributeDisplayForm: {
+                label_method_method: require("./metadata/testWorkspace/attributeDisplayForm/label.method.method.json"),
+            },
         },
     },
 };
