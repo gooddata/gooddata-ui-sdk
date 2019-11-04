@@ -46,6 +46,12 @@ export class AttributeBuilder implements IAttribute {
 }
 
 // @public
+export function attributeDisplayFormId(displayForm: IAttributeDisplayForm): string;
+
+// @public
+export function attributeDisplayFormTitle(displayForm: IAttributeDisplayForm): string;
+
+// @public
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
@@ -221,6 +227,12 @@ export interface IAttribute {
         displayForm: ObjRef;
         alias?: string;
     };
+}
+
+// @public
+export interface IAttributeDisplayForm {
+    id: Identifier;
+    title: string;
 }
 
 // @public

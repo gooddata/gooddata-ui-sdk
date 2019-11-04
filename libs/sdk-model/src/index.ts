@@ -15,6 +15,12 @@ export {
 export { newAttribute, AttributeBuilder, AttributeModifications } from "./attribute/factory";
 
 export {
+    IAttributeDisplayForm,
+    attributeDisplayFormId,
+    attributeDisplayFormTitle,
+} from "./attributeDisplayForm";
+
+export {
     Identifier,
     UriRef,
     IdentifierRef,

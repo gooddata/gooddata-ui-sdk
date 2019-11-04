@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
-import { IVisualizationClass, IInsight } from "@gooddata/sdk-model";
+import { IVisualizationClass, IInsight, IAttributeDisplayForm } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { VisualizationClass } from "@gooddata/gd-bear-model";
 import { convertVisualizationClass } from "./toSdkModel/VisualizationClassConverter";
@@ -43,5 +43,14 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const visualizationClassIdentifier = visClass.visualizationClass.meta.identifier;
 
         return convertVisualization(visualization, visualizationClassIdentifier);
+    };
+
+    public getAttributeDisplayForm = async (id: string): Promise<IAttributeDisplayForm> => {
+        const displayFormUri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+        const displayFormDetails = await this.authCall(sdk => sdk.md.getObjectDetails(displayFormUri));
+        return {
+            id: displayFormDetails.attributeDisplayForm.meta.identifier,
+            title: displayFormDetails.attributeDisplayForm.meta.title,
+        };
     };
 }

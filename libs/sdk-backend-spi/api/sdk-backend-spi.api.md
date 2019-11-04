@@ -7,6 +7,7 @@
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -399,6 +400,8 @@ export interface ITotalDescriptor {
 
 // @public
 export interface IWorkspaceMetadata {
+    // (undocumented)
+    getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(id: string): Promise<IInsight>;
     // (undocumented)
