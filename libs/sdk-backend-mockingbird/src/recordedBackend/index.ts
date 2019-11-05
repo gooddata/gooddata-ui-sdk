@@ -333,7 +333,7 @@ function recordedElementQuery(objectId: string, recordings: WorkspaceRecordings 
             elements: [],
             limit,
             offset: recording.length,
-            totalItemsCount: recording.length,
+            totalCount: recording.length,
             next: () => Promise.resolve(emptyResult),
         };
 
@@ -346,7 +346,7 @@ function recordedElementQuery(objectId: string, recordings: WorkspaceRecordings 
                 return hasNextPage ? queryWorker(offset + limit, limit) : Promise.resolve(emptyResult);
             },
             offset: Math.min(offset, recording.length),
-            totalItemsCount: recording.length,
+            totalCount: recording.length,
         };
     };
 

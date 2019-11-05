@@ -251,7 +251,7 @@ export interface IElementQueryResult {
     // (undocumented)
     readonly offset: number;
     // (undocumented)
-    readonly totalItemsCount: number;
+    readonly totalCount: number;
 }
 
 // @public

@@ -109,7 +109,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
 
         const hasAllData =
             validElements &&
-            currentElements.length === validElements.totalItemsCount &&
+            currentElements.length === validElements.totalCount &&
             !currentElements.some((e: Element | EmptyListItem) => (e as EmptyListItem).empty);
 
         const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
@@ -239,7 +239,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
-                totalCount={validElements ? validElements.totalItemsCount : VISIBLE_ITEMS_COUNT}
+                totalCount={validElements ? validElements.totalCount : VISIBLE_ITEMS_COUNT}
                 applyDisabled={shouldDisableApplyButton}
                 onSelect={this.onSelect}
                 onApplyButtonClicked={this.onApplyButtonClicked}
