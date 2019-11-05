@@ -98,16 +98,21 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     }
 
     public getElements = async () => {
-        const { offset, limit } = this.state;
+        const { offset, limit, validElements } = this.state;
 
-        const currentElements = this.state.validElements ? this.state.validElements.elements : [];
+        const currentElements = validElements ? validElements.elements : [];
 
         const isQueryOutOfBounds = offset + limit > currentElements.length;
-        const isMissingData = currentElements
+        const isMissingDataInWindow = currentElements
             .slice(offset, offset + limit)
             .some((e: Element | EmptyListItem) => (e as EmptyListItem).empty);
 
-        const needsLoading = isQueryOutOfBounds || isMissingData;
+        const hasAllData =
+            validElements &&
+            currentElements.length === validElements.totalItemsCount &&
+            !currentElements.some((e: Element | EmptyListItem) => (e as EmptyListItem).empty);
+
+        const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
 
         if (needsLoading) {
             this.loadElements(offset, limit);
