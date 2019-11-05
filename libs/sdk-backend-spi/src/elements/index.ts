@@ -6,6 +6,7 @@ import { SortDirection } from "@gooddata/sdk-model";
  * @public
  */
 export interface IElementQueryOptions {
+    // TODO: revisit if we really need all of these options
     order?: SortDirection;
     filter?: string;
     prompt?: string;
@@ -14,7 +15,7 @@ export interface IElementQueryOptions {
     includeTotalCountWithoutFilters?: boolean;
     restrictiveDefinition?: string;
     restrictiveDefinitionContent?: object;
-    // afm?: ExecuteAFM.IAfm; // TODO what should we do with this?
+    // afm?: ExecuteAFM.IAfm; // TODO: do we really need this? if so, we should add support for using executionDefinition here
 }
 
 /**
