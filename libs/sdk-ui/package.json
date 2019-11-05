@@ -66,7 +66,7 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
-        "@gooddata/goodstrap": "64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z",
+        "@gooddata/goodstrap": "^64.2.0",
         "@gooddata/js-utils": "^3.4.0",
         "@gooddata/numberjs": "^3.1.2",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",

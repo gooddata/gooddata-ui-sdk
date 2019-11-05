@@ -1,6 +1,6 @@
 dependencies:
   '@babel/core': 7.6.2
-  '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2
+  '@gooddata/goodstrap': 64.2.0_react-dom@16.10.2+react@16.10.2
   '@gooddata/js-utils': 3.5.0
   '@gooddata/mock-js': 1.34.0
   '@gooddata/numberjs': 3.2.2
@@ -1581,12 +1581,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EXxN64agfUqqIGeEjI5dL5z0Sw0ZwWo1mLTi4mQowCZ42O59b7DRpZAnTC6OqdF28wMBMFKNb/4uFGrVaigSpg==
-  /@babel/runtime/7.6.3:
+  /@babel/runtime/7.7.0:
     dependencies:
       regenerator-runtime: 0.13.3
     dev: false
     resolution:
-      integrity: sha512-kq6anf9JGjW8Nt5rYfEuGRaEAaH1mkv3Bbu6rYvLOpPh/RusSJXuKPEAoZ7L7gybZkchE8+NV5g9vKF4AGAtsA==
+      integrity: sha512-xdf3hZAzoqL9q7ItTe/KyUGw214oXdHmq2XhW8ANRuo2KMX+s17RK+z4DsQiPkdOqCjep14eNTneRoiTs9T1AQ==
   /@babel/template/7.6.0:
     dependencies:
       '@babel/code-frame': 7.5.5
@@ -1737,7 +1737,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6PYY5DVdAY1ifaQW6XYTnOMihmBVT27elqSjEoodchsGjzYlEsTQMcEhSud99kVawatyTZRTiVkJ/c6lwbQ7nA==
-  /@gooddata/goodstrap/64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2:
+  /@gooddata/goodstrap/64.2.0_react-dom@16.10.2+react@16.10.2:
     dependencies:
       '@gooddata/js-utils': 3.5.0
       babel-runtime: 6.25.0
@@ -1762,7 +1762,7 @@ packages:
       react-native-listener: 1.1.0
       react-portal: 4.2.0_react@16.10.2
       react-responsive: 3.0.0_react@16.10.2
-      react-textarea-autosize: 7.1.0_react@16.10.2
+      react-textarea-autosize: 7.1.2_react@16.10.2
       react-transition-group: 1.2.1_react-dom@16.10.2+react@16.10.2
       rxjs: 5.5.12
       tinycolor2: 1.4.1
@@ -1771,7 +1771,7 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-U6OSE9iDTcgLLmf0wT7G3K5Vc4y6FgUN4b4JLgJB2izti2I0XgesaUJk5O7cuqHgdkdXDnvsKgf2yNBbrxC2MA==
+      integrity: sha512-5e7u0h0ndvDAlEpok2gXiXy+RvzpAGXtWetifIBe4ZYc4oQDTAbguNwXt5/s0TV1rjcNE15uLXz+c2rjh1pOKg==
   /@gooddata/js-utils/3.5.0:
     dependencies:
       js-cookie: 2.2.1
@@ -5866,7 +5866,7 @@ packages:
       integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   /dom-helpers/3.4.0:
     dependencies:
-      '@babel/runtime': 7.6.3
+      '@babel/runtime': 7.7.0
     dev: false
     resolution:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -12216,6 +12216,16 @@ packages:
       react: '>=0.14.0 <17.0.0'
     resolution:
       integrity: sha512-c2FlR/fP0qbxmlrW96SdrbgP/v0XZMTupqB90zybvmDVDutytUgPl7beU35klwcTeMepUIQEpQUn3P3bdshGPg==
+  /react-textarea-autosize/7.1.2_react@16.10.2:
+    dependencies:
+      '@babel/runtime': 7.7.0
+      prop-types: 15.7.2
+      react: 16.10.2
+    dev: false
+    peerDependencies:
+      react: '>=0.14.0 <17.0.0'
+    resolution:
+      integrity: sha512-uH3ORCsCa3C6LHxExExhF4jHoXYCQwE5oECmrRsunlspaDAbS4mGKNlWZqjLfInWtFQcf0o1n1jC/NGXFdUBCg==
   /react-transition-group/1.2.1_react-dom@16.10.2+react@16.10.2:
     dependencies:
       chain-function: 1.0.1
@@ -15614,7 +15624,7 @@ packages:
   'file:projects/sdk-ui.tgz_prop-types@15.7.2+webpack@4.41.0':
     dependencies:
       '@babel/core': 7.6.2
-      '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z_react-dom@16.10.2+react@16.10.2
+      '@gooddata/goodstrap': 64.2.0_react-dom@16.10.2+react@16.10.2
       '@gooddata/js-utils': 3.5.0
       '@gooddata/mock-js': 1.34.0
       '@gooddata/numberjs': 3.2.2
@@ -15691,13 +15701,13 @@ packages:
       prop-types: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-nGTFHIVdhQM19BByc66STEtr6uWW5qcJTN+hAub1wLNNTQGN/oBK+nWD2lcxvAr020BZhZlrta81zadDde2VGg==
+      integrity: sha512-C5Yt9WA9UZ7lvbJMqEg5cLyLe2kClhvKBpxZp8/1Gtjpg22Q5PUlPgZHn0D35O3K3HnjQP/g35lu1jwzKK2dEg==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
 registry: ''
 specifiers:
   '@babel/core': ^7.4.4
-  '@gooddata/goodstrap': 64.0.1-alpha-no23reason-dho-fet-343-string-refs-2019-10-25T13-35-25-564Z
+  '@gooddata/goodstrap': ^64.2.0
   '@gooddata/js-utils': ^3.4.0
   '@gooddata/mock-js': ^1.31.0
   '@gooddata/numberjs': ^3.1.2
