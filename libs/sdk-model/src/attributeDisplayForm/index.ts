@@ -17,9 +17,9 @@ export interface IAttributeDisplayForm {
      * Note: specifying attributes by URI is discouraged and WILL be deprecated in the future. The
      * specification of URL has several drawbacks:
      *
-     * -  Display form URLs are tied to particular analytical workspace; this makes any application that uses
+     * -  Attribute URLs are tied to particular analytical workspace; this makes any application that uses
      *    URL-specified attributes workspace-specific.
-     * -  Display for URLs are not supported by all GoodData backends == this makes any application that uses
+     * -  Attribute URLs are not supported by all GoodData backends == this makes any application that uses
      *    URL-specified attribute backend-specific
      */
     attribute: ObjRef;

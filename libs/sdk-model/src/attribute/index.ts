@@ -34,7 +34,7 @@ export interface IAttribute {
          *
          * -  Display form URLs are tied to particular analytical workspace; this makes any application that uses
          *    URL-specified display forms workspace-specific.
-         * -  Display for URLs are not supported by all GoodData backends == this makes any application that uses
+         * -  Display form URLs are not supported by all GoodData backends == this makes any application that uses
          *    URL-specified display form backend-specific
          */
         displayForm: ObjRef;
