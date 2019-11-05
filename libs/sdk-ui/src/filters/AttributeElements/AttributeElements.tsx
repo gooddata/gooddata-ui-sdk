@@ -54,7 +54,6 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             !isEqual(this.props.options, prevProps.options);
 
         if (needsInvalidation) {
-            this.setState({ validElements: null, error: null, isLoading: false });
             this.getValidElements();
         }
     }
@@ -95,7 +94,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                 .elements()
                 .forObject(identifier)
                 .withOffset(offset || 0)
-                .withLimit(limit || 50) // TODO defaults
+                .withLimit(limit || 50)
                 .withOptions(options)
                 .query();
 
