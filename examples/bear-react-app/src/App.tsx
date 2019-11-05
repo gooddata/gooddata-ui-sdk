@@ -55,9 +55,11 @@ const Dashboard: React.FC = () => {
                     />
                     <AttributeFilter
                         backend={analyticalBackend}
-                        // workspace={workspace}
-                        projectId={workspace}
+                        workspace={workspace}
                         identifier="label.method.method"
+                        onApply={(selectedItems, isInverted) =>
+                            console.log("Attribute filter", { selectedItems, isInverted })
+                        }
                     />
                 </Col>
             </Row>
