@@ -214,7 +214,7 @@ function main(dir: string) {
     console.log("SUCCESS: Created", playlist);
 }
 
-const DIR = "../../libs/sdk-ui/__mocks__/recordings/";
+const DIR = path.resolve(__dirname, "../../../libs/sdk-ui/__mocks__/recordings");
 
 /**
  * Given a directory, this program will pounce around, look for all subdirectories that contain the definition, response
