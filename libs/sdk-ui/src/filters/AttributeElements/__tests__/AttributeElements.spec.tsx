@@ -2,19 +2,16 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
+import { waitForAsync } from "../../../../testUtils/synchronization";
 
 import { AttributeElements } from "../AttributeElements";
-import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
 
 describe("AttributeElements", () => {
     const backend = recordedBackend(MasterIndex);
     const workspace = "testWorkspace";
     const identifier = "label.method.method";
     const anotherIdentifier = "label.status.status";
-
-    // waits for any async methods resolution
-    // tslint:disable-next-line: no-string-based-set-immediate
-    const waitForAsync = () => new Promise(resolve => setImmediate(resolve));
 
     const renderComponent = (props: any = {}) =>
         shallow(

@@ -4,10 +4,11 @@ import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import noop = require("lodash/noop");
-
-import { AttributeDropdown } from "../AttributeDropdown";
 import { IntlWrapper } from "../../../../base/translations/IntlWrapper";
 import { MasterIndex } from "../../../../../__mocks__/recordings/playlist";
+import { waitForAsync } from "../../../../../testUtils/synchronization";
+
+import { AttributeDropdown } from "../AttributeDropdown";
 import { AttributeFilterItem } from "../AttributeFilterItem";
 
 describe("AttributeDropdown", () => {
@@ -22,10 +23,6 @@ describe("AttributeDropdown", () => {
             </IntlWrapper>,
         );
     }
-
-    // waits for any async methods resolution
-    // tslint:disable-next-line: no-string-based-set-immediate
-    const waitForAsync = () => new Promise(resolve => setImmediate(resolve));
 
     afterEach(() => {
         // for some reason the document.body gets polluted and has to be cleared after every test
