@@ -1,5 +1,5 @@
 // (C) 2019-2019 GoodData Corporation
-// THIS FILE WAS AUTO-GENERATED ON 2019-11-05T07:59:21.913Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
+// THIS FILE WAS AUTO-GENERATED ON 2019-11-05T10:50:00.366Z; DO NOT EDIT; LOOK INTO 'mock-handling' TOOLING
 // tslint:disable:variable-name
 export const AreaChartWith3MetricsAndViewByAttribute = {
     definition: require("./execution/area_chart_with_3_metrics_and_view_by_attribute/definition.json"),
@@ -396,10 +396,12 @@ export const MasterIndex = {
         metadata: {
             attributeDisplayForm: {
                 label_method_method: require("./metadata/testWorkspace/attributeDisplayForm/label.method.method.json"),
+                label_status_status: require("./metadata/testWorkspace/attributeDisplayForm/label.status.status.json"),
             },
         },
         elements: {
             label_method_method: require("./elements/testWorkspace/label.method.method.json"),
+            label_status_status: require("./elements/testWorkspace/label.status.status.json"),
         },
     },
 };
