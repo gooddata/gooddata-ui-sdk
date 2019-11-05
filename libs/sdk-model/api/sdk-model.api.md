@@ -46,16 +46,16 @@ export class AttributeBuilder implements IAttribute {
 }
 
 // @public
-export function attributeDisplayFormId(displayForm: IAttributeDisplayForm): string | undefined;
+export function attributeDisplayFormAttributeId(displayForm: IAttributeDisplayForm): string | undefined;
 
 // @public
-export function attributeDisplayFormIdentifier(displayForm: IAttributeDisplayForm): string | undefined;
+export function attributeDisplayFormAttributeUri(displayForm: IAttributeDisplayForm): string | undefined;
 
 // @public
-export function attributeDisplayFormTitle(displayForm: IAttributeDisplayForm): string | undefined;
+export function attributeDisplayFormId(displayForm: IAttributeDisplayForm): string;
 
 // @public
-export function attributeDisplayFormUri(displayForm: IAttributeDisplayForm): string | undefined;
+export function attributeDisplayFormTitle(displayForm: IAttributeDisplayForm): string;
 
 // @public
 export type AttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;

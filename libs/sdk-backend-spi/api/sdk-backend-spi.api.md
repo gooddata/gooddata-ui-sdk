@@ -402,7 +402,6 @@ export interface ITotalDescriptor {
 
 // @public
 export interface IWorkspaceMetadata {
-    // (undocumented)
     getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(id: string): Promise<IInsight>;

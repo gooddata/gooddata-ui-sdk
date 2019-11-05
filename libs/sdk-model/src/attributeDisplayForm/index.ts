@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import invariant from "ts-invariant";
 import { Identifier, ObjRef, isUriRef, isIdentifierRef } from "../base";
 
 /**
@@ -36,58 +37,50 @@ export interface IAttributeDisplayForm {
 
 /**
  * Gets the attribute display form's id.
- * @param displayForm - attribute display form to work with, may be undefined == result is undefined
+ * @param displayForm - attribute display form to work with
  * @returns id of the attribute display form
  * @public
  */
-export function attributeDisplayFormId(displayForm: IAttributeDisplayForm): string | undefined {
-    if (!displayForm) {
-        return undefined;
-    }
+export function attributeDisplayFormId(displayForm: IAttributeDisplayForm): string {
+    invariant(displayForm, "displayForm must not be undefined");
 
     return displayForm.id;
 }
 
 /**
  * Gets the attribute display form's title.
- * @param displayForm - attribute display form to work with, may be undefined == result is undefined
+ * @param displayForm - attribute display form to work with
  * @returns title of the attribute display form
  * @public
  */
-export function attributeDisplayFormTitle(displayForm: IAttributeDisplayForm): string | undefined {
-    if (!displayForm) {
-        return undefined;
-    }
+export function attributeDisplayFormTitle(displayForm: IAttributeDisplayForm): string {
+    invariant(displayForm, "displayForm must not be undefined");
 
     return displayForm.title;
 }
 
 /**
- * Gets URI of attribute display form to use and get attribute element values from.
+ * Gets URI of the attribute the display form is a form of.
  *
- * @param displayForm - attribute display form to work with, may be undefined == result is undefined
+ * @param displayForm - attribute display form to work with
  * @returns display form URI as string, undefined if display form not specified using URI
  * @public
  */
-export function attributeDisplayFormUri(displayForm: IAttributeDisplayForm): string | undefined {
-    if (!displayForm) {
-        return undefined;
-    }
+export function attributeDisplayFormAttributeUri(displayForm: IAttributeDisplayForm): string | undefined {
+    invariant(displayForm, "displayForm must not be undefined");
 
     return isUriRef(displayForm.attribute) ? displayForm.attribute.uri : undefined;
 }
 
 /**
- * Gets identifier of attribute display form to use and get attribute element values from.
+ * Gets identifier of the attribute the display form is a form of.
  *
- * @param attribute - attribute display form to work with, may be undefined == result is undefined
+ * @param attribute - attribute display form to work with
  * @returns display form identifier as string, undefined if display for not specified using identifier
  * @public
  */
-export function attributeDisplayFormIdentifier(displayForm: IAttributeDisplayForm): string | undefined {
-    if (!displayForm) {
-        return undefined;
-    }
+export function attributeDisplayFormAttributeId(displayForm: IAttributeDisplayForm): string | undefined {
+    invariant(displayForm, "displayForm must not be undefined");
 
     return isIdentifierRef(displayForm.attribute) ? displayForm.attribute.identifier : undefined;
 }

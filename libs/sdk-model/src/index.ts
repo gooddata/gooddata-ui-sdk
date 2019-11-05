@@ -18,8 +18,8 @@ export {
     IAttributeDisplayForm,
     attributeDisplayFormId,
     attributeDisplayFormTitle,
-    attributeDisplayFormIdentifier,
-    attributeDisplayFormUri,
+    attributeDisplayFormAttributeId,
+    attributeDisplayFormAttributeUri,
 } from "./attributeDisplayForm";
 
 export {
