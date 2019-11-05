@@ -3,7 +3,7 @@ import * as React from "react";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IValidElementsResponse } from "@gooddata/gd-bear-client";
-import { Element, IAnalyticalBackend, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { IElement, IAnalyticalBackend, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import * as classNames from "classnames";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
@@ -32,7 +32,7 @@ export interface IAttributeDropdownProps {
     workspace: string;
     identifier: string;
 
-    onApply: (selectedItems: Element[], isInverted: boolean) => void;
+    onApply: (selectedItems: IElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
 }
 
@@ -44,7 +44,7 @@ export interface IAttributeDropdownStateItem {
 
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResult;
-    selectedItems: Element[];
+    selectedItems: IElement[];
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
@@ -105,12 +105,12 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         const isQueryOutOfBounds = offset + limit > currentElements.length;
         const isMissingDataInWindow = currentElements
             .slice(offset, offset + limit)
-            .some((e: Element | EmptyListItem) => (e as EmptyListItem).empty);
+            .some((e: IElement | EmptyListItem) => (e as EmptyListItem).empty);
 
         const hasAllData =
             validElements &&
             currentElements.length === validElements.totalCount &&
-            !currentElements.some((e: Element | EmptyListItem) => (e as EmptyListItem).empty);
+            !currentElements.some((e: IElement | EmptyListItem) => (e as EmptyListItem).empty);
 
         const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
 
@@ -213,7 +213,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         }
     };
 
-    private onSelect = (selectedItems: Element[], isInverted: boolean) => {
+    private onSelect = (selectedItems: IElement[], isInverted: boolean) => {
         this.setState({
             selectedItems,
             isInverted,

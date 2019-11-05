@@ -6,10 +6,10 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
-import { Element } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IElement } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 

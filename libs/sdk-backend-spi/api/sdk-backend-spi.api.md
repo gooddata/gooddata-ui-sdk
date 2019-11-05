@@ -124,12 +124,6 @@ export class DataViewFacade {
 }
 
 // @public
-export type Element = {
-    readonly title: string;
-    readonly uri?: string;
-};
-
-// @public
 export class ExecutionError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
@@ -203,6 +197,14 @@ export interface IDimensionDescriptor {
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
 // @public
+export interface IElement {
+    // (undocumented)
+    readonly title: string;
+    // (undocumented)
+    readonly uri?: string;
+}
+
+// @public
 export interface IElementQuery {
     // (undocumented)
     query(): Promise<IElementQueryResult>;
@@ -243,7 +245,7 @@ export interface IElementQueryOptions {
 // @public
 export interface IElementQueryResult {
     // (undocumented)
-    readonly elements: Element[];
+    readonly elements: IElement[];
     // (undocumented)
     readonly limit: number;
     // (undocumented)

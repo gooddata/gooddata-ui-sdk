@@ -20,7 +20,7 @@ import {
     NotSupported,
     IElementQuery,
     IElementQueryOptions,
-    Element,
+    IElement,
     IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -65,7 +65,7 @@ export type WorkspaceRecordings = {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
     };
     elements?: {
-        [id: string]: Element[];
+        [id: string]: IElement[];
     };
 };
 

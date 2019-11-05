@@ -44,7 +44,7 @@ export interface IElementQuery {
  * @public
  */
 export interface IElementQueryResult {
-    readonly elements: Element[];
+    readonly elements: IElement[];
     readonly limit: number;
     readonly offset: number;
     readonly totalCount: number;
@@ -56,7 +56,7 @@ export interface IElementQueryResult {
  * TODO: SDK8: add docs
  * @public
  */
-export type Element = {
+export interface IElement {
     readonly title: string;
     readonly uri?: string;
-};
+}

@@ -45,7 +45,7 @@ export {
     IElementQueryFactory,
     IElementQueryResult,
     IElementQuery,
-    Element,
+    IElement,
     IElementQueryOptions,
 } from "./elements";
 

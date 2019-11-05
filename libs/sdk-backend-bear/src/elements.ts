@@ -4,6 +4,7 @@ import {
     IElementQuery,
     IElementQueryOptions,
     IElementQueryResult,
+    IElement,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedCallGuard } from "./commonTypes";
 
@@ -94,7 +95,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         };
 
         return {
-            elements: items.map((element: { element: Element }) => element.element), // TODO helper
+            elements: items.map((element: { element: IElement }) => element.element),
             limit: count,
             offset: serverOffset,
             totalCount: total,

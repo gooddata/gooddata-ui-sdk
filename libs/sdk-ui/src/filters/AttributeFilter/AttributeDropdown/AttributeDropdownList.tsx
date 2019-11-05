@@ -3,7 +3,7 @@ import * as React from "react";
 import noop = require("lodash/noop");
 import { FormattedMessage } from "react-intl";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
-import { Element } from "@gooddata/sdk-backend-spi";
+import { IElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 
@@ -37,14 +37,14 @@ const ListNoResults = () => {
 };
 
 interface IAttributeDropdownListProps {
-    items: Element[];
+    items: IElement[];
     totalCount: number;
-    selectedItems: Element[];
+    selectedItems: IElement[];
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
 
-    onSelect: (selectedItems: Element[], isInverted: boolean) => void;
+    onSelect: (selectedItems: IElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
 }
 
