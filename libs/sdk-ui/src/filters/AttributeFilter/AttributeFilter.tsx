@@ -1,28 +1,27 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { SDK, factory as createSdk } from "@gooddata/gd-bear-client";
+import { injectIntl } from "react-intl";
+import { IAnalyticalBackend, IElement } from "@gooddata/sdk-backend-spi";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
-import { injectIntl } from "react-intl";
-import { AttributeDropdown } from "./AttributeDropdown";
-import { AttributeLoader } from "./AttributeLoader";
-import { IAttributeDisplayForm } from "./model";
-import { setTelemetryHeaders } from "../../base/helpers/utils";
+import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 
-export interface IAttributeFilterProps {
-    sdk?: SDK;
-    uri?: string;
-    identifier?: string;
-    projectId?: string;
-    metadata?: {
-        getObjectUri: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
-        getObjectDetails: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
-    };
-    onApply: (...params: any[]) => any; // TODO: make the types more specific (FET-282)
+interface IAttributeFilterProps {
+    backend: IAnalyticalBackend;
+    workspace: string;
+    identifier: string;
+
+    onApply: (selectedItems: IElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
     locale?: string;
-    FilterLoading?: any;
-    FilterError?: any;
+    FilterLoading?: React.ComponentType;
+    FilterError?: React.ComponentType<{ error?: any }>;
+}
+
+interface IAttributeFilterState {
+    title: string;
+    isLoading: boolean;
+    error?: any;
 }
 
 const DefaultFilterLoading = injectIntl(({ intl }) => {
@@ -35,78 +34,84 @@ const DefaultFilterLoading = injectIntl(({ intl }) => {
 
 const DefaultFilterError = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
-    return <div className="gd-message error">{text}</div>;
+    return <div className="gd-message error s-button-error">{text}</div>;
 });
 
 /**
- * AttributeFilter
- * is a component that renders a dropdown populated with attribute values
+ * AttributeFilter is a component that renders a dropdown populated with attribute values
+ * for specified attribute display form.
  */
-export class AttributeFilter extends React.PureComponent<IAttributeFilterProps> {
-    public static defaultProps: Partial<IAttributeFilterProps> = {
-        uri: null,
-        identifier: null,
-        projectId: null,
+export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
+    public static defaultProps = {
         locale: "en-US",
-
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError,
         fullscreenOnMobile: false,
     };
 
-    private sdk: SDK;
+    public state: IAttributeFilterState = {
+        title: "",
+        error: null,
+        isLoading: false,
+    };
 
-    constructor(props: IAttributeFilterProps) {
-        super(props);
+    private getBackend = () => {
+        return this.props.backend.withTelemetry("AttributeFilter", this.props);
+    };
 
-        const sdk = props.sdk || createSdk();
-        this.sdk = sdk.clone();
-        setTelemetryHeaders(this.sdk, "AttributeFilter", props);
+    public componentDidMount(): void {
+        this.loadAttributeTitle();
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IAttributeFilterProps) {
-        if (nextProps.sdk && this.sdk !== nextProps.sdk) {
-            this.sdk = nextProps.sdk.clone();
-            setTelemetryHeaders(this.sdk, "AttributeFilter", nextProps);
+    public componentDidUpdate(prevProps: IAttributeFilterProps): void {
+        const needsNewTitleLoad =
+            prevProps.identifier !== this.props.identifier || prevProps.workspace !== this.props.workspace;
+
+        if (needsNewTitleLoad) {
+            this.loadAttributeTitle(true);
         }
     }
+
+    private loadAttributeTitle = async (force = false) => {
+        if (!force && this.state.isLoading) {
+            return;
+        }
+
+        const { identifier, workspace } = this.props;
+
+        this.setState({ error: null, isLoading: true });
+
+        try {
+            const displayForm = await this.getBackend()
+                .workspace(workspace)
+                .metadata()
+                .getAttributeDisplayForm(identifier);
+
+            this.setState({ title: displayForm.title, error: null, isLoading: false });
+        } catch (error) {
+            this.setState({ title: "", error, isLoading: false });
+        }
+    };
 
     public render() {
-        const { locale, projectId, uri, identifier } = this.props;
-        const { md } = this.sdk;
+        const { locale, workspace, identifier, backend, onApply, FilterError, FilterLoading } = this.props;
+        const { title, error, isLoading } = this.state;
         return (
             <IntlWrapper locale={locale}>
-                <AttributeLoader uri={uri} identifier={identifier} projectId={projectId} metadata={md}>
-                    {props => this.renderContent(props)}
-                </AttributeLoader>
+                {isLoading ? (
+                    <FilterLoading />
+                ) : error ? (
+                    <FilterError error={error} />
+                ) : (
+                    <AttributeDropdown
+                        identifier={identifier}
+                        backend={backend}
+                        workspace={workspace}
+                        onApply={onApply}
+                        title={title}
+                    />
+                )}
             </IntlWrapper>
-        );
-    }
-
-    private renderContent({
-        isLoading,
-        attributeDisplayForm,
-    }: {
-        isLoading: boolean;
-        attributeDisplayForm: IAttributeDisplayForm;
-    }) {
-        if (isLoading) {
-            return <this.props.FilterLoading />;
-        }
-
-        const { projectId, onApply, fullscreenOnMobile } = this.props;
-
-        const isUsingIdentifier = this.props.identifier !== null;
-        const { md } = this.sdk;
-        return (
-            <AttributeDropdown
-                attributeDisplayForm={attributeDisplayForm}
-                metadata={md}
-                projectId={projectId}
-                onApply={onApply}
-                fullscreenOnMobile={fullscreenOnMobile}
-                isUsingIdentifier={isUsingIdentifier}
-            />
         );
     }
 }

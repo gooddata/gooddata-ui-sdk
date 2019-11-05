@@ -27,7 +27,8 @@
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
+        "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check",
+        "playlist-generator": "ts-node ./src/playListGenerator.ts"
     },
     "jest": {
         "setupFilesAfterEnv": [

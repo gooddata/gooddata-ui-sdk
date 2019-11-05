@@ -13,12 +13,13 @@ import { BearExecution } from "./executionFactory";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearWorkspaceMetadata } from "./metadata";
 import { BearWorkspaceStyling } from "./styling";
+import { BearWorkspaceElements } from "./elements";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
     public elements(): IElementQueryFactory {
-        throw new NotImplemented("element query not yet implemented");
+        return new BearWorkspaceElements(this.authCall, this.workspace);
     }
 
     public execution(): IExecutionFactory {

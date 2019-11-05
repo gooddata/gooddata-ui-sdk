@@ -34,7 +34,7 @@ export interface IAttribute {
          *
          * -  Display form URLs are tied to particular analytical workspace; this makes any application that uses
          *    URL-specified display forms workspace-specific.
-         * -  Display for URLs are not supported by all GoodData backends == this makes any application that uses
+         * -  Display form URLs are not supported by all GoodData backends == this makes any application that uses
          *    URL-specified display form backend-specific
          */
         displayForm: ObjRef;
@@ -114,7 +114,7 @@ export function attributeUri(attribute: IAttribute): string | undefined {
  * Gets identifier of attribute's display form to use and get attribute element values from.
  *
  * @param attribute - attribute to work with, may be undefined == result is undefined
- * @returns display form identifier as tring, undefined if display for not specified using identifier
+ * @returns display form identifier as string, undefined if display for not specified using identifier
  * @public
  */
 export function attributeIdentifier(attribute: IAttribute): string | undefined {

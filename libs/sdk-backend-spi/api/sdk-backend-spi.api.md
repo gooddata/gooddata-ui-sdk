@@ -7,6 +7,7 @@
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -15,6 +16,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
 // @public
@@ -122,12 +124,6 @@ export class DataViewFacade {
 }
 
 // @public
-export type Element = {
-    readonly value: string;
-    readonly uri?: string;
-};
-
-// @public
 export class ExecutionError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
@@ -201,13 +197,23 @@ export interface IDimensionDescriptor {
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
 // @public
+export interface IElement {
+    // (undocumented)
+    readonly title: string;
+    // (undocumented)
+    readonly uri?: string;
+}
+
+// @public
 export interface IElementQuery {
     // (undocumented)
-    query(): IElementQueryResult;
+    query(): Promise<IElementQueryResult>;
     // (undocumented)
     withLimit(limit: number): IElementQuery;
     // (undocumented)
     withOffset(offset: number): IElementQuery;
+    // (undocumented)
+    withOptions(options: IElementQueryOptions): IElementQuery;
 }
 
 // @public
@@ -217,15 +223,37 @@ export interface IElementQueryFactory {
 }
 
 // @public
+export interface IElementQueryOptions {
+    // (undocumented)
+    complement?: boolean;
+    // (undocumented)
+    filter?: string;
+    // (undocumented)
+    includeTotalCountWithoutFilters?: boolean;
+    // (undocumented)
+    order?: SortDirection;
+    // (undocumented)
+    prompt?: string;
+    // (undocumented)
+    restrictiveDefinition?: string;
+    // (undocumented)
+    restrictiveDefinitionContent?: object;
+    // (undocumented)
+    uris?: string[];
+}
+
+// @public
 export interface IElementQueryResult {
     // (undocumented)
-    readonly elements: Element[];
+    readonly elements: IElement[];
     // (undocumented)
     readonly limit: number;
     // (undocumented)
-    next(): IElementQueryResult;
+    next(): Promise<IElementQueryResult>;
     // (undocumented)
     readonly offset: number;
+    // (undocumented)
+    readonly totalCount: number;
 }
 
 // @public
@@ -374,6 +402,7 @@ export interface ITotalDescriptor {
 
 // @public
 export interface IWorkspaceMetadata {
+    getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(id: string): Promise<IInsight>;
     // (undocumented)

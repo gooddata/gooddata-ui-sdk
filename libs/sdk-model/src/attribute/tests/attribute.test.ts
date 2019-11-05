@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-
 import { attributeIdentifier, attributeLocalId, attributesFind, attributeUri, IAttribute } from "../index";
 import { Account, Activity, ActivityType } from "../../../__mocks__/model";
 

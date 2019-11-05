@@ -1,4 +1,22 @@
 // (C) 2019 GoodData Corporation
+import { SortDirection } from "@gooddata/sdk-model";
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IElementQueryOptions {
+    // TODO: revisit if we really need all of these options
+    order?: SortDirection;
+    filter?: string;
+    prompt?: string;
+    uris?: string[];
+    complement?: boolean;
+    includeTotalCountWithoutFilters?: boolean;
+    restrictiveDefinition?: string;
+    restrictiveDefinitionContent?: object;
+    // afm?: ExecuteAFM.IAfm; // TODO: do we really need this? if so, we should add support for using executionDefinition here
+}
 
 /**
  * TODO: SDK8: add docs
@@ -17,7 +35,9 @@ export interface IElementQuery {
 
     withOffset(offset: number): IElementQuery;
 
-    query(): IElementQueryResult;
+    withOptions(options: IElementQueryOptions): IElementQuery;
+
+    query(): Promise<IElementQueryResult>;
 }
 
 /**
@@ -25,18 +45,19 @@ export interface IElementQuery {
  * @public
  */
 export interface IElementQueryResult {
-    readonly elements: Element[];
+    readonly elements: IElement[];
     readonly limit: number;
     readonly offset: number;
+    readonly totalCount: number;
 
-    next(): IElementQueryResult;
+    next(): Promise<IElementQueryResult>;
 }
 
 /**
  * TODO: SDK8: add docs
  * @public
  */
-export type Element = {
-    readonly value: string;
+export interface IElement {
+    readonly title: string;
     readonly uri?: string;
-};
+}

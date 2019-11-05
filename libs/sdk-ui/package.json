@@ -66,7 +66,7 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
-        "@gooddata/goodstrap": "^63.1.1",
+        "@gooddata/goodstrap": "^64.2.0",
         "@gooddata/js-utils": "^3.4.0",
         "@gooddata/numberjs": "^3.1.2",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",
@@ -137,8 +137,6 @@
         "node-sass-magic-importer": "^5.3.2",
         "prettier": "~1.18.2",
         "raf": "^3.3.2",
-        "react": "^16.10.0",
-        "react-dom": "^16.10.0",
         "sass-loader": "^6.0.6",
         "style-loader": "^0.19.1",
         "ts-jest": "^24.1.0",
