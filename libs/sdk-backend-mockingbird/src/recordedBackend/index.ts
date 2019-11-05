@@ -327,7 +327,7 @@ function recordedElementQuery(objectId: string, recordings: WorkspaceRecordings 
             throw new Error("Recording not found");
         }
 
-        const slice = recording.slice(offset, limit);
+        const slice = recording.slice(offset, offset + limit);
 
         const emptyResult: IElementQueryResult = {
             elements: [],
