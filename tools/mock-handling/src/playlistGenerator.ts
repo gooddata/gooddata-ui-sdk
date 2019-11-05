@@ -10,8 +10,11 @@ const _WARNING = `// THIS FILE WAS AUTO-GENERATED ON ${new Date().toISOString()}
 const _TSLINT = "// tslint:disable:variable-name";
 
 const EXECUTION_FOLDER = "execution";
+
 const METADATA_FOLDER = "metadata";
 const ATTRIBUTE_DISPLAY_FORM_FOLDER = "attributeDisplayForm";
+
+const ELEMENTS_FOLDER = "elements";
 
 type ExecutionRecordingEntry = {
     name: string;
@@ -104,6 +107,29 @@ function getMetadataEntries(dir: string) {
     );
 }
 
+function getElementsEntries(dir: string) {
+    const elementsWorkspaces = fs
+        .readdirSync(path.join(dir, ELEMENTS_FOLDER), { withFileTypes: true })
+        .filter(maybeDir => maybeDir.isDirectory());
+
+    return elementsWorkspaces.reduce(
+        (acc, workspace) => {
+            acc[workspace.name] = fs.readdirSync(path.resolve(dir, ELEMENTS_FOLDER, workspace.name)).reduce(
+                (workspaceElements, objectId) => {
+                    const sanitizedName = path.parse(objectId).name.replace(/\./g, "_");
+                    workspaceElements[
+                        sanitizedName
+                    ] = `require('./${ELEMENTS_FOLDER}/${workspace.name}/${objectId}')`;
+                    return workspaceElements;
+                },
+                {} as any,
+            );
+            return acc;
+        },
+        {} as any,
+    );
+}
+
 function main(dir: string) {
     if (!fs.existsSync(dir)) {
         console.log(path.resolve(dir));
@@ -152,13 +178,13 @@ function main(dir: string) {
     );
 
     const metadataRecordingsMap: any = getMetadataEntries(dir);
-
-    console.log("AAAAA", metadataRecordingsMap);
+    const elementsRecordingsMap: any = getElementsEntries(dir);
 
     const executionWorkspaces = Object.keys(executionRecordingsMap);
     const metadataWorkspaces = Object.keys(metadataRecordingsMap);
+    const elementsWorkspaces = Object.keys(elementsRecordingsMap);
 
-    const workspaces = union(executionWorkspaces, metadataWorkspaces);
+    const workspaces = union(executionWorkspaces, metadataWorkspaces, elementsWorkspaces);
 
     const workspaceContentsMap = workspaces.reduce((acc: any, workspace) => {
         acc[workspace] = {};
@@ -167,6 +193,9 @@ function main(dir: string) {
         }
         if (metadataRecordingsMap[workspace]) {
             acc[workspace].metadata = metadataRecordingsMap[workspace];
+        }
+        if (elementsRecordingsMap[workspace]) {
+            acc[workspace].elements = elementsRecordingsMap[workspace];
         }
         return acc;
     }, {});

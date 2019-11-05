@@ -1,0 +1,34 @@
+[
+    {
+        "title": "DELETE",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110"
+    },
+    {
+        "title": "GET",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=5"
+    },
+    {
+        "title": "HEAD",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=67"
+    },
+    {
+        "title": "OPTIONS",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=27112"
+    },
+    {
+        "title": "PATCH",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=54115"
+    },
+    {
+        "title": "POST",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=17"
+    },
+    {
+        "title": "PROPFIND",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=5074"
+    },
+    {
+        "title": "PUT",
+        "uri": "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=49"
+    }
+]

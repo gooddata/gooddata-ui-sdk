@@ -18,6 +18,10 @@ import {
     IWorkspaceMetadata,
     IWorkspaceStylingService,
     NotSupported,
+    IElementQuery,
+    IElementQueryOptions,
+    Element,
+    IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -59,6 +63,9 @@ export type WorkspaceRecordings = {
     };
     metadata?: {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
+    };
+    elements?: {
+        [id: string]: Element[];
     };
 };
 
@@ -145,7 +152,7 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
             return recordedExecutionFactory(workspace, recordings);
         },
         elements(): IElementQueryFactory {
-            throw new NotSupported("not supported");
+            return recordedElementsQueryFactory(recordings);
         },
         settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
@@ -297,6 +304,67 @@ function recordedWorkspaceMetadata(recordings: WorkspaceRecordings = {}): IWorks
         },
         getVisualizationClasses(): Promise<IVisualizationClass[]> {
             throw new NotSupported("not supported");
+        },
+    };
+}
+
+function recordedElementsQueryFactory(recordings: WorkspaceRecordings = {}): IElementQueryFactory {
+    return {
+        forObject(objectId: string): IElementQuery {
+            return recordedElementQuery(objectId, recordings);
+        },
+    };
+}
+
+function recordedElementQuery(objectId: string, recordings: WorkspaceRecordings = {}): IElementQuery {
+    let _limit = 50;
+    let _offset = 0;
+
+    const queryWorker = async (offset: number, limit: number): Promise<IElementQueryResult> => {
+        const recording = recordings.elements && recordings.elements[objectId.replace(/\./g, "_")];
+
+        if (!recording) {
+            throw new Error("Recording not found");
+        }
+
+        const slice = recording.slice(offset, limit);
+
+        const emptyResult: IElementQueryResult = {
+            elements: [],
+            limit,
+            offset: recording.length,
+            totalItemsCount: recording.length,
+            next: () => Promise.resolve(emptyResult),
+        };
+
+        const hasNextPage = offset + limit < recording.length;
+
+        return {
+            elements: slice,
+            limit: Math.min(limit, slice.length),
+            next() {
+                return hasNextPage ? queryWorker(offset + limit, limit) : Promise.resolve(emptyResult);
+            },
+            offset: Math.min(offset, recording.length),
+            totalItemsCount: recording.length,
+        };
+    };
+
+    return {
+        query(): Promise<IElementQueryResult> {
+            return queryWorker(_offset, _limit);
+        },
+        withLimit(limit: number): IElementQuery {
+            _limit = limit;
+            return this;
+        },
+        withOffset(offset: number): IElementQuery {
+            _offset = offset;
+            return this;
+        },
+        withOptions(_options: IElementQueryOptions): IElementQuery {
+            // options are ignored for now
+            return this;
         },
     };
 }
