@@ -6,7 +6,7 @@ import { IAnalyticalBackend, IElement } from "@gooddata/sdk-backend-spi";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 
-export interface IAttributeFilterProps {
+interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
     workspace: string;
     identifier: string;

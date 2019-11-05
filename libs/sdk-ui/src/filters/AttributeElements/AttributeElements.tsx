@@ -6,7 +6,7 @@ import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
 import { IAttributeElementsChildren } from "./types";
 
-export interface IAttributeElementsProps {
+interface IAttributeElementsProps {
     backend: IAnalyticalBackend;
     workspace: string;
     identifier: string;
@@ -17,7 +17,7 @@ export interface IAttributeElementsProps {
     children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
-export interface IAttributeElementsState {
+interface IAttributeElementsState {
     validElements?: IElementQueryResult;
     isLoading: boolean;
     error?: any;
