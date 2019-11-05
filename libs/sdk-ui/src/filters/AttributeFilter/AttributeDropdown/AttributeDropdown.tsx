@@ -8,9 +8,7 @@ import * as classNames from "classnames";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { VISIBLE_ITEMS_COUNT } from "./AttributeDropdownList";
-
-const emptyListItem = { empty: true };
-type EmptyListItem = typeof emptyListItem;
+import { mergeElementQueryResults, EmptyListItem } from "./mergeElementQueryResults";
 
 export interface IValidElementsItem {
     uri: string;
@@ -133,38 +131,12 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
             .query();
 
         this.setState(state => {
-            const mergedElements = state.validElements ? [...state.validElements.elements] : [];
-            const currentLength = mergedElements.length;
-            // make sure the array has sufficient length for new elements
-            // in case they are added "beyond" the current last item
-            // otherwise splice would overwrite wrong indices
-            const newLength = Math.max(currentLength, newElements.offset + newElements.elements.length);
-            if (newLength > mergedElements.length) {
-                mergedElements.length = newLength;
-            }
-
-            // fill the hole we might have created with dummy objects
-            // because the underlying list throws on undefined members
-            const holeLength = newElements.offset - currentLength;
-            if (holeLength > 0) {
-                mergedElements.splice(
-                    currentLength,
-                    holeLength,
-                    ...new Array(holeLength).fill({ ...emptyListItem }),
-                );
-            }
-
-            // insert the newly loaded items at their corresponding places
-            mergedElements.splice(newElements.offset, newElements.elements.length, ...newElements.elements);
+            const mergedValidElements = mergeElementQueryResults(state.validElements, newElements);
 
             return {
                 ...state,
                 isLoading: false,
-                validElements: {
-                    ...state.validElements,
-                    ...newElements,
-                    elements: mergedElements,
-                },
+                validElements: mergedValidElements,
             };
         });
     };
