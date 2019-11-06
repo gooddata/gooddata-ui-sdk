@@ -3,3 +3,5 @@
 export { dummyBackend, dummyDataView, dummyDataFacade } from "./dummyBackend";
 
 export { ExecutionRecording, recordedBackend, recordedDataFacade } from "./recordedBackend";
+
+export { decoratedBackend, DecoratedPreparedExecution, ServiceDecoratorFactories } from "./decoratedBackend";

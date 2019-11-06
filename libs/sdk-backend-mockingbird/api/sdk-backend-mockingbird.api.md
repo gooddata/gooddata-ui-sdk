@@ -6,12 +6,42 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDimension } from '@gooddata/sdk-model';
 import { IElement } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { SortItem } from '@gooddata/sdk-model';
+
+// Warning: (ae-internal-missing-underscore) The name "decoratedBackend" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function decoratedBackend(backend: IAnalyticalBackend, decorators: ServiceDecoratorFactories): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "DecoratedPreparedExecution" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export abstract class DecoratedPreparedExecution implements IPreparedExecution {
+    protected constructor(decorated: IPreparedExecution);
+    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    // (undocumented)
+    readonly definition: IExecutionDefinition;
+    // (undocumented)
+    equals(other: IPreparedExecution): boolean;
+    // (undocumented)
+    execute(): Promise<IExecutionResult>;
+    // (undocumented)
+    fingerprint(): string;
+    // (undocumented)
+    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    // (undocumented)
+    withSorting(...items: SortItem[]): IPreparedExecution;
+}
 
 // Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
 // 
@@ -47,6 +77,13 @@ export function recordedBackend(index: RecordingIndex, config?: AnalyticalBacken
 // 
 // @internal
 export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade;
+
+// Warning: (ae-internal-missing-underscore) The name "ServiceDecoratorFactories" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export type ServiceDecoratorFactories = {
+    execution?: (execution: IExecutionFactory) => IExecutionFactory;
+};
 
 
 // (No @packageDocumentation comment for this package)
