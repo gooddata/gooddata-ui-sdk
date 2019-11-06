@@ -153,20 +153,14 @@ export class ScenariosForComponent<T extends VisProps> implements IScenariosForC
      *
      * -  name that should be used in the test - derived from the scenario name
      * -  react component realizing the respective visualization
-     * -  props to use with the react component
+     * -  props factory for the react component
      *
      * It is then the responsibility of the test code to instantiate and use the component in the way it
      * sees fit.
-     *
-     * @param backend
-     * @param workspace
      */
-    public asTestInput = (
-        backend: IAnalyticalBackend,
-        workspace: string,
-    ): Array<[string, React.ComponentType<T>, T]> => {
+    public asTestInput = (): Array<[string, React.ComponentType<T>, PropsFactory<T>]> => {
         return this.scenarioList.map(u => {
-            return [u.name, this.component, u.propsFactory(backend, workspace)];
+            return [u.name, this.component, u.propsFactory];
         });
     };
 
