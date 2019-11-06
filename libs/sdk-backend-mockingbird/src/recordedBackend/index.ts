@@ -8,38 +8,39 @@ import {
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     IDataView,
+    IElement,
+    IElementQuery,
     IElementQueryFactory,
+    IElementQueryOptions,
+    IElementQueryResult,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IWorkspaceSettingsService,
     IPreparedExecution,
     IWorkspaceMetadata,
+    IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    IElementQuery,
-    IElementQueryOptions,
-    IElement,
-    IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
-    IBucket,
-    IDimension,
-    IFilter,
-    IInsight,
-    SortItem,
-    IExecutionDefinition,
+    defaultDimensionsGenerator,
     defFingerprint,
-    newDefForBuckets,
-    newDefForInsight,
-    newDefForItems,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
     IAttributeDisplayForm,
+    IBucket,
+    IDimension,
+    IExecutionDefinition,
+    IFilter,
+    IInsight,
     IVisualizationClass,
+    newDefForBuckets,
+    newDefForInsight,
+    newDefForItems,
+    SortItem,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test", username: "testUser@example.com" };
@@ -132,9 +133,10 @@ export function recordedBackend(
  */
 export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade {
     const definition = recording.definition;
+    const executionFactory = recordedExecutionFactory(recording.definition.workspace);
 
     // this result can readAll() and promise data view from recorded afm result
-    const result = recordedExecutionResult(definition, recording);
+    const result = recordedExecutionResult(definition, executionFactory, recording);
     // the facade needs the data view right now, no promises; so create that too
     const dataView = recordedDataView(definition, result, recording);
 
@@ -170,23 +172,40 @@ function recordedExecutionFactory(
     workspace: string,
     recordings: WorkspaceRecordings = {},
 ): IExecutionFactory {
-    return {
+    const factory: IExecutionFactory = {
         forDefinition(def: IExecutionDefinition): IPreparedExecution {
-            return recordedPreparedExecution(def, recordings);
+            return recordedPreparedExecution(def, factory, recordings);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(newDefForItems(workspace, items, filters), recordings);
+            const def = defWithDimensions(
+                newDefForItems(workspace, items, filters),
+                defaultDimensionsGenerator,
+            );
+
+            return factory.forDefinition(def);
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(newDefForBuckets(workspace, buckets, filters), recordings);
+            const def = defWithDimensions(
+                newDefForBuckets(workspace, buckets, filters),
+                defaultDimensionsGenerator,
+            );
+
+            return factory.forDefinition(def);
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return recordedPreparedExecution(newDefForInsight(workspace, insight, filters), recordings);
+            const def = defWithDimensions(
+                newDefForInsight(workspace, insight, filters),
+                defaultDimensionsGenerator,
+            );
+
+            return factory.forDefinition(def);
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
         },
     };
+
+    return factory;
 }
 
 function recordedDataView(
@@ -217,6 +236,7 @@ function recordedDataView(
 
 function recordedExecutionResult(
     definition: IExecutionDefinition,
+    executionFactory: IExecutionFactory,
     recording: ExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
@@ -241,7 +261,7 @@ function recordedExecutionResult(
             throw new NotSupported("...");
         },
         transform(): IPreparedExecution {
-            return recordedPreparedExecution(definition);
+            return executionFactory.forDefinition(definition);
         },
     };
 
@@ -250,6 +270,7 @@ function recordedExecutionResult(
 
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
+    executionFactory: IExecutionFactory,
     recordings: WorkspaceRecordings = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
@@ -257,10 +278,10 @@ function recordedPreparedExecution(
     return {
         definition,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return recordedPreparedExecution(defWithDimensions(definition, dim), recordings);
+            return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
         },
         withSorting(...items: SortItem[]): IPreparedExecution {
-            return recordedPreparedExecution(defWithSorting(definition, items), recordings);
+            return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
@@ -269,7 +290,7 @@ function recordedPreparedExecution(
                 if (!recording) {
                     reject(new Error("Recording not found"));
                 } else {
-                    resolve(recordedExecutionResult(definition, recording));
+                    resolve(recordedExecutionResult(definition, executionFactory, recording));
                 }
             });
         },

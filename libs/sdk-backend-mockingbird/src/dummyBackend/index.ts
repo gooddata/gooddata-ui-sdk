@@ -20,6 +20,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
+    defaultDimensionsGenerator,
     defFingerprint,
     defWithDimensions,
     defWithSorting,
@@ -98,7 +99,8 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
  * @internal
  */
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
-    const execResult = result ? result : dummyExecutionResult(definition);
+    const factory = dummyExecutionFactory(definition.workspace);
+    const execResult = result ? result : dummyExecutionResult(definition, factory);
 
     const fp = defFingerprint(definition) + "/emptyView";
 
@@ -144,27 +146,42 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
 }
 
 function dummyExecutionFactory(workspace: string): IExecutionFactory {
-    return {
+    const factory: IExecutionFactory = {
         forDefinition(def: IExecutionDefinition): IPreparedExecution {
-            return dummyPreparedExecution(def);
+            return dummyPreparedExecution(def, factory);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(newDefForItems(workspace, items, filters));
+            return dummyPreparedExecution(
+                defWithDimensions(newDefForItems(workspace, items, filters), defaultDimensionsGenerator),
+                factory,
+            );
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(newDefForBuckets(workspace, buckets, filters));
+            return dummyPreparedExecution(
+                defWithDimensions(newDefForBuckets(workspace, buckets, filters), defaultDimensionsGenerator),
+                factory,
+            );
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(newDefForInsight(workspace, insight, filters));
+            return dummyPreparedExecution(
+                defWithDimensions(newDefForInsight(workspace, insight, filters), defaultDimensionsGenerator),
+                factory,
+            );
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
             throw new NotSupported("not yet supported");
         },
     };
+
+    return factory;
 }
 
-function dummyExecutionResult(definition: IExecutionDefinition): IExecutionResult {
+function dummyExecutionResult(
+    definition: IExecutionDefinition,
+    executionFactory: IExecutionFactory,
+): IExecutionResult {
     const fp = defFingerprint(definition) + "/emptyResult";
+
     const result: IExecutionResult = {
         definition,
         dimensions: [],
@@ -184,26 +201,29 @@ function dummyExecutionResult(definition: IExecutionDefinition): IExecutionResul
             throw new NotSupported("...");
         },
         transform(): IPreparedExecution {
-            return dummyPreparedExecution(definition);
+            return executionFactory.forDefinition(definition);
         },
     };
 
     return result;
 }
 
-function dummyPreparedExecution(definition: IExecutionDefinition): IPreparedExecution {
+function dummyPreparedExecution(
+    definition: IExecutionDefinition,
+    executionFactory: IExecutionFactory,
+): IPreparedExecution {
     const fp = defFingerprint(definition);
 
     return {
         definition,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return dummyPreparedExecution(defWithDimensions(definition, dim));
+            return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
         },
         withSorting(...items: SortItem[]): IPreparedExecution {
-            return dummyPreparedExecution(defWithSorting(definition, items));
+            return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
-            return new Promise(r => r(dummyExecutionResult(definition)));
+            return new Promise(r => r(dummyExecutionResult(definition, executionFactory)));
         },
         fingerprint(): string {
             return fp;

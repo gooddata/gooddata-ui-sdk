@@ -19,14 +19,15 @@ import { DataValue, IDimensionDescriptor, IResultHeader } from "./results";
  * Note: the execution factory WILL perform extensive input validation to ensure that the created
  * instance of prepared execution is semantically correct.
  *
- * The contract is that any freshly created instance of {@link IPreparedExecution} MUST be executable (of course
- * barring desync conditions with the backend where the data model changes).
- *
  * @public
  */
 export interface IExecutionFactory {
     /**
      * Prepares a new execution for the provided execution definition.
+     *
+     * The contract is that the definition is taken and used in the prepared execution AS IS. Compared
+     * to the other convenience methods, this method MUST NOT create prepared executions with automatically
+     * generated dimensions.
      *
      * @param def - execution definition
      * @returns new prepareted execution
@@ -36,6 +37,10 @@ export interface IExecutionFactory {
     /**
      * Prepares a new execution for a list of attributes and measures, optionally filtered using the
      * provided filters.
+     *
+     * The contract is that prepared executions created by this method MUST be executable and MUST come with
+     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * `@gooddata/sdk-model` package.
      *
      * @param items - list of attributes and measures, must not be empty
      * @param filters - list of filters, may not be provided
@@ -52,6 +57,10 @@ export interface IExecutionFactory {
      * Or more specifically, given two buckets with items as [A1, A2, M1] and [A3, M2, M3], the resulting
      * prepared execution WILL have definition with attributes = [A1, A2, A3] and measures = [M1, M2, M3]
      *
+     * The contract is that prepared executions created by this method MUST be executable and MUST come with
+     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * `@gooddata/sdk-model` package.
+     *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
      * @param filters - optional, may not be provided
      */
@@ -64,6 +73,10 @@ export interface IExecutionFactory {
      *
      * Additionally, an optional list of additional filters WILL be merged with the filters already defined in
      * the insight.
+     *
+     * The contract is that prepared executions created by this method MUST be executable and MUST come with
+     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * `@gooddata/sdk-model` package.
      *
      * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided
@@ -79,6 +92,10 @@ export interface IExecutionFactory {
      * authorization guarantees - for instance the backend MAY only allow end user to execute these stored insights
      * and not do any 'freeform' execution.
      *
+     * The contract is that prepared executions created by this method MUST be executable and MUST come with
+     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * `@gooddata/sdk-model` package.
+     *
      * @param uri - link to insight
      * @param filters - optional list of filters to merge with filters already defined in the insight
      */
@@ -91,6 +108,9 @@ export interface IExecutionFactory {
  *
  * To this end, it provides several functions to customize sort items and dimensions. The prepared execution
  * is immutable and so all the customization functions WILL result in a new instance of prepared execution.
+ *
+ * The contract for creating these new instances is that the new prepared execution MUST be created using the
+ * execution factory that created current execution.
  *
  * @public
  */
@@ -117,20 +137,7 @@ export interface IPreparedExecution {
      * @param dim - dimensions to set
      * @returns new execution with the updated dimensions
      */
-    withDimensions(...dim: IDimension[]): IPreparedExecution;
-
-    /**
-     * This is a convenience method to set dimensions of the resulting data. The prepared execution will call
-     * the provided function with any buckets accumulated in the definition so far and will set the dimensions
-     * to whatever values the function returns.
-     *
-     * The dimensions returned by the generator function are subject to the same constraints as if they were
-     * provided explicitly on input to withDimensions().
-     *
-     * @param f - generator function
-     * @returns new execution with the updated dimensions
-     */
-    withDimensions(f: DimensionGenerator): IPreparedExecution;
+    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
 
     /**
      * Starts the execution.

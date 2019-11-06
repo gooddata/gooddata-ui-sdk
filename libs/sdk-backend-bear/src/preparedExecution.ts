@@ -8,15 +8,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
-    IDimension,
-    IExecutionDefinition,
-    SortItem,
-    defaultDimensionsGenerator,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
+    IDimension,
+    IExecutionDefinition,
+    SortItem,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
@@ -28,14 +26,7 @@ export class BearPreparedExecution implements IPreparedExecution {
         private readonly authCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
-    ) {
-        if (isEmpty(this.definition.dimensions)) {
-            this.definition = {
-                ...this.definition,
-                dimensions: defaultDimensionsGenerator(this.definition),
-            };
-        }
-    }
+    ) {}
 
     public async execute(): Promise<IExecutionResult> {
         checkDefIsExecutable(this.definition);
@@ -60,19 +51,11 @@ export class BearPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return new BearPreparedExecution(
-            this.authCall,
-            defWithDimensions(this.definition, dimsOrGen),
-            this.executionFactory,
-        );
+        return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
     }
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return new BearPreparedExecution(
-            this.authCall,
-            defWithSorting(this.definition, items),
-            this.executionFactory,
-        );
+        return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     }
 
     public fingerprint(): string {

@@ -318,8 +318,7 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
-    withDimensions(...dim: IDimension[]): IPreparedExecution;
-    withDimensions(f: DimensionGenerator): IPreparedExecution;
+    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withSorting(...items: SortItem[]): IPreparedExecution;
 }
 
