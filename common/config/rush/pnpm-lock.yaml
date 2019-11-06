@@ -16109,7 +16109,7 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-YhsUqonNulvaLmCwvZqqU8OoNfjaVmcIWUpsXPWc4gM3jhj2fBqy9aBY7qWa3blHD0XbP/9dqHCaUfCOkFKtNA==
+      integrity: sha512-VK8o3+NTh6NBMvwgbfd7PF/PYCNEzCFUcDi63rsyHS5fqVzranCEoda6SyqPrgrGj2yTiN/eqP+TLZ2ZQx5ZNw==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz':
@@ -16224,12 +16224,13 @@ packages:
       prop-types: '*'
       webpack: '*'
     resolution:
-      integrity: sha512-fqT1aGmVqr0n/IAEDZEuvIaHjw6oXOw7vNhFXstnpJo8oMFqbNvxOlB5bEKp7KrzxpcIX29vJ+zo7D90fR97TA==
+      integrity: sha512-sDSYwrkFwVcMXm27YRdcR+Lu/DzCNq4EdtID8i2521LIapaH9BQfirO1mkiEzWVi3tq76ZyuUAfHPvDBcPlbZA==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@babel/core': ^7.4.4
-  '@gooddata/goodstrap': ^64.2.0
+  '@gooddata/goodstrap': ^64.3.0
   '@gooddata/js-utils': ^3.4.0
   '@gooddata/mock-js': ^1.31.0
   '@gooddata/numberjs': ^3.1.2
@@ -16321,7 +16322,7 @@ specifiers:
   madge: ^3.4.4
   md5: ^2.2.1
   node-fetch: ^1.7.3
-  node-sass: ^4.12.0
+  node-sass: ^4.13.0
   node-sass-magic-importer: ^5.3.2
   nodelist-foreach-polyfill: ^1.2.0
   ora: ^4.0.2

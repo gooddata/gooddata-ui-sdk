@@ -11,7 +11,7 @@
         font-size: 50px;
         white-space: nowrap;
 
-        @extend %gd-heading-1;
+        @include gd-heading-1;
 
         .headline-value-wrapper {
             display: inline-block;
@@ -94,7 +94,7 @@
         margin-bottom: 15px;
         color: $gd-color-state-blank;
 
-        @extend %gd-font-base;
+        @include gd-font-base;
     }
 
     .headline-compare-section-item {
