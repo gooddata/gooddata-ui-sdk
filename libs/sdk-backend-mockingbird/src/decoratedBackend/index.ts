@@ -14,29 +14,31 @@ import {
     IWorkspaceMetadata,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
+    IDimensionDescriptor,
+    IExportResult,
+    IExportConfig,
+    IDataView,
 } from "@gooddata/sdk-backend-spi";
-import { DimensionGenerator, IDimension, IExecutionDefinition, SortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    DimensionGenerator,
+    IBucket,
+    IDimension,
+    IExecutionDefinition,
+    IFilter,
+    IInsight,
+    SortItem,
+} from "@gooddata/sdk-model";
 
 import isEmpty = require("lodash/isEmpty");
-
-/**
- * Provides factory functions for the different service decorators (currently only supports execution
- * decorator). Input to each factory function is the original implementation from the wrapped backend, output
- * is whatever decorateur sees fit.
- *
- * @internal
- */
-export type ServiceDecoratorFactories = {
-    execution?: (execution: IExecutionFactory) => IExecutionFactory;
-};
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: BackendCapabilities;
     public config: AnalyticalBackendConfig;
     private decorated: IAnalyticalBackend;
-    private readonly factories: ServiceDecoratorFactories;
+    private readonly factories: DecoratorFactories;
 
-    constructor(backend: IAnalyticalBackend, factories: ServiceDecoratorFactories = {}) {
+    constructor(backend: IAnalyticalBackend, factories: DecoratorFactories = {}) {
         this.decorated = backend;
         this.factories = factories;
         this.capabilities = backend.capabilities;
@@ -74,9 +76,9 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     public workspace: string;
     private decorated: IAnalyticalWorkspace;
-    private readonly factories: ServiceDecoratorFactories;
+    private readonly factories: DecoratorFactories;
 
-    constructor(decorated: IAnalyticalWorkspace, factories: ServiceDecoratorFactories) {
+    constructor(decorated: IAnalyticalWorkspace, factories: DecoratorFactories) {
         this.decorated = decorated;
         this.factories = factories;
         this.workspace = decorated.workspace;
@@ -109,8 +111,48 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 }
 
+export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
+
 /**
- * Superclass for prepared execution decorators.
+ * Base class for execution factory decorators. Implements all delegates.
+ *
+ * There is an opt-in functionality to decorate the prepared executions - which is a typical use case for
+ * factory decorators.
+ */
+export class DecoratedExecutionFactory implements IExecutionFactory {
+    constructor(
+        private readonly decorated: IExecutionFactory,
+        private readonly wrapper?: PreparedExecutionWrapper,
+    ) {}
+
+    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
+        return this.wrap(this.decorated.forDefinition(def));
+    }
+
+    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+        return this.wrap(this.decorated.forItems(items, filters));
+    }
+
+    public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
+        return this.wrap(this.decorated.forBuckets(buckets, filters));
+    }
+
+    public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+        return this.wrap(this.decorated.forInsight(insight, filters));
+    }
+
+    public forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution> {
+        return this.decorated.forInsightByRef(uri, filters).then(this.wrap);
+    }
+
+    private wrap = (execution: IPreparedExecution) => {
+        return this.wrapper ? this.wrapper(execution) : execution;
+    };
+}
+
+/**
+ * Abstract base class for prepared execution decorators. Implements delegates to decorated execution. Concrete
+ * implementations can override just the functions they are interested in.
  *
  * @internal
  */
@@ -143,12 +185,70 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     /**
      * Methods that create new instances of prepared executions (withDimensions, withSorting) will
-     * call out to this method to create decorated execution.
+     * call out to this method to create decorated execution. This is essential to maintain the decoration
+     * during immutable operations where decorated implementation creates new instances.
      *
      * @param decorated - instance to decorate
      */
     protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
 }
+
+/**
+ * Abstract base class for execution result decorators. Implements delegates to decorated execution. Concrete
+ * implementations can override just the functions they are interested in.
+ *
+ * The prepared execution wrap is needed here because of the transform function which normally creates new
+ * instances of prepared execution - and so the decoration needs to be maintained.
+ *
+ * @internal
+ */
+export abstract class DecoratedExecutionResult implements IExecutionResult {
+    public readonly definition: IExecutionDefinition;
+    public readonly dimensions: IDimensionDescriptor[];
+
+    constructor(
+        private readonly decorated: IExecutionResult,
+        private readonly wrapper: PreparedExecutionWrapper,
+    ) {
+        this.definition = decorated.definition;
+        this.dimensions = decorated.dimensions;
+    }
+
+    public export(options: IExportConfig): Promise<IExportResult> {
+        return this.decorated.export(options);
+    }
+
+    public readAll(): Promise<IDataView> {
+        return this.decorated.readAll();
+    }
+
+    public readWindow(offset: number[], size: number[]): Promise<IDataView> {
+        return this.decorated.readWindow(offset, size);
+    }
+
+    public transform(): IPreparedExecution {
+        return this.wrapper(this.decorated.transform());
+    }
+
+    public equals(other: IExecutionResult): boolean {
+        return this.decorated.equals(other);
+    }
+
+    public fingerprint(): string {
+        return this.decorated.fingerprint();
+    }
+}
+
+/**
+ * Provides factory functions for the different decorators (currently only supports execution
+ * decorator). Input to each factory function is the original implementation from the wrapped backend, output
+ * is whatever decorateur sees fit.
+ *
+ * @internal
+ */
+export type DecoratorFactories = {
+    execution?: (executionFactory: IExecutionFactory) => IExecutionFactory;
+};
 
 /**
  * Decorated backend is a wrapper of any other backend implementations that can be used to enrich
@@ -162,7 +262,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
  * @returns new decorated backend
  * @internal
  */
-export function decoratedBackend(backend: IAnalyticalBackend, decorators: ServiceDecoratorFactories) {
+export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories) {
     if (isEmpty(decorators)) {
         return backend;
     }
