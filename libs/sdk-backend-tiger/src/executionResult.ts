@@ -2,7 +2,6 @@
 
 import {
     DataValue,
-    DataViewError,
     IDataView,
     IExecutionResult,
     IExportConfig,
@@ -12,6 +11,8 @@ import {
     IResultHeader,
     NotImplemented,
     NotSupported,
+    UnexpectedError,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import SparkMD5 from "spark-md5";
@@ -68,15 +69,19 @@ export class TigerExecutionResult implements IExecutionResult {
         return promisedRes
             .then(res => {
                 if (!res) {
-                    throw new DataViewError(
-                        "An error has occurred while trying to obtain data view for result",
-                    );
+                    // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
+                    //  perhaps legitimate NoDataCase?
+                    throw new UnexpectedError("Server returned no data");
+                }
+
+                if (isEmptyDataResult(res)) {
+                    throw new NoDataError("The execution resulted in no data to display.");
                 }
 
                 return new TigerDataView(this, res);
             })
             .catch(e => {
-                throw new DataViewError(
+                throw new UnexpectedError(
                     "An error has occurred while trying to obtain data view for result",
                     e,
                 );
@@ -149,4 +154,16 @@ class TigerDataView implements IDataView {
     public equals(other: IDataView): boolean {
         return this.fingerprint() === other.fingerprint();
     }
+}
+
+function hasEmptyData(result: Execution.IExecutionResult): boolean {
+    return result.data.length === 0;
+}
+
+function hasMissingHeaderItems(result: Execution.IExecutionResult): boolean {
+    return !result.headerItems;
+}
+
+function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
+    return hasEmptyData(result) && hasMissingHeaderItems(result);
 }

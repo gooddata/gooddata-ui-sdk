@@ -1,11 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import {
-    ExecutionError,
-    IExecutionFactory,
-    IExecutionResult,
-    IPreparedExecution,
-} from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
     defWithDimensions,
@@ -16,6 +11,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "./commonTypes";
+import { convertExecutionApiError } from "./errorHandling";
 import { BearExecutionResult } from "./executionResult";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
@@ -45,7 +41,7 @@ export class BearPreparedExecution implements IPreparedExecution {
                     );
                 })
                 .catch(e => {
-                    throw new ExecutionError("An error has occurred while doing execution on backend", e);
+                    throw convertExecutionApiError(e);
                 }),
         );
     }

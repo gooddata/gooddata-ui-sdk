@@ -34,6 +34,18 @@ export abstract class AnalyticalBackendError extends Error {
 }
 
 // @public
+export const AnalyticalBackendErrorTypes: {
+    NO_DATA: string;
+    DATA_TOO_LARGE: string;
+    PROTECTED_DATA: string;
+    UNEXPECTED_HTTP: string;
+    UNEXPECTED: string;
+    NOT_SUPPORTED: string;
+    NOT_IMPLEMENTED: string;
+    NOT_AUTHENTICATED: string;
+};
+
+// @public
 export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
 // @public
@@ -62,12 +74,12 @@ export type BackendCapabilities = {
 };
 
 // @public
-export type DataValue = null | string | number;
-
-// @public
-export class DataViewError extends AnalyticalBackendError {
+export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @public
+export type DataValue = null | string | number;
 
 // @alpha
 export class DataViewFacade {
@@ -121,11 +133,6 @@ export class DataViewFacade {
     // (undocumented)
     totals(): DataValue[][][] | undefined;
     twoDimData(): DataValue[][];
-}
-
-// @public
-export class ExecutionError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error);
 }
 
 // @public
@@ -359,16 +366,16 @@ export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendErro
 export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 
 // @public
-export function isDataViewError(obj: any): obj is DataViewError;
-
-// @public
-export function isExecutionError(obj: any): obj is ExecutionError;
+export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
 
 // @public
 export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
 
 // @public
 export function isMeasureGroupDescriptor(obj: any): obj is IMeasureGroupDescriptor;
+
+// @public
+export function isNoDataError(obj: any): obj is NoDataError;
 
 // @public
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated;
@@ -378,6 +385,9 @@ export function isNotImplemented(obj: any): obj is NotImplemented;
 
 // @public
 export function isNotSupported(obj: any): obj is NotSupported;
+
+// @public
+export function isProtectedDataError(obj: any): obj is ProtectedDataError;
 
 // @public
 export function isResultAttributeHeader(obj: any): obj is IResultAttributeHeader;
@@ -390,6 +400,12 @@ export function isResultTotalHeader(obj: any): obj is IResultTotalHeader;
 
 // @public
 export function isTotalDescriptor(obj: any): obj is ITotalDescriptor;
+
+// @public
+export function isUnexpectedError(obj: any): obj is UnexpectedError;
+
+// @public
+export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseError;
 
 // @public
 export interface ITotalDescriptor {
@@ -427,6 +443,11 @@ export interface IWorkspaceStylingService {
 }
 
 // @public
+export class NoDataError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
+
+// @public
 export class NotAuthenticated extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
@@ -443,6 +464,25 @@ export class NotSupported extends AnalyticalBackendError {
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+
+// @public
+export class ProtectedDataError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
+
+// @public
+export class UnexpectedError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
+
+// @public
+export class UnexpectedResponseError extends AnalyticalBackendError {
+    constructor(message: string, httpStatus: number, responseBody: any, cause?: Error);
+    // (undocumented)
+    readonly httpStatus: number;
+    // (undocumented)
+    readonly responseBody: number;
+}
 
 
 // (No @packageDocumentation comment for this package)

@@ -6,7 +6,7 @@ import { ErrorComponent } from "./base/simple/ErrorComponent";
 import { LoadingComponent } from "./base/simple/LoadingComponent";
 import { Kpi } from "./kpi/Kpi";
 // import { Visualization } from "./_defunct/uri/Visualization";
-import { ErrorStates, ErrorCodes } from "./base/constants/errorStates";
+import { ErrorStates } from "./base/constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
 // import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
@@ -38,7 +38,6 @@ export {
     BucketNames,
     CatalogHelper,
     ChartType,
-    ErrorCodes,
     ErrorStates,
     ErrorComponent,
     Kpi,

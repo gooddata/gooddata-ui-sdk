@@ -10,7 +10,8 @@ import {
     IAuthenticationProvider,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import { AsyncCall, isApiResponseError } from "./commonTypes";
+import { AsyncCall, ErrorConverter } from "./commonTypes";
+import { convertApiError, isApiResponseError } from "./errorHandling";
 import { BearWorkspace } from "./workspace";
 import isEmpty = require("lodash/isEmpty");
 
@@ -124,7 +125,7 @@ export class BearBackend implements IAnalyticalBackend {
 
     public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
         if (!force) {
-            return this.authCall(sdk => {
+            return this.authApiCall(sdk => {
                 return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
             });
         }
@@ -133,24 +134,31 @@ export class BearBackend implements IAnalyticalBackend {
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
-        return new BearWorkspace(this.authCall, id);
+        return new BearWorkspace(this.authApiCall, id);
     }
 
     /**
-     * Perform API call that requires authentication; if the current session is not authenticated, then
-     * call out to the provider to authenticate.
+     * Perform API call that requires authentication. The call will be decorated with error handling
+     * such that not authenticated errors will trigger authentication flow AND other errors will be
+     * converted using the provided converter and throw.
      *
      * @param call - a call which requires an authenticated session
+     * @param errorConverter - converter from rest client errors to analytical backend errors
      */
-    public authCall = <T>(call: AsyncCall<T>): Promise<T> => {
+    public authApiCall = <T>(
+        call: AsyncCall<T>,
+        errorConverter: ErrorConverter = convertApiError,
+    ): Promise<T> => {
         return call(this.sdk).catch(err => {
             if (!isNotAuthenticatedError(err)) {
-                throw err;
+                throw errorConverter(err);
             }
 
             return this.triggerAuthentication()
                 .then(_ => {
-                    return call(this.sdk);
+                    return call(this.sdk).catch(e => {
+                        throw errorConverter(e);
+                    });
                 })
                 .catch(err2 => {
                     throw new NotAuthenticated("Current session is not authenticated.", err2);

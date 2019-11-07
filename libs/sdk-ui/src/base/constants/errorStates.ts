@@ -1,11 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-export enum ErrorCodes {
-    APP_NO_DATA = 1001,
-    EMPTY_AFM = 1002,
-
-    INVALID_BUCKETS = 2001,
-}
-
 export type CANCELLED = "CANCELLED";
 
 export const ErrorStates = {

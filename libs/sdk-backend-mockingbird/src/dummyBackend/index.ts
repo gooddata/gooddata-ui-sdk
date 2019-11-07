@@ -17,6 +17,8 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     AuthenticatedPrincipal,
+    IResultHeader,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -36,7 +38,28 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 
-const defaultConfig = { hostname: "test", username: "testUser@example.com" };
+/**
+ *
+ */
+export type DummyBackendConfig = AnalyticalBackendConfig & {
+    /**
+     * Influences whether readAll() / readWindow() should throw NoDataError() or return empty data view.
+     *
+     * The empty data view is returned by default - and can be used in tests that verify definition parts of
+     * the returned data view.
+     *
+     * Throwing NoDataError is closer to how normal backends behave.
+     */
+    raiseNoDataExceptions: boolean;
+};
+
+/**
+ *
+ */
+export const defaultDummyBackendConfig: DummyBackendConfig = {
+    hostname: "test",
+    raiseNoDataExceptions: false,
+};
 
 /**
  * Returns dummy backend - this backend focuses on the execution 'branch' of the SPI. it implements
@@ -50,7 +73,7 @@ const defaultConfig = { hostname: "test", username: "testUser@example.com" };
  * @param config - optionally provide configuration of the backend (host/user)
  * @internal
  */
-export function dummyBackend(config: AnalyticalBackendConfig = defaultConfig): IAnalyticalBackend {
+export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
     const noopBackend: IAnalyticalBackend = {
         capabilities: {},
         config,
@@ -64,7 +87,7 @@ export function dummyBackend(config: AnalyticalBackendConfig = defaultConfig): I
             return this;
         },
         workspace(id: string): IAnalyticalWorkspace {
-            return dummyWorkspace(id);
+            return dummyWorkspace(id, config);
         },
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "dummyUser" });
@@ -98,16 +121,24 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
  * @returns new instance of data view
  * @internal
  */
-export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView {
-    const factory = dummyExecutionFactory(definition.workspace);
-    const execResult = result ? result : dummyExecutionResult(definition, factory);
+export function dummyDataView(
+    definition: IExecutionDefinition,
+    result?: IExecutionResult,
+    config: DummyBackendConfig = defaultDummyBackendConfig,
+): IDataView {
+    const factory = dummyExecutionFactory(definition.workspace, config);
+    const execResult = result ? result : dummyExecutionResult(definition, factory, config);
 
     const fp = defFingerprint(definition) + "/emptyView";
+
+    const emptyHeaders: IResultHeader[][][] = definition.dimensions.map(dim =>
+        dim.itemIdentifiers.map(_ => []),
+    );
 
     return {
         definition,
         result: execResult,
-        headerItems: [],
+        headerItems: emptyHeaders,
         data: [],
         offset: [0, 0],
         count: [0, 0],
@@ -124,11 +155,11 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // Internals
 //
 
-function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
+function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyticalWorkspace {
     return {
         workspace,
         execution(): IExecutionFactory {
-            return dummyExecutionFactory(workspace);
+            return dummyExecutionFactory(workspace, config);
         },
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
@@ -145,27 +176,30 @@ function dummyWorkspace(workspace: string): IAnalyticalWorkspace {
     };
 }
 
-function dummyExecutionFactory(workspace: string): IExecutionFactory {
+function dummyExecutionFactory(workspace: string, config: DummyBackendConfig): IExecutionFactory {
     const factory: IExecutionFactory = {
         forDefinition(def: IExecutionDefinition): IPreparedExecution {
-            return dummyPreparedExecution(def, factory);
+            return dummyPreparedExecution(def, factory, config);
         },
         forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
             return dummyPreparedExecution(
                 defWithDimensions(newDefForItems(workspace, items, filters), defaultDimensionsGenerator),
                 factory,
+                config,
             );
         },
         forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
             return dummyPreparedExecution(
                 defWithDimensions(newDefForBuckets(workspace, buckets, filters), defaultDimensionsGenerator),
                 factory,
+                config,
             );
         },
         forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
             return dummyPreparedExecution(
                 defWithDimensions(newDefForInsight(workspace, insight, filters), defaultDimensionsGenerator),
                 factory,
+                config,
             );
         },
         forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
@@ -179,6 +213,7 @@ function dummyExecutionFactory(workspace: string): IExecutionFactory {
 function dummyExecutionResult(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
+    config: DummyBackendConfig,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/emptyResult";
 
@@ -186,10 +221,18 @@ function dummyExecutionResult(
         definition,
         dimensions: [],
         readAll(): Promise<IDataView> {
-            return new Promise(r => r(dummyDataView(definition, result)));
+            if (config.raiseNoDataExceptions) {
+                return Promise.reject(new NoDataError("Empty data view from dummy backend"));
+            }
+
+            return Promise.resolve(dummyDataView(definition, result, config));
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
-            return new Promise(r => r(dummyDataView(definition, result)));
+            if (config.raiseNoDataExceptions) {
+                return Promise.reject(new NoDataError("Empty data view from dummy backend"));
+            }
+
+            return Promise.resolve(dummyDataView(definition, result, config));
         },
         fingerprint(): string {
             return fp;
@@ -211,6 +254,7 @@ function dummyExecutionResult(
 function dummyPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
+    config: DummyBackendConfig,
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
 
@@ -223,7 +267,7 @@ function dummyPreparedExecution(
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
         execute(): Promise<IExecutionResult> {
-            return new Promise(r => r(dummyExecutionResult(definition, executionFactory)));
+            return new Promise(r => r(dummyExecutionResult(definition, executionFactory, config)));
         },
         fingerprint(): string {
             return fp;

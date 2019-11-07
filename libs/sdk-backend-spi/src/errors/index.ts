@@ -2,7 +2,24 @@
 import isEmpty = require("lodash/isEmpty");
 
 /**
+ * Types of errors that can be raised by Analytical Backends.
+ *
+ * @public
+ */
+export const AnalyticalBackendErrorTypes = {
+    NO_DATA: "ND",
+    DATA_TOO_LARGE: "DTL",
+    PROTECTED_DATA: "PD",
+    UNEXPECTED_HTTP: "UH",
+    UNEXPECTED: "UE",
+    NOT_SUPPORTED: "NS",
+    NOT_IMPLEMENTED: "NI!",
+    NOT_AUTHENTICATED: "NAuth",
+};
+
+/**
  * Superclass for all exceptions that can occur in Analytical Backend.
+ *
  * @public
  */
 export abstract class AnalyticalBackendError extends Error {
@@ -12,32 +29,79 @@ export abstract class AnalyticalBackendError extends Error {
 }
 
 /**
- * Class for exceptions that can happen while submitting execution
+ * This exception MUST be thrown when the backend execution identifies that there is no data to
+ * calculate.
+ *
  * @public
  */
-export class ExecutionError extends AnalyticalBackendError {
+export class NoDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error) {
-        super(message, "EE", cause);
+        super(message, AnalyticalBackendErrorTypes.NO_DATA, cause);
     }
 }
 
 /**
- * Class for exceptions that can happen while obtaining data view
+ * This exception MUST be thrown when backend execution identifies that there is too much data
+ * to process for the execution and refuses to proceed.
+ *
  * @public
  */
-export class DataViewError extends AnalyticalBackendError {
+export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error) {
-        super(message, "DV", cause);
+        super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
+    }
+}
+
+/**
+ * This exception MUST be thrown when backend execution identifies that the data to calculate
+ * results for is protected and the caller lacks the sufficient authorization.
+ *
+ * @public
+ */
+export class ProtectedDataError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.PROTECTED_DATA, cause);
+    }
+}
+
+/**
+ * This exception MUST be thrown when communication with the backend encounters an unexpected
+ * response status code and it cannot handle or categorize it to a known, domain-specific error.
+ *
+ * @public
+ */
+export class UnexpectedResponseError extends AnalyticalBackendError {
+    public readonly httpStatus: number;
+    public readonly responseBody: number;
+
+    constructor(message: string, httpStatus: number, responseBody: any, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.UNEXPECTED_HTTP, cause);
+
+        this.httpStatus = httpStatus;
+        this.responseBody = responseBody;
+    }
+}
+
+/**
+ * This exception MUST be thrown when the unexpected happens. This is a last-resort error type that SHOULD
+ * be used if the erroneous state cannot be categorized in a better way.
+ *
+ * @public
+ */
+export class UnexpectedError extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.UNEXPECTED, cause);
     }
 }
 
 /**
  * This exception is thrown when client code asks Analytical Backend to exercise an unsupported feature.
+ *
  * @public
  */
 export class NotSupported extends AnalyticalBackendError {
     constructor(message: string) {
-        super(message, "UF");
+        super(message, AnalyticalBackendErrorTypes.NOT_SUPPORTED);
     }
 }
 
@@ -48,7 +112,7 @@ export class NotSupported extends AnalyticalBackendError {
  */
 export class NotImplemented extends AnalyticalBackendError {
     constructor(message: string) {
-        super(message, "NI!");
+        super(message, AnalyticalBackendErrorTypes.NOT_IMPLEMENTED);
     }
 }
 
@@ -60,14 +124,13 @@ export class NotImplemented extends AnalyticalBackendError {
  */
 export class NotAuthenticated extends AnalyticalBackendError {
     constructor(message: string, cause?: Error) {
-        super(message, "NAuth", cause);
+        super(message, AnalyticalBackendErrorTypes.NOT_AUTHENTICATED, cause);
     }
 }
 
 /**
- * Tests whether input is an AnalyticalBackendError.
+ * Type guard checking whether input is an instance of {@link AnalyticalBackendError}
  *
- * @param obj - anything
  * @public
  */
 export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendError {
@@ -75,51 +138,73 @@ export function isAnalyticalBackendError(obj: any): obj is AnalyticalBackendErro
 }
 
 /**
- * Tests whether input is an ExecutionError.
+ * Type guard checking whether input is an instance of {@link NoDataError}
  *
- * @param obj - anything
  * @public
  */
-export function isExecutionError(obj: any): obj is ExecutionError {
-    return isAnalyticalBackendError(obj) && obj.abeType === "EE";
+export function isNoDataError(obj: any): obj is NoDataError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NO_DATA;
 }
 
 /**
- * Tests whether input is an DataViewError.
+ * Type guard checking whether input is an instance of {@link DataTooLargeError}
  *
- * @param obj - anything
  * @public
  */
-export function isDataViewError(obj: any): obj is DataViewError {
-    return isAnalyticalBackendError(obj) && obj.abeType === "DV";
+export function isDataTooLargeError(obj: any): obj is DataTooLargeError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.DATA_TOO_LARGE;
 }
 
 /**
- * Tests whether input is an NotSupported error.
+ * Type guard checking whether input is an instance of {@link ProtectedDataError}
  *
- * @param obj - anything
+ * @public
+ */
+export function isProtectedDataError(obj: any): obj is ProtectedDataError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.PROTECTED_DATA;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link UnexpectedResponseError}
+ *
+ * @public
+ */
+export function isUnexpectedResponseError(obj: any): obj is UnexpectedResponseError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.UNEXPECTED_HTTP;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link UnexpectedResponseError}
+ *
+ * @public
+ */
+export function isUnexpectedError(obj: any): obj is UnexpectedError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.UNEXPECTED;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link NotSupported}
+ *
  * @public
  */
 export function isNotSupported(obj: any): obj is NotSupported {
-    return isAnalyticalBackendError(obj) && obj.abeType === "UF";
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_SUPPORTED;
 }
 
 /**
- * Tests whether input is a NotImplemented error.
+ * Type guard checking whether input is an instance of {@link NotImplemented}
  *
- * @param obj - anything
  * @public
  */
 export function isNotImplemented(obj: any): obj is NotImplemented {
-    return isAnalyticalBackendError(obj) && obj.abeType === "NI!";
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_IMPLEMENTED;
 }
 
 /**
- * Tests whether input is a NotAuthenticated error.
+ * Type guard checking whether input is an instance of {@link NotAuthenticated}
  *
- * @param obj - anything
  * @public
  */
 export function isNotAuthenticated(obj: any): obj is NotAuthenticated {
-    return isAnalyticalBackendError(obj) && obj.abeType === "NAuth";
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_AUTHENTICATED;
 }

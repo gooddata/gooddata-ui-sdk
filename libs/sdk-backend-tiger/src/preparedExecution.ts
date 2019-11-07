@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    ExecutionError,
     IExecutionFactory,
     IExecutionResult,
     IPreparedExecution,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -39,7 +39,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 return new TigerExecutionResult(this.axios, this.definition, response);
             })
             .catch(e => {
-                throw new ExecutionError("An error has occurred while doing execution on backend", e);
+                throw new UnexpectedError("An error has occurred while doing execution on backend", e);
             });
     }
 

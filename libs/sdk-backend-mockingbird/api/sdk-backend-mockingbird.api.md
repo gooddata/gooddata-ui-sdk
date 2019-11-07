@@ -22,10 +22,11 @@ export type AnalyticalBackendCallbacks = {
     successfulResultReadAll?: (dataView: IDataView) => void;
 };
 
+// Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
-export function dummyBackend(config?: AnalyticalBackendConfig): IAnalyticalBackend;
+export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 
 // Warning: (ae-internal-missing-underscore) The name "dummyDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
 // 
@@ -35,7 +36,7 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
 // Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
-export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult): IDataView;
+export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
 // Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 // 

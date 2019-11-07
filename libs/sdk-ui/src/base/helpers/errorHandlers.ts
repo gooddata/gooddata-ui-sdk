@@ -1,24 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
-import { isAnalyticalBackendError } from "@gooddata/sdk-backend-spi";
-import { ApiResponseError } from "@gooddata/gd-bear-client";
-import { InjectedIntl } from "react-intl";
-import { ErrorCodes, ErrorStates } from "../constants/errorStates";
+import {
+    AnalyticalBackendErrorTypes,
+    isAnalyticalBackendError,
+    isUnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
 import * as HttpStatusCodes from "http-status-codes";
-import { RuntimeError } from "../errors/RuntimeError";
-import get = require("lodash/get");
-import includes = require("lodash/includes");
-
-function getJSONFromText(data: string): object {
-    try {
-        return JSON.parse(data);
-    } catch (e) {
-        return null;
-    }
-}
-
-function isApiResponseError(error: TypeError | ApiResponseError): error is ApiResponseError {
-    return (error as ApiResponseError).response !== undefined;
-}
+import { InjectedIntl } from "react-intl";
+import { ErrorStates } from "../constants/errorStates";
+import { isSdkError, RuntimeError } from "../errors/RuntimeError";
 
 export interface IErrorMap {
     [key: string]: {
@@ -57,51 +46,34 @@ export function generateErrorMap(intl: InjectedIntl): IErrorMap {
 }
 
 // CAREFUL: error can also be of different type than listed
-export function convertErrors(inError: ApiResponseError | TypeError): RuntimeError {
-    let error = inError;
+export function convertErrors(inError: Error): RuntimeError {
+    if (isSdkError(inError)) {
+        return inError;
+    } else if (isAnalyticalBackendError(inError)) {
+        if (isUnexpectedResponseError(inError)) {
+            switch (inError.httpStatus) {
+                case HttpStatusCodes.NOT_FOUND:
+                    return new RuntimeError(ErrorStates.NOT_FOUND, inError);
+                case HttpStatusCodes.BAD_REQUEST:
+                    return new RuntimeError(ErrorStates.BAD_REQUEST, inError);
+                default:
+                    return new RuntimeError(ErrorStates.UNKNOWN_ERROR, inError);
+            }
+        }
 
-    // TODO: SDK8: revisit this after we have a more solid error handling strategy in SPI
-    // unwrap ApiResponseErrors that caused analytical backend errors
-    if (isAnalyticalBackendError(inError)) {
-        if (isApiResponseError(inError.cause)) {
-            error = inError.cause;
+        switch (inError.abeType) {
+            case AnalyticalBackendErrorTypes.NO_DATA:
+                return new RuntimeError(ErrorStates.NO_DATA, inError);
+            case AnalyticalBackendErrorTypes.DATA_TOO_LARGE:
+                return new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, inError);
+            case AnalyticalBackendErrorTypes.PROTECTED_DATA:
+                return new RuntimeError(ErrorStates.PROTECTED_REPORT, inError);
+            case AnalyticalBackendErrorTypes.NOT_AUTHENTICATED:
+                return new RuntimeError(ErrorStates.UNAUTHORIZED, inError);
+            default:
+                return new RuntimeError(ErrorStates.UNKNOWN_ERROR, inError);
         }
     }
 
-    if (!isApiResponseError(error)) {
-        return new RuntimeError(error.message, error);
-    }
-
-    const errorCode: number = error.response.status;
-    switch (errorCode) {
-        case HttpStatusCodes.NO_CONTENT:
-            return new RuntimeError(ErrorStates.NO_DATA, error);
-
-        case HttpStatusCodes.REQUEST_TOO_LONG:
-            return new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_COMPUTE, error);
-
-        case HttpStatusCodes.BAD_REQUEST:
-            const message = get(getJSONFromText(error.responseBody), "error.message", "");
-
-            if (includes(message, "Attempt to execute protected report unsafely")) {
-                return new RuntimeError(ErrorStates.PROTECTED_REPORT, error);
-            } else {
-                return new RuntimeError(ErrorStates.BAD_REQUEST, error);
-            }
-
-        case HttpStatusCodes.NOT_FOUND:
-            return new RuntimeError(ErrorStates.NOT_FOUND, error);
-
-        case HttpStatusCodes.UNAUTHORIZED:
-            return new RuntimeError(ErrorStates.UNAUTHORIZED, error);
-
-        case ErrorCodes.EMPTY_AFM:
-            return new RuntimeError(ErrorStates.EMPTY_AFM);
-
-        case ErrorCodes.INVALID_BUCKETS:
-            return new RuntimeError(ErrorStates.INVALID_BUCKETS);
-
-        default:
-            return new RuntimeError(ErrorStates.UNKNOWN_ERROR);
-    }
+    return new RuntimeError(ErrorStates.UNKNOWN_ERROR, inError);
 }
