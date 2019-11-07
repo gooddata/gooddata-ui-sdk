@@ -118,6 +118,9 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
  * @param definition - execution definition
  * @param result - optionally a result to link with the data view, if not provided an execution result will be
  *  created
+ * @param config - optionally override config that will be passed to exec result that may be created for the
+ *  data view (it is needed there in order to correctly handle readAll() and read()); config will not be used
+ *  if the `result` parameter is provided explicitly
  * @returns new instance of data view
  * @internal
  */

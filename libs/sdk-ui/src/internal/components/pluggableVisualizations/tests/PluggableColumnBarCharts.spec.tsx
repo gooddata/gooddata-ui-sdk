@@ -32,7 +32,7 @@ describe("PluggableColumnBarCharts", () => {
         return new PluggableColumnChart(props);
     }
 
-    const executionFactory = dummyBackend()
+    const executionFactory = dummyBackend({ hostname: "test", raiseNoDataExceptions: true })
         .workspace("PROJECTID")
         .execution();
 
