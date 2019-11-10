@@ -43,6 +43,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-backend-bear",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-backend-mockingbird",
       "allowedCategories": [ "production" ]
     },
