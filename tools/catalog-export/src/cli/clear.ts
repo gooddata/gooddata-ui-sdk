@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import * as readline from "readline";
 
-export function clearTermial(clr: boolean = true) {
+export function clearTerminal(clr: boolean = true) {
     if (clr) {
         process.stdout.write("\x1b[2J\x1b[H");
     }
