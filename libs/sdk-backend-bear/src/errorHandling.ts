@@ -60,7 +60,7 @@ export function convertApiError(error: any): AnalyticalBackendError {
             return new NotAuthenticated("Not authenticated against backend");
         }
 
-        return new UnexpectedResponseError(error.message, error.response.status, error.responseBody);
+        return new UnexpectedResponseError(error.message, error.response.status, error.responseBody, error);
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
