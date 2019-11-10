@@ -14,5 +14,5 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .addScenario("single measure with viewBy and stackBy", {
         measures: [ReferenceLdm.Won],
         viewBy: [ReferenceLdm.Account.Name],
-        stackBy: ReferenceLdm.ActivityType,
+        stackBy: ReferenceLdm.Department,
     });

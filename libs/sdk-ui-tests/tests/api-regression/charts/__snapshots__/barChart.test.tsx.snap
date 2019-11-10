@@ -83,9 +83,9 @@ Object {
     Object {
       "attribute": Object {
         "displayForm": Object {
-          "identifier": "label.activity.activitytype",
+          "identifier": "label.owner.department",
         },
-        "localIdentifier": "a_label.activity.activitytype",
+        "localIdentifier": "a_label.owner.department",
       },
     },
   ],
@@ -125,9 +125,9 @@ Object {
         Object {
           "attribute": Object {
             "displayForm": Object {
-              "identifier": "label.activity.activitytype",
+              "identifier": "label.owner.department",
             },
-            "localIdentifier": "a_label.activity.activitytype",
+            "localIdentifier": "a_label.owner.department",
           },
         },
       ],
@@ -137,7 +137,7 @@ Object {
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "a_label.activity.activitytype",
+        "a_label.owner.department",
       ],
     },
     Object {
