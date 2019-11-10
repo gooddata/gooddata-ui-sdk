@@ -22,6 +22,15 @@
     },
     {
       "commandKind": "bulk",
+      "name": "write-exec-defs",
+      "summary": "Makes projects write definitions of executions to reference workspace. These definitions can then be executed and their results recorded in the reference workspace as well.",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "prettier-write",
       "summary": "Formats code in all projects",
       "safeForSimultaneousRushProcesses": true,
