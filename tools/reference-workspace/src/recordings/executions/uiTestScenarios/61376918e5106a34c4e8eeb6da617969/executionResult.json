@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_afSEwRwdbMeQ",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1284",
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Name",
+                        "localIdentifier": "a_label.account.id.name",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/970",
+                        "identifier": "label.account.id.name",
+                        "formOf": {
+                            "name": "Account",
+                            "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/969",
+                            "identifier": "attr.account.id"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
