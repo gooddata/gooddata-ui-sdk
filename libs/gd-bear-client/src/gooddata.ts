@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
+import { getAttributesDisplayForms } from "@gooddata/gd-bear-model";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
 import { MetadataModule } from "./metadata";
@@ -10,21 +11,19 @@ import { DashboardModule } from "./dashboard/dashboard";
 import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
 import { CatalogueModule } from "./catalogue";
 import { AdminModule } from "./admin";
-
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
-import { getAttributesDisplayForms } from "./utils/visualizationObjectHelper";
 
 /**
  * # JS SDK
- * Here is a set of functions that mostly are a thin wraper over the [GoodData API](https://developer.gooddata.com/api).
+ * Here is a set of functions that mostly are a thin wrapper over the [GoodData API](https://developer.gooddata.com/api).
  * Before calling any of those functions, you need to authenticate with a valid GoodData
  * user credentials. After that, every subsequent call in the current session is authenticated.
  * You can find more about the GD authentication mechanism here.
  *
- * ## GD Authentication Mechansim
+ * ## GD Authentication Mechanism
  * In this JS SDK library we provide you with a simple `login(username, passwd)` function
  * that does the magic for you.
- * To fully understand the authentication mechansim, please read
+ * To fully understand the authentication mechanism, please read
  * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
  * on [GoodData Developer Portal](http://developer.gooddata.com/)
  *

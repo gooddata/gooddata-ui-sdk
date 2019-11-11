@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
-import { DashboardExport } from "@gooddata/gd-bear-model";
+import { DashboardExport, sanitizeDateFilters } from "@gooddata/gd-bear-model";
 import { ApiResponse, XhrModule } from "../xhr";
 import { IExportResponse } from "../interfaces";
 import { handleHeadPolling, IPollingOptions } from "../util";
-import { isExportFinished, sanitizeDateFilters } from "../utils/export";
+import { isExportFinished } from "../utils/export";
 
 interface IDashboardExportPayload {
     dashboardExport: {
@@ -40,13 +40,7 @@ export class DashboardModule {
         pollingOptions: IPollingOptions,
     ): Promise<IExportResponse> {
         const data: IExportResponse = response.getData();
-        const exportResponse = await handleHeadPolling(
-            this.xhr.head.bind(this.xhr),
-            data.uri,
-            isExportFinished,
-            pollingOptions,
-        );
-        return exportResponse;
+        return handleHeadPolling(this.xhr.head.bind(this.xhr), data.uri, isExportFinished, pollingOptions);
     }
 
     private getDashboardExportPayload(

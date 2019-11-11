@@ -1,7 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
-import { IObjectMeta } from "./Meta";
-import isEmpty = require("lodash/isEmpty");
+import { IObjectMeta } from "../meta/Meta";
+import isEmpty from "lodash/isEmpty";
 
+/**
+ * @public
+ */
 export namespace VisualizationObject {
     export type SortDirection = "asc" | "desc";
     export type Identifier = string;
@@ -144,21 +147,25 @@ export namespace VisualizationObject {
         | IPreviousPeriodMeasureDefinition;
 
     export interface IMeasure {
-        measure: {
-            localIdentifier: Identifier;
-            definition: IMeasureDefinitionType;
-            alias?: string;
-            title?: string;
-            format?: string;
-        };
+        measure: IMeasureContent;
+    }
+
+    export interface IMeasureContent {
+        localIdentifier: Identifier;
+        definition: IMeasureDefinitionType;
+        alias?: string;
+        title?: string;
+        format?: string;
     }
 
     export interface IVisualizationAttribute {
-        visualizationAttribute: {
-            localIdentifier: Identifier;
-            displayForm: ObjQualifier;
-            alias?: string;
-        };
+        visualizationAttribute: IVisualizationAttributeContent;
+    }
+
+    export interface IVisualizationAttributeContent {
+        localIdentifier: Identifier;
+        displayForm: ObjQualifier;
+        alias?: string;
     }
 
     export interface IMeasureDefinition {

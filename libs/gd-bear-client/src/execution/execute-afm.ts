@@ -35,10 +35,9 @@ export class ExecuteAfmModule {
      *
      * @method executeAfm
      * @param {String} projectId - GD project identifier
-     * @param {AFM.IExecution} execution - See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/AFM.ts#L2
+     * @param {ExecuteAFM.IExecution} execution
      *
-     * @returns {Promise<Execution.IExecutionResponses>} Structure with `executionResponse` and `executionResult` -
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L113
+     * @returns {Promise<Execution.IExecutionResponses>} Structure with `executionResponse` and `executionResult`
      */
     public executeAfm(
         projectId: string,
@@ -62,10 +61,9 @@ export class ExecuteAfmModule {
      *
      * @method getExecutionResponse
      * @param {string} projectId - GD project identifier
-     * @param {AFM.IExecution} execution - See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/AFM.ts#L2
+     * @param {ExecuteAFM.IExecution} execution
      *
      * @returns {Promise<Execution.IExecutionResponse>} Promise with `executionResponse`
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L69
      */
     public getExecutionResponse(
         projectId: string,
@@ -149,7 +147,6 @@ export class ExecuteAfmModule {
      *
      * @returns {Promise<Execution.IExecutionResult | null>}
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
     public getPartialExecutionResult(
         executionResultUri: string,
@@ -171,7 +168,6 @@ export class ExecuteAfmModule {
      *
      * @returns {Promise<Execution.IExecutionResult | null>}
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
     public getExecutionResult(executionResultUri: string): Promise<Execution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);

@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
+import { ExecuteAFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
 import { dummyDataFacade, legacyRecordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { IBucket, IInsight, IMeasure, newDefForBuckets } from "@gooddata/sdk-model";
 
@@ -165,7 +165,7 @@ export const pivotTableMDO: IVisualization = {
                         },
                     },
                     // To make sure sortItems are typed even in stringify and to satisfy linter
-                ] as AFM.IAttributeSortItem[],
+                ] as ExecuteAFM.IAttributeSortItem[],
             }),
         },
         meta: {

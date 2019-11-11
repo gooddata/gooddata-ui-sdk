@@ -471,4 +471,437 @@ describe("AFM", () => {
             expect(result).toEqual(false);
         });
     });
+
+    describe("isObjectUriQualifier", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isObjectUriQualifier(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isObjectUriQualifier(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when identifier object qualifier is tested", () => {
+            const objectQualifier: AFM.ObjQualifier = {
+                identifier: "id",
+            };
+            const result = AFM.isObjectUriQualifier(objectQualifier);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when uri object qualifier is tested", () => {
+            const objectQualifier: AFM.ObjQualifier = {
+                uri: "/gdc/mock/id",
+            };
+            const result = AFM.isObjectUriQualifier(objectQualifier);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe("isObjIdentifierQualifier", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isObjIdentifierQualifier(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isObjIdentifierQualifier(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when uri object qualifier is tested", () => {
+            const objectQualifier: AFM.ObjQualifier = {
+                uri: "/gdc/mock/id",
+            };
+            const result = AFM.isObjIdentifierQualifier(objectQualifier);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when identifier object qualifier is tested", () => {
+            const objectQualifier: AFM.ObjQualifier = {
+                identifier: "id",
+            };
+            const result = AFM.isObjIdentifierQualifier(objectQualifier);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe("isSimpleMeasureDefinition", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isSimpleMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isSimpleMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when simple measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
+
+        it("should return false when arithmetic measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ["/gdc/mock/measure"],
+                    operator: "sum",
+                },
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when pop measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: "m1",
+                    popAttribute: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when previous period measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: "m1",
+                    dateDataSets: [
+                        {
+                            dataSet: {
+                                uri: "/gdc/mock/date",
+                            },
+                            periodsAgo: 1,
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe("isArithmeticMeasureDefinition", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isArithmeticMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isArithmeticMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when simple measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when arithmetic measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ["/gdc/mock/measure"],
+                    operator: "sum",
+                },
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
+
+        it("should return false when pop measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: "m1",
+                    popAttribute: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when previous period measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: "m1",
+                    dateDataSets: [
+                        {
+                            dataSet: {
+                                uri: "/gdc/mock/date",
+                            },
+                            periodsAgo: 1,
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isArithmeticMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe("isPopMeasureDefinition", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isPopMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isPopMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when simple measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isPopMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when arithmetic measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ["/gdc/mock/measure"],
+                    operator: "sum",
+                },
+            };
+            const result = AFM.isPopMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when pop measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: "m1",
+                    popAttribute: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isPopMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
+
+        it("should return false when previous period measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: "m1",
+                    dateDataSets: [
+                        {
+                            dataSet: {
+                                uri: "/gdc/mock/date",
+                            },
+                            periodsAgo: 1,
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isSimpleMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe("isPreviousPeriodMeasureDefinition", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isPreviousPeriodMeasureDefinition(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isPreviousPeriodMeasureDefinition(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when simple measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                measure: {
+                    item: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when arithmetic measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                arithmeticMeasure: {
+                    measureIdentifiers: ["/gdc/mock/measure"],
+                    operator: "sum",
+                },
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when pop measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                popMeasure: {
+                    measureIdentifier: "m1",
+                    popAttribute: {
+                        uri: "/gdc/mock/measure",
+                    },
+                },
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when previous period measure definition is tested", () => {
+            const measure: AFM.MeasureDefinition = {
+                previousPeriodMeasure: {
+                    measureIdentifier: "m1",
+                    dateDataSets: [
+                        {
+                            dataSet: {
+                                uri: "/gdc/mock/date",
+                            },
+                            periodsAgo: 1,
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe("isAttributeSortItem", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isAttributeSortItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isAttributeSortItem(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when attribute sort item is tested", () => {
+            const sortItem: AFM.SortItem = {
+                attributeSortItem: {
+                    direction: "asc",
+                    attributeIdentifier: "a1",
+                },
+            };
+            const result = AFM.isAttributeSortItem(sortItem);
+            expect(result).toEqual(true);
+        });
+
+        it("should return false when measure sort item is tested", () => {
+            const sortItem: AFM.SortItem = {
+                measureSortItem: {
+                    direction: "asc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isAttributeSortItem(sortItem);
+            expect(result).toEqual(false);
+        });
+    });
+
+    describe("isMeasureSortItem", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isMeasureSortItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isMeasureSortItem(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when attribute sort item is tested", () => {
+            const sortItem: AFM.SortItem = {
+                attributeSortItem: {
+                    direction: "asc",
+                    attributeIdentifier: "a1",
+                },
+            };
+            const result = AFM.isMeasureSortItem(sortItem);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when measure sort item is tested", () => {
+            const sortItem: AFM.SortItem = {
+                measureSortItem: {
+                    direction: "asc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            };
+            const result = AFM.isMeasureSortItem(sortItem);
+            expect(result).toEqual(true);
+        });
+    });
+
+    describe("isMeasureLocatorItem", () => {
+        it("should return false when null is tested", () => {
+            const result = AFM.isMeasureLocatorItem(null);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when undefined is tested", () => {
+            const result = AFM.isMeasureLocatorItem(undefined);
+            expect(result).toEqual(false);
+        });
+
+        it("should return false when attribute locator is tested", () => {
+            const locatorItem: AFM.LocatorItem = {
+                attributeLocatorItem: {
+                    attributeIdentifier: "a1",
+                    element: "element",
+                },
+            };
+            const result = AFM.isMeasureLocatorItem(locatorItem);
+            expect(result).toEqual(false);
+        });
+
+        it("should return true when measure locator filter is tested", () => {
+            const locatorItem: AFM.LocatorItem = {
+                measureLocatorItem: {
+                    measureIdentifier: "m1",
+                },
+            };
+            const result = AFM.isMeasureLocatorItem(locatorItem);
+            expect(result).toEqual(true);
+        });
+    });
 });

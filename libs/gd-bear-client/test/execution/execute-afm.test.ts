@@ -2,7 +2,7 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import range from "lodash/range";
-import { AFM, Execution } from "@gooddata/gd-bear-model";
+import { ExecuteAFM, Execution } from "@gooddata/gd-bear-model";
 import {
     ExecuteAfmModule,
     getNextLimit,
@@ -91,7 +91,7 @@ function getExecutionResultResponseBody(): string {
     return JSON.stringify(result);
 }
 
-function getExecution(numOfDimensions: number = 2): AFM.IExecution {
+function getExecution(numOfDimensions: number = 2): ExecuteAFM.IExecution {
     const dimension = { itemIdentifiers: [] };
 
     return {

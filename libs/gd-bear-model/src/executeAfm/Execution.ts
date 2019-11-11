@@ -1,4 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
+
+/**
+ * @public
+ */
 export namespace Execution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
@@ -49,19 +53,22 @@ export namespace Execution {
 
     export interface IResultMeasureHeaderItem {
         measureHeaderItem: {
-            name: string,
-            order: number
+            name: string;
+            order: number;
         };
     }
 
     export interface IResultTotalHeaderItem {
         totalHeaderItem: {
-            name: string,
-            type: string
+            name: string;
+            type: string;
         };
     }
 
-    export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+    export type IResultHeaderItem =
+        | IResultAttributeHeaderItem
+        | IResultMeasureHeaderItem
+        | IResultTotalHeaderItem;
 
     export interface IResultDimension {
         headers: IHeader[];

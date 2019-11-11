@@ -1,98 +1,24 @@
-// (C) 2019 GoodData Corporation
-import { DashboardExport } from "@gooddata/gd-bear-model";
-import { isDateFilter, sanitizeDateFilter, sanitizeDateFilters } from "../../src/utils/export";
+// (C) 2007-2019 GoodData Corporation
+import { isExportFinished } from "../../src/utils/export";
 
-describe("utils for dashboard export", () => {
-    describe("sanitizeDateFilters", () => {
-        const relativeDateFilter: DashboardExport.FilterContextItem = {
-            dateFilter: {
-                type: "relative",
-                from: -11,
-                to: 11,
-                granularity: "GDC.time.month",
-            },
-        };
-
-        const absoluteDateFilter: DashboardExport.FilterContextItem = {
-            dateFilter: {
-                type: "absolute",
-                from: "2019-08-06",
-                to: "2019-08-08",
-                granularity: "GDC.time.month",
-            },
-        };
-
-        const attributeFilter: DashboardExport.FilterContextItem = {
-            attributeFilter: {
-                displayForm: "/gdc/md/testProjectId/obj/700",
-                negativeSelection: false,
-                attributeElements: ["/gdc/md/testProjectId/obj/750", "/gdc/md/testProjectId/obj/751"],
-            },
-        };
-
-        it("should not be date filter", () => {
-            expect(isDateFilter(attributeFilter)).toBe(false);
+describe("export utils", () => {
+    describe("isExportFinished", () => {
+        it("should return true when response ended as success", async () => {
+            // tslint:disable-next-line:no-object-literal-type-assertion
+            const response = { status: 200 } as Response;
+            expect(isExportFinished(response)).toBe(true);
         });
 
-        it("should be date filter", () => {
-            expect(isDateFilter(relativeDateFilter)).toBe(true);
+        it("should return false when response ended as bad error", () => {
+            // tslint:disable-next-line:no-object-literal-type-assertion
+            const response = { status: 400 } as Response;
+            expect(isExportFinished(response)).toBe(true);
         });
 
-        it("should sanitize date filter", () => {
-            expect(sanitizeDateFilter(relativeDateFilter)).toEqual({
-                dateFilter: {
-                    type: "relative",
-                    from: "-11",
-                    to: "11",
-                    granularity: "GDC.time.month",
-                },
-            });
-        });
-
-        it("should reduce payload", () => {
-            expect(
-                sanitizeDateFilter({
-                    dateFilter: {
-                        type: "relative",
-                        from: undefined,
-                        to: undefined,
-                        granularity: "GDC.time.month",
-                    },
-                }),
-            ).toEqual({
-                dateFilter: {
-                    type: "relative",
-                    granularity: "GDC.time.month",
-                },
-            });
-        });
-
-        it("should sanitize date filters", () => {
-            expect(sanitizeDateFilters([absoluteDateFilter, relativeDateFilter, attributeFilter])).toEqual([
-                {
-                    dateFilter: {
-                        type: "absolute",
-                        from: "2019-08-06",
-                        to: "2019-08-08",
-                        granularity: "GDC.time.month",
-                    },
-                },
-                {
-                    dateFilter: {
-                        type: "relative",
-                        from: "-11",
-                        to: "11",
-                        granularity: "GDC.time.month",
-                    },
-                },
-                {
-                    attributeFilter: {
-                        displayForm: "/gdc/md/testProjectId/obj/700",
-                        negativeSelection: false,
-                        attributeElements: ["/gdc/md/testProjectId/obj/750", "/gdc/md/testProjectId/obj/751"],
-                    },
-                },
-            ]);
+        it("should return false when response ended as internal error", () => {
+            // tslint:disable-next-line:no-object-literal-type-assertion
+            const response = { status: 500 } as Response;
+            expect(isExportFinished(response)).toBe(true);
         });
     });
 });

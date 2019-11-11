@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, AFM, ExecuteAFM } from "@gooddata/gd-bear-model";
+import { VisualizationObject, ExecuteAFM } from "@gooddata/gd-bear-model";
 
 export type SortDirection = "asc" | "desc";
 
@@ -308,7 +308,7 @@ export interface IPropertiesControls {
 
 export interface IProperties {
     controls?: IPropertiesControls;
-    sortItems?: AFM.SortItem[];
+    sortItems?: ExecuteAFM.SortItem[];
 }
 
 export interface IStoredItemDescription {

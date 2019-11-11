@@ -1,9 +1,13 @@
 // (C) 2019 GoodData Corporation
-import { ExtendedDateFilters } from './ExtendedDateFilters';
+import isEmpty from "lodash/isEmpty";
+import { ExtendedDateFilters } from "../extendedDateFilters/ExtendedDateFilters";
 
+/**
+ * @internal
+ */
 export namespace DashboardExport {
-    export type RelativeType = 'relative';
-    export type AbsoluteType = 'absolute';
+    export type RelativeType = "relative";
+    export type AbsoluteType = "absolute";
     export type DateFilterType = RelativeType | AbsoluteType;
 
     export interface IAttributeFilter {
@@ -26,4 +30,12 @@ export namespace DashboardExport {
     }
 
     export type FilterContextItem = IAttributeFilter | IDateFilter;
+
+    export function isDateFilter(filter: FilterContextItem): filter is IDateFilter {
+        return !isEmpty(filter) && !!(filter as IDateFilter).dateFilter;
+    }
+
+    export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter {
+        return !isEmpty(filter) && !!(filter as IAttributeFilter).attributeFilter;
+    }
 }
