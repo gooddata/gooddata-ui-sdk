@@ -18,7 +18,7 @@ export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 
 //
-// Single use case
+// Single scenario
 //
 
 /**
@@ -85,19 +85,56 @@ export class ScenarioBuilder<T extends VisProps> {
 }
 
 //
-// Use cases for visualization
+// Scenario groups
 //
 
-export type ScenarioSet<T extends VisProps> = { [name: string]: IScenario<T> };
+/**
+ * Configuration for visual tests in included in a scenario group
+ */
+export type VisualTestConfiguration = {
+    /**
+     * Specifies size of the screenshot to take for visual regression
+     */
+    screenshotSize?: {
+        width: number;
+        height: number;
+    };
 
-export interface IScenariosForComponent<T extends VisProps> {
+    /**
+     * Specify that visual scenarios in the scenario group should be visually grouped into a single
+     * story of this name. If this happens, then the scenario name will be used as caption above particular
+     * screenshot.
+     */
+    groupUnder?: string;
+};
+
+/**
+ * Configuration for tests in a scenario group. Only visual tests need configuration at the moment.
+ */
+export type TestConfiguration = {
+    visual: VisualTestConfiguration;
+};
+
+type ScenarioSet<T extends VisProps> = { [name: string]: IScenario<T> };
+
+export interface IScenarioGroup<T extends VisProps> {
+    /**
+     * Human readable name of the visualization for which there are scenarios
+     */
     readonly vis: string;
+
+    /**
+     * React component that realizes the visualization.
+     */
     readonly component: React.ComponentType<T>;
+
     readonly scenarioList: ReadonlyArray<IScenario<T>>;
+    readonly testConfig: TestConfiguration;
 }
 
-export class ScenariosForComponent<T extends VisProps> implements IScenariosForComponent<T> {
+export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public scenarioList: Array<IScenario<T>> = [];
+    public testConfig: TestConfiguration = { visual: {} };
     private scenarioIndex: ScenarioSet<T> = {};
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
@@ -114,7 +151,7 @@ export class ScenariosForComponent<T extends VisProps> implements IScenariosForC
         name: string,
         props: UnboundVisProps<T>,
         m: ScenarioModification<T> = identity,
-    ): ScenariosForComponent<T> {
+    ): ScenarioGroup<T> {
         const exists = this.scenarioIndex[name];
 
         invariant(!exists, `contract "${name}" for ${this.vis} already exists`);
@@ -127,6 +164,17 @@ export class ScenariosForComponent<T extends VisProps> implements IScenariosForC
     }
 
     /**
+     * Configures how to do visual regression tests for scenarios in this group.
+     *
+     * @param config - instance of config, will be used as is, will replace any existing config.
+     */
+    public withVisualTestConfig(config: VisualTestConfiguration): ScenarioGroup<T> {
+        this.testConfig.visual = config;
+
+        return this;
+    }
+
+    /**
      * Filters scenarios by types of tests that should be run on top of them. This is immutable, the original
      * instance is left unfiltered and a copy of filtered scenarios is returned.
      *
@@ -134,8 +182,8 @@ export class ScenariosForComponent<T extends VisProps> implements IScenariosForC
      *   of these test types will be returned
      * @returns always new instance, may contain no scenarios
      */
-    public forTestTypes = (...testTypes: TestTypes[]): ScenariosForComponent<T> => {
-        const filtered = new ScenariosForComponent(this.vis, this.component);
+    public forTestTypes = (...testTypes: TestTypes[]): ScenarioGroup<T> => {
+        const filtered = new ScenarioGroup(this.vis, this.component);
 
         this.scenarioList.forEach(u => {
             if (intersection(u.tests, testTypes).length > 0) {
@@ -178,6 +226,6 @@ export class ScenariosForComponent<T extends VisProps> implements IScenariosForC
 export function scenariosFor<T extends VisProps>(
     chart: string,
     component: React.ComponentType<T>,
-): ScenariosForComponent<T> {
-    return new ScenariosForComponent(chart, component);
+): ScenarioGroup<T> {
+    return new ScenarioGroup(chart, component);
 }
