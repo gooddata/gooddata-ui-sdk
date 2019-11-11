@@ -69,3 +69,4 @@ libs/**/src/**/*.js
 libs/**/src/**/*.jsx
 .rush/temp/**
 .gdcatalogrc
+.gdmockrc

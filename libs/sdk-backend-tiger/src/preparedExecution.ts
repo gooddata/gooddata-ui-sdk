@@ -1,14 +1,19 @@
 // (C) 2019 GoodData Corporation
 
-import { ExecutionError, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IDimension,
-    SortItem,
+    IExecutionFactory,
+    IExecutionResult,
+    IPreparedExecution,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
+import {
     defFingerprint,
-    IExecutionDefinition,
-    DimensionGenerator,
     defWithDimensions,
     defWithSorting,
+    DimensionGenerator,
+    IDimension,
+    IExecutionDefinition,
+    SortItem,
 } from "@gooddata/sdk-model";
 import { AxiosInstance } from "axios";
 import { TigerExecutionResult } from "./executionResult";
@@ -16,12 +21,13 @@ import { executeAfm } from "./gd-tiger-client/execution";
 import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
 export class TigerPreparedExecution implements IPreparedExecution {
-    public readonly definition: IExecutionDefinition;
     private _fingerprint: string | undefined;
 
-    constructor(private readonly axios: AxiosInstance, def: IExecutionDefinition) {
-        this.definition = def;
-    }
+    constructor(
+        private readonly axios: AxiosInstance,
+        public readonly definition: IExecutionDefinition,
+        private readonly executionFactory: IExecutionFactory,
+    ) {}
 
     public async execute(): Promise<IExecutionResult> {
         checkDefIsExecutable(this.definition);
@@ -33,16 +39,16 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 return new TigerExecutionResult(this.axios, this.definition, response);
             })
             .catch(e => {
-                throw new ExecutionError("An error has occurred while doing execution on backend", e);
+                throw new UnexpectedError("An error has occurred while doing execution on backend", e);
             });
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return new TigerPreparedExecution(this.axios, defWithDimensions(this.definition, dimsOrGen));
+        return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
     }
 
     public withSorting(...items: SortItem[]): IPreparedExecution {
-        return new TigerPreparedExecution(this.axios, defWithSorting(this.definition, items));
+        return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     }
 
     public fingerprint(): string {

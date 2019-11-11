@@ -1,0 +1,15 @@
+{
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+    "testRegex": "/tests/(smoke-and-capture).*\\.test\\.tsx?$",
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "moduleNameMapper": {
+        "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/__mocks__/jestSvgStub.js",
+        "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts"
+    },
+    "globals": {
+        "ts-jest": {
+            "packageJson": "package.json"
+        }
+    }
+}

@@ -3,10 +3,12 @@
 import { IExecutionFactory, IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
+    defaultDimensionsGenerator,
+    defWithDimensions,
     IBucket,
+    IExecutionDefinition,
     IFilter,
     IInsight,
-    IExecutionDefinition,
     newDefForBuckets,
     newDefForInsight,
     newDefForItems,
@@ -22,19 +24,28 @@ export class BearExecution implements IExecutionFactory {
     }
 
     public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-        const def = newDefForItems(this.workspace, items, filters);
+        const def = defWithDimensions(
+            newDefForItems(this.workspace, items, filters),
+            defaultDimensionsGenerator,
+        );
 
         return this.forDefinition(def);
     }
 
     public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-        const def = newDefForBuckets(this.workspace, buckets, filters);
+        const def = defWithDimensions(
+            newDefForBuckets(this.workspace, buckets, filters),
+            defaultDimensionsGenerator,
+        );
 
         return this.forDefinition(def);
     }
 
     public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-        const def = newDefForInsight(this.workspace, insight, filters);
+        const def = defWithDimensions(
+            newDefForInsight(this.workspace, insight, filters),
+            defaultDimensionsGenerator,
+        );
 
         return this.forDefinition(def);
     }

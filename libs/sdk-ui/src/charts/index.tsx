@@ -26,3 +26,5 @@ export { PieChart, IPieChartProps } from "./pieChart/PieChart";
 export { ScatterPlot, IScatterPlotProps } from "./scatterPlot/ScatterPlot";
 
 export { Treemap, ITreemapProps } from "./treemap/Treemap";
+
+export { withJsxExport } from "./withJsxExport";

@@ -170,7 +170,7 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: SortItem
  */
 export function defWithDimensions(
     definition: IExecutionDefinition,
-    dims: Array<IDimension | DimensionGenerator>,
+    ...dims: Array<IDimension | DimensionGenerator>
 ): IExecutionDefinition {
     return defSetDimensions(definition, toDimensions(dims, definition));
 }

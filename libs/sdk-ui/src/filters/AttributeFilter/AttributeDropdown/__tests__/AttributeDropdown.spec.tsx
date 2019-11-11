@@ -11,6 +11,10 @@ import { waitForAsync } from "../../../../../testUtils/synchronization";
 import { AttributeDropdown } from "../AttributeDropdown";
 import { AttributeFilterItem } from "../AttributeFilterItem";
 
+/*
+ * NOTE: I suspect these tests may be flaky; I happened on a test run where one of them failed -> no change -> rerun
+ *  -> all is good. The failed test run was in batch test mode (no interactive jest run)
+ */
 describe("AttributeDropdown", () => {
     const backend = recordedBackend(MasterIndex);
     const workspace = "testWorkspace";

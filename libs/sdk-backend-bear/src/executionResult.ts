@@ -3,7 +3,6 @@
 import { Execution } from "@gooddata/gd-bear-model";
 import {
     DataValue,
-    DataViewError,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
@@ -12,17 +11,20 @@ import {
     IPreparedExecution,
     IDimensionDescriptor,
     IResultHeader,
+    NoDataError,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { AuthenticatedCallGuard } from "./commonTypes";
+import { convertExecutionApiError } from "./errorHandling";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
     private readonly _fingerprint: string;
 
     constructor(
-        private readonly authCall: AuthenticatedCallGuard,
+        private readonly authApiCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly execFactory: IExecutionFactory,
         private readonly execResponse: Execution.IExecutionResponse,
@@ -33,7 +35,10 @@ export class BearExecutionResult implements IExecutionResult {
 
     public async readAll(): Promise<IDataView> {
         return this.asDataView(
-            this.authCall(sdk => sdk.execution.getExecutionResult(this.execResponse.links.executionResult)),
+            this.authApiCall(
+                sdk => sdk.execution.getExecutionResult(this.execResponse.links.executionResult),
+                convertExecutionApiError,
+            ),
         );
     }
 
@@ -42,12 +47,14 @@ export class BearExecutionResult implements IExecutionResult {
         const saneSize = sanitizeSize(size);
 
         return this.asDataView(
-            this.authCall(sdk =>
-                sdk.execution.getPartialExecutionResult(
-                    this.execResponse.links.executionResult,
-                    saneSize,
-                    saneOffset,
-                ),
+            this.authApiCall(
+                sdk =>
+                    sdk.execution.getPartialExecutionResult(
+                        this.execResponse.links.executionResult,
+                        saneSize,
+                        saneOffset,
+                    ),
+                convertExecutionApiError,
             ),
         );
     }
@@ -57,7 +64,7 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        return this.authCall(sdk =>
+        return this.authApiCall(sdk =>
             sdk.report.exportResult(
                 this.definition.workspace,
                 this.execResponse.links.executionResult,
@@ -75,25 +82,19 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     private asDataView: DataViewFactory = promisedRes => {
-        return promisedRes
-            .then(res => {
-                if (!res) {
-                    throw new DataViewError(
-                        "An error has occurred while trying to obtain data view for result",
-                    );
-                }
+        return promisedRes.then(res => {
+            if (!res) {
+                // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
+                //  perhaps legitimate NoDataCase?
+                throw new UnexpectedError("Server returned no data");
+            }
 
-                // TODO: SDK8: enable empty result checking? moved this here from helpers, it was used in vis loading HOC
-                // const result = checkEmptyResult(res);
+            if (isEmptyDataResult(res)) {
+                throw new NoDataError("The execution resulted in no data to display.");
+            }
 
-                return new BearDataView(this, res);
-            })
-            .catch(e => {
-                throw new DataViewError(
-                    "An error has occurred while trying to obtain data view for result",
-                    e,
-                );
-            });
+            return new BearDataView(this, res);
+        });
     };
 }
 
@@ -164,20 +165,4 @@ function hasMissingHeaderItems(result: Execution.IExecutionResult): boolean {
 
 function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
     return hasEmptyData(result) && hasMissingHeaderItems(result);
-}
-
-// @ts-ignore
-function checkEmptyResult(result: Execution.IExecutionResult) {
-    if (isEmptyDataResult(result)) {
-        throw {
-            name: "EmptyResultError",
-            response: {
-                status: 204,
-                json: () => Promise.resolve(null),
-                text: () => Promise.resolve(null),
-            },
-        };
-    }
-
-    return result;
 }

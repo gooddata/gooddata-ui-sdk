@@ -15,9 +15,13 @@
 # The subsequent build / rebuild will then overwrite the dummy file and everything will be on track.
 #
 
-if [ ! -f "tools/catalog-export/dist/index.js" ]; then
-  mkdir -p "tools/catalog-export/dist"
-  cat >"tools/catalog-export/dist/index.js" << EOF
+FILE="tools/catalog-export/dist/index.js";
+DIR=`dirname ${FILE}`
+
+if [ ! -f ${FILE} ]; then
+  mkdir -p ${DIR}
+  cat >$FILE << EOF
+#!/usr/bin/env node
 console.error("You are calling dummy-garage bootstrapped version of catalog export; this was created by bootstrap-catalog-export preInstall hook - in order for rush link to work. Please run rush rebuild.");
 EOF
 fi

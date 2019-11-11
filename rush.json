@@ -222,7 +222,10 @@
         /**
          * The list of shell commands to run before the Rush installation starts
          */
-        "preRushInstall": ["common/scripts/bootstrap-catalog-export.sh"],
+        "preRushInstall": [
+            "common/scripts/bootstrap-catalog-export.sh",
+            "common/scripts/bootstrap-mock-handling.sh"
+        ],
 
         /**
          * The list of shell commands to run after the Rush installation finishes
@@ -297,6 +300,12 @@
      * 3. It's useful to have a centralized inventory of all projects and their important metadata.
      */
     "projects": [
+        {
+            "packageName": "@gooddata/sdk-ui-tests",
+            "projectFolder": "libs/sdk-ui-tests",
+            "reviewCategory": "production",
+            "shouldPublish": true
+        },
         {
             "packageName": "@gooddata/reference-workspace",
             "projectFolder": "tools/reference-workspace",

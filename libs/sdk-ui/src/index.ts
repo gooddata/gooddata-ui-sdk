@@ -6,7 +6,7 @@ import { ErrorComponent } from "./base/simple/ErrorComponent";
 import { LoadingComponent } from "./base/simple/LoadingComponent";
 import { Kpi } from "./kpi/Kpi";
 // import { Visualization } from "./_defunct/uri/Visualization";
-import { ErrorStates, ErrorCodes } from "./base/constants/errorStates";
+import { ErrorStates } from "./base/constants/errorStates";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
 // import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
@@ -21,67 +21,34 @@ import DerivedMeasureTitleSuffixFactory from "./base/factory/DerivedMeasureTitle
 import ArithmeticMeasureTitleFactory from "./base/factory/ArithmeticMeasureTitleFactory";
 // import { IDataSourceProviderInjectedProps } from "./_defunct/afm/DataSourceProvider";
 
-import { BarChart } from "./charts/barChart/BarChart";
-import { ColumnChart } from "./charts/columnChart/ColumnChart";
-import { LineChart } from "./charts/lineChart/LineChart";
-import { AreaChart } from "./charts/areaChart/AreaChart";
-import { PieChart } from "./charts/pieChart/PieChart";
-import { Treemap } from "./charts/treemap/Treemap";
-import { DonutChart } from "./charts/donutChart/DonutChart";
-import { BubbleChart } from "./charts/bubbleChart/BubbleChart";
-import { Headline } from "./charts/headline/Headline";
-import { ScatterPlot } from "./charts/scatterPlot/ScatterPlot";
-import { ComboChart } from "./charts/comboChart/ComboChart";
-import { FunnelChart } from "./charts/funnelChart/FunnelChart";
-import { Heatmap } from "./charts/heatmap/Heatmap";
-import { withJsxExport } from "./charts/withJsxExport";
 import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
 // tslint:disable-next-line:no-duplicate-imports
-import { Chart, ChartTransformation, ILegendConfig, IChartConfig, ColorUtils } from "./highcharts";
 import { RuntimeError } from "./base/errors/RuntimeError";
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
 import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
 import * as MappingHeader from "./base/interfaces/MappingHeader";
-// import { BucketExecutor } from "./execution/BucketExecutor";
-
-export { PivotTable, IPivotTableConfig, IPivotTableBucketProps, IMenu } from "./pivotTable";
 
 import { InsightView } from "./insightView/InsightView";
+
 export {
     AttributeElements,
     AttributeFilter,
-    BarChart,
     BucketNames,
     CatalogHelper,
     ChartType,
-    ColumnChart,
-    ScatterPlot,
-    ComboChart,
-    FunnelChart,
-    ErrorCodes,
     ErrorStates,
     ErrorComponent,
     Kpi,
     Executor,
     withExecution,
     generateDimensions,
-    Headline,
     // ICommonVisualizationProps,
     IDrillableItem,
-    ILegendConfig,
-    IChartConfig,
     IPushData,
     IColorsData,
     LoadingComponent,
-    LineChart,
-    AreaChart,
-    PieChart,
-    Treemap,
-    BubbleChart,
-    DonutChart,
-    Heatmap,
     IMeasureTitleProps,
     IArithmeticMeasureTitleProps,
     MeasureTitleHelper,
@@ -91,15 +58,15 @@ export {
     VisEvents,
     VisualizationEnvironment,
     VisualizationTypes,
-    ChartTransformation,
-    Chart,
     OverTimeComparisonType,
     OverTimeComparisonTypes,
     SortsHelper,
-    ColorUtils,
     IHeaderPredicate,
     HeaderPredicateFactory,
     MappingHeader,
-    withJsxExport,
     InsightView,
 };
+
+export * from "./charts";
+export * from "./highcharts";
+export * from "./pivotTable";

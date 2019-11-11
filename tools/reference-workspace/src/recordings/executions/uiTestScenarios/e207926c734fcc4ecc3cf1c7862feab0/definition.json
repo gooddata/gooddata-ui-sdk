@@ -1,0 +1,90 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_afSEwRwdbMeQ"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.account.id.name"
+                        },
+                        "localIdentifier": "a_label.account.id.name"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "stack",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.department"
+                        },
+                        "localIdentifier": "a_label.owner.department"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.account.id.name"
+                },
+                "localIdentifier": "a_label.account.id.name"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.department"
+                },
+                "localIdentifier": "a_label.owner.department"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a_label.owner.department"]
+        },
+        {
+            "itemIdentifiers": ["a_label.account.id.name", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

@@ -2,25 +2,34 @@
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import {
-    DataViewError,
-    ExecutionError,
+    DataTooLargeError,
     isAnalyticalBackendError,
+    isDataTooLargeError,
+    isNoDataError,
+    isNotAuthenticated,
+    isNotImplemented,
+    isNotSupported,
+    isProtectedDataError,
+    isUnexpectedError,
+    isUnexpectedResponseError,
+    NoDataError,
+    NotAuthenticated,
     NotImplemented,
     NotSupported,
-    NotAuthenticated,
-    isExecutionError,
-    isDataViewError,
-    isNotSupported,
-    isNotImplemented,
-    isNotAuthenticated,
+    ProtectedDataError,
+    UnexpectedError,
+    UnexpectedResponseError,
 } from "../index";
 
 describe("result type guards", () => {
     describe("isAnalyticalBackendError", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [true, "execution error", new ExecutionError("fail")],
-            [true, "data view error", new DataViewError("fail")],
+            [true, "no data error", new NoDataError("fail")],
+            [true, "data too large error", new DataTooLargeError("fail")],
+            [true, "protected data", new ProtectedDataError("fail")],
+            [true, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [true, "unexpected error", new UnexpectedError("fail")],
             [true, "not supported error", new NotSupported("fail")],
             [true, "not implemented error", new NotImplemented("fail")],
             [true, "not authenticated", new NotAuthenticated("fail")],
@@ -31,41 +40,104 @@ describe("result type guards", () => {
         });
     });
 
-    describe("isExecutionError", () => {
+    describe("isNoDataError", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [true, "execution error", new ExecutionError("fail")],
-            [false, "data view error", new DataViewError("fail")],
+            [true, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedError("fail")],
             [false, "not supported error", new NotSupported("fail")],
             [false, "not implemented error", new NotImplemented("fail")],
             [false, "not authenticated", new NotAuthenticated("fail")],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isExecutionError(input)).toBe(expectedResult);
+            expect(isNoDataError(input)).toBe(expectedResult);
         });
     });
 
-    describe("isDataViewError", () => {
+    describe("isDataTooLargeError", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [false, "execution error", new ExecutionError("fail")],
-            [true, "data view error", new DataViewError("fail")],
+            [false, "no data error", new NoDataError("fail")],
+            [true, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedError("fail")],
             [false, "not supported error", new NotSupported("fail")],
             [false, "not implemented error", new NotImplemented("fail")],
             [false, "not authenticated", new NotAuthenticated("fail")],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isDataViewError(input)).toBe(expectedResult);
+            expect(isDataTooLargeError(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isProtectedDataError", () => {
+        const Scenarios: Array<[boolean, string, Error | any]> = [
+            ...InvalidInputTestCases,
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [true, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedError("fail")],
+            [false, "not supported error", new NotSupported("fail")],
+            [false, "not implemented error", new NotImplemented("fail")],
+            [false, "not authenticated", new NotAuthenticated("fail")],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isProtectedDataError(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isUnexpectedHttpError", () => {
+        const Scenarios: Array<[boolean, string, Error | any]> = [
+            ...InvalidInputTestCases,
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [true, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedError("fail")],
+            [false, "not supported error", new NotSupported("fail")],
+            [false, "not implemented error", new NotImplemented("fail")],
+            [false, "not authenticated", new NotAuthenticated("fail")],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isUnexpectedResponseError(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isUnexpectedError", () => {
+        const Scenarios: Array<[boolean, string, Error | any]> = [
+            ...InvalidInputTestCases,
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [true, "unexpected error", new UnexpectedError("fail")],
+            [false, "not supported error", new NotSupported("fail")],
+            [false, "not implemented error", new NotImplemented("fail")],
+            [false, "not authenticated", new NotAuthenticated("fail")],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isUnexpectedError(input)).toBe(expectedResult);
         });
     });
 
     describe("isNotSupported", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [false, "execution error", new ExecutionError("fail")],
-            [false, "data view error", new DataViewError("fail")],
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedResponseError("fail", 400, "")],
             [true, "not supported error", new NotSupported("fail")],
             [false, "not implemented error", new NotImplemented("fail")],
             [false, "not authenticated", new NotAuthenticated("fail")],
@@ -79,8 +151,11 @@ describe("result type guards", () => {
     describe("isNotImplemented", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [false, "execution error", new ExecutionError("fail")],
-            [false, "data view error", new DataViewError("fail")],
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedResponseError("fail", 400, "")],
             [false, "not supported error", new NotSupported("fail")],
             [true, "not implemented error", new NotImplemented("fail")],
             [false, "not authenticated", new NotAuthenticated("fail")],
@@ -94,8 +169,11 @@ describe("result type guards", () => {
     describe("isNotAuthenticated", () => {
         const Scenarios: Array<[boolean, string, Error | any]> = [
             ...InvalidInputTestCases,
-            [false, "execution error", new ExecutionError("fail")],
-            [false, "data view error", new DataViewError("fail")],
+            [false, "no data error", new NoDataError("fail")],
+            [false, "data too large error", new DataTooLargeError("fail")],
+            [false, "protected data", new ProtectedDataError("fail")],
+            [false, "unexpected response", new UnexpectedResponseError("fail", 400, "")],
+            [false, "unexpected error", new UnexpectedResponseError("fail", 400, "")],
             [false, "not supported error", new NotSupported("fail")],
             [false, "not implemented error", new NotImplemented("fail")],
             [true, "not authenticated", new NotAuthenticated("fail")],

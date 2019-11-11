@@ -174,7 +174,7 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: SortItem[]): IEx
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 
 // @public
-export function defWithDimensions(definition: IExecutionDefinition, dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
+export function defWithDimensions(definition: IExecutionDefinition, ...dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
 
 // @public
 export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;

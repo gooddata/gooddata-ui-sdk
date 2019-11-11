@@ -6,6 +6,12 @@ import omit = require("lodash/omit");
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 
 /**
+ * Specifies props that are on bucket chart props but not on core chart props - these must not be passed
+ * down to core chart.
+ */
+const NON_CORE_PROPS: Array<keyof IBucketChartProps> = ["backend", "workspace"];
+
+/**
  * Defines all the functions needed to render a chart.
  */
 export interface IChartDefinition<
@@ -55,10 +61,11 @@ export const getCoreChartProps = <
     const execution = chart.executionFactory(propsToUse, buckets);
     const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
     const propOverrides = chart.propOverridesFactory ? chart.propOverridesFactory(propsToUse, buckets) : {};
-    return {
+    const coreChartProps = {
         ...nonBucketProps,
         ...propOverrides,
         execution,
-        backend: propsToUse.backend, // make sure the required props are not removed
     };
+
+    return omit(coreChartProps, NON_CORE_PROPS);
 };

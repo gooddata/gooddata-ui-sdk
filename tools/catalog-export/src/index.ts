@@ -7,7 +7,7 @@ import gooddata from "@gooddata/gd-bear-client";
 import * as path from "path";
 import * as pkg from "../package.json";
 import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers";
-import { clearLine, clearTermial } from "./cli/clear";
+import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername, requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
@@ -30,7 +30,7 @@ program
     .parse(process.argv);
 
 async function run() {
-    clearTermial();
+    clearTerminal();
     printHeader(pkg.version);
 
     if (program.acceptUntrustedSsl) {
