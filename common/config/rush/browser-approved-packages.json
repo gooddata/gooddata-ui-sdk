@@ -7,6 +7,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@babel/runtime",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/catalog-export",
       "allowedCategories": [ "tools" ]
     },
@@ -235,6 +239,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "babel-runtime",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "caller-callsite",
       "allowedCategories": [ "production" ]
     },
@@ -253,6 +261,10 @@
     {
       "name": "commander",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "core-js",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "css-loader",

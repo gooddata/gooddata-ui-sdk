@@ -211,6 +211,10 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         });
     };
 
+    public isEmpty = (): boolean => {
+        return this.scenarioList.length === 0;
+    };
+
     private insertScenario(scenario: IScenario<T>): void {
         this.scenarioIndex[scenario.name] = scenario;
         this.scenarioList.push(scenario);

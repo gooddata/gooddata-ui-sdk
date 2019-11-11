@@ -139,7 +139,8 @@ Note: visual regression tests will fail if you run them before capturing executi
     test file, make alterations so that tests run against the new scenarios. Note: these are all parameterized
     snapshot tests. All the test files are the same with the exception of chart name & type.
 
--   Add visual regression tests: TODO
+-   Visual regression tests for all scenarios are created automatically. There are story creators in
+    `stories/visual-regression`.
 
 After this, you need to capture execution definition for this new combination and capture recording of the data
 backing the execution. See the next topic on how to do this.
@@ -159,7 +160,4 @@ manually: `npm run write-exec-defs`.
 This command will execute the 'smoke-and-capture' suite that will store execution definitions in the reference-workspace
 project.
 
-After this, you can navigate to the **reference-workspace** project and execute: TODO
-
-Alternatively, you can also run `rush write-exec-defs` and `rush ???` (TODO) to trigger global refresh of execution
-definitions and data recordings.
+After this, you can navigate to the **reference-workspace** project and execute: `./bin/refresh-recordings.sh`
