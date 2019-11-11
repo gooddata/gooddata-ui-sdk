@@ -93,13 +93,12 @@ export type ScenarioSet<T extends VisProps> = { [name: string]: IScenario<T> };
 export interface IScenariosForComponent<T extends VisProps> {
     readonly vis: string;
     readonly component: React.ComponentType<T>;
-    readonly scenarioIndex: ScenarioSet<T>;
     readonly scenarioList: ReadonlyArray<IScenario<T>>;
 }
 
 export class ScenariosForComponent<T extends VisProps> implements IScenariosForComponent<T> {
-    public scenarioIndex: ScenarioSet<T> = {};
     public scenarioList: Array<IScenario<T>> = [];
+    private scenarioIndex: ScenarioSet<T> = {};
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
 

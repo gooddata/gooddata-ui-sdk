@@ -1,17 +1,20 @@
 // (C) 2007-2019 GoodData Corporation
 
 import omit = require("lodash/omit");
+import { ICoreChartProps } from "@gooddata/sdk-ui";
+
+const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution"];
 
 /**
- * Cleans up properties before taking their snapshot. The goal of this function is to remove any properties
- * that are not significant for the snapshot testing. For instance:
- *
- * -  completely remove the 'backend' prop
- * -  clean up functions from prepared execution stored in 'execution' prop
+ * Cleans up core chart properties before taking their snapshot. The goal of this function is to remove any properties
+ * that are not significant for the snapshot testing.
  *
  * @param props - props to clean up
- * @param omitKeys - keys to completely remove from the props; defaults to omiting the 'backend' prop
  */
-export function cleanupProps(props: any, omitKeys: string[] = ["execution"]): any {
-    return omit(props, omitKeys);
+export function cleanupCoreChartProps(props?: ICoreChartProps): any {
+    if (!props) {
+        return;
+    }
+
+    return omit(props, InsignificantCoreChartProps);
 }

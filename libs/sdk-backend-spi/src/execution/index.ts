@@ -39,7 +39,7 @@ export interface IExecutionFactory {
      * provided filters.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
      * @param items - list of attributes and measures, must not be empty
@@ -58,7 +58,7 @@ export interface IExecutionFactory {
      * prepared execution WILL have definition with attributes = [A1, A2, A3] and measures = [M1, M2, M3]
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
@@ -75,7 +75,7 @@ export interface IExecutionFactory {
      * the insight.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
      * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
@@ -93,7 +93,7 @@ export interface IExecutionFactory {
      * and not do any 'freeform' execution.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using default the `defaultDimensionsGenerator` provided by the
+     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
      * @param uri - link to insight

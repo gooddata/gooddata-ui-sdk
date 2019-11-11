@@ -5,7 +5,7 @@ import React from "react";
 import BaseUseCases from "../../../scenarios/charts/areaChart/base";
 import { PropsFactory } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
-import { cleanupProps } from "../../_infra/utils";
+import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("AreaChart", () => {
     const Scenarios: Array<
@@ -22,7 +22,7 @@ describe("AreaChart", () => {
         it("should create expected props for core chart", () => {
             expect(interactions.passedToBaseChart).toBeDefined();
             expect(interactions.passedToBaseChart!.execution).toBeDefined();
-            expect(cleanupProps(interactions.passedToBaseChart)).toMatchSnapshot();
+            expect(cleanupCoreChartProps(interactions.passedToBaseChart)).toMatchSnapshot();
         });
     });
 });

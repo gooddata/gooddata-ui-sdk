@@ -113,6 +113,9 @@ async function run() {
     }
 
     const configFilePath = program.config || DEFAULT_CONFIG_FILE_NAME;
+
+    logInfo(`Reading config from ${configFilePath}`);
+
     const partialConfig = getConfigFromConfigFile(configFilePath, getConfigFromProgram(program));
     const { recordingDir } = partialConfig;
 
@@ -137,34 +140,30 @@ async function run() {
         return;
     }
 
-    try {
-        /*
-         * So there is stuff to do; first make sure tool has complete config, prompt user for anything that was
-         * not on file or as CLI tool args.
-         */
-        const fullConfig = await promptForMissingConfig(partialConfig);
+    /*
+     * So there is stuff to do; first make sure tool has complete config, prompt user for anything that was
+     * not on file or as CLI tool args.
+     */
+    const fullConfig = await promptForMissingConfig(partialConfig);
 
-        /*
-         * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
-         * run.
-         */
-        const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
-            new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
-        );
+    /*
+     * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
+     * run.
+     */
+    const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
+        new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
+    );
 
-        await runAndCaptureExecutionRecordings(executionsWithoutData, backend, fullConfig);
-    } catch (err) {
-        if (isDataRecorderError(err)) {
-            process.exit(err.rc);
-        } else {
-            logError(`An unexpected error has occurred while capturing data: ${err}`);
-            console.error(err);
-
-            process.exit(1);
-        }
-
-        return;
-    }
+    await runAndCaptureExecutionRecordings(executionsWithoutData, backend, fullConfig);
 }
 
-run();
+run().catch(err => {
+    if (isDataRecorderError(err)) {
+        process.exit(err.rc);
+    } else {
+        logError(`An unexpected error has occurred: ${err}`);
+        console.error(err);
+
+        process.exit(1);
+    }
+});
