@@ -5,7 +5,7 @@ import { testUtils } from "@gooddata/js-utils";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
 import { ICoreChartProps } from "../../chartProps";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
 import { prepareExecution } from "@gooddata/sdk-backend-spi";
 import { headlineWithOneMeasure, headlineWithTwoMeasures } from "../../../../__mocks__/fixtures";
@@ -17,7 +17,7 @@ describe("Headline", () => {
         );
     }
 
-    const backend = recordedBackend(MasterIndex);
+    const backend = legacyRecordedBackend(MasterIndex);
     const singleMeasureExec = prepareExecution(backend, headlineWithOneMeasure.definition);
     const twoMeasureExec = prepareExecution(backend, headlineWithTwoMeasures.definition);
 

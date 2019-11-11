@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import noop = require("lodash/noop");
 import { IntlWrapper } from "../../../../base/translations/IntlWrapper";
 import { MasterIndex } from "../../../../../__mocks__/recordings/playlist";
@@ -16,7 +16,7 @@ import { AttributeFilterItem } from "../AttributeFilterItem";
  *  -> all is good. The failed test run was in batch test mode (no interactive jest run)
  */
 describe("AttributeDropdown", () => {
-    const backend = recordedBackend(MasterIndex);
+    const backend = legacyRecordedBackend(MasterIndex);
     const workspace = "testWorkspace";
 
     function renderComponent(props: any = {}) {

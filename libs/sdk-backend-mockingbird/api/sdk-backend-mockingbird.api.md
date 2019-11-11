@@ -38,25 +38,25 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
-// Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 // 
-// @internal
-export type ExecutionRecording = {
+// @internal @deprecated
+export type LegacyExecutionRecording = {
     definition: IExecutionDefinition;
     response: any;
     result: any;
 };
 
 // Warning: (ae-forgotten-export) The symbol "RecordingIndex" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "legacyRecordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 // 
-// @internal
-export function recordedBackend(index: RecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
+// @internal @deprecated
+export function legacyRecordedBackend(index: RecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "recordedDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "legacyRecordedDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
 // 
-// @internal
-export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade;
+// @internal @deprecated
+export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade;
 
 // Warning: (ae-internal-missing-underscore) The name "withEventing" should be prefixed with an underscore because the declaration is marked as @internal
 // 

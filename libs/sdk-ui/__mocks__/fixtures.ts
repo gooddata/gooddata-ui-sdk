@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
-import { dummyDataFacade, recordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { dummyDataFacade, legacyRecordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { IBucket, IInsight, IMeasure, newDefForBuckets } from "@gooddata/sdk-model";
 
 import * as rec from "./recordings/playlist";
@@ -1416,11 +1416,11 @@ export const comboFacade = dummyDataFacade(newDefForBuckets(testWorkspace, combo
 // Area chart fixtures
 //
 
-export const areaChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+export const areaChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
     rec.AreaChartWith3MetricsAndViewByAttribute,
 );
 
-export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
+export const areaChartWithMeasureViewByAndStackBy = legacyRecordedDataFacade(
     rec.AreaChartWithMeasureViewByAndStackBy,
 );
 
@@ -1428,64 +1428,68 @@ export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
 // Bar chart fixtures
 //
 
-export const barChartWith4MetricsAndViewByTwoAttributes = recordedDataFacade(
+export const barChartWith4MetricsAndViewByTwoAttributes = legacyRecordedDataFacade(
     rec.BarChartWith4MetricsAndViewByTwoAttributes,
 );
-export const barChartWithStackByAndViewByAttributes = recordedDataFacade(
+export const barChartWithStackByAndViewByAttributes = legacyRecordedDataFacade(
     rec.BarChartWithStackByAndViewByAttributes,
 );
-export const barChartWithViewByAttribute = recordedDataFacade(rec.BarChartWithViewByAttribute);
-export const barChartWith2MetricsAndViewByAttribute = recordedDataFacade(
+export const barChartWithViewByAttribute = legacyRecordedDataFacade(rec.BarChartWithViewByAttribute);
+export const barChartWith2MetricsAndViewByAttribute = legacyRecordedDataFacade(
     rec.BarChartWith2MetricsAndViewByAttribute,
 );
-export const barChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+export const barChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
     rec.BarChartWith3MetricsAndViewByAttribute,
 );
-export const barChartWith3MetricsAndViewByAttributeFunformat = recordedDataFacade(
+export const barChartWith3MetricsAndViewByAttributeFunformat = legacyRecordedDataFacade(
     rec.BarChartWith3MetricsAndViewByAttributeFunformat,
 );
 
-export const barChartWith3MetricsAndViewByAttributePercInFormat = recordedDataFacade(
+export const barChartWith3MetricsAndViewByAttributePercInFormat = legacyRecordedDataFacade(
     rec.BarChartWith3MetricsAndViewByAttributePercInFormat,
 );
 
-export const barChartWithPopMeasureAndViewByAttribute = recordedDataFacade(
+export const barChartWithPopMeasureAndViewByAttribute = legacyRecordedDataFacade(
     rec.BarChartWithPopMeasureAndViewByAttribute,
 );
 
-export const barChartWithPopMeasureAndViewByAttributeX6 = recordedDataFacade(
+export const barChartWithPopMeasureAndViewByAttributeX6 = legacyRecordedDataFacade(
     rec.BarChartWithPopMeasureAndViewByAttributeX6,
 );
 
-export const barChartWithPreviousPeriodMeasure = recordedDataFacade(rec.BarChartWithPreviousPeriodMeasure);
-export const barChartWithSingleMeasureAndNoAttributes = recordedDataFacade(
+export const barChartWithPreviousPeriodMeasure = legacyRecordedDataFacade(
+    rec.BarChartWithPreviousPeriodMeasure,
+);
+export const barChartWithSingleMeasureAndNoAttributes = legacyRecordedDataFacade(
     rec.BarChartWithSingleMeasureAndNoAttributes,
 );
-export const barChartWithStackByAndOnlyOneStack = recordedDataFacade(rec.BarChartWithStackByAndOnlyOneStack);
+export const barChartWithStackByAndOnlyOneStack = legacyRecordedDataFacade(
+    rec.BarChartWithStackByAndOnlyOneStack,
+);
 
-export const barChartWithPreviousPeriodMeasureX6 = recordedDataFacade(
+export const barChartWithPreviousPeriodMeasureX6 = legacyRecordedDataFacade(
     rec.BarChartWithPreviousPeriodMeasureX6,
 );
 
-export const barChartWithoutAttributes = recordedDataFacade(rec.BarChartWithoutAttributes);
+export const barChartWithoutAttributes = legacyRecordedDataFacade(rec.BarChartWithoutAttributes);
 
-export const barChartForDrillTests = recordedDataFacade(rec.BarChartForDrillTests);
+export const barChartForDrillTests = legacyRecordedDataFacade(rec.BarChartForDrillTests);
 
 //
 // Bubble chart
 //
-export const bubbleChartWith2MetricsAndAttributeNoPrimaries = recordedDataFacade(
+export const bubbleChartWith2MetricsAndAttributeNoPrimaries = legacyRecordedDataFacade(
     rec.BubbleChartWith2MetricsAndAttributeNoPrimaries,
 );
 
-export const bubbleChartWith1Metric = recordedDataFacade(rec.BubbleChartWith1Metric);
+export const bubbleChartWith1Metric = legacyRecordedDataFacade(rec.BubbleChartWith1Metric);
 
-export const bubbleChartWith3Metrics = recordedDataFacade(rec.BubbleChartWith3Metrics);
+export const bubbleChartWith3Metrics = legacyRecordedDataFacade(rec.BubbleChartWith3Metrics);
 
-export const bubbleChartWith3MetricsAndAttribute = recordedDataFacade(
+export const bubbleChartWith3MetricsAndAttribute = legacyRecordedDataFacade(
     rec.BubbleChartWith3MetricsAndAttribute,
 );
-export const bubbleChartWith3MetricsAndAttributeNullsInData = recordedDataFacade(
+export const bubbleChartWith3MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
     rec.BubbleChartWith3MetricsAndAttributeNullsInData,
 );
 
@@ -1493,89 +1497,99 @@ export const bubbleChartWith3MetricsAndAttributeNullsInData = recordedDataFacade
 // Column chart
 //
 
-export const columnChartWithMeasureAndViewBy = recordedDataFacade(rec.ColumnChartWithMeasureAndViewBy);
+export const columnChartWithMeasureAndViewBy = legacyRecordedDataFacade(rec.ColumnChartWithMeasureAndViewBy);
 
-export const columnChartWithMeasureAndViewByAndComputeRatio = recordedDataFacade(
+export const columnChartWithMeasureAndViewByAndComputeRatio = legacyRecordedDataFacade(
     rec.ColumnChartWithMeasureAndViewByAndComputeRatio,
 );
 
 //
 // Combo chart
 //
-export const comboWithTwoMeasuresAndViewByAttribute = recordedDataFacade(
+export const comboWithTwoMeasuresAndViewByAttribute = legacyRecordedDataFacade(
     rec.ComboChartWithTwoMeasuresViewByAttribute,
 );
 
-export const comboChartWithTwoMeasuresViewByAttributeNoBuckets = recordedDataFacade(
+export const comboChartWithTwoMeasuresViewByAttributeNoBuckets = legacyRecordedDataFacade(
     rec.ComboChartWithTwoMeasuresViewByAttributeNoBuckets,
 );
 
-export const comboChartWithTwoMeasuresViewByAttributePercformat = recordedDataFacade(
+export const comboChartWithTwoMeasuresViewByAttributePercformat = legacyRecordedDataFacade(
     rec.ComboChartWithTwoMeasuresViewByAttributePercformat,
 );
 
-export const comboChartWith3MetricsAndViewByAttribute = recordedDataFacade(
+export const comboChartWith3MetricsAndViewByAttribute = legacyRecordedDataFacade(
     rec.ComboChartWith3MetricsAndViewByAttribute,
 );
 
 //
 //
 //
-export const headlineWithOneMeasure = recordedDataFacade(rec.HeadlineWithOneMeasure);
-export const headlineWithOneMeasureWithIdentifier = recordedDataFacade(
+export const headlineWithOneMeasure = legacyRecordedDataFacade(rec.HeadlineWithOneMeasure);
+export const headlineWithOneMeasureWithIdentifier = legacyRecordedDataFacade(
     rec.HeadlineWithOneMeasureWithIdentifier,
 );
-export const headlineWithTwoMeasures = recordedDataFacade(rec.HeadlineWithTwoMeasures);
-export const headlineWithTwoMeasuresWithIdentifier = recordedDataFacade(
+export const headlineWithTwoMeasures = legacyRecordedDataFacade(rec.HeadlineWithTwoMeasures);
+export const headlineWithTwoMeasuresWithIdentifier = legacyRecordedDataFacade(
     rec.HeadlineWithTwoMeasuresWithIdentifier,
 );
-export const headlineWithTwoMeasuresFirstEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresFirstEmpty);
-export const headlineWithTwoMeasuresSecondEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresSecondEmpty);
-export const headlineWithTwoMeasuresBothEmpty = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothEmpty);
-export const headlineWithTwoMeasuresBothZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothZero);
-export const headlineWithTwoMeasuresFirstZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresFirstZero);
-export const headlineWithTwoMeasuresSecondZero = recordedDataFacade(rec.HeadlineWithTwoMeasuresSecondZero);
-export const headlineWithTwoMeasuresBothSame = recordedDataFacade(rec.HeadlineWithTwoMeasuresBothSame);
+export const headlineWithTwoMeasuresFirstEmpty = legacyRecordedDataFacade(
+    rec.HeadlineWithTwoMeasuresFirstEmpty,
+);
+export const headlineWithTwoMeasuresSecondEmpty = legacyRecordedDataFacade(
+    rec.HeadlineWithTwoMeasuresSecondEmpty,
+);
+export const headlineWithTwoMeasuresBothEmpty = legacyRecordedDataFacade(
+    rec.HeadlineWithTwoMeasuresBothEmpty,
+);
+export const headlineWithTwoMeasuresBothZero = legacyRecordedDataFacade(rec.HeadlineWithTwoMeasuresBothZero);
+export const headlineWithTwoMeasuresFirstZero = legacyRecordedDataFacade(
+    rec.HeadlineWithTwoMeasuresFirstZero,
+);
+export const headlineWithTwoMeasuresSecondZero = legacyRecordedDataFacade(
+    rec.HeadlineWithTwoMeasuresSecondZero,
+);
+export const headlineWithTwoMeasuresBothSame = legacyRecordedDataFacade(rec.HeadlineWithTwoMeasuresBothSame);
 
 //
 // Heatmap recordings
 //
 
-export const heatMapWithEmptyCells = recordedDataFacade(rec.HeatMapWithEmptyCells);
-export const heatMapWithMetricRowColumn = recordedDataFacade(rec.HeatMapWithMetricRowColumn);
+export const heatMapWithEmptyCells = legacyRecordedDataFacade(rec.HeatMapWithEmptyCells);
+export const heatMapWithMetricRowColumn = legacyRecordedDataFacade(rec.HeatMapWithMetricRowColumn);
 //
 // Pie chart recordings
 //
 
-export const pieChartWithMetricsOnly = recordedDataFacade(rec.PieChartWithMetricsOnly);
-export const pieChartWithMetricsOnlyFundata = recordedDataFacade(rec.PieChartWithMetricsOnlyFundata);
+export const pieChartWithMetricsOnly = legacyRecordedDataFacade(rec.PieChartWithMetricsOnly);
+export const pieChartWithMetricsOnlyFundata = legacyRecordedDataFacade(rec.PieChartWithMetricsOnlyFundata);
 
 //
 // Pivot table recordings
 //
-export const pivotTableWith2Metrics4AttributesSubtotals = recordedDataFacade(
+export const pivotTableWith2Metrics4AttributesSubtotals = legacyRecordedDataFacade(
     rec.PivotTableWith2Metrics4AttributesSubtotals,
 );
-export const pivotTableWith3Metrics = recordedDataFacade(rec.PivotTableWith3Metrics);
-export const pivotTableWithColumnAndRowAttributes = recordedDataFacade(
+export const pivotTableWith3Metrics = legacyRecordedDataFacade(rec.PivotTableWith3Metrics);
+export const pivotTableWithColumnAndRowAttributes = legacyRecordedDataFacade(
     rec.PivotTableWithColumnAndRowAttributes,
 );
-export const pivotTableWithColumnRowAttributesAndTotals = recordedDataFacade(
+export const pivotTableWithColumnRowAttributesAndTotals = legacyRecordedDataFacade(
     rec.PivotTableWithColumnRowAttributesAndTotals,
 );
-export const pivotTableWithSubtotals = recordedDataFacade(rec.PivotTableWithSubtotals);
+export const pivotTableWithSubtotals = legacyRecordedDataFacade(rec.PivotTableWithSubtotals);
 
 //
 // Scatter plot recording
 //
 
-export const scatterPlotWith2MetricsAndAttribute = recordedDataFacade(
+export const scatterPlotWith2MetricsAndAttribute = legacyRecordedDataFacade(
     rec.ScatterPlotWith2MetricsAndAttribute,
 );
-export const scatterPlotWith2MetricsAndAttributeNullsInData = recordedDataFacade(
+export const scatterPlotWith2MetricsAndAttributeNullsInData = legacyRecordedDataFacade(
     rec.ScatterPlotWith2MetricsAndAttributeNullsInData,
 );
-export const scatterPlotWith2MetricsAndAttributeWithPrimary = recordedDataFacade(
+export const scatterPlotWith2MetricsAndAttributeWithPrimary = legacyRecordedDataFacade(
     rec.ScatterPlotWith2MetricsAndAttributeWithPrimary,
 );
 
@@ -1583,21 +1597,21 @@ export const scatterPlotWith2MetricsAndAttributeWithPrimary = recordedDataFacade
 // Treemap recordings
 //
 
-export const treemapWithMetricAndStackByAttribute = recordedDataFacade(
+export const treemapWithMetricAndStackByAttribute = legacyRecordedDataFacade(
     rec.TreemapWithMetricAndStackByAttribute,
 );
-export const treemapWithMetricAndViewByAttribute = recordedDataFacade(
+export const treemapWithMetricAndViewByAttribute = legacyRecordedDataFacade(
     rec.TreemapWithMetricAndViewByAttribute,
 );
-export const treemapWithTwoMetricsAndStackByAttribute = recordedDataFacade(
+export const treemapWithTwoMetricsAndStackByAttribute = legacyRecordedDataFacade(
     rec.TreemapWithTwoMetricsAndStackByAttribute,
 );
-export const treemapWithThreeMetrics = recordedDataFacade(rec.TreemapWithThreeMetrics);
-export const treemapWithOneMetric = recordedDataFacade(rec.TreemapWithOneMetric);
-export const treemapWithMetricAndViewByAttribute1element = recordedDataFacade(
+export const treemapWithThreeMetrics = legacyRecordedDataFacade(rec.TreemapWithThreeMetrics);
+export const treemapWithOneMetric = legacyRecordedDataFacade(rec.TreemapWithOneMetric);
+export const treemapWithMetricAndViewByAttribute1element = legacyRecordedDataFacade(
     rec.TreemapWithMetricAndViewByAttribute1element,
 );
-export const treemapWithMetricViewByAndStackByAttribute = recordedDataFacade(
+export const treemapWithMetricViewByAndStackByAttribute = legacyRecordedDataFacade(
     rec.TreemapWithMetricViewByAndStackByAttribute,
 );
 
