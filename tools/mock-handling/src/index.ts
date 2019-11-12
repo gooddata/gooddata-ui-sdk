@@ -6,12 +6,14 @@ import chalk from "chalk";
 import gooddata from "@gooddata/gd-bear-client";
 import * as pkg from "../package.json";
 import * as process from "process";
-import { log, logError, logInfo } from "./cli/loggers";
+import * as path from "path";
+import { log, logError, logInfo, logSuccess } from "./cli/loggers";
 import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
+import { generateRecordingIndex } from "./codegen";
 import {
     discoverExecutionRecordings,
     IExecutionRecording,
@@ -78,7 +80,7 @@ async function runAndCaptureExecutionRecordings(
     recordings: IExecutionRecording[],
     backend: IAnalyticalBackend,
     config: DataRecorderConfig,
-): Promise<void> {
+): Promise<IExecutionRecording[]> {
     const executionSpinner = ora();
     let successes = 0;
     executionSpinner.start("Running and capturing executions");
@@ -93,7 +95,7 @@ async function runAndCaptureExecutionRecordings(
         executionSpinner.info(`Processed ${successes}/${recordings.length} execution(s)`);
     };
 
-    await populateExecutionRecordings(recordings, backend, config, onCapture);
+    const results = await populateExecutionRecordings(recordings, backend, config, onCapture);
 
     if (successes < recordings.length) {
         executionSpinner.warn(
@@ -102,6 +104,8 @@ async function runAndCaptureExecutionRecordings(
     } else {
         executionSpinner.succeed("All executions run successfully and were captured.");
     }
+
+    return results;
 }
 
 async function run() {
@@ -126,35 +130,47 @@ async function run() {
         return;
     }
 
-    const executions = await discoverExecutionRecordings(recordingDir);
+    const absoluteRecordingDir = path.resolve(recordingDir);
+    const executions = await discoverExecutionRecordings(absoluteRecordingDir);
     const executionsWithoutData = executions.filter(e => !e.hasRecordedData);
 
     logInfo(
         `Discovered ${executions.length} execution recordings; out of these ${executionsWithoutData.length} are missing recorded data.`,
     );
 
-    if (!executionsWithoutData.length) {
-        logInfo(`There is nothing to do. Bye.`);
+    let executionsToProcess = executions.filter(e => e.hasRecordedData);
 
-        process.exit(0);
-        return;
+    if (executionsWithoutData.length) {
+        /*
+         * So there is stuff to do; first make sure tool has complete config, prompt user for anything that was
+         * not on file or as CLI tool args.
+         */
+        const fullConfig = await promptForMissingConfig(partialConfig);
+
+        /*
+         * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
+         * run.
+         */
+        const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
+            new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
+        );
+
+        const newRecordings = await runAndCaptureExecutionRecordings(
+            executionsWithoutData,
+            backend,
+            fullConfig,
+        );
+
+        executionsToProcess = executionsToProcess.concat(newRecordings.filter(e => e.hasRecordedData));
     }
 
-    /*
-     * So there is stuff to do; first make sure tool has complete config, prompt user for anything that was
-     * not on file or as CLI tool args.
-     */
-    const fullConfig = await promptForMissingConfig(partialConfig);
+    logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
 
-    /*
-     * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
-     * run.
-     */
-    const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
-        new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
-    );
+    generateRecordingIndex({ executions: executionsToProcess }, absoluteRecordingDir);
 
-    await runAndCaptureExecutionRecordings(executionsWithoutData, backend, fullConfig);
+    logSuccess("Done");
+
+    process.exit(0);
 }
 
 run().catch(err => {

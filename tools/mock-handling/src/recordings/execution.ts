@@ -74,7 +74,6 @@ function serializeDataView(dataView: IDataView): any {
     return JSON.stringify(pick(dataView, DataViewPropsToSerialize), null, 4);
 }
 
-// @ts-ignore
 async function makeRecording(
     rec: IExecutionRecording,
     execFactory: IExecutionFactory,
