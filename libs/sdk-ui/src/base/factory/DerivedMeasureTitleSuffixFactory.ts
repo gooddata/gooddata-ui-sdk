@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization } from "@gooddata/gd-bear-model";
+import { GdcLocalization } from "@gooddata/gd-bear-model";
 import IntlStore from "../translations/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 
@@ -10,13 +10,13 @@ import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/O
  * @internal
  */
 export default class DerivedMeasureTitleSuffixFactory {
-    private readonly locale: Localization.ILocale;
+    private readonly locale: GdcLocalization.ILocale;
 
     /**
      * Create a new instance of the class.
-     * @param {Localization.ILocale} locale - The locale used for translation.
+     * @param {GdcLocalization.ILocale} locale - The locale used for translation.
      */
-    constructor(locale: Localization.ILocale) {
+    constructor(locale: GdcLocalization.ILocale) {
         this.locale = locale;
     }
 

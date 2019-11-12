@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { ReportModule } from "../../src/report/report";
 import { XhrModule, ApiResponseError } from "../../src/xhr";
 import { IExportConfig, IExportResponse } from "../../src/interfaces";
@@ -40,7 +40,7 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const showFilters: ExecuteAFM.CompatibilityFilter[] = [
+                const showFilters: GdcExecuteAFM.CompatibilityFilter[] = [
                     {
                         positiveAttributeFilter: {
                             displayForm: {
@@ -78,7 +78,7 @@ describe("report", () => {
                     },
                 ];
 
-                const expectedShowFilters: ExecuteAFM.CompatibilityFilter[] = [
+                const expectedShowFilters: GdcExecuteAFM.CompatibilityFilter[] = [
                     {
                         positiveAttributeFilter: {
                             displayForm: {

@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 /**
  * @public
  */
-export namespace VisualizationObject {
+export namespace GdcVisualizationObject {
     export type SortDirection = "asc" | "desc";
     export type Identifier = string;
     export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";

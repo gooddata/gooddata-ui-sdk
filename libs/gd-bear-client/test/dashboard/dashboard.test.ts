@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { DashboardExport } from "@gooddata/gd-bear-model";
+import { GdcDashboardExport } from "@gooddata/gd-bear-model";
 import { DashboardModule } from "../../src/dashboard/dashboard";
 import { XhrModule } from "../../src/xhr";
 import {
@@ -20,7 +20,7 @@ describe("exportDashboard", () => {
     const endpoint = `/gdc/internal/projects/${projectId}/exportDashboard`;
     const createdPdf = `/gdc/exporter/result/${projectId}/pdfFileUri`;
 
-    const relativeDateFilter: DashboardExport.FilterContextItem = {
+    const relativeDateFilter: GdcDashboardExport.FilterContextItem = {
         dateFilter: {
             type: "relative",
             from: -11,
@@ -29,7 +29,7 @@ describe("exportDashboard", () => {
         },
     };
 
-    const absoluteDateFilter: DashboardExport.FilterContextItem = {
+    const absoluteDateFilter: GdcDashboardExport.FilterContextItem = {
         dateFilter: {
             type: "absolute",
             from: "2019-08-06",
@@ -38,7 +38,7 @@ describe("exportDashboard", () => {
         },
     };
 
-    const attributeFilter: DashboardExport.FilterContextItem = {
+    const attributeFilter: GdcDashboardExport.FilterContextItem = {
         attributeFilter: {
             displayForm: "/gdc/md/testProjectId/obj/700",
             negativeSelection: false,

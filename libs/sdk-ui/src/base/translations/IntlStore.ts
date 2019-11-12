@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { InjectedIntl, IntlProvider } from "react-intl";
-import { Localization } from "@gooddata/gd-bear-model";
+import { GdcLocalization } from "@gooddata/gd-bear-model";
 import { translations } from "@gooddata/js-utils";
 import { DEFAULT_LOCALE } from "../constants/localization";
 
@@ -29,12 +29,12 @@ const messagesMap = {
 
 const intlStore = {};
 
-function createIntl(locale: Localization.ILocale): InjectedIntl {
+function createIntl(locale: GdcLocalization.ILocale): InjectedIntl {
     const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
     return intlProvider.getChildContext().intl;
 }
 
-function getIntl(locale: Localization.ILocale = DEFAULT_LOCALE): InjectedIntl {
+function getIntl(locale: GdcLocalization.ILocale = DEFAULT_LOCALE): InjectedIntl {
     let usedLocale = locale;
     if (isEmpty(locale)) {
         usedLocale = DEFAULT_LOCALE;
@@ -43,7 +43,7 @@ function getIntl(locale: Localization.ILocale = DEFAULT_LOCALE): InjectedIntl {
     return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
 }
 
-function getTranslation(translationId: string, locale: Localization.ILocale, values = {}): string {
+function getTranslation(translationId: string, locale: GdcLocalization.ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
 }

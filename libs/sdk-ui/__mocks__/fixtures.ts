@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExecuteAFM, VisualizationClass, VisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM, GdcVisualizationClass, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { dummyDataFacade, legacyRecordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { IBucket, IInsight, IMeasure, newDefForBuckets } from "@gooddata/sdk-model";
 
 import * as rec from "./recordings/playlist";
-import IVisualizationClassWrapped = VisualizationClass.IVisualizationClassWrapped;
-import IVisualization = VisualizationObject.IVisualization;
+import IVisualizationClassWrapped = GdcVisualizationClass.IVisualizationClassWrapped;
+import IVisualization = GdcVisualizationObject.IVisualization;
 
 export const dummyMeasureGroup = {
     items: [
@@ -26,7 +26,7 @@ export const dummyMeasureGroup = {
     ],
 };
 
-export const measures: VisualizationObject.IMeasure[] = [
+export const measures: GdcVisualizationObject.IMeasure[] = [
     {
         measure: {
             localIdentifier: "m1",
@@ -165,7 +165,7 @@ export const pivotTableMDO: IVisualization = {
                         },
                     },
                     // To make sure sortItems are typed even in stringify and to satisfy linter
-                ] as ExecuteAFM.IAttributeSortItem[],
+                ] as GdcExecuteAFM.IAttributeSortItem[],
             }),
         },
         meta: {
@@ -1318,7 +1318,7 @@ export const visualizationClasses: IVisualizationClassWrapped[] = [
     },
 ];
 
-export const comboVizObjectContent: VisualizationObject.IVisualizationObjectContent = {
+export const comboVizObjectContent: GdcVisualizationObject.IVisualizationObjectContent = {
     visualizationClass: {
         uri: "/gdc/md/myproject/obj/column",
     },

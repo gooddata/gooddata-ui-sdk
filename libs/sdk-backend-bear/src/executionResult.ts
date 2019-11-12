@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { Execution } from "@gooddata/gd-bear-model";
+import { GdcExecution } from "@gooddata/gd-bear-model";
 import {
     DataValue,
     IDataView,
@@ -27,7 +27,7 @@ export class BearExecutionResult implements IExecutionResult {
         private readonly authApiCall: AuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly execFactory: IExecutionFactory,
-        private readonly execResponse: Execution.IExecutionResponse,
+        private readonly execResponse: GdcExecution.IExecutionResponse,
     ) {
         this.dimensions = execResponse.dimensions;
         this._fingerprint = SparkMD5.hash(execResponse.links.executionResult);
@@ -116,7 +116,7 @@ function sanitizeSize(size: number[]): number[] {
     });
 }
 
-type DataViewFactory = (promisedRes: Promise<Execution.IExecutionResult | null>) => Promise<IDataView>;
+type DataViewFactory = (promisedRes: Promise<GdcExecution.IExecutionResult | null>) => Promise<IDataView>;
 
 class BearDataView implements IDataView {
     public readonly data: DataValue[][] | DataValue[];
@@ -129,7 +129,7 @@ class BearDataView implements IDataView {
     public readonly totals?: DataValue[][][];
     private readonly _fingerprint: string;
 
-    constructor(result: IExecutionResult, dataResult: Execution.IExecutionResult) {
+    constructor(result: IExecutionResult, dataResult: GdcExecution.IExecutionResult) {
         this.result = result;
         this.definition = result.definition;
         this.data = dataResult.data;
@@ -155,14 +155,14 @@ class BearDataView implements IDataView {
 //
 //
 
-function hasEmptyData(result: Execution.IExecutionResult): boolean {
+function hasEmptyData(result: GdcExecution.IExecutionResult): boolean {
     return result.data.length === 0;
 }
 
-function hasMissingHeaderItems(result: Execution.IExecutionResult): boolean {
+function hasMissingHeaderItems(result: GdcExecution.IExecutionResult): boolean {
     return !result.headerItems;
 }
 
-function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
+function isEmptyDataResult(result: GdcExecution.IExecutionResult): boolean {
     return hasEmptyData(result) && hasMissingHeaderItems(result);
 }

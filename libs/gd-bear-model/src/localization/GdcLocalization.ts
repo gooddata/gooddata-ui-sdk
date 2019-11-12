@@ -3,7 +3,7 @@
 /**
  * @internal
  */
-export namespace Localization {
+export namespace GdcLocalization {
     export type ILocale =
         | "en-US"
         | "de-DE"

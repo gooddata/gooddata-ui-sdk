@@ -15,7 +15,7 @@ export interface IElementQueryOptions {
     includeTotalCountWithoutFilters?: boolean;
     restrictiveDefinition?: string;
     restrictiveDefinitionContent?: object;
-    // afm?: ExecuteAFM.IAfm; // TODO: do we really need this? if so, we should add support for using executionDefinition here
+    // afm?: GdcExecuteAFM.IAfm; // TODO: do we really need this? if so, we should add support for using executionDefinition here
 }
 
 /**

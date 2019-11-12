@@ -4,7 +4,7 @@ import { IObjectMeta } from "../meta/Meta";
 /**
  * @public
  */
-export namespace VisualizationClass {
+export namespace GdcVisualizationClass {
     export interface IVisualizationClassContent {
         url: string;
         icon: string;

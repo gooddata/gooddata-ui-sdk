@@ -4,10 +4,10 @@
 
 ```ts
 
-// Warning: (ae-internal-missing-underscore) The name "DashboardExport" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "GdcDashboardExport" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal (undocumented)
-export namespace DashboardExport {
+export namespace GdcDashboardExport {
     // (undocumented)
     export type AbsoluteType = "absolute";
     // (undocumented)
@@ -28,9 +28,9 @@ export namespace DashboardExport {
         // (undocumented)
         dateFilter: {
             type: DateFilterType;
-            granularity: ExtendedDateFilters.DateFilterGranularity;
-            from?: ExtendedDateFilters.DateString | number;
-            to?: ExtendedDateFilters.DateString | number;
+            granularity: GdcExtendedDateFilters.DateFilterGranularity;
+            from?: GdcExtendedDateFilters.DateString | number;
+            to?: GdcExtendedDateFilters.DateString | number;
             dataSet?: string;
             attribute?: string;
         };
@@ -43,8 +43,88 @@ export namespace DashboardExport {
     export type RelativeType = "relative";
 }
 
+// Warning: (ae-internal-missing-underscore) The name "GdcDashboardLayout" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export namespace GdcDashboardLayout {
+    // (undocumented)
+    export interface IFluidLayout {
+        // (undocumented)
+        fluidLayout: {
+            rows: IFluidLayoutRow[];
+            size?: IFluidLayoutSize;
+            style?: string;
+        };
+    }
+    // (undocumented)
+    export interface IFluidLayoutColSize {
+        // (undocumented)
+        lg?: IFluidLayoutSize;
+        // (undocumented)
+        md?: IFluidLayoutSize;
+        // (undocumented)
+        sm?: IFluidLayoutSize;
+        // (undocumented)
+        xl: IFluidLayoutSize;
+        // (undocumented)
+        xs?: IFluidLayoutSize;
+    }
+    // (undocumented)
+    export interface IFluidLayoutColumn {
+        // (undocumented)
+        content?: LayoutContent;
+        // (undocumented)
+        size: IFluidLayoutColSize;
+        // (undocumented)
+        style?: string;
+    }
+    // (undocumented)
+    export interface IFluidLayoutRow {
+        // (undocumented)
+        columns: IFluidLayoutColumn[];
+        // (undocumented)
+        header?: SectionHeader;
+        // (undocumented)
+        style?: string;
+    }
+    // (undocumented)
+    export interface IFluidLayoutSize {
+        // (undocumented)
+        heightAsRatio?: number;
+        // (undocumented)
+        width: number;
+    }
+    // (undocumented)
+    export interface IPersistedWidget {
+        // (undocumented)
+        widget: {
+            qualifier: GdcVisualizationObject.ObjQualifier;
+        };
+    }
+    // (undocumented)
+    export interface ISectionDescription {
+        // (undocumented)
+        description: string;
+    }
+    // (undocumented)
+    export interface ISectionHeader {
+        // (undocumented)
+        description?: string;
+        // (undocumented)
+        title: string;
+    }
+    // (undocumented)
+    export type Layout = IFluidLayout;
+    // (undocumented)
+    export type LayoutContent = Widget | Layout;
+    // (undocumented)
+    export type SectionHeader = ISectionHeader | ISectionDescription;
+    // (undocumented)
+    export type Widget = IPersistedWidget;
+}
+
 // @public
-export namespace ExecuteAFM {
+export namespace GdcExecuteAFM {
     // (undocumented)
     export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
     // (undocumented)
@@ -289,23 +369,23 @@ export namespace ExecuteAFM {
         sorts?: SortItem[];
     }
     // (undocumented)
-    export function isAbsoluteDateFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IAbsoluteDateFilter;
+    export function isAbsoluteDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IAbsoluteDateFilter;
     // (undocumented)
-    export function isArithmeticMeasureDefinition(definition: ExecuteAFM.MeasureDefinition): definition is ExecuteAFM.IArithmeticMeasureDefinition;
+    export function isArithmeticMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IArithmeticMeasureDefinition;
     // (undocumented)
     export function isAttributeElementsArray(attributeElements: AttributeElements): attributeElements is string[];
     // (undocumented)
-    export function isAttributeElementsByRef(attributeElements: ExecuteAFM.AttributeElements): attributeElements is ExecuteAFM.IAttributeElementsByRef;
+    export function isAttributeElementsByRef(attributeElements: GdcExecuteAFM.AttributeElements): attributeElements is GdcExecuteAFM.IAttributeElementsByRef;
     // (undocumented)
-    export function isAttributeElementsByValue(attributeElements: ExecuteAFM.AttributeElements): attributeElements is ExecuteAFM.IAttributeElementsByValue;
+    export function isAttributeElementsByValue(attributeElements: GdcExecuteAFM.AttributeElements): attributeElements is GdcExecuteAFM.IAttributeElementsByValue;
     // (undocumented)
-    export function isAttributeFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.AttributeFilterItem;
+    export function isAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.AttributeFilterItem;
     // (undocumented)
-    export function isAttributeSortItem(sortItem: ExecuteAFM.SortItem): sortItem is ExecuteAFM.IAttributeSortItem;
+    export function isAttributeSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IAttributeSortItem;
     // (undocumented)
-    export function isDateFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.DateFilterItem;
+    export function isDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.DateFilterItem;
     // (undocumented)
-    export function isExpressionFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IExpressionFilter;
+    export function isExpressionFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IExpressionFilter;
     // (undocumented)
     export interface ISimpleMeasure {
         // (undocumented)
@@ -323,27 +403,27 @@ export namespace ExecuteAFM {
         measure: ISimpleMeasure;
     }
     // (undocumented)
-    export function isMeasureLocatorItem(locator: ExecuteAFM.LocatorItem): locator is ExecuteAFM.IMeasureLocatorItem;
+    export function isMeasureLocatorItem(locator: GdcExecuteAFM.LocatorItem): locator is GdcExecuteAFM.IMeasureLocatorItem;
     // (undocumented)
-    export function isMeasureSortItem(sortItem: ExecuteAFM.SortItem): sortItem is ExecuteAFM.IMeasureSortItem;
+    export function isMeasureSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IMeasureSortItem;
     // (undocumented)
-    export function isMeasureValueFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IMeasureValueFilter;
+    export function isMeasureValueFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IMeasureValueFilter;
     // (undocumented)
-    export function isNegativeAttributeFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.INegativeAttributeFilter;
+    export function isNegativeAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.INegativeAttributeFilter;
     // (undocumented)
-    export function isObjectUriQualifier(qualifier: ExecuteAFM.ObjQualifier): qualifier is ExecuteAFM.IObjUriQualifier;
+    export function isObjectUriQualifier(qualifier: GdcExecuteAFM.ObjQualifier): qualifier is GdcExecuteAFM.IObjUriQualifier;
     // (undocumented)
-    export function isObjIdentifierQualifier(qualifier: ExecuteAFM.ObjQualifier): qualifier is ExecuteAFM.IObjIdentifierQualifier;
+    export function isObjIdentifierQualifier(qualifier: GdcExecuteAFM.ObjQualifier): qualifier is GdcExecuteAFM.IObjIdentifierQualifier;
     // (undocumented)
-    export function isPopMeasureDefinition(definition: ExecuteAFM.MeasureDefinition): definition is ExecuteAFM.IPopMeasureDefinition;
+    export function isPopMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IPopMeasureDefinition;
     // (undocumented)
-    export function isPositiveAttributeFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IPositiveAttributeFilter;
+    export function isPositiveAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IPositiveAttributeFilter;
     // (undocumented)
-    export function isPreviousPeriodMeasureDefinition(definition: ExecuteAFM.MeasureDefinition): definition is ExecuteAFM.IPreviousPeriodMeasureDefinition;
+    export function isPreviousPeriodMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.IPreviousPeriodMeasureDefinition;
     // (undocumented)
-    export function isRelativeDateFilter(filter: ExecuteAFM.CompatibilityFilter): filter is ExecuteAFM.IRelativeDateFilter;
+    export function isRelativeDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.IRelativeDateFilter;
     // (undocumented)
-    export function isSimpleMeasureDefinition(definition: ExecuteAFM.MeasureDefinition): definition is ExecuteAFM.ISimpleMeasureDefinition;
+    export function isSimpleMeasureDefinition(definition: GdcExecuteAFM.MeasureDefinition): definition is GdcExecuteAFM.ISimpleMeasureDefinition;
     // (undocumented)
     export interface ITotalItem {
         // (undocumented)
@@ -392,7 +472,7 @@ export namespace ExecuteAFM {
 }
 
 // @public (undocumented)
-export namespace Execution {
+export namespace GdcExecution {
     // (undocumented)
     export type DataValue = null | string | number;
     // (undocumented)
@@ -538,10 +618,10 @@ export namespace Execution {
     }
 }
 
-// Warning: (ae-internal-missing-underscore) The name "ExtendedDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "GdcExtendedDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal (undocumented)
-export namespace ExtendedDateFilters {
+export namespace GdcExtendedDateFilters {
     // (undocumented)
     export type AbsoluteDateFilterOption = IAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
     // (undocumented)
@@ -762,131 +842,16 @@ export namespace ExtendedDateFilters {
     export type RelativePresetType = "relativePreset";
 }
 
-// Warning: (ae-internal-missing-underscore) The name "getAttributesDisplayForms" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "GdcLocalization" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal (undocumented)
-export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
-
-// Warning: (ae-internal-missing-underscore) The name "IFluidLayout" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IFluidLayout {
-    // (undocumented)
-    fluidLayout: {
-        rows: IFluidLayoutRow[];
-        size?: IFluidLayoutSize;
-        style?: string;
-    };
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IFluidLayoutColSize" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IFluidLayoutColSize {
-    // (undocumented)
-    lg?: IFluidLayoutSize;
-    // (undocumented)
-    md?: IFluidLayoutSize;
-    // (undocumented)
-    sm?: IFluidLayoutSize;
-    // (undocumented)
-    xl: IFluidLayoutSize;
-    // (undocumented)
-    xs?: IFluidLayoutSize;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IFluidLayoutColumn" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IFluidLayoutColumn {
-    // (undocumented)
-    content?: LayoutContent;
-    // (undocumented)
-    size: IFluidLayoutColSize;
-    // (undocumented)
-    style?: string;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IFluidLayoutRow" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IFluidLayoutRow {
-    // (undocumented)
-    columns: IFluidLayoutColumn[];
-    // (undocumented)
-    header?: SectionHeader;
-    // (undocumented)
-    style?: string;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IFluidLayoutSize" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IFluidLayoutSize {
-    // (undocumented)
-    heightAsRatio?: number;
-    // (undocumented)
-    width: number;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "IPersistedWidget" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface IPersistedWidget {
-    // (undocumented)
-    widget: {
-        qualifier: VisualizationObject.ObjQualifier;
-    };
-}
-
-// Warning: (ae-internal-missing-underscore) The name "ISectionDescription" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface ISectionDescription {
-    // (undocumented)
-    description: string;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "ISectionHeader" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export interface ISectionHeader {
-    // (undocumented)
-    description?: string;
-    // (undocumented)
-    title: string;
-}
-
-// Warning: (ae-internal-missing-underscore) The name "Layout" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export type Layout = IFluidLayout;
-
-// Warning: (ae-internal-missing-underscore) The name "LayoutContent" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export type LayoutContent = Widget | Layout;
-
-// Warning: (ae-internal-missing-underscore) The name "Localization" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export namespace Localization {
+export namespace GdcLocalization {
     // (undocumented)
     export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans";
 }
 
-// Warning: (ae-internal-missing-underscore) The name "sanitizeDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export function sanitizeDateFilters(filters: DashboardExport.FilterContextItem[]): DashboardExport.FilterContextItem[];
-
-// Warning: (ae-internal-missing-underscore) The name "SectionHeader" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export type SectionHeader = ISectionHeader | ISectionDescription;
-
 // @public (undocumented)
-export namespace VisualizationClass {
+export namespace GdcVisualizationClass {
     // (undocumented)
     export interface IVisualizationClass {
         // (undocumented)
@@ -915,7 +880,7 @@ export namespace VisualizationClass {
 }
 
 // @public (undocumented)
-export namespace VisualizationObject {
+export namespace GdcVisualizationObject {
     // (undocumented)
     export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
     // (undocumented)
@@ -1177,10 +1142,15 @@ export namespace VisualizationObject {
     export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
 }
 
-// Warning: (ae-internal-missing-underscore) The name "Widget" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "getAttributesDisplayForms" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal (undocumented)
-export type Widget = IPersistedWidget;
+export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
+
+// Warning: (ae-internal-missing-underscore) The name "sanitizeDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export function sanitizeDateFilters(filters: GdcDashboardExport.FilterContextItem[]): GdcDashboardExport.FilterContextItem[];
 
 
 // (No @packageDocumentation comment for this package)

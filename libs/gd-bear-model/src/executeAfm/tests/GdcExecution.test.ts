@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from "../Execution";
-import isAttributeHeaderItem = Execution.isAttributeHeaderItem;
-import IResultHeaderItem = Execution.IResultHeaderItem;
-import isMeasureHeaderItem = Execution.isMeasureHeaderItem;
-import isTotalHeaderItem = Execution.isTotalHeaderItem;
-import IHeader = Execution.IHeader;
-import isMeasureGroupHeader = Execution.isMeasureGroupHeader;
-import isAttributeHeader = Execution.isAttributeHeader;
+import { GdcExecution } from "../GdcExecution";
+import isAttributeHeaderItem = GdcExecution.isAttributeHeaderItem;
+import IResultHeaderItem = GdcExecution.IResultHeaderItem;
+import isMeasureHeaderItem = GdcExecution.isMeasureHeaderItem;
+import isTotalHeaderItem = GdcExecution.isTotalHeaderItem;
+import IHeader = GdcExecution.IHeader;
+import isMeasureGroupHeader = GdcExecution.isMeasureGroupHeader;
+import isAttributeHeader = GdcExecution.isAttributeHeader;
 
-describe("Execution type guards", () => {
+describe("GdcExecution type guards", () => {
     const attr: IResultHeaderItem = {
         attributeHeaderItem: {
             uri: "/uri",

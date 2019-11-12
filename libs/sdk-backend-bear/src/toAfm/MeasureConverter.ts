@@ -11,12 +11,12 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertMeasureFilter } from "./FilterConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 
-export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
+export function convertMeasure(measure: IMeasure): GdcExecuteAFM.IMeasure {
     const {
         measure: { definition },
     } = measure;
@@ -37,7 +37,7 @@ export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
     };
 }
 
-function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAFM.MeasureDefinition {
+function convertMeasureDefinition(definition: IMeasureDefinitionType): GdcExecuteAFM.MeasureDefinition {
     if (isMeasureDefinition(definition)) {
         return convertSimpleMeasureDefinition(definition);
     } else if (isPoPMeasureDefinition(definition)) {
@@ -51,10 +51,12 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAF
     }
 }
 
-function convertSimpleMeasureDefinition(definition: IMeasureDefinition): ExecuteAFM.ISimpleMeasureDefinition {
+function convertSimpleMeasureDefinition(
+    definition: IMeasureDefinition,
+): GdcExecuteAFM.ISimpleMeasureDefinition {
     const { measureDefinition } = definition;
 
-    const filters: ExecuteAFM.FilterItem[] = measureDefinition.filters
+    const filters: GdcExecuteAFM.FilterItem[] = measureDefinition.filters
         ? compact(measureDefinition.filters.map(convertMeasureFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
@@ -75,7 +77,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
     };
 }
 
-function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): ExecuteAFM.IPopMeasureDefinition {
+function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExecuteAFM.IPopMeasureDefinition {
     const { popMeasureDefinition } = definition;
     return {
         popMeasure: {
@@ -87,7 +89,7 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): Execute
 
 function convertPreviousPeriodMeasureDefinition(
     definition: IPreviousPeriodMeasureDefinition,
-): ExecuteAFM.IPreviousPeriodMeasureDefinition {
+): GdcExecuteAFM.IPreviousPeriodMeasureDefinition {
     const { previousPeriodMeasure } = definition;
     return {
         previousPeriodMeasure: {
@@ -102,7 +104,7 @@ function convertPreviousPeriodMeasureDefinition(
 
 function convertArithmeticMeasureDefinition(
     definition: IArithmeticMeasureDefinition,
-): ExecuteAFM.IArithmeticMeasureDefinition {
+): GdcExecuteAFM.IArithmeticMeasureDefinition {
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {

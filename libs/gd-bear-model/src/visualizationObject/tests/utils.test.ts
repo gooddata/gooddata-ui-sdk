@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { getAttributesDisplayForms } from "../utils";
-import { VisualizationObject } from "../VisualizationObject";
+import { GdcVisualizationObject } from "../GdcVisualizationObject";
 
 describe("visualizationObjectHelper", () => {
     describe("getAttributesDisplayForms", () => {
         it("should get all display forms from measure filters and attributes", () => {
-            const mdObject: VisualizationObject.IVisualizationObjectContent = {
+            const mdObject: GdcVisualizationObject.IVisualizationObjectContent = {
                 buckets: [
                     {
                         localIdentifier: "view",

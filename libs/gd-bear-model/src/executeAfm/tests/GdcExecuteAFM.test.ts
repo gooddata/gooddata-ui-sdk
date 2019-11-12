@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import { ExecuteAFM as AFM } from "../ExecuteAFM";
+import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
 import CompatibilityFilter = AFM.CompatibilityFilter;
 
-describe("AFM", () => {
+describe("GdcExecuteAFM", () => {
     const expressionFilter: CompatibilityFilter = {
         value: "MAQL",
     };

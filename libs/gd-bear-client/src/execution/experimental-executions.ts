@@ -15,15 +15,15 @@ import negate from "lodash/negate";
 import partial from "lodash/partial";
 import flatten from "lodash/flatten";
 import set from "lodash/set";
-import { getAttributesDisplayForms, VisualizationObject } from "@gooddata/gd-bear-model";
+import { getAttributesDisplayForms, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 
 import { Rules } from "../utils/rules";
 import { sortDefinitions } from "../utils/definitions";
 import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader";
 import { IMeasure } from "../interfaces";
 import { XhrModule } from "../xhr";
-import isAttribute = VisualizationObject.isAttribute;
-import isMeasure = VisualizationObject.isMeasure;
+import isAttribute = GdcVisualizationObject.isAttribute;
+import isMeasure = GdcVisualizationObject.isMeasure;
 
 const notEmpty = negate<Array<string | null>>(isEmpty);
 
@@ -149,7 +149,7 @@ function getDateFilterExpression() {
 }
 
 function getFilterExpression(attributesMap: any, measureFilter: any) {
-    if (VisualizationObject.isAttributeFilter(measureFilter)) {
+    if (GdcVisualizationObject.isAttributeFilter(measureFilter)) {
         return getAttrFilterExpression(measureFilter, attributesMap);
     }
     return getDateFilterExpression();

@@ -4,7 +4,7 @@ import { IObjectMeta } from "../meta/Meta";
 /**
  * @internal
  */
-export namespace ExtendedDateFilters {
+export namespace GdcExtendedDateFilters {
     // Generated unique identification string that is not subject to change during project copying.
     export type GUID = string;
 

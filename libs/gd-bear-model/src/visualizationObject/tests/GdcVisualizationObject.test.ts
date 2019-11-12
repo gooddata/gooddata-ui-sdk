@@ -1,24 +1,24 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject } from "../VisualizationObject";
-import IMeasure = VisualizationObject.IMeasure;
-import IVisualizationAttribute = VisualizationObject.IVisualizationAttribute;
-import BucketItem = VisualizationObject.BucketItem;
-import VisualizationObjectExtendedFilter = VisualizationObject.VisualizationObjectExtendedFilter;
-import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
-import VisualizationObjectDateFilter = VisualizationObject.VisualizationObjectDateFilter;
-import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
-import IArithmeticMeasureDefinition = VisualizationObject.IArithmeticMeasureDefinition;
+import { GdcVisualizationObject } from "../GdcVisualizationObject";
+import IMeasure = GdcVisualizationObject.IMeasure;
+import IVisualizationAttribute = GdcVisualizationObject.IVisualizationAttribute;
+import BucketItem = GdcVisualizationObject.BucketItem;
+import VisualizationObjectExtendedFilter = GdcVisualizationObject.VisualizationObjectExtendedFilter;
+import VisualizationObjectAttributeFilter = GdcVisualizationObject.VisualizationObjectAttributeFilter;
+import VisualizationObjectDateFilter = GdcVisualizationObject.VisualizationObjectDateFilter;
+import VisualizationObjectFilter = GdcVisualizationObject.VisualizationObjectFilter;
+import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
+import IArithmeticMeasureDefinition = GdcVisualizationObject.IArithmeticMeasureDefinition;
 
-describe("VisualizationObject", () => {
+describe("GdcVisualizationObject", () => {
     describe("isMeasure", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasure(null);
+            const result = GdcVisualizationObject.isMeasure(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasure(undefined);
+            const result = GdcVisualizationObject.isMeasure(undefined);
             expect(result).toEqual(false);
         });
 
@@ -31,7 +31,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasure(attribute);
+            const result = GdcVisualizationObject.isMeasure(attribute);
             expect(result).toEqual(false);
         });
 
@@ -48,19 +48,19 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasure(measure);
+            const result = GdcVisualizationObject.isMeasure(measure);
             expect(result).toEqual(true);
         });
     });
 
     describe("isVisualizationAttribute", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isVisualizationAttribute(null);
+            const result = GdcVisualizationObject.isVisualizationAttribute(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isVisualizationAttribute(undefined);
+            const result = GdcVisualizationObject.isVisualizationAttribute(undefined);
             expect(result).toEqual(false);
         });
 
@@ -77,7 +77,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isVisualizationAttribute(measure);
+            const result = GdcVisualizationObject.isVisualizationAttribute(measure);
             expect(result).toEqual(false);
         });
 
@@ -90,19 +90,19 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isVisualizationAttribute(attribute);
+            const result = GdcVisualizationObject.isVisualizationAttribute(attribute);
             expect(result).toEqual(true);
         });
     });
 
     describe("isMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasureDefinition(null);
+            const result = GdcVisualizationObject.isMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasureDefinition(undefined);
+            const result = GdcVisualizationObject.isMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -114,7 +114,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -125,7 +125,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -138,7 +138,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -156,19 +156,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isArithmeticMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isArithmeticMeasureDefinition(null);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isArithmeticMeasureDefinition(undefined);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -180,7 +180,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -191,7 +191,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -204,7 +204,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -222,19 +222,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isPopMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPopMeasureDefinition(null);
+            const result = GdcVisualizationObject.isPopMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPopMeasureDefinition(undefined);
+            const result = GdcVisualizationObject.isPopMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -246,7 +246,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -257,7 +257,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -270,7 +270,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPopMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
 
@@ -288,19 +288,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
     });
 
     describe("isPreviousPeriodMeasureDefinition", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(null);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(undefined);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(undefined);
             expect(result).toEqual(false);
         });
 
@@ -312,7 +312,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -323,7 +323,7 @@ describe("VisualizationObject", () => {
                     operator: "sum",
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -336,7 +336,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(false);
         });
 
@@ -354,19 +354,19 @@ describe("VisualizationObject", () => {
                     ],
                 },
             };
-            const result = VisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
+            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
             expect(result).toEqual(true);
         });
     });
 
     describe("isAttributeFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAttributeFilter(null);
+            const result = GdcVisualizationObject.isAttributeFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAttributeFilter(undefined);
+            const result = GdcVisualizationObject.isAttributeFilter(undefined);
             expect(result).toEqual(false);
         });
 
@@ -381,7 +381,7 @@ describe("VisualizationObject", () => {
                     to: -1,
                 },
             };
-            const result = VisualizationObject.isAttributeFilter(filter);
+            const result = GdcVisualizationObject.isAttributeFilter(filter);
             expect(result).toEqual(false);
         });
 
@@ -394,7 +394,7 @@ describe("VisualizationObject", () => {
                     notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isAttributeFilter(filter);
+            const result = GdcVisualizationObject.isAttributeFilter(filter);
             expect(result).toEqual(true);
         });
 
@@ -407,19 +407,19 @@ describe("VisualizationObject", () => {
                     in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isAttributeFilter(filter);
+            const result = GdcVisualizationObject.isAttributeFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isPositiveAttributeFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isPositiveAttributeFilter(null);
+            const result = GdcVisualizationObject.isPositiveAttributeFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isPositiveAttributeFilter(undefined);
+            const result = GdcVisualizationObject.isPositiveAttributeFilter(undefined);
             expect(result).toEqual(false);
         });
 
@@ -432,7 +432,7 @@ describe("VisualizationObject", () => {
                     notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isPositiveAttributeFilter(filter);
+            const result = GdcVisualizationObject.isPositiveAttributeFilter(filter);
             expect(result).toEqual(false);
         });
 
@@ -445,19 +445,19 @@ describe("VisualizationObject", () => {
                     in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isPositiveAttributeFilter(filter);
+            const result = GdcVisualizationObject.isPositiveAttributeFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isAbsoluteDateFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAbsoluteDateFilter(null);
+            const result = GdcVisualizationObject.isAbsoluteDateFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAbsoluteDateFilter(undefined);
+            const result = GdcVisualizationObject.isAbsoluteDateFilter(undefined);
             expect(result).toEqual(false);
         });
 
@@ -472,7 +472,7 @@ describe("VisualizationObject", () => {
                     to: -1,
                 },
             };
-            const result = VisualizationObject.isAbsoluteDateFilter(filter);
+            const result = GdcVisualizationObject.isAbsoluteDateFilter(filter);
             expect(result).toEqual(false);
         });
 
@@ -486,19 +486,19 @@ describe("VisualizationObject", () => {
                     to: "2018-07-11",
                 },
             };
-            const result = VisualizationObject.isAbsoluteDateFilter(filter);
+            const result = GdcVisualizationObject.isAbsoluteDateFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isRelativeDateFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isRelativeDateFilter(null);
+            const result = GdcVisualizationObject.isRelativeDateFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isRelativeDateFilter(undefined);
+            const result = GdcVisualizationObject.isRelativeDateFilter(undefined);
             expect(result).toEqual(false);
         });
 
@@ -512,7 +512,7 @@ describe("VisualizationObject", () => {
                     to: "to end",
                 },
             };
-            const result = VisualizationObject.isRelativeDateFilter(filter);
+            const result = GdcVisualizationObject.isRelativeDateFilter(filter);
             expect(result).toEqual(false);
         });
 
@@ -527,19 +527,19 @@ describe("VisualizationObject", () => {
                     to: -1,
                 },
             };
-            const result = VisualizationObject.isRelativeDateFilter(filter);
+            const result = GdcVisualizationObject.isRelativeDateFilter(filter);
             expect(result).toEqual(true);
         });
     });
 
     describe("isAttribute", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isAttribute(null);
+            const result = GdcVisualizationObject.isAttribute(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isAttribute(undefined);
+            const result = GdcVisualizationObject.isAttribute(undefined);
             expect(result).toEqual(false);
         });
 
@@ -556,7 +556,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isAttribute(measure);
+            const result = GdcVisualizationObject.isAttribute(measure);
             expect(result).toEqual(false);
         });
 
@@ -569,19 +569,19 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isAttribute(attribute);
+            const result = GdcVisualizationObject.isAttribute(attribute);
             expect(result).toEqual(true);
         });
     });
 
     describe("isMeasureValueFilter", () => {
         it("should return false when null is tested", () => {
-            const result = VisualizationObject.isMeasureValueFilter(null);
+            const result = GdcVisualizationObject.isMeasureValueFilter(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = VisualizationObject.isMeasureValueFilter(undefined);
+            const result = GdcVisualizationObject.isMeasureValueFilter(undefined);
             expect(result).toEqual(false);
         });
 
@@ -593,7 +593,7 @@ describe("VisualizationObject", () => {
                     },
                 },
             };
-            const result = VisualizationObject.isMeasureValueFilter(filter);
+            const result = GdcVisualizationObject.isMeasureValueFilter(filter);
             expect(result).toEqual(true);
         });
 
@@ -606,7 +606,7 @@ describe("VisualizationObject", () => {
                     in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
                 },
             };
-            const result = VisualizationObject.isMeasureValueFilter(filter);
+            const result = GdcVisualizationObject.isMeasureValueFilter(filter);
             expect(result).toEqual(false);
         });
     });

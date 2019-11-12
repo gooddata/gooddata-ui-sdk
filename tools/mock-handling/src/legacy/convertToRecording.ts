@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { ExecuteAFM, Execution } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM, GdcExecution } from "@gooddata/gd-bear-model";
 import {
     AttributeElements,
     defSetDimensions,
@@ -23,32 +23,32 @@ import rimraf from "rimraf";
 
 type TestDataFiles = {
     request: IExecutionDefinition;
-    response: Execution.IExecutionResponse;
-    result: Execution.IExecutionResult;
+    response: GdcExecution.IExecutionResponse;
+    result: GdcExecution.IExecutionResult;
 };
 
-function readRequestFile(prefix: string): ExecuteAFM.IExecution {
+function readRequestFile(prefix: string): GdcExecuteAFM.IExecution {
     const fullpath = prefix + "_request.json";
     const fileContent = fs.readFileSync(fullpath, { encoding: "utf-8" });
 
-    return JSON.parse(fileContent) as ExecuteAFM.IExecution;
+    return JSON.parse(fileContent) as GdcExecuteAFM.IExecution;
 }
 
-function readResponseFile(prefix: string): Execution.IExecutionResponse {
+function readResponseFile(prefix: string): GdcExecution.IExecutionResponse {
     const fullpath = prefix + "_response.json";
     const fileContent = fs.readFileSync(fullpath, { encoding: "utf-8" });
 
-    return JSON.parse(fileContent) as Execution.IExecutionResponse;
+    return JSON.parse(fileContent) as GdcExecution.IExecutionResponse;
 }
 
-function readResultFile(prefix: string): Execution.IExecutionResult {
+function readResultFile(prefix: string): GdcExecution.IExecutionResult {
     const fullpath = prefix + "_result.json";
     const fileContent = fs.readFileSync(fullpath, { encoding: "utf-8" });
 
-    return JSON.parse(fileContent) as Execution.IExecutionResult;
+    return JSON.parse(fileContent) as GdcExecution.IExecutionResult;
 }
 
-function transformAttrs(attrs: ExecuteAFM.IAttribute[] = []): IAttribute[] {
+function transformAttrs(attrs: GdcExecuteAFM.IAttribute[] = []): IAttribute[] {
     if (!attrs.length) {
         return [];
     }
@@ -60,8 +60,8 @@ function transformAttrs(attrs: ExecuteAFM.IAttribute[] = []): IAttribute[] {
     });
 }
 
-function transformAttrElements(attrElem: ExecuteAFM.AttributeElements): AttributeElements {
-    if (ExecuteAFM.isAttributeElementsArray(attrElem)) {
+function transformAttrElements(attrElem: GdcExecuteAFM.AttributeElements): AttributeElements {
+    if (GdcExecuteAFM.isAttributeElementsArray(attrElem)) {
         return {
             values: attrElem,
         };
@@ -70,12 +70,12 @@ function transformAttrElements(attrElem: ExecuteAFM.AttributeElements): Attribut
     return attrElem;
 }
 
-function isExpressionFilter(obj: any): obj is ExecuteAFM.IExpressionFilter {
-    return obj && (obj as ExecuteAFM.IExpressionFilter).value !== undefined;
+function isExpressionFilter(obj: any): obj is GdcExecuteAFM.IExpressionFilter {
+    return obj && (obj as GdcExecuteAFM.IExpressionFilter).value !== undefined;
 }
 
-function transformMeasureFilter(f: ExecuteAFM.FilterItem): IMeasureFilter {
-    if (ExecuteAFM.isPositiveAttributeFilter(f)) {
+function transformMeasureFilter(f: GdcExecuteAFM.FilterItem): IMeasureFilter {
+    if (GdcExecuteAFM.isPositiveAttributeFilter(f)) {
         const newFilter: IPositiveAttributeFilter = {
             positiveAttributeFilter: {
                 displayForm: f.positiveAttributeFilter.displayForm,
@@ -84,7 +84,7 @@ function transformMeasureFilter(f: ExecuteAFM.FilterItem): IMeasureFilter {
         };
 
         return newFilter;
-    } else if (ExecuteAFM.isNegativeAttributeFilter(f)) {
+    } else if (GdcExecuteAFM.isNegativeAttributeFilter(f)) {
         const newFilter: INegativeAttributeFilter = {
             negativeAttributeFilter: {
                 displayForm: f.negativeAttributeFilter.displayForm,
@@ -98,7 +98,7 @@ function transformMeasureFilter(f: ExecuteAFM.FilterItem): IMeasureFilter {
     return f;
 }
 
-function transformFilters(filters: ExecuteAFM.CompatibilityFilter[] = []): IFilter[] {
+function transformFilters(filters: GdcExecuteAFM.CompatibilityFilter[] = []): IFilter[] {
     if (!filters.length) {
         return [];
     }
@@ -108,7 +108,7 @@ function transformFilters(filters: ExecuteAFM.CompatibilityFilter[] = []): IFilt
             throw new Error("get out of here ;)");
         }
 
-        if (ExecuteAFM.isMeasureValueFilter(f)) {
+        if (GdcExecuteAFM.isMeasureValueFilter(f)) {
             return f;
         }
 
@@ -116,7 +116,7 @@ function transformFilters(filters: ExecuteAFM.CompatibilityFilter[] = []): IFilt
     });
 }
 
-function transformMeasureFilters(filters: ExecuteAFM.FilterItem[] = []): IMeasureFilter[] {
+function transformMeasureFilters(filters: GdcExecuteAFM.FilterItem[] = []): IMeasureFilter[] {
     if (!filters.length) {
         return [];
     }
@@ -124,7 +124,7 @@ function transformMeasureFilters(filters: ExecuteAFM.FilterItem[] = []): IMeasur
     return filters.map(transformMeasureFilter);
 }
 
-function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
+function transformMeasures(measures: GdcExecuteAFM.IMeasure[] = []): IMeasure[] {
     if (!measures.length) {
         return [];
     }
@@ -132,7 +132,7 @@ function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
     return measures.map(m => {
         const { alias, definition, format, localIdentifier } = m;
 
-        if (ExecuteAFM.isSimpleMeasureDefinition(definition)) {
+        if (GdcExecuteAFM.isSimpleMeasureDefinition(definition)) {
             const newMeasure: IMeasure<IMeasureDefinition> = {
                 measure: {
                     localIdentifier,
@@ -148,7 +148,7 @@ function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
             };
 
             return newMeasure;
-        } else if (ExecuteAFM.isPopMeasureDefinition(definition)) {
+        } else if (GdcExecuteAFM.isPopMeasureDefinition(definition)) {
             const newMeasure: IMeasure<IPoPMeasureDefinition> = {
                 measure: {
                     localIdentifier,
@@ -176,7 +176,9 @@ function transformMeasures(measures: ExecuteAFM.IMeasure[] = []): IMeasure[] {
     });
 }
 
-function explodeResultSpec(rs: ExecuteAFM.IResultSpec = {}): { sorts: SortItem[]; dimensions: IDimension[] } {
+function explodeResultSpec(
+    rs: GdcExecuteAFM.IResultSpec = {},
+): { sorts: SortItem[]; dimensions: IDimension[] } {
     const { sorts, dimensions } = rs;
 
     return {
@@ -185,7 +187,7 @@ function explodeResultSpec(rs: ExecuteAFM.IResultSpec = {}): { sorts: SortItem[]
     };
 }
 
-function transformRequestToExecDef(req: ExecuteAFM.IExecution): IExecutionDefinition {
+function transformRequestToExecDef(req: GdcExecuteAFM.IExecution): IExecutionDefinition {
     const attrs = transformAttrs(req.execution.afm.attributes);
     const measures = transformMeasures(req.execution.afm.measures);
     const filters = transformFilters(req.execution.afm.filters);
@@ -231,11 +233,11 @@ const TARGET_DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
  * Start this program and give it a prefix of the test data set (e.g. the stuff before _request.json, _result.json etc)
  *
  * It will by default look into sdk-ui/stories/test_data for the input files. if read correctly, it will transform
- * the request .. build an agnostic execution definition. then it will store this, the request and the response
+ * the request .. build an agnostic GdcExecution definition. then it will store this, the request and the response
  * inside the target directory.
  *
  * From there on, the legacyRecordedBackend can work with the stuff. see the mockingbird for more information on how to
- * use these recorded executions.
+ * use these recorded GdcExecutions.
  */
 
 main(SOURCE_DIR, TARGET_DIR, "pivot_table_with_2_metrics_4_attributes_subtotals");

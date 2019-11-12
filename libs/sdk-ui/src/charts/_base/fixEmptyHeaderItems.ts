@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/gd-bear-model";
+import { GdcExecution } from "@gooddata/gd-bear-model";
 
 export function fixEmptyHeaderItems(
-    executionResult: Execution.IExecutionResult,
+    executionResult: GdcExecution.IExecutionResult,
     emptyHeaderString: string,
-): Execution.IExecutionResult {
+): GdcExecution.IExecutionResult {
     if (!executionResult.headerItems) {
         return executionResult;
     }

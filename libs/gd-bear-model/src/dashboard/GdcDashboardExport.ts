@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ExtendedDateFilters } from "../extendedDateFilters/ExtendedDateFilters";
+import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 
 /**
  * @internal
  */
-export namespace DashboardExport {
+export namespace GdcDashboardExport {
     export type RelativeType = "relative";
     export type AbsoluteType = "absolute";
     export type DateFilterType = RelativeType | AbsoluteType;
@@ -21,9 +21,9 @@ export namespace DashboardExport {
     export interface IDateFilter {
         dateFilter: {
             type: DateFilterType;
-            granularity: ExtendedDateFilters.DateFilterGranularity;
-            from?: ExtendedDateFilters.DateString | number;
-            to?: ExtendedDateFilters.DateString | number;
+            granularity: GdcExtendedDateFilters.DateFilterGranularity;
+            from?: GdcExtendedDateFilters.DateString | number;
+            to?: GdcExtendedDateFilters.DateString | number;
             dataSet?: string;
             attribute?: string;
         };

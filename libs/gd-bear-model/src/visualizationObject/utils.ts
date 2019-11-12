@@ -1,17 +1,17 @@
 // (C) 2007-2018 GoodData Corporation
 import get from "lodash/get";
-import { VisualizationObject } from "./VisualizationObject";
-import IVisualizationObjectContent = VisualizationObject.IVisualizationObjectContent;
-import IBucket = VisualizationObject.IBucket;
-import BucketItem = VisualizationObject.BucketItem;
-import IVisualizationAttributeContent = VisualizationObject.IVisualizationAttributeContent;
-import IMeasureContent = VisualizationObject.IMeasureContent;
-import IMeasureDefinitionType = VisualizationObject.IMeasureDefinitionType;
-import VisualizationObjectFilter = VisualizationObject.VisualizationObjectFilter;
-import VisualizationObjectAttributeFilter = VisualizationObject.VisualizationObjectAttributeFilter;
-import isAttribute = VisualizationObject.isAttribute;
-import isMeasure = VisualizationObject.isMeasure;
-import isAttributeFilter = VisualizationObject.isAttributeFilter;
+import { GdcVisualizationObject } from "./GdcVisualizationObject";
+import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
+import IBucket = GdcVisualizationObject.IBucket;
+import BucketItem = GdcVisualizationObject.BucketItem;
+import IVisualizationAttributeContent = GdcVisualizationObject.IVisualizationAttributeContent;
+import IMeasureContent = GdcVisualizationObject.IMeasureContent;
+import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
+import VisualizationObjectFilter = GdcVisualizationObject.VisualizationObjectFilter;
+import VisualizationObjectAttributeFilter = GdcVisualizationObject.VisualizationObjectAttributeFilter;
+import isAttribute = GdcVisualizationObject.isAttribute;
+import isMeasure = GdcVisualizationObject.isMeasure;
+import isAttributeFilter = GdcVisualizationObject.isAttributeFilter;
 
 function getBuckets(mdObj: IVisualizationObjectContent): IBucket[] {
     return get(mdObj, "buckets", []);

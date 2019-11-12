@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import { ExtendedDateFilters } from "../ExtendedDateFilters";
+import { GdcExtendedDateFilters } from "../GdcExtendedDateFilters";
 
-describe("ExtendedDateFilters", () => {
-    const absoluteForm: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+describe("GdcExtendedDateFilters", () => {
+    const absoluteForm: GdcExtendedDateFilters.IAbsoluteDateFilterForm = {
         from: "2000-01-01",
         localIdentifier: "foo",
         to: "2020-01-01",
@@ -11,7 +11,7 @@ describe("ExtendedDateFilters", () => {
         visible: true,
     };
 
-    const absolutePreset: ExtendedDateFilters.IAbsoluteDateFilterPreset = {
+    const absolutePreset: GdcExtendedDateFilters.IAbsoluteDateFilterPreset = {
         from: "2000-01-01",
         localIdentifier: "foo",
         name: "bar",
@@ -20,7 +20,7 @@ describe("ExtendedDateFilters", () => {
         visible: true,
     };
 
-    const relativeForm: ExtendedDateFilters.IRelativeDateFilterForm = {
+    const relativeForm: GdcExtendedDateFilters.IRelativeDateFilterForm = {
         from: -2,
         granularity: "GDC.time.date",
         availableGranularities: ["GDC.time.date"],
@@ -31,7 +31,7 @@ describe("ExtendedDateFilters", () => {
         visible: true,
     };
 
-    const relativePreset: ExtendedDateFilters.IRelativeDateFilterPreset = {
+    const relativePreset: GdcExtendedDateFilters.IRelativeDateFilterPreset = {
         from: -2,
         granularity: "GDC.time.date",
         localIdentifier: "foo",
@@ -41,7 +41,7 @@ describe("ExtendedDateFilters", () => {
         visible: true,
     };
 
-    const allTimeFilter: ExtendedDateFilters.IAllTimeDateFilter = {
+    const allTimeFilter: GdcExtendedDateFilters.IAllTimeDateFilter = {
         localIdentifier: "foo",
         type: "allTime",
         name: "All time",
@@ -57,12 +57,12 @@ describe("ExtendedDateFilters", () => {
             ["an absolute form", absoluteForm],
             ["an absolute preset", absolutePreset],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isAllTimeDateFilter(input);
+            const result = GdcExtendedDateFilters.isAllTimeDateFilter(input);
             expect(result).toEqual(false);
         });
 
         it("should return true when an all-time filter is tested", () => {
-            const result = ExtendedDateFilters.isAllTimeDateFilter(allTimeFilter);
+            const result = GdcExtendedDateFilters.isAllTimeDateFilter(allTimeFilter);
             expect(result).toEqual(true);
         });
     });
@@ -76,12 +76,12 @@ describe("ExtendedDateFilters", () => {
             ["an absolute preset", absolutePreset],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isAbsoluteDateFilterForm(input);
+            const result = GdcExtendedDateFilters.isAbsoluteDateFilterForm(input);
             expect(result).toEqual(false);
         });
 
         it("should return true when an absolute form is tested", () => {
-            const result = ExtendedDateFilters.isAbsoluteDateFilterForm(absoluteForm);
+            const result = GdcExtendedDateFilters.isAbsoluteDateFilterForm(absoluteForm);
             expect(result).toEqual(true);
         });
     });
@@ -95,12 +95,12 @@ describe("ExtendedDateFilters", () => {
             ["an absolute form", absoluteForm],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isAbsoluteDateFilterPreset(input);
+            const result = GdcExtendedDateFilters.isAbsoluteDateFilterPreset(input);
             expect(result).toEqual(false);
         });
 
         it("should return true when an absolute preset is tested", () => {
-            const result = ExtendedDateFilters.isAbsoluteDateFilterPreset(absolutePreset);
+            const result = GdcExtendedDateFilters.isAbsoluteDateFilterPreset(absolutePreset);
             expect(result).toEqual(true);
         });
     });
@@ -114,12 +114,12 @@ describe("ExtendedDateFilters", () => {
             ["an absolute preset", absolutePreset],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isRelativeDateFilterForm(input);
+            const result = GdcExtendedDateFilters.isRelativeDateFilterForm(input);
             expect(result).toEqual(false);
         });
 
         it("should return true when a relative form is tested", () => {
-            const result = ExtendedDateFilters.isRelativeDateFilterForm(relativeForm);
+            const result = GdcExtendedDateFilters.isRelativeDateFilterForm(relativeForm);
             expect(result).toEqual(true);
         });
     });
@@ -133,12 +133,12 @@ describe("ExtendedDateFilters", () => {
             ["an absolute preset", absolutePreset],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isRelativeDateFilterPreset(input);
+            const result = GdcExtendedDateFilters.isRelativeDateFilterPreset(input);
             expect(result).toEqual(false);
         });
 
         it("should return true when a relative preset is tested", () => {
-            const result = ExtendedDateFilters.isRelativeDateFilterPreset(relativePreset);
+            const result = GdcExtendedDateFilters.isRelativeDateFilterPreset(relativePreset);
             expect(result).toEqual(true);
         });
     });
@@ -151,14 +151,14 @@ describe("ExtendedDateFilters", () => {
             ["a relative preset", relativePreset],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isAbsoluteDateFilterOption(input);
+            const result = GdcExtendedDateFilters.isAbsoluteDateFilterOption(input);
             expect(result).toEqual(false);
         });
 
         it.each([["an absolute form", absoluteForm], ["an absolute preset", absolutePreset]])(
             "should return true when %s is tested",
             (_: any, input: any) => {
-                const result = ExtendedDateFilters.isAbsoluteDateFilterOption(input);
+                const result = GdcExtendedDateFilters.isAbsoluteDateFilterOption(input);
                 expect(result).toEqual(true);
             },
         );
@@ -172,14 +172,14 @@ describe("ExtendedDateFilters", () => {
             ["an absolute preset", absolutePreset],
             ["an all-time filter", allTimeFilter],
         ])("should return false when %s is tested", (_: any, input: any) => {
-            const result = ExtendedDateFilters.isRelativeDateFilterOption(input);
+            const result = GdcExtendedDateFilters.isRelativeDateFilterOption(input);
             expect(result).toEqual(false);
         });
 
         it.each([["a relative form", relativeForm], ["a relative preset", relativePreset]])(
             "should return false when %s is tested",
             (_: any, input: any) => {
-                const result = ExtendedDateFilters.isRelativeDateFilterOption(input);
+                const result = GdcExtendedDateFilters.isRelativeDateFilterOption(input);
                 expect(result).toEqual(true);
             },
         );

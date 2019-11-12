@@ -3,7 +3,7 @@
 /**
  * @public
  */
-export namespace Execution {
+export namespace GdcExecution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
             uri?: string;
