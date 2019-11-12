@@ -6,52 +6,38 @@ const commitHash = require("child_process")
     .toString()
     .trim();
 
-module.exports = {
-    resolve: {
-        extensions: [".ts", ".tsx", ".js", ".json"],
-    },
-
-    module: {
-        rules: [
+/*
+ * Our extension of config adds support for typescript. support for CSS loading and SVG & fonts is built into
+ * storybook's webpack by default (having file-loader for svg et al here lead to build-time warnings about duplicate
+ * svgs, removing it from here gets rid of warnings and everything still renders OK)
+ */
+module.exports = ({ config, mode }) => {
+    config.resolve.extensions.push(".ts", ".tsx", ".js", ".json");
+    config.module.rules.push({
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        include: [
+            path.join(__dirname, "../stories"),
+            path.join(__dirname, "../scenarios"),
+            path.join(__dirname, "../src"),
+        ],
+        loaders: [
             {
-                test: /\.css$/,
-                loaders: ["style-loader", "css-loader"],
-            },
-            {
-                test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"],
-            },
-            {
-                test: /\.(svg|eot|woff|ttf)$/,
-                loader: "file-loader",
+                loader: "ts-loader",
                 options: {
-                    name: "[name].[ext]",
+                    transpileOnly: true,
+                    configFile: path.join(__dirname, "../tsconfig.json"),
                 },
             },
-            {
-                test: /\.tsx?$/,
-                exclude: /node_modules/,
-                include: [
-                    path.join(__dirname, "../stories"),
-                    path.join(__dirname, "../scenarios"),
-                    path.join(__dirname, "../src"),
-                ],
-                loaders: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            configFile: path.join(__dirname, "../tsconfig.json"),
-                        },
-                    },
-                ],
-            },
         ],
-    },
+    });
 
-    plugins: [
+    // DEBUG constant
+    config.plugins.push(
         new webpack.DefinePlugin({
             __COMMIT_HASH__: JSON.stringify(commitHash),
         }),
-    ],
+    );
+
+    return config;
 };
