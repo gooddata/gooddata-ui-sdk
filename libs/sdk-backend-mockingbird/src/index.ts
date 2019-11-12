@@ -2,6 +2,10 @@
 
 export { dummyBackend, dummyDataView, dummyDataFacade } from "./dummyBackend";
 
-export { ExecutionRecording, recordedBackend, recordedDataFacade } from "./recordedBackend";
+export {
+    LegacyExecutionRecording,
+    legacyRecordedBackend,
+    legacyRecordedDataFacade,
+} from "./legacyRecordedBackend";
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";

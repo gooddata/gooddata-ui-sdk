@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
 import { waitForAsync } from "../../../../testUtils/synchronization";
 
@@ -10,7 +10,7 @@ import { AttributeFilter } from "../AttributeFilter";
 import { AttributeDropdown } from "../AttributeDropdown/AttributeDropdown";
 
 describe("AttributeFilter", () => {
-    const backend = recordedBackend(MasterIndex);
+    const backend = legacyRecordedBackend(MasterIndex);
     const workspace = "testWorkspace";
 
     it("should be in loading state until attribute display form title is loaded", async () => {

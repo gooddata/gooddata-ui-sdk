@@ -63,16 +63,16 @@
         "@gooddata/sdk-backend-bear": "^8.0.0-alpha.0",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",
         "@gooddata/sdk-model": "^8.0.0-alpha.0",
-        "lodash": "^4.17.15",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
         "inquirer": "^6.5.2",
+        "lodash": "^4.17.15",
         "ora": "^4.0.2",
+        "p-map": "^3.0.0",
         "prettier": "~1.18.2",
         "prompt": "^1.0.0",
-        "p-map": "^3.0.0",
-        "strip-ansi": "^5.2.0",
-        "rimraf": "^3.0.0"
+        "rimraf": "^3.0.0",
+        "strip-ansi": "^5.2.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",

@@ -48,6 +48,7 @@ const defaultConfig = { hostname: "test", username: "testUser@example.com" };
 /**
  * Master Index is the input needed to initialize the recorded backend.
  * @internal
+ * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
 export type RecordingIndex = {
     [workspace: string]: WorkspaceRecordings;
@@ -57,10 +58,11 @@ export type RecordingIndex = {
  * Workspace-specific recordings
  *
  * @internal
+ * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
 export type WorkspaceRecordings = {
     execution?: {
-        [fp: string]: ExecutionRecording;
+        [fp: string]: LegacyExecutionRecording;
     };
     metadata?: {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
@@ -74,27 +76,20 @@ export type WorkspaceRecordings = {
  * Each recording in the master index has these 3 entries
  *
  * @internal
+ * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export type ExecutionRecording = {
+export type LegacyExecutionRecording = {
     definition: IExecutionDefinition;
     response: any;
     result: any;
 };
 
 /**
- * Returns dummy backend - this backend focuses on the execution 'branch' of the SPI. it implements
- * execution factory et al. in a way, that the returned result and data view have a correct execution
- * definition but have no data whatsoever.
- *
- * This implementation is suitable when:
- * - testing code which builds and configures an instance of IPreparedExecution.
- * - testing code which works with IDataView's' execution definition
- *
- * @param index - index with available recordings
- * @param config - optionally provide configuration of the backend (host/user)
+ * This is legacy implementation of the recorded backend. Do not use for new tests.
  * @internal
+ * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export function recordedBackend(
+export function legacyRecordedBackend(
     index: RecordingIndex,
     config: AnalyticalBackendConfig = defaultConfig,
 ): IAnalyticalBackend {
@@ -102,7 +97,7 @@ export function recordedBackend(
         capabilities: {},
         config,
         onHostname(hostname: string): IAnalyticalBackend {
-            return recordedBackend(index, { ...config, hostname });
+            return legacyRecordedBackend(index, { ...config, hostname });
         },
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
@@ -128,10 +123,13 @@ export function recordedBackend(
 /**
  * Creates a new data view facade for the provided recording.
  *
+ * This is legacy implementation of recorded backend. Do not use for new tests.
+ *
  * @param recording - recorded definition, AFM response and AFM result
  * @internal
+ * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export function recordedDataFacade(recording: ExecutionRecording): DataViewFacade {
+export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
     const definition = recording.definition;
     const executionFactory = recordedExecutionFactory(recording.definition.workspace);
 
@@ -211,7 +209,7 @@ function recordedExecutionFactory(
 function recordedDataView(
     definition: IExecutionDefinition,
     result: IExecutionResult,
-    recording: ExecutionRecording,
+    recording: LegacyExecutionRecording,
 ): IDataView {
     const afmResult = recording.result.executionResult as Execution.IExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
@@ -237,7 +235,7 @@ function recordedDataView(
 function recordedExecutionResult(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    recording: ExecutionRecording,
+    recording: LegacyExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
     const afmResponse = recording.response.executionResponse as Execution.IExecutionResponse;

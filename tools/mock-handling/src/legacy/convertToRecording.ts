@@ -234,7 +234,7 @@ const TARGET_DIR = "../../../libs/sdk-ui/__mocks__/recordings/";
  * the request .. build an agnostic execution definition. then it will store this, the request and the response
  * inside the target directory.
  *
- * From there on, the recordedBackend can work with the stuff. see the mockingbird for more information on how to
+ * From there on, the legacyRecordedBackend can work with the stuff. see the mockingbird for more information on how to
  * use these recorded executions.
  */
 

@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
 import { waitForAsync } from "../../../../testUtils/synchronization";
 
 import { AttributeElements } from "../AttributeElements";
 
 describe("AttributeElements", () => {
-    const backend = recordedBackend(MasterIndex);
+    const backend = legacyRecordedBackend(MasterIndex);
     const workspace = "testWorkspace";
     const identifier = "label.method.method";
     const anotherIdentifier = "label.status.status";

@@ -14,14 +14,14 @@ import * as stickyRowHandler from "../impl/stickyRowHandler";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
 import { ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { MasterIndex } from "../../../__mocks__/recordings/playlist";
 import { headlineWithOneMeasure } from "../../../__mocks__/fixtures";
 
 const intl = createIntlMock();
 
 describe("CorePivotTable", () => {
-    const backend = recordedBackend(MasterIndex);
+    const backend = legacyRecordedBackend(MasterIndex);
     const singleMeasureExec = prepareExecution(backend, headlineWithOneMeasure.definition);
 
     function renderComponent(

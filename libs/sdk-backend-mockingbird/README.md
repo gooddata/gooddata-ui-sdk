@@ -2,12 +2,19 @@
 
 This package contains test support and mock implementations of various concepts in the sdk-backend-spi.
 
-## Dummy backend
+## Dummy Backend
 
 This implementation of Analytical Backend SPI focuses on the execution branch of the SPI; it creates
 and sets up Prepared Execution just like any other implementation would. When the prepared execution
-is started (execute()) it returns an empty result which only contains execution definition and has
-the result dimensions empty. Reading any data views from this result will return empty data views.
+is started (execute()) it either (based on configuration):
+
+-   Returns an empty result which only contains execution definition and has the result dimensions empty.
+    Reading any data views from this result will return empty data views.
+
+-   Returns an empty result which only contains execution definition and has the result dimensions empty.
+    Reading any data views from this result will yield NoDataError
+
+    (Note: this is closer to how real backend implementations behave)
 
 Purpose:
 
@@ -19,16 +26,14 @@ Purpose:
 
 -   use in component-level 'smoke tests' (e.g. something renders or happens, we don't care about the details)
 
-## Recorded backend
+## Legacy Recorded Backend
 
-This implementation of Analytical Backend SPI for now focuses on the execution branch of the SPI.
+This implementation of Analytical Backend SPI for serves results recorded on the disk. It is called
+legacy, because it works with recordings that were created pre-8.0, using an unknown method and are
+tightly coupled with Execute AFM types themselves.
 
-Purpose:
+This legacy implementation was essential during the initial refactoring of the SDK to quickly get the
+existing tests green. However, it should not be used in any new tests and should not be enhanced any further.
 
--   use in unit and component tests which need to verify behaviour based on particular definition + results + data of
-    an execution
-
-Using the recorded executions is the preferred approach when test fixture requires non-trivial setup. Favor the
-recorded executions over hand-crafting the execution results and data views. The benefit of recorded executions
-is their easier change-ability in case of breaking changes of the execution or data shape: transformer code can
-rake through all of them in a straightforward fashion.
+Instead, our efforts need to be focused on enhancing the non-legacy recorded backend and having all
+tests (eventually also old tests) run against the reference workspace.
