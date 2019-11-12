@@ -1,0 +1,10 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "single measure"
+    }
+]

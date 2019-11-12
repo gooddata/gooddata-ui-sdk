@@ -1,0 +1,10 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "single measure with viewBy and stackBy"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "single measure with viewBy and stackBy"
+    }
+]

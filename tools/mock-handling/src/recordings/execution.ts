@@ -13,9 +13,11 @@ import { logInfo, logWarn } from "../cli/loggers";
 import { DataRecorderConfig } from "../base/types";
 import pmap from "p-map";
 import pick = require("lodash/pick");
+import isArray = require("lodash/isArray");
 
 export const ExecutionRecordingDir = "executions";
 export const ExecutionDefinitionFile = "definition.json";
+export const ScenariosFile = "scenarios.json";
 export const ExecutionResultFile = "executionResult.json";
 export const DataViewFile = "dataView_all.json";
 
@@ -36,6 +38,11 @@ const DataViewPropsToSerialize: Array<keyof IDataView> = [
     "totalCount",
 ];
 
+export type ScenarioDescriptor = {
+    vis: string;
+    scenario: string;
+};
+
 export interface IExecutionRecording {
     directory: string;
     fingerprint: string;
@@ -44,6 +51,7 @@ export interface IExecutionRecording {
     resultFile: string;
     dataViewFile: string;
     hasRecordedData: boolean;
+    scenarios: ScenarioDescriptor[];
 
     makeRecording(execFactory: IExecutionFactory, workspace: string): Promise<IExecutionRecording>;
 }
@@ -91,6 +99,44 @@ async function makeRecording(
     };
 }
 
+function loadScenarios(directory: string): ScenarioDescriptor[] {
+    const scenariosFile = path.join(directory, ScenariosFile);
+
+    if (!fs.existsSync(scenariosFile)) {
+        return [];
+    }
+
+    try {
+        const scenarios = JSON.parse(fs.readFileSync(scenariosFile, { encoding: "utf-8" }));
+
+        if (!isArray(scenarios)) {
+            logWarn(
+                `The ${ScenariosFile} in ${directory} does not contain JSON array with scenario metadata. Proceeding without scenarios - they will not be included for this particular recording. `,
+            );
+
+            return [];
+        }
+
+        const validScenarios = scenarios.filter(
+            s => s.vis !== undefined && s.scenario !== undefined,
+        ) as ScenarioDescriptor[];
+
+        if (validScenarios.length !== scenarios.length) {
+            logWarn(
+                `The ${ScenariosFile} in ${directory} does not contain valid scenario metadata. Some or even all metadata have invalid shape. This comes as object with 'vis' and 'scenario' string properties. Proceeding without scenarios - they will not be included for this particular recording.`,
+            );
+        }
+
+        return validScenarios;
+    } catch (e) {
+        logWarn(
+            `Unable to read or parse ${ScenariosFile} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with array of {vis, scenario} objects. Proceeding without scenarios - they will not be included for this particular recording.`,
+        );
+
+        return [];
+    }
+}
+
 function load(definitionFile: string): IExecutionRecording | null {
     const directory = path.dirname(definitionFile);
     let fingerprint = path.basename(directory);
@@ -117,6 +163,7 @@ function load(definitionFile: string): IExecutionRecording | null {
         definitionFile,
         resultFile,
         dataViewFile,
+        scenarios: loadScenarios(directory),
         hasRecordedData: fs.existsSync(resultFile) && fs.existsSync(dataViewFile),
         makeRecording: async (execFactory: IExecutionFactory, workspace: string) =>
             makeRecording(executionTask, execFactory, workspace),
@@ -125,15 +172,15 @@ function load(definitionFile: string): IExecutionRecording | null {
     return executionTask;
 }
 
-async function locateDefinitions(executionsDir: string): Promise<string[]> {
-    const entries = await fs.readdirSync(executionsDir, { withFileTypes: true, encoding: "utf-8" });
+function locateDefinitions(executionsDir: string): string[] {
+    const entries = fs.readdirSync(executionsDir, { withFileTypes: true, encoding: "utf-8" });
     const files = [];
 
     for (const entry of entries) {
         const fullPath = path.join(executionsDir, entry.name);
 
         if (entry.isDirectory()) {
-            files.push(...(await locateDefinitions(fullPath)));
+            files.push(...locateDefinitions(fullPath));
         } else if (entry.isFile() && entry.name === ExecutionDefinitionFile) {
             files.push(fullPath);
         }
