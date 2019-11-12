@@ -7,8 +7,8 @@ import BucketItem = GdcVisualizationObject.BucketItem;
 import IVisualizationAttributeContent = GdcVisualizationObject.IVisualizationAttributeContent;
 import IMeasureContent = GdcVisualizationObject.IMeasureContent;
 import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
-import VisualizationObjectFilter = GdcVisualizationObject.VisualizationObjectFilter;
-import VisualizationObjectAttributeFilter = GdcVisualizationObject.VisualizationObjectAttributeFilter;
+import Filter = GdcVisualizationObject.Filter;
+import AttributeFilter = GdcVisualizationObject.AttributeFilter;
 import isAttribute = GdcVisualizationObject.isAttribute;
 import isMeasure = GdcVisualizationObject.isMeasure;
 import isAttributeFilter = GdcVisualizationObject.isAttributeFilter;
@@ -57,23 +57,23 @@ function getMeasures(mdObject: IVisualizationObjectContent): IMeasureContent[] {
     );
 }
 
-function getMeasureFilters(measure: IMeasureContent): VisualizationObjectFilter[] {
+function getMeasureFilters(measure: IMeasureContent): Filter[] {
     return get(getDefinition(measure), "filters", []);
 }
 
-function getMeasureAttributeFilters(measure: IMeasureContent): VisualizationObjectAttributeFilter[] {
+function getMeasureAttributeFilters(measure: IMeasureContent): AttributeFilter[] {
     return getMeasureFilters(measure).filter(isAttributeFilter);
 }
 
-function getAttributeFilters(mdObject: IVisualizationObjectContent): VisualizationObjectAttributeFilter[] {
+function getAttributeFilters(mdObject: IVisualizationObjectContent): AttributeFilter[] {
     return getMeasures(mdObject).reduce(
-        (filters: VisualizationObjectAttributeFilter[], measure: IMeasureContent) =>
+        (filters: AttributeFilter[], measure: IMeasureContent) =>
             filters.concat(getMeasureAttributeFilters(measure)),
         [],
     );
 }
 
-function getAttributeFilterDisplayForm(measureFilter: VisualizationObjectAttributeFilter): string[] {
+function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string[] {
     return (
         get(measureFilter, ["positiveAttributeFilter", "displayForm", "uri"]) ||
         get(measureFilter, ["negativeAttributeFilter", "displayForm", "uri"])

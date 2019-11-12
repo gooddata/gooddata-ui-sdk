@@ -884,9 +884,26 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
     // (undocumented)
-    export type BucketItem = IMeasure | IVisualizationAttribute;
+    export type AttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+    // (undocumented)
+    export type BucketItem = IMeasure | IAttribute;
     // (undocumented)
     export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+    // (undocumented)
+    export type DateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
+    // (undocumented)
+    export type ExtendedFilter = Filter | IMeasureValueFilter;
+    // (undocumented)
+    export type Filter = DateFilter | AttributeFilter;
+    // (undocumented)
+    export interface IAbsoluteDateFilter {
+        // (undocumented)
+        absoluteDateFilter: {
+            dataSet: ObjQualifier;
+            from?: string;
+            to?: string;
+        };
+    }
     // (undocumented)
     export interface IArithmeticMeasureDefinition {
         // (undocumented)
@@ -896,13 +913,18 @@ export namespace GdcVisualizationObject {
         };
     }
     // (undocumented)
+    export interface IAttribute {
+        // (undocumented)
+        visualizationAttribute: IVisualizationAttributeContent;
+    }
+    // (undocumented)
     export interface IBucket {
         // (undocumented)
         items: BucketItem[];
         // (undocumented)
         localIdentifier?: Identifier;
         // (undocumented)
-        totals?: IVisualizationTotal[];
+        totals?: ITotal[];
     }
     // (undocumented)
     export interface IComparisonCondition {
@@ -943,7 +965,7 @@ export namespace GdcVisualizationObject {
         measureDefinition: {
             item: ObjQualifier;
             aggregation?: MeasureAggregation;
-            filters?: VisualizationObjectFilter[];
+            filters?: Filter[];
             computeRatio?: boolean;
         };
     }
@@ -955,6 +977,14 @@ export namespace GdcVisualizationObject {
         measureValueFilter: {
             measure: IObjUriQualifier | ILocalIdentifierQualifier;
             condition?: MeasureValueFilterCondition;
+        };
+    }
+    // (undocumented)
+    export interface INegativeAttributeFilter {
+        // (undocumented)
+        negativeAttributeFilter: {
+            displayForm: ObjQualifier;
+            notIn: string[];
         };
     }
     // (undocumented)
@@ -973,6 +1003,14 @@ export namespace GdcVisualizationObject {
         popMeasureDefinition: {
             measureIdentifier: Identifier;
             popAttribute: ObjQualifier;
+        };
+    }
+    // (undocumented)
+    export interface IPositiveAttributeFilter {
+        // (undocumented)
+        positiveAttributeFilter: {
+            displayForm: ObjQualifier;
+            in: string[];
         };
     }
     // (undocumented)
@@ -1005,38 +1043,52 @@ export namespace GdcVisualizationObject {
         [identifier: string]: string;
     }
     // (undocumented)
-    export function isAbsoluteDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectAbsoluteDateFilter;
+    export interface IRelativeDateFilter {
+        // (undocumented)
+        relativeDateFilter: {
+            dataSet: ObjQualifier;
+            granularity: string;
+            from?: number;
+            to?: number;
+        };
+    }
+    // (undocumented)
+    export function isAbsoluteDateFilter(filter: DateFilter): filter is IAbsoluteDateFilter;
     // (undocumented)
     export function isArithmeticMeasureDefinition(definition: IMeasureDefinitionType): definition is IArithmeticMeasureDefinition;
     // (undocumented)
-    export function isAttribute(bucketItem: BucketItem): bucketItem is IVisualizationAttribute;
+    export function isAttribute(bucketItem: IMeasure | IAttribute): bucketItem is IAttribute;
     // (undocumented)
-    export function isAttributeFilter(filter: VisualizationObjectFilter): filter is VisualizationObjectAttributeFilter;
+    export function isAttributeFilter(filter: Filter): filter is AttributeFilter;
     // (undocumented)
-    export function isMeasure(bucketItem: IMeasure | IVisualizationAttribute): bucketItem is IMeasure;
+    export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure;
     // (undocumented)
     export function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition;
     // (undocumented)
-    export function isMeasureValueFilter(filter: VisualizationObjectExtendedFilter): filter is IMeasureValueFilter;
+    export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter;
     // (undocumented)
     export function isPopMeasureDefinition(definition: IMeasureDefinitionType): definition is IPoPMeasureDefinition;
     // (undocumented)
-    export function isPositiveAttributeFilter(filter: VisualizationObjectAttributeFilter): filter is IVisualizationObjectPositiveAttributeFilter;
+    export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter;
     // (undocumented)
     export function isPreviousPeriodMeasureDefinition(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition;
     // (undocumented)
-    export function isRelativeDateFilter(filter: VisualizationObjectDateFilter): filter is IVisualizationObjectRelativeDateFilter;
+    export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
     // (undocumented)
-    export function isVisualizationAttribute(bucketItem: IMeasure | IVisualizationAttribute): bucketItem is IVisualizationAttribute;
+    export interface ITotal {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        attributeIdentifier: string;
+        // (undocumented)
+        measureIdentifier: string;
+        // (undocumented)
+        type: TotalType;
+    }
     // (undocumented)
     export interface IVisualization {
         // (undocumented)
         visualizationObject: IVisualizationObject;
-    }
-    // (undocumented)
-    export interface IVisualizationAttribute {
-        // (undocumented)
-        visualizationAttribute: IVisualizationAttributeContent;
     }
     // (undocumented)
     export interface IVisualizationAttributeContent {
@@ -1055,20 +1107,11 @@ export namespace GdcVisualizationObject {
         meta: IObjectMeta;
     }
     // (undocumented)
-    export interface IVisualizationObjectAbsoluteDateFilter {
-        // (undocumented)
-        absoluteDateFilter: {
-            dataSet: ObjQualifier;
-            from?: string;
-            to?: string;
-        };
-    }
-    // (undocumented)
     export interface IVisualizationObjectContent {
         // (undocumented)
         buckets: IBucket[];
         // (undocumented)
-        filters?: VisualizationObjectExtendedFilter[];
+        filters?: ExtendedFilter[];
         // (undocumented)
         properties?: string;
         // (undocumented)
@@ -1077,46 +1120,9 @@ export namespace GdcVisualizationObject {
         visualizationClass: IObjUriQualifier;
     }
     // (undocumented)
-    export interface IVisualizationObjectNegativeAttributeFilter {
-        // (undocumented)
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: string[];
-        };
-    }
-    // (undocumented)
-    export interface IVisualizationObjectPositiveAttributeFilter {
-        // (undocumented)
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: string[];
-        };
-    }
-    // (undocumented)
-    export interface IVisualizationObjectRelativeDateFilter {
-        // (undocumented)
-        relativeDateFilter: {
-            dataSet: ObjQualifier;
-            granularity: string;
-            from?: number;
-            to?: number;
-        };
-    }
-    // (undocumented)
     export interface IVisualizationObjectResponse {
         // (undocumented)
         visualizationObject: IVisualizationObject;
-    }
-    // (undocumented)
-    export interface IVisualizationTotal {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        attributeIdentifier: string;
-        // (undocumented)
-        measureIdentifier: string;
-        // (undocumented)
-        type: TotalType;
     }
     // (undocumented)
     export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
@@ -1130,14 +1136,6 @@ export namespace GdcVisualizationObject {
     export type SortDirection = "asc" | "desc";
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    // (undocumented)
-    export type VisualizationObjectAttributeFilter = IVisualizationObjectPositiveAttributeFilter | IVisualizationObjectNegativeAttributeFilter;
-    // (undocumented)
-    export type VisualizationObjectDateFilter = IVisualizationObjectRelativeDateFilter | IVisualizationObjectAbsoluteDateFilter;
-    // (undocumented)
-    export type VisualizationObjectExtendedFilter = VisualizationObjectFilter | IMeasureValueFilter;
-    // (undocumented)
-    export type VisualizationObjectFilter = VisualizationObjectDateFilter | VisualizationObjectAttributeFilter;
     // (undocumented)
     export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
 }

@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import { GdcVisualizationObject } from "../GdcVisualizationObject";
 import IMeasure = GdcVisualizationObject.IMeasure;
-import IVisualizationAttribute = GdcVisualizationObject.IVisualizationAttribute;
+import IAttribute = GdcVisualizationObject.IAttribute;
 import BucketItem = GdcVisualizationObject.BucketItem;
-import VisualizationObjectExtendedFilter = GdcVisualizationObject.VisualizationObjectExtendedFilter;
-import VisualizationObjectAttributeFilter = GdcVisualizationObject.VisualizationObjectAttributeFilter;
-import VisualizationObjectDateFilter = GdcVisualizationObject.VisualizationObjectDateFilter;
-import VisualizationObjectFilter = GdcVisualizationObject.VisualizationObjectFilter;
+import ExtendedFilter = GdcVisualizationObject.ExtendedFilter;
+import AttributeFilter = GdcVisualizationObject.AttributeFilter;
+import DateFilter = GdcVisualizationObject.DateFilter;
+import Filter = GdcVisualizationObject.Filter;
 import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
 import IArithmeticMeasureDefinition = GdcVisualizationObject.IArithmeticMeasureDefinition;
 
@@ -23,7 +23,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when visualization attribute is tested", () => {
-            const attribute: IVisualizationAttribute = {
+            const attribute: IAttribute = {
                 visualizationAttribute: {
                     localIdentifier: "m1",
                     displayForm: {
@@ -53,14 +53,14 @@ describe("GdcVisualizationObject", () => {
         });
     });
 
-    describe("isVisualizationAttribute", () => {
+    describe("isAttribute", () => {
         it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isVisualizationAttribute(null);
+            const result = GdcVisualizationObject.isAttribute(null);
             expect(result).toEqual(false);
         });
 
         it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isVisualizationAttribute(undefined);
+            const result = GdcVisualizationObject.isAttribute(undefined);
             expect(result).toEqual(false);
         });
 
@@ -77,12 +77,12 @@ describe("GdcVisualizationObject", () => {
                     },
                 },
             };
-            const result = GdcVisualizationObject.isVisualizationAttribute(measure);
+            const result = GdcVisualizationObject.isAttribute(measure);
             expect(result).toEqual(false);
         });
 
         it("should return true when visualization attribute is tested", () => {
-            const attribute: IVisualizationAttribute = {
+            const attribute: IAttribute = {
                 visualizationAttribute: {
                     localIdentifier: "m1",
                     displayForm: {
@@ -90,7 +90,7 @@ describe("GdcVisualizationObject", () => {
                     },
                 },
             };
-            const result = GdcVisualizationObject.isVisualizationAttribute(attribute);
+            const result = GdcVisualizationObject.isAttribute(attribute);
             expect(result).toEqual(true);
         });
     });
@@ -371,7 +371,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when relative date filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
+            const filter: Filter = {
                 relativeDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -386,7 +386,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when negative attribute filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
+            const filter: Filter = {
                 negativeAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/date",
@@ -399,7 +399,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectFilter = {
+            const filter: Filter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/attribute",
@@ -424,7 +424,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when negative attribute filter is tested", () => {
-            const filter: VisualizationObjectAttributeFilter = {
+            const filter: AttributeFilter = {
                 negativeAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/date",
@@ -437,7 +437,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectAttributeFilter = {
+            const filter: AttributeFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/attribute",
@@ -462,7 +462,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when relative date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: DateFilter = {
                 relativeDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -477,7 +477,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when absolute date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: DateFilter = {
                 absoluteDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -503,7 +503,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when absolute date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: DateFilter = {
                 absoluteDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -517,7 +517,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when relative date filter is tested", () => {
-            const filter: VisualizationObjectDateFilter = {
+            const filter: DateFilter = {
                 relativeDateFilter: {
                     dataSet: {
                         uri: "/gdc/mock/date",
@@ -586,7 +586,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return true when measure value filter is tested", () => {
-            const filter: VisualizationObjectExtendedFilter = {
+            const filter: ExtendedFilter = {
                 measureValueFilter: {
                     measure: {
                         uri: "/gdc/mock/date",
@@ -598,7 +598,7 @@ describe("GdcVisualizationObject", () => {
         });
 
         it("should return false when positive attribute filter is tested", () => {
-            const filter: VisualizationObjectExtendedFilter = {
+            const filter: ExtendedFilter = {
                 positiveAttributeFilter: {
                     displayForm: {
                         uri: "/gdc/mock/attribute",
