@@ -17,7 +17,8 @@
     },
     "scripts": {
         "dev": "tsc --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "copy-data": "cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
