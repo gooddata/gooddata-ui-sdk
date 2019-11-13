@@ -9,11 +9,11 @@
                         "definition": {
                             "measureDefinition": {
                                 "item": {
-                                    "identifier": "afSEwRwdbMeQ"
+                                    "identifier": "ah1EuQxwaCqs"
                                 }
                             }
                         },
-                        "localIdentifier": "m_afSEwRwdbMeQ"
+                        "localIdentifier": "m_ah1EuQxwaCqs"
                     }
                 }
             ]
@@ -24,9 +24,9 @@
                 {
                     "attribute": {
                         "displayForm": {
-                            "identifier": "label.account.id.name"
+                            "identifier": "label.product.id.name"
                         },
-                        "localIdentifier": "a_label.account.id.name"
+                        "localIdentifier": "a_label.product.id.name"
                     }
                 }
             ]
@@ -40,9 +40,9 @@
         {
             "attribute": {
                 "displayForm": {
-                    "identifier": "label.account.id.name"
+                    "identifier": "label.product.id.name"
                 },
-                "localIdentifier": "a_label.account.id.name"
+                "localIdentifier": "a_label.product.id.name"
             }
         }
     ],
@@ -52,11 +52,11 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "identifier": "afSEwRwdbMeQ"
+                            "identifier": "ah1EuQxwaCqs"
                         }
                     }
                 },
-                "localIdentifier": "m_afSEwRwdbMeQ"
+                "localIdentifier": "m_ah1EuQxwaCqs"
             }
         }
     ],
@@ -65,7 +65,7 @@
             "itemIdentifiers": ["measureGroup"]
         },
         {
-            "itemIdentifiers": ["a_label.account.id.name"]
+            "itemIdentifiers": ["a_label.product.id.name"]
         }
     ],
     "filters": [],

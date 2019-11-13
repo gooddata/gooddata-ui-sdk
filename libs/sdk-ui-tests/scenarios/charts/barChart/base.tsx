@@ -8,11 +8,11 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         measures: [ReferenceLdm.Won],
     })
     .addScenario("single measure with viewBy", {
-        measures: [ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Account.Name],
+        measures: [ReferenceLdm.Amount],
+        viewBy: [ReferenceLdm.Product.Name],
     })
     .addScenario("single measure with viewBy and stackBy", {
-        measures: [ReferenceLdm.Won],
-        viewBy: [ReferenceLdm.Account.Name],
-        stackBy: ReferenceLdm.Department,
+        measures: [ReferenceLdm.Amount],
+        viewBy: [ReferenceLdm.Product.Name],
+        stackBy: ReferenceLdm.Region,
     });

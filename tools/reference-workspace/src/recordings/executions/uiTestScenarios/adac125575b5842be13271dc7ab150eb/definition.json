@@ -9,11 +9,11 @@
                         "definition": {
                             "measureDefinition": {
                                 "item": {
-                                    "identifier": "afSEwRwdbMeQ"
+                                    "identifier": "ah1EuQxwaCqs"
                                 }
                             }
                         },
-                        "localIdentifier": "m_afSEwRwdbMeQ"
+                        "localIdentifier": "m_ah1EuQxwaCqs"
                     }
                 }
             ]
@@ -24,9 +24,9 @@
                 {
                     "attribute": {
                         "displayForm": {
-                            "identifier": "label.account.id.name"
+                            "identifier": "label.product.id.name"
                         },
-                        "localIdentifier": "a_label.account.id.name"
+                        "localIdentifier": "a_label.product.id.name"
                     }
                 }
             ]
@@ -37,9 +37,9 @@
                 {
                     "attribute": {
                         "displayForm": {
-                            "identifier": "label.owner.department"
+                            "identifier": "label.owner.region"
                         },
-                        "localIdentifier": "a_label.owner.department"
+                        "localIdentifier": "a_label.owner.region"
                     }
                 }
             ]
@@ -49,17 +49,17 @@
         {
             "attribute": {
                 "displayForm": {
-                    "identifier": "label.account.id.name"
+                    "identifier": "label.product.id.name"
                 },
-                "localIdentifier": "a_label.account.id.name"
+                "localIdentifier": "a_label.product.id.name"
             }
         },
         {
             "attribute": {
                 "displayForm": {
-                    "identifier": "label.owner.department"
+                    "identifier": "label.owner.region"
                 },
-                "localIdentifier": "a_label.owner.department"
+                "localIdentifier": "a_label.owner.region"
             }
         }
     ],
@@ -69,20 +69,20 @@
                 "definition": {
                     "measureDefinition": {
                         "item": {
-                            "identifier": "afSEwRwdbMeQ"
+                            "identifier": "ah1EuQxwaCqs"
                         }
                     }
                 },
-                "localIdentifier": "m_afSEwRwdbMeQ"
+                "localIdentifier": "m_ah1EuQxwaCqs"
             }
         }
     ],
     "dimensions": [
         {
-            "itemIdentifiers": ["a_label.owner.department"]
+            "itemIdentifiers": ["a_label.owner.region"]
         },
         {
-            "itemIdentifiers": ["a_label.account.id.name", "measureGroup"]
+            "itemIdentifiers": ["a_label.product.id.name", "measureGroup"]
         }
     ],
     "filters": [],
