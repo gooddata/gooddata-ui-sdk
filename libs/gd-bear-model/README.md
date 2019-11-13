@@ -1,49 +1,61 @@
-# GoodData Typings
-> TypeScript interfaces used in UI SDK
+# gd-bear-model
+
+> TypeScript interfaces and utilities for working with bear's domain model in UI SDK.
+
+## Migration guide
+
+This package was created from `@gooddata/typings`. See [migration guide](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/gd-bear-model/docs/migration.md) for more information about the changes in the package.
 
 ## Getting started
 
 ### Usage
 
-With [yarn](https://yarnpkg.com) installed, go to your project directory and run
-```
-$ yarn add -D @gooddata/gd-bear-model
-```
+With [npm](https://npmjs.com) installed, go to your project directory and run
 
-If you prefer [npm](npmjs.com) run
 ```
 $ npm install --save-dev @gooddata/gd-bear-model
 ```
 
+If you prefer [yarn](https://yarnpkg.com) run
+
+```
+$ yarn add -D @gooddata/gd-bear-model
+```
+
 ## Documentation
+
 [Documentation](https://sdk.gooddata.com/gooddata-ui/)
 
 ## Develop
 
 ### Running the development
 
-To develop, you need to run the typescript compiler. By running `yarn dev`, the typescript compiler will be run in watch mode.
+To develop, you need to run the typescript compiler. By running `npm run dev`, the typescript compiler will be run in watch mode.
+
 ```sh
-$ cd gooddata-typings
-$ yarn dev
+$ npm run dev
 ```
 
 ### Running tests
 
-To run tests (including watch mode), use `yarn test`.
+To run tests (including watch mode), use `npm run test`.
+
 ```sh
-$ yarn test
+$ npm run test
 ```
 
+Alternatively, use `npm run test-once` to run all the tests without watch mode.
 
 ### Deployment
 
-Use [gooddata-typings CI job](https://checklist.intgdc.com/job/client-libs/job/gooddata-typings-release/).
+Use [CI job](TODO:-SDK8:-Update-with-link-after-job-when-job-is-created) for releasing.
 
 ## Contributing
-Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-typings/issues).
+
+Report bugs and features on our [issues page](https://github.com/gooddata/gooddata-ui-sdk/issues).
 
 ## License
-Copyright (C) 2007-2018, GoodData(R) Corporation. All rights reserved.
 
-For more information, please see [LICENSE](https://github.com/gooddata/gooddata-typings/blob/master/LICENSE)
+Copyright (C) 2007-2019, GoodData(R) Corporation. All rights reserved.
+
+For more information, please see [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/gd-bear-model/LICENSE)
