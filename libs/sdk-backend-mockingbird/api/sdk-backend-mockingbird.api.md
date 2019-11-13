@@ -38,6 +38,15 @@ export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacad
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
+// Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export type ExecutionRecording = {
+    definition: IExecutionDefinition;
+    executionResult: any;
+    dataViewAll: any;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal @deprecated
@@ -47,21 +56,50 @@ export type LegacyExecutionRecording = {
     result: any;
 };
 
-// Warning: (ae-forgotten-export) The symbol "RecordingIndex" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "LegacyRecordingIndex" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "legacyRecordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal @deprecated
-export function legacyRecordedBackend(index: RecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
+export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
 
 // Warning: (ae-internal-missing-underscore) The name "legacyRecordedDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal @deprecated
 export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade;
 
+// Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal
+export function recordedBackend(index: RecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export type RecordingIndex = {
+    [workspace: string]: WorkspaceRecordings;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "withEventing" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "WorkspaceRecordings" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export type WorkspaceRecordings = {
+    executions?: {
+        [fp: string]: ExecutionRecording;
+    };
+    metadata?: {
+        attributeDisplayForm?: {
+            [id: string]: IAttributeDisplayForm;
+        };
+    };
+    elements?: {
+        [id: string]: IElement[];
+    };
+};
 
 
 // (No @packageDocumentation comment for this package)
