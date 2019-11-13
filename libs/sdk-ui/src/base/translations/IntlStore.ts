@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
+import isEmpty = require("lodash/isEmpty");
+
 import { InjectedIntl, IntlProvider } from "react-intl";
-import { GdcLocalization } from "@gooddata/gd-bear-model";
 import { translations } from "@gooddata/js-utils";
 import { DEFAULT_LOCALE } from "../constants/localization";
 
@@ -13,7 +14,7 @@ import * as nlNL from "./bundles/nl-NL.json";
 import * as ptBR from "./bundles/pt-BR.json";
 import * as ptPT from "./bundles/pt-PT.json";
 import * as zhHans from "./bundles/zh-Hans.json";
-import isEmpty = require("lodash/isEmpty");
+import { ILocale } from "../interfaces/Locale";
 
 const messagesMap = {
     "en-US": translations.removeMetadata(enUS),
@@ -29,12 +30,12 @@ const messagesMap = {
 
 const intlStore = {};
 
-function createIntl(locale: GdcLocalization.ILocale): InjectedIntl {
+function createIntl(locale: ILocale): InjectedIntl {
     const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
     return intlProvider.getChildContext().intl;
 }
 
-function getIntl(locale: GdcLocalization.ILocale = DEFAULT_LOCALE): InjectedIntl {
+function getIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
     let usedLocale = locale;
     if (isEmpty(locale)) {
         usedLocale = DEFAULT_LOCALE;
@@ -43,7 +44,7 @@ function getIntl(locale: GdcLocalization.ILocale = DEFAULT_LOCALE): InjectedIntl
     return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
 }
 
-function getTranslation(translationId: string, locale: GdcLocalization.ILocale, values = {}): string {
+function getTranslation(translationId: string, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
 }

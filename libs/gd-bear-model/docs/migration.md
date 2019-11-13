@@ -5,7 +5,8 @@ The package `@gooddata/typings` was renamed to `@gooddata/gd-bear-model`.
 ## Removed types
 
 -   `AFM` type is not longer part of `@gooddata/gd-bear-model`. Use `ExecuteAFM` type instead.
--   `VisualizationInput` type is no longer part of `@gooddata/gd-bear-model`. Use types from `sdk-model` package instead.
+-   `VisualizationInput` type is no longer part of `@gooddata/gd-bear-model`. Use types from `@gooddata/sdk-model` package instead.
+-   `Localization` type is no longer part of `@gooddata/gd-bear-model`. Use `ILocale` from `@gooddata/sdk-ui` instead.
 
 ## Public API changes
 
@@ -30,8 +31,6 @@ The package `@gooddata/typings` was renamed to `@gooddata/gd-bear-model`.
     -   Exported type guard function `isVisualizationAttribute` renamed to `isAttribute`
 
 -   Type `VisualizationClass` renamed to `GdcVisualizationClass`
-
--   Type `Localization` renamed to `GdcLocalization`
 
 -   Type `DashboardExport` renamed to `GdcDashboardExport`
 

@@ -25,7 +25,7 @@ import DerivedMeasureTitleSuffixFactory from "../factory/DerivedMeasureTitleSuff
 import ArithmeticMeasureTitleFactory from "../factory/ArithmeticMeasureTitleFactory";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { IMeasureTitleProps } from "../interfaces/MeasureTitle";
-import { ILocale } from "../../internal/interfaces/Visualization";
+import { ILocale } from "../interfaces/Locale";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 

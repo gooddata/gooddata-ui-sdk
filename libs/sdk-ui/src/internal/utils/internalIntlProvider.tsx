@@ -2,7 +2,6 @@
 import * as React from "react";
 import { IntlProvider, InjectedIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
-import { ILocale } from "../interfaces/Visualization";
 import { DEFAULT_LOCALE } from "../../base/constants/localization";
 
 import * as enUS from "../translations/en-US.json";
@@ -14,6 +13,7 @@ import * as nlNL from "../translations/nl-NL.json";
 import * as ptBR from "../translations/pt-BR.json";
 import * as ptPT from "../translations/pt-PT.json";
 import * as zhHans from "../translations/zh-Hans.json";
+import { ILocale } from "../../base/interfaces/Locale";
 
 export const messagesMap = {
     "en-US": translations.removeMetadata(enUS),

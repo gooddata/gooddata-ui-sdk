@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/gd-bear-model",
+            "comment": "Remove Localization type. More robust type guard unit tests (and some additional missing type guards).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/gd-bear-model",
+    "email": "petr.dolejsi@gooddata.com"
+}

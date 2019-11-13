@@ -70,3 +70,5 @@ export {
 export * from "./charts";
 export * from "./highcharts";
 export * from "./pivotTable";
+
+export { ILocale } from "./base/interfaces/Locale";

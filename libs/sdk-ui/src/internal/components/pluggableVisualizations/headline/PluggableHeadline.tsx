@@ -18,7 +18,6 @@ import {
     IVisCallbacks,
     IVisConstruct,
     IVisProps,
-    ILocale,
     IVisualizationProperties,
     IBucketItem,
     IBucketOfFun,
@@ -55,6 +54,7 @@ import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { ILocale } from "../../../../base/interfaces/Locale";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;

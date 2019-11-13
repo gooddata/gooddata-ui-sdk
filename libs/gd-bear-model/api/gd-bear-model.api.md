@@ -844,14 +844,6 @@ export namespace GdcExtendedDateFilters {
     export type RelativePresetType = "relativePreset";
 }
 
-// Warning: (ae-internal-missing-underscore) The name "GdcLocalization" should be prefixed with an underscore because the declaration is marked as @internal
-// 
-// @internal (undocumented)
-export namespace GdcLocalization {
-    // (undocumented)
-    export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans";
-}
-
 // @public (undocumented)
 export namespace GdcVisualizationClass {
     // (undocumented)
