@@ -19,11 +19,11 @@
             ]
         },
         {
-            "localIdentifier": "attribute",
+            "localIdentifier": "secondary_measures",
             "items": []
         },
         {
-            "localIdentifier": "stack",
+            "localIdentifier": "view",
             "items": []
         }
     ],

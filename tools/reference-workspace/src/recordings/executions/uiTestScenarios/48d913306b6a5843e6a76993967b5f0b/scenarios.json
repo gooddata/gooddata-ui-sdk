@@ -10,5 +10,9 @@
     {
         "vis": "ColumnChart",
         "scenario": "single measure with viewBy"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary measure with viewBy"
     }
 ]

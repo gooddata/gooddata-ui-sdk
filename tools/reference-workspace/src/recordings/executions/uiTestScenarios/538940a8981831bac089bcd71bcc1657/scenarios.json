@@ -10,5 +10,9 @@
     {
         "vis": "ColumnChart",
         "scenario": "single measure"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary measure"
     }
 ]

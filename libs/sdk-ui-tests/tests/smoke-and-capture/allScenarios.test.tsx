@@ -11,6 +11,7 @@ import * as path from "path";
 import isArray = require("lodash/isArray");
 
 type AllScenariosType = [string, string, React.ComponentType<any>, PropsFactory<any>];
+type AnyComponentTest = [string, React.ComponentType<any>, PropsFactory<any>];
 
 const StoreEnvVar = "GDC_STORE_DEFS";
 const StoreLocation = initializeStore(process.env[StoreEnvVar]);
@@ -104,7 +105,7 @@ function storeScenarioDefinition(vis: string, scenario: string, def: IExecutionD
 
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
-        const testInputs = s.asTestInput();
+        const testInputs: AnyComponentTest[] = s.asTestInput();
 
         return testInputs.map(t => {
             // spread won't work here
