@@ -6,5 +6,9 @@
     {
         "vis": "BarChart",
         "scenario": "single measure with viewBy and stackBy"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "single measure with viewBy and stackBy"
     }
 ]

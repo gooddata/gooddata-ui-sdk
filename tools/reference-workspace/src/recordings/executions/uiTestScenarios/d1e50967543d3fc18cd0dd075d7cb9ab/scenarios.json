@@ -6,5 +6,9 @@
     {
         "vis": "BarChart",
         "scenario": "single measure"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "single measure"
     }
 ]
