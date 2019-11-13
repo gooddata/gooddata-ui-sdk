@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { GdcExecution } from "../GdcExecution";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import isAttributeHeaderItem = GdcExecution.isAttributeHeaderItem;
 import IResultHeaderItem = GdcExecution.IResultHeaderItem;
 import isMeasureHeaderItem = GdcExecution.isMeasureHeaderItem;
@@ -9,42 +10,28 @@ import isMeasureGroupHeader = GdcExecution.isMeasureGroupHeader;
 import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 describe("GdcExecution type guards", () => {
-    const attr: IResultHeaderItem = {
+    const attributeHeaderItem: IResultHeaderItem = {
         attributeHeaderItem: {
             uri: "/uri",
             name: "Name",
         },
     };
 
-    const measure: IResultHeaderItem = {
+    const measureHeaderItem: IResultHeaderItem = {
         measureHeaderItem: {
             name: "Name",
             order: 1,
         },
     };
 
-    const total: IResultHeaderItem = {
+    const totalHeaderItem: IResultHeaderItem = {
         totalHeaderItem: {
             name: "Name",
             type: "asdf",
         },
     };
 
-    it("should recognize IResultHeaderItem subtypes", () => {
-        expect(isAttributeHeaderItem(attr)).toEqual(true);
-        expect(isMeasureHeaderItem(attr)).toEqual(false);
-        expect(isTotalHeaderItem(attr)).toEqual(false);
-
-        expect(isAttributeHeaderItem(measure)).toEqual(false);
-        expect(isMeasureHeaderItem(measure)).toEqual(true);
-        expect(isTotalHeaderItem(measure)).toEqual(false);
-
-        expect(isAttributeHeaderItem(total)).toEqual(false);
-        expect(isMeasureHeaderItem(total)).toEqual(false);
-        expect(isTotalHeaderItem(total)).toEqual(true);
-    });
-
-    const measureGroup: IHeader = {
+    const measureGroupGroup: IHeader = {
         measureGroupHeader: {
             items: [
                 {
@@ -72,11 +59,66 @@ describe("GdcExecution type guards", () => {
         },
     };
 
-    it("should recognize IHeader subtypes", () => {
-        expect(isMeasureGroupHeader(measureGroup)).toEqual(true);
-        expect(isAttributeHeader(measureGroup)).toEqual(false);
+    describe("isAttributeHeaderItem", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute header item", attributeHeaderItem],
+            [false, "measure header item", measureHeaderItem],
+            [false, "total header item", totalHeaderItem],
+        ];
 
-        expect(isMeasureGroupHeader(attributeHeader)).toEqual(false);
-        expect(isAttributeHeader(attributeHeader)).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isAttributeHeaderItem(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isMeasureHeaderItem", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute header item", attributeHeaderItem],
+            [true, "measure header item", measureHeaderItem],
+            [false, "total header item", totalHeaderItem],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isMeasureHeaderItem(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isTotalHeaderItem", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute header item", attributeHeaderItem],
+            [false, "measure header item", measureHeaderItem],
+            [true, "total header item", totalHeaderItem],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isTotalHeaderItem(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isMeasureGroupHeader", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute header", attributeHeader],
+            [true, "measure group header", measureGroupGroup],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isMeasureGroupHeader(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isAttributeHeader", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute header", attributeHeader],
+            [false, "measure group header", measureGroupGroup],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isAttributeHeader(input)).toBe(expectedResult);
+        });
     });
 });

@@ -250,7 +250,7 @@ export namespace GdcVisualizationObject {
         );
     }
 
-    export function isAttributeFilter(filter: Filter): filter is AttributeFilter {
+    export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter {
         return (
             !isEmpty(filter) &&
             ((filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
@@ -258,8 +258,20 @@ export namespace GdcVisualizationObject {
         );
     }
 
+    export function isDateFilter(filter: ExtendedFilter): filter is DateFilter {
+        return (
+            !isEmpty(filter) &&
+            ((filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined ||
+                (filter as IRelativeDateFilter).relativeDateFilter !== undefined)
+        );
+    }
+
     export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter {
         return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    }
+
+    export function isNegativeAttributeFilter(filter: AttributeFilter): filter is INegativeAttributeFilter {
+        return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
     }
 
     export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter {

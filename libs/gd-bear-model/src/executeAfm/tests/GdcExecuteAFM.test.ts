@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
 import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
-import CompatibilityFilter = AFM.CompatibilityFilter;
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 
 describe("GdcExecuteAFM", () => {
-    const expressionFilter: CompatibilityFilter = {
+    const expressionFilter: AFM.CompatibilityFilter = {
         value: "MAQL",
     };
-    const relativeDateFilter: CompatibilityFilter = {
+    const relativeDateFilter: AFM.CompatibilityFilter = {
         relativeDateFilter: {
             dataSet: {
                 uri: "/gdc/mock/ds",
@@ -16,7 +16,7 @@ describe("GdcExecuteAFM", () => {
             to: 0,
         },
     };
-    const absoluteDateFilter: CompatibilityFilter = {
+    const absoluteDateFilter: AFM.CompatibilityFilter = {
         absoluteDateFilter: {
             dataSet: {
                 uri: "/gdc/mock/ds",
@@ -25,7 +25,7 @@ describe("GdcExecuteAFM", () => {
             to: "2",
         },
     };
-    const negativeAttributeFilter: CompatibilityFilter = {
+    const negativeAttributeFilter: AFM.CompatibilityFilter = {
         negativeAttributeFilter: {
             displayForm: {
                 uri: "/gdc/mock/date",
@@ -33,7 +33,7 @@ describe("GdcExecuteAFM", () => {
             notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
         },
     };
-    const positiveAttributeFilter: CompatibilityFilter = {
+    const positiveAttributeFilter: AFM.CompatibilityFilter = {
         positiveAttributeFilter: {
             displayForm: {
                 uri: "/gdc/mock/attribute",
@@ -41,867 +41,384 @@ describe("GdcExecuteAFM", () => {
             in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
         },
     };
-    const measureValueFilter: CompatibilityFilter = {
+    const measureValueFilter: AFM.CompatibilityFilter = {
         measureValueFilter: {
             measure: {
                 uri: "/gdc/mock/date",
             },
         },
     };
+    const identifierObjectQualifier: AFM.ObjQualifier = {
+        identifier: "id",
+    };
+    const uriObjectQualifier: AFM.ObjQualifier = {
+        uri: "/gdc/mock/id",
+    };
+    const simpleMeasureDefinition: AFM.ISimpleMeasureDefinition = {
+        measure: {
+            item: {
+                uri: "/gdc/mock/measure",
+            },
+        },
+    };
+    const arithmeticMeasureDefinition: AFM.IArithmeticMeasureDefinition = {
+        arithmeticMeasure: {
+            measureIdentifiers: ["/gdc/mock/measure"],
+            operator: "sum",
+        },
+    };
+    const popMeasureDefinition: AFM.IPopMeasureDefinition = {
+        popMeasure: {
+            measureIdentifier: "m1",
+            popAttribute: {
+                uri: "/gdc/mock/measure",
+            },
+        },
+    };
+    const previousPeriodMeasureDefinition: AFM.IPreviousPeriodMeasureDefinition = {
+        previousPeriodMeasure: {
+            measureIdentifier: "m1",
+            dateDataSets: [
+                {
+                    dataSet: {
+                        uri: "/gdc/mock/date",
+                    },
+                    periodsAgo: 1,
+                },
+            ],
+        },
+    };
+    const attributeSortItem: AFM.IAttributeSortItem = {
+        attributeSortItem: {
+            direction: "asc",
+            attributeIdentifier: "a1",
+        },
+    };
+    const measureSortItem: AFM.IMeasureSortItem = {
+        measureSortItem: {
+            direction: "asc",
+            locators: [
+                {
+                    measureLocatorItem: {
+                        measureIdentifier: "m1",
+                    },
+                },
+            ],
+        },
+    };
+    const attributeLocatorItem: AFM.IAttributeLocatorItem = {
+        attributeLocatorItem: {
+            attributeIdentifier: "a1",
+            element: "element",
+        },
+    };
+    const measureLocatorItem: AFM.IMeasureLocatorItem = {
+        measureLocatorItem: {
+            measureIdentifier: "m1",
+        },
+    };
 
     describe("isDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "relative date filter", relativeDateFilter],
+            [true, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isDateFilter(relativeDateFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isDateFilter(absoluteDateFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isDateFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isDateFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isDateFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isDateFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isRelativeDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isRelativeDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isRelativeDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(relativeDateFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isRelativeDateFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isRelativeDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isAbsoluteDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [true, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(absoluteDateFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isAbsoluteDateFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAbsoluteDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [true, "positive attribute filter", positiveAttributeFilter],
+            [true, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAttributeFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isAttributeFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isAttributeFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isAttributeFilter(negativeAttributeFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isAttributeFilter(positiveAttributeFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isAttributeFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isAttributeFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isPositiveAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [true, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(positiveAttributeFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isPositiveAttributeFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isPositiveAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isNegativeAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [true, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(negativeAttributeFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isNegativeAttributeFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isNegativeAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isMeasureValueFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isMeasureValueFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "expression filter", expressionFilter],
+            [true, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isMeasureValueFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(measureValueFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isMeasureValueFilter(expressionFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isMeasureValueFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isExpressionFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isExpressionFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [true, "expression filter", expressionFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isExpressionFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const result = AFM.isExpressionFilter(relativeDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const result = AFM.isExpressionFilter(absoluteDateFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when negative attribute filter is tested", () => {
-            const result = AFM.isExpressionFilter(negativeAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const result = AFM.isExpressionFilter(positiveAttributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure value filter is tested", () => {
-            const result = AFM.isExpressionFilter(measureValueFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when expression filter is tested", () => {
-            const result = AFM.isExpressionFilter(expressionFilter);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isExpressionFilter(input)).toBe(expectedResult);
         });
     });
 
+    const attributeElementsByRef = {
+        uris: ["a", "b", "c"],
+    };
+    const valuesElementsByValue = {
+        values: ["a", "b", "c"],
+    };
+    const valuesElementsArray = ["a", "b", "c"];
+
     describe("isAttributeElementsArray", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAttributeElementsArray(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases.filter(testCase => testCase[1] !== "array"),
+            [true, "empty array", []],
+            [false, "attribute elements by ref", attributeElementsByRef],
+            [false, "attribute elements by value", valuesElementsByValue],
+            [true, "attribute elements array", valuesElementsArray],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAttributeElementsArray(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when attr elements by ref", () => {
-            const result = AFM.isAttributeElementsArray({ uris: ["a", "b", "c"] });
-            expect(result).toEqual(false);
-        });
-        it("should return false when attr elements by value", () => {
-            const result = AFM.isAttributeElementsArray({ values: ["a", "b", "c"] });
-            expect(result).toEqual(false);
-        });
-        it("should return true when attr elements is array", () => {
-            const result = AFM.isAttributeElementsArray(["a", "b", "c"]);
-            expect(result).toEqual(true);
-        });
-        it("should return true when attr elements is empty array", () => {
-            const result = AFM.isAttributeElementsArray([]);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeElementsArray(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttributeElementsByRef", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAttributeElementsByRef(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute elements by ref", attributeElementsByRef],
+            [false, "attribute elements by value", valuesElementsByValue],
+            [false, "attribute elements array", valuesElementsArray],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAttributeElementsByRef(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when attr elements by ref", () => {
-            const result = AFM.isAttributeElementsByRef({ uris: ["a", "b", "c"] });
-            expect(result).toEqual(true);
-        });
-        it("should return false when attr elements by value", () => {
-            const result = AFM.isAttributeElementsByRef({ values: ["a", "b", "c"] });
-            expect(result).toEqual(false);
-        });
-        it("should return false when attr elements is array", () => {
-            const result = AFM.isAttributeElementsByRef(["a", "b", "c"]);
-            expect(result).toEqual(false);
-        });
-        it("should return false when attr elements is empty array", () => {
-            const result = AFM.isAttributeElementsByRef([]);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeElementsByRef(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttributeElementsByValue", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAttributeElementsByValue(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute elements by ref", attributeElementsByRef],
+            [true, "attribute elements by value", valuesElementsByValue],
+            [false, "attribute elements array", valuesElementsArray],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAttributeElementsByValue(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when attr elements by ref", () => {
-            const result = AFM.isAttributeElementsByValue({ uris: ["a", "b", "c"] });
-            expect(result).toEqual(false);
-        });
-        it("should return true when attr elements by value", () => {
-            const result = AFM.isAttributeElementsByValue({ values: ["a", "b", "c"] });
-            expect(result).toEqual(true);
-        });
-        it("should return false when attr elements is array", () => {
-            const result = AFM.isAttributeElementsByValue(["a", "b", "c"]);
-            expect(result).toEqual(false);
-        });
-        it("should return false when attr elements is empty array", () => {
-            const result = AFM.isAttributeElementsByValue([]);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeElementsByValue(input)).toBe(expectedResult);
         });
     });
 
     describe("isObjectUriQualifier", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isObjectUriQualifier(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "identifier object qualifier", identifierObjectQualifier],
+            [true, "uri object qualifier", uriObjectQualifier],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isObjectUriQualifier(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when identifier object qualifier is tested", () => {
-            const objectQualifier: AFM.ObjQualifier = {
-                identifier: "id",
-            };
-            const result = AFM.isObjectUriQualifier(objectQualifier);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when uri object qualifier is tested", () => {
-            const objectQualifier: AFM.ObjQualifier = {
-                uri: "/gdc/mock/id",
-            };
-            const result = AFM.isObjectUriQualifier(objectQualifier);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isObjectUriQualifier(input)).toBe(expectedResult);
         });
     });
 
     describe("isObjIdentifierQualifier", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isObjIdentifierQualifier(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "identifier object qualifier", identifierObjectQualifier],
+            [false, "uri object qualifier", uriObjectQualifier],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isObjIdentifierQualifier(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when uri object qualifier is tested", () => {
-            const objectQualifier: AFM.ObjQualifier = {
-                uri: "/gdc/mock/id",
-            };
-            const result = AFM.isObjIdentifierQualifier(objectQualifier);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when identifier object qualifier is tested", () => {
-            const objectQualifier: AFM.ObjQualifier = {
-                identifier: "id",
-            };
-            const result = AFM.isObjIdentifierQualifier(objectQualifier);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isObjIdentifierQualifier(input)).toBe(expectedResult);
         });
     });
 
-    describe("isSimpleMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isSimpleMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+    describe("isMeasureDefinition", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isSimpleMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when simple measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                measure: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isSimpleMeasureDefinition(measure);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = AFM.isSimpleMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                popMeasure: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isSimpleMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isSimpleMeasureDefinition(measure);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isSimpleMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isArithmeticMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isArithmeticMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [true, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isArithmeticMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                measure: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isArithmeticMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when arithmetic measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = AFM.isArithmeticMeasureDefinition(measure);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                popMeasure: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isArithmeticMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isArithmeticMeasureDefinition(measure);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isArithmeticMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isPopMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isPopMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [true, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isPopMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                measure: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isPopMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = AFM.isPopMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when pop measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                popMeasure: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isPopMeasureDefinition(measure);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isSimpleMeasureDefinition(measure);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isPopMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isPreviousPeriodMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isPreviousPeriodMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [true, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isPreviousPeriodMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                measure: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                popMeasure: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when previous period measure definition is tested", () => {
-            const measure: AFM.MeasureDefinition = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isPreviousPeriodMeasureDefinition(measure);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttributeSortItem", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isAttributeSortItem(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute sort item", attributeSortItem],
+            [false, "measure sort item", measureSortItem],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isAttributeSortItem(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when attribute sort item is tested", () => {
-            const sortItem: AFM.SortItem = {
-                attributeSortItem: {
-                    direction: "asc",
-                    attributeIdentifier: "a1",
-                },
-            };
-            const result = AFM.isAttributeSortItem(sortItem);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when measure sort item is tested", () => {
-            const sortItem: AFM.SortItem = {
-                measureSortItem: {
-                    direction: "asc",
-                    locators: [
-                        {
-                            measureLocatorItem: {
-                                measureIdentifier: "m1",
-                            },
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isAttributeSortItem(sortItem);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeSortItem(input)).toBe(expectedResult);
         });
     });
 
     describe("isMeasureSortItem", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isMeasureSortItem(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute sort item", attributeSortItem],
+            [true, "measure sort item", measureSortItem],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isMeasureSortItem(undefined);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isMeasureSortItem(input)).toBe(expectedResult);
         });
+    });
 
-        it("should return false when attribute sort item is tested", () => {
-            const sortItem: AFM.SortItem = {
-                attributeSortItem: {
-                    direction: "asc",
-                    attributeIdentifier: "a1",
-                },
-            };
-            const result = AFM.isMeasureSortItem(sortItem);
-            expect(result).toEqual(false);
-        });
+    describe("isAttributeLocatorItem", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute locator item", attributeLocatorItem],
+            [false, "measure locator item", measureLocatorItem],
+        ];
 
-        it("should return true when measure sort item is tested", () => {
-            const sortItem: AFM.SortItem = {
-                measureSortItem: {
-                    direction: "asc",
-                    locators: [
-                        {
-                            measureLocatorItem: {
-                                measureIdentifier: "m1",
-                            },
-                        },
-                    ],
-                },
-            };
-            const result = AFM.isMeasureSortItem(sortItem);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isAttributeLocatorItem(input)).toBe(expectedResult);
         });
     });
 
     describe("isMeasureLocatorItem", () => {
-        it("should return false when null is tested", () => {
-            const result = AFM.isMeasureLocatorItem(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute locator item", attributeLocatorItem],
+            [true, "measure locator item", measureLocatorItem],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = AFM.isMeasureLocatorItem(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when attribute locator is tested", () => {
-            const locatorItem: AFM.LocatorItem = {
-                attributeLocatorItem: {
-                    attributeIdentifier: "a1",
-                    element: "element",
-                },
-            };
-            const result = AFM.isMeasureLocatorItem(locatorItem);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when measure locator filter is tested", () => {
-            const locatorItem: AFM.LocatorItem = {
-                measureLocatorItem: {
-                    measureIdentifier: "m1",
-                },
-            };
-            const result = AFM.isMeasureLocatorItem(locatorItem);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isMeasureLocatorItem(input)).toBe(expectedResult);
         });
     });
 });

@@ -333,6 +333,15 @@ export namespace GdcExecuteAFM {
         );
     }
 
+    export function isAttributeLocatorItem(
+        locator: GdcExecuteAFM.LocatorItem,
+    ): locator is GdcExecuteAFM.IAttributeLocatorItem {
+        return (
+            !isEmpty(locator) &&
+            (locator as GdcExecuteAFM.IAttributeLocatorItem).attributeLocatorItem !== undefined
+        );
+    }
+
     export function isMeasureLocatorItem(
         locator: GdcExecuteAFM.LocatorItem,
     ): locator is GdcExecuteAFM.IMeasureLocatorItem {

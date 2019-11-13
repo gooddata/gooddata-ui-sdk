@@ -1,613 +1,300 @@
 // (C) 2007-2019 GoodData Corporation
 import { GdcVisualizationObject } from "../GdcVisualizationObject";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import IMeasure = GdcVisualizationObject.IMeasure;
 import IAttribute = GdcVisualizationObject.IAttribute;
-import BucketItem = GdcVisualizationObject.BucketItem;
-import ExtendedFilter = GdcVisualizationObject.ExtendedFilter;
-import AttributeFilter = GdcVisualizationObject.AttributeFilter;
 import DateFilter = GdcVisualizationObject.DateFilter;
 import Filter = GdcVisualizationObject.Filter;
 import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
 import IArithmeticMeasureDefinition = GdcVisualizationObject.IArithmeticMeasureDefinition;
+import IMeasureValueFilter = GdcVisualizationObject.IMeasureValueFilter;
 
 describe("GdcVisualizationObject", () => {
-    describe("isMeasure", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isMeasure(null);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isMeasure(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when visualization attribute is tested", () => {
-            const attribute: IAttribute = {
-                visualizationAttribute: {
-                    localIdentifier: "m1",
-                    displayForm: {
+    const attribute: IAttribute = {
+        visualizationAttribute: {
+            localIdentifier: "m1",
+            displayForm: {
+                uri: "/gdc/mock/measure",
+            },
+        },
+    };
+    const simpleMeasure: IMeasure = {
+        measure: {
+            localIdentifier: "m1",
+            definition: {
+                measureDefinition: {
+                    item: {
                         uri: "/gdc/mock/measure",
                     },
                 },
-            };
-            const result = GdcVisualizationObject.isMeasure(attribute);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when measure is tested", () => {
-            const measure: IMeasure = {
-                measure: {
-                    localIdentifier: "m1",
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                uri: "/gdc/mock/measure",
-                            },
-                        },
+            },
+        },
+    };
+    const simpleMeasureDefinition: IMeasureDefinitionType = {
+        measureDefinition: {
+            item: {
+                uri: "/gdc/mock/measure",
+            },
+        },
+    };
+    const arithmeticMeasureDefinition: IArithmeticMeasureDefinition = {
+        arithmeticMeasure: {
+            measureIdentifiers: ["/gdc/mock/measure"],
+            operator: "sum",
+        },
+    };
+    const popMeasureDefinition: IMeasureDefinitionType = {
+        popMeasureDefinition: {
+            measureIdentifier: "m1",
+            popAttribute: {
+                uri: "/gdc/mock/measure",
+            },
+        },
+    };
+    const previousPeriodMeasureDefinition: IMeasureDefinitionType = {
+        previousPeriodMeasure: {
+            measureIdentifier: "m1",
+            dateDataSets: [
+                {
+                    dataSet: {
+                        uri: "/gdc/mock/date",
                     },
+                    periodsAgo: 1,
                 },
-            };
-            const result = GdcVisualizationObject.isMeasure(measure);
-            expect(result).toEqual(true);
+            ],
+        },
+    };
+    const positiveAttributeFilter: Filter = {
+        positiveAttributeFilter: {
+            displayForm: {
+                uri: "/gdc/mock/attribute",
+            },
+            in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
+        },
+    };
+    const negativeAttributeFilter: Filter = {
+        negativeAttributeFilter: {
+            displayForm: {
+                uri: "/gdc/mock/date",
+            },
+            notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
+        },
+    };
+    const relativeDateFilter: Filter = {
+        relativeDateFilter: {
+            dataSet: {
+                uri: "/gdc/mock/date",
+            },
+            granularity: "GDC.time.year",
+            from: -1,
+            to: -1,
+        },
+    };
+    const absoluteDateFilter: DateFilter = {
+        absoluteDateFilter: {
+            dataSet: {
+                uri: "/gdc/mock/date",
+            },
+            from: "2017-06-12",
+            to: "2018-07-11",
+        },
+    };
+    const measureValueFilter: IMeasureValueFilter = {
+        measureValueFilter: {
+            measure: {
+                uri: "/gdc/mock/date",
+            },
+            condition: {
+                comparison: {
+                    operator: "GREATER_THAN",
+                    value: 42,
+                },
+            },
+        },
+    };
+
+    describe("isMeasure", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute", attribute],
+            [true, "measure", simpleMeasure],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isMeasure(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttribute", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isAttribute(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute", attribute],
+            [false, "measure", simpleMeasure],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isAttribute(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure is tested", () => {
-            const measure: IMeasure = {
-                measure: {
-                    localIdentifier: "m1",
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                uri: "/gdc/mock/measure",
-                            },
-                        },
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isAttribute(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when visualization attribute is tested", () => {
-            const attribute: IAttribute = {
-                visualizationAttribute: {
-                    localIdentifier: "m1",
-                    displayForm: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isAttribute(attribute);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isAttribute(input)).toBe(expectedResult);
         });
     });
 
     describe("isMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when simple measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measureDefinition: IArithmeticMeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                popMeasureDefinition: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isArithmeticMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [true, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when arithmetic measure definition is tested", () => {
-            const measureDefinition: IArithmeticMeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                popMeasureDefinition: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = GdcVisualizationObject.isArithmeticMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isArithmeticMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isPopMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isPopMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [true, "pop measure definition", popMeasureDefinition],
+            [false, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isPopMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measureDefinition: IArithmeticMeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when pop measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                popMeasureDefinition: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isPopMeasureDefinition(measureDefinition);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when previous period measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isPopMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isPreviousPeriodMeasureDefinition", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "simple measure definition", simpleMeasureDefinition],
+            [false, "arithmetic measure definition", arithmeticMeasureDefinition],
+            [false, "pop measure definition", popMeasureDefinition],
+            [true, "previous period measure definition", previousPeriodMeasureDefinition],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when simple measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                measureDefinition: {
-                    item: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when arithmetic measure definition is tested", () => {
-            const measureDefinition: IArithmeticMeasureDefinition = {
-                arithmeticMeasure: {
-                    measureIdentifiers: ["/gdc/mock/measure"],
-                    operator: "sum",
-                },
-            };
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when pop measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                popMeasureDefinition: {
-                    measureIdentifier: "m1",
-                    popAttribute: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when previous period measure definition is tested", () => {
-            const measureDefinition: IMeasureDefinitionType = {
-                previousPeriodMeasure: {
-                    measureIdentifier: "m1",
-                    dateDataSets: [
-                        {
-                            dataSet: {
-                                uri: "/gdc/mock/date",
-                            },
-                            periodsAgo: 1,
-                        },
-                    ],
-                },
-            };
-            const result = GdcVisualizationObject.isPreviousPeriodMeasureDefinition(measureDefinition);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isPreviousPeriodMeasureDefinition(input)).toBe(expectedResult);
         });
     });
 
     describe("isAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [true, "positive attribute filter", positiveAttributeFilter],
+            [true, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isAttributeFilter(undefined);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isAttributeFilter(input)).toBe(expectedResult);
         });
+    });
 
-        it("should return false when relative date filter is tested", () => {
-            const filter: Filter = {
-                relativeDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    granularity: "GDC.time.year",
-                    from: -1,
-                    to: -1,
-                },
-            };
-            const result = GdcVisualizationObject.isAttributeFilter(filter);
-            expect(result).toEqual(false);
-        });
+    describe("isDateFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "relative date filter", relativeDateFilter],
+            [true, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return true when negative attribute filter is tested", () => {
-            const filter: Filter = {
-                negativeAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/date",
-                    },
-                    notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = GdcVisualizationObject.isAttributeFilter(filter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return true when positive attribute filter is tested", () => {
-            const filter: Filter = {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/attribute",
-                    },
-                    in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = GdcVisualizationObject.isAttributeFilter(filter);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isPositiveAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isPositiveAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [true, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isPositiveAttributeFilter(undefined);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isPositiveAttributeFilter(input)).toBe(expectedResult);
         });
+    });
 
-        it("should return false when negative attribute filter is tested", () => {
-            const filter: AttributeFilter = {
-                negativeAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/date",
-                    },
-                    notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = GdcVisualizationObject.isPositiveAttributeFilter(filter);
-            expect(result).toEqual(false);
-        });
+    describe("isNegativeAttributeFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [true, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return true when positive attribute filter is tested", () => {
-            const filter: AttributeFilter = {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/attribute",
-                    },
-                    in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = GdcVisualizationObject.isPositiveAttributeFilter(filter);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isNegativeAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isAbsoluteDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isAbsoluteDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [true, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isAbsoluteDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when relative date filter is tested", () => {
-            const filter: DateFilter = {
-                relativeDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    granularity: "GDC.time.year",
-                    from: -1,
-                    to: -1,
-                },
-            };
-            const result = GdcVisualizationObject.isAbsoluteDateFilter(filter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when absolute date filter is tested", () => {
-            const filter: DateFilter = {
-                absoluteDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    from: "2017-06-12",
-                    to: "2018-07-11",
-                },
-            };
-            const result = GdcVisualizationObject.isAbsoluteDateFilter(filter);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isAbsoluteDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isRelativeDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isRelativeDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [false, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isRelativeDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when absolute date filter is tested", () => {
-            const filter: DateFilter = {
-                absoluteDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    from: "beginning",
-                    to: "to end",
-                },
-            };
-            const result = GdcVisualizationObject.isRelativeDateFilter(filter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when relative date filter is tested", () => {
-            const filter: DateFilter = {
-                relativeDateFilter: {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    granularity: "GDC.time.year",
-                    from: -1,
-                    to: -1,
-                },
-            };
-            const result = GdcVisualizationObject.isRelativeDateFilter(filter);
-            expect(result).toEqual(true);
-        });
-    });
-
-    describe("isAttribute", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isAttribute(null);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isAttribute(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when measure is tested", () => {
-            const measure: BucketItem = {
-                measure: {
-                    localIdentifier: "m1",
-                    definition: {
-                        measureDefinition: {
-                            item: {
-                                uri: "/gdc/mock/measure",
-                            },
-                        },
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isAttribute(measure);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when visualization attribute is tested", () => {
-            const attribute: BucketItem = {
-                visualizationAttribute: {
-                    localIdentifier: "m1",
-                    displayForm: {
-                        uri: "/gdc/mock/measure",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isAttribute(attribute);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isRelativeDateFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isMeasureValueFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcVisualizationObject.isMeasureValueFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "relative date filter", relativeDateFilter],
+            [false, "absolute date filter", absoluteDateFilter],
+            [false, "positive attribute filter", positiveAttributeFilter],
+            [false, "negative attribute filter", negativeAttributeFilter],
+            [true, "measure value filter", measureValueFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcVisualizationObject.isMeasureValueFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when measure value filter is tested", () => {
-            const filter: ExtendedFilter = {
-                measureValueFilter: {
-                    measure: {
-                        uri: "/gdc/mock/date",
-                    },
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureValueFilter(filter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when positive attribute filter is tested", () => {
-            const filter: ExtendedFilter = {
-                positiveAttributeFilter: {
-                    displayForm: {
-                        uri: "/gdc/mock/attribute",
-                    },
-                    in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-                },
-            };
-            const result = GdcVisualizationObject.isMeasureValueFilter(filter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcVisualizationObject.isMeasureValueFilter(input)).toBe(expectedResult);
         });
     });
 });

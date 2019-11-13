@@ -381,6 +381,8 @@ export namespace GdcExecuteAFM {
     // (undocumented)
     export function isAttributeFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.AttributeFilterItem;
     // (undocumented)
+    export function isAttributeLocatorItem(locator: GdcExecuteAFM.LocatorItem): locator is GdcExecuteAFM.IAttributeLocatorItem;
+    // (undocumented)
     export function isAttributeSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IAttributeSortItem;
     // (undocumented)
     export function isDateFilter(filter: GdcExecuteAFM.CompatibilityFilter): filter is GdcExecuteAFM.DateFilterItem;
@@ -1059,13 +1061,17 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export function isAttribute(bucketItem: IMeasure | IAttribute): bucketItem is IAttribute;
     // (undocumented)
-    export function isAttributeFilter(filter: Filter): filter is AttributeFilter;
+    export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter;
+    // (undocumented)
+    export function isDateFilter(filter: ExtendedFilter): filter is DateFilter;
     // (undocumented)
     export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure;
     // (undocumented)
     export function isMeasureDefinition(definition: IMeasureDefinitionType): definition is IMeasureDefinition;
     // (undocumented)
     export function isMeasureValueFilter(filter: ExtendedFilter): filter is IMeasureValueFilter;
+    // (undocumented)
+    export function isNegativeAttributeFilter(filter: AttributeFilter): filter is INegativeAttributeFilter;
     // (undocumented)
     export function isPopMeasureDefinition(definition: IMeasureDefinitionType): definition is IPoPMeasureDefinition;
     // (undocumented)

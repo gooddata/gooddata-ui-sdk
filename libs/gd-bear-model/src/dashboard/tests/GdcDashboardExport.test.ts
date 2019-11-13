@@ -1,3 +1,5 @@
+// (C) 2019 GoodData Corporation
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import { GdcDashboardExport } from "../GdcDashboardExport";
 
 describe("GdcDashboardExport", () => {
@@ -16,46 +18,26 @@ describe("GdcDashboardExport", () => {
     };
 
     describe("isAttributeFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcDashboardExport.isAttributeFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "attribute filter", attributeFilter],
+            [false, "date filter", dateFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcDashboardExport.isAttributeFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when attribute filter is tested", () => {
-            const result = GdcDashboardExport.isAttributeFilter(attributeFilter);
-            expect(result).toEqual(true);
-        });
-
-        it("should return false when date filter is tested", () => {
-            const result = GdcDashboardExport.isAttributeFilter(dateFilter);
-            expect(result).toEqual(false);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcDashboardExport.isAttributeFilter(input)).toBe(expectedResult);
         });
     });
 
     describe("isDateFilter", () => {
-        it("should return false when null is tested", () => {
-            const result = GdcDashboardExport.isDateFilter(null);
-            expect(result).toEqual(false);
-        });
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "attribute filter", attributeFilter],
+            [true, "date filter", dateFilter],
+        ];
 
-        it("should return false when undefined is tested", () => {
-            const result = GdcDashboardExport.isDateFilter(undefined);
-            expect(result).toEqual(false);
-        });
-
-        it("should return false when attribute filter is tested", () => {
-            const result = GdcDashboardExport.isDateFilter(attributeFilter);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when date filter is tested", () => {
-            const result = GdcDashboardExport.isDateFilter(dateFilter);
-            expect(result).toEqual(true);
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(GdcDashboardExport.isDateFilter(input)).toBe(expectedResult);
         });
     });
 });

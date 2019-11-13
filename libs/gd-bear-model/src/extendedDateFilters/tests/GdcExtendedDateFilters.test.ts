@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { GdcExtendedDateFilters } from "../GdcExtendedDateFilters";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 
 describe("GdcExtendedDateFilters", () => {
     const absoluteForm: GdcExtendedDateFilters.IAbsoluteDateFilterForm = {
@@ -50,138 +51,99 @@ describe("GdcExtendedDateFilters", () => {
 
     describe("isAllTimeDateFilter", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative form", relativeForm],
-            ["a relative preset", relativePreset],
-            ["an absolute form", absoluteForm],
-            ["an absolute preset", absolutePreset],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [false, "a relative form", relativeForm],
+            [false, "a relative preset", relativePreset],
+            [false, "an absolute form", absoluteForm],
+            [false, "an absolute preset", absolutePreset],
+            [true, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isAllTimeDateFilter(input);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when an all-time filter is tested", () => {
-            const result = GdcExtendedDateFilters.isAllTimeDateFilter(allTimeFilter);
-            expect(result).toEqual(true);
+            expect(result).toEqual(expectedResult);
         });
     });
 
     describe("isAbsoluteDateFilterForm", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative form", relativeForm],
-            ["a relative preset", relativePreset],
-            ["an absolute preset", absolutePreset],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [false, "a relative form", relativeForm],
+            [false, "a relative preset", relativePreset],
+            [true, "an absolute form", absoluteForm],
+            [false, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isAbsoluteDateFilterForm(input);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when an absolute form is tested", () => {
-            const result = GdcExtendedDateFilters.isAbsoluteDateFilterForm(absoluteForm);
-            expect(result).toEqual(true);
+            expect(result).toEqual(expectedResult);
         });
     });
 
     describe("isAbsoluteDateFilterPreset", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative form", relativeForm],
-            ["a relative preset", relativePreset],
-            ["an absolute form", absoluteForm],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [false, "a relative form", relativeForm],
+            [false, "a relative preset", relativePreset],
+            [false, "an absolute form", absoluteForm],
+            [true, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isAbsoluteDateFilterPreset(input);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when an absolute preset is tested", () => {
-            const result = GdcExtendedDateFilters.isAbsoluteDateFilterPreset(absolutePreset);
-            expect(result).toEqual(true);
+            expect(result).toEqual(expectedResult);
         });
     });
 
     describe("isRelativeDateFilterForm", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative preset", relativePreset],
-            ["an absolute form", absoluteForm],
-            ["an absolute preset", absolutePreset],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [true, "a relative form", relativeForm],
+            [false, "a relative preset", relativePreset],
+            [false, "an absolute form", absoluteForm],
+            [false, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isRelativeDateFilterForm(input);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when a relative form is tested", () => {
-            const result = GdcExtendedDateFilters.isRelativeDateFilterForm(relativeForm);
-            expect(result).toEqual(true);
+            expect(result).toEqual(expectedResult);
         });
     });
 
     describe("isRelativeDateFilterPreset", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative form", relativeForm],
-            ["an absolute form", absoluteForm],
-            ["an absolute preset", absolutePreset],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [false, "a relative form", relativeForm],
+            [true, "a relative preset", relativePreset],
+            [false, "an absolute form", absoluteForm],
+            [false, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isRelativeDateFilterPreset(input);
-            expect(result).toEqual(false);
-        });
-
-        it("should return true when a relative preset is tested", () => {
-            const result = GdcExtendedDateFilters.isRelativeDateFilterPreset(relativePreset);
-            expect(result).toEqual(true);
+            expect(result).toEqual(expectedResult);
         });
     });
 
     describe("isAbsoluteDateFilterOption", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["a relative form", relativeForm],
-            ["a relative preset", relativePreset],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [false, "a relative form", relativeForm],
+            [false, "a relative preset", relativePreset],
+            [true, "an absolute form", absoluteForm],
+            [true, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isAbsoluteDateFilterOption(input);
-            expect(result).toEqual(false);
+            expect(result).toEqual(expectedResult);
         });
-
-        it.each([["an absolute form", absoluteForm], ["an absolute preset", absolutePreset]])(
-            "should return true when %s is tested",
-            (_: any, input: any) => {
-                const result = GdcExtendedDateFilters.isAbsoluteDateFilterOption(input);
-                expect(result).toEqual(true);
-            },
-        );
     });
 
     describe("isRelativeDateFilterOption", () => {
         it.each([
-            ["null", null],
-            ["undefined", undefined],
-            ["an absolute form", absoluteForm],
-            ["an absolute preset", absolutePreset],
-            ["an all-time filter", allTimeFilter],
-        ])("should return false when %s is tested", (_: any, input: any) => {
+            ...InvalidInputTestCases,
+            [true, "a relative form", relativeForm],
+            [true, "a relative preset", relativePreset],
+            [false, "an absolute form", absoluteForm],
+            [false, "an absolute preset", absolutePreset],
+            [false, "an all-time filter", allTimeFilter],
+        ])("should return %s when %s is tested", (expectedResult, _desc, input) => {
             const result = GdcExtendedDateFilters.isRelativeDateFilterOption(input);
-            expect(result).toEqual(false);
+            expect(result).toEqual(expectedResult);
         });
-
-        it.each([["a relative form", relativeForm], ["a relative preset", relativePreset]])(
-            "should return false when %s is tested",
-            (_: any, input: any) => {
-                const result = GdcExtendedDateFilters.isRelativeDateFilterOption(input);
-                expect(result).toEqual(true);
-            },
-        );
     });
 });
