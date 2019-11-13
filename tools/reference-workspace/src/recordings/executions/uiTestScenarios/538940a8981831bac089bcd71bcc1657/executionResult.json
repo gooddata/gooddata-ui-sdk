@@ -7,11 +7,11 @@
                         "items": [
                             {
                                 "measureHeaderItem": {
-                                    "name": "Won",
+                                    "name": "Amount",
                                     "format": "$#,##0.00",
-                                    "localIdentifier": "m_afSEwRwdbMeQ",
-                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1284",
-                                    "identifier": "afSEwRwdbMeQ"
+                                    "localIdentifier": "m_ah1EuQxwaCqs",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1279",
+                                    "identifier": "ah1EuQxwaCqs"
                                 }
                             }
                         ]

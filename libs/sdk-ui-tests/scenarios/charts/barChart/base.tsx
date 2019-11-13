@@ -5,7 +5,7 @@ import { scenariosFor } from "../../../src";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Won],
+        measures: [ReferenceLdm.Amount],
     })
     .addScenario("single measure with viewBy", {
         measures: [ReferenceLdm.Amount],

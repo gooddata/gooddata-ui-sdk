@@ -1,11 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { ColumnChart, IBarChartProps } from "@gooddata/sdk-ui";
+import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
 
-export default scenariosFor<IBarChartProps>("ColumnChart", ColumnChart)
+export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .addScenario("single measure", {
-        measures: [ReferenceLdm.Won],
+        measures: [ReferenceLdm.Amount],
     })
     .addScenario("single measure with viewBy", {
         measures: [ReferenceLdm.Amount],

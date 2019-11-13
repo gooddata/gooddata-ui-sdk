@@ -1,11 +1,11 @@
 {
-    "data": [["38310753.45"]],
+    "data": [["116625456.54"]],
     "headerItems": [
         [
             [
                 {
                     "measureHeaderItem": {
-                        "name": "Won",
+                        "name": "Amount",
                         "order": 0
                     }
                 }
