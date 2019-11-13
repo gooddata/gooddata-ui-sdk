@@ -1,6 +1,8 @@
 // (C) 2019 GoodData Corporation
 import {
+    AbstractExecutionFactory,
     AnalyticalBackendConfig,
+    AuthenticatedPrincipal,
     DataViewFacade,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
@@ -11,30 +13,22 @@ import {
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IWorkspaceSettingsService,
     IPreparedExecution,
-    IWorkspaceMetadata,
-    IWorkspaceStylingService,
-    NotSupported,
-    AuthenticatedPrincipal,
     IResultHeader,
+    IWorkspaceMetadata,
+    IWorkspaceSettingsService,
+    IWorkspaceStylingService,
     NoDataError,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeOrMeasure,
-    defaultDimensionsGenerator,
     defFingerprint,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
-    IBucket,
     IDimension,
     IExecutionDefinition,
     IFilter,
-    IInsight,
-    newDefForBuckets,
-    newDefForInsight,
-    newDefForItems,
     SortItem,
 } from "@gooddata/sdk-model";
 
@@ -129,7 +123,7 @@ export function dummyDataView(
     result?: IExecutionResult,
     config: DummyBackendConfig = defaultDummyBackendConfig,
 ): IDataView {
-    const factory = dummyExecutionFactory(definition.workspace, config);
+    const factory = new DummyExecutionFactory(config, definition.workspace);
     const execResult = result ? result : dummyExecutionResult(definition, factory, config);
 
     const fp = defFingerprint(definition) + "/emptyView";
@@ -162,7 +156,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
     return {
         workspace,
         execution(): IExecutionFactory {
-            return dummyExecutionFactory(workspace, config);
+            return new DummyExecutionFactory(config, workspace);
         },
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
@@ -179,38 +173,18 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
     };
 }
 
-function dummyExecutionFactory(workspace: string, config: DummyBackendConfig): IExecutionFactory {
-    const factory: IExecutionFactory = {
-        forDefinition(def: IExecutionDefinition): IPreparedExecution {
-            return dummyPreparedExecution(def, factory, config);
-        },
-        forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(
-                defWithDimensions(newDefForItems(workspace, items, filters), defaultDimensionsGenerator),
-                factory,
-                config,
-            );
-        },
-        forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(
-                defWithDimensions(newDefForBuckets(workspace, buckets, filters), defaultDimensionsGenerator),
-                factory,
-                config,
-            );
-        },
-        forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            return dummyPreparedExecution(
-                defWithDimensions(newDefForInsight(workspace, insight, filters), defaultDimensionsGenerator),
-                factory,
-                config,
-            );
-        },
-        forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
-            throw new NotSupported("not yet supported");
-        },
-    };
+class DummyExecutionFactory extends AbstractExecutionFactory {
+    constructor(private readonly config: DummyBackendConfig, workspace: string) {
+        super(workspace);
+    }
 
-    return factory;
+    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
+        return dummyPreparedExecution(def, this, this.config);
+    }
+
+    public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
+        throw new NotSupported("not yet supported");
+    }
 }
 
 function dummyExecutionResult(

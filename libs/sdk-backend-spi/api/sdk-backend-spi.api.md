@@ -20,6 +20,21 @@ import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
 // @public
+export abstract class AbstractExecutionFactory implements IExecutionFactory {
+    constructor(workspace: string);
+    // (undocumented)
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    // (undocumented)
+    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    // (undocumented)
+    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    }
+
+// @public
 export type AnalyticalBackendConfig = {
     readonly hostname?: string;
 };
