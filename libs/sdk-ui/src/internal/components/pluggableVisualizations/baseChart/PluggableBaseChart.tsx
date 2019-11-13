@@ -7,7 +7,6 @@ import {
     IBucketOfFun,
     IExtendedReferencePoint,
     IFeatureFlags,
-    ILocale,
     IReferencePoint,
     IReferences,
     IUiConfig,
@@ -79,6 +78,7 @@ import get = require("lodash/get");
 import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
+import { ILocale } from "../../../../base/interfaces/Locale";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;

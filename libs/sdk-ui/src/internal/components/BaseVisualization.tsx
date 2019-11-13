@@ -8,7 +8,6 @@ import {
     IBucketItem,
     IFeatureFlags,
     IGdcConfig,
-    ILocale,
     IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
@@ -35,6 +34,7 @@ import isEqual = require("lodash/isEqual");
 import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
+import { ILocale } from "../../base/interfaces/Locale";
 
 // visualization catalogue - add your new visualization here
 const VisualizationsCatalog = {

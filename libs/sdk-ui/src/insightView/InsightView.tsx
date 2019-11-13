@@ -13,7 +13,7 @@ import {
     IColorPalette,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, IVisCallbacks, ILocale } from "../internal/interfaces/Visualization";
+import { IVisualization, IVisProps, IVisCallbacks } from "../internal/interfaces/Visualization";
 import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableColumnChart } from "../internal/components/pluggableVisualizations/columnChart/PluggableColumnChart";
 import { PluggableLineChart } from "../internal/components/pluggableVisualizations/lineChart/PluggableLineChart";
@@ -34,6 +34,7 @@ import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent
 import { RuntimeError } from "../base/errors/RuntimeError";
 import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
 import { DEFAULT_LOCALE } from "../base/constants/localization";
+import { ILocale } from "../base/interfaces/Locale";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,

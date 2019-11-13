@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import compact from "lodash/compact";
 import isArray from "lodash/isArray";
 import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
@@ -9,7 +9,7 @@ import { handleHeadPolling, IPollingOptions } from "../util";
 import { isExportFinished } from "../utils/export";
 
 interface IExtendedExportConfig extends IBaseExportConfig {
-    showFilters?: ExecuteAFM.CompatibilityFilter[];
+    showFilters?: GdcExecuteAFM.CompatibilityFilter[];
 }
 
 interface IResultExport {
@@ -91,8 +91,8 @@ export class ReportModule {
     }
 
     private sanitizeFilters(
-        showFilters?: ExecuteAFM.CompatibilityFilter[],
-    ): ExecuteAFM.CompatibilityFilter[] | undefined {
+        showFilters?: GdcExecuteAFM.CompatibilityFilter[],
+    ): GdcExecuteAFM.CompatibilityFilter[] | undefined {
         if (isArray(showFilters) && showFilters.length > 0) {
             return compact(showFilters);
         }

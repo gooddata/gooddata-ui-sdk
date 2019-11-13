@@ -8,7 +8,6 @@ import { getHeaderValue } from "./helpers/headers";
 
 const createXhr = (configStorage = {}) => new XhrModule(fetch, configStorage);
 
-
 describe("thisPackage", () => {
     it("should equal to current package name and version", () => {
         const pkgJson = require("../package.json");

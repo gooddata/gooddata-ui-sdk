@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { IBucketOfFun, IFilters, ILocale, IVisProps } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import * as BucketNames from "../../../../../base/constants/bucketNames";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
@@ -13,6 +13,7 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
 import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
+import { ILocale } from "../../../../../base/interfaces/Locale";
 
 jest.mock("react-dom", () => {
     const renderObject = {

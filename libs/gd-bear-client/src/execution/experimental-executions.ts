@@ -15,20 +15,15 @@ import negate from "lodash/negate";
 import partial from "lodash/partial";
 import flatten from "lodash/flatten";
 import set from "lodash/set";
+import { getAttributesDisplayForms, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 
 import { Rules } from "../utils/rules";
 import { sortDefinitions } from "../utils/definitions";
 import { getMissingUrisInAttributesMap } from "../utils/attributesMapLoader";
-import {
-    getAttributes,
-    getMeasures,
-    getMeasureFilters,
-    getDefinition,
-    isAttributeMeasureFilter,
-    getAttributesDisplayForms,
-} from "../utils/visualizationObjectHelper";
 import { IMeasure } from "../interfaces";
 import { XhrModule } from "../xhr";
+import isAttribute = GdcVisualizationObject.isAttribute;
+import isMeasure = GdcVisualizationObject.isMeasure;
 
 const notEmpty = negate<Array<string | null>>(isEmpty);
 
@@ -154,7 +149,7 @@ function getDateFilterExpression() {
 }
 
 function getFilterExpression(attributesMap: any, measureFilter: any) {
-    if (isAttributeMeasureFilter(measureFilter)) {
+    if (GdcVisualizationObject.isAttributeFilter(measureFilter)) {
         return getAttrFilterExpression(measureFilter, attributesMap);
     }
     return getDateFilterExpression();
@@ -499,6 +494,52 @@ function getExecutionDefinitionsAndColumns(mdObj: any, options: any, attributesM
         columns,
         definitions: sortDefinitions(compact(map(metrics, "definition"))),
     };
+}
+
+function getBuckets(mdObj: any) {
+    return get(mdObj, "buckets", []);
+}
+
+function getAttributesInBucket(bucket: any) {
+    return get(bucket, "items").reduce((list: any, bucketItem: any) => {
+        if (isAttribute(bucketItem)) {
+            list.push(get(bucketItem, "visualizationAttribute"));
+        }
+        return list;
+    }, []);
+}
+
+function getAttributes(mdObject: any) {
+    const buckets = getBuckets(mdObject);
+    return buckets.reduce(
+        (categoriesList: any, bucket: any) => categoriesList.concat(getAttributesInBucket(bucket)),
+        [],
+    );
+}
+
+function getDefinition(measure: any) {
+    return get(measure, ["definition", "measureDefinition"], {});
+}
+
+function getMeasuresInBucket(bucket: any) {
+    return get(bucket, "items").reduce((list: any, bucketItem: any) => {
+        if (isMeasure(bucketItem)) {
+            list.push(get(bucketItem, "measure"));
+        }
+        return list;
+    }, []);
+}
+
+function getMeasures(mdObject: any) {
+    const buckets = getBuckets(mdObject);
+    return buckets.reduce(
+        (measuresList: any, bucket: any) => measuresList.concat(getMeasuresInBucket(bucket)),
+        [],
+    );
+}
+
+function getMeasureFilters(measure: any) {
+    return get(getDefinition(measure), "filters", []);
 }
 
 /**

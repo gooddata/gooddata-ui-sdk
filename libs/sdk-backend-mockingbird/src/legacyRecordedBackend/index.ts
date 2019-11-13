@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
+import { GdcExecution } from "@gooddata/gd-bear-model";
 import {
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
@@ -211,7 +211,7 @@ function recordedDataView(
     result: IExecutionResult,
     recording: LegacyExecutionRecording,
 ): IDataView {
-    const afmResult = recording.result.executionResult as Execution.IExecutionResult;
+    const afmResult = recording.result.executionResult as GdcExecution.IExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {
@@ -238,7 +238,7 @@ function recordedExecutionResult(
     recording: LegacyExecutionRecording,
 ): IExecutionResult {
     const fp = defFingerprint(definition) + "/recordedResult";
-    const afmResponse = recording.response.executionResponse as Execution.IExecutionResponse;
+    const afmResponse = recording.response.executionResponse as GdcExecution.IExecutionResponse;
 
     const result: IExecutionResult = {
         definition,

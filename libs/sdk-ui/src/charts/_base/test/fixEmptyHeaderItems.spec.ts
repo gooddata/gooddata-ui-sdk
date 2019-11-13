@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
-import { Execution } from "@gooddata/gd-bear-model";
+import { GdcExecution } from "@gooddata/gd-bear-model";
 import { fixEmptyHeaderItems } from "../fixEmptyHeaderItems";
 
-function getExecutionResult(): Execution.IExecutionResult {
+function getExecutionResult(): GdcExecution.IExecutionResult {
     return {
         data: null,
         paging: {

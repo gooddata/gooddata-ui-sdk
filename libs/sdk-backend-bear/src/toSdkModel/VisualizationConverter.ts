@@ -10,7 +10,7 @@ import {
     IAttribute,
     IMeasureFilter,
 } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties } from "./PropertiesConverter";
 import { isUri } from "@gooddata/gd-bear-client";
@@ -24,8 +24,8 @@ const convertAttributeElements = (items: string[]): AttributeElements => {
     return isUri(first) ? { uris: items } : { values: items };
 };
 
-const convertFilter = (filter: VisualizationObject.VisualizationObjectExtendedFilter): IFilter => {
-    if (VisualizationObject.isMeasureValueFilter(filter)) {
+const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter => {
+    if (GdcVisualizationObject.isMeasureValueFilter(filter)) {
         return {
             measureValueFilter: {
                 condition: filter.measureValueFilter.condition,
@@ -37,9 +37,9 @@ const convertFilter = (filter: VisualizationObject.VisualizationObjectExtendedFi
     return convertMeasureFilter(filter);
 };
 
-const convertMeasureFilter = (filter: VisualizationObject.VisualizationObjectFilter): IMeasureFilter => {
-    if (VisualizationObject.isAttributeFilter(filter)) {
-        if (VisualizationObject.isPositiveAttributeFilter(filter)) {
+const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter => {
+    if (GdcVisualizationObject.isAttributeFilter(filter)) {
+        if (GdcVisualizationObject.isPositiveAttributeFilter(filter)) {
             return {
                 positiveAttributeFilter: {
                     displayForm: filter.positiveAttributeFilter.displayForm,
@@ -54,7 +54,7 @@ const convertMeasureFilter = (filter: VisualizationObject.VisualizationObjectFil
             },
         };
     } else {
-        if (VisualizationObject.isAbsoluteDateFilter(filter)) {
+        if (GdcVisualizationObject.isAbsoluteDateFilter(filter)) {
             return {
                 absoluteDateFilter: {
                     dataSet: filter.absoluteDateFilter.dataSet,
@@ -74,15 +74,15 @@ const convertMeasureFilter = (filter: VisualizationObject.VisualizationObjectFil
 };
 
 const convertMeasureDefinition = (
-    definition: VisualizationObject.IMeasureDefinitionType,
+    definition: GdcVisualizationObject.IMeasureDefinitionType,
 ): IMeasureDefinitionType => {
-    if (VisualizationObject.isArithmeticMeasureDefinition(definition)) {
+    if (GdcVisualizationObject.isArithmeticMeasureDefinition(definition)) {
         return definition;
     }
-    if (VisualizationObject.isPopMeasureDefinition(definition)) {
+    if (GdcVisualizationObject.isPopMeasureDefinition(definition)) {
         return definition;
     }
-    if (VisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
+    if (GdcVisualizationObject.isPreviousPeriodMeasureDefinition(definition)) {
         return definition;
     }
     const { filters } = definition.measureDefinition;
@@ -94,7 +94,7 @@ const convertMeasureDefinition = (
     };
 };
 
-const convertMeasure = (measure: VisualizationObject.IMeasure): IMeasure => {
+const convertMeasure = (measure: GdcVisualizationObject.IMeasure): IMeasure => {
     const { definition } = measure.measure;
 
     return {
@@ -105,17 +105,17 @@ const convertMeasure = (measure: VisualizationObject.IMeasure): IMeasure => {
     };
 };
 
-const convertAttribute = (attribute: VisualizationObject.IVisualizationAttribute): IAttribute => {
+const convertAttribute = (attribute: GdcVisualizationObject.IAttribute): IAttribute => {
     return { attribute: attribute.visualizationAttribute };
 };
 
-const convertBucketItem = (bucketItem: VisualizationObject.BucketItem): AttributeOrMeasure => {
-    return VisualizationObject.isMeasure(bucketItem)
+const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): AttributeOrMeasure => {
+    return GdcVisualizationObject.isMeasure(bucketItem)
         ? convertMeasure(bucketItem)
         : convertAttribute(bucketItem);
 };
 
-const convertBucket = (bucket: VisualizationObject.IBucket): IBucket => {
+const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
     return {
         items: bucket.items.map(convertBucketItem),
         localIdentifier: bucket.localIdentifier,
@@ -124,7 +124,7 @@ const convertBucket = (bucket: VisualizationObject.IBucket): IBucket => {
 };
 
 export const convertVisualization = (
-    visualization: VisualizationObject.IVisualization,
+    visualization: GdcVisualizationObject.IVisualization,
     visualizationClassIdentifier: string,
 ): IInsight => {
     const withResolvedReferences = convertReferencesToUris(visualization.visualizationObject);

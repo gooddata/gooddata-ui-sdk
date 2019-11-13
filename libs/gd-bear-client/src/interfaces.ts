@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { VisualizationObject, AFM, ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject, GdcExecuteAFM } from "@gooddata/gd-bear-model";
 
 export type SortDirection = "asc" | "desc";
 
@@ -64,7 +64,7 @@ export interface IEtlPullResponse {
 }
 
 export interface IBaseLoadOptions {
-    bucketItems?: VisualizationObject.IVisualizationObjectContent;
+    bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
     excludeObjectsWithTags?: string[];
     includeObjectsWithTags?: string[];
 }
@@ -275,7 +275,7 @@ export interface IBaseExportConfig {
 }
 
 export interface IExportConfig extends IBaseExportConfig {
-    showFilters?: ExecuteAFM.CompatibilityFilter[];
+    showFilters?: GdcExecuteAFM.CompatibilityFilter[];
 }
 
 export interface IExportResponse {
@@ -308,7 +308,7 @@ export interface IPropertiesControls {
 
 export interface IProperties {
     controls?: IPropertiesControls;
-    sortItems?: AFM.SortItem[];
+    sortItems?: GdcExecuteAFM.SortItem[];
 }
 
 export interface IStoredItemDescription {

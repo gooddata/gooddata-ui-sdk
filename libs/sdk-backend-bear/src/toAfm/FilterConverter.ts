@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
@@ -14,7 +14,7 @@ import {
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem | null {
+function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     if (!isPositiveAttributeFilter(filter)) {
         if (filterIsEmpty(filter)) {
             return null;
@@ -23,7 +23,7 @@ function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem
     return filter;
 }
 
-export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteAFM.FilterItem | null {
+export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): GdcExecuteAFM.FilterItem | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -39,7 +39,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
     };
 }
 
-export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteAFM.FilterItem | null {
+export function convertRelativeDateFilter(filter: IRelativeDateFilter): GdcExecuteAFM.FilterItem | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
@@ -58,7 +58,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
 
 export function convertMeasureValueFilter(
     filter: IMeasureValueFilter,
-): ExecuteAFM.IMeasureValueFilter | null {
+): GdcExecuteAFM.IMeasureValueFilter | null {
     if (filter.measureValueFilter.condition === undefined) {
         return null;
     }
@@ -66,7 +66,7 @@ export function convertMeasureValueFilter(
     return filter;
 }
 
-export function convertFilter(filter: IFilter): ExecuteAFM.ExtendedFilter | null {
+export function convertFilter(filter: IFilter): GdcExecuteAFM.ExtendedFilter | null {
     if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     }
@@ -74,7 +74,7 @@ export function convertFilter(filter: IFilter): ExecuteAFM.ExtendedFilter | null
     return convertMeasureFilter(filter);
 }
 
-export function convertMeasureFilter(filter: IMeasureFilter): ExecuteAFM.FilterItem | null {
+export function convertMeasureFilter(filter: IMeasureFilter): GdcExecuteAFM.FilterItem | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {

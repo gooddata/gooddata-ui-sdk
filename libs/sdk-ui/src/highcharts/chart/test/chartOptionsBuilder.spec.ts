@@ -772,7 +772,7 @@ describe("chartOptionsBuilder", () => {
                 ],
             };
 
-            const dummyExecutionResponse: Execution.IExecutionResponse = {
+            const dummyExecutionResponse: GdcExecution.IExecutionResponse = {
                 dimensions: [
                     {
                         headers: [

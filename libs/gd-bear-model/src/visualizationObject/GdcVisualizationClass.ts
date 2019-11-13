@@ -1,7 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-import { IObjectMeta } from './Meta';
+import { IObjectMeta } from "../meta/Meta";
 
-export namespace VisualizationClass {
+/**
+ * @public
+ */
+export namespace GdcVisualizationClass {
     export interface IVisualizationClassContent {
         url: string;
         icon: string;

@@ -5,8 +5,9 @@
     "typings": "dist/index.d.ts",
     "main": "dist/index.js",
     "scripts": {
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
         "prepublish": "npm run build",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
         "test": "jest --watch",
         "test-once": "jest",
@@ -23,7 +24,7 @@
     },
     "files": [
         "dist",
-        "index.ts",
+        "src/index.ts",
         "README.md"
     ],
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-model",
@@ -35,7 +36,8 @@
         "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
         "collectCoverageFrom": [
             "src/**/*.{ts}",
-            "!**/*.d.ts"
+            "!**/*.d.ts",
+            "!src/index.ts"
         ],
         "collectCoverage": false,
         "coverageReporters": [
@@ -63,6 +65,7 @@
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
+        "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
         "jest": "^24.7.1",

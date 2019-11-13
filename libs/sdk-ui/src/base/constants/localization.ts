@@ -1,4 +1,4 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization } from "@gooddata/gd-bear-model";
+import { ILocale } from "../interfaces/Locale";
 
-export const DEFAULT_LOCALE: Localization.ILocale = "en-US";
+export const DEFAULT_LOCALE: ILocale = "en-US";

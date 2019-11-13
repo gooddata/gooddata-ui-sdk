@@ -1410,7 +1410,7 @@ describe("getFilteredMeasuresForStackedCharts", () => {
 });
 
 describe("noRowsAndHasOneMeasure", () => {
-    it("should return true when VisualizationObject.BucketItem has one measure and any rows", () => {
+    it("should return true when GdcVisualizationObject.BucketItem has one measure and any rows", () => {
         // localIdentifier of row is 'view'
         const buckets: IBucket[] = oneMeasureOneStack;
 
@@ -1418,7 +1418,7 @@ describe("noRowsAndHasOneMeasure", () => {
         expect(result).toBe(true);
     });
 
-    it("should return false when VisualizationObject.BucketItem has one measure and some rows", () => {
+    it("should return false when GdcVisualizationObject.BucketItem has one measure and some rows", () => {
         // localIdentifier of row is 'view'
         const buckets: IBucket[] = oneMeasureOneView;
 
@@ -1428,7 +1428,7 @@ describe("noRowsAndHasOneMeasure", () => {
 });
 
 describe("noColumnsAndHasOneMeasure", () => {
-    it("should return true when VisualizationObject.BucketItem has one measure and any columns", () => {
+    it("should return true when GdcVisualizationObject.BucketItem has one measure and any columns", () => {
         // localIdentifier of column is 'stack'
         const buckets: IBucket[] = oneMeasureOneView;
 
@@ -1436,7 +1436,7 @@ describe("noColumnsAndHasOneMeasure", () => {
         expect(result).toBe(true);
     });
 
-    it("should return false when VisualizationObject.BucketItem has one measure and some columns", () => {
+    it("should return false when GdcVisualizationObject.BucketItem has one measure and some columns", () => {
         // localIdentifier of row is 'stack'
         const buckets: IBucket[] = oneMeasureOneStack;
 

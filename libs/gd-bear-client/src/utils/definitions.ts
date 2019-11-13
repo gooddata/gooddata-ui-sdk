@@ -5,7 +5,6 @@ import map from "lodash/map";
 const IDENTIFIER_REGEX = /{\S+}/g;
 
 export interface IMetric {
-    // TODO
     metricDefinition: {
         expression: string;
         identifier: string;

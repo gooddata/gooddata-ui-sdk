@@ -19,7 +19,6 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
-    ILocale,
     IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
@@ -68,6 +67,7 @@ import {
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
+import { ILocale } from "../../../../base/interfaces/Locale";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(

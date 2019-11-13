@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { isUri } from "@gooddata/gd-bear-client";
 import isEmpty = require("lodash/isEmpty");
 import omit = require("lodash/omit");
@@ -13,8 +13,8 @@ import { deserializeProperties, serializeProperties } from "./PropertiesConverte
 /*
  * Helpers
  */
-const getReferenceValue = (id: string, references: VisualizationObject.IReferenceItems) => references[id];
-const getReferenceId = (value: string, references: VisualizationObject.IReferenceItems) =>
+const getReferenceValue = (id: string, references: GdcVisualizationObject.IReferenceItems) => references[id];
+const getReferenceId = (value: string, references: GdcVisualizationObject.IReferenceItems) =>
     Object.keys(references).find(id => references[id] === value);
 
 type IdGenerator = () => string;
@@ -46,24 +46,24 @@ const traverse = (obj: any, convert: StringTransformation): any => {
 
 interface IConversionResult {
     convertedProperties: VisualizationProperties;
-    convertedReferences: VisualizationObject.IReferenceItems;
+    convertedReferences: GdcVisualizationObject.IReferenceItems;
 }
 
 type ConversionFunction = (
     originalProperties: VisualizationProperties,
-    originalReferences: VisualizationObject.IReferenceItems,
+    originalReferences: GdcVisualizationObject.IReferenceItems,
     idGenerator: IdGenerator,
 ) => IConversionResult;
 
 export type ReferenceConverter = (
-    mdObject: VisualizationObject.IVisualizationObject,
+    mdObject: GdcVisualizationObject.IVisualizationObject,
     idGenerator?: IdGenerator,
-) => VisualizationObject.IVisualizationObject;
+) => GdcVisualizationObject.IVisualizationObject;
 
 const createConverter = (conversionFunction: ConversionFunction): ReferenceConverter => (
-    mdObject: VisualizationObject.IVisualizationObject,
+    mdObject: GdcVisualizationObject.IVisualizationObject,
     idGenerator: IdGenerator = defaultIdGenerator,
-): VisualizationObject.IVisualizationObject => {
+): GdcVisualizationObject.IVisualizationObject => {
     const { content } = mdObject;
     if (!content) {
         return mdObject;
@@ -90,7 +90,7 @@ const createConverter = (conversionFunction: ConversionFunction): ReferenceConve
     return {
         ...mdObject,
         content: {
-            ...(omit(mdObject.content, "references") as VisualizationObject.IVisualizationObjectContent),
+            ...(omit(mdObject.content, "references") as GdcVisualizationObject.IVisualizationObjectContent),
             properties: serializeProperties(convertedProperties),
             ...referencesProp,
         },
@@ -101,7 +101,7 @@ const createConverter = (conversionFunction: ConversionFunction): ReferenceConve
  * Conversion from References to URIs
  */
 const convertReferenceToUri = (
-    references: VisualizationObject.IReferenceItems,
+    references: GdcVisualizationObject.IReferenceItems,
 ): StringTransformation => value => getReferenceValue(value, references) || value;
 
 /**
@@ -123,10 +123,10 @@ export const convertReferencesToUris = createConverter((originalProperties, orig
  * Conversion from URIs to References
  */
 const createUriToReferenceConverter = (
-    originalReferences: VisualizationObject.IReferenceItems,
+    originalReferences: GdcVisualizationObject.IReferenceItems,
     idGenerator: IdGenerator,
 ) => {
-    const convertedReferences: VisualizationObject.IReferenceItems = {};
+    const convertedReferences: GdcVisualizationObject.IReferenceItems = {};
 
     return {
         convertedReferences,

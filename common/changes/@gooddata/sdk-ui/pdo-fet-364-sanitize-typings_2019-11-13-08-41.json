@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui",
+            "comment": "Updated used types to reflect changes in gd-bear-model, updated readme.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui",
+    "email": "petr.dolejsi@gooddata.com"
+}

@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import compact = require("lodash/compact");
 import isEmpty = require("lodash/isEmpty");
-import { ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
@@ -16,7 +16,7 @@ import {
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
-function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
+function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
     return {
@@ -26,14 +26,14 @@ function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttri
     };
 }
 
-function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
-    const attributes: ExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
+function convertAFM(def: IExecutionDefinition): GdcExecuteAFM.IAfm {
+    const attributes: GdcExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
     const attrProp = attributes.length ? { attributes } : {};
 
-    const measures: ExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
+    const measures: GdcExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
     const measuresProp = measures.length ? { measures } : {};
 
-    const filters: ExecuteAFM.CompatibilityFilter[] = def.filters
+    const filters: GdcExecuteAFM.CompatibilityFilter[] = def.filters
         ? compact(def.filters.map(convertFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
@@ -49,7 +49,7 @@ function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
     };
 }
 
-function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotalItem[] {
+function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTotalItem[] {
     // first find all native totals defined across dimensions
     const nativeTotals = def.dimensions
         .map(dimensionTotals)
@@ -82,9 +82,9 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
     });
 }
 
-function convertTotals(totals: ITotal[] = []): ExecuteAFM.ITotalItem[] {
+function convertTotals(totals: ITotal[] = []): GdcExecuteAFM.ITotalItem[] {
     return totals.map(t => {
-        const newItem: ExecuteAFM.ITotalItem = {
+        const newItem: GdcExecuteAFM.ITotalItem = {
             type: t.type,
             attributeIdentifier: t.attributeIdentifier,
             measureIdentifier: t.measureIdentifier,
@@ -94,12 +94,12 @@ function convertTotals(totals: ITotal[] = []): ExecuteAFM.ITotalItem[] {
     });
 }
 
-function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
+function convertDimensions(def: IExecutionDefinition): GdcExecuteAFM.IDimension[] {
     return def.dimensions.map(dim => {
         const totals = convertTotals(dim.totals);
         const totalsProp = !isEmpty(totals) ? { totals } : {};
 
-        const newDim: ExecuteAFM.IDimension = {
+        const newDim: GdcExecuteAFM.IDimension = {
             itemIdentifiers: dim.itemIdentifiers,
             ...totalsProp,
         };
@@ -108,7 +108,7 @@ function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
     });
 }
 
-function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
+function convertResultSpec(def: IExecutionDefinition): GdcExecuteAFM.IResultSpec {
     // TODO: SDK8: why this???
     // Workaround because we can handle only 1 sort item for now
     const sortsProp = !isEmpty(def.sortBy) ? { sorts: def.sortBy.slice(0, 1) } : {};
@@ -127,7 +127,7 @@ function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
  * @param def - execution definition
  * @returns AFM Execution
  */
-export function toAfmExecution(def: IExecutionDefinition): ExecuteAFM.IExecution {
+export function toAfmExecution(def: IExecutionDefinition): GdcExecuteAFM.IExecution {
     return {
         execution: {
             afm: convertAFM(def),

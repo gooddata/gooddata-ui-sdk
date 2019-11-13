@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import { VisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 
 // tslint:disable:max-line-length
 
 const createFixture = (
     properties: string,
-    references?: VisualizationObject.IReferenceItems,
-): VisualizationObject.IVisualizationObject => {
+    references?: GdcVisualizationObject.IReferenceItems,
+): GdcVisualizationObject.IVisualizationObject => {
     const referenceProp = references ? { references } : undefined;
     return {
         content: {

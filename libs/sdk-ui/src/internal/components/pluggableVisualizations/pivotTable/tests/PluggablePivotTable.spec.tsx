@@ -16,7 +16,6 @@ import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import {
     IVisConstruct,
     IBucketOfFun,
-    ILocale,
     IVisProps,
     IFilters,
     IExtendedReferencePoint,
@@ -33,6 +32,7 @@ import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
 import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ILocale } from "../../../../../base/interfaces/Locale";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],

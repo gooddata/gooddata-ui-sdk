@@ -1,5 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
-export namespace Execution {
+import isEmpty from "lodash/isEmpty";
+
+/**
+ * @public
+ */
+export namespace GdcExecution {
     export interface IMeasureHeaderItem {
         measureHeaderItem: {
             uri?: string;
@@ -49,19 +54,22 @@ export namespace Execution {
 
     export interface IResultMeasureHeaderItem {
         measureHeaderItem: {
-            name: string,
-            order: number
+            name: string;
+            order: number;
         };
     }
 
     export interface IResultTotalHeaderItem {
         totalHeaderItem: {
-            name: string,
-            type: string
+            name: string;
+            type: string;
         };
     }
 
-    export type IResultHeaderItem = IResultAttributeHeaderItem | IResultMeasureHeaderItem | IResultTotalHeaderItem;
+    export type IResultHeaderItem =
+        | IResultAttributeHeaderItem
+        | IResultMeasureHeaderItem
+        | IResultTotalHeaderItem;
 
     export interface IResultDimension {
         headers: IHeader[];
@@ -118,22 +126,22 @@ export namespace Execution {
     }
 
     export function isAttributeHeaderItem(header: IResultHeaderItem): header is IResultAttributeHeaderItem {
-        return (header as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
+        return !isEmpty(header) && (header as IResultAttributeHeaderItem).attributeHeaderItem !== undefined;
     }
 
     export function isMeasureHeaderItem(header: IResultHeaderItem): header is IResultMeasureHeaderItem {
-        return (header as IResultMeasureHeaderItem).measureHeaderItem !== undefined;
+        return !isEmpty(header) && (header as IResultMeasureHeaderItem).measureHeaderItem !== undefined;
     }
 
     export function isTotalHeaderItem(header: IResultHeaderItem): header is IResultTotalHeaderItem {
-        return (header as IResultTotalHeaderItem).totalHeaderItem !== undefined;
+        return !isEmpty(header) && (header as IResultTotalHeaderItem).totalHeaderItem !== undefined;
     }
 
     export function isAttributeHeader(header: IHeader): header is IAttributeHeader {
-        return (header as IAttributeHeader).attributeHeader !== undefined;
+        return !isEmpty(header) && (header as IAttributeHeader).attributeHeader !== undefined;
     }
 
     export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader {
-        return (header as IMeasureGroupHeader).measureGroupHeader !== undefined;
+        return !isEmpty(header) && (header as IMeasureGroupHeader).measureGroupHeader !== undefined;
     }
 }

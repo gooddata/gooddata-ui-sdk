@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { IVisualizationClass } from "@gooddata/sdk-model";
-import { VisualizationClass } from "@gooddata/gd-bear-model";
+import { GdcVisualizationClass } from "@gooddata/gd-bear-model";
 
 export const convertVisualizationClass = (
-    visClass: VisualizationClass.IVisualizationClassWrapped,
+    visClass: GdcVisualizationClass.IVisualizationClassWrapped,
 ): IVisualizationClass => {
     const { content, meta } = visClass.visualizationClass;
     return {

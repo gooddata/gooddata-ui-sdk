@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-import { Localization } from "@gooddata/gd-bear-model";
 import IntlStore from "../translations/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../interfaces/MeasureTitle";
+import { ILocale } from "../../base/interfaces/Locale";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.
@@ -10,13 +10,13 @@ import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../interfaces/
  * @internal
  */
 export default class ArithmeticMeasureTitleFactory {
-    private readonly locale: Localization.ILocale;
+    private readonly locale: ILocale;
 
     /**
      * Create a new instance of the class.
-     * @param {Localization.ILocale} locale - The locale used for translation.
+     * @param {ILocale} locale - The locale used for translation.
      */
-    constructor(locale: Localization.ILocale) {
+    constructor(locale: ILocale) {
         this.locale = locale;
     }
 

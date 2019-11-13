@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import IntlStore from "../../translations/IntlStore";
 import { DEFAULT_LOCALE } from "../../constants/localization";
-import { Localization } from "@gooddata/gd-bear-model";
+import { ILocale } from "../../interfaces/Locale";
 
 describe("IntlStore", () => {
     describe("getIntl", () => {
@@ -29,7 +29,7 @@ describe("IntlStore", () => {
 
     describe("getTranslation", () => {
         describe("Messages in supported localizations", () => {
-            const localizations: Localization.ILocale[] = [
+            const localizations: ILocale[] = [
                 "en-US",
                 "de-DE",
                 "es-ES",

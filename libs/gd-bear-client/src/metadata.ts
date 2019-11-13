@@ -4,7 +4,7 @@ import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
-import { ExecuteAFM, VisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import { IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection } from "./interfaces";
@@ -20,7 +20,7 @@ export interface IValidElementsOptions {
     includeTotalCountWithoutFilters?: boolean;
     restrictiveDefinition?: string;
     restrictiveDefinitionContent?: object;
-    afm?: ExecuteAFM.IAfm;
+    afm?: GdcExecuteAFM.IAfm;
 }
 
 /**
@@ -726,9 +726,9 @@ export class MetadataModule {
      * @method getVisualization
      * @param {String} visualizationUri
      */
-    public getVisualization(uri: string): Promise<VisualizationObject.IVisualization> {
+    public getVisualization(uri: string): Promise<GdcVisualizationObject.IVisualization> {
         return this.getObjectDetails(uri).then(
-            (visualizationObject: VisualizationObject.IVisualizationObjectResponse) => {
+            (visualizationObject: GdcVisualizationObject.IVisualizationObjectResponse) => {
                 const mdObject = visualizationObject.visualizationObject;
                 return {
                     visualizationObject: mdObject,
@@ -743,7 +743,7 @@ export class MetadataModule {
      * @method saveVisualization
      * @param {String} visualizationUri
      */
-    public saveVisualization(projectId: string, visualization: VisualizationObject.IVisualization) {
+    public saveVisualization(projectId: string, visualization: GdcVisualizationObject.IVisualization) {
         return this.createObject(projectId, { visualizationObject: visualization.visualizationObject });
     }
 
@@ -756,7 +756,7 @@ export class MetadataModule {
     public updateVisualization(
         projectId: string,
         visualizationUri: string,
-        visualization: VisualizationObject.IVisualization,
+        visualization: GdcVisualizationObject.IVisualization,
     ) {
         return this.updateObject(projectId, visualizationUri, {
             visualizationObject: visualization.visualizationObject,

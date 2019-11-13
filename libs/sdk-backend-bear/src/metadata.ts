@@ -2,7 +2,7 @@
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
 import { IVisualizationClass, IInsight, IAttributeDisplayForm } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "./commonTypes";
-import { VisualizationClass } from "@gooddata/gd-bear-model";
+import { GdcVisualizationClass } from "@gooddata/gd-bear-model";
 import { convertVisualizationClass } from "./toSdkModel/VisualizationClassConverter";
 import { convertVisualization } from "./toSdkModel/VisualizationConverter";
 
@@ -19,7 +19,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     };
 
     public getVisualizationClasses = async (): Promise<IVisualizationClass[]> => {
-        const visualizationClassesResult: VisualizationClass.IVisualizationClassWrapped[] = await this.authCall(
+        const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] = await this.authCall(
             sdk =>
                 sdk.md.getObjectsByQuery(this.workspace, {
                     category: "visualizationClass",

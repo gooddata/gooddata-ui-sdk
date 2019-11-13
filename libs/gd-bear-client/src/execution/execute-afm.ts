@@ -3,7 +3,7 @@ import invariant from "invariant";
 import qs from "qs";
 import range from "lodash/range";
 import get from "lodash/get";
-import { Execution, ExecuteAFM } from "@gooddata/gd-bear-model";
+import { GdcExecution, GdcExecuteAFM } from "@gooddata/gd-bear-model";
 
 import { XhrModule } from "../xhr";
 import { convertExecutionToJson } from "./execute-afm.convert";
@@ -22,8 +22,8 @@ export const DEFAULT_LIMIT = 1000;
 export interface IVisualizationExecution {
     visualizationExecution: {
         reference: string;
-        resultSpec?: ExecuteAFM.IResultSpec;
-        filters?: ExecuteAFM.CompatibilityFilter[];
+        resultSpec?: GdcExecuteAFM.IResultSpec;
+        filters?: GdcExecuteAFM.CompatibilityFilter[];
     };
 }
 
@@ -35,20 +35,19 @@ export class ExecuteAfmModule {
      *
      * @method executeAfm
      * @param {String} projectId - GD project identifier
-     * @param {AFM.IExecution} execution - See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/AFM.ts#L2
+     * @param {GdcExecuteAFM.IExecution} execution
      *
-     * @returns {Promise<Execution.IExecutionResponses>} Structure with `executionResponse` and `executionResult` -
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L113
+     * @returns {Promise<GdcExecution.IExecutionResponses>} Structure with `executionResponse` and `executionResult`
      */
     public executeAfm(
         projectId: string,
-        execution: ExecuteAFM.IExecution,
-    ): Promise<Execution.IExecutionResponses> {
+        execution: GdcExecuteAFM.IExecution,
+    ): Promise<GdcExecution.IExecutionResponses> {
         validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
         return this.getExecutionResponse(projectId, execution).then(
-            (executionResponse: Execution.IExecutionResponse) => {
+            (executionResponse: GdcExecution.IExecutionResponse) => {
                 return this.getExecutionResult(executionResponse.links.executionResult).then(
-                    (executionResult: Execution.IExecutionResult | null) => {
+                    (executionResult: GdcExecution.IExecutionResult | null) => {
                         return { executionResponse, executionResult };
                     },
                 );
@@ -62,15 +61,14 @@ export class ExecuteAfmModule {
      *
      * @method getExecutionResponse
      * @param {string} projectId - GD project identifier
-     * @param {AFM.IExecution} execution - See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/AFM.ts#L2
+     * @param {GdcExecuteAFM.IExecution} execution
      *
-     * @returns {Promise<Execution.IExecutionResponse>} Promise with `executionResponse`
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L69
+     * @returns {Promise<GdcExecution.IExecutionResponse>} Promise with `executionResponse`
      */
     public getExecutionResponse(
         projectId: string,
-        execution: ExecuteAFM.IExecution,
-    ): Promise<Execution.IExecutionResponse> {
+        execution: GdcExecuteAFM.IExecution,
+    ): Promise<GdcExecution.IExecutionResponse> {
         validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
         return this.xhr
             .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
@@ -93,13 +91,13 @@ export class ExecuteAfmModule {
     public _executeVisualization(
         projectId: string,
         visExecution: IVisualizationExecution,
-    ): Promise<Execution.IExecutionResponses> {
+    ): Promise<GdcExecution.IExecutionResponses> {
         // We have ONE-3961 as followup to take this out of experimental mode
 
         return this._getVisExecutionResponse(projectId, visExecution).then(
-            (executionResponse: Execution.IExecutionResponse) => {
+            (executionResponse: GdcExecution.IExecutionResponse) => {
                 return this.getExecutionResult(executionResponse.links.executionResult).then(
-                    (executionResult: Execution.IExecutionResult | null) => {
+                    (executionResult: GdcExecution.IExecutionResult | null) => {
                         return { executionResponse, executionResult };
                     },
                 );
@@ -124,7 +122,7 @@ export class ExecuteAfmModule {
     public _getVisExecutionResponse(
         projectId: string,
         visExecution: IVisualizationExecution,
-    ): Promise<Execution.IExecutionResponse> {
+    ): Promise<GdcExecution.IExecutionResponse> {
         // We have ONE-3961 as followup to take this out of experimental mode
 
         const body = createExecuteVisualizationBody(visExecution);
@@ -147,15 +145,14 @@ export class ExecuteAfmModule {
      * @param {number[]} limit - limit for each dimension
      * @param {number[]} offset - offset for each dimension
      *
-     * @returns {Promise<Execution.IExecutionResult | null>}
+     * @returns {Promise<GdcExecution.IExecutionResult | null>}
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
     public getPartialExecutionResult(
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<Execution.IExecutionResult | null> {
+    ): Promise<GdcExecution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -169,11 +166,10 @@ export class ExecuteAfmModule {
      * @method getExecutionResult
      * @param {string} executionResultUri
      *
-     * @returns {Promise<Execution.IExecutionResult | null>}
+     * @returns {Promise<GdcExecution.IExecutionResult | null>}
      *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
-     *  See https://github.com/gooddata/gooddata-typings/blob/v2.1.0/src/Execution.ts#L88
      */
-    public getExecutionResult(executionResultUri: string): Promise<Execution.IExecutionResult | null> {
+    public getExecutionResult(executionResultUri: string): Promise<GdcExecution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);
         const numOfDimensions = Number(qs.parse(executionResultUriQueryPart).dimensions);
         validateNumOfDimensions(numOfDimensions);
@@ -188,9 +184,9 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<Execution.IExecutionResult | null> {
+    ): Promise<GdcExecution.IExecutionResult | null> {
         return this.fetchExecutionResult(executionResultUri, limit, offset).then(
-            (executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+            (executionResultWrapper: GdcExecution.IExecutionResultWrapper | null) => {
                 return executionResultWrapper ? unwrapExecutionResult(executionResultWrapper) : null;
             },
         );
@@ -200,10 +196,10 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-        prevExecutionResult?: Execution.IExecutionResult,
-    ): Promise<Execution.IExecutionResult | null> {
+        prevExecutionResult?: GdcExecution.IExecutionResult,
+    ): Promise<GdcExecution.IExecutionResult | null> {
         return this.fetchExecutionResult(executionResultUri, limit, offset).then(
-            (executionResultWrapper: Execution.IExecutionResultWrapper | null) => {
+            (executionResultWrapper: GdcExecution.IExecutionResultWrapper | null) => {
                 if (!executionResultWrapper) {
                     return null;
                 }
@@ -229,7 +225,7 @@ export class ExecuteAfmModule {
         executionResultUri: string,
         limit: number[],
         offset: number[],
-    ): Promise<Execution.IExecutionResultWrapper | null> {
+    ): Promise<GdcExecution.IExecutionResultWrapper | null> {
         const uri = replaceLimitAndOffsetInUri(executionResultUri, limit, offset);
 
         return this.xhr
@@ -243,14 +239,14 @@ function getExecutionResultUriQueryPart(executionResultUri: string): string {
 }
 
 function unwrapExecutionResponse(
-    executionResponseWrapper: Execution.IExecutionResponseWrapper,
-): Execution.IExecutionResponse {
+    executionResponseWrapper: GdcExecution.IExecutionResponseWrapper,
+): GdcExecution.IExecutionResponse {
     return executionResponseWrapper.executionResponse;
 }
 
 function unwrapExecutionResult(
-    executionResultWrapper: Execution.IExecutionResultWrapper,
-): Execution.IExecutionResult {
+    executionResultWrapper: GdcExecution.IExecutionResultWrapper,
+): GdcExecution.IExecutionResult {
     return executionResultWrapper.executionResult;
 }
 
@@ -334,8 +330,8 @@ export function nextPageExists(nextOffset: number[], total: number[]): boolean {
 
 function mergeHeaderItemsForEachAttribute(
     dimension: number,
-    headerItems: Execution.IResultHeaderItem[][][] | undefined,
-    result: Execution.IExecutionResult,
+    headerItems: GdcExecution.IResultHeaderItem[][][] | undefined,
+    result: GdcExecution.IExecutionResult,
 ) {
     if (headerItems && result.headerItems) {
         for (let attrIdx = 0; attrIdx < headerItems[dimension].length; attrIdx += 1) {
@@ -346,9 +342,9 @@ function mergeHeaderItemsForEachAttribute(
 
 // works only for one or two dimensions
 export function mergePage(
-    prevExecutionResult: Execution.IExecutionResult,
-    executionResult: Execution.IExecutionResult,
-): Execution.IExecutionResult {
+    prevExecutionResult: GdcExecution.IExecutionResult,
+    executionResult: GdcExecution.IExecutionResult,
+): GdcExecution.IExecutionResult {
     const result = prevExecutionResult;
     const { headerItems, data, paging } = executionResult;
 
@@ -366,14 +362,14 @@ export function mergePage(
     if (result.data[rowOffset]) {
         // appending columns to existing rows
         for (let i = 0; i < data.length; i += 1) {
-            const columns = data[i] as Execution.DataValue[];
-            const resultData = result.data[i + rowOffset] as Execution.DataValue[];
+            const columns = data[i] as GdcExecution.DataValue[];
+            const resultData = result.data[i + rowOffset] as GdcExecution.DataValue[];
             resultData.push(...columns);
         }
     } else {
         // appending new rows
-        const resultData = result.data as Execution.DataValue[];
-        const currentPageData = data as Execution.DataValue[];
+        const resultData = result.data as GdcExecution.DataValue[];
+        const currentPageData = data as GdcExecution.DataValue[];
         resultData.push(...currentPageData);
     }
 
