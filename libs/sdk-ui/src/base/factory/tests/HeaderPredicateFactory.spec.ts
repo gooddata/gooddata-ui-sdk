@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
@@ -6,7 +6,7 @@ import {
     context,
     attributeHeaderItem,
     attributeDescriptor,
-} from "./HeaderPredicateFactory.mock";
+} from "./HeaderPredicateFactory.fixtures";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {

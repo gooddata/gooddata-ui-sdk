@@ -9,7 +9,7 @@ import {
     twoAttributesTwoMeasuresEvenGroupsFristPage,
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
     noAttributesTwoMeasures,
-} from "./GroupingProvider.mock";
+} from "./GroupingProvider.fixtures";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
     const boundaries = new Array(expectedBoundaries.length)

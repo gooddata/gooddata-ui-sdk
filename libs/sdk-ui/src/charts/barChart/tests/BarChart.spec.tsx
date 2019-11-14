@@ -2,7 +2,6 @@
 import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
-import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -15,6 +14,7 @@ import {
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { CoreBarChart } from "../CoreBarChart";
+import { M1, M1WithRatio } from "../../tests/fixtures";
 
 function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
     return shallow(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);

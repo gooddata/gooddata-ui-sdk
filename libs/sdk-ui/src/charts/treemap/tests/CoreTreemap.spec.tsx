@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreTreemap } from "../CoreTreemap";
-import { dummyExecution } from "../../tests/mocks";
+import { dummyExecution } from "../../tests/fixtures";
 import { BaseChart } from "../../_base/BaseChart";
 
 describe("Treemap", () => {

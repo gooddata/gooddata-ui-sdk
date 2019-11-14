@@ -2,10 +2,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { FunnelChart } from "../FunnelChart";
-import { M1 } from "../../tests/fixtures/buckets";
 import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreFunnelChart } from "../CoreFunnelChart";
+import { M1 } from "../../tests/fixtures";
 
 describe("FunnelChart", () => {
     const measure: IMeasure = {

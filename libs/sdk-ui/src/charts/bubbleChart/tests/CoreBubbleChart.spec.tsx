@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CoreBubbleChart } from "../CoreBubbleChart";
-import { dummyExecution } from "../../tests/mocks";
+import { dummyExecution } from "../../tests/fixtures";
 import { BaseChart } from "../../_base/BaseChart";
 
 describe("BubbleChart", () => {

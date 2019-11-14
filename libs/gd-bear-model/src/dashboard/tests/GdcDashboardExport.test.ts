@@ -1,22 +1,9 @@
 // (C) 2019 GoodData Corporation
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import { GdcDashboardExport } from "../GdcDashboardExport";
+import { attributeFilter, dateFilter } from "./GdcDashboardExport.fixtures";
 
 describe("GdcDashboardExport", () => {
-    const attributeFilter: GdcDashboardExport.IAttributeFilter = {
-        attributeFilter: {
-            displayForm: "/uri/attr",
-            negativeSelection: true,
-            attributeElements: ["/uri/attr?id=1", "/uri/attr?id=2"],
-        },
-    };
-    const dateFilter: GdcDashboardExport.IDateFilter = {
-        dateFilter: {
-            type: "relative",
-            granularity: "GDC.time.date",
-        },
-    };
-
     describe("isAttributeFilter", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,

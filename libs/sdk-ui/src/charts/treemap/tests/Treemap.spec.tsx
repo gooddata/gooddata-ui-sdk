@@ -2,9 +2,9 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { Treemap } from "../Treemap";
-import { M1 } from "../../tests/fixtures/buckets";
 import { CoreTreemap } from "../CoreTreemap";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { M1 } from "../../tests/fixtures";
 
 describe("Treemap", () => {
     it("should render with custom SDK", () => {

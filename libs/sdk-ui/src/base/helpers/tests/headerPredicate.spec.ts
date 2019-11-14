@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
-import { context, measureDescriptors } from "../../factory/tests/HeaderPredicateFactory.mock";
+import { context, measureDescriptors } from "../../factory/tests/HeaderPredicateFactory.fixtures";
 import { IMappingHeader } from "../../interfaces/MappingHeader";
 import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../drilling";

@@ -2,10 +2,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { PieChart } from "../PieChart";
-import { M1 } from "../../tests/fixtures/buckets";
 import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CorePieChart } from "../CorePieChart";
+import { M1 } from "../../tests/fixtures";
 
 describe("PieChart", () => {
     const measure: IMeasure = {

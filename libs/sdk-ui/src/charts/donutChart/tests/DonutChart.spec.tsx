@@ -3,9 +3,9 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { DonutChart } from "../DonutChart";
-import { M1 } from "../../tests/fixtures/buckets";
 import { CoreDonutChart } from "../CoreDonutChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { M1 } from "../../tests/fixtures";
 
 describe("DonutChart", () => {
     it("should render with custom SDK", () => {

@@ -2,10 +2,10 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { BubbleChart } from "../BubbleChart";
-import { M1 } from "../../tests/fixtures/buckets";
 import { IAttribute, IAttributeSortItem, IMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreBubbleChart } from "../CoreBubbleChart";
+import { M1 } from "../../tests/fixtures";
 
 describe("BubbleChart", () => {
     const measure: IMeasure = {

@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { isHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
 import {
     attributeHeaderItem,
     measureDescriptors,
     attributeDescriptor,
-} from "../../factory/tests/HeaderPredicateFactory.mock";
+} from "../../factory/tests/HeaderPredicateFactory.fixtures";
 import {
     isAttributeDescriptor,
     isMeasureDescriptor,

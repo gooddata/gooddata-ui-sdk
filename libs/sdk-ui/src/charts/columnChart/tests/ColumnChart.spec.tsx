@@ -2,11 +2,11 @@
 import * as React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
-import { M1, M1WithRatio } from "../../tests/fixtures/buckets";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";
+import { M1, M1WithRatio } from "../../tests/fixtures";
 
 function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
     return shallow(

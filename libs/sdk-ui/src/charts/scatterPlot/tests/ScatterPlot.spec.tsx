@@ -2,9 +2,9 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { ScatterPlot } from "../ScatterPlot";
-import { M1 } from "../../tests/fixtures/buckets";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreScatterPlot } from "../CoreScatterPlot";
+import { M1 } from "../../tests/fixtures";
 
 describe("ScatterPlot", () => {
     it("should render with custom SDK", () => {

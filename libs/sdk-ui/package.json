@@ -36,7 +36,7 @@
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.js"
         ],
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?)$",
+        "testRegex": "(\\.(test|spec))\\.(tsx?)$",
         "testPathIgnorePatterns": [
             ",/node_modules/",
             "/dist/",

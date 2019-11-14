@@ -3,9 +3,9 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { Heatmap } from "../Heatmap";
-import { M1 } from "../../tests/fixtures/buckets";
 import { CoreHeatmap } from "../CoreHeatmap";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { M1 } from "../../tests/fixtures";
 
 describe("Heatmap", () => {
     it("should render with custom SDK", () => {

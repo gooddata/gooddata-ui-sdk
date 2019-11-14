@@ -33,7 +33,7 @@
         "setupFilesAfterEnv": [
             "<rootDir>/jest.setup.js"
         ],
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts)$",
+        "testRegex": "(\\.(test|spec))\\.(ts)$",
         "collectCoverageFrom": [
             "src/**/*.{ts}",
             "!**/*.d.ts",

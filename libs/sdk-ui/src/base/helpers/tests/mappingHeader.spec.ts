@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
@@ -9,7 +9,7 @@ import {
     attributeDescriptor,
     attributeHeaderItem,
     measureDescriptors,
-} from "../../factory/tests/HeaderPredicateFactory.mock";
+} from "../../factory/tests/HeaderPredicateFactory.fixtures";
 
 describe("getMappingHeaderLocalIdentifier", () => {
     it("should return localIdentifier from attributeHeader", () => {

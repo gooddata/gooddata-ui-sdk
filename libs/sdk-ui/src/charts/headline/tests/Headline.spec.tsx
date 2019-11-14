@@ -2,9 +2,9 @@
 import * as React from "react";
 import { shallow } from "enzyme";
 import { Headline } from "../Headline";
-import { M1 } from "../../tests/fixtures/buckets";
 import { CoreHeadline } from "../CoreHeadline";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { M1 } from "../../tests/fixtures";
 
 describe("Headline", () => {
     it("should render with custom SDK", () => {

@@ -14,7 +14,7 @@ import {
     DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER,
     DRILL_EVENT_DATA_BY_MEASURE_URI,
     DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
-} from "./fixtures/drill_event_data";
+} from "./HeadlineTransformation.fixtures";
 import noop = require("lodash/noop");
 
 describe("HeadlineTransformation", () => {

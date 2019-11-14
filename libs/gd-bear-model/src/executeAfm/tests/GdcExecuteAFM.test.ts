@@ -1,123 +1,26 @@
 // (C) 2019 GoodData Corporation
 import { GdcExecuteAFM as AFM } from "../GdcExecuteAFM";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import {
+    relativeDateFilter,
+    absoluteDateFilter,
+    positiveAttributeFilter,
+    negativeAttributeFilter,
+    expressionFilter,
+    measureValueFilter,
+    identifierObjectQualifier,
+    uriObjectQualifier,
+    simpleMeasureDefinition,
+    arithmeticMeasureDefinition,
+    popMeasureDefinition,
+    previousPeriodMeasureDefinition,
+    attributeSortItem,
+    measureSortItem,
+    attributeLocatorItem,
+    measureLocatorItem,
+} from "./GdcExecuteAFM.fixtures";
 
 describe("GdcExecuteAFM", () => {
-    const expressionFilter: AFM.CompatibilityFilter = {
-        value: "MAQL",
-    };
-    const relativeDateFilter: AFM.CompatibilityFilter = {
-        relativeDateFilter: {
-            dataSet: {
-                uri: "/gdc/mock/ds",
-            },
-            granularity: "gram",
-            from: -10,
-            to: 0,
-        },
-    };
-    const absoluteDateFilter: AFM.CompatibilityFilter = {
-        absoluteDateFilter: {
-            dataSet: {
-                uri: "/gdc/mock/ds",
-            },
-            from: "1",
-            to: "2",
-        },
-    };
-    const negativeAttributeFilter: AFM.CompatibilityFilter = {
-        negativeAttributeFilter: {
-            displayForm: {
-                uri: "/gdc/mock/date",
-            },
-            notIn: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-        },
-    };
-    const positiveAttributeFilter: AFM.CompatibilityFilter = {
-        positiveAttributeFilter: {
-            displayForm: {
-                uri: "/gdc/mock/attribute",
-            },
-            in: ["/gdc/mock/attribute/value_1", "/gdc/mock/attribute/value_2"],
-        },
-    };
-    const measureValueFilter: AFM.CompatibilityFilter = {
-        measureValueFilter: {
-            measure: {
-                uri: "/gdc/mock/date",
-            },
-        },
-    };
-    const identifierObjectQualifier: AFM.ObjQualifier = {
-        identifier: "id",
-    };
-    const uriObjectQualifier: AFM.ObjQualifier = {
-        uri: "/gdc/mock/id",
-    };
-    const simpleMeasureDefinition: AFM.ISimpleMeasureDefinition = {
-        measure: {
-            item: {
-                uri: "/gdc/mock/measure",
-            },
-        },
-    };
-    const arithmeticMeasureDefinition: AFM.IArithmeticMeasureDefinition = {
-        arithmeticMeasure: {
-            measureIdentifiers: ["/gdc/mock/measure"],
-            operator: "sum",
-        },
-    };
-    const popMeasureDefinition: AFM.IPopMeasureDefinition = {
-        popMeasure: {
-            measureIdentifier: "m1",
-            popAttribute: {
-                uri: "/gdc/mock/measure",
-            },
-        },
-    };
-    const previousPeriodMeasureDefinition: AFM.IPreviousPeriodMeasureDefinition = {
-        previousPeriodMeasure: {
-            measureIdentifier: "m1",
-            dateDataSets: [
-                {
-                    dataSet: {
-                        uri: "/gdc/mock/date",
-                    },
-                    periodsAgo: 1,
-                },
-            ],
-        },
-    };
-    const attributeSortItem: AFM.IAttributeSortItem = {
-        attributeSortItem: {
-            direction: "asc",
-            attributeIdentifier: "a1",
-        },
-    };
-    const measureSortItem: AFM.IMeasureSortItem = {
-        measureSortItem: {
-            direction: "asc",
-            locators: [
-                {
-                    measureLocatorItem: {
-                        measureIdentifier: "m1",
-                    },
-                },
-            ],
-        },
-    };
-    const attributeLocatorItem: AFM.IAttributeLocatorItem = {
-        attributeLocatorItem: {
-            attributeIdentifier: "a1",
-            element: "element",
-        },
-    };
-    const measureLocatorItem: AFM.IMeasureLocatorItem = {
-        measureLocatorItem: {
-            measureIdentifier: "m1",
-        },
-    };
-
     describe("isDateFilter", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
