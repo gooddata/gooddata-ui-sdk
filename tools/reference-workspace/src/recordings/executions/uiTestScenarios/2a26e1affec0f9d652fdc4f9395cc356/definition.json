@@ -36,11 +36,7 @@
             ]
         },
         {
-            "localIdentifier": "tertiary_measures",
-            "items": []
-        },
-        {
-            "localIdentifier": "view",
+            "localIdentifier": "attribute",
             "items": [
                 {
                     "attribute": {

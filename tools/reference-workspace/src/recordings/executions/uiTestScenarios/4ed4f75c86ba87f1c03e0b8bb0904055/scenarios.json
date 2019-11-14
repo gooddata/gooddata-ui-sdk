@@ -6,5 +6,9 @@
     {
         "vis": "Heatmap",
         "scenario": "with measure and rows"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "x axis measure and attribute"
     }
 ]

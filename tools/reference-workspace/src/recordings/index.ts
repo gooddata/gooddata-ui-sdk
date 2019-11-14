@@ -1,6 +1,6 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T09:03:36.145Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T09:12:35.714Z; */
 
 const fp_07ba5edacdbeb3448c9bd786be2b1f3c = {
     definition: require("./executions/uiTestScenarios/07ba5edacdbeb3448c9bd786be2b1f3c/definition.json"),
@@ -95,6 +95,11 @@ export const Scenarios = {
         XAxisMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         XAxisMeasureWithViewBy: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
     },
+    ScatterPlot: {
+        XAndYAxisMeasuresAndAttribute: fp_2a26e1affec0f9d652fdc4f9395cc356,
+        XAxisMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
+        XAxisMeasureAndAttribute: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
+    },
     DonutChart: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
@@ -110,15 +115,15 @@ export const Scenarios = {
         WithMeasureAndRows: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
         WithMeasureRowsAndColumns: fp_559531551ec78bf8774da4e003dbe112,
     },
-    Treemap: {
-        SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
-        SingleMeasureAndViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
-        SingleMeasureViewByAndSegment: fp_fd5055c16b64140019f3b9ba5edf67de,
-    },
     PieChart: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
         TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
+    },
+    Treemap: {
+        SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
+        SingleMeasureAndViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
+        SingleMeasureViewByAndSegment: fp_fd5055c16b64140019f3b9ba5edf67de,
     },
     AreaChart: {
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,

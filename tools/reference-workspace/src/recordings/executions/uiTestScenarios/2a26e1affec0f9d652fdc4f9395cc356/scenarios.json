@@ -2,5 +2,9 @@
     {
         "vis": "BubbleChart",
         "scenario": "x and y axis measures with viewBy"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "x and y axis measures and attribute"
     }
 ]

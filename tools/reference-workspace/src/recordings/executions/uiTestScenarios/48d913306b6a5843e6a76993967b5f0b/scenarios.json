@@ -24,11 +24,11 @@
         "scenario": "single measure with viewBy"
     },
     {
-        "vis": "Treemap",
-        "scenario": "single measure and viewBy"
-    },
-    {
         "vis": "PieChart",
         "scenario": "single measure with viewBy"
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "single measure and viewBy"
     }
 ]

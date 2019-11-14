@@ -16,11 +16,15 @@
         "scenario": "with measure only"
     },
     {
-        "vis": "Treemap",
+        "vis": "PieChart",
         "scenario": "single measure"
     },
     {
-        "vis": "PieChart",
+        "vis": "ScatterPlot",
+        "scenario": "x axis measure"
+    },
+    {
+        "vis": "Treemap",
         "scenario": "single measure"
     }
 ]
