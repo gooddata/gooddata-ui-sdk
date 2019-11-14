@@ -5,14 +5,14 @@ import { scenariosFor } from "../../../src";
 
 export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 800 } })
-    .addScenario("with measure only", {
+    .addScenario("measure only", {
         measure: ReferenceLdm.Amount,
     })
-    .addScenario("with measure and rows", {
+    .addScenario("measure and rows", {
         measure: ReferenceLdm.Amount,
         rows: ReferenceLdm.Product.Name,
     })
-    .addScenario("with measure, rows and columns", {
+    .addScenario("measure, rows and columns", {
         measure: ReferenceLdm.Amount,
         rows: ReferenceLdm.Product.Name,
         columns: ReferenceLdm.Region,

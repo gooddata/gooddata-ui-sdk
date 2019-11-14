@@ -13,7 +13,7 @@
     },
     {
         "vis": "Heatmap",
-        "scenario": "with measure only"
+        "scenario": "measure only"
     },
     {
         "vis": "PieChart",

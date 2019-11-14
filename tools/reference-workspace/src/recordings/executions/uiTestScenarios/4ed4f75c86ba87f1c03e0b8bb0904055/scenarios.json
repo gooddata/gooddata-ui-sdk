@@ -5,7 +5,7 @@
     },
     {
         "vis": "Heatmap",
-        "scenario": "with measure and rows"
+        "scenario": "measure and rows"
     },
     {
         "vis": "ScatterPlot",

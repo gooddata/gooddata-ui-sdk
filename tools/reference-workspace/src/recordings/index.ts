@@ -1,6 +1,6 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T09:12:35.714Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T09:48:56.358Z; */
 
 const fp_07ba5edacdbeb3448c9bd786be2b1f3c = {
     definition: require("./executions/uiTestScenarios/07ba5edacdbeb3448c9bd786be2b1f3c/definition.json"),
@@ -111,9 +111,9 @@ export const Scenarios = {
         TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
     },
     Heatmap: {
-        WithMeasureOnly: fp_3f053129b295b39b68b6c8b2f17ab376,
-        WithMeasureAndRows: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
-        WithMeasureRowsAndColumns: fp_559531551ec78bf8774da4e003dbe112,
+        MeasureOnly: fp_3f053129b295b39b68b6c8b2f17ab376,
+        MeasureAndRows: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
+        MeasureRowsAndColumns: fp_559531551ec78bf8774da4e003dbe112,
     },
     PieChart: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,

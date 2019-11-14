@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Heatmap with with measure and rows should create expected execution definition 1`] = `
+exports[`Heatmap with measure and rows should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -80,9 +80,9 @@ Object {
 }
 `;
 
-exports[`Heatmap with with measure and rows should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure and rows should create expected props for core chart 1`] = `Object {}`;
 
-exports[`Heatmap with with measure only should create expected execution definition 1`] = `
+exports[`Heatmap with measure only should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
   "buckets": Array [
@@ -142,9 +142,9 @@ Object {
 }
 `;
 
-exports[`Heatmap with with measure only should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure only should create expected props for core chart 1`] = `Object {}`;
 
-exports[`Heatmap with with measure, rows and columns should create expected execution definition 1`] = `
+exports[`Heatmap with measure, rows and columns should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -242,4 +242,4 @@ Object {
 }
 `;
 
-exports[`Heatmap with with measure, rows and columns should create expected props for core chart 1`] = `Object {}`;
+exports[`Heatmap with measure, rows and columns should create expected props for core chart 1`] = `Object {}`;
