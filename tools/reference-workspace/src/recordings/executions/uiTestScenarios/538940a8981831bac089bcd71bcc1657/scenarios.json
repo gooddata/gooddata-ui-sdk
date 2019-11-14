@@ -14,5 +14,9 @@
     {
         "vis": "ComboChart",
         "scenario": "one primary measure"
+    },
+    {
+        "vis": "LineChart",
+        "scenario": "single measure"
     }
 ]

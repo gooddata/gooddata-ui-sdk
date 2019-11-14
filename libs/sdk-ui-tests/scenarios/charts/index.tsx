@@ -9,6 +9,7 @@ import donutChart from "./donutChart/base";
 import funnelChart from "./funnelChart/base";
 import headline from "./headline/base";
 import heatmap from "./heatmap/base";
+import lineChart from "./lineChart/base";
 import treemap from "./treemap/base";
 
 export default [
@@ -21,5 +22,6 @@ export default [
     funnelChart,
     headline,
     heatmap,
+    lineChart,
     treemap,
 ];

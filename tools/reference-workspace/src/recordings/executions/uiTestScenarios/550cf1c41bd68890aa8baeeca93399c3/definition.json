@@ -20,14 +20,32 @@
         },
         {
             "localIdentifier": "attribute",
-            "items": []
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "created.aci81lMifn6q"
+                        },
+                        "localIdentifier": "a_created.aci81lMifn6q"
+                    }
+                }
+            ]
         },
         {
             "localIdentifier": "stack",
             "items": []
         }
     ],
-    "attributes": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "created.aci81lMifn6q"
+                },
+                "localIdentifier": "a_created.aci81lMifn6q"
+            }
+        }
+    ],
     "measures": [
         {
             "measure": {
@@ -47,7 +65,7 @@
             "itemIdentifiers": ["measureGroup"]
         },
         {
-            "itemIdentifiers": []
+            "itemIdentifiers": ["a_created.aci81lMifn6q"]
         }
     ],
     "filters": [],
