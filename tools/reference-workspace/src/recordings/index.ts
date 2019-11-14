@@ -1,6 +1,6 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T08:01:45.061Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-14T08:21:39.027Z; */
 
 const fp_18fd6d70952e9e0d81eeb8ddcfeeece0 = {
     definition: require("./executions/uiTestScenarios/18fd6d70952e9e0d81eeb8ddcfeeece0/definition.json"),
@@ -47,6 +47,16 @@ const fp_d8bfd38020a6b5b812177fdcdc87ff78 = {
     executionResult: require("./executions/uiTestScenarios/d8bfd38020a6b5b812177fdcdc87ff78/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/d8bfd38020a6b5b812177fdcdc87ff78/dataView_all.json"),
 };
+const fp_abfbc8b0d9f7d2dca6d41a9b07292885 = {
+    definition: require("./executions/uiTestScenarios/abfbc8b0d9f7d2dca6d41a9b07292885/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/abfbc8b0d9f7d2dca6d41a9b07292885/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/abfbc8b0d9f7d2dca6d41a9b07292885/dataView_all.json"),
+};
+const fp_c426924dfc9ad75ca4d5945a0db6ccc0 = {
+    definition: require("./executions/uiTestScenarios/c426924dfc9ad75ca4d5945a0db6ccc0/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/c426924dfc9ad75ca4d5945a0db6ccc0/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/c426924dfc9ad75ca4d5945a0db6ccc0/dataView_all.json"),
+};
 export const Scenarios = {
     BubbleChart: {
         XAndYAxisAndSizeMeasuresWithViewBy: fp_18fd6d70952e9e0d81eeb8ddcfeeece0,
@@ -84,6 +94,10 @@ export const Scenarios = {
         OnePrimaryMeasure: fp_538940a8981831bac089bcd71bcc1657,
         OnePrimaryAndScenarioMeasureWithViewBy: fp_d8bfd38020a6b5b812177fdcdc87ff78,
     },
+    Headline: {
+        SingleMeasure: fp_abfbc8b0d9f7d2dca6d41a9b07292885,
+        TwoMeasures: fp_c426924dfc9ad75ca4d5945a0db6ccc0,
+    },
 };
 export const Recordings = {
     ws_testWorkspace: {
@@ -97,6 +111,8 @@ export const Recordings = {
             fp_709cdd2f5d4bd0d87bcc65a887485bdc,
             fp_adac125575b5842be13271dc7ab150eb,
             fp_d8bfd38020a6b5b812177fdcdc87ff78,
+            fp_abfbc8b0d9f7d2dca6d41a9b07292885,
+            fp_c426924dfc9ad75ca4d5945a0db6ccc0,
         },
     },
 };

@@ -10,6 +10,7 @@ import { ScenarioGroup } from "../../../src";
 import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui/styles/css/charts.css";
+import "@gooddata/sdk-ui/styles/css/headline.css";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 const DefaultWorkspace = "testWorkspace";

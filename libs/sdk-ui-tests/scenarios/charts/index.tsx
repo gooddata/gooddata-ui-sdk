@@ -7,5 +7,6 @@ import columnChart from "./columnChart/base";
 import comboChart from "./comboChart/base";
 import donutChart from "./donutChart/base";
 import funnelChart from "./funnelChart/base";
+import headline from "./headline/base";
 
-export default [areaChart, barChart, bubbleChart, columnChart, comboChart, donutChart, funnelChart];
+export default [areaChart, barChart, bubbleChart, columnChart, comboChart, donutChart, funnelChart, headline];
