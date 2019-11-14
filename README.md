@@ -75,6 +75,21 @@ Long story short here are facts and commands you need to know:
 
 -   `rush add` - adds a new dependency to a project
 
+#### Bulk projects commands
+
+| Command                | Description                                                                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rush validate`        | Validates code in all projects.                                                                                                                                              |
+| `rush validate-ci`     | Validates code in all projects in CI mode.                                                                                                                                   |
+| `rush test-once`       | Tests code in all projects.                                                                                                                                                  |
+| `rush test-ci`         | Tests code in all projects in CI mode with coverage reporting.                                                                                                               |
+| `rush prettier-check`  | Verifies code formatting in all projects.                                                                                                                                    |
+| `rush prettier-write`  | Formats code in all projects.                                                                                                                                                |
+| `rush api-extractor`   | Runs api-extractor in all applicable sub projects.                                                                                                                           |
+| `rush write-exec-defs` | Makes projects write definitions of executions to reference workspace. These definitions can then be executed and their results recorded in the reference workspace as well. |
+
+> New multi project CLI commands can be defined in [command-line.json](common/config/rush/command-line.json) file.
+
 #### Why Rush and not Lerna / Yarn workspaces?
 
 Several reasons:
