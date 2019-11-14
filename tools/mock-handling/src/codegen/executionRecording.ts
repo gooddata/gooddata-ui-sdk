@@ -41,7 +41,10 @@ type VisScenarioRecording = [string, string, IExecutionRecording];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     return `{ ${entries
-        .map(e => `${createUniqueVariableName(e[1], {})}: ${executionRecordingName(e[2])}`)
+        .map(
+            ([_, entryName, entryRecording]) =>
+                `${createUniqueVariableName(entryName, {})}: ${executionRecordingName(entryRecording)}`,
+        )
         .join(",")} }`;
 }
 
@@ -58,7 +61,7 @@ function generateScenariosConst(recordings: IExecutionRecording[]): OptionalKind
             {
                 name: ScenariosConstName,
                 initializer: `{ ${entriesByVis
-                    .map(e => `${e[0]}: ${generateScenarioForVis(e[1])}`)
+                    .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
                     .join(",")} }`,
             },
         ],
