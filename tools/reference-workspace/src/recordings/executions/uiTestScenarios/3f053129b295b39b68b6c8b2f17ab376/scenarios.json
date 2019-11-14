@@ -2,5 +2,13 @@
     {
         "vis": "BubbleChart",
         "scenario": "x axis measure"
+    },
+    {
+        "vis": "DonutChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "FunnelChart",
+        "scenario": "single measure"
     }
 ]

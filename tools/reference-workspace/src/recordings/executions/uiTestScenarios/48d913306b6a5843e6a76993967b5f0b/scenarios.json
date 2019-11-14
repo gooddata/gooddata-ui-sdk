@@ -14,5 +14,13 @@
     {
         "vis": "ComboChart",
         "scenario": "one primary measure with viewBy"
+    },
+    {
+        "vis": "DonutChart",
+        "scenario": "single measure with viewBy"
+    },
+    {
+        "vis": "FunnelChart",
+        "scenario": "single measure with viewBy"
     }
 ]
