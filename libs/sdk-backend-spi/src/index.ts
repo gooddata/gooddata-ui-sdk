@@ -12,7 +12,13 @@ export {
     AuthenticatedPrincipal,
 } from "./backend";
 
-export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./execution";
+export {
+    IExecutionFactory,
+    AbstractExecutionFactory,
+    IPreparedExecution,
+    IExecutionResult,
+    IDataView,
+} from "./execution";
 
 export { DataViewFacade } from "./execution/facade";
 

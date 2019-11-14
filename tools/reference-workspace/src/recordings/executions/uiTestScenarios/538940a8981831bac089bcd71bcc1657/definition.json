@@ -1,0 +1,55 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_ah1EuQxwaCqs"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": []
+        },
+        {
+            "localIdentifier": "stack",
+            "items": []
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "ah1EuQxwaCqs"
+                        }
+                    }
+                },
+                "localIdentifier": "m_ah1EuQxwaCqs"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": []
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

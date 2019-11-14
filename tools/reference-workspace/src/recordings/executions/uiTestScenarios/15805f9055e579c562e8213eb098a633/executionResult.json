@@ -1,0 +1,49 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_ah1EuQxwaCqs",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1279",
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_afSEwRwdbMeQ",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1284",
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "US Short (Created)",
+                        "localIdentifier": "a_created.aci81lMifn6q",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/94",
+                        "identifier": "created.aci81lMifn6q",
+                        "formOf": {
+                            "name": "Quarter/Year (Created)",
+                            "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93",
+                            "identifier": "created.quarter"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

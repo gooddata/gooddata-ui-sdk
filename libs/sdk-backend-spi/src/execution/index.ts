@@ -8,6 +8,11 @@ import {
     SortItem,
     IExecutionDefinition,
     DimensionGenerator,
+    defWithDimensions,
+    newDefForItems,
+    defaultDimensionsGenerator,
+    newDefForBuckets,
+    newDefForInsight,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "../export";
 import { DataValue, IDimensionDescriptor, IResultHeader } from "./results";
@@ -100,6 +105,48 @@ export interface IExecutionFactory {
      * @param filters - optional list of filters to merge with filters already defined in the insight
      */
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+}
+
+/**
+ * Abstract base class that can be extended to implement concrete execution factories for different
+ * backend implementations.
+ *
+ * This class implements the convenience methods which do not need to change in implementations.
+ *
+ * @public
+ */
+export abstract class AbstractExecutionFactory implements IExecutionFactory {
+    constructor(private readonly workspace: string) {}
+
+    public abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    public abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+
+    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+        const def = defWithDimensions(
+            newDefForItems(this.workspace, items, filters),
+            defaultDimensionsGenerator,
+        );
+
+        return this.forDefinition(def);
+    }
+
+    public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
+        const def = defWithDimensions(
+            newDefForBuckets(this.workspace, buckets, filters),
+            defaultDimensionsGenerator,
+        );
+
+        return this.forDefinition(def);
+    }
+
+    public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+        const def = defWithDimensions(
+            newDefForInsight(this.workspace, insight, filters),
+            defaultDimensionsGenerator,
+        );
+
+        return this.forDefinition(def);
+    }
 }
 
 /**

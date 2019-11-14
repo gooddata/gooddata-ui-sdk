@@ -1,0 +1,98 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_ah1EuQxwaCqs"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "secondary_measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aaX0PIUzg7nF"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aaX0PIUzg7nF"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.product.id.name"
+                },
+                "localIdentifier": "a_label.product.id.name"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "ah1EuQxwaCqs"
+                        }
+                    }
+                },
+                "localIdentifier": "m_ah1EuQxwaCqs"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aaX0PIUzg7nF"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aaX0PIUzg7nF"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a_label.product.id.name"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

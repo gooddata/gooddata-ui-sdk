@@ -1,0 +1,22 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary measure"
+    },
+    {
+        "vis": "LineChart",
+        "scenario": "single measure"
+    }
+]

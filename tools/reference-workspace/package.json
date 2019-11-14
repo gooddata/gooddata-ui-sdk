@@ -17,7 +17,8 @@
     },
     "scripts": {
         "dev": "tsc --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "copy-data": "cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
@@ -63,6 +64,7 @@
         "@gooddata/tslint-config": "1.0.0",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
+        "@types/node": "^10.14.18",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
         "prettier": "~1.18.2",

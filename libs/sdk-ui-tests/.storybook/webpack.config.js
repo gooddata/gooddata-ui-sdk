@@ -12,7 +12,7 @@ const commitHash = require("child_process")
  * svgs, removing it from here gets rid of warnings and everything still renders OK)
  */
 module.exports = ({ config, mode }) => {
-    config.resolve.extensions.push(".ts", ".tsx", ".js", ".json");
+    config.resolve.extensions.push(".ts", ".tsx");
     config.module.rules.push({
         test: /\.tsx?$/,
         exclude: /node_modules/,

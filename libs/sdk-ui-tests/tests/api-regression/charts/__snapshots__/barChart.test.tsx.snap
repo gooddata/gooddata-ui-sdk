@@ -11,11 +11,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "ah1EuQxwaCqs",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_ah1EuQxwaCqs",
           },
         },
       ],
@@ -47,11 +47,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "ah1EuQxwaCqs",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_ah1EuQxwaCqs",
       },
     },
   ],
@@ -75,17 +75,17 @@ Object {
     Object {
       "attribute": Object {
         "displayForm": Object {
-          "identifier": "label.account.id.name",
+          "identifier": "label.product.id.name",
         },
-        "localIdentifier": "a_label.account.id.name",
+        "localIdentifier": "a_label.product.id.name",
       },
     },
     Object {
       "attribute": Object {
         "displayForm": Object {
-          "identifier": "label.owner.department",
+          "identifier": "label.owner.region",
         },
-        "localIdentifier": "a_label.owner.department",
+        "localIdentifier": "a_label.owner.region",
       },
     },
   ],
@@ -97,11 +97,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "ah1EuQxwaCqs",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_ah1EuQxwaCqs",
           },
         },
       ],
@@ -112,9 +112,9 @@ Object {
         Object {
           "attribute": Object {
             "displayForm": Object {
-              "identifier": "label.account.id.name",
+              "identifier": "label.product.id.name",
             },
-            "localIdentifier": "a_label.account.id.name",
+            "localIdentifier": "a_label.product.id.name",
           },
         },
       ],
@@ -125,9 +125,9 @@ Object {
         Object {
           "attribute": Object {
             "displayForm": Object {
-              "identifier": "label.owner.department",
+              "identifier": "label.owner.region",
             },
-            "localIdentifier": "a_label.owner.department",
+            "localIdentifier": "a_label.owner.region",
           },
         },
       ],
@@ -137,12 +137,12 @@ Object {
   "dimensions": Array [
     Object {
       "itemIdentifiers": Array [
-        "a_label.owner.department",
+        "a_label.owner.region",
       ],
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.account.id.name",
+        "a_label.product.id.name",
         "measureGroup",
       ],
     },
@@ -154,11 +154,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "ah1EuQxwaCqs",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_ah1EuQxwaCqs",
       },
     },
   ],
@@ -182,9 +182,9 @@ Object {
     Object {
       "attribute": Object {
         "displayForm": Object {
-          "identifier": "label.account.id.name",
+          "identifier": "label.product.id.name",
         },
-        "localIdentifier": "a_label.account.id.name",
+        "localIdentifier": "a_label.product.id.name",
       },
     },
   ],
@@ -196,11 +196,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "ah1EuQxwaCqs",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_ah1EuQxwaCqs",
           },
         },
       ],
@@ -211,9 +211,9 @@ Object {
         Object {
           "attribute": Object {
             "displayForm": Object {
-              "identifier": "label.account.id.name",
+              "identifier": "label.product.id.name",
             },
-            "localIdentifier": "a_label.account.id.name",
+            "localIdentifier": "a_label.product.id.name",
           },
         },
       ],
@@ -232,7 +232,7 @@ Object {
     },
     Object {
       "itemIdentifiers": Array [
-        "a_label.account.id.name",
+        "a_label.product.id.name",
       ],
     },
   ],
@@ -243,11 +243,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "ah1EuQxwaCqs",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_ah1EuQxwaCqs",
       },
     },
   ],

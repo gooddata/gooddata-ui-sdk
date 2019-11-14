@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { GdcExecution } from "@gooddata/gd-bear-model";
 import {
+    AbstractExecutionFactory,
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
     DataViewFacade,
@@ -24,34 +25,28 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeOrMeasure,
-    defaultDimensionsGenerator,
     defFingerprint,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
     IAttributeDisplayForm,
-    IBucket,
     IDimension,
     IExecutionDefinition,
     IFilter,
     IInsight,
     IVisualizationClass,
-    newDefForBuckets,
-    newDefForInsight,
-    newDefForItems,
     SortItem,
 } from "@gooddata/sdk-model";
 
-const defaultConfig = { hostname: "test", username: "testUser@example.com" };
+const defaultConfig = { hostname: "test" };
 
 /**
  * Master Index is the input needed to initialize the recorded backend.
  * @internal
  * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export type RecordingIndex = {
-    [workspace: string]: WorkspaceRecordings;
+export type LegacyRecordingIndex = {
+    [workspace: string]: LegacyWorkspaceRecordings;
 };
 
 /**
@@ -60,7 +55,7 @@ export type RecordingIndex = {
  * @internal
  * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export type WorkspaceRecordings = {
+export type LegacyWorkspaceRecordings = {
     execution?: {
         [fp: string]: LegacyExecutionRecording;
     };
@@ -90,7 +85,7 @@ export type LegacyExecutionRecording = {
  * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
 export function legacyRecordedBackend(
-    index: RecordingIndex,
+    index: LegacyRecordingIndex,
     config: AnalyticalBackendConfig = defaultConfig,
 ): IAnalyticalBackend {
     const noopBackend: IAnalyticalBackend = {
@@ -131,7 +126,7 @@ export function legacyRecordedBackend(
  */
 export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
     const definition = recording.definition;
-    const executionFactory = recordedExecutionFactory(recording.definition.workspace);
+    const executionFactory = new RecordedExecutionFactory({}, recording.definition.workspace);
 
     // this result can readAll() and promise data view from recorded afm result
     const result = recordedExecutionResult(definition, executionFactory, recording);
@@ -145,11 +140,14 @@ export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): D
 // Internals
 //
 
-function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = {}): IAnalyticalWorkspace {
+function recordedWorkspace(
+    workspace: string,
+    recordings: LegacyWorkspaceRecordings = {},
+): IAnalyticalWorkspace {
     return {
         workspace,
         execution(): IExecutionFactory {
-            return recordedExecutionFactory(workspace, recordings);
+            return new RecordedExecutionFactory(recordings, workspace);
         },
         elements(): IElementQueryFactory {
             return recordedElementsQueryFactory(recordings);
@@ -166,44 +164,18 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
     };
 }
 
-function recordedExecutionFactory(
-    workspace: string,
-    recordings: WorkspaceRecordings = {},
-): IExecutionFactory {
-    const factory: IExecutionFactory = {
-        forDefinition(def: IExecutionDefinition): IPreparedExecution {
-            return recordedPreparedExecution(def, factory, recordings);
-        },
-        forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-            const def = defWithDimensions(
-                newDefForItems(workspace, items, filters),
-                defaultDimensionsGenerator,
-            );
+class RecordedExecutionFactory extends AbstractExecutionFactory {
+    constructor(private readonly recordings: LegacyWorkspaceRecordings, workspace: string) {
+        super(workspace);
+    }
 
-            return factory.forDefinition(def);
-        },
-        forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-            const def = defWithDimensions(
-                newDefForBuckets(workspace, buckets, filters),
-                defaultDimensionsGenerator,
-            );
+    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
+        return recordedPreparedExecution(def, this, this.recordings);
+    }
 
-            return factory.forDefinition(def);
-        },
-        forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
-            const def = defWithDimensions(
-                newDefForInsight(workspace, insight, filters),
-                defaultDimensionsGenerator,
-            );
-
-            return factory.forDefinition(def);
-        },
-        forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
-            throw new NotSupported("not yet supported");
-        },
-    };
-
-    return factory;
+    public forInsightByRef(_uri: string, _filters?: IFilter[]): Promise<IPreparedExecution> {
+        throw new NotSupported("not yet supported");
+    }
 }
 
 function recordedDataView(
@@ -269,7 +241,7 @@ function recordedExecutionResult(
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    recordings: WorkspaceRecordings = {},
+    recordings: LegacyWorkspaceRecordings = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
 
@@ -301,7 +273,7 @@ function recordedPreparedExecution(
     };
 }
 
-function recordedWorkspaceMetadata(recordings: WorkspaceRecordings = {}): IWorkspaceMetadata {
+function recordedWorkspaceMetadata(recordings: LegacyWorkspaceRecordings = {}): IWorkspaceMetadata {
     return {
         getAttributeDisplayForm: async (id: string): Promise<IAttributeDisplayForm> => {
             const recording =
@@ -327,7 +299,7 @@ function recordedWorkspaceMetadata(recordings: WorkspaceRecordings = {}): IWorks
     };
 }
 
-function recordedElementsQueryFactory(recordings: WorkspaceRecordings = {}): IElementQueryFactory {
+function recordedElementsQueryFactory(recordings: LegacyWorkspaceRecordings = {}): IElementQueryFactory {
     return {
         forObject(objectId: string): IElementQuery {
             return recordedElementQuery(objectId, recordings);
@@ -335,7 +307,7 @@ function recordedElementsQueryFactory(recordings: WorkspaceRecordings = {}): IEl
     };
 }
 
-function recordedElementQuery(objectId: string, recordings: WorkspaceRecordings = {}): IElementQuery {
+function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecordings = {}): IElementQuery {
     let _limit = 50;
     let _offset = 0;
 

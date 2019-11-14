@@ -1,0 +1,30 @@
+[
+    {
+        "vis": "BubbleChart",
+        "scenario": "x axis measure"
+    },
+    {
+        "vis": "DonutChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "FunnelChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "Heatmap",
+        "scenario": "measure only"
+    },
+    {
+        "vis": "PieChart",
+        "scenario": "single measure"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "x axis measure"
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "single measure"
+    }
+]

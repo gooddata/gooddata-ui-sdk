@@ -1,0 +1,400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BubbleChart with x and y axis and size measures with viewBy should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aaX0PIUzg7nF",
+                },
+              },
+            },
+            "localIdentifier": "m_aaX0PIUzg7nF",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acfWntEMcom0",
+                },
+              },
+            },
+            "localIdentifier": "m_acfWntEMcom0",
+          },
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aaX0PIUzg7nF",
+            },
+          },
+        },
+        "localIdentifier": "m_aaX0PIUzg7nF",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acfWntEMcom0",
+            },
+          },
+        },
+        "localIdentifier": "m_acfWntEMcom0",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`BubbleChart with x and y axis and size measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+
+exports[`BubbleChart with x and y axis measures with viewBy should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aaX0PIUzg7nF",
+                },
+              },
+            },
+            "localIdentifier": "m_aaX0PIUzg7nF",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aaX0PIUzg7nF",
+            },
+          },
+        },
+        "localIdentifier": "m_aaX0PIUzg7nF",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`BubbleChart with x and y axis measures with viewBy should create expected props for core chart 1`] = `Object {}`;
+
+exports[`BubbleChart with x axis measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`BubbleChart with x axis measure should create expected props for core chart 1`] = `Object {}`;
+
+exports[`BubbleChart with x axis measure with viewBy should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`BubbleChart with x axis measure with viewBy should create expected props for core chart 1`] = `Object {}`;

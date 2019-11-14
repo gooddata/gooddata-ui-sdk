@@ -155,9 +155,25 @@ single source of all recordings done on top of the UI Reference Workspace.
 Execution definitions for visualizations being tested here can be captured using the specialized 'smoke-and-capture'
 test suite. This test suite takes all scenarios and renders the components using a backend instrumented to capture
 the definitions. This test suite is intentionally excluded from the main test runs and has to be triggered
-manually: `npm run write-exec-defs`.
+manually: `npm run write-exec-defs` or using `rush write-exec-defs` (this works from anywhere)
 
 This command will execute the 'smoke-and-capture' suite that will store execution definitions in the reference-workspace
 project.
 
 After this, you can navigate to the **reference-workspace** project and execute: `./bin/refresh-recordings.sh`
+
+#### TL;DR
+
+When creating new test scenarios, proceed as follows:
+
+-   Open terminal in `tools/reference-workspace` project
+-   Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
+    scenarios index
+-   Execute `rush write-exec-defs` in terminal => writes new execution defs
+-   Execute `./bin/refresh-recordings.sh && npm run build` => captures execution recordings (if needed) and builds
+    the recording index
+-   Commit
+
+Note: if at any point you realize that the recordings need to be completely re-done, then it is safe to delete
+`tools/reference-workspace/src/recordings/uiTestScenarios`; following the above steps will then lead to
+complete refresh.

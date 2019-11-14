@@ -14,7 +14,14 @@
         "outDir": "./dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "../..",
+        "paths": {
+            "@gooddata/sdk-model": ["libs/sdk-model/src"],
+            "@gooddata/sdk-backend-spi": ["libs/sdk-backend-spi/src"],
+            "@gooddata/sdk-backend-mockingbird": ["libs/sdk-backend-mockingbird/src"],
+            "@gooddata/reference-workspace": ["tools/reference-workspace/src"]
+        }
     },
     "exclude": ["node_modules", "dist", "**/__mocks__/*"]
 }

@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DonutChart with single measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with single measure should create expected props for core chart 1`] = `Object {}`;
+
+exports[`DonutChart with single measure with viewBy should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with single measure with viewBy should create expected props for core chart 1`] = `Object {}`;
+
+exports[`DonutChart with two measures should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with two measures should create expected props for core chart 1`] = `Object {}`;

@@ -1,0 +1,14 @@
+[
+    {
+        "vis": "BubbleChart",
+        "scenario": "x axis measure with viewBy"
+    },
+    {
+        "vis": "Heatmap",
+        "scenario": "measure and rows"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "x axis measure and attribute"
+    }
+]

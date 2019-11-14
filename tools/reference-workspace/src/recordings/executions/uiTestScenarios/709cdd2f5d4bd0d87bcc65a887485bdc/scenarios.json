@@ -1,0 +1,14 @@
+[
+    {
+        "vis": "DonutChart",
+        "scenario": "two measures"
+    },
+    {
+        "vis": "FunnelChart",
+        "scenario": "two measures"
+    },
+    {
+        "vis": "PieChart",
+        "scenario": "two measures"
+    }
+]

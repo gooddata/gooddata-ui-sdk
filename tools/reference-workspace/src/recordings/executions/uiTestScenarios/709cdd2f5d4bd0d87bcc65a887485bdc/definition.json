@@ -1,0 +1,75 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_ah1EuQxwaCqs"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_afSEwRwdbMeQ"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": []
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "ah1EuQxwaCqs"
+                        }
+                    }
+                },
+                "localIdentifier": "m_ah1EuQxwaCqs"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}
