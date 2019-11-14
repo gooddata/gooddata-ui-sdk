@@ -18,5 +18,9 @@
     {
         "vis": "Treemap",
         "scenario": "single measure"
+    },
+    {
+        "vis": "PieChart",
+        "scenario": "single measure"
     }
 ]

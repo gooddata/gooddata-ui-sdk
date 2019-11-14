@@ -10,6 +10,7 @@ import funnelChart from "./funnelChart/base";
 import headline from "./headline/base";
 import heatmap from "./heatmap/base";
 import lineChart from "./lineChart/base";
+import pieChart from "./pieChart/base";
 import treemap from "./treemap/base";
 
 export default [
@@ -23,5 +24,6 @@ export default [
     headline,
     heatmap,
     lineChart,
+    pieChart,
     treemap,
 ];
