@@ -32,8 +32,17 @@
             ]
         },
         {
-            "localIdentifier": "segment",
-            "items": []
+            "localIdentifier": "stack",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.region"
+                        },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ]
         }
     ],
     "attributes": [
@@ -43,6 +52,14 @@
                     "identifier": "label.product.id.name"
                 },
                 "localIdentifier": "a_label.product.id.name"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.region"
+                },
+                "localIdentifier": "a_label.owner.region"
             }
         }
     ],
@@ -62,10 +79,10 @@
     ],
     "dimensions": [
         {
-            "itemIdentifiers": ["measureGroup"]
+            "itemIdentifiers": ["a_label.product.id.name"]
         },
         {
-            "itemIdentifiers": ["a_label.product.id.name"]
+            "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
         }
     ],
     "filters": [],

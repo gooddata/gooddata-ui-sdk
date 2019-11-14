@@ -2,5 +2,9 @@
     {
         "vis": "BubbleChart",
         "scenario": "x axis measure with viewBy"
+    },
+    {
+        "vis": "Heatmap",
+        "scenario": "with measure and rows"
     }
 ]

@@ -10,5 +10,13 @@
     {
         "vis": "FunnelChart",
         "scenario": "single measure"
+    },
+    {
+        "vis": "Heatmap",
+        "scenario": "with measure only"
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "single measure"
     }
 ]

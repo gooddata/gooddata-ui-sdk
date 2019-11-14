@@ -22,5 +22,9 @@
     {
         "vis": "FunnelChart",
         "scenario": "single measure with viewBy"
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "single measure and viewBy"
     }
 ]
