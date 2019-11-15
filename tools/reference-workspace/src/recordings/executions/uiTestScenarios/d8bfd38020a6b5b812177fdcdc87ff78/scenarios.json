@@ -4,6 +4,10 @@
         "scenario": "two measures with viewBy"
     },
     {
+        "vis": "BarChart",
+        "scenario": "two measures with viewBy"
+    },
+    {
         "vis": "ComboChart",
         "scenario": "one primary and scenario measure with viewBy"
     }

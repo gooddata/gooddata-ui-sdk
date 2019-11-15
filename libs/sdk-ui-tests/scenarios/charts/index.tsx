@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import areaChart from "./areaChart";
-import barChart from "./barChart/base";
+import barChart from "./barChart";
 import bubbleChart from "./bubbleChart/base";
 import columnChart from "./columnChart/base";
 import comboChart from "./comboChart/base";
@@ -16,7 +16,7 @@ import treemap from "./treemap/base";
 
 export default [
     ...areaChart,
-    barChart,
+    ...barChart,
     bubbleChart,
     columnChart,
     comboChart,

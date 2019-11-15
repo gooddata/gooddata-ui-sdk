@@ -2,5 +2,9 @@
     {
         "vis": "AreaChart",
         "scenario": "two measures with viewBy sorted by attribute"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "two measures with viewBy sorted by attribute"
     }
 ]
