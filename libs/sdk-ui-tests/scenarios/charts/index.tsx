@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import areaChart from "./areaChart/base";
+import areaChart from "./areaChart";
 import barChart from "./barChart/base";
 import bubbleChart from "./bubbleChart/base";
 import columnChart from "./columnChart/base";
@@ -15,7 +15,7 @@ import scatterPlot from "./scatterPlot/base";
 import treemap from "./treemap/base";
 
 export default [
-    areaChart,
+    ...areaChart,
     barChart,
     bubbleChart,
     columnChart,

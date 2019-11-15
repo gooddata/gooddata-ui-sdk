@@ -4,6 +4,10 @@
         "scenario": "single measure with viewBy and stackBy"
     },
     {
+        "vis": "AreaChart",
+        "scenario": "single measure with two viewBy"
+    },
+    {
         "vis": "BarChart",
         "scenario": "single measure with viewBy and stackBy"
     },

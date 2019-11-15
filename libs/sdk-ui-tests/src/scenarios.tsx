@@ -14,7 +14,11 @@ import isEmpty = require("lodash/isEmpty");
 
 export type VisProps = IPivotTableProps | IBucketChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
-
+export type UnboundVisPropsCustomizer<T extends VisProps> = (
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+) => Array<[string, UnboundVisProps<T>]>;
+export type ScenarioNameAndProps<T extends VisProps> = [string, UnboundVisProps<T>];
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 
 //
@@ -196,6 +200,31 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         const builder = new ScenarioBuilder<T>(name, props);
         builder.withTags(...this.defaultTags);
         this.insertScenario(m(builder).build());
+
+        return this;
+    }
+
+    /**
+     * Adds multiple test scenarios; given base name & props of the scenario this method will use the
+     * provided customizer function to expand base into multiple contrete scenarios. It then adds those
+     * one-by-one.
+     *
+     * @param baseName - base name for the scenario variants
+     * @param baseProps - base props for the scenario variants
+     * @param customizer - function to expand base name & props into multiple variants
+     * @param m - modifications to apply on each scenario
+     */
+    public addScenarios(
+        baseName: string,
+        baseProps: UnboundVisProps<T>,
+        customizer: UnboundVisPropsCustomizer<T>,
+        m: ScenarioModification<T> = identity,
+    ): ScenarioGroup<T> {
+        const variants = customizer(baseName, baseProps);
+
+        variants.forEach(([name, props]) => {
+            this.addScenario(name, props, m);
+        });
 
         return this;
     }
