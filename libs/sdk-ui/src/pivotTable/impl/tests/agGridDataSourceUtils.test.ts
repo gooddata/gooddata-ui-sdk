@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { areTotalsChanged, isInvalidGetRowsRequest } from '../agGridDataSourceUtils';
-import { IGridTotalsRow } from '../agGridTypes';
+import { areTotalsChanged, isInvalidGetRowsRequest } from "../agGridDataSourceUtils";
+import { IGridTotalsRow } from "../agGridTypes";
 
 describe("getGridDataSourceUtils", () => {
     describe("isInvalidGetRowsRequest", () => {

@@ -24,7 +24,7 @@ The main constraints - hard rules - in the architecture are:
 -   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix => **Layer 2 packages**
 -   All SDK React packages have `sdk-ui-` prefix => **Layer 3 packages**
 
-### Package rules and guideines
+### Package rules and guidelines
 
 **Strictly defined and controlled package API** - Each package MUST have an index.ts(x) in its source root.
 This is where API surface of the package is defined. API surface of each package is enumerated _exactly_.
@@ -174,6 +174,11 @@ Here are a few guidelines that apply for all packages in the SDK:
 -   Keep the each package's API minimal and focused on what is the package responsible for
 -   Keep things DRY; always look for existing code to handle the job
 -   Keep things in the right packages; see package overview above for hints
+-   Every change in the code must be fully unit tested
+
+    -   Tests are placed in `tests` directory located in the package that contains the tested file
+    -   The file with the test is named `<testedFile>.test.ts`
+    -   The file with fixtures (mocks) used by the unit test is named `<testedFile>.fixture.ts`
 
 Then there are specific guidelines for each layer / groups of packages.
 
