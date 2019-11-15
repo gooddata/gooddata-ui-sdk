@@ -1,16 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IHeadlineProps } from "@gooddata/sdk-ui";
-import React from "react";
 import BaseUseCases from "../../../scenarios/charts/headline/base";
-import { PropsFactory } from "../../../src";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("Headline", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IHeadlineProps>, PropsFactory<IHeadlineProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IHeadlineProps>> = BaseUseCases.forTestTypes(
+        "api",
+    ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

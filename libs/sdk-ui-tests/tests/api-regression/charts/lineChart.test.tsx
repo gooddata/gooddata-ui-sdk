@@ -1,16 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { ILineChartProps } from "@gooddata/sdk-ui";
-import React from "react";
 import BaseUseCases from "../../../scenarios/charts/lineChart/base";
-import { PropsFactory } from "../../../src";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("LineChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<ILineChartProps>, PropsFactory<ILineChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<ILineChartProps>> = BaseUseCases.forTestTypes(
+        "api",
+    ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

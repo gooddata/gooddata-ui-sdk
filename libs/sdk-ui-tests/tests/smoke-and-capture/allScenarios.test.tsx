@@ -1,17 +1,17 @@
 // (C) 2007-2019 GoodData Corporation
 
 import flatMap = require("lodash/flatMap");
-import { PropsFactory } from "../../src";
-import allScenarios from "../../scenarios";
-import { mountChartAndCapture } from "../_infra/render";
+import isArray = require("lodash/isArray");
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
-import * as process from "process";
 import * as fs from "fs";
 import * as path from "path";
-import isArray = require("lodash/isArray");
+import * as process from "process";
+import allScenarios from "../../scenarios";
+import { ScenarioTestInput } from "../../src";
+import { mountChartAndCapture } from "../_infra/render";
 
-type AllScenariosType = [string, string, React.ComponentType<any>, PropsFactory<any>];
-type AnyComponentTest = [string, React.ComponentType<any>, PropsFactory<any>];
+type AllScenariosType = [string, string, ScenarioTestInput<any>];
+type AnyComponentTest = ScenarioTestInput<any>;
 
 const StoreEnvVar = "GDC_STORE_DEFS";
 const StoreLocation = initializeStore(process.env[StoreEnvVar]);
@@ -55,7 +55,7 @@ function storeDefinition(def: IExecutionDefinition): string {
     return recordingDir;
 }
 
-function storeScenarioMetadata(recordingDir: string, vis: string, scenario: string) {
+function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: string) {
     const scenariosFile = path.join(recordingDir, ScenariosFileName);
 
     let scenarios = [];
@@ -74,12 +74,12 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenario: stri
         }
     }
 
-    if (scenarios.find(s => s.vis === vis && s.scenario === scenario)) {
+    if (scenarios.find(s => s.vis === vis && s.scenario === scenarioName)) {
         // scenario is already mentioned in the metadata; bail out there is nothing to do
         return;
     }
 
-    scenarios.push({ vis, scenario });
+    scenarios.push({ vis, scenario: scenarioName });
     fs.writeFileSync(scenariosFile, JSON.stringify(scenarios, null, 4), { encoding: "utf-8" });
 }
 
@@ -90,17 +90,19 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenario: stri
  * is used.
  *
  * @param vis - visualization for which the scenario is being stored
- * @param scenario - test scenario name
+ * @param scenario - detail about test scenario
  * @param def - execution definition
  */
-function storeScenarioDefinition(vis: string, scenario: string, def: IExecutionDefinition) {
+function storeScenarioDefinition(vis: string, scenario: ScenarioTestInput<any>, def: IExecutionDefinition) {
     if (!StoreLocation) {
         return;
     }
 
     const recordingDir = storeDefinition(def);
 
-    storeScenarioMetadata(recordingDir, vis, scenario);
+    if (!scenario[3].includes("mock-no-scenario-meta")) {
+        storeScenarioMetadata(recordingDir, vis, scenario[0]);
+    }
 }
 
 describe("all scenarios", () => {
@@ -108,13 +110,12 @@ describe("all scenarios", () => {
         const testInputs: AnyComponentTest[] = s.asTestInput();
 
         return testInputs.map(t => {
-            // spread won't work here
-            return [s.vis, t[0], t[1], t[2]];
+            return [s.vis, t[0], t];
         });
     });
 
-    it.each(Scenarios)("%s %s should lead to execution", (vis, scenario, Component, propsFactory) => {
-        const interactions = mountChartAndCapture(Component, propsFactory);
+    it.each(Scenarios)("%s %s should lead to execution", (vis, _scenarioName, scenario) => {
+        const interactions = mountChartAndCapture(scenario[1], scenario[2]);
 
         expect(interactions.triggeredExecution).toBeDefined();
         storeScenarioDefinition(vis, scenario, interactions.triggeredExecution!);

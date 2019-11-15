@@ -2,15 +2,14 @@
 
 import { IBubbleChartProps } from "@gooddata/sdk-ui";
 import BaseUseCases from "../../../scenarios/charts/bubbleChart/base";
-import React from "react";
-import { PropsFactory } from "../../../src";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("BubbleChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IBubbleChartProps>, PropsFactory<IBubbleChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IBubbleChartProps>> = BaseUseCases.forTestTypes(
+        "api",
+    ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

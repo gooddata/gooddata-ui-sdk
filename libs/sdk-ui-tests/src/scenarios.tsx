@@ -26,13 +26,37 @@ export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, wor
  */
 export type TestTypes = "api" | "visual";
 
-export type SignificantTags = "customConfig";
-export type UseCaseTags = SignificantTags | string;
+/**
+ * Tags that are significant for the infrastructure.
+ *
+ * -  "vis-config-only" - indicates the purpose of the scenario is to exercise various visual configurations
+ * -  "rec-no-scenario-meta' - indicates that the capture & mock handling tooling should not include the
+ *    tagged scenario in the execution's scenario meta, thus ensuring that the scenario does not appear
+ *    in the Scenarios mapping in recording index
+ */
+export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta";
+
+export type ScenarioTags = SignificantTags | string;
+
+/**
+ * View on test scenario that can be used as input to parameterized tests.
+ *
+ * First element: component name
+ * Second element: react component type
+ * Third element: factory to create props for the react component
+ * Fourth element: scenario tags
+ */
+export type ScenarioTestInput<T extends VisProps> = [
+    string,
+    React.ComponentType<T>,
+    PropsFactory<T>,
+    ScenarioTags[],
+];
 
 export interface IScenario<T extends VisProps> {
     name: string;
     props: UnboundVisProps<T>;
-    tags: UseCaseTags[];
+    tags: ScenarioTags[];
     tests: TestTypes[];
 
     propsFactory: PropsFactory<T>;
@@ -41,12 +65,12 @@ export interface IScenario<T extends VisProps> {
 export type ScenarioModification<T extends IBucketChartProps> = (m: ScenarioBuilder<T>) => ScenarioBuilder<T>;
 
 export class ScenarioBuilder<T extends VisProps> {
-    private tags: UseCaseTags[] = [];
+    private tags: ScenarioTags[] = [];
     private tests: TestTypes[] = ["api", "visual"];
 
     constructor(private readonly name: string, private readonly props: UnboundVisProps<T>) {}
 
-    public withTags(...tags: UseCaseTags[]): ScenarioBuilder<T> {
+    public withTags(...tags: ScenarioTags[]): ScenarioBuilder<T> {
         if (!isEmpty(tags)) {
             this.tags = tags;
         }
@@ -205,9 +229,9 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * It is then the responsibility of the test code to instantiate and use the component in the way it
      * sees fit.
      */
-    public asTestInput = (): Array<[string, React.ComponentType<T>, PropsFactory<T>]> => {
+    public asTestInput = (): Array<ScenarioTestInput<T>> => {
         return this.scenarioList.map(u => {
-            return [u.name, this.component, u.propsFactory];
+            return [u.name, this.component, u.propsFactory, u.tags];
         });
     };
 

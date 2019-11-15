@@ -2,15 +2,14 @@
 
 import { IBarChartProps } from "@gooddata/sdk-ui";
 import BaseUseCases from "../../../scenarios/charts/barChart/base";
-import React from "react";
-import { PropsFactory } from "../../../src";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("BarChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IBarChartProps>, PropsFactory<IBarChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IBarChartProps>> = BaseUseCases.forTestTypes(
+        "api",
+    ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

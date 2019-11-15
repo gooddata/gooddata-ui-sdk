@@ -1,16 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IColumnChartProps } from "@gooddata/sdk-ui";
-import React from "react";
 import BaseUseCases from "../../../scenarios/charts/columnChart/base";
-import { PropsFactory } from "../../../src";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 
 describe("ColumnChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IColumnChartProps>, PropsFactory<IColumnChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IColumnChartProps>> = BaseUseCases.forTestTypes(
+        "api",
+    ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);
