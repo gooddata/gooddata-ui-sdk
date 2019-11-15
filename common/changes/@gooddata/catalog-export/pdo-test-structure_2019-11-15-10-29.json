@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/catalog-export",
+            "comment": "",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/catalog-export",
+    "email": "petr.dolejsi@gooddata.com"
+}

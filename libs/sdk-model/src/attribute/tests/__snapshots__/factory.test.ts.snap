@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attribute factory visualizationAttribute should return a simple attribute 1`] = `
+Object {
+  "attribute": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "localIdentifier": "a_foo",
+  },
+}
+`;
+
+exports[`attribute factory visualizationAttribute should return an attribute with a custom localId 1`] = `
+Object {
+  "attribute": Object {
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "localIdentifier": "custom",
+  },
+}
+`;
+
+exports[`attribute factory visualizationAttribute should return an attribute with an alias 1`] = `
+Object {
+  "attribute": Object {
+    "alias": "alias",
+    "displayForm": Object {
+      "identifier": "foo",
+    },
+    "localIdentifier": "a_foo",
+  },
+}
+`;

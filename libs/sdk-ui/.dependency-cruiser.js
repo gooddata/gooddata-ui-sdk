@@ -94,10 +94,10 @@ options = {
                 "or there's something in the test folder that isn't a test.",
             severity: "error",
             from: {
-                pathNot: "^(test|spec)",
+                pathNot: "^test",
             },
             to: {
-                path: "^(test|spec)",
+                path: "^test",
             },
         },
         {

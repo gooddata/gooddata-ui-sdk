@@ -38,7 +38,7 @@
             "<rootDir>/jest.setup.ts"
         ],
         "preset": "ts-jest",
-        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.ts$",
+        "testRegex": "(\\.test)\\.ts$",
         "testPathIgnorePatterns": [
             ",/node_modules/",
             "/dist/"

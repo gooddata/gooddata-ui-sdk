@@ -1,64 +1,20 @@
 // (C) 2007-2018 GoodData Corporation
-import { GdcExecution } from "../GdcExecution";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { GdcExecution } from "../GdcExecution";
+import {
+    attributeHeaderItem,
+    measureHeaderItem,
+    totalHeaderItem,
+    attributeHeader,
+    measureGroupGroup,
+} from "./GdcExecution.fixtures";
 import isAttributeHeaderItem = GdcExecution.isAttributeHeaderItem;
-import IResultHeaderItem = GdcExecution.IResultHeaderItem;
 import isMeasureHeaderItem = GdcExecution.isMeasureHeaderItem;
 import isTotalHeaderItem = GdcExecution.isTotalHeaderItem;
-import IHeader = GdcExecution.IHeader;
 import isMeasureGroupHeader = GdcExecution.isMeasureGroupHeader;
 import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 describe("GdcExecution type guards", () => {
-    const attributeHeaderItem: IResultHeaderItem = {
-        attributeHeaderItem: {
-            uri: "/uri",
-            name: "Name",
-        },
-    };
-
-    const measureHeaderItem: IResultHeaderItem = {
-        measureHeaderItem: {
-            name: "Name",
-            order: 1,
-        },
-    };
-
-    const totalHeaderItem: IResultHeaderItem = {
-        totalHeaderItem: {
-            name: "Name",
-            type: "asdf",
-        },
-    };
-
-    const measureGroupGroup: IHeader = {
-        measureGroupHeader: {
-            items: [
-                {
-                    measureHeaderItem: {
-                        localIdentifier: "m1",
-                        name: "Senseilevel",
-                        format: "###",
-                    },
-                },
-            ],
-        },
-    };
-
-    const attributeHeader: IHeader = {
-        attributeHeader: {
-            uri: "/uri",
-            identifier: "id",
-            localIdentifier: "a1",
-            name: "Year over year",
-            formOf: {
-                uri: "/uri2",
-                identifier: "id2",
-                name: "Date of birth",
-            },
-        },
-    };
-
     describe("isAttributeHeaderItem", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
