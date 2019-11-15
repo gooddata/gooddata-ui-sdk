@@ -30,13 +30,13 @@ export type TestTypes = "api" | "visual";
  * Tags that are significant for the infrastructure.
  *
  * -  "vis-config-only" - indicates the purpose of the scenario is to exercise various visual configurations
- * -  "rec-no-scenario-meta' - indicates that the capture & mock handling tooling should not include the
+ * -  "mock-no-scenario-meta' - indicates that the capture & mock handling tooling should not include the
  *    tagged scenario in the execution's scenario meta, thus ensuring that the scenario does not appear
  *    in the Scenarios mapping in recording index
  */
 export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta";
 
-export type ScenarioTags = SignificantTags | string;
+export type ScenarioTag = SignificantTags | string;
 
 /**
  * View on test scenario that can be used as input to parameterized tests.
@@ -50,13 +50,13 @@ export type ScenarioTestInput<T extends VisProps> = [
     string,
     React.ComponentType<T>,
     PropsFactory<T>,
-    ScenarioTags[],
+    ScenarioTag[],
 ];
 
 export interface IScenario<T extends VisProps> {
     name: string;
     props: UnboundVisProps<T>;
-    tags: ScenarioTags[];
+    tags: ScenarioTag[];
     tests: TestTypes[];
 
     propsFactory: PropsFactory<T>;
@@ -65,12 +65,12 @@ export interface IScenario<T extends VisProps> {
 export type ScenarioModification<T extends IBucketChartProps> = (m: ScenarioBuilder<T>) => ScenarioBuilder<T>;
 
 export class ScenarioBuilder<T extends VisProps> {
-    private tags: ScenarioTags[] = [];
+    private tags: ScenarioTag[] = [];
     private tests: TestTypes[] = ["api", "visual"];
 
     constructor(private readonly name: string, private readonly props: UnboundVisProps<T>) {}
 
-    public withTags(...tags: ScenarioTags[]): ScenarioBuilder<T> {
+    public withTags(...tags: ScenarioTag[]): ScenarioBuilder<T> {
         if (!isEmpty(tags)) {
             this.tags = tags;
         }
@@ -160,8 +160,21 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public scenarioList: Array<IScenario<T>> = [];
     public testConfig: TestConfiguration = { visual: {} };
     private scenarioIndex: ScenarioSet<T> = {};
+    private defaultTags: ScenarioTag[] = [];
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
+
+    /**
+     * Configures the scenario group to assign the provided tags to all new scenarios added
+     * after this call.
+     *
+     * @param tags - tags to assign
+     */
+    public withDefaultTags(...tags: ScenarioTag[]): ScenarioGroup<T> {
+        this.defaultTags = tags;
+
+        return this;
+    }
 
     /**
      * Adds a new test scenarios for a component. The scenario specifies name and visualization props (sans backend
@@ -181,7 +194,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         invariant(!exists, `contract "${name}" for ${this.vis} already exists`);
 
         const builder = new ScenarioBuilder<T>(name, props);
-
+        builder.withTags(...this.defaultTags);
         this.insertScenario(m(builder).build());
 
         return this;
