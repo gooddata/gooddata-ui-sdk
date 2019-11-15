@@ -1,5 +1,12 @@
 // (C) 2019 GoodData Corporation
-export { IChartConfig, PositionType, ILegendConfig } from "./Config";
+export {
+    IChartConfig,
+    PositionType,
+    ILegendConfig,
+    IChartLimits,
+    IAxisConfig,
+    IDataLabelsConfig,
+} from "./Config";
 
 import Chart from "./chart/Chart";
 import ChartTransformation from "./chart/ChartTransformation";
