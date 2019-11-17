@@ -1,13 +1,16 @@
 // (C) 2019 GoodData Corporation
-import { newArithmeticMeasure } from "@gooddata/sdk-model";
+import { modifyMeasure, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 import * as ReferenceLdm from "./full";
-import { newPopMeasure } from "@gooddata/sdk-model";
 
 /*
  * This file contains our custom extensions on top of the reference LDM. Things such as arithmetic
  * measure definitions, PoP measure definitions and any custom yet reusable stuff that is useful
  * when testing.
  */
+
+export const MinAmount = modifyMeasure(ReferenceLdm.Amount_1.Min, m => m.alias("Min Amount"));
+export const MedianAmount = modifyMeasure(ReferenceLdm.Amount_1.Median, m => m.alias("Median Amount"));
+export const MaxAmount = modifyMeasure(ReferenceLdm.Amount_1.Max, m => m.alias("Max Amount"));
 
 /**
  * Arithmetic measure doing difference of Amount and Won measures

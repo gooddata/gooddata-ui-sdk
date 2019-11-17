@@ -10,5 +10,9 @@
     {
         "vis": "ColumnChart",
         "scenario": "two measures with viewBy sorted by attribute"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary and secondary measure with viewBy sorted by attr"
     }
 ]

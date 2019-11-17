@@ -16,6 +16,10 @@
         "scenario": "one primary measure with viewBy"
     },
     {
+        "vis": "ComboChart",
+        "scenario": "one secondary measure with viewBy"
+    },
+    {
         "vis": "DonutChart",
         "scenario": "single measure with viewBy"
     },

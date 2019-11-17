@@ -61,28 +61,10 @@
         },
         {
             "localIdentifier": "view",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "label.product.id.name"
-                        },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ]
+            "items": []
         }
     ],
-    "attributes": [
-        {
-            "attribute": {
-                "displayForm": {
-                    "identifier": "label.product.id.name"
-                },
-                "localIdentifier": "a_label.product.id.name"
-            }
-        }
-    ],
+    "attributes": [],
     "measures": [
         {
             "measure": {
@@ -138,7 +120,7 @@
             "itemIdentifiers": ["measureGroup"]
         },
         {
-            "itemIdentifiers": ["a_label.product.id.name"]
+            "itemIdentifiers": []
         }
     ],
     "filters": [],

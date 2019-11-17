@@ -96,9 +96,15 @@
     "filters": [],
     "sortBy": [
         {
-            "attributeSortItem": {
-                "attributeIdentifier": "a_label.product.id.name",
-                "direction": "desc"
+            "measureSortItem": {
+                "direction": "desc",
+                "locators": [
+                    {
+                        "measureLocatorItem": {
+                            "measureIdentifier": "m_ah1EuQxwaCqs"
+                        }
+                    }
+                ]
             }
         }
     ]

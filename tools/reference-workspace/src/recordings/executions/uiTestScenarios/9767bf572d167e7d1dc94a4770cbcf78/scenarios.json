@@ -10,5 +10,9 @@
     {
         "vis": "ColumnChart",
         "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "arithmetic measures"
     }
 ]
