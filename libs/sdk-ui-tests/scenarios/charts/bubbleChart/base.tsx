@@ -1,7 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
+import { newAttributeSort } from "@gooddata/sdk-model";
+
+export const BubbleChartWithAllMeasuresAndAttribute = {
+    xAxisMeasure: ReferenceLdm.Amount,
+    yAxisMeasure: ReferenceLdm.WinRate,
+    size: ReferenceLdm.Probability,
+    viewBy: ReferenceLdm.Product.Name,
+};
 
 export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .addScenario("x axis measure", {
@@ -11,14 +19,27 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         xAxisMeasure: ReferenceLdm.Amount,
         viewBy: ReferenceLdm.Product.Name,
     })
+    .addScenario("x axis and size measures with viewBy", {
+        xAxisMeasure: ReferenceLdm.Amount,
+        size: ReferenceLdm.Probability,
+        viewBy: ReferenceLdm.Product.Name,
+    })
     .addScenario("x and y axis measures with viewBy", {
         xAxisMeasure: ReferenceLdm.Amount,
         yAxisMeasure: ReferenceLdm.WinRate,
         viewBy: ReferenceLdm.Product.Name,
     })
-    .addScenario("x and y axis and size measures with viewBy", {
+    .addScenario("x and y axis and size measures with viewBy", BubbleChartWithAllMeasuresAndAttribute)
+    .addScenario("arithmetic measure", {
+        xAxisMeasure: ReferenceLdm.Amount,
+        yAxisMeasure: ReferenceLdm.Won,
+        size: ReferenceLdmExt.CalculatedLost,
+        viewBy: ReferenceLdm.Product.Name,
+    })
+    .addScenario("x and y axis and size measures with viewBy and sorted by attr", {
         xAxisMeasure: ReferenceLdm.Amount,
         yAxisMeasure: ReferenceLdm.WinRate,
         size: ReferenceLdm.Probability,
         viewBy: ReferenceLdm.Product.Name,
+        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
     });

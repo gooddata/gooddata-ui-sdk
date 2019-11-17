@@ -2,7 +2,7 @@
 
 import areaChart from "./areaChart";
 import barChart from "./barChart";
-import bubbleChart from "./bubbleChart/base";
+import bubbleChart from "./bubbleChart";
 import columnChart from "./columnChart/base";
 import comboChart from "./comboChart/base";
 import donutChart from "./donutChart/base";
@@ -17,7 +17,7 @@ import treemap from "./treemap/base";
 export default [
     ...areaChart,
     ...barChart,
-    bubbleChart,
+    ...bubbleChart,
     columnChart,
     comboChart,
     donutChart,

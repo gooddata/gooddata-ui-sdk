@@ -1,0 +1,56 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Product Name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/952",
+                        "identifier": "label.product.id.name",
+                        "formOf": {
+                            "name": "Product",
+                            "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/949",
+                            "identifier": "attr.product.id"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_ah1EuQxwaCqs",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1279",
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_afSEwRwdbMeQ",
+                                    "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1284",
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Calculated 'Lost' measure",
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
