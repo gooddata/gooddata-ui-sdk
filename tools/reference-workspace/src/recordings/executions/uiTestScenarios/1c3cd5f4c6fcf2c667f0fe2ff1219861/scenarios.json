@@ -2,5 +2,9 @@
     {
         "vis": "BarChart",
         "scenario": "viewBy date and PoP measure"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "viewBy date and PoP measure"
     }
 ]

@@ -1,15 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IColumnChartProps } from "@gooddata/sdk-ui";
-import BaseUseCases from "../../../scenarios/charts/columnChart/base";
+import columnChartScenarios from "../../../scenarios/charts/columnChart";
 import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("ColumnChart", () => {
-    const Scenarios: Array<ScenarioTestInput<IColumnChartProps>> = BaseUseCases.forTestTypes(
-        "api",
-    ).asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IColumnChartProps>> = flatMap(columnChartScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

@@ -6,5 +6,9 @@
     {
         "vis": "BarChart",
         "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "arithmetic measures"
     }
 ]

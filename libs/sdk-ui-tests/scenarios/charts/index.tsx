@@ -3,7 +3,7 @@
 import areaChart from "./areaChart";
 import barChart from "./barChart";
 import bubbleChart from "./bubbleChart";
-import columnChart from "./columnChart/base";
+import columnChart from "./columnChart";
 import comboChart from "./comboChart/base";
 import donutChart from "./donutChart/base";
 import funnelChart from "./funnelChart/base";
@@ -18,7 +18,7 @@ export default [
     ...areaChart,
     ...barChart,
     ...bubbleChart,
-    columnChart,
+    ...columnChart,
     comboChart,
     donutChart,
     funnelChart,
