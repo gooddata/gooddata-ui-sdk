@@ -7,7 +7,7 @@ import {
     BarChartWithTwoMeasuresAndViewBy,
 } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { AttributeElements } from "../_infra/predicates";
@@ -32,10 +32,7 @@ const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
                 },
                 {
                     predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
-                    color: {
-                        type: "guid",
-                        value: "05",
-                    },
+                    color: CustomPaletteColor,
                 },
             ],
         },

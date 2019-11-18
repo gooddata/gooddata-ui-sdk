@@ -3,7 +3,7 @@ import { scenariosFor } from "../../../src";
 import { ComboChart, HeaderPredicateFactory, IComboChartProps } from "@gooddata/sdk-ui";
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 
@@ -27,10 +27,7 @@ const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
                 },
                 {
                     predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
-                    color: {
-                        type: "guid",
-                        value: "05",
-                    },
+                    color: CustomPaletteColor,
                 },
             ],
         },

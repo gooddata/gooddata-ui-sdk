@@ -945,7 +945,7 @@ Object {
 }
 `;
 
-exports[`Treemap with  - force hidden should create expected execution definition 1`] = `
+exports[`Treemap with  - forced hidden should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1043,7 +1043,7 @@ Object {
 }
 `;
 
-exports[`Treemap with  - force hidden should create expected props for core chart 1`] = `
+exports[`Treemap with  - forced hidden should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "dataLabels": Object {

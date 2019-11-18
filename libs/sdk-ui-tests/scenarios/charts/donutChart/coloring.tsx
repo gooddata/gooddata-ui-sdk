@@ -2,7 +2,7 @@
 import { scenariosFor } from "../../../src";
 import { DonutChart, HeaderPredicateFactory, IDonutChartProps } from "@gooddata/sdk-ui";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base";
@@ -28,10 +28,7 @@ const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
                 },
                 {
                     predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
-                    color: {
-                        type: "guid",
-                        value: "05",
-                    },
+                    color: CustomPaletteColor,
                 },
             ],
         },

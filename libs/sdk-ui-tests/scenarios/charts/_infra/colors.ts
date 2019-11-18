@@ -87,3 +87,8 @@ export const CustomColorPalette: IColorPalette = [
         },
     },
 ];
+
+export const CustomPaletteColor: IColor = {
+    type: "guid",
+    value: "05",
+};

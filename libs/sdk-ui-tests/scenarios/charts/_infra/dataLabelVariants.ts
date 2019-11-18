@@ -16,7 +16,7 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
         "forced visible and german separators",
         { dataLabels: { visible: true }, separators: GermanNumberFormat },
     ],
-    ["force hidden", { dataLabels: { visible: false } }],
+    ["forced hidden", { dataLabels: { visible: false } }],
 ];
 
 export function dataLabelCustomizer<T extends VisProps>(

@@ -993,7 +993,7 @@ Object {
 }
 `;
 
-exports[`LineChart with  - force hidden should create expected execution definition 1`] = `
+exports[`LineChart with  - forced hidden should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1097,7 +1097,7 @@ Object {
 }
 `;
 
-exports[`LineChart with  - force hidden should create expected props for core chart 1`] = `
+exports[`LineChart with  - forced hidden should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "dataLabels": Object {

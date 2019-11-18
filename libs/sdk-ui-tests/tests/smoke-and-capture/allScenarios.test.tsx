@@ -7,7 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
 import allScenarios from "../../scenarios";
-import { ScenarioTestInput } from "../../src";
+import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
 import { mountChartAndCapture } from "../_infra/render";
 
 type AllScenariosType = [string, string, ScenarioTestInput<any>];
@@ -100,8 +100,8 @@ function storeScenarioDefinition(vis: string, scenario: ScenarioTestInput<any>, 
 
     const recordingDir = storeDefinition(def);
 
-    if (!scenario[3].includes("mock-no-scenario-meta")) {
-        storeScenarioMetadata(recordingDir, vis, scenario[0]);
+    if (!scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta")) {
+        storeScenarioMetadata(recordingDir, vis, scenario[ScenarioTestMembers.ScenarioName]);
     }
 }
 
@@ -115,7 +115,10 @@ describe("all scenarios", () => {
     });
 
     it.each(Scenarios)("%s %s should lead to execution", (vis, _scenarioName, scenario) => {
-        const interactions = mountChartAndCapture(scenario[1], scenario[2]);
+        const interactions = mountChartAndCapture(
+            scenario[ScenarioTestMembers.Component],
+            scenario[ScenarioTestMembers.PropsFactory],
+        );
 
         expect(interactions.triggeredExecution).toBeDefined();
         storeScenarioDefinition(vis, scenario, interactions.triggeredExecution!);
