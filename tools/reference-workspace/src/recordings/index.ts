@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T10:59:54.626Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T12:26:13.407Z; */
 
 const fp_012802100dffcab5e9844c3d8f53e1a8 = {
     definition: require("./executions/uiTestScenarios/012802100dffcab5e9844c3d8f53e1a8/definition.json"),
@@ -97,6 +97,11 @@ const fp_9767bf572d167e7d1dc94a4770cbcf78 = {
     definition: require("./executions/uiTestScenarios/9767bf572d167e7d1dc94a4770cbcf78/definition.json"),
     executionResult: require("./executions/uiTestScenarios/9767bf572d167e7d1dc94a4770cbcf78/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/9767bf572d167e7d1dc94a4770cbcf78/dataView_all.json"),
+};
+const fp_9f0b584a0ae6709770feefb5ba1bd805 = {
+    definition: require("./executions/uiTestScenarios/9f0b584a0ae6709770feefb5ba1bd805/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/9f0b584a0ae6709770feefb5ba1bd805/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/9f0b584a0ae6709770feefb5ba1bd805/dataView_all.json"),
 };
 const fp_a8d59f1a3870602544c1ce029e3f9495 = {
     definition: require("./executions/uiTestScenarios/a8d59f1a3870602544c1ce029e3f9495/definition.json"),
@@ -221,6 +226,7 @@ export const Scenarios = {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
         TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
+        ArithmeticMeasures: fp_9f0b584a0ae6709770feefb5ba1bd805,
     },
     FunnelChart: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
@@ -236,6 +242,7 @@ export const Scenarios = {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
         TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
+        ArithmeticMeasures: fp_9f0b584a0ae6709770feefb5ba1bd805,
     },
     Treemap: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
@@ -280,6 +287,7 @@ export const Recordings = {
             fp_559531551ec78bf8774da4e003dbe112,
             fp_709cdd2f5d4bd0d87bcc65a887485bdc,
             fp_9767bf572d167e7d1dc94a4770cbcf78,
+            fp_9f0b584a0ae6709770feefb5ba1bd805,
             fp_a8d59f1a3870602544c1ce029e3f9495,
             fp_abfbc8b0d9f7d2dca6d41a9b07292885,
             fp_adac125575b5842be13271dc7ab150eb,
