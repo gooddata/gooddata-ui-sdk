@@ -10,5 +10,9 @@
     {
         "vis": "ScatterPlot",
         "scenario": "x axis measure and attribute"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "y axis measure and attribute"
     }
 ]

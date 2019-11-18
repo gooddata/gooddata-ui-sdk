@@ -11,7 +11,7 @@ import headline from "./headline/base";
 import heatmap from "./heatmap";
 import lineChart from "./lineChart";
 import pieChart from "./pieChart";
-import scatterPlot from "./scatterPlot/base";
+import scatterPlot from "./scatterPlot";
 import treemap from "./treemap/base";
 
 export default [
@@ -26,6 +26,6 @@ export default [
     ...heatmap,
     ...lineChart,
     ...pieChart,
-    scatterPlot,
+    ...scatterPlot,
     treemap,
 ];

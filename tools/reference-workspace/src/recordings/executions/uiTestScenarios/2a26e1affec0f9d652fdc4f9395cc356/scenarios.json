@@ -6,5 +6,9 @@
     {
         "vis": "ScatterPlot",
         "scenario": "x and y axis measures and attribute"
+    },
+    {
+        "vis": "ScatterPlot",
+        "scenario": "x and y axis measures and attribute with attr sorting"
     }
 ]

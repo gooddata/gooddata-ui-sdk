@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T16:11:12.187Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T17:00:58.335Z; */
 
 const fp_012802100dffcab5e9844c3d8f53e1a8 = {
     definition: require("./executions/uiTestScenarios/012802100dffcab5e9844c3d8f53e1a8/definition.json"),
@@ -193,15 +193,15 @@ const fp_eac0ab1ad046abd14a2b4e2572f7f533 = {
     executionResult: require("./executions/uiTestScenarios/eac0ab1ad046abd14a2b4e2572f7f533/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/eac0ab1ad046abd14a2b4e2572f7f533/dataView_all.json"),
 };
-const fp_fd5055c16b64140019f3b9ba5edf67de = {
-    definition: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/definition.json"),
-    executionResult: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/executionResult.json"),
-    dataViewAll: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/dataView_all.json"),
-};
 const fp_fc8edbc7a59e498e639440363a5140a4 = {
     definition: require("./executions/uiTestScenarios/fc8edbc7a59e498e639440363a5140a4/definition.json"),
     executionResult: require("./executions/uiTestScenarios/fc8edbc7a59e498e639440363a5140a4/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/fc8edbc7a59e498e639440363a5140a4/dataView_all.json"),
+};
+const fp_fd5055c16b64140019f3b9ba5edf67de = {
+    definition: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/dataView_all.json"),
 };
 export const Scenarios = {
     BubbleChart: {
@@ -256,8 +256,10 @@ export const Scenarios = {
     },
     ScatterPlot: {
         XAndYAxisMeasuresAndAttribute: fp_2a26e1affec0f9d652fdc4f9395cc356,
+        XAndYAxisMeasuresAndAttributeWithAttrSorting: fp_2a26e1affec0f9d652fdc4f9395cc356,
         XAxisMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         XAxisMeasureAndAttribute: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
+        YAxisMeasureAndAttribute: fp_4ed4f75c86ba87f1c03e0b8bb0904055,
     },
     ComboChart: {
         OnePrimaryAndSecondaryMeasureWithViewBySortedBySecondaryMeasure: fp_30060637c4b329bf2174dfc47362ceff,
@@ -356,8 +358,8 @@ export const Recordings = {
             fp_e7161020bbb4d0f3e8e191ad52d41bbe,
             fp_e7b93aff8569adfbec9ddf89202d41f0,
             fp_eac0ab1ad046abd14a2b4e2572f7f533,
-            fp_fd5055c16b64140019f3b9ba5edf67de,
             fp_fc8edbc7a59e498e639440363a5140a4,
+            fp_fd5055c16b64140019f3b9ba5edf67de,
         },
     },
 };
