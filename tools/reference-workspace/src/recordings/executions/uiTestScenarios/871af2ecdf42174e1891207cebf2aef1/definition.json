@@ -27,6 +27,18 @@
                         },
                         "localIdentifier": "m_afSEwRwdbMeQ"
                     }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                                "operator": "difference"
+                            }
+                        },
+                        "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                        "alias": "Calculated 'Lost' measure"
+                    }
                 }
             ]
         },
@@ -36,10 +48,28 @@
         },
         {
             "localIdentifier": "segment",
-            "items": []
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "created.aci81lMifn6q"
+                        },
+                        "localIdentifier": "a_created.aci81lMifn6q"
+                    }
+                }
+            ]
         }
     ],
-    "attributes": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "created.aci81lMifn6q"
+                },
+                "localIdentifier": "a_created.aci81lMifn6q"
+            }
+        }
+    ],
     "measures": [
         {
             "measure": {
@@ -64,14 +94,26 @@
                 },
                 "localIdentifier": "m_afSEwRwdbMeQ"
             }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                        "operator": "difference"
+                    }
+                },
+                "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                "alias": "Calculated 'Lost' measure"
+            }
         }
     ],
     "dimensions": [
         {
-            "itemIdentifiers": []
+            "itemIdentifiers": ["measureGroup"]
         },
         {
-            "itemIdentifiers": ["measureGroup"]
+            "itemIdentifiers": ["a_created.aci81lMifn6q"]
         }
     ],
     "filters": [],

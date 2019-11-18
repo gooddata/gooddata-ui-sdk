@@ -1,14 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { ITreemapProps } from "@gooddata/sdk-ui";
-import BaseUseCases from "../../../scenarios/charts/treemap/base";
+import treemapScenarios from "../../../scenarios/charts/treemap";
 import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("Treemap", () => {
-    const Scenarios: Array<ScenarioTestInput<ITreemapProps>> = BaseUseCases.forTestTypes("api").asTestInput();
-
+    const Scenarios: Array<ScenarioTestInput<ITreemapProps>> = flatMap(treemapScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);
 

@@ -12,7 +12,7 @@ import heatmap from "./heatmap";
 import lineChart from "./lineChart";
 import pieChart from "./pieChart";
 import scatterPlot from "./scatterPlot";
-import treemap from "./treemap/base";
+import treemap from "./treemap";
 
 export default [
     ...areaChart,
@@ -27,5 +27,5 @@ export default [
     ...lineChart,
     ...pieChart,
     ...scatterPlot,
-    treemap,
+    ...treemap,
 ];

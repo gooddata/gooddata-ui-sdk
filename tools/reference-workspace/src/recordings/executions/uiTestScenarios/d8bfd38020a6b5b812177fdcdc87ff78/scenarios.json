@@ -18,5 +18,9 @@
     {
         "vis": "ComboChart",
         "scenario": "one primary and secondary measure with viewBy"
+    },
+    {
+        "vis": "Treemap",
+        "scenario": "two measures and viewBy"
     }
 ]

@@ -3,10 +3,6 @@
     "buckets": [
         {
             "localIdentifier": "measures",
-            "items": []
-        },
-        {
-            "localIdentifier": "secondary_measures",
             "items": [
                 {
                     "measure": {
@@ -46,6 +42,10 @@
                     }
                 }
             ]
+        },
+        {
+            "localIdentifier": "segment",
+            "items": []
         }
     ],
     "attributes": [

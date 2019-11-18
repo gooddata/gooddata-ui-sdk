@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T17:00:58.335Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T21:32:57.926Z; */
 
 const fp_012802100dffcab5e9844c3d8f53e1a8 = {
     definition: require("./executions/uiTestScenarios/012802100dffcab5e9844c3d8f53e1a8/definition.json"),
@@ -112,6 +112,11 @@ const fp_7e73742559844a2590d82c8845d9be11 = {
     definition: require("./executions/uiTestScenarios/7e73742559844a2590d82c8845d9be11/definition.json"),
     executionResult: require("./executions/uiTestScenarios/7e73742559844a2590d82c8845d9be11/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/7e73742559844a2590d82c8845d9be11/dataView_all.json"),
+};
+const fp_871af2ecdf42174e1891207cebf2aef1 = {
+    definition: require("./executions/uiTestScenarios/871af2ecdf42174e1891207cebf2aef1/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/871af2ecdf42174e1891207cebf2aef1/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/871af2ecdf42174e1891207cebf2aef1/dataView_all.json"),
 };
 const fp_9767bf572d167e7d1dc94a4770cbcf78 = {
     definition: require("./executions/uiTestScenarios/9767bf572d167e7d1dc94a4770cbcf78/definition.json"),
@@ -297,6 +302,9 @@ export const Scenarios = {
     Treemap: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureAndViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
+        TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
+        ArithmeticMeasuresAndSegment: fp_871af2ecdf42174e1891207cebf2aef1,
+        TwoMeasuresAndViewBy: fp_d8bfd38020a6b5b812177fdcdc87ff78,
         SingleMeasureViewByAndSegment: fp_fd5055c16b64140019f3b9ba5edf67de,
     },
     AreaChart: {
@@ -342,6 +350,7 @@ export const Recordings = {
             fp_709cdd2f5d4bd0d87bcc65a887485bdc,
             fp_74611e89fae0910ea789f24ec59a2cb6,
             fp_7e73742559844a2590d82c8845d9be11,
+            fp_871af2ecdf42174e1891207cebf2aef1,
             fp_9767bf572d167e7d1dc94a4770cbcf78,
             fp_98b5a3c8f7428050bd4dbb4b34fc996f,
             fp_9f0b584a0ae6709770feefb5ba1bd805,
