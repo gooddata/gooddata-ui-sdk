@@ -1,0 +1,151 @@
+{
+    "data": [
+        [
+            "0.00274606060606061",
+            "0.0316384424242424",
+            "0.0417408",
+            "0.0651348848484848",
+            "0.0452346303030303",
+            "0.198320242424242",
+            "0.177348951515152",
+            "0.255835951515152",
+            "0.167846327272727",
+            "0.878585212121212",
+            "1.4526383",
+            "1.25708932424242",
+            "1.52396840909091",
+            "1.22047556969697",
+            "1.79286689393939",
+            "1.2072483",
+            "1.01187292727273",
+            "0.278728"
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "% of Goal",
+                        "order": 0
+                    }
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2008",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8033"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2008",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8034"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2008",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8035"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2008",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8036"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2009",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8037"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2009",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8038"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2009",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8039"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2009",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8040"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2010",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8041"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2010",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8042"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2010",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8043"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2010",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8044"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2011",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8045"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2011",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8046"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q3/2011",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8047"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q4/2011",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8048"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q1/2012",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8049"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Q2/2012",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/93/elements?id=8050"
+                    }
+                }
+            ]
+        ]
+    ],
+    "count": [1, 18],
+    "offset": [0, 0],
+    "totalCount": [1, 18]
+}

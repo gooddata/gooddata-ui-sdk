@@ -9,7 +9,7 @@ import donutChart from "./donutChart";
 import funnelChart from "./funnelChart";
 import headline from "./headline/base";
 import heatmap from "./heatmap";
-import lineChart from "./lineChart/base";
+import lineChart from "./lineChart";
 import pieChart from "./pieChart";
 import scatterPlot from "./scatterPlot/base";
 import treemap from "./treemap/base";
@@ -24,7 +24,7 @@ export default [
     ...funnelChart,
     headline,
     ...heatmap,
-    lineChart,
+    ...lineChart,
     ...pieChart,
     scatterPlot,
     treemap,
