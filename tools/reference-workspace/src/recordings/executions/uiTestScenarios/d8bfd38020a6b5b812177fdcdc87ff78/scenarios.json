@@ -13,10 +13,10 @@
     },
     {
         "vis": "ComboChart",
-        "scenario": "one primary and secondary measure with viewBy"
+        "scenario": "two secondary measure with viewBy"
     },
     {
         "vis": "ComboChart",
-        "scenario": "two secondary measure with viewBy"
+        "scenario": "one primary and secondary measure with viewBy"
     }
 ]

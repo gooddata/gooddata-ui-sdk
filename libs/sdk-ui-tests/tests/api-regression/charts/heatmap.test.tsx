@@ -1,13 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IHeatmapProps } from "@gooddata/sdk-ui";
-import BaseUseCases from "../../../scenarios/charts/heatmap/base";
+import heatmapScenarios from "../../../scenarios/charts/heatmap";
 import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("Heatmap", () => {
-    const Scenarios: Array<ScenarioTestInput<IHeatmapProps>> = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IHeatmapProps>> = flatMap(heatmapScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

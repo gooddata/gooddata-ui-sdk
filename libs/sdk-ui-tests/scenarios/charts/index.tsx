@@ -8,7 +8,7 @@ import comboChart from "./comboChart";
 import donutChart from "./donutChart";
 import funnelChart from "./funnelChart";
 import headline from "./headline/base";
-import heatmap from "./heatmap/base";
+import heatmap from "./heatmap";
 import lineChart from "./lineChart/base";
 import pieChart from "./pieChart";
 import scatterPlot from "./scatterPlot/base";
@@ -23,7 +23,7 @@ export default [
     ...donutChart,
     ...funnelChart,
     headline,
-    heatmap,
+    ...heatmap,
     lineChart,
     ...pieChart,
     scatterPlot,
