@@ -1,17 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
 @import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
+@import "~@gooddata/goodstrap/lib/core/styles/layout";
 
 .headline {
     text-align: center;
 
     .headline-primary-item {
+        @include gd-heading-1;
+
         overflow: hidden;
         height: 60px;
         line-height: 60px;
         font-size: 50px;
         white-space: nowrap;
-
-        @include gd-heading-1;
 
         .headline-value-wrapper {
             display: inline-block;
@@ -86,6 +87,8 @@
     }
 
     .headline-compare-section {
+        @include gd-font-base;
+
         position: relative;
         justify-content: center;
         flex-wrap: nowrap;
@@ -93,8 +96,6 @@
         margin-top: 10px;
         margin-bottom: 15px;
         color: $gd-color-state-blank;
-
-        @include gd-font-base;
     }
 
     .headline-compare-section-item {

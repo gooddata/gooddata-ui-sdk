@@ -3,7 +3,7 @@
 import { IChartConfig } from "@gooddata/sdk-ui";
 import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
 
-const GERMAN_NUMBER_FORMAT = {
+export const GermanNumberFormat = {
     thousand: ".",
     decimal: ",",
 };
@@ -14,7 +14,7 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
     ["forced visible", { dataLabels: { visible: true } }],
     [
         "forced visible and german separators",
-        { dataLabels: { visible: true }, separators: GERMAN_NUMBER_FORMAT },
+        { dataLabels: { visible: true }, separators: GermanNumberFormat },
     ],
     ["force hidden", { dataLabels: { visible: false } }],
 ];

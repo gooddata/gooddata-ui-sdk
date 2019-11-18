@@ -78,6 +78,112 @@ Object {
 }
 `;
 
+exports[`Headline with two measures one PoP should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Won Last Year",
+            "definition": Object {
+              "popMeasureDefinition": Object {
+                "measureIdentifier": "m_afSEwRwdbMeQ",
+                "popAttribute": Object {
+                  "identifier": "closed.year",
+                },
+              },
+            },
+            "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Won Last Year",
+        "definition": Object {
+          "popMeasureDefinition": Object {
+            "measureIdentifier": "m_afSEwRwdbMeQ",
+            "popAttribute": Object {
+              "identifier": "closed.year",
+            },
+          },
+        },
+        "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Headline with two measures one PoP should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`Headline with two measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
@@ -174,6 +280,114 @@ Object {
     },
     "factories": Object {
       "execution": [Function],
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Headline with two measures with german separators should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Headline with two measures with german separators should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "config": Object {
+    "separators": Object {
+      "decimal": ",",
+      "thousand": ".",
     },
   },
   "workspace": "testWorkspace",

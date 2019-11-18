@@ -1,5 +1,10 @@
 // (C) 2019 GoodData Corporation
-import { modifyMeasure, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
+import {
+    modifyMeasure,
+    newArithmeticMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "@gooddata/sdk-model";
 import * as ReferenceLdm from "./full";
 
 /*
@@ -34,3 +39,10 @@ export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Refe
  * attribute ids are not yet in the generated LDM catalog.
  */
 export const WonPopClosedYear = newPopMeasure(ReferenceLdm.Won, "closed.year", m => m.alias("Won Last Year"));
+
+/**
+ * A previous period measure derived from 'Won' measure
+ */
+export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
+    { dataSet: "closed", periodsAgo: 1 },
+]);

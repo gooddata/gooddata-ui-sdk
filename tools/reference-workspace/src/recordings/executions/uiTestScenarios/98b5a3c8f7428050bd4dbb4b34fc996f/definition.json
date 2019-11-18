@@ -1,0 +1,72 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_afSEwRwdbMeQ"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_afSEwRwdbMeQ",
+                                "popAttribute": {
+                                    "identifier": "closed.year"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+                        "alias": "Won Last Year"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_afSEwRwdbMeQ",
+                        "popAttribute": {
+                            "identifier": "closed.year"
+                        }
+                    }
+                },
+                "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+                "alias": "Won Last Year"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}
