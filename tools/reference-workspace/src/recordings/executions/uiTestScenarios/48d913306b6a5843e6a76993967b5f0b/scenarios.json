@@ -34,5 +34,9 @@
     {
         "vis": "Treemap",
         "scenario": "single measure and viewBy"
+    },
+    {
+        "vis": "FunnelChart",
+        "scenario": "single measure with viewBy sorted by attribute"
     }
 ]

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T12:26:13.407Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-18T13:51:02.207Z; */
 
 const fp_012802100dffcab5e9844c3d8f53e1a8 = {
     definition: require("./executions/uiTestScenarios/012802100dffcab5e9844c3d8f53e1a8/definition.json"),
@@ -163,6 +163,11 @@ const fp_fd5055c16b64140019f3b9ba5edf67de = {
     executionResult: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/executionResult.json"),
     dataViewAll: require("./executions/uiTestScenarios/fd5055c16b64140019f3b9ba5edf67de/dataView_all.json"),
 };
+const fp_c5090454ba91e88d7da1659d6a4f6617 = {
+    definition: require("./executions/uiTestScenarios/c5090454ba91e88d7da1659d6a4f6617/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/c5090454ba91e88d7da1659d6a4f6617/executionResult.json"),
+    dataViewAll: require("./executions/uiTestScenarios/c5090454ba91e88d7da1659d6a4f6617/dataView_all.json"),
+};
 export const Scenarios = {
     BubbleChart: {
         XAxisAndSizeMeasuresWithViewBy: fp_012802100dffcab5e9844c3d8f53e1a8,
@@ -231,7 +236,9 @@ export const Scenarios = {
     FunnelChart: {
         SingleMeasure: fp_3f053129b295b39b68b6c8b2f17ab376,
         SingleMeasureWithViewBy: fp_48d913306b6a5843e6a76993967b5f0b,
+        SingleMeasureWithViewBySortedByAttribute: fp_48d913306b6a5843e6a76993967b5f0b,
         TwoMeasures: fp_709cdd2f5d4bd0d87bcc65a887485bdc,
+        ArithmeticMeasures: fp_c5090454ba91e88d7da1659d6a4f6617,
     },
     Heatmap: {
         MeasureOnly: fp_3f053129b295b39b68b6c8b2f17ab376,
@@ -300,6 +307,7 @@ export const Recordings = {
             fp_e7b93aff8569adfbec9ddf89202d41f0,
             fp_eac0ab1ad046abd14a2b4e2572f7f533,
             fp_fd5055c16b64140019f3b9ba5edf67de,
+            fp_c5090454ba91e88d7da1659d6a4f6617,
         },
     },
 };

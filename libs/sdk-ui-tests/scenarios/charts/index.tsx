@@ -6,7 +6,7 @@ import bubbleChart from "./bubbleChart";
 import columnChart from "./columnChart";
 import comboChart from "./comboChart";
 import donutChart from "./donutChart";
-import funnelChart from "./funnelChart/base";
+import funnelChart from "./funnelChart";
 import headline from "./headline/base";
 import heatmap from "./heatmap/base";
 import lineChart from "./lineChart/base";
@@ -21,7 +21,7 @@ export default [
     ...columnChart,
     ...comboChart,
     ...donutChart,
-    funnelChart,
+    ...funnelChart,
     headline,
     heatmap,
     lineChart,
