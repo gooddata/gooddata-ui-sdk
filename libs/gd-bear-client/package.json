@@ -24,7 +24,7 @@
         "prepublishOnly": "npm run build",
         "test": "jest --watch",
         "test-once": "jest",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
@@ -33,26 +33,6 @@
         "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-client",
-    "jest": {
-        "preset": "ts-jest",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.js"
-        ],
-        "testRegex": "(\\.test)\\.(tsx?)$",
-        "collectCoverageFrom": [
-            "src/**/*.{ts,tsx}",
-            "!**/*.d.ts"
-        ],
-        "collectCoverage": false,
-        "coverageReporters": [
-            "html"
-        ],
-        "globals": {
-            "ts-jest": {
-                "packageJson": "package.json"
-            }
-        }
-    },
     "dependencies": {
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
         "fetch-cookie": "^0.7.0",
