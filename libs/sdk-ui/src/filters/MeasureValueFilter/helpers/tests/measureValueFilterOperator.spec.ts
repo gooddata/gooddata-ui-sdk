@@ -9,6 +9,8 @@ describe("getOperatorTranslationKey", () => {
         ${"GREATER_THAN_OR_EQUAL_TO"} | ${"mvf.operator.greaterThanOrEqualTo"}
         ${"LESS_THAN"}                | ${"mvf.operator.lessThan"}
         ${"LESS_THAN_OR_EQUAL_TO"}    | ${"mvf.operator.lessThanOrEqualTo"}
+        ${"EQUAL_TO"}                 | ${"mvf.operator.equalTo"}
+        ${"NOT_EQUAL_TO"}             | ${"mvf.operator.notEqualTo"}
         ${"BETWEEN"}                  | ${"mvf.operator.between"}
         ${"NOT_BETWEEN"}              | ${"mvf.operator.notBetween"}
     `("should return $result translation key for $operator operator", ({ operator, result }) => {
@@ -24,6 +26,8 @@ describe("getOperatorIcon", () => {
         ${"GREATER_THAN_OR_EQUAL_TO"} | ${"greater-than-equal-to"}
         ${"LESS_THAN"}                | ${"less-than"}
         ${"LESS_THAN_OR_EQUAL_TO"}    | ${"less-than-equal-to"}
+        ${"EQUAL_TO"}                 | ${"equal-to"}
+        ${"NOT_EQUAL_TO"}             | ${"not-equal-to"}
         ${"BETWEEN"}                  | ${"between"}
         ${"NOT_BETWEEN"}              | ${"not-between"}
     `("should return $result for $operator operator", ({ operator, result }) => {
