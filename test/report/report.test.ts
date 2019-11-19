@@ -39,92 +39,90 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const showFilters: AFM.CompatibilityFilter[] = [
-                    {
-                        positiveAttributeFilter: {
+                const afm: AFM.IAfm = {
+                    measures: [
+                        {
+                            localIdentifier: "a14fb77382304ab4925f05d2d64f7aed",
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: "/gdc/md/projectId/obj/16203",
+                                    },
+                                },
+                            },
+                            alias: "Conversion",
+                        },
+                    ],
+                    attributes: [
+                        {
                             displayForm: {
-                                uri: "bar",
+                                uri: "/gdc/md/projectId/obj/15358",
                             },
-                            in: ["/gdc/md/bar1", "/gdc/md/bar2"],
+                            localIdentifier: "645bf676a4854a32b694390bba9bd63c",
                         },
-                    },
-                    {
-                        negativeAttributeFilter: {
-                            displayForm: {
-                                identifier: "foo",
-                            },
-                            notIn: ["foo1", "foo2"],
-                            textFilter: true,
-                        },
-                    },
-                    {
-                        absoluteDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
-                            },
-                            from: "2011-01-01",
-                            to: "2011-12-31",
-                        },
-                    },
-                    {
-                        relativeDateFilter: {
-                            to: 0,
-                            from: -3,
-                            granularity: "GDC.time.quarter",
-                            dataSet: {
-                                uri: "/gdc/md/myproject/obj/921",
+                    ],
+                    filters: [
+                        {
+                            measureValueFilter: {
+                                measure: {
+                                    localIdentifier: "a14fb77382304ab4925f05d2d64f7aed",
+                                },
+                                condition: {
+                                    comparison: {
+                                        operator: "GREATER_THAN",
+                                        value: 350000,
+                                    },
+                                },
                             },
                         },
-                    },
-                ];
+                    ],
+                };
 
-                const expectedShowFilters: ExecuteAFM.CompatibilityFilter[] = [
-                    {
-                        positiveAttributeFilter: {
+                const expectedAfm: ExecuteAFM.IAfm = {
+                    measures: [
+                        {
+                            localIdentifier: "a14fb77382304ab4925f05d2d64f7aed",
+                            definition: {
+                                measure: {
+                                    item: {
+                                        uri: "/gdc/md/projectId/obj/16203",
+                                    },
+                                },
+                            },
+                            alias: "Conversion",
+                        },
+                    ],
+                    attributes: [
+                        {
                             displayForm: {
-                                uri: "bar",
+                                uri: "/gdc/md/projectId/obj/15358",
                             },
-                            in: {
-                                uris: ["/gdc/md/bar1", "/gdc/md/bar2"],
+                            localIdentifier: "645bf676a4854a32b694390bba9bd63c",
+                        },
+                    ],
+                    filters: [
+                        {
+                            measureValueFilter: {
+                                measure: {
+                                    localIdentifier: "a14fb77382304ab4925f05d2d64f7aed",
+                                },
+                                condition: {
+                                    comparison: {
+                                        operator: "GREATER_THAN",
+                                        value: 350000,
+                                    },
+                                },
                             },
                         },
-                    },
-                    {
-                        negativeAttributeFilter: {
-                            displayForm: {
-                                identifier: "foo",
-                            },
-                            notIn: {
-                                values: ["foo1", "foo2"],
-                            },
-                        },
-                    },
-                    {
-                        absoluteDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
-                            },
-                            from: "2011-01-01",
-                            to: "2011-12-31",
-                        },
-                    },
-                    {
-                        relativeDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/myproject/obj/921",
-                            },
-                            from: -3,
-                            granularity: "GDC.time.quarter",
-                            to: 0,
-                        },
-                    },
-                ];
+                    ],
+                };
 
                 const exportConfig: IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,
-                    showFilters,
+                    showFilters: true,
+                    afm,
                 };
 
                 return mockedReportModule()
@@ -140,7 +138,8 @@ describe("report", () => {
                                     title: "title",
                                     format: "xlsx",
                                     mergeHeaders: false,
-                                    showFilters: expectedShowFilters,
+                                    showFilters: true,
+                                    afm: expectedAfm,
                                 },
                             },
                         });
