@@ -56,6 +56,29 @@ export interface IBucketFilterElement {
     uri: string;
 }
 
+export type ComparisonConditionOperator =
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUAL_TO"
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUAL_TO"
+    | "EQUAL_TO"
+    | "NOT_EQUAL_TO";
+
+export interface IComparisonCondition {
+    readonly operator: ComparisonConditionOperator;
+    readonly value: number;
+}
+
+export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+export interface IRangeCondition {
+    readonly operator: RangeConditionOperator;
+    readonly from: number;
+    readonly to: number;
+}
+
+export type IMeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
 export interface IBucketFilterInterval {
     granularity: string;
     interval: string[];
@@ -72,6 +95,8 @@ export interface IBucketFilter {
     selectedElements?: IBucketFilterElement[];
     totalElementsCount?: number;
     overTimeComparisonType?: OverTimeComparisonType;
+    measureLocalIdentifier?: string;
+    condition?: IMeasureValueFilterCondition;
 }
 
 export interface ISort {
