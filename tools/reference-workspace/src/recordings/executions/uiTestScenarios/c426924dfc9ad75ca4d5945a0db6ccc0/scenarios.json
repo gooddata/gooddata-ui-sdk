@@ -2,5 +2,9 @@
     {
         "vis": "Headline",
         "scenario": "two measures"
+    },
+    {
+        "vis": "Headline",
+        "scenario": "two measures with german separators"
     }
 ]

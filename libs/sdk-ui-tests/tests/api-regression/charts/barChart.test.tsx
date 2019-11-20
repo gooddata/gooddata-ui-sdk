@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IBarChartProps } from "@gooddata/sdk-ui";
-import BaseUseCases from "../../../scenarios/charts/barChart/base";
-import React from "react";
-import { PropsFactory } from "../../../src";
+import barChartScenarios from "../../../scenarios/charts/barChart";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("BarChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IBarChartProps>, PropsFactory<IBarChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IBarChartProps>> = flatMap(barChartScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

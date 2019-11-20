@@ -14,7 +14,11 @@ import isEmpty = require("lodash/isEmpty");
 
 export type VisProps = IPivotTableProps | IBucketChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
-
+export type UnboundVisPropsCustomizer<T extends VisProps> = (
+    baseName: string,
+    baseProps: UnboundVisProps<T>,
+) => Array<[string, UnboundVisProps<T>]>;
+export type ScenarioNameAndProps<T extends VisProps> = [string, UnboundVisProps<T>];
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 
 //
@@ -26,13 +30,50 @@ export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, wor
  */
 export type TestTypes = "api" | "visual";
 
-export type SignificantTags = "customConfig";
-export type UseCaseTags = SignificantTags | string;
+/**
+ * Tags that are significant for the infrastructure.
+ *
+ * -  "vis-config-only" - indicates the purpose of the scenario is to exercise various visual configurations
+ * -  "mock-no-scenario-meta' - indicates that the capture & mock handling tooling should not include the
+ *    tagged scenario in the execution's scenario meta, thus ensuring that the scenario does not appear
+ *    in the Scenarios mapping in recording index
+ */
+export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta";
+
+export type ScenarioTag = SignificantTags | string;
+
+/**
+ * View on test scenario that can be used as input to parameterized tests.
+ *
+ * First element: name of the test scenario
+ * Second element: react component type
+ * Third element: factory to create props for the react component
+ * Fourth element: scenario tags
+ *
+ * Having this as array is essential for parameterized jest tests in order for jest to correctly name the
+ * test suite / test case.
+ */
+export type ScenarioTestInput<T extends VisProps> = [
+    string,
+    React.ComponentType<T>,
+    PropsFactory<T>,
+    ScenarioTag[],
+];
+
+/**
+ * Enum with indexes into scenario test input array.
+ */
+export enum ScenarioTestMembers {
+    ScenarioName = 0,
+    Component = 1,
+    PropsFactory = 2,
+    Tags = 3,
+}
 
 export interface IScenario<T extends VisProps> {
     name: string;
     props: UnboundVisProps<T>;
-    tags: UseCaseTags[];
+    tags: ScenarioTag[];
     tests: TestTypes[];
 
     propsFactory: PropsFactory<T>;
@@ -41,12 +82,12 @@ export interface IScenario<T extends VisProps> {
 export type ScenarioModification<T extends IBucketChartProps> = (m: ScenarioBuilder<T>) => ScenarioBuilder<T>;
 
 export class ScenarioBuilder<T extends VisProps> {
-    private tags: UseCaseTags[] = [];
+    private tags: ScenarioTag[] = [];
     private tests: TestTypes[] = ["api", "visual"];
 
     constructor(private readonly name: string, private readonly props: UnboundVisProps<T>) {}
 
-    public withTags(...tags: UseCaseTags[]): ScenarioBuilder<T> {
+    public withTags(...tags: ScenarioTag[]): ScenarioBuilder<T> {
         if (!isEmpty(tags)) {
             this.tags = tags;
         }
@@ -136,8 +177,21 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public scenarioList: Array<IScenario<T>> = [];
     public testConfig: TestConfiguration = { visual: {} };
     private scenarioIndex: ScenarioSet<T> = {};
+    private defaultTags: ScenarioTag[] = [];
 
     constructor(public readonly vis: string, public readonly component: React.ComponentType<T>) {}
+
+    /**
+     * Configures the scenario group to assign the provided tags to all new scenarios added
+     * after this call.
+     *
+     * @param tags - tags to assign
+     */
+    public withDefaultTags(...tags: ScenarioTag[]): ScenarioGroup<T> {
+        this.defaultTags = tags;
+
+        return this;
+    }
 
     /**
      * Adds a new test scenarios for a component. The scenario specifies name and visualization props (sans backend
@@ -157,8 +211,33 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
         invariant(!exists, `contract "${name}" for ${this.vis} already exists`);
 
         const builder = new ScenarioBuilder<T>(name, props);
-
+        builder.withTags(...this.defaultTags);
         this.insertScenario(m(builder).build());
+
+        return this;
+    }
+
+    /**
+     * Adds multiple test scenarios; given base name & props of the scenario this method will use the
+     * provided customizer function to expand base into multiple contrete scenarios. It then adds those
+     * one-by-one.
+     *
+     * @param baseName - base name for the scenario variants
+     * @param baseProps - base props for the scenario variants
+     * @param customizer - function to expand base name & props into multiple variants
+     * @param m - modifications to apply on each scenario
+     */
+    public addScenarios(
+        baseName: string,
+        baseProps: UnboundVisProps<T>,
+        customizer: UnboundVisPropsCustomizer<T>,
+        m: ScenarioModification<T> = identity,
+    ): ScenarioGroup<T> {
+        const variants = customizer(baseName, baseProps);
+
+        variants.forEach(([name, props]) => {
+            this.addScenario(name, props, m);
+        });
 
         return this;
     }
@@ -205,9 +284,9 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * It is then the responsibility of the test code to instantiate and use the component in the way it
      * sees fit.
      */
-    public asTestInput = (): Array<[string, React.ComponentType<T>, PropsFactory<T>]> => {
+    public asTestInput = (): Array<ScenarioTestInput<T>> => {
         return this.scenarioList.map(u => {
-            return [u.name, this.component, u.propsFactory];
+            return [u.name, this.component, u.propsFactory, u.tags];
         });
     };
 

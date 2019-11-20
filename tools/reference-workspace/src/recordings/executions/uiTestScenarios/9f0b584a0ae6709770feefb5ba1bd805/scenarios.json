@@ -1,0 +1,10 @@
+[
+    {
+        "vis": "DonutChart",
+        "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "PieChart",
+        "scenario": "arithmetic measures"
+    }
+]

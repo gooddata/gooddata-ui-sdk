@@ -1,7 +1,43 @@
 // (C) 2007-2019 GoodData Corporation
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
+import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+
+export type ComboChartTypes = "area" | "column" | "line";
+
+export const ComboChartWithTwoMeasuresAndNoViewBy = {
+    primaryMeasures: [ReferenceLdm.Amount],
+    secondaryMeasures: [ReferenceLdm.Won],
+};
+
+export const ComboChartWithTwoSecondaryMeasures = {
+    secondaryMeasures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+    viewBy: [ReferenceLdm.Product.Name],
+};
+
+export const ComboChartWithMultipleMeasuresAndNoViewBy = {
+    primaryMeasures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
+    secondaryMeasures: [ReferenceLdmExt.CalculatedWonLostRatio],
+};
+
+export const ComboChartWithTwoMeasuresAndViewBy = {
+    primaryMeasures: [ReferenceLdm.Amount],
+    secondaryMeasures: [ReferenceLdm.Won],
+    viewBy: [ReferenceLdm.Product.Name],
+};
+
+export const ComboChartWithArithmeticMeasuresAndViewBy = {
+    primaryMeasures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
+    secondaryMeasures: [ReferenceLdmExt.CalculatedWonLostRatio],
+    viewBy: [ReferenceLdm.Product.Name],
+};
+
+export const ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy = {
+    primaryMeasures: [ReferenceLdmExt.MinAmount, ReferenceLdmExt.MedianAmount, ReferenceLdmExt.MaxAmount],
+    secondaryMeasures: [ReferenceLdm.Amount, ReferenceLdm.Won, ReferenceLdmExt.CalculatedLost],
+    viewBy: [ReferenceLdm.Product.Name],
+};
 
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .addScenario("one primary measure", {
@@ -11,8 +47,34 @@ export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)
         primaryMeasures: [ReferenceLdm.Amount],
         viewBy: [ReferenceLdm.Product.Name],
     })
-    .addScenario("one primary and scenario measure with viewBy", {
+    .addScenario("two secondary measure with viewBy", ComboChartWithTwoSecondaryMeasures)
+    .addScenario("one secondary measure with viewBy", {
+        secondaryMeasures: [ReferenceLdm.Amount],
+        viewBy: [ReferenceLdm.Product.Name],
+    })
+    .addScenario("one primary and secondary measure no viewBy", ComboChartWithTwoMeasuresAndNoViewBy)
+    .addScenario("one primary and secondary measure with viewBy sorted by attr", {
         primaryMeasures: [ReferenceLdm.Amount],
         secondaryMeasures: [ReferenceLdm.Won],
         viewBy: [ReferenceLdm.Product.Name],
-    });
+        sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+    })
+    .addScenario("one primary and secondary measure with viewBy sorted by primary measure", {
+        primaryMeasures: [ReferenceLdm.Amount],
+        secondaryMeasures: [ReferenceLdm.Won],
+        viewBy: [ReferenceLdm.Product.Name],
+        sortBy: [newMeasureSort(ReferenceLdm.Amount, "desc")],
+    })
+    .addScenario("one primary and secondary measure with viewBy sorted by secondary measure", {
+        primaryMeasures: [ReferenceLdm.Amount],
+        secondaryMeasures: [ReferenceLdm.Won],
+        viewBy: [ReferenceLdm.Product.Name],
+        sortBy: [newMeasureSort(ReferenceLdm.Won, "desc")],
+    })
+    .addScenario("one primary and secondary measure with viewBy", ComboChartWithTwoMeasuresAndViewBy)
+    .addScenario(
+        "multiple primary and secondary measures with viewBy",
+        ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+    )
+    .addScenario("multiple measures and no viewBy", ComboChartWithMultipleMeasuresAndNoViewBy)
+    .addScenario("arithmetic measures", ComboChartWithArithmeticMeasuresAndViewBy);

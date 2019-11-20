@@ -1,0 +1,121 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_ah1EuQxwaCqs"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_afSEwRwdbMeQ"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                                "operator": "difference"
+                            }
+                        },
+                        "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                        "alias": "Calculated 'Lost' measure"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": []
+        },
+        {
+            "localIdentifier": "segment",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "created.aci81lMifn6q"
+                        },
+                        "localIdentifier": "a_created.aci81lMifn6q"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "created.aci81lMifn6q"
+                },
+                "localIdentifier": "a_created.aci81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "ah1EuQxwaCqs"
+                        }
+                    }
+                },
+                "localIdentifier": "m_ah1EuQxwaCqs"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                        "operator": "difference"
+                    }
+                },
+                "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                "alias": "Calculated 'Lost' measure"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_created.aci81lMifn6q"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

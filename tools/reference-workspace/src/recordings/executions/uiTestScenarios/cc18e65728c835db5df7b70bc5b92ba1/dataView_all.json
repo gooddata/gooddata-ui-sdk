@@ -1,0 +1,37 @@
+{
+    "data": [["116625456.54"], ["38310753.45"], ["78314703.09"], ["2.04419636883962"]],
+    "headerItems": [
+        [
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "Amount",
+                        "order": 0
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Won",
+                        "order": 1
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Calculated 'Lost' measure",
+                        "order": 2
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Ratio of Won and Lost",
+                        "order": 3
+                    }
+                }
+            ]
+        ],
+        []
+    ],
+    "count": [4, 1],
+    "offset": [0, 0],
+    "totalCount": [4, 1]
+}

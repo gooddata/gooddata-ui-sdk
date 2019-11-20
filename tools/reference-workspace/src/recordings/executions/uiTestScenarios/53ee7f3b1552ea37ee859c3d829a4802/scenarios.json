@@ -1,0 +1,18 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "two measures with viewBy sorted by attribute"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "two measures with viewBy sorted by attribute"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "two measures with viewBy sorted by attribute"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary and secondary measure with viewBy sorted by attr"
+    }
+]

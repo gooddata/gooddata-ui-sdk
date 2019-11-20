@@ -33,6 +33,10 @@
         {
             "localIdentifier": "view",
             "items": []
+        },
+        {
+            "localIdentifier": "segment",
+            "items": []
         }
     ],
     "attributes": [],

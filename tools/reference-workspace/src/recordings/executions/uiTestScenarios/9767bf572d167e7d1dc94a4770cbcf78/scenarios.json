@@ -1,0 +1,18 @@
+[
+    {
+        "vis": "AreaChart",
+        "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "BarChart",
+        "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "arithmetic measures"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "arithmetic measures"
+    }
+]

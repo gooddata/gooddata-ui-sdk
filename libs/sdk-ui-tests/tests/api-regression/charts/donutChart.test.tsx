@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IDonutChartProps } from "@gooddata/sdk-ui";
-import React from "react";
-import BaseUseCases from "../../../scenarios/charts/donutChart/base";
-import { PropsFactory } from "../../../src";
+import donutChartScenarios from "../../../scenarios/charts/donutChart";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("DonutChart", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IDonutChartProps>, PropsFactory<IDonutChartProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IDonutChartProps>> = flatMap(donutChartScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

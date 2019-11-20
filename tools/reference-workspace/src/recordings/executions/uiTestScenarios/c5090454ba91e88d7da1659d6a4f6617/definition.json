@@ -1,0 +1,99 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "ah1EuQxwaCqs"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_ah1EuQxwaCqs"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                                "operator": "difference"
+                            }
+                        },
+                        "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                        "alias": "Calculated 'Lost' measure"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "afSEwRwdbMeQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_afSEwRwdbMeQ"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": []
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "ah1EuQxwaCqs"
+                        }
+                    }
+                },
+                "localIdentifier": "m_ah1EuQxwaCqs"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_ah1EuQxwaCqs", "m_afSEwRwdbMeQ"],
+                        "operator": "difference"
+                    }
+                },
+                "localIdentifier": "m_m_ah1EuQxwaCqs_m_afSEwRwdbMeQ",
+                "alias": "Calculated 'Lost' measure"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "afSEwRwdbMeQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_afSEwRwdbMeQ"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

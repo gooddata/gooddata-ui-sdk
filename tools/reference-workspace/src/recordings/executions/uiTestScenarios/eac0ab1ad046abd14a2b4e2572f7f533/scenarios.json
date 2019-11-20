@@ -1,0 +1,10 @@
+[
+    {
+        "vis": "BarChart",
+        "scenario": "two measures with two viewBy"
+    },
+    {
+        "vis": "ColumnChart",
+        "scenario": "two measures with two viewBy"
+    }
+]

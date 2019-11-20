@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IScatterPlotProps } from "@gooddata/sdk-ui";
-import React from "react";
-import BaseUseCases from "../../../scenarios/charts/scatterPlot/base";
-import { PropsFactory } from "../../../src";
+import scatterPlotScenarios from "../../../scenarios/charts/scatterPlot";
+import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("ScatterPlot", () => {
-    const Scenarios: Array<
-        [string, React.ComponentType<IScatterPlotProps>, PropsFactory<IScatterPlotProps>]
-    > = BaseUseCases.forTestTypes("api").asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IScatterPlotProps>> = flatMap(scatterPlotScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const interactions = mountChartAndCapture(Component, propsFactory);

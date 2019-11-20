@@ -15,12 +15,7 @@
                         },
                         "localIdentifier": "m_ah1EuQxwaCqs"
                     }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "secondary_measures",
-            "items": [
+                },
                 {
                     "measure": {
                         "definition": {
@@ -47,6 +42,10 @@
                     }
                 }
             ]
+        },
+        {
+            "localIdentifier": "segment",
+            "items": []
         }
     ],
     "attributes": [
