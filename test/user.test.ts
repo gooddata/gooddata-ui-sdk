@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { UserModule } from "../src/user";
@@ -289,6 +289,48 @@ describe("user", () => {
                         expect(accountInfo.lastName).toEqual(lastName);
                         expect(accountInfo.organizationName).toEqual(organizationName);
                         expect(accountInfo.profileUri).toEqual(profileUri);
+                    });
+            });
+        });
+
+        describe("getUserConfigs", () => {
+            it("should return user configs setting item", () => {
+                const userId = "USER_ID";
+                const settingItems = [
+                    {
+                        settingItem: {
+                            key: "activeFiltersByDefault",
+                            value: false,
+                            source: "user",
+                            links: {
+                                self: "/gdc/account/profile/USER_ID/config/activeFiltersByDefault",
+                            },
+                        },
+                    },
+                    {
+                        settingItem: {
+                            key: "platformEdition",
+                            value: "free",
+                            source: "catalog",
+                            links: {
+                                self: "/gdc/account/profile/USER_ID/config/platformEdition",
+                            },
+                        },
+                    },
+                ];
+                fetchMock.mock(`/gdc/account/profile/${userId}/config`, {
+                    status: 200,
+                    body: JSON.stringify({
+                        settings: {
+                            items: settingItems,
+                        },
+                    }),
+                });
+                return createUser()
+                    .getUserConfigs(userId)
+                    .then(userConfigs => {
+                        expect(userConfigs.length).toBe(2);
+                        expect(userConfigs).toEqual(settingItems);
                     });
             });
         });
