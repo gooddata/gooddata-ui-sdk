@@ -87,7 +87,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         const hasNextPage = serverOffset + count < total;
 
         const emptyResult: IElementQueryResult = {
-            elements: [],
+            items: [],
             limit: count,
             offset: total,
             totalCount: total,
@@ -95,7 +95,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         };
 
         return {
-            elements: items.map((element: { element: IAttributeElement }) => element.element),
+            items: items.map((element: { element: IAttributeElement }) => element.element),
             limit: count,
             offset: serverOffset,
             totalCount: total,

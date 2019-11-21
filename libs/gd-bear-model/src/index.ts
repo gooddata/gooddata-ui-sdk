@@ -9,6 +9,8 @@ export { GdcDashboardExport } from "./dashboard/GdcDashboardExport";
 export { GdcDashboardLayout } from "./dashboard/DashboardLayout";
 export { GdcCatalog } from "./catalog/GdcCatalog";
 export { GdcMetadata } from "./meta/GdcMetadata";
+export { GdcDataSets } from "./dataSets/GdcDataSets";
+export { GdcProject } from "./project/GdcProject";
 
 export { sanitizeDateFilters } from "./dashboard/utils";
 export { getAttributesDisplayForms } from "./visualizationObject/utils";

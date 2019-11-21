@@ -8,7 +8,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
-import { GdcCatalog } from "@gooddata/gd-bear-model";
+import { GdcCatalog, GdcDataSets } from "@gooddata/gd-bear-model";
 
 const REQUEST_DEFAULTS = {
     types: ["attribute", "metric", "fact"],
@@ -204,7 +204,10 @@ export class CatalogueModule {
         return this.loadCatalog(projectId, request);
     }
 
-    public async loadDateDataSets(projectId: string, options: any) {
+    public async loadDateDataSets(
+        projectId: string,
+        options: any,
+    ): Promise<GdcDataSets.IDateDataSetResponse> {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
             ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap"), true)
@@ -292,7 +295,20 @@ export class CatalogueModule {
         return itemDescriptions.map(unwrapItemDescriptionObject);
     }
 
-    private requestDateDataSets(projectId: string, dateDataSetsRequest: any) {
+    /**
+     * Loads all available data sets.
+     * @param projectId
+     */
+    public async loadDataSets(projectId: string): Promise<GdcDataSets.IDataSet[]> {
+        const uri = `/gdc/dataload/internal/projects/${projectId}/csv/datasets`;
+        const response: GdcDataSets.IDataSetResponse = await this.xhr.get(uri).then(res => res.getData());
+        return response.datasets.items;
+    }
+
+    private requestDateDataSets(
+        projectId: string,
+        dateDataSetsRequest: any,
+    ): Promise<GdcDataSets.IDateDataSetResponse> {
         const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
 
         return this.xhr

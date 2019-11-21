@@ -5,7 +5,9 @@ import {
     IInsight,
     IAttributeDisplayForm,
     IMeasureExpressionToken,
+    IInsightWithoutIdentifier,
 } from "@gooddata/sdk-model";
+import { IPagedResource } from "../paging";
 
 /**
  * TODO: SDK8: add public doc
@@ -16,6 +18,10 @@ export interface IWorkspaceMetadata {
     getVisualizationClass(id: string): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     getInsight(id: string): Promise<IInsight>;
+    getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    createInsight(insight: IInsightWithoutIdentifier): Promise<IInsight>;
+    updateInsight(insight: IInsight): Promise<IInsight>;
+    deleteInsight(id: string): Promise<void>;
     /**
      * Gets the attribute display form with the provided identifier.
      * @param id - identifier of the attribute display form to retrieve
@@ -29,3 +35,25 @@ export interface IWorkspaceMetadata {
      */
     getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
 }
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
+export interface IInsightQueryOptions {
+    offset?: number;
+    limit?: number;
+    orderBy?: "id" | "title" | "updated";
+    /**
+     * Login of the author to filter the insights by
+     */
+    author?: string;
+}
+
+/**
+ * TODO: SDK8: add public doc
+ *
+ * @public
+ */
+export interface IInsightQueryResult extends IPagedResource<IInsight> {}

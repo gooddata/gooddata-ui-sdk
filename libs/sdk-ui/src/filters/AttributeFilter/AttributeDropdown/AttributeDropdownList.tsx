@@ -6,6 +6,7 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
+import { AttributeListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
 const LIST_WIDTH = 208;
@@ -37,7 +38,7 @@ const ListNoResults = () => {
 };
 
 interface IAttributeDropdownListProps {
-    items: IAttributeElement[];
+    items: AttributeListItem[];
     totalCount: number;
     selectedItems: IAttributeElement[];
     isInverted: boolean;

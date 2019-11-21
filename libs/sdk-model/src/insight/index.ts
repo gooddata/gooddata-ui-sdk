@@ -78,6 +78,16 @@ export interface IInsight {
 }
 
 /**
+ * Represents an Insight without identifier. This is useful when working with Insight that do not have any identifier yet
+ * (i.e. they have not been saved to the platform yet).
+ *
+ * @public
+ */
+export type IInsightWithoutIdentifier = {
+    insight: Omit<IInsight["insight"], "identifier">;
+};
+
+/**
  * Visualization class is essentially a descriptor for particular type of visualization - say bar chart
  * or table. Each available visualization type is described by a class stored in the metadata. The available
  * classes influence what visualizations can users select in Analytical Designer.
@@ -186,7 +196,7 @@ export function isInsight(obj: any): obj is IInsight {
  * @public
  */
 export function insightBucket(
-    insight: IInsight,
+    insight: IInsightWithoutIdentifier,
     idOrFun: string | BucketPredicate = anyBucket,
 ): IBucket | undefined {
     if (!insight) {
@@ -204,7 +214,7 @@ export function insightBucket(
  * @returns empty list if none match
  * @public
  */
-export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
+export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: string[]): IBucket[] {
     if (!insight) {
         return [];
     }
@@ -223,7 +233,7 @@ export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[] {
  * @returns empty if one
  * @public
  */
-export function insightMeasures(insight: IInsight): IMeasure[] {
+export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[] {
     if (!insight) {
         return [];
     }
@@ -238,7 +248,7 @@ export function insightMeasures(insight: IInsight): IMeasure[] {
  * @returns true if any measures, false if not
  * @public
  */
-export function insightHasMeasures(insight: IInsight): boolean {
+export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean {
     if (!insight) {
         return false;
     }
@@ -253,7 +263,7 @@ export function insightHasMeasures(insight: IInsight): boolean {
  * @returns empty if none
  * @public
  */
-export function insightAttributes(insight: IInsight): IAttribute[] {
+export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribute[] {
     if (!insight) {
         return [];
     }
@@ -268,7 +278,7 @@ export function insightAttributes(insight: IInsight): IAttribute[] {
  * @returns true if any measures, false if not
  * @public
  */
-export function insightHasAttributes(insight: IInsight): boolean {
+export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolean {
     if (!insight) {
         return false;
     }
@@ -284,7 +294,7 @@ export function insightHasAttributes(insight: IInsight): boolean {
  * @returns true if at least one measure or attribute, false if none
  * @public
  */
-export function insightHasDataDefined(insight: IInsight): boolean {
+export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boolean {
     if (!insight) {
         return false;
     }
@@ -300,7 +310,7 @@ export function insightHasDataDefined(insight: IInsight): boolean {
  * @param insight - insight to work with
  * @public
  */
-export function insightFilters(insight: IInsight): IFilter[] {
+export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[] {
     if (!insight) {
         return [];
     }
@@ -318,7 +328,7 @@ export function insightFilters(insight: IInsight): IFilter[] {
  * @returns array of valid sorts
  * @public
  */
-export function insightSorts(insight: IInsight): SortItem[] {
+export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[] {
     if (!insight) {
         return [];
     }
@@ -347,7 +357,7 @@ export function insightSorts(insight: IInsight): SortItem[] {
  * @returns empty if none
  * @public
  */
-export function insightTotals(insight: IInsight): ITotal[] {
+export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[] {
     if (!insight) {
         return [];
     }
@@ -362,7 +372,7 @@ export function insightTotals(insight: IInsight): ITotal[] {
  * @returns empty object is no properties
  * @public
  */
-export function insightProperties(insight: IInsight): VisualizationProperties {
+export function insightProperties(insight: IInsightWithoutIdentifier): VisualizationProperties {
     if (!insight) {
         return {};
     }
@@ -373,13 +383,39 @@ export function insightProperties(insight: IInsight): VisualizationProperties {
 /**
  * Gets visualization class identifier of an insight.
  *
- * @param insight - insight to get vis properties for
+ * @param insight - insight to get vis class identifier for
  * @public
  */
-export function insightVisualizationClassIdentifier(insight: IInsight): string {
+export function insightVisualizationClassIdentifier(insight: IInsightWithoutIdentifier): string {
     invariant(insight, "insight to get vis class identifier from must be defined");
 
     return insight.insight.visualizationClassIdentifier;
+}
+
+/**
+ * Gets the insight title
+ *
+ * @param insight - insight to title of
+ * @returns the insight title
+ * @public
+ */
+export function insightTitle(insight: IInsightWithoutIdentifier): string {
+    invariant(insight, "insight to get title from must be defined");
+
+    return insight.insight.title;
+}
+
+/**
+ * Gets the insight id
+ *
+ * @param insight - insight to get id of
+ * @returns the insight id
+ * @public
+ */
+export function insightId(insight: IInsight): string {
+    invariant(insight, "insight to get id of must be defined");
+
+    return insight.insight.identifier;
 }
 
 /**
@@ -391,7 +427,11 @@ export function insightVisualizationClassIdentifier(insight: IInsight): string {
  * @returns always new instance
  * @public
  */
-export function insightSetProperties(insight: IInsight, properties: VisualizationProperties = {}): IInsight {
+export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
+export function insightSetProperties(
+    insight: IInsightWithoutIdentifier,
+    properties: VisualizationProperties = {},
+): IInsightWithoutIdentifier {
     return {
         insight: {
             ...insight.insight,
@@ -409,7 +449,11 @@ export function insightSetProperties(insight: IInsight, properties: Visualizatio
  * @returns always new instance
  * @public
  */
-export function insightSetSorts(insight: IInsight, sorts: SortItem[] = []): IInsight {
+export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
+export function insightSetSorts(
+    insight: IInsightWithoutIdentifier,
+    sorts: SortItem[] = [],
+): IInsightWithoutIdentifier {
     return {
         insight: {
             ...insight.insight,

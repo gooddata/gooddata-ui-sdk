@@ -14,13 +14,17 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDataSet } from '@gooddata/sdk-model';
+import { IDateDataSet } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
+import { IInsightWithoutIdentifier } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWorkspace } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
@@ -165,11 +169,13 @@ export interface IAnalyticalBackend {
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
+    workspaces(): IWorkspaceQueryFactory;
 }
 
 // @public
 export interface IAnalyticalWorkspace {
     catalog(): IWorkspaceCatalog;
+    dataSets(): IWorkspaceDataSetsService;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
     metadata(): IWorkspaceMetadata;
@@ -199,6 +205,7 @@ export interface IAttributeDescriptor {
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
 }
 
 // @public
@@ -263,17 +270,7 @@ export interface IElementQueryOptions {
 }
 
 // @public
-export interface IElementQueryResult {
-    // (undocumented)
-    readonly elements: IAttributeElement[];
-    // (undocumented)
-    readonly limit: number;
-    // (undocumented)
-    next(): Promise<IElementQueryResult>;
-    // (undocumented)
-    readonly offset: number;
-    // (undocumented)
-    readonly totalCount: number;
+export interface IElementQueryResult extends IPagedResource<IAttributeElement> {
 }
 
 // @public
@@ -309,6 +306,21 @@ export interface IExportConfig {
 export interface IExportResult {
     // (undocumented)
     uri: string;
+}
+
+// @public
+export interface IInsightQueryOptions {
+    author?: string;
+    // (undocumented)
+    limit?: number;
+    // (undocumented)
+    offset?: number;
+    // (undocumented)
+    orderBy?: "id" | "title" | "updated";
+}
+
+// @public
+export interface IInsightQueryResult extends IPagedResource<IInsight> {
 }
 
 // @public (undocumented)
@@ -364,6 +376,20 @@ export interface IMeasureGroupDescriptor {
         items: IMeasureDescriptor[];
         totalItems?: ITotalDescriptor[];
     };
+}
+
+// @public
+export interface IPagedResource<TItem> {
+    // (undocumented)
+    readonly items: TItem[];
+    // (undocumented)
+    readonly limit: number;
+    // (undocumented)
+    next(): Promise<IPagedResource<TItem>>;
+    // (undocumented)
+    readonly offset: number;
+    // (undocumented)
+    readonly totalCount: number;
 }
 
 // @public
@@ -473,15 +499,48 @@ export interface IWorkspaceCatalog {
 }
 
 // @public
+export interface IWorkspaceDataSetsService {
+    // (undocumented)
+    getDataSets(): Promise<IDataSet[]>;
+    // (undocumented)
+    getDateDataSets(): Promise<IDateDataSet[]>;
+}
+
+// @public
 export interface IWorkspaceMetadata {
+    // (undocumented)
+    createInsight(insight: IInsightWithoutIdentifier): Promise<IInsight>;
+    // (undocumented)
+    deleteInsight(id: string): Promise<void>;
     getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(id: string): Promise<IInsight>;
+    // (undocumented)
+    getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
     getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
     // (undocumented)
     getVisualizationClass(id: string): Promise<IVisualizationClass>;
     // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
+    // (undocumented)
+    updateInsight(insight: IInsight): Promise<IInsight>;
+}
+
+// @public
+export interface IWorkspaceQuery {
+    query(): Promise<IWorkspaceQueryResult>;
+    withLimit(limit: number): IWorkspaceQuery;
+    withOffset(offset: number): IWorkspaceQuery;
+}
+
+// @public
+export interface IWorkspaceQueryFactory {
+    forCurrentUser(): IWorkspaceQuery;
+    forUser(userId: string): IWorkspaceQuery;
+}
+
+// @public
+export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {
 }
 
 // @public

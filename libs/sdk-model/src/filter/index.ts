@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
-import { ObjRef, ObjRefInScope } from "../base";
 import isEmpty = require("lodash/isEmpty");
+import invariant from "ts-invariant";
+import { ObjRef, ObjRefInScope } from "../base";
 
 /**
  * Attribute elements specified by their URI.
@@ -353,4 +354,130 @@ function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean
     }
 
     return isEmpty(attributeElements.values);
+}
+
+/**
+ * Gets attribute elements for attribute filters.
+ *
+ * @param filter - filter to work with
+ * @returns attribute elements, undefined if not available
+ * @public
+ */
+export function filterAttributeElements(
+    filter: IPositiveAttributeFilter | INegativeAttributeFilter,
+): AttributeElements;
+export function filterAttributeElements(filter: IFilter): AttributeElements | undefined {
+    if (!isAttributeFilter(filter)) {
+        return undefined;
+    }
+
+    return isPositiveAttributeFilter(filter)
+        ? filter.positiveAttributeFilter.in
+        : filter.negativeAttributeFilter.notIn;
+}
+
+/**
+ * Gets attribute display form for filter.
+ *
+ * @param filter - filter to work with
+ * @returns filter attribute display form, undefined if not available
+ * @public
+ */
+export function filterAttributeDisplayForm(
+    filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter,
+): ObjRef;
+export function filterAttributeDisplayForm(filter: IFilter): ObjRef | undefined {
+    if (isPositiveAttributeFilter(filter)) {
+        return filter.positiveAttributeFilter.displayForm;
+    }
+    if (isNegativeAttributeFilter(filter)) {
+        return filter.negativeAttributeFilter.displayForm;
+    }
+    if (isAbsoluteDateFilter(filter)) {
+        return filter.absoluteDateFilter.dataSet;
+    }
+    if (isRelativeDateFilter(filter)) {
+        return filter.relativeDateFilter.dataSet;
+    }
+    return undefined;
+}
+
+/**
+ * Represents values of an absolute filter.
+ *
+ * @public
+ */
+export interface IAbsoluteDateFilterValues {
+    from: string;
+    to: string;
+}
+
+/**
+ * Gets effective values of an absolute date filter.
+ *
+ * @param filter - date filter to work with
+ * @returns filter values
+ * @public
+ */
+export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues {
+    invariant(filter, "filter must not be undefined");
+
+    return {
+        from: filter.absoluteDateFilter.from,
+        to: filter.absoluteDateFilter.to,
+    };
+}
+
+/**
+ * Represents values of a relative filter.
+ *
+ * @public
+ */
+export interface IRelativeDateFilterValues {
+    from: number;
+    to: number;
+    granularity: string;
+}
+
+/**
+ * Gets effective values of a relative date filter.
+ *
+ * @param filter - date filter to work with
+ * @returns filter values
+ * @public
+ */
+export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues {
+    invariant(filter, "filter must not be undefined");
+
+    return {
+        from: filter.relativeDateFilter.from,
+        to: filter.relativeDateFilter.to,
+        granularity: filter.relativeDateFilter.granularity,
+    };
+}
+
+/**
+ * Gets measure value filter measure.
+ * @param filter - measure value filter to work with
+ * @returns filter measure
+ * @public
+ */
+export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope {
+    invariant(filter, "filter must not be undefined");
+
+    return filter.measureValueFilter.measure;
+}
+
+/**
+ * Gets measure value filter condition.
+ * @param filter - measure value filter to work with
+ * @returns filter condition
+ * @public
+ */
+export function measureValueFilterCondition(
+    filter: IMeasureValueFilter,
+): MeasureValueFilterCondition | undefined {
+    invariant(filter, "filter must not be undefined");
+
+    return filter.measureValueFilter.condition;
 }

@@ -7,6 +7,8 @@ import { IWorkspaceSettingsService } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
 import { IWorkspaceStylingService } from "../styling";
 import { IWorkspaceCatalog } from "../catalog";
+import { IWorkspaceDataSetsService } from "../dataSets";
+import { IWorkspaceQueryFactory } from "../workspace";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -114,6 +116,11 @@ export interface IAnalyticalBackend {
      * @returns an instance that can be used to interact with the workspace
      */
     workspace(id: string): IAnalyticalWorkspace;
+
+    /**
+     * Returns service that can be used to obtain available workspaces.
+     */
+    workspaces(): IWorkspaceQueryFactory;
 }
 
 /**
@@ -158,6 +165,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query workspace catalog items - attributes, measures, facts, dates, and datasets
      */
     catalog(): IWorkspaceCatalog;
+
+    /**
+     * Returns service that can be used to query data sets and data data sets defined in this workspace.
+     */
+    dataSets(): IWorkspaceDataSetsService;
 }
 
 /**
@@ -231,6 +243,12 @@ export interface IAuthenticationProvider {
      * @param context - context in which the authentication is done
      */
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+
+    /**
+     * Returns the currently authenticated principal, or undefined if not authenticated.
+     * Does not trigger authentication if no principal is available.
+     */
+    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
 }
 
 /**

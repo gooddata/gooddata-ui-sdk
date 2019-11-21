@@ -1,14 +1,15 @@
 // (C) 2019 GoodData Corporation
 import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
 
-import { mergeElementQueryResults, emptyListItem } from "../mergeElementQueryResults";
+import { mergeElementQueryResults } from "../mergeElementQueryResults";
+import { emptyListItem } from "../types";
 
 describe("mergeElementQueryResults", () => {
     it("should handle empty current elements", () => {
         const current: IElementQueryResult | undefined = undefined;
 
         const incoming: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -29,7 +30,7 @@ describe("mergeElementQueryResults", () => {
 
     it("should handle appending to empty current elements", () => {
         const current: IElementQueryResult = {
-            elements: [],
+            items: [],
             limit: 1,
             next: jest.fn(),
             offset: 0,
@@ -37,7 +38,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const incoming: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -58,7 +59,7 @@ describe("mergeElementQueryResults", () => {
 
     it("should handle appending to non-empty current elements without a hole", () => {
         const current: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -71,7 +72,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const incoming: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Bar",
                     uri: "some/uri",
@@ -84,7 +85,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const expected: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -107,7 +108,7 @@ describe("mergeElementQueryResults", () => {
 
     it("should handle appending to non-empty current elements with a hole", () => {
         const current: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -120,7 +121,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const incoming: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Bar",
                     uri: "some/uri",
@@ -133,7 +134,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const expected = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -159,7 +160,7 @@ describe("mergeElementQueryResults", () => {
 
     it("should handle overwriting non-empty current elements", () => {
         const current: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Foo",
                     uri: "some/uri",
@@ -172,7 +173,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const incoming: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Bar",
                     uri: "some/uri",
@@ -185,7 +186,7 @@ describe("mergeElementQueryResults", () => {
         };
 
         const expected: IElementQueryResult = {
-            elements: [
+            items: [
                 {
                     title: "Bar",
                     uri: "some/uri",

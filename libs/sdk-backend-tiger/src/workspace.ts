@@ -9,6 +9,7 @@ import {
     IWorkspaceStylingService,
     NotImplemented,
     IWorkspaceCatalog,
+    IWorkspaceDataSetsService,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import { TigerExecution } from "./executionFactory";
@@ -38,5 +39,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public catalog(): IWorkspaceCatalog {
         throw new NotImplemented("catalog service not yet implemented");
+    }
+
+    public dataSets(): IWorkspaceDataSetsService {
+        throw new NotImplemented("dataSets service not yet implemented");
     }
 }

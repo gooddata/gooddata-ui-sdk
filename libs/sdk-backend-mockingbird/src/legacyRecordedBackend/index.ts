@@ -23,6 +23,8 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     IWorkspaceCatalog,
+    IWorkspaceDataSetsService,
+    IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -106,6 +108,9 @@ export function legacyRecordedBackend(
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index[id]);
         },
+        workspaces(): IWorkspaceQueryFactory {
+            throw new NotSupported("not yet supported");
+        },
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "recordedUser" });
         },
@@ -164,6 +169,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         catalog(): IWorkspaceCatalog {
+            throw new NotSupported("not supported");
+        },
+        dataSets(): IWorkspaceDataSetsService {
             throw new NotSupported("not supported");
         },
     };
@@ -295,6 +303,18 @@ function recordedWorkspaceMetadata(recordings: LegacyWorkspaceRecordings = {}): 
         getInsight(_id: string): Promise<IInsight> {
             throw new NotSupported("not supported");
         },
+        getInsights(_options) {
+            throw new NotSupported("not supported");
+        },
+        createInsight(_insight) {
+            throw new NotSupported("not supported");
+        },
+        updateInsight(_insight) {
+            throw new NotSupported("not supported");
+        },
+        deleteInsight(_id) {
+            throw new NotSupported("not supported");
+        },
         getVisualizationClass(_id: string): Promise<IVisualizationClass> {
             throw new NotSupported("not supported");
         },
@@ -329,7 +349,7 @@ function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecor
         const slice = recording.slice(offset, offset + limit);
 
         const emptyResult: IElementQueryResult = {
-            elements: [],
+            items: [],
             limit,
             offset: recording.length,
             totalCount: recording.length,
@@ -339,7 +359,7 @@ function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecor
         const hasNextPage = offset + limit < recording.length;
 
         return {
-            elements: slice,
+            items: slice,
             limit: Math.min(limit, slice.length),
             next() {
                 return hasNextPage ? queryWorker(offset + limit, limit) : Promise.resolve(emptyResult);

@@ -5,7 +5,7 @@
 ```ts
 
 // Warning: (ae-internal-missing-underscore) The name "GdcCatalog" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export namespace GdcCatalog {
     // (undocumented)
@@ -135,7 +135,7 @@ export namespace GdcCatalog {
 }
 
 // Warning: (ae-internal-missing-underscore) The name "GdcDashboardExport" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export namespace GdcDashboardExport {
     // (undocumented)
@@ -174,7 +174,7 @@ export namespace GdcDashboardExport {
 }
 
 // Warning: (ae-internal-missing-underscore) The name "GdcDashboardLayout" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export namespace GdcDashboardLayout {
     // (undocumented)
@@ -251,6 +251,95 @@ export namespace GdcDashboardLayout {
     export type SectionHeader = ISectionHeader | ISectionDescription;
     // (undocumented)
     export type Widget = IPersistedWidget;
+}
+
+// @public (undocumented)
+export namespace GdcDataSets {
+    export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+    export type DataSetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+    export interface IDataColumn {
+        // (undocumented)
+        column: {
+            name: string;
+            type: DataColumnType;
+            skip?: boolean;
+            format?: string;
+        };
+    }
+    export interface IDataHeader {
+        // (undocumented)
+        columns: IDataColumn[];
+        // (undocumented)
+        headerRowIndex?: number;
+    }
+    export interface IDataSet {
+        // (undocumented)
+        dataset: {
+            name: string;
+            dataHeader: IDataHeader;
+            dataSetId: string;
+            loadedRowCount: number;
+            dataSetLoadStatus: DataSetLoadStatus;
+            firstSuccessfulUpdate?: IDataSetLoadInfo;
+            lastSuccessfulUpdate?: IDataSetLoadInfo;
+            lastUpdate?: IDataSetLoadInfo;
+        };
+    }
+    export interface IDataSetLoadInfo {
+        // (undocumented)
+        created: string;
+        // (undocumented)
+        owner: IDataSetUser;
+        // (undocumented)
+        status: DataSetLoadStatus;
+    }
+    // (undocumented)
+    export interface IDataSetResponse {
+        // (undocumented)
+        datasets: {
+            items: IDataSet[];
+        };
+    }
+    export interface IDataSetUser {
+        // (undocumented)
+        fullName: string;
+        // (undocumented)
+        login: string;
+        // (undocumented)
+        profileUri: string;
+    }
+    export interface IDateDataSet {
+        // (undocumented)
+        availableDateAttributes?: IDateDataSetAttribute[];
+        // Warning: (ae-incompatible-release-tags) The symbol "meta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
+        //
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+        // (undocumented)
+        relevance: number;
+    }
+    export interface IDateDataSetAttribute {
+        // Warning: (ae-incompatible-release-tags) The symbol "attributeMeta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
+        //
+        // (undocumented)
+        attributeMeta: GdcMetadata.IObjectMeta;
+        // Warning: (ae-incompatible-release-tags) The symbol "defaultDisplayFormMeta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
+        //
+        // (undocumented)
+        defaultDisplayFormMeta: GdcMetadata.IObjectMeta;
+        // (undocumented)
+        type: string;
+    }
+    export interface IDateDataSetResponse {
+        // (undocumented)
+        dateDataSetsResponse: IDateDataSetResponseContent;
+    }
+    export interface IDateDataSetResponseContent {
+        // (undocumented)
+        dateDataSets: IDateDataSet[];
+        // (undocumented)
+        unavailableDateDataSetsCount?: number;
+    }
 }
 
 // @public
@@ -751,7 +840,7 @@ export namespace GdcExecution {
 }
 
 // Warning: (ae-internal-missing-underscore) The name "GdcExtendedDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export namespace GdcExtendedDateFilters {
     // (undocumented)
@@ -973,7 +1062,7 @@ export namespace GdcExtendedDateFilters {
 }
 
 // Warning: (ae-internal-missing-underscore) The name "GdcMetadata" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export namespace GdcMetadata {
     // (undocumented)
@@ -1033,7 +1122,7 @@ export namespace GdcMetadata {
         // (undocumented)
         contributor: string;
         // Warning: (ae-forgotten-export) The symbol "Timestamp" needs to be exported by the entry point index.d.ts
-        // 
+        //
         // (undocumented)
         created: Timestamp;
         // (undocumented)
@@ -1124,13 +1213,42 @@ export namespace GdcMetadata {
 }
 
 // @public (undocumented)
+export namespace GdcProject {
+    // (undocumented)
+    export interface IUserProject {
+        // (undocumented)
+        links: {
+            self: string;
+        };
+        // (undocumented)
+        projectDescription: string;
+        // (undocumented)
+        projectState: UserProjectState;
+        // (undocumented)
+        projectTitle: string;
+        // (undocumented)
+        userState: UserProjectState;
+    }
+    // (undocumented)
+    export interface IUserProjectsResponse {
+        // (undocumented)
+        userProjects: {
+            items: IUserProject[];
+            paging: GdcPaging.IBearPagingWithTotalCount;
+        };
+    }
+    // (undocumented)
+    export type UserProjectState = "ENABLED" | "DISABLED";
+}
+
+// @public (undocumented)
 export namespace GdcVisualizationClass {
     // (undocumented)
     export interface IVisualizationClass {
         // (undocumented)
         content: IVisualizationClassContent;
         // Warning: (ae-incompatible-release-tags) The symbol "meta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
-        // 
+        //
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
     }
@@ -1383,9 +1501,9 @@ export namespace GdcVisualizationObject {
         // (undocumented)
         content: IVisualizationObjectContent;
         // Warning: (ae-incompatible-release-tags) The symbol "meta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
-        // 
+        //
         // (undocumented)
-        meta: GdcMetadata.IObjectMeta;
+        meta: Partial<GdcMetadata.IObjectMeta>;
     }
     // (undocumented)
     export interface IVisualizationObjectContent {
@@ -1422,21 +1540,22 @@ export namespace GdcVisualizationObject {
 }
 
 // Warning: (ae-internal-missing-underscore) The name "getAttributesDisplayForms" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[];
 
 // Warning: (ae-internal-missing-underscore) The name "sanitizeDateFilters" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal (undocumented)
 export function sanitizeDateFilters(filters: GdcDashboardExport.FilterContextItem[]): GdcDashboardExport.FilterContextItem[];
 
 
 // Warnings were encountered during analysis:
-// 
+//
 // dist/meta/GdcMetadata.d.ts:44:13 - (ae-forgotten-export) The symbol "MaqlExpression" needs to be exported by the entry point index.d.ts
 // dist/meta/GdcMetadata.d.ts:45:13 - (ae-forgotten-export) The symbol "Uri" needs to be exported by the entry point index.d.ts
 // dist/meta/GdcMetadata.d.ts:78:17 - (ae-forgotten-export) The symbol "NumberAsString" needs to be exported by the entry point index.d.ts
+// dist/project/GdcProject.d.ts:19:13 - (ae-forgotten-export) The symbol "GdcPaging" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

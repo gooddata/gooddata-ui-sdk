@@ -2,13 +2,10 @@
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { isUri } from "@gooddata/gd-bear-client";
-import isEmpty = require("lodash/isEmpty");
-import omit = require("lodash/omit");
 import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
 import * as uuid from "uuid";
-import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
 
 /*
  * Helpers
@@ -44,57 +41,23 @@ const traverse = (obj: any, convert: StringTransformation): any => {
     }
 };
 
-interface IConversionResult {
-    convertedProperties: VisualizationProperties;
-    convertedReferences: GdcVisualizationObject.IReferenceItems;
+export interface IConversionData {
+    properties: VisualizationProperties;
+    references: GdcVisualizationObject.IReferenceItems;
 }
 
-type ConversionFunction = (
-    originalProperties: VisualizationProperties,
-    originalReferences: GdcVisualizationObject.IReferenceItems,
-    idGenerator: IdGenerator,
-) => IConversionResult;
+type ConversionFunction = (conversionData: IConversionData, idGenerator: IdGenerator) => IConversionData;
 
 export type ReferenceConverter = (
-    mdObject: GdcVisualizationObject.IVisualizationObject,
+    conversionData: IConversionData,
     idGenerator?: IdGenerator,
-) => GdcVisualizationObject.IVisualizationObject;
+) => IConversionData;
 
 const createConverter = (conversionFunction: ConversionFunction): ReferenceConverter => (
-    mdObject: GdcVisualizationObject.IVisualizationObject,
-    idGenerator: IdGenerator = defaultIdGenerator,
-): GdcVisualizationObject.IVisualizationObject => {
-    const { content } = mdObject;
-    if (!content) {
-        return mdObject;
-    }
-
-    const { properties } = content;
-    if (!properties) {
-        return mdObject;
-    }
-
-    // prepare result objects
-    const originalProperties = deserializeProperties(properties);
-    const originalReferences = content.references || {};
-
-    const { convertedProperties, convertedReferences } = conversionFunction(
-        originalProperties,
-        originalReferences,
-        idGenerator,
-    );
-
-    // set the new properties and references
-    const referencesProp = isEmpty(convertedReferences) ? undefined : { references: convertedReferences };
-
-    return {
-        ...mdObject,
-        content: {
-            ...(omit(mdObject.content, "references") as GdcVisualizationObject.IVisualizationObjectContent),
-            properties: serializeProperties(convertedProperties),
-            ...referencesProp,
-        },
-    };
+    conversionData,
+    idGenerator = defaultIdGenerator,
+) => {
+    return conversionFunction(conversionData, idGenerator);
 };
 
 /*
@@ -105,17 +68,15 @@ const convertReferenceToUri = (
 ): StringTransformation => value => getReferenceValue(value, references) || value;
 
 /**
- * Converts reference based values to actual URIs
+ * Converts URIs to reference based values
  *
- * @param mdObject The object to convert properties of
+ * @param conversionData Data to convert
  * @param [idGenerator=uuid] Function that returns unique ids
  */
-export const convertReferencesToUris = createConverter((originalProperties, originalReferences) => {
-    const convertedProperties = traverse(originalProperties, convertReferenceToUri(originalReferences));
-
+export const convertReferencesToUris = createConverter(({ references, properties }) => {
     return {
-        convertedProperties,
-        convertedReferences: originalReferences,
+        properties: traverse(properties, convertReferenceToUri(references)),
+        references,
     };
 });
 
@@ -149,17 +110,14 @@ const createUriToReferenceConverter = (
 /**
  * Converts URIs to reference based values
  *
- * @param mdObject The object to convert properties of
+ * @param conversionData Data to convert
  * @param [idGenerator=uuid] Function that returns unique ids
  */
-export const convertUrisToReferences = createConverter(
-    (originalProperties, originalReferences, idGenerator) => {
-        const converter = createUriToReferenceConverter(originalReferences, idGenerator);
-        const convertedProperties = traverse(originalProperties, converter.conversion);
+export const convertUrisToReferences = createConverter(({ properties, references }, idGenerator) => {
+    const converter = createUriToReferenceConverter(references, idGenerator);
 
-        return {
-            convertedProperties,
-            convertedReferences: converter.convertedReferences,
-        };
-    },
-);
+    return {
+        properties: traverse(properties, converter.conversion),
+        references: converter.convertedReferences,
+    };
+});

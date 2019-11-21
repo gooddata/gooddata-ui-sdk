@@ -26,6 +26,8 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
     constructor(username: string, password: string);
     // (undocumented)
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
     }
 
 

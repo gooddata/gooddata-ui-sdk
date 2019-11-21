@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { SortDirection, IAttributeElement } from "@gooddata/sdk-model";
+import { IPagedResource } from "../paging";
 
 /**
  * TODO: SDK8: add docs
@@ -44,11 +45,4 @@ export interface IElementQuery {
  * TODO: SDK8: add docs
  * @public
  */
-export interface IElementQueryResult {
-    readonly elements: IAttributeElement[];
-    readonly limit: number;
-    readonly offset: number;
-    readonly totalCount: number;
-
-    next(): Promise<IElementQueryResult>;
-}
+export interface IElementQueryResult extends IPagedResource<IAttributeElement> {}

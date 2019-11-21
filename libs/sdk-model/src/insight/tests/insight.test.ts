@@ -30,6 +30,7 @@ import {
     insightHasDataDefined,
     insightHasMeasures,
     insightMeasures,
+    insightId,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -243,6 +244,16 @@ describe("insightProperties", () => {
 
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightProperties(insightArg)).toEqual(expectedResult);
+    });
+});
+
+describe("insightId", () => {
+    it("should return the identifier", () => {
+        expect(insightId(EmptyInsight)).toEqual("random");
+    });
+    it("should throw if the insight is undefined", () => {
+        // @ts-ignore
+        expect(() => insightId(undefined)).toThrow();
     });
 });
 

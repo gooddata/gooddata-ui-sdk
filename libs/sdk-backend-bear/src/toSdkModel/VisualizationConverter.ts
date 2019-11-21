@@ -10,9 +10,11 @@ import {
     IAttribute,
     IMeasureFilter,
 } from "@gooddata/sdk-model";
+import isEmpty = require("lodash/isEmpty");
+import omit = require("lodash/omit");
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
-import { deserializeProperties } from "./PropertiesConverter";
+import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
 import { isUri } from "@gooddata/gd-bear-client";
 
 const convertAttributeElements = (items: string[]): AttributeElements => {
@@ -123,11 +125,42 @@ const convertBucket = (bucket: GdcVisualizationObject.IBucket): IBucket => {
     };
 };
 
+const resolveReferences = (
+    mdObject: GdcVisualizationObject.IVisualizationObject,
+): GdcVisualizationObject.IVisualizationObject => {
+    const { content } = mdObject;
+    if (!content) {
+        return mdObject;
+    }
+
+    const { properties } = content;
+    if (!properties) {
+        return mdObject;
+    }
+
+    const { properties: convertedProperties, references: convertedReferences } = convertReferencesToUris({
+        properties: deserializeProperties(properties),
+        references: content.references || {},
+    });
+
+    // set the new properties and references
+    const referencesProp = isEmpty(convertedReferences) ? undefined : { references: convertedReferences };
+
+    return {
+        ...mdObject,
+        content: {
+            ...(omit(mdObject.content, "references") as GdcVisualizationObject.IVisualizationObjectContent),
+            properties: serializeProperties(convertedProperties),
+            ...referencesProp,
+        },
+    };
+};
+
 export const convertVisualization = (
     visualization: GdcVisualizationObject.IVisualization,
     visualizationClassIdentifier: string,
 ): IInsight => {
-    const withResolvedReferences = convertReferencesToUris(visualization.visualizationObject);
+    const withResolvedReferences = resolveReferences(visualization.visualizationObject);
     const { content, meta } = withResolvedReferences;
     const parsedProperties = deserializeProperties(content.properties);
 
@@ -138,7 +171,7 @@ export const convertVisualization = (
             identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
             properties: { properties: parsedProperties },
             sorts: parsedProperties.sortItems || [],
-            title: meta.title,
+            title: meta.title!,
             uri: meta.uri,
             visualizationClassIdentifier,
         },

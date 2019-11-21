@@ -21,6 +21,8 @@ import {
     NoDataError,
     NotSupported,
     IWorkspaceCatalog,
+    IWorkspaceDataSetsService,
+    IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -83,6 +85,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         workspace(id: string): IAnalyticalWorkspace {
             return dummyWorkspace(id, config);
+        },
+        workspaces(): IWorkspaceQueryFactory {
+            throw new NotSupported("not supported");
         },
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "dummyUser" });
@@ -172,6 +177,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         catalog(): IWorkspaceCatalog {
+            throw new NotSupported("not supported");
+        },
+        dataSets(): IWorkspaceDataSetsService {
             throw new NotSupported("not supported");
         },
     };
