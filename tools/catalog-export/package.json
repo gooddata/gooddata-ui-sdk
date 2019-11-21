@@ -23,37 +23,13 @@
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "test": "jest --watch",
         "test-once": "jest",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "tsc --noEmit && npm run tslint && npm run prettier-check",
         "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
-    },
-    "jest": {
-        "preset": "ts-jest",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.ts"
-        ],
-        "testRegex": "(\\.test)\\.ts$",
-        "testPathIgnorePatterns": [
-            ",/node_modules/",
-            "/dist/"
-        ],
-        "collectCoverageFrom": [
-            "src/**/*.{ts}",
-            "!**/*.d.ts"
-        ],
-        "collectCoverage": false,
-        "coverageReporters": [
-            "html"
-        ],
-        "globals": {
-            "ts-jest": {
-                "packageJson": "package.json"
-            }
-        }
     },
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",

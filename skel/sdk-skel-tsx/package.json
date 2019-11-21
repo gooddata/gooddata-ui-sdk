@@ -21,6 +21,7 @@
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
         "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
@@ -29,34 +30,6 @@
         "validate-ci": "tsc --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "typings": "dist/index.d.ts",
-    "jest": {
-        "preset": "ts-jest",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.ts"
-        ],
-        "testRegex": "(\\.test)\\.(tsx?)$",
-        "testPathIgnorePatterns": [
-            ",/node_modules/",
-            "/dist/"
-        ],
-        "collectCoverageFrom": [
-            "src/**/*.{ts,tsx}",
-            "!**/*.d.ts"
-        ],
-        "collectCoverage": false,
-        "moduleNameMapper": {
-            "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/__mocks__/jestSvgStub.js",
-            "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts"
-        },
-        "coverageReporters": [
-            "html"
-        ],
-        "globals": {
-            "ts-jest": {
-                "packageJson": "package.json"
-            }
-        }
-    },
     "dependencies": {
         "lodash": "^4.17.15",
         "prop-types": "^15.6.0",

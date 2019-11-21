@@ -32,35 +32,6 @@
         "validate-ci": "tsc --noEmit -p tsconfig.build.json && npm run tslint-ci && npm run prettier-check"
     },
     "typings": "dist/index.d.ts",
-    "jest": {
-        "preset": "ts-jest",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.js"
-        ],
-        "testRegex": "(\\.test)\\.(tsx?)$",
-        "testPathIgnorePatterns": [
-            ",/node_modules/",
-            "/dist/",
-            "/src/_defunct/"
-        ],
-        "collectCoverageFrom": [
-            "src/**/*.{ts,tsx}",
-            "!**/*.d.ts"
-        ],
-        "collectCoverage": false,
-        "moduleNameMapper": {
-            "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/jestSvgStub.js",
-            "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts"
-        },
-        "coverageReporters": [
-            "html"
-        ],
-        "globals": {
-            "ts-jest": {
-                "packageJson": "package.json"
-            }
-        }
-    },
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",

@@ -3,5 +3,5 @@ const ciBase = require("../../common/config/jest/jest.config.ci.base.js");
 
 module.exports = {
     ...ciBase,
-    testPathIgnorePatterns: [",/node_modules/", "/dist/", "/src/_defunct/"],
+    collectCoverageFrom: ["src/**/*.ts", "test/**/*.ts", "!**/*.d.ts", "!src/index.ts"],
 };

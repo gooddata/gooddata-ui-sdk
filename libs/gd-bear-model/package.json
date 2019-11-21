@@ -11,7 +11,7 @@
         "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
         "test": "jest --watch",
         "test-once": "jest",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.json",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "validate": "tsc --noEmit && npm run tslint",
@@ -28,27 +28,6 @@
         "README.md"
     ],
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-model",
-    "jest": {
-        "preset": "ts-jest",
-        "setupFilesAfterEnv": [
-            "<rootDir>/jest.setup.js"
-        ],
-        "testRegex": "(\\.test)\\.(ts)$",
-        "collectCoverageFrom": [
-            "src/**/*.{ts}",
-            "!**/*.d.ts",
-            "!src/index.ts"
-        ],
-        "collectCoverage": false,
-        "coverageReporters": [
-            "html"
-        ],
-        "globals": {
-            "ts-jest": {
-                "packageJson": "package.json"
-            }
-        }
-    },
     "keywords": [
         "typescript",
         "gooddata",

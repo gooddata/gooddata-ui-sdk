@@ -1,11 +1,6 @@
-const pkg = require("./package.json");
+const ciBase = require("../../common/config/jest/jest.config.ci.base.js");
 
-const config = {
-    ...pkg.jest,
-    collectCoverage: true,
-    coverageDirectory: "<rootDir>/ci/results/coverage",
-    coverageReporters: ["json", "cobertura", "lcov"],
-    testResultsProcessor: "<rootDir>/node_modules/jest-junit",
+module.exports = {
+    ...ciBase,
+    testRegex: "/tests/(api-regression).*\\.test\\.tsx?$",
 };
-
-module.exports = config;
