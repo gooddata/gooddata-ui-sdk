@@ -4,6 +4,136 @@
 
 ```ts
 
+// Warning: (ae-internal-missing-underscore) The name "GdcCatalog" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export namespace GdcCatalog {
+    // (undocumented)
+    export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
+    // (undocumented)
+    export type CatalogItemType = "attribute" | "metric" | "fact";
+    // (undocumented)
+    export interface ICatalogAttribute extends ICatalogItemBase {
+        // (undocumented)
+        readonly links: {
+            readonly self: string;
+            readonly defaultDisplayForm: string;
+        };
+        // (undocumented)
+        readonly type: "attribute";
+    }
+    // (undocumented)
+    export interface ICatalogFact extends ICatalogItemBase {
+        // (undocumented)
+        readonly type: "fact";
+    }
+    // (undocumented)
+    export interface ICatalogGroup {
+        // (undocumented)
+        readonly identifier: string;
+        // (undocumented)
+        readonly title: string;
+    }
+    // (undocumented)
+    export interface ICatalogItemBase {
+        // (undocumented)
+        readonly groups: string[];
+        // (undocumented)
+        readonly identifier: string;
+        // (undocumented)
+        readonly links: {
+            self: string;
+        };
+        // (undocumented)
+        readonly production: boolean;
+        // (undocumented)
+        readonly summary: string;
+        // (undocumented)
+        readonly title: string;
+        // (undocumented)
+        readonly type: CatalogItemType;
+    }
+    // (undocumented)
+    export interface ICatalogMetric extends ICatalogItemBase {
+        // (undocumented)
+        readonly expression: string;
+        // (undocumented)
+        readonly format: string;
+        // (undocumented)
+        readonly type: "metric";
+    }
+    // (undocumented)
+    export interface ILoadAvailableCatalogItemsParams {
+        // (undocumented)
+        catalogQueryRequest: {
+            bucketItems: ItemDescription[];
+            types?: CatalogItemType[];
+        };
+    }
+    // (undocumented)
+    export interface ILoadAvailableCatalogItemsResponse {
+        // (undocumented)
+        catalogAvailableItems: {
+            items: string[];
+        };
+    }
+    // (undocumented)
+    export interface ILoadCatalogGroupsParams {
+        // (undocumented)
+        readonly csvDataSets?: string[];
+        // (undocumented)
+        readonly excludeWithTags?: string[];
+        // (undocumented)
+        readonly includeWithTags?: string[];
+        // (undocumented)
+        readonly production?: 1 | 0;
+    }
+    // (undocumented)
+    export interface ILoadCatalogGroupsResponse {
+        // (undocumented)
+        catalogGroups: ICatalogGroup[];
+    }
+    // (undocumented)
+    export interface ILoadCatalogItemsParams {
+        // (undocumented)
+        readonly csvDataSets?: string[];
+        // (undocumented)
+        readonly excludeWithTags?: string[];
+        // (undocumented)
+        readonly includeWithTags?: string[];
+        // (undocumented)
+        readonly limit?: number;
+        // (undocumented)
+        readonly offset?: number;
+        // (undocumented)
+        readonly production?: 1 | 0;
+        // (undocumented)
+        readonly types?: CatalogItemType[];
+    }
+    // (undocumented)
+    export interface ILoadCatalogItemsResponse {
+        // (undocumented)
+        catalogItems: {
+            items: CatalogItem[];
+            paging: {
+                offset: number;
+                limit: number;
+            };
+        };
+    }
+    // (undocumented)
+    export function isCatalogAttribute(item: CatalogItem): item is ICatalogAttribute;
+    // (undocumented)
+    export function isCatalogFact(item: CatalogItem): item is ICatalogFact;
+    // (undocumented)
+    export function isCatalogMetric(item: CatalogItem): item is ICatalogMetric;
+    // (undocumented)
+    export type ItemDescription = {
+        uri: string;
+    };
+    {};
+}
+
 // Warning: (ae-internal-missing-underscore) The name "GdcDashboardExport" should be prefixed with an underscore because the declaration is marked as @internal
 // 
 // @internal (undocumented)
@@ -726,10 +856,8 @@ export namespace GdcExtendedDateFilters {
     export interface IDateFilterConfig {
         // (undocumented)
         content: IDateFilterConfigContent;
-        // Warning: (ae-forgotten-export) The symbol "IObjectMeta" needs to be exported by the entry point index.d.ts
-        // 
         // (undocumented)
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
     }
     // (undocumented)
     export interface IDateFilterConfigContent {
@@ -844,14 +972,167 @@ export namespace GdcExtendedDateFilters {
     export type RelativePresetType = "relativePreset";
 }
 
+// Warning: (ae-internal-missing-underscore) The name "GdcMetadata" should be prefixed with an underscore because the declaration is marked as @internal
+// 
+// @internal (undocumented)
+export namespace GdcMetadata {
+    // (undocumented)
+    export interface IAttribute extends IMetadataObject {
+        // (undocumented)
+        content: {
+            displayForms: IAttributeDisplayForm[];
+        };
+    }
+    // (undocumented)
+    export interface IAttributeDisplayForm extends IMetadataObject {
+        // (undocumented)
+        content: {
+            expression: MaqlExpression;
+            formOf: Uri;
+            ldmexpression?: string;
+            type?: string;
+            default?: number;
+        };
+        // (undocumented)
+        links: {
+            elements: string;
+        };
+    }
+    // (undocumented)
+    export interface IAttributeElement {
+        // (undocumented)
+        title: string;
+        // (undocumented)
+        uri: string;
+    }
+    // (undocumented)
+    export interface IFact extends IMetadataObject {
+        // (undocumented)
+        content: any;
+    }
+    // (undocumented)
+    export interface IMetadataObject {
+        // (undocumented)
+        meta: IObjectMeta;
+    }
+    // (undocumented)
+    export interface IMetric extends IMetadataObject {
+        // (undocumented)
+        content: {
+            expression: MaqlExpression;
+        };
+    }
+    // (undocumented)
+    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm;
+    // (undocumented)
+    export interface IObjectMeta {
+        // (undocumented)
+        author: string;
+        // (undocumented)
+        category: ObjectCategory;
+        // (undocumented)
+        contributor: string;
+        // Warning: (ae-forgotten-export) The symbol "Timestamp" needs to be exported by the entry point index.d.ts
+        // 
+        // (undocumented)
+        created: Timestamp;
+        // (undocumented)
+        deprecated: "0" | "1";
+        // (undocumented)
+        flags?: string[];
+        // (undocumented)
+        identifier: string;
+        // (undocumented)
+        isProduction: 1 | 0;
+        // (undocumented)
+        locked?: boolean;
+        // (undocumented)
+        projectTemplate?: string;
+        // (undocumented)
+        sharedWithSomeone?: boolean;
+        // (undocumented)
+        summary: string;
+        // (undocumented)
+        tags: string;
+        // (undocumented)
+        title: string;
+        // (undocumented)
+        unlisted?: boolean;
+        // (undocumented)
+        updated: Timestamp;
+        // (undocumented)
+        uri: string;
+    }
+    // (undocumented)
+    export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute;
+    // (undocumented)
+    export function isWrappedAttributeDisplayForm(object: WrappedObject): object is IWrappedAttributeDisplayForm;
+    // (undocumented)
+    export function isWrappedFact(object: WrappedObject): object is IWrappedFact;
+    // (undocumented)
+    export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric;
+    // (undocumented)
+    export interface IWrappedAttribute {
+        // (undocumented)
+        attribute: IAttribute;
+    }
+    // (undocumented)
+    export interface IWrappedAttributeDisplayForm {
+        // (undocumented)
+        attributeDisplayForm: IAttributeDisplayForm;
+    }
+    // (undocumented)
+    export interface IWrappedAttributeElements {
+        // (undocumented)
+        attributeElements: {
+            elementsMeta: {
+                count: number;
+                mode: "includeuris";
+                filter: string;
+                records: NumberAsString;
+                prompt: string;
+                attribute: Uri;
+                order: "asc" | "desc";
+                attributeDisplayForm: Uri;
+                offset: NumberAsString;
+            };
+            elements: IAttributeElement[];
+            paging: {
+                next: null | string;
+                count: number;
+                total: NumberAsString;
+                offset: NumberAsString;
+            };
+        };
+    }
+    // (undocumented)
+    export interface IWrappedFact {
+        // (undocumented)
+        fact: IFact;
+    }
+    // (undocumented)
+    export interface IWrappedMetric {
+        // (undocumented)
+        metric: IMetric;
+    }
+    // (undocumented)
+    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget";
+    // (undocumented)
+    export function unwrapMetadataObject(object: WrappedObject): IObject;
+    // (undocumented)
+    export type WrappedObject = IWrappedAttribute | IWrappedMetric | IWrappedFact | IWrappedAttributeDisplayForm;
+}
+
 // @public (undocumented)
 export namespace GdcVisualizationClass {
     // (undocumented)
     export interface IVisualizationClass {
         // (undocumented)
         content: IVisualizationClassContent;
+        // Warning: (ae-incompatible-release-tags) The symbol "meta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
+        // 
         // (undocumented)
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
     }
     // (undocumented)
     export interface IVisualizationClassContent {
@@ -1101,8 +1382,10 @@ export namespace GdcVisualizationObject {
     export interface IVisualizationObject {
         // (undocumented)
         content: IVisualizationObjectContent;
+        // Warning: (ae-incompatible-release-tags) The symbol "meta" is marked as @public, but its signature references "GdcMetadata" which is marked as @internal
+        // 
         // (undocumented)
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
     }
     // (undocumented)
     export interface IVisualizationObjectContent {
@@ -1148,6 +1431,12 @@ export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent)
 // @internal (undocumented)
 export function sanitizeDateFilters(filters: GdcDashboardExport.FilterContextItem[]): GdcDashboardExport.FilterContextItem[];
 
+
+// Warnings were encountered during analysis:
+// 
+// dist/meta/GdcMetadata.d.ts:44:13 - (ae-forgotten-export) The symbol "MaqlExpression" needs to be exported by the entry point index.d.ts
+// dist/meta/GdcMetadata.d.ts:45:13 - (ae-forgotten-export) The symbol "Uri" needs to be exported by the entry point index.d.ts
+// dist/meta/GdcMetadata.d.ts:78:17 - (ae-forgotten-export) The symbol "NumberAsString" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

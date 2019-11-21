@@ -23,6 +23,7 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
+    IWorkspaceCatalog,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -36,6 +37,7 @@ import {
     IInsight,
     IVisualizationClass,
     SortItem,
+    IMeasureExpressionToken,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test" };
@@ -159,6 +161,9 @@ function recordedWorkspace(
             return recordedWorkspaceMetadata(recordings);
         },
         styling(): IWorkspaceStylingService {
+            throw new NotSupported("not supported");
+        },
+        catalog(): IWorkspaceCatalog {
             throw new NotSupported("not supported");
         },
     };
@@ -294,6 +299,9 @@ function recordedWorkspaceMetadata(recordings: LegacyWorkspaceRecordings = {}): 
             throw new NotSupported("not supported");
         },
         getVisualizationClasses(): Promise<IVisualizationClass[]> {
+            throw new NotSupported("not supported");
+        },
+        getMeasureExpressionTokens(_id: string): Promise<IMeasureExpressionToken[]> {
             throw new NotSupported("not supported");
         },
     };

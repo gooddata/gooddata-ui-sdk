@@ -48,6 +48,13 @@ export { IWorkspaceSettingsService, IWorkspaceSettings } from "./featureFlags";
 export { IWorkspaceMetadata } from "./metadata";
 
 export {
+    IWorkspaceCatalog,
+    ILoadCatalogGroupsOptions,
+    ILoadCatalogItemsOptions,
+    ILoadAvailableCatalogItemsOptions,
+} from "./catalog";
+
+export {
     IElementQueryFactory,
     IElementQueryResult,
     IElementQuery,

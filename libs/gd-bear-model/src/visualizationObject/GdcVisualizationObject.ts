@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IObjectMeta } from "../meta/Meta";
+import { GdcMetadata } from "../meta/GdcMetadata";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -198,7 +198,7 @@ export namespace GdcVisualizationObject {
     }
 
     export interface IVisualizationObject {
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
         content: IVisualizationObjectContent;
     }
 

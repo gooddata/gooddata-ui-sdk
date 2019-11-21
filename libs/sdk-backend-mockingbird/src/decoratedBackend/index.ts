@@ -18,6 +18,7 @@ import {
     IExportResult,
     IExportConfig,
     IDataView,
+    IWorkspaceCatalog,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -108,6 +109,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public styling(): IWorkspaceStylingService {
         return this.decorated.styling();
+    }
+
+    public catalog(): IWorkspaceCatalog {
+        return this.decorated.catalog();
     }
 }
 

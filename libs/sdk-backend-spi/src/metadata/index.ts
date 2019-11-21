@@ -1,6 +1,11 @@
 // (C) 2019 GoodData Corporation
 
-import { IVisualizationClass, IInsight, IAttributeDisplayForm } from "@gooddata/sdk-model";
+import {
+    IVisualizationClass,
+    IInsight,
+    IAttributeDisplayForm,
+    IMeasureExpressionToken,
+} from "@gooddata/sdk-model";
 
 /**
  * TODO: SDK8: add public doc
@@ -17,4 +22,10 @@ export interface IWorkspaceMetadata {
      * @public
      */
     getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
+
+    /**
+     * Get measure expression tokens for provided measure identifier
+     * @param id - idenrifier of the measure
+     */
+    getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
 }

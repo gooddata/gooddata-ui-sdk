@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import { IObjectMeta } from "../meta/Meta";
+// (C) 2007-2019 GoodData Corporation
+import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
  * @public
@@ -14,7 +14,7 @@ export namespace GdcVisualizationClass {
     }
 
     export interface IVisualizationClass {
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
         content: IVisualizationClassContent;
     }
 

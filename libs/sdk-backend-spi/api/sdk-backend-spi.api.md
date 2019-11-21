@@ -5,16 +5,20 @@
 ```ts
 
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-model';
+import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
@@ -164,6 +168,7 @@ export interface IAnalyticalBackend {
 
 // @public
 export interface IAnalyticalWorkspace {
+    catalog(): IWorkspaceCatalog;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
     metadata(): IWorkspaceMetadata;
@@ -313,6 +318,40 @@ export interface IExportResult {
     uri: string;
 }
 
+// @public (undocumented)
+export interface ILoadAvailableCatalogItemsOptions {
+    // (undocumented)
+    readonly identifiers: string[];
+    // (undocumented)
+    readonly types?: CatalogItemType[];
+}
+
+// @public (undocumented)
+export interface ILoadCatalogGroupsOptions {
+    // (undocumented)
+    readonly csvDataSets?: string[];
+    // (undocumented)
+    readonly excludeWithTags?: string[];
+    // (undocumented)
+    readonly includeWithTags?: string[];
+    // (undocumented)
+    readonly production?: 1 | 0;
+}
+
+// @public (undocumented)
+export interface ILoadCatalogItemsOptions {
+    // (undocumented)
+    readonly csvDataSets?: string[];
+    // (undocumented)
+    readonly excludeWithTags?: string[];
+    // (undocumented)
+    readonly includeWithTags?: string[];
+    // (undocumented)
+    readonly production?: 1 | 0;
+    // (undocumented)
+    readonly types?: CatalogItemType[];
+}
+
 // @public
 export interface IMeasureDescriptor {
     // (undocumented)
@@ -431,10 +470,21 @@ export interface ITotalDescriptor {
 }
 
 // @public
+export interface IWorkspaceCatalog {
+    // (undocumented)
+    loadAvailableItemsIdentifiers(options: ILoadAvailableCatalogItemsOptions): Promise<string[]>;
+    // (undocumented)
+    loadGroups(options?: ILoadCatalogGroupsOptions): Promise<ICatalogGroup[]>;
+    // (undocumented)
+    loadItems(options?: ILoadCatalogItemsOptions): Promise<CatalogItem[]>;
+}
+
+// @public
 export interface IWorkspaceMetadata {
     getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(id: string): Promise<IInsight>;
+    getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
     // (undocumented)
     getVisualizationClass(id: string): Promise<IVisualizationClass>;
     // (undocumented)
