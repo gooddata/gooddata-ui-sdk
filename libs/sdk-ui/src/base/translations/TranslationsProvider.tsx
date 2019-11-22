@@ -10,7 +10,7 @@ export interface ITranslationsProviderProps {
 export interface ITranslationsComponentProps {
     numericSymbols: string[];
     emptyHeaderString: string;
-    intl: InjectedIntl
+    intl: InjectedIntl;
 }
 
 export class TranslationsProvider extends React.PureComponent<
@@ -20,7 +20,7 @@ export class TranslationsProvider extends React.PureComponent<
         const props: ITranslationsComponentProps = {
             numericSymbols: this.getNumericSymbols(),
             emptyHeaderString: this.getEmptyHeaderString(),
-            intl: this.props.intl
+            intl: this.props.intl,
         };
         return this.props.children(props);
     }

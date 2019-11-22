@@ -28,8 +28,8 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "check-circular-deps": "madge --circular --extensions ts ./src",
-        "validate": "tsc --noEmit -p tsconfig.build.json && npm run tslint && npm run prettier-check",
-        "validate-ci": "tsc --noEmit -p tsconfig.build.json && npm run tslint-ci && npm run prettier-check"
+        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {

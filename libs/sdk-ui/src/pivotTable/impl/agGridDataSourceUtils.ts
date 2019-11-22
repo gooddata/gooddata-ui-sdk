@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
-import { GridApi } from 'ag-grid-community';
-import ApiWrapper from './agGridApiWrapper';
-import { IGridTotalsRow } from './agGridTypes';
-import isEqual = require('lodash/isEqual');
+import { GridApi } from "ag-grid-community";
+import ApiWrapper from "./agGridApiWrapper";
+import { IGridTotalsRow } from "./agGridTypes";
+import isEqual = require("lodash/isEqual");
 
 export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) => {
     const currentTotalsCount = gridApi.getPinnedBottomRowCount();
