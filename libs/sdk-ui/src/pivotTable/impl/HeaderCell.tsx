@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import * as classNames from "classnames";
 
 import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
-import { ITotal, SortDirection } from '@gooddata/sdk-model';
+import { ITotal, SortDirection } from "@gooddata/sdk-model";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";
