@@ -1,6 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
-import { ExecuteAFM } from "@gooddata/typings";
+import { AFM, ExecuteAFM } from "@gooddata/typings";
+import compact from "lodash/compact";
+import isEmpty from "lodash/isEmpty";
 import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
+import {
+    convertAbsoluteDateFilter,
+    convertRelativeDateFilter,
+} from "../DataLayer/converters/FilterConverter";
+import { convertFilter as convertAttributeFilter } from "../execution/execute-afm.convert";
 import { IBaseExportConfig, IExportConfig, IExportResponse } from "../interfaces";
 import { ApiResponseError, XhrModule, ApiResponse } from "../xhr";
 import { handleHeadPolling, IPollingOptions } from "../util";
@@ -52,7 +59,10 @@ export class ReportModule {
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
-                exportConfig,
+                exportConfig: {
+                    ...exportConfig,
+                    ...this.sanitizeExportConfig(exportConfig),
+                },
             },
         };
 
@@ -63,6 +73,22 @@ export class ReportModule {
                 handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, isExportFinished, pollingOptions),
             )
             .catch(this.handleExportResultError);
+    }
+
+    private sanitizeExportConfig(exportConfig: IExportConfig): IExtendedExportConfig {
+        const { afm } = exportConfig;
+
+        if (afm && !isEmpty(afm.filters)) {
+            const sanitizedAfm: ExecuteAFM.IAfm = {
+                ...afm,
+                filters: this.sanitizeFilters(afm.filters),
+            };
+            return {
+                ...exportConfig,
+                afm: sanitizedAfm,
+            };
+        }
+        return exportConfig;
     }
 
     private handleExportResultError = (error: ApiResponseError | Error): Promise<Error> => {
@@ -81,5 +107,20 @@ export class ReportModule {
 
     private isApiResponseError(error: ApiResponseError | Error): error is ApiResponseError {
         return (error as ApiResponseError).response !== undefined;
+    }
+
+    private sanitizeFilters(filters?: AFM.CompatibilityFilter[]): ExecuteAFM.CompatibilityFilter[] {
+        return filters ? compact(filters.map(this.sanitizeFilter)) : [];
+    }
+
+    private sanitizeFilter(filter: AFM.CompatibilityFilter): ExecuteAFM.CompatibilityFilter | null {
+        if (AFM.isAttributeFilter(filter)) {
+            return convertAttributeFilter(filter);
+        } else if (AFM.isAbsoluteDateFilter(filter)) {
+            return convertAbsoluteDateFilter(filter);
+        } else if (AFM.isRelativeDateFilter(filter)) {
+            return convertRelativeDateFilter(filter);
+        }
+        return filter;
     }
 }
