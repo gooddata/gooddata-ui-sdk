@@ -30,6 +30,15 @@ describe("withEventing backend", () => {
         expect(successfulExecute).toHaveBeenCalled();
     });
 
+    it("emits successfulExecute even if no data", async () => {
+        const successfulExecute = jest.fn();
+        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), { successfulExecute });
+
+        await prepareExecution(backend).execute();
+
+        expect(successfulExecute).toHaveBeenCalled();
+    });
+
     it("emits successfulResultReadAll", async () => {
         const successfulResultReadAll = jest.fn();
         const backend = withEventing(dummyBackend(), { successfulResultReadAll });
@@ -37,5 +46,42 @@ describe("withEventing backend", () => {
         await (await prepareExecution(backend).execute()).readAll();
 
         expect(successfulResultReadAll).toHaveBeenCalled();
+    });
+
+    it("emits successfulResultReadWindow", async () => {
+        const successfulResultReadWindow = jest.fn();
+        const backend = withEventing(dummyBackend(), { successfulResultReadWindow });
+
+        await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
+
+        expect(successfulResultReadWindow).toHaveBeenCalledWith([1, 2], [100, 1000], expect.any(Object));
+    });
+
+    it("emits failedResultReadAll", async () => {
+        const failedResultReadAll = jest.fn();
+        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), { failedResultReadAll });
+
+        try {
+            await (await prepareExecution(backend).execute()).readAll();
+        } catch (e) {
+            // expected to throw
+        }
+
+        expect(failedResultReadAll).toHaveBeenCalled();
+    });
+
+    it("emits failedResultReadWindow", async () => {
+        const failedResultReadWindow = jest.fn();
+        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), {
+            failedResultReadWindow,
+        });
+
+        try {
+            await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
+        } catch (e) {
+            // expected to throw
+        }
+
+        expect(failedResultReadWindow).toHaveBeenCalledWith([1, 2], [100, 1000], expect.any(Object));
     });
 });
