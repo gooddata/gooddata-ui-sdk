@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { has } from "lodash";
-import { IExecutionRecording } from "../recordings/execution";
 
 const NonAlphaNumRegex = /[^\w\d$]+/g;
 
@@ -58,13 +57,6 @@ export function createUniqueVariableName(title: string, scope: TakenNamesSet = {
     const variableName = titleToVariableName(title);
 
     return createUniqueName(variableName, scope);
-}
-
-/**
- * Given execution recording, return unique variable name for the recording.
- */
-export function executionRecordingName(rec: IExecutionRecording): string {
-    return `fp_${rec.fingerprint}`;
 }
 
 /**

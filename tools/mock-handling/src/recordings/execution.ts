@@ -1,31 +1,32 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
-import {
-    IAnalyticalBackend,
-    IDataView,
-    IExecutionFactory,
-    IExecutionResult,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
-import { logInfo, logWarn } from "../cli/loggers";
-import { DataRecorderConfig } from "../base/types";
-import pmap from "p-map";
-import pick = require("lodash/pick");
+import { logWarn } from "../cli/loggers";
+import { IRecording, readJsonSync, RecordingIndexEntry, writeAsJsonSync } from "./common";
 import isArray = require("lodash/isArray");
+import isObject = require("lodash/isObject");
+import pickBy = require("lodash/pickBy");
 
-export const ExecutionRecordingDir = "executions";
-export const ExecutionDefinitionFile = "definition.json";
-export const ScenariosFile = "scenarios.json";
-export const ExecutionResultFile = "executionResult.json";
-export const DataViewFile = "dataView_all.json";
+//
+// internal constants & types
+//
 
+const DataViewRequestsFile = "requests.json";
+const ScenariosFile = "scenarios.json";
+const ExecutionResultFile = "executionResult.json";
+const DataViewAllFile = "dataView_all.json";
+const DataViewWindowFile = (win: RequestedWindow) => `dataView_${dataViewWindowId(win)}.json`;
+const dataViewWindowId = (win: RequestedWindow) => `o${win.offset.join("_")}s${win.size.join("_")}`;
+const DefaultDataViewRequests: DataViewRequests = {
+    allData: true,
+};
 /**
  * Properties of execution result to serialize into the recording; everything else is functions or derivable / provided at runtime
  */
 const ExecutionResultPropsToSerialize: Array<keyof IExecutionResult> = ["dimensions"];
-
 /**
  * Properties of data view to serialize into the recording; everything else is functions or derivable / provided at runtime
  */
@@ -38,66 +39,39 @@ const DataViewPropsToSerialize: Array<keyof IDataView> = [
     "totalCount",
 ];
 
-export type ScenarioDescriptor = {
-    vis: string;
-    scenario: string;
+type DataViewRequests = {
+    allData?: boolean;
+    windows?: RequestedWindow[];
 };
 
-export interface IExecutionRecording {
-    directory: string;
-    fingerprint: string;
-    definition: IExecutionDefinition;
-    definitionFile: string;
-    resultFile: string;
-    dataViewFile: string;
-    hasRecordedData: boolean;
-    scenarios: ScenarioDescriptor[];
+type RequestedWindow = {
+    offset: number[];
+    size: number[];
+};
 
-    makeRecording(execFactory: IExecutionFactory, workspace: string): Promise<IExecutionRecording>;
-}
-
-export type OnRecordingCaptured = (recording: IExecutionRecording, error?: string) => void;
+type DataViewFiles = {
+    [filename: string]: RequestedWindow | "all";
+};
 
 //
+// loading and verifying data from filesystem
 //
-//
 
-function isValidExecutionTask(obj: any): obj is IExecutionRecording {
-    return obj !== null;
+function loadDefinition(directory: string): [IExecutionDefinition, string] {
+    const fingerprint = path.basename(directory);
+    const definition = readJsonSync(path.join(directory, ExecutionDefinitionFile)) as IExecutionDefinition;
+    const calculatedFingerprint = defFingerprint(definition);
+
+    if (calculatedFingerprint !== fingerprint) {
+        logWarn(`The actual fingerprint ('${calculatedFingerprint}') of the execution definition stored in ${directory} does not match the directory in which it is stored. 
+        If you created this definition manually then you do not have to worry about this warning. If this definition is supposed to be created
+        by automation (such as the write-exec-defs scripts) then it indicates manual tampering.`);
+    }
+
+    return [definition, calculatedFingerprint];
 }
 
-function serializeExecutionResult(result: IExecutionResult): any {
-    return JSON.stringify(pick(result, ExecutionResultPropsToSerialize), null, 4);
-}
-
-function serializeDataView(dataView: IDataView): any {
-    return JSON.stringify(pick(dataView, DataViewPropsToSerialize), null, 4);
-}
-
-async function makeRecording(
-    rec: IExecutionRecording,
-    execFactory: IExecutionFactory,
-    workspace: string,
-): Promise<IExecutionRecording> {
-    // exec definitions are stored with some test workspace in them; make sure the exec definition that will actually
-    //  contain ID of workspace specified by the user
-    const workspaceBoundDef: IExecutionDefinition = {
-        ...rec.definition,
-        workspace,
-    };
-
-    const result: IExecutionResult = await execFactory.forDefinition(workspaceBoundDef).execute();
-    const allDataView: IDataView = await result.readAll();
-
-    fs.writeFileSync(rec.resultFile, serializeExecutionResult(result), { encoding: "utf-8" });
-    fs.writeFileSync(rec.dataViewFile, serializeDataView(allDataView), { encoding: "utf-8" });
-
-    return {
-        ...rec,
-        hasRecordedData: true,
-    };
-}
-
+// TODO: replace these weak validations with proper json-schema validation
 function loadScenarios(directory: string): ScenarioDescriptor[] {
     const scenariosFile = path.join(directory, ScenariosFile);
 
@@ -136,105 +110,159 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
     }
 }
 
-function load(definitionFile: string): IExecutionRecording | null {
-    const directory = path.dirname(definitionFile);
-    let fingerprint = path.basename(directory);
-    const definition = JSON.parse(
-        fs.readFileSync(definitionFile, { encoding: "utf-8" }),
-    ) as IExecutionDefinition;
-    const calculatedFingerprint = defFingerprint(definition);
+// TODO: replace these weak validations with proper json-schema validation
+function loadDataViewRequests(directory: string): DataViewRequests {
+    const requestsFile = path.join(directory, DataViewRequestsFile);
 
-    if (defFingerprint(definition) !== fingerprint) {
-        logWarn(`The actual fingerprint ('${calculatedFingerprint}') of the execution definition stored in ${directory} does not match the directory in which it is stored. 
-        If you created this definition manually then you do not have to worry about this warning. If this definition is supposed to be created
-        by automation (such as the write-exec-defs scripts) then it indicates manual tampering.`);
-
-        fingerprint = calculatedFingerprint;
+    if (!fs.existsSync(requestsFile)) {
+        return DefaultDataViewRequests;
     }
 
-    const resultFile = path.join(directory, ExecutionResultFile);
-    const dataViewFile = path.join(directory, DataViewFile);
+    try {
+        const requests = JSON.parse(fs.readFileSync(requestsFile, { encoding: "utf-8" })) as DataViewRequests;
 
-    const executionTask = {
-        directory,
-        fingerprint,
-        definition,
-        definitionFile,
-        resultFile,
-        dataViewFile,
-        scenarios: loadScenarios(directory),
-        hasRecordedData: fs.existsSync(resultFile) && fs.existsSync(dataViewFile),
-        makeRecording: async (execFactory: IExecutionFactory, workspace: string) =>
-            makeRecording(executionTask, execFactory, workspace),
-    };
+        if (!isObject(requests) || (requests.allData === undefined && requests.windows === undefined)) {
+            logWarn(
+                `The ${DataViewRequestsFile} in ${directory} does not contain valid data view request definitions. . It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
+            );
 
-    return executionTask;
-}
-
-function locateDefinitions(executionsDir: string): string[] {
-    const entries = fs.readdirSync(executionsDir, { withFileTypes: true, encoding: "utf-8" });
-    const files = [];
-
-    for (const entry of entries) {
-        const fullPath = path.join(executionsDir, entry.name);
-
-        if (entry.isDirectory()) {
-            files.push(...locateDefinitions(fullPath));
-        } else if (entry.isFile() && entry.name === ExecutionDefinitionFile) {
-            files.push(fullPath);
+            return DefaultDataViewRequests;
         }
-    }
 
-    return files;
-}
-
-export async function discoverExecutionRecordings(recordingDir: string): Promise<IExecutionRecording[]> {
-    const executionsDir = path.join(recordingDir, ExecutionRecordingDir);
-
-    if (!fs.existsSync(executionsDir)) {
-        logInfo(
-            `Recordings directory contains no '${ExecutionRecordingDir}' subdir - assuming no executions to record`,
-        );
-
-        return [];
-    } else if (!fs.statSync(executionsDir).isDirectory()) {
+        // feeling lucky.. the file may still be messed up
+        return requests;
+    } catch (e) {
         logWarn(
-            `Recordings directory contains '${ExecutionRecordingDir}' but it is not a directory - this is likely a problem in your recordings organization. No execution recordings will be captured.`,
+            `Unable to read or parse ${DataViewRequestsFile} in ${directory}: ${e}; it is likely that the file is malformed. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
         );
 
-        return [];
+        return DefaultDataViewRequests;
     }
-
-    return (await locateDefinitions(executionsDir)).map(load).filter(isValidExecutionTask);
 }
 
-export async function populateExecutionRecordings(
-    recordings: IExecutionRecording[],
-    backend: IAnalyticalBackend,
-    config: DataRecorderConfig,
-    onCaptured: OnRecordingCaptured,
-): Promise<IExecutionRecording[]> {
-    const executionFactory = backend.workspace(config.projectId!).execution();
+//
+// Public API
+//
 
-    return pmap(
-        recordings,
-        rec => {
-            return rec
-                .makeRecording(executionFactory, config.projectId!)
-                .then(completedRec => {
-                    onCaptured(completedRec);
+export const ExecutionDefinitionFile = "definition.json";
 
-                    return completedRec;
-                })
-                .catch(err => {
-                    onCaptured(
-                        rec,
-                        `An error '${err}' has occurred while obtaining data for recording in ${rec.definitionFile}; it is highly likely that the execution definition is semantically incorrect and leads to un-executable input. Suggestion: try it out in Analytical Designer.`,
-                    );
+export type ScenarioDescriptor = {
+    vis: string;
+    scenario: string;
+};
 
-                    return rec;
-                });
-        },
-        { concurrency: 4 },
-    );
+export class ExecutionRecording implements IRecording {
+    public readonly fingerprint: string;
+    public readonly definition: IExecutionDefinition;
+    public readonly scenarios: ScenarioDescriptor[];
+    public readonly directory: string;
+
+    private readonly dataViewRequests: DataViewRequests;
+
+    constructor(directory: string) {
+        this.directory = directory;
+        const [definition, fingerprint] = loadDefinition(directory);
+
+        this.definition = definition;
+        this.fingerprint = fingerprint;
+
+        this.scenarios = loadScenarios(directory);
+        this.dataViewRequests = loadDataViewRequests(directory);
+    }
+
+    public getRecordingName(): string {
+        return `fp_${this.fingerprint}`;
+    }
+
+    public isComplete(): boolean {
+        return this.hasResult() && this.hasAllDataViewFiles();
+    }
+
+    public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
+        // exec definitions are stored with some test workspace in them; make sure the exec definition that will actually
+        //  contain ID of workspace specified by the user
+        const workspaceBoundDef: IExecutionDefinition = {
+            ...this.definition,
+            workspace,
+        };
+
+        const result: IExecutionResult = await backend
+            .workspace(workspace)
+            .execution()
+            .forDefinition(workspaceBoundDef)
+            .execute();
+
+        writeAsJsonSync(
+            path.join(this.directory, ExecutionResultFile),
+            result,
+            ExecutionResultPropsToSerialize,
+        );
+
+        const missingFiles = Object.entries(this.getMissingDataViewFiles());
+
+        for (const [filename, requestType] of missingFiles) {
+            let dataView;
+
+            if (requestType === "all") {
+                dataView = await result.readAll();
+            } else {
+                dataView = await result.readWindow(requestType.offset, requestType.size);
+            }
+
+            writeAsJsonSync(filename, dataView, DataViewPropsToSerialize);
+        }
+
+        return;
+    }
+
+    public getEntryForRecordingIndex(): RecordingIndexEntry {
+        const dataViewFiles: RecordingIndexEntry = Object.keys(this.getRequiredDataViewFiles()).reduce(
+            (acc: RecordingIndexEntry, filename) => {
+                acc[path.basename(filename, ".json")] = filename;
+
+                return acc;
+            },
+            {},
+        );
+
+        return {
+            definition: path.join(this.directory, ExecutionDefinitionFile),
+            executionResult: path.join(this.directory, ExecutionResultFile),
+            ...dataViewFiles,
+        };
+    }
+
+    private hasResult(): boolean {
+        const resultFile = path.join(this.directory, ExecutionResultFile);
+
+        return fs.existsSync(resultFile);
+    }
+
+    private hasAllDataViewFiles(): boolean {
+        return Object.keys(this.getMissingDataViewFiles()).length === 0;
+    }
+
+    private getMissingDataViewFiles(): DataViewFiles {
+        return pickBy(this.getRequiredDataViewFiles(), (_, filename) => !fs.existsSync(filename));
+    }
+
+    private getRequiredDataViewFiles(): DataViewFiles {
+        const files: DataViewFiles = {};
+
+        if (this.dataViewRequests.allData) {
+            const filename = path.join(this.directory, DataViewAllFile);
+
+            files[filename] = "all";
+        }
+
+        if (this.dataViewRequests.windows) {
+            this.dataViewRequests.windows.forEach(win => {
+                const filename = path.join(this.directory, DataViewWindowFile(win));
+
+                files[filename] = win;
+            });
+        }
+
+        return files;
+    }
 }

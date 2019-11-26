@@ -26,5 +26,9 @@
     {
         "vis": "Treemap",
         "scenario": "single measure"
+    },
+    {
+        "vis": "PivotTable",
+        "scenario": "single measure"
     }
 ]

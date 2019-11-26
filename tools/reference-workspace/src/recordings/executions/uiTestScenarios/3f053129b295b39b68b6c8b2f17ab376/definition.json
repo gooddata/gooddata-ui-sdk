@@ -19,11 +19,11 @@
             ]
         },
         {
-            "localIdentifier": "view",
+            "localIdentifier": "attribute",
             "items": []
         },
         {
-            "localIdentifier": "segment",
+            "localIdentifier": "columns",
             "items": []
         }
     ],

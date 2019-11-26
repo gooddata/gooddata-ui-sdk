@@ -2,5 +2,9 @@
     {
         "vis": "Heatmap",
         "scenario": "measure, rows and columns"
+    },
+    {
+        "vis": "PivotTable",
+        "scenario": "single measure with row and column attributes"
     }
 ]

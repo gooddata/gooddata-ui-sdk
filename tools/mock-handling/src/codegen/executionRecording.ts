@@ -2,23 +2,23 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { IExecutionRecording } from "../recordings/execution";
-import { createUniqueVariableName, executionRecordingName } from "./variableNaming";
+import { createUniqueVariableName } from "./variableNaming";
 import flatMap = require("lodash/flatMap");
 import groupBy = require("lodash/groupBy");
+import { ExecutionRecording } from "../recordings/execution";
 
 const ScenariosConstName = "Scenarios";
 
-function executionRecordingInit(rec: IExecutionRecording, targetDir: string): string {
-    const definition = `require('./${path.relative(targetDir, rec.definitionFile)}')`;
-    const executionResult = `require('./${path.relative(targetDir, rec.resultFile)}')`;
-    const dataViewAll = `require('./${path.relative(targetDir, rec.dataViewFile)}')`;
+function executionRecordingInit(rec: ExecutionRecording, targetDir: string): string {
+    const entries = Object.entries(rec.getEntryForRecordingIndex());
 
-    return `{ definition: ${definition}, executionResult: ${executionResult}, dataViewAll: ${dataViewAll} }`;
+    return `{ ${entries
+        .map(([type, file]) => `${type}: require('./${path.relative(targetDir, file)}')`)
+        .join(",")} }`;
 }
 
 function generateRecordingConst(
-    rec: IExecutionRecording,
+    rec: ExecutionRecording,
     targetDir: string,
 ): OptionalKind<VariableStatementStructure> {
     return {
@@ -26,7 +26,7 @@ function generateRecordingConst(
         isExported: false,
         declarations: [
             {
-                name: executionRecordingName(rec),
+                name: rec.getRecordingName(),
                 initializer: executionRecordingInit(rec, targetDir),
             },
         ],
@@ -37,18 +37,18 @@ function generateRecordingConst(
 // generating initializer for map of maps .. fun times.
 //
 
-type VisScenarioRecording = [string, string, IExecutionRecording];
+type VisScenarioRecording = [string, string, ExecutionRecording];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     return `{ ${entries
         .map(
             ([_, entryName, entryRecording]) =>
-                `${createUniqueVariableName(entryName, {})}: ${executionRecordingName(entryRecording)}`,
+                `${createUniqueVariableName(entryName, {})}: ${entryRecording.getRecordingName()}`,
         )
         .join(",")} }`;
 }
 
-function generateScenariosConst(recordings: IExecutionRecording[]): OptionalKind<VariableStatementStructure> {
+function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
     const recsWithVisAndScenario = flatMap(recordings, rec =>
         rec.scenarios.map<VisScenarioRecording>(s => [s.vis, s.scenario, rec]),
     );
@@ -77,7 +77,7 @@ function generateScenariosConst(recordings: IExecutionRecording[]): OptionalKind
  *   relativized from require()
  */
 export function generateConstantsForExecutions(
-    recordings: IExecutionRecording[],
+    recordings: ExecutionRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
     return [...recordings.map(r => generateRecordingConst(r, targetDir)), generateScenariosConst(recordings)];

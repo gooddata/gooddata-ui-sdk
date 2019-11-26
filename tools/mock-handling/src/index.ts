@@ -14,14 +14,14 @@ import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
 import { generateRecordingIndex } from "./codegen";
-import {
-    discoverExecutionRecordings,
-    IExecutionRecording,
-    OnRecordingCaptured,
-    populateExecutionRecordings,
-} from "./recordings/execution";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ExecutionRecording } from "./recordings/execution";
+import {
+    discoverExecutionRecordings,
+    OnRecordingCaptured,
+    populateExecutionRecordings,
+} from "./recordings/executionRepository.js";
 
 program
     .version(pkg.version)
@@ -77,10 +77,10 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
 }
 
 async function runAndCaptureExecutionRecordings(
-    recordings: IExecutionRecording[],
+    recordings: ExecutionRecording[],
     backend: IAnalyticalBackend,
     config: DataRecorderConfig,
-): Promise<IExecutionRecording[]> {
+): Promise<ExecutionRecording[]> {
     const executionSpinner = ora();
     let successes = 0;
     executionSpinner.start("Running and capturing executions");
@@ -132,13 +132,13 @@ async function run() {
 
     const absoluteRecordingDir = path.resolve(recordingDir);
     const executions = await discoverExecutionRecordings(absoluteRecordingDir);
-    const executionsWithoutData = executions.filter(e => !e.hasRecordedData);
+    const executionsWithoutData = executions.filter(e => !e.isComplete());
 
     logInfo(
         `Discovered ${executions.length} execution recordings; out of these ${executionsWithoutData.length} are missing recorded data.`,
     );
 
-    let executionsToProcess = executions.filter(e => e.hasRecordedData);
+    let executionsToProcess = executions.filter(e => e.isComplete());
 
     if (executionsWithoutData.length) {
         /*
@@ -161,7 +161,7 @@ async function run() {
             fullConfig,
         );
 
-        executionsToProcess = executionsToProcess.concat(newRecordings.filter(e => e.hasRecordedData));
+        executionsToProcess = executionsToProcess.concat(newRecordings.filter(e => e.isComplete()));
     }
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
