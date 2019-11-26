@@ -4,6 +4,7 @@ import { attributeDescriptorLocalId, DataViewFacade, IAttributeDescriptor } from
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
+import { IntlShape } from "react-intl";
 
 import Menu from "../menu/Menu";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
@@ -15,7 +16,7 @@ import { getParsedFields } from "./agGridUtils";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 
 export interface IAggregationsMenuProps {
-    intl: ReactIntl.InjectedIntl;
+    intl: IntlShape;
     isMenuOpened: boolean;
     isMenuButtonVisible: boolean;
     showSubmenu: boolean;

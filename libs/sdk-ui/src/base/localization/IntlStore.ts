@@ -1,16 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 
-import { InjectedIntl, IntlProvider, addLocaleData } from "react-intl";
+import { IntlShape, createIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
-
-import * as deLocaleData from "react-intl/locale-data/de";
-import * as esLocaleData from "react-intl/locale-data/es";
-import * as enLocaleData from "react-intl/locale-data/en";
-import * as frLocaleData from "react-intl/locale-data/fr";
-import * as jaLocaleData from "react-intl/locale-data/ja";
-import * as nlLocaleData from "react-intl/locale-data/nl";
-import * as ptLocaleData from "react-intl/locale-data/pt";
 
 import * as enUS from "./bundles/en-US.json";
 import * as deDE from "./bundles/de-DE.json";
@@ -37,35 +29,23 @@ const messagesMap = {
 
 const intlStore = {};
 
-function createIntl(locale: ILocale): InjectedIntl {
-    const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
-    return intlProvider.getChildContext().intl;
-}
-
-export function getIntl(locale: ILocale = DefaultLocale): InjectedIntl {
+function getIntl(locale: ILocale = DefaultLocale): IntlShape {
     let usedLocale = locale;
     if (isEmpty(locale)) {
         usedLocale = DefaultLocale;
     }
-
-    return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
+    return (
+        intlStore[usedLocale] ||
+        (intlStore[usedLocale] = createIntl({
+            locale: usedLocale,
+            messages: messagesMap[locale],
+        }))
+    );
 }
 
 export function getTranslation(translationId: string, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
-}
-
-export function addLocaleDataToReactIntl() {
-    addLocaleData([
-        ...deLocaleData,
-        ...esLocaleData,
-        ...enLocaleData,
-        ...frLocaleData,
-        ...jaLocaleData,
-        ...nlLocaleData,
-        ...ptLocaleData,
-    ]);
 }
 
 export default {

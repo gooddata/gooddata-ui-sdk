@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 
 import { IntlWrapper } from "../../base/localization/IntlWrapper";
@@ -24,7 +24,7 @@ export interface IDropdownBodyOwnProps {
     onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
 }
 
-export type IDropdownBodyProps = IDropdownBodyOwnProps & InjectedIntlProps;
+export type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
 
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;

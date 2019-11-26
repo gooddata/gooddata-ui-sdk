@@ -13,7 +13,7 @@ import { ExtendedDateFilters } from "../../../interfaces/ExtendedDateFilters";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,
-    formatMessage: (id, values) => `${id.id}__${JSON.stringify(values)}`,
+    formatMessage: (id: any, values: any) => `${id.id}__${JSON.stringify(values)}`,
 };
 
 describe("getDateFilterTitleUsingTranslator", () => {

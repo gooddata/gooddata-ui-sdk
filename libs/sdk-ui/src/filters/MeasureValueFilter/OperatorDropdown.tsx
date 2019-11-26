@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import classNames from "classnames";
 import capitalize = require("lodash/capitalize");
 import Button from "@gooddata/goodstrap/lib/Button/Button";
@@ -15,7 +15,7 @@ export interface IOperatorDropdownOwnProps {
     operator: MeasureValueFilterOperator;
 }
 
-export type IOperatorDropdownProps = IOperatorDropdownOwnProps & InjectedIntlProps;
+export type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
 
 interface IOperatorDropdownState {
     opened: boolean;

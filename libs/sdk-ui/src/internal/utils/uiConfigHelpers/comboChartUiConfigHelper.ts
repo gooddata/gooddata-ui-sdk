@@ -2,7 +2,7 @@
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import { BucketNames } from "../../../base/";
 import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
@@ -59,7 +59,7 @@ function setCanStackInPercent(uiConfig: IUiConfig, secondaryChartType: string, i
 
 export function setComboChartUiConfig(
     referencePoint: IExtendedReferencePoint,
-    intl: InjectedIntl,
+    intl: IntlShape,
     visualizationType: ChartType,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);

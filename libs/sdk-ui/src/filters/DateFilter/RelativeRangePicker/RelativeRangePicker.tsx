@@ -3,7 +3,7 @@ import * as React from "react";
 import cx from "classnames";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect";
 import { getRelativeDateFilterItems } from "../DynamicSelect/utils";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu";
 import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
@@ -14,7 +14,9 @@ interface IRelativeRangePickerProps {
     isMobile: boolean;
 }
 
-class RelativeRangePickerComponent extends React.Component<IRelativeRangePickerProps & InjectedIntlProps> {
+class RelativeRangePickerComponent extends React.Component<
+    IRelativeRangePickerProps & WrappedComponentProps
+> {
     private toFieldRef = React.createRef<DynamicSelect>();
 
     public render(): React.ReactNode {

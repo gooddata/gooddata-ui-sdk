@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
@@ -16,14 +16,14 @@ export interface ICheckboxControlProps {
     pushData(data: any): void;
 }
 
-class CheckboxControl extends React.Component<ICheckboxControlProps & InjectedIntlProps> {
+class CheckboxControl extends React.Component<ICheckboxControlProps & WrappedComponentProps> {
     public static defaultProps = {
         checked: false,
         disabled: false,
         showDisabledMessage: false,
     };
 
-    constructor(props: ICheckboxControlProps & InjectedIntlProps) {
+    constructor(props: ICheckboxControlProps & WrappedComponentProps) {
         super(props);
 
         this.onValueChanged = this.onValueChanged.bind(this);

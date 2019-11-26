@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import { IntlShape } from "react-intl";
 
 import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 import { getIdsFromUri, getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
@@ -31,7 +32,6 @@ import {
 import { getMinimalRowData } from "./agGridHeaders";
 import invariant = require("invariant");
 import zipObject = require("lodash/zipObject");
-import InjectedIntl = ReactIntl.InjectedIntl;
 
 /*
  * All code related to transforming data from our backend to ag-grid structures
@@ -46,7 +46,7 @@ const getCell = (
     rowIndex: number,
     rowHeader: IGridHeader,
     rowHeaderIndex: number,
-    intl: InjectedIntl,
+    intl: IntlShape,
 ): {
     field: string;
     value: string;
@@ -92,7 +92,7 @@ export const getRow = (
     rowHeaders: IGridHeader[],
     rowHeaderData: IResultHeader[][],
     subtotalStyles: string[],
-    intl: InjectedIntl,
+    intl: IntlShape,
 ): IGridRow => {
     const row: IGridRow = {
         headerItemMap: {},
@@ -127,11 +127,7 @@ export const getRow = (
     return row;
 };
 
-export const getRowTotals = (
-    dv: DataViewFacade,
-    columnKeys: string[],
-    intl: InjectedIntl,
-): IGridTotalsRow[] => {
+export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: IntlShape): IGridTotalsRow[] => {
     if (!dv.hasTotals()) {
         return null;
     }
@@ -198,7 +194,7 @@ export const getRowTotals = (
 export function createRowData(
     headers: TableHeaders,
     dv: DataViewFacade,
-    intl: InjectedIntl,
+    intl: IntlShape,
     options: IGridAdapterOptions = {},
 ): IAgGridPage {
     const { addLoadingRenderer = null } = options;

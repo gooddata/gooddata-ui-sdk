@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 
 import DropdownControl from "../DropdownControl";
@@ -9,7 +9,7 @@ import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../..
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
-class NamePositionControl extends React.PureComponent<IConfigItemSubsection & InjectedIntlProps, {}> {
+class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps, {}> {
     public render() {
         const { axisVisible, axisNameVisible, namePosition } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled, intl } = this.props;

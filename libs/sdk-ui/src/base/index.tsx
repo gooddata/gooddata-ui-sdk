@@ -40,7 +40,7 @@ export { wrapDisplayName } from "./react/wrapDisplayName";
  */
 
 export { ILocale, DefaultLocale } from "./localization/Locale";
-export { addLocaleDataToReactIntl, getIntl, getTranslation } from "./localization/IntlStore";
+export { getTranslation } from "./localization/IntlStore";
 export { IntlWrapper, IIntlWrapperProps, messagesMap } from "./localization/IntlWrapper";
 export {
     TranslationsProvider,

@@ -8,7 +8,7 @@ import includes = require("lodash/includes");
 import * as React from "react";
 import Measure from "react-measure";
 import { render } from "react-dom";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
@@ -258,7 +258,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private element: string;
     private configPanelElement: string;
     private callbacks: IVisCallbacks;
-    private intl: InjectedIntl;
+    private intl: IntlShape;
     private visualizationProperties: IVisualizationProperties;
     private locale: ILocale;
     private environment: VisualizationEnvironment;

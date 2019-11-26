@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import "./polyfills";
 import * as VisEvents from "./base/vis/Events";
 // import { ICommonVisualizationProps } from "./_defunct/to_delete/VisualizationLoadingHOC";
 import { Kpi } from "./kpi/Kpi";
