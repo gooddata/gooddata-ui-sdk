@@ -14,5 +14,9 @@
     {
         "vis": "Treemap",
         "scenario": "two measures"
+    },
+    {
+        "vis": "PivotTable",
+        "scenario": "two measures"
     }
 ]

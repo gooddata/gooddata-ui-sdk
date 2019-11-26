@@ -36,10 +36,28 @@
         },
         {
             "localIdentifier": "columns",
-            "items": []
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.region"
+                        },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ]
         }
     ],
-    "attributes": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.region"
+                },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
     "measures": [
         {
             "measure": {
@@ -71,7 +89,7 @@
             "itemIdentifiers": []
         },
         {
-            "itemIdentifiers": ["measureGroup"]
+            "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
         }
     ],
     "filters": [],

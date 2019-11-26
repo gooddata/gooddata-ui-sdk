@@ -5,12 +5,13 @@ import { createHighChartResolver, ScreenshotReadyWrapper } from "../_infra/Scree
 import { screenshotWrap } from "@gooddata/test-storybook";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import chartGroups from "../../../scenarios/charts";
+import chartGroups from "../../../scenarios";
 import { ScenarioGroup } from "../../../src";
 import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui/styles/css/charts.css";
 import "@gooddata/sdk-ui/styles/css/headline.css";
+import "@gooddata/sdk-ui/styles/css/pivotTable.css";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 const DefaultWorkspace = "testWorkspace";

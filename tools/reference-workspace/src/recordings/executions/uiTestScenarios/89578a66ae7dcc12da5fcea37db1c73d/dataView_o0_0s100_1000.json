@@ -1,0 +1,63 @@
+{
+    "data": [["28017096.42", "10542759.65", "88608360.12", "27767993.8"]],
+    "headerItems": [
+        [],
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1023/elements?id=1225"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "East Coast",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1023/elements?id=1225"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1023/elements?id=1237"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "West Coast",
+                        "uri": "/gdc/md/m2ptzxlets70wm0xy0eim5pf9x42hra8/obj/1023/elements?id=1237"
+                    }
+                }
+            ],
+            [
+                {
+                    "measureHeaderItem": {
+                        "name": "Amount",
+                        "order": 0
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Won",
+                        "order": 1
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Amount",
+                        "order": 0
+                    }
+                },
+                {
+                    "measureHeaderItem": {
+                        "name": "Won",
+                        "order": 1
+                    }
+                }
+            ]
+        ]
+    ],
+    "count": [1, 4],
+    "offset": [0, 0],
+    "totalCount": [1, 4]
+}

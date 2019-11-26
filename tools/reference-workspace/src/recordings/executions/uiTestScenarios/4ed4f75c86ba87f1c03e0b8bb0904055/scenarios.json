@@ -17,6 +17,6 @@
     },
     {
         "vis": "PivotTable",
-        "scenario": "single measure with row attributes"
+        "scenario": "single measure with row attribute"
     }
 ]

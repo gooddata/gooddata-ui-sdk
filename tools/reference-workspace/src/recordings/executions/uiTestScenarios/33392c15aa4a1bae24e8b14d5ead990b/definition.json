@@ -32,14 +32,49 @@
         },
         {
             "localIdentifier": "attribute",
-            "items": []
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ]
         },
         {
             "localIdentifier": "columns",
-            "items": []
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.region"
+                        },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ]
         }
     ],
-    "attributes": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.product.id.name"
+                },
+                "localIdentifier": "a_label.product.id.name"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.region"
+                },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
     "measures": [
         {
             "measure": {
@@ -68,10 +103,10 @@
     ],
     "dimensions": [
         {
-            "itemIdentifiers": []
+            "itemIdentifiers": ["a_label.product.id.name"]
         },
         {
-            "itemIdentifiers": ["measureGroup"]
+            "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
         }
     ],
     "filters": [],
