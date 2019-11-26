@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IAttribute, IFilter, ITotal, SortItem, TotalType } from "@gooddata/sdk-model";
@@ -67,6 +67,9 @@ export interface IPivotTableBucketProps {
     sortBy?: SortItem[];
 }
 
+/**
+ * @internal
+ */
 export interface ICorePivotTableProps extends IPivotTableBaseProps, InjectedIntlProps {
     execution: IPreparedExecution;
 }

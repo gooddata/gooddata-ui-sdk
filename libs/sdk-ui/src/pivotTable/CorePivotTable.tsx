@@ -91,6 +91,8 @@ export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
 
 /**
  * Pivot Table react component
+ *
+ * @internal
  */
 export class CorePivotTable extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
     public static defaultProps: Partial<ICorePivotTableProps> = {
