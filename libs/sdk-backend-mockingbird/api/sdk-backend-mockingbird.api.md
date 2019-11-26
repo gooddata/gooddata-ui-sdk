@@ -47,7 +47,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 export type ExecutionRecording = {
     definition: IExecutionDefinition;
     executionResult: any;
-    dataViewAll: any;
+    [dataViews: string]: any;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal

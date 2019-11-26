@@ -30,5 +30,5 @@ export type WorkspaceRecordings = {
 export type ExecutionRecording = {
     definition: IExecutionDefinition;
     executionResult: any;
-    dataViewAll: any;
+    [dataViews: string]: any;
 };
