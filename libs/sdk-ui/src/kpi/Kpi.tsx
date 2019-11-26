@@ -8,7 +8,7 @@ import { IErrorProps } from "../base/simple/ErrorComponent";
 import { Executor, IExecutorProps } from "../execution/Executor";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IntlWrapper } from "../base/translations/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
@@ -57,7 +57,7 @@ export const Kpi: React.StatelessComponent<IKpiProps> = props => {
 
 const KpiLoading = () => <LoadingComponent inline={true} />;
 
-const CoreKpi: React.StatelessComponent<IKpiProps & InjectedIntlProps> = props => {
+const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = props => {
     const {
         backend,
         workspace,

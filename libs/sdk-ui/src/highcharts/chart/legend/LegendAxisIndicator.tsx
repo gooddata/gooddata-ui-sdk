@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
 export interface ILegendAxisIndicatorProps {
     labelKey: string;
@@ -9,7 +9,7 @@ export interface ILegendAxisIndicatorProps {
 }
 
 export class LegendAxisIndicatorClass extends React.PureComponent<
-    ILegendAxisIndicatorProps & InjectedIntlProps
+    ILegendAxisIndicatorProps & WrappedComponentProps
 > {
     public render() {
         const { labelKey, width, data, intl } = this.props;

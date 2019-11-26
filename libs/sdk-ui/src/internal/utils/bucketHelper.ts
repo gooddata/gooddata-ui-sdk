@@ -13,7 +13,7 @@ import isEmpty = require("lodash/isEmpty");
 import flatMap = require("lodash/flatMap");
 import compact = require("lodash/compact");
 import without = require("lodash/without");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import * as BucketNames from "../../base/constants/bucketNames";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
@@ -255,7 +255,7 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
 export function setBucketTitles(
     referencePoint: IExtendedReferencePoint,
     visualizationType: string,
-    intl?: InjectedIntl,
+    intl?: IntlShape,
 ): IUiConfig {
     const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
     const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));

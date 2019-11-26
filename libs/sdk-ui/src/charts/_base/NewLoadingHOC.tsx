@@ -2,7 +2,7 @@
 
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { injectIntl, InjectedIntl } from "react-intl";
+import { injectIntl, IntlShape } from "react-intl";
 import { ErrorStates } from "../../base/constants/errorStates";
 import { RuntimeError } from "../../base/errors/RuntimeError";
 import { convertErrors } from "../../base/helpers/errorHandlers";
@@ -44,7 +44,7 @@ export interface ILoadingInjectedProps {
     error?: string;
 
     // TODO: SDK8: take this out of here
-    intl: InjectedIntl;
+    intl: IntlShape;
 
     /**
      * Callback to trigger when export is ready
@@ -197,7 +197,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
         };
     }
 
-    const IntlLoadingHOC = injectIntl(LoadingHOCWrapped);
+    const IntlLoadingHOC = injectIntl<"intl", T & ILoadingInjectedProps>(LoadingHOCWrapped);
 
     return class LoadingHOC extends React.Component<T & ILoadingInjectedProps, null> {
         public render() {

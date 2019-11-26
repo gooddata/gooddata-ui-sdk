@@ -2,7 +2,7 @@
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import * as BucketNames from "../../../base/constants/bucketNames";
 import { IBucketOfFun, IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
@@ -22,7 +22,7 @@ export function getDefaultHeadlineUiConfig(): IUiConfig {
     return cloneDeep(DEFAULT_HEADLINE_UICONFIG);
 }
 
-export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: InjectedIntl): IUiConfig {
+export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlShape): IUiConfig {
     let uiConfig = getDefaultHeadlineUiConfig();
 
     const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
@@ -18,7 +18,7 @@ export interface IColoredItemProps {
     disabled?: boolean;
 }
 
-class ColoredItem extends React.PureComponent<IColoredItemProps & InjectedIntlProps> {
+class ColoredItem extends React.PureComponent<IColoredItemProps & WrappedComponentProps> {
     public static defaultProps = {
         showCustomPicker: false,
         disabled: false,

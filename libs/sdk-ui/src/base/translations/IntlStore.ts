@@ -1,7 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 
-import { InjectedIntl, IntlProvider } from "react-intl";
+import { IntlShape, createIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 import { DEFAULT_LOCALE } from "../constants/localization";
 
@@ -30,18 +30,18 @@ const messagesMap = {
 
 const intlStore = {};
 
-function createIntl(locale: ILocale): InjectedIntl {
-    const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
-    return intlProvider.getChildContext().intl;
-}
-
-function getIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
+function getIntl(locale: ILocale = DEFAULT_LOCALE): IntlShape {
     let usedLocale = locale;
     if (isEmpty(locale)) {
         usedLocale = DEFAULT_LOCALE;
     }
-
-    return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
+    return (
+        intlStore[usedLocale] ||
+        (intlStore[usedLocale] = createIntl({
+            locale: usedLocale,
+            messages: messagesMap[locale],
+        }))
+    );
 }
 
 function getTranslation(translationId: string, locale: ILocale, values = {}): string {

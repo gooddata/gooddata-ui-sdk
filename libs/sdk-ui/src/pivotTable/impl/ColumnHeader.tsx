@@ -2,6 +2,7 @@
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IHeaderParams } from "ag-grid-community";
 import * as React from "react";
+import { IntlShape } from "react-intl";
 import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 
@@ -14,7 +15,7 @@ export interface IColumnHeaderProps extends IHeaderParams {
     getColumnTotals?: () => ITotal[];
     getDataView?: () => DataViewFacade;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
-    intl?: ReactIntl.InjectedIntl;
+    intl?: IntlShape;
 }
 
 export interface IColumnHeaderState {

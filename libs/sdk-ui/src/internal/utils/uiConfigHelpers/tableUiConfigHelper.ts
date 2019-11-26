@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import * as BucketNames from "../../../base/constants/bucketNames";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
@@ -16,7 +16,7 @@ import * as tableAttributeIcon from "../../assets/table/bucket-title-attributes.
 
 export function setTableUiConfig(
     referencePoint: IExtendedReferencePoint,
-    intl: InjectedIntl,
+    intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);

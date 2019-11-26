@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import * as HttpStatusCodes from "http-status-codes";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { ErrorStates } from "../constants/errorStates";
 import { isSdkError, RuntimeError } from "../errors/RuntimeError";
 
@@ -17,7 +17,7 @@ export interface IErrorMap {
     };
 }
 
-export function generateErrorMap(intl: InjectedIntl): IErrorMap {
+export function generateErrorMap(intl: IntlShape): IErrorMap {
     const errorMap = {
         [ErrorStates.DATA_TOO_LARGE_TO_DISPLAY]: {
             icon: "icon-cloud-rain",

@@ -1,8 +1,9 @@
 dependencies:
   '@babel/core': 7.7.4
   '@babel/runtime': 7.7.4
+  '@formatjs/intl-pluralrules': 1.3.7
   '@gooddata/frontend-npm-scripts': 1.0.1
-  '@gooddata/goodstrap': 64.6.7
+  '@gooddata/goodstrap': 64.6.4-alpha-tomsatgd-tsa-fet-233-upgrade-react-intl-2019-11-25T15-10-15-043Z
   '@gooddata/js-utils': 3.5.0
   '@gooddata/numberjs': 3.2.3
   '@gooddata/test-storybook': 3.1.1
@@ -22,7 +23,7 @@ dependencies:
   '@rush-temp/sdk-model': 'file:projects/sdk-model.tgz'
   '@rush-temp/sdk-skel-ts': 'file:projects/sdk-skel-ts.tgz'
   '@rush-temp/sdk-skel-tsx': 'file:projects/sdk-skel-tsx.tgz'
-  '@rush-temp/sdk-ui': 'file:projects/sdk-ui.tgz_prop-types@15.7.2'
+  '@rush-temp/sdk-ui': 'file:projects/sdk-ui.tgz'
   '@rush-temp/sdk-ui-tests': 'file:projects/sdk-ui-tests.tgz_webpack@4.41.2'
   '@storybook/addon-actions': 5.2.6
   '@storybook/addon-options': 5.2.6
@@ -49,7 +50,6 @@ dependencies:
   '@types/qs': 6.9.0
   '@types/react': 16.9.13
   '@types/react-dom': 16.9.4
-  '@types/react-intl': 2.3.18
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
   '@types/rimraf': 2.0.3
@@ -74,6 +74,7 @@ dependencies:
   fetch-cookie: 0.7.3
   fetch-mock: 5.13.1
   foundation-sites: 5.5.3
+  full-icu: 1.3.0
   highcharts: 7.1.1
   highcharts-grouped-categories: 1.1.3
   hoist-non-react-statics: 3.3.1
@@ -100,7 +101,7 @@ dependencies:
   qs: 6.9.1
   raf: 3.4.1
   react-dom-factories: 1.0.2
-  react-intl: 2.9.0_prop-types@15.7.2
+  react-intl: 3.7.0
   react-measure: 2.3.0
   rimraf: 3.0.0
   spark-md5: 3.0.0
@@ -1818,6 +1819,38 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6PYY5DVdAY1ifaQW6XYTnOMihmBVT27elqSjEoodchsGjzYlEsTQMcEhSud99kVawatyTZRTiVkJ/c6lwbQ7nA==
+  /@formatjs/intl-listformat/1.2.7:
+    dependencies:
+      '@formatjs/intl-utils': 1.4.4
+    dev: false
+    resolution:
+      integrity: sha512-wxoUh1qZ4FTkGP2xRTzh0qzFwq/8AbfkPntZ9u8fiydhnb4YDjZRAKm2FbvPXyFaIDomfJA1FjrpnhedhvEQFg==
+  /@formatjs/intl-pluralrules/1.3.7:
+    dependencies:
+      '@formatjs/intl-utils': 1.4.4
+    dev: false
+    resolution:
+      integrity: sha512-2CkIZ1WqWyaA5CwYvoEbZnR08qjTuB9smKq0Pacyu1L30cdlX1zwGqUSPoJN3WAOu9Oo1AQFohfF1KIw4JN7kw==
+  /@formatjs/intl-relativetimeformat/4.4.6:
+    dependencies:
+      '@formatjs/intl-utils': 1.4.4
+    dev: false
+    resolution:
+      integrity: sha512-eyYNGp8fTUGnWnX1sYpJfu1zqUQDo/30HIkAOs9lwTpU1mTwbVUCkA9m6ivYWo/NNoKNVACbwFctspl+NimkRg==
+  /@formatjs/intl-unified-numberformat/2.1.7:
+    dependencies:
+      '@formatjs/intl-utils': 1.4.4
+    dev: false
+    resolution:
+      integrity: sha512-hC4Qq6XP7Lv1QYqzxuyeTX9dC4+QC+TBNF+mRf4H0eXQP02e2KIWz6sgaPDPfbgOj1HdxMnxACbbUdG+a9LDEw==
+  /@formatjs/intl-utils/1.4.4:
+    dev: false
+    resolution:
+      integrity: sha512-FYLEfy5rn1AYV03Vm8ey4snJRwcXzlGJWdi+oDEAMogyhPoFX4Y/jCeFSMfkcxbztYfNM8zzJqXlRBTLtAYldg==
+  /@formatjs/macro/0.2.6:
+    dev: false
+    resolution:
+      integrity: sha512-DfdnLJf8+PwLHzJECZ1Xfa8+sI9akQnUuLN2UdkaExTQmlY0Vs36rMzEP0JoVDBMk+KdQbJNt72rPeZkBNcKWg==
   /@gooddata/frontend-npm-scripts/1.0.1:
     dependencies:
       firstline: 2.0.2
@@ -1826,7 +1859,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-3Szx0DjNucb7Zq7HvF9fZieJTKOYOMI1lCbX/Qgq3XOun08E3iZSclMEHJ6//NtJAZwaf4NevTKQImQylvRpBw==
-  /@gooddata/goodstrap/64.6.7:
+  /@gooddata/goodstrap/64.6.4-alpha-tomsatgd-tsa-fet-233-upgrade-react-intl-2019-11-25T15-10-15-043Z:
     dependencies:
       '@gooddata/js-utils': 3.5.0
       babel-runtime: 6.25.0
@@ -1845,7 +1878,7 @@ packages:
       querystringify: 2.1.1
       react-day-picker: 7.1.10
       react-document-title: 2.0.3
-      react-intl: 2.9.0_prop-types@15.7.2
+      react-intl: 3.7.0
       react-native-listener: 1.1.0
       react-portal: 4.2.0
       react-responsive: 3.0.0
@@ -1858,8 +1891,8 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-IegDSr/zkxbSAFjQWRbfgYAoR6Z7XZExUfRHlb681/X/SK4DRENerfyA340hUNYLVYh5mFI2mXmOsZZMyMHxvg==
-  /@gooddata/goodstrap/64.6.7_react-dom@16.12.0+react@16.12.0:
+      integrity: sha512-nCck2z2BXM/O5SOd4eNC244/PhxbT9UfYDskodq5Y6PUf/qew6TXjyC1sl7LLhQTWjcVp6PniFG/ra/rAAyOaw==
+  /@gooddata/goodstrap/64.6.4-alpha-tomsatgd-tsa-fet-233-upgrade-react-intl-2019-11-25T15-10-15-043Z_react-dom@16.12.0+react@16.12.0:
     dependencies:
       '@gooddata/js-utils': 3.5.0
       babel-runtime: 6.25.0
@@ -1880,7 +1913,7 @@ packages:
       react-day-picker: 7.1.10_react@16.12.0
       react-document-title: 2.0.3
       react-dom: 16.12.0_react@16.12.0
-      react-intl: 2.9.0_prop-types@15.7.2+react@16.12.0
+      react-intl: 3.7.0_react@16.12.0
       react-native-listener: 1.1.0
       react-portal: 4.2.0_react@16.12.0
       react-responsive: 3.0.0_react@16.12.0
@@ -1893,7 +1926,7 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-IegDSr/zkxbSAFjQWRbfgYAoR6Z7XZExUfRHlb681/X/SK4DRENerfyA340hUNYLVYh5mFI2mXmOsZZMyMHxvg==
+      integrity: sha512-nCck2z2BXM/O5SOd4eNC244/PhxbT9UfYDskodq5Y6PUf/qew6TXjyC1sl7LLhQTWjcVp6PniFG/ra/rAAyOaw==
   /@gooddata/js-utils/3.5.0:
     dependencies:
       js-cookie: 2.2.1
@@ -3139,10 +3172,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fya9xteU/n90tda0s+FtN5Ym4tbgxpq/hb/Af24dvs6uYnYn+fspaxw5USlw0R8apDNwxsqumdRoCoKitckQqw==
-  /@types/react-intl/2.3.18:
-    dev: false
-    resolution:
-      integrity: sha512-DVNJs49zUxKRZng8VuILE886Yihdsf3yLr5vHk9zJrmF8SyRSK3sxNSvikAKxNkv9hX55XBTJShz6CkJnbNjgg==
   /@types/react-measure/2.0.5:
     dependencies:
       '@types/react': 16.9.13
@@ -7097,6 +7126,12 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-WvJ193OHa0GHPEL+AycEJgxvBEwyfRkN1vhjca23OaPVMCaLCXTd5qAu82AjTcgP1UJmytkOKb63Ypde7raDIg==
+  /full-icu/1.3.0:
+    dev: false
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-LGLpSsbkHUT0T+EKrIJltYoejYzUqg1eW+n6wm/FTte1pDiYjeKTxO0uJvrE3jgv6V9eBzMAjF6A8jH16C0+eQ==
   /function-bind/1.1.1:
     dev: false
     resolution:
@@ -7922,27 +7957,25 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
-  /intl-format-cache/2.2.9:
+  /intl-format-cache/4.2.11:
     dev: false
     resolution:
-      integrity: sha512-Zv/u8wRpekckv0cLkwpVdABYST4hZNTDaX7reFetrYTJwxExR2VyTqQm+l0WmL0Qo8Mjb9Tf33qnfj0T7pjxdQ==
-  /intl-messageformat-parser/1.4.0:
+      integrity: sha512-5AEkYXzkrbz/PZDgQ2SLCgpBO6pHDqagaj7oF2PGcRyQf8f0uK8/YCAIU/E6UXomeZhjpqJ+qf18wvJglAJnjw==
+  /intl-locales-supported/1.8.4:
     dev: false
     resolution:
-      integrity: sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
-  /intl-messageformat/2.2.0:
+      integrity: sha512-wO0JhDqhshhkq8Pa9CLcstqd1aCXjfMgfMzjD6mDreS3mTSDbjGiMU+07O8BdJGxed7Q0Wf3TFVjGq0W3Y0n1w==
+  /intl-messageformat-parser/3.3.1:
+    dev: false
+    resolution:
+      integrity: sha512-H+t27dpxi8r51GD9km0huyy5UJET3YF3AT2mvXRc0PRioKPFNexxhMUSagPNrMqGhb+/7p7RPcmsv7tcgCdWWQ==
+  /intl-messageformat/7.6.1:
     dependencies:
-      intl-messageformat-parser: 1.4.0
+      intl-format-cache: 4.2.11
+      intl-messageformat-parser: 3.3.1
     dev: false
     resolution:
-      integrity: sha1-NFvNRt5jC3aDMwwuUhd/9eq0hPw=
-  /intl-relativeformat/2.2.0:
-    dependencies:
-      intl-messageformat: 2.2.0
-    deprecated: 'This package has been deprecated, please see migration guide at ''https://github.com/formatjs/formatjs/tree/master/packages/intl-relativeformat#migration-guide'''
-    dev: false
-    resolution:
-      integrity: sha512-4bV/7kSKaPEmu6ArxXf9xjv1ny74Zkwuey8Pm01NH4zggPP7JHwg2STk8Y3JdspCKRDriwIyLRfEXnj2ZLr4Bw==
+      integrity: sha512-RN2wah9s/56EVMgVQKTcou2C2DoevmiPlWqIyoY3mciNrOWLlfjFqEFqqJrFinf32/LvnOhClwoqvDZ3T0Jh8Q==
   /invariant/2.2.4:
     dependencies:
       loose-envify: 1.4.0
@@ -11547,35 +11580,47 @@ packages:
       react: ^16.8.4
     resolution:
       integrity: sha512-PSR8xDoGFN8R3LKmq1NT+hBBwhxjd9Qwz8yKY+5NXY/CHpxXHm01CVabxzI7zFwFav/M3JoC/Z0Ro2kSX6Ef2Q==
-  /react-intl/2.9.0_prop-types@15.7.2:
+  /react-intl/3.7.0:
     dependencies:
+      '@formatjs/intl-listformat': 1.2.7
+      '@formatjs/intl-relativetimeformat': 4.4.6
+      '@formatjs/intl-unified-numberformat': 2.1.7
+      '@formatjs/macro': 0.2.6
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/invariant': 2.2.30
       hoist-non-react-statics: 3.3.1
-      intl-format-cache: 2.2.9
-      intl-messageformat: 2.2.0
-      intl-relativeformat: 2.2.0
+      intl-format-cache: 4.2.11
+      intl-locales-supported: 1.8.4
+      intl-messageformat: 7.6.1
+      intl-messageformat-parser: 3.3.1
       invariant: 2.2.4
-      prop-types: 15.7.2
+      shallow-equal: 1.2.0
     dev: false
     peerDependencies:
-      prop-types: ^15.5.4
-      react: ^0.14.9 || ^15.0.0 || ^16.0.0
+      react: ^16.3.0
     resolution:
-      integrity: sha512-27jnDlb/d2A7mSJwrbOBnUgD+rPep+abmoJE511Tf8BnoONIAUehy/U1zZCHGO17mnOwMWxqN4qC0nW11cD6rA==
-  /react-intl/2.9.0_prop-types@15.7.2+react@16.12.0:
+      integrity: sha512-hzG1+eZCVE38WMHQBqaQbz+yYXnc7Kg3UZW5XmqhbujHivUJlCzBw5u2PKtO9qhdiGt5bOEoyl1DRs7397K18g==
+  /react-intl/3.7.0_react@16.12.0:
     dependencies:
+      '@formatjs/intl-listformat': 1.2.7
+      '@formatjs/intl-relativetimeformat': 4.4.6
+      '@formatjs/intl-unified-numberformat': 2.1.7
+      '@formatjs/macro': 0.2.6
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/invariant': 2.2.30
       hoist-non-react-statics: 3.3.1
-      intl-format-cache: 2.2.9
-      intl-messageformat: 2.2.0
-      intl-relativeformat: 2.2.0
+      intl-format-cache: 4.2.11
+      intl-locales-supported: 1.8.4
+      intl-messageformat: 7.6.1
+      intl-messageformat-parser: 3.3.1
       invariant: 2.2.4
-      prop-types: 15.7.2
       react: 16.12.0
+      shallow-equal: 1.2.0
     dev: false
     peerDependencies:
-      prop-types: ^15.5.4
-      react: ^0.14.9 || ^15.0.0 || ^16.0.0
+      react: ^16.3.0
     resolution:
-      integrity: sha512-27jnDlb/d2A7mSJwrbOBnUgD+rPep+abmoJE511Tf8BnoONIAUehy/U1zZCHGO17mnOwMWxqN4qC0nW11cD6rA==
+      integrity: sha512-hzG1+eZCVE38WMHQBqaQbz+yYXnc7Kg3UZW5XmqhbujHivUJlCzBw5u2PKtO9qhdiGt5bOEoyl1DRs7397K18g==
   /react-is/16.12.0:
     dev: false
     resolution:
@@ -14614,7 +14659,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-HOh3o4MU5+kFvXjPnHdFxXjHqQR4YVulY2CX5RNB3k+KIIAH1EpIVlfSh6vVCap9FQsQVNPcKM+69L1+22MtSQ==
+      integrity: sha512-6jZEflI78inwr5KeYkLUZsT5fkZgfOwzTI6XA1WP/g9RHGtLGmEiok1vXMpJa0/wMSooWvNQm5+awbEZORovmg==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
@@ -14625,7 +14670,6 @@ packages:
       '@types/invariant': 2.2.30
       '@types/isomorphic-fetch': 0.0.34
       '@types/jest': 24.0.23
-      '@types/json-stable-stringify': 1.0.32
       '@types/lodash': 4.14.149
       '@types/md5': 2.1.33
       '@types/node-fetch': 1.6.9
@@ -14641,7 +14685,6 @@ packages:
       jest: 24.9.0
       jest-junit: 3.7.0
       js-object-pretty-print: 0.2.0
-      json-stable-stringify: 1.0.1
       lodash: 4.17.15
       lodash-webpack-plugin: 0.11.5_webpack@4.41.2
       md5: 2.2.1
@@ -14659,7 +14702,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-client'
     resolution:
-      integrity: sha512-PNgIVnuPzUxjcByJw7AIjSHziQ/oZ2Lsr3xPT6otErKXkH90ZKUMY/Joo6nLuz583nbe9OjrRlpdCy8fWT5U7A==
+      integrity: sha512-nj6gkQo/+ebRLyjrFs+zCGGLn17wlOVhPl7+3kz/Y38v7YUzaoVhwGAVRZ9gRLj1KUdlbDBkj+NL4MlTEGy3PQ==
       tarball: 'file:projects/gd-bear-client.tgz'
     version: 0.0.0
   'file:projects/gd-bear-model.tgz':
@@ -14679,7 +14722,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-model'
     resolution:
-      integrity: sha512-74qScVgPn3gy4pjChTsQG8ioed/a8hm6qQVkvZvsHlitgHwCli1yaI/ByKMOEGmKtH0/kJISA+/9plfvG8euYQ==
+      integrity: sha512-zYm/+jwpT96r37RHrNQTSPtBBe/51pQYduaxfk3EcW3Q9F35ERWemGznE9PWrPqzeyWXU5PpJKSh3ndTUOQa6A==
       tarball: 'file:projects/gd-bear-model.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -14712,7 +14755,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-bU6CYIbVsEnOGkbbr0MnxnZCwkbKm0D+IDtGyJTxodk+/9Zk7M4EwuIjvE9F3qHjNmJYU7gFA1IhS/hFJcYoyQ==
+      integrity: sha512-qd/XCfjQtUPWECSNHD7qCjzuQv62wyoZ+WBXCWMTAEsP4EVojc2pUPALJbMEY4ivJz1J5ZUmoKClUO10LpQ1Tw==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
@@ -14732,7 +14775,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-duMf6c58T/U6QCUYY9qSf/Dopd8tIWepX0SxiOryiSo/cNuTAV0Te704d6WXmppuQ0oBKuIvTlmYgg1LYgxLyw==
+      integrity: sha512-Z/yf6cMhsLvzc8nx5g2y/BXhlD7cOee+7+cNs3awgzwwcGuLZoz3rZWuXeXSapAv7mBcL0InNSS+fxmpJjdCqw==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/schema-gen.tgz':
@@ -14754,7 +14797,7 @@ packages:
     dev: false
     name: '@rush-temp/schema-gen'
     resolution:
-      integrity: sha512-gdf9DT7OmB68vWYO3gKych+HUAFZkU5enrvqYCpnSTPLvgW7bEiUSLiVJ1tOR9o+0RNy6aI/nMNjF7FUI330uA==
+      integrity: sha512-V2qHmV84CgJZFEusD4ftkaJQTxCGRJCI2ZOt3EhoNmqG9ta/EVKQOzPoTweqOKJlWNXyIsfFLzWoNmVewU9wmQ==
       tarball: 'file:projects/schema-gen.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -14781,7 +14824,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-oj7H9mEdH56Qp73TroBcDATDYF+76zxdFfFAV8G3G9aMetcHaLLJ2FQ4B4vGARPFuYU/FkqJzb5Q4bM4FURtzA==
+      integrity: sha512-s6NW5LHb4NcDxYMp/ZsAyMhurgNAW1a1/BmKNTdTNQklEBbK8p2iyQtW1zt/0uon27mFZiQpGuo5MAJZ8vSN9Q==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -14802,7 +14845,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-K6F6gzEvZdNVbyFVJcMN02MqA0WvQ2z5XOj6sxwsryOIyB0KZKRYadbg9ZrYHr/3BlGrpxhZs42aYRaXfW3TGw==
+      integrity: sha512-0Uq46YUkNy7szO+N86SPZS256qgQIFOGhM66II5DGGFovaRGcVHIGdCfb3MvLHBXvegZS/kbvm3es/QX+WwQCw==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -14824,7 +14867,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-/vQj7Yt2qdWmBSstFMjGQQKD1oBtEVnoIr0Cczfqw2YzfdU25CF5JvxQTCtrC30+ilNWT1tJ9V4ZFioSUQIdgg==
+      integrity: sha512-h57CG3rXfXH+5Fw8oWcER4/vINIFKleNTt7KFH5Gotlf36ntzLsj584X4I56/Kg88z6gIR59ZljsWbPYUd1b6w==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -14847,7 +14890,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-wp2hQmteytBaMGpzGpI4pJFW3cNaCT3FbJpQqJmQPVom8/Ys9Vkh0lH0Y86j6rJZKwwWFK2R5H5g933pvIkAxA==
+      integrity: sha512-EFfR4EJtS/DQTtLZVtynsvWY9SePZ40h+T48KyOZ/FLIUF8SJ8Zc+Z6X50x/7PQIhdFjHmqH4c0OukTxLnuAIQ==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -14873,7 +14916,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-mk3l2QwuT6wOFOx8L6XwrMoZxyqzzhzF6tJEkUHRKNMWFYy4SsCJehMqzcghiaJ4EC8hhoFcTAhOuO8H+2D7uw==
+      integrity: sha512-OKZ4kdn8mcBeGd13+1PGXYpco01qv15JFvAP8m2mJ5WYO7DPu/Z1v8bkidgVNtR3WLgXSIfNq8WUwZwKzYdaMA==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -14893,7 +14936,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-oxELZVRuql1D/M666yXwkqoUvj6dfmaBETUGbphrpIESpwrtcHCqcjCNNMXR1zG4u3SuyD5IFzq0/+Zs0xEvKw==
+      integrity: sha512-fwcni3Weqg2RznxvSEnDDmlMMMu/mDRmcO9C7kGR3gfBPdGbJqW3Vzw3Qdinw5FNO5sj7htweSvO9zCgK9q6lA==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz':
@@ -14908,7 +14951,6 @@ packages:
       '@types/prop-types': 15.7.3
       '@types/react': 16.9.13
       '@types/react-dom': 16.9.4
-      '@types/react-intl': 2.3.18
       '@types/stringify-object': 3.2.0
       enzyme: 3.10.0
       enzyme-adapter-react-16: 1.15.1_c144b6a04efe5c1f760bc30c8dcf5b0f
@@ -14922,7 +14964,7 @@ packages:
       raf: 3.4.1
       react: 16.12.0
       react-dom: 16.12.0_react@16.12.0
-      react-intl: 2.9.0_prop-types@15.7.2+react@16.12.0
+      react-intl: 3.7.0_react@16.12.0
       ts-jest: 24.2.0_jest@24.9.0
       tslint: 5.20.1_typescript@3.7.2
       tslint-config-prettier: 1.18.0
@@ -14930,7 +14972,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-tsx'
     resolution:
-      integrity: sha512-b2iJzWyeUG+HyuT8we5/NqM/mdUKGyenQpmd0zPvVpGTJriBcw9E5gOiFfiSQYklTY6HcsvdkCJg/Z3/U4a/MQ==
+      integrity: sha512-Snj6Zns4dT9xrCXL/qxn4OulwHmMWRYxKxtJUHtVb3/QAknkvhHZDUEWh3PvO4VS60c3FM+QeW5Eptxlyb9u8w==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz_webpack@4.41.2':
@@ -14951,7 +14993,6 @@ packages:
       '@types/node': 10.17.6
       '@types/react': 16.9.13
       '@types/react-dom': 16.9.4
-      '@types/react-intl': 2.3.18
       babel-loader: 8.0.6_@babel+core@7.7.4+webpack@4.41.2
       babel-runtime: 6.26.0
       core-js: 2.6.10
@@ -14976,12 +15017,13 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-4HqumkFXeXNFR+Ewyzk6t1dHBnRir0469eGJ9DB6oUWJ9ZiEIBo3dEAXmUmtXZc7WPPzFAMrebDrLKa4uj27Rg==
+      integrity: sha512-aMdwQ+n1IOMoSJxiioKIWpNa2CFAJ0dX8H1BEfnHwzyubFCCDDNJFo0qJuxSKFrt1Oto+tB38XsoF8zjSJ2ZKA==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
-  'file:projects/sdk-ui.tgz_prop-types@15.7.2':
+  'file:projects/sdk-ui.tgz':
     dependencies:
-      '@gooddata/goodstrap': 64.6.7_react-dom@16.12.0+react@16.12.0
+      '@formatjs/intl-pluralrules': 1.3.7
+      '@gooddata/goodstrap': 64.6.4-alpha-tomsatgd-tsa-fet-233-upgrade-react-intl-2019-11-25T15-10-15-043Z_react-dom@16.12.0+react@16.12.0
       '@gooddata/js-utils': 3.5.0
       '@gooddata/numberjs': 3.2.3
       '@gooddata/tslint-config': 1.0.0_typescript@3.7.2
@@ -14995,7 +15037,6 @@ packages:
       '@types/node': 10.17.6
       '@types/react': 16.9.13
       '@types/react-dom': 16.9.4
-      '@types/react-intl': 2.3.18
       '@types/react-measure': 2.0.5
       '@types/react-portal': 4.0.1
       '@types/uuid': 3.4.6
@@ -15006,6 +15047,7 @@ packages:
       enzyme: 3.10.0
       enzyme-adapter-react-16: 1.15.1_c144b6a04efe5c1f760bc30c8dcf5b0f
       foundation-sites: 5.5.3
+      full-icu: 1.3.0
       highcharts: 7.1.1
       highcharts-grouped-categories: 1.1.3
       hoist-non-react-statics: 3.3.1
@@ -15021,7 +15063,7 @@ packages:
       react: 16.12.0
       react-dom: 16.12.0_react@16.12.0
       react-dom-factories: 1.0.2
-      react-intl: 2.9.0_prop-types@15.7.2+react@16.12.0
+      react-intl: 3.7.0_react@16.12.0
       react-measure: 2.3.0_react-dom@16.12.0+react@16.12.0
       ts-jest: 24.2.0_jest@24.9.0
       tslint: 5.20.1_typescript@3.7.2
@@ -15029,20 +15071,17 @@ packages:
       typescript: 3.7.2
       uuid: 3.3.3
     dev: false
-    id: 'file:projects/sdk-ui.tgz'
     name: '@rush-temp/sdk-ui'
-    peerDependencies:
-      prop-types: '*'
     resolution:
-      integrity: sha512-L8u5C8jUb+vj7lwF9Df7iGheOHmYY1MuZFYNtfkBH6LFDH0kje04iu9swJUun5k/fa+DG+dAhwCpI1xTN8YKlw==
+      integrity: sha512-hLfsJGn6zYJ5JAhRKiSt1VrV/egIo6hFq13IEHqUlZnZi4fqNJ53B8dcNgMC/w7FL2HeNanGPcGmDgsZlXy6nQ==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
-registry: ''
 specifiers:
   '@babel/core': ^7.7.2
   '@babel/runtime': ^7.7.2
+  '@formatjs/intl-pluralrules': ~1.3.7
   '@gooddata/frontend-npm-scripts': 1.0.1
-  '@gooddata/goodstrap': ^64.6.1
+  '@gooddata/goodstrap': 64.6.4-alpha-tomsatgd-tsa-fet-233-upgrade-react-intl-2019-11-25T15-10-15-043Z
   '@gooddata/js-utils': ^3.4.0
   '@gooddata/numberjs': ^3.1.2
   '@gooddata/test-storybook': ~3.1.1
@@ -15089,7 +15128,6 @@ specifiers:
   '@types/qs': ^6.5.1
   '@types/react': ^16.9.11
   '@types/react-dom': ^16.9.3
-  '@types/react-intl': ^2.3.5
   '@types/react-measure': 2.0.5
   '@types/react-portal': 4.0.1
   '@types/rimraf': ^2.0.2
@@ -15114,6 +15152,7 @@ specifiers:
   fetch-cookie: ^0.7.0
   fetch-mock: ^5.12.2
   foundation-sites: ^5.5.3
+  full-icu: ^1.3.0
   highcharts: 7.1.1
   highcharts-grouped-categories: ^1.1.3
   hoist-non-react-statics: ^3.3.0
@@ -15140,7 +15179,7 @@ specifiers:
   qs: ^6.5.1
   raf: ^3.3.2
   react-dom-factories: ^1.0.2
-  react-intl: ^2.4.0
+  react-intl: ^3.6.0
   react-measure: ^2.3.0
   rimraf: ^3.0.0
   spark-md5: ^3.0.0

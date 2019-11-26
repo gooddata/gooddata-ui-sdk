@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import InjectedIntl = ReactIntl.InjectedIntl;
+import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 
 export interface ITranslationsProviderProps {
     children: any;
@@ -10,11 +9,11 @@ export interface ITranslationsProviderProps {
 export interface ITranslationsComponentProps {
     numericSymbols: string[];
     emptyHeaderString: string;
-    intl: InjectedIntl;
+    intl: IntlShape;
 }
 
 export class TranslationsProvider extends React.PureComponent<
-    ITranslationsProviderProps & InjectedIntlProps
+    ITranslationsProviderProps & WrappedComponentProps
 > {
     public render() {
         const props: ITranslationsComponentProps = {

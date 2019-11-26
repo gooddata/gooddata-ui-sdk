@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 import DropdownControl from "./DropdownControl";
 
@@ -16,7 +16,7 @@ export interface IDataLabelsControlProps {
     defaultValue?: string | boolean;
 }
 
-class DataLabelsControl extends React.Component<IDataLabelsControlProps & InjectedIntlProps> {
+class DataLabelsControl extends React.Component<IDataLabelsControlProps & WrappedComponentProps> {
     public static defaultProps = {
         defaultValue: "auto",
         showDisabledMessage: false,

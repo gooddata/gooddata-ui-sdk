@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
 import set = require("lodash/set");
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -23,7 +23,7 @@ export interface IConfigSubsectionState {
 }
 
 class ConfigSubsection extends React.Component<
-    IConfigSubsectionProps & InjectedIntlProps,
+    IConfigSubsectionProps & WrappedComponentProps,
     IConfigSubsectionState
 > {
     public static defaultProps = {
@@ -35,7 +35,7 @@ class ConfigSubsection extends React.Component<
         showDisabledMessage: false,
     };
 
-    constructor(props: IConfigSubsectionProps & InjectedIntlProps) {
+    constructor(props: IConfigSubsectionProps & WrappedComponentProps) {
         super(props);
         this.toggleValue = this.toggleValue.bind(this);
     }

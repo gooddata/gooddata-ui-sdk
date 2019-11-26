@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
@@ -6,7 +6,7 @@ import isNumber = require("lodash/isNumber");
 import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import {
     isSomeHeaderPredicateMatched,
@@ -47,7 +47,7 @@ function createHeadlineDataItem(executionDataItem: IHeadlineExecutionData): IHea
     };
 }
 
-function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: InjectedIntl): IHeadlineDataItem {
+function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlShape): IHeadlineDataItem {
     const secondaryHeaderItem = get(executionData, [1, "measureHeaderItem"]);
     if (!secondaryHeaderItem) {
         return null;
@@ -99,7 +99,7 @@ function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
  * @param intl - Required localization for compare item title
  * @returns {*}
  */
-export function getHeadlineData(dataView: IDataView, intl: InjectedIntl): IHeadlineData {
+export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadlineData {
     const dv = new DataViewFacade(dataView);
     const executionData = getExecutionData(dv);
 

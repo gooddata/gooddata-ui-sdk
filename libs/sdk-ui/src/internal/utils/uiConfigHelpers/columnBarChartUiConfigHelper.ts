@@ -11,12 +11,12 @@ import { UICONFIG, SUPPORTED_COMPARISON_TYPES } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
 import { getMeasureItems } from "../bucketHelper";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
 
 export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,
-    intl: InjectedIntl,
+    intl: IntlShape,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
 

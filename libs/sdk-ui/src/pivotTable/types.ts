@@ -3,7 +3,7 @@ import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IAttribute, IFilter, ITotal, SortItem, TotalType } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";
-import InjectedIntlProps = ReactIntl.InjectedIntlProps;
+import { WrappedComponentProps } from "react-intl";
 
 export interface IMenu {
     aggregations?: boolean;
@@ -70,7 +70,7 @@ export interface IPivotTableBucketProps {
 /**
  * @internal
  */
-export interface ICorePivotTableProps extends IPivotTableBaseProps, InjectedIntlProps {
+export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
     execution: IPreparedExecution;
 }
 

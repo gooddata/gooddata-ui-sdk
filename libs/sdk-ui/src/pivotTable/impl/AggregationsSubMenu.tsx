@@ -4,6 +4,7 @@ import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
+import { IntlShape } from "react-intl";
 
 import {
     getNthAttributeLocalIdentifier,
@@ -17,7 +18,7 @@ import { IColumnTotal } from "./aggregationsMenuTypes";
 const MENU_HEADER_OFFSET = -36;
 
 export interface IAggregationsSubMenuProps {
-    intl: ReactIntl.InjectedIntl;
+    intl: IntlShape;
     totalType: TotalType;
     toggler: JSX.Element;
     isMenuOpened?: boolean;

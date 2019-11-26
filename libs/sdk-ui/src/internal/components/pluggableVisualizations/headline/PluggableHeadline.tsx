@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -60,7 +60,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
     // private projectId: string;
     private callbacks: IVisCallbacks;
-    private intl: InjectedIntl;
+    private intl: IntlShape;
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;

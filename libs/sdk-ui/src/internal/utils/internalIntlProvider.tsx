@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { IntlProvider, InjectedIntl } from "react-intl";
+import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 import { DEFAULT_LOCALE } from "../../base/constants/localization";
 
@@ -27,9 +27,8 @@ export const messagesMap = {
     "zh-Hans": zhHans,
 };
 
-export function createInternalIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
-    const intlProvider = new IntlProvider({ locale, messages: messagesMap[locale] }, {});
-    return intlProvider.getChildContext().intl;
+export function createInternalIntl(locale: ILocale = DEFAULT_LOCALE): IntlShape {
+    return createIntl({ locale, messages: messagesMap[locale] });
 }
 
 export interface IInternalIntlWrapperProps {

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
 import set = require("lodash/set");
 import cloneDeep = require("lodash/cloneDeep");
@@ -34,7 +34,7 @@ export interface IInputControlState {
 const MAX_NUMBER_LENGTH = 15;
 
 export class InputControl extends React.Component<
-    IInputControlProps & InjectedIntlProps,
+    IInputControlProps & WrappedComponentProps,
     IInputControlState
 > {
     public static defaultProps = {
@@ -52,7 +52,7 @@ export class InputControl extends React.Component<
 
     private inputRef: HTMLElement;
 
-    constructor(props: IInputControlProps & InjectedIntlProps) {
+    constructor(props: IInputControlProps & WrappedComponentProps) {
         super(props);
 
         this.state = {
@@ -66,7 +66,7 @@ export class InputControl extends React.Component<
         this.triggerBlur = this.triggerBlur.bind(this);
     }
 
-    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & InjectedIntlProps) {
+    public UNSAFE_componentWillReceiveProps(newProps: IInputControlProps & WrappedComponentProps) {
         if (newProps.value !== this.state.value) {
             this.setState({
                 value: newProps.value,

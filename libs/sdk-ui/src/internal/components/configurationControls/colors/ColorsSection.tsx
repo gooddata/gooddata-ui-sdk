@@ -3,7 +3,7 @@ import * as React from "react";
 import set = require("lodash/set");
 import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import * as classNames from "classnames";
@@ -29,7 +29,7 @@ export interface IColorsSectionProps {
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
 
-class ColorsSection extends React.Component<IColorsSectionProps & InjectedIntlProps> {
+class ColorsSection extends React.Component<IColorsSectionProps & WrappedComponentProps> {
     public render() {
         const { pushData, propertiesMeta } = this.props;
 

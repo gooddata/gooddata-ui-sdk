@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import set = require("lodash/set");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import * as BucketNames from "../../../base/constants/bucketNames";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
@@ -16,7 +16,7 @@ import * as tableColumnsIcon from "../../assets/table/bucket-title-columns.svg";
 
 export function setPivotTableUiConfig(
     referencePoint: IExtendedReferencePoint,
-    intl: InjectedIntl,
+    intl: IntlShape,
     visualizationType: string,
 ) {
     set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));

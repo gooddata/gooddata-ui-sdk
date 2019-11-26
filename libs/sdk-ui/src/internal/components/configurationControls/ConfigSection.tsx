@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import * as classNames from "classnames";
 import noop = require("lodash/noop");
 import get = require("lodash/get");
@@ -30,7 +30,7 @@ export interface IConfigSectionState {
 }
 
 export class ConfigSection extends React.Component<
-    IConfigSectionProps & InjectedIntlProps,
+    IConfigSectionProps & WrappedComponentProps,
     IConfigSectionState
 > {
     public static defaultProps = {
@@ -45,7 +45,7 @@ export class ConfigSection extends React.Component<
         properties: {},
     };
 
-    constructor(props: IConfigSectionProps & InjectedIntlProps) {
+    constructor(props: IConfigSectionProps & WrappedComponentProps) {
         super(props);
 
         this.toggleCollapsed = this.toggleCollapsed.bind(this);
@@ -58,7 +58,7 @@ export class ConfigSection extends React.Component<
         };
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionProps & InjectedIntlProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionProps & WrappedComponentProps) {
         const collapsed = get(nextProps, `propertiesMeta.${this.props.id}.collapsed`, true);
         this.setState({ collapsed });
     }

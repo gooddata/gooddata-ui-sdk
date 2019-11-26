@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 
 interface IAttributeDropdownButtonsProps {
@@ -9,7 +9,7 @@ interface IAttributeDropdownButtonsProps {
     applyDisabled?: boolean;
 }
 
-const AttributeDropdownButtonsWrapped: React.FC<IAttributeDropdownButtonsProps & InjectedIntlProps> = ({
+const AttributeDropdownButtonsWrapped: React.FC<IAttributeDropdownButtonsProps & WrappedComponentProps> = ({
     applyDisabled,
     intl,
     onApplyButtonClicked,
