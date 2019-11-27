@@ -41,7 +41,7 @@ async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
     // otherwise figure out number of pages to load, calculate their offsets
     const lastPageNotComplete = available % PAGE_SIZE > 0 ? 1 : 0;
     const numPagesToGet = Math.trunc(available / PAGE_SIZE) - 1 + lastPageNotComplete;
-    const pageOffsets = new Array(numPagesToGet).map((_, idx) => (idx + 1) * PAGE_SIZE);
+    const pageOffsets = new Array(numPagesToGet).fill(0).map((_, idx) => (idx + 1) * PAGE_SIZE);
     const loadPage = async (offset: number): Promise<CatalogItemsResponse> => {
         const pageOpts = getRequestOptions(offset);
 
