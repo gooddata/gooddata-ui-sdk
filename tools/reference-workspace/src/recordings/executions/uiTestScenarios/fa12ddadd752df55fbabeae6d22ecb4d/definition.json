@@ -1,0 +1,73 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": []
+        },
+        {
+            "localIdentifier": "columns",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.owner.region"
+                        },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.region"
+                },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": []
+        },
+        {
+            "itemIdentifiers": ["a_label.owner.region", "measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

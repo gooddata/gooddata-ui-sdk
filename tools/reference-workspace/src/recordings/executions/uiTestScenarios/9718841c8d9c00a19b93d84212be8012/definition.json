@@ -1,0 +1,134 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "secondary_measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "abZgFKGPaGYM"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_abZgFKGPaGYM"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "tertiary_measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "abEgMnq5hyJQ"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_abEgMnq5hyJQ"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.product.id.name"
+                        },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ]
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.product.id.name"
+                },
+                "localIdentifier": "a_label.product.id.name"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "abZgFKGPaGYM"
+                        }
+                    }
+                },
+                "localIdentifier": "m_abZgFKGPaGYM"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "abEgMnq5hyJQ"
+                        }
+                    }
+                },
+                "localIdentifier": "m_abEgMnq5hyJQ"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a_label.product.id.name"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": [
+        {
+            "attributeSortItem": {
+                "attributeIdentifier": "a_label.product.id.name",
+                "direction": "desc"
+            }
+        }
+    ]
+}

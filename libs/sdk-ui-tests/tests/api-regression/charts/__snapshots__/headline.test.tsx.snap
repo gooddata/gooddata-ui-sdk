@@ -11,11 +11,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "acugFHNJgsBy",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_acugFHNJgsBy",
           },
         },
       ],
@@ -36,11 +36,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "acugFHNJgsBy",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
   ],
@@ -89,11 +89,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "acugFHNJgsBy",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_acugFHNJgsBy",
           },
         },
         Object {
@@ -101,13 +101,13 @@ Object {
             "alias": "Won Last Year",
             "definition": Object {
               "popMeasureDefinition": Object {
-                "measureIdentifier": "m_afSEwRwdbMeQ",
+                "measureIdentifier": "m_acugFHNJgsBy",
                 "popAttribute": Object {
                   "identifier": "closed.year",
                 },
               },
             },
-            "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
           },
         },
       ],
@@ -128,11 +128,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "acugFHNJgsBy",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
     Object {
@@ -140,13 +140,13 @@ Object {
         "alias": "Won Last Year",
         "definition": Object {
           "popMeasureDefinition": Object {
-            "measureIdentifier": "m_afSEwRwdbMeQ",
+            "measureIdentifier": "m_acugFHNJgsBy",
             "popAttribute": Object {
               "identifier": "closed.year",
             },
           },
         },
-        "localIdentifier": "m_m_afSEwRwdbMeQ_closed.year",
+        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
       },
     },
   ],
@@ -195,11 +195,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "acugFHNJgsBy",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_acugFHNJgsBy",
           },
         },
         Object {
@@ -207,11 +207,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "ah1EuQxwaCqs",
+                  "identifier": "aangOxLSeztu",
                 },
               },
             },
-            "localIdentifier": "m_ah1EuQxwaCqs",
+            "localIdentifier": "m_aangOxLSeztu",
           },
         },
       ],
@@ -232,11 +232,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "acugFHNJgsBy",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
     Object {
@@ -244,11 +244,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "ah1EuQxwaCqs",
+              "identifier": "aangOxLSeztu",
             },
           },
         },
-        "localIdentifier": "m_ah1EuQxwaCqs",
+        "localIdentifier": "m_aangOxLSeztu",
       },
     },
   ],
@@ -297,11 +297,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "afSEwRwdbMeQ",
+                  "identifier": "acugFHNJgsBy",
                 },
               },
             },
-            "localIdentifier": "m_afSEwRwdbMeQ",
+            "localIdentifier": "m_acugFHNJgsBy",
           },
         },
         Object {
@@ -309,11 +309,11 @@ Object {
             "definition": Object {
               "measureDefinition": Object {
                 "item": Object {
-                  "identifier": "ah1EuQxwaCqs",
+                  "identifier": "aangOxLSeztu",
                 },
               },
             },
-            "localIdentifier": "m_ah1EuQxwaCqs",
+            "localIdentifier": "m_aangOxLSeztu",
           },
         },
       ],
@@ -334,11 +334,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "afSEwRwdbMeQ",
+              "identifier": "acugFHNJgsBy",
             },
           },
         },
-        "localIdentifier": "m_afSEwRwdbMeQ",
+        "localIdentifier": "m_acugFHNJgsBy",
       },
     },
     Object {
@@ -346,11 +346,11 @@ Object {
         "definition": Object {
           "measureDefinition": Object {
             "item": Object {
-              "identifier": "ah1EuQxwaCqs",
+              "identifier": "aangOxLSeztu",
             },
           },
         },
-        "localIdentifier": "m_ah1EuQxwaCqs",
+        "localIdentifier": "m_aangOxLSeztu",
       },
     },
   ],

@@ -225,3 +225,55 @@ Here are couple of ground rules for this package:
 
 -   Backend SPI MUST NOT expose platform-specific types; e.g. stuff defined in client packages
 -   ...
+
+### Testing and testing guidelines
+
+#### Testing strategy
+
+TBD
+
+#### Reference Workspace
+
+In order to standardize and simplify testing, all our tests SHOULD use same GoodData LDM and even further same testing
+data. The reference workspace and the tooling surrounding it sets the foundation to enable this and automate as many
+tasks as feasible.
+
+The entire story goes as follows:
+
+-   Reference workspace exists in GoodData Platform - it is realized by a standardized project derived from GoodSales v2
+    demo. It comes with non-trivial LDM and with made-up test data. The workspace can be created automatically and
+    in matter of minute(s).
+
+-   The catalog-export tool located in this repository can be used to export LDM from the workspace into a TypeScript
+    representation; with facts, measures, attributes and date data sets represented by constants initialized to
+    respective sdk-model instances
+
+-   The mock-handling tool also located in this repository can be used to create and maintain data and metadata
+    recordings taken from the reference workspace.
+
+-   This all comes together in the tools/reference-workspace project; this is where TypeScript code representing
+    LDM exists. This is where we store definitions of what data to capture from the reference workspace living in
+    GoodData platform.
+
+-   The tools/reference-workspace project is built as any other project and can be depended-on as needed. It contains
+    all the code and recording artifacts. The recordings are accessible through a RecordingIndex - this can be used
+    as input to recordedBackend() implemented in sdk-backend-mockingbird.
+
+Thus, the tools/reference-workspace project delivers testing infrastructure that SHOULD be used for all types of tests:
+
+-   The Reference LDM on its own SHOULD be used in unit tests in the area of execution definition
+-   The Reference LDM in conjunction with dummyBackend() SHOULD be used in unit and component tests focused on
+    creating and driving executions (e.g. when results are unimportant)
+-   The Reference LDM in conjunction with recordedBackend() SHOULD be used for component tests and end-to-end tests
+    where it is important to have valid data and metadata
+
+To learn more, please see:
+
+-   [tools/reference-workspace](tools/reference-workspace)
+-   [tools/catalog-export](tools/catalog-export)
+-   [tools/mock-handling](tools/mock-handling)
+
+For inspiration how to automatically obtain execution recording definitions (not the data, just the input on
+what data to obtain) please see:
+
+-   [libs/sdk-ui-tests](libs/sdk-ui-tests)

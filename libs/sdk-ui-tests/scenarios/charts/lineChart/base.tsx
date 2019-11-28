@@ -28,7 +28,7 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
         trendBy: ReferenceLdm.CreatedQuarterYear,
     })
     .addScenario("single measure with % and trendBy", {
-        measures: [ReferenceLdm.PercentOfGoal],
+        measures: [ReferenceLdm.WinRate],
         trendBy: ReferenceLdm.CreatedQuarterYear,
     })
     .addScenario("two measures with trendBy", LineChartTwoMeasuresWithTrendyBy)

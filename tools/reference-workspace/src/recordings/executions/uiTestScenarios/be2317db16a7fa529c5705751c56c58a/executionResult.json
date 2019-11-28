@@ -1,0 +1,48 @@
+{
+    "dimensions": [
+        {
+            "headers": []
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "name": "Region",
+                        "localIdentifier": "a_label.owner.region",
+                        "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1087",
+                        "identifier": "label.owner.region",
+                        "formOf": {
+                            "name": "Region",
+                            "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1086",
+                            "identifier": "attr.owner.region"
+                        }
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1271",
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1272",
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
