@@ -34,14 +34,14 @@
     "dependencies": {
         "@gooddata/gd-bear-client": "^8.0.0-alpha.0",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.0",
-        "lodash": "^4.17.15",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
         "inquirer": "^6.5.2",
+        "lodash": "^4.17.15",
         "ora": "^4.0.2",
+        "p-map": "^3.0.0",
         "prettier": "~1.18.2",
         "prompt": "^1.0.0",
-        "p-map": "^3.0.0",
         "strip-ansi": "^5.2.0",
         "ts-morph": "^4.2.0"
     },
@@ -59,6 +59,6 @@
         "ts-node": "^8.4.1",
         "tslint": "^5.14.0",
         "tslint-config-prettier": "^1.18.0",
-        "typescript": "3.6.3"
+        "typescript": "3.7.2"
     }
 }
