@@ -189,3 +189,7 @@ For detailed description of the release process, please see [Release process](do
 #### `rush build` gives me error TS2307: Cannot find module '@gooddata/sdk-backend-spi'.
 
 This might be caused by corrupted symlinks. Try running `rush link --force` to recreate them. After that, everything should work fine.
+
+## CI jobs and gating
+
+Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
