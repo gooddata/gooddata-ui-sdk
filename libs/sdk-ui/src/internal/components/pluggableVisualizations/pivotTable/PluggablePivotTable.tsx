@@ -180,12 +180,15 @@ const isAttributeSortItemVisible = (_sortItem: IAttributeSortItem, _filters: IBu
     true;
 
 const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IBucketFilter): boolean =>
-    filter.selectedElements.some(selectedElement =>
-        sortItem.measureSortItem.locators.some(
-            locator =>
-                !isMeasureLocator(locator) && locator.attributeLocatorItem.element === selectedElement.uri,
-        ),
-    );
+    filter.selectedElements
+        ? filter.selectedElements.some(selectedElement =>
+              sortItem.measureSortItem.locators.some(
+                  locator =>
+                      !isMeasureLocator(locator) &&
+                      locator.attributeLocatorItem.element === selectedElement.uri,
+              ),
+          )
+        : false;
 
 const isMeasureSortItemVisible = (sortItem: IMeasureSortItem, filters: IBucketFilter[]): boolean =>
     filters.reduce((isVisible, filter) => {
