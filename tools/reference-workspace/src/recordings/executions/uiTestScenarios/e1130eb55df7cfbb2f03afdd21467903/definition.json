@@ -1,0 +1,104 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "created.aci81lMifn6q"
+                        },
+                        "localIdentifier": "a_created.aci81lMifn6q"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "stack",
+            "items": []
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "created.aci81lMifn6q"
+                },
+                "localIdentifier": "a_created.aci81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_created.aci81lMifn6q"]
+        }
+    ],
+    "filters": [],
+    "sortBy": [
+        {
+            "attributeSortItem": {
+                "attributeIdentifier": "a_created.aci81lMifn6q",
+                "direction": "desc"
+            }
+        }
+    ]
+}

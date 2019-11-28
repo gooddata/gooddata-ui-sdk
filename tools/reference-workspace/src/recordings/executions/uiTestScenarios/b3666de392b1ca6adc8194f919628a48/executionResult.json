@@ -1,0 +1,23 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1272",
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

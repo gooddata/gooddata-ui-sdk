@@ -1,0 +1,125 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": {
+                                    "identifier": "closed.year"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                        "alias": "Won Last Year"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "attribute",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "closed.aag81lMifn6q"
+                        },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "stack",
+            "items": []
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "closed.aag81lMifn6q"
+                },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": {
+                            "identifier": "closed.year"
+                        }
+                    }
+                },
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                "alias": "Won Last Year"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_closed.aag81lMifn6q"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

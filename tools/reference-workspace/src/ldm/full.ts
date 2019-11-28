@@ -1,6 +1,7 @@
+// (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-10-18T09:24:24.067Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-28T08:53:09.533Z; */
 import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
 
 export const Account = {
@@ -47,14 +48,14 @@ export const ForecastCategory: IAttribute = newAttribute("label.opportunitysnaps
 export const IsActive: IAttribute = newAttribute("label.stage.isactive");
 /**
  * Attribute Title: Is Closed?
- * Display Form ID: attr.stage.isclosed
- */
-export const IsClosed: IAttribute = newAttribute("label.stage.isclosed");
-/**
- * Attribute Title: Is Closed?
  * Display Form ID: attr.activity.isclosed
  */
-export const IsClosed_1: IAttribute = newAttribute("label.activity.isclosed");
+export const IsClosed: IAttribute = newAttribute("label.activity.isclosed");
+/**
+ * Attribute Title: Is Closed?
+ * Display Form ID: attr.stage.isclosed
+ */
+export const IsClosed_1: IAttribute = newAttribute("label.stage.isclosed");
 /**
  * Attribute Title: Is Task?
  * Display Form ID: attr.activity.istask
@@ -129,258 +130,68 @@ export const StageName = {
      */
     Default: newAttribute("label.stage.name.stagename"),
     /**
-     * Display Form Title: Stage Name
-     * Display Form ID: label.stage.name
-     */ _1: newAttribute("label.stage.name"),
-    /**
      * Display Form Title: Order
      * Display Form ID: label.stage.name.order
      */ Order: newAttribute("label.stage.name.order"),
 };
 /**
  * Attribute Title: Status
- * Display Form ID: attr.stage.status
- */
-export const Status: IAttribute = newAttribute("label.stage.status");
-/**
- * Attribute Title: Status
  * Display Form ID: attr.activity.status
  */
-export const Status_1: IAttribute = newAttribute("label.activity.status");
+export const Status: IAttribute = newAttribute("label.activity.status");
 /**
- * Metric Title: _Close [BOP]
- * Metric ID: aaeb7jTCfexV
- * Metric Type: MAQL Metric
+ * Attribute Title: Status
+ * Display Form ID: attr.stage.status
  */
-export const CloseBOP: IMeasure<IMeasureDefinition> = newMeasure("aaeb7jTCfexV");
-/**
- * Metric Title: _Close [EOP]
- * Metric ID: aazb6kroa3iC
- * Metric Type: MAQL Metric
- */
-export const CloseEOP: IMeasure<IMeasureDefinition> = newMeasure("aazb6kroa3iC");
-/**
- * Metric Title: _Opp. First Snapshot
- * Metric ID: anwcdHC0aJK1
- * Metric Type: MAQL Metric
- */
-export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure("anwcdHC0aJK1");
-/**
- * Metric Title: _Snapshot [BOP]
- * Metric ID: aazV2yX2gz2z
- * Metric Type: MAQL Metric
- */
-export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure("aazV2yX2gz2z");
-/**
- * Metric Title: _Snapshot [EOP-1]
- * Metric ID: aeTdhRNid95F
- * Metric Type: MAQL Metric
- */
-export const SnapshotEOP1: IMeasure<IMeasureDefinition> = newMeasure("aeTdhRNid95F");
-/**
- * Metric Title: _Snapshot [EOP-2]
- * Metric ID: ab0bydLaaisS
- * Metric Type: MAQL Metric
- */
-export const SnapshotEOP2: IMeasure<IMeasureDefinition> = newMeasure("ab0bydLaaisS");
+export const Status_1: IAttribute = newAttribute("label.stage.status");
 /**
  * Metric Title: _Snapshot [EOP]
- * Metric ID: aa5EuXigaJAx
+ * Metric ID: abxgDICQav2J
  * Metric Type: MAQL Metric
  */
-export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure("aa5EuXigaJAx");
-/**
- * Metric Title: _Timeline [BOP]
- * Metric ID: aiTEuXhZaJw5
- * Metric Type: MAQL Metric
- */
-export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure("aiTEuXhZaJw5");
+export const SnapshotEOP: IMeasure<IMeasureDefinition> = newMeasure("abxgDICQav2J");
 /**
  * Metric Title: _Timeline [EOP]
- * Metric ID: ahUEuUVTefyt
+ * Metric ID: abYgDBRagANw
  * Metric Type: MAQL Metric
  */
-export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure("ahUEuUVTefyt");
+export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure("abYgDBRagANw");
 /**
- * Metric Title: # of Activities
- * Metric ID: acKjadJIgZUN
+ * Metric Title: # Of Opportunities
+ * Metric ID: abQgDWx4gOUu
  * Metric Type: MAQL Metric
  */
-export const NrOfActivities: IMeasure<IMeasureDefinition> = newMeasure("acKjadJIgZUN");
+export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure("abQgDWx4gOUu");
 /**
- * Metric Title: # of Lost Opps.
- * Metric ID: adjh3LoXhPXZ
+ * Metric Title: # Of Won Opportunities
+ * Metric ID: aa4gLlQhcmLO
  * Metric Type: MAQL Metric
  */
-export const NrOfLostOpps: IMeasure<IMeasureDefinition> = newMeasure("adjh3LoXhPXZ");
-/**
- * Metric Title: # of Open Opps.
- * Metric ID: aaYh6Voua2yj
- * Metric Type: MAQL Metric
- */
-export const NrOfOpenOpps: IMeasure<IMeasureDefinition> = newMeasure("aaYh6Voua2yj");
-/**
- * Metric Title: # of Opportunities
- * Metric ID: afdV48ABh8CN
- * Metric Type: MAQL Metric
- */
-export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure("afdV48ABh8CN");
-/**
- * Metric Title: # of Opportunities [BOP]
- * Metric ID: aamV6GqBeqJE
- * Metric Type: MAQL Metric
- */
-export const NrOfOpportunitiesBOP: IMeasure<IMeasureDefinition> = newMeasure("aamV6GqBeqJE");
-/**
- * Metric Title: # of Won Opps.
- * Metric ID: abf0d42yaIkL
- * Metric Type: MAQL Metric
- */
-export const NrOfWonOpps: IMeasure<IMeasureDefinition> = newMeasure("abf0d42yaIkL");
-/**
- * Metric Title: % of Goal
- * Metric ID: aau7DWc4aOY9
- * Metric Type: MAQL Metric
- */
-export const PercentOfGoal: IMeasure<IMeasureDefinition> = newMeasure("aau7DWc4aOY9");
+export const NrOfWonOpportunities: IMeasure<IMeasureDefinition> = newMeasure("aa4gLlQhcmLO");
 /**
  * Metric Title: Amount
- * Metric ID: ah1EuQxwaCqs
+ * Metric ID: aangOxLSeztu
  * Metric Type: MAQL Metric
  */
-export const Amount: IMeasure<IMeasureDefinition> = newMeasure("ah1EuQxwaCqs");
-/**
- * Metric Title: Amount [BOP]
- * Metric ID: aagV61RmaPTt
- * Metric Type: MAQL Metric
- */
-export const AmountBOP: IMeasure<IMeasureDefinition> = newMeasure("aagV61RmaPTt");
-/**
- * Metric Title: Avg. Amount
- * Metric ID: aoJqpe5Ib4mO
- * Metric Type: MAQL Metric
- */
-export const AvgAmount: IMeasure<IMeasureDefinition> = newMeasure("aoJqpe5Ib4mO");
-/**
- * Metric Title: Avg. Won
- * Metric ID: agEEuYDOefRs
- * Metric Type: MAQL Metric
- */
-export const AvgWon: IMeasure<IMeasureDefinition> = newMeasure("agEEuYDOefRs");
-/**
- * Metric Title: Best Case
- * Metric ID: ac3EwmqvbxcX
- * Metric Type: MAQL Metric
- */
-export const BestCase: IMeasure<IMeasureDefinition> = newMeasure("ac3EwmqvbxcX");
-/**
- * Metric Title: Best Case [BOP]
- * Metric ID: agWV63OeeLzZ
- * Metric Type: MAQL Metric
- */
-export const BestCaseBOP: IMeasure<IMeasureDefinition> = newMeasure("agWV63OeeLzZ");
-/**
- * Metric Title: Best Case + Won
- * Metric ID: afrEHo1vdgPX
- * Metric Type: MAQL Metric
- */
-export const BestCaseWon: IMeasure<IMeasureDefinition> = newMeasure("afrEHo1vdgPX");
-/**
- * Metric Title: Best Case + Won above Quota
- * Metric ID: aguEHnQddgJQ
- * Metric Type: MAQL Metric
- */
-export const BestCaseWonAboveQuota: IMeasure<IMeasureDefinition> = newMeasure("aguEHnQddgJQ");
-/**
- * Metric Title: Days until Close
- * Metric ID: ab60fWAtbXDu
- * Metric Type: MAQL Metric
- */
-export const DaysUntilClose: IMeasure<IMeasureDefinition> = newMeasure("ab60fWAtbXDu");
-/**
- * Metric Title: Expected
- * Metric ID: alUEwmBtbwSh
- * Metric Type: MAQL Metric
- */
-export const Expected: IMeasure<IMeasureDefinition> = newMeasure("alUEwmBtbwSh");
-/**
- * Metric Title: Expected % of Goal
- * Metric ID: ahiKysS4g1xJ
- * Metric Type: MAQL Metric
- */
-export const ExpectedPercentOfGoal: IMeasure<IMeasureDefinition> = newMeasure("ahiKysS4g1xJ");
-/**
- * Metric Title: Expected + Won
- * Metric ID: abpEF3QAhrxq
- * Metric Type: MAQL Metric
- */
-export const ExpectedWon: IMeasure<IMeasureDefinition> = newMeasure("abpEF3QAhrxq");
-/**
- * Metric Title: Expected + Won vs. Quota
- * Metric ID: adIEF3jFhrus
- * Metric Type: MAQL Metric
- */
-export const ExpectedWonVsQuota: IMeasure<IMeasureDefinition> = newMeasure("adIEF3jFhrus");
-/**
- * Metric Title: Lost
- * Metric ID: af2Ewj9Re2vK
- * Metric Type: MAQL Metric
- */
-export const Lost: IMeasure<IMeasureDefinition> = newMeasure("af2Ewj9Re2vK");
+export const Amount: IMeasure<IMeasureDefinition> = newMeasure("aangOxLSeztu");
 /**
  * Metric Title: Probability
- * Metric ID: acfWntEMcom0
+ * Metric ID: abEgMnq5hyJQ
  * Metric Type: MAQL Metric
  */
-export const Probability: IMeasure<IMeasureDefinition> = newMeasure("acfWntEMcom0");
-/**
- * Metric Title: Probability [BOP]
- * Metric ID: apjWnFTTgjIi
- * Metric Type: MAQL Metric
- */
-export const ProbabilityBOP: IMeasure<IMeasureDefinition> = newMeasure("apjWnFTTgjIi");
-/**
- * Metric Title: Productive Reps
- * Metric ID: aah1rj5OeOqc
- * Metric Type: MAQL Metric
- */
-export const ProductiveReps: IMeasure<IMeasureDefinition> = newMeasure("aah1rj5OeOqc");
-/**
- * Metric Title: Quota
- * Metric ID: abFKeoNocsN0
- * Metric Type: MAQL Metric
- */
-export const Quota: IMeasure<IMeasureDefinition> = newMeasure("abFKeoNocsN0");
-/**
- * Metric Title: Remaining Quota
- * Metric ID: ab4EFOAmhjOx
- * Metric Type: MAQL Metric
- */
-export const RemainingQuota: IMeasure<IMeasureDefinition> = newMeasure("ab4EFOAmhjOx");
-/**
- * Metric Title: Stage Duration
- * Metric ID: ae8zDprJiBLY
- * Metric Type: MAQL Metric
- */
-export const StageDuration: IMeasure<IMeasureDefinition> = newMeasure("ae8zDprJiBLY");
-/**
- * Metric Title: Stage Velocity
- * Metric ID: amlzCOoUe2Q0
- * Metric Type: MAQL Metric
- */
-export const StageVelocity: IMeasure<IMeasureDefinition> = newMeasure("amlzCOoUe2Q0");
+export const Probability: IMeasure<IMeasureDefinition> = newMeasure("abEgMnq5hyJQ");
 /**
  * Metric Title: Win Rate
- * Metric ID: aaX0PIUzg7nF
+ * Metric ID: abZgFKGPaGYM
  * Metric Type: MAQL Metric
  */
-export const WinRate: IMeasure<IMeasureDefinition> = newMeasure("aaX0PIUzg7nF");
+export const WinRate: IMeasure<IMeasureDefinition> = newMeasure("abZgFKGPaGYM");
 /**
  * Metric Title: Won
- * Metric ID: afSEwRwdbMeQ
+ * Metric ID: acugFHNJgsBy
  * Metric Type: MAQL Metric
  */
-export const Won: IMeasure<IMeasureDefinition> = newMeasure("afSEwRwdbMeQ");
+export const Won: IMeasure<IMeasureDefinition> = newMeasure("acugFHNJgsBy");
 /**
  * Fact Title: Activity (Date)
  * Fact ID: dt.activity.activity
@@ -801,129 +612,11 @@ export const Velocity = {
      * Fact Aggregation: runsum
      */ Runsum: newMeasure("fact.stagehistory.velocity", m => m.aggregation("runsum")),
 };
-export const CreatedDate = {
-    /**
-     * Display Form Title: mm/dd/yyyy (Created)
-     * Display Form ID: created.date.mmddyyyy
-     */
-    MmDdYyyy: newAttribute("created.date.mmddyyyy"),
-    /**
-     * Display Form Title: yyyy-mm-dd (Created)
-     * Display Form ID: created.date.yyyymmdd
-     */ YyyyMmDd: newAttribute("created.date.yyyymmdd"),
-    /**
-     * Display Form Title: m/d/yy (no leading zeroes) (Created)
-     * Display Form ID: created.date.mdyy
-     */ MDYy: newAttribute("created.date.mdyy"),
-    /**
-     * Display Form Title: Long (Mon, Jan 1, 2010) (Created)
-     * Display Form ID: created.date.long
-     */ Long: newAttribute("created.date.long"),
-    /**
-     * Display Form Title: dd/mm/yyyy (Created)
-     * Display Form ID: created.date.ddmmyyyy
-     */ DdMmYyyy: newAttribute("created.date.ddmmyyyy"),
-    /**
-     * Display Form Title: dd-mm-yyyy (Created)
-     * Display Form ID: created.date.eddmmyyyy
-     */ DdMmYyyy_1: newAttribute("created.date.eddmmyyyy"),
-};
-export const CreatedDayOfWeekMonSun = {
-    /**
-     * Display Form Title: Short (Mon) (Created)
-     * Display Form ID: created.abU81lMifn6q
-     */
-    Short: newAttribute("created.abU81lMifn6q"),
-    /**
-     * Display Form Title: Long (Monday) (Created)
-     * Display Form ID: created.abY81lMifn6q
-     */ Long: newAttribute("created.abY81lMifn6q"),
-    /**
-     * Display Form Title: Number (1=Monday) (Created)
-     * Display Form ID: created.abW81lMifn6q
-     */ Number: newAttribute("created.abW81lMifn6q"),
-};
-export const CreatedMonthYear = {
-    /**
-     * Display Form Title: Short (Jan 2010) (Created)
-     * Display Form ID: created.act81lMifn6q
-     */
-    Short: newAttribute("created.act81lMifn6q"),
-    /**
-     * Display Form Title: Long (January 2010) (Created)
-     * Display Form ID: created.acx81lMifn6q
-     */ Long: newAttribute("created.acx81lMifn6q"),
-    /**
-     * Display Form Title: Number (1/2010) (Created)
-     * Display Form ID: created.acv81lMifn6q
-     */ Number: newAttribute("created.acv81lMifn6q"),
-};
-export const CreatedMonth = {
-    /**
-     * Display Form Title: Short (Jan) (Created)
-     * Display Form ID: created.abm81lMifn6q
-     */
-    Short: newAttribute("created.abm81lMifn6q"),
-    /**
-     * Display Form Title: Long (January) (Created)
-     * Display Form ID: created.abs81lMifn6q
-     */ Long: newAttribute("created.abs81lMifn6q"),
-    /**
-     * Display Form Title: Number (M1) (Created)
-     * Display Form ID: created.abq81lMifn6q
-     */ Number: newAttribute("created.abq81lMifn6q"),
-    /**
-     * Display Form Title: M/Q (M1/Q1) (Created)
-     * Display Form ID: created.abo81lMifn6q
-     */ MQ: newAttribute("created.abo81lMifn6q"),
-};
 /**
- * Attribute Title: Week (Mon-Sun) (Created)
- * Display Form ID: created.euweek.in.year
+ * Attribute Title: Year (Created)
+ * Display Form ID: created.year
  */
-export const CreatedWeekMonSun: IAttribute = newAttribute("created.aba81lMifn6q");
-export const CreatedWeekMonSunYear = {
-    /**
-     * Display Form Title: Week #/Year (W1/2010) (Created)
-     * Display Form ID: created.aa281lMifn6q
-     */
-    WeekNrYear: newAttribute("created.aa281lMifn6q"),
-    /**
-     * Display Form Title: Week Starting (Created)
-     * Display Form ID: created.aaY81lMifn6q
-     */ WeekStarting: newAttribute("created.aaY81lMifn6q"),
-    /**
-     * Display Form Title: From - To (Created)
-     * Display Form ID: created.aaW81lMifn6q
-     */ FromTo: newAttribute("created.aaW81lMifn6q"),
-    /**
-     * Display Form Title: Week #/Year (Cont.) (Created)
-     * Display Form ID: created.aa081lMifn6q
-     */ WeekNrYear_1: newAttribute("created.aa081lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Cont.) (Created)
-     * Display Form ID: created.aa481lMifn6q
-     */ WkQtrYear: newAttribute("created.aa481lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Created)
-     * Display Form ID: created.aaU81lMifn6q
-     */ WkQtrYear_1: newAttribute("created.aaU81lMifn6q"),
-};
-/**
- * Attribute Title: Quarter/Year (Created)
- * Display Form ID: created.quarter
- */
-export const CreatedQuarterYear: IAttribute = newAttribute("created.aci81lMifn6q");
-/**
- * Attribute Title: Day of Month (Created)
- * Display Form ID: created.day.in.month
- */
-export const CreatedDayOfMonth: IAttribute = newAttribute("created.aca81lMifn6q");
-/**
- * Attribute Title: Week (Sun-Sat) of Qtr (Created)
- * Display Form ID: created.week.in.quarter
- */
-export const CreatedWeekSunSatOfQtr: IAttribute = newAttribute("created.aaO81lMifn6q");
+export const CreatedYear: IAttribute = newAttribute("created.aag81lMifn6q");
 /**
  * Attribute Title: Quarter (Created)
  * Display Form ID: created.quarter.in.year
@@ -957,6 +650,65 @@ export const CreatedWeekSunSatYear = {
      */ WkQtrYear_1: newAttribute("created.aas81lMifn6q"),
 };
 /**
+ * Attribute Title: Week (Sun-Sat) (Created)
+ * Display Form ID: created.week.in.year
+ */
+export const CreatedWeekSunSat: IAttribute = newAttribute("created.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Created)
+ * Display Form ID: created.week.in.quarter
+ */
+export const CreatedWeekSunSatOfQtr: IAttribute = newAttribute("created.aaO81lMifn6q");
+export const CreatedWeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Created)
+     * Display Form ID: created.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("created.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Created)
+     * Display Form ID: created.aaY81lMifn6q
+     */ WeekStarting: newAttribute("created.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Created)
+     * Display Form ID: created.aaW81lMifn6q
+     */ FromTo: newAttribute("created.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Created)
+ * Display Form ID: created.euweek.in.year
+ */
+export const CreatedWeekMonSun: IAttribute = newAttribute("created.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Created)
+ * Display Form ID: created.euweek.in.quarter
+ */
+export const CreatedWeekMonSunOfQtr: IAttribute = newAttribute("created.abg81lMifn6q");
+export const CreatedMonth = {
+    /**
+     * Display Form Title: Short (Jan) (Created)
+     * Display Form ID: created.abm81lMifn6q
+     */
+    Short: newAttribute("created.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Created)
+     * Display Form ID: created.abs81lMifn6q
+     */ Long: newAttribute("created.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Created)
+     * Display Form ID: created.abq81lMifn6q
+     */ Number: newAttribute("created.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Created)
+     * Display Form ID: created.abo81lMifn6q
+     */ MQ: newAttribute("created.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Created)
+ * Display Form ID: created.month.in.quarter
+ */
+export const CreatedMonthOfQuarter: IAttribute = newAttribute("created.aby81lMifn6q");
+/**
  * Attribute Title: Day of Year (Created)
  * Display Form ID: created.day.in.year
  */
@@ -976,154 +728,83 @@ export const CreatedDayOfWeekSunSat = {
      * Display Form ID: created.abM81lMifn6q
      */ Number: newAttribute("created.abM81lMifn6q"),
 };
-/**
- * Attribute Title: Week (Sun-Sat) (Created)
- * Display Form ID: created.week.in.year
- */
-export const CreatedWeekSunSat: IAttribute = newAttribute("created.aaI81lMifn6q");
-/**
- * Attribute Title: Week (Mon-Sun) of Qtr (Created)
- * Display Form ID: created.euweek.in.quarter
- */
-export const CreatedWeekMonSunOfQtr: IAttribute = newAttribute("created.abg81lMifn6q");
+export const CreatedDayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Created)
+     * Display Form ID: created.abU81lMifn6q
+     */
+    Short: newAttribute("created.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Created)
+     * Display Form ID: created.abY81lMifn6q
+     */ Long: newAttribute("created.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Created)
+     * Display Form ID: created.abW81lMifn6q
+     */ Number: newAttribute("created.abW81lMifn6q"),
+};
 /**
  * Attribute Title: Day of Quarter (Created)
  * Display Form ID: created.day.in.quarter
  */
 export const CreatedDayOfQuarter: IAttribute = newAttribute("created.ab481lMifn6q");
 /**
- * Attribute Title: Year (Created)
- * Display Form ID: created.year
+ * Attribute Title: Day of Month (Created)
+ * Display Form ID: created.day.in.month
  */
-export const CreatedYear: IAttribute = newAttribute("created.aag81lMifn6q");
+export const CreatedDayOfMonth: IAttribute = newAttribute("created.aca81lMifn6q");
 /**
- * Attribute Title: Month of Quarter (Created)
- * Display Form ID: created.month.in.quarter
+ * Attribute Title: Quarter/Year (Created)
+ * Display Form ID: created.quarter
  */
-export const CreatedMonthOfQuarter: IAttribute = newAttribute("created.aby81lMifn6q");
-export const ClosedDate = {
+export const CreatedQuarterYear: IAttribute = newAttribute("created.aci81lMifn6q");
+export const CreatedMonthYear = {
     /**
-     * Display Form Title: mm/dd/yyyy (Closed)
-     * Display Form ID: closed.date.mmddyyyy
+     * Display Form Title: Short (Jan 2010) (Created)
+     * Display Form ID: created.act81lMifn6q
      */
-    MmDdYyyy: newAttribute("closed.date.mmddyyyy"),
+    Short: newAttribute("created.act81lMifn6q"),
     /**
-     * Display Form Title: yyyy-mm-dd (Closed)
-     * Display Form ID: closed.date.yyyymmdd
-     */ YyyyMmDd: newAttribute("closed.date.yyyymmdd"),
+     * Display Form Title: Long (January 2010) (Created)
+     * Display Form ID: created.acx81lMifn6q
+     */ Long: newAttribute("created.acx81lMifn6q"),
     /**
-     * Display Form Title: m/d/yy (no leading zeroes) (Closed)
-     * Display Form ID: closed.date.mdyy
-     */ MDYy: newAttribute("closed.date.mdyy"),
-    /**
-     * Display Form Title: Long (Mon, Jan 1, 2010) (Closed)
-     * Display Form ID: closed.date.long
-     */ Long: newAttribute("closed.date.long"),
-    /**
-     * Display Form Title: dd/mm/yyyy (Closed)
-     * Display Form ID: closed.date.ddmmyyyy
-     */ DdMmYyyy: newAttribute("closed.date.ddmmyyyy"),
-    /**
-     * Display Form Title: dd-mm-yyyy (Closed)
-     * Display Form ID: closed.date.eddmmyyyy
-     */ DdMmYyyy_1: newAttribute("closed.date.eddmmyyyy"),
+     * Display Form Title: Number (1/2010) (Created)
+     * Display Form ID: created.acv81lMifn6q
+     */ Number: newAttribute("created.acv81lMifn6q"),
 };
-export const ClosedDayOfWeekMonSun = {
+export const CreatedDate = {
     /**
-     * Display Form Title: Short (Mon) (Closed)
-     * Display Form ID: closed.abU81lMifn6q
+     * Display Form Title: mm/dd/yyyy (Created)
+     * Display Form ID: created.date.mmddyyyy
      */
-    Short: newAttribute("closed.abU81lMifn6q"),
+    MmDdYyyy: newAttribute("created.date.mmddyyyy"),
     /**
-     * Display Form Title: Long (Monday) (Closed)
-     * Display Form ID: closed.abY81lMifn6q
-     */ Long: newAttribute("closed.abY81lMifn6q"),
+     * Display Form Title: yyyy-mm-dd (Created)
+     * Display Form ID: created.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("created.date.yyyymmdd"),
     /**
-     * Display Form Title: Number (1=Monday) (Closed)
-     * Display Form ID: closed.abW81lMifn6q
-     */ Number: newAttribute("closed.abW81lMifn6q"),
-};
-export const ClosedMonthYear = {
+     * Display Form Title: m/d/yy (no leading zeroes) (Created)
+     * Display Form ID: created.date.mdyy
+     */ MDYy: newAttribute("created.date.mdyy"),
     /**
-     * Display Form Title: Short (Jan 2010) (Closed)
-     * Display Form ID: closed.act81lMifn6q
-     */
-    Short: newAttribute("closed.act81lMifn6q"),
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Created)
+     * Display Form ID: created.date.long
+     */ Long: newAttribute("created.date.long"),
     /**
-     * Display Form Title: Long (January 2010) (Closed)
-     * Display Form ID: closed.acx81lMifn6q
-     */ Long: newAttribute("closed.acx81lMifn6q"),
+     * Display Form Title: dd/mm/yyyy (Created)
+     * Display Form ID: created.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("created.date.ddmmyyyy"),
     /**
-     * Display Form Title: Number (1/2010) (Closed)
-     * Display Form ID: closed.acv81lMifn6q
-     */ Number: newAttribute("closed.acv81lMifn6q"),
-};
-export const ClosedMonth = {
-    /**
-     * Display Form Title: Short (Jan) (Closed)
-     * Display Form ID: closed.abm81lMifn6q
-     */
-    Short: newAttribute("closed.abm81lMifn6q"),
-    /**
-     * Display Form Title: Long (January) (Closed)
-     * Display Form ID: closed.abs81lMifn6q
-     */ Long: newAttribute("closed.abs81lMifn6q"),
-    /**
-     * Display Form Title: Number (M1) (Closed)
-     * Display Form ID: closed.abq81lMifn6q
-     */ Number: newAttribute("closed.abq81lMifn6q"),
-    /**
-     * Display Form Title: M/Q (M1/Q1) (Closed)
-     * Display Form ID: closed.abo81lMifn6q
-     */ MQ: newAttribute("closed.abo81lMifn6q"),
+     * Display Form Title: dd-mm-yyyy (Created)
+     * Display Form ID: created.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("created.date.eddmmyyyy"),
 };
 /**
- * Attribute Title: Week (Mon-Sun) (Closed)
- * Display Form ID: closed.euweek.in.year
+ * Attribute Title: Year (Closed)
+ * Display Form ID: closed.year
  */
-export const ClosedWeekMonSun: IAttribute = newAttribute("closed.aba81lMifn6q");
-export const ClosedWeekMonSunYear = {
-    /**
-     * Display Form Title: Week #/Year (W1/2010) (Closed)
-     * Display Form ID: closed.aa281lMifn6q
-     */
-    WeekNrYear: newAttribute("closed.aa281lMifn6q"),
-    /**
-     * Display Form Title: Week Starting (Closed)
-     * Display Form ID: closed.aaY81lMifn6q
-     */ WeekStarting: newAttribute("closed.aaY81lMifn6q"),
-    /**
-     * Display Form Title: From - To (Closed)
-     * Display Form ID: closed.aaW81lMifn6q
-     */ FromTo: newAttribute("closed.aaW81lMifn6q"),
-    /**
-     * Display Form Title: Week #/Year (Cont.) (Closed)
-     * Display Form ID: closed.aa081lMifn6q
-     */ WeekNrYear_1: newAttribute("closed.aa081lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Cont.) (Closed)
-     * Display Form ID: closed.aa481lMifn6q
-     */ WkQtrYear: newAttribute("closed.aa481lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Closed)
-     * Display Form ID: closed.aaU81lMifn6q
-     */ WkQtrYear_1: newAttribute("closed.aaU81lMifn6q"),
-};
-/**
- * Attribute Title: Quarter/Year (Closed)
- * Display Form ID: closed.quarter
- */
-export const ClosedQuarterYear: IAttribute = newAttribute("closed.aci81lMifn6q");
-/**
- * Attribute Title: Day of Month (Closed)
- * Display Form ID: closed.day.in.month
- */
-export const ClosedDayOfMonth: IAttribute = newAttribute("closed.aca81lMifn6q");
-/**
- * Attribute Title: Week (Sun-Sat) of Qtr (Closed)
- * Display Form ID: closed.week.in.quarter
- */
-export const ClosedWeekSunSatOfQtr: IAttribute = newAttribute("closed.aaO81lMifn6q");
+export const ClosedYear: IAttribute = newAttribute("closed.aag81lMifn6q");
 /**
  * Attribute Title: Quarter (Closed)
  * Display Form ID: closed.quarter.in.year
@@ -1157,6 +838,65 @@ export const ClosedWeekSunSatYear = {
      */ WkQtrYear_1: newAttribute("closed.aas81lMifn6q"),
 };
 /**
+ * Attribute Title: Week (Sun-Sat) (Closed)
+ * Display Form ID: closed.week.in.year
+ */
+export const ClosedWeekSunSat: IAttribute = newAttribute("closed.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Closed)
+ * Display Form ID: closed.week.in.quarter
+ */
+export const ClosedWeekSunSatOfQtr: IAttribute = newAttribute("closed.aaO81lMifn6q");
+export const ClosedWeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Closed)
+     * Display Form ID: closed.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("closed.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Closed)
+     * Display Form ID: closed.aaY81lMifn6q
+     */ WeekStarting: newAttribute("closed.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Closed)
+     * Display Form ID: closed.aaW81lMifn6q
+     */ FromTo: newAttribute("closed.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Closed)
+ * Display Form ID: closed.euweek.in.year
+ */
+export const ClosedWeekMonSun: IAttribute = newAttribute("closed.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Closed)
+ * Display Form ID: closed.euweek.in.quarter
+ */
+export const ClosedWeekMonSunOfQtr: IAttribute = newAttribute("closed.abg81lMifn6q");
+export const ClosedMonth = {
+    /**
+     * Display Form Title: Short (Jan) (Closed)
+     * Display Form ID: closed.abm81lMifn6q
+     */
+    Short: newAttribute("closed.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Closed)
+     * Display Form ID: closed.abs81lMifn6q
+     */ Long: newAttribute("closed.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Closed)
+     * Display Form ID: closed.abq81lMifn6q
+     */ Number: newAttribute("closed.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Closed)
+     * Display Form ID: closed.abo81lMifn6q
+     */ MQ: newAttribute("closed.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Closed)
+ * Display Form ID: closed.month.in.quarter
+ */
+export const ClosedMonthOfQuarter: IAttribute = newAttribute("closed.aby81lMifn6q");
+/**
  * Attribute Title: Day of Year (Closed)
  * Display Form ID: closed.day.in.year
  */
@@ -1176,154 +916,83 @@ export const ClosedDayOfWeekSunSat = {
      * Display Form ID: closed.abM81lMifn6q
      */ Number: newAttribute("closed.abM81lMifn6q"),
 };
-/**
- * Attribute Title: Week (Sun-Sat) (Closed)
- * Display Form ID: closed.week.in.year
- */
-export const ClosedWeekSunSat: IAttribute = newAttribute("closed.aaI81lMifn6q");
-/**
- * Attribute Title: Week (Mon-Sun) of Qtr (Closed)
- * Display Form ID: closed.euweek.in.quarter
- */
-export const ClosedWeekMonSunOfQtr: IAttribute = newAttribute("closed.abg81lMifn6q");
+export const ClosedDayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Closed)
+     * Display Form ID: closed.abU81lMifn6q
+     */
+    Short: newAttribute("closed.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Closed)
+     * Display Form ID: closed.abY81lMifn6q
+     */ Long: newAttribute("closed.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Closed)
+     * Display Form ID: closed.abW81lMifn6q
+     */ Number: newAttribute("closed.abW81lMifn6q"),
+};
 /**
  * Attribute Title: Day of Quarter (Closed)
  * Display Form ID: closed.day.in.quarter
  */
 export const ClosedDayOfQuarter: IAttribute = newAttribute("closed.ab481lMifn6q");
 /**
- * Attribute Title: Year (Closed)
- * Display Form ID: closed.year
+ * Attribute Title: Day of Month (Closed)
+ * Display Form ID: closed.day.in.month
  */
-export const ClosedYear: IAttribute = newAttribute("closed.aag81lMifn6q");
+export const ClosedDayOfMonth: IAttribute = newAttribute("closed.aca81lMifn6q");
 /**
- * Attribute Title: Month of Quarter (Closed)
- * Display Form ID: closed.month.in.quarter
+ * Attribute Title: Quarter/Year (Closed)
+ * Display Form ID: closed.quarter
  */
-export const ClosedMonthOfQuarter: IAttribute = newAttribute("closed.aby81lMifn6q");
-export const SnapshotDate = {
+export const ClosedQuarterYear: IAttribute = newAttribute("closed.aci81lMifn6q");
+export const ClosedMonthYear = {
     /**
-     * Display Form Title: mm/dd/yyyy (Snapshot)
-     * Display Form ID: snapshot.date.mmddyyyy
+     * Display Form Title: Short (Jan 2010) (Closed)
+     * Display Form ID: closed.act81lMifn6q
      */
-    MmDdYyyy: newAttribute("snapshot.date.mmddyyyy"),
+    Short: newAttribute("closed.act81lMifn6q"),
     /**
-     * Display Form Title: yyyy-mm-dd (Snapshot)
-     * Display Form ID: snapshot.date.yyyymmdd
-     */ YyyyMmDd: newAttribute("snapshot.date.yyyymmdd"),
+     * Display Form Title: Long (January 2010) (Closed)
+     * Display Form ID: closed.acx81lMifn6q
+     */ Long: newAttribute("closed.acx81lMifn6q"),
     /**
-     * Display Form Title: m/d/yy (no leading zeroes) (Snapshot)
-     * Display Form ID: snapshot.date.mdyy
-     */ MDYy: newAttribute("snapshot.date.mdyy"),
-    /**
-     * Display Form Title: Long (Mon, Jan 1, 2010) (Snapshot)
-     * Display Form ID: snapshot.date.long
-     */ Long: newAttribute("snapshot.date.long"),
-    /**
-     * Display Form Title: dd/mm/yyyy (Snapshot)
-     * Display Form ID: snapshot.date.ddmmyyyy
-     */ DdMmYyyy: newAttribute("snapshot.date.ddmmyyyy"),
-    /**
-     * Display Form Title: dd-mm-yyyy (Snapshot)
-     * Display Form ID: snapshot.date.eddmmyyyy
-     */ DdMmYyyy_1: newAttribute("snapshot.date.eddmmyyyy"),
+     * Display Form Title: Number (1/2010) (Closed)
+     * Display Form ID: closed.acv81lMifn6q
+     */ Number: newAttribute("closed.acv81lMifn6q"),
 };
-export const SnapshotDayOfWeekMonSun = {
+export const ClosedDate = {
     /**
-     * Display Form Title: Short (Mon) (Snapshot)
-     * Display Form ID: snapshot.abU81lMifn6q
+     * Display Form Title: mm/dd/yyyy (Closed)
+     * Display Form ID: closed.date.mmddyyyy
      */
-    Short: newAttribute("snapshot.abU81lMifn6q"),
+    MmDdYyyy: newAttribute("closed.date.mmddyyyy"),
     /**
-     * Display Form Title: Long (Monday) (Snapshot)
-     * Display Form ID: snapshot.abY81lMifn6q
-     */ Long: newAttribute("snapshot.abY81lMifn6q"),
+     * Display Form Title: yyyy-mm-dd (Closed)
+     * Display Form ID: closed.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("closed.date.yyyymmdd"),
     /**
-     * Display Form Title: Number (1=Monday) (Snapshot)
-     * Display Form ID: snapshot.abW81lMifn6q
-     */ Number: newAttribute("snapshot.abW81lMifn6q"),
-};
-export const SnapshotMonthYear = {
+     * Display Form Title: m/d/yy (no leading zeroes) (Closed)
+     * Display Form ID: closed.date.mdyy
+     */ MDYy: newAttribute("closed.date.mdyy"),
     /**
-     * Display Form Title: Short (Jan 2010) (Snapshot)
-     * Display Form ID: snapshot.act81lMifn6q
-     */
-    Short: newAttribute("snapshot.act81lMifn6q"),
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Closed)
+     * Display Form ID: closed.date.long
+     */ Long: newAttribute("closed.date.long"),
     /**
-     * Display Form Title: Long (January 2010) (Snapshot)
-     * Display Form ID: snapshot.acx81lMifn6q
-     */ Long: newAttribute("snapshot.acx81lMifn6q"),
+     * Display Form Title: dd/mm/yyyy (Closed)
+     * Display Form ID: closed.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("closed.date.ddmmyyyy"),
     /**
-     * Display Form Title: Number (1/2010) (Snapshot)
-     * Display Form ID: snapshot.acv81lMifn6q
-     */ Number: newAttribute("snapshot.acv81lMifn6q"),
-};
-export const SnapshotMonth = {
-    /**
-     * Display Form Title: Short (Jan) (Snapshot)
-     * Display Form ID: snapshot.abm81lMifn6q
-     */
-    Short: newAttribute("snapshot.abm81lMifn6q"),
-    /**
-     * Display Form Title: Long (January) (Snapshot)
-     * Display Form ID: snapshot.abs81lMifn6q
-     */ Long: newAttribute("snapshot.abs81lMifn6q"),
-    /**
-     * Display Form Title: Number (M1) (Snapshot)
-     * Display Form ID: snapshot.abq81lMifn6q
-     */ Number: newAttribute("snapshot.abq81lMifn6q"),
-    /**
-     * Display Form Title: M/Q (M1/Q1) (Snapshot)
-     * Display Form ID: snapshot.abo81lMifn6q
-     */ MQ: newAttribute("snapshot.abo81lMifn6q"),
+     * Display Form Title: dd-mm-yyyy (Closed)
+     * Display Form ID: closed.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("closed.date.eddmmyyyy"),
 };
 /**
- * Attribute Title: Week (Mon-Sun) (Snapshot)
- * Display Form ID: snapshot.euweek.in.year
+ * Attribute Title: Year (Snapshot)
+ * Display Form ID: snapshot.year
  */
-export const SnapshotWeekMonSun: IAttribute = newAttribute("snapshot.aba81lMifn6q");
-export const SnapshotWeekMonSunYear = {
-    /**
-     * Display Form Title: Week #/Year (W1/2010) (Snapshot)
-     * Display Form ID: snapshot.aa281lMifn6q
-     */
-    WeekNrYear: newAttribute("snapshot.aa281lMifn6q"),
-    /**
-     * Display Form Title: Week Starting (Snapshot)
-     * Display Form ID: snapshot.aaY81lMifn6q
-     */ WeekStarting: newAttribute("snapshot.aaY81lMifn6q"),
-    /**
-     * Display Form Title: From - To (Snapshot)
-     * Display Form ID: snapshot.aaW81lMifn6q
-     */ FromTo: newAttribute("snapshot.aaW81lMifn6q"),
-    /**
-     * Display Form Title: Week #/Year (Cont.) (Snapshot)
-     * Display Form ID: snapshot.aa081lMifn6q
-     */ WeekNrYear_1: newAttribute("snapshot.aa081lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Cont.) (Snapshot)
-     * Display Form ID: snapshot.aa481lMifn6q
-     */ WkQtrYear: newAttribute("snapshot.aa481lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Snapshot)
-     * Display Form ID: snapshot.aaU81lMifn6q
-     */ WkQtrYear_1: newAttribute("snapshot.aaU81lMifn6q"),
-};
-/**
- * Attribute Title: Quarter/Year (Snapshot)
- * Display Form ID: snapshot.quarter
- */
-export const SnapshotQuarterYear: IAttribute = newAttribute("snapshot.aci81lMifn6q");
-/**
- * Attribute Title: Day of Month (Snapshot)
- * Display Form ID: snapshot.day.in.month
- */
-export const SnapshotDayOfMonth: IAttribute = newAttribute("snapshot.aca81lMifn6q");
-/**
- * Attribute Title: Week (Sun-Sat) of Qtr (Snapshot)
- * Display Form ID: snapshot.week.in.quarter
- */
-export const SnapshotWeekSunSatOfQtr: IAttribute = newAttribute("snapshot.aaO81lMifn6q");
+export const SnapshotYear: IAttribute = newAttribute("snapshot.aag81lMifn6q");
 /**
  * Attribute Title: Quarter (Snapshot)
  * Display Form ID: snapshot.quarter.in.year
@@ -1357,6 +1026,65 @@ export const SnapshotWeekSunSatYear = {
      */ WkQtrYear_1: newAttribute("snapshot.aas81lMifn6q"),
 };
 /**
+ * Attribute Title: Week (Sun-Sat) (Snapshot)
+ * Display Form ID: snapshot.week.in.year
+ */
+export const SnapshotWeekSunSat: IAttribute = newAttribute("snapshot.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Snapshot)
+ * Display Form ID: snapshot.week.in.quarter
+ */
+export const SnapshotWeekSunSatOfQtr: IAttribute = newAttribute("snapshot.aaO81lMifn6q");
+export const SnapshotWeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Snapshot)
+     * Display Form ID: snapshot.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("snapshot.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Snapshot)
+     * Display Form ID: snapshot.aaY81lMifn6q
+     */ WeekStarting: newAttribute("snapshot.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Snapshot)
+     * Display Form ID: snapshot.aaW81lMifn6q
+     */ FromTo: newAttribute("snapshot.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Snapshot)
+ * Display Form ID: snapshot.euweek.in.year
+ */
+export const SnapshotWeekMonSun: IAttribute = newAttribute("snapshot.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Snapshot)
+ * Display Form ID: snapshot.euweek.in.quarter
+ */
+export const SnapshotWeekMonSunOfQtr: IAttribute = newAttribute("snapshot.abg81lMifn6q");
+export const SnapshotMonth = {
+    /**
+     * Display Form Title: Short (Jan) (Snapshot)
+     * Display Form ID: snapshot.abm81lMifn6q
+     */
+    Short: newAttribute("snapshot.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Snapshot)
+     * Display Form ID: snapshot.abs81lMifn6q
+     */ Long: newAttribute("snapshot.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Snapshot)
+     * Display Form ID: snapshot.abq81lMifn6q
+     */ Number: newAttribute("snapshot.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Snapshot)
+     * Display Form ID: snapshot.abo81lMifn6q
+     */ MQ: newAttribute("snapshot.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Snapshot)
+ * Display Form ID: snapshot.month.in.quarter
+ */
+export const SnapshotMonthOfQuarter: IAttribute = newAttribute("snapshot.aby81lMifn6q");
+/**
  * Attribute Title: Day of Year (Snapshot)
  * Display Form ID: snapshot.day.in.year
  */
@@ -1376,154 +1104,83 @@ export const SnapshotDayOfWeekSunSat = {
      * Display Form ID: snapshot.abM81lMifn6q
      */ Number: newAttribute("snapshot.abM81lMifn6q"),
 };
-/**
- * Attribute Title: Week (Sun-Sat) (Snapshot)
- * Display Form ID: snapshot.week.in.year
- */
-export const SnapshotWeekSunSat: IAttribute = newAttribute("snapshot.aaI81lMifn6q");
-/**
- * Attribute Title: Week (Mon-Sun) of Qtr (Snapshot)
- * Display Form ID: snapshot.euweek.in.quarter
- */
-export const SnapshotWeekMonSunOfQtr: IAttribute = newAttribute("snapshot.abg81lMifn6q");
+export const SnapshotDayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Snapshot)
+     * Display Form ID: snapshot.abU81lMifn6q
+     */
+    Short: newAttribute("snapshot.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Snapshot)
+     * Display Form ID: snapshot.abY81lMifn6q
+     */ Long: newAttribute("snapshot.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Snapshot)
+     * Display Form ID: snapshot.abW81lMifn6q
+     */ Number: newAttribute("snapshot.abW81lMifn6q"),
+};
 /**
  * Attribute Title: Day of Quarter (Snapshot)
  * Display Form ID: snapshot.day.in.quarter
  */
 export const SnapshotDayOfQuarter: IAttribute = newAttribute("snapshot.ab481lMifn6q");
 /**
- * Attribute Title: Year (Snapshot)
- * Display Form ID: snapshot.year
+ * Attribute Title: Day of Month (Snapshot)
+ * Display Form ID: snapshot.day.in.month
  */
-export const SnapshotYear: IAttribute = newAttribute("snapshot.aag81lMifn6q");
+export const SnapshotDayOfMonth: IAttribute = newAttribute("snapshot.aca81lMifn6q");
 /**
- * Attribute Title: Month of Quarter (Snapshot)
- * Display Form ID: snapshot.month.in.quarter
+ * Attribute Title: Quarter/Year (Snapshot)
+ * Display Form ID: snapshot.quarter
  */
-export const SnapshotMonthOfQuarter: IAttribute = newAttribute("snapshot.aby81lMifn6q");
-export const ActivityDate_1 = {
+export const SnapshotQuarterYear: IAttribute = newAttribute("snapshot.aci81lMifn6q");
+export const SnapshotMonthYear = {
     /**
-     * Display Form Title: mm/dd/yyyy (Activity)
-     * Display Form ID: activity.date.mmddyyyy
+     * Display Form Title: Short (Jan 2010) (Snapshot)
+     * Display Form ID: snapshot.act81lMifn6q
      */
-    MmDdYyyy: newAttribute("activity.date.mmddyyyy"),
+    Short: newAttribute("snapshot.act81lMifn6q"),
     /**
-     * Display Form Title: yyyy-mm-dd (Activity)
-     * Display Form ID: activity.date.yyyymmdd
-     */ YyyyMmDd: newAttribute("activity.date.yyyymmdd"),
+     * Display Form Title: Long (January 2010) (Snapshot)
+     * Display Form ID: snapshot.acx81lMifn6q
+     */ Long: newAttribute("snapshot.acx81lMifn6q"),
     /**
-     * Display Form Title: m/d/yy (no leading zeroes) (Activity)
-     * Display Form ID: activity.date.mdyy
-     */ MDYy: newAttribute("activity.date.mdyy"),
-    /**
-     * Display Form Title: Long (Mon, Jan 1, 2010) (Activity)
-     * Display Form ID: activity.date.long
-     */ Long: newAttribute("activity.date.long"),
-    /**
-     * Display Form Title: dd/mm/yyyy (Activity)
-     * Display Form ID: activity.date.ddmmyyyy
-     */ DdMmYyyy: newAttribute("activity.date.ddmmyyyy"),
-    /**
-     * Display Form Title: dd-mm-yyyy (Activity)
-     * Display Form ID: activity.date.eddmmyyyy
-     */ DdMmYyyy_1: newAttribute("activity.date.eddmmyyyy"),
+     * Display Form Title: Number (1/2010) (Snapshot)
+     * Display Form ID: snapshot.acv81lMifn6q
+     */ Number: newAttribute("snapshot.acv81lMifn6q"),
 };
-export const ActivityDayOfWeekMonSun = {
+export const SnapshotDate = {
     /**
-     * Display Form Title: Short (Mon) (Activity)
-     * Display Form ID: activity.abU81lMifn6q
+     * Display Form Title: mm/dd/yyyy (Snapshot)
+     * Display Form ID: snapshot.date.mmddyyyy
      */
-    Short: newAttribute("activity.abU81lMifn6q"),
+    MmDdYyyy: newAttribute("snapshot.date.mmddyyyy"),
     /**
-     * Display Form Title: Long (Monday) (Activity)
-     * Display Form ID: activity.abY81lMifn6q
-     */ Long: newAttribute("activity.abY81lMifn6q"),
+     * Display Form Title: yyyy-mm-dd (Snapshot)
+     * Display Form ID: snapshot.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("snapshot.date.yyyymmdd"),
     /**
-     * Display Form Title: Number (1=Monday) (Activity)
-     * Display Form ID: activity.abW81lMifn6q
-     */ Number: newAttribute("activity.abW81lMifn6q"),
-};
-export const ActivityMonthYear = {
+     * Display Form Title: m/d/yy (no leading zeroes) (Snapshot)
+     * Display Form ID: snapshot.date.mdyy
+     */ MDYy: newAttribute("snapshot.date.mdyy"),
     /**
-     * Display Form Title: Short (Jan 2010) (Activity)
-     * Display Form ID: activity.act81lMifn6q
-     */
-    Short: newAttribute("activity.act81lMifn6q"),
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Snapshot)
+     * Display Form ID: snapshot.date.long
+     */ Long: newAttribute("snapshot.date.long"),
     /**
-     * Display Form Title: Long (January 2010) (Activity)
-     * Display Form ID: activity.acx81lMifn6q
-     */ Long: newAttribute("activity.acx81lMifn6q"),
+     * Display Form Title: dd/mm/yyyy (Snapshot)
+     * Display Form ID: snapshot.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("snapshot.date.ddmmyyyy"),
     /**
-     * Display Form Title: Number (1/2010) (Activity)
-     * Display Form ID: activity.acv81lMifn6q
-     */ Number: newAttribute("activity.acv81lMifn6q"),
-};
-export const ActivityMonth = {
-    /**
-     * Display Form Title: Short (Jan) (Activity)
-     * Display Form ID: activity.abm81lMifn6q
-     */
-    Short: newAttribute("activity.abm81lMifn6q"),
-    /**
-     * Display Form Title: Long (January) (Activity)
-     * Display Form ID: activity.abs81lMifn6q
-     */ Long: newAttribute("activity.abs81lMifn6q"),
-    /**
-     * Display Form Title: Number (M1) (Activity)
-     * Display Form ID: activity.abq81lMifn6q
-     */ Number: newAttribute("activity.abq81lMifn6q"),
-    /**
-     * Display Form Title: M/Q (M1/Q1) (Activity)
-     * Display Form ID: activity.abo81lMifn6q
-     */ MQ: newAttribute("activity.abo81lMifn6q"),
+     * Display Form Title: dd-mm-yyyy (Snapshot)
+     * Display Form ID: snapshot.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("snapshot.date.eddmmyyyy"),
 };
 /**
- * Attribute Title: Week (Mon-Sun) (Activity)
- * Display Form ID: activity.euweek.in.year
+ * Attribute Title: Year (Activity)
+ * Display Form ID: activity.year
  */
-export const ActivityWeekMonSun: IAttribute = newAttribute("activity.aba81lMifn6q");
-export const ActivityWeekMonSunYear = {
-    /**
-     * Display Form Title: Week #/Year (W1/2010) (Activity)
-     * Display Form ID: activity.aa281lMifn6q
-     */
-    WeekNrYear: newAttribute("activity.aa281lMifn6q"),
-    /**
-     * Display Form Title: Week Starting (Activity)
-     * Display Form ID: activity.aaY81lMifn6q
-     */ WeekStarting: newAttribute("activity.aaY81lMifn6q"),
-    /**
-     * Display Form Title: From - To (Activity)
-     * Display Form ID: activity.aaW81lMifn6q
-     */ FromTo: newAttribute("activity.aaW81lMifn6q"),
-    /**
-     * Display Form Title: Week #/Year (Cont.) (Activity)
-     * Display Form ID: activity.aa081lMifn6q
-     */ WeekNrYear_1: newAttribute("activity.aa081lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Cont.) (Activity)
-     * Display Form ID: activity.aa481lMifn6q
-     */ WkQtrYear: newAttribute("activity.aa481lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Activity)
-     * Display Form ID: activity.aaU81lMifn6q
-     */ WkQtrYear_1: newAttribute("activity.aaU81lMifn6q"),
-};
-/**
- * Attribute Title: Quarter/Year (Activity)
- * Display Form ID: activity.quarter
- */
-export const ActivityQuarterYear: IAttribute = newAttribute("activity.aci81lMifn6q");
-/**
- * Attribute Title: Day of Month (Activity)
- * Display Form ID: activity.day.in.month
- */
-export const ActivityDayOfMonth: IAttribute = newAttribute("activity.aca81lMifn6q");
-/**
- * Attribute Title: Week (Sun-Sat) of Qtr (Activity)
- * Display Form ID: activity.week.in.quarter
- */
-export const ActivityWeekSunSatOfQtr: IAttribute = newAttribute("activity.aaO81lMifn6q");
+export const ActivityYear: IAttribute = newAttribute("activity.aag81lMifn6q");
 /**
  * Attribute Title: Quarter (Activity)
  * Display Form ID: activity.quarter.in.year
@@ -1557,6 +1214,65 @@ export const ActivityWeekSunSatYear = {
      */ WkQtrYear_1: newAttribute("activity.aas81lMifn6q"),
 };
 /**
+ * Attribute Title: Week (Sun-Sat) (Activity)
+ * Display Form ID: activity.week.in.year
+ */
+export const ActivityWeekSunSat: IAttribute = newAttribute("activity.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Activity)
+ * Display Form ID: activity.week.in.quarter
+ */
+export const ActivityWeekSunSatOfQtr: IAttribute = newAttribute("activity.aaO81lMifn6q");
+export const ActivityWeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Activity)
+     * Display Form ID: activity.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("activity.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Activity)
+     * Display Form ID: activity.aaY81lMifn6q
+     */ WeekStarting: newAttribute("activity.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Activity)
+     * Display Form ID: activity.aaW81lMifn6q
+     */ FromTo: newAttribute("activity.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Activity)
+ * Display Form ID: activity.euweek.in.year
+ */
+export const ActivityWeekMonSun: IAttribute = newAttribute("activity.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Activity)
+ * Display Form ID: activity.euweek.in.quarter
+ */
+export const ActivityWeekMonSunOfQtr: IAttribute = newAttribute("activity.abg81lMifn6q");
+export const ActivityMonth = {
+    /**
+     * Display Form Title: Short (Jan) (Activity)
+     * Display Form ID: activity.abm81lMifn6q
+     */
+    Short: newAttribute("activity.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Activity)
+     * Display Form ID: activity.abs81lMifn6q
+     */ Long: newAttribute("activity.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Activity)
+     * Display Form ID: activity.abq81lMifn6q
+     */ Number: newAttribute("activity.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Activity)
+     * Display Form ID: activity.abo81lMifn6q
+     */ MQ: newAttribute("activity.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Activity)
+ * Display Form ID: activity.month.in.quarter
+ */
+export const ActivityMonthOfQuarter: IAttribute = newAttribute("activity.aby81lMifn6q");
+/**
  * Attribute Title: Day of Year (Activity)
  * Display Form ID: activity.day.in.year
  */
@@ -1576,154 +1292,83 @@ export const ActivityDayOfWeekSunSat = {
      * Display Form ID: activity.abM81lMifn6q
      */ Number: newAttribute("activity.abM81lMifn6q"),
 };
-/**
- * Attribute Title: Week (Sun-Sat) (Activity)
- * Display Form ID: activity.week.in.year
- */
-export const ActivityWeekSunSat: IAttribute = newAttribute("activity.aaI81lMifn6q");
-/**
- * Attribute Title: Week (Mon-Sun) of Qtr (Activity)
- * Display Form ID: activity.euweek.in.quarter
- */
-export const ActivityWeekMonSunOfQtr: IAttribute = newAttribute("activity.abg81lMifn6q");
+export const ActivityDayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Activity)
+     * Display Form ID: activity.abU81lMifn6q
+     */
+    Short: newAttribute("activity.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Activity)
+     * Display Form ID: activity.abY81lMifn6q
+     */ Long: newAttribute("activity.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Activity)
+     * Display Form ID: activity.abW81lMifn6q
+     */ Number: newAttribute("activity.abW81lMifn6q"),
+};
 /**
  * Attribute Title: Day of Quarter (Activity)
  * Display Form ID: activity.day.in.quarter
  */
 export const ActivityDayOfQuarter: IAttribute = newAttribute("activity.ab481lMifn6q");
 /**
- * Attribute Title: Year (Activity)
- * Display Form ID: activity.year
+ * Attribute Title: Day of Month (Activity)
+ * Display Form ID: activity.day.in.month
  */
-export const ActivityYear: IAttribute = newAttribute("activity.aag81lMifn6q");
+export const ActivityDayOfMonth: IAttribute = newAttribute("activity.aca81lMifn6q");
 /**
- * Attribute Title: Month of Quarter (Activity)
- * Display Form ID: activity.month.in.quarter
+ * Attribute Title: Quarter/Year (Activity)
+ * Display Form ID: activity.quarter
  */
-export const ActivityMonthOfQuarter: IAttribute = newAttribute("activity.aby81lMifn6q");
-export const TimelineDate_1 = {
+export const ActivityQuarterYear: IAttribute = newAttribute("activity.aci81lMifn6q");
+export const ActivityMonthYear = {
     /**
-     * Display Form Title: mm/dd/yyyy (Timeline)
-     * Display Form ID: timeline.date.mmddyyyy
+     * Display Form Title: Short (Jan 2010) (Activity)
+     * Display Form ID: activity.act81lMifn6q
      */
-    MmDdYyyy: newAttribute("timeline.date.mmddyyyy"),
+    Short: newAttribute("activity.act81lMifn6q"),
     /**
-     * Display Form Title: yyyy-mm-dd (Timeline)
-     * Display Form ID: timeline.date.yyyymmdd
-     */ YyyyMmDd: newAttribute("timeline.date.yyyymmdd"),
+     * Display Form Title: Long (January 2010) (Activity)
+     * Display Form ID: activity.acx81lMifn6q
+     */ Long: newAttribute("activity.acx81lMifn6q"),
     /**
-     * Display Form Title: m/d/yy (no leading zeroes) (Timeline)
-     * Display Form ID: timeline.date.mdyy
-     */ MDYy: newAttribute("timeline.date.mdyy"),
-    /**
-     * Display Form Title: Long (Mon, Jan 1, 2010) (Timeline)
-     * Display Form ID: timeline.date.long
-     */ Long: newAttribute("timeline.date.long"),
-    /**
-     * Display Form Title: dd/mm/yyyy (Timeline)
-     * Display Form ID: timeline.date.ddmmyyyy
-     */ DdMmYyyy: newAttribute("timeline.date.ddmmyyyy"),
-    /**
-     * Display Form Title: dd-mm-yyyy (Timeline)
-     * Display Form ID: timeline.date.eddmmyyyy
-     */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
+     * Display Form Title: Number (1/2010) (Activity)
+     * Display Form ID: activity.acv81lMifn6q
+     */ Number: newAttribute("activity.acv81lMifn6q"),
 };
-export const TimelineDayOfWeekMonSun = {
+export const ActivityDate_1 = {
     /**
-     * Display Form Title: Short (Mon) (Timeline)
-     * Display Form ID: timeline.abU81lMifn6q
+     * Display Form Title: mm/dd/yyyy (Activity)
+     * Display Form ID: activity.date.mmddyyyy
      */
-    Short: newAttribute("timeline.abU81lMifn6q"),
+    MmDdYyyy: newAttribute("activity.date.mmddyyyy"),
     /**
-     * Display Form Title: Long (Monday) (Timeline)
-     * Display Form ID: timeline.abY81lMifn6q
-     */ Long: newAttribute("timeline.abY81lMifn6q"),
+     * Display Form Title: yyyy-mm-dd (Activity)
+     * Display Form ID: activity.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("activity.date.yyyymmdd"),
     /**
-     * Display Form Title: Number (1=Monday) (Timeline)
-     * Display Form ID: timeline.abW81lMifn6q
-     */ Number: newAttribute("timeline.abW81lMifn6q"),
-};
-export const TimelineMonthYear = {
+     * Display Form Title: m/d/yy (no leading zeroes) (Activity)
+     * Display Form ID: activity.date.mdyy
+     */ MDYy: newAttribute("activity.date.mdyy"),
     /**
-     * Display Form Title: Short (Jan 2010) (Timeline)
-     * Display Form ID: timeline.act81lMifn6q
-     */
-    Short: newAttribute("timeline.act81lMifn6q"),
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Activity)
+     * Display Form ID: activity.date.long
+     */ Long: newAttribute("activity.date.long"),
     /**
-     * Display Form Title: Long (January 2010) (Timeline)
-     * Display Form ID: timeline.acx81lMifn6q
-     */ Long: newAttribute("timeline.acx81lMifn6q"),
+     * Display Form Title: dd/mm/yyyy (Activity)
+     * Display Form ID: activity.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("activity.date.ddmmyyyy"),
     /**
-     * Display Form Title: Number (1/2010) (Timeline)
-     * Display Form ID: timeline.acv81lMifn6q
-     */ Number: newAttribute("timeline.acv81lMifn6q"),
-};
-export const TimelineMonth = {
-    /**
-     * Display Form Title: Short (Jan) (Timeline)
-     * Display Form ID: timeline.abm81lMifn6q
-     */
-    Short: newAttribute("timeline.abm81lMifn6q"),
-    /**
-     * Display Form Title: Long (January) (Timeline)
-     * Display Form ID: timeline.abs81lMifn6q
-     */ Long: newAttribute("timeline.abs81lMifn6q"),
-    /**
-     * Display Form Title: Number (M1) (Timeline)
-     * Display Form ID: timeline.abq81lMifn6q
-     */ Number: newAttribute("timeline.abq81lMifn6q"),
-    /**
-     * Display Form Title: M/Q (M1/Q1) (Timeline)
-     * Display Form ID: timeline.abo81lMifn6q
-     */ MQ: newAttribute("timeline.abo81lMifn6q"),
+     * Display Form Title: dd-mm-yyyy (Activity)
+     * Display Form ID: activity.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("activity.date.eddmmyyyy"),
 };
 /**
- * Attribute Title: Week (Mon-Sun) (Timeline)
- * Display Form ID: timeline.euweek.in.year
+ * Attribute Title: Year (Timeline)
+ * Display Form ID: timeline.year
  */
-export const TimelineWeekMonSun: IAttribute = newAttribute("timeline.aba81lMifn6q");
-export const TimelineWeekMonSunYear = {
-    /**
-     * Display Form Title: Week #/Year (W1/2010) (Timeline)
-     * Display Form ID: timeline.aa281lMifn6q
-     */
-    WeekNrYear: newAttribute("timeline.aa281lMifn6q"),
-    /**
-     * Display Form Title: Week Starting (Timeline)
-     * Display Form ID: timeline.aaY81lMifn6q
-     */ WeekStarting: newAttribute("timeline.aaY81lMifn6q"),
-    /**
-     * Display Form Title: From - To (Timeline)
-     * Display Form ID: timeline.aaW81lMifn6q
-     */ FromTo: newAttribute("timeline.aaW81lMifn6q"),
-    /**
-     * Display Form Title: Week #/Year (Cont.) (Timeline)
-     * Display Form ID: timeline.aa081lMifn6q
-     */ WeekNrYear_1: newAttribute("timeline.aa081lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Cont.) (Timeline)
-     * Display Form ID: timeline.aa481lMifn6q
-     */ WkQtrYear: newAttribute("timeline.aa481lMifn6q"),
-    /**
-     * Display Form Title: Wk/Qtr/Year (Timeline)
-     * Display Form ID: timeline.aaU81lMifn6q
-     */ WkQtrYear_1: newAttribute("timeline.aaU81lMifn6q"),
-};
-/**
- * Attribute Title: Quarter/Year (Timeline)
- * Display Form ID: timeline.quarter
- */
-export const TimelineQuarterYear: IAttribute = newAttribute("timeline.aci81lMifn6q");
-/**
- * Attribute Title: Day of Month (Timeline)
- * Display Form ID: timeline.day.in.month
- */
-export const TimelineDayOfMonth: IAttribute = newAttribute("timeline.aca81lMifn6q");
-/**
- * Attribute Title: Week (Sun-Sat) of Qtr (Timeline)
- * Display Form ID: timeline.week.in.quarter
- */
-export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute("timeline.aaO81lMifn6q");
+export const TimelineYear: IAttribute = newAttribute("timeline.aag81lMifn6q");
 /**
  * Attribute Title: Quarter (Timeline)
  * Display Form ID: timeline.quarter.in.year
@@ -1757,6 +1402,65 @@ export const TimelineWeekSunSatYear = {
      */ WkQtrYear_1: newAttribute("timeline.aas81lMifn6q"),
 };
 /**
+ * Attribute Title: Week (Sun-Sat) (Timeline)
+ * Display Form ID: timeline.week.in.year
+ */
+export const TimelineWeekSunSat: IAttribute = newAttribute("timeline.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Timeline)
+ * Display Form ID: timeline.week.in.quarter
+ */
+export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute("timeline.aaO81lMifn6q");
+export const TimelineWeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Timeline)
+     * Display Form ID: timeline.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("timeline.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Timeline)
+     * Display Form ID: timeline.aaY81lMifn6q
+     */ WeekStarting: newAttribute("timeline.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Timeline)
+     * Display Form ID: timeline.aaW81lMifn6q
+     */ FromTo: newAttribute("timeline.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Timeline)
+ * Display Form ID: timeline.euweek.in.year
+ */
+export const TimelineWeekMonSun: IAttribute = newAttribute("timeline.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Timeline)
+ * Display Form ID: timeline.euweek.in.quarter
+ */
+export const TimelineWeekMonSunOfQtr: IAttribute = newAttribute("timeline.abg81lMifn6q");
+export const TimelineMonth = {
+    /**
+     * Display Form Title: Short (Jan) (Timeline)
+     * Display Form ID: timeline.abm81lMifn6q
+     */
+    Short: newAttribute("timeline.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Timeline)
+     * Display Form ID: timeline.abs81lMifn6q
+     */ Long: newAttribute("timeline.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Timeline)
+     * Display Form ID: timeline.abq81lMifn6q
+     */ Number: newAttribute("timeline.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Timeline)
+     * Display Form ID: timeline.abo81lMifn6q
+     */ MQ: newAttribute("timeline.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Timeline)
+ * Display Form ID: timeline.month.in.quarter
+ */
+export const TimelineMonthOfQuarter: IAttribute = newAttribute("timeline.aby81lMifn6q");
+/**
  * Attribute Title: Day of Year (Timeline)
  * Display Form ID: timeline.day.in.year
  */
@@ -1776,29 +1480,76 @@ export const TimelineDayOfWeekSunSat = {
      * Display Form ID: timeline.abM81lMifn6q
      */ Number: newAttribute("timeline.abM81lMifn6q"),
 };
-/**
- * Attribute Title: Week (Sun-Sat) (Timeline)
- * Display Form ID: timeline.week.in.year
- */
-export const TimelineWeekSunSat: IAttribute = newAttribute("timeline.aaI81lMifn6q");
-/**
- * Attribute Title: Week (Mon-Sun) of Qtr (Timeline)
- * Display Form ID: timeline.euweek.in.quarter
- */
-export const TimelineWeekMonSunOfQtr: IAttribute = newAttribute("timeline.abg81lMifn6q");
+export const TimelineDayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Timeline)
+     * Display Form ID: timeline.abU81lMifn6q
+     */
+    Short: newAttribute("timeline.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Timeline)
+     * Display Form ID: timeline.abY81lMifn6q
+     */ Long: newAttribute("timeline.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Timeline)
+     * Display Form ID: timeline.abW81lMifn6q
+     */ Number: newAttribute("timeline.abW81lMifn6q"),
+};
 /**
  * Attribute Title: Day of Quarter (Timeline)
  * Display Form ID: timeline.day.in.quarter
  */
 export const TimelineDayOfQuarter: IAttribute = newAttribute("timeline.ab481lMifn6q");
 /**
- * Attribute Title: Year (Timeline)
- * Display Form ID: timeline.year
+ * Attribute Title: Day of Month (Timeline)
+ * Display Form ID: timeline.day.in.month
  */
-export const TimelineYear: IAttribute = newAttribute("timeline.aag81lMifn6q");
+export const TimelineDayOfMonth: IAttribute = newAttribute("timeline.aca81lMifn6q");
 /**
- * Attribute Title: Month of Quarter (Timeline)
- * Display Form ID: timeline.month.in.quarter
+ * Attribute Title: Quarter/Year (Timeline)
+ * Display Form ID: timeline.quarter
  */
-export const TimelineMonthOfQuarter: IAttribute = newAttribute("timeline.aby81lMifn6q");
+export const TimelineQuarterYear: IAttribute = newAttribute("timeline.aci81lMifn6q");
+export const TimelineMonthYear = {
+    /**
+     * Display Form Title: Short (Jan 2010) (Timeline)
+     * Display Form ID: timeline.act81lMifn6q
+     */
+    Short: newAttribute("timeline.act81lMifn6q"),
+    /**
+     * Display Form Title: Long (January 2010) (Timeline)
+     * Display Form ID: timeline.acx81lMifn6q
+     */ Long: newAttribute("timeline.acx81lMifn6q"),
+    /**
+     * Display Form Title: Number (1/2010) (Timeline)
+     * Display Form ID: timeline.acv81lMifn6q
+     */ Number: newAttribute("timeline.acv81lMifn6q"),
+};
+export const TimelineDate_1 = {
+    /**
+     * Display Form Title: mm/dd/yyyy (Timeline)
+     * Display Form ID: timeline.date.mmddyyyy
+     */
+    MmDdYyyy: newAttribute("timeline.date.mmddyyyy"),
+    /**
+     * Display Form Title: yyyy-mm-dd (Timeline)
+     * Display Form ID: timeline.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("timeline.date.yyyymmdd"),
+    /**
+     * Display Form Title: m/d/yy (no leading zeroes) (Timeline)
+     * Display Form ID: timeline.date.mdyy
+     */ MDYy: newAttribute("timeline.date.mdyy"),
+    /**
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Timeline)
+     * Display Form ID: timeline.date.long
+     */ Long: newAttribute("timeline.date.long"),
+    /**
+     * Display Form Title: dd/mm/yyyy (Timeline)
+     * Display Form ID: timeline.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("timeline.date.ddmmyyyy"),
+    /**
+     * Display Form Title: dd-mm-yyyy (Timeline)
+     * Display Form ID: timeline.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("timeline.date.eddmmyyyy"),
+};
 export const Insights = {};

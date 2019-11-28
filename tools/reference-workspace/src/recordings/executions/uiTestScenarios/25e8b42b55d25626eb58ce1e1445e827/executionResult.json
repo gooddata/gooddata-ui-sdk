@@ -1,0 +1,26 @@
+{
+    "dimensions": [
+        {
+            "headers": []
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "uri": "/gdc/md/avack24l7eynvolkdbe8nnrjbrjguk9j/obj/1271",
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
