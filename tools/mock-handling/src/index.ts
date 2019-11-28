@@ -21,7 +21,7 @@ import {
     discoverExecutionRecordings,
     OnRecordingCaptured,
     populateExecutionRecordings,
-} from "./recordings/executionRepository.js";
+} from "./recordings/executionRepository";
 
 program
     .version(pkg.version)

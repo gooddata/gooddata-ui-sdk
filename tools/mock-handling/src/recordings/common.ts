@@ -56,10 +56,6 @@ export function writeAsJsonSync(file: string, obj: any, keys?: string[]) {
     return fs.writeFileSync(file, toJsonString(obj, keys), { encoding: "utf-8" });
 }
 
-export function writeAsJson(file: string, obj: any, keys?: string[]): Promise<void> {
-    return fs.promises.writeFile(file, toJsonString(obj, keys), { encoding: "utf-8" });
-}
-
 export function readJsonSync(file: string): any {
     return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
 }

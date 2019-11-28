@@ -7,6 +7,7 @@ import * as path from "path";
 import { logWarn } from "../cli/loggers";
 import { IRecording, readJsonSync, RecordingIndexEntry, writeAsJsonSync } from "./common";
 import isArray = require("lodash/isArray");
+import isEmpty = require("lodash/isEmpty");
 import isObject = require("lodash/isObject");
 import pickBy = require("lodash/pickBy");
 
@@ -80,7 +81,7 @@ function loadScenarios(directory: string): ScenarioDescriptor[] {
     }
 
     try {
-        const scenarios = JSON.parse(fs.readFileSync(scenariosFile, { encoding: "utf-8" }));
+        const scenarios = readJsonSync(scenariosFile);
 
         if (!isArray(scenarios)) {
             logWarn(
@@ -119,11 +120,11 @@ function loadDataViewRequests(directory: string): DataViewRequests {
     }
 
     try {
-        const requests = JSON.parse(fs.readFileSync(requestsFile, { encoding: "utf-8" })) as DataViewRequests;
+        const requests = readJsonSync(requestsFile) as DataViewRequests;
 
         if (!isObject(requests) || (requests.allData === undefined && requests.windows === undefined)) {
             logWarn(
-                `The ${DataViewRequestsFile} in ${directory} does not contain valid data view request definitions. . It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
+                `The ${DataViewRequestsFile} in ${directory} does not contain valid data view request definitions. It should contain JSON with object with allData: boolean and/or windows: [{offset, size}]. Proceeding with default: getting all data.`,
             );
 
             return DefaultDataViewRequests;
@@ -239,7 +240,7 @@ export class ExecutionRecording implements IRecording {
     }
 
     private hasAllDataViewFiles(): boolean {
-        return Object.keys(this.getMissingDataViewFiles()).length === 0;
+        return isEmpty(Object.keys(this.getMissingDataViewFiles()));
     }
 
     private getMissingDataViewFiles(): DataViewFiles {
