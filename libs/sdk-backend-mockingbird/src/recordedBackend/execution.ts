@@ -2,18 +2,17 @@
 
 import {
     AbstractExecutionFactory,
+    DataValue,
+    IDataView,
+    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
-    IPreparedExecution,
-    NotSupported,
     IExportResult,
-    IDataView,
-    NotImplemented,
-    IDimensionDescriptor,
-    DataValue,
+    IPreparedExecution,
     IResultHeader,
     NoDataError,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -22,8 +21,8 @@ import {
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
-    SortItem,
     IFilter,
+    SortItem,
 } from "@gooddata/sdk-model";
 import { ExecutionRecording, WorkspaceRecordings } from "./types";
 
@@ -76,6 +75,10 @@ function recordedPreparedExecution(
     };
 }
 
+const DataViewPrefix = "dataView_";
+const DataViewAll = `${DataViewPrefix}all`;
+const dataViewWindowId = (offset: number[], size: number[]) => `o${offset.join("_")}s${size.join("_")}`;
+
 class RecordedExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
     private readonly _fp: string;
@@ -94,18 +97,24 @@ class RecordedExecutionResult implements IExecutionResult {
     };
 
     public readAll = (): Promise<IDataView> => {
-        return Promise.resolve(new RecordedDataView(this, this.definition, this.recording.dataViewAll));
+        const allData = this.recording[DataViewAll];
+
+        if (!allData) {
+            return Promise.reject(new NoDataError("there is no execution recording that contains all data"));
+        }
+
+        return Promise.resolve(new RecordedDataView(this, this.definition, allData));
     };
 
-    public readWindow = (_offset: number[], _size: number[]): Promise<IDataView> => {
-        /*
-         * Support for page-able recordings needs to drop eventually. Since the executions and their results
-         * can be quite complex (with the grant totals, subtotals and all this) it will be safer to actually
-         * make per-page recordings and look them up.
-         *
-         * Paging on top of the dataViewAll may be possible but means duplication of non-trivial backend logic.
-         */
-        return Promise.reject(new NotImplemented("not yet implemented"));
+    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+        const windowDataId = `${DataViewPrefix}${dataViewWindowId(offset, size)}`;
+        const windowData = this.recording[windowDataId];
+
+        if (!windowData) {
+            return Promise.reject(new NoDataError("there is no execution recording for requested window"));
+        }
+
+        return Promise.resolve(new RecordedDataView(this, this.definition, windowData));
     };
 
     public transform = (): IPreparedExecution => {

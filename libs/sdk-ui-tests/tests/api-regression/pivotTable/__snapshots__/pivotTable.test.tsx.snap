@@ -1,0 +1,2073 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PivotTable with single measure pivot sorted by first row attr should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure pivot sorted by first row attr should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure pivot sorted by second row attr should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.owner.department",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure pivot sorted by second row attr should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure with column attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure with column attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure with row and column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure with row and column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure with row attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure with row attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure with two row and one column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure with two row and one column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with single measure with two row and two column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single measure with two row and two column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with column attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with column attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with row and column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with row and column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with row attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with row attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with single row attr sorted by first measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_ah1EuQxwaCqs",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with single row attr sorted by first measure should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with single row attr sorted by second measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m_afSEwRwdbMeQ",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with single row attr sorted by second measure should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with two row and one column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with two row and one column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with two measures with two row and two column attributes should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "ah1EuQxwaCqs",
+                },
+              },
+            },
+            "localIdentifier": "m_ah1EuQxwaCqs",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "afSEwRwdbMeQ",
+                },
+              },
+            },
+            "localIdentifier": "m_afSEwRwdbMeQ",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.department",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "ah1EuQxwaCqs",
+            },
+          },
+        },
+        "localIdentifier": "m_ah1EuQxwaCqs",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "afSEwRwdbMeQ",
+            },
+          },
+        },
+        "localIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with two measures with two row and two column attributes should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;

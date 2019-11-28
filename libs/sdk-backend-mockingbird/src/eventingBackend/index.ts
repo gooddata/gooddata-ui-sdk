@@ -51,19 +51,47 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
     }
 
     public readAll = (): Promise<IDataView> => {
-        const { successfulResultReadAll } = this.callbacks;
+        const { successfulResultReadAll, failedResultReadAll } = this.callbacks;
 
         const promisedDataView = super.readAll();
 
-        if (successfulResultReadAll) {
-            return promisedDataView.then(res => {
-                successfulResultReadAll(res);
+        return promisedDataView
+            .then(res => {
+                if (successfulResultReadAll) {
+                    successfulResultReadAll(res);
+                }
 
                 return res;
-            });
-        }
+            })
+            .catch(e => {
+                if (failedResultReadAll) {
+                    failedResultReadAll(e);
+                }
 
-        return promisedDataView;
+                throw e;
+            });
+    };
+
+    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+        const { successfulResultReadWindow, failedResultReadWindow } = this.callbacks;
+
+        const promisedDataView = super.readWindow(offset, size);
+
+        return promisedDataView
+            .then(res => {
+                if (successfulResultReadWindow) {
+                    successfulResultReadWindow(offset, size, res);
+                }
+
+                return res;
+            })
+            .catch(e => {
+                if (failedResultReadWindow) {
+                    failedResultReadWindow(offset, size, e);
+                }
+
+                throw e;
+            });
     };
 }
 
@@ -93,6 +121,33 @@ export type AnalyticalBackendCallbacks = {
      * @param dataView - data view (mind that this contains definition and result already)
      */
     successfulResultReadAll?: (dataView: IDataView) => void;
+
+    /**
+     * Called when IExecuteResult.readAll() ends with an error.
+     *
+     * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     */
+    failedResultReadAll?: (error: any) => void;
+
+    /**
+     * Called when IExecuteResult.readWindow() successfully completes. The function is called with the requested
+     * window arguments and the resulting data size (note: requested window & actual window may differ)
+     *
+     * @param offset - *requested window offset, the actual offset may differ, actual offset is in data view
+     * @param size - *request* window size, the actual size may differ, actual size is in data view
+     * @param dataView - data view (mind that this contains definition and result already)
+     */
+    successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
+
+    /**
+     * Called when IExecuteResult.readWindow() ends with an error. The function is called with the requested
+     * window arguments and the error from the underlying backend.
+     *
+     * @param offset - *requested window offset, the actual offset may differ, actual offset is in data view
+     * @param size - *request* window size, the actual size may differ, actual size is in data view
+     * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     */
+    failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
 
 /**

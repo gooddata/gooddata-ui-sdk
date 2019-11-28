@@ -13,16 +13,20 @@ describe("Heatmap", () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const interactions = mountChartAndCapture(Component, propsFactory);
+        const promisedInteractions = mountChartAndCapture(Component, propsFactory);
 
-        it("should create expected execution definition", () => {
+        it("should create expected execution definition", async () => {
+            const interactions = await promisedInteractions;
+
             expect(interactions.triggeredExecution).toMatchSnapshot();
         });
 
-        it("should create expected props for core chart", () => {
-            expect(interactions.passedToBaseChart).toBeDefined();
-            expect(interactions.passedToBaseChart!.execution).toBeDefined();
-            expect(cleanupCoreChartProps(interactions.passedToBaseChart)).toMatchSnapshot();
+        it("should create expected props for core chart", async () => {
+            const interactions = await promisedInteractions;
+
+            expect(interactions.effectiveProps).toBeDefined();
+            expect(interactions.effectiveProps!.execution).toBeDefined();
+            expect(cleanupCoreChartProps(interactions.effectiveProps)).toMatchSnapshot();
         });
     });
 });

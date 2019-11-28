@@ -16,7 +16,7 @@ import {
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
-import { IPivotTableBucketProps, IPivotTableProps } from "./types";
+import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
 import omit = require("lodash/omit");
 import { IntlWrapper } from "../base/translations/IntlWrapper";
 import {
@@ -43,6 +43,8 @@ export class PivotTable extends React.Component<IPivotTableProps> {
             ["measures", "rows", "columns", "totals", "filters", "sortBy"],
         );
 
+        const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
+
         const execution = prepareExecution(this.props);
 
         return (
@@ -51,7 +53,7 @@ export class PivotTable extends React.Component<IPivotTableProps> {
                     {(translationProps: ITranslationsComponentProps) => {
                         return (
                             <CorePivotTable
-                                {...newProps}
+                                {...corePivotProps}
                                 intl={translationProps.intl}
                                 execution={execution}
                                 exportTitle={exportTitle}

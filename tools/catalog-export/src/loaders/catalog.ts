@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import gooddata from "@gooddata/gd-bear-client";
 import pmap from "p-map";
-import { flatMap } from "lodash";
+import { flatMap, range } from "lodash";
 import { isAttribute, isMetric, Catalog, Attribute, Metric, Fact } from "../base/types";
 
 type CatalogItemsResponse = {
@@ -41,7 +41,7 @@ async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
     // otherwise figure out number of pages to load, calculate their offsets
     const lastPageNotComplete = available % PAGE_SIZE > 0 ? 1 : 0;
     const numPagesToGet = Math.trunc(available / PAGE_SIZE) - 1 + lastPageNotComplete;
-    const pageOffsets = new Array(numPagesToGet).map((_, idx) => (idx + 1) * PAGE_SIZE);
+    const pageOffsets = range(numPagesToGet).map((_, idx) => (idx + 1) * PAGE_SIZE);
     const loadPage = async (offset: number): Promise<CatalogItemsResponse> => {
         const pageOpts = getRequestOptions(offset);
 

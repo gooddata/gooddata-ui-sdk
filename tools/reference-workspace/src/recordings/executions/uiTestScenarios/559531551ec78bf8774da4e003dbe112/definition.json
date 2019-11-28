@@ -19,7 +19,7 @@
             ]
         },
         {
-            "localIdentifier": "view",
+            "localIdentifier": "attribute",
             "items": [
                 {
                     "attribute": {
@@ -32,7 +32,7 @@
             ]
         },
         {
-            "localIdentifier": "stack",
+            "localIdentifier": "columns",
             "items": [
                 {
                     "attribute": {

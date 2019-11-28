@@ -1,14 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import flatMap = require("lodash/flatMap");
+import unionBy = require("lodash/unionBy");
 import isArray = require("lodash/isArray");
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
+import isObject = require("lodash/isObject");
+import { defFingerprint } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
 import allScenarios from "../../scenarios";
 import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
-import { mountChartAndCapture } from "../_infra/render";
+import { ChartInteractions, DataViewRequests, mountChartAndCapture } from "../_infra/render";
 
 type AllScenariosType = [string, string, ScenarioTestInput<any>];
 type AnyComponentTest = ScenarioTestInput<any>;
@@ -16,7 +18,20 @@ type AnyComponentTest = ScenarioTestInput<any>;
 const StoreEnvVar = "GDC_STORE_DEFS";
 const StoreLocation = initializeStore(process.env[StoreEnvVar]);
 const DefinitionFileName = "definition.json";
+const RequestsFileName = "requests.json";
 const ScenariosFileName = "scenarios.json";
+
+function toJsonString(obj: any): string {
+    return JSON.stringify(obj, null, 4);
+}
+
+function writeAsJsonSync(file: string, obj: any) {
+    return fs.writeFileSync(file, toJsonString(obj), { encoding: "utf-8" });
+}
+
+function readJsonSync(file: string): any {
+    return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
+}
 
 function initializeStore(dir: string | undefined): string | undefined {
     if (!dir) {
@@ -42,15 +57,58 @@ function initializeStore(dir: string | undefined): string | undefined {
     return dir;
 }
 
-function storeDefinition(def: IExecutionDefinition): string {
-    const fp = defFingerprint(def);
+function storeRequests(interactions: ChartInteractions, recordingDir: string): void {
+    const requestsFile = path.join(recordingDir, RequestsFileName);
+    const { dataViewRequests } = interactions;
+
+    let requests: DataViewRequests = {
+        allData: false,
+        windows: [],
+    };
+
+    if (fs.existsSync(requestsFile)) {
+        try {
+            const existingRequests = readJsonSync(requestsFile);
+
+            if (!isObject(existingRequests)) {
+                // tslint:disable-next-line:no-console
+                console.warn(
+                    `The requests file ${requestsFile} seems invalid. It should contain object describing what data view requests should be captured for the recording.`,
+                );
+            } else {
+                requests = existingRequests as DataViewRequests;
+            }
+        } catch (err) {
+            // tslint:disable-next-line:no-console
+            console.warn("Unable to read or parse exec requests file in ", requestsFile);
+        }
+    }
+
+    if (dataViewRequests.allData) {
+        requests.allData = true;
+    }
+
+    if (dataViewRequests.windows) {
+        requests.windows = unionBy(dataViewRequests.windows, requests.windows, val => {
+            return `${val.offset.join(",")}-${val.size.join(",")}`;
+        });
+    }
+
+    writeAsJsonSync(requestsFile, requests);
+}
+
+function storeDefinition(interactions: ChartInteractions): string {
+    const { triggeredExecution } = interactions;
+    const fp = defFingerprint(triggeredExecution!);
     const recordingDir = path.join(StoreLocation!, fp);
 
     if (!fs.existsSync(recordingDir)) {
         fs.mkdirSync(recordingDir);
     }
 
-    fs.writeFileSync(path.join(recordingDir, DefinitionFileName), JSON.stringify(def, null, 4));
+    writeAsJsonSync(path.join(recordingDir, DefinitionFileName), triggeredExecution);
+
+    storeRequests(interactions, recordingDir);
 
     return recordingDir;
 }
@@ -62,15 +120,19 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
 
     if (fs.existsSync(scenariosFile)) {
         try {
-            scenarios = JSON.parse(fs.readFileSync(scenariosFile, { encoding: "utf-8" }));
+            const existingScenarios = readJsonSync(scenariosFile);
+
+            if (!isArray(existingScenarios)) {
+                // tslint:disable-next-line:no-console
+                console.warn(
+                    `The scenarios file ${scenariosFile} seems invalid. It should contain array of scenario metadata.`,
+                );
+            } else {
+                scenarios = existingScenarios;
+            }
         } catch (err) {
             // tslint:disable-next-line:no-console
             console.warn("Unable to read or parse exec definition scenario file in ", scenariosFile);
-            scenarios = [];
-        }
-
-        if (!isArray(scenarios)) {
-            scenarios = [];
         }
     }
 
@@ -80,7 +142,8 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
     }
 
     scenarios.push({ vis, scenario: scenarioName });
-    fs.writeFileSync(scenariosFile, JSON.stringify(scenarios, null, 4), { encoding: "utf-8" });
+
+    writeAsJsonSync(scenariosFile, scenarios);
 }
 
 /**
@@ -91,14 +154,18 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
  *
  * @param vis - visualization for which the scenario is being stored
  * @param scenario - detail about test scenario
- * @param def - execution definition
+ * @param interactions - chart interactions with the backend
  */
-function storeScenarioDefinition(vis: string, scenario: ScenarioTestInput<any>, def: IExecutionDefinition) {
+function storeScenarioDefinition(
+    vis: string,
+    scenario: ScenarioTestInput<any>,
+    interactions: ChartInteractions,
+) {
     if (!StoreLocation) {
         return;
     }
 
-    const recordingDir = storeDefinition(def);
+    const recordingDir = storeDefinition(interactions);
 
     if (!scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta")) {
         storeScenarioMetadata(recordingDir, vis, scenario[ScenarioTestMembers.ScenarioName]);
@@ -114,13 +181,24 @@ describe("all scenarios", () => {
         });
     });
 
-    it.each(Scenarios)("%s %s should lead to execution", (vis, _scenarioName, scenario) => {
-        const interactions = mountChartAndCapture(
+    it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
+        const interactions = await mountChartAndCapture(
             scenario[ScenarioTestMembers.Component],
             scenario[ScenarioTestMembers.PropsFactory],
         );
 
         expect(interactions.triggeredExecution).toBeDefined();
-        storeScenarioDefinition(vis, scenario, interactions.triggeredExecution!);
+
+        if (
+            interactions.dataViewRequests.windows === undefined &&
+            interactions.dataViewRequests.allData === undefined
+        ) {
+            fail(
+                `Mounting ${vis} for scenario ${scenarioName} did not lead to request of data from server. The smoke-and-capture suite now does not know what to store in the recording definition as it is unclear if the scenario needs all data or some particular window of data.`,
+            );
+            return;
+        }
+
+        storeScenarioDefinition(vis, scenario, interactions);
     });
 });

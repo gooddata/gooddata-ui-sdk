@@ -14,5 +14,9 @@
     {
         "vis": "ScatterPlot",
         "scenario": "y axis measure and attribute"
+    },
+    {
+        "vis": "PivotTable",
+        "scenario": "single measure with row attribute"
     }
 ]

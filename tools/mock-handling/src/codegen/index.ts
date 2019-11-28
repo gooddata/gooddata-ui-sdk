@@ -10,10 +10,10 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
-import { IExecutionRecording } from "../recordings/execution";
 import { generateConstantsForExecutions } from "./executionRecording";
-import { executionRecordingName, workspaceName } from "./variableNaming";
+import { workspaceName } from "./variableNaming";
 import groupBy = require("lodash/groupBy");
+import { ExecutionRecording } from "../recordings/execution";
 
 const FILE_DIRECTIVES = ["/* tslint:disable:file-header */", "/* tslint:disable:variable-name */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
@@ -51,7 +51,7 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
     const executionsByWorkspace = Object.entries(groupBy(input.executions, e => e.definition.workspace));
     const workspaceEntries = executionsByWorkspace.map(
         ([ws, execs]) =>
-            `${workspaceName(ws)}: { executions: { ${execs.map(executionRecordingName).join(",")} } }`,
+            `${workspaceName(ws)}: { executions: { ${execs.map(e => e.getRecordingName()).join(",")} } }`,
     );
     return {
         declarationKind: VariableDeclarationKind.Const,
@@ -79,7 +79,7 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string): T
  * Input to TS codegen that creates index with pointers to all recordings.
  */
 export type IndexGeneratorInput = {
-    executions: IExecutionRecording[];
+    executions: ExecutionRecording[];
 };
 
 /**

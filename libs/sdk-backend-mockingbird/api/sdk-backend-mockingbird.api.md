@@ -20,6 +20,9 @@ export type AnalyticalBackendCallbacks = {
     beforeExecute?: (def: IExecutionDefinition) => void;
     successfulExecute?: (result: IExecutionResult) => void;
     successfulResultReadAll?: (dataView: IDataView) => void;
+    failedResultReadAll?: (error: any) => void;
+    successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
+    failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
 
 // Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
@@ -44,7 +47,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 export type ExecutionRecording = {
     definition: IExecutionDefinition;
     executionResult: any;
-    dataViewAll: any;
+    [dataViews: string]: any;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
