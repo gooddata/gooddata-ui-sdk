@@ -3,9 +3,8 @@
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, InjectedIntl } from "react-intl";
-import { ErrorStates } from "../../base/constants/errorStates";
-import { RuntimeError } from "../../base/errors/RuntimeError";
-import { convertErrors } from "../../base/helpers/errorHandlers";
+import { ErrorCodes, GoodDataSdkError } from "../../base/errors/GoodDataSdkError";
+import { convertError } from "../../base/errors/errorHandling";
 import { ILoadingState, IExportFunction, IExtendedExportConfig } from "../../base/interfaces/Events";
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
@@ -137,7 +136,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
             this.setState(state);
         }
 
-        private onError(error: RuntimeError, execution = this.props.execution) {
+        private onError(error: GoodDataSdkError, execution = this.props.execution) {
             const { onExportReady } = this.props;
             if (this.props.execution.equals(execution)) {
                 this.setState({ error: error.getMessage(), dataView: null });
@@ -149,18 +148,20 @@ export function withEntireDataView<T extends ICoreChartProps>(
             }
         }
 
-        private createExportErrorFunction(error: RuntimeError | ApiResponseError | Error): IExportFunction {
+        private createExportErrorFunction(
+            error: GoodDataSdkError | ApiResponseError | Error,
+        ): IExportFunction {
             return (_exportConfig: IExtendedExportConfig): Promise<IExportResponse> => {
                 return Promise.reject(error);
             };
         }
 
         private onDataTooLarge() {
-            this.onError(new RuntimeError(ErrorStates.DATA_TOO_LARGE_TO_DISPLAY));
+            this.onError(new GoodDataSdkError(ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY));
         }
 
         private onNegativeValues() {
-            this.onError(new RuntimeError(ErrorStates.NEGATIVE_VALUES));
+            this.onError(new GoodDataSdkError(ErrorCodes.NEGATIVE_VALUES));
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
@@ -188,7 +189,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
                 }
                 // TODO: SDK8: push data
             } catch (error) {
-                this.onError(convertErrors(error));
+                this.onError(convertError(error));
             }
         }
 

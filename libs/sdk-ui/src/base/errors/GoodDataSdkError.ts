@@ -1,7 +1,46 @@
-// (C) 2007-2018 GoodData Corporation
-export type CANCELLED = "CANCELLED";
+// (C) 2007-2019 GoodData Corporation
 
-export const ErrorStates = {
+import isEmpty = require("lodash/isEmpty");
+
+/**
+ * This is common SDK-land exception.
+ *
+ * @public
+ */
+export class GoodDataSdkError extends Error {
+    public readonly sdkError: boolean = true;
+
+    constructor(public message: string, public cause?: any) {
+        super(message);
+
+        Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
+    }
+
+    /**
+     * Provides description of the problem or one of {@link ErrorCodes}.
+     */
+    public getMessage() {
+        return this.message;
+    }
+
+    /**
+     * Underlying cause of this error (if any).
+     */
+    public getCause() {
+        return this.cause;
+    }
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link GoodDataSdkError};
+ *
+ * @public
+ */
+export function isGoodDataSdkError(obj: any): obj is GoodDataSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).sdkError === true;
+}
+
+export const ErrorCodes = {
     /**
      * This error means that server could not understand the request due to invalid syntax.
      */

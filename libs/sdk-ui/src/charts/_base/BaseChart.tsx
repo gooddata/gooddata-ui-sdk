@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
+import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
 import { ICoreChartProps } from "../chartProps";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
@@ -18,7 +18,7 @@ import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 import { ChartType } from "../../base/constants/visualizationTypes";
-import { ErrorStates } from "../../base/constants/errorStates";
+import { ErrorCodes } from "../../base/";
 
 export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;
@@ -37,12 +37,12 @@ class StatelessBaseChart extends React.Component<Props, {}> {
         visualizationComponent: Visualization,
     };
 
-    private readonly errorMap: IErrorMap;
+    private readonly errorMap: IErrorDescriptors;
 
     constructor(props: Props) {
         super(props);
 
-        this.errorMap = generateErrorMap(props.intl);
+        this.errorMap = newErrorMapping(props.intl);
     }
 
     public render(): JSX.Element {
@@ -53,7 +53,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorStates.UNKNOWN_ERROR
+                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }

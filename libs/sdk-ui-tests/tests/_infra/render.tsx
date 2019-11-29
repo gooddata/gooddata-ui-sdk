@@ -3,7 +3,7 @@
 import { dummyBackend, withEventing } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend, isNoDataError } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { RuntimeError } from "@gooddata/sdk-ui";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { mount, ReactWrapper } from "enzyme";
 import React from "react";
 import { PropsFactory, VisProps } from "../../src";
@@ -28,7 +28,7 @@ export type ChartInteractions = {
     effectiveProps?: any;
 };
 
-function errorHandler(error: RuntimeError) {
+function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {
         /*
          * This is expected during tests, executions go against dummy backend that throws no data.
