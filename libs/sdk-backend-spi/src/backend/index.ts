@@ -6,6 +6,7 @@ import { IExecutionFactory, IPreparedExecution } from "../execution";
 import { IWorkspaceSettingsService } from "../featureFlags";
 import { IWorkspaceMetadata } from "../metadata";
 import { IWorkspaceStylingService } from "../styling";
+import { IWorkspaceCatalog } from "../catalog";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -152,6 +153,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to obtain settings that are currently in effect for the workspace.
      */
     settings(): IWorkspaceSettingsService;
+
+    /**
+     * Returns service that can be used to query workspace catalog items - attributes, measures, facts, dates, and datasets
+     */
+    catalog(): IWorkspaceCatalog;
 }
 
 /**

@@ -21,6 +21,9 @@ export function getHeaderValue(request: MockRequest, name: string): string {
 
 const createXhr = (configStorage = {}) => new XhrModule(fetch, configStorage);
 
+const dummyBody = '{ "test": "ok" }';
+const parsedDummyBody = { test: "ok" };
+
 describe("thisPackage", () => {
     it("should equal to current package name and version", () => {
         const pkgJson = require("../../package.json");
@@ -55,13 +58,13 @@ describe("fetch", () => {
 
     describe("xhr.ajax request", () => {
         it("should handle successful request", () => {
-            fetchMock.get("/some/url", { status: 200, body: "hello" });
+            fetchMock.get("/some/url", { status: 200, body: dummyBody });
 
             return createXhr()
                 .ajax("/some/url")
                 .then(r => {
                     expect(r.response.status).toBe(200);
-                    expect(r.getData()).toBe("hello");
+                    expect(r.getData()).toEqual(parsedDummyBody);
                 });
         });
 
@@ -247,7 +250,7 @@ describe("fetch", () => {
                     return 202;
                 }
 
-                return { status: 200, body: "Poll result" };
+                return { status: 200, body: dummyBody };
             });
 
             return createXhr()
@@ -255,14 +258,14 @@ describe("fetch", () => {
                 .then(r => {
                     expect(r.response.status).toBe(200);
                     expect(fetchMock.calls("/some/url").length).toBe(3);
-                    expect(r.getData()).toBe("Poll result");
+                    expect(r.getData()).toEqual(parsedDummyBody);
                 });
         });
 
         it("should poll on provided url", () => {
             fetchMock.get("/some/url2", {
                 status: 200,
-                body: "Poll result",
+                body: dummyBody,
             });
 
             fetchMock.get("/some/url", {
@@ -278,7 +281,7 @@ describe("fetch", () => {
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/some/url2").length).toBe(1);
 
-                    expect(r.getData()).toBe("Poll result");
+                    expect(r.getData()).toEqual(parsedDummyBody);
                 });
         });
 
@@ -322,7 +325,7 @@ describe("fetch", () => {
                 if (fetchMock.calls(url).length <= 2) {
                     return 202;
                 }
-                return { status: 200, body: "Poll result from other url" };
+                return { status: 200, body: dummyBody };
             });
 
             return createXhr()
@@ -331,14 +334,14 @@ describe("fetch", () => {
                     expect(r.response.status).toBe(200);
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/other/url").length).toBe(3);
-                    expect(r.getData()).toBe("Poll result from other url");
+                    expect(r.getData()).toEqual(parsedDummyBody);
                 });
         });
 
         it("should folow multiple redirects", () => {
             fetchMock.get("/some/url", { status: 202, headers: { Location: "/other/url" } });
             fetchMock.get("/other/url", { status: 202, headers: { Location: "/last/url" } });
-            fetchMock.get("/last/url", { status: 200, body: "Poll result with redirects" });
+            fetchMock.get("/last/url", { status: 200, body: dummyBody });
 
             return createXhr()
                 .ajax("/some/url", { pollDelay: 0 })
@@ -347,7 +350,7 @@ describe("fetch", () => {
                     expect(fetchMock.calls("/some/url").length).toBe(1);
                     expect(fetchMock.calls("/other/url").length).toBe(1);
                     expect(fetchMock.calls("/last/url").length).toBe(1);
-                    expect(r.getData()).toBe("Poll result with redirects");
+                    expect(r.getData()).toEqual(parsedDummyBody);
                 });
         });
 

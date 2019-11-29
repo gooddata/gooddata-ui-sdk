@@ -1,4 +1,5 @@
-// (C) 2007-2013 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+import qs from "qs";
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -100,7 +101,7 @@ export class ApiResponseError extends ApiError {
 
 export class ApiNetworkError extends ApiError {}
 
-export class ApiResponse {
+export class ApiResponse<T = any> {
     public response: Response;
     public responseBody: string;
 
@@ -111,17 +112,17 @@ export class ApiResponse {
 
     get data() {
         try {
-            return JSON.parse(this.responseBody);
+            return JSON.parse(this.responseBody) as T;
         } catch (error) {
-            return this.responseBody;
+            throw new Error("Cannot parse responseBody!");
         }
     }
 
     public getData() {
         try {
-            return JSON.parse(this.responseBody);
+            return JSON.parse(this.responseBody) as T;
         } catch (error) {
-            return this.responseBody;
+            throw new Error("Cannot parse responseBody!");
         }
     }
 
@@ -151,7 +152,7 @@ export class XhrModule {
         Object.assign(this.configStorage.xhrSettings, settings);
     }
 
-    public async ajax(originalUrl: string, customSettings = {}): Promise<ApiResponse> {
+    public async ajax<T = any>(originalUrl: string, customSettings = {}): Promise<ApiResponse<T>> {
         // TODO refactor to: getRequestParams(originalUrl, customSettings);
         const firstSettings = this.createRequestSettings(customSettings);
         const { url, settings } = enrichSettingWithCustomDomain(
@@ -223,6 +224,20 @@ export class XhrModule {
     }
 
     /**
+     * Wrapper for xhr.ajax method GET, returns parsed JSON response body
+     */
+    public getParsed<T>(url: string, settings: any = {}) {
+        const { data, ...restSettings } = settings;
+        let urlWithParams = url;
+        if (data) {
+            urlWithParams = `${url}?${qs.stringify(data)}`;
+        }
+        return this.ajax<T>(urlWithParams, merge({ method: "GET" }, restSettings)).then(response =>
+            response.getData(),
+        );
+    }
+
+    /**
      * Wrapper for xhr.ajax method HEAD
      */
     public head(url: string, settings?: any) {
@@ -234,6 +249,13 @@ export class XhrModule {
      */
     public post(url: string, settings?: any) {
         return this.ajax(url, merge({ method: "POST" }, settings));
+    }
+
+    /**
+     * Wrapper for xhr.ajax method POST, returns parsed JSON response body
+     */
+    public postParsed<T>(url: string, settings?: any) {
+        return this.ajax<T>(url, merge({ method: "POST" }, settings)).then(response => response.getData());
     }
 
     /**

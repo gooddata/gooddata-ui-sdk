@@ -1,20 +1,20 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { IElement } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 
 interface IAttributeDropdownBodyProps {
-    items: IElement[];
+    items: IAttributeElement[];
     totalCount: number;
-    selectedItems: IElement[];
+    selectedItems: IAttributeElement[];
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
     applyDisabled?: boolean;
 
-    onSelect: (selectedItems: IElement[], isInverted: boolean) => void;
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
     onApplyButtonClicked: () => void;
     onCloseButtonClicked: () => void;

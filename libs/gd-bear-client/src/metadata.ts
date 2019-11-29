@@ -1,10 +1,10 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
-import { GdcExecuteAFM, GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { GdcExecuteAFM, GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import { IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection } from "./interfaces";
@@ -23,6 +23,11 @@ export interface IValidElementsOptions {
     afm?: GdcExecuteAFM.IAfm;
 }
 
+export interface IUriIdentifierPair {
+    uri: string;
+    identifier: string;
+}
+
 /**
  * Functions for working with metadata objects
  *
@@ -33,6 +38,76 @@ export class MetadataModule {
     constructor(private xhr: XhrModule) {}
 
     /**
+     * Get default display form value of provided atrribute element uri
+     * @param attributeElementUri string
+     */
+    public async getAttributeElementDefaultDisplayFormValue(
+        attributeElementUri: string,
+    ): Promise<GdcMetadata.IAttributeElement | undefined> {
+        const uriChunks = attributeElementUri.match(/(.+)\/elements\?id=(.*)/);
+        if (!uriChunks) {
+            throw new Error("Provide valid attribute element uri");
+        }
+        const attributeUri = uriChunks[1];
+        const elementId = uriChunks[2];
+        const defaultDisplayForm = await this.getAttributeDefaultDisplayForm(attributeUri);
+        if (!defaultDisplayForm) {
+            throw new Error("Attribute of the provided element has no default display form!");
+        }
+        const defaultDisplayFormUri = defaultDisplayForm.meta.uri;
+        const defaultDisplayFormElementValue = await this.xhr.getParsed<
+            GdcMetadata.IWrappedAttributeElements
+        >(`${defaultDisplayFormUri}/elements?id=${elementId}`);
+
+        const firstElement = defaultDisplayFormElementValue.attributeElements.elements[0];
+        return firstElement;
+    }
+
+    /**
+     * Get default display form of provided atrribute uri
+     * @param attributeUri string
+     */
+    public async getAttributeDefaultDisplayForm(attributeUri: string) {
+        const object = await this.xhr.getParsed<GdcMetadata.WrappedObject>(attributeUri);
+        if (!GdcMetadata.isWrappedAttribute(object)) {
+            throw new Error("Provided uri is not attribute uri!");
+        }
+
+        return (
+            object.attribute.content.displayForms.find(displayForm => displayForm.content.default === 1) ||
+            object.attribute.content.displayForms[0]
+        );
+    }
+
+    /**
+     * Get metadata object by provided identifier
+     * @param projectId string
+     * @param identifier string
+     */
+    public async getObjectByIdentifier<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
+        projectId: string,
+        identifier: string,
+    ) {
+        const uri = await this.getObjectUri(projectId, identifier);
+        return this.xhr.getParsed<T>(uri);
+    }
+
+    /**
+     * Get metadata objects by provided identifiers
+     * @param projectId string
+     * @param identifiers string[]
+     */
+    public async getObjectsByIdentifiers<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
+        projectId: string,
+        identifiers: string[],
+    ) {
+        const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
+        const uris = uriIdentifierPairs.map(pair => pair.uri);
+        const objects: T[] = await this.getObjects(projectId, uris);
+        return objects;
+    }
+
+    /**
      * Load all objects with given uris
      * (use bulk loading instead of getting objects one by one)
      *
@@ -41,7 +116,10 @@ export class MetadataModule {
      * @param {Array} objectUris array of uris for objects to be loaded
      * @return {Array} array of loaded elements
      */
-    public getObjects(projectId: string, objectUris: string[]): any {
+    public getObjects<T extends GdcMetadata.WrappedObject = GdcMetadata.WrappedObject>(
+        projectId: string,
+        objectUris: string[],
+    ): Promise<T[]> {
         const LIMIT = 50;
         const uri = `/gdc/md/${projectId}/objects/get`;
 
@@ -602,7 +680,7 @@ export class MetadataModule {
                     identifierToUri: identifiers,
                 },
             })
-            .then((r: ApiResponse) => r.getData())
+            .then((r: ApiResponse<{ identifiers: IUriIdentifierPair[] }>) => r.getData())
             .then(data => {
                 return data.identifiers;
             });
@@ -623,7 +701,7 @@ export class MetadataModule {
                     uriToIdentifier: uris,
                 },
             })
-            .then((r: ApiResponse) => r.getData())
+            .then((r: ApiResponse<{ identifiers: IUriIdentifierPair[] }>) => r.getData())
             .then(data => {
                 return data.identifiers;
             });

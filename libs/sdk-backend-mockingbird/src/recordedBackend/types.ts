@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IExecutionDefinition, IAttributeDisplayForm } from "@gooddata/sdk-model";
-import { IElement } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, IAttributeDisplayForm, IAttributeElement } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -20,7 +19,7 @@ export type WorkspaceRecordings = {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
     };
     elements?: {
-        [id: string]: IElement[];
+        [id: string]: IAttributeElement[];
     };
 };
 

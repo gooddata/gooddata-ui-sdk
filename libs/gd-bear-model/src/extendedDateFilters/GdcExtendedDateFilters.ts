@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IObjectMeta } from "../meta/Meta";
+import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
  * @internal
@@ -177,7 +177,7 @@ export namespace GdcExtendedDateFilters {
     }
 
     export interface IDateFilterConfig {
-        meta: IObjectMeta;
+        meta: GdcMetadata.IObjectMeta;
         content: IDateFilterConfigContent;
     }
 

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { SortDirection } from "@gooddata/sdk-model";
+import { SortDirection, IAttributeElement } from "@gooddata/sdk-model";
 
 /**
  * TODO: SDK8: add docs
@@ -45,19 +45,10 @@ export interface IElementQuery {
  * @public
  */
 export interface IElementQueryResult {
-    readonly elements: IElement[];
+    readonly elements: IAttributeElement[];
     readonly limit: number;
     readonly offset: number;
     readonly totalCount: number;
 
     next(): Promise<IElementQueryResult>;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IElement {
-    readonly title: string;
-    readonly uri?: string;
 }

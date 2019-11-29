@@ -139,6 +139,12 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 // @public
 export function bucketTotals(bucket: IBucket): ITotal[];
 
+// @public
+export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+
+// @public
+export type CatalogItemType = "attribute" | "measure" | "fact";
+
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
 
@@ -243,6 +249,24 @@ export interface IAttributeDisplayForm {
 }
 
 // @public
+export interface IAttributeElement {
+    // (undocumented)
+    readonly title: string;
+    // (undocumented)
+    readonly uri: string;
+}
+
+// @public (undocumented)
+export interface IAttributeElementExpressionToken {
+    // (undocumented)
+    element: IAttributeElement;
+    // (undocumented)
+    type: "attributeElement";
+    // (undocumented)
+    value: string;
+}
+
+// @public
 export interface IAttributeElementsByRef {
     // (undocumented)
     uris: string[];
@@ -284,6 +308,40 @@ export interface IBucket {
     localIdentifier?: Identifier;
     // (undocumented)
     totals?: ITotal[];
+}
+
+// Warning: (ae-forgotten-export) The symbol "ICatalogItemBase" needs to be exported by the entry point index.d.ts
+//
+// @public
+export interface ICatalogAttribute extends ICatalogItemBase {
+    // (undocumented)
+    readonly defaultDisplayForm: string;
+    // (undocumented)
+    readonly type: "attribute";
+}
+
+// @public
+export interface ICatalogFact extends ICatalogItemBase {
+    // (undocumented)
+    readonly type: "fact";
+}
+
+// @public
+export interface ICatalogGroup {
+    // (undocumented)
+    readonly identifier: string;
+    // (undocumented)
+    readonly title: string;
+}
+
+// @public
+export interface ICatalogMeasure extends ICatalogItemBase {
+    // (undocumented)
+    readonly expression: string;
+    // (undocumented)
+    readonly format: string;
+    // (undocumented)
+    readonly type: "measure";
 }
 
 // @public
@@ -388,7 +446,7 @@ export interface IInsight {
 }
 
 // Warning: (ae-forgotten-export) The symbol "IMeasureTitle" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     // (undocumented)
@@ -414,6 +472,9 @@ export interface IMeasureDefinition {
 
 // @public
 export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
+
+// @public
+export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken;
 
 // @public
 export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
@@ -494,6 +555,18 @@ export function insightTotals(insight: IInsight): ITotal[];
 
 // @public
 export function insightVisualizationClassIdentifier(insight: IInsight): string;
+
+// @public (undocumented)
+export interface IObjectExpressionToken {
+    // Warning: (ae-forgotten-export) The symbol "IObjectMeta" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    meta: IObjectMeta;
+    // (undocumented)
+    type: "metadataObject";
+    // (undocumented)
+    value: string;
+}
 
 // @public
 export interface IPoPMeasureDefinition {
@@ -608,6 +681,15 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 export function isBucket(obj: any): obj is IBucket;
 
 // @public
+export function isCatalogAttribute(item: CatalogItem): item is ICatalogAttribute;
+
+// @public
+export function isCatalogFact(item: CatalogItem): item is ICatalogFact;
+
+// @public
+export function isCatalogMeasure(item: CatalogItem): item is ICatalogMeasure;
+
+// @public
 export function isColorFromPalette(obj: any): obj is IColorFromPalette;
 
 // @public
@@ -675,6 +757,14 @@ export function isTotal(obj: any): obj is ITotal;
 
 // @public
 export function isUriRef(obj: any): obj is UriRef;
+
+// @public (undocumented)
+export interface ITextExpressionToken {
+    // (undocumented)
+    type: "text";
+    // (undocumented)
+    value: string;
+}
 
 // @public
 export interface ITotal {
@@ -885,7 +975,7 @@ export type RgbType = "rgb";
 export type SortDirection = "asc" | "desc";
 
 // Warning: (ae-internal-missing-underscore) The name "SortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal
 export type SortEntityIds = {
     allIdentifiers: Identifier[];
@@ -894,7 +984,7 @@ export type SortEntityIds = {
 };
 
 // Warning: (ae-internal-missing-underscore) The name "sortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal
 export function sortEntityIds(sort: SortItem): SortEntityIds;
 

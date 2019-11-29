@@ -8,12 +8,14 @@ import {
     IWorkspaceMetadata,
     IWorkspaceStylingService,
     NotImplemented,
+    IWorkspaceCatalog,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearWorkspaceMetadata } from "./metadata";
 import { BearWorkspaceStyling } from "./styling";
 import { BearWorkspaceElements } from "./elements";
+import { BearWorkspaceCatalog } from "./catalog";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -36,5 +38,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public styling(): IWorkspaceStylingService {
         return new BearWorkspaceStyling(this.authCall, this.workspace);
+    }
+
+    public catalog(): IWorkspaceCatalog {
+        return new BearWorkspaceCatalog(this.authCall, this.workspace);
     }
 }

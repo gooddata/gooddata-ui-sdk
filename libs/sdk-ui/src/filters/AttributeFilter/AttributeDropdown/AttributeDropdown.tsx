@@ -1,9 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IValidElementsResponse } from "@gooddata/gd-bear-client";
-import { IElement, IAnalyticalBackend, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementQueryResult } from "@gooddata/sdk-backend-spi";
 import * as classNames from "classnames";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
@@ -30,7 +31,7 @@ export interface IAttributeDropdownProps {
     workspace: string;
     identifier: string;
 
-    onApply: (selectedItems: IElement[], isInverted: boolean) => void;
+    onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
 }
 
@@ -42,7 +43,7 @@ export interface IAttributeDropdownStateItem {
 
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResult;
-    selectedItems: IElement[];
+    selectedItems: IAttributeElement[];
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
@@ -103,12 +104,12 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         const isQueryOutOfBounds = offset + limit > currentElements.length;
         const isMissingDataInWindow = currentElements
             .slice(offset, offset + limit)
-            .some((e: IElement | EmptyListItem) => (e as EmptyListItem).empty);
+            .some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
 
         const hasAllData =
             validElements &&
             currentElements.length === validElements.totalCount &&
-            !currentElements.some((e: IElement | EmptyListItem) => (e as EmptyListItem).empty);
+            !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
 
         const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
 
@@ -185,7 +186,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         }
     };
 
-    private onSelect = (selectedItems: IElement[], isInverted: boolean) => {
+    private onSelect = (selectedItems: IAttributeElement[], isInverted: boolean) => {
         this.setState({
             selectedItems,
             isInverted,

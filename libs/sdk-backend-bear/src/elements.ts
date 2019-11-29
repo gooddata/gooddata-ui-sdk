@@ -4,9 +4,9 @@ import {
     IElementQuery,
     IElementQueryOptions,
     IElementQueryResult,
-    IElement,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedCallGuard } from "./commonTypes";
+import { IAttributeElement } from "@gooddata/sdk-model";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -95,7 +95,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         };
 
         return {
-            elements: items.map((element: { element: IElement }) => element.element),
+            elements: items.map((element: { element: IAttributeElement }) => element.element),
             limit: count,
             offset: serverOffset,
             totalCount: total,

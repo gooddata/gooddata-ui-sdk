@@ -245,4 +245,25 @@ export {
     visClassUrl,
 } from "./insight";
 
+export {
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+} from "./catalog";
+
+export { IAttributeElement } from "./metadata/attributeElement";
+
+export {
+    IMeasureExpressionToken,
+    IObjectExpressionToken,
+    IAttributeElementExpressionToken,
+    ITextExpressionToken,
+} from "./metadata/measure";
+
 export { factoryNotationFor } from "./objectFactoryNotation";

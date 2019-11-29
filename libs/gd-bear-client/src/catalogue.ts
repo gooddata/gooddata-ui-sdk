@@ -1,11 +1,14 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get from "lodash/get";
 import find from "lodash/find";
 import omit from "lodash/omit";
+import omitBy from "lodash/omitBy";
+import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
+import { GdcCatalog } from "@gooddata/gd-bear-model";
 
 const REQUEST_DEFAULTS = {
     types: ["attribute", "metric", "fact"],
@@ -98,8 +101,86 @@ const unwrapItemDescriptionObject = (itemDescription: ItemDescription): string =
     throw new Error("Item description can only have expression or uri");
 };
 
+// When the limit is more than 500,
+// catalog items endpoint returns status of 500
+const CATALOG_ITEMS_LIMIT = 500;
+
 export class CatalogueModule {
     constructor(private xhr: XhrModule, private execution: ExecutionModule) {}
+
+    /**
+     * Load all catalog items
+     * @param projectId string
+     * @param options GdcCatalog.ILoadCatalogItemsParams
+     */
+    public async loadAllItems(projectId: string, options: GdcCatalog.ILoadCatalogItemsParams = {}) {
+        const loadAll = async (
+            requestOptions: GdcCatalog.ILoadCatalogItemsParams,
+            items: GdcCatalog.CatalogItem[] = [],
+        ): Promise<GdcCatalog.CatalogItem[]> => {
+            const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogItemsResponse>(
+                `/gdc/internal/projects/${projectId}/catalog/items`,
+                {
+                    data: requestOptions,
+                },
+            );
+            const resultItems = result.catalogItems.items;
+            const updatedItems = [...items, ...resultItems];
+            if (resultItems.length === requestOptions.limit) {
+                const updatedRequestOptions: GdcCatalog.ILoadCatalogItemsParams = {
+                    ...requestOptions,
+                    offset: result.catalogItems.paging.offset + requestOptions.limit,
+                };
+
+                return loadAll(updatedRequestOptions, updatedItems);
+            }
+
+            return updatedItems;
+        };
+
+        return loadAll({
+            offset: 0,
+            limit: CATALOG_ITEMS_LIMIT,
+            ...options,
+        });
+    }
+
+    /**
+     * Load catalog groups
+     * @param projectId string
+     * @param options GdcCatalog.ILoadCatalogGroupsParams
+     */
+    public async loadGroups(projectId: string, options: GdcCatalog.ILoadCatalogGroupsParams = {}) {
+        const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogGroupsResponse>(
+            `/gdc/internal/projects/${projectId}/catalog/groups`,
+            {
+                data: options,
+            },
+        );
+
+        return result.catalogGroups;
+    }
+
+    /**
+     * Load available item uris by already used uris and expressions
+     * @param projectId string
+     * @param options GdcCatalog.ILoadAvailableCatalogItemsParams
+     */
+    public async loadAvailableItemUris(
+        projectId: string,
+        options: GdcCatalog.ILoadAvailableCatalogItemsParams,
+    ) {
+        const sanitizedCatalogQueryRequest = omitBy(options.catalogQueryRequest, isEmpty);
+        const result = await this.xhr.postParsed<GdcCatalog.ILoadAvailableCatalogItemsResponse>(
+            `/gdc/internal/projects/${projectId}/catalog/query`,
+            {
+                data: {
+                    catalogQueryRequest: sanitizedCatalogQueryRequest,
+                },
+            },
+        );
+        return result.catalogAvailableItems.items;
+    }
 
     public loadItems(projectId: string, options = {}) {
         const request = omit(
