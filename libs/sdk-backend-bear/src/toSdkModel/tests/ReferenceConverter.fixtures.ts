@@ -19,6 +19,17 @@ const createFixture = (
         },
         meta: {
             title: "Foo",
+            category: "visualizationObject",
+            summary: "",
+            tags: "",
+            author: "",
+            contributor: "",
+            identifier: "",
+            uri: "",
+            deprecated: "0",
+            created: "",
+            isProduction: 1,
+            updated: "",
         },
     };
 };
