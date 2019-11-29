@@ -429,3 +429,79 @@ export function measureTitle(measure: IMeasure): string | undefined {
 
     return measure.measure.title;
 }
+
+/**
+ * Gets measure format.
+ * @param measure - measure to get the format of
+ * @returns measure format if specified, undefined otherwise
+ * @public
+ */
+export function measureFormat(measure: IMeasure): string | undefined {
+    if (!measure) {
+        return;
+    }
+
+    return measure.measure.format;
+}
+
+/**
+ * Gets measure aggregation.
+ *
+ * @param measure - measure to get the aggregation of
+ * @returns measure aggregation if specified, undefined otherwise
+ * @public
+ */
+export function measureAggregation(measure: IMeasure): MeasureAggregation | undefined {
+    if (!isSimpleMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.measureDefinition.aggregation;
+}
+
+/**
+ * Gets measure filters.
+ *
+ * @param measure - measure to get the filters of
+ * @returns measure filters if specified, undefined otherwise
+ * @public
+ */
+export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined {
+    if (!isSimpleMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.measureDefinition.filters;
+}
+
+/**
+ * Gets measure popAttribute.
+ *
+ * @param measure - measure to get the popAttribute of
+ * @returns measure popAttribute if specified, undefined otherwise
+ * @public
+ */
+export function measurePopAttribute(measure: IMeasure): ObjRef | undefined {
+    if (!isPoPMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.popMeasureDefinition.popAttribute;
+}
+
+/**
+ * Gets measure previous period date data sets.
+ *
+ * @param measure - measure to get the previous period date data sets of
+ * @returns measure previous period date data sets if specified, undefined otherwise
+ * @public
+ */
+export function measurePreviousPeriodDateDataSets(
+    measure: IMeasure,
+): IPreviousPeriodDateDataSet[] | undefined {
+    if (!isPreviousPeriodMeasure(measure)) {
+        return undefined;
+    }
+
+    return measure.measure.definition.previousPeriodMeasure.dateDataSets;
+}

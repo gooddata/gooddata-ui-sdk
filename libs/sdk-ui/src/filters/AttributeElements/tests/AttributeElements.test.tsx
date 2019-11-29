@@ -29,8 +29,8 @@ describe("AttributeElements", () => {
 
         expect(children).toHaveBeenCalledTimes(2);
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
-        expect(children.mock.calls[1][0].validElements.elements.length).toEqual(8);
-        expect(children.mock.calls[1][0].validElements.elements[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items.length).toEqual(8);
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
     });
 
     it("should load more attribute elements using the loadMore function", async () => {
@@ -40,16 +40,16 @@ describe("AttributeElements", () => {
         await waitForAsync();
 
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
-        expect(children.mock.calls[1][0].validElements.elements.length).toEqual(1);
-        expect(children.mock.calls[1][0].validElements.elements[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items.length).toEqual(1);
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
 
         await children.mock.calls[1][0].loadMore();
 
         expect(children.mock.calls[2][0].isLoading).toEqual(true);
 
         expect(children.mock.calls[3][0].isLoading).toEqual(false);
-        expect(children.mock.calls[3][0].validElements.elements.length).toEqual(2);
-        expect(children.mock.calls[3][0].validElements.elements[1].title).toEqual("GET");
+        expect(children.mock.calls[3][0].validElements.items.length).toEqual(2);
+        expect(children.mock.calls[3][0].validElements.items[1].title).toEqual("GET");
     });
 
     it("should load different attribute when identifier prop changes", async () => {
@@ -63,7 +63,7 @@ describe("AttributeElements", () => {
 
         expect(children).toHaveBeenCalledTimes(2);
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
-        expect(children.mock.calls[1][0].validElements.elements[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
 
         wrapper.setProps({ identifier: anotherIdentifier });
 
@@ -71,6 +71,6 @@ describe("AttributeElements", () => {
 
         const lastCallArguments = children.mock.calls[children.mock.calls.length - 1][0];
         expect(lastCallArguments.isLoading).toEqual(false);
-        expect(lastCallArguments.validElements.elements[0].title).toEqual("100");
+        expect(lastCallArguments.validElements.items[0].title).toEqual("100");
     });
 });

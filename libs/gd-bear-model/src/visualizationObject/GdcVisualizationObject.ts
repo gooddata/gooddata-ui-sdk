@@ -198,7 +198,7 @@ export namespace GdcVisualizationObject {
     }
 
     export interface IVisualizationObject {
-        meta: GdcMetadata.IObjectMeta;
+        meta: Partial<GdcMetadata.IObjectMeta>;
         content: IVisualizationObjectContent;
     }
 

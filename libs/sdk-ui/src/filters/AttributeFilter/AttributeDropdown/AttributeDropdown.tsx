@@ -4,12 +4,13 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IValidElementsResponse } from "@gooddata/gd-bear-client";
-import { IAnalyticalBackend, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import * as classNames from "classnames";
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { VISIBLE_ITEMS_COUNT } from "./AttributeDropdownList";
-import { mergeElementQueryResults, EmptyListItem } from "./mergeElementQueryResults";
+import { mergeElementQueryResults } from "./mergeElementQueryResults";
+import { IElementQueryResultWithEmptyItems, EmptyListItem } from "./types";
 
 export interface IValidElementsItem {
     uri: string;
@@ -42,7 +43,7 @@ export interface IAttributeDropdownStateItem {
 }
 
 export interface IAttributeDropdownState {
-    validElements?: IElementQueryResult;
+    validElements?: IElementQueryResultWithEmptyItems;
     selectedItems: IAttributeElement[];
     isInverted: boolean;
     isLoading: boolean;
@@ -99,7 +100,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     public getElements = async () => {
         const { offset, limit, validElements } = this.state;
 
-        const currentElements = validElements ? validElements.elements : [];
+        const currentElements = validElements ? validElements.items : [];
 
         const isQueryOutOfBounds = offset + limit > currentElements.length;
         const isMissingDataInWindow = currentElements
@@ -200,15 +201,14 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     private renderDropdownBody() {
         const { selectedItems, isInverted, error, isLoading, validElements } = this.state;
 
-        const shouldDisableApplyButton =
-            error || isLoading || (validElements && !validElements.elements.length);
-        const hasTriedToLoadData = validElements && validElements.elements;
+        const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
+        const hasTriedToLoadData = validElements && validElements.items;
 
         return (
             <AttributeDropdownBody
                 error={error}
                 isLoading={!hasTriedToLoadData && isLoading}
-                items={validElements ? validElements.elements : []}
+                items={validElements ? validElements.items : []}
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}

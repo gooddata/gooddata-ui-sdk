@@ -75,7 +75,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
                 validElements: {
                     ...state.validElements,
                     ...moreItems,
-                    elements: [...state.validElements.elements, ...moreItems.elements],
+                    items: [...state.validElements.items, ...moreItems.items],
                 },
             }));
         } catch (error) {

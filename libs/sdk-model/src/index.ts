@@ -10,6 +10,8 @@ export {
     attributesFind,
     attributeUri,
     attributeIdentifier,
+    attributeAlias,
+    attributeAttributeDisplayFormObjRef,
 } from "./attribute";
 
 export { newAttribute, AttributeBuilder, AttributeModifications } from "./attribute/factory";
@@ -67,6 +69,18 @@ export {
 } from "./base/sort";
 
 export {
+    DataColumnType,
+    DataSetLoadStatus,
+    IDataColumn,
+    IDataHeader,
+    IDataSet,
+    IDataSetLoadInfo,
+    IDataSetUser,
+} from "./dataSet";
+
+export { IDateDataSetAttribute, IDateDataSet } from "./dateDataSet";
+
+export {
     IAttributeElementsByRef,
     IAttributeElementsByValue,
     AttributeElements,
@@ -97,6 +111,14 @@ export {
     isComparisonCondition,
     isRangeCondition,
     filterIsEmpty,
+    filterAttributeElements,
+    filterAttributeDisplayForm,
+    IAbsoluteDateFilterValues,
+    IRelativeDateFilterValues,
+    absoluteDateFilterValues,
+    relativeDateFilterValues,
+    measureValueFilterCondition,
+    measureValueFilterMeasure,
 } from "./filter";
 
 export {
@@ -139,6 +161,11 @@ export {
     measureAlias,
     measureTitle,
     measureArithmeticOperator,
+    measureFormat,
+    measureAggregation,
+    measureFilters,
+    measurePopAttribute,
+    measurePreviousPeriodDateDataSets,
 } from "./measure";
 
 export {
@@ -224,10 +251,12 @@ export {
 
 export {
     IInsight,
+    IInsightWithoutIdentifier,
     IVisualizationClass,
     VisualizationProperties,
     IColorMappingItem,
     isInsight,
+    insightId,
     insightMeasures,
     insightHasMeasures,
     insightAttributes,
@@ -237,6 +266,7 @@ export {
     insightBuckets,
     insightSorts,
     insightBucket,
+    insightTitle,
     insightTotals,
     insightFilters,
     insightVisualizationClassIdentifier,
@@ -267,3 +297,5 @@ export {
 } from "./metadata/measure";
 
 export { factoryNotationFor } from "./objectFactoryNotation";
+
+export { IWorkspace } from "./workspace";

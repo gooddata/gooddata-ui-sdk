@@ -1,6 +1,15 @@
 // (C) 2019 GoodData Corporation
-import { attributeIdentifier, attributeLocalId, attributesFind, attributeUri, IAttribute } from "../index";
+import {
+    attributeIdentifier,
+    attributeLocalId,
+    attributesFind,
+    attributeUri,
+    IAttribute,
+    attributeAlias,
+    attributeAttributeDisplayFormObjRef,
+} from "../index";
 import { Account, Activity, ActivityType } from "../../../__mocks__/model";
+import { ObjRef } from "../../base";
 
 const UriDefinedAttribute: IAttribute = {
     attribute: {
@@ -8,6 +17,13 @@ const UriDefinedAttribute: IAttribute = {
         displayForm: {
             uri: "/gdc/uri/should/not/be/used",
         },
+    },
+};
+
+const AttributeWithAlias: IAttribute = {
+    attribute: {
+        ...Account.Default.attribute,
+        alias: "alias",
     },
 };
 
@@ -50,6 +66,52 @@ describe("attributeIdentifier", () => {
 
     it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
         expect(attributeIdentifier(input)).toBe(expectedResult);
+    });
+});
+
+describe("attributeAlias", () => {
+    const Scenarios: Array<[string, any, any]> = [
+        ["return undefined if attribute has no alias", Account.Default, undefined],
+        ["return identifier if attribute defined as such", AttributeWithAlias, "alias"],
+    ];
+
+    it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
+        expect(attributeAlias(input)).toBe(expectedResult);
+    });
+
+    it("should fail if attribute is null", () => {
+        // @ts-ignore
+        expect(() => attributeAlias(null)).toThrow();
+    });
+
+    it("should fail if attribute is undefined", () => {
+        // @ts-ignore
+        expect(() => attributeAlias(undefined)).toThrow();
+    });
+});
+
+describe("attributeAttributeDisplayFormObjRef", () => {
+    const Scenarios: Array<[string, any, ObjRef]> = [
+        ["return id ref if attribute has id ref", Account.Default, { identifier: "label.account.id" }],
+        [
+            "return uri ref if attribute defined as such",
+            UriDefinedAttribute,
+            { uri: "/gdc/uri/should/not/be/used" },
+        ],
+    ];
+
+    it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
+        expect(attributeAttributeDisplayFormObjRef(input)).toEqual(expectedResult);
+    });
+
+    it("should fail if attribute is null", () => {
+        // @ts-ignore
+        expect(() => attributeAttributeDisplayFormObjRef(null)).toThrow();
+    });
+
+    it("should fail if attribute is undefined", () => {
+        // @ts-ignore
+        expect(() => attributeAttributeDisplayFormObjRef(undefined)).toThrow();
     });
 });
 

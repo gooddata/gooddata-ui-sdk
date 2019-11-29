@@ -4,9 +4,10 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
+import { AttributeListItem } from "./types";
 
 interface IAttributeDropdownBodyProps {
-    items: IAttributeElement[];
+    items: AttributeListItem[];
     totalCount: number;
     selectedItems: IAttributeElement[];
     isInverted: boolean;

@@ -48,6 +48,17 @@ export interface IGetObjectsByQueryOptions {
     author?: string;
     limit?: number;
     deprecated?: boolean;
+    orderBy?: "id" | "title" | "updated";
+    getTotalCount?: boolean;
+}
+
+export interface IGetObjectsByQueryWithPagingResponse<T> {
+    items: T[];
+    paging: {
+        count: number;
+        offset: number;
+        totalCount?: number;
+    };
 }
 
 export interface IGetObjectUsingOptions {

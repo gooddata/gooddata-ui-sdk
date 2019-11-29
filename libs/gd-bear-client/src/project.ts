@@ -1,8 +1,10 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+import qs from "qs";
 import { getIn, handlePolling, getAllPagesByOffsetLimit } from "./util";
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
 import { XhrModule, ApiResponse } from "./xhr";
+import { GdcProject } from "@gooddata/gd-bear-model";
 
 const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },
@@ -106,6 +108,29 @@ export class ProjectModule {
             `/gdc/account/profile/${profileId}/projects`,
             "projects",
         ).then((result: any) => result.map((p: any) => p.project));
+    }
+
+    /**
+     * Fetches projects available for the user represented by the given profileId page by page.
+     * @param userId
+     * @param offset
+     * @param limit
+     */
+    public getProjectsWithPaging(
+        userId: string,
+        offset: number,
+        limit: number,
+    ): Promise<GdcProject.IUserProjectsResponse> {
+        // inspired by ProjectDataSource in goodstrap. Maybe the /gdc/account/profile/${profileId}/projects would be suitable as well.
+        const mergedOptions = {
+            limit,
+            offset,
+            userId,
+            projectStates: "ENABLED",
+            userState: "ENABLED",
+        };
+        const uri = `/gdc/internal/projects/?${qs.stringify(mergedOptions)}`;
+        return this.xhr.get(uri).then(res => res.getData());
     }
 
     /**

@@ -5,6 +5,9 @@
 ```ts
 
 // @public
+export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
+
+// @public
 export const anyAttribute: AttributePredicate;
 
 // @public
@@ -24,6 +27,12 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
 
 // @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
+
+// @public
+export function attributeAlias(attribute: IAttribute): string | undefined;
+
+// @public
+export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef;
 
 // @public
 export class AttributeBuilder implements IAttribute {
@@ -156,6 +165,12 @@ export enum ComputeRatioRule {
 }
 
 // @public
+export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+
+// @public
+export type DataSetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+
+// @public
 export const DateGranularity: {
     date: string;
     week: string;
@@ -207,6 +222,12 @@ export function emptyDef(workspace: string): IExecutionDefinition;
 export const factoryNotationFor: (data: any) => string;
 
 // @public
+export function filterAttributeDisplayForm(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter): ObjRef;
+
+// @public
+export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): AttributeElements;
+
+// @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public (undocumented)
@@ -220,6 +241,14 @@ export interface IAbsoluteDateFilter {
         from: string;
         to: string;
     };
+}
+
+// @public
+export interface IAbsoluteDateFilterValues {
+    // (undocumented)
+    from: string;
+    // (undocumented)
+    to: string;
 }
 
 // @public
@@ -384,6 +413,78 @@ export interface IComparisonCondition {
 }
 
 // @public
+export interface IDataColumn {
+    // (undocumented)
+    column: {
+        name: string;
+        type: DataColumnType;
+        skip?: boolean;
+        format?: string;
+    };
+}
+
+// @public
+export interface IDataHeader {
+    // (undocumented)
+    columns: IDataColumn[];
+    // (undocumented)
+    headerRowIndex?: number;
+}
+
+// @public
+export interface IDataSet {
+    // (undocumented)
+    dataset: {
+        name: string;
+        dataHeader: IDataHeader;
+        dataSetId: string;
+        loadedRowCount: number;
+        dataSetLoadStatus: DataSetLoadStatus;
+        firstSuccessfulUpdate?: IDataSetLoadInfo;
+        lastSuccessfulUpdate?: IDataSetLoadInfo;
+        lastUpdate?: IDataSetLoadInfo;
+    };
+}
+
+// @public
+export interface IDataSetLoadInfo {
+    // (undocumented)
+    created: string;
+    // (undocumented)
+    owner: IDataSetUser;
+    // (undocumented)
+    status: DataSetLoadStatus;
+}
+
+// @public
+export interface IDataSetUser {
+    // (undocumented)
+    fullName: string;
+    // (undocumented)
+    login: string;
+}
+
+// @public
+export interface IDateDataSet {
+    // (undocumented)
+    availableDateAttributes?: IDateDataSetAttribute[];
+    // (undocumented)
+    relevance: number;
+}
+
+// @public
+export interface IDateDataSetAttribute {
+    // (undocumented)
+    attributeId: string;
+    // (undocumented)
+    defaultDisplayFormId: string;
+    // (undocumented)
+    defaultDisplayFormTitle: string;
+    // (undocumented)
+    granularity: string;
+}
+
+// @public
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
 // @public
@@ -444,6 +545,11 @@ export interface IInsight {
         properties: VisualizationProperties;
     };
 }
+
+// @public
+export type IInsightWithoutIdentifier = {
+    insight: Omit<IInsight["insight"], "identifier">;
+};
 
 // Warning: (ae-forgotten-export) The symbol "IMeasureTitle" needs to be exported by the entry point index.d.ts
 //
@@ -515,31 +621,34 @@ export interface INegativeAttributeFilter {
 }
 
 // @public
-export function insightAttributes(insight: IInsight): IAttribute[];
+export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribute[];
 
 // @public
-export function insightBucket(insight: IInsight, idOrFun?: string | BucketPredicate): IBucket | undefined;
+export function insightBucket(insight: IInsightWithoutIdentifier, idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
-export function insightBuckets(insight: IInsight, ...ids: string[]): IBucket[];
+export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: string[]): IBucket[];
 
 // @public
-export function insightFilters(insight: IInsight): IFilter[];
+export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[];
 
 // @public
-export function insightHasAttributes(insight: IInsight): boolean;
+export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolean;
 
 // @public
-export function insightHasDataDefined(insight: IInsight): boolean;
+export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boolean;
 
 // @public
-export function insightHasMeasures(insight: IInsight): boolean;
+export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean;
 
 // @public
-export function insightMeasures(insight: IInsight): IMeasure[];
+export function insightId(insight: IInsight): string;
 
 // @public
-export function insightProperties(insight: IInsight): VisualizationProperties;
+export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[];
+
+// @public
+export function insightProperties(insight: IInsightWithoutIdentifier): VisualizationProperties;
 
 // @public
 export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
@@ -548,13 +657,16 @@ export function insightSetProperties(insight: IInsight, properties?: Visualizati
 export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
 
 // @public
-export function insightSorts(insight: IInsight): SortItem[];
+export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[];
 
 // @public
-export function insightTotals(insight: IInsight): ITotal[];
+export function insightTitle(insight: IInsightWithoutIdentifier): string;
 
 // @public
-export function insightVisualizationClassIdentifier(insight: IInsight): string;
+export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[];
+
+// @public
+export function insightVisualizationClassIdentifier(insight: IInsightWithoutIdentifier): string;
 
 // @public (undocumented)
 export interface IObjectExpressionToken {
@@ -630,6 +742,16 @@ export interface IRelativeDateFilter {
         from: number;
         to: number;
     };
+}
+
+// @public
+export interface IRelativeDateFilterValues {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: string;
+    // (undocumented)
+    to: number;
 }
 
 // @public
@@ -790,6 +912,16 @@ export interface IVisualizationClass {
 }
 
 // @public
+export interface IWorkspace {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public
 export type LocalIdRef = {
     localIdentifier: Identifier;
 };
@@ -799,6 +931,9 @@ export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
 export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+
+// @public
+export function measureAggregation(measure: IMeasure): MeasureAggregation | undefined;
 
 // @public
 export function measureAlias(measure: IMeasure): string | undefined;
@@ -816,7 +951,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
-    filters: (...filters: IMeasureFilter[]) => this;
+    filters: (...filters: (import("../filter").IPositiveAttributeFilter | import("../filter").INegativeAttributeFilter | import("../filter").IAbsoluteDateFilter | import("../filter").IRelativeDateFilter)[]) => this;
     // (undocumented)
     ratio: () => this;
 }
@@ -848,6 +983,12 @@ export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
 // @public
+export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined;
+
+// @public
+export function measureFormat(measure: IMeasure): string | undefined;
+
+// @public
 export const MeasureGroupIdentifier = "measureGroup";
 
 // @public
@@ -870,7 +1011,13 @@ export function measureMasterIdentifier(measure: IMeasure): string | undefined;
 export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 // @public
+export function measurePopAttribute(measure: IMeasure): ObjRef | undefined;
+
+// @public
 export type MeasurePredicate = (measure: IMeasure) => boolean;
+
+// @public
+export function measurePreviousPeriodDateDataSets(measure: IMeasure): IPreviousPeriodDateDataSet[] | undefined;
 
 // @public
 export function measureTitle(measure: IMeasure): string | undefined;
@@ -880,6 +1027,12 @@ export function measureUri(measure: IMeasure): string | undefined;
 
 // @public (undocumented)
 export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
+
+// @public
+export function measureValueFilterCondition(filter: IMeasureValueFilter): MeasureValueFilterCondition | undefined;
+
+// @public
+export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope;
 
 // @public
 export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
@@ -967,6 +1120,9 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
 
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
+
+// @public
+export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
 
 // @public (undocumented)
 export type RgbType = "rgb";

@@ -3,18 +3,21 @@ import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
-import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcMetadata } from "@gooddata/gd-bear-model";
 import {
     IVisualizationClass,
     IInsight,
     IAttributeDisplayForm,
     IMeasureExpressionToken,
+    IInsightWithoutIdentifier,
+    insightId,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConverter";
 import { convertVisualization } from "../toSdkModel/VisualizationConverter";
 import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
+import { convertInsight } from "../fromSdkModel/InsightConverter";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -53,6 +56,65 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const visualizationClassIdentifier = visClass.visualizationClass.meta.identifier;
 
         return convertVisualization(visualization, visualizationClassIdentifier);
+    };
+
+    public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
+        const mergedOptions = { ...options, getTotalCount: true };
+        const {
+            items,
+            paging: { count, offset, totalCount },
+        } = await this.authCall(sdk =>
+            sdk.md.getObjectsByQueryWithPaging(this.workspace, {
+                category: "visualizationObject",
+                ...mergedOptions,
+            }),
+        );
+
+        const emptyResult: IInsightQueryResult = {
+            items: [],
+            limit: count,
+            offset: totalCount!,
+            totalCount: totalCount!,
+            next: () => Promise.resolve(emptyResult),
+        };
+
+        const hasNextPage = offset + count < totalCount!;
+
+        return {
+            items,
+            limit: count,
+            offset,
+            totalCount: totalCount!,
+            next: hasNextPage
+                ? () => this.getInsights({ ...options, offset: offset + count })
+                : () => Promise.resolve(emptyResult),
+        };
+    };
+
+    public createInsight = async (insight: IInsightWithoutIdentifier): Promise<IInsight> => {
+        return this.authCall(sdk =>
+            sdk.md.saveVisualization(this.workspace, { visualizationObject: convertInsight(insight) }),
+        );
+    };
+
+    public updateInsight = async (insight: IInsight): Promise<IInsight> => {
+        const id = insightId(insight);
+        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+        return this.authCall(sdk =>
+            sdk.md.updateVisualization(this.workspace, uri, { visualizationObject: convertInsight(insight) }),
+        );
+    };
+
+    public deleteInsight = async (id: string): Promise<void> => {
+        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+        await this.authCall(sdk => sdk.md.deleteVisualization(uri));
+    };
+
+    public openInsightAsReport = async (insight: IInsightWithoutIdentifier): Promise<string> => {
+        const visualizationObject = convertInsight(insight);
+        return this.authCall(sdk =>
+            sdk.md.openVisualizationAsReport(this.workspace, { visualizationObject }),
+        );
     };
 
     public getAttributeDisplayForm = async (id: string): Promise<IAttributeDisplayForm> => {

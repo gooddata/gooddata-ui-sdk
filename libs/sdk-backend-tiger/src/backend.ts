@@ -6,6 +6,8 @@ import {
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     AuthenticatedPrincipal,
+    IWorkspaceQueryFactory,
+    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import { newAxios } from "./gd-tiger-client/axios";
@@ -103,6 +105,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public workspace(id: string): IAnalyticalWorkspace {
         return new TigerWorkspace(this.axios, id);
+    }
+
+    public workspaces(): IWorkspaceQueryFactory {
+        throw new NotImplemented("workspaces query not yet implemented");
     }
 }
 

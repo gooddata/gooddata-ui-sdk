@@ -45,7 +45,7 @@ export {
 
 export { IWorkspaceSettingsService, IWorkspaceSettings } from "./featureFlags";
 
-export { IWorkspaceMetadata } from "./metadata";
+export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./metadata";
 
 export {
     IWorkspaceCatalog,
@@ -81,3 +81,9 @@ export {
     isNotAuthenticated,
     AnalyticalBackendErrorTypes,
 } from "./errors";
+
+export { IPagedResource } from "./paging";
+
+export { IWorkspaceDataSetsService } from "./dataSets";
+
+export { IWorkspaceQuery, IWorkspaceQueryFactory, IWorkspaceQueryResult } from "./workspace";

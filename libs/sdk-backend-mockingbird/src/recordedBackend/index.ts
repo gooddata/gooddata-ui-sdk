@@ -14,6 +14,8 @@ import {
     NotSupported,
     UnexpectedResponseError,
     IWorkspaceCatalog,
+    IWorkspaceDataSetsService,
+    IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordingIndex, WorkspaceRecordings } from "./types";
@@ -61,6 +63,9 @@ export function recordedBackend(
 
             return recordedWorkspace(id, index[workspaceEntry]);
         },
+        workspaces(): IWorkspaceQueryFactory {
+            throw new NotSupported("not supported");
+        },
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "recordedUser" });
         },
@@ -91,6 +96,9 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
             throw new NotSupported("not supported");
         },
         catalog(): IWorkspaceCatalog {
+            throw new NotSupported("not supported");
+        },
+        dataSets(): IWorkspaceDataSetsService {
             throw new NotSupported("not supported");
         },
     };

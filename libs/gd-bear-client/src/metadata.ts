@@ -4,10 +4,16 @@ import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
+import qs from "qs";
 import { GdcExecuteAFM, GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
-import { IGetObjectsByQueryOptions, IGetObjectUsingOptions, SortDirection } from "./interfaces";
+import {
+    IGetObjectsByQueryOptions,
+    IGetObjectUsingOptions,
+    SortDirection,
+    IGetObjectsByQueryWithPagingResponse,
+} from "./interfaces";
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -191,6 +197,33 @@ export class MetadataModule {
             "deprecated",
         ]);
         return getOnePage(uri + queryString(query));
+    }
+
+    /**
+     * Loads all objects by query with paging
+     *
+     * @method getObjectsByQueryWithPaging
+     * @param {String} projectId id of the project
+     * @param {Object} options (see https://developer.gooddata.com/api endpoint: /gdc/md/{project_id}/objects/query)
+     *        - category {String} for example 'dataSets' or 'projectDashboard'
+     *        - mode {String} 'enriched' or 'raw'
+     *        - author {String} the URI of the author of the metadata objects
+     *        - limit {number} default is 50 (also maximum)
+     *        - deprecated {boolean} show also deprecated objects
+     *        - orderBy {id|title|updated} order the results by id, title or the last updated (newest first)
+     *        - getTotalCount {boolean} include total count of items in the paging object
+     * @return {Promise<Array>} array of returned objects
+     */
+    public getObjectsByQueryWithPaging<T = any>(
+        projectId: string,
+        options: IGetObjectsByQueryOptions,
+    ): Promise<IGetObjectsByQueryWithPagingResponse<T>> {
+        const getTotalCount = options && options.getTotalCount ? 1 : 0;
+        const uri = `/gdc/md/${projectId}/objects/query?${qs.stringify({ ...options, getTotalCount })}`;
+        return this.xhr
+            .get(uri)
+            .then((r: ApiResponse) => r.getData())
+            .then(({ objects }: any) => objects);
     }
 
     /**
@@ -893,6 +926,24 @@ export class MetadataModule {
                 body: obj,
             })
             .then((r: ApiResponse) => r.getData());
+    }
+
+    /**
+     * Converts the visualization object to legacy report.
+     * @param {String} projectId
+     * @param mdObject visualization object to convert
+     * @return uri to the converted report
+     */
+    public openVisualizationAsReport(
+        projectId: string,
+        mdObject: GdcVisualizationObject.IVisualization,
+    ): Promise<string> {
+        return this.xhr
+            .post(`/gdc/internal/projects/${projectId}/convertVisualizationObject`, {
+                body: mdObject,
+            })
+            .then(res => res.data())
+            .then(({ uri }) => uri);
     }
 
     /**

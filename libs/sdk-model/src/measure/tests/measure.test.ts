@@ -12,12 +12,24 @@ import {
     measureArithmeticOperator,
     measureAlias,
     measureTitle,
+    measureFormat,
+    measureAggregation,
+    measurePopAttribute,
+    measurePreviousPeriodDateDataSets,
+    IPreviousPeriodDateDataSet,
+    measureFilters,
 } from "../index";
+import { ObjRef } from "../../base";
+import { newPositiveAttributeFilter } from "../../filter/factory";
+import { IFilter } from "../../filter";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifyMeasure(Won, m => m.ratio());
 const SimpleMeasureWithUri = modifyMeasure(Won);
 SimpleMeasureWithUri.measure.definition.measureDefinition.item = { uri: "/uri" };
+const SimpleMeasureWithFilters = modifyMeasure(Won, m =>
+    m.filters(newPositiveAttributeFilter("myAttribute", ["foo"])),
+);
 
 const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");
 const PopMeasure = newPopMeasure(measureLocalId(Won), "myPopAttribute");
@@ -139,11 +151,97 @@ describe("measureTitle", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [
         ["undefined if measure is undefined", undefined, undefined],
         ["undefined if measure is null", null, undefined],
-        ["undefined for measure without alias", SimpleMeasureWithIdentifier, undefined],
+        ["undefined for measure without title", SimpleMeasureWithIdentifier, undefined],
         ["title value when defined", MeasureWithTitle, "customTitle"],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureTitle(measureArg)).toEqual(expectedResult);
+    });
+});
+
+describe("measureFormat", () => {
+    const MeasureWithFormat = modifyMeasure(SimpleMeasureWithIdentifier, m => m.format("customFormat"));
+    const Scenarios: Array<[string, any, string | undefined]> = [
+        ["undefined if measure is undefined", undefined, undefined],
+        ["undefined if measure is null", null, undefined],
+        ["undefined for measure without format", SimpleMeasureWithIdentifier, undefined],
+        ["format value when defined", MeasureWithFormat, "customFormat"],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measureFormat(measureArg)).toEqual(expectedResult);
+    });
+});
+
+describe("measureAggregation", () => {
+    const MeasureWithAggregation = modifyMeasure(SimpleMeasureWithIdentifier, m => m.aggregation("median"));
+    const Scenarios: Array<[string, any, string | undefined]> = [
+        ["undefined if measure is undefined", undefined, undefined],
+        ["undefined if measure is null", null, undefined],
+        ["undefined for measure without aggregation", SimpleMeasureWithIdentifier, undefined],
+        ["aggregation value when defined", MeasureWithAggregation, "median"],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measureAggregation(measureArg)).toEqual(expectedResult);
+    });
+});
+
+describe("measureFilters", () => {
+    const Scenarios: Array<[string, any, IFilter[] | undefined]> = [
+        ["undefined if measure is undefined", undefined, undefined],
+        ["undefined if measure is null", null, undefined],
+        ["undefined for measure without filters", SimpleMeasureWithIdentifier, undefined],
+        [
+            "filter values when defined",
+            SimpleMeasureWithFilters,
+            [
+                {
+                    positiveAttributeFilter: {
+                        displayForm: { identifier: "myAttribute" },
+                        in: { values: ["foo"] },
+                    },
+                },
+            ],
+        ],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measureFilters(measureArg)).toEqual(expectedResult);
+    });
+});
+
+describe("measurePopAttribute", () => {
+    const Scenarios: Array<[string, any, ObjRef | undefined]> = [
+        ["undefined if measure is undefined", undefined, undefined],
+        ["undefined if measure is null", null, undefined],
+        ["undefined for measure without PoP attribute", SimpleMeasureWithIdentifier, undefined],
+        ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute" }],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measurePopAttribute(measureArg)).toEqual(expectedResult);
+    });
+});
+
+describe("measurePreviousPeriodDateDataSets", () => {
+    const Scenarios: Array<[string, any, IPreviousPeriodDateDataSet[] | undefined]> = [
+        ["undefined if measure is undefined", undefined, undefined],
+        ["undefined if measure is null", null, undefined],
+        [
+            "undefined for measure without previous period date data sets",
+            SimpleMeasureWithIdentifier,
+            undefined,
+        ],
+        [
+            "previous period date data set values when defined",
+            PreviousPeriodMeasure,
+            [{ dataSet: { identifier: "dataSet" }, periodsAgo: 1 }],
+        ],
+    ];
+
+    it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
+        expect(measurePreviousPeriodDateDataSets(measureArg)).toEqual(expectedResult);
     });
 });

@@ -128,6 +128,32 @@ export function attributeIdentifier(attribute: IAttribute): string | undefined {
 }
 
 /**
+ * Gets an attribute alias.
+ *
+ * @param attribute - attribute to work with
+ * @returns value of attribute alias
+ * @public
+ */
+export function attributeAlias(attribute: IAttribute): string | undefined {
+    invariant(attribute, "attribute must not be undefined");
+
+    return attribute.attribute.alias;
+}
+
+/**
+ * Gets an attribute display form object ref.
+ *
+ * @param attribute - attribute to work with
+ * @returns value of attribute display form object ref
+ * @public
+ */
+export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef {
+    invariant(attribute, "attribute must not be undefined");
+
+    return attribute.attribute.displayForm;
+}
+
+/**
  * Given list of attributes, returns first-found attribute matching the provided predicate.
  *
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute

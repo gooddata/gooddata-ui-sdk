@@ -9,11 +9,17 @@ import {
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     NotAuthenticated,
+    IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
-import { AsyncCall, ErrorConverter } from "./commonTypes";
+import { IInsight } from "@gooddata/sdk-model";
+import { AsyncCall, ErrorConverter, IAsyncCallContext } from "./commonTypes";
 import { convertApiError, isApiResponseError } from "./errorHandling";
 import { BearWorkspace } from "./workspace";
+import defaultTo = require("lodash/defaultTo");
 import isEmpty = require("lodash/isEmpty");
+import { BearWorkspaceQueryFactory } from "./workspaces";
+import { convertInsight } from "./fromSdkModel/InsightConverter";
+import { GdcDataSets } from "@gooddata/gd-bear-model";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -43,13 +49,28 @@ export type BearBackendConfig = {
     packageVersion?: string;
 };
 
+/**
+ * BearBackend-specific legacy functions.
+ */
+type BearLegacyFunctions = {
+    openAsReport?(workspace: string, insight: IInsight): Promise<string>;
+    loadDateDataSets?(workspace: string, options: any): Promise<GdcDataSets.IDateDataSetResponse>;
+};
+
+/**
+ * Provides a way for the BearBackend to expose some of its backend specific functions.
+ */
+type LegacyFunctionsSubscription = {
+    onLegacyFunctionsReady?(functions: BearLegacyFunctions): void;
+};
+
 type TelemetryData = {
     componentName?: string;
     props?: string[];
 };
 
 /**
- * This implementation of analytical backend uses the goodata-js API client to realize the SPI.
+ * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
  *
  * The only thing worth noting about this impl is the handling of SDK instance creation and authentication:
  *
@@ -62,7 +83,7 @@ type TelemetryData = {
  *
  * - Authentication is done at construction time; the constructor MAY receive an instance of deferred authentication -
  *   this is to cater for cases when withCredentials is called, new instance of backend is returned and then
- *   someone calls withTelementry on this instance => in that case there is no need to reinitiate login.
+ *   someone calls withTelemetry on this instance => in that case there is no need to re-initiate login.
  *
  */
 export class BearBackend implements IAnalyticalBackend {
@@ -76,7 +97,7 @@ export class BearBackend implements IAnalyticalBackend {
 
     constructor(
         config?: AnalyticalBackendConfig,
-        implConfig?: BearBackendConfig,
+        implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
         telemetry?: TelemetryData,
         authProvider?: AuthProviderCallGuard,
     ) {
@@ -85,6 +106,22 @@ export class BearBackend implements IAnalyticalBackend {
         this.telemetry = telemetrySanitize(telemetry);
         this.authProvider = authProvider;
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
+
+        if (this.implConfig.onLegacyCallbacksReady) {
+            const legacyFunctions: BearLegacyFunctions = {
+                openAsReport: (workspace: string, insight: IInsight) => {
+                    const visualizationObject = convertInsight(insight);
+                    return this.authApiCall(sdk =>
+                        sdk.md.openVisualizationAsReport(workspace, { visualizationObject }),
+                    );
+                },
+                loadDateDataSets: (workspace: string, options: any) => {
+                    return this.authApiCall(sdk => sdk.catalogue.loadDateDataSets(workspace, options));
+                },
+            };
+
+            this.implConfig.onLegacyCallbacksReady(legacyFunctions);
+        }
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -137,6 +174,10 @@ export class BearBackend implements IAnalyticalBackend {
         return new BearWorkspace(this.authApiCall, id);
     }
 
+    public workspaces(): IWorkspaceQueryFactory {
+        return new BearWorkspaceQueryFactory(this.authApiCall);
+    }
+
     /**
      * Perform API call that requires authentication. The call will be decorated with error handling
      * such that not authenticated errors will trigger authentication flow AND other errors will be
@@ -149,14 +190,14 @@ export class BearBackend implements IAnalyticalBackend {
         call: AsyncCall<T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk).catch(err => {
+        return call(this.sdk, this.getAsyncCallContext()).catch(err => {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
             }
 
             return this.triggerAuthentication()
                 .then(_ => {
-                    return call(this.sdk).catch(e => {
+                    return call(this.sdk, this.getAsyncCallContext()).catch(e => {
                         throw errorConverter(e);
                     });
                 })
@@ -179,6 +220,19 @@ export class BearBackend implements IAnalyticalBackend {
 
         return this.authProvider.authenticate({ client: this.sdk });
     };
+
+    private getAsyncCallContext = (): IAsyncCallContext => {
+        // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
+        // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
+        // thus triggering the auth process
+        const principal = defaultTo(this.authProvider && this.authProvider.getCurrentPrincipal(), {
+            userId: "__invalid__",
+        });
+
+        return {
+            principal,
+        };
+    };
 }
 
 /**
@@ -187,6 +241,8 @@ export class BearBackend implements IAnalyticalBackend {
  * @public
  */
 export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvider {
+    private principal: AuthenticatedPrincipal | undefined;
+
     constructor(private readonly username: string, private readonly password: string) {}
 
     public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
@@ -195,7 +251,15 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
         await sdk.user.login(this.username, this.password);
 
         // retrieve full info about the authenticated user
-        return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+        const principal = await sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+
+        this.principal = principal;
+
+        return principal;
+    }
+
+    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
+        return this.principal;
     }
 }
 
@@ -249,6 +313,10 @@ class AuthProviderCallGuard implements IAuthenticationProvider {
 
         return this.inflightRequest;
     };
+
+    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
+        return this.principal;
+    }
 }
 
 function isNotAuthenticatedError(err: any): boolean {
