@@ -9,7 +9,6 @@ import {
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     IDataView,
-    IElement,
     IElementQuery,
     IElementQueryFactory,
     IElementQueryOptions,
@@ -38,6 +37,7 @@ import {
     IVisualizationClass,
     SortItem,
     IMeasureExpressionToken,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test" };
@@ -65,7 +65,7 @@ export type LegacyWorkspaceRecordings = {
         attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
     };
     elements?: {
-        [id: string]: IElement[];
+        [id: string]: IAttributeElement[];
     };
 };
 

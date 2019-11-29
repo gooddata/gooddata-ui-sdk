@@ -73,7 +73,10 @@ export class MetadataModule {
             throw new Error("Provided uri is not attribute uri!");
         }
 
-        return object.attribute.content.displayForms.find(displayForm => displayForm.content.default === 1);
+        return (
+            object.attribute.content.displayForms.find(displayForm => displayForm.content.default === 1) ||
+            object.attribute.content.displayForms[0]
+        );
     }
 
     /**

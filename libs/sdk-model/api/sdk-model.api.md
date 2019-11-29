@@ -311,7 +311,7 @@ export interface IBucket {
 }
 
 // Warning: (ae-forgotten-export) The symbol "ICatalogItemBase" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public
 export interface ICatalogAttribute extends ICatalogItemBase {
     // (undocumented)
@@ -446,7 +446,7 @@ export interface IInsight {
 }
 
 // Warning: (ae-forgotten-export) The symbol "IMeasureTitle" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     // (undocumented)
@@ -473,7 +473,7 @@ export interface IMeasureDefinition {
 // @public
 export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
 
-// @public (undocumented)
+// @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken;
 
 // @public
@@ -559,7 +559,7 @@ export function insightVisualizationClassIdentifier(insight: IInsight): string;
 // @public (undocumented)
 export interface IObjectExpressionToken {
     // Warning: (ae-forgotten-export) The symbol "IObjectMeta" needs to be exported by the entry point index.d.ts
-    // 
+    //
     // (undocumented)
     meta: IObjectMeta;
     // (undocumented)
@@ -975,7 +975,7 @@ export type RgbType = "rgb";
 export type SortDirection = "asc" | "desc";
 
 // Warning: (ae-internal-missing-underscore) The name "SortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal
 export type SortEntityIds = {
     allIdentifiers: Identifier[];
@@ -984,7 +984,7 @@ export type SortEntityIds = {
 };
 
 // Warning: (ae-internal-missing-underscore) The name "sortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
-// 
+//
 // @internal
 export function sortEntityIds(sort: SortItem): SortEntityIds;
 

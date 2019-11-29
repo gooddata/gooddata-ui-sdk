@@ -25,7 +25,7 @@ export interface IWorkspaceMetadata {
 
     /**
      * Get measure expression tokens for provided measure identifier
-     * @param id - idenrifier of the measure
+     * @param id - identifier of the measure
      */
     getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
 }

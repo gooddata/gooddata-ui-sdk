@@ -2,8 +2,8 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import { FormattedMessage } from "react-intl";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
-import { IElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 
@@ -37,14 +37,14 @@ const ListNoResults = () => {
 };
 
 interface IAttributeDropdownListProps {
-    items: IElement[];
+    items: IAttributeElement[];
     totalCount: number;
-    selectedItems: IElement[];
+    selectedItems: IAttributeElement[];
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
 
-    onSelect: (selectedItems: IElement[], isInverted: boolean) => void;
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
 }
 

@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { injectIntl } from "react-intl";
-import { IAnalyticalBackend, IElement } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
@@ -11,7 +12,7 @@ interface IAttributeFilterProps {
     workspace: string;
     identifier: string;
 
-    onApply: (selectedItems: IElement[], isInverted: boolean) => void;
+    onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
     locale?: string;
     FilterLoading?: React.ComponentType;

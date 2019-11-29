@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
+import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -224,14 +225,6 @@ export interface IDimensionDescriptor {
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
 // @public
-export interface IElement {
-    // (undocumented)
-    readonly title: string;
-    // (undocumented)
-    readonly uri?: string;
-}
-
-// @public
 export interface IElementQuery {
     // (undocumented)
     query(): Promise<IElementQueryResult>;
@@ -272,7 +265,7 @@ export interface IElementQueryOptions {
 // @public
 export interface IElementQueryResult {
     // (undocumented)
-    readonly elements: IElement[];
+    readonly elements: IAttributeElement[];
     // (undocumented)
     readonly limit: number;
     // (undocumented)
