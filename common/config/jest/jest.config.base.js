@@ -9,7 +9,7 @@ module.exports = {
         "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/jestSvgStub.js",
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
     },
-    testPathIgnorePatterns: [",/node_modules/", "/dist/", "/src/_defunct/"],
+    testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     globals: {
         "ts-jest": {
             packageJson: "<rootDir>/package.json",

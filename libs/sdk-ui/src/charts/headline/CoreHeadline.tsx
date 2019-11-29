@@ -9,21 +9,21 @@ import { fixEmptyHeaderItems2 } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
-import { generateErrorMap, IErrorMap } from "../../base/helpers/errorHandlers";
+import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ErrorStates } from "../../base/constants/errorStates";
+import { ErrorCodes } from "../..";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props, {}> {
     public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
 
-    private errorMap: IErrorMap;
+    private errorMap: IErrorDescriptors;
 
     constructor(props: Props) {
         super(props);
-        this.errorMap = generateErrorMap(props.intl);
+        this.errorMap = newErrorMapping(props.intl);
     }
 
     public render(): JSX.Element {
@@ -34,7 +34,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
 
         if (error) {
             const errorProps = this.errorMap[
-                this.errorMap.hasOwnProperty(error) ? error : ErrorStates.UNKNOWN_ERROR
+                this.errorMap.hasOwnProperty(error) ? error : ErrorCodes.UNKNOWN_ERROR
             ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }

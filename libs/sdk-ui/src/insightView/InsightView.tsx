@@ -31,7 +31,7 @@ import { PluggableFunnelChart } from "../internal/components/pluggableVisualizat
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import { ErrorComponent, IErrorProps } from "../base/simple/ErrorComponent";
 import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent";
-import { RuntimeError } from "../base/errors/RuntimeError";
+import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
 import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
 import { DEFAULT_LOCALE } from "../base/constants/localization";
 import { ILocale } from "../base/interfaces/Locale";
@@ -75,7 +75,7 @@ interface IInsightViewProps extends Partial<IVisCallbacks> {
 
 interface IInsightViewState {
     isLoading: boolean;
-    error: RuntimeError | undefined;
+    error: GoodDataSdkError | undefined;
 }
 
 const getElementId = () => `gd-vis-${uuid.v4()}`;
@@ -114,7 +114,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         }
     };
 
-    private setError = (error: RuntimeError | undefined) => {
+    private setError = (error: GoodDataSdkError | undefined) => {
         if (this.state.error !== error) {
             this.setState({ error });
         }
@@ -199,7 +199,7 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         try {
             return await resourceObtainer(this.props.backend.workspace(this.props.workspace));
         } catch (e) {
-            this.setError(new RuntimeError(e.message, e));
+            this.setError(new GoodDataSdkError(e.message, e));
             this.stopLoading();
             return undefined;
         }

@@ -58,7 +58,7 @@ import { AxisType } from "../../../interfaces/AxisType";
 import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { generateDimensions } from "../../../../base/helpers/dimensions";
 import * as BucketNames from "../../../../base/constants/bucketNames";
-import { RuntimeError } from "../../../../base/errors/RuntimeError";
+import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
 import * as VisEvents from "../../../../base/interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
@@ -412,7 +412,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private onError(error: RuntimeError) {
+    private onError(error: GoodDataSdkError) {
         const onError = get(this.callbacks, "onError");
 
         if (onError) {
