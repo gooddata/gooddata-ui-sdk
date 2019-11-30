@@ -2,10 +2,10 @@
 import { scenariosFor } from "../../../src";
 import { FunnelChart, HeaderPredicateFactory, IFunnelChartProps } from "@gooddata/sdk-ui";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { AttributeElements } from "../_infra/predicates";
+import { AttributeElements } from "../../_infra/predicates";
 import { FunnelChartWithMeasureAndViewBy, FunnelChartWithArithmeticMeasures } from "./base";
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)

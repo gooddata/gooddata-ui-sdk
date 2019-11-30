@@ -9,7 +9,7 @@ import {
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { AttributeElements } from "../_infra/predicates";
+import { AttributeElements } from "../../_infra/predicates";
 
 export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })

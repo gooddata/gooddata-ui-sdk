@@ -13,19 +13,8 @@
                                 }
                             }
                         },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                },
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "acugFHNJgsBy"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_acugFHNJgsBy"
+                        "localIdentifier": "m_aangOxLSeztu",
+                        "format": "[backgroundColor=ffff00][green]#,##0.00 €"
                     }
                 }
             ]
@@ -117,19 +106,8 @@
                         }
                     }
                 },
-                "localIdentifier": "m_aangOxLSeztu"
-            }
-        },
-        {
-            "measure": {
-                "definition": {
-                    "measureDefinition": {
-                        "item": {
-                            "identifier": "acugFHNJgsBy"
-                        }
-                    }
-                },
-                "localIdentifier": "m_acugFHNJgsBy"
+                "localIdentifier": "m_aangOxLSeztu",
+                "format": "[backgroundColor=ffff00][green]#,##0.00 €"
             }
         }
     ],

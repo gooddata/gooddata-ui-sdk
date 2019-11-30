@@ -7,10 +7,10 @@ import {
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { AttributeElements } from "../_infra/predicates";
+import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "coloring" })

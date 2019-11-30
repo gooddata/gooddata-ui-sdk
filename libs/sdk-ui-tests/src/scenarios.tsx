@@ -87,18 +87,20 @@ export class ScenarioBuilder<T extends VisProps> {
 
     constructor(private readonly name: string, private readonly props: UnboundVisProps<T>) {}
 
+    /**
+     * Sets tags for this scenario. This will override any tags that may be specified on the scenario group
+     * to which this scenario belongs. Passing no flags means the scenario will have none.
+     *
+     * @param tags - tags to assign, may be undefined or empty if no flags desired
+     */
     public withTags(...tags: ScenarioTag[]): ScenarioBuilder<T> {
-        if (!isEmpty(tags)) {
-            this.tags = tags;
-        }
+        this.tags = !isEmpty(tags) ? tags : [];
 
         return this;
     }
 
     public withTests(...tests: TestTypes[]): ScenarioBuilder<T> {
-        if (!isEmpty(tests)) {
-            this.tests = tests;
-        }
+        this.tests = !isEmpty(tests) ? tests : [];
 
         return this;
     }

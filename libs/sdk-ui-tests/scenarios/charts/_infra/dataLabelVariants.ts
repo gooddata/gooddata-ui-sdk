@@ -2,11 +2,7 @@
 
 import { IChartConfig } from "@gooddata/sdk-ui";
 import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
-
-export const GermanNumberFormat = {
-    thousand: ".",
-    decimal: ",",
-};
+import { GermanNumberFormat } from "../../_infra/formatting";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
     ["default", {}],

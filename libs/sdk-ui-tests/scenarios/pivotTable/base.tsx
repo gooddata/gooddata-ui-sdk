@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { scenariosFor } from "../../src";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui";
 
 export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
@@ -18,7 +18,17 @@ export const PivotTableWithSingleMeasureAndTwoRowsAndCols = {
 export const PivotTableWithTwoMeasuresAndTwoRowsAndCols = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
     rows: [ReferenceLdm.Product.Name, ReferenceLdm.Department],
-    columns: [ReferenceLdm.StageName.Default, ReferenceLdm.Region],
+    columns: [ReferenceLdm.ForecastCategory, ReferenceLdm.Region],
+};
+
+export const PivotTableWithArithmeticMeasures = {
+    measures: [
+        ReferenceLdm.Amount,
+        ReferenceLdm.Won,
+        ReferenceLdmExt.CalculatedLost,
+        ReferenceLdmExt.CalculatedWonLostRatio,
+    ],
+    rows: [ReferenceLdm.Product.Name],
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
@@ -69,4 +79,6 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario(
         "two measures with two row and two column attributes",
         PivotTableWithTwoMeasuresAndTwoRowsAndCols,
-    );
+    )
+    .addScenario("empty values", PivotTableWithSingleMeasureAndTwoRowsAndCols)
+    .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures);
