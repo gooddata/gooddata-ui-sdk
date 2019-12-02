@@ -12,9 +12,9 @@ export {
     attributeIdentifier,
     attributeAlias,
     attributeAttributeDisplayFormObjRef,
-} from "./attribute";
+} from "./execution/attribute";
 
-export { newAttribute, AttributeBuilder, AttributeModifications } from "./attribute/factory";
+export { newAttribute, AttributeBuilder, AttributeModifications } from "./execution/attribute/factory";
 
 export {
     IAttributeDisplayForm,
@@ -22,7 +22,7 @@ export {
     attributeDisplayFormTitle,
     attributeDisplayFormAttributeId,
     attributeDisplayFormAttributeUri,
-} from "./attributeDisplayForm";
+} from "./ldm/attributeDisplayForm";
 
 export {
     Identifier,
@@ -34,7 +34,7 @@ export {
     isUriRef,
     isIdentifierRef,
     objectRefValue,
-} from "./base";
+} from "./execution/base";
 
 export {
     IDimension,
@@ -45,9 +45,9 @@ export {
     newDimension,
     MeasureGroupIdentifier,
     dimensionSetTotals,
-} from "./base/dimension";
+} from "./execution/base/dimension";
 
-export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./base/totals";
+export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals";
 
 export {
     SortDirection,
@@ -66,7 +66,7 @@ export {
     newAttributeLocator,
     SortEntityIds,
     sortEntityIds,
-} from "./base/sort";
+} from "./execution/base/sort";
 
 export {
     DataColumnType,
@@ -76,9 +76,9 @@ export {
     IDataSet,
     IDataSetLoadInfo,
     IDataSetUser,
-} from "./dataSet";
+} from "./ldm/dataSet";
 
-export { IDateDataSetAttribute, IDateDataSet } from "./dateDataSet";
+export { IDateDataSetAttribute, IDateDataSet } from "./ldm/dateDataSet";
 
 export {
     IAttributeElementsByRef,
@@ -119,7 +119,7 @@ export {
     relativeDateFilterValues,
     measureValueFilterCondition,
     measureValueFilterMeasure,
-} from "./filter";
+} from "./execution/filter";
 
 export {
     newAbsoluteDateFilter,
@@ -127,7 +127,7 @@ export {
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newMeasureValueFilter,
-} from "./filter/factory";
+} from "./execution/filter/factory";
 
 export {
     IMeasureDefinitionType,
@@ -166,7 +166,7 @@ export {
     measureFilters,
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
-} from "./measure";
+} from "./execution/measure";
 
 export {
     IPreviousPeriodDateDataSetSimple,
@@ -181,7 +181,7 @@ export {
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-} from "./measure/factory";
+} from "./execution/measure/factory";
 
 export {
     AttributeOrMeasure,
@@ -202,7 +202,7 @@ export {
     BucketPredicate,
     applyRatioRule,
     ComputeRatioRule,
-} from "./buckets";
+} from "./execution/buckets";
 
 export {
     bucketsFind,
@@ -214,7 +214,7 @@ export {
     bucketsFindAttribute,
     bucketsItems,
     bucketsTotals,
-} from "./buckets/bucketArray";
+} from "./execution/buckets/bucketArray";
 
 export {
     IExecutionDefinition,
@@ -224,7 +224,7 @@ export {
     defSetDimensions,
     defSetSorts,
     defTotals,
-} from "./executionDefinition";
+} from "./execution/executionDefinition";
 
 export {
     newDefForItems,
@@ -234,7 +234,7 @@ export {
     defWithSorting,
     defaultDimensionsGenerator,
     emptyDef,
-} from "./executionDefinition/factory";
+} from "./execution/executionDefinition/factory";
 
 export {
     GuidType,
@@ -285,17 +285,17 @@ export {
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
-} from "./catalog";
+} from "./ldm/catalog";
 
-export { IAttributeElement } from "./metadata/attributeElement";
+export { IAttributeElement } from "./ldm/attributeElement";
 
 export {
     IMeasureExpressionToken,
     IObjectExpressionToken,
     IAttributeElementExpressionToken,
     ITextExpressionToken,
-} from "./metadata/measure";
+} from "./ldm/measure";
 
-export { factoryNotationFor } from "./objectFactoryNotation";
+export { factoryNotationFor } from "./execution/objectFactoryNotation";
 
 export { IWorkspace } from "./workspace";

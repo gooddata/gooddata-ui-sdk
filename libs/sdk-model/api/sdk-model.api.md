@@ -46,7 +46,7 @@ export class AttributeBuilder implements IAttribute {
     build: () => {
         attribute: {
             localIdentifier: string;
-            displayForm: import("..").ObjRef;
+            displayForm: import("../base").ObjRef;
             alias?: string | undefined;
         };
     };

@@ -1,19 +1,19 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
-import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
-import { anyBucket, BucketPredicate, IBucket } from "../buckets";
-import { IFilter } from "../filter";
-import { IMeasure, measureLocalId } from "../measure";
-import { attributeLocalId, IAttribute } from "../attribute";
-import { ITotal } from "../base/totals";
+import { SortEntityIds, sortEntityIds, SortItem } from "../execution/base/sort";
+import { anyBucket, BucketPredicate, IBucket } from "../execution/buckets";
+import { IFilter } from "../execution/filter";
+import { IMeasure, measureLocalId } from "../execution/measure";
+import { attributeLocalId, IAttribute } from "../execution/attribute";
+import { ITotal } from "../execution/base/totals";
 import {
     bucketsAttributes,
     bucketsById,
     bucketsFind,
     bucketsMeasures,
     bucketsTotals,
-} from "../buckets/bucketArray";
+} from "../execution/buckets/bucketArray";
 import invariant from "ts-invariant";
 import { IColor } from "../colors";
 
@@ -199,9 +199,7 @@ export function insightBucket(
     insight: IInsightWithoutIdentifier,
     idOrFun: string | BucketPredicate = anyBucket,
 ): IBucket | undefined {
-    if (!insight) {
-        return;
-    }
+    invariant(insight, "insight must be specified");
 
     return bucketsFind(insight.insight.buckets, idOrFun);
 }
@@ -215,9 +213,7 @@ export function insightBucket(
  * @public
  */
 export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: string[]): IBucket[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     if (isEmpty(ids)) {
         return insight.insight.buckets;
@@ -234,9 +230,7 @@ export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: strin
  * @public
  */
 export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     return bucketsMeasures(insight.insight.buckets);
 }
@@ -249,9 +243,7 @@ export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[] 
  * @public
  */
 export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean {
-    if (!insight) {
-        return false;
-    }
+    invariant(insight, "insight must be specified");
 
     return insightMeasures(insight).length > 0;
 }
@@ -264,9 +256,7 @@ export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean 
  * @public
  */
 export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribute[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     return bucketsAttributes(insight.insight.buckets);
 }
@@ -279,9 +269,7 @@ export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribut
  * @public
  */
 export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolean {
-    if (!insight) {
-        return false;
-    }
+    invariant(insight, "insight must be specified");
 
     return insightAttributes(insight).length > 0;
 }
@@ -295,9 +283,7 @@ export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolea
  * @public
  */
 export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boolean {
-    if (!insight) {
-        return false;
-    }
+    invariant(insight, "insight must be specified");
 
     return (
         insight.insight.buckets.length > 0 && (insightHasMeasures(insight) || insightHasAttributes(insight))
@@ -311,9 +297,7 @@ export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boole
  * @public
  */
 export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     return insight.insight.filters;
 }
@@ -329,9 +313,7 @@ export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[] {
  * @public
  */
 export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     const attributeIds = insightAttributes(insight).map(attributeLocalId);
     const measureIds = insightMeasures(insight).map(measureLocalId);
@@ -358,9 +340,7 @@ export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[] {
  * @public
  */
 export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[] {
-    if (!insight) {
-        return [];
-    }
+    invariant(insight, "insight must be specified");
 
     return bucketsTotals(insight.insight.buckets);
 }
@@ -373,9 +353,7 @@ export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[] {
  * @public
  */
 export function insightProperties(insight: IInsightWithoutIdentifier): VisualizationProperties {
-    if (!insight) {
-        return {};
-    }
+    invariant(insight, "insight must be specified");
 
     return insight.insight.properties;
 }
@@ -432,6 +410,8 @@ export function insightSetProperties(
     insight: IInsightWithoutIdentifier,
     properties: VisualizationProperties = {},
 ): IInsightWithoutIdentifier {
+    invariant(insight, "insight must be specified");
+
     return {
         insight: {
             ...insight.insight,
@@ -454,6 +434,8 @@ export function insightSetSorts(
     insight: IInsightWithoutIdentifier,
     sorts: SortItem[] = [],
 ): IInsightWithoutIdentifier {
+    invariant(insight, "insight must be specified");
+
     return {
         insight: {
             ...insight.insight,

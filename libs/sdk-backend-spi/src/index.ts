@@ -18,9 +18,9 @@ export {
     IPreparedExecution,
     IExecutionResult,
     IDataView,
-} from "./execution";
+} from "./workspace/execution";
 
-export { DataViewFacade } from "./execution/facade";
+export { DataViewFacade } from "./workspace/execution/facade";
 
 export {
     DataValue,
@@ -41,24 +41,29 @@ export {
     isResultAttributeHeader,
     isResultMeasureHeader,
     isResultTotalHeader,
-} from "./execution/results";
+} from "./workspace/execution/results";
 
-export { IWorkspaceSettingsService, IWorkspaceSettings } from "./featureFlags";
+export { IWorkspaceSettingsService, IWorkspaceSettings } from "./workspace/settings";
 
-export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./metadata";
+export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./workspace/insights";
 
 export {
     IWorkspaceCatalog,
     ILoadCatalogGroupsOptions,
     ILoadCatalogItemsOptions,
     ILoadAvailableCatalogItemsOptions,
-} from "./catalog";
+} from "./workspace/ldm/catalog";
 
-export { IElementQueryFactory, IElementQueryResult, IElementQuery, IElementQueryOptions } from "./elements";
+export {
+    IElementQueryFactory,
+    IElementQueryResult,
+    IElementQuery,
+    IElementQueryOptions,
+} from "./workspace/elements";
 
-export { IExportConfig, IExportResult } from "./export";
+export { IExportConfig, IExportResult } from "./workspace/execution/export";
 
-export { IWorkspaceStylingService } from "./styling";
+export { IWorkspaceStylingService } from "./workspace/styling";
 
 export {
     AnalyticalBackendError,
@@ -82,8 +87,8 @@ export {
     AnalyticalBackendErrorTypes,
 } from "./errors";
 
-export { IPagedResource } from "./paging";
+export { IPagedResource } from "./common/paging";
 
-export { IWorkspaceDataSetsService } from "./dataSets";
+export { IWorkspaceDataSetsService } from "./workspace/ldm/dataSets";
 
 export { IWorkspaceQuery, IWorkspaceQueryFactory, IWorkspaceQueryResult } from "./workspace";

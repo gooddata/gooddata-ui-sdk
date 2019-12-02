@@ -19,9 +19,9 @@ import {
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
-import { IAttribute } from "../../attribute";
-import { IBucket, newBucket } from "../../buckets";
-import { IMeasure } from "../../measure";
+import { IAttribute } from "../../execution/attribute";
+import { IBucket, newBucket } from "../../execution/buckets";
+import { IMeasure } from "../../execution/measure";
 import {
     insightAttributes,
     insightBucket,
@@ -49,9 +49,13 @@ const InsightWithThreeBuckets = newInsight(VisClassId, m =>
 const InsightWithJustAttrBucket = newInsight(VisClassId, m => m.buckets([AttributeBucket]));
 const InsightWithJustMeasureBucket = newInsight(VisClassId, m => m.buckets([MeasureBucket]));
 
+const InvalidScenarios: Array<[string, any]> = [
+    ["insight is undefined", undefined],
+    ["insight is null", undefined],
+];
+
 describe("insightBucket", () => {
     const Scenarios: Array<[string, any, any, IBucket | undefined]> = [
-        ["undefined when insight undefined", undefined, undefined, undefined],
         ["undefined when insight empty", EmptyInsight, undefined, undefined],
         ["undefined when predicate not matched", InsightWithSingleBucket, () => false, undefined],
         ["first found bucket by default", InsightWithTwoBuckets, undefined, AttributeBucket],
@@ -61,11 +65,14 @@ describe("insightBucket", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, predicateArg, expectedResult) => {
         expect(insightBucket(insightArg, predicateArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightBucket(input)).toThrow();
+    });
 });
 
 describe("insightBuckets", () => {
     const Scenarios: Array<[string, any, any[], IBucket[]]> = [
-        ["empty list if insight undefined", undefined, [], []],
         ["empty list if insight empty", EmptyInsight, [], []],
         ["all buckets if no ids provided", InsightWithTwoBuckets, [], [AttributeBucket, MixedBucket]],
         ["bucket matching ID", InsightWithTwoBuckets, ["bucket1"], [MixedBucket]],
@@ -74,11 +81,14 @@ describe("insightBuckets", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, idsArg, expectedResult) => {
         expect(insightBuckets(insightArg, ...idsArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightBuckets(input)).toThrow();
+    });
 });
 
 describe("insightMeasures", () => {
     const Scenarios: Array<[string, any, IMeasure[]]> = [
-        ["no measures for undefined insight", undefined, []],
         ["no measures for empty insight", EmptyInsight, []],
         ["single measure from second bucket", InsightWithTwoBuckets, [Won]],
         [
@@ -91,11 +101,14 @@ describe("insightMeasures", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightMeasures(insightArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightMeasures(input)).toThrow();
+    });
 });
 
 describe("insightHasMeasures", () => {
     const Scenarios: Array<[boolean, string, any]> = [
-        [false, "undefined insight", undefined],
         [false, "empty insight", EmptyInsight],
         [false, "attr-only insight", InsightWithJustAttrBucket],
         [true, "mixed bucket insight", InsightWithSingleBucket],
@@ -105,11 +118,14 @@ describe("insightHasMeasures", () => {
     it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
         expect(insightHasMeasures(insightArg)).toBe(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightHasMeasures(input)).toThrow();
+    });
 });
 
 describe("insightAttributes", () => {
     const Scenarios: Array<[string, any, IAttribute[]]> = [
-        ["no attributes for undefined insight", undefined, []],
         ["no attributes for empty insight", EmptyInsight, []],
         ["single attribute", InsightWithSingleBucket, [Account.Name]],
         [
@@ -122,11 +138,14 @@ describe("insightAttributes", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightAttributes(insightArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightAttributes(input)).toThrow();
+    });
 });
 
 describe("insightHasAttributes", () => {
     const Scenarios: Array<[boolean, string, any]> = [
-        [false, "undefined insight", undefined],
         [false, "empty insight", EmptyInsight],
         [true, "attr-only insight", InsightWithJustAttrBucket],
         [true, "mixed bucket insight", InsightWithSingleBucket],
@@ -136,11 +155,14 @@ describe("insightHasAttributes", () => {
     it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
         expect(insightHasAttributes(insightArg)).toBe(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightHasAttributes(input)).toThrow();
+    });
 });
 
 describe("insightHasDataDefined", () => {
     const Scenarios: Array<[boolean, string, any]> = [
-        [false, "undefined insight", undefined],
         [false, "empty insight", EmptyInsight],
         [true, "attr-only insight", InsightWithJustAttrBucket],
         [true, "mixed bucket insight", InsightWithSingleBucket],
@@ -150,6 +172,10 @@ describe("insightHasDataDefined", () => {
     it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
         expect(insightHasDataDefined(insightArg)).toBe(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightHasDataDefined(input)).toThrow();
+    });
 });
 
 describe("insightFilters", () => {
@@ -158,7 +184,6 @@ describe("insightFilters", () => {
     );
 
     const Scenarios: Array<[string, any, IFilter[]]> = [
-        ["no filters for undefined insight", undefined, []],
         ["no filters for empty insight", EmptyInsight, []],
         ["no filters if insight without filters ", InsightWithTwoBuckets, []],
         ["filters from insight", InsightWithFilters, [AttributeFilter]],
@@ -166,6 +191,10 @@ describe("insightFilters", () => {
 
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightFilters(insightArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightFilters(input)).toThrow();
     });
 });
 
@@ -196,7 +225,6 @@ describe("insightSorts", () => {
     );
 
     const Scenarios: Array<[string, any, SortItem[]]> = [
-        ["no sorts for undefined insight", undefined, []],
         ["no sorts for empty insight", EmptyInsight, []],
         ["no sorts if insight without sorts ", InsightWithTwoBuckets, []],
         ["valid attribute sort", InsightWithValidAttributeSort, [AccountSort]],
@@ -210,6 +238,10 @@ describe("insightSorts", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightSorts(insightArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSorts(input)).toThrow();
+    });
 });
 
 describe("insightTotals", () => {
@@ -218,7 +250,6 @@ describe("insightTotals", () => {
     const InsightWithTotals = newInsight(VisClassId, m => m.buckets([BucketWithTotals]));
 
     const Scenarios: Array<[string, any, ITotal[]]> = [
-        ["no totals for undefined insight", undefined, []],
         ["no totals for empty insight", EmptyInsight, []],
         ["no totals if insight without totals ", InsightWithTwoBuckets, []],
         ["totals from insight", InsightWithTotals, [Total]],
@@ -226,6 +257,10 @@ describe("insightTotals", () => {
 
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightTotals(insightArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightTotals(input)).toThrow();
     });
 });
 
@@ -236,7 +271,6 @@ describe("insightProperties", () => {
     );
 
     const Scenarios: Array<[string, any, VisualizationProperties]> = [
-        ["no properties for undefined insight", undefined, {}],
         ["no properties for empty insight", EmptyInsight, {}],
         ["no properties if insight without properties ", InsightWithTwoBuckets, {}],
         ["totals from insight", InsightWithProperties, Properties],
@@ -245,15 +279,19 @@ describe("insightProperties", () => {
     it.each(Scenarios)("should return %s", (_desc, insightArg, expectedResult) => {
         expect(insightProperties(insightArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightProperties(input)).toThrow();
+    });
 });
 
 describe("insightId", () => {
     it("should return the identifier", () => {
         expect(insightId(EmptyInsight)).toEqual("random");
     });
-    it("should throw if the insight is undefined", () => {
-        // @ts-ignore
-        expect(() => insightId(undefined)).toThrow();
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightId(input)).toThrow();
     });
 });
 
@@ -275,6 +313,10 @@ describe("insightSetSorts", () => {
         const InsightWithSomeSorts = insightSetSorts(EmptyInsight, [AccountSort]);
 
         expect(insightSetSorts(InsightWithSomeSorts).insight.sorts).toEqual([]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSetSorts(input)).toThrow();
     });
 });
 
@@ -300,5 +342,9 @@ describe("insightSetProperties", () => {
         const InsightWithSomeProperties = insightSetProperties(EmptyInsight, SampleProperties1);
 
         expect(insightSetProperties(InsightWithSomeProperties).insight.properties).toEqual({});
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSetProperties(input)).toThrow();
     });
 });

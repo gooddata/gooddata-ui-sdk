@@ -20,10 +20,10 @@ export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const columns = insightBucket(insight, COLUMNS);
     const measures = insightBucket(insight, MEASURES);
 
-    const rowAttributeIds = bucketAttributes(row).map(attributeLocalId);
-    const columnAttributeIds = bucketAttributes(columns).map(attributeLocalId);
+    const rowAttributeIds = row ? bucketAttributes(row).map(attributeLocalId) : [];
+    const columnAttributeIds = columns ? bucketAttributes(columns).map(attributeLocalId) : [];
 
-    const measuresItemIdentifiers = !bucketIsEmpty(measures) ? [MEASUREGROUP] : [];
+    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MEASUREGROUP] : [];
 
     const totals = insightTotals(insight);
     const totalsProp = totals.length ? { totals } : {};
@@ -42,7 +42,7 @@ export function getPivotTableDimensions(insight: IInsight): IDimension[] {
 function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
     const viewBy = insightBucket(insight, VIEW);
 
-    if (!bucketIsEmpty(viewBy)) {
+    if (viewBy && !bucketIsEmpty(viewBy)) {
         return [
             {
                 itemIdentifiers: [MEASUREGROUP],
@@ -65,49 +65,10 @@ function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
 
 function getBarDimensions(insight: IInsight): IDimension[] {
     const viewBy = insightBucket(insight, VIEW);
+    const viewByAttributes = viewBy ? bucketAttributes(viewBy) : [];
     const stack = insightBucket(insight, STACK);
 
-    if (bucketIsEmpty(stack)) {
-        return [
-            {
-                itemIdentifiers: [MEASUREGROUP],
-            },
-            {
-                itemIdentifiers: bucketAttributes(viewBy).map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: bucketAttributes(stack).map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [...bucketAttributes(viewBy).map(attributeLocalId), MEASUREGROUP],
-        },
-    ];
-}
-
-function getAreaDimensions(insight: IInsight): IDimension[] {
-    const viewByAttributes = bucketAttributes(insightBucket(insight, VIEW));
-    const stack = insightBucket(insight, STACK);
-
-    if (viewByAttributes.length > 1) {
-        // only take first two view items
-        const [viewItemIdentifier, stackItemIdentifier] = viewByAttributes
-            .slice(0, VIEW_BY_ATTRIBUTES_LIMIT)
-            .map(attributeLocalId);
-        return [
-            {
-                itemIdentifiers: [stackItemIdentifier],
-            },
-            {
-                itemIdentifiers: [viewItemIdentifier, MEASUREGROUP],
-            },
-        ];
-    }
-
-    if (bucketIsEmpty(stack)) {
+    if (!stack || bucketIsEmpty(stack)) {
         return [
             {
                 itemIdentifiers: [MEASUREGROUP],
@@ -128,17 +89,59 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
     ];
 }
 
-function getLineDimensions(insight: IInsight): IDimension[] {
-    const trend = insightBucket(insight, TREND);
-    const segment = insightBucket(insight, SEGMENT);
+function getAreaDimensions(insight: IInsight): IDimension[] {
+    const viewBucket = insightBucket(insight, VIEW);
+    const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
+    const stackBucket = insightBucket(insight, STACK);
 
-    if (bucketIsEmpty(segment)) {
+    if (viewByAttributes.length > 1) {
+        // only take first two view items
+        const [viewItemIdentifier, stackItemIdentifier] = viewByAttributes
+            .slice(0, VIEW_BY_ATTRIBUTES_LIMIT)
+            .map(attributeLocalId);
+        return [
+            {
+                itemIdentifiers: [stackItemIdentifier],
+            },
+            {
+                itemIdentifiers: [viewItemIdentifier, MEASUREGROUP],
+            },
+        ];
+    }
+
+    if (!stackBucket || bucketIsEmpty(stackBucket)) {
         return [
             {
                 itemIdentifiers: [MEASUREGROUP],
             },
             {
-                itemIdentifiers: bucketAttributes(trend).map(attributeLocalId),
+                itemIdentifiers: viewByAttributes.map(attributeLocalId),
+            },
+        ];
+    }
+
+    return [
+        {
+            itemIdentifiers: bucketAttributes(stackBucket).map(attributeLocalId),
+        },
+        {
+            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MEASUREGROUP],
+        },
+    ];
+}
+
+function getLineDimensions(insight: IInsight): IDimension[] {
+    const trend = insightBucket(insight, TREND);
+    const trendAttributes = trend ? bucketAttributes(trend) : [];
+    const segment = insightBucket(insight, SEGMENT);
+
+    if (!segment || bucketIsEmpty(segment)) {
+        return [
+            {
+                itemIdentifiers: [MEASUREGROUP],
+            },
+            {
+                itemIdentifiers: trendAttributes.map(attributeLocalId),
             },
         ];
     }
@@ -148,7 +151,7 @@ function getLineDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: bucketAttributes(segment).map(attributeLocalId),
         },
         {
-            itemIdentifiers: [...bucketAttributes(trend).map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...trendAttributes.map(attributeLocalId), MEASUREGROUP],
         },
     ];
 }
@@ -160,7 +163,7 @@ export function getHeadlinesDimensions(): IDimension[] {
 function getScatterDimensions(insight: IInsight): IDimension[] {
     const attribute = insightBucket(insight, ATTRIBUTE);
 
-    if (!bucketIsEmpty(attribute)) {
+    if (attribute && !bucketIsEmpty(attribute)) {
         return [
             {
                 itemIdentifiers: bucketAttributes(attribute).map(attributeLocalId),
@@ -188,12 +191,13 @@ export function getHeatmapDimensionsFromMdObj(insight: IInsight): IDimension[] {
 
 export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[] {
     const view = insightBucket(insight, VIEW);
+    const viewAttributes = view ? bucketAttributes(view) : [];
     const stack = insightBucket(insight, STACK);
 
-    if (bucketIsEmpty(stack)) {
+    if (!stack || bucketIsEmpty(stack)) {
         return [
             {
-                itemIdentifiers: bucketAttributes(view).map(attributeLocalId),
+                itemIdentifiers: viewAttributes.map(attributeLocalId),
             },
             {
                 itemIdentifiers: [MEASUREGROUP],
@@ -203,7 +207,7 @@ export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[]
 
     return [
         {
-            itemIdentifiers: bucketAttributes(view).map(attributeLocalId),
+            itemIdentifiers: viewAttributes.map(attributeLocalId),
         },
         {
             itemIdentifiers: [...bucketAttributes(stack).map(attributeLocalId), MEASUREGROUP],
@@ -215,7 +219,7 @@ function getBubbleDimensions(insight: IInsight): IDimension[] {
     const view = insightBucket(insight, VIEW);
     const stack = insightBucket(insight, STACK);
 
-    if (bucketIsEmpty(stack)) {
+    if (!stack || bucketIsEmpty(stack)) {
         return [
             {
                 itemIdentifiers: bucketAttributes(view).map(attributeLocalId),
@@ -293,7 +297,8 @@ export function generateDimensions(insight: IInsight, type: VisType): IDimension
 }
 
 export function generateStackedDimensions(insight: IInsight): IDimension[] {
-    const viewAttributes = bucketAttributes(insightBucket(insight, ATTRIBUTE));
+    const viewBucket = insightBucket(insight, ATTRIBUTE);
+    const viewAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
     const stackAttribute = bucketAttribute(insightBucket(insight, STACK));
 
     return [

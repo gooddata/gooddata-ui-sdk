@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IWorkspace } from "@gooddata/sdk-model";
-import { IPagedResource } from "../paging";
+import { IPagedResource } from "../common/paging";
 
 /**
  * Factory providing creating queries used to get available workspaces.

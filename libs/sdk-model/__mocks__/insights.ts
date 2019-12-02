@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import { SortItem, VisualizationProperties } from "../src";
-import { IBucket } from "../src/buckets";
+import { IBucket } from "../src/execution/buckets";
 import { IInsight } from "../src/insight";
-import { IFilter } from "../src/filter";
+import { IFilter } from "../src/execution/filter";
 import identity = require("lodash/identity");
 
 /*
