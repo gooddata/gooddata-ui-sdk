@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, InjectedIntl } from "react-intl";
 import { ErrorCodes, GoodDataSdkError } from "../../base/errors/GoodDataSdkError";
@@ -10,7 +10,6 @@ import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-import { IExportResponse, ApiResponseError } from "@gooddata/gd-bear-client";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -148,10 +147,8 @@ export function withEntireDataView<T extends ICoreChartProps>(
             }
         }
 
-        private createExportErrorFunction(
-            error: GoodDataSdkError | ApiResponseError | Error,
-        ): IExportFunction {
-            return (_exportConfig: IExtendedExportConfig): Promise<IExportResponse> => {
+        private createExportErrorFunction(error: GoodDataSdkError): IExportFunction {
+            return (_exportConfig: IExtendedExportConfig): Promise<IExportResult> => {
                 return Promise.reject(error);
             };
         }
