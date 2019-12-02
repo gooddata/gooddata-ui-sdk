@@ -5,7 +5,7 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
-import { fixEmptyHeaderItems2 } from "../_base/fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import { IErrorProps } from "../../base/simple/ErrorComponent";
 import { ILoadingProps } from "../../base/simple/LoadingComponent";
@@ -55,7 +55,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => {
                         // TODO: SDK8: evil; fix this conceptually
-                        fixEmptyHeaderItems2(dataView, props.emptyHeaderString);
+                        fixEmptyHeaderItems(dataView, props.emptyHeaderString);
 
                         return (
                             <HeadlineTransformation
