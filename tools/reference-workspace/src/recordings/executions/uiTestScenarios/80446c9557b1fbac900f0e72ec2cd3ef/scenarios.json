@@ -2,5 +2,9 @@
     {
         "vis": "PivotTable",
         "scenario": "single measure with two row and two column attributes"
+    },
+    {
+        "vis": "PivotTable",
+        "scenario": "empty values"
     }
 ]

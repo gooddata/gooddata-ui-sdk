@@ -2,7 +2,7 @@
 
 import { IChartConfig } from "@gooddata/sdk-ui";
 import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
-import { CustomColorPalette, CustomColors } from "./colors";
+import { CustomColorPalette, CustomColors } from "../../_infra/colors";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
     ["default", {}],

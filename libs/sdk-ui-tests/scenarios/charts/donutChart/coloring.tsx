@@ -2,11 +2,11 @@
 import { scenariosFor } from "../../../src";
 import { DonutChart, HeaderPredicateFactory, IDonutChartProps } from "@gooddata/sdk-ui";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base";
-import { AttributeElements } from "../_infra/predicates";
+import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withVisualTestConfig({ groupUnder: "coloring" })

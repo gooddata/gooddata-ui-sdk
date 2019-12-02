@@ -9,9 +9,9 @@ import chartGroups from "../../../scenarios";
 import { ScenarioGroup } from "../../../src";
 import groupBy = require("lodash/groupBy");
 
-import "@gooddata/sdk-ui/styles/css/charts.css";
-import "@gooddata/sdk-ui/styles/css/headline.css";
+import "@gooddata/sdk-ui/styles/css/main.css";
 import "@gooddata/sdk-ui/styles/css/pivotTable.css";
+import { ScenarioStories } from "../_infra/storyGroups";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 const DefaultWorkspace = "testWorkspace";
@@ -53,7 +53,7 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
 }
 
 ScenarioGroupsByVis.forEach(([vis, groups]) => {
-    const storiesForChart = storiesOf(`Charts/${vis}`, module);
+    const storiesForChart = storiesOf(`${ScenarioStories}/${vis}`, module);
 
     for (const group of groups) {
         // only interested in scenarios for visual regression

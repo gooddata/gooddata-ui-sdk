@@ -2,11 +2,11 @@
 import { scenariosFor } from "../../../src";
 import { PieChart, HeaderPredicateFactory, IPieChartProps } from "@gooddata/sdk-ui";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../_infra/colors";
+import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
-import { AttributeElements } from "../_infra/predicates";
+import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withVisualTestConfig({ groupUnder: "coloring" })

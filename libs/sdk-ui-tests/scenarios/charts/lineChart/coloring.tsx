@@ -2,7 +2,7 @@
 import { scenariosFor } from "../../../src";
 import { HeaderPredicateFactory, LineChart, ILineChartProps } from "@gooddata/sdk-ui";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette } from "../_infra/colors";
+import { BlackColor, CustomColorPalette } from "../../_infra/colors";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { LineChartTwoMeasuresWithTrendyBy } from "./base";
