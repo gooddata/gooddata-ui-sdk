@@ -1,19 +1,19 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
-import { SortEntityIds, sortEntityIds, SortItem } from "../base/sort";
-import { anyBucket, BucketPredicate, IBucket } from "../buckets";
-import { IFilter } from "../filter";
-import { IMeasure, measureLocalId } from "../measure";
-import { attributeLocalId, IAttribute } from "../attribute";
-import { ITotal } from "../base/totals";
+import { SortEntityIds, sortEntityIds, SortItem } from "../execution/base/sort";
+import { anyBucket, BucketPredicate, IBucket } from "../execution/buckets";
+import { IFilter } from "../execution/filter";
+import { IMeasure, measureLocalId } from "../execution/measure";
+import { attributeLocalId, IAttribute } from "../execution/attribute";
+import { ITotal } from "../execution/base/totals";
 import {
     bucketsAttributes,
     bucketsById,
     bucketsFind,
     bucketsMeasures,
     bucketsTotals,
-} from "../buckets/bucketArray";
+} from "../execution/buckets/bucketArray";
 import invariant from "ts-invariant";
 import { IColor } from "../colors";
 

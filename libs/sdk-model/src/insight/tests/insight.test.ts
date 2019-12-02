@@ -19,9 +19,9 @@ import {
 } from "../..";
 import { newInsight } from "../../../__mocks__/insights";
 import { Account, Activity, Velocity, Won } from "../../../__mocks__/model";
-import { IAttribute } from "../../attribute";
-import { IBucket, newBucket } from "../../buckets";
-import { IMeasure } from "../../measure";
+import { IAttribute } from "../../execution/attribute";
+import { IBucket, newBucket } from "../../execution/buckets";
+import { IMeasure } from "../../execution/measure";
 import {
     insightAttributes,
     insightBucket,
