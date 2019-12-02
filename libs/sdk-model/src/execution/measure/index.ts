@@ -271,7 +271,7 @@ export function isArithmeticMeasureDefinition(obj: any): obj is IArithmeticMeasu
  * @public
  */
 export function measureLocalId(measure: IMeasure): string {
-    invariant(measure, "measure to get local id from must be defined");
+    invariant(measure, "measure to get local id from must be specified");
 
     return measure.measure.localIdentifier;
 }
@@ -285,6 +285,8 @@ export function measureLocalId(measure: IMeasure): string {
  * @public
  */
 export function measureUri(measure: IMeasure): string | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isSimpleMeasure(measure)) {
         return undefined;
     }
@@ -303,6 +305,8 @@ export function measureUri(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureIdentifier(measure: IMeasure): string | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isSimpleMeasure(measure)) {
         return undefined;
     }
@@ -320,6 +324,8 @@ export function measureIdentifier(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureDoesComputeRatio(measure: IMeasure): boolean {
+    invariant(measure, "measure must be specified");
+
     if (!isSimpleMeasure(measure)) {
         return false;
     }
@@ -337,6 +343,8 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
  * @public
  */
 export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
+    invariant(measure, "measure must be specified");
+
     if (!measureDoesComputeRatio(measure)) {
         return measure;
     }
@@ -357,6 +365,8 @@ export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
  * @public
  */
 export function measureMasterIdentifier(measure: IMeasure): string | undefined {
+    invariant(measure, "measure must be specified");
+
     if (isPoPMeasure(measure)) {
         return measure.measure.definition.popMeasureDefinition.measureIdentifier;
     } else if (isPreviousPeriodMeasure(measure)) {
@@ -378,6 +388,8 @@ export function measureMasterIdentifier(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureArithmeticOperands(measure: IMeasure): string[] | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isArithmeticMeasure(measure)) {
         return undefined;
     }
@@ -394,6 +406,8 @@ export function measureArithmeticOperands(measure: IMeasure): string[] | undefin
  * @public
  */
 export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureOperator | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isArithmeticMeasure(measure)) {
         return undefined;
     }
@@ -409,9 +423,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
  * @public
  */
 export function measureAlias(measure: IMeasure): string | undefined {
-    if (!measure) {
-        return;
-    }
+    invariant(measure, "measure must be specified");
 
     return measure.measure.alias;
 }
@@ -423,9 +435,7 @@ export function measureAlias(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureTitle(measure: IMeasure): string | undefined {
-    if (!measure) {
-        return;
-    }
+    invariant(measure, "measure must be specified");
 
     return measure.measure.title;
 }
@@ -437,9 +447,7 @@ export function measureTitle(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureFormat(measure: IMeasure): string | undefined {
-    if (!measure) {
-        return;
-    }
+    invariant(measure, "measure must be specified");
 
     return measure.measure.format;
 }
@@ -452,6 +460,8 @@ export function measureFormat(measure: IMeasure): string | undefined {
  * @public
  */
 export function measureAggregation(measure: IMeasure): MeasureAggregation | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isSimpleMeasure(measure)) {
         return undefined;
     }
@@ -467,6 +477,8 @@ export function measureAggregation(measure: IMeasure): MeasureAggregation | unde
  * @public
  */
 export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isSimpleMeasure(measure)) {
         return undefined;
     }
@@ -482,6 +494,8 @@ export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined 
  * @public
  */
 export function measurePopAttribute(measure: IMeasure): ObjRef | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isPoPMeasure(measure)) {
         return undefined;
     }
@@ -499,6 +513,8 @@ export function measurePopAttribute(measure: IMeasure): ObjRef | undefined {
 export function measurePreviousPeriodDateDataSets(
     measure: IMeasure,
 ): IPreviousPeriodDateDataSet[] | undefined {
+    invariant(measure, "measure must be specified");
+
     if (!isPreviousPeriodMeasure(measure)) {
         return undefined;
     }

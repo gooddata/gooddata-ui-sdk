@@ -97,5 +97,7 @@ export function newTotal(
  * @public
  */
 export function totalIsNative(total: ITotal): boolean {
-    return total ? total.type === "nat" : false;
+    invariant(total, "total must be specified");
+
+    return total.type === "nat";
 }

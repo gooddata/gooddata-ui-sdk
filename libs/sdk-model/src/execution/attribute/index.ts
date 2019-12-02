@@ -103,9 +103,7 @@ export function attributeLocalId(attribute: IAttribute): string {
  * @public
  */
 export function attributeUri(attribute: IAttribute): string | undefined {
-    if (!attribute) {
-        return undefined;
-    }
+    invariant(attribute, "attribute must not be undefined");
 
     return isUriRef(attribute.attribute.displayForm) ? attribute.attribute.displayForm.uri : undefined;
 }
@@ -118,9 +116,7 @@ export function attributeUri(attribute: IAttribute): string | undefined {
  * @public
  */
 export function attributeIdentifier(attribute: IAttribute): string | undefined {
-    if (!attribute) {
-        return undefined;
-    }
+    invariant(attribute, "attribute must not be undefined");
 
     return isIdentifierRef(attribute.attribute.displayForm)
         ? attribute.attribute.displayForm.identifier
@@ -162,7 +158,7 @@ export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjR
  * This function also provides convenience to find attribute by its local identifier - if you pass predicate as
  * string the function will automatically create idMatchAttribute predicate.
  *
- * @param attributes - list of attributes to work with, may be undefined == no match
+ * @param attributes - list of attributes to work with, must be specified
  * @param idOrFun - attribute identifier or instance of AttributePredicate; {@link anyAttribute} predicate is default
  * @public
  */
@@ -170,7 +166,9 @@ export function attributesFind(
     attributes: IAttribute[],
     idOrFun: string | AttributePredicate = anyAttribute,
 ): IAttribute | undefined {
-    if (!attributes || !attributes.length) {
+    invariant(attributes, "attributes must not be undefined");
+
+    if (!attributes.length) {
         return;
     }
 

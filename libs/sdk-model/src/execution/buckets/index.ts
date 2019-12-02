@@ -146,7 +146,9 @@ export function newBucket(
  * @public
  */
 export function bucketIsEmpty(bucket: IBucket): boolean {
-    return !bucket || (bucket.items.length === 0 && (!bucket.totals || bucket.totals.length === 0));
+    invariant(bucket, "bucket must be specified");
+
+    return bucket.items.length === 0 && (!bucket.totals || bucket.totals.length === 0);
 }
 
 /**
@@ -167,9 +169,7 @@ export function bucketAttribute(
     bucket: IBucket,
     idOrFun: string | AttributePredicate = anyAttribute,
 ): IAttribute | undefined {
-    if (!bucket) {
-        return;
-    }
+    invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchAttribute(idOrFun) : idOrFun;
     const compositeGuard = (obj: any): obj is IAttribute => {
@@ -194,9 +194,7 @@ export function bucketAttributes(
     bucket: IBucket,
     predicate: AttributePredicate = anyAttribute,
 ): IAttribute[] {
-    if (!bucket) {
-        return [];
-    }
+    invariant(bucket, "bucket must be specified");
 
     // need custom type-guard so as not to break type inference in filter() method
     const compositeGuard = (obj: any): obj is IAttribute => {
@@ -224,9 +222,7 @@ export function bucketMeasure(
     bucket: IBucket,
     idOrFun: string | MeasurePredicate = anyMeasure,
 ): IMeasure | undefined {
-    if (!bucket) {
-        return;
-    }
+    invariant(bucket, "bucket must be specified");
 
     const predicate = typeof idOrFun === "string" ? idMatchMeasure(idOrFun) : idOrFun;
     const compositeGuard = (obj: any): obj is IMeasure => {
@@ -248,9 +244,7 @@ export function bucketMeasure(
  * @public
  */
 export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = anyMeasure): IMeasure[] {
-    if (!bucket) {
-        return [];
-    }
+    invariant(bucket, "bucket must be specified");
 
     // need custom type-guard so as not to break type inference in filter() method
     const compositeGuard = (obj: any): obj is IMeasure => {
@@ -268,9 +262,7 @@ export function bucketMeasures(bucket: IBucket, predicate: MeasurePredicate = an
  * @public
  */
 export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
-    if (!bucket) {
-        return [];
-    }
+    invariant(bucket, "bucket must be specified");
 
     return bucket.items;
 }
@@ -283,7 +275,9 @@ export function bucketItems(bucket: IBucket): AttributeOrMeasure[] {
  * @public
  */
 export function bucketTotals(bucket: IBucket): ITotal[] {
-    if (!bucket || !bucket.totals) {
+    invariant(bucket, "bucket must be specified");
+
+    if (!bucket.totals) {
         return [];
     }
 
@@ -330,9 +324,7 @@ export function applyRatioRule<T extends AttributeOrMeasure>(
     items: T[],
     rule: ComputeRatioRule = ComputeRatioRule.SINGLE_MEASURE_ONLY,
 ): T[] {
-    if (!items) {
-        return [];
-    }
+    invariant(items, "items must be specified");
 
     if (rule === ComputeRatioRule.ANY_MEASURE) {
         return items;

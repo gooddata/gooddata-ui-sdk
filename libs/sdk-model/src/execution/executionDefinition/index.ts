@@ -55,7 +55,7 @@ export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
 export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = []): IExecutionDefinition {
     invariant(def, "execution definition to add more filters to must be defined");
 
-    if (!filters || isEmpty(filters)) {
+    if (isEmpty(filters)) {
         return def;
     }
 
@@ -94,7 +94,7 @@ export function defSetSorts(def: IExecutionDefinition, sortBy: SortItem[] = []):
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[] {
     invariant(def, "execution definition to get totals for must be defined");
 
-    if (!def || !def.dimensions[dimIdx]) {
+    if (!def.dimensions[dimIdx]) {
         return [];
     }
 

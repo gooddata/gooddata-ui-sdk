@@ -36,6 +36,8 @@ const RelativeDateFilter = newRelativeDateFilter(
 
 const MeasureValueFilter = newMeasureValueFilter(Won, "EQUAL_TO", 42);
 
+const InvalidScenarios: Array<[string, any]> = [["filter undefined", undefined], ["filter null", undefined]];
+
 describe("filterIsEmpty", () => {
     const Scenarios: Array<[boolean, string, any]> = [
         [true, "no items in positive filter", newPositiveAttributeFilter(Account.Name, [])],
@@ -49,12 +51,14 @@ describe("filterIsEmpty", () => {
     it.each(Scenarios)("should return %s when %s", (expectedResult, _desc, input) => {
         expect(filterIsEmpty(input)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => filterIsEmpty(input)).toThrow();
+    });
 });
 
 describe("filterAttributeElements", () => {
     const Scenarios: Array<[string, IFilter | null | undefined, AttributeElements | undefined]> = [
-        ["undefined for null filter", null, undefined],
-        ["undefined for undefined filter", undefined, undefined],
         ["undefined for date filter", AbsoluteDateFilter, undefined],
         [
             "empty values for positive attribute filter with empty values",
@@ -81,12 +85,14 @@ describe("filterAttributeElements", () => {
     it.each(Scenarios)("should return %s", (_, input, expectedResult) => {
         expect(filterAttributeElements(input as any)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => filterAttributeElements(input)).toThrow();
+    });
 });
 
 describe("filterAttributeDisplayForm", () => {
     const Scenarios: Array<[string, IFilter | null | undefined, ObjRef | undefined]> = [
-        ["undefined for null filter", null, undefined],
-        ["undefined for undefined filter", undefined, undefined],
         ["undefined for measure filter", MeasureValueFilter, undefined],
         [
             "attribute display form identifier for positive attribute filter",
@@ -113,6 +119,10 @@ describe("filterAttributeDisplayForm", () => {
     it.each(Scenarios)("should return %s", (_, input, expectedResult) => {
         expect(filterAttributeDisplayForm(input as any)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => filterAttributeDisplayForm(input)).toThrow();
+    });
 });
 
 describe("absoluteDateFilterValues", () => {
@@ -123,14 +133,8 @@ describe("absoluteDateFilterValues", () => {
         });
     });
 
-    it("should throw for undefined relative date filter", () => {
-        // @ts-ignore
-        expect(() => absoluteDateFilterValues(undefined)).toThrow();
-    });
-
-    it("should throw for null relative date filter", () => {
-        // @ts-ignore
-        expect(() => absoluteDateFilterValues(null)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => absoluteDateFilterValues(input)).toThrow();
     });
 });
 
@@ -143,14 +147,8 @@ describe("relativeDateFilterValues", () => {
         });
     });
 
-    it("should throw for undefined relative date filter", () => {
-        // @ts-ignore
-        expect(() => relativeDateFilterValues(undefined)).toThrow();
-    });
-
-    it("should throw for null relative date filter", () => {
-        // @ts-ignore
-        expect(() => relativeDateFilterValues(null)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => relativeDateFilterValues(input)).toThrow();
     });
 });
 
@@ -161,14 +159,8 @@ describe("measureValueFilterMeasure", () => {
         });
     });
 
-    it("should throw for undefined measure value filter", () => {
-        // @ts-ignore
-        expect(() => measureValueFilterMeasure(undefined)).toThrow();
-    });
-
-    it("should throw for null measure value filter", () => {
-        // @ts-ignore
-        expect(() => measureValueFilterMeasure(null)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => measureValueFilterMeasure(input)).toThrow();
     });
 });
 
@@ -182,13 +174,7 @@ describe("measureValueFilterCondition", () => {
         });
     });
 
-    it("should throw for undefined measure value filter", () => {
-        // @ts-ignore
-        expect(() => measureValueFilterCondition(undefined)).toThrow();
-    });
-
-    it("should throw for null measure value filter", () => {
-        // @ts-ignore
-        expect(() => measureValueFilterCondition(null)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => measureValueFilterCondition(input)).toThrow();
     });
 });

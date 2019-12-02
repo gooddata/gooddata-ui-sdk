@@ -59,11 +59,11 @@ const BucketWithManyAttrs = newBucket("BucketWithManyAttrs", Account.Name, Accou
 const BucketWithMeasureAndAttr = newBucket("BucketWithMeasureAndAttr", Won, Account.Name);
 const BucketWithEverything = newBucket("BucketWithMeasureAndAttr", Won, Account.Name, Total);
 
+const InvalidScenarios: Array<[string, any]> = [["undefined input", undefined], ["null input", null]];
+
 describe("bucketIsEmpty", () => {
     const Scenarios: Array<[boolean, string, any]> = [
         [true, "empty bucket", EmptyBucket],
-        [true, "undefined input", undefined],
-        [true, "null input", null],
         [false, "bucket with only totals", BucketWithOnlyTotals],
         [false, "bucket with single measure", BucketWithSingleMeasure],
         [false, "bucket with single attr", BucketWithSingleAttr],
@@ -73,13 +73,15 @@ describe("bucketIsEmpty", () => {
     it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, input) => {
         expect(bucketIsEmpty(input)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketIsEmpty(input)).toThrow();
+    });
 });
 
 describe("bucketAttribute", () => {
     const Scenarios: Array<[string, any, any, IAttribute | undefined]> = [
         ["no attribute in empty bucket", EmptyBucket, undefined, undefined],
-        ["no attribute for undefined bucket", undefined, undefined, undefined],
-        ["no attribute for null bucket", null, undefined, undefined],
         ["no attribute in measure-only bucket", BucketWithManyMeasures, undefined, undefined],
         ["no attribute if localId empty", BucketWithManyAttrs, "", undefined],
         ["no attribute if localId matches nothing", BucketWithManyAttrs, "noSuchLocalId", undefined],
@@ -97,13 +99,15 @@ describe("bucketAttribute", () => {
     it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
         expect(bucketAttribute(bucketArg, predicateArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketAttribute(input)).toThrow();
+    });
 });
 
 describe("bucketAttributes", () => {
     const Scenarios: Array<[string, any, any, IAttribute[]]> = [
         ["no attributes in empty bucket", EmptyBucket, undefined, []],
-        ["no attributes if bucket undefined", undefined, undefined, []],
-        ["no attributes if bucket null", null, undefined, []],
         ["no attributes in measure-only bucket", BucketWithManyMeasures, undefined, []],
         ["no attributes in attr bucket but no predicate match", BucketWithManyAttrs, () => false, []],
         ["attributes in single attr bucket", BucketWithSingleAttr, undefined, [Account.Name]],
@@ -125,13 +129,15 @@ describe("bucketAttributes", () => {
     it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
         expect(bucketAttributes(bucketArg, predicateArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketAttributes(input)).toThrow();
+    });
 });
 
 describe("bucketMeasure", () => {
     const Scenarios: Array<[string, any, any, IMeasure | undefined]> = [
         ["no measure in empty bucket", EmptyBucket, undefined, undefined],
-        ["no measure for undefined bucket", undefined, undefined, undefined],
-        ["no measure for null bucket", null, undefined, undefined],
         ["no measure in attr-only bucket", BucketWithManyAttrs, undefined, undefined],
         ["no measure if localId empty", BucketWithManyMeasures, "", undefined],
         ["no measure if localId matches nothing", BucketWithManyMeasures, "noSuchLocalId", undefined],
@@ -149,13 +155,15 @@ describe("bucketMeasure", () => {
     it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
         expect(bucketMeasure(bucketArg, predicateArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketMeasure(input)).toThrow();
+    });
 });
 
 describe("bucketMeasures", () => {
     const Scenarios: Array<[string, any, any, IMeasure[]]> = [
         ["no measures in empty bucket", EmptyBucket, undefined, []],
-        ["no measures if bucket undefined", undefined, undefined, []],
-        ["no measures if bucket null", null, undefined, []],
         ["no measures in attr-only bucket", BucketWithManyAttrs, undefined, []],
         ["no measures in measure bucket but no predicate match", BucketWithManyMeasures, () => false, []],
         ["measures in single measure bucket", BucketWithSingleMeasure, undefined, [Won]],
@@ -177,18 +185,24 @@ describe("bucketMeasures", () => {
     it.each(Scenarios)("should find %s", (_desc, bucketArg, predicateArg, expectedResult) => {
         expect(bucketMeasures(bucketArg, predicateArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketMeasures(input)).toThrow();
+    });
 });
 
 describe("bucketItems", () => {
     const Scenarios: Array<[string, any, AttributeOrMeasure[]]> = [
         ["no items in empty bucket", EmptyBucket, []],
-        ["no items if bucket undefined", undefined, []],
-        ["no items if bucket null", null, []],
         ["items in populated bucket", BucketWithMeasureAndAttr, [Won, Account.Name]],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, bucketArg, expectedResult) => {
         expect(bucketItems(bucketArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketItems(input)).toThrow();
     });
 });
 
@@ -196,13 +210,15 @@ describe("bucketTotals", () => {
     const Scenarios: Array<[string, any, ITotal[]]> = [
         ["no totals in empty bucket", EmptyBucket, []],
         ["no totals in bucket without totals", BucketWithMeasureAndAttr, []],
-        ["no items if bucket undefined", undefined, []],
-        ["no items if bucket null", null, []],
         ["totals in populated bucket", BucketWithEverything, [Total]],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, bucketArg, expectedResult) => {
         expect(bucketTotals(bucketArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketTotals(input)).toThrow();
     });
 });
 
@@ -211,8 +227,6 @@ describe("applyRatioRule", () => {
     const MeasureWithRatio2 = modifyMeasure(Velocity.Avg, m => m.ratio());
 
     const Scenarios: Array<[string, any, any, any]> = [
-        ["empty array if undefined input", undefined, undefined, []],
-        ["empty array if null input", null, undefined, []],
         [
             "apply SINGLE rule by default",
             [MeasureWithRatio1],
@@ -265,5 +279,9 @@ describe("applyRatioRule", () => {
 
     it.each(Scenarios)("should return %s", (_desc, itemsArg, ruleArg, expectedResult) => {
         expect(applyRatioRule(itemsArg, ruleArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => bucketTotals(input)).toThrow();
     });
 });

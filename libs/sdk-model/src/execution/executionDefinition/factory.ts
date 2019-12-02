@@ -246,6 +246,8 @@ function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDim
  * @public
  */
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[] {
+    invariant(definition, "definition must be specified");
+
     const buckets = definition.buckets;
 
     return !bucketsIsEmpty(buckets)

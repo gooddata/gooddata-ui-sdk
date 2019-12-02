@@ -35,10 +35,13 @@ const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");
 const PopMeasure = newPopMeasure(measureLocalId(Won), "myPopAttribute");
 const PreviousPeriodMeasure = newPreviousPeriodMeasure(Won, [{ dataSet: "dataSet", periodsAgo: 1 }]);
 
+const InvalidScenarios: Array<[string, any]> = [
+    ["measure is undefined", undefined],
+    ["measure is null", null],
+];
+
 describe("measureUri", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined if measure with identifier", SimpleMeasureWithIdentifier, undefined],
         ["undefined for arithmetic measure", ArithmeticMeasure, undefined],
         ["undefined for PoP measure", PopMeasure, undefined],
@@ -49,12 +52,14 @@ describe("measureUri", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureUri(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureUri(input)).toThrow();
+    });
 });
 
 describe("measureIdentifier", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined if measure with uri", SimpleMeasureWithUri, undefined],
         ["undefined for arithmetic measure", ArithmeticMeasure, undefined],
         ["undefined for PoP measure", PopMeasure, undefined],
@@ -65,12 +70,14 @@ describe("measureIdentifier", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureIdentifier(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureIdentifier(input)).toThrow();
+    });
 });
 
 describe("measureDoesComputeRatio", () => {
     const Scenarios: Array<[boolean, string, any]> = [
-        [false, "undefined", undefined],
-        [false, "null", null],
         [false, "arithmetic measure", ArithmeticMeasure],
         [false, "PoP measure", PopMeasure],
         [false, "Previous Period measure", PreviousPeriodMeasure],
@@ -81,12 +88,14 @@ describe("measureDoesComputeRatio", () => {
     it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, measureArg) => {
         expect(measureDoesComputeRatio(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureDoesComputeRatio(input)).toThrow();
+    });
 });
 
 describe("measureMasterIdentifier", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for arithmetic measure", ArithmeticMeasure, undefined],
         ["undefined for simple measure", SimpleMeasureWithIdentifier, undefined],
         ["simple measure local id for PoP measure", PopMeasure, "m_afSEwRwdbMeQ"],
@@ -96,12 +105,14 @@ describe("measureMasterIdentifier", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureMasterIdentifier(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureMasterIdentifier(input)).toThrow();
+    });
 });
 
 describe("measureArithmeticOperands", () => {
     const Scenarios: Array<[string, any, string[] | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for simple measure", SimpleMeasureWithIdentifier, undefined],
         ["simple measure local id for PoP measure", PopMeasure, undefined],
         ["simple measure local id for PreviousPeriod measure", PreviousPeriodMeasure, undefined],
@@ -115,12 +126,14 @@ describe("measureArithmeticOperands", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureArithmeticOperands(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureArithmeticOperands(input)).toThrow();
+    });
 });
 
 describe("measureArithmeticOperator", () => {
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for simple measure", SimpleMeasureWithIdentifier, undefined],
         ["simple measure local id for PoP measure", PopMeasure, undefined],
         ["simple measure local id for PreviousPeriod measure", PreviousPeriodMeasure, undefined],
@@ -130,13 +143,15 @@ describe("measureArithmeticOperator", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureArithmeticOperator(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureArithmeticOperator(input)).toThrow();
+    });
 });
 
 describe("measureAlias", () => {
     const MeasureWithAlias = modifyMeasure(SimpleMeasureWithIdentifier, m => m.alias("customAlias"));
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without alias", SimpleMeasureWithIdentifier, undefined],
         ["alias value when defined", MeasureWithAlias, "customAlias"],
     ];
@@ -144,13 +159,15 @@ describe("measureAlias", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureAlias(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureAlias(input)).toThrow();
+    });
 });
 
 describe("measureTitle", () => {
     const MeasureWithTitle = modifyMeasure(SimpleMeasureWithIdentifier, m => m.title("customTitle"));
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without title", SimpleMeasureWithIdentifier, undefined],
         ["title value when defined", MeasureWithTitle, "customTitle"],
     ];
@@ -158,13 +175,15 @@ describe("measureTitle", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureTitle(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureTitle(input)).toThrow();
+    });
 });
 
 describe("measureFormat", () => {
     const MeasureWithFormat = modifyMeasure(SimpleMeasureWithIdentifier, m => m.format("customFormat"));
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without format", SimpleMeasureWithIdentifier, undefined],
         ["format value when defined", MeasureWithFormat, "customFormat"],
     ];
@@ -172,13 +191,15 @@ describe("measureFormat", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureFormat(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureFormat(input)).toThrow();
+    });
 });
 
 describe("measureAggregation", () => {
     const MeasureWithAggregation = modifyMeasure(SimpleMeasureWithIdentifier, m => m.aggregation("median"));
     const Scenarios: Array<[string, any, string | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without aggregation", SimpleMeasureWithIdentifier, undefined],
         ["aggregation value when defined", MeasureWithAggregation, "median"],
     ];
@@ -186,12 +207,14 @@ describe("measureAggregation", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureAggregation(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureAggregation(input)).toThrow();
+    });
 });
 
 describe("measureFilters", () => {
     const Scenarios: Array<[string, any, IFilter[] | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without filters", SimpleMeasureWithIdentifier, undefined],
         [
             "filter values when defined",
@@ -210,12 +233,14 @@ describe("measureFilters", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measureFilters(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measureFilters(input)).toThrow();
+    });
 });
 
 describe("measurePopAttribute", () => {
     const Scenarios: Array<[string, any, ObjRef | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         ["undefined for measure without PoP attribute", SimpleMeasureWithIdentifier, undefined],
         ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute" }],
     ];
@@ -223,12 +248,14 @@ describe("measurePopAttribute", () => {
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measurePopAttribute(measureArg)).toEqual(expectedResult);
     });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measurePopAttribute(input)).toThrow();
+    });
 });
 
 describe("measurePreviousPeriodDateDataSets", () => {
     const Scenarios: Array<[string, any, IPreviousPeriodDateDataSet[] | undefined]> = [
-        ["undefined if measure is undefined", undefined, undefined],
-        ["undefined if measure is null", null, undefined],
         [
             "undefined for measure without previous period date data sets",
             SimpleMeasureWithIdentifier,
@@ -243,5 +270,9 @@ describe("measurePreviousPeriodDateDataSets", () => {
 
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {
         expect(measurePreviousPeriodDateDataSets(measureArg)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => measurePreviousPeriodDateDataSets(input)).toThrow();
     });
 });

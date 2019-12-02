@@ -165,6 +165,8 @@ export type SortEntityIds = {
  * @internal
  */
 export function sortEntityIds(sort: SortItem): SortEntityIds {
+    invariant(sort, "sort item must be specified");
+
     const res: SortEntityIds = {
         attributeIdentifiers: [],
         measureIdentifiers: [],

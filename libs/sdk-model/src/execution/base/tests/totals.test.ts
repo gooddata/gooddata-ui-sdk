@@ -37,10 +37,15 @@ describe("isNativeTotal", () => {
     const Scenarios: Array<[boolean, string, any]> = [
         [true, "native total", newTotal("nat", Won, Account.Default)],
         [false, "non-native total", newTotal("sum", Won, Account.Default)],
-        [false, "undefined total", undefined],
     ];
 
-    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, input) => {
+    const InvalidScenario: Array<[string, any]> = [["undefined total", undefined], ["null total", null]];
+
+    it.each(Scenarios)("should return %s when %s", (expectedResult, _desc, input) => {
         expect(totalIsNative(input)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenario)("should throw for %s", (_desc, input) => {
+        expect(() => totalIsNative(input)).toThrow();
     });
 });

@@ -12,6 +12,7 @@ import {
     isPositiveAttributeFilter,
 } from "./index";
 import unionBy = require("lodash/unionBy");
+import invariant from "ts-invariant";
 
 function filterObjectRef(filter: IFilter): string {
     if (isMeasureValueFilter(filter)) {
@@ -73,6 +74,8 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  * @internal
  */
 export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] {
+    invariant(originalFilters, "original filters must be defined");
+
     if (!addedFilters || !addedFilters.length) {
         return originalFilters;
     }

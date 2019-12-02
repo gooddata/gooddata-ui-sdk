@@ -10,6 +10,7 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { DEFAULT_LOCALE } from "../../../base/constants/localization";
 import { IInsight, insightHasMeasures } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
+import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
 
 export interface IConfigurationPanelContentProps {
     properties?: IVisualizationProperties;
@@ -59,7 +60,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
 
     protected isControlDisabled() {
         const { insight, isError, isLoading } = this.props;
-        return !insightHasMeasures(insight) || isError || isLoading;
+        return !insight || !insightHasMeasures(insight) || isError || isLoading;
     }
 
     protected renderColorSection() {
@@ -75,6 +76,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         } = this.props;
 
         const controlsDisabled = this.isControlDisabled();
+        const hasMeasures = getMeasuresFromMdObject(insight).length > 0;
 
         return (
             <ColorsSection
@@ -84,7 +86,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
                 colors={colors}
                 controlsDisabled={controlsDisabled}
                 pushData={pushData}
-                hasMeasures={insightHasMeasures(insight)}
+                hasMeasures={hasMeasures}
                 showCustomPicker={featureFlags.enableCustomColorPicker as boolean}
                 isLoading={isLoading}
             />

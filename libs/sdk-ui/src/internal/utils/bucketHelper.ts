@@ -399,6 +399,10 @@ export function getUniqueAttributes(buckets: IBucketOfFun[]) {
 }
 
 export function getMeasuresFromMdObject(insight: IInsight) {
+    if (!insight) {
+        return [];
+    }
+
     return bucketsMeasures(insightBuckets(insight), isSimpleMeasure);
 }
 
@@ -615,8 +619,10 @@ export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]) {
 }
 
 export function noRowsAndHasOneMeasure(buckets: IBucket[]): boolean {
-    const measures = bucketItems(bucketsFind(buckets, BucketNames.MEASURES));
-    const rows = bucketItems(bucketsFind(buckets, BucketNames.VIEW));
+    const measuresBucket = bucketsFind(buckets, BucketNames.MEASURES);
+    const measures = measuresBucket ? bucketItems(measuresBucket) : [];
+    const rowsBucket = bucketsFind(buckets, BucketNames.VIEW);
+    const rows = rowsBucket ? bucketItems(rowsBucket) : [];
 
     const hasOneMeasure = measures.length === 1;
     const hasRows = rows.length > 0;
@@ -625,8 +631,10 @@ export function noRowsAndHasOneMeasure(buckets: IBucket[]): boolean {
 }
 
 export function noColumnsAndHasOneMeasure(buckets: IBucket[]): boolean {
-    const measures = bucketItems(bucketsFind(buckets, BucketNames.MEASURES));
-    const columns = bucketItems(bucketsFind(buckets, BucketNames.STACK));
+    const measuresBucket = bucketsFind(buckets, BucketNames.MEASURES);
+    const measures = measuresBucket ? bucketItems(measuresBucket) : [];
+    const columnsBucket = bucketsFind(buckets, BucketNames.STACK);
+    const columns = columnsBucket ? bucketItems(columnsBucket) : [];
 
     const hasOneMeasure = measures.length === 1;
     const hasColumn = columns.length > 0;

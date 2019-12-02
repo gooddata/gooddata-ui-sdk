@@ -174,6 +174,12 @@ export class DataViewFacade {
      * @returns true if bucket with the provided local identifier both exists and is non empty.
      */
     public isBucketEmpty(localId: string): boolean {
+        const bucket = this._bucketByLocalId[localId];
+
+        if (!bucket) {
+            return true;
+        }
+
         return bucketIsEmpty(this._bucketByLocalId[localId]);
     }
 
@@ -186,6 +192,12 @@ export class DataViewFacade {
      *  the bucket contains no measures
      */
     public bucketMeasures(localId: string): IMeasure[] {
+        const bucket = this._bucketByLocalId[localId];
+
+        if (!bucket) {
+            return [];
+        }
+
         return bucketMeasures(this._bucketByLocalId[localId]);
     }
 

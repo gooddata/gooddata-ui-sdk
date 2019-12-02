@@ -85,10 +85,15 @@ describe("dimensionTotals", () => {
     const Scenarios: Array<[string, any, ITotal[]]> = [
         ["return empty totals if not in dim", DimensionWithoutTotals, []],
         ["return totals from dim", DimensionWithTotals, [Total1]],
-        ["return empty totals if dim undefined", undefined, []],
     ];
 
     it.each(Scenarios)("should %s", (_desc, input, expected) => {
         expect(dimensionTotals(input)).toEqual(expected);
+    });
+
+    const InvalidScenarios: Array<[string, any]> = [["dim undefined", undefined], ["dim null", null]];
+
+    it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
+        expect(() => dimensionTotals(input)).toThrow();
     });
 });

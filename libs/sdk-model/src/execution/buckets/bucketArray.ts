@@ -17,6 +17,7 @@ import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttri
 import { anyMeasure, idMatchMeasure, IMeasure, isMeasure, MeasurePredicate } from "../measure";
 import { ITotal } from "../base/totals";
 import flatMap = require("lodash/flatMap");
+import invariant from "ts-invariant";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.
@@ -33,7 +34,9 @@ export function bucketsAttributes(
     buckets: IBucket[],
     predicate: AttributePredicate = anyAttribute,
 ): IAttribute[] {
-    if (!buckets || !buckets.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length) {
         return [];
     }
 
@@ -52,7 +55,9 @@ export function bucketsAttributes(
  * @public
  */
 export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate = anyMeasure): IMeasure[] {
-    if (!buckets || !buckets.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length) {
         return [];
     }
 
@@ -76,6 +81,8 @@ export function bucketsFind(
     buckets: IBucket[],
     idOrFun: string | BucketPredicate = anyBucket,
 ): IBucket | undefined {
+    invariant(buckets, "buckets must be specified");
+
     const predicate = typeof idOrFun === "string" ? idMatchBucket(idOrFun) : idOrFun;
 
     return buckets.find(predicate);
@@ -99,7 +106,9 @@ export function bucketsFindAttribute(
     buckets: IBucket[],
     idOrFun: string | AttributePredicate = anyAttribute,
 ): AttributeInBucket | undefined {
-    if (!buckets || !buckets.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length) {
         return;
     }
 
@@ -138,7 +147,9 @@ export function bucketsFindMeasure(
     buckets: IBucket[],
     idOrFun: string | MeasurePredicate = anyMeasure,
 ): MeasureInBucket | undefined {
-    if (!buckets || !buckets.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length) {
         return;
     }
 
@@ -168,7 +179,9 @@ export function bucketsFindMeasure(
  * @public
  */
 export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
-    if (!buckets || !buckets.length || !ids || !ids.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length || !ids || !ids.length) {
         return [];
     }
 
@@ -183,9 +196,7 @@ export function bucketsById(buckets: IBucket[], ...ids: string[]): IBucket[] {
  * @public
  */
 export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
-    if (!buckets) {
-        return [];
-    }
+    invariant(buckets, "buckets must be specified");
 
     return flatMap(buckets, b => bucketItems(b));
 }
@@ -198,9 +209,7 @@ export function bucketsItems(buckets: IBucket[]): AttributeOrMeasure[] {
  * @public
  */
 export function bucketsTotals(buckets: IBucket[]): ITotal[] {
-    if (!buckets) {
-        return [];
-    }
+    invariant(buckets, "buckets must be specified");
 
     return flatMap(buckets, b => bucketTotals(b));
 }
@@ -213,7 +222,9 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[] {
  * @public
  */
 export function bucketsIsEmpty(buckets: IBucket[]): boolean {
-    if (!buckets || !buckets.length) {
+    invariant(buckets, "buckets must be specified");
+
+    if (!buckets.length) {
         return true;
     }
 

@@ -33,8 +33,10 @@ export function getDefaultChartType(config?: IChartConfig) {
 function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinition): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
     const buckets = definition ? definition.buckets : [];
-    const isEmptyPrimaryMeasure = bucketIsEmpty(bucketsFind(buckets, MEASURES));
-    const isEmptySecondaryMeasure = bucketIsEmpty(bucketsFind(buckets, SECONDARY_MEASURES));
+    const primaryBucket = bucketsFind(buckets, MEASURES);
+    const secondaryBucket = bucketsFind(buckets, SECONDARY_MEASURES);
+    const isEmptyPrimaryMeasure = !primaryBucket || bucketIsEmpty(primaryBucket);
+    const isEmptySecondaryMeasure = !secondaryBucket || bucketIsEmpty(secondaryBucket);
     const isLineChartOnLeftAxis = isLineChart(primaryChartType);
     const isLineChartOnRightAxis = isLineChart(secondaryChartType);
     return (

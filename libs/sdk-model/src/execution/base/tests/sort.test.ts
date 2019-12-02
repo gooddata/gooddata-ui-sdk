@@ -22,12 +22,19 @@ describe("sortEntityIds", () => {
         ["get local ids from attribute sort", AttributeSort],
         ["get local ids from measure sort with just measure locator", MeasureSort1],
         ["get local ids from measure sort with measure locator and attribute locators", MeasureSort2],
-        ["get empty result if input undefined", undefined],
-        ["get empty result if input null", null],
     ];
 
     it.each(Scenarios)("should %s", (_desc, input) => {
         expect(sortEntityIds(input)).toMatchSnapshot();
+    });
+
+    const InvalidScenarios: Array<[string, any]> = [
+        ["get empty result if input undefined", undefined],
+        ["get empty result if input null", null],
+    ];
+
+    it.each(InvalidScenarios)("should %s", (_desc, input) => {
+        expect(() => sortEntityIds(input)).toThrow();
     });
 });
 

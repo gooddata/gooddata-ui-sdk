@@ -169,22 +169,6 @@ Object {
 }
 `;
 
-exports[`sortEntityIds should get empty result if input null 1`] = `
-Object {
-  "allIdentifiers": Array [],
-  "attributeIdentifiers": Array [],
-  "measureIdentifiers": Array [],
-}
-`;
-
-exports[`sortEntityIds should get empty result if input undefined 1`] = `
-Object {
-  "allIdentifiers": Array [],
-  "attributeIdentifiers": Array [],
-  "measureIdentifiers": Array [],
-}
-`;
-
 exports[`sortEntityIds should get local ids from attribute sort 1`] = `
 Object {
   "allIdentifiers": Array [

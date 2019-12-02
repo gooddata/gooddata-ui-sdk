@@ -57,12 +57,14 @@ export function isDimension(obj: any): obj is IDimension {
 /**
  * Gets totals defined in the provided dimension
  *
- * @param dim - dimension to work with, may be undefined == empty totals will be returned
+ * @param dim - dimension to work with
  * @returns totals in the dimension or empty array if none
  * @public
  */
 export function dimensionTotals(dim: IDimension): ITotal[] {
-    return dim && dim.totals ? dim.totals : [];
+    invariant(dim, "dimension must be defined");
+
+    return dim.totals ? dim.totals : [];
 }
 
 /**
@@ -74,6 +76,8 @@ export function dimensionTotals(dim: IDimension): ITotal[] {
  * @public
  */
 export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDimension {
+    invariant(dim, "dimension must be defined");
+
     const totalsProp = !isEmpty(totals) ? { totals } : {};
 
     return {
@@ -101,6 +105,9 @@ export type DimensionItem = Identifier | ITotal;
  * @public
  */
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[] {
+    invariant(dim1Input, "input for first dimension must be specified");
+    invariant(dim2Input, "input for second dimension must be specified");
+
     const atMostOneMeasureGroup = !(
         dim1Input.find(isMeasureGroupIdentifier) && dim2Input.find(isMeasureGroupIdentifier)
     );

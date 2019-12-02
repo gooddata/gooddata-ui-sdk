@@ -334,6 +334,8 @@ export function isAttributeElementsByValue(obj: any): obj is IAttributeElementsB
  * @public
  */
 export function filterIsEmpty(filter: IAttributeFilter): boolean {
+    invariant(filter, "filter must be specified");
+
     if (isPositiveAttributeFilter(filter)) {
         return attributeElementsIsEmpty(filter.positiveAttributeFilter.in);
     }
@@ -349,6 +351,8 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
  * @internal
  */
 function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
+    invariant(attributeElements, "attribute elements must be specified");
+
     if (isAttributeElementsByRef(attributeElements)) {
         return isEmpty(attributeElements.uris);
     }
@@ -367,6 +371,8 @@ export function filterAttributeElements(
     filter: IPositiveAttributeFilter | INegativeAttributeFilter,
 ): AttributeElements;
 export function filterAttributeElements(filter: IFilter): AttributeElements | undefined {
+    invariant(filter, "attribute elements must be specified");
+
     if (!isAttributeFilter(filter)) {
         return undefined;
     }
@@ -387,6 +393,8 @@ export function filterAttributeDisplayForm(
     filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter,
 ): ObjRef;
 export function filterAttributeDisplayForm(filter: IFilter): ObjRef | undefined {
+    invariant(filter, "filter must be specified");
+
     if (isPositiveAttributeFilter(filter)) {
         return filter.positiveAttributeFilter.displayForm;
     }

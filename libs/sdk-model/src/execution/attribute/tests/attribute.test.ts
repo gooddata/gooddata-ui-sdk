@@ -27,19 +27,15 @@ const AttributeWithAlias: IAttribute = {
     },
 };
 
+const InvalidScenarios: Array<[string, any]> = [["attribute undefined", undefined], ["attribute null", null]];
+
 describe("attributeLocalId", () => {
     it("should return local identifier", () => {
         expect(attributeLocalId(Account.Default)).toEqual("a_label.account.id");
     });
 
-    it("should fail if attribute is null", () => {
-        // @ts-ignore
-        expect(() => attributeLocalId(null)).toThrow();
-    });
-
-    it("should fail if attribute is undefined", () => {
-        // @ts-ignore
-        expect(() => attributeLocalId(undefined)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributeLocalId(input)).toThrow();
     });
 });
 
@@ -47,12 +43,14 @@ describe("attributeUri", () => {
     const Scenarios: Array<[string, any, any]> = [
         ["return URI if attribute defined as such", UriDefinedAttribute, "/gdc/uri/should/not/be/used"],
         ["return undefined if attribute defined with identifier", Account.Default, undefined],
-        ["return undefined if attribute undefined", undefined, undefined],
-        ["return undefined if attribute null", null, undefined],
     ];
 
     it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
         expect(attributeUri(input)).toBe(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributeUri(input)).toThrow();
     });
 });
 
@@ -60,12 +58,14 @@ describe("attributeIdentifier", () => {
     const Scenarios: Array<[string, any, any]> = [
         ["return undefined if attribute defined with URI", UriDefinedAttribute, undefined],
         ["return identifier if attribute defined as such", Account.Default, "label.account.id"],
-        ["return undefined if attribute undefined", undefined, undefined],
-        ["return undefined if attribute null", null, undefined],
     ];
 
     it.each(Scenarios)("should %s", (_desc, input, expectedResult) => {
         expect(attributeIdentifier(input)).toBe(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributeIdentifier(input)).toThrow();
     });
 });
 
@@ -79,14 +79,8 @@ describe("attributeAlias", () => {
         expect(attributeAlias(input)).toBe(expectedResult);
     });
 
-    it("should fail if attribute is null", () => {
-        // @ts-ignore
-        expect(() => attributeAlias(null)).toThrow();
-    });
-
-    it("should fail if attribute is undefined", () => {
-        // @ts-ignore
-        expect(() => attributeAlias(undefined)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributeAlias(input)).toThrow();
     });
 });
 
@@ -104,14 +98,8 @@ describe("attributeAttributeDisplayFormObjRef", () => {
         expect(attributeAttributeDisplayFormObjRef(input)).toEqual(expectedResult);
     });
 
-    it("should fail if attribute is null", () => {
-        // @ts-ignore
-        expect(() => attributeAttributeDisplayFormObjRef(null)).toThrow();
-    });
-
-    it("should fail if attribute is undefined", () => {
-        // @ts-ignore
-        expect(() => attributeAttributeDisplayFormObjRef(undefined)).toThrow();
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributeAttributeDisplayFormObjRef(input)).toThrow();
     });
 });
 
@@ -123,10 +111,13 @@ describe("attributesFind", () => {
         ["find nothing if no local id match", AttributeList, "does not exist", undefined],
         ["find nothing if no predicate match", AttributeList, () => false, undefined],
         ["find nothing if empty list", [], attributeLocalId(Account.Name), undefined],
-        ["find nothing if undefined list", undefined, attributeLocalId(Account.Name), undefined],
     ];
 
     it.each(Scenarios)("should %s", (_desc, inputList, findPredicate, expectedResult) => {
         expect(attributesFind(inputList, findPredicate)).toEqual(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => attributesFind(input)).toThrow();
     });
 });
