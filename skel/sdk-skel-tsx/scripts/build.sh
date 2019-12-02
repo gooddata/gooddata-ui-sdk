@@ -1,32 +1,36 @@
 #!/usr/bin/env bash
 
-_build_styles(){
+_build_styles() {
     echo
 }
 
-_common-build(){
+_clean() {
     rm -rf dist
+}
 
+_common-build() {
     mkdir dist
 
     _build_styles
 }
 
-build(){
+build() {
+    _clean
     _common-build
     tsc -p tsconfig.build.json
 }
 
-build-dev(){
+build-dev() {
+    _clean
     _common-build
     tsc -p tsconfig.dev.json
 }
 
-build-dev-watch(){
+build-dev-watch() {
     _common-build
-    tsc --watch -p tsconfig.dev.json & _build_styles
+    tsc --watch -p tsconfig.dev.json &
+    _build_styles
 }
-
 
 FLAG=$1
 if [ "$FLAG" = "--dev" ]; then

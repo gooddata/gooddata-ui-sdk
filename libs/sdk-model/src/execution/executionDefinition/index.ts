@@ -2,16 +2,6 @@
 import isEmpty = require("lodash/isEmpty");
 import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
-import {
-    dimensionTotals,
-    IAttribute,
-    IBucket,
-    IDimension,
-    IFilter,
-    IMeasure,
-    ITotal,
-    SortItem,
-} from "../../index";
 import { mergeFilters } from "../filter/filterMerge";
 import {
     attributeFingerprint,
@@ -20,6 +10,13 @@ import {
     measureFingerprint,
     sortFingerprint,
 } from "./fingerprints";
+import { IDimension, dimensionTotals } from "../base/dimension";
+import { SortItem } from "../base/sort";
+import { ITotal } from "../base/totals";
+import { IAttribute } from "../attribute";
+import { IBucket } from "../buckets";
+import { IFilter } from "../filter";
+import { IMeasure } from "../measure";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will

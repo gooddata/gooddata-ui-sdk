@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-_build_styles(){
+_build_styles() {
     node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
     node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
 }
 
-_common-build(){
+_clean() {
     rm -rf dist
+}
 
+_common-build() {
     mkdir -p dist/base/translations
     cp -rf src/base/translations/bundles dist/base/translations
 
@@ -18,22 +20,23 @@ _common-build(){
     _build_styles
 }
 
-build(){
+build() {
+    _clean
     _common-build
     tsc -p tsconfig.build.json
 }
 
-build-dev(){
+build-dev() {
+    _clean
     _common-build
     tsc -p tsconfig.dev.json
 }
 
-build-dev-watch(){
+build-dev-watch() {
     _common-build
     _build_styles
     tsc --watch -p tsconfig.dev.json
 }
-
 
 FLAG=$1
 if [ "$FLAG" = "--dev" ]; then

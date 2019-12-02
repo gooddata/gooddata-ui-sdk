@@ -13,7 +13,7 @@ import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandl
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ErrorCodes } from "../..";
+import { ErrorCodes } from "../../base/errors/GoodDataSdkError";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props, {}> {
