@@ -7,7 +7,6 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceMetadata,
     IWorkspaceStylingService,
-    NotImplemented,
     IWorkspaceCatalog,
     IWorkspaceDataSetsService,
 } from "@gooddata/sdk-backend-spi";
@@ -18,6 +17,7 @@ import { BearWorkspaceStyling } from "./styling";
 import { BearWorkspaceElements } from "./elements";
 import { BearWorkspaceCatalog } from "./catalog";
 import { BearWorkspaceDataSets } from "./dataSets";
+import { BearWorkspaceSettings } from "./settings";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -31,7 +31,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
     }
 
     public settings(): IWorkspaceSettingsService {
-        throw new NotImplemented("feature flags query not yet implemented");
+        return new BearWorkspaceSettings(this.authCall, this.workspace);
     }
 
     public metadata(): IWorkspaceMetadata {
