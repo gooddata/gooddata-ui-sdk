@@ -14,7 +14,7 @@ import {
     newDefForBuckets,
     newDefForInsight,
 } from "@gooddata/sdk-model";
-import { IExportConfig, IExportResult } from "../export";
+import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader } from "./results";
 
 /**

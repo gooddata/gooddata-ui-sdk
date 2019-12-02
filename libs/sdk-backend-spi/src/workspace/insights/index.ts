@@ -7,7 +7,7 @@ import {
     IMeasureExpressionToken,
     IInsightWithoutIdentifier,
 } from "@gooddata/sdk-model";
-import { IPagedResource } from "../paging";
+import { IPagedResource } from "../../common/paging";
 
 /**
  * TODO: SDK8: add public doc

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
 import {
     IDimensionItemDescriptor,
     isAttributeDescriptor,

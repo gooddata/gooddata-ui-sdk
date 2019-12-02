@@ -1,13 +1,13 @@
 // (C) 2019 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IElementQueryFactory } from "../elements";
-import { IExecutionFactory, IPreparedExecution } from "../execution";
-import { IWorkspaceSettingsService } from "../featureFlags";
-import { IWorkspaceMetadata } from "../metadata";
-import { IWorkspaceStylingService } from "../styling";
-import { IWorkspaceCatalog } from "../catalog";
-import { IWorkspaceDataSetsService } from "../dataSets";
+import { IElementQueryFactory } from "../workspace/elements";
+import { IExecutionFactory, IPreparedExecution } from "../workspace/execution";
+import { IWorkspaceSettingsService } from "../workspace/settings";
+import { IWorkspaceMetadata } from "../workspace/insights";
+import { IWorkspaceStylingService } from "../workspace/styling";
+import { IWorkspaceCatalog } from "../workspace/ldm/catalog";
+import { IWorkspaceDataSetsService } from "../workspace/ldm/dataSets";
 import { IWorkspaceQueryFactory } from "../workspace";
 
 /**
