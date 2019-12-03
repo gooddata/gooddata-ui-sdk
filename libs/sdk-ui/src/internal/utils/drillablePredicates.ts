@@ -1,88 +1,72 @@
 // (C) 2019 GoodData Corporation
-import sdk from "@gooddata/gd-bear-client";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
-import uniq = require("lodash/uniq");
-import includes = require("lodash/includes");
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
 import isArray = require("lodash/isArray");
+import uniq = require("lodash/uniq");
 
+/**
+ * @public
+ */
 export interface ISimplePostMessageData {
+    /**
+     * URI of attribute or measure that should be drillable.
+     */
     uris?: string[];
+
+    /**
+     * Identifier of attribute or measure that should be drillable.
+     */
     identifiers?: string[];
 }
 
+/**
+ * @public
+ */
 export interface IPostMessageData extends ISimplePostMessageData {
+    /**
+     * Optionally specifies drilling on measures that are composed from other measures - by listing uris or
+     * identifiers of components.
+     */
     composedFrom?: ISimplePostMessageData;
-}
-
-export interface IUriIdentifierPair {
-    uri: string;
-    identifier: string;
 }
 
 function isPostMessageData(item: IPostMessageData): item is IPostMessageData {
     return (item as IPostMessageData).composedFrom !== undefined;
 }
 
-function getUriFromPairByIdentifier(
-    identifier: string,
-    uriIdentifierPairs: IUriIdentifierPair[],
-    excludeUris: string[],
-): string {
-    const resolvedPair = uriIdentifierPairs
-        .filter(result => !includes(excludeUris, result.uri))
-        .find(result => result.identifier === identifier);
-
-    if (resolvedPair) {
-        return resolvedPair.uri;
-    }
-
-    return null;
-}
-
+/**
+ * Converts post message with drilling specification into header predicates. Given the message with
+ * uris, identifiers and composedFrom uris and identifiers, this function will create instances of
+ * uriMatch(), identifierMatch(), composedFromUri(), composedFromIdentifier() predicates.
+ *
+ * @param postMessageData - input received via post message
+ * @internal
+ */
 export async function convertPostMessageToDrillablePredicates(
-    projectId: string,
     postMessageData: IPostMessageData,
 ): Promise<IHeaderPredicate[]> {
     const { uris, identifiers, composedFrom } = postMessageData;
 
-    const simpleUris = isArray(uris) ? uris : [];
-    const simpleIdentifiers = isArray(identifiers) ? identifiers : [];
+    const simpleUris = isArray(uris) ? uniq(uris) : [];
+    const simpleIdentifiers = isArray(identifiers) ? uniq(identifiers) : [];
 
     const composedFromUris =
-        isPostMessageData(postMessageData) && isArray(composedFrom.uris) ? composedFrom.uris : [];
+        isPostMessageData(postMessageData) && isArray(composedFrom.uris) ? uniq(composedFrom.uris) : [];
 
     const composedFromIdentifiers =
         isPostMessageData(postMessageData) && isArray(composedFrom.identifiers)
-            ? composedFrom.identifiers
+            ? uniq(composedFrom.identifiers)
             : [];
 
-    const allIdentifiers = uniq([...simpleIdentifiers, ...composedFromIdentifiers]);
+    // note: not passing factory function to maps to make testing assertions simpler (passing factory fun-as-is
+    //  will call the factory with 3 args (value, index and all values)
 
-    const urisFromIdentifiers: IUriIdentifierPair[] = await sdk.md.getUrisFromIdentifiers(
-        projectId,
-        allIdentifiers,
-    );
-
-    const allUris = [
-        ...simpleUris,
-        ...simpleIdentifiers
-            .map(identifier => getUriFromPairByIdentifier(identifier, urisFromIdentifiers, simpleUris))
-            .filter(uri => uri),
+    return [
+        ...simpleUris.map(uri => HeaderPredicateFactory.uriMatch(uri)),
+        ...simpleIdentifiers.map(identifier => HeaderPredicateFactory.identifierMatch(identifier)),
+        ...composedFromUris.map(uri => HeaderPredicateFactory.composedFromUri(uri)),
+        ...composedFromIdentifiers.map(identifier =>
+            HeaderPredicateFactory.composedFromIdentifier(identifier),
+        ),
     ];
-
-    const allComposedFromUris = [
-        ...composedFromUris,
-        ...composedFromIdentifiers
-            .map(identifier => getUriFromPairByIdentifier(identifier, urisFromIdentifiers, composedFromUris))
-            .filter(uri => uri),
-    ];
-
-    const uniqUriPredicates = uniq(allUris).map(uri => HeaderPredicateFactory.uriMatch(uri));
-
-    const uniqComposedFromUriPredicates = uniq(allComposedFromUris).map(uri =>
-        HeaderPredicateFactory.composedFromUri(uri),
-    );
-
-    return [...uniqUriPredicates, ...uniqComposedFromUriPredicates];
 }

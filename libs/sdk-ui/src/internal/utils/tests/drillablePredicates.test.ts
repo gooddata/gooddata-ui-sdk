@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import sdk from "@gooddata/gd-bear-client";
 import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
 import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
@@ -7,65 +6,61 @@ import * as HeaderPredicateFactory from "../../../base/factory/HeaderPredicateFa
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: SpyInstance;
+    let identifierMatchSpy: SpyInstance;
     let composedFromUriSpy: SpyInstance;
-    let getUrisFromIdentifiersMock: SpyInstance;
+    let composedFromIdentifierSpy: SpyInstance;
 
-    function checkResult(result: IHeaderPredicate[], responsesCount: number) {
-        expect(result).toHaveLength(responsesCount);
+    function assertPredicates(result: IHeaderPredicate[], expectedCount: number) {
+        expect(result).toHaveLength(expectedCount);
         result.forEach(predicate => {
             expect(typeof predicate).toBe("function");
         });
     }
 
     beforeEach(() => {
-        getUrisFromIdentifiersMock = jest
-            .spyOn(sdk.md, "getUrisFromIdentifiers")
-            .mockImplementation(() =>
-                Promise.resolve([
-                    { identifier: "bar", uri: "/bar" },
-                    { identifier: "baz", uri: "/baz" },
-                    { identifier: "common", uri: "/common" },
-                ]),
-            );
         uriMatchSpy = jest.spyOn(HeaderPredicateFactory, "uriMatch");
+        identifierMatchSpy = jest.spyOn(HeaderPredicateFactory, "identifierMatch");
         composedFromUriSpy = jest.spyOn(HeaderPredicateFactory, "composedFromUri");
+        composedFromIdentifierSpy = jest.spyOn(HeaderPredicateFactory, "composedFromIdentifier");
     });
 
     afterEach(() => {
-        getUrisFromIdentifiersMock.mockReset();
         uriMatchSpy.mockRestore();
+        identifierMatchSpy.mockRestore();
         composedFromUriSpy.mockRestore();
+        composedFromIdentifierSpy.mockRestore();
     });
 
-    it("should return uriMatch predicates for combination of uris and identifiers", async () => {
+    it("should return predicates for combination of uris and identifiers", async () => {
         const data: IPostMessageData = {
             uris: ["/foo", "/measure"],
             identifiers: ["bar", "baz"],
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 4);
 
-        expect(uriMatchSpy).toHaveBeenCalledTimes(4);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 4);
+
+        expect(uriMatchSpy).toHaveBeenCalledTimes(2);
         expect(uriMatchSpy).toBeCalledWith("/foo");
         expect(uriMatchSpy).toBeCalledWith("/measure");
-        expect(uriMatchSpy).toBeCalledWith("/bar");
-        expect(uriMatchSpy).toBeCalledWith("/baz");
 
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(2);
+        expect(identifierMatchSpy).toBeCalledWith("bar");
+        expect(identifierMatchSpy).toBeCalledWith("baz");
     });
 
-    it("should return deduplicated uriMatch predicate when uri and identifier refers to same entity", async () => {
+    it("should return deduplicated predicates", async () => {
         const data: IPostMessageData = {
             uris: ["/common", "/common"],
             identifiers: ["common", "common"],
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 1);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 2);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(1);
         expect(uriMatchSpy).toBeCalledWith("/common");
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(1);
+        expect(identifierMatchSpy).toBeCalledWith("common");
     });
 
     it("should return no predicates when no identifiers and uris provided", async () => {
@@ -73,51 +68,31 @@ describe("convertPostMessageToDrillablePredicates", () => {
             uris: [],
             identifiers: [],
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 0);
+        const result = await convertPostMessageToDrillablePredicates(data);
 
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
-    });
-
-    it("should return no predicates when identifier cannot be resolved to uri", async () => {
-        const data: IPostMessageData = {
-            identifiers: ["undefinedIdentifier"],
-            uris: [],
-        };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 0);
-
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
+        assertPredicates(result, 0);
     });
 
     it("should return uriMatch predicate when only uris list provided", async () => {
         const data = {
             uris: ["/foo"],
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 1);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 1);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(1);
         expect(uriMatchSpy).toBeCalledWith("/foo");
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
     });
 
-    it("should return uriMatch predicate when only identifiers list provided", async () => {
+    it("should return identifierMatch predicate when only identifiers list provided", async () => {
         const data = {
             identifiers: ["bar"],
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 1);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 1);
 
-        expect(uriMatchSpy).toHaveBeenCalledTimes(1);
-        expect(uriMatchSpy).toBeCalledWith("/bar");
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(1);
+        expect(identifierMatchSpy).toBeCalledWith("bar");
     });
 
     it("should return composedFromUri predicates when composed uri provided", async () => {
@@ -128,10 +103,8 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 uris: ["/foo", "/bar"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 2);
-
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 2);
 
         expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
         expect(composedFromUriSpy).toBeCalledWith("/foo");
@@ -146,8 +119,8 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 uris: ["/undefinedUri"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 1);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 1);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(0);
 
@@ -155,7 +128,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
         expect(composedFromUriSpy).toBeCalledWith("/undefinedUri");
     });
 
-    it("should return composedFromUri predicates when composed identifiers provided", async () => {
+    it("should return composedFromIdentifier predicates when composed identifiers provided", async () => {
         const data: IPostMessageData = {
             identifiers: [],
             uris: [],
@@ -163,33 +136,15 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar", "baz"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 2);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 2);
 
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
-        expect(composedFromUriSpy).toBeCalledWith("/bar");
-        expect(composedFromUriSpy).toBeCalledWith("/baz");
+        expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(2);
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
+        expect(composedFromIdentifierSpy).toBeCalledWith("baz");
     });
 
-    it("should return no composedFromUri predicates when composed unresolvable identifier provided", async () => {
-        const data: IPostMessageData = {
-            identifiers: [],
-            uris: [],
-            composedFrom: {
-                identifiers: ["undefinedIdentifier"],
-            },
-        };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 0);
-
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(0);
-    });
-
-    it("should return composedFromUri predicates when composed uri and identifiers provided", async () => {
+    it("should return predicates when composed uri and identifiers provided", async () => {
         const data: IPostMessageData = {
             identifiers: [],
             uris: [],
@@ -198,59 +153,68 @@ describe("convertPostMessageToDrillablePredicates", () => {
                 identifiers: ["bar"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 2);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 2);
+
+        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
+
+        expect(composedFromUriSpy).toHaveBeenCalledTimes(1);
+        expect(composedFromUriSpy).toBeCalledWith("/foo");
+        expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(1);
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
+    });
+
+    // tslint:disable-next-line:max-line-length
+    it("should return deduplicated predicates when composed uris and identifiers provided", async () => {
+        const data: IPostMessageData = {
+            identifiers: [],
+            uris: [],
+            composedFrom: {
+                uris: ["/foo", "/common", "/common"],
+                identifiers: ["bar", "common", "common"],
+            },
+        };
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 4);
 
         expect(uriMatchSpy).toHaveBeenCalledTimes(0);
 
         expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
         expect(composedFromUriSpy).toBeCalledWith("/foo");
-        expect(composedFromUriSpy).toBeCalledWith("/bar");
-    });
-
-    // tslint:disable-next-line:max-line-length
-    it("should return deduplicated composedFromUri predicates when composed uris and identifiers provided", async () => {
-        const data: IPostMessageData = {
-            identifiers: [],
-            uris: [],
-            composedFrom: {
-                uris: ["/foo", "/common"],
-                identifiers: ["bar", "common"],
-            },
-        };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 3);
-
-        expect(uriMatchSpy).toHaveBeenCalledTimes(0);
-
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(3);
-        expect(composedFromUriSpy).toBeCalledWith("/foo");
         expect(composedFromUriSpy).toBeCalledWith("/common");
-        expect(composedFromUriSpy).toBeCalledWith("/bar");
+        expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(2);
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
+        expect(composedFromIdentifierSpy).toBeCalledWith("common");
     });
 
     it("should return deduplicated predicates when all input uris and identifiers provided", async () => {
         const data: IPostMessageData = {
-            uris: ["/foo", "/common"],
-            identifiers: ["bar", "baz", "common"],
+            uris: ["/foo", "/common", "/common"],
+            identifiers: ["bar", "baz", "common", "common"],
             composedFrom: {
-                uris: ["/foo", "/common"],
-                identifiers: ["bar", "baz", "common"],
+                uris: ["/foo", "/common", "/common"],
+                identifiers: ["bar", "baz", "common", "common"],
             },
         };
-        const result = await convertPostMessageToDrillablePredicates("projectId", data);
-        checkResult(result, 8);
+        const result = await convertPostMessageToDrillablePredicates(data);
+        assertPredicates(result, 10);
 
-        expect(uriMatchSpy).toHaveBeenCalledTimes(4);
+        expect(uriMatchSpy).toHaveBeenCalledTimes(2);
         expect(uriMatchSpy).toBeCalledWith("/foo");
         expect(uriMatchSpy).toBeCalledWith("/common");
-        expect(uriMatchSpy).toBeCalledWith("/bar");
-        expect(uriMatchSpy).toBeCalledWith("/baz");
 
-        expect(composedFromUriSpy).toHaveBeenCalledTimes(4);
+        expect(identifierMatchSpy).toHaveBeenCalledTimes(3);
+        expect(identifierMatchSpy).toBeCalledWith("bar");
+        expect(identifierMatchSpy).toBeCalledWith("baz");
+        expect(identifierMatchSpy).toBeCalledWith("common");
+
+        expect(composedFromUriSpy).toHaveBeenCalledTimes(2);
         expect(composedFromUriSpy).toBeCalledWith("/foo");
         expect(composedFromUriSpy).toBeCalledWith("/common");
-        expect(composedFromUriSpy).toBeCalledWith("/bar");
-        expect(composedFromUriSpy).toBeCalledWith("/baz");
+
+        expect(composedFromIdentifierSpy).toHaveBeenCalledTimes(3);
+        expect(composedFromIdentifierSpy).toBeCalledWith("bar");
+        expect(composedFromIdentifierSpy).toBeCalledWith("baz");
+        expect(composedFromIdentifierSpy).toBeCalledWith("common");
     });
 });
