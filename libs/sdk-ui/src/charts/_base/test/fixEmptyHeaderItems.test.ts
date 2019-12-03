@@ -1,94 +1,22 @@
-// (C) 2007-2018 GoodData Corporation
-import { GdcExecution } from "@gooddata/gd-bear-model";
+// (C) 2007-2019 GoodData Corporation
+import { pivotTableWithSubtotals } from "../../../../__mocks__/fixtures";
 import { fixEmptyHeaderItems } from "../fixEmptyHeaderItems";
+import cloneDeep = require("lodash/cloneDeep");
 
-function getExecutionResult(): GdcExecution.IExecutionResult {
-    return {
-        data: null,
-        paging: {
-            count: [2, 7],
-            offset: [0, 0],
-            total: [2, 7],
-        },
-        headerItems: [
-            [
-                [
-                    {
-                        attributeHeaderItem: {
-                            name: "2014",
-                            uri: "/gdc/md/oqxssdt6v69m9n7hn0dl5qfegxh57m43/obj/324/elements?id=2014",
-                        },
-                    },
-                    {
-                        attributeHeaderItem: {
-                            name: "2016",
-                            uri: "/gdc/md/oqxssdt6v69m9n7hn0dl5qfegxh57m43/obj/324/elements?id=2016",
-                        },
-                    },
-                    {
-                        attributeHeaderItem: {
-                            name: "2017",
-                            uri: "/gdc/md/oqxssdt6v69m9n7hn0dl5qfegxh57m43/obj/324/elements?id=2017",
-                        },
-                    },
-                ],
-            ],
-            [
-                [
-                    {
-                        attributeHeaderItem: {
-                            name: "East Coast",
-                            uri: "/gdc/md/oqxssdt6v69m9n7hn0dl5qfegxh57m43/obj/1024/elements?id=1225",
-                        },
-                    },
-                    {
-                        attributeHeaderItem: {
-                            name: "",
-                            uri: "/gdc/md/oqxssdt6v69m9n7hn0dl5qfegxh57m43/obj/1024/elements?id=1237",
-                        },
-                    },
-                ],
-                [
-                    {
-                        measureHeaderItem: {
-                            name: "m1",
-                            order: 0,
-                        },
-                    },
-                    {
-                        measureHeaderItem: {
-                            name: "",
-                            order: 0,
-                        },
-                    },
-                ],
-                [
-                    {
-                        totalHeaderItem: {
-                            name: "",
-                            type: "unknown",
-                        },
-                    },
-                ],
-            ],
-        ],
-    };
-}
-
-const EMPTY_HEADER_STRING = "empty-value-translation";
+const EmptyHeaderString = "EmptyHeader";
+const TestInput = pivotTableWithSubtotals.dataView;
 
 describe("fixEmptyHeaderItems", () => {
-    it("should handle missing headerItems", () => {
-        const missingHeaders = getExecutionResult();
-        delete missingHeaders.headerItems;
-        expect(fixEmptyHeaderItems(missingHeaders, EMPTY_HEADER_STRING)).toEqual(missingHeaders);
-    });
-
     it("should replace empty values in all types of headerItems", () => {
-        const fixed = fixEmptyHeaderItems(getExecutionResult(), EMPTY_HEADER_STRING) as any;
+        const missingHeaders: any = cloneDeep(TestInput);
+        missingHeaders.headerItems[0][0][0].attributeHeaderItem.name = "";
+        missingHeaders.headerItems[1][0][0].measureHeaderItem.name = "";
+        missingHeaders.headerItems[0][2][2].totalHeaderItem.name = "";
 
-        expect(fixed.headerItems[1][0][1].attributeHeaderItem.name).toEqual(EMPTY_HEADER_STRING);
-        expect(fixed.headerItems[1][1][1].measureHeaderItem.name).toEqual(EMPTY_HEADER_STRING);
-        expect(fixed.headerItems[1][2][0].totalHeaderItem.name).toEqual(EMPTY_HEADER_STRING);
+        fixEmptyHeaderItems(missingHeaders, EmptyHeaderString);
+
+        expect(missingHeaders.headerItems[0][0][0].attributeHeaderItem.name).toEqual(EmptyHeaderString);
+        expect(missingHeaders.headerItems[1][0][0].measureHeaderItem.name).toEqual(EmptyHeaderString);
+        expect(missingHeaders.headerItems[0][2][2].totalHeaderItem.name).toEqual(EmptyHeaderString);
     });
 });

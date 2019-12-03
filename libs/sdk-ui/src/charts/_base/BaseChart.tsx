@@ -13,7 +13,7 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "../../base/translations/TranslationsProvider";
-import { fixEmptyHeaderItems2 } from "./fixEmptyHeaderItems";
+import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
 import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
@@ -76,7 +76,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
                         // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
-                        fixEmptyHeaderItems2(dataView, translationProps.emptyHeaderString);
+                        fixEmptyHeaderItems(dataView, translationProps.emptyHeaderString);
 
                         return (
                             <this.props.visualizationComponent

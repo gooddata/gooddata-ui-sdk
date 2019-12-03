@@ -3,7 +3,6 @@ import * as React from "react";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
-import { IValidElementsResponse } from "@gooddata/gd-bear-client";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import * as classNames from "classnames";
 
@@ -11,19 +10,6 @@ import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { VISIBLE_ITEMS_COUNT } from "./AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
 import { IElementQueryResultWithEmptyItems, EmptyListItem } from "./types";
-
-export interface IValidElementsItem {
-    uri: string;
-    title: string;
-}
-
-export interface IAttributeMetadata {
-    getValidElements: (
-        projectId: string,
-        objectId: string,
-        options: object,
-    ) => Promise<IValidElementsResponse>;
-}
 
 export interface IAttributeDropdownProps {
     title: string;
@@ -34,12 +20,6 @@ export interface IAttributeDropdownProps {
 
     onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
-}
-
-export interface IAttributeDropdownStateItem {
-    title: string;
-    uri: string;
-    selected?: boolean;
 }
 
 export interface IAttributeDropdownState {
