@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IHeaderParams } from "ag-grid-community";
+import { IHeaderParams } from "@ag-grid-community/all-modules";
 import * as React from "react";
 import { IntlShape } from "react-intl";
 import { IMenu, IMenuAggregationClickConfig } from "../types";

@@ -3,6 +3,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/approved-packages.schema.json",
   "packages": [
     {
+      "name": "@ag-grid-community/all-modules",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@ag-grid-community/infinite-row-model",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@ag-grid-community/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@babel/core",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -404,6 +416,14 @@
     },
     {
       "name": "jest-environment-enzyme",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest-environment-jsdom-fifteen",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest-environment-jsdom-fourteen",
       "allowedCategories": [ "production" ]
     },
     {

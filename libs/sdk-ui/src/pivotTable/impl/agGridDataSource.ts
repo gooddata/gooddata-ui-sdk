@@ -1,8 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { DataViewFacade, IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
-
+import { GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
 import { COLS_PER_PAGE, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { getSortsFromModel } from "./agGridSorting";
 import { DatasourceConfig, ISortModelItem, TableHeaders } from "./agGridTypes";

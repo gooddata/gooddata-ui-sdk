@@ -33,7 +33,7 @@ import {
     isMeasureLocator,
     isMeasureSort,
 } from "@gooddata/sdk-model";
-import { ColDef } from "ag-grid-community";
+import { ColDef } from "@ag-grid-community/all-modules";
 import range = require("lodash/range");
 import clone = require("lodash/clone");
 import invariant = require("invariant");

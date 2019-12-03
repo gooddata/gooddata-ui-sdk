@@ -1,12 +1,14 @@
-// (C) 2007-2019 GoodData Corporation
-import { GridApi } from "ag-grid-community";
+// (C) 2007-2020 GoodData Corporation
+import { GridApi } from "@ag-grid-community/all-modules";
 
 function getHeaderHeight(gridApi: GridApi): number {
     return (gridApi as any).headerRootComp.eHeaderContainer.clientHeight;
 }
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
-    const rowComp = (gridApi as any).rowRenderer.rowCompsByIndex[rowIndex];
+    const rowRenderer = (gridApi as any).rowRenderer;
+    const rowComp = rowRenderer.rowCompsByIndex[rowIndex];
+
     return rowComp && rowComp.cellComps[attributeId] ? rowComp.cellComps[attributeId].eGui : null;
 }
 
@@ -27,8 +29,7 @@ function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number
 function getPaginationBottomRowIndex(gridApi: GridApi): number | null {
     const paginationProxy = (gridApi as any).paginationProxy;
     if (paginationProxy) {
-        const index = paginationProxy.bottomRowIndex;
-        return typeof index === "number" ? index : null;
+        return paginationProxy.bottomRowBounds?.rowIndex ?? null;
     }
 
     return null;

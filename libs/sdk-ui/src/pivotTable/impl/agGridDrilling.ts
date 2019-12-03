@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { getMappingHeaderUri, IMappingHeader } from "../../base";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
-import { ColDef } from "ag-grid-community";
+import { ColDef } from "@ag-grid-community/all-modules";
 import { IGridHeader } from "./agGridTypes";
 import {
     IAttributeDescriptor,

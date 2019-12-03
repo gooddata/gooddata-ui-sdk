@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { ITotal } from "@gooddata/sdk-model";
-import { ColGroupDef, IHeaderGroupParams } from "ag-grid-community";
+import { ColGroupDef, IHeaderGroupParams } from "@ag-grid-community/all-modules";
 import * as React from "react";
 import { IntlShape } from "react-intl";
 

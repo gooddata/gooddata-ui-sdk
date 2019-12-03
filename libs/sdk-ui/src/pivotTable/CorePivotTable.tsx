@@ -11,15 +11,16 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint, defTotals, ITotal, SortDirection } from "@gooddata/sdk-model";
 import {
+    AllCommunityModules,
     BodyScrollEvent,
+    CellClassParams,
     ColumnResizedEvent,
     GridApi,
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
-} from "ag-grid-community";
-import { CellClassParams } from "ag-grid-community/dist/lib/entities/colDef";
-import { AgGridReact } from "ag-grid-react";
+} from "@ag-grid-community/all-modules";
+import { AgGridReact } from "@ag-grid-community/react";
 import * as classNames from "classnames";
 import * as CustomEvent from "custom-event";
 import * as React from "react";
@@ -338,7 +339,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    <AgGridReact {...this.gridOptions} />
+                    <AgGridReact {...this.gridOptions} modules={AllCommunityModules} />
                 </div>
             </div>
         );
@@ -967,10 +968,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (!this.gridApi) {
             return 0;
         }
-        const actualWidth = this.containerRef && this.containerRef.scrollWidth;
-        const preferredWidth = this.gridApi.getPreferredWidth();
-        const hasHorizontalScrollBar = actualWidth < preferredWidth;
-        return hasHorizontalScrollBar ? getScrollbarWidth() : 0;
+
+        if (!this.containerRef) {
+            return 0;
+        }
+
+        // see: https://stackoverflow.com/questions/4880381/check-whether-html-element-has-scrollbars
+        return this.containerRef.scrollWidth > this.containerRef.clientWidth ? getScrollbarWidth() : 0;
     }
 
     private calculateDesiredHeight(dv: DataViewFacade): number {

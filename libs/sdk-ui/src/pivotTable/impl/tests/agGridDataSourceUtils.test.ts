@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { areTotalsChanged, isInvalidGetRowsRequest } from "../agGridDataSourceUtils";
 import { IGridTotalsRow } from "../agGridTypes";
 
@@ -7,7 +7,9 @@ describe("getGridDataSourceUtils", () => {
         function mockGridApi(bottomRowIndex: number | null): any {
             return {
                 paginationProxy: {
-                    bottomRowIndex,
+                    bottomRowBounds: {
+                        rowIndex: bottomRowIndex,
+                    },
                 },
             };
         }

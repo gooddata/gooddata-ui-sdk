@@ -1,7 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IExecutionResult, isMeasureGroupDescriptor, isTotalDescriptor } from "@gooddata/sdk-backend-spi";
-import { IDimension } from "@gooddata/sdk-model";
-import { ICellRendererParams } from "ag-grid-community";
+import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { getMappingHeaderUri, IMappingHeader } from "../../base";
 import {
     DOT_PLACEHOLDER,
@@ -14,6 +12,8 @@ import {
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
 import escape = require("lodash/escape");
+import { isTotalDescriptor, isMeasureGroupDescriptor, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IDimension } from "@gooddata/sdk-model";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
