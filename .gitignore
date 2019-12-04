@@ -63,6 +63,12 @@ dist-storybook
 # Common toolchain intermediate files
 temp
 
+#
+libs/sdk-ui-tests/dist-storybook
+libs/sdk-ui-tests/backstop/stories.json
+libs/sdk-ui-tests/backstop/output/**
+
+
 # Rush files
 common/temp/**
 package-deps.json

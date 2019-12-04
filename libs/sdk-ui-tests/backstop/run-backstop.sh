@@ -32,12 +32,14 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
 
     echo "Starting BackstopJS in mode: $1"
 
-    docker run --rm \
-        --net ${NETWORK} --net-alias backstop \
-        --volume ${BACKSTOP_DIR}:/src backstopjs/backstopjs:4.3.4 \
-        --config=/src/backstop.config.js $1
+    {
+        docker run --rm \
+            --net ${NETWORK} --net-alias backstop \
+            --volume ${BACKSTOP_DIR}:/src backstopjs/backstopjs:4.3.4 \
+            --config=/src/backstop.config.js $1
 
-    echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
+        echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
+    }
 
     docker kill ${NGINX_CONTAINER}
 }

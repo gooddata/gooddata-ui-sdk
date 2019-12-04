@@ -13,10 +13,10 @@ const backstopConfig = {
     ],
     scenarios,
     paths: {
-        bitmaps_reference: "data/reference",
-        bitmaps_test: "data/tests",
-        html_report: "data/html-report",
-        ci_report: "data/ci-report",
+        bitmaps_reference: "reference",
+        bitmaps_test: "output/tests",
+        html_report: "output/html-report",
+        ci_report: "output/ci-report",
     },
     engine: "puppeteer",
     engineOptions: {
