@@ -101,16 +101,15 @@ export interface IBucketChartProps extends ICommonChartProps {
     /**
      * Analytical backend, from which the chart will obtain data to visualize
      *
-     * TODO: SDK8: make this optional; obtain singleton analytical backend
      */
-    backend: IAnalyticalBackend;
+    backend?: IAnalyticalBackend;
 
     /**
      * Workspace, from which the chart will obtain data to visualize.
      *
      * TODO: SDK8: perhaps should also accept IAnalyticalWorkspace as input
      */
-    workspace: string;
+    workspace?: string;
 }
 
 //

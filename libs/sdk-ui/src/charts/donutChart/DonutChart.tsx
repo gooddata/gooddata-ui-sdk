@@ -1,11 +1,32 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
-import * as React from "react";
 import { MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreDonutChart } from "./CoreDonutChart";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition";
+import { withChart } from "../_base/withChart";
+
+//
+// Internals
+//
+
+const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChartProps> = {
+    bucketPropsKeys: ["measures", "viewBy", "filters"],
+    bucketsFactory: props => {
+        return [newBucket(MEASURES, ...props.measures), newBucket(VIEW, props.viewBy)];
+    },
+    executionFactory: (props, buckets) => {
+        const { backend, workspace } = props;
+
+        return backend
+            .withTelemetry("DonutChart", props)
+            .workspace(workspace)
+            .execution()
+            .forBuckets(buckets, props.filters)
+            .withDimensions(roundChartDimensions);
+    },
+};
 
 //
 // Public interface
@@ -35,29 +56,4 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
  *
  * @public
  */
-export function DonutChart(props: IDonutChartProps): JSX.Element {
-    return <CoreDonutChart {...getProps(props)} />;
-}
-
-//
-// Internals
-//
-
-const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChartProps> = {
-    bucketPropsKeys: ["measures", "viewBy", "filters"],
-    bucketsFactory: props => {
-        return [newBucket(MEASURES, ...props.measures), newBucket(VIEW, props.viewBy)];
-    },
-    executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
-
-        return backend
-            .withTelemetry("DonutChart", props)
-            .workspace(workspace)
-            .execution()
-            .forBuckets(buckets, props.filters)
-            .withDimensions(roundChartDimensions);
-    },
-};
-
-const getProps = getCoreChartProps(donutChartDefinition);
+export const DonutChart = withChart(donutChartDefinition)(CoreDonutChart);

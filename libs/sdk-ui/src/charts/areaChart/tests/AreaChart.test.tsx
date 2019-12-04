@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 
 import { AreaChart } from "../AreaChart";
 import { IChartConfig } from "../../../highcharts";
@@ -9,10 +9,8 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreAreaChart } from "../CoreAreaChart";
 import { M1, M1WithRatio } from "../../tests/fixtures";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
-    return shallow(
-        <AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />,
-    );
+function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+    return mount(<AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />);
 }
 
 describe("AreaChart", () => {

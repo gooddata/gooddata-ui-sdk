@@ -54,8 +54,8 @@ export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
 }
 
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
 }
 
 export interface IPivotTableBucketProps {

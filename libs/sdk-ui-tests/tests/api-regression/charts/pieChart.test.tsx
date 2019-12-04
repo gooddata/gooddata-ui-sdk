@@ -13,7 +13,9 @@ describe("PieChart", () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory);
+        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>
+            wrapper.find("CorePieChart").props(),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;

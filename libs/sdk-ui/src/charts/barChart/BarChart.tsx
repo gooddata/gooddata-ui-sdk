@@ -7,7 +7,6 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import * as React from "react";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { IBucketChartProps } from "../chartProps";
 import { truncate } from "../_commons/truncate";
@@ -15,39 +14,8 @@ import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { sanitizeConfig } from "../../highcharts";
 import { CoreBarChart } from "./CoreBarChart";
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
-
-//
-// Public interface
-//
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IBarChartBucketProps {
-    measures: AttributeOrMeasure[];
-    viewBy?: IAttribute | IAttribute[];
-    stackBy?: IAttribute;
-    filters?: IFilter[];
-    sortBy?: SortItem[];
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {
-    workspace: string;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export function BarChart(props: IBarChartProps): JSX.Element {
-    return <CoreBarChart {...getProps(props)} />;
-}
+import { IChartDefinition } from "../_commons/chartDefinition";
+import { withChart } from "../_base/withChart";
 
 //
 // Internals
@@ -83,4 +51,30 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
     },
 };
 
-const getProps = getCoreChartProps(barChartDefinition);
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IBarChartBucketProps {
+    measures: AttributeOrMeasure[];
+    viewBy?: IAttribute | IAttribute[];
+    stackBy?: IAttribute;
+    filters?: IFilter[];
+    sortBy?: SortItem[];
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export const BarChart = withChart(barChartDefinition)(CoreBarChart);

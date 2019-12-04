@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { BubbleChart } from "../BubbleChart";
 import { IAttribute, IAttributeSortItem, IMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -64,12 +64,12 @@ describe("BubbleChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(<BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={M1} />);
+        const wrapper = mount(<BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={M1} />);
         expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
     });
 
     it("should render scatter plot and convert the buckets to AFM", () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <BubbleChart
                 workspace="foo"
                 backend={dummyBackend()}

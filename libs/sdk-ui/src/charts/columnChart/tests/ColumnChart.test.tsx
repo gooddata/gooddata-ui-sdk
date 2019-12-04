@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -8,8 +8,8 @@ import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@goo
 import { CoreColumnChart } from "../CoreColumnChart";
 import { M1, M1WithRatio } from "../../tests/fixtures";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
-    return shallow(
+function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+    return mount(
         <ColumnChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />,
     );
 }
@@ -65,7 +65,7 @@ describe("ColumnChart", () => {
     });
 
     it("should render column chart and convert the buckets to AFM", () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <ColumnChart
                 workspace="foo"
                 backend={dummyBackend()}

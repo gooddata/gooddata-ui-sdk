@@ -244,7 +244,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             return;
         }
 
-        const { dimensions, custom, locale, config } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%

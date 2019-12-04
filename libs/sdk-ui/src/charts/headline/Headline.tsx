@@ -8,6 +8,7 @@ import { Subtract } from "../../base/typings/subtract";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
+import { withContexts } from "../../context/withContexts";
 
 //
 // Public interface
@@ -37,7 +38,9 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
  *
  * @public
  */
-export function Headline(props: IHeadlineProps): JSX.Element {
+export const Headline = withContexts(RenderHeadline);
+
+export function RenderHeadline(props: IHeadlineProps): JSX.Element {
     return <CoreHeadline {...toCoreHeadlineProps(props)} />;
 }
 

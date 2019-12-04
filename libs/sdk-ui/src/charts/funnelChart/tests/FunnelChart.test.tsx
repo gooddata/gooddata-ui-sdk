@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { FunnelChart } from "../FunnelChart";
 import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -44,12 +44,12 @@ describe("FunnelChart", () => {
     };
 
     it("should render with custom SDK", () => {
-        const wrapper = shallow(<FunnelChart workspace="foo" backend={dummyBackend()} measures={[M1]} />);
+        const wrapper = mount(<FunnelChart workspace="foo" backend={dummyBackend()} measures={[M1]} />);
         expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);
     });
 
     it("should render funnel chart and convert the buckets to AFM", () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <FunnelChart
                 workspace="foo"
                 backend={dummyBackend()}

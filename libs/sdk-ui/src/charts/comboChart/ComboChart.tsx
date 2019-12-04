@@ -8,49 +8,15 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import * as React from "react";
 import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
 import get = require("lodash/get");
 import isArray = require("lodash/isArray");
-
-//
-// Public interface
-//
-
-/**
- * TODO: SDK8: add docs
- *
- * @public
- */
-export interface IComboChartBucketProps {
-    primaryMeasures?: IMeasure[];
-    secondaryMeasures?: IMeasure[];
-    viewBy?: IAttribute | IAttribute[];
-    filters?: IFilter[];
-    sortBy?: SortItem[];
-}
-
-/**
- * TODO: SDK8: add docs
- *
- * @public
- */
-export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {}
-
-/**
- * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
- * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
- *
- * @public
- */
-export function ComboChart(props: IComboChartProps): JSX.Element {
-    return <CoreComboChart {...getProps(props)} />;
-}
+import { withChart } from "../_base/withChart";
 
 //
 // Internals
@@ -100,8 +66,6 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
     },
 };
 
-const getProps = getCoreChartProps(comboChartDefinition);
-
 function getConfiguration(props: IComboChartProps): IChartConfig {
     const { primaryMeasures, secondaryMeasures, config } = props;
     const isDualAxis = get(props, "config.dualAxis", true);
@@ -109,3 +73,35 @@ function getConfiguration(props: IComboChartProps): IChartConfig {
 
     return sanitizeConfig(measuresOnPrimaryAxis, config);
 }
+
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export interface IComboChartBucketProps {
+    primaryMeasures?: IMeasure[];
+    secondaryMeasures?: IMeasure[];
+    viewBy?: IAttribute | IAttribute[];
+    filters?: IFilter[];
+    sortBy?: SortItem[];
+}
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export interface IComboChartProps extends IBucketChartProps, IComboChartBucketProps {}
+
+/**
+ * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
+ * is a component with bucket props primaryMeasures, secondaryMeasures, viewBy, filters
+ *
+ * @public
+ */
+export const ComboChart = withChart(comboChartDefinition)(CoreComboChart);

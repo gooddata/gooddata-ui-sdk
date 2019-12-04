@@ -12,7 +12,9 @@ describe("Headline", () => {
     ).asTestInput();
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory);
+        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>
+            wrapper.find("LoadingHOC").props(),
+        );
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;

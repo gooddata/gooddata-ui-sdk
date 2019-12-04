@@ -1,11 +1,36 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
-import * as React from "react";
 import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../base/constants/bucketNames";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreScatterPlot } from "./CoreScatterPlot";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition";
+import { withChart } from "../_base/withChart";
+
+//
+// Internals
+//
+
+const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterPlotProps> = {
+    bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
+    bucketsFactory: props => {
+        return [
+            newBucket(MEASURES, props.xAxisMeasure),
+            newBucket(SECONDARY_MEASURES, props.yAxisMeasure),
+            newBucket(ATTRIBUTE, props.attribute),
+        ];
+    },
+    executionFactory: (props, buckets) => {
+        const { backend, workspace } = props;
+
+        return backend
+            .withTelemetry("ScatterPlot", props)
+            .workspace(workspace)
+            .execution()
+            .forBuckets(buckets, props.filters)
+            .withDimensions(pointyChartDimensions);
+    },
+};
 
 //
 // Public interface
@@ -37,33 +62,4 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
  *
  * @public
  */
-export function ScatterPlot(props: IScatterPlotProps): JSX.Element {
-    return <CoreScatterPlot {...getProps(props)} />;
-}
-
-//
-// Internals
-//
-
-const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterPlotProps> = {
-    bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
-    bucketsFactory: props => {
-        return [
-            newBucket(MEASURES, props.xAxisMeasure),
-            newBucket(SECONDARY_MEASURES, props.yAxisMeasure),
-            newBucket(ATTRIBUTE, props.attribute),
-        ];
-    },
-    executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
-
-        return backend
-            .withTelemetry("ScatterPlot", props)
-            .workspace(workspace)
-            .execution()
-            .forBuckets(buckets, props.filters)
-            .withDimensions(pointyChartDimensions);
-    },
-};
-
-const getProps = getCoreChartProps(scatterPlotDefinition);
+export const ScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
