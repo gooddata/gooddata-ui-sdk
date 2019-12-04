@@ -29,7 +29,10 @@
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
         "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check",
         "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
-        "build-storybook": "npm run build && npm run story-extractor && build-storybook -c .storybook -o dist-storybook"
+        "build-storybook": "npm run build && npm run story-extractor && build-storybook -c .storybook -o dist-storybook",
+        "backstop-test": "bash backstop/run-backstop.sh test",
+        "backstop-approve": "bash backstop/run-backstop.sh approve",
+        "backstop-reference": "bash backstop/run-backstop.sh reference"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {

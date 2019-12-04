@@ -17,6 +17,7 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
 {
     echo "Starting nginx container serving storybooks"
 
+    # Note: careful with the net-alias; it is used as hostname in scenarios.config.js
     NGINX_CONTAINER=$(docker run --rm \
         --detach \
         --net ${NETWORK} --net-alias storybook \
@@ -26,7 +27,8 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
 
     echo "nginx container started: ${NGINX_CONTAINER}"
 
-    sleep 2;
+    # TODO Yea right.. nginx starts quite fast but this will ultimately fail on some overloaded slaves.
+    sleep 2
 
     echo "Starting BackstopJS in mode: $1"
 
