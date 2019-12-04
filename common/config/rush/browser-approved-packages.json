@@ -7,6 +7,22 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@babel/plugin-proposal-export-default-from",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@babel/plugin-transform-typescript",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@babel/preset-env",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@babel/preset-react",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@babel/runtime",
       "allowedCategories": [ "production" ]
     },
@@ -139,6 +155,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@types/jsdom",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/json-stable-stringify",
       "allowedCategories": [ "production" ]
     },
@@ -239,6 +259,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "babel-plugin-require-context-hook",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "babel-runtime",
       "allowedCategories": [ "production" ]
     },
@@ -260,7 +284,7 @@
     },
     {
       "name": "commander",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "core-js",
@@ -344,6 +368,10 @@
     },
     {
       "name": "js-object-pretty-print",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jsdom",
       "allowedCategories": [ "production" ]
     },
     {
@@ -435,12 +463,20 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "require-context.macro",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "rimraf",
       "allowedCategories": [ "tools" ]
     },
     {
       "name": "sass-loader",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "serve",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "spark-md5",

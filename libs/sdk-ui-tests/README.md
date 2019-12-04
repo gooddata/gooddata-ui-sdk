@@ -177,3 +177,16 @@ When creating new test scenarios, proceed as follows:
 Note: if at any point you realize that the recordings need to be completely re-done, then it is safe to delete
 `tools/reference-workspace/src/recordings/uiTestScenarios`; following the above steps will then lead to
 complete refresh.
+
+#### Technical Funny Stuff
+
+This project has several use cases where React component test scenarios have to be processed in node.js environment:
+
+-   Capturing execution definitions for visualizations implemented by React components
+-   Building BackstopJS configuration for visual regression testing
+
+In both of these cases code that is normally interpreted in browsers needs to run on server/workstation.
+
+To simplify and speed up initial development, the project mis-uses jest to run code that requires simulation of
+browser environment in node. A proper solution (perhaps using browser-env) is definitely possible but comes with
+its own price-tag while leading to the same results as current solution.
