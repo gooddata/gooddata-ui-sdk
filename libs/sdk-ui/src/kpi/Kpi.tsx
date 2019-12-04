@@ -12,45 +12,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { IntlWrapper } from "../base/translations/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
-
-//
-// Public interface
-//
-
-/**
- * TODO: SDK8: add docs
- *
- * @public
- */
-export interface IKpiProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
-    measure: IMeasure;
-    filters?: IFilter[];
-    separators?: ISeparators;
-    locale?: string;
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    onLoadingStart?: IExecutorProps["onLoadingStart"];
-    onLoadingChanged?: IExecutorProps["onLoadingChanged"];
-    onLoadingFinish?: IExecutorProps["onLoadingFinish"];
-    onError?: IExecutorProps["onError"];
-}
-
-/**
- * TODO: SDK8: add docs
- *
- * @public
- */
-export const Kpi: React.StatelessComponent<IKpiProps> = props => {
-    const { locale } = props;
-    return (
-        <IntlWrapper locale={locale}>
-            <IntlKpi {...props} />
-        </IntlWrapper>
-    );
-};
-
+import { withContexts } from "../context/withContexts";
 //
 // Internals
 //
@@ -135,3 +97,43 @@ const getMeasureFormat = (result: DataViewFacade) => {
 };
 
 const IntlKpi = injectIntl(CoreKpi);
+
+const RenderKpi: React.FC<IKpiProps> = props => {
+    const { locale } = props;
+    return (
+        <IntlWrapper locale={locale}>
+            <IntlKpi {...props} />
+        </IntlWrapper>
+    );
+};
+
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export interface IKpiProps {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    measure: IMeasure;
+    filters?: IFilter[];
+    separators?: ISeparators;
+    locale?: string;
+    LoadingComponent?: React.ComponentType<ILoadingProps>;
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    onLoadingStart?: IExecutorProps["onLoadingStart"];
+    onLoadingChanged?: IExecutorProps["onLoadingChanged"];
+    onLoadingFinish?: IExecutorProps["onLoadingFinish"];
+    onError?: IExecutorProps["onError"];
+}
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export const Kpi = withContexts(RenderKpi);

@@ -1,11 +1,36 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
-import * as React from "react";
 import { MEASURES, SEGMENT, VIEW } from "../../base/constants/bucketNames";
 import { treemapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreTreemap } from "./CoreTreemap";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition";
+import { withChart } from "../_base/withChart";
+
+//
+// Internals
+//
+
+const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = {
+    bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
+    bucketsFactory: props => {
+        return [
+            newBucket(MEASURES, ...props.measures),
+            newBucket(VIEW, props.viewBy),
+            newBucket(SEGMENT, props.segmentBy),
+        ];
+    },
+    executionFactory: (props, buckets) => {
+        const { backend, workspace } = props;
+
+        return backend
+            .withTelemetry("Treemap", props)
+            .workspace(workspace)
+            .execution()
+            .forBuckets(buckets, props.filters)
+            .withDimensions(treemapDimensions);
+    },
+};
 
 //
 // Public interface
@@ -45,36 +70,7 @@ export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {}
  *
  * @public
  */
-export function Treemap(props: ITreemapProps): JSX.Element {
-    return <CoreTreemap {...getProps(props)} />;
-}
-
-//
-// Internals
-//
-
-const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = {
-    bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
-    bucketsFactory: props => {
-        return [
-            newBucket(MEASURES, ...props.measures),
-            newBucket(VIEW, props.viewBy),
-            newBucket(SEGMENT, props.segmentBy),
-        ];
-    },
-    executionFactory: (props, buckets) => {
-        const { backend, workspace } = props;
-
-        return backend
-            .withTelemetry("Treemap", props)
-            .workspace(workspace)
-            .execution()
-            .forBuckets(buckets, props.filters)
-            .withDimensions(treemapDimensions);
-    },
-};
-
-const getProps = getCoreChartProps(treemapDefinition);
+export const Treemap = withChart(treemapDefinition)(CoreTreemap);
 
 /*
 

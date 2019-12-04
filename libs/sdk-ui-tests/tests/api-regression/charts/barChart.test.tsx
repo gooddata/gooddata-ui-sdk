@@ -13,7 +13,9 @@ describe("BarChart", () => {
     );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
-        const promisedInteractions = mountChartAndCapture(Component, propsFactory);
+        const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper => {
+            return wrapper.find("CoreBarChart").props();
+        });
 
         it("should create expected execution definition", async () => {
             const interactions = await promisedInteractions;

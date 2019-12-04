@@ -7,7 +7,6 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import * as React from "react";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
@@ -15,41 +14,9 @@ import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
-import { getCoreChartProps, IChartDefinition } from "../_commons/chartDefinition";
+import { IChartDefinition } from "../_commons/chartDefinition";
 import isNil = require("lodash/isNil");
-
-//
-// Public interface
-//
-
-/**
- * TODO: SDK8: describe buckets
- *
- * @public
- */
-export interface IAreaChartBucketProps {
-    measures: AttributeOrMeasure[];
-    viewBy?: IAttribute | IAttribute[];
-    stackBy?: IAttribute;
-    filters?: IFilter[];
-    sortBy?: SortItem[];
-}
-
-/**
- * @public
- */
-export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {}
-
-/**
- * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
- * is a component with bucket props measures, viewBy, stacksBy, filters
- *
- * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
- * @public
- */
-export function AreaChart(props: IAreaChartProps): JSX.Element {
-    return <CoreAreaChart {...getProps(props)} />;
-}
+import { withChart } from "../_base/withChart";
 
 //
 // Internals
@@ -160,4 +127,33 @@ export function verifyBuckets(props: IAreaChartProps): void {
     }
 }
 
-const getProps = getCoreChartProps(areaChartDefinition);
+//
+// Public interface
+//
+
+/**
+ * TODO: SDK8: describe buckets
+ *
+ * @public
+ */
+export interface IAreaChartBucketProps {
+    measures: AttributeOrMeasure[];
+    viewBy?: IAttribute | IAttribute[];
+    stackBy?: IAttribute;
+    filters?: IFilter[];
+    sortBy?: SortItem[];
+}
+
+/**
+ * @public
+ */
+export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {}
+
+/**
+ * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
+ * is a component with bucket props measures, viewBy, stacksBy, filters
+ *
+ * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
+ * @public
+ */
+export const AreaChart = withChart(areaChartDefinition)(CoreAreaChart);

@@ -24,47 +24,7 @@ import {
     ITranslationsComponentProps,
 } from "../base/translations/TranslationsProvider";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-
-type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
-/**
- * Update link to documentation [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html)
- * is a component with bucket props measures, rows, columns, totals, sortBy, filters
- */
-export class PivotTable extends React.Component<IPivotTableProps> {
-    public static defaultProps: Partial<IPivotTableProps> = {
-        groupRows: true,
-    };
-
-    public render() {
-        const { exportTitle } = this.props;
-
-        const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
-            this.props,
-            ["measures", "rows", "columns", "totals", "filters", "sortBy"],
-        );
-
-        const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
-
-        const execution = prepareExecution(this.props);
-
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <IntlTranslationsProvider>
-                    {(translationProps: ITranslationsComponentProps) => {
-                        return (
-                            <CorePivotTable
-                                {...corePivotProps}
-                                intl={translationProps.intl}
-                                execution={execution}
-                                exportTitle={exportTitle}
-                            />
-                        );
-                    }}
-                </IntlTranslationsProvider>
-            </IntlWrapper>
-        );
-    }
-}
+import { withContexts } from "../context/withContexts";
 
 /**
  * Prepares new execution matching pivot table props.
@@ -119,3 +79,47 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
         },
     ];
 }
+
+type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
+
+class RenderPivotTable extends React.Component<IPivotTableProps> {
+    public static defaultProps: Partial<IPivotTableProps> = {
+        groupRows: true,
+    };
+
+    public render() {
+        const { exportTitle } = this.props;
+
+        const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
+            this.props,
+            ["measures", "rows", "columns", "totals", "filters", "sortBy"],
+        );
+
+        const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
+
+        const execution = prepareExecution(this.props);
+
+        return (
+            <IntlWrapper locale={this.props.locale}>
+                <IntlTranslationsProvider>
+                    {(translationProps: ITranslationsComponentProps) => {
+                        return (
+                            <CorePivotTable
+                                {...corePivotProps}
+                                intl={translationProps.intl}
+                                execution={execution}
+                                exportTitle={exportTitle}
+                            />
+                        );
+                    }}
+                </IntlTranslationsProvider>
+            </IntlWrapper>
+        );
+    }
+}
+
+/**
+ * Update link to documentation [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html)
+ * is a component with bucket props measures, rows, columns, totals, sortBy, filters
+ */
+export const PivotTable = withContexts(RenderPivotTable);

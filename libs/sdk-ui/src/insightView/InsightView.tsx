@@ -35,6 +35,7 @@ import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
 import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
 import { DEFAULT_LOCALE } from "../base/constants/localization";
 import { ILocale } from "../base/interfaces/Locale";
+import { withContexts } from "../context/withContexts";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
@@ -63,14 +64,14 @@ const getVisualizationForInsight = (insight: IInsight) => {
 };
 
 interface IInsightViewProps extends Partial<IVisCallbacks> {
-    backend: IAnalyticalBackend;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     filters?: IFilter[];
     id: string;
     locale?: ILocale;
     LoadingComponent?: React.ComponentType<ILoadingProps>;
     visualizationProps?: IVisProps;
-    workspace: string;
 }
 
 interface IInsightViewState {
@@ -80,7 +81,7 @@ interface IInsightViewState {
 
 const getElementId = () => `gd-vis-${uuid.v4()}`;
 
-export class InsightView extends React.Component<IInsightViewProps, IInsightViewState> {
+class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewState> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
@@ -276,3 +277,5 @@ export class InsightView extends React.Component<IInsightViewProps, IInsightView
         );
     }
 }
+
+export const InsightView = withContexts(RenderInsightView);

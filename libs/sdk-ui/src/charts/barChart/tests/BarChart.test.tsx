@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -16,8 +16,8 @@ import {
 import { CoreBarChart } from "../CoreBarChart";
 import { M1, M1WithRatio } from "../../tests/fixtures";
 
-function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ShallowWrapper {
-    return shallow(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
+function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
+    return mount(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
 }
 
 describe("BarChart", () => {
@@ -73,7 +73,7 @@ describe("BarChart", () => {
     it("should render column chart and create correct stacking dimensions", () => {
         // note: this test was previously verifying that AFM is created correctly; that is pointless now as the
         //  transformation is tested elsewhere. the important thing to test is that dimensions are built as expected.
-        const wrapper = shallow(
+        const wrapper = mount(
             <BarChart
                 workspace="foo"
                 backend={dummyBackend()}

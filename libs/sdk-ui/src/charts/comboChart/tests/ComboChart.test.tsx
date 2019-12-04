@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { ComboChart } from "../ComboChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -10,7 +10,7 @@ import { M1, M2, M3, M4 } from "../../tests/fixtures";
 
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -22,7 +22,7 @@ describe("ComboChart", () => {
     });
 
     it("should render CoreComboChart", () => {
-        const wrapper = shallow(
+        const wrapper = mount(
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
@@ -39,7 +39,7 @@ describe("ComboChart", () => {
             secondaryMeasures: IMeasure[],
             config?: IChartConfig,
         ) {
-            return shallow(
+            return mount(
                 <ComboChart
                     config={config}
                     workspace="foo"
