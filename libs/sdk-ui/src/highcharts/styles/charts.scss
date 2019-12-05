@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 @import "../../../node_modules/@gooddata/goodstrap/lib/Bubble/styles/mixins";
 @import "../../../node_modules/@gooddata/goodstrap/lib/core/styles/variables";
 @import "../../../node_modules/@gooddata/goodstrap/lib/core/styles/mixins";
@@ -50,8 +50,17 @@ $paging-button-small-size: 22px;
 .highcharts-drilldown-axis-label {
     &:hover {
         // stylelint-disable-next-line declaration-no-important
-        text-decoration: underline !important; // Override Higharts inline style
+        text-decoration: underline !important; // Override Highcharts inline style
     }
+    // stylelint-disable declaration-no-important
+    .gd-axis-label-drilling-disabled & {
+        text-decoration: none !important; // Override Highcharts inline style
+        font-weight: normal !important; // Override Highcharts inline style
+        pointer-events: none;
+        color: $gd-color-state-blank !important;
+        fill: $gd-color-state-blank !important;
+    }
+    // stylelint-enable
 }
 
 @import "legend";

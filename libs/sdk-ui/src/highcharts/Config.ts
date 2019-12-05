@@ -66,6 +66,7 @@ export interface IChartConfig extends IMeasuresStackConfig {
     dualAxis?: boolean;
     primaryChartType?: string;
     secondaryChartType?: string;
+    forceDisableDrillOnAxes?: boolean;
 }
 
 export interface IStackLabels {
@@ -170,6 +171,7 @@ export interface IChartOptions {
     colorAxis?: ColorAxisOptions;
     colorAssignments?: IColorAssignment[];
     colorPalette?: IColorPalette;
+    forceDisableDrillOnAxes?: boolean;
 }
 
 export interface IPatternOptionsObject {

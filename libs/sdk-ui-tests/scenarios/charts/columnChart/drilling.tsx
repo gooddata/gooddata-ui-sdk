@@ -22,6 +22,13 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         drillableItems: [AttributeElements.Product.Explorer],
     })
+    .addScenario("force disable drill on axes", {
+        ...ColumnChartWithTwoMeasuresAndTwoViewBy,
+        drillableItems: [AttributeElements.Product.Explorer],
+        config: {
+            forceDisableDrillOnAxes: true,
+        },
+    })
     .addScenario("single measure and two viewBy with drilling on child attribute", {
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         drillableItems: [AttributeElements.Region.EastCoast],

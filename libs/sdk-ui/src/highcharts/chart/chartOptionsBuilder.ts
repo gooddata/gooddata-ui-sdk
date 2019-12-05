@@ -1727,6 +1727,7 @@ export function getChartOptions(
             secondary_yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1761,6 +1762,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1794,6 +1796,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1841,6 +1844,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1880,6 +1884,7 @@ export function getChartOptions(
         colorAssignments,
         colorPalette,
         isViewByTwoAttributes,
+        forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
     };
 
     return chartOptions;
