@@ -8,15 +8,8 @@ The REST API versions in the table are just for your information as the values a
 
 |gooddata-js version | REST API version
 |:---:|:---:
-|\>= 11.20.0|4
 |\>= 10.0.0|3
 |<= 9.0.1|2
-
-<a name="11.20.0"></a>
-## 2019-11-15 Version [11.20.0](https://github.com/gooddata/gooddata-js/compare/v11.19.3...v11.20.0)
-
-- update REST API version to 4
-- add AFM to export payload
 
 <a name="11.19.3"></a>
 ## 2019-10-08 Version [11.19.3](https://github.com/gooddata/gooddata-js/compare/v11.19.2...v11.19.3)

@@ -275,8 +275,7 @@ export interface IBaseExportConfig {
 }
 
 export interface IExportConfig extends IBaseExportConfig {
-    showFilters?: boolean;
-    afm?: AFM.IAfm;
+    showFilters?: AFM.CompatibilityFilter[];
 }
 
 export interface IExportResponse {

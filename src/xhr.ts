@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2013 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -26,7 +26,7 @@ const REST_API_VERSION_HEADER = "X-GDC-VERSION";
 const REST_API_DEPRECATED_VERSION_HEADER = "X-GDC-DEPRECATED";
 
 // The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
-const LATEST_REST_API_VERSION = 4;
+const LATEST_REST_API_VERSION = 3;
 
 function simulateBeforeSend(url: string, settings: any) {
     const xhrMockInBeforeSend = {
