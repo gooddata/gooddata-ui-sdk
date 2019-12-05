@@ -149,10 +149,13 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 export function bucketTotals(bucket: IBucket): ITotal[];
 
 // @public
-export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+export type CatalogDateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.date";
 
 // @public
-export type CatalogItemType = "attribute" | "measure" | "fact";
+export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
+
+// @public
+export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
 
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
@@ -168,7 +171,7 @@ export enum ComputeRatioRule {
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
-export type DataSetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @public
 export const DateGranularity: {
@@ -339,18 +342,36 @@ export interface IBucket {
     totals?: ITotal[];
 }
 
-// Warning: (ae-forgotten-export) The symbol "ICatalogItemBase" needs to be exported by the entry point index.d.ts
-//
 // @public
-export interface ICatalogAttribute extends ICatalogItemBase {
+export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     // (undocumented)
-    readonly defaultDisplayForm: string;
+    readonly defaultDisplayForm: IObjectMeta;
     // (undocumented)
     readonly type: "attribute";
 }
 
 // @public
-export interface ICatalogFact extends ICatalogItemBase {
+export interface ICatalogDateAttribute {
+    // (undocumented)
+    readonly attribute: IObjectMeta;
+    // (undocumented)
+    readonly defaultDisplayForm: IObjectMeta;
+    // (undocumented)
+    readonly granularity: CatalogDateAttributeGranularity;
+}
+
+// @public
+export interface ICatalogDateDataset extends ICatalogItemBase {
+    // (undocumented)
+    readonly dateAttributes: ICatalogDateAttribute[];
+    // (undocumented)
+    readonly relevance: number;
+    // (undocumented)
+    readonly type: "dateDataset";
+}
+
+// @public
+export interface ICatalogFact extends IGroupableCatalogItemBase {
     // (undocumented)
     readonly type: "fact";
 }
@@ -358,13 +379,19 @@ export interface ICatalogFact extends ICatalogItemBase {
 // @public
 export interface ICatalogGroup {
     // (undocumented)
-    readonly identifier: string;
+    readonly id: string;
     // (undocumented)
     readonly title: string;
 }
 
 // @public
-export interface ICatalogMeasure extends ICatalogItemBase {
+export interface ICatalogItemBase extends IObjectMeta {
+    // (undocumented)
+    readonly type: CatalogItemType;
+}
+
+// @public
+export interface ICatalogMeasure extends IGroupableCatalogItemBase {
     // (undocumented)
     readonly expression: string;
     // (undocumented)
@@ -432,56 +459,36 @@ export interface IDataHeader {
 }
 
 // @public
-export interface IDataSet {
+export interface IDataset {
     // (undocumented)
     dataset: {
         name: string;
         dataHeader: IDataHeader;
         dataSetId: string;
         loadedRowCount: number;
-        dataSetLoadStatus: DataSetLoadStatus;
-        firstSuccessfulUpdate?: IDataSetLoadInfo;
-        lastSuccessfulUpdate?: IDataSetLoadInfo;
-        lastUpdate?: IDataSetLoadInfo;
+        dataSetLoadStatus: DatasetLoadStatus;
+        firstSuccessfulUpdate?: IDatasetLoadInfo;
+        lastSuccessfulUpdate?: IDatasetLoadInfo;
+        lastUpdate?: IDatasetLoadInfo;
     };
 }
 
 // @public
-export interface IDataSetLoadInfo {
+export interface IDatasetLoadInfo {
     // (undocumented)
     created: string;
     // (undocumented)
-    owner: IDataSetUser;
+    owner: IDatasetUser;
     // (undocumented)
-    status: DataSetLoadStatus;
+    status: DatasetLoadStatus;
 }
 
 // @public
-export interface IDataSetUser {
+export interface IDatasetUser {
     // (undocumented)
     fullName: string;
     // (undocumented)
     login: string;
-}
-
-// @public
-export interface IDateDataSet {
-    // (undocumented)
-    availableDateAttributes?: IDateDataSetAttribute[];
-    // (undocumented)
-    relevance: number;
-}
-
-// @public
-export interface IDateDataSetAttribute {
-    // (undocumented)
-    attributeId: string;
-    // (undocumented)
-    defaultDisplayFormId: string;
-    // (undocumented)
-    defaultDisplayFormTitle: string;
-    // (undocumented)
-    granularity: string;
 }
 
 // @public
@@ -532,6 +539,12 @@ export interface IExecutionDefinition {
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter;
 
 // @public
+export interface IGroupableCatalogItemBase extends ICatalogItemBase {
+    // (undocumented)
+    readonly groups: string[];
+}
+
+// @public
 export interface IInsight {
     // (undocumented)
     insight: {
@@ -551,8 +564,6 @@ export type IInsightWithoutIdentifier = {
     insight: Omit<IInsight["insight"], "identifier">;
 };
 
-// Warning: (ae-forgotten-export) The symbol "IMeasureTitle" needs to be exported by the entry point index.d.ts
-//
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     // (undocumented)
@@ -599,6 +610,16 @@ export interface IMeasureSortItem {
     measureSortItem: {
         direction: SortDirection;
         locators: LocatorItem[];
+    };
+}
+
+// @public
+export interface IMeasureTitle {
+    // (undocumented)
+    measure: {
+        localIdentifier: string;
+        title?: string;
+        alias?: string;
     };
 }
 
@@ -670,14 +691,26 @@ export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier)
 
 // @public (undocumented)
 export interface IObjectExpressionToken {
-    // Warning: (ae-forgotten-export) The symbol "IObjectMeta" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     meta: IObjectMeta;
     // (undocumented)
     type: "metadataObject";
     // (undocumented)
     value: string;
+}
+
+// @public (undocumented)
+export interface IObjectMeta {
+    // (undocumented)
+    readonly description: string;
+    // (undocumented)
+    readonly id: string;
+    // (undocumented)
+    readonly production: boolean;
+    // (undocumented)
+    readonly title: string;
+    // (undocumented)
+    readonly uri: string;
 }
 
 // @public
@@ -803,13 +836,16 @@ export function isAttributeSort(obj: any): obj is IAttributeSortItem;
 export function isBucket(obj: any): obj is IBucket;
 
 // @public
-export function isCatalogAttribute(item: CatalogItem): item is ICatalogAttribute;
+export function isCatalogAttribute(obj: any): obj is ICatalogAttribute;
 
 // @public
-export function isCatalogFact(item: CatalogItem): item is ICatalogFact;
+export function isCatalogDateDataset(obj: any): obj is ICatalogDateDataset;
 
 // @public
-export function isCatalogMeasure(item: CatalogItem): item is ICatalogMeasure;
+export function isCatalogFact(obj: any): obj is ICatalogFact;
+
+// @public
+export function isCatalogMeasure(obj: any): obj is ICatalogMeasure;
 
 // @public
 export function isColorFromPalette(obj: any): obj is IColorFromPalette;
@@ -1145,9 +1181,9 @@ export type SortEntityIds = {
     measureIdentifiers: Identifier[];
 };
 
-// Warning: (ae-internal-missing-underscore) The name "sortEntityIds" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-incompatible-release-tags) The symbol "sortEntityIds" is marked as @public, but its signature references "SortEntityIds" which is marked as @internal
 //
-// @internal
+// @public
 export function sortEntityIds(sort: SortItem): SortEntityIds;
 
 // @public

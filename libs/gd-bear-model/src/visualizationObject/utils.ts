@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import get from "lodash/get";
 import { GdcVisualizationObject } from "./GdcVisualizationObject";
 import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
@@ -81,7 +81,7 @@ function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string[]
 }
 
 /**
- * @internal
+ * @public
  */
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[] {
     const attributesDfs = getAttributes(mdObject).map((attribute: IVisualizationAttributeContent) =>

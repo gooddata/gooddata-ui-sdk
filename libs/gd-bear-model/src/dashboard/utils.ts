@@ -23,7 +23,7 @@ function sanitizeDateFilter(filter: GdcDashboardExport.IDateFilter): GdcDashboar
 }
 
 /**
- * @internal
+ * @public
  */
 export function sanitizeDateFilters(
     filters: GdcDashboardExport.FilterContextItem[],

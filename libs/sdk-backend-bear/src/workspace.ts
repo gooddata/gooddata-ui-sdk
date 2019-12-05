@@ -7,15 +7,15 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceMetadata,
     IWorkspaceStylingService,
-    IWorkspaceCatalog,
-    IWorkspaceDataSetsService,
+    IWorkspaceDatasetsService,
+    IWorkspaceCatalogFactory,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { BearWorkspaceMetadata } from "./metadata";
 import { BearWorkspaceStyling } from "./styling";
 import { BearWorkspaceElements } from "./elements";
-import { BearWorkspaceCatalog } from "./catalog";
+import { BearWorkspaceCatalogFactory } from "./catalog/factory";
 import { BearWorkspaceDataSets } from "./dataSets";
 import { BearWorkspaceSettings } from "./settings";
 
@@ -42,11 +42,11 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearWorkspaceStyling(this.authCall, this.workspace);
     }
 
-    public catalog(): IWorkspaceCatalog {
-        return new BearWorkspaceCatalog(this.authCall, this.workspace);
+    public catalog(): IWorkspaceCatalogFactory {
+        return new BearWorkspaceCatalogFactory(this.authCall, this.workspace);
     }
 
-    public dataSets(): IWorkspaceDataSetsService {
+    public dataSets(): IWorkspaceDatasetsService {
         return new BearWorkspaceDataSets(this.authCall, this.workspace);
     }
 }

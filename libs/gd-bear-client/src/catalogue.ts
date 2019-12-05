@@ -8,7 +8,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
-import { GdcCatalog, GdcDataSets } from "@gooddata/gd-bear-model";
+import { GdcCatalog, GdcDatasets, GdcDateDataSets, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 
 const REQUEST_DEFAULTS = {
     types: ["attribute", "metric", "fact"],
@@ -206,8 +206,18 @@ export class CatalogueModule {
 
     public async loadDateDataSets(
         projectId: string,
-        options: any,
-    ): Promise<GdcDataSets.IDateDataSetResponse> {
+        options: {
+            bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
+            excludeObjectsWithTags?: string[];
+            includeObjectsWithTags?: string[];
+            dataSetIdentifier?: string;
+            includeAvailableDateAttributes?: boolean;
+            includeUnavailableDateDataSetsCount?: boolean;
+            returnAllDateDataSets?: boolean;
+            returnAllRelatedDateDataSets?: boolean;
+            attributesMap?: {};
+        },
+    ) {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
             ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap"), true)
@@ -256,10 +266,10 @@ export class CatalogueModule {
      */
     public async loadItemDescriptionObjects(
         projectId: string,
-        mdObj: any,
-        attributesMap: any,
+        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        attributesMap: any = {},
         removeDateItems = false,
-    ): Promise<ItemDescription[]> {
+    ): Promise<GdcCatalog.ItemDescription[]> {
         const definitionsAndColumns = await this.execution.mdToExecutionDefinitionsAndColumns(
             projectId,
             mdObj,
@@ -299,21 +309,17 @@ export class CatalogueModule {
      * Loads all available data sets.
      * @param projectId
      */
-    public async loadDataSets(projectId: string): Promise<GdcDataSets.IDataSet[]> {
+    public async loadDataSets(projectId: string): Promise<GdcDatasets.IDataset[]> {
         const uri = `/gdc/dataload/internal/projects/${projectId}/csv/datasets`;
-        const response: GdcDataSets.IDataSetResponse = await this.xhr.get(uri).then(res => res.getData());
+        const response = await this.xhr.getParsed<GdcDatasets.IDatasetsResponse>(uri);
         return response.datasets.items;
     }
 
-    private requestDateDataSets(
-        projectId: string,
-        dateDataSetsRequest: any,
-    ): Promise<GdcDataSets.IDateDataSetResponse> {
+    private requestDateDataSets(projectId: string, dateDataSetsRequest: any) {
         const uri = `/gdc/internal/projects/${projectId}/loadDateDataSets`;
 
         return this.xhr
-            .post(uri, { data: { dateDataSetsRequest } })
-            .then(r => r.getData())
+            .postParsed<GdcDateDataSets.IDateDataSetResponse>(uri, { data: { dateDataSetsRequest } })
             .then(data => data.dateDataSetsResponse);
     }
 

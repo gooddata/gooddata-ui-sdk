@@ -13,8 +13,8 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     UnexpectedResponseError,
-    IWorkspaceCatalog,
-    IWorkspaceDataSetsService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedExecutionFactory } from "./execution";
@@ -95,10 +95,10 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
-        catalog(): IWorkspaceCatalog {
+        catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");
         },
-        dataSets(): IWorkspaceDataSetsService {
+        dataSets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
         },
     };

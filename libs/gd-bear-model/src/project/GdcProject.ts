@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { GdcPaging } from "../base/Paging";
+import { GdcPaging } from "../base/GdcPaging";
+import { Uri } from "../aliases";
 
 /**
  * @public
@@ -13,7 +14,7 @@ export namespace GdcProject {
         projectDescription: string;
         projectTitle: string;
         links: {
-            self: string; // TODO use Uri type
+            self: Uri;
         };
     }
 

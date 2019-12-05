@@ -5,7 +5,7 @@ import flow from "lodash/flow";
 import { Timestamp, MaqlExpression, Uri, NumberAsString } from "../aliases";
 
 /**
- * @internal
+ * @public
  */
 export namespace GdcMetadata {
     export type ObjectCategory =

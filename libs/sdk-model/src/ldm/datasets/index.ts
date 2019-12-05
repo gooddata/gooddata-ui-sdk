@@ -1,18 +1,17 @@
 // (C) 2019 GoodData Corporation
-
 /**
  * Represents the current status of CSV source.
  *
  * @public
  */
-export type DataSetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 /**
  * Object wrapping info about the user that created CSV load. Contains their login and full name.
  *
  * @public
  */
-export interface IDataSetUser {
+export interface IDatasetUser {
     login: string;
     fullName: string;
 }
@@ -22,9 +21,9 @@ export interface IDataSetUser {
  *
  * @public
  */
-export interface IDataSetLoadInfo {
-    owner: IDataSetUser;
-    status: DataSetLoadStatus;
+export interface IDatasetLoadInfo {
+    owner: IDatasetUser;
+    status: DatasetLoadStatus;
     created: string;
 }
 
@@ -68,17 +67,15 @@ export interface IDataHeader {
  *
  * @public
  */
-export interface IDataSet {
+export interface IDataset {
     dataset: {
         name: string;
         dataHeader: IDataHeader;
         dataSetId: string;
         loadedRowCount: number;
-        dataSetLoadStatus: DataSetLoadStatus;
-        firstSuccessfulUpdate?: IDataSetLoadInfo;
-        lastSuccessfulUpdate?: IDataSetLoadInfo;
-        lastUpdate?: IDataSetLoadInfo;
+        dataSetLoadStatus: DatasetLoadStatus;
+        firstSuccessfulUpdate?: IDatasetLoadInfo;
+        lastSuccessfulUpdate?: IDatasetLoadInfo;
+        lastUpdate?: IDatasetLoadInfo;
     };
 }
-
-// TODO functions

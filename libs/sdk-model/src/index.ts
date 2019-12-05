@@ -69,18 +69,6 @@ export {
 } from "./execution/base/sort";
 
 export {
-    DataColumnType,
-    DataSetLoadStatus,
-    IDataColumn,
-    IDataHeader,
-    IDataSet,
-    IDataSetLoadInfo,
-    IDataSetUser,
-} from "./ldm/dataSet";
-
-export { IDateDataSetAttribute, IDateDataSet } from "./ldm/dateDataSet";
-
-export {
     IAttributeElementsByRef,
     IAttributeElementsByValue,
     AttributeElements,
@@ -132,6 +120,7 @@ export {
 } from "./execution/filter/factory";
 
 export {
+    IMeasureTitle,
     IMeasureDefinitionType,
     IMeasureDefinition,
     ArithmeticMeasureOperator,
@@ -280,16 +269,34 @@ export {
 export {
     CatalogItemType,
     CatalogItem,
+    CatalogDateAttributeGranularity,
     ICatalogGroup,
     ICatalogAttribute,
     ICatalogFact,
     ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
+    isCatalogDateDataset,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
 } from "./ldm/catalog";
 
+export {
+    DataColumnType,
+    DatasetLoadStatus,
+    IDataColumn,
+    IDataHeader,
+    IDatasetLoadInfo,
+    IDatasetUser,
+    IDataset,
+} from "./ldm/datasets";
+
 export { IAttributeElement } from "./ldm/attributeElement";
+
+export { IObjectMeta } from "./common/objectMeta";
 
 export {
     IMeasureExpressionToken,

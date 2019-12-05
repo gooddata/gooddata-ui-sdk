@@ -2,7 +2,7 @@
 import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
- * @internal
+ * @public
  */
 export namespace GdcExtendedDateFilters {
     // Generated unique identification string that is not subject to change during project copying.

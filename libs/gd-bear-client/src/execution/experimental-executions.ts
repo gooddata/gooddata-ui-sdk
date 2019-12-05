@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import md5 from "md5";
 import invariant from "invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -15,7 +15,7 @@ import negate from "lodash/negate";
 import partial from "lodash/partial";
 import flatten from "lodash/flatten";
 import set from "lodash/set";
-import { getAttributesDisplayForms, GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { getAttributesDisplayForms, GdcVisualizationObject, GdcCatalog } from "@gooddata/gd-bear-model";
 
 import { Rules } from "../utils/rules";
 import { sortDefinitions } from "../utils/definitions";
@@ -475,7 +475,11 @@ function getMetricFactory(measure: any, mdObj: any) {
     return factory;
 }
 
-function getExecutionDefinitionsAndColumns(mdObj: any, options: any, attributesMap: any) {
+function getExecutionDefinitionsAndColumns(
+    mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+    options: { removeDateItems?: boolean },
+    attributesMap: any,
+): GdcCatalog.IColumnsAndDefinitions {
     const measures = getMeasures(mdObj);
     let attributes = getAttributes(mdObj);
 
@@ -627,7 +631,11 @@ export class ExperimentalExecutionsModule {
             });
     }
 
-    public mdToExecutionDefinitionsAndColumns(projectId: string, mdObj: any, options = {}) {
+    public mdToExecutionDefinitionsAndColumns(
+        projectId: string,
+        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        options: { attributesMap?: {}; removeDateItems?: boolean } = {},
+    ): Promise<GdcCatalog.IColumnsAndDefinitions> {
         const allDfUris = getAttributesDisplayForms(mdObj);
         const attributesMapPromise = this.getAttributesMap(options, allDfUris, projectId);
 
@@ -636,7 +644,11 @@ export class ExperimentalExecutionsModule {
         });
     }
 
-    private getAttributesMap(options: any, displayFormUris: string[], projectId: string) {
+    private getAttributesMap(
+        options: { attributesMap?: {} } = {},
+        displayFormUris: string[],
+        projectId: string,
+    ) {
         const attributesMap = get(options, "attributesMap", {});
 
         const missingUris = getMissingUrisInAttributesMap(displayFormUris, attributesMap);

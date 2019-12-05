@@ -4,6 +4,9 @@
  * @public
  */
 export interface IObjectMeta {
-    title: string;
-    identifier: string;
+    readonly id: string;
+    readonly uri: string;
+    readonly title: string;
+    readonly description: string;
+    readonly production: boolean;
 }

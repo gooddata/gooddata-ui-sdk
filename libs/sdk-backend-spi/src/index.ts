@@ -53,10 +53,14 @@ export {
 export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./workspace/insights";
 
 export {
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalog,
-    ILoadCatalogGroupsOptions,
-    ILoadCatalogItemsOptions,
-    ILoadAvailableCatalogItemsOptions,
+    IWorkspaceCatalogFactoryOptions,
+    IWorkspaceCatalogWithAvailableItems,
+    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    IWorkspaceCatalogFactoryMethods,
+    IWorkspaceCatalogMethods,
 } from "./workspace/ldm/catalog";
 
 export {
@@ -94,6 +98,6 @@ export {
 
 export { IPagedResource } from "./common/paging";
 
-export { IWorkspaceDataSetsService } from "./workspace/ldm/dataSets";
+export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
 
 export { IWorkspaceQuery, IWorkspaceQueryFactory, IWorkspaceQueryResult } from "./workspace";

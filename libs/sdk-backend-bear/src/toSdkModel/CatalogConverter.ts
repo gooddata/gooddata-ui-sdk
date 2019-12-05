@@ -2,59 +2,115 @@
 import {
     CatalogItemType,
     CatalogItem,
+    ICatalogDateDataset,
+    IGroupableCatalogItemBase,
     ICatalogAttribute,
     ICatalogMeasure,
     ICatalogFact,
+    ICatalogDateAttribute,
+    CatalogDateAttributeGranularity,
+    ICatalogGroup,
 } from "@gooddata/sdk-model";
-import { GdcCatalog } from "@gooddata/gd-bear-model";
+import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/gd-bear-model";
+import { convertObjectMeta } from "./MetaConverter";
+
+export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
+export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;
 
 const bearItemTypeByCatalogItemType: {
-    [spiItemType in CatalogItemType]: GdcCatalog.CatalogItemType;
+    [catalogItemType in CompatibleCatalogItemType]: GdcCatalog.CatalogItemType;
 } = {
     attribute: "attribute",
     fact: "fact",
     measure: "metric",
 };
 
-export const convertCatalogItemTypeToBearItemType = (type: CatalogItemType): GdcCatalog.CatalogItemType => {
+export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType => {
     const bearItemType = bearItemTypeByCatalogItemType[type];
     return bearItemType;
 };
 
-export const convertBearCatalogItemToCatalogItem = (item: GdcCatalog.CatalogItem): CatalogItem => {
-    const { identifier, title, summary, production, groups = [] } = item;
-    const itemBase = {
+const convertGroupableItemBase = (item: GdcCatalog.CatalogItem): Omit<IGroupableCatalogItemBase, "type"> => {
+    const {
         identifier,
         title,
         summary,
         production,
+        groups = [],
+        links: { self },
+    } = item;
+
+    return {
+        id: identifier,
+        uri: self,
+        title,
+        description: summary,
+        production,
         groups,
     };
+};
 
-    switch (item.type) {
-        case "attribute": {
-            const spiAttribute: ICatalogAttribute = {
-                type: "attribute",
-                defaultDisplayForm: item.links.defaultDisplayForm,
-                ...itemBase,
-            };
-            return spiAttribute;
-        }
-        case "metric": {
-            const spiMeasure: ICatalogMeasure = {
-                type: "measure",
-                expression: item.expression,
-                format: item.format,
-                ...itemBase,
-            };
-            return spiMeasure;
-        }
-        case "fact": {
-            const spiFact: ICatalogFact = {
-                type: "fact",
-                ...itemBase,
-            };
-            return spiFact;
-        }
-    }
+export const convertAttribute = (
+    attribute: GdcCatalog.ICatalogAttribute,
+    defaultDisplayForm: GdcMetadata.IAttributeDisplayForm,
+): ICatalogAttribute => {
+    const { meta: bearDefaultDisplayFormMeta } = defaultDisplayForm;
+    const groupableCatalogItemBase = convertGroupableItemBase(attribute);
+    const displayFormMeta = convertObjectMeta(bearDefaultDisplayFormMeta);
+
+    return {
+        ...groupableCatalogItemBase,
+        type: "attribute",
+        defaultDisplayForm: displayFormMeta,
+    };
+};
+
+export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasure => {
+    const groupableCatalogItemBase = convertGroupableItemBase(metric);
+    return {
+        ...groupableCatalogItemBase,
+        type: "measure",
+        expression: metric.expression,
+        format: metric.format,
+    };
+};
+
+export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
+    const groupableCatalogItemBase = convertGroupableItemBase(fact);
+    return {
+        ...groupableCatalogItemBase,
+        type: "fact",
+    };
+};
+
+const convertDateDataSetAttribute = (
+    dateDatasetAttribute: GdcDateDataSets.IDateDataSetAttribute,
+): ICatalogDateAttribute => {
+    const { type, attributeMeta, defaultDisplayFormMeta } = dateDatasetAttribute;
+    return {
+        granularity: type as CatalogDateAttributeGranularity,
+        attribute: convertObjectMeta(attributeMeta),
+        defaultDisplayForm: convertObjectMeta(defaultDisplayFormMeta),
+    };
+};
+
+export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): ICatalogDateDataset => {
+    const { meta, relevance, availableDateAttributes = [] } = dateDataset;
+    const catalogItemBase = convertObjectMeta(meta);
+    const dateAttributes = availableDateAttributes.map(convertDateDataSetAttribute);
+
+    return {
+        ...catalogItemBase,
+        type: "dateDataset",
+        relevance,
+        dateAttributes,
+    };
+};
+
+export const convertGroup = (group: GdcCatalog.ICatalogGroup): ICatalogGroup => {
+    const { identifier, title } = group;
+    return {
+        title,
+        id: identifier,
+    };
 };
