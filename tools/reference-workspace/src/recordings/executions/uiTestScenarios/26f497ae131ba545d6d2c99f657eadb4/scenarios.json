@@ -1,0 +1,6 @@
+[
+    {
+        "vis": "BarChart",
+        "scenario": "two measures with two viewBy, filtered to single value"
+    }
+]

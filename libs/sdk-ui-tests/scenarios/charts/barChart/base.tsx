@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
 
@@ -23,6 +23,15 @@ export const BarChartWithTwoMeasuresAndViewBy = {
 export const BarChartWithTwoMeasuresAndTwoViewBy = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
     viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+};
+
+export const BarChartWithTwoMeasuresAndTwoViewByFiltered = {
+    measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+    filters: [
+        newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["WonderKid"]),
+        newPositiveAttributeFilter(ReferenceLdm.Region, ["East Coast"]),
+    ],
 };
 
 export const BarChartWithSingleMeasureAndTwoViewByAndStack = {
@@ -56,6 +65,10 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .addScenario("single measure with two viewBy and stack", BarChartWithSingleMeasureAndTwoViewByAndStack)
     .addScenario("two measures with viewBy", BarChartWithTwoMeasuresAndViewBy)
     .addScenario("two measures with two viewBy", BarChartWithTwoMeasuresAndTwoViewBy)
+    .addScenario(
+        "two measures with two viewBy, filtered to single value",
+        BarChartWithTwoMeasuresAndTwoViewByFiltered,
+    )
     .addScenario("two measures with viewBy sorted by attribute", {
         measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
         viewBy: [ReferenceLdm.Product.Name],
