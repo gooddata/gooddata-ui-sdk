@@ -18,7 +18,14 @@ import * as cx from "classnames";
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { IAxis, IChartConfig, IChartOptions, IDataLabelsVisible, ISeriesItem } from "../../Config";
+import {
+    IAxis,
+    IChartConfig,
+    IChartOptions,
+    IDataLabelsVisible,
+    ISeriesItem,
+    IPointData,
+} from "../../Config";
 import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
@@ -28,6 +35,7 @@ import {
     isBarChart,
     isBubbleChart,
     isColumnChart,
+    isComboChart,
     isHeatmap,
     isOneOfTypes,
     isRotationInRange,
@@ -56,10 +64,15 @@ const ALIGN_RIGHT = "right";
 const ALIGN_CENTER = "center";
 
 const TOOLTIP_ARROW_OFFSET = 23;
-const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 const TOOLTIP_MAX_WIDTH = 320;
 const TOOLTIP_BAR_CHART_VERTICAL_OFFSET = 5;
 const TOOLTIP_VERTICAL_OFFSET = 14;
+const BAR_COLUMN_TOOLTIP_TOP_OFFSET = 8;
+const BAR_COLUMN_TOOLTIP_LEFT_OFFSET = 5;
+const HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET = 16;
+
+// in viewport <= 480, tooltip width is equal to chart container width
+const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
 const escapeAngleBrackets = (str: any) => str && str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -232,7 +245,13 @@ function getTooltipVerticalOffset(chartType: any, stacking: any, point: any) {
     return TOOLTIP_VERTICAL_OFFSET;
 }
 
-function positionTooltip(chartType: any, stacking: any, labelWidth: any, labelHeight: any, point: any) {
+export function getTooltipPositionInChartContainer(
+    chartType: string,
+    stacking: string,
+    labelWidth: number,
+    labelHeight: number,
+    point: IPointData,
+) {
     const dataPointEnd = getDataPointEnd(chartType, point.negative, point.plotX, point.h, stacking);
     const arrowPosition = getArrowHorizontalPosition(chartType, stacking, dataPointEnd, point.h);
     const chartWidth = this.chart.plotWidth;
@@ -253,7 +272,45 @@ function positionTooltip(chartType: any, stacking: any, labelWidth: any, labelHe
     };
 }
 
-const showFullscreenTooltip = () => {
+function getHighchartTooltipTopOffset(chartType: string): number {
+    if (isBarChart(chartType) || isColumnChart(chartType) || isComboChart(chartType)) {
+        return BAR_COLUMN_TOOLTIP_TOP_OFFSET;
+    }
+    return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
+}
+
+function getHighchartTooltipLeftOffset(chartType: string): number {
+    if (isBarChart(chartType) || isColumnChart(chartType) || isComboChart(chartType)) {
+        return BAR_COLUMN_TOOLTIP_LEFT_OFFSET;
+    }
+    return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
+}
+export function getTooltipPositionInViewPort(
+    chartType: string,
+    stacking: string,
+    labelWidth: number,
+    labelHeight: number,
+    point: IPointData,
+) {
+    const { x, y } = getTooltipPositionInChartContainer.call(
+        this,
+        chartType,
+        stacking,
+        labelWidth,
+        labelHeight,
+        point,
+    );
+    const { top: containerTop, left: containerLeft } = this.chart.container.getBoundingClientRect();
+    const leftOffset = pageXOffset + containerLeft - getHighchartTooltipLeftOffset(chartType);
+    const topOffset = pageYOffset + containerTop - getHighchartTooltipTopOffset(chartType);
+
+    return {
+        x: isTooltipShownInFullScreen() ? leftOffset : leftOffset + x,
+        y: topOffset + y,
+    };
+}
+
+const isTooltipShownInFullScreen = () => {
     return document.documentElement.clientWidth <= TOOLTIP_FULLSCREEN_THRESHOLD;
 };
 
@@ -261,9 +318,8 @@ function formatTooltip(tooltipCallback: any) {
     const { chart } = this.series;
     const { color: pointColor } = this.point;
     const chartWidth = chart.spacingBox.width;
-    const maxTooltipContentWidth = showFullscreenTooltip()
-        ? chartWidth
-        : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);
+    const isFullScreenTooltip = isTooltipShownInFullScreen();
+    const maxTooltipContentWidth = isFullScreenTooltip ? chartWidth : Math.min(chartWidth, TOOLTIP_MAX_WIDTH);
 
     // when brushing, do not show tooltip
     if (chart.mouseIsDown) {
@@ -271,12 +327,13 @@ function formatTooltip(tooltipCallback: any) {
     }
 
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : "";
+    const tooltipStyle = isFullScreenTooltip ? `width: ${maxTooltipContentWidth}px;` : "";
 
     // null disables whole tooltip
     const tooltipContent: string = tooltipCallback(this.point, maxTooltipContentWidth, this.percentage);
 
     return tooltipContent !== null
-        ? `<div class="hc-tooltip gd-viz-tooltip">
+        ? `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
             <span class="stroke gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
             <div class="content gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
                 ${tooltipContent}
@@ -399,7 +456,8 @@ function getTooltipConfiguration(chartOptions: IChartOptions) {
                   borderRadius: 0,
                   shadow: false,
                   useHTML: true,
-                  positioner: partial(positionTooltip, chartType, stacking),
+                  outside: true,
+                  positioner: partial(getTooltipPositionInViewPort, chartType, stacking),
                   formatter: partial(formatTooltip, tooltipAction),
                   ...followPointer,
               },

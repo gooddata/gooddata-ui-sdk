@@ -37,6 +37,10 @@ $paging-button-small-size: 22px;
 }
 
 .highcharts-container {
+    // If the outer container have scroll bar, the chart can be showed by scrolling.
+    // stylelint-disable-next-line declaration-no-important
+    overflow: visible !important;
+
     // This makes highcharts resizable and shrinkable!
     // stylelint-disable-next-line declaration-no-important
     width: 100% !important;

@@ -153,7 +153,7 @@ export interface IShapeArgsConfig {
 
 export interface IChartOptions {
     type?: string;
-    stacking?: any;
+    stacking?: string;
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;
