@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
+import { AFM, ExecuteAFM } from "@gooddata/typings";
 import { ReportModule } from "../../src/report/report";
 import { XhrModule, ApiResponseError } from "../../src/xhr";
 import { IExportConfig, IExportResponse } from "../../src/interfaces";
@@ -12,7 +13,6 @@ import {
     BAD_REQUEST_MESSAGE,
     ERROR_RESTRICTED_MESSAGE,
 } from "../../src/constants/errors";
-import { exportedAfm } from "./report.fixtures";
 
 const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
 
@@ -28,7 +28,7 @@ describe("report", () => {
         });
 
         describe("exportResult", () => {
-            it("should sanitize afm filter in export config", () => {
+            it("should sanitized showFilters config", () => {
                 fetchMock.mock(projectUri, {
                     status: SUCCESS_REQUEST_STATUS,
                     body: { uri: createdReport },
@@ -39,12 +39,92 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
+                const showFilters: AFM.CompatibilityFilter[] = [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                uri: "bar",
+                            },
+                            in: ["/gdc/md/bar1", "/gdc/md/bar2"],
+                        },
+                    },
+                    {
+                        negativeAttributeFilter: {
+                            displayForm: {
+                                identifier: "foo",
+                            },
+                            notIn: ["foo1", "foo2"],
+                            textFilter: true,
+                        },
+                    },
+                    {
+                        absoluteDateFilter: {
+                            dataSet: {
+                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
+                            },
+                            from: "2011-01-01",
+                            to: "2011-12-31",
+                        },
+                    },
+                    {
+                        relativeDateFilter: {
+                            to: 0,
+                            from: -3,
+                            granularity: "GDC.time.quarter",
+                            dataSet: {
+                                uri: "/gdc/md/myproject/obj/921",
+                            },
+                        },
+                    },
+                ];
+
+                const expectedShowFilters: ExecuteAFM.CompatibilityFilter[] = [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                uri: "bar",
+                            },
+                            in: {
+                                uris: ["/gdc/md/bar1", "/gdc/md/bar2"],
+                            },
+                        },
+                    },
+                    {
+                        negativeAttributeFilter: {
+                            displayForm: {
+                                identifier: "foo",
+                            },
+                            notIn: {
+                                values: ["foo1", "foo2"],
+                            },
+                        },
+                    },
+                    {
+                        absoluteDateFilter: {
+                            dataSet: {
+                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
+                            },
+                            from: "2011-01-01",
+                            to: "2011-12-31",
+                        },
+                    },
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                uri: "/gdc/md/myproject/obj/921",
+                            },
+                            from: -3,
+                            granularity: "GDC.time.quarter",
+                            to: 0,
+                        },
+                    },
+                ];
+
                 const exportConfig: IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,
-                    showFilters: true,
-                    afm: exportedAfm,
+                    showFilters,
                 };
 
                 return mockedReportModule()
@@ -53,7 +133,17 @@ describe("report", () => {
                         const [, settings] = fetchMock.lastCall(
                             `/gdc/internal/projects/${projectId}/exportResult`,
                         );
-                        expect(JSON.parse(settings.body as string)).toMatchSnapshot();
+                        expect(JSON.parse(settings.body as string)).toEqual({
+                            resultExport: {
+                                executionResult: "/executionResult/1234",
+                                exportConfig: {
+                                    title: "title",
+                                    format: "xlsx",
+                                    mergeHeaders: false,
+                                    showFilters: expectedShowFilters,
+                                },
+                            },
+                        });
                     });
             });
 
@@ -76,23 +166,7 @@ describe("report", () => {
 
                 return mockedReportModule()
                     .exportResult(projectId, executionResult, exportConfig, { pollStep: 1 })
-                    .then((result: IExportResponse) => {
-                        expect(result.uri).toEqual(createdReport);
-
-                        const [, settings] = fetchMock.lastCall(
-                            `/gdc/internal/projects/${projectId}/exportResult`,
-                        );
-                        expect(JSON.parse(settings.body as string)).toEqual({
-                            resultExport: {
-                                executionResult: "/executionResult/1234",
-                                exportConfig: {
-                                    title: "title",
-                                    format: "xlsx",
-                                    mergeHeaders: false,
-                                },
-                            },
-                        });
-                    });
+                    .then((result: IExportResponse) => expect(result.uri).toEqual(createdReport));
             });
 
             it("should return error when polling fail", () => {
