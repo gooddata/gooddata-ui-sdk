@@ -2,7 +2,6 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { createHighChartResolver, ScreenshotReadyWrapper } from "../_infra/ScreenshotReadyWrapper";
-import { screenshotWrap } from "@gooddata/test-storybook";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import chartGroups from "../../../scenarios";
@@ -11,6 +10,7 @@ import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 import "@gooddata/sdk-ui/styles/css/pivotTable.css";
+import { screenshotWrap } from "../_infra/screenshotWrap";
 import { ScenarioStories } from "../_infra/storyGroups";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };

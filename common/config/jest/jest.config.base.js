@@ -6,7 +6,7 @@ module.exports = {
     collectCoverage: false,
     moduleFileExtensions: ["ts", "js", "tsx"],
     moduleNameMapper: {
-        "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/jestSvgStub.js",
+        "^[./a-zA-Z0-9$_-]+\\.svg$": "<rootDir>/__mocks__/jestSvgStub.js",
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],

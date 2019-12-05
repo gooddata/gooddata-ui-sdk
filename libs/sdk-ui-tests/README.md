@@ -59,10 +59,10 @@ defined for that visualization, they are a natural indicator of breaking API cha
 section for more information on this.
 
 Furthermore, test scenarios are used to create recordings of backend interactions so that the tests
-in this project can run offline (and as fast as possible) against mocked backend.
+in this project can run offline (and as fast as possible) against recorded backend.
 
 Test scenarios work with LDM defined in the 'reference-workspace'; the recordings of backend interactions
-are also stored in 'reference-workspace' - with their intention for further reuse in component tests in
+are also stored in 'reference-workspace' - with the intention for further reuse in component tests in
 different SDK projects.
 
 ### Review methodology
@@ -90,8 +90,8 @@ First, here are the safe types of changes in this area:
         researched and explained in the PR
 -   Modifying existing screenshots
     -   The go-to answer is that this should not happen during minor or patch releases
-    -   The exception is if the snapshots are updated for technical reasons (screenshot of a larger
-        area, date changes)
+    -   The exceptions could be related to technicalities - screenshot of a larger
+        area, date changes etc
 
 #### Major release
 
@@ -105,7 +105,7 @@ First, here are the safe types of changes in this area:
 
 #### Adding new scenario for a visualization
 
-Locate desired for the visualization and then:
+Locate directory of the visualization and then:
 
 -   When adding a new scenario that covers different combinations of buckets look at the 'base' scenarios, make
     sure you are not adding a duplicate scenario. Then code the buckets for this new scenario using objects from
@@ -115,8 +115,10 @@ Locate desired for the visualization and then:
     See the next topics on how to do this.
 
 -   When adding a new scenario that covers different combinations of visualization configuration (chart config, callbacks
-    and then like), then build on top of one of the 'base' scenarios and add the extra customization on top of the
-    buckets
+    and then like), that build on top of one of the 'base' scenarios: add them to a separate file within the vis
+    directory and tag them with "vis-config-only" and "mock-no-scenario-meta" tags. These tags will ensure that
+    the mock building infrastructure will not clutter recording index with extra named scenarios leading to the
+    same recording.
 
 -   Newly added scenarios are automatically included in existing api-regression and visual-regression test suites => you
     are done.
@@ -141,9 +143,6 @@ Note: visual regression tests will fail if you run them before capturing executi
 
 -   Visual regression tests for all scenarios are created automatically. There are story creators in
     `stories/visual-regression`.
-
-After this, you need to capture execution definition for this new combination and capture recording of the data
-backing the execution. See the next topic on how to do this.
 
 Note: visual regression tests will fail if you run them before capturing execution definition and data recordings.
 
@@ -177,3 +176,44 @@ When creating new test scenarios, proceed as follows:
 Note: if at any point you realize that the recordings need to be completely re-done, then it is safe to delete
 `tools/reference-workspace/src/recordings/uiTestScenarios`; following the above steps will then lead to
 complete refresh.
+
+### Visual Regression with BackstopJS
+
+We use BackstopJS Docker image to run visual regression tests. You can (and should) run BackstopJS tests locally
+because they will produce same results as CI servers. Make sure you have Docker installed; if on OS X also make sure your
+Docker installation has RAM limit set to at least 4 GiB (Settings > Advanced).
+
+Tests can be triggered as follows:
+
+1.  Build storybook app: `npm run build-storybook`
+
+    This will create `dist-storybook` directory with build of Storybook & create or update `backstop/stories.json` file.
+    This file contains listing of all stories available in storybook.
+
+2.  Run BackstopJS in 'test' mode: `npm run backstop-test`
+
+Additional BackstopJS modes are also available:
+
+-   `npm run backstop-reference` - take reference screenshots for new stories
+-   `npm run backstop-approve` - update screenshots that differ from reference
+
+Note: the 'backstop' commands do not trigger `build-storybook` script.
+
+#### Configuration of BackstopJS scenarios
+
+Check out [backstop/scenarios.config.js](scenarios.config.js). There are some sane defaults for chart and
+pivot table stories. If you do anything custom, add configuration for your stories into this file. If there is
+no config match for a story, then it will be skipped from screenshot tests.
+
+### Technical Funny Stuff
+
+This project has several use cases where React component test scenarios have to be processed in node.js environment:
+
+-   Capturing execution definitions for visualizations implemented by React components
+-   Building BackstopJS configuration for visual regression testing
+
+In both of these cases code that is normally interpreted in browsers needs to run on server/workstation.
+
+To simplify and speed up initial development, the project mis-uses jest to run code that requires simulation of
+browser environment in node. A proper solution (perhaps using browser-env) is definitely possible but comes with
+its own price-tag while leading to the same results as current solution.
