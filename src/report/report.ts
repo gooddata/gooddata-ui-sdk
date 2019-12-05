@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { AFM, ExecuteAFM } from "@gooddata/typings";
 import compact from "lodash/compact";
-import isArray from "lodash/isArray";
+import isEmpty from "lodash/isEmpty";
 import { ERROR_RESTRICTED_CODE, ERROR_RESTRICTED_MESSAGE } from "../constants/errors";
 import {
     convertAbsoluteDateFilter,
@@ -14,7 +14,8 @@ import { handleHeadPolling, IPollingOptions } from "../util";
 import { isExportFinished } from "../utils/export";
 
 interface IExtendedExportConfig extends IBaseExportConfig {
-    showFilters?: ExecuteAFM.CompatibilityFilter[];
+    showFilters?: boolean;
+    afm?: ExecuteAFM.IAfm;
 }
 
 interface IResultExport {
@@ -55,15 +56,12 @@ export class ReportModule {
         exportConfig: IExportConfig = {},
         pollingOptions: IPollingOptions = {},
     ): Promise<IExportResponse> {
-        const { showFilters } = exportConfig;
-
-        const sanitizedFilters = this.sanitizeFilters(showFilters);
         const requestPayload: IExportResultPayload = {
             resultExport: {
                 executionResult,
                 exportConfig: {
                     ...exportConfig,
-                    showFilters: sanitizedFilters,
+                    ...this.sanitizeExportConfig(exportConfig),
                 },
             },
         };
@@ -75,6 +73,22 @@ export class ReportModule {
                 handleHeadPolling(this.xhr.get.bind(this.xhr), data.uri, isExportFinished, pollingOptions),
             )
             .catch(this.handleExportResultError);
+    }
+
+    private sanitizeExportConfig(exportConfig: IExportConfig): IExtendedExportConfig {
+        const { afm } = exportConfig;
+
+        if (afm && !isEmpty(afm.filters)) {
+            const sanitizedAfm: ExecuteAFM.IAfm = {
+                ...afm,
+                filters: this.sanitizeFilters(afm.filters),
+            };
+            return {
+                ...exportConfig,
+                afm: sanitizedAfm,
+            };
+        }
+        return exportConfig;
     }
 
     private handleExportResultError = (error: ApiResponseError | Error): Promise<Error> => {
@@ -95,13 +109,8 @@ export class ReportModule {
         return (error as ApiResponseError).response !== undefined;
     }
 
-    private sanitizeFilters(
-        showFilters?: AFM.CompatibilityFilter[],
-    ): ExecuteAFM.CompatibilityFilter[] | undefined {
-        if (isArray(showFilters) && showFilters.length > 0) {
-            return compact(showFilters.map(this.sanitizeFilter));
-        }
-        return undefined;
+    private sanitizeFilters(filters?: AFM.CompatibilityFilter[]): ExecuteAFM.CompatibilityFilter[] {
+        return filters ? compact(filters.map(this.sanitizeFilter)) : [];
     }
 
     private sanitizeFilter(filter: AFM.CompatibilityFilter): ExecuteAFM.CompatibilityFilter | null {
