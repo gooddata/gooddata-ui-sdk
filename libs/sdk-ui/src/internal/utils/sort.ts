@@ -72,11 +72,17 @@ function getDefaultTableSort(insight: IInsight): SortItem[] {
     return [];
 }
 
-function getDefaultBarChartSort(insight: IInsight): SortItem[] {
-    const viewBy = bucketsAttributes(insightBuckets(insight, BucketNames.VIEW));
-    const stackBy = bucketsAttributes(insightBuckets(insight, BucketNames.STACK));
+function getDefaultBarChartSort(insight: IInsight, canSortStackTotalValue: boolean = false): SortItem[] {
+    const viewBucket = insightBuckets(insight, BucketNames.VIEW);
+    const stackBucket = insightBuckets(insight, BucketNames.STACK);
+    const viewBy = viewBucket ? bucketsAttributes(viewBucket) : [];
+    const stackBy = stackBucket ? bucketsAttributes(stackBucket) : [];
 
     if (!isEmpty(viewBy) && !isEmpty(stackBy)) {
+        return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
+    }
+
+    if (!isEmpty(viewBy) && canSortStackTotalValue) {
         return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
     }
 
@@ -86,7 +92,11 @@ function getDefaultBarChartSort(insight: IInsight): SortItem[] {
 }
 
 // Consider disolving this function into individual components
-export function createSorts(type: string, insight: IInsight): SortItem[] {
+export function createSorts(
+    type: string,
+    insight: IInsight,
+    canSortStackTotalValue: boolean = false,
+): SortItem[] {
     switch (type) {
         case VisualizationTypes.TABLE:
             const sorts = insightSorts(insight);
@@ -96,7 +106,7 @@ export function createSorts(type: string, insight: IInsight): SortItem[] {
         case VisualizationTypes.LINE:
             return [];
         case VisualizationTypes.BAR:
-            return getDefaultBarChartSort(insight);
+            return getDefaultBarChartSort(insight, canSortStackTotalValue);
         case VisualizationTypes.TREEMAP:
             return SortsHelper.getDefaultTreemapSort(insight);
     }

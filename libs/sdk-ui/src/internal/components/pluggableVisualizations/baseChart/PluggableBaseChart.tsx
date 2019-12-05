@@ -63,15 +63,17 @@ import * as VisEvents from "../../../../base/interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
+    bucketsItems,
     IColorMappingItem,
     IDimension,
     IInsight,
     insightBuckets,
     insightHasDataDefined,
+    insightMeasures,
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig, ColorUtils } from "../../../../highcharts";
+import { IChartConfig, ColorUtils, IAxisConfig } from "../../../../highcharts";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -252,14 +254,16 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const afterRender = get(this.callbacks, "afterRender", noop);
         const onDrill = get(this.callbacks, "onDrill", noop);
         const { drillableItems } = custom;
-        const supportedControls = this.getSupportedControls(insight);
+        const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
         const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
 
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(...createSorts(this.type, insight));
+            .withSorting(
+                ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
+            );
 
         render(
             <BaseChart
@@ -502,4 +506,19 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
 function isStacked(insight: IInsight): boolean {
     return !bucketsIsEmpty(insightBuckets(insight, BucketNames.STACK, BucketNames.SEGMENT));
+}
+
+function areAllMeasuresOnSingleAxis(insight: IInsight, secondaryYAxis: IAxisConfig): boolean {
+    const measureCount = insightMeasures(insight).length;
+    const numberOfMeasureOnSecondaryAxis = secondaryYAxis ? secondaryYAxis.measures.length : 0;
+    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
+}
+
+function canSortStackTotalValue(insight: IInsight, supportedControls: IVisualizationProperties): boolean {
+    const stackMeasures = get(supportedControls, "stackMeasures", false);
+    const singleViewItem = bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length === 1;
+    const secondaryAxis: IAxisConfig = get(supportedControls, "secondary_yaxis", { measures: [] });
+    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
+
+    return stackMeasures && allMeasuresOnSingleAxis && singleViewItem;
 }
