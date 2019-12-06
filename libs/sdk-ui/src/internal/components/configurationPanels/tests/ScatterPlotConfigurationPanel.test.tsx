@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
@@ -18,6 +18,25 @@ describe("ScatterPlotConfigurationPanel", () => {
         return shallow<IConfigurationPanelContentProps, null>(<ScatterPlotConfigurationPanel {...props} />, {
             lifecycleExperimental: true,
         });
+    }
+
+    function newInsight(measureBucket: string): IInsight {
+        return {
+            insight: {
+                title: "My Insight",
+                sorts: [],
+                filters: [],
+                visualizationClassIdentifier: "vc",
+                properties: {},
+                identifier: "id",
+                buckets: [
+                    {
+                        localIdentifier: measureBucket,
+                        items: [newMeasure("testMeasure")],
+                    },
+                ],
+            },
+        };
     }
 
     it("should render three sections in configuration panel for bubble chart", () => {
@@ -123,49 +142,26 @@ describe("ScatterPlotConfigurationPanel", () => {
             expect(yAxisSection.props().disabled).toBe(true);
         });
 
-        it("should render configuration panel with enabled X axis name section and disabled Y axis name section", () => {
-            const insight: IInsight = {
-                insight: {
-                    title: "My Insight",
-                    sorts: [],
-                    filters: [],
-                    visualizationClassIdentifier: "vc",
-                    properties: {},
-                    identifier: "id",
-                    buckets: [
-                        {
-                            localIdentifier: "measures",
-                            items: [
-                                {
-                                    measure: {
-                                        localIdentifier: "measureId",
-                                        definition: {
-                                            measureDefinition: {
-                                                item: {
-                                                    uri: "/gdc/md/projectId/obj/9211",
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    ],
-                },
-            };
+        it.each([[false, true, "measures"], [true, false, "secondary_measures"]])(
+            "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
+            (
+                expectedXAxisSectionDisabled: boolean,
+                expectedYAxisSectionDisabled: boolean,
+                measureIdentifier: string,
+            ) => {
+                const wrapper = createComponent({
+                    ...defaultProps,
+                    insight: newInsight(measureIdentifier),
+                });
 
-            const wrapper = createComponent({
-                ...defaultProps,
-                insight,
-            });
+                const axisSections = wrapper.find(NameSubsection);
 
-            const axisSections = wrapper.find(NameSubsection);
+                const xAxisSection = axisSections.at(0);
+                expect(xAxisSection.props().disabled).toEqual(expectedXAxisSectionDisabled);
 
-            const xAxisSection = axisSections.at(0);
-            expect(xAxisSection.props().disabled).toEqual(false);
-
-            const yAxisSection = axisSections.at(1);
-            expect(yAxisSection.props().disabled).toEqual(true);
-        });
+                const yAxisSection = axisSections.at(1);
+                expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
+            },
+        );
     });
 });

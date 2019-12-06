@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
 import { VisualizationTypes } from "../../../..";
@@ -15,6 +15,25 @@ describe("BubbleChartconfigurationPanel", () => {
         return shallow<IConfigurationPanelContentProps, null>(<BubbleChartConfigurationPanel {...props} />, {
             lifecycleExperimental: true,
         });
+    }
+
+    function newInsight(measureBucket: string): IInsight {
+        return {
+            insight: {
+                title: "My Insight",
+                sorts: [],
+                filters: [],
+                visualizationClassIdentifier: "vc",
+                properties: {},
+                identifier: "id",
+                buckets: [
+                    {
+                        localIdentifier: measureBucket,
+                        items: [newMeasure("testMeasure")],
+                    },
+                ],
+            },
+        };
     }
 
     it("should render configuration panel with enabled controls", () => {
@@ -210,5 +229,27 @@ describe("BubbleChartconfigurationPanel", () => {
             const yAxisSection = axisSections.at(1);
             expect(yAxisSection.props().disabled).toEqual(true);
         });
+
+        it.each([[false, true, "measures"], [true, false, "secondary_measures"]])(
+            "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
+            (
+                expectedXAxisSectionDisabled: boolean,
+                expectedYAxisSectionDisabled: boolean,
+                measureIdentifier: string,
+            ) => {
+                const wrapper = createComponent({
+                    ...defaultProps,
+                    insight: newInsight(measureIdentifier),
+                });
+
+                const axisSections = wrapper.find(NameSubsection);
+
+                const xAxisSection = axisSections.at(0);
+                expect(xAxisSection.props().disabled).toEqual(expectedXAxisSectionDisabled);
+
+                const yAxisSection = axisSections.at(1);
+                expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
+            },
+        );
     });
 });
