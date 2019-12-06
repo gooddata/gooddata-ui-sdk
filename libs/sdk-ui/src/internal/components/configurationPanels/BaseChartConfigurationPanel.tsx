@@ -117,9 +117,10 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
 
     protected getBaseChartAxisSection(axes: IAxisProperties[]) {
         const { type, properties, propertiesMeta, pushData, insight } = this.props;
+        const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
-        const itemsOnAxes = countItemsOnAxes(type, properties.controls, insight);
+        const itemsOnAxes = countItemsOnAxes(type, controls, insight);
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);

@@ -6,6 +6,7 @@ import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import * as classNames from "classnames";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
@@ -26,8 +27,10 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel() {
         const { xAxisVisible, yAxisVisible, gridEnabled } = this.getControlProperties();
 
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, type, insight } = this.props;
+        const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
+        const itemsOnAxes = countItemsOnAxes(type, controls, insight);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -73,7 +76,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         pushData={pushData}
                     >
                         <NameSubsection
-                            disabled={controlsDisabled}
+                            disabled={controlsDisabled || itemsOnAxes.yaxis !== 1}
                             configPanelDisabled={controlsDisabled}
                             axis={"yaxis"}
                             properties={properties}

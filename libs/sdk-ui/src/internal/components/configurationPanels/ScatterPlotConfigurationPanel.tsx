@@ -21,6 +21,7 @@ import {
 import { insightHasAttributes } from "@gooddata/sdk-model";
 import get = require("lodash/get");
 import NameSubsection from "../configurationControls/axis/NameSubsection";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled() {
@@ -32,8 +33,10 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel() {
         const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
 
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, insight, type } = this.props;
+        const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
+        const itemsOnAxes = countItemsOnAxes(type, controls, insight);
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -79,7 +82,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         pushData={pushData}
                     >
                         <NameSubsection
-                            disabled={controlsDisabled}
+                            disabled={controlsDisabled || itemsOnAxes.yaxis !== 1}
                             configPanelDisabled={controlsDisabled}
                             axis={"yaxis"}
                             properties={properties}

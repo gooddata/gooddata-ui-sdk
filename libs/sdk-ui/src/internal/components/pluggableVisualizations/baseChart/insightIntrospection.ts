@@ -1,11 +1,19 @@
 // (C) 2019 GoodData Corporation
 import { bucketItems, IInsight, insightBucket } from "@gooddata/sdk-model";
 import * as BucketNames from "../../../../base/constants/bucketNames";
-import { isBarChart } from "../../../../highcharts/utils/common";
+import { isBarChart, isScatterPlot, isBubbleChart } from "../../../../highcharts/utils/common";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import get = require("lodash/get");
 
 export function countBucketItems(insight: IInsight) {
+    if (!insight) {
+        return {
+            viewByItemCount: 0,
+            measureItemCount: 0,
+            secondaryMeasureItemCount: 0,
+        };
+    }
+
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const measureBucket = insightBucket(insight, BucketNames.MEASURES);
     const secondaryMeasureBucket = insightBucket(insight, BucketNames.SECONDARY_MEASURES);
@@ -33,6 +41,13 @@ export function countItemsOnAxes(type: string, controls: IVisualizationPropertie
             yaxis: viewByItemCount,
             xaxis: totalMeasureItemCount - secondaryMeasureCountInConfig,
             secondary_xaxis: secondaryMeasureCountInConfig,
+        };
+    }
+
+    if (isScatterPlot(type) || isBubbleChart(type)) {
+        return {
+            xaxis: measureItemCount,
+            yaxis: secondaryMeasureItemCount,
         };
     }
 
