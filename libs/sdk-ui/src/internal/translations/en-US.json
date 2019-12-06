@@ -109,6 +109,16 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.measures_title.xirr": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.attribute_title.xirr": {
+        "value": "Date attribute",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.bucket.combo.subtitle.column": {
         "value": "as columns",
         "comment": "Display measures in column chart = 'as columns'.",
@@ -317,6 +327,16 @@
     "dashboard.headline.error.missing_bucket_item.text": {
         "value": "Add a primary measure to your insight, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
+        "limit": 0
+    },
+    "dashboard.xirr.error.invalid_buckets.heading": {
+        "value": "Incomplete configuration",
+        "comment": "Informs the user that they have not provided all the necessary configuration items (one measure and one date attribute)",
+        "limit": 0
+    },
+    "dashboard.xirr.error.invalid_buckets.text": {
+        "value": "Make sure you have selected one measure and one date attribute",
+        "comment": "The user should be instructed to review that they have added one measure and one date attribute to the insight",
         "limit": 0
     },
     "properties.unsupported": {
