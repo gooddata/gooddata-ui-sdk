@@ -16,6 +16,7 @@ export { Visualization } from "./Visualization";
 
 export { FLUID_LEGEND_THRESHOLD } from "./chart/HighChartsRenderer";
 export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
+export { updateConfigWithSettings } from "./chart/chartOptions/chartOptionsForSettings";
 
 // TODO: SDK8: this should go away; its exported for drills
 

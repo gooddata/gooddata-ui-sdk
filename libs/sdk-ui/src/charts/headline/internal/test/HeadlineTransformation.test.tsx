@@ -32,6 +32,18 @@ describe("HeadlineTransformation", () => {
         expect(props.onAfterRender).toEqual(noop);
     });
 
+    it("should pass disableDrillUnderline prop from config.disableDrillUnderline", () => {
+        const wrapper = createComponent({
+            dataView: headlineWithOneMeasure.dataView,
+            config: {
+                disableDrillUnderline: true,
+            },
+        });
+
+        const headlineComponent = wrapper.find(Headline);
+        expect(headlineComponent.prop("disableDrillUnderline")).toBeTruthy();
+    });
+
     it("should pass all required props to Headline component and enable drilling identified by uri", () => {
         const onAfterRender = jest.fn();
         const drillableItems = [

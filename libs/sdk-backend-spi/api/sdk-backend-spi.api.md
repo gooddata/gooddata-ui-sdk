@@ -442,6 +442,12 @@ export function isAttributeDescriptor(obj: any): obj is IAttributeDescriptor;
 export function isDataTooLargeError(obj: any): obj is DataTooLargeError;
 
 // @public
+export interface ISettings {
+    // (undocumented)
+    [key: string]: number | boolean | string;
+}
+
+// @public
 export function isMeasureDescriptor(obj: any): obj is IMeasureDescriptor;
 
 // @public
@@ -544,8 +550,7 @@ export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {
 }
 
 // @public
-export interface IWorkspaceSettings {
-    [key: string]: number | boolean | string;
+export interface IWorkspaceSettings extends ISettings {
     workspace: string;
 }
 
@@ -585,6 +590,11 @@ export function prepareExecution(backend: IAnalyticalBackend, definition: IExecu
 // @public
 export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
+}
+
+// @public
+export enum SettingCatalog {
+    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline"
 }
 
 // @public

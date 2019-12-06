@@ -8,6 +8,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
 import * as BucketNames from "../../../../base/constants/bucketNames";
+import { updateConfigWithSettings } from "../../../../highcharts";
 import { METRIC } from "../../../constants/bucket";
 
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -53,7 +54,7 @@ import {
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "../../../../base/interfaces/Locale";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
@@ -64,6 +65,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;
+    private settings?: ISettings;
 
     constructor(props: IVisConstruct) {
         super();
@@ -73,6 +75,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
+        this.settings = props.featureFlags;
     }
 
     public unmount() {
@@ -153,7 +156,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 execution={execution}
                 drillableItems={drillableItems}
                 locale={locale}
-                config={config}
+                config={updateConfigWithSettings(config, this.settings)}
                 afterRender={afterRender}
                 onLoadingChanged={onLoadingChanged}
                 pushData={pushData}

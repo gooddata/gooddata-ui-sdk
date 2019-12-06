@@ -1,5 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Headline with drilling on single measure should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Headline with drilling on single measure should create expected props for core chart 1`] = `
+Object {
+  "backend": BackendWithDecoratedServices {
+    "capabilities": Object {},
+    "config": Object {
+      "hostname": "test",
+      "raiseNoDataExceptions": true,
+    },
+    "decorated": Object {
+      "authenticate": [Function],
+      "capabilities": Object {},
+      "config": Object {
+        "hostname": "test",
+        "raiseNoDataExceptions": true,
+      },
+      "isAuthenticated": [Function],
+      "onHostname": [Function],
+      "withAuthentication": [Function],
+      "withTelemetry": [Function],
+      "workspace": [Function],
+      "workspaces": [Function],
+    },
+    "factories": Object {
+      "execution": [Function],
+    },
+  },
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`Headline with single measure should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],

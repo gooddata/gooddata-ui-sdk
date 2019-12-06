@@ -1,15 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { IHeadlineProps } from "@gooddata/sdk-ui";
-import BaseUseCases from "../../../scenarios/charts/headline/base";
+import headlineScenarios from "../../../scenarios/charts/headline";
 import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
+import flatMap = require("lodash/flatMap");
 
 describe("Headline", () => {
-    const Scenarios: Array<ScenarioTestInput<IHeadlineProps>> = BaseUseCases.forTestTypes(
-        "api",
-    ).asTestInput();
+    const Scenarios: Array<ScenarioTestInput<IHeadlineProps>> = flatMap(headlineScenarios, group =>
+        group.forTestTypes("api").asTestInput(),
+    );
 
     describe.each(Scenarios)("with %s", (_desc, Component, propsFactory) => {
         const promisedInteractions = mountChartAndCapture(Component, propsFactory, wrapper =>

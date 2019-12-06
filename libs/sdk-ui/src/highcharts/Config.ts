@@ -67,6 +67,7 @@ export interface IChartConfig extends IMeasuresStackConfig {
     primaryChartType?: string;
     secondaryChartType?: string;
     forceDisableDrillOnAxes?: boolean;
+    disableDrillUnderline?: boolean;
 }
 
 export interface IStackLabels {

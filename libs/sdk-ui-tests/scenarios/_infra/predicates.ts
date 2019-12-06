@@ -1,5 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
+import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicateFactory } from "@gooddata/sdk-ui";
 
 /**
@@ -15,3 +17,10 @@ export const AttributeElements = {
         WestCoast: HeaderPredicateFactory.attributeItemNameMatch("West Coast"),
     },
 };
+
+export const AmountMeasurePredicate = HeaderPredicateFactory.identifierMatch(
+    measureIdentifier(ReferenceLdm.Amount)!,
+);
+export const WonMeasurePredicate = HeaderPredicateFactory.identifierMatch(
+    measureIdentifier(ReferenceLdm.Won)!,
+);
