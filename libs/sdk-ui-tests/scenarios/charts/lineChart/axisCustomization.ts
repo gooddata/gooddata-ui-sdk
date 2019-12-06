@@ -1,12 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
-import { ILineChartProps, LineChart } from "@gooddata/sdk-ui";
-import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";
-import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { ILineChartProps, LineChart } from "@gooddata/sdk-ui";
+import { scenariosFor } from "../../../src";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
+import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";
 
-export default scenariosFor<ILineChartProps>("LineChart", LineChart)
+const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {
@@ -34,3 +35,26 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
             },
         },
     });
+
+const singleAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withVisualTestConfig({ groupUnder: "single axis name configuration" })
+    .addScenarios("", LineChartTwoMeasuresWithTrendyBy, axisNameCustomization);
+
+const dualAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withVisualTestConfig({ groupUnder: "dual axis name configuration" })
+    .addScenarios(
+        "",
+        {
+            ...LineChartTwoMeasuresWithTrendyBy,
+            config: {
+                secondary_yaxis: {
+                    measures: [measureLocalId(ReferenceLdm.Won)],
+                },
+            },
+        },
+        axisNameCustomization,
+    );
+
+export default [axisConfig, singleAxisNameScenarios, dualAxisNameScenarios];

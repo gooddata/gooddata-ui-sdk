@@ -25,7 +25,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     {this.renderColorSection()}
-                    {this.getBaseChartAxisSection(properties, propertiesMeta, axes)}
+                    {this.getBaseChartAxisSection(axes)}
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="canvas_section"

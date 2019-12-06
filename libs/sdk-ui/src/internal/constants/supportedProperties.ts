@@ -3,9 +3,21 @@ import { AXIS } from "./axis";
 
 const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping"];
 
-const BASE_X_AXIS_PROPERTIES = ["xaxis.labelsEnabled", "xaxis.rotation", "xaxis.visible"];
+const BASE_X_AXIS_PROPERTIES = [
+    "xaxis.rotation",
+    "xaxis.labelsEnabled",
+    "xaxis.visible",
+    "xaxis.name.visible",
+    "xaxis.name.position",
+];
 
-const BASE_Y_AXIS_PROPERTIES = ["yaxis.rotation", "yaxis.labelsEnabled", "yaxis.visible"];
+const BASE_Y_AXIS_PROPERTIES = [
+    "yaxis.rotation",
+    "yaxis.labelsEnabled",
+    "yaxis.visible",
+    "yaxis.name.visible",
+    "yaxis.name.position",
+];
 
 const BASE_PRIMARY_AXIS_PROPERTIES = [...BASE_Y_AXIS_PROPERTIES, "yaxis.min", "yaxis.max"];
 
@@ -18,6 +30,8 @@ const BASE_SECONDARY_AXIS_PROPERTIES = [
     "secondary_yaxis.min",
     "secondary_yaxis.max",
     "secondary_yaxis.measures",
+    "secondary_yaxis.name.visible",
+    "secondary_yaxis.name.position",
 ];
 
 const BAR_SECONDARY_AXIS_PROPERTIES = [
@@ -27,6 +41,8 @@ const BAR_SECONDARY_AXIS_PROPERTIES = [
     "secondary_xaxis.min",
     "secondary_xaxis.max",
     "secondary_xaxis.measures",
+    "secondary_xaxis.name.visible",
+    "secondary_xaxis.name.position",
 ];
 
 export const OPTIONAL_STACKING_PROPERTIES = ["stackMeasures", "stackMeasuresToPercent"];
@@ -116,11 +132,17 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "xaxis.visible",
     "xaxis.min",
     "xaxis.max",
+    "xaxis.name.visible",
+    "xaxis.name.position",
+
     "yaxis.labelsEnabled",
     "yaxis.rotation",
     "yaxis.visible",
     "yaxis.min",
     "yaxis.max",
+    "yaxis.name.visible",
+    "yaxis.name.position",
+
     "legend",
     "colorMapping",
 ];
@@ -133,11 +155,16 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "xaxis.visible",
     "xaxis.min",
     "xaxis.max",
+    "xaxis.name.visible",
+    "xaxis.name.position",
+
     "yaxis.labelsEnabled",
     "yaxis.rotation",
     "yaxis.visible",
     "yaxis.min",
     "yaxis.max",
+    "yaxis.name.visible",
+    "yaxis.name.position",
     "colorMapping",
 ];
 
@@ -151,8 +178,13 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "yaxis.rotation",
     "yaxis.labelsEnabled",
     "yaxis.visible",
+    "yaxis.name.visible",
+    "yaxis.name.position",
+
     "xaxis.labelsEnabled",
     "xaxis.rotation",
     "xaxis.visible",
+    "xaxis.name.visible",
+    "xaxis.name.position",
     "colorMapping",
 ];

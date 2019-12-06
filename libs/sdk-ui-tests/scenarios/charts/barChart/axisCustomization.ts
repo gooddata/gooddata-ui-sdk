@@ -2,6 +2,7 @@
 
 import { scenariosFor } from "../../../src";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithTwoMeasuresAndTwoViewBy,
@@ -10,7 +11,34 @@ import {
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 
-export default scenariosFor<IBarChartProps>("BarChart", BarChart)
+const singleAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withVisualTestConfig({
+        groupUnder: "single axis name customization",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("single axis", BarChartWithTwoMeasuresAndViewBy, axisNameCustomization);
+
+const dualAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withVisualTestConfig({
+        groupUnder: "dual axis name customization",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios(
+        "",
+        {
+            ...BarChartWithTwoMeasuresAndTwoViewBy,
+            config: {
+                secondary_xaxis: {
+                    measures: [measureLocalId(ReferenceLdm.Won)],
+                },
+            },
+        },
+        axisNameCustomization,
+    );
+
+const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {
@@ -70,3 +98,5 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             },
         },
     });
+
+export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig];

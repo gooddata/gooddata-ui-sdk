@@ -28,7 +28,7 @@ describe("ConfigSubsection", () => {
         it("should render config subsection", () => {
             const wrapper = createComponent();
 
-            expect(wrapper.find(".s-configuration-subsection").length).toBe(1);
+            expect(wrapper.find(".s-configuration-subsection-properties-legend-title").length).toBe(1);
         });
     });
 

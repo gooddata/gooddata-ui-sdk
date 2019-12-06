@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { scenariosFor } from "../../../src";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
     ComboChartWithMultipleMeasuresAndNoViewBy,
@@ -29,4 +30,15 @@ const multipleMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", C
     .withVisualTestConfig({ groupUnder: "dual axis multiple measures without slicing" })
     .addScenarios("", ComboChartWithMultipleMeasuresAndNoViewBy, comboVariants);
 
-export default [twoMeasures, twoMeasuresNoSlicing, multipleMeasures, multipleMeasuresNoSlicing];
+const axisNameConfig = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withVisualTestConfig({ groupUnder: "axis name configuration" })
+    .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, axisNameCustomization);
+
+export default [
+    twoMeasures,
+    twoMeasuresNoSlicing,
+    multipleMeasures,
+    multipleMeasuresNoSlicing,
+    axisNameConfig,
+];

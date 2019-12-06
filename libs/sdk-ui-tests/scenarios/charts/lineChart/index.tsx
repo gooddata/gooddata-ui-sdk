@@ -5,4 +5,4 @@ import axisCustomization from "./axisCustomization";
 import coloring from "./coloring";
 import customization from "./customization";
 
-export default [base, axisCustomization, ...coloring, ...customization];
+export default [base, ...axisCustomization, ...coloring, ...customization];

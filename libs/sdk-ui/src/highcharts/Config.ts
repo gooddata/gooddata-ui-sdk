@@ -95,6 +95,11 @@ export interface IStackMeasuresConfig {
     yAxis?: IHighChartAxis[];
 }
 
+export interface IAxisNameConfig {
+    visible?: boolean;
+    position?: Highcharts.AxisTitleAlignValue;
+}
+
 export interface IAxisConfig {
     visible?: boolean;
     labelsEnabled?: boolean;
@@ -105,6 +110,7 @@ export interface IAxisConfig {
     stacks?: IStackItem;
     series?: ISeriesItem[];
     stackTotalGroup?: SVGAttributes;
+    name?: IAxisNameConfig;
 }
 
 export interface IAxis {

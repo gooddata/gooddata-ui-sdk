@@ -5,6 +5,7 @@ import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import get = require("lodash/get");
 import * as classNames from "classnames";
+import NameSubsection from "../configurationControls/axis/NameSubsection";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import ConfigSection from "../configurationControls/ConfigSection";
@@ -45,6 +46,14 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={xAxisDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={xAxisDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -65,6 +74,14 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={yAxisDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={yAxisDisabled}
                             configPanelDisabled={controlsDisabled}

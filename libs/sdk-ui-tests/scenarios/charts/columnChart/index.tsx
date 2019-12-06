@@ -7,4 +7,4 @@ import customization from "./customization";
 import drilling from "./drilling";
 import stacking from "./stacking";
 
-export default [base, axisCustomization, ...coloring, ...customization, drilling, stacking];
+export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking];

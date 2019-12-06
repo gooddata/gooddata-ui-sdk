@@ -25,3 +25,43 @@ export const dataLabelsDropdownItems: IDropdownItem[] = [
     { title: "properties.canvas.dataLabels.show", value: true },
     { title: "properties.canvas.dataLabels.hide", value: false },
 ];
+
+export const xAxisPositionDropdownItems: IDropdownItem[] = [
+    { title: "properties.auto_default", value: "auto" },
+    { type: "separator" },
+    {
+        title: "properties.axis.name.position.left",
+        value: "left",
+        icon: "dropdown-icon-axis-name-position-left",
+    },
+    {
+        title: "properties.axis.name.position.center",
+        value: "center",
+        icon: "dropdown-icon-axis-name-position-center",
+    },
+    {
+        title: "properties.axis.name.position.right",
+        value: "right",
+        icon: "dropdown-icon-axis-name-position-right",
+    },
+];
+
+export const yAxisPositionDropdownItems: IDropdownItem[] = [
+    { title: "properties.auto_default", value: "auto" },
+    { type: "separator" },
+    {
+        title: "properties.axis.name.position.top",
+        value: "top",
+        icon: "dropdown-icon-axis-name-position-top",
+    },
+    {
+        title: "properties.axis.name.position.middle",
+        value: "middle",
+        icon: "dropdown-icon-axis-name-position-middle",
+    },
+    {
+        title: "properties.axis.name.position.bottom",
+        value: "bottom",
+        icon: "dropdown-icon-axis-name-position-bottom",
+    },
+];

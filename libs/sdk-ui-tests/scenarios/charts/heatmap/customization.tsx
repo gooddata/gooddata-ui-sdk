@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { HeatmapWithMeasureRowsAndColumns } from "./base";
@@ -15,4 +16,9 @@ const dataLabelScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", HeatmapWithMeasureRowsAndColumns, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const axisNameScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
+    .withVisualTestConfig({ groupUnder: "axis name configuration" })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("", HeatmapWithMeasureRowsAndColumns, axisNameCustomization);
+
+export default [legendScenarios, dataLabelScenarios, axisNameScenarios];

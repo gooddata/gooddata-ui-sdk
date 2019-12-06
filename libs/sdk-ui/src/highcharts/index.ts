@@ -6,6 +6,7 @@ export {
     IChartLimits,
     IAxisConfig,
     IDataLabelsConfig,
+    IAxisNameConfig,
 } from "./Config";
 
 import Chart from "./chart/Chart";

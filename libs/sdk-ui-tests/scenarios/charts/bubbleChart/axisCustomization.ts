@@ -1,14 +1,23 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
 import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui";
+import { scenariosFor } from "../../../src";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
+
+const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+    .withVisualTestConfig({
+        groupUnder: "axis name customization",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("single axis", BubbleChartWithAllMeasuresAndAttribute, axisNameCustomization);
 
 /*
  * TODO: "long name of X and Y axes are truncated" story used to exist in old stories;
  *  shouldn't this be in all axis customizations stories for all charts?
  */
-export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
+const axisConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("X axis min/max configuration", {
@@ -58,3 +67,5 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
             },
         },
     });
+
+export default [axisConfig, singleAxisNameConfig];

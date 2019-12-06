@@ -20,6 +20,7 @@ import {
 } from "../../constants/bubble";
 import { insightHasAttributes } from "@gooddata/sdk-model";
 import get = require("lodash/get");
+import NameSubsection from "../configurationControls/axis/NameSubsection";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled() {
@@ -49,6 +50,14 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={controlsDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -69,6 +78,14 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={controlsDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}

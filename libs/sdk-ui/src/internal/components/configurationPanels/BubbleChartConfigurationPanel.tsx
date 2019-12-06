@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import * as classNames from "classnames";
+import NameSubsection from "../configurationControls/axis/NameSubsection";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
@@ -43,6 +44,14 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={controlsDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -63,6 +72,14 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={controlsDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
