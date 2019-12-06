@@ -28,6 +28,14 @@ describe("AttributeDropdown", () => {
         );
     }
 
+    // we have to wait for the debounced onSearch
+    const waitForDebounce = () =>
+        new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 300);
+        });
+
     afterEach(() => {
         // for some reason the document.body gets polluted and has to be cleared after every test
         // otherwise every subsequent test fails
@@ -73,5 +81,108 @@ describe("AttributeDropdown", () => {
             [{ title: "DELETE", uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110" }],
             true,
         );
+    });
+
+    it("should keep selection after Apply", async () => {
+        const onApply = jest.fn();
+        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method", onApply });
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        wrapper
+            .find(AttributeFilterItem)
+            .first()
+            .simulate("click");
+
+        wrapper.find("button.s-apply").simulate("click");
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(7);
+    });
+
+    it("should reset selection on Cancel", async () => {
+        const onApply = jest.fn();
+        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method", onApply });
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        wrapper
+            .find(AttributeFilterItem)
+            .first()
+            .simulate("click");
+
+        wrapper.find("button.s-cancel").simulate("click");
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(8);
+    });
+
+    it("should limit items by search string", async () => {
+        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method" });
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        wrapper
+            .find("input")
+            .first()
+            .simulate("change", { target: { value: "DELETE" } });
+
+        await waitForDebounce();
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        const dropdownItems = document.querySelectorAll(".s-attribute-filter-list-item");
+        expect(dropdownItems.length).toBe(1);
+    });
+
+    it("should reset search string on cancel", async () => {
+        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method" });
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+
+        wrapper
+            .find("input")
+            .first()
+            .simulate("change", { target: { value: "DELETE" } });
+
+        await waitForDebounce();
+
+        wrapper.update();
+        expect(wrapper.find("InvertableList").prop("searchString")).toBe("DELETE");
+
+        wrapper.find("button.s-cancel").simulate("click");
+        wrapper.update();
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        await waitForAsync(); // There have to be two of those for some reason :-/
+        wrapper.update();
+        expect(wrapper.find("InvertableList").prop("searchString")).toBe("");
     });
 });

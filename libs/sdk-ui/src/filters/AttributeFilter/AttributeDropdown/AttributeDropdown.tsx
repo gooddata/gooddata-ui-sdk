@@ -5,11 +5,20 @@ import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropd
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import * as classNames from "classnames";
+import debounce = require("lodash/debounce");
+import noop = require("lodash/noop");
 
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
-import { VISIBLE_ITEMS_COUNT } from "./AttributeDropdownList";
+import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
-import { IElementQueryResultWithEmptyItems, EmptyListItem } from "./types";
+import {
+    IElementQueryResultWithEmptyItems,
+    EmptyListItem,
+    AttributeListItem,
+    isNonEmptyListItem,
+} from "./types";
+
+const LIMIT = MAX_SELECTION_SIZE + 50;
 
 export interface IAttributeDropdownProps {
     title: string;
@@ -18,16 +27,25 @@ export interface IAttributeDropdownProps {
     workspace: string;
     identifier: string;
 
+    selectedItems?: Array<Partial<IAttributeElement>>;
+    isInverted?: boolean;
+
     onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
 }
 
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResultWithEmptyItems;
-    selectedItems: IAttributeElement[];
+
+    selectedItems: Array<Partial<IAttributeElement>>;
     isInverted: boolean;
+
+    prevSelectedItems: Array<Partial<IAttributeElement>>;
+    prevIsInverted: boolean;
+
     isLoading: boolean;
     error?: any;
+    searchString: string;
 
     // paging
     offset: number;
@@ -55,25 +73,45 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     constructor(props: IAttributeDropdownProps) {
         super(props);
 
+        const selectedItems = props.selectedItems || [];
+        const isInverted = props.isInverted !== undefined ? props.isInverted : true;
+
         this.state = {
             validElements: null,
-            selectedItems: [],
+
+            selectedItems,
+            isInverted,
+
+            prevSelectedItems: selectedItems,
+            prevIsInverted: isInverted,
+
             isLoading: false,
-            limit: VISIBLE_ITEMS_COUNT,
+            limit: LIMIT,
             offset: 0,
-            isInverted: true,
+            searchString: "",
         };
 
         this.createMediaQuery(props.fullscreenOnMobile);
     }
 
-    public componentDidUpdate(prevProps: IAttributeDropdownProps): void {
+    public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
         const needsInvalidation =
-            this.props.identifier !== prevProps.identifier || this.props.workspace !== prevProps.workspace;
+            this.props.identifier !== prevProps.identifier ||
+            this.props.workspace !== prevProps.workspace ||
+            this.state.searchString !== prevState.searchString;
 
         if (needsInvalidation) {
-            this.setState({ validElements: null, error: null, isLoading: false, limit: VISIBLE_ITEMS_COUNT });
-            this.getElements();
+            this.setState(
+                {
+                    validElements: null,
+                    error: null,
+                    isLoading: false,
+                    offset: 0,
+                    totalCount: undefined,
+                    limit: LIMIT,
+                },
+                () => this.getElements(),
+            );
         }
     }
 
@@ -99,6 +137,29 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         }
     };
 
+    private updateSelectedItemsWithData = (
+        selection: Array<Partial<IAttributeElement>>,
+        items: AttributeListItem[],
+    ) => {
+        const nonEmptyItems = items.filter(isNonEmptyListItem);
+        return selection.map(selectedItem => {
+            const foundItem = nonEmptyItems.find(
+                item =>
+                    (selectedItem.uri && item.uri === selectedItem.uri) ||
+                    (selectedItem.title && item.title === selectedItem.title),
+            );
+            return foundItem || selectedItem;
+        });
+    };
+
+    private onSearch = debounce((query: string) => {
+        this.setState({ searchString: query });
+    }, 250);
+
+    private clearSearchString = () => {
+        this.setState({ searchString: "" });
+    };
+
     private loadElements = async (offset: number, limit: number) => {
         const { workspace, identifier } = this.props;
 
@@ -108,15 +169,29 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
             .workspace(workspace)
             .elements()
             .forObject(identifier)
+            .withOptions({
+                ...(this.state.searchString ? { filter: this.state.searchString } : {}),
+            })
             .withOffset(offset)
             .withLimit(limit)
             .query();
 
         this.setState(state => {
             const mergedValidElements = mergeElementQueryResults(state.validElements, newElements);
+            const { items } = mergedValidElements;
+
+            // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
+            // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
+            const updatedSelectedItems = this.updateSelectedItemsWithData(this.state.selectedItems, items);
+            const updatedPrevSelectedItems = this.updateSelectedItemsWithData(
+                this.state.prevSelectedItems,
+                items,
+            );
 
             return {
                 ...state,
+                selectedItems: updatedSelectedItems,
+                prevSelectedItems: updatedPrevSelectedItems,
                 isLoading: false,
                 validElements: mergedValidElements,
             };
@@ -148,23 +223,47 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
             : ({ children }: { children: (isMobile: boolean) => React.ReactNode }) => children(false);
     }
 
+    private backupSelection = (callback: () => any = noop) => {
+        const { selectedItems, isInverted } = this.state;
+        this.setState(
+            {
+                prevSelectedItems: selectedItems,
+                prevIsInverted: isInverted,
+            },
+            callback,
+        );
+    };
+
+    private restoreSelection = () => {
+        const { prevSelectedItems, prevIsInverted } = this.state;
+        this.setState({
+            selectedItems: prevSelectedItems,
+            isInverted: prevIsInverted,
+        });
+    };
+
     private onDropdownOpenStateChanged = (isOpen: boolean) => {
         if (isOpen) {
             this.getElements();
+        } else {
+            this.clearSearchString();
+            this.restoreSelection();
+        }
+    };
+
+    private closeDropdown = () => {
+        if (this.dropdownRef.current) {
+            this.dropdownRef.current.closeDropdown();
         }
     };
 
     private onApplyButtonClicked = () => {
-        this.props.onApply(this.state.selectedItems, this.state.isInverted);
-        if (this.dropdownRef.current) {
-            this.dropdownRef.current.closeDropdown();
-        }
+        this.props.onApply(this.state.selectedItems.filter(isNonEmptyListItem), this.state.isInverted);
+        this.backupSelection(this.closeDropdown);
     };
 
     private onCloseButtonClicked = () => {
-        if (this.dropdownRef.current) {
-            this.dropdownRef.current.closeDropdown();
-        }
+        this.closeDropdown();
     };
 
     private onSelect = (selectedItems: IAttributeElement[], isInverted: boolean) => {
@@ -179,7 +278,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     };
 
     private renderDropdownBody() {
-        const { selectedItems, isInverted, error, isLoading, validElements } = this.state;
+        const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;
@@ -192,8 +291,10 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
-                totalCount={validElements ? validElements.totalCount : VISIBLE_ITEMS_COUNT}
+                totalCount={validElements ? validElements.totalCount : LIMIT}
                 applyDisabled={shouldDisableApplyButton}
+                onSearch={this.onSearch}
+                searchString={searchString}
                 onSelect={this.onSelect}
                 onApplyButtonClicked={this.onApplyButtonClicked}
                 onCloseButtonClicked={this.onCloseButtonClicked}

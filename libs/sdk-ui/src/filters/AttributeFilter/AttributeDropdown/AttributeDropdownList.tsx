@@ -1,49 +1,36 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import noop = require("lodash/noop");
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-model";
 import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
+import LoadingMask from "@gooddata/goodstrap/lib/core/LoadingMask";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 import { AttributeListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
 const LIST_WIDTH = 208;
-const MAX_SELECTION_SIZE = 500;
+export const MAX_SELECTION_SIZE = 500;
 export const VISIBLE_ITEMS_COUNT = 10;
 
-const ListLoading = () => {
-    return (
-        <div>
-            <span className="s-attribute-filter-list-loading" /> <FormattedMessage id="gs.list.loading" />
-        </div>
-    );
-};
+const ListLoading = () => <LoadingMask style={{ height: 306 }} />;
 
-const ListError = () => {
-    return (
-        <div className="gd-message error">
-            <FormattedMessage id="gs.list.error" />
-        </div>
-    );
-};
-
-const ListNoResults = () => {
-    return (
-        <div>
-            <FormattedMessage id="gs.list.noItemsFound" />
-        </div>
-    );
-};
+const ListError = () => (
+    <div className="gd-message error">
+        <FormattedMessage id="gs.list.error" />
+    </div>
+);
 
 interface IAttributeDropdownListProps {
     items: AttributeListItem[];
     totalCount: number;
-    selectedItems: IAttributeElement[];
+    selectedItems: Array<Partial<IAttributeElement>>;
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
+
+    searchString: string;
+    onSearch: (searchString: string) => void;
 
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
@@ -58,17 +45,11 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     isInverted,
     onRangeChange,
     onSelect,
+    onSearch,
+    searchString,
 }) => {
     if (error) {
         return <ListError />;
-    }
-
-    if (isLoading) {
-        return <ListLoading />;
-    }
-
-    if (!items.length) {
-        return <ListNoResults />;
     }
 
     return (
@@ -77,8 +58,13 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             itemsCount={totalCount}
             filteredItemsCount={totalCount}
             selection={selectedItems}
+            isLoading={isLoading}
+            isLoadingClass={ListLoading}
+            noItemsFound={!items.length}
             isInverted={isInverted}
-            showSearchField={false}
+            showSearchField={true}
+            onSearch={onSearch}
+            searchString={searchString}
             rowItem={<AttributeFilterItem />}
             maxSelectionSize={MAX_SELECTION_SIZE}
             width={LIST_WIDTH}
@@ -86,7 +72,6 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             height={ITEM_HEIGHT * VISIBLE_ITEMS_COUNT}
             onRangeChange={onRangeChange}
             onSelect={onSelect}
-            onSearch={noop} // TODO make this prop not required in goodstrap
         />
     );
 };
