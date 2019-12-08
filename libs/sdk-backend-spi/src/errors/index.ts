@@ -1,5 +1,6 @@
 // (C) 2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
+import { IDataView } from "../workspace/execution";
 
 /**
  * Types of errors that can be raised by Analytical Backends.
@@ -35,8 +36,15 @@ export abstract class AnalyticalBackendError extends Error {
  * @public
  */
 export class NoDataError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error) {
+    /**
+     * Empty data view MAY be included by the backend in case execution metadata and data view metadata is present.
+     */
+    public readonly dataView?: IDataView;
+
+    constructor(message: string, dataView?: IDataView, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.NO_DATA, cause);
+
+        this.dataView = dataView;
     }
 }
 

@@ -1,6 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { ITotal, SortItem, IColorPalette } from "@gooddata/sdk-model";
+import { ITotal, SortItem, IColorPalette, Identifier } from "@gooddata/sdk-model";
 import { IColorAssignment } from "./Colors";
 
 /**
@@ -9,6 +9,14 @@ import { IColorAssignment } from "./Colors";
 export interface IColorsData {
     colorAssignments: IColorAssignment[];
     colorPalette: IColorPalette;
+}
+
+export type DrillableItemType = "measure";
+
+export interface IDrillableItemPushData {
+    type: DrillableItemType;
+    localIdentifier: Identifier;
+    title: string;
 }
 
 /**
@@ -23,4 +31,5 @@ export interface IPushData {
     };
     propertiesMeta?: any;
     colors?: IColorsData;
+    supportedDrillableItems?: IDrillableItemPushData[];
 }

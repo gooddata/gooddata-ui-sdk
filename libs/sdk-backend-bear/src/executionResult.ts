@@ -90,7 +90,10 @@ export class BearExecutionResult implements IExecutionResult {
             }
 
             if (isEmptyDataResult(res)) {
-                throw new NoDataError("The execution resulted in no data to display.");
+                throw new NoDataError(
+                    "The execution resulted in no data to display.",
+                    new BearDataView(this, res),
+                );
             }
 
             return new BearDataView(this, res);

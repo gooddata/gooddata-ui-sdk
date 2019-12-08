@@ -1,6 +1,14 @@
 // (C) 2019 GoodData Corporation
 
-import { IDataView, IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    DataViewFacade,
+    IDataView,
+    IExecutionResult,
+    IExportResult,
+    IMeasureDescriptor,
+    IPreparedExecution,
+    isNoDataError,
+} from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, InjectedIntl } from "react-intl";
 import { ErrorCodes, GoodDataSdkError } from "../../base/errors/GoodDataSdkError";
@@ -10,6 +18,7 @@ import { IntlWrapper } from "../../base/translations/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
+import { IDrillableItemPushData } from "../../base/interfaces/PushData";
 
 interface IDataViewLoadState {
     isLoading: boolean;
@@ -161,8 +170,18 @@ export function withEntireDataView<T extends ICoreChartProps>(
             this.onError(new GoodDataSdkError(ErrorCodes.NEGATIVE_VALUES));
         }
 
+        private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
+            return dv.measureDescriptors().map(
+                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
+                    type: "measure",
+                    localIdentifier: measure.measureHeaderItem.localIdentifier,
+                    title: measure.measureHeaderItem.name,
+                }),
+            );
+        }
+
         private async initDataLoading(execution: IPreparedExecution) {
-            const { onExportReady } = this.props;
+            const { onExportReady, pushData } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
 
@@ -181,11 +200,31 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
                 this.setState({ dataView, executionResult });
                 this.onLoadingChanged({ isLoading: false });
+
                 if (onExportReady) {
                     onExportReady(dataView.result.export.bind(dataView.result));
                 }
-                // TODO: SDK8: push data
+
+                if (pushData) {
+                    const supportedDrillableItems = this.getSupportedDrillableItems(
+                        new DataViewFacade(dataView),
+                    );
+
+                    pushData({ dataView, supportedDrillableItems });
+                }
             } catch (error) {
+                /*
+                 * There can be situations, where there is no data to visualize but the result / dataView contains
+                 * metadata essential for setup of drilling. Look for that and if available push up.
+                 */
+                if (isNoDataError(error) && error.dataView && pushData) {
+                    const supportedDrillableItems = this.getSupportedDrillableItems(
+                        new DataViewFacade(error.dataView),
+                    );
+
+                    pushData({ supportedDrillableItems });
+                }
+
                 this.onError(convertError(error));
             }
         }
