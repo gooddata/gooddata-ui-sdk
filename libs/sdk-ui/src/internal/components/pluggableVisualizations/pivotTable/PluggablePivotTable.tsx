@@ -7,7 +7,7 @@ import isNil = require("lodash/isNil");
 import includes = require("lodash/includes");
 import * as React from "react";
 import Measure from "react-measure";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import { InjectedIntl } from "react-intl";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
@@ -69,6 +69,7 @@ import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
 import { ILocale } from "../../../../base/interfaces/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -273,10 +274,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {

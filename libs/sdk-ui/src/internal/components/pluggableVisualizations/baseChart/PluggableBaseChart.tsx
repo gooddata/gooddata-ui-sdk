@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntl } from "react-intl";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -83,6 +83,7 @@ import get = require("lodash/get");
 import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -133,10 +134,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {

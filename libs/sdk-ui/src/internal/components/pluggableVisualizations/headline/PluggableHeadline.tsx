@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import * as React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import { InjectedIntl } from "react-intl";
 
 import cloneDeep = require("lodash/cloneDeep");
@@ -56,6 +56,7 @@ import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "../../../../base/interfaces/Locale";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -79,10 +80,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
