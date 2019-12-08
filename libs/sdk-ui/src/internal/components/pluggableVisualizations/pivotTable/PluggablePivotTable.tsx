@@ -68,6 +68,7 @@ import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
 import { ILocale } from "../../../../base/interfaces/Locale";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -375,7 +376,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .withSorting(...createSorts(VisualizationTypes.TABLE, insight));
 
         let configUpdated = config;
-        if (this.environment !== "dashboards") {
+        if (this.environment !== DASHBOARDS_ENVIRONMENT) {
             // Menu aggregations turned off in KD
             configUpdated = merge(
                 {
@@ -409,7 +410,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         //  into account (it had the prop because it inherited from same base as charts). Checked the history
         //  and it seems that CorePivotTable never used the 'height' prop
 
-        if (this.environment === "dashboards") {
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
             if (isNil(height)) {
                 render(
                     <Measure client={true}>

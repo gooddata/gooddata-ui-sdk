@@ -4,6 +4,7 @@ import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base";
+import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
 
 const legendScenarios = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
@@ -16,4 +17,9 @@ const dataLabelScenarios = scenariosFor<IDonutChartProps>("DonutChart", DonutCha
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", DonutChartWithSingleMeasureAndViewBy, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const chartAlignmentScenarios = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
+    .withVisualTestConfig({ groupUnder: "alignment", screenshotSize: { width: 400, height: 600 } })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("", DonutChartWithSingleMeasureAndViewBy, chartAlignmentVariants);
+
+export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios];

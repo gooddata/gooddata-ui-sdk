@@ -168,7 +168,12 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "colorMapping",
 ];
 
-export const PIECHART_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
+export const PIECHART_SUPPORTED_PROPERTIES = [
+    "dataLabels.visible",
+    "legend",
+    "colorMapping",
+    "chart.verticalAlign",
+];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = ["dataLabels.visible", "legend", "colorMapping"];
 

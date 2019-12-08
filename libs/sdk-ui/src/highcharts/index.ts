@@ -7,6 +7,7 @@ export {
     IAxisConfig,
     IDataLabelsConfig,
     IAxisNameConfig,
+    ChartAlignTypes,
 } from "./Config";
 
 import Chart from "./chart/Chart";
@@ -29,3 +30,5 @@ export { getValidColorPalette } from "./utils/color";
 import ColorUtils from "./utils/color";
 
 export { ColorUtils };
+
+export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";

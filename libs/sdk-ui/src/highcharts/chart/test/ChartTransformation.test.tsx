@@ -5,11 +5,13 @@ import noop = require("lodash/noop");
 
 import ChartTransformation from "../ChartTransformation";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig } from "../../Config";
 import { getRgbString } from "../../utils/color";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
+import Chart from "../Chart";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
 
 describe("ChartTransformation", () => {
     const defaultProps = {
@@ -444,6 +446,34 @@ describe("ChartTransformation", () => {
 
             wrapper.setProps(fixtures.pieChartWithMetricsOnly);
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
+        });
+    });
+
+    const AlignableCharts: Array<[string]> = [[VisualizationTypes.PIE], [VisualizationTypes.DONUT]];
+
+    describe.each(AlignableCharts)("%s chart alignments", (type: string) => {
+        function render(chartConfig: IChartConfig) {
+            const props = {
+                ...fixtures.pieChartWithMetricsOnly,
+                config: {
+                    type,
+                    ...chartConfig,
+                },
+                onDataTooLarge: noop,
+            };
+            return mount(createComponent(props));
+        }
+
+        it.each([[TOP], [MIDDLE], [BOTTOM]])("should props.verticalAlign be %s", (verticalAlign: string) => {
+            const wrapper = render({ chart: { verticalAlign } });
+            const chartProps = wrapper.find(Chart).props();
+            expect(chartProps.config.chart.verticalAlign).toBe(verticalAlign);
+        });
+
+        it("should props.verticalAlign be undefined", () => {
+            const wrapper = render({});
+            const chartProps = wrapper.find(Chart).props();
+            expect(chartProps.config.chart.verticalAlign).toBe(undefined);
         });
     });
 });
