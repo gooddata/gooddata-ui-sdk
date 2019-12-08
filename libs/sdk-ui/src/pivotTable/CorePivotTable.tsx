@@ -240,6 +240,10 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                         this.props.pushData({ dataView, supportedDrillableItems });
                     })
                     .catch(error => {
+                        if (this.unmounted) {
+                            return;
+                        }
+
                         /*
                          * There can be situations, where there is no data to visualize but the result / dataView contains
                          * metadata essential for setup of drilling. Look for that and if available push up.
@@ -256,6 +260,10 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                     });
             })
             .catch(error => {
+                if (this.unmounted) {
+                    return;
+                }
+
                 this.onError(convertError(error));
             });
     }

@@ -213,6 +213,10 @@ export function withEntireDataView<T extends ICoreChartProps>(
                     pushData({ dataView, supportedDrillableItems });
                 }
             } catch (error) {
+                if (this.hasUnmounted) {
+                    return;
+                }
+
                 /*
                  * There can be situations, where there is no data to visualize but the result / dataView contains
                  * metadata essential for setup of drilling. Look for that and if available push up.
