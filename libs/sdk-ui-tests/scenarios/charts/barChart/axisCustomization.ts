@@ -10,6 +10,7 @@ import {
 } from "./base";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { axisRotationVariants } from "../_infra/axisRotationVariants";
 
 const singleAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({
@@ -38,6 +39,29 @@ const dualAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         axisNameCustomization,
     );
 
+const dualAxisLabelRotation = scenariosFor<IBarChartProps>("BarChart", BarChart)
+    .withVisualTestConfig({
+        groupUnder: "dual axis label rotation",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios(
+        "",
+        {
+            ...BarChartWithArithmeticMeasuresAndViewBy,
+            config: {
+                xaxis: {
+                    rotation: "90",
+                },
+                secondary_xaxis: {
+                    measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                    rotation: "90",
+                },
+            },
+        },
+        axisRotationVariants,
+    );
+
 const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
@@ -63,18 +87,6 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         config: {
             secondary_xaxis: {
                 measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
-            },
-        },
-    })
-    .addScenario("dual axis labels alignment", {
-        ...BarChartWithArithmeticMeasuresAndViewBy,
-        config: {
-            xaxis: {
-                rotation: "90",
-            },
-            secondary_xaxis: {
-                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
-                rotation: "90",
             },
         },
     })
@@ -111,4 +123,4 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
         },
     });
 
-export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig];
+export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig, dualAxisLabelRotation];
