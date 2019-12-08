@@ -566,7 +566,8 @@ export interface IWorkspaceStylingService {
 
 // @public
 export class NoDataError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error);
+    constructor(message: string, dataView?: IDataView, cause?: Error);
+    readonly dataView?: IDataView;
 }
 
 // @public

@@ -14,19 +14,19 @@ import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import * as SortsHelper from "../../base/helpers/sorts";
 import {
-    bucketsAttributes,
+    bucketAttributes,
     IAttributeSortItem,
     IInsight,
     insightAttributes,
-    insightBuckets,
+    insightBucket,
     insightMeasures,
     insightSorts,
     newAttributeSort,
     newMeasureSort,
     SortDirection,
-    SortItem,
     SortEntityIds,
     sortEntityIds,
+    SortItem,
 } from "@gooddata/sdk-model";
 import * as BucketNames from "../../base/constants/bucketNames";
 
@@ -73,10 +73,25 @@ function getDefaultTableSort(insight: IInsight): SortItem[] {
 }
 
 function getDefaultBarChartSort(insight: IInsight, canSortStackTotalValue: boolean = false): SortItem[] {
-    const viewBucket = insightBuckets(insight, BucketNames.VIEW);
-    const stackBucket = insightBuckets(insight, BucketNames.STACK);
-    const viewBy = viewBucket ? bucketsAttributes(viewBucket) : [];
-    const stackBy = stackBucket ? bucketsAttributes(stackBucket) : [];
+    const measures = insightMeasures(insight);
+    const viewBucket = insightBucket(insight, BucketNames.VIEW);
+    const stackBucket = insightBucket(insight, BucketNames.STACK);
+    const viewBy = viewBucket ? bucketAttributes(viewBucket) : [];
+    const stackBy = stackBucket ? bucketAttributes(stackBucket) : [];
+
+    if (viewBy.length === 2) {
+        if (measures.length >= 2 && !canSortStackTotalValue) {
+            return [
+                newAttributeSort(viewBy[0], SORT_DIR_DESC, true),
+                newMeasureSort(measures[0], SORT_DIR_DESC),
+            ];
+        }
+
+        return [
+            newAttributeSort(viewBy[0], SORT_DIR_DESC, true),
+            newAttributeSort(viewBy[1], SORT_DIR_DESC, true),
+        ];
+    }
 
     if (!isEmpty(viewBy) && !isEmpty(stackBy)) {
         return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
@@ -85,8 +100,6 @@ function getDefaultBarChartSort(insight: IInsight, canSortStackTotalValue: boole
     if (!isEmpty(viewBy) && canSortStackTotalValue) {
         return [newAttributeSort(viewBy[0], SORT_DIR_DESC, true)];
     }
-
-    const measures = insightMeasures(insight);
 
     return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
 }

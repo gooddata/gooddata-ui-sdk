@@ -18,12 +18,12 @@ import {
 } from "../../../interfaces/Visualization";
 import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
+    getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
     getSupportedPropertiesControls,
     hasColorMapping,
     isEmptyObject,
-    getHighchartsAxisNameConfiguration,
 } from "../../../utils/propertiesHelper";
 import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT, UICONFIG } from "../../../constants/uiConfig";
 import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -65,7 +65,6 @@ import * as VisEvents from "../../../../base/interfaces/Events";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
-    bucketsItems,
     IColorMappingItem,
     IDimension,
     IInsight,
@@ -75,15 +74,15 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig, ColorUtils, IAxisConfig } from "../../../../highcharts";
+import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
+import { ILocale } from "../../../../base/interfaces/Locale";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
-import { ILocale } from "../../../../base/interfaces/Locale";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -524,9 +523,8 @@ function areAllMeasuresOnSingleAxis(insight: IInsight, secondaryYAxis: IAxisConf
 
 function canSortStackTotalValue(insight: IInsight, supportedControls: IVisualizationProperties): boolean {
     const stackMeasures = get(supportedControls, "stackMeasures", false);
-    const singleViewItem = bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length === 1;
     const secondaryAxis: IAxisConfig = get(supportedControls, "secondary_yaxis", { measures: [] });
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
-    return stackMeasures && allMeasuresOnSingleAxis && singleViewItem;
+    return stackMeasures && allMeasuresOnSingleAxis;
 }

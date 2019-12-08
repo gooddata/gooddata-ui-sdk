@@ -17,8 +17,10 @@ import {
     insightWithNoMeasureAndTwoViewBy,
     insightWithSingleMeasure,
     insightWithSingleMeasureAndStack,
+    insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
+    insightWithTwoMeasuresAndTwoViewBy,
     insightWithTwoMeasuresAndViewBy,
 } from "../../mocks/testMocks";
 import { IAttributeSortItem, IMeasureSortItem, insightSetSorts, SortItem } from "@gooddata/sdk-model";
@@ -122,6 +124,73 @@ describe("createSorts", () => {
                     },
                 ];
                 expect(createSorts("bar", insightWithSingleMeasureAndViewBy)).toEqual(expectedSort);
+            });
+            it("should sort by group for bar chart with 1 measure and 2 viewBy", () => {
+                const expectedSort: SortItem[] = [
+                    {
+                        attributeSortItem: {
+                            direction: "desc",
+                            aggregation: "sum",
+                            attributeIdentifier: "a1",
+                        },
+                    },
+                    {
+                        attributeSortItem: {
+                            direction: "desc",
+                            aggregation: "sum",
+                            attributeIdentifier: "a2",
+                        },
+                    },
+                ];
+
+                expect(createSorts("bar", insightWithSingleMeasureAndTwoViewBy)).toEqual(expectedSort);
+            });
+
+            it("should sort by group for bar chart with 2 measure and 2 viewBy", () => {
+                const expectedSort: SortItem[] = [
+                    {
+                        attributeSortItem: {
+                            direction: "desc",
+                            aggregation: "sum",
+                            attributeIdentifier: "a1",
+                        },
+                    },
+                    {
+                        measureSortItem: {
+                            direction: "desc",
+                            locators: [
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: "m1",
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ];
+
+                expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy)).toEqual(expectedSort);
+            });
+
+            it("should sort by group for bar chart with 2 measure and 2 viewBy and canSortStackTotalValue is true", () => {
+                const expectedSort: SortItem[] = [
+                    {
+                        attributeSortItem: {
+                            direction: "desc",
+                            aggregation: "sum",
+                            attributeIdentifier: "a1",
+                        },
+                    },
+                    {
+                        attributeSortItem: {
+                            direction: "desc",
+                            aggregation: "sum",
+                            attributeIdentifier: "a2",
+                        },
+                    },
+                ];
+
+                expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy, true)).toEqual(expectedSort);
             });
 
             it("should return area sort for stacked bar chart", () => {
