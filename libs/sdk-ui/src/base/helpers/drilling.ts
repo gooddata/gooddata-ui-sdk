@@ -1,5 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2019 GoodData Corporation
+import {
+    DataViewFacade,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isTotalDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import { identifierMatch, uriMatch } from "../factory/HeaderPredicateFactory";
 import {
     IDrillableItem,
@@ -34,23 +40,42 @@ export function convertDrillableItemsToPredicates(
     });
 }
 
-export function createDrillIntersectionElement(
-    id: string,
-    title: string,
-    uri?: string,
-    identifier?: string,
-): IDrillEventIntersectionElement {
-    const element: IDrillEventIntersectionElement = {
-        id: id || "",
-        title: title || "",
-    };
+// shared by charts and table
+export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[] {
+    return drillItems.reduce(
+        (
+            drillIntersection: IDrillEventIntersectionElement[],
+            drillItem: IMappingHeader,
+            index: number,
+            drillItems: IMappingHeader[],
+        ): IDrillEventIntersectionElement[] => {
+            if (isAttributeDescriptor(drillItem)) {
+                const attributeItem = drillItems[index - 1]; // attribute item is always before attribute
+                if (attributeItem && isResultAttributeHeader(attributeItem)) {
+                    drillIntersection.push({
+                        header: {
+                            ...attributeItem,
+                            ...drillItem,
+                        },
+                    });
+                } else {
+                    // no attr. item before attribute -> use only attribute header
+                    drillIntersection.push({
+                        header: drillItem,
+                    });
+                }
+            } else if (isMeasureDescriptor(drillItem)) {
+                drillIntersection.push({
+                    header: drillItem,
+                });
+            } else if (isTotalDescriptor(drillItem)) {
+                drillIntersection.push({
+                    header: drillItem,
+                });
+            }
 
-    if (uri || identifier) {
-        element.header = {
-            uri: uri || "",
-            identifier: identifier || "",
-        };
-    }
-
-    return element;
+            return drillIntersection;
+        },
+        [],
+    );
 }

@@ -1,20 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 
-import {
-    getMappingHeaderIdentifier,
-    getMappingHeaderLocalIdentifier,
-    getMappingHeaderName,
-    getMappingHeaderUri,
-} from "../../base/helpers/mappingHeader";
-import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
+import { getMappingHeaderUri } from "../../base/helpers/mappingHeader";
 import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "ag-grid-community";
 import { IGridHeader } from "./agGridTypes";
 import {
-    DataViewFacade,
     IAttributeDescriptor,
     IDimensionItemDescriptor,
     IResultHeader,
@@ -23,9 +15,7 @@ import {
     isResultAttributeHeader,
     isResultMeasureHeader,
 } from "@gooddata/sdk-backend-spi";
-import { measureUriOrQualifier } from "../../base/helpers/measures";
 import get = require("lodash/get");
-import { createDrillIntersectionElement } from "../../base/helpers/drilling";
 
 export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: string]: any }) => {
     return leafColumnDefs.reduce((drillRow, colDef: ColDef) => {
@@ -50,40 +40,6 @@ export const getDrillRowData = (leafColumnDefs: ColDef[], rowData: { [key: strin
         }
         return drillRow;
     }, []);
-};
-
-export const getDrillIntersection = (
-    drillItems: IMappingHeader[],
-    dv: DataViewFacade,
-): IDrillEventIntersectionElement[] => {
-    // Drilling needs refactoring: all '' should be replaced by null (breaking change)
-    // intersection consists of
-    //     0..1 measure
-    //     0..1 row attribute and row attribute value
-    //     0..n column attribute and column attribute values
-    return drillItems.map((drillItem: IMappingHeader) => {
-        if (isResultAttributeHeader(drillItem)) {
-            const id = getAttributeElementIdFromAttributeElementUri(drillItem.attributeHeaderItem.uri);
-            return createDrillIntersectionElement(
-                id,
-                getMappingHeaderName(drillItem),
-                getMappingHeaderUri(drillItem),
-                "",
-            );
-        }
-
-        const headerLocalIdentifier = getMappingHeaderLocalIdentifier(drillItem);
-        const headerIdentifier = getMappingHeaderIdentifier(drillItem) || "";
-        const measure = dv.masterMeasureForDerived(headerLocalIdentifier);
-        const uriAndIdentifier = measureUriOrQualifier(measure);
-
-        const headerUri = getMappingHeaderUri(drillItem) || "";
-        const uri = (uriAndIdentifier && uriAndIdentifier.uri) || headerUri;
-        const identifier = (uriAndIdentifier && uriAndIdentifier.identifier) || headerIdentifier;
-        const id = headerLocalIdentifier || headerIdentifier;
-
-        return createDrillIntersectionElement(id, getMappingHeaderName(drillItem), uri, identifier);
-    });
 };
 
 export const getMeasureDrillItem = (

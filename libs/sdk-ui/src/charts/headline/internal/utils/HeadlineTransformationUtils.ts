@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
@@ -8,18 +8,15 @@ import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import {
-    isSomeHeaderPredicateMatched,
-    createDrillIntersectionElement,
-} from "../../../../base/helpers/drilling";
+import { isSomeHeaderPredicateMatched } from "../../../../base/helpers/drilling";
 import {
     IDrillEvent,
     IDrillEventCallback,
     IDrillEventContextHeadline,
+    IDrillEventIntersectionElement,
 } from "../../../../base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../../../base/interfaces/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
-import { measureUriOrQualifier } from "../../../../base/helpers/measures";
 import { Identifier } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
@@ -161,24 +158,14 @@ export function buildDrillEventData(
     dataView: IDataView,
 ): IDrillEvent {
     const dv = new DataViewFacade(dataView);
-    const measureHeaderItem = dv.measureDescriptor(itemContext.localIdentifier);
+    const measureHeaderItem: IMeasureDescriptor = dv.measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }
 
-    const masterMeasureQualifier = measureUriOrQualifier(
-        dv.masterMeasureForDerived(itemContext.localIdentifier),
-    );
-    if (!masterMeasureQualifier) {
-        throw new Error("The metric ids has not been found in execution request!");
-    }
-
-    const intersectionElement = createDrillIntersectionElement(
-        measureHeaderItem.measureHeaderItem.localIdentifier,
-        measureHeaderItem.measureHeaderItem.name,
-        masterMeasureQualifier.uri,
-        masterMeasureQualifier.identifier,
-    );
+    const intersectionElement: IDrillEventIntersectionElement = {
+        header: measureHeaderItem,
+    };
     const drillContext: IDrillEventContextHeadline = {
         type: VisualizationTypes.HEADLINE,
         element: itemContext.element,

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     applyDrillableItems,
     buildDrillEventData,
@@ -490,11 +490,14 @@ describe("HeadlineTransformationUtils", () => {
                     value: "9011389.956",
                     intersection: [
                         {
-                            id: "lostMetric",
-                            title: "Lost",
                             header: {
-                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                                identifier: "",
+                                measureHeaderItem: {
+                                    name: "Lost",
+                                    format: "#,##0.00",
+                                    localIdentifier: "lostMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    identifier: "af2Ewj9Re2vK",
+                                },
                             },
                         },
                     ],
@@ -517,11 +520,14 @@ describe("HeadlineTransformationUtils", () => {
                     value: "9011389.956",
                     intersection: [
                         {
-                            id: "lostMetric",
-                            title: "Lost",
                             header: {
-                                identifier: "af2Ewj9Re2vK",
-                                uri: "",
+                                measureHeaderItem: {
+                                    name: "Lost",
+                                    format: "#,##0.00",
+                                    localIdentifier: "lostMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    identifier: "af2Ewj9Re2vK",
+                                },
                             },
                         },
                     ],
@@ -544,11 +550,14 @@ describe("HeadlineTransformationUtils", () => {
                     value: "42470571.16",
                     intersection: [
                         {
-                            id: "wonMetric",
-                            title: "Won",
                             header: {
-                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
-                                identifier: "",
+                                measureHeaderItem: {
+                                    name: "Won",
+                                    format: "#,##0.00",
+                                    localIdentifier: "wonMetric",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                                    identifier: "afSEwRwdbMeQ",
+                                },
                             },
                         },
                     ],

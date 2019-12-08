@@ -146,7 +146,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         const { locale, custom, config } = options;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions({ itemIdentifiers: ["measureGroup"] });
@@ -155,6 +155,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             <CoreHeadline
                 execution={execution}
                 drillableItems={drillableItems}
+                onDrill={onDrill}
                 locale={locale}
                 config={updateConfigWithSettings(config, this.settings)}
                 afterRender={afterRender}

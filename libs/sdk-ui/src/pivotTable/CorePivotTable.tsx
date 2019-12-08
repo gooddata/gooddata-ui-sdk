@@ -1,5 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import { DataViewFacade, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    DataViewFacade,
+    IAttributeDescriptor,
+    IExecutionResult,
+    IPreparedExecution,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import { ITotal, SortDirection, defFingerprint, defTotals } from "@gooddata/sdk-model";
 import {
     BodyScrollEvent,
@@ -18,8 +24,16 @@ import * as React from "react";
 import "../../styles/css/pivotTable.css";
 import { VisualizationTypes } from "../base/constants/visualizationTypes";
 import { getScrollbarWidth } from "../base/helpers/domUtils";
-import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../base/helpers/drilling";
-import { IDrillEvent, IDrillEventContextTable } from "../base/interfaces/DrillEvents";
+import {
+    convertDrillableItemsToPredicates,
+    isSomeHeaderPredicateMatched,
+    getDrillIntersection,
+} from "../base/helpers/drilling";
+import {
+    IDrillEvent,
+    IDrillEventContextTable,
+    IDrillEventIntersectionElement,
+} from "../base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
 import { ErrorComponent } from "../base/simple/ErrorComponent";
@@ -36,7 +50,7 @@ import {
     ROW_TOTAL,
 } from "./impl/agGridConst";
 import { AgGridDatasource, createAgGridDatasource } from "./impl/agGridDataSource";
-import { getDrillIntersection, getDrillRowData } from "./impl/agGridDrilling";
+import { getDrillRowData } from "./impl/agGridDrilling";
 import { createTableHeaders } from "./impl/agGridHeaders";
 import { getSortsFromModel } from "./impl/agGridSorting";
 import {
@@ -424,27 +438,80 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.updateStickyRow();
     };
 
+    private getAttributeHeader(colId: string, columnDefs: IGridHeader[]): IAttributeDescriptor {
+        const matchingColDef: IGridHeader = columnDefs.find(
+            (columnDef: IGridHeader) => columnDef.field === colId,
+        );
+        if (matchingColDef && matchingColDef.drillItems.length === 1) {
+            const drillItemHeader = matchingColDef.drillItems[0];
+            if (isAttributeDescriptor(drillItemHeader)) {
+                return drillItemHeader;
+            }
+        }
+        return null;
+    }
+
+    private getItemAndAttributeHeaders = (
+        attributeItemHeaders: { [colId: string]: IMappingHeader },
+        columnDefs: IGridHeader[],
+    ): IMappingHeader[] => {
+        return Object.keys(attributeItemHeaders).reduce((headers: IMappingHeader[], colId: string) => {
+            const attributeHeader = this.getAttributeHeader(colId, columnDefs);
+            if (attributeHeader) {
+                headers.push(attributeItemHeaders[colId]);
+                headers.push(attributeHeader);
+            }
+            return headers;
+        }, []);
+    };
+
+    private getAttributeDrillItemsForMeasureDrill = (
+        cellEvent: IGridCellEvent,
+        columnDefs: IGridHeader[],
+    ): IMappingHeader[] => {
+        const rowDrillItems = get(cellEvent, ["data", "headerItemMap"]);
+        return this.getItemAndAttributeHeaders(rowDrillItems, columnDefs);
+    };
+
+    private isSomeTotal = (rowType: string) => {
+        const isRowTotal = rowType === ROW_TOTAL;
+        const isRowSubtotal = rowType === ROW_SUBTOTAL;
+        return isRowTotal || isRowSubtotal;
+    };
+
+    private getRowDrillItem = (cellEvent: IGridCellEvent) =>
+        get(cellEvent, ["data", "headerItemMap", cellEvent.colDef.field]);
+
+    private getDrillItems = (cellEvent: IGridCellEvent): IMappingHeader[] => {
+        const { colDef } = cellEvent;
+        const rowDrillItem = this.getRowDrillItem(cellEvent);
+        return rowDrillItem ? [rowDrillItem, ...colDef.drillItems] : colDef.drillItems;
+    };
+
+    private getDrillIntersection = (
+        cellEvent: IGridCellEvent,
+        drillItems: IMappingHeader[],
+        columnDefs: IGridHeader[],
+    ): IDrillEventIntersectionElement[] => {
+        const rowDrillItem = this.getRowDrillItem(cellEvent);
+        const completeDrillItems: IMappingHeader[] = rowDrillItem
+            ? drillItems
+            : [...drillItems, ...this.getAttributeDrillItemsForMeasureDrill(cellEvent, columnDefs)];
+        return getDrillIntersection(completeDrillItems);
+    };
+
     private cellClicked = (cellEvent: IGridCellEvent) => {
         const { onDrill } = this.props;
         const tableHeaders = this.tableHeaders;
         const dv = this.visibleData;
         const drillablePredicates = this.getDrillablePredicates();
-
         const { colDef, rowIndex } = cellEvent;
-
         const rowType = get(cellEvent, ["data", "type"], "");
-        const isRowTotal = rowType === ROW_TOTAL;
-        const isRowSubtotal = rowType === ROW_SUBTOTAL;
-
-        if (isRowTotal || isRowSubtotal) {
+        if (this.isSomeTotal(rowType)) {
             return false;
         }
 
-        const rowDrillItem = get(cellEvent, ["data", "headerItemMap", colDef.field]);
-        const drillItems: IMappingHeader[] = rowDrillItem
-            ? [...colDef.drillItems, rowDrillItem]
-            : colDef.drillItems;
-
+        const drillItems: IMappingHeader[] = this.getDrillItems(cellEvent);
         const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
             isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
         );
@@ -456,7 +523,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         const leafColumnDefs = getTreeLeaves(tableHeaders.allHeaders);
         const columnIndex = leafColumnDefs.findIndex(gridHeader => gridHeader.field === colDef.field);
         const row = getDrillRowData(leafColumnDefs, cellEvent.data);
-        const intersection = getDrillIntersection(drillItems, dv);
+        const intersection = this.getDrillIntersection(cellEvent, drillItems, tableHeaders.colHeaders);
 
         const drillContext: IDrillEventContextTable = {
             type: VisualizationTypes.TABLE,
@@ -482,6 +549,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
             cellEvent.event.target.dispatchEvent(event);
             return true;
         }
+
         return false;
     };
 

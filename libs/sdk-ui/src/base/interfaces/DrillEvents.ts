@@ -1,5 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDescriptor,
+    IDataView,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
+    ITotalDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import {
     ChartElementType,
     ChartType,
@@ -34,14 +40,23 @@ export function isDrillableItemIdentifier(item: IDrillableItem): item is IDrilla
 
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 
+export interface IDrillIntersectionAttributeItem extends IAttributeDescriptor, IResultAttributeHeader {}
+
+export function isDrillIntersectionAttributeItem(
+    header: DrillEventIntersectionElementHeader,
+): header is IDrillIntersectionAttributeItem {
+    return (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
+}
+
+export type DrillEventIntersectionElementHeader =
+    | IAttributeDescriptor
+    | IMeasureDescriptor
+    | ITotalDescriptor
+    | IDrillIntersectionAttributeItem;
+
 // Intersection element
 export interface IDrillEventIntersectionElement {
-    id: string;
-    title: string;
-    header?: {
-        uri: string;
-        identifier: string;
-    };
+    header: DrillEventIntersectionElementHeader;
 }
 
 // Drill context for tables
@@ -101,6 +116,7 @@ export interface IDrillEventContext {
     rowIndex?: number;
     row?: any[]; // table row data of the drilled row
     value?: string; // cell or element value drilled
+
     // some drill headers that are relevant for current drill element
     intersection?: IDrillEventIntersectionElement[];
     // A collection of chart series points (if available)

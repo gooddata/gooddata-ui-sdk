@@ -367,7 +367,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const { locale, custom, dimensions, config } = options;
         const { height } = dimensions;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
 
         const execution = executionFactory
             .forInsight(insight)
@@ -391,6 +391,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const pivotTableProps: ICorePivotTableProps = {
             execution,
             drillableItems,
+            onDrill,
             config: configUpdated,
             locale,
             afterRender,
