@@ -66,6 +66,18 @@ const axisConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
             },
         },
     })
+    .addScenario("dual axis labels alignment", {
+        ...BarChartWithArithmeticMeasuresAndViewBy,
+        config: {
+            xaxis: {
+                rotation: "90",
+            },
+            secondary_xaxis: {
+                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                rotation: "90",
+            },
+        },
+    })
     .addScenario("dual axis when two viewBy attributes", {
         ...BarChartWithTwoMeasuresAndTwoViewBy,
         config: {

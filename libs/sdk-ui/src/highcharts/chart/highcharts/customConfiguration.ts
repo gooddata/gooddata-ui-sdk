@@ -56,6 +56,7 @@ import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 import { getAxisNameConfiguration } from "./getAxisNameConfiguration";
 import { getChartAlignmentConfiguration } from "./getChartAlignmentConfiguration";
+import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -1140,6 +1141,7 @@ export function getCustomizedConfiguration(
         getZeroAlignConfiguration,
         getAxisNameConfiguration,
         getChartAlignmentConfiguration,
+        getAxisLabelConfigurationForDualBarChart,
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {
