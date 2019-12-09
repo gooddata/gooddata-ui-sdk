@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`report export exportResult should sanitize afm filter in export config 1`] = `
+Object {
+  "resultExport": Object {
+    "executionResult": "/executionResult/1234",
+    "exportConfig": Object {
+      "afm": Object {
+        "attributes": Array [
+          Object {
+            "displayForm": Object {
+              "uri": "/gdc/md/projectId/obj/15358",
+            },
+            "localIdentifier": "645bf676a4854a32b694390bba9bd63c",
+          },
+        ],
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "uri": "bar",
+              },
+              "in": Object {
+                "uris": Array [
+                  "/gdc/md/bar1",
+                  "/gdc/md/bar2",
+                ],
+              },
+            },
+          },
+          Object {
+            "negativeAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "foo",
+              },
+              "notIn": Object {
+                "values": Array [
+                  "foo1",
+                  "foo2",
+                ],
+              },
+            },
+          },
+          Object {
+            "absoluteDateFilter": Object {
+              "dataSet": Object {
+                "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
+              },
+              "from": "2011-01-01",
+              "to": "2011-12-31",
+            },
+          },
+          Object {
+            "relativeDateFilter": Object {
+              "dataSet": Object {
+                "uri": "/gdc/md/myproject/obj/921",
+              },
+              "from": -3,
+              "granularity": "GDC.time.quarter",
+              "to": 0,
+            },
+          },
+          Object {
+            "measureValueFilter": Object {
+              "condition": Object {
+                "comparison": Object {
+                  "operator": "GREATER_THAN",
+                  "value": 350000,
+                },
+              },
+              "measure": Object {
+                "localIdentifier": "a14fb77382304ab4925f05d2d64f7aed",
+              },
+            },
+          },
+        ],
+        "measures": Array [
+          Object {
+            "alias": "Conversion",
+            "definition": Object {
+              "measure": Object {
+                "item": Object {
+                  "uri": "/gdc/md/projectId/obj/16203",
+                },
+              },
+            },
+            "localIdentifier": "a14fb77382304ab4925f05d2d64f7aed",
+          },
+        ],
+      },
+      "format": "xlsx",
+      "mergeHeaders": false,
+      "showFilters": true,
+      "title": "title",
+    },
+  },
+}
+`;

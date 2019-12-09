@@ -13,6 +13,7 @@ import {
     BAD_REQUEST_MESSAGE,
     ERROR_RESTRICTED_MESSAGE,
 } from "../../constants/errors";
+import { exportedAfm } from "./report.fixtures";
 
 const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
 
@@ -28,8 +29,7 @@ describe("report", () => {
         });
 
         describe("exportResult", () => {
-            // TODO: fixme
-            it("should sanitized showFilters config", () => {
+            it("should sanitize afm filter in export config", () => {
                 fetchMock.mock(projectUri, {
                     status: SUCCESS_REQUEST_STATUS,
                     body: { uri: createdReport },
@@ -40,87 +40,12 @@ describe("report", () => {
                 const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
                 mockPollingRequest(createdReport, runningTask, finishedTask);
 
-                const showFilters: GdcExecuteAFM.CompatibilityFilter[] = [
-                    {
-                        positiveAttributeFilter: {
-                            displayForm: {
-                                uri: "bar",
-                            },
-                            in: ["/gdc/md/bar1", "/gdc/md/bar2"],
-                        },
-                    },
-                    {
-                        negativeAttributeFilter: {
-                            displayForm: {
-                                identifier: "foo",
-                            },
-                            notIn: ["foo1", "foo2"],
-                        },
-                    },
-                    {
-                        absoluteDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
-                            },
-                            from: "2011-01-01",
-                            to: "2011-12-31",
-                        },
-                    },
-                    {
-                        relativeDateFilter: {
-                            to: 0,
-                            from: -3,
-                            granularity: "GDC.time.quarter",
-                            dataSet: {
-                                uri: "/gdc/md/myproject/obj/921",
-                            },
-                        },
-                    },
-                ];
-
-                const expectedShowFilters: GdcExecuteAFM.CompatibilityFilter[] = [
-                    {
-                        positiveAttributeFilter: {
-                            displayForm: {
-                                uri: "bar",
-                            },
-                            in: ["/gdc/md/bar1", "/gdc/md/bar2"],
-                        },
-                    },
-                    {
-                        negativeAttributeFilter: {
-                            displayForm: {
-                                identifier: "foo",
-                            },
-                            notIn: ["foo1", "foo2"],
-                        },
-                    },
-                    {
-                        absoluteDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/330",
-                            },
-                            from: "2011-01-01",
-                            to: "2011-12-31",
-                        },
-                    },
-                    {
-                        relativeDateFilter: {
-                            dataSet: {
-                                uri: "/gdc/md/myproject/obj/921",
-                            },
-                            from: -3,
-                            granularity: "GDC.time.quarter",
-                            to: 0,
-                        },
-                    },
-                ];
-
                 const exportConfig: IExportConfig = {
                     title: "title",
                     format: "xlsx",
                     mergeHeaders: false,
-                    showFilters,
+                    showFilters: true,
+                    afm: exportedAfm,
                 };
 
                 return mockedReportModule()
@@ -129,17 +54,7 @@ describe("report", () => {
                         const [, settings] = fetchMock.lastCall(
                             `/gdc/internal/projects/${projectId}/exportResult`,
                         );
-                        expect(JSON.parse(settings.body as string)).toEqual({
-                            resultExport: {
-                                executionResult: "/executionResult/1234",
-                                exportConfig: {
-                                    title: "title",
-                                    format: "xlsx",
-                                    mergeHeaders: false,
-                                    showFilters: expectedShowFilters,
-                                },
-                            },
-                        });
+                        expect(JSON.parse(settings.body as string)).toMatchSnapshot();
                     });
             });
 
@@ -162,7 +77,23 @@ describe("report", () => {
 
                 return mockedReportModule()
                     .exportResult(projectId, executionResult, exportConfig, { pollStep: 1 })
-                    .then((result: IExportResponse) => expect(result.uri).toEqual(createdReport));
+                    .then((result: IExportResponse) => {
+                        expect(result.uri).toEqual(createdReport);
+
+                        const [, settings] = fetchMock.lastCall(
+                            `/gdc/internal/projects/${projectId}/exportResult`,
+                        );
+                        expect(JSON.parse(settings.body as string)).toEqual({
+                            resultExport: {
+                                executionResult: "/executionResult/1234",
+                                exportConfig: {
+                                    title: "title",
+                                    format: "xlsx",
+                                    mergeHeaders: false,
+                                },
+                            },
+                        });
+                    });
             });
 
             it("should return error when polling fail", () => {

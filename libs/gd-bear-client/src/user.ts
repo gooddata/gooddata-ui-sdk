@@ -1,6 +1,23 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
+
+export interface IUserConfigsSettingItem {
+    settingItem: {
+        key: string;
+        links: {
+            self: string;
+        };
+        source: string;
+        value: string;
+    };
+}
+
+export interface IUserConfigsResponse {
+    settings: {
+        items: IUserConfigsSettingItem[];
+    };
+}
 
 export class UserModule {
     constructor(private xhr: XhrModule) {}
@@ -168,6 +185,23 @@ export class UserModule {
                 organizationName: bootstrapResource.settings.organizationName,
                 profileUri: bootstrapResource.accountSetting.links.self,
             };
+        });
+    }
+
+    /**
+     * Gets user configs including user specific feature flags
+     *
+     * @param {String} userId - A user identifier
+     * @return {IUserConfigsSettingItem[]} An array of user configs setting item
+     */
+    public getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
+        return this.xhr.get(`/gdc/account/profile/${userId}/config`).then((apiResponse: ApiResponse) => {
+            const userConfigs: IUserConfigsResponse = apiResponse.getData();
+            const {
+                settings: { items },
+            } = userConfigs;
+
+            return items || [];
         });
     }
 

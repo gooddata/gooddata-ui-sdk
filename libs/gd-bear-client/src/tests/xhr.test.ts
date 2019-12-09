@@ -1,4 +1,4 @@
-// (C) 2007-2017 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import isPlainObject from "lodash/isPlainObject";
@@ -142,7 +142,7 @@ describe("fetch", () => {
 
             xhr.ajax("/some/url");
 
-            expect(getHeaderValue(fetchMock.lastOptions(), "X-GDC-VERSION")).toBe(3);
+            expect(getHeaderValue(fetchMock.lastOptions(), "X-GDC-VERSION")).toBe(4);
         });
 
         it("should log deprecation warning once when REST API call was performed against deprecated version", () => {
