@@ -53,7 +53,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
 
         const visClass = visClassResult[0];
-        const visualizationClassIdentifier = visClass.visualizationClass.meta.identifier;
+        const visualizationClassIdentifier = visClass.visualizationClass.content.uri; // TODO revert to meta.identifier
 
         return convertVisualization(visualization, visualizationClassIdentifier);
     };

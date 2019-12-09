@@ -69,7 +69,7 @@ function createExecution(buckets: IBucket[], props: IHeadlineProps): IPreparedEx
     const { backend, workspace } = props;
 
     return backend
-        .withTelemetry("FunnelChart", props)
+        .withTelemetry("Headline", props)
         .workspace(workspace)
         .execution()
         .forBuckets(buckets, props.filters)

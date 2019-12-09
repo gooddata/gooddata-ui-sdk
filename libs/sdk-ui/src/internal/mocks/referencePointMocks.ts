@@ -344,6 +344,23 @@ export const measuresOnSecondaryAxisAndAttributeReferencePoint: IReferencePoint 
     },
 };
 
+export const measuresAndDateReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "attribute",
+            items: [dateItem],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const simpleStackedReferencePoint: IReferencePoint = {
     buckets: [
         {

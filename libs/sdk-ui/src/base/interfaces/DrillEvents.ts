@@ -15,6 +15,7 @@ import {
     TableType,
     VisElementType,
     VisType,
+    XirrType,
 } from "../constants/visualizationTypes";
 import isEmpty = require("lodash/isEmpty");
 
@@ -74,6 +75,14 @@ export interface IDrillEventContextTable {
 export interface IDrillEventContextHeadline {
     type: HeadlineType;
     element: HeadlineElementType;
+    value: string;
+    intersection: IDrillEventIntersectionElement[];
+}
+
+// Drill context for XIRR
+export interface IDrillEventContextXirr {
+    type: XirrType;
+    element: HeadlineElementType; // XIRR uses Headline internally, so its drill context is the same as that of Headline
     value: string;
     intersection: IDrillEventIntersectionElement[];
 }

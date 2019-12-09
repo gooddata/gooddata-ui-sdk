@@ -28,6 +28,7 @@ import { PluggableComboChartDeprecated } from "../internal/components/pluggableV
 import { PluggableComboChart } from "../internal/components/pluggableVisualizations/comboChart/PluggableComboChart";
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
+import { PluggableXirr } from "../internal/components/pluggableVisualizations/xirr/PluggableXirr";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import { ErrorComponent, IErrorProps } from "../base/simple/ErrorComponent";
 import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent";
@@ -53,6 +54,7 @@ const VisualizationsCatalog = {
     combo2: PluggableComboChart, // new combo chart
     treemap: PluggableTreemap,
     funnel: PluggableFunnelChart,
+    xirr: PluggableXirr,
 };
 
 const getVisualizationForInsight = (insight: IInsight) => {

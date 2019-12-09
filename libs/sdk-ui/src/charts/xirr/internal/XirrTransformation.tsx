@@ -1,20 +1,16 @@
-// (C) 2007-2018 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+// (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import noop = require("lodash/noop");
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/helpers/drilling";
 import { IChartConfig } from "../../../highcharts";
 import { IDrillableItem, IDrillEventCallback } from "../../../base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
-import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
-import {
-    applyDrillableItems,
-    buildDrillEventData,
-    getHeadlineData,
-} from "./utils/HeadlineTransformationUtils";
-import noop = require("lodash/noop");
+import { getHeadlineData, applyDrillableItems, buildDrillEventData } from "./utils/XirrTransformationUtils";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import Headline, { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/Headline";
 
-export interface IHeadlineTransformationProps {
+export interface IXirrTransformationProps {
     dataView: IDataView;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     config?: IChartConfig;
@@ -28,27 +24,20 @@ export interface IHeadlineTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-class HeadlineTransformation extends React.Component<IHeadlineTransformationProps & InjectedIntlProps> {
-    public static defaultProps: Partial<IHeadlineTransformationProps> = {
+class XirrTransformation extends React.Component<IXirrTransformationProps & InjectedIntlProps> {
+    public static defaultProps: Partial<IXirrTransformationProps> = {
         drillableItems: [],
         onDrill: () => true,
         onAfterRender: noop,
     };
 
-    constructor(props: IHeadlineTransformationProps & InjectedIntlProps) {
-        super(props);
+    public render(): React.ReactNode {
+        const { drillableItems, config, onAfterRender, dataView } = this.props;
 
-        this.handleFiredDrillEvent = this.handleFiredDrillEvent.bind(this);
-    }
-
-    public render() {
-        const { intl, drillableItems, dataView, config, onAfterRender } = this.props;
-
-        const data = getHeadlineData(dataView, intl);
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+        const data = getHeadlineData(dataView);
         const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
         const disableDrillUnderline = this.getDisableDrillUnderlineFromConfig();
-
         return (
             <Headline
                 data={dataWithUpdatedDrilling}
@@ -60,11 +49,8 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
         );
     }
 
-    private getDisableDrillUnderlineFromConfig() {
-        if (this.props.config) {
-            return this.props.config.disableDrillUnderline;
-        }
-    }
+    private getDisableDrillUnderlineFromConfig = (): boolean =>
+        this.props.config ? this.props.config.disableDrillUnderline : false;
 
     private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {
         const { onDrill, dataView } = this.props;
@@ -74,4 +60,4 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
     }
 }
 
-export default injectIntl(HeadlineTransformation);
+export default injectIntl(XirrTransformation);

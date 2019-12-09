@@ -315,6 +315,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "date-fns",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "downshift",
       "allowedCategories": [ "production" ]
     },

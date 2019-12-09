@@ -9,12 +9,12 @@ import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
-import HeadlineTransformation from "./internal/HeadlineTransformation";
+import XirrTransformation from "./internal/XirrTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 import { ErrorCodes } from "../../base/errors/GoodDataSdkError";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
-export class HeadlineStateless extends React.Component<Props, {}> {
+export class XirrStateless extends React.Component<Props, {}> {
     public static defaultProps: Partial<ICommonChartProps> = defaultCoreChartProps;
 
     private errorMap: IErrorDescriptors;
@@ -37,7 +37,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 
-        // when in pageble mode (getPage present) never show loading (its handled by the component)
+        // when in pageable mode (getPage present) never show loading (its handled by the component)
         if (isLoading || !dataView) {
             return LoadingComponent ? <LoadingComponent /> : null;
         }
@@ -56,7 +56,7 @@ export class HeadlineStateless extends React.Component<Props, {}> {
                         fixEmptyHeaderItems(dataView, props.emptyHeaderString);
 
                         return (
-                            <HeadlineTransformation
+                            <XirrTransformation
                                 dataView={dataView}
                                 onAfterRender={afterRender}
                                 onDrill={onDrill}
@@ -71,4 +71,4 @@ export class HeadlineStateless extends React.Component<Props, {}> {
     }
 }
 
-export const CoreHeadline = withEntireDataView(HeadlineStateless);
+export const CoreXirr = withEntireDataView(XirrStateless);
