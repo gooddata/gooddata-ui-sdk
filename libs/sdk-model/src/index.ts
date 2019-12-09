@@ -269,7 +269,7 @@ export {
     insightTitle,
     insightTotals,
     insightFilters,
-    insightVisualizationClassIdentifier,
+    insightVisualizationClassUri,
     insightSetProperties,
     insightSetSorts,
     visClassUrl,

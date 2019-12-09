@@ -23,7 +23,7 @@ describe("BubbleChartconfigurationPanel", () => {
                 title: "My Insight",
                 sorts: [],
                 filters: [],
-                visualizationClassIdentifier: "vc",
+                visualizationClassUri: "vc",
                 properties: {},
                 identifier: "id",
                 buckets: [
@@ -105,7 +105,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [
@@ -167,7 +167,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [] as any,
@@ -194,7 +194,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [

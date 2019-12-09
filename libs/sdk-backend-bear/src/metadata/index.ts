@@ -53,9 +53,9 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
 
         const visClass = visClassResult[0];
-        const visualizationClassIdentifier = visClass.visualizationClass.content.uri; // TODO revert to meta.identifier
+        const visualizationClassUri = visClass.visualizationClass.content.url;
 
-        return convertVisualization(visualization, visualizationClassIdentifier);
+        return convertVisualization(visualization, visualizationClassUri);
     };
 
     public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {

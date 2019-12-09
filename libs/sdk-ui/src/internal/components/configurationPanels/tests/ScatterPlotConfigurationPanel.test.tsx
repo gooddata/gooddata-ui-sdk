@@ -27,7 +27,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                 title: "My Insight",
                 sorts: [],
                 filters: [],
-                visualizationClassIdentifier: "vc",
+                visualizationClassUri: "vc",
                 properties: {},
                 identifier: "id",
                 buckets: [
@@ -63,7 +63,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [
@@ -125,7 +125,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [] as any,

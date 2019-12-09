@@ -21,9 +21,9 @@ export type InsightsModifications = (builder: InsightBuilder) => InsightBuilder;
 export class InsightBuilder {
     private insight: IInsight["insight"];
 
-    constructor(visClassId: string) {
+    constructor(visClassUri: string) {
         this.insight = {
-            visualizationClassIdentifier: visClassId,
+            visualizationClassUri: visClassUri,
             title: "Untitled",
             buckets: [],
             filters: [],

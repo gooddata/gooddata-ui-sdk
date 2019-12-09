@@ -9,7 +9,7 @@ import {
     IInsight,
     IFilter,
     insightProperties,
-    insightVisualizationClassIdentifier,
+    insightVisualizationClassUri,
     IColorPalette,
 } from "@gooddata/sdk-model";
 
@@ -58,9 +58,9 @@ const VisualizationsCatalog = {
 };
 
 const getVisualizationForInsight = (insight: IInsight) => {
-    const visClassIdentifier = insightVisualizationClassIdentifier(insight);
-    // the identifiers follow the "local.visualizationType" format
-    const split = visClassIdentifier.split(".");
+    const visClassUri = insightVisualizationClassUri(insight);
+    // the identifiers follow the "local:visualizationType" format
+    const split = visClassUri.split(":");
     const key = last(split) as keyof typeof VisualizationsCatalog;
     return VisualizationsCatalog[key];
 };

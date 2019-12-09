@@ -158,7 +158,7 @@ const resolveReferences = (
 
 export const convertVisualization = (
     visualization: GdcVisualizationObject.IVisualization,
-    visualizationClassIdentifier: string,
+    visualizationClassUri: string,
 ): IInsight => {
     const withResolvedReferences = resolveReferences(visualization.visualizationObject);
     const { content, meta } = withResolvedReferences;
@@ -173,7 +173,7 @@ export const convertVisualization = (
             sorts: parsedProperties.sortItems || [],
             title: meta.title!,
             uri: meta.uri,
-            visualizationClassIdentifier,
+            visualizationClassUri,
         },
     };
 };
