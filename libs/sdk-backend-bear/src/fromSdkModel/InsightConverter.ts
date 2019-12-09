@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 import { convertUrisToReferences } from "../toSdkModel/ReferenceConverter";
 import { serializeProperties } from "../toSdkModel/PropertiesConverter";
-import { convertExtendedFilter } from "./FilterConverter";
+import { convertExtendedFilter, shouldFilterBeIncluded } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 
 const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttribute => {
@@ -55,7 +55,9 @@ const convertInsightContent = (
         visualizationClass: {
             uri: insightVisualizationClassIdentifier(insight), // TODO this might not be an uri but an identifier...
         },
-        filters: insightFilters(insight).map(convertExtendedFilter),
+        filters: insightFilters(insight)
+            .filter(shouldFilterBeIncluded)
+            .map(convertExtendedFilter),
         properties: serializeProperties(properties),
         references,
     };

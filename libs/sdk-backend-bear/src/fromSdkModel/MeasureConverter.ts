@@ -26,7 +26,7 @@ import {
     measurePreviousPeriodDateDataSets,
     measureFilters,
 } from "@gooddata/sdk-model";
-import { convertFilter } from "./FilterConverter";
+import { convertFilter, shouldFilterBeIncluded } from "./FilterConverter";
 
 const convertPreviousPeriodMeasureDefinition = (
     measure: IMeasure<IPreviousPeriodMeasureDefinition>,
@@ -71,11 +71,13 @@ const convertSimpleMeasureDefinition = (
         throw new Error("Measure has neither uri nor identifier.");
     }
 
+    const filters = measureFilters(measure) || [];
+
     return {
         measureDefinition: {
             aggregation: measureAggregation(measure),
             computeRatio: measureDoesComputeRatio(measure),
-            filters: (measureFilters(measure) || []).map(convertFilter),
+            filters: filters.filter(shouldFilterBeIncluded).map(convertFilter),
             item: identifier ? { identifier } : { uri: uri! },
         },
     };
