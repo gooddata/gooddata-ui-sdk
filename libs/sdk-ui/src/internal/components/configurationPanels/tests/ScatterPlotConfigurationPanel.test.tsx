@@ -2,6 +2,7 @@
 import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
+import { insightWithSingleAttribute } from "../../../mocks/testMocks";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
@@ -51,6 +52,9 @@ describe("ScatterPlotConfigurationPanel", () => {
             isLoading: false,
             locale: DEFAULT_LOCALE,
             type: VisualizationTypes.SCATTER,
+            featureFlags: {
+                enableAxisNameConfiguration: true,
+            },
         };
 
         it("should render configuration panel with enabled name sections", () => {
@@ -163,5 +167,18 @@ describe("ScatterPlotConfigurationPanel", () => {
                 expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
             },
         );
+
+        it("should not render name sections in configuration panel", () => {
+            const wrapper = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableAxisNameConfiguration: false,
+                },
+                insight: insightWithSingleAttribute,
+            });
+
+            const axisSections = wrapper.find(NameSubsection);
+            expect(axisSections.exists()).toEqual(false);
+        });
     });
 });
