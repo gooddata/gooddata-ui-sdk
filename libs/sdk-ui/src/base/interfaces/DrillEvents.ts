@@ -16,6 +16,7 @@ import {
     VisElementType,
     VisType,
 } from "../constants/visualizationTypes";
+import isEmpty = require("lodash/isEmpty");
 
 export interface IDrillableItemUri {
     uri: string;
@@ -45,7 +46,7 @@ export interface IDrillIntersectionAttributeItem extends IAttributeDescriptor, I
 export function isDrillIntersectionAttributeItem(
     header: DrillEventIntersectionElementHeader,
 ): header is IDrillIntersectionAttributeItem {
-    return (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
+    return !isEmpty(header) && (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
 }
 
 export type DrillEventIntersectionElementHeader =
