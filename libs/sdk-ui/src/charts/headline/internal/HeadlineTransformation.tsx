@@ -48,6 +48,7 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
         const data = getHeadlineData(dataView, intl);
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         const dataWithUpdatedDrilling = applyDrillableItems(data, drillablePredicates, dataView);
+        const disableDrillUnderline = this.getDisableDrillUnderlineFromConfig();
 
         return (
             <Headline
@@ -55,8 +56,15 @@ class HeadlineTransformation extends React.Component<IHeadlineTransformationProp
                 config={config}
                 onDrill={this.handleFiredDrillEvent}
                 onAfterRender={onAfterRender}
+                disableDrillUnderline={disableDrillUnderline}
             />
         );
+    }
+
+    private getDisableDrillUnderlineFromConfig() {
+        if (this.props.config) {
+            return this.props.config.disableDrillUnderline;
+        }
     }
 
     private handleFiredDrillEvent(item: IHeadlineFiredDrillEventItemContext, target: HTMLElement) {

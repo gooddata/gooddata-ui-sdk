@@ -6,3 +6,5 @@ export { IErrorDescriptors, newErrorMapping, convertError } from "./errors/error
 export { ILocale } from "./interfaces/Locale";
 export { LoadingComponent, ILoadingProps } from "./simple/LoadingComponent";
 export { ErrorComponent, IErrorProps } from "./simple/ErrorComponent";
+
+export { DEFAULT_LOCALE } from "./constants/localization";

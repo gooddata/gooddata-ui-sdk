@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
+import { alignChart } from "./helpers";
 
 const PIE_TEMPLATE = {
     chart: {
@@ -12,6 +13,8 @@ const PIE_TEMPLATE = {
                         distance: -(get(this, "series.0.points.0.shapeArgs.r", 30) / 3),
                     },
                 });
+
+                alignChart(this);
             },
         },
     },

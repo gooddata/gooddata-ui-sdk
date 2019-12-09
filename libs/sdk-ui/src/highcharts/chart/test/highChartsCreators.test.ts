@@ -152,7 +152,7 @@ describe("highChartCreators", () => {
 
     describe("Column chart stacked configuration", () => {
         const config = getHighchartsOptions(
-            { ...chartOptions, type: VisualizationTypes.COLUMN, stacking: true },
+            { ...chartOptions, type: VisualizationTypes.COLUMN, stacking: "normal" },
             drillConfig,
         );
 

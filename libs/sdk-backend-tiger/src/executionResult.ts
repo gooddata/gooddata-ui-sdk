@@ -75,7 +75,10 @@ export class TigerExecutionResult implements IExecutionResult {
                 }
 
                 if (isEmptyDataResult(res)) {
-                    throw new NoDataError("The execution resulted in no data to display.");
+                    throw new NoDataError(
+                        "The execution resulted in no data to display.",
+                        new TigerDataView(this, res),
+                    );
                 }
 
                 return new TigerDataView(this, res);

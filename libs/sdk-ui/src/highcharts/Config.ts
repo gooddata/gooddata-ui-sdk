@@ -66,6 +66,8 @@ export interface IChartConfig extends IMeasuresStackConfig {
     dualAxis?: boolean;
     primaryChartType?: string;
     secondaryChartType?: string;
+    forceDisableDrillOnAxes?: boolean;
+    disableDrillUnderline?: boolean;
 }
 
 export interface IStackLabels {
@@ -94,6 +96,11 @@ export interface IStackMeasuresConfig {
     yAxis?: IHighChartAxis[];
 }
 
+export interface IAxisNameConfig {
+    visible?: boolean;
+    position?: Highcharts.AxisTitleAlignValue;
+}
+
 export interface IAxisConfig {
     visible?: boolean;
     labelsEnabled?: boolean;
@@ -104,6 +111,7 @@ export interface IAxisConfig {
     stacks?: IStackItem;
     series?: ISeriesItem[];
     stackTotalGroup?: SVGAttributes;
+    name?: IAxisNameConfig;
 }
 
 export interface IAxis {
@@ -152,7 +160,7 @@ export interface IShapeArgsConfig {
 
 export interface IChartOptions {
     type?: string;
-    stacking?: any;
+    stacking?: string;
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;
@@ -170,6 +178,7 @@ export interface IChartOptions {
     colorAxis?: ColorAxisOptions;
     colorAssignments?: IColorAssignment[];
     colorPalette?: IColorPalette;
+    forceDisableDrillOnAxes?: boolean;
 }
 
 export interface IPatternOptionsObject {
@@ -235,3 +244,5 @@ export interface IClientRect {
     x?: number;
     y?: number;
 }
+
+export type ChartAlignTypes = "top" | "bottom" | "middle";

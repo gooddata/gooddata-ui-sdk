@@ -1,43 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
-// override highcharts default overflow for chart container
-// to allow tooltip overlap chart container area
-
-.gd-viz-highchart-wrap {
-    .highcharts-container {
-        // overwrite
-        // stylelint-disable-next-line declaration-no-important
-        z-index: auto !important;
-        // overwrite
-        // stylelint-disable-next-line declaration-no-important
-        overflow: visible !important;
-    }
-
-    // hide default highcharts svg tooltip when using html-based one
-    g.highcharts-tooltip {
-        visibility: hidden;
-    }
-
-    // without this, the max-width settings for .value and .title
-    // are ineffective
-    .highcharts-tooltip {
-        z-index: 3005;
-        display: flex;
-
-        > span {
-            flex: 0 0 auto;
-        }
-
-        &,
-        > span {
-            @media #{$insight-small-only} {
-                right: 0;
-                // overwrite
-                // stylelint-disable-next-line declaration-no-important
-                left: 0 !important;
-            }
-        }
-    }
-}
+// (C) 2007-2019 GoodData Corporation
 
 .gd-viz-tooltip {
     position: relative;
@@ -179,4 +140,12 @@
             content: none;
         }
     }
+}
+
+// hide default highcharts svg tooltip when using html-based one
+.highcharts-tooltip-container {
+    g.highcharts-tooltip {
+        visibility: hidden;
+    }
+    z-index: 3005;
 }

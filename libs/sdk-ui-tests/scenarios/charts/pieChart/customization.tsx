@@ -4,6 +4,7 @@ import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
+import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
 
 const legendScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
@@ -16,4 +17,9 @@ const dataLabelScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", PieChartWithSingleMeasureAndViewBy, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const chartAlignmentScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
+    .withVisualTestConfig({ groupUnder: "alignment", screenshotSize: { width: 400, height: 600 } })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("", PieChartWithSingleMeasureAndViewBy, chartAlignmentVariants);
+
+export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios];

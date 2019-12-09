@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import Measure from "react-measure";
+import Measure, { Rect } from "react-measure";
 import * as cx from "classnames";
-
+import isEmpty = require("lodash/isEmpty");
 import FluidLegend from "./FluidLegend";
 import StaticLegend from "./StaticLegend";
 import { ChartType } from "../../../base/constants/visualizationTypes";
@@ -26,6 +26,7 @@ export interface ILegendProps {
     locale?: string;
     showFluidLegend?: boolean;
     onItemClick(item: any): void;
+    validateOverHeight(legendClient: Rect): void;
 }
 
 export interface ILegendState {
@@ -38,6 +39,7 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
         legendItemsEnabled: [] as any,
         height: 0,
         showFluidLegend: false,
+        isLegendOverHeight: false,
     };
 
     constructor(props: ILegendProps) {
@@ -116,6 +118,11 @@ export default class Legend extends React.PureComponent<ILegendProps, ILegendSta
                             ? Math.floor(contentRect.client.height)
                             : 0;
                     const usedHeight = height || measuredHeight;
+
+                    if (!isEmpty(contentRect.client)) {
+                        this.props.validateOverHeight(contentRect.client);
+                    }
+
                     return (
                         <div className={classNames} ref={measureRef}>
                             <StaticLegend {...props} containerHeight={usedHeight} />

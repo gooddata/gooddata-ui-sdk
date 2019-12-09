@@ -8,9 +8,11 @@ import {
     formatOverlapping,
     formatOverlappingForParentAttribute,
     getCustomizedConfiguration,
+    getTooltipPositionInViewPort,
     percentageDataLabelFormatter,
+    getTooltipPositionInChartContainer,
 } from "../customConfiguration";
-import { ISeriesDataItem } from "../../../Config";
+import { IPointData, ISeriesDataItem } from "../../../Config";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { immutableSet } from "../../../utils/common";
 import {
@@ -608,6 +610,59 @@ describe("getCustomizedConfiguration", () => {
             });
 
             expect(result.tooltip.followPointer).toBeFalsy();
+        });
+    });
+
+    describe("tooltip position", () => {
+        it("should be positioned by absolute position", () => {
+            const highchartContext: any = {
+                chart: {
+                    plotLeft: 0,
+                    plotTop: 0,
+                    container: {
+                        getBoundingClientRect: jest.fn().mockReturnValue({
+                            top: 10,
+                            left: 20,
+                        }),
+                    },
+                },
+            };
+            const mockDataPoint: IPointData = {
+                negative: false,
+                plotX: 50,
+                plotY: 50,
+                h: 10,
+            };
+            // array: [chartType, stacking, labelWidth, labelHeight, point]
+            let mockChartParameters = ["bar", false, 10, 10, mockDataPoint];
+
+            // use .apply function here to mock for tooltip callback from highchart
+            let relativePosition = getTooltipPositionInChartContainer.apply(
+                highchartContext,
+                mockChartParameters,
+            );
+            expect(relativePosition).toEqual({ x: 45, y: 35 });
+
+            let position = getTooltipPositionInViewPort.apply(highchartContext, mockChartParameters);
+            // offset: pageOffset + containerPosition - highchart off set
+            // bar
+            expect(position).toEqual({
+                x: 15, // 0 + 20 - 5
+                y: 2 + relativePosition.y, // 0 + 10 -8 + 35
+            });
+
+            // line
+            mockChartParameters = ["line", false, 10, 10, mockDataPoint];
+            relativePosition = getTooltipPositionInChartContainer.apply(
+                highchartContext,
+                mockChartParameters,
+            );
+            expect(relativePosition).toEqual({ x: 45, y: 26 });
+            position = getTooltipPositionInViewPort.apply(highchartContext, mockChartParameters);
+            expect(position).toEqual({
+                x: 4, // 0 + 20 - 16
+                y: -6 + relativePosition.y, // 0 + 10 - 16 + 26
+            });
         });
     });
 

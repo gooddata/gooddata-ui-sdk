@@ -17,19 +17,33 @@ export interface IWorkspaceSettingsService {
  *
  * @public
  */
-export interface IWorkspaceSettings {
+export interface IWorkspaceSettings extends ISettings {
     /**
      * Workspace to which the settings belong.
      */
     workspace: string;
+}
 
+/**
+ *
+ * This enum lists notable settings that should work across implementations of Analytical Backends.
+ *
+ * @public
+ */
+export enum SettingCatalog {
     /**
-     * Key-value mapping.
-     *
-     * TODO: SDK8: improve this; key-value mapping is insufficient in a world, where we need to
-     *   have platform agnostic settings (and each platform may name them differently). we should
-     *   have the platform-agnostic settings enumerated and everything else falls backs into the k-v map
-     *   we should do this when we integrate SDK8 into AD and KD
+     * Headline component will not be underlined when it is set up with drilling.
      */
+    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
+}
+
+/**
+ * Settings are obtained from backend and are effectively a collection of feature flags or settings with
+ * concrete string or numeric value. Settings are stored and configured on the server and typically allow
+ * for a more fine-grained tuning of otherwise unified behavior.
+ *
+ * @public
+ */
+export interface ISettings {
     [key: string]: number | boolean | string;
 }

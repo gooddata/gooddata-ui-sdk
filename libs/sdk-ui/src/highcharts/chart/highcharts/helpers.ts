@@ -16,7 +16,8 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "../../../base/constants/visualizationTypes";
 import { isBarChart } from "../../utils/common";
-import { ISeriesItem, ISeriesDataItem, IChartConfig } from "../../Config";
+import { ISeriesItem, ISeriesDataItem, IChartConfig, ChartAlignTypes } from "../../Config";
+import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 
 export interface IRectByPoints {
     left: number;
@@ -371,4 +372,51 @@ export function getAxisRangeForAxes(chart: any): IAxisRangeForAxes {
 
 export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean {
     return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
+}
+
+export function alignChart(chart: Highcharts.Chart) {
+    const { container } = chart;
+    if (!container) {
+        return;
+    }
+
+    const { width: chartWidth, height: chartHeight } = container.getBoundingClientRect();
+    const margin: number = chartHeight - chartWidth;
+
+    const isVerticalRectContainer: boolean = margin > 0;
+    const verticalAlign: ChartAlignTypes = get(chart, "userOptions.chart.verticalAlign", MIDDLE);
+
+    const isAlignedToTop = verticalAlign === TOP;
+    const isAlignedToBottom = verticalAlign === BOTTOM;
+
+    const type = getChartType(chart);
+    const className = `s-highcharts-${type}-aligned-to-${verticalAlign}`;
+
+    let chartOptions: Highcharts.ChartOptions = {};
+    if (isVerticalRectContainer && verticalAlign !== MIDDLE) {
+        chartOptions = {
+            spacingTop: isAlignedToTop ? 0 : undefined,
+            spacingBottom: isAlignedToBottom ? 0 : undefined,
+            marginTop: isAlignedToBottom ? margin : undefined,
+            marginBottom: isAlignedToTop ? margin : undefined,
+            className,
+        };
+    } else {
+        chartOptions = {
+            spacingTop: undefined,
+            spacingBottom: undefined,
+            marginTop: undefined,
+            marginBottom: undefined,
+            className,
+        };
+    }
+
+    chart.update(
+        {
+            chart: chartOptions,
+        },
+        false,
+        false,
+        false,
+    );
 }

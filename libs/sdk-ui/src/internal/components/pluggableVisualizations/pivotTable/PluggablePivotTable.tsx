@@ -7,7 +7,7 @@ import isNil = require("lodash/isNil");
 import includes = require("lodash/includes");
 import * as React from "react";
 import Measure from "react-measure";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import { InjectedIntl } from "react-intl";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
@@ -68,6 +68,8 @@ import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
 import { ILocale } from "../../../../base/interfaces/Locale";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -272,10 +274,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
@@ -367,7 +366,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const { locale, custom, dimensions, config } = options;
         const { height } = dimensions;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
 
         const execution = executionFactory
             .forInsight(insight)
@@ -375,7 +374,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .withSorting(...createSorts(VisualizationTypes.TABLE, insight));
 
         let configUpdated = config;
-        if (this.environment !== "dashboards") {
+        if (this.environment !== DASHBOARDS_ENVIRONMENT) {
             // Menu aggregations turned off in KD
             configUpdated = merge(
                 {
@@ -391,6 +390,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const pivotTableProps: ICorePivotTableProps = {
             execution,
             drillableItems,
+            onDrill,
             config: configUpdated,
             locale,
             afterRender,
@@ -408,7 +408,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         //  into account (it had the prop because it inherited from same base as charts). Checked the history
         //  and it seems that CorePivotTable never used the 'height' prop
 
-        if (this.environment === "dashboards") {
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
             if (isNil(height)) {
                 render(
                     <Measure client={true}>

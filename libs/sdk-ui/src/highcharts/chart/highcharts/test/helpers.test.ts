@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     shouldFollowPointer,
     shouldFollowPointerForDualAxes,
@@ -10,9 +10,11 @@ import {
     getStackedMinValue,
     shouldXAxisStartOnTickOnBubbleScatter,
     shouldYAxisStartOnTickOnBubbleScatter,
+    alignChart,
 } from "../helpers";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { IChartConfig } from "../../../Config";
+import { ChartAlignTypes, IChartConfig } from "../../../Config";
+import { BOTTOM, TOP } from "../../../constants/alignments";
 
 describe("helpers", () => {
     describe("getChartProperties", () => {
@@ -829,5 +831,113 @@ describe("helpers", () => {
                 expect(result).toEqual(-135);
             });
         });
+    });
+
+    describe("getChartAlignmentConfiguration", () => {
+        function getCommonChartOptionsMock(width: number, height: number) {
+            const getBoundingClientRect = jest.fn().mockReturnValue({ width, height });
+            return {
+                options: {
+                    chart: {
+                        type: VisualizationTypes.DONUT,
+                    },
+                },
+                container: {
+                    getBoundingClientRect,
+                },
+                update: jest.fn(),
+            };
+        }
+
+        it.each([[TOP, 0, undefined, undefined, 100], [BOTTOM, undefined, 0, 100, undefined]])(
+            "should update chart margin %s",
+            (
+                verticalAlign: ChartAlignTypes,
+                spacingTop: number,
+                spacingBottom: number,
+                marginTop: number,
+                marginBottom: number,
+            ) => {
+                const chart: any = {
+                    ...getCommonChartOptionsMock(200, 300),
+                    userOptions: {
+                        chart: {
+                            verticalAlign,
+                        },
+                    },
+                };
+
+                alignChart(chart);
+
+                expect(chart.update).toBeCalledWith(
+                    {
+                        chart: {
+                            spacingTop,
+                            spacingBottom,
+                            marginTop,
+                            marginBottom,
+                            className: `s-highcharts-donut-aligned-to-${verticalAlign}`,
+                        },
+                    },
+                    false,
+                    false,
+                    false,
+                );
+            },
+        );
+
+        it("should not update when rectangle container is horizontal", () => {
+            const chart: any = {
+                ...getCommonChartOptionsMock(300, 200),
+            };
+
+            alignChart(chart);
+
+            expect(chart.update).toBeCalledWith(
+                {
+                    chart: {
+                        spacingTop: undefined,
+                        spacingBottom: undefined,
+                        marginTop: undefined,
+                        marginBottom: undefined,
+                        className: "s-highcharts-donut-aligned-to-middle",
+                    },
+                },
+                false,
+                false,
+                false,
+            );
+        });
+
+        it.each([["middle"], [undefined]])(
+            "should not update when verticalAlign is %s",
+            (verticalAlign: ChartAlignTypes) => {
+                const chart: any = {
+                    ...getCommonChartOptionsMock(200, 300),
+                    userOptions: {
+                        chart: {
+                            verticalAlign,
+                        },
+                    },
+                };
+
+                alignChart(chart);
+
+                expect(chart.update).toBeCalledWith(
+                    {
+                        chart: {
+                            spacingTop: undefined,
+                            spacingBottom: undefined,
+                            marginTop: undefined,
+                            marginBottom: undefined,
+                            className: "s-highcharts-donut-aligned-to-middle",
+                        },
+                    },
+                    false,
+                    false,
+                    false,
+                );
+            },
+        );
     });
 });

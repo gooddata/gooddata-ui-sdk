@@ -1,10 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
 import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui";
+import { scenariosFor } from "../../../src";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { ScatterPlotWithMeasuresAndAttribute } from "./base";
 
-export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+const axisConfig = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {
@@ -20,3 +21,10 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
             },
         },
     });
+
+const axisNameScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withVisualTestConfig({ groupUnder: "axis name configuration" })
+    .addScenarios("", ScatterPlotWithMeasuresAndAttribute, axisNameCustomization);
+
+export default [axisConfig, axisNameScenarios];

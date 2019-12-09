@@ -20,6 +20,8 @@ import {
 } from "../../constants/bubble";
 import { insightHasAttributes } from "@gooddata/sdk-model";
 import get = require("lodash/get");
+import NameSubsection from "../configurationControls/axis/NameSubsection";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled() {
@@ -31,8 +33,12 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel() {
         const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
 
-        const { propertiesMeta, properties, pushData } = this.props;
+        const { propertiesMeta, properties, pushData, insight, type } = this.props;
+        const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
+        const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
+        const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
+        const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -49,6 +55,14 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={xAxisNameSectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"xaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -69,6 +83,14 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
+                        <NameSubsection
+                            disabled={yAxisNameSectionDisabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={"yaxis"}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}

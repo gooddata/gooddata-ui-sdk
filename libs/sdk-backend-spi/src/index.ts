@@ -43,7 +43,12 @@ export {
     isResultTotalHeader,
 } from "./workspace/execution/results";
 
-export { IWorkspaceSettingsService, IWorkspaceSettings } from "./workspace/settings";
+export {
+    IWorkspaceSettingsService,
+    IWorkspaceSettings,
+    ISettings,
+    SettingCatalog,
+} from "./workspace/settings";
 
 export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./workspace/insights";
 

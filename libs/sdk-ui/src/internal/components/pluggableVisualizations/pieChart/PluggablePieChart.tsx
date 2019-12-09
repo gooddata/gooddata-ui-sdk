@@ -6,7 +6,13 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import * as BucketNames from "../../../../base/constants/bucketNames";
 
-import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
+import {
+    IVisConstruct,
+    IReferencePoint,
+    IExtendedReferencePoint,
+    IGdcConfig,
+    IVisualizationProperties,
+} from "../../../interfaces/Visualization";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
@@ -33,6 +39,8 @@ import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiCo
 import { removeSort } from "../../../utils/sort";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { IChartConfig, TOP } from "../../../../highcharts";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -119,5 +127,21 @@ export class PluggablePieChart extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+    }
+
+    protected buildVisualizationConfig(
+        config: IGdcConfig,
+        supportedControls: IVisualizationProperties,
+    ): IChartConfig {
+        const baseVisualizationConfig = super.buildVisualizationConfig(config, supportedControls);
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
+            return {
+                ...baseVisualizationConfig,
+                chart: {
+                    verticalAlign: TOP,
+                },
+            };
+        }
+        return baseVisualizationConfig;
     }
 }

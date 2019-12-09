@@ -26,8 +26,8 @@ function createComponent(customProps: Partial<ILabelSubsection> = {}) {
     );
 }
 
-describe("LegendSection render", () => {
-    it("should render legend section", () => {
+describe("LabelSection render", () => {
+    it("should render label section", () => {
         const wrapper = createComponent();
         expect(wrapper.find(LabelSubsection).length).toBe(1);
     });

@@ -6,6 +6,8 @@ export {
     IChartLimits,
     IAxisConfig,
     IDataLabelsConfig,
+    IAxisNameConfig,
+    ChartAlignTypes,
 } from "./Config";
 
 import Chart from "./chart/Chart";
@@ -15,6 +17,7 @@ export { Visualization } from "./Visualization";
 
 export { FLUID_LEGEND_THRESHOLD } from "./chart/HighChartsRenderer";
 export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
+export { updateConfigWithSettings } from "./chart/chartOptions/chartOptionsForSettings";
 
 // TODO: SDK8: this should go away; its exported for drills
 
@@ -27,3 +30,5 @@ export { getValidColorPalette } from "./utils/color";
 import ColorUtils from "./utils/color";
 
 export { ColorUtils };
+
+export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";

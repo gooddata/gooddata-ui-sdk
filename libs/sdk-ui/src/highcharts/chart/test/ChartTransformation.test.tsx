@@ -2,14 +2,18 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 import noop = require("lodash/noop");
+import get = require("lodash/get");
 
 import ChartTransformation from "../ChartTransformation";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { TOP } from "../legend/PositionTypes";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig } from "../../Config";
 import { getRgbString } from "../../utils/color";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
+import Chart from "../Chart";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
+import { IntlWrapper } from "../../../base/translations/IntlWrapper";
 
 describe("ChartTransformation", () => {
     const defaultProps = {
@@ -444,6 +448,105 @@ describe("ChartTransformation", () => {
 
             wrapper.setProps(fixtures.pieChartWithMetricsOnly);
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
+        });
+    });
+
+    const AlignableCharts: Array<[string]> = [[VisualizationTypes.PIE], [VisualizationTypes.DONUT]];
+
+    describe.each(AlignableCharts)("%s chart alignments", (type: string) => {
+        function render(chartConfig: IChartConfig) {
+            const props = {
+                ...fixtures.pieChartWithMetricsOnly,
+                config: {
+                    type,
+                    ...chartConfig,
+                },
+                onDataTooLarge: noop,
+            };
+            return mount(createComponent(props));
+        }
+
+        it.each([[TOP], [MIDDLE], [BOTTOM]])("should props.verticalAlign be %s", (verticalAlign: string) => {
+            const wrapper = render({ chart: { verticalAlign } });
+            const chartProps = wrapper.find(Chart).props();
+            expect(chartProps.config.chart.verticalAlign).toBe(verticalAlign);
+        });
+
+        it("should props.verticalAlign be undefined", () => {
+            const wrapper = render({});
+            const chartProps = wrapper.find(Chart).props();
+            expect(chartProps.config.chart.verticalAlign).toBe(undefined);
+        });
+    });
+
+    describe("axis labels alignment on dual bar chart", () => {
+        function createComponent(chartConfig: IChartConfig) {
+            const props = {
+                ...fixtures.barChartWith2MetricsAndViewByAttribute,
+                config: {
+                    type: VisualizationTypes.BAR,
+                    ...chartConfig,
+                },
+                onDataTooLarge: noop,
+            };
+            return mount(
+                <IntlWrapper>
+                    <ChartTransformation {...(props as any)} />
+                </IntlWrapper>,
+            );
+        }
+
+        it("should align secondary Y axis labels to left", () => {
+            const chartConfig: IChartConfig = {
+                secondary_xaxis: {
+                    measures: ["wonMetric"],
+                    rotation: "90",
+                },
+            };
+            const wrapper = createComponent(chartConfig);
+            const chartConfigProps = wrapper.find(Chart).prop("config");
+            const label = get(chartConfigProps, "yAxis.1.labels");
+
+            expect(label.align).toBe("left");
+            expect(label.y).toBe(undefined);
+        });
+
+        it("should align Y axis label to right and secondary Y axis labels to left", () => {
+            const chartConfig: IChartConfig = {
+                xaxis: {
+                    rotation: "90",
+                },
+                secondary_xaxis: {
+                    measures: ["wonMetric"],
+                    rotation: "90",
+                },
+            };
+            const wrapper = createComponent(chartConfig);
+            const chartConfigProps = wrapper.find(Chart).prop("config");
+
+            const labels = get(chartConfigProps, "yAxis.0.labels");
+            expect(labels.align).toBe("right");
+            expect(labels.y).toBe(8);
+
+            const secondaryLabels = get(chartConfigProps, "yAxis.1.labels");
+            expect(secondaryLabels.align).toBe("left");
+            expect(secondaryLabels.y).toBe(undefined);
+        });
+
+        it("should not align secondary Y axis labels to left on other charts", () => {
+            const chartConfig: IChartConfig = {
+                type: VisualizationTypes.COLUMN,
+                secondary_yaxis: {
+                    measures: ["wonMetric"],
+                    rotation: "90",
+                },
+            };
+            const wrapper = createComponent(chartConfig);
+            const chartConfigProps = wrapper.find(Chart).prop("config");
+            const label = get(chartConfigProps, "yAxis.1.labels");
+
+            expect(label.align).toBe(undefined);
+            expect(label.y).toBe(undefined);
         });
     });
 });

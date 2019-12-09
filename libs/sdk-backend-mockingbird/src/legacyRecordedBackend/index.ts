@@ -338,6 +338,7 @@ function recordedElementsQueryFactory(recordings: LegacyWorkspaceRecordings = {}
 function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecordings = {}): IElementQuery {
     let _limit = 50;
     let _offset = 0;
+    let _filter = "";
 
     const queryWorker = async (offset: number, limit: number): Promise<IElementQueryResult> => {
         const recording = recordings.elements && recordings.elements[objectId.replace(/\./g, "_")];
@@ -346,7 +347,9 @@ function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecor
             throw new Error("Recording not found");
         }
 
-        const slice = recording.slice(offset, offset + limit);
+        const slice = recording
+            .filter(_filter ? item => item.title.toLowerCase().includes(_filter.toLowerCase()) : Boolean)
+            .slice(offset, offset + limit);
 
         const emptyResult: IElementQueryResult = {
             items: [],
@@ -381,8 +384,9 @@ function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecor
             _offset = offset;
             return this;
         },
-        withOptions(_options: IElementQueryOptions): IElementQuery {
-            // options are ignored for now
+        withOptions(options: IElementQueryOptions): IElementQuery {
+            // other options are ignored for now
+            _filter = (options && options.filter) || "";
             return this;
         },
     };

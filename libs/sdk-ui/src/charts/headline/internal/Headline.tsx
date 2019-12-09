@@ -25,6 +25,7 @@ export interface IHeadlineVisualizationProps {
     config?: IChartConfig;
     onDrill?: IHeadlineFiredDrillEvent;
     onAfterRender?: () => void;
+    disableDrillUnderline?: boolean;
 }
 
 /**
@@ -35,6 +36,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         onDrill: () => true,
         onAfterRender: noop,
         config: {},
+        disableDrillUnderline: false,
     };
 
     constructor(props: IHeadlineVisualizationProps) {
@@ -195,6 +197,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         const valueClassNames = classNames(["headline-value", "s-headline-value"], {
             "headline-value--empty": formattedItem.isValueEmpty,
             "s-headline-value--empty": formattedItem.isValueEmpty,
+            "headline-link-style-underline": !this.props.disableDrillUnderline,
         });
 
         return <div className={valueClassNames}>{formattedItem.value}</div>;

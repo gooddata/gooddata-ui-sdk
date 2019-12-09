@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-30T14:57:04.585Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-05T18:03:55.792Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./executions/uiTestScenarios/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -312,6 +312,11 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
+const fp_26f497ae131ba545d6d2c99f657eadb4 = {
+    definition: require("./executions/uiTestScenarios/26f497ae131ba545d6d2c99f657eadb4/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/26f497ae131ba545d6d2c99f657eadb4/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/26f497ae131ba545d6d2c99f657eadb4/dataView_all.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: fp_06890d7172183531342ed8e17d70e01a,
@@ -385,6 +390,7 @@ export const Scenarios = {
         SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
         TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
         SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
+        TwoMeasuresWithTwoViewByFilteredToSingleValue: fp_26f497ae131ba545d6d2c99f657eadb4,
     },
     ColumnChart: {
         TwoMeasuresWithViewBySortedByAttribute: fp_1407ee212bc8a079b1048ff976726a8e,
@@ -519,6 +525,7 @@ export const Recordings = {
             fp_f8eb5e66709f2ea572a139e5e7790931,
             fp_fa12ddadd752df55fbabeae6d22ecb4d,
             fp_feb4ad60c9bd6a1dd6003afd669e25c8,
+            fp_26f497ae131ba545d6d2c99f657eadb4,
         },
     },
 };

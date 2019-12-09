@@ -1,16 +1,44 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { scenariosFor } from "../../../src";
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
-import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
+import { scenariosFor } from "../../../src";
+import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import {
     ColumnChartWithArithmeticMeasuresAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base";
 
-export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withVisualTestConfig({
+        groupUnder: "single axis name customization",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("single axis", ColumnChartWithTwoMeasuresAndViewBy, axisNameCustomization);
+
+const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
+    .withVisualTestConfig({
+        groupUnder: "dual axis name customization",
+        screenshotSize: { width: 800, height: 600 },
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios(
+        "",
+        {
+            ...ColumnChartWithArithmeticMeasuresAndViewBy,
+            config: {
+                secondary_yaxis: {
+                    measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                },
+            },
+        },
+        axisNameCustomization,
+    );
+
+const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("Y axis min/max configuration", {
@@ -70,3 +98,5 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
             },
         },
     });
+
+export default [axisConfig, singleAxisNameConfig, dualAxisNameConfig];

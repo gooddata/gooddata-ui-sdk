@@ -1,13 +1,14 @@
 // (C) 2019 GoodData Corporation
 
 import * as React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import { InjectedIntl } from "react-intl";
 
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
 import * as BucketNames from "../../../../base/constants/bucketNames";
+import { updateConfigWithSettings } from "../../../../highcharts";
 import { METRIC } from "../../../constants/bucket";
 
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -53,8 +54,9 @@ import {
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "../../../../base/interfaces/Locale";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -64,6 +66,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;
+    private settings?: ISettings;
 
     constructor(props: IVisConstruct) {
         super();
@@ -73,13 +76,11 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.callbacks = props.callbacks;
         this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
         this.intl = createInternalIntl(this.locale);
+        this.settings = props.featureFlags;
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
@@ -143,7 +144,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         const { locale, custom, config } = options;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData } = this.callbacks;
+        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions({ itemIdentifiers: ["measureGroup"] });
@@ -152,8 +153,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             <CoreHeadline
                 execution={execution}
                 drillableItems={drillableItems}
+                onDrill={onDrill}
                 locale={locale}
-                config={config}
+                config={updateConfigWithSettings(config, this.settings)}
                 afterRender={afterRender}
                 onLoadingChanged={onLoadingChanged}
                 pushData={pushData}

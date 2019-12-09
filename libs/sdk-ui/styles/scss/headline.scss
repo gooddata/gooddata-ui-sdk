@@ -66,13 +66,15 @@
 
     .headline-item-link {
         .headline-value {
-            &:not(.headline-value--empty)::after {
+            &::after {
                 content: "";
                 position: absolute;
                 right: 0;
                 bottom: 0;
                 left: 0;
                 display: block;
+            }
+            &:not(.headline-value--empty).headline-link-style-underline::after {
                 border-bottom: 2px solid;
             }
         }
@@ -80,8 +82,11 @@
 
     .headline-secondary-item .headline-item-link {
         .headline-value {
-            &:not(.headline-value--empty)::after {
+            &.headline-link-style-underline::after {
                 border-bottom: 1px solid;
+            }
+            &.headline-value--empty::after {
+                border-bottom: none;
             }
         }
     }

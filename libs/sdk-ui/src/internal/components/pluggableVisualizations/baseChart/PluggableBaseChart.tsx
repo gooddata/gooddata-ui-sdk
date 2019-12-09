@@ -1,12 +1,13 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { InjectedIntl } from "react-intl";
-import { render, unmountComponentAtNode } from "react-dom";
+import { render } from "react-dom";
 import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
     IFeatureFlags,
+    IGdcConfig,
     IReferencePoint,
     IReferences,
     IUiConfig,
@@ -17,6 +18,7 @@ import {
 } from "../../../interfaces/Visualization";
 import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
+    getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
     getSupportedPropertiesControls,
@@ -68,17 +70,20 @@ import {
     IInsight,
     insightBuckets,
     insightHasDataDefined,
+    insightMeasures,
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IChartConfig, ColorUtils } from "../../../../highcharts";
+import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
+import { ILocale } from "../../../../base/interfaces/Locale";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import noop = require("lodash/noop");
 import tail = require("lodash/tail");
 import set = require("lodash/set");
-import { ILocale } from "../../../../base/interfaces/Locale";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -102,7 +107,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected locale: ILocale;
-    private environment: string;
+    protected environment: string;
     private element: string;
 
     constructor(props: IVisConstruct) {
@@ -129,10 +134,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public unmount() {
-        unmountComponentAtNode(document.querySelector(this.element));
-        if (document.querySelector(this.configPanelElement)) {
-            unmountComponentAtNode(document.querySelector(this.configPanelElement));
-        }
+        unmountComponentsAtNodes([this.element, this.configPanelElement]);
     }
 
     public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
@@ -248,18 +250,20 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
-        const resultingHeight = this.environment === "dashboards" ? height : undefined;
+        const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const afterRender = get(this.callbacks, "afterRender", noop);
         const onDrill = get(this.callbacks, "onDrill", noop);
         const { drillableItems } = custom;
-        const supportedControls = this.getSupportedControls(insight);
+        const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
         const fullConfig = this.buildVisualizationConfig(config, configSupportedControls);
 
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(...createSorts(this.type, insight));
+            .withSorting(
+                ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
+            );
 
         render(
             <BaseChart
@@ -400,6 +404,28 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     };
 
+    protected buildVisualizationConfig(
+        config: IGdcConfig,
+        supportedControls: IVisualizationProperties,
+    ): IChartConfig {
+        const colorMapping: IColorMappingItem[] = get(supportedControls, "colorMapping");
+
+        const validColorMapping =
+            colorMapping &&
+            colorMapping
+                .filter(mapping => mapping != null)
+                .map(mapItem => ({
+                    predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+                    color: mapItem.color,
+                }));
+
+        return {
+            ...config,
+            ...supportedControls,
+            colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
+        };
+    }
+
     private getOpenAsReportConfig(properties: IVisualizationProperties) {
         const hasMapping = hasColorMapping(properties);
         const isSupported = this.isOpenAsReportSupported();
@@ -423,7 +449,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     private getSupportedControls(insight: IInsight) {
-        const supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
+        let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
             this.supportedPropertiesList,
@@ -437,9 +463,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         // Set legend position by bucket items and environment
         set(supportedControls, "legend.position", legendPosition);
-        if (this.environment === "dashboards") {
+        if (this.environment === DASHBOARDS_ENVIRONMENT) {
             set(supportedControls, "legend.responsive", true);
         }
+
+        supportedControls = getHighchartsAxisNameConfiguration(supportedControls);
 
         return {
             ...defaultControls,
@@ -472,34 +500,29 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (legendPosition === "auto") {
             // Legend has right position always on dashboards or if report is stacked
             if (this.type === "heatmap") {
-                return this.environment === "dashboards" ? "right" : "top";
+                return this.environment === DASHBOARDS_ENVIRONMENT ? "right" : "top";
             }
-            return isStacked(insight) || this.environment === "dashboards" ? "right" : "auto";
+            return isStacked(insight) || this.environment === DASHBOARDS_ENVIRONMENT ? "right" : "auto";
         }
 
         return legendPosition;
-    }
-
-    private buildVisualizationConfig(config: any, supportedControls: any): IChartConfig {
-        const colorMapping: IColorMappingItem[] = get(supportedControls, "colorMapping");
-
-        const validColorMapping =
-            colorMapping &&
-            colorMapping
-                .filter(mapping => mapping != null)
-                .map(mapItem => ({
-                    predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
-                    color: mapItem.color,
-                }));
-
-        return {
-            ...config,
-            ...supportedControls,
-            colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
-        };
     }
 }
 
 function isStacked(insight: IInsight): boolean {
     return !bucketsIsEmpty(insightBuckets(insight, BucketNames.STACK, BucketNames.SEGMENT));
+}
+
+function areAllMeasuresOnSingleAxis(insight: IInsight, secondaryYAxis: IAxisConfig): boolean {
+    const measureCount = insightMeasures(insight).length;
+    const numberOfMeasureOnSecondaryAxis = secondaryYAxis ? secondaryYAxis.measures.length : 0;
+    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
+}
+
+function canSortStackTotalValue(insight: IInsight, supportedControls: IVisualizationProperties): boolean {
+    const stackMeasures = get(supportedControls, "stackMeasures", false);
+    const secondaryAxis: IAxisConfig = get(supportedControls, "secondary_yaxis", { measures: [] });
+    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
+
+    return stackMeasures && allMeasuresOnSingleAxis;
 }

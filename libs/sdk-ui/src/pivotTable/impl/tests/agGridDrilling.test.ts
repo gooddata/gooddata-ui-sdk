@@ -3,17 +3,13 @@
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
 import { createIntlMock } from "../../../base/helpers/intlUtils";
-import {
-    assignDrillItemsAndType,
-    getDrillIntersection,
-    getDrillRowData,
-    getMeasureDrillItem,
-} from "../agGridDrilling";
+import { assignDrillItemsAndType, getDrillRowData, getMeasureDrillItem } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";
 import { IDimensionItemDescriptor, IResultMeasureHeader } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
+import { getDrillIntersection } from "../../../base/helpers/drilling";
 
 const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();
@@ -130,71 +126,83 @@ describe("getDrillIntersection", () => {
 
     it("should return intersection of row attribute and row attribute value for row header cell", async () => {
         const rowColDef = columnDefs[0]; // row header
-        const drillItems = [...rowColDef.drillItems, rowData[0].headerItemMap[rowColDef.field]];
-        const intersection = getDrillIntersection(drillItems, pivotTableWithColumnAndRowAttributes);
+        const drillItems = [rowData[0].headerItemMap[rowColDef.field], ...rowColDef.drillItems];
+        const intersection = getDrillIntersection(drillItems);
         expect(intersection).toEqual([
             {
                 header: {
-                    identifier: "label.restaurantlocation.locationstate",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
+                    attributeHeader: {
+                        formOf: {
+                            identifier: "attr.restaurantlocation.locationstate",
+                            name: "Location State",
+                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210",
+                        },
+                        identifier: "label.restaurantlocation.locationstate",
+                        localIdentifier: "state",
+                        name: "Location State",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
+                    },
+                    attributeHeaderItem: {
+                        name: "Alabama",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109",
+                    },
                 },
-                id: "state",
-                title: "Location State",
-            },
-            {
-                header: {
-                    identifier: "",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340109",
-                },
-                id: "6340109",
-                title: "Alabama",
             },
         ]);
     });
 
     it("should return intersection of all column header attributes and values and a measure for column header cell", async () => {
         const colDef = getTreeLeaves(columnDefs)[3]; // column leaf header
-        const intersection = getDrillIntersection(colDef.drillItems, pivotTableWithColumnAndRowAttributes);
+        const intersection = getDrillIntersection(colDef.drillItems);
         expect(intersection).toEqual([
             {
                 header: {
-                    identifier: "",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                    attributeHeader: {
+                        formOf: {
+                            identifier: "date.quarter.in.year",
+                            name: "Quarter (Date)",
+                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009",
+                        },
+                        identifier: "date.aam81lMifn6q",
+                        localIdentifier: "year",
+                        name: "default (Date)",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                    },
+                    attributeHeaderItem: {
+                        name: "Q1",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
+                    },
                 },
-                id: "1",
-                title: "Q1",
             },
             {
                 header: {
-                    identifier: "date.aam81lMifn6q",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2011",
+                    attributeHeader: {
+                        formOf: {
+                            identifier: "date.month.in.year",
+                            name: "Month (Date)",
+                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071",
+                        },
+                        identifier: "date.abm81lMifn6q",
+                        localIdentifier: "month",
+                        name: "Short (Jan) (Date)",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
+                    },
+                    attributeHeaderItem: {
+                        name: "Jan",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                    },
                 },
-                id: "year",
-                title: "Quarter (Date)",
             },
             {
                 header: {
-                    identifier: "",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
+                    measureHeaderItem: {
+                        format: "[red][>=0]$#,##0;[<0]-$#,##0",
+                        identifier: "aabHeqImaK0d",
+                        localIdentifier: "franchiseFeesAdRoyaltyIdentifier",
+                        name: "$ Franchise Fees (Ad Royalty)",
+                        uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
+                    },
                 },
-                id: "1",
-                title: "Jan",
-            },
-            {
-                header: {
-                    identifier: "date.abm81lMifn6q",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2073",
-                },
-                id: "month",
-                title: "Month (Date)",
-            },
-            {
-                header: {
-                    identifier: "aabHeqImaK0d",
-                    uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6694",
-                },
-                id: "franchiseFeesAdRoyaltyIdentifier",
-                title: "$ Franchise Fees (Ad Royalty)",
             },
         ]);
     });
@@ -210,11 +218,16 @@ describe("getDrillIntersection", () => {
                 },
             },
         ];
-        const intersection = getDrillIntersection(drillItems, pivotTableWithColumnAndRowAttributes);
+        const intersection = getDrillIntersection(drillItems);
         expect(intersection).toEqual([
             {
-                id: "am1",
-                title: "Arithmetic measure",
+                header: {
+                    measureHeaderItem: {
+                        format: "",
+                        localIdentifier: "am1",
+                        name: "Arithmetic measure",
+                    },
+                },
             },
         ]);
     });

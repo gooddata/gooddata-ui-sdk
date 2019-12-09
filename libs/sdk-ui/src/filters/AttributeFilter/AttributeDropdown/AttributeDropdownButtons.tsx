@@ -20,7 +20,7 @@ const AttributeDropdownButtonsWrapped: React.FC<IAttributeDropdownButtonsProps &
     return (
         <div className="gd-attribute-filter-actions">
             <Button
-                className="gd-button-secondary gd-button-small cancel-button"
+                className="gd-button-secondary gd-button-small cancel-button s-cancel"
                 onClick={onCloseButtonClicked}
                 value={cancelText}
                 title={cancelText}

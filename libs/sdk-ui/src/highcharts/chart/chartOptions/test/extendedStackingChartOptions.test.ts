@@ -217,24 +217,52 @@ describe("getDrillableSeriesWithParentAttribute", () => {
     );
     const drillIntersectionItems = [
         {
-            id: "c2fa878519934f39aefe9325638f2beb",
-            title: "_Close [BOP]",
-            header: { uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9211", identifier: "aaeb7jTCfexV" },
-        },
-        {
-            id: "1225",
-            title: "East Coast",
             header: {
-                uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1024",
-                identifier: "label.owner.region",
+                measureHeaderItem: {
+                    format: "#,##0.00",
+                    identifier: "aaeb7jTCfexV",
+                    localIdentifier: "c2fa878519934f39aefe9325638f2beb",
+                    name: "_Close [BOP]",
+                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9211",
+                },
             },
         },
         {
-            id: "1226",
-            title: "Direct Sales",
             header: {
-                uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1027",
-                identifier: "label.owner.department",
+                attributeHeader: {
+                    formOf: {
+                        identifier: "attr.owner.region",
+                        name: "Region",
+                        uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023",
+                    },
+                    identifier: "label.owner.region",
+                    localIdentifier: "6af145960f4145efbe4ace7504b0f1de",
+                    name: "Region",
+                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1024",
+                },
+                attributeHeaderItem: {
+                    name: "East Coast",
+                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1225",
+                },
+            },
+        },
+        {
+            header: {
+                attributeHeader: {
+                    formOf: {
+                        identifier: "attr.owner.department",
+                        name: "Department",
+                        uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026",
+                    },
+                    identifier: "label.owner.department",
+                    localIdentifier: "0e3388d37e444c369731afe398740572",
+                    name: "Department",
+                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1027",
+                },
+                attributeHeaderItem: {
+                    name: "Direct Sales",
+                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1226",
+                },
             },
         },
     ];

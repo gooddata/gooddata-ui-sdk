@@ -4,7 +4,7 @@ import * as uuid from "uuid";
 import last = require("lodash/last");
 import noop = require("lodash/noop");
 
-import { IAnalyticalBackend, IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IFilter,
@@ -86,6 +86,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
     private colorPalette: IColorPalette | undefined;
+    private settings: IWorkspaceSettings | undefined;
 
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
@@ -191,6 +192,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             locale: this.props.visualizationProps ? this.props.visualizationProps.locale : undefined,
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
+            featureFlags: this.settings,
         });
     };
 
@@ -212,6 +214,14 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
     private getColorPaletteFromProject = () => {
         return this.getRemoteResource<IColorPalette>(workspace => workspace.styling().colorPalette());
+    };
+
+    private getWorkspaceSettings = () => {
+        return this.getRemoteResource<IWorkspaceSettings>(workspace => workspace.settings().query());
+    };
+
+    private updateWorkspaceSettings = async () => {
+        this.settings = await this.getWorkspaceSettings();
     };
 
     private updateColorPalette = async () => {
@@ -237,6 +247,8 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     private componentDidMountInner = async () => {
         await this.setupVisualization();
         await this.updateColorPalette();
+        await this.updateWorkspaceSettings();
+
         return this.updateVisualization();
     };
 

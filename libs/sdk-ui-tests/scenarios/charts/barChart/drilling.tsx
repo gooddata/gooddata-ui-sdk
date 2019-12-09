@@ -22,6 +22,13 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         ...BarChartWithTwoMeasuresAndTwoViewBy,
         drillableItems: [AttributeElements.Product.Explorer],
     })
+    .addScenario("force disable drill on axes", {
+        ...BarChartWithTwoMeasuresAndTwoViewBy,
+        drillableItems: [AttributeElements.Product.Explorer],
+        config: {
+            forceDisableDrillOnAxes: true,
+        },
+    })
     .addScenario("single measure and two viewBy with drilling on child attribute", {
         ...BarChartWithTwoMeasuresAndTwoViewBy,
         drillableItems: [AttributeElements.Region.EastCoast],

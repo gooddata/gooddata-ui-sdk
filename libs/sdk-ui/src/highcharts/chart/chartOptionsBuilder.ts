@@ -5,11 +5,10 @@ import {
     DataViewFacade,
     IAttributeDescriptor,
     IDataView,
-    IMeasureGroupDescriptor,
     IMeasureDescriptor,
+    IMeasureGroupDescriptor,
     IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
-import { isMeasureDefinition } from "@gooddata/sdk-model";
 import * as cx from "classnames";
 import * as invariant from "invariant";
 
@@ -20,32 +19,42 @@ import {
     TERTIARY_MEASURES,
     VIEW,
 } from "../../base/constants/bucketNames";
+import {
+    PARENT_ATTRIBUTE_INDEX,
+    PRIMARY_ATTRIBUTE_INDEX,
+    STACK_BY_DIMENSION_INDEX,
+    VIEW_BY_DIMENSION_INDEX,
+} from "../../base/constants/dimensions";
+import {
+    HEATMAP_DATA_POINTS_LIMIT,
+    PIE_CHART_LIMIT,
+    VIEW_BY_ATTRIBUTES_LIMIT,
+} from "../../base/constants/limits";
 import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
-import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
+import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/helpers/drilling";
 
 import {
     findAttributeInDimension,
     findMeasureGroupInDimensions,
 } from "../../base/helpers/executionResultHelper";
-import { createDrillIntersectionElement, isSomeHeaderPredicateMatched } from "../../base/helpers/drilling";
+import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
 import { unwrap } from "../../base/helpers/utils";
+import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
+import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 
 import {
     IAxis,
     ICategory,
+    IChartConfig,
     IChartLimits,
     IChartOptions,
-    IChartConfig,
     IPatternObject,
     IPointData,
     ISeriesDataItem,
     ISeriesItem,
     ISeriesItemConfig,
 } from "../Config";
-import { IDrillEventIntersectionElement } from "../../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
@@ -61,6 +70,7 @@ import {
     parseValue,
     stringifyChartTypes,
 } from "../utils/common";
+import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
 import {
     canComboChartBeStackedInPercent,
     getComboChartSeries,
@@ -70,17 +80,6 @@ import {
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
 
 import { ColorFactory, IColorStrategy } from "./colorFactory";
-import {
-    HEATMAP_DATA_POINTS_LIMIT,
-    PIE_CHART_LIMIT,
-    VIEW_BY_ATTRIBUTES_LIMIT,
-} from "../../base/constants/limits";
-import {
-    PARENT_ATTRIBUTE_INDEX,
-    PRIMARY_ATTRIBUTE_INDEX,
-    STACK_BY_DIMENSION_INDEX,
-    VIEW_BY_DIMENSION_INDEX,
-} from "../../base/constants/dimensions";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -92,7 +91,6 @@ import { getChartProperties } from "./highcharts/helpers";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
-import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 import escape = require("lodash/escape");
@@ -106,7 +104,7 @@ import last = require("lodash/last");
 import range = require("lodash/range");
 import unescape = require("lodash/unescape");
 import without = require("lodash/without");
-import { getAttributeElementIdFromAttributeElementUri } from "../../base/helpers/getAttributeElementIdFromAttributeElementUri";
+import omit = require("lodash/omit");
 
 const TOOLTIP_PADDING = 10;
 
@@ -921,48 +919,6 @@ export function isLegacyAttributeHeader(header: ILegacyHeader): header is ILegac
     return (header as ILegacyAttributeHeader).attribute !== undefined;
 }
 
-function mapDrillIntersectionElement(
-    header: ILegacyHeader,
-    dv: DataViewFacade,
-): IDrillEventIntersectionElement {
-    const { name, localIdentifier } = header;
-
-    if (isLegacyAttributeHeader(header)) {
-        const { attribute, uri } = header;
-
-        return createDrillIntersectionElement(
-            getAttributeElementIdFromAttributeElementUri(uri),
-            name,
-            attribute.uri,
-            attribute.identifier,
-        );
-    }
-
-    const masterMeasure = dv.masterMeasureForDerived(localIdentifier);
-    const masterMeasureQualifier: { uri?: string; identifier?: string } = isMeasureDefinition(
-        masterMeasure.measure.definition,
-    )
-        ? masterMeasure.measure.definition.measureDefinition.item
-        : {};
-    const uri = masterMeasureQualifier.uri ? masterMeasureQualifier.uri : header.uri;
-    const identifier = masterMeasureQualifier.identifier
-        ? masterMeasureQualifier.identifier
-        : header.identifier;
-
-    return createDrillIntersectionElement(localIdentifier, name, uri, identifier);
-}
-
-export function getDrillIntersection(
-    stackByItem: any,
-    viewByItems: any[],
-    measures: any[],
-    dv: DataViewFacade,
-): IDrillEventIntersectionElement[] {
-    const headers = without([...measures, ...viewByItems, stackByItem], null);
-
-    return headers.map(header => mapDrillIntersectionElement(header, dv));
-}
-
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
     let viewByHeader: IResultAttributeHeader = null;
     let viewByItem = null;
@@ -974,7 +930,7 @@ function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByI
             ...unwrap(viewByHeader),
             attribute: viewByAttribute,
         };
-        viewByAttributeDescriptor = { attributeHeader: viewByAttribute };
+        viewByAttributeDescriptor = { attributeHeader: omit(viewByAttribute, "items") };
     }
 
     return {
@@ -996,7 +952,7 @@ function getStackBy(stackByAttribute: IUnwrappedAttributeHeadersWithItems, stack
             ...unwrap(stackByHeader),
             attribute: stackByAttribute,
         };
-        stackByAttributeDescriptor = { attributeHeader: stackByAttribute };
+        stackByAttributeDescriptor = { attributeHeader: omit(stackByAttribute, "items") };
     }
 
     return {
@@ -1059,19 +1015,17 @@ export function getDrillableSeries(
                     stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
                 }
 
-                const { stackByHeader, stackByItem, stackByAttributeDescriptor } = getStackBy(
+                const { stackByHeader, stackByAttributeDescriptor } = getStackBy(
                     stackByAttribute,
                     stackByIndex,
                 );
 
                 const {
-                    viewByItem: viewByChildItem,
                     viewByHeader: viewByChildHeader,
                     viewByAttributeDescriptor: viewByChildAttributeDescriptor,
                 } = getViewBy(viewByChildAttribute, viewByIndex);
 
                 const {
-                    viewByItem: viewByParentItem,
                     viewByHeader: viewByParentHeader,
                     viewByAttributeDescriptor: viewByParentdAttributeDescriptor,
                 } = getViewBy(viewByParentAttribute, viewByIndex);
@@ -1104,14 +1058,17 @@ export function getDrillableSeries(
                 };
 
                 if (drilldown) {
-                    const measures = measureHeaders.map(unwrap);
-
-                    drillableProps.drillIntersection = getDrillIntersection(
-                        stackByItem,
-                        [viewByChildItem, viewByParentItem],
-                        measures,
-                        dv,
-                    );
+                    const headers: IMappingHeader[] = [
+                        ...measureHeaders,
+                        viewByChildHeader,
+                        viewByChildAttributeDescriptor,
+                        viewByParentHeader,
+                        viewByParentdAttributeDescriptor,
+                        stackByHeader,
+                        stackByAttributeDescriptor,
+                    ];
+                    const sanitizedHeaders = without([...headers], null);
+                    drillableProps.drillIntersection = getDrillIntersection(sanitizedHeaders);
                     isSeriesDrillable = true;
                 }
                 return {
@@ -1727,6 +1684,7 @@ export function getChartOptions(
             secondary_yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1761,6 +1719,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1794,6 +1753,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1841,6 +1801,7 @@ export function getChartOptions(
             yAxisProps,
             colorAssignments,
             colorPalette,
+            forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
         };
     }
 
@@ -1880,6 +1841,7 @@ export function getChartOptions(
         colorAssignments,
         colorPalette,
         isViewByTwoAttributes,
+        forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
     };
 
     return chartOptions;

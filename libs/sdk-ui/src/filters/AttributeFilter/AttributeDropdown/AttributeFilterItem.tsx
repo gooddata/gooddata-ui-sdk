@@ -32,7 +32,9 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
             return this.renderLoadingItem();
         }
 
-        const classes = classNames("gd-list-item", "s-attribute-filter-list-item");
+        const classes = classNames("gd-list-item", "s-attribute-filter-list-item", {
+            "s-attribute-filter-list-item-selected": item.selected,
+        });
         return (
             <div className={classes} onClick={this.handleSelect}>
                 <input

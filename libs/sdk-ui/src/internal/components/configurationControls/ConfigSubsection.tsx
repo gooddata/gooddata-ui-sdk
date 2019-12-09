@@ -42,9 +42,10 @@ class ConfigSubsection extends React.Component<
 
     public render() {
         const { title, intl } = this.props;
+        const className = `configuration-subsection ${this.getTestClassName()}`;
 
         return (
-            <div className="configuration-subsection s-configuration-subsection">
+            <div className={className}>
                 <fieldset>
                     <legend>
                         <span className="legend-title">{getTranslation(title, intl)}</span>
@@ -90,6 +91,10 @@ class ConfigSubsection extends React.Component<
 
             pushData({ properties: newProperties });
         }
+    }
+
+    private getTestClassName(): string {
+        return `s-configuration-subsection-${this.props.title.replace(/\./g, "-")}`;
     }
 }
 

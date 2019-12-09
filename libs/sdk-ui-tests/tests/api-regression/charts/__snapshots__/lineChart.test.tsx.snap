@@ -1339,6 +1339,552 @@ Object {
 }
 `;
 
+exports[`LineChart with  - high should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - high should create expected execution definition 2`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - high should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - high should create expected props for core chart 2`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_acugFHNJgsBy",
+      ],
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "high",
+        "visible": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - invisible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - invisible should create expected execution definition 2`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - invisible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - invisible should create expected props for core chart 2`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_acugFHNJgsBy",
+      ],
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": false,
+      },
+    },
+  },
+}
+`;
+
 exports[`LineChart with  - legend at bottom should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -1790,6 +2336,552 @@ Object {
   "config": Object {
     "legend": Object {
       "position": "top",
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - low should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - low should create expected execution definition 2`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - low should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - low should create expected props for core chart 2`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_acugFHNJgsBy",
+      ],
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "low",
+        "visible": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - middle should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - middle should create expected execution definition 2`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`LineChart with  - middle should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`LineChart with  - middle should create expected props for core chart 2`] = `
+Object {
+  "config": Object {
+    "secondary_xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_acugFHNJgsBy",
+      ],
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "xaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
+    },
+    "yaxis": Object {
+      "name": Object {
+        "position": "middle",
+        "visible": true,
+      },
     },
   },
 }

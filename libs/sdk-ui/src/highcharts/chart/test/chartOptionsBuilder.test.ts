@@ -14,7 +14,6 @@ import {
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
     getDrillableSeries,
-    getDrillIntersection,
     getHeatmapDataClasses,
     getHeatmapSeries,
     getSeries,
@@ -1572,82 +1571,6 @@ describe("chartOptionsBuilder", () => {
         });
     });
 
-    describe("getDrillIntersection", () => {
-        it("should return correct intersection for bar chart with stack by and view by attributes", () => {
-            const dv = fixtures.barChartWithStackByAndViewByAttributes;
-            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
-            /*
-            "measureHeaderItem": {
-                "name": "Amount",
-                "format": "#,##0.00",
-                "localIdentifier": "amountMetric",
-                "uri": "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
-                "identifier": "ah1EuQxwaCqs"
-            }
-            */
-            const measures = [measureGroup.items[0].measureHeaderItem];
-
-            const viewByItem = {
-                ...viewByAttribute.items[0].attributeHeaderItem,
-                attribute: viewByAttribute,
-            };
-
-            const stackByItem = {
-                ...stackByAttribute.items[0].attributeHeaderItem,
-                attribute: stackByAttribute,
-            };
-
-            const drillIntersection = getDrillIntersection(stackByItem, [viewByItem], measures, dv);
-            expect(drillIntersection).toEqual([
-                {
-                    id: "amountMetric",
-                    title: "Amount",
-                    header: {
-                        identifier: "ah1EuQxwaCqs",
-                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
-                    },
-                },
-                {
-                    id: "1226",
-                    title: "Direct Sales",
-                    header: {
-                        identifier: "label.owner.department",
-                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1027",
-                    },
-                },
-                {
-                    id: "1225",
-                    title: "East Coast",
-                    header: {
-                        identifier: "label.owner.region",
-                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024",
-                    },
-                },
-            ]);
-        });
-
-        it("should return correct intersection for pie chart measures only", () => {
-            const dv = fixtures.pieChartWithMetricsOnly;
-            const { measureGroup } = getMVS(dv);
-            const measures = [measureGroup.items[0].measureHeaderItem];
-
-            const viewByItem: any = null;
-            const stackByItem: any = null;
-
-            const drillIntersection = getDrillIntersection(stackByItem, [viewByItem], measures, dv);
-            expect(drillIntersection).toEqual([
-                {
-                    id: "lostMetric",
-                    title: "Lost",
-                    header: {
-                        identifier: "af2Ewj9Re2vK",
-                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                    },
-                },
-            ]);
-        });
-    });
-
     describe("getDrillableSeries", () => {
         describe("in usecase of scatter plot with 2 measures and attribute", () => {
             const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
@@ -1689,27 +1612,44 @@ describe("chartOptionsBuilder", () => {
                 ).toEqual([
                     [
                         {
-                            id: "lostMetric",
-                            title: "<button>Lost</button> ...",
                             header: {
-                                identifier: "af2Ewj9Re2vK",
-                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                measureHeaderItem: {
+                                    format: "#,##0.00",
+                                    identifier: "af2Ewj9Re2vK",
+                                    localIdentifier: "lostMetric",
+                                    name: "<button>Lost</button> ...",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                },
                             },
                         },
                         {
-                            id: "wonMetric",
-                            title: "Won",
                             header: {
-                                identifier: "afSEwRwdbMeQ",
-                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                                measureHeaderItem: {
+                                    format: "#,##0.00",
+                                    identifier: "afSEwRwdbMeQ",
+                                    localIdentifier: "wonMetric",
+                                    name: "Won",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                                },
                             },
                         },
                         {
-                            id: "2008",
-                            title: "<button>2008</button>",
                             header: {
-                                identifier: "created.aag81lMifn6q",
-                                uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                attributeHeader: {
+                                    formOf: {
+                                        identifier: "created",
+                                        name: "Year created",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+                                    },
+                                    identifier: "created.aag81lMifn6q",
+                                    localIdentifier: "yearCreatedAttribute",
+                                    name: "Year (Created)",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                },
+                                attributeHeaderItem: {
+                                    name: "<button>2008</button>",
+                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+                                },
                             },
                         },
                     ],
@@ -1793,35 +1733,55 @@ describe("chartOptionsBuilder", () => {
                     drilldown: true,
                     drillIntersection: [
                         {
-                            id: "784a5018a51049078e8f7e86247e08a3",
-                            title: "_Snapshot [EOP-2]",
                             header: {
-                                identifier: "ab0bydLaaisS",
-                                uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+                                measureHeaderItem: {
+                                    format: "#,##0.00",
+                                    identifier: "ab0bydLaaisS",
+                                    localIdentifier: "784a5018a51049078e8f7e86247e08a3",
+                                    name: "_Snapshot [EOP-2]",
+                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/67097",
+                                },
                             },
                         },
                         {
-                            id: "9e5c3cd9a93f4476a93d3494cedc6010",
-                            title: "# of Open Opps.",
                             header: {
-                                identifier: "aaYh6Voua2yj",
-                                uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+                                measureHeaderItem: {
+                                    format: "#,##0",
+                                    identifier: "aaYh6Voua2yj",
+                                    localIdentifier: "9e5c3cd9a93f4476a93d3494cedc6010",
+                                    name: "# of Open Opps.",
+                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/13465",
+                                },
                             },
                         },
                         {
-                            id: "71d50cf1d13746099b7f506576d78e4a",
-                            title: "Remaining Quota",
                             header: {
-                                identifier: "ab4EFOAmhjOx",
-                                uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+                                measureHeaderItem: {
+                                    format: "$#,#00.00",
+                                    identifier: "ab4EFOAmhjOx",
+                                    localIdentifier: "71d50cf1d13746099b7f506576d78e4a",
+                                    name: "Remaining Quota",
+                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1543",
+                                },
                             },
                         },
                         {
-                            id: "1235",
-                            title: "Jessica Traven",
                             header: {
-                                identifier: "label.owner.id.name",
-                                uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+                                attributeHeader: {
+                                    formOf: {
+                                        identifier: "attr.owner.id",
+                                        name: "Sales Rep",
+                                        uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025",
+                                    },
+                                    identifier: "label.owner.id.name",
+                                    localIdentifier: "49a659fbd7c541a69284769d53a2be7f",
+                                    name: "Owner Name",
+                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1028",
+                                },
+                                attributeHeaderItem: {
+                                    name: "Jessica Traven",
+                                    uri: "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1235",
+                                },
                             },
                         },
                     ],
@@ -2086,38 +2046,68 @@ describe("chartOptionsBuilder", () => {
                     ).toEqual([
                         [
                             {
-                                id: "lostMetric",
-                                title: "<button>Lost</button> ...",
                                 header: {
-                                    identifier: "af2Ewj9Re2vK",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    measureHeaderItem: {
+                                        format: "#,##0.00",
+                                        identifier: "af2Ewj9Re2vK",
+                                        localIdentifier: "lostMetric",
+                                        name: "<button>Lost</button> ...",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                                    },
                                 },
                             },
                             {
-                                id: "2008",
-                                title: "<button>2008</button>",
                                 header: {
-                                    identifier: "created.aag81lMifn6q",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                    attributeHeader: {
+                                        formOf: {
+                                            identifier: "created",
+                                            name: "Year created",
+                                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+                                        },
+                                        identifier: "created.aag81lMifn6q",
+                                        localIdentifier: "yearCreatedAttribute",
+                                        name: "Year (Created)",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                    },
+                                    attributeHeaderItem: {
+                                        name: "<button>2008</button>",
+                                        uri:
+                                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+                                    },
                                 },
                             },
                         ],
                         undefined,
                         [
                             {
-                                id: "expectedMetric",
-                                title: "Expected",
                                 header: {
-                                    identifier: "alUEwmBtbwSh",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+                                    measureHeaderItem: {
+                                        format: "#,##0.00",
+                                        identifier: "alUEwmBtbwSh",
+                                        localIdentifier: "expectedMetric",
+                                        name: "Expected",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
+                                    },
                                 },
                             },
                             {
-                                id: "2008",
-                                title: "<button>2008</button>",
                                 header: {
-                                    identifier: "created.aag81lMifn6q",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                    attributeHeader: {
+                                        formOf: {
+                                            identifier: "created",
+                                            name: "Year created",
+                                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/157",
+                                        },
+                                        identifier: "created.aag81lMifn6q",
+                                        localIdentifier: "yearCreatedAttribute",
+                                        name: "Year (Created)",
+                                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158",
+                                    },
+                                    attributeHeaderItem: {
+                                        name: "<button>2008</button>",
+                                        uri:
+                                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/158/elements?id=2008",
+                                    },
                                 },
                             },
                         ],

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
@@ -11,11 +11,14 @@ export const DRILL_EVENT_DATA_BY_MEASURE_URI = {
         intersection: [
             {
                 header: {
-                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                    identifier: "",
+                    measureHeaderItem: {
+                        format: "#,##0.00",
+                        identifier: "af2Ewj9Re2vK",
+                        localIdentifier: "lostMetric",
+                        name: "Lost",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                    },
                 },
-                id: "lostMetric",
-                title: "Lost",
             },
         ],
         type: "headline",
@@ -30,11 +33,14 @@ export const DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER = {
         intersection: [
             {
                 header: {
-                    identifier: "af2Ewj9Re2vK",
-                    uri: "",
+                    measureHeaderItem: {
+                        format: "#,##0.00",
+                        identifier: "af2Ewj9Re2vK",
+                        localIdentifier: "lostMetric",
+                        name: "Lost",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                    },
                 },
-                id: "lostMetric",
-                title: "Lost",
             },
         ],
         type: "headline",
@@ -49,11 +55,14 @@ export const DRILL_EVENT_DATA_FOR_SECONDARY_ITEM = {
         intersection: [
             {
                 header: {
-                    identifier: "afSEwRwdbMeQ",
-                    uri: "",
+                    measureHeaderItem: {
+                        format: "#,##0.00",
+                        identifier: "afSEwRwdbMeQ",
+                        localIdentifier: "wonMetric",
+                        name: "Won",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                    },
                 },
-                id: "wonMetric",
-                title: "Won",
             },
         ],
         type: "headline",
