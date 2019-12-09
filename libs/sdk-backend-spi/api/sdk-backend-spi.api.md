@@ -595,7 +595,8 @@ export class ProtectedDataError extends AnalyticalBackendError {
 
 // @public
 export enum SettingCatalog {
-    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline"
+    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
+    enableAxisNameConfiguration = "enableAxisNameConfiguration"
 }
 
 // @public
