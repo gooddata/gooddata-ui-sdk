@@ -74,7 +74,7 @@ export class ReportModule {
         const { afm } = exportConfig;
 
         if (afm && !isEmpty(afm.filters)) {
-            const sanitizedAfm: ExecuteAFM.IAfm = {
+            const sanitizedAfm: GdcExecuteAFM.IAfm = {
                 ...afm,
                 filters: this.sanitizeFilters(afm.filters),
             };
@@ -107,19 +107,6 @@ export class ReportModule {
     private sanitizeFilters(
         filters?: GdcExecuteAFM.CompatibilityFilter[],
     ): GdcExecuteAFM.CompatibilityFilter[] {
-        return filters ? compact(filters.map(this.sanitizeFilter)) : [];
-    }
-
-    private sanitizeFilter(
-        filter: GdcExecuteAFM.CompatibilityFilter,
-    ): GdcExecuteAFM.CompatibilityFilter | null {
-        if (GdcExecuteAFM.isAttributeFilter(filter)) {
-            return convertAttributeFilter(filter);
-        } else if (GdcExecuteAFM.isAbsoluteDateFilter(filter)) {
-            return convertAbsoluteDateFilter(filter);
-        } else if (GdcExecuteAFM.isRelativeDateFilter(filter)) {
-            return convertRelativeDateFilter(filter);
-        }
-        return filter;
+        return filters ? compact(filters) : [];
     }
 }

@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { ReportModule } from "../report";
 import { XhrModule, ApiResponseError } from "../../xhr";
 import { IExportConfig, IExportResponse } from "../../interfaces";
@@ -13,7 +12,6 @@ import {
     BAD_REQUEST_MESSAGE,
     ERROR_RESTRICTED_MESSAGE,
 } from "../../constants/errors";
-import { exportedAfm } from "./report.fixtures";
 
 const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
 
@@ -29,35 +27,6 @@ describe("report", () => {
         });
 
         describe("exportResult", () => {
-            it("should sanitize afm filter in export config", () => {
-                fetchMock.mock(projectUri, {
-                    status: SUCCESS_REQUEST_STATUS,
-                    body: { uri: createdReport },
-                });
-
-                const mockTask = (status: number) => ({ status, uri: createdReport });
-                const finishedTask = mockTask(SUCCESS_REQUEST_STATUS);
-                const runningTask = mockTask(ACCEPTED_REQUEST_STATUS);
-                mockPollingRequest(createdReport, runningTask, finishedTask);
-
-                const exportConfig: IExportConfig = {
-                    title: "title",
-                    format: "xlsx",
-                    mergeHeaders: false,
-                    showFilters: true,
-                    afm: exportedAfm,
-                };
-
-                return mockedReportModule()
-                    .exportResult(projectId, executionResult, exportConfig, { pollStep: 1 })
-                    .then(() => {
-                        const [, settings] = fetchMock.lastCall(
-                            `/gdc/internal/projects/${projectId}/exportResult`,
-                        );
-                        expect(JSON.parse(settings.body as string)).toMatchSnapshot();
-                    });
-            });
-
             it("should return created file", () => {
                 fetchMock.mock(projectUri, {
                     status: SUCCESS_REQUEST_STATUS,

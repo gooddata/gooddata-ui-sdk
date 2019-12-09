@@ -6,6 +6,7 @@ import defaults from "lodash/defaults";
 import merge from "lodash/merge";
 import result from "lodash/result";
 import { name as pkgName, version as pkgVersion } from "../package.json";
+import * as qs from "qs";
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
