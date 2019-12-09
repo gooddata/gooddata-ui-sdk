@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { TOP } from "../chart/legend/PositionTypes";
 import { PositionType } from "../Config";
 
@@ -8,6 +8,7 @@ export interface ILegendOptions {
     position: PositionType;
     format: string;
     items: LegendOptionsItemType[];
+    responsive?: boolean;
 }
 
 export type LegendOptionsItemType = IBaseLegendItem | IHeatmapLegendItem;

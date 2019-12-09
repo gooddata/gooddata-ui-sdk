@@ -1259,6 +1259,16 @@ storiesOf("Internal/HighCharts/ChartTransformation", module)
             )}
         </div>
     ))
+    .add("Over height bottom legend", () =>
+        screenshotWrap(
+            <ScreenshotReadyWrapper resolver={createHighChartResolver(1)}>
+                {getChart({
+                    legendPosition: "bottom",
+                    dataSet: fixtures.barChartWith150MetricsAndViewByAttribute,
+                })}
+            </ScreenshotReadyWrapper>,
+        ),
+    )
     .add("Optional stacking chart", () => {
         return screenshotWrap(
             wrap(

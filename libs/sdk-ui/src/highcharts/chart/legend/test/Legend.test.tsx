@@ -33,6 +33,7 @@ describe("Legend", () => {
             legendLayout: "vertical",
             series,
             onItemClick: noop,
+            validateOverHeight: noop,
             position: "top",
             ...userProps,
         };

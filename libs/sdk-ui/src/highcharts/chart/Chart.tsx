@@ -63,6 +63,10 @@ export default class Chart extends React.Component<IChartProps> {
         this.chart.destroy();
     }
 
+    public getHighchartRef(): HTMLElement {
+        return this.chartRef;
+    }
+
     public setChartRef(ref: HTMLElement) {
         this.chartRef = ref;
     }
