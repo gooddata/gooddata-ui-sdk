@@ -1,0 +1,156 @@
+// (C) 2019 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+@import "~@gooddata/goodstrap/lib/Button/styles/variables.scss";
+
+.gd-extended-date-filter {
+    &-body {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        max-height: 600px;
+        overflow: hidden;
+    }
+
+    &-body-mobile {
+        max-height: none;
+
+        .gd-date-filter-form-wrapper {
+            flex: 1 1 auto;
+        }
+
+        .gd-dynamic-select {
+            position: static;
+
+            .gd-select-menu {
+                height: 100%;
+            }
+
+            .List {
+                width: 100% !important;
+            }
+        }
+
+        .gd-dynamic-select-menu {
+            height: calc(100vh - 228px);
+        }
+    }
+
+    &-body-wrapper {
+        // We have additional wrapper so we can set 2 max-heights
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        max-height: 100vh;
+        width: 100%;
+        padding: 10px 0 0;
+
+        @media #{$medium-up} {
+            min-width: 335px;
+        }
+    }
+
+    &-body-mobile &-body-wrapper {
+        flex: 1 1 auto;
+        max-height: none;
+        padding: 0;
+        border-bottom: 1px solid $border-color;
+
+        .gd-list-item:last-child {
+            border-bottom-color: transparent;
+        }
+    }
+
+    &-actions {
+        padding: 10px;
+        border-top: 1px solid $border-color;
+
+        &-buttons {
+            display: flex;
+            flex: 1 1 auto;
+            justify-content: flex-end;
+        }
+
+        &.gd-dialog-footer {
+            padding-bottom: 0;
+        }
+
+        .gd-button {
+            flex: 0 0 auto;
+            text-align: center;
+        }
+    }
+
+    &-body-mobile &-exclude-current,
+    &-body-mobile &-actions {
+        background-color: $gd-color-white;
+    }
+
+    &-body-mobile &-actions {
+        flex: 0 0 auto;
+        padding: 10px;
+        border-top: 0;
+
+        .gd-button {
+            flex: 1;
+        }
+    }
+
+    &-exclude-current {
+        padding: 5px 10px;
+        margin-top: 5px;
+        font-size: 12px;
+
+        .input-checkbox-label {
+            margin-left: -3px;
+        }
+
+        .input-label-text {
+            cursor: pointer;
+        }
+    }
+
+    &-body-mobile &-exclude-current {
+        margin-top: 0;
+        padding: 10px 10px 0;
+    }
+
+    &-edit-mode-message {
+        margin: 0 10px 5px;
+        font-size: 12px;
+        line-height: 16px;
+        color: $gd-color-state-blank;
+
+        &-text {
+            margin-bottom: 10px;
+        }
+    }
+
+    &-body .gd-date-filter-item-mobile {
+        &.gd-list-item {
+            flex: 0 0 auto;
+            border-bottom: 1px solid $border-color;
+        }
+
+        &.gd-filter-list-item {
+            height: 40px;
+        }
+
+        &.gd-list-item-header {
+            height: 24px;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+
+            &,
+            &:hover,
+            &:active {
+                background-color: transparentize($border-color, 0.8);
+            }
+        }
+    }
+
+    &-body-scrollable {
+        min-height: 350px; // This makes sure date-picker and relative-form select is not clipped when not enought presets are visible
+    }
+}

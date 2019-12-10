@@ -4,4 +4,9 @@ const ciBase = require("../../common/config/jest/jest.config.ci.base.js");
 module.exports = {
     ...ciBase,
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+    testEnvironment: "enzyme",
+    testEnvironmentOptions: {
+        enzymeAdapter: "react16",
+    },
+    setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
 };

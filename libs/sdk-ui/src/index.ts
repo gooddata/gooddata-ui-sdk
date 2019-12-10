@@ -9,7 +9,6 @@ import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./base/interfaces/PushData";
-import { AttributeFilter, AttributeElements } from "./filters";
 import { generateDimensions } from "./base/helpers/dimensions";
 import * as BucketNames from "./base/constants/bucketNames";
 import * as MeasureTitleHelper from "./base/helpers/measureTitleHelper";
@@ -28,8 +27,6 @@ import * as MappingHeader from "./base/interfaces/MappingHeader";
 import { InsightView } from "./insightView/InsightView";
 
 export {
-    AttributeElements,
-    AttributeFilter,
     BucketNames,
     CatalogHelper,
     ChartType,
@@ -65,3 +62,4 @@ export * from "./base";
 export * from "./charts";
 export * from "./highcharts";
 export * from "./pivotTable";
+export * from "./filters";

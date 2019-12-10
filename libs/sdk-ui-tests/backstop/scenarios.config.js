@@ -33,12 +33,24 @@ const ScenarioConfig = [
         },
     },
     {
+        /*
+         * Tests for visualization stories - either created automatically for test scenarios or created manually
+         */
         idRegex: /(01|02).*/g,
         config: {
             readySelector:
                 ".screenshot-target, .screenshot-wrapper .highcharts-container, " +
                 ".screenshot-wrapper .s-headline-value, " +
                 ".screenshot-wrapper .s-pivot-table .s-loading-done",
+        },
+    },
+    {
+        /*
+         * Tests for Filtering components
+         */
+        idRegex: /(10).*/g,
+        config: {
+            readySelector: ".screenshot-target",
         },
     },
 ];

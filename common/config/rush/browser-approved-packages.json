@@ -191,8 +191,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/raf",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@types/react-day-picker",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/react-dom",
@@ -208,6 +216,14 @@
     },
     {
       "name": "@types/react-portal",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/react-responsive",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/react-window",
       "allowedCategories": [ "production" ]
     },
     {
@@ -299,6 +315,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "downshift",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "enzyme",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -363,6 +383,14 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "jest-environment-enzyme",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jest-enzyme",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "jest-junit",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -392,6 +420,10 @@
     },
     {
       "name": "md5",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "moment",
       "allowedCategories": [ "production" ]
     },
     {
@@ -443,6 +475,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "react-day-picker",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-dom",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -459,8 +495,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-responsive",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-scripts",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-window",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "require-context.macro",
