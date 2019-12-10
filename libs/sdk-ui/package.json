@@ -32,7 +32,7 @@
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
-        "@gooddata/goodstrap": "^64.6.1",
+        "@gooddata/goodstrap": "^65.0.0",
         "@gooddata/js-utils": "^3.4.0",
         "@gooddata/numberjs": "^3.2.3",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",

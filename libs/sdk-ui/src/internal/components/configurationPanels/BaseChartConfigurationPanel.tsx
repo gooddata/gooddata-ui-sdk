@@ -116,11 +116,12 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
     }
 
     protected getBaseChartAxisSection(axes: IAxisProperties[]) {
-        const { type, properties, propertiesMeta, pushData, insight } = this.props;
+        const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
         const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
+        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);
@@ -141,13 +142,15 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
                     properties={properties}
                     pushData={pushData}
                 >
-                    <NameSubsection
-                        disabled={disabled || hasMoreThanOneItem}
-                        configPanelDisabled={controlsDisabled}
-                        axis={axis.name}
-                        properties={properties}
-                        pushData={pushData}
-                    />
+                    {isNameSubsectionVisible && (
+                        <NameSubsection
+                            disabled={disabled || hasMoreThanOneItem}
+                            configPanelDisabled={controlsDisabled}
+                            axis={axis.name}
+                            properties={properties}
+                            pushData={pushData}
+                        />
+                    )}
                     <LabelSubsection
                         disabled={disabled}
                         configPanelDisabled={controlsDisabled}

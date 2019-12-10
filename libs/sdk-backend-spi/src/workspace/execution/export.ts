@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import { IFilter } from "@gooddata/sdk-model";
 
 /**
  * Configuration for exports of results into XLSX or CSV.
@@ -29,7 +28,7 @@ export interface IExportConfig {
      * person looking at the XLSX file. They serve no other purpose and are merely serialized
      * into the XLSX in a human readable form.
      */
-    showFilters?: IFilter[];
+    showFilters?: boolean;
 }
 
 /**

@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import { GdcExecution } from "@gooddata/gd-bear-model";
+import { IExportConfig as GdcExportConfig } from "@gooddata/gd-bear-client";
 import {
     DataValue,
     IDataView,
@@ -18,6 +19,7 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { convertExecutionApiError } from "./errorHandling";
+import { toAfmExecution } from "./toAfm/toAfmResultSpec";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -64,6 +66,17 @@ export class BearExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
+        const optionsForBackend: GdcExportConfig = {
+            format: options.format,
+            mergeHeaders: options.mergeHeaders,
+            title: options.title,
+            showFilters: options.showFilters,
+        };
+
+        if (options.showFilters) {
+            optionsForBackend.afm = toAfmExecution(this.definition).execution.afm;
+        }
+
         return this.authApiCall(sdk =>
             sdk.report.exportResult(
                 this.definition.workspace,

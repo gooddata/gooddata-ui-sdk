@@ -286,7 +286,8 @@ export interface IBaseExportConfig {
 }
 
 export interface IExportConfig extends IBaseExportConfig {
-    showFilters?: GdcExecuteAFM.CompatibilityFilter[];
+    showFilters?: boolean;
+    afm?: GdcExecuteAFM.IAfm;
 }
 
 export interface IExportResponse {

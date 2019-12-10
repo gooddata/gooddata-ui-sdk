@@ -1,5 +1,4 @@
 // (C) 2007-2019 GoodData Corporation
-import qs from "qs";
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -7,6 +6,7 @@ import defaults from "lodash/defaults";
 import merge from "lodash/merge";
 import result from "lodash/result";
 import { name as pkgName, version as pkgVersion } from "../package.json";
+import * as qs from "qs";
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -26,7 +26,7 @@ const REST_API_VERSION_HEADER = "X-GDC-VERSION";
 const REST_API_DEPRECATED_VERSION_HEADER = "X-GDC-DEPRECATED";
 
 // The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
-const LATEST_REST_API_VERSION = 3;
+const LATEST_REST_API_VERSION = 4;
 
 /**
  * Gooddata-js package signature

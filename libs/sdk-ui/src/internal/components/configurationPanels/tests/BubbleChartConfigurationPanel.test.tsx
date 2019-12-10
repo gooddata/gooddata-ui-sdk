@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import { IInsight, newMeasure } from "@gooddata/sdk-model";
-import * as React from "react";
 import { shallow } from "enzyme";
+import * as React from "react";
 import { VisualizationTypes } from "../../../..";
-import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
-import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
-import ConfigSection from "../../configurationControls/ConfigSection";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../mocks/testMocks";
+import NameSubsection from "../../configurationControls/axis/NameSubsection";
+import ConfigSection from "../../configurationControls/ConfigSection";
+import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
+import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 
 describe("BubbleChartconfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
@@ -94,6 +94,9 @@ describe("BubbleChartconfigurationPanel", () => {
             isLoading: false,
             locale: DEFAULT_LOCALE,
             type: VisualizationTypes.BUBBLE,
+            featureFlags: {
+                enableAxisNameConfiguration: true,
+            },
         };
 
         it("should render configuration panel with enabled name sections", () => {
@@ -251,5 +254,18 @@ describe("BubbleChartconfigurationPanel", () => {
                 expect(yAxisSection.props().disabled).toEqual(expectedYAxisSectionDisabled);
             },
         );
+
+        it("should not render name sections in configuration panel", () => {
+            const wrapper = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableAxisNameConfiguration: false,
+                },
+                insight: insightWithSingleAttribute,
+            });
+
+            const axisSections = wrapper.find(NameSubsection);
+            expect(axisSections.exists()).toEqual(false);
+        });
     });
 });

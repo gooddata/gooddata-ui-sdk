@@ -6,7 +6,6 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
-    IFeatureFlags,
     IGdcConfig,
     IReferencePoint,
     IReferences,
@@ -73,7 +72,7 @@ import {
     insightMeasures,
     insightProperties,
 } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
 import { ILocale } from "../../../../base/interfaces/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -90,7 +89,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected callbacks: IVisCallbacks;
     protected type: ChartType;
     protected intl: InjectedIntl;
-    protected featureFlags: IFeatureFlags;
+    protected featureFlags: ISettings;
     protected isError: boolean;
     protected isLoading: boolean;
     protected options: IVisProps;
@@ -467,7 +466,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             set(supportedControls, "legend.responsive", true);
         }
 
-        supportedControls = getHighchartsAxisNameConfiguration(supportedControls);
+        supportedControls = getHighchartsAxisNameConfiguration(supportedControls, this.featureFlags[
+            SettingCatalog.enableAxisNameConfiguration
+        ] as boolean);
 
         return {
             ...defaultControls,

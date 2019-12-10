@@ -27,12 +27,13 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel() {
         const { xAxisVisible, yAxisVisible, gridEnabled } = this.getControlProperties();
 
-        const { propertiesMeta, properties, pushData, type, insight } = this.props;
+        const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
         const controls = properties && properties.controls;
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
+        const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -49,13 +50,15 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        <NameSubsection
-                            disabled={xAxisNameSectionDisabled}
-                            configPanelDisabled={controlsDisabled}
-                            axis={"xaxis"}
-                            properties={properties}
-                            pushData={pushData}
-                        />
+                        {isNameSubsectionVisible && (
+                            <NameSubsection
+                                disabled={xAxisNameSectionDisabled}
+                                configPanelDisabled={controlsDisabled}
+                                axis={"xaxis"}
+                                properties={properties}
+                                pushData={pushData}
+                            />
+                        )}
 
                         <LabelSubsection
                             disabled={controlsDisabled}
@@ -77,13 +80,15 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        <NameSubsection
-                            disabled={yAxisNameSectionDisabled}
-                            configPanelDisabled={controlsDisabled}
-                            axis={"yaxis"}
-                            properties={properties}
-                            pushData={pushData}
-                        />
+                        {isNameSubsectionVisible && (
+                            <NameSubsection
+                                disabled={yAxisNameSectionDisabled}
+                                configPanelDisabled={controlsDisabled}
+                                axis={"yaxis"}
+                                properties={properties}
+                                pushData={pushData}
+                            />
+                        )}
 
                         <LabelSubsection
                             disabled={controlsDisabled}

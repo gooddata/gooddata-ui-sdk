@@ -2,6 +2,7 @@
 import { IAttribute, IInsight, IMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
+import { insightWithSingleAttribute } from "../../../mocks/testMocks";
 import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
@@ -59,6 +60,9 @@ describe("BaseChartConfigurationPanel", () => {
             isLoading: false,
             locale: DEFAULT_LOCALE,
             type: VisualizationTypes.COLUMN,
+            featureFlags: {
+                enableAxisNameConfiguration: true,
+            },
         };
 
         it("should render configuration panel with enabled name sections in single axis chart", () => {
@@ -214,6 +218,19 @@ describe("BaseChartConfigurationPanel", () => {
 
             const yAxisSection = axisSections.at(1);
             expect(yAxisSection.props().disabled).toEqual(true); // because of 2 measures on Y axis
+        });
+
+        it("should not render name sections in configuration panel", () => {
+            const wrapper = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableAxisNameConfiguration: false,
+                },
+                insight: insightWithSingleAttribute,
+            });
+
+            const axisSections = wrapper.find(NameSubsection);
+            expect(axisSections.exists()).toEqual(false);
         });
     });
 });

@@ -298,7 +298,7 @@ export interface IExecutionResult {
 export interface IExportConfig {
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
-    showFilters?: IFilter[];
+    showFilters?: boolean;
     title?: string;
 }
 
@@ -595,7 +595,8 @@ export class ProtectedDataError extends AnalyticalBackendError {
 
 // @public
 export enum SettingCatalog {
-    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline"
+    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
+    enableAxisNameConfiguration = "enableAxisNameConfiguration"
 }
 
 // @public

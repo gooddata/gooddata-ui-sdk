@@ -35,6 +35,11 @@ export enum SettingCatalog {
      * Headline component will not be underlined when it is set up with drilling.
      */
     disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
+
+    /**
+     * Allows configuration of axis name position and visibility for Pluggable Visualizations.
+     */
+    enableAxisNameConfiguration = "enableAxisNameConfiguration",
 }
 
 /**

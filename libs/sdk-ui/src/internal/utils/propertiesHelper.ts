@@ -181,6 +181,7 @@ const AXIS_TYPES: string[] = ["xaxis", "yaxis", "secondary_xaxis", "secondary_ya
 
 export function getHighchartsAxisNameConfiguration(
     controlProperties: IVisualizationProperties,
+    enableAxisNameConfiguration: boolean = false,
 ): IVisualizationProperties {
     const axisProperties: IVisualizationProperties = AXIS_TYPES.reduce(
         (result: IVisualizationProperties, axis: string) => {
@@ -190,7 +191,10 @@ export function getHighchartsAxisNameConfiguration(
                 return result;
             }
 
-            axisNameConfig.position = AXIS_NAME_POSITION_MAPPING[axisNameConfig.position];
+            axisNameConfig.position =
+                AXIS_NAME_POSITION_MAPPING[
+                    enableAxisNameConfiguration ? axisNameConfig.position : AXIS_NAME_POSITION_MAPPING.auto
+                ];
             result[axis] = {
                 ...controlProperties[axis],
                 name: axisNameConfig,

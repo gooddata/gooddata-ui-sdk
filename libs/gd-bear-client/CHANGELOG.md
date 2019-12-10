@@ -8,8 +8,16 @@ The REST API versions in the table are just for your information as the values a
 
 | gooddata-js version | REST API version |
 | :-----------------: | :--------------: |
+|     \>= 12.0.0      |        4         |
 |     \>= 10.0.0      |        3         |
 |      <= 9.0.1       |        2         |
+
+<a name="12.0.0"></a>
+
+## 2019-11-15 Version [11.20.0](https://github.com/gooddata/gooddata-js/compare/v11.19.3...v11.20.0)
+
+-   update REST API version to 4
+-   add AFM to export payload
 
 <a name="11.19.3"></a>
 
@@ -39,7 +47,7 @@ The REST API versions in the table are just for your information as the values a
 
 ## 2019-08-27 Version [11.18.2](https://github.com/gooddata/gooddata-js/compare/v11.18.1...v11.18.2)
 
--   use a version of @gooddata/gd-bear-model that includes the Dashboard types
+-   use a version of @gooddata/typings that includes the Dashboard types
 
 <a name="11.18.1"></a>
 
@@ -106,7 +114,7 @@ The REST API versions in the table are just for your information as the values a
 
 ## 2019-05-15 Version [11.10.0](https://github.com/gooddata/gooddata-js/compare/v11.9.0...v11.10.0)
 
--   relax of @gooddata/gd-bear-model dependency specification (add a ^)
+-   relax of @gooddata/typings dependency specification (add a ^)
 
 <a name="11.9.0"></a>
 
@@ -265,9 +273,9 @@ The REST API versions in the table are just for your information as the values a
 Default SDK instance is no longer returned as the only `module.export` ([see commit](https://github.com/gooddata/gooddata-js/commit/ebcebe#diff-5fdc9336695bd0fbfa5729ca90862b69L13)).
 
 -   To get default instance use \
-     in CommonJS: `const gooddata = require('@gooddata/gd-bear-client').default` \
-     or in ES6: `import gooddata from '@gooddata/gd-bear-client'`
+     in CommonJS: `const gooddata = require('@gooddata/gooddata-js').default` \
+     or in ES6: `import gooddata from '@gooddata/gooddata-js'`
 -   DataLayer was merged into gooddata-js as named export. Use: \
-     in CommonJS: `const DataLayer = require('@gooddata/gd-bear-client').DataLayer` \
-     or in ES6: `import { DataLayer } from '@gooddata/gd-bear-client'`
+     in CommonJS: `const DataLayer = require('@gooddata/gooddata-js').DataLayer` \
+     or in ES6: `import { DataLayer } from '@gooddata/gooddata-js'`
 -   See [all named exports here](https://github.com/gooddata/gooddata-js/blob/v6.0.0/src/gooddata-browser.ts#L13-L28) or in `gooddata-node.ts`
