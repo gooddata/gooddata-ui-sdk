@@ -51,19 +51,21 @@ function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
     const headerItems = dv.attributeHeaders()[0][0]; // TODO: is there a better way to do this?
     const data = dv.singleDimData();
 
-    return headerItems.map(
-        (item, index): IXirrExecutionData => {
-            const value = data[index];
+    return headerItems
+        ? headerItems.map(
+              (item, index): IXirrExecutionData => {
+                  const value = data[index];
 
-            invariant(value !== undefined, "Undefined execution value data for XIRR transformation");
-            invariant(item.attributeHeaderItem, "Missing expected attributeHeaderItem");
+                  invariant(value !== undefined, "Undefined execution value data for XIRR transformation");
+                  invariant(item.attributeHeaderItem, "Missing expected attributeHeaderItem");
 
-            return {
-                date: item.attributeHeaderItem.name,
-                value,
-            };
-        },
-    );
+                  return {
+                      date: item.attributeHeaderItem.name,
+                      value,
+                  };
+              },
+          )
+        : [];
 }
 
 /**

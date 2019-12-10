@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-11-28T08:53:09.533Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-10T13:37:20.314Z; */
 import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
 
 export const Account = {
@@ -163,11 +163,11 @@ export const TimelineEOP: IMeasure<IMeasureDefinition> = newMeasure("abYgDBRagAN
  */
 export const NrOfOpportunities: IMeasure<IMeasureDefinition> = newMeasure("abQgDWx4gOUu");
 /**
- * Metric Title: # Of Won Opportunities
+ * Metric Title: # Of Opportunities Won
  * Metric ID: aa4gLlQhcmLO
  * Metric Type: MAQL Metric
  */
-export const NrOfWonOpportunities: IMeasure<IMeasureDefinition> = newMeasure("aa4gLlQhcmLO");
+export const NrOfOpportunitiesWon: IMeasure<IMeasureDefinition> = newMeasure("aa4gLlQhcmLO");
 /**
  * Metric Title: Amount
  * Metric ID: aangOxLSeztu
@@ -180,6 +180,12 @@ export const Amount: IMeasure<IMeasureDefinition> = newMeasure("aangOxLSeztu");
  * Metric Type: MAQL Metric
  */
 export const Probability: IMeasure<IMeasureDefinition> = newMeasure("abEgMnq5hyJQ");
+/**
+ * Metric Title: Sample XIRR
+ * Metric ID: aadpHDMBecIy
+ * Metric Type: MAQL Metric
+ */
+export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure("aadpHDMBecIy");
 /**
  * Metric Title: Win Rate
  * Metric ID: abZgFKGPaGYM
