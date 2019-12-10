@@ -41,9 +41,10 @@ import {
     insightProperties,
     insightHasDataDefined,
     insightBucket,
-    bucketItems,
     attributeLocalId,
     IDimension,
+    newDimension,
+    bucketAttributes,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "../../../../base/interfaces/Locale";
@@ -166,18 +167,9 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         const attribute = insightBucket(insight, ATTRIBUTE);
 
         if (attribute && attribute.items.length) {
-            const items = bucketItems(attribute);
-            return [
-                {
-                    itemIdentifiers: [MEASUREGROUP, ...items.map(attributeLocalId)],
-                },
-            ];
+            return [newDimension([MEASUREGROUP, ...bucketAttributes(attribute).map(attributeLocalId)])];
         }
 
-        return [
-            {
-                itemIdentifiers: [MEASUREGROUP],
-            },
-        ];
+        return [newDimension([MEASUREGROUP])];
     }
 }

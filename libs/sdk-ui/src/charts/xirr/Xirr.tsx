@@ -1,7 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IBucket, IFilter, IMeasure, newBucket, IAttribute, attributeLocalId } from "@gooddata/sdk-model";
 import * as React from "react";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    IBucket,
+    IFilter,
+    IMeasure,
+    newBucket,
+    IAttribute,
+    attributeLocalId,
+    newDimension,
+    bucketsAttributes,
+} from "@gooddata/sdk-model";
 import { MEASURES, ATTRIBUTE } from "../../base/constants/bucketNames";
 
 import { Subtract } from "../../base/typings/subtract";
@@ -73,10 +82,10 @@ function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecut
         .workspace(workspace)
         .execution()
         .forBuckets(buckets, props.filters)
-        .withDimensions({
-            itemIdentifiers: [
+        .withDimensions(
+            newDimension([
                 "measureGroup",
-                ...(buckets[1].items || []).map((a: IAttribute) => attributeLocalId(a)),
-            ],
-        });
+                ...bucketsAttributes(buckets).map(attribute => attributeLocalId(attribute)),
+            ]),
+        );
 }
