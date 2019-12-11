@@ -33,14 +33,14 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
     # TODO Yea right.. nginx starts quite fast but this will ultimately fail on some overloaded slaves.
     sleep 2
 
-    echo "Starting BackstopJS in dir ${BACKSTOP_DIR} in mode: $1"
+    echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
     {
         docker run --rm \
             --user $UID:$GID \
             --net ${NETWORK} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:4.3.4 \
-            --config=/src/backstop.config.js $1
+            --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
     }
