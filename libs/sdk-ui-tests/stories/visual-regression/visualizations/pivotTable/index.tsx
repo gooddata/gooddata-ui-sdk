@@ -5,7 +5,7 @@ import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { PivotTable } from "@gooddata/sdk-ui";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
-import { screenshotWrap } from "../../_infra/screenshotWrap";
+import { withScreenshot } from "../../_infra/backstopWrapper";
 import { CustomStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
@@ -16,7 +16,7 @@ const DefaultWorkspace = "testWorkspace";
 const backend = recordedBackend(ReferenceRecordings.Recordings);
 
 storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () =>
-    screenshotWrap(
+    withScreenshot(
         <div
             style={{
                 width: 800,

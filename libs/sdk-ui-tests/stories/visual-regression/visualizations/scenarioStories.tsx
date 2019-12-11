@@ -10,7 +10,7 @@ import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui/styles/css/main.css";
 import "@gooddata/sdk-ui/styles/css/pivotTable.css";
-import { screenshotWrap } from "../_infra/screenshotWrap";
+import { withScreenshot } from "../_infra/backstopWrapper";
 import { ScenarioStories } from "../_infra/storyGroups";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
@@ -21,7 +21,7 @@ const ScenarioGroupsByVis = Object.entries(groupBy<ScenarioGroup<any>>(chartGrou
 
 function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
     return () => {
-        return screenshotWrap(
+        return withScreenshot(
             <div style={wrapperStyle}>
                 <Component {...props} />
             </div>,
@@ -33,7 +33,7 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     const scenarios = group.asTestInput();
 
     return () => {
-        return screenshotWrap(
+        return withScreenshot(
             <ScreenshotReadyWrapper resolver={createHighChartResolver(scenarios.length)}>
                 {scenarios.map(([name, Component, propsFactory], idx) => {
                     const props = propsFactory(backend, DefaultWorkspace);

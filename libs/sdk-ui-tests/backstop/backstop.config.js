@@ -11,6 +11,7 @@ const backstopConfig = {
             height: 768,
         },
     ],
+    onReadyScript: "puppet/onReady.js",
     scenarios,
     paths: {
         bitmaps_reference: "reference",

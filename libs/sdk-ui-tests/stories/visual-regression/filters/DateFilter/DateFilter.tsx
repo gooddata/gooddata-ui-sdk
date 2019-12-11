@@ -1,23 +1,37 @@
 // (C) 2007-2019 GoodData Corporation
-import { DateFilter, defaultDateFilterOptions } from "@gooddata/sdk-ui";
+import { DateFilter, defaultDateFilterOptions, ExtendedDateFilters } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { screenshotWrap } from "../../_infra/screenshotWrap";
+import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { DateFilterStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui/styles/css/dateFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
+const fixedAbsoluteDateForm: ExtendedDateFilters.IAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01",
+    to: "2019-02-01",
+    name: "",
+    visible: true,
+};
+
+const filterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
+    ...defaultDateFilterOptions,
+    absoluteForm: fixedAbsoluteDateForm,
+};
+
 storiesOf(`${DateFilterStories}/DateFilter`, module)
     .add("full-featured", () => {
-        return screenshotWrap(
+        return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <DateFilter
                     excludeCurrentPeriod={false}
                     selectedFilterOption={defaultDateFilterOptions.allTime}
-                    filterOptions={defaultDateFilterOptions}
+                    filterOptions={filterOptions}
                     availableGranularities={[
                         "GDC.time.date",
                         "GDC.time.month",
@@ -32,109 +46,49 @@ storiesOf(`${DateFilterStories}/DateFilter`, module)
                     onClose={action("onClose")}
                 />
             </div>,
-        );
-    })
-    .add("full-featured opened", () => {
-        class DateFilterController extends React.Component<{}, {}> {
-            public render() {
-                return (
-                    <DateFilter
-                        excludeCurrentPeriod={false}
-                        selectedFilterOption={defaultDateFilterOptions.allTime}
-                        filterOptions={defaultDateFilterOptions}
-                        availableGranularities={[
-                            "GDC.time.date",
-                            "GDC.time.month",
-                            "GDC.time.quarter",
-                            "GDC.time.year",
-                        ]}
-                        isEditMode={false}
-                        customFilterName="My Date Filter"
-                        dateFilterMode="active"
-                        onApply={action("applyClick")}
-                        onCancel={action("cancelClick")}
-                        onOpen={action("onOpen")}
-                        onClose={action("onClose")}
-                    />
-                );
-            }
-
-            public componentDidMount(): void {
-                this.forceOpenDropdown();
-            }
-
-            private forceOpenDropdown() {
-                (document.getElementsByClassName("s-date-filter-button")[0] as any).click();
-            }
-        }
-
-        return screenshotWrap(
-            <div style={wrapperStyle} className="screenshot-target">
-                <DateFilterController />
-            </div>,
+            {
+                closed: {},
+                opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+                "absolute-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
+                    postInteractionWait: 200,
+                },
+                "relative-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-relative-form"],
+                    postInteractionWait: 200,
+                },
+            },
         );
     })
     .add("localized", () => {
-        class DateFilterController extends React.Component<{}, {}> {
-            public render() {
-                return (
-                    <DateFilter
-                        locale="de-DE"
-                        excludeCurrentPeriod={false}
-                        selectedFilterOption={defaultDateFilterOptions.allTime}
-                        filterOptions={defaultDateFilterOptions}
-                        availableGranularities={[
-                            "GDC.time.date",
-                            "GDC.time.month",
-                            "GDC.time.quarter",
-                            "GDC.time.year",
-                        ]}
-                        isEditMode={false}
-                        dateFilterMode="active"
-                    />
-                );
-            }
-        }
-
-        return screenshotWrap(
+        return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
-                <DateFilterController />
+                <DateFilter
+                    locale="de-DE"
+                    excludeCurrentPeriod={false}
+                    selectedFilterOption={defaultDateFilterOptions.allTime}
+                    filterOptions={filterOptions}
+                    availableGranularities={[
+                        "GDC.time.date",
+                        "GDC.time.month",
+                        "GDC.time.quarter",
+                        "GDC.time.year",
+                    ]}
+                    isEditMode={false}
+                    dateFilterMode="active"
+                />
             </div>,
-        );
-    })
-    .add("localized - opened", () => {
-        class DateFilterController extends React.Component<{}, {}> {
-            public render() {
-                return (
-                    <DateFilter
-                        locale="de-DE"
-                        excludeCurrentPeriod={false}
-                        selectedFilterOption={defaultDateFilterOptions.allTime}
-                        filterOptions={defaultDateFilterOptions}
-                        availableGranularities={[
-                            "GDC.time.date",
-                            "GDC.time.month",
-                            "GDC.time.quarter",
-                            "GDC.time.year",
-                        ]}
-                        isEditMode={false}
-                        dateFilterMode="active"
-                    />
-                );
-            }
-
-            public componentDidMount(): void {
-                this.forceOpenDropdown();
-            }
-
-            private forceOpenDropdown() {
-                (document.getElementsByClassName("s-date-filter-button")[0] as any).click();
-            }
-        }
-
-        return screenshotWrap(
-            <div style={wrapperStyle} className="screenshot-target">
-                <DateFilterController />
-            </div>,
+            {
+                closed: {},
+                opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+                "absolute-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
+                    postInteractionWait: 200,
+                },
+                "relative-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-relative-form"],
+                    postInteractionWait: 200,
+                },
+            },
         );
     });
