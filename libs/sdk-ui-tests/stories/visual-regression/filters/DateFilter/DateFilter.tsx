@@ -4,7 +4,7 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
-import { DateFilterStories } from "../../_infra/storyGroups";
+import { FilterStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui/styles/css/dateFilter.css";
 
@@ -24,7 +24,7 @@ const filterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
     absoluteForm: fixedAbsoluteDateForm,
 };
 
-storiesOf(`${DateFilterStories}/DateFilter`, module)
+storiesOf(`${FilterStories}/DateFilter`, module)
     .add("full-featured", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">

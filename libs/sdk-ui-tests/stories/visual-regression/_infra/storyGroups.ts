@@ -2,4 +2,4 @@
 
 export const ScenarioStories = "01 Stories From Test Scenarios";
 export const CustomStories = "02 Custom Test Stories";
-export const DateFilterStories = "10 Filters";
+export const FilterStories = "10 Filters";
