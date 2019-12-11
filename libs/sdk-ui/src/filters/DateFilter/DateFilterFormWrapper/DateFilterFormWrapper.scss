@@ -1,0 +1,16 @@
+// (C) 2007-2019 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/typo-mixins.scss";
+@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+
+.gd-date-filter-form-wrapper-desktop.gd-date-filter-form-wrapper {
+    @include gd-font-base;
+    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    margin: 0 0 0 10px;
+    padding: 10px;
+    border-left: 2px dotted $border-color;
+}
+
+.gd-date-filter-form-wrapper-inner {
+    padding: 10px;
+    background-color: #f5f7f9;
+}

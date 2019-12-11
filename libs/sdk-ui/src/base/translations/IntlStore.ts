@@ -1,9 +1,17 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 
-import { InjectedIntl, IntlProvider } from "react-intl";
+import { InjectedIntl, IntlProvider, addLocaleData } from "react-intl";
 import { translations } from "@gooddata/js-utils";
 import { DEFAULT_LOCALE } from "../constants/localization";
+
+import * as deLocaleData from "react-intl/locale-data/de";
+import * as esLocaleData from "react-intl/locale-data/es";
+import * as enLocaleData from "react-intl/locale-data/en";
+import * as frLocaleData from "react-intl/locale-data/fr";
+import * as jaLocaleData from "react-intl/locale-data/ja";
+import * as nlLocaleData from "react-intl/locale-data/nl";
+import * as ptLocaleData from "react-intl/locale-data/pt";
 
 import * as enUS from "./bundles/en-US.json";
 import * as deDE from "./bundles/de-DE.json";
@@ -47,6 +55,18 @@ function getIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
 function getTranslation(translationId: string, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
+}
+
+export function addLocaleDataToReactIntl() {
+    addLocaleData([
+        ...deLocaleData,
+        ...esLocaleData,
+        ...enLocaleData,
+        ...frLocaleData,
+        ...jaLocaleData,
+        ...nlLocaleData,
+        ...ptLocaleData,
+    ]);
 }
 
 export default {

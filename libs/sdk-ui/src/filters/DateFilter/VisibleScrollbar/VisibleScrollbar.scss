@@ -1,0 +1,18 @@
+// (C) 2019 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+
+.gd-visible-scrollbar {
+    overflow-x: hidden;
+
+    // Emulate MacOS scroll-bar design
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+    }
+}

@@ -2,3 +2,12 @@
 
 export { AttributeElements } from "./AttributeElements/AttributeElements";
 export { AttributeFilter } from "./AttributeFilter/AttributeFilter";
+export {
+    DateFilter,
+    IDateFilterCallbackProps,
+    IDateFilterOwnProps,
+    IDateFilterProps,
+    DateFilterHelpers,
+    ExtendedDateFilters,
+    defaultDateFilterOptions,
+} from "./DateFilter";

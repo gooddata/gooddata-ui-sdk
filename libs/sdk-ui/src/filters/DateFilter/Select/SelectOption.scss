@@ -1,0 +1,24 @@
+// (C) 2019 GoodData Corporation
+@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+
+.gd-list-item.gd-select-option {
+    padding: 5px 10px;
+
+    &-is-selected {
+        text-decoration: none;
+        color: $is-selected-color;
+        background: $is-selected-background;
+        font-weight: bold;
+    }
+
+    &-is-focused {
+        text-decoration: none;
+        color: $is-focused-color;
+        background: $is-focused-background;
+    }
+
+    &-is-selected.gd-select-option-is-focused {
+        color: $is-selected-color;
+        background: $is-selected-focused-background;
+    }
+}
