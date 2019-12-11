@@ -14,7 +14,7 @@ import { Dropdown } from "./Dropdown";
 export interface IDropdownProps {
     filter?: IMeasureValueFilter;
     button?: React.ComponentType<any>;
-    onApply: (filter: IMeasureValueFilter, measureIdentifier: string) => void;
+    onApply: (filter: IMeasureValueFilter | null, measureIdentifier: string) => void;
     locale?: string;
     measureTitle?: string;
     measureIdentifier: string;
@@ -22,16 +22,17 @@ export interface IDropdownProps {
 }
 
 const getDropdownData = (
-    filter: IMeasureValueFilter,
-): { operator: MeasureValueFilterOperator; value: IValue } => {
+    filter: IMeasureValueFilter | undefined,
+): { operator?: MeasureValueFilterOperator; value?: IValue } => {
     if (!filter) {
-        return {
-            operator: null,
-            value: null,
-        };
+        return {};
     }
 
     const condition = measureValueFilterCondition(filter);
+    if (!condition) {
+        return {};
+    }
+
     const operator = isRangeCondition(condition) ? condition.range.operator : condition.comparison.operator;
     const value = isRangeCondition(condition)
         ? { from: condition.range.from, to: condition.range.to }
@@ -47,7 +48,7 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
     public render() {
         const { button, measureTitle, locale, filter, displayDropdown } = this.props;
 
-        const dropdownData = getDropdownData(filter);
+        const { operator, value } = getDropdownData(filter);
 
         return (
             <Dropdown
@@ -56,21 +57,21 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
                 onApply={this.onApply}
                 measureTitle={measureTitle}
                 locale={locale}
-                operator={dropdownData.operator}
-                value={dropdownData.value}
+                operator={operator}
+                value={value}
             />
         );
     }
 
-    private onApply = (operator: MeasureValueFilterOperator, value: IValue) => {
+    private onApply = (operator: MeasureValueFilterOperator | null, value: IValue) => {
         const { measureIdentifier, onApply } = this.props;
 
         if (operator === null || operator === "ALL") {
             onApply(null, measureIdentifier);
         } else {
             const filter = isRangeConditionOperator(operator)
-                ? newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.from, value.to)
-                : newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.value);
+                ? newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.from!, value.to)
+                : newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.value!);
             onApply(filter, measureIdentifier);
         }
     };

@@ -17,11 +17,11 @@ export interface IInputProps {
 }
 
 export interface IDropdownBodyOwnProps {
-    operator?: MeasureValueFilterOperator;
-    value?: IValue;
+    operator: MeasureValueFilterOperator;
+    value: IValue;
     locale?: string;
     onCancel?: () => void;
-    onApply: (operator: MeasureValueFilterOperator, value: IValue) => void;
+    onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
 }
 
 export type IDropdownBodyProps = IDropdownBodyOwnProps & InjectedIntlProps;

@@ -12,14 +12,14 @@ export interface IDropdownButtonProps {
     isActive?: boolean;
     onClick: (e: React.SyntheticEvent) => void;
     measureTitle?: string;
-    operator?: MeasureValueFilterOperator;
+    operator?: MeasureValueFilterOperator | null;
     operatorTitle?: string;
-    value?: IValue;
+    value?: IValue | null;
 }
 
 export interface IDropdownOwnProps {
     button?: React.ComponentType<IDropdownButtonProps>;
-    onApply: (operator: string, value?: IValue) => void;
+    onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
     locale?: string;
     measureTitle?: string;
     operator?: MeasureValueFilterOperator;
@@ -37,11 +37,11 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
     public static defaultProps: Partial<IDropdownOwnProps> = {
         button: DefaultDropdownButton,
         value: {},
-        operator: null,
+        operator: "ALL",
         displayDropdown: false,
     };
 
-    private toggleButtonRef: EventTarget = null;
+    private toggleButtonRef: EventTarget | null = null;
 
     constructor(props: IDropdownProps) {
         super(props);
@@ -49,15 +49,16 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
         const { displayDropdown } = props;
 
         this.state = {
-            displayDropdown,
+            displayDropdown: displayDropdown || false,
         };
     }
 
     public render() {
-        const { intl, button: DropdownButton, measureTitle, operator, value, locale } = this.props;
+        const { intl, button, measureTitle, operator, value, locale } = this.props;
         const { displayDropdown } = this.state;
-
-        const selectedOperator = operator !== null ? operator : "ALL";
+        const DropdownButton = button || DefaultDropdownButton;
+        const effectiveValue = value || {};
+        const selectedOperator = operator || "ALL";
         const operatorTitle = intl.formatMessage({
             id: getOperatorTranslationKey(selectedOperator),
         });
@@ -83,7 +84,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
                     >
                         <DropdownBody
                             operator={selectedOperator}
-                            value={value}
+                            value={effectiveValue}
                             locale={locale}
                             onCancel={this.closeDropdown}
                             onApply={this.onApply}
@@ -105,7 +106,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
         this.setState({ displayDropdown: false });
     };
 
-    private onApply = (operator: string, value?: IValue) => {
+    private onApply = (operator: MeasureValueFilterOperator | null, value: IValue) => {
         this.closeDropdown();
         this.props.onApply(operator, value);
     };
