@@ -3,7 +3,7 @@ import { DateFilter, defaultDateFilterOptions, ExtendedDateFilters } from "@good
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { screenshotWrap } from "../../_infra/screenshotWrap";
+import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { DateFilterStories } from "../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui/styles/css/dateFilter.css";
@@ -26,7 +26,7 @@ const filterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
 
 storiesOf(`${DateFilterStories}/DateFilter`, module)
     .add("full-featured", () => {
-        return screenshotWrap(
+        return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <DateFilter
                     excludeCurrentPeriod={false}
@@ -61,7 +61,7 @@ storiesOf(`${DateFilterStories}/DateFilter`, module)
         );
     })
     .add("localized", () => {
-        return screenshotWrap(
+        return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <DateFilter
                     locale="de-DE"

@@ -47,6 +47,9 @@ export interface IViewportNext {
     height: number;
 }
 
-export type BackstopScenarios = {
+export type BackstopConfig = {
+    /**
+     * Backstop scenario => scenario configuration mapping. Key will be used to name the test scenario.
+     */
     [name: string]: IBackstopScenarioConfig;
 };

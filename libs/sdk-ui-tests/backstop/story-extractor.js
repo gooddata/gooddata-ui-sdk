@@ -37,6 +37,14 @@ describe("story-extractor", () => {
 
         stories.forEach(rawStory => {
             const storyElement = rawStory.getOriginal()();
+            let config = {};
+
+            /*
+             * See if story defined global configuration for backstop scenario(s) that will be derived from it.
+             */
+            if (storyElement.props !== undefined && storyElement.props.config !== undefined) {
+                config = storyElement.props.config;
+            }
 
             if (storyElement.props === undefined || storyElement.props.scenarios === undefined) {
                 /*
@@ -47,6 +55,7 @@ describe("story-extractor", () => {
                     storyId: rawStory.id,
                     storyKind: rawStory.kind,
                     storyName: rawStory.name,
+                    scenarioConfig: config,
                 });
             } else {
                 /*
@@ -59,7 +68,10 @@ describe("story-extractor", () => {
                         storyKind: rawStory.kind,
                         storyName: rawStory.name,
                         scenarioName: name,
-                        scenarioConfig,
+                        scenarioConfig: {
+                            ...config,
+                            ...scenarioConfig,
+                        },
                     });
                 });
             }
