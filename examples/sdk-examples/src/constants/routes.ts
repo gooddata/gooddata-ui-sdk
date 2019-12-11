@@ -110,6 +110,16 @@ export const hiddenPaths = [
     // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
+    // {
+    //     path: "/hidden/measure-value-filter",
+    //     title: "Measure Value Filter",
+    //     Component: MeasureValueFilter,
+    // },
+    // {
+    //     path: "/hidden/measure-value-filter-component",
+    //     title: "Measure Value Filter Component",
+    //     Component: MeasureValueFilterComponent,
+    // },
 ];
 
 export const backendInfoRoutes = [

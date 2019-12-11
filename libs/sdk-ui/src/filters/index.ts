@@ -11,3 +11,4 @@ export {
     ExtendedDateFilters,
     defaultDateFilterOptions,
 } from "./DateFilter";
+export { DropdownAfmWrapper as MeasureValueFilterDropdown } from "./MeasureValueFilter/DropdownAfmWrapper";

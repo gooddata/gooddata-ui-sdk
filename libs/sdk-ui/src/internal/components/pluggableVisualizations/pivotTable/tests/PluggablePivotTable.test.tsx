@@ -980,7 +980,7 @@ describe("addDefaultSort", () => {
     });
 });
 
-describe("isSortVisible", () => {
+describe("isSortItemVisible", () => {
     describe("given attribute sort item", () => {
         it("should always return true", () => {
             const actual = isSortItemVisible(
@@ -1041,6 +1041,14 @@ describe("isSortVisible", () => {
             title: "Not Matching",
             uri: notMatchingUri,
         };
+        const measureValueFilter: IBucketFilter = {
+            measureLocalIdentifier: "id",
+            condition: {
+                operator: "BETWEEN",
+                from: 0,
+                to: 0,
+            },
+        };
 
         it("should return true when no filters are specified", () => {
             const actual = isSortItemVisible(sortItem, []);
@@ -1085,6 +1093,10 @@ describe("isSortVisible", () => {
             ]);
             const expected = false;
             expect(actual).toEqual(expected);
+        });
+        it("should return false when filter is MVF", () => {
+            const actual = isSortItemVisible(sortItem, [measureValueFilter]);
+            expect(actual).toEqual(false);
         });
     });
 });
