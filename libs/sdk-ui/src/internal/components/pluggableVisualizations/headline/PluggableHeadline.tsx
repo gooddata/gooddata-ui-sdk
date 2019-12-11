@@ -142,7 +142,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, config } = options;
+        const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
         const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
         const execution = executionFactory

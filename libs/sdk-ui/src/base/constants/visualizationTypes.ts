@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 export const VisualizationTypes = {
     BAR: "bar" as "bar",
     COLUMN: "column" as "column",
@@ -21,6 +21,7 @@ export const VisualizationTypes = {
     FUNNEL: "funnel" as "funnel",
     PARETO: "pareto" as "pareto",
     ALLUVIAL: "alluvial" as "alluvial",
+    XIRR: "xirr" as "xirr",
 };
 
 export type ChartType =
@@ -44,8 +45,9 @@ export type ChartType =
     | "pareto"
     | "alluvial";
 export type HeadlineType = "headline";
+export type XirrType = "xirr";
 export type TableType = "table";
-export type VisType = ChartType | HeadlineType | TableType;
+export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell"; // 'cell' for heatmap
 export type HeadlineElementType = "primaryValue" | "secondaryValue";

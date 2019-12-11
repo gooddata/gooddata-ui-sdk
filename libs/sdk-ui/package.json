@@ -41,6 +41,7 @@
         "ag-grid-react": "20.0.0",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
+        "date-fns": "^2.8.1",
         "downshift": "^3.4.7",
         "highcharts": "7.1.1",
         "highcharts-grouped-categories": "^1.1.3",

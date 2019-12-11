@@ -538,7 +538,7 @@ export interface IInsight {
         identifier: string;
         uri?: string;
         title: string;
-        visualizationClassIdentifier: string;
+        visualizationClassUri: string;
         buckets: IBucket[];
         filters: IFilter[];
         sorts: SortItem[];
@@ -666,7 +666,7 @@ export function insightTitle(insight: IInsightWithoutIdentifier): string;
 export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[];
 
 // @public
-export function insightVisualizationClassIdentifier(insight: IInsightWithoutIdentifier): string;
+export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier): string;
 
 // @public (undocumented)
 export interface IObjectExpressionToken {

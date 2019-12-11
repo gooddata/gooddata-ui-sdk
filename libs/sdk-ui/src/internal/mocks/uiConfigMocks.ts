@@ -9,6 +9,8 @@ import {
     MAX_FILTERS_COUNT,
     MAX_TABLE_CATEGORIES_COUNT,
     DEFAULT_HEADLINE_METRICS_COUNT,
+    DEFAULT_XIRR_METRICS_COUNT,
+    DEFAULT_XIRR_ATTRIBUTES_COUNT,
 } from "../constants/uiConfig";
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../constants/bucket";
@@ -1164,4 +1166,42 @@ export const defaultPivotTableUiConfig: IUiConfig = {
     exportConfig: enabledExportConfig,
     openAsReport: disabledOpenAsReportConfig,
     supportedOverTimeComparisonTypes: allOverTimeComparisonTypes,
+};
+
+export const fullySpecifiedXirrUiConfig: IUiConfig = {
+    buckets: {
+        measures: {
+            accepts: [METRIC, FACT],
+            allowsDuplicateItems: true,
+            enabled: true,
+            allowsReordering: true,
+            allowsSwapping: true,
+            itemsLimit: DEFAULT_XIRR_METRICS_COUNT,
+            isShowInPercentEnabled: false,
+            isShowInPercentVisible: false,
+            title: "Measure",
+            canAddItems: false,
+        },
+        filters: {
+            accepts: [ATTRIBUTE, DATE],
+            itemsLimit: MAX_FILTERS_COUNT,
+            allowsReordering: false,
+            enabled: true,
+            isShowInPercentEnabled: false,
+        },
+        attribute: {
+            accepts: [DATE],
+            itemsLimit: DEFAULT_XIRR_ATTRIBUTES_COUNT,
+            allowsSwapping: true,
+            allowsReordering: false,
+            enabled: true,
+            isShowInPercentEnabled: false,
+            title: "Date attribute",
+            canAddItems: false,
+        },
+    },
+    recommendations: {},
+    exportConfig: disabledExportConfig,
+    openAsReport: disabledOpenAsReportConfig,
+    supportedOverTimeComparisonTypes: [],
 };

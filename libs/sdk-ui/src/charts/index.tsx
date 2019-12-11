@@ -27,4 +27,6 @@ export { ScatterPlot, IScatterPlotProps } from "./scatterPlot/ScatterPlot";
 
 export { Treemap, ITreemapProps } from "./treemap/Treemap";
 
+export { Xirr, IXirrProps } from "./xirr/Xirr";
+
 export { withJsxExport } from "./withJsxExport";

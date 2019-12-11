@@ -14,6 +14,8 @@ export const MAX_TABLE_CATEGORIES_COUNT = 20;
 export const MAX_STACKS_COUNT = 1;
 export const MAX_VIEW_COUNT = 2;
 export const DEFAULT_HEADLINE_METRICS_COUNT = 1;
+export const DEFAULT_XIRR_METRICS_COUNT = 1;
+export const DEFAULT_XIRR_ATTRIBUTES_COUNT = 1;
 
 export const UICONFIG = "uiConfig";
 export const RECOMMENDATIONS = "recommendations";
@@ -518,4 +520,23 @@ export const COMBO_CHART_UICONFIG: IUiConfig = {
         disabled: false,
         stackMeasures: false,
     },
+};
+
+export const DEFAULT_XIRR_UICONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
+            accepts: [METRIC, FACT],
+            itemsLimit: DEFAULT_XIRR_METRICS_COUNT,
+            isShowInPercentVisible: false,
+        },
+        attribute: {
+            ...viewBase,
+            accepts: [DATE],
+            itemsLimit: DEFAULT_XIRR_ATTRIBUTES_COUNT,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...disabledExportConfig,
 };

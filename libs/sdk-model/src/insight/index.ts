@@ -44,9 +44,9 @@ export interface IInsight {
         title: string;
 
         /**
-         * Identifier of the visualization class that should be used to render this insight.
+         * URI of the visualization class that should be used to render this insight.
          */
-        visualizationClassIdentifier: string;
+        visualizationClassUri: string;
 
         /**
          * Buckets of attributes, measures and totals to render on the visualization.
@@ -359,15 +359,15 @@ export function insightProperties(insight: IInsightWithoutIdentifier): Visualiza
 }
 
 /**
- * Gets visualization class identifier of an insight.
+ * Gets visualization class URI of an insight.
  *
- * @param insight - insight to get vis class identifier for
+ * @param insight - insight to get vis class URI for
  * @public
  */
-export function insightVisualizationClassIdentifier(insight: IInsightWithoutIdentifier): string {
-    invariant(insight, "insight to get vis class identifier from must be defined");
+export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier): string {
+    invariant(insight, "insight to get vis class URI from must be defined");
 
-    return insight.insight.visualizationClassIdentifier;
+    return insight.insight.visualizationClassUri;
 }
 
 /**

@@ -24,3 +24,6 @@ export const AmountMeasurePredicate = HeaderPredicateFactory.identifierMatch(
 export const WonMeasurePredicate = HeaderPredicateFactory.identifierMatch(
     measureIdentifier(ReferenceLdm.Won)!,
 );
+export const SampleXirrMeasurePredicate = HeaderPredicateFactory.identifierMatch(
+    measureIdentifier(ReferenceLdm.SampleXIRR)!,
+);

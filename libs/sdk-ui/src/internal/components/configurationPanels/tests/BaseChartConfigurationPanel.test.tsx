@@ -71,7 +71,7 @@ describe("BaseChartConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [
@@ -107,7 +107,7 @@ describe("BaseChartConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [
@@ -154,7 +154,7 @@ describe("BaseChartConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [
@@ -190,7 +190,7 @@ describe("BaseChartConfigurationPanel", () => {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
-                    visualizationClassIdentifier: "vc",
+                    visualizationClassUri: "vc",
                     properties: {},
                     identifier: "id",
                     buckets: [

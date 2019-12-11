@@ -52,6 +52,10 @@ export function hasNoSecondaryMeasures(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.SECONDARY_MEASURES) === 0;
 }
 
+export function hasNoAttribute(buckets: IBucketOfFun[]): boolean {
+    return getItemsCount(buckets, BucketNames.ATTRIBUTE) === 0;
+}
+
 export function hasSomeSegmentByItems(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.SEGMENT) !== 0;
 }

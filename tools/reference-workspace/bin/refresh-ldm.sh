@@ -8,5 +8,5 @@ OUTPUT="${ROOTDIR}/src/ldm/full.ts"
 
 $EXPORTER \
   --hostname "secure.gooddata.com" \
-  --project-id "avack24l7eynvolkdbe8nnrjbrjguk9j" \
+  --project-id "l32xdyl4bjuzgf9kkqr2avl55gtuyjwf" \
   --output "${OUTPUT}"

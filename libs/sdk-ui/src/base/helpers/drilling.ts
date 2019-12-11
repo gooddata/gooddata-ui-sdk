@@ -6,12 +6,15 @@ import {
     isResultAttributeHeader,
     isTotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
+import * as CustomEventPolyfill from "custom-event";
 import { identifierMatch, uriMatch } from "../factory/HeaderPredicateFactory";
 import {
     IDrillableItem,
     IDrillEventIntersectionElement,
     isDrillableItemIdentifier,
     isDrillableItemUri,
+    IDrillEventCallback,
+    IDrillEvent,
 } from "../interfaces/DrillEvents";
 import { IHeaderPredicate, isHeaderPredicate } from "../interfaces/HeaderPredicate";
 import { IMappingHeader } from "../interfaces/MappingHeader";
@@ -78,4 +81,28 @@ export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventI
         },
         [],
     );
+}
+
+/**
+ * Fire a new drill event built from the provided data to the target that have a 'dispatchEvent' method.
+ *
+ * @param drillEventFunction - custom drill event function which could process and prevent default post message event.
+ * @param drillEventData - The event data in {executionContext, drillContext} format.
+ * @param target - The target where the built event must be dispatched.
+ */
+export function fireDrillEvent(
+    drillEventFunction: IDrillEventCallback,
+    drillEventData: IDrillEvent,
+    target: EventTarget,
+) {
+    const shouldDispatchPostMessage = drillEventFunction && drillEventFunction(drillEventData);
+
+    if (shouldDispatchPostMessage !== false) {
+        target.dispatchEvent(
+            new CustomEventPolyfill("drill", {
+                detail: drillEventData,
+                bubbles: true,
+            }),
+        );
+    }
 }

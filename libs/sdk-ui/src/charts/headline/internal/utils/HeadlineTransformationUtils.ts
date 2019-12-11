@@ -4,14 +4,12 @@ import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
 import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import * as CustomEventPolyfill from "custom-event";
 import * as invariant from "invariant";
 import { InjectedIntl } from "react-intl";
 import { HeadlineElementType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { isSomeHeaderPredicateMatched } from "../../../../base/helpers/drilling";
 import {
     IDrillEvent,
-    IDrillEventCallback,
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,
 } from "../../../../base/interfaces/DrillEvents";
@@ -177,28 +175,4 @@ export function buildDrillEventData(
         dataView,
         drillContext,
     };
-}
-
-/**
- * Fire a new drill event built from the provided data to the target that have a 'dispatchEvent' method.
- *
- * @param drillEventFunction - custom drill event function which could process and prevent default post message event.
- * @param drillEventData - The event data in {executionContext, drillContext} format.
- * @param target - The target where the built event must be dispatched.
- */
-export function fireDrillEvent(
-    drillEventFunction: IDrillEventCallback,
-    drillEventData: IDrillEvent,
-    target: EventTarget,
-) {
-    const shouldDispatchPostMessage = drillEventFunction && drillEventFunction(drillEventData);
-
-    if (shouldDispatchPostMessage !== false) {
-        target.dispatchEvent(
-            new CustomEventPolyfill("drill", {
-                detail: drillEventData,
-                bubbles: true,
-            }),
-        );
-    }
 }

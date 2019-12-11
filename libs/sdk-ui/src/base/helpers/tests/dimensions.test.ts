@@ -103,7 +103,7 @@ function newInsight(buckets: IBucket[]): IInsight {
         insight: {
             identifier: "test",
             title: "no name",
-            visualizationClassIdentifier: "classId",
+            visualizationClassUri: "classId",
             buckets,
             filters: [],
             sorts: [],

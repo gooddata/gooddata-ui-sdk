@@ -934,7 +934,7 @@
                         "title": {
                             "type": "string"
                         },
-                        "visualizationClassIdentifier": {
+                        "visualizationClassUri: {
                             "type": "string"
                         },
                         "buckets": {
@@ -989,7 +989,7 @@
                         "properties",
                         "sorts",
                         "title",
-                        "visualizationClassIdentifier"
+                        "visualizationClassUri"
                     ]
                 }
             },

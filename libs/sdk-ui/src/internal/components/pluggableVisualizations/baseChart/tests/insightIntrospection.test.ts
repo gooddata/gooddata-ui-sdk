@@ -14,7 +14,7 @@ describe("countItemsOnAxesInMdObject", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassIdentifier: "vcId",
+                visualizationClassUri: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -40,7 +40,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassIdentifier: "vcId",
+                visualizationClassUri: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -68,7 +68,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassIdentifier: "vcId",
+                visualizationClassUri: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -96,7 +96,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassIdentifier: "vcId",
+                visualizationClassUri: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },

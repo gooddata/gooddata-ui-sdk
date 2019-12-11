@@ -7,8 +7,6 @@ import {
 } from "../../base/translations/TranslationsProvider";
 import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
-import { IErrorProps } from "../../base/simple/ErrorComponent";
-import { ILoadingProps } from "../../base/simple/LoadingComponent";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
@@ -29,8 +27,8 @@ export class HeadlineStateless extends React.Component<Props, {}> {
     public render(): JSX.Element {
         const { dataView, error, isLoading } = this.props;
 
-        const ErrorComponent = this.props.ErrorComponent as React.ComponentType<IErrorProps>;
-        const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
+        const ErrorComponent = this.props.ErrorComponent;
+        const LoadingComponent = this.props.LoadingComponent;
 
         if (error) {
             const errorProps = this.errorMap[
