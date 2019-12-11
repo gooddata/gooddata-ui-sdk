@@ -3,7 +3,7 @@
 const stories = require("./stories");
 
 /*
- * BackstopJS configuration for scenarios created for storybook stories.
+ * BackstopJS global configuration for scenarios created for storybook stories.
  *
  * This contains list of objects as:
  *
@@ -61,17 +61,26 @@ const ScenarioConfig = [
 // there should be no need to touch these when customizing backstop scenarios config for stories
 // --------------------------------------------------------------------
 
-function scenarioLabel(kind, name) {
-    return `${kind} - ${name}`;
+function scenarioLabel(storyKind, storyName, scenarioName) {
+    const storyDerivedName = `${storyKind} - ${storyName}`;
+
+    return scenarioName !== undefined ? `${storyDerivedName} - ${scenarioName}` : storyDerivedName;
 }
 
-function scenarioUrl(kind, name) {
-    return `http://storybook/iframe.html?selectedKind=${encodeURIComponent(
-        kind,
-    )}&selectedStory=${encodeURIComponent(name)}`;
+function scenarioUrlForId(id) {
+    return `http://storybook/iframe.html?id=${encodeURIComponent(id)}`;
 }
 
-function scenarioConfig(kind, name) {
+/**
+ * As a convenience, the screenshot testing infrastructure allows to globally define backstop JS configurations
+ * to associate to scenarios automatically created for storybook stories. The association is done based on
+ * story kind & name regex match.
+ *
+ * @param kind story kind
+ * @param name story name
+ * @return {{}|*} backstop config or empty object
+ */
+function scenarioGlobalConfig(kind, name) {
     const id = `${kind}_${name}`;
 
     const foundConfig = ScenarioConfig.find(({ idRegex }) => {
@@ -79,12 +88,6 @@ function scenarioConfig(kind, name) {
     });
 
     if (foundConfig === undefined) {
-        console.warn(
-            "Cannot determine BackstopJS configuration for scenario with ID: ",
-            id,
-            "; This story will not be screenshot tested using Backstop.",
-        );
-
         return {};
     }
 
@@ -92,15 +95,35 @@ function scenarioConfig(kind, name) {
 }
 
 module.exports = stories
-    .map(({ kind, name }) => {
-        const config = scenarioConfig(kind, name);
+    .map(story => {
+        const { storyId, storyKind, storyName, scenarioName, scenarioConfig: localConfig } = story;
+        const label = scenarioLabel(storyKind, storyName, scenarioName);
 
-        return config !== undefined
-            ? {
-                  label: scenarioLabel(kind, name),
-                  url: scenarioUrl(kind, name),
-                  ...config,
-              }
-            : undefined;
+        /*
+         * Create configuration for this scenario. Find global configuration that applies for scenario done
+         * for this kind of story (if any) and then overlay the config with local scenario (if any)
+         *
+         * If the resulting configuration is empty, then the story will not be tested using backstop - as it is
+         * not clear what to wait for.
+         */
+        const globalConfig = scenarioGlobalConfig(storyKind, storyName);
+        const scenarioConfig = {
+            ...globalConfig,
+            ...localConfig,
+        };
+
+        if (Object.keys(scenarioConfig).length === 0) {
+            console.warn(
+                `Cannot determine BackstopJS configuration for scenario from story: ${label}; This story will not be screenshot tested using Backstop.`,
+            );
+
+            return undefined;
+        }
+
+        return {
+            label: label,
+            url: scenarioUrlForId(storyId),
+            ...scenarioConfig,
+        };
     })
     .filter(scenario => scenario !== undefined);

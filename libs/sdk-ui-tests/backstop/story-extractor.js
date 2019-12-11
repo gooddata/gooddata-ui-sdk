@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { configure, getStorybook } from "@storybook/react";
+import { configure, getStorybook, raw } from "@storybook/react";
 import * as fs from "fs";
 const OutputFilename = "backstop/stories.json";
 
@@ -28,20 +28,41 @@ describe("story-extractor", () => {
         }
 
         configure(loadStories, module);
-        return getStorybook();
+        return raw();
     }
 
     it("dumps stories into a file", () => {
         const stories = getAvailableStories();
         const storyDump = [];
 
-        stories.forEach(kind => {
-            kind.stories.forEach(story => {
+        stories.forEach(rawStory => {
+            const storyElement = rawStory.getOriginal()();
+
+            if (storyElement.props === undefined || storyElement.props.scenarios === undefined) {
+                /*
+                 * The story does not explicitly define any backstop scenarios... falling back to
+                 * implicit scenarios-for-story
+                 */
                 storyDump.push({
-                    kind: kind.kind,
-                    name: story.name,
+                    storyId: rawStory.id,
+                    storyKind: rawStory.kind,
+                    storyName: rawStory.name,
                 });
-            });
+            } else {
+                /*
+                 * The story explicitly tells what backstop scenarios there should be & specifies
+                 * backstop config for them. Dump all listed scenarios.
+                 */
+                Object.entries(storyElement.props.scenarios).forEach(([name, scenarioConfig]) => {
+                    storyDump.push({
+                        storyId: rawStory.id,
+                        storyKind: rawStory.kind,
+                        storyName: rawStory.name,
+                        scenarioName: name,
+                        scenarioConfig,
+                    });
+                });
+            }
         });
 
         fs.writeFileSync(OutputFilename, JSON.stringify(storyDump, null, 4), { encoding: "utf-8" });
