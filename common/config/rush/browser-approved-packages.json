@@ -319,6 +319,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "dependency-cruiser",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "downshift",
       "allowedCategories": [ "production" ]
     },
