@@ -3,7 +3,7 @@ import compose = require("lodash/flowRight");
 import { withBackend } from "./BackendContext";
 import { withWorkspace } from "./WorkspaceContext";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { wrapDisplayName } from "../base/hoc/wrapDisplayName";
+import { wrapDisplayName } from "../hoc/wrapDisplayName";
 
 /**
  * Injects backend and worksapce provided by BackendProvider & WorkspaceProvider to a component

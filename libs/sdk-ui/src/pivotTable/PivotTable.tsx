@@ -24,7 +24,7 @@ import {
     ITranslationsComponentProps,
 } from "../base/translations/TranslationsProvider";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withContexts } from "../context/withContexts";
+import { withContexts } from "../base/context/withContexts";
 
 /**
  * Prepares new execution matching pivot table props.

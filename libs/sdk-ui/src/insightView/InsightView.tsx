@@ -36,7 +36,7 @@ import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
 import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
 import { DEFAULT_LOCALE } from "../base/constants/localization";
 import { ILocale } from "../base/interfaces/Locale";
-import { withContexts } from "../context/withContexts";
+import { withContexts } from "../base/context/withContexts";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
