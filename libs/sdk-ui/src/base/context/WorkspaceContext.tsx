@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { wrapDisplayName } from "../base/hoc/wrapDisplayName";
+import { wrapDisplayName } from "../hoc/wrapDisplayName";
 /**
  * @internal
  */

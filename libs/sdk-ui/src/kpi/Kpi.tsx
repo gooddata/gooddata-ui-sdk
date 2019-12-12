@@ -12,7 +12,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { IntlWrapper } from "../base/translations/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
-import { withContexts } from "../context/withContexts";
+import { withContexts } from "../base/context/withContexts";
 //
 // Internals
 //

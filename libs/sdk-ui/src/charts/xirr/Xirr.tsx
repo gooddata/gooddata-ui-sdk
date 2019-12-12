@@ -17,7 +17,7 @@ import { Subtract } from "../../base/typings/subtract";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreXirr } from "./CoreXirr";
 import omit = require("lodash/omit");
-import { withContexts } from "../../context/withContexts";
+import { withContexts } from "../../base/context/withContexts";
 
 //
 // Public interface

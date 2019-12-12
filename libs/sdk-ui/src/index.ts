@@ -55,8 +55,8 @@ export {
     InsightView,
 };
 
-export { BackendProvider, useBackend, withBackend } from "./context/BackendContext";
-export { WorkspaceProvider, useWorkspace, withWorkspace } from "./context/WorkspaceContext";
+export { BackendProvider, useBackend, withBackend } from "./base/context/BackendContext";
+export { WorkspaceProvider, useWorkspace, withWorkspace } from "./base/context/WorkspaceContext";
 
 export * from "./base";
 export * from "./charts";

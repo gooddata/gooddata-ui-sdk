@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { wrapDisplayName } from "../base/hoc/wrapDisplayName";
+import { wrapDisplayName } from "../hoc/wrapDisplayName";
 
 /**
  * @internal

@@ -3,7 +3,7 @@ import * as React from "react";
 import compose = require("lodash/flowRight");
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 import { IBucketChartProps, ICoreChartProps } from "../chartProps";
-import { withContexts } from "../../context/withContexts";
+import { withContexts } from "../../base/context/withContexts";
 import { wrapDisplayName } from "../../base/hoc/wrapDisplayName";
 
 /**
