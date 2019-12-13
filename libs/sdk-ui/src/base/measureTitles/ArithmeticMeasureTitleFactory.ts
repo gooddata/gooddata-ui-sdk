@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import IntlStore from "../localization/IntlStore";
-import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../interfaces/MeasureTitle";
+import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
 
 /**
@@ -9,7 +9,7 @@ import { ILocale } from "../localization/Locale";
  *
  * @internal
  */
-export default class ArithmeticMeasureTitleFactory {
+export class ArithmeticMeasureTitleFactory {
     private readonly locale: ILocale;
 
     /**

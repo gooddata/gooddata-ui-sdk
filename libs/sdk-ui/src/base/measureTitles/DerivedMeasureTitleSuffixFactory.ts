@@ -9,7 +9,7 @@ import { ILocale } from "../localization/Locale";
  *
  * @internal
  */
-export default class DerivedMeasureTitleSuffixFactory {
+export class DerivedMeasureTitleSuffixFactory {
     private readonly locale: ILocale;
 
     /**

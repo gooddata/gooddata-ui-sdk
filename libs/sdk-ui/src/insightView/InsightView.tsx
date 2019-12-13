@@ -33,7 +33,7 @@ import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetF
 import { ErrorComponent, IErrorProps } from "../base/react/ErrorComponent";
 import { LoadingComponent, ILoadingProps } from "../base/react/LoadingComponent";
 import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
-import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
+import { fillMissingTitles } from "../base/measureTitles/fillMissingTitles";
 import { DefaultLocale, ILocale } from "../base/localization/Locale";
 import { withContexts } from "../base/react/withContexts";
 

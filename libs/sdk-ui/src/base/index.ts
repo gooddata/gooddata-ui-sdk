@@ -50,3 +50,12 @@ export {
 } from "./headerMatching/HeaderPredicate";
 import * as HeaderPredicates from "./headerMatching/HeaderPredicateFactory";
 export { HeaderPredicates };
+
+/*
+ * Derived measure title generation
+ */
+
+export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasureTitleFactory";
+export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory";
+export { fillMissingTitles } from "./measureTitles/fillMissingTitles";
+export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle";

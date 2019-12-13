@@ -6,7 +6,7 @@ import {
     bucketMeasures,
     idMatchMeasure,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles } from "../measureTitleHelper";
+import { fillMissingTitles } from "../fillMissingTitles";
 import {
     insightWithPoP,
     insightWithPoPAndAlias,
