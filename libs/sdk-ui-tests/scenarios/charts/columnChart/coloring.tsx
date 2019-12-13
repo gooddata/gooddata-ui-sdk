@@ -1,16 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
+import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
-import { ColumnChart, HeaderPredicateFactory, IColumnChartProps } from "@gooddata/sdk-ui";
+import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
+import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates";
+import { coloringCustomizer } from "../_infra/coloringVariants";
 import {
     ColumnChartViewByDateAndPop,
     ColumnChartWithSingleMeasureViewByAndStackBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base";
-import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
@@ -25,13 +23,11 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(
-                        measureLocalId(ReferenceLdm.Amount),
-                    ),
+                    predicate: AmountMeasurePredicate,
                     color: BlackColor,
                 },
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
+                    predicate: WonMeasurePredicate,
                     color: CustomPaletteColor,
                 },
             ],
@@ -43,7 +39,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
+                    predicate: WonMeasurePredicate,
                     color: BlackColor,
                 },
             ],

@@ -1,15 +1,38 @@
 // (C) 2007-2018 GoodData Corporation
-import { IMappingHeader } from "../interfaces/MappingHeader";
 import {
+    IAttributeDescriptor,
+    IMeasureDescriptor,
+    IResultAttributeHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
+    ITotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
 
+/**
+ * TODO: SDK8: remove this, replace with something more meaningful
+ * @public
+ */
+export type IMappingHeader =
+    | IAttributeDescriptor
+    | IResultAttributeHeader
+    | IMeasureDescriptor
+    | ITotalDescriptor;
+
+//
+//
+//
+
+/**
+ * @internal
+ */
 export function hasMappingHeaderLocalIdentifier(header: IMappingHeader): boolean {
     return isAttributeDescriptor(header) || isMeasureDescriptor(header);
 }
 
+/**
+ * @internal
+ */
 export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.localIdentifier;
@@ -21,6 +44,9 @@ export function getMappingHeaderLocalIdentifier(header: IMappingHeader): string 
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no localIdentifier`);
 }
 
+/**
+ * @internal
+ */
 export function getMappingHeaderName(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.formOf.name;
@@ -33,6 +59,9 @@ export function getMappingHeaderName(header: IMappingHeader): string {
     }
 }
 
+/**
+ * @internal
+ */
 export function getMappingHeaderIdentifier(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.identifier;
@@ -43,6 +72,9 @@ export function getMappingHeaderIdentifier(header: IMappingHeader): string {
     throw new Error(`Mapping header of type "${Object.keys(header)}" has no identifier`);
 }
 
+/**
+ * @internal
+ */
 export function getMappingHeaderUri(header: IMappingHeader): string {
     if (isAttributeDescriptor(header)) {
         return header.attributeHeader.uri;

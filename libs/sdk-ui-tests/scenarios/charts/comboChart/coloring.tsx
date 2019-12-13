@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { scenariosFor } from "../../../src";
-import { ComboChart, HeaderPredicateFactory, IComboChartProps } from "@gooddata/sdk-ui";
+import { ComboChart, HeaderPredicates, IComboChartProps } from "@gooddata/sdk-ui";
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors";
@@ -20,13 +20,11 @@ const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(
-                        measureLocalId(ReferenceLdm.Amount),
-                    ),
+                    predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Amount)),
                     color: BlackColor,
                 },
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
+                    predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
                     color: CustomPaletteColor,
                 },
             ],

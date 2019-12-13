@@ -60,4 +60,7 @@
     -   TODO: add description & migration guide
 
 -   Model helpers replaced by factory functions and moved to sdk-model
+
     -   TODO: add description & migration guide
+
+-   The exported HeaderPredicateFactory is now exported as HeaderPredicates

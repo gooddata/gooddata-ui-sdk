@@ -14,7 +14,7 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../../constants/dimensions";
 
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
 import { IChartOptions } from "../../Config";
 
 export function generateChartOptions(

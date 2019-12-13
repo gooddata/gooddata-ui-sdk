@@ -42,7 +42,7 @@ import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingCo
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { uriMatch } from "../../../base/factory/HeaderPredicateFactory";
+import { uriMatch } from "../../../base/headerMatching/HeaderPredicateFactory";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);

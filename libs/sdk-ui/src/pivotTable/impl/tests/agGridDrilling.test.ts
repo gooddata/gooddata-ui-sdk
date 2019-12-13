@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/headerMatching/MappingHeader";
 import { createIntlMock } from "../../../base/localization/intlUtils";
 import { assignDrillItemsAndType, getDrillRowData, getMeasureDrillItem } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";

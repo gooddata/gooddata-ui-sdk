@@ -1,8 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { getMappingHeaderName } from "../../base/helpers/mappingHeader";
 import { unwrap } from "../../base/helpers/utils";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { getMappingHeaderName, IMappingHeader } from "../../base/headerMatching/MappingHeader";
 import { getIdsFromUri, getTreeLeaves } from "./agGridUtils";
 import {
     COLUMN_GROUPING_DELIMITER,

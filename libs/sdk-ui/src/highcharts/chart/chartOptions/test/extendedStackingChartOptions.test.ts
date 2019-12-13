@@ -6,7 +6,7 @@ import { MeasureColorStrategy } from "../../colorFactory";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeUri, measureUri } from "@gooddata/sdk-model";
-import { uriMatch } from "../../../../base/factory/HeaderPredicateFactory";
+import { uriMatch } from "../../../../base/headerMatching/HeaderPredicateFactory";
 import { DEFAULT_COLOR_PALETTE } from "../../../Config";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 

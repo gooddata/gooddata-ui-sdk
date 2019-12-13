@@ -1,12 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
+import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate";
 import {
     getMappingHeaderIdentifier,
     getMappingHeaderLocalIdentifier,
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
-} from "../helpers/mappingHeader";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../interfaces/MappingHeader";
+    IMappingHeader,
+} from "./MappingHeader";
 import {
     DataViewFacade,
     IMeasureDescriptor,
@@ -177,6 +177,11 @@ export function uriMatch(uri: string): IHeaderPredicate {
     };
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function identifierMatch(identifier: string): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;
@@ -206,6 +211,11 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
     };
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function attributeItemNameMatch(name: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         return isResultAttributeHeader(header)
@@ -214,6 +224,11 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate {
     };
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
@@ -224,10 +239,20 @@ export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate 
     };
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function composedFromUri(uri: string): IHeaderPredicate {
     return composedFromQualifier(uriMatch(uri));
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function composedFromIdentifier(identifier: string): IHeaderPredicate {
     return composedFromQualifier(identifierMatch(identifier));
 }

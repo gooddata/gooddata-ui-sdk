@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IHeaderPredicateContext } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicateContext } from "../HeaderPredicate";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 

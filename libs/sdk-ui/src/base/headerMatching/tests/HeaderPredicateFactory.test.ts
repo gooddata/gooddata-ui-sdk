@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
     measureDescriptors,

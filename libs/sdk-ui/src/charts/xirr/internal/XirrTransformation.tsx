@@ -5,7 +5,7 @@ import noop = require("lodash/noop");
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/helpers/drilling";
 import { IChartConfig } from "../../../highcharts";
 import { IDrillableItem, IDrillEventCallback } from "../../../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
 import { getHeadlineData, applyDrillableItems, buildDrillEventData } from "./utils/XirrTransformationUtils";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/Headline";

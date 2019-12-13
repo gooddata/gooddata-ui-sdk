@@ -15,6 +15,7 @@
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "baseUrl": "../..",
         "paths": {
             "@gooddata/sdk-ui": ["libs/sdk-ui/src"],

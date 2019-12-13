@@ -7,7 +7,6 @@ import { Kpi } from "./kpi/Kpi";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/constants/visualizationTypes";
 // import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./base/interfaces/PushData";
 import * as BucketNames from "./base/constants/bucketNames";
 import * as MeasureTitleHelper from "./base/helpers/measureTitleHelper";
@@ -20,8 +19,6 @@ import { Executor } from "./execution/Executor";
 // tslint:disable-next-line:no-duplicate-imports
 import { IMeasureTitleProps, IArithmeticMeasureTitleProps } from "./base/interfaces/MeasureTitle";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
-import * as HeaderPredicateFactory from "./base/factory/HeaderPredicateFactory";
-import * as MappingHeader from "./base/interfaces/MappingHeader";
 
 import { InsightView } from "./insightView/InsightView";
 
@@ -46,9 +43,6 @@ export {
     OverTimeComparisonType,
     OverTimeComparisonTypes,
     SortsHelper,
-    IHeaderPredicate,
-    HeaderPredicateFactory,
-    MappingHeader,
     InsightView,
 };
 

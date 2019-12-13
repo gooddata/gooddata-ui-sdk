@@ -1,10 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
+import { ILineChartProps, LineChart } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
-import { HeaderPredicateFactory, LineChart, ILineChartProps } from "@gooddata/sdk-ui";
-import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { AmountMeasurePredicate } from "../../_infra/predicates";
+import { coloringCustomizer } from "../_infra/coloringVariants";
 import { LineChartTwoMeasuresWithTrendyBy } from "./base";
 
 const colorsAndPalette = scenariosFor<ILineChartProps>("LineChart", LineChart)
@@ -20,9 +19,7 @@ const colorAssignment = scenariosFor<ILineChartProps>("LineChart", LineChart)
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(
-                        measureLocalId(ReferenceLdm.Amount),
-                    ),
+                    predicate: AmountMeasurePredicate,
                     color: BlackColor,
                 },
             ],

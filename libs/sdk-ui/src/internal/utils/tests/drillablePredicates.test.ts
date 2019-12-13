@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
-import * as HeaderPredicateFactory from "../../../base/factory/HeaderPredicateFactory";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
+import * as HeaderPredicateFactory from "../../../base/headerMatching/HeaderPredicateFactory";
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: SpyInstance;

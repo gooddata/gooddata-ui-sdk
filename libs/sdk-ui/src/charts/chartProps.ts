@@ -5,7 +5,7 @@ import { IErrorProps } from "../base/react/ErrorComponent";
 import { ILoadingProps } from "../base/react/LoadingComponent";
 import { IChartConfig } from "../highcharts";
 import { OnError, OnExportReady, OnLoadingChanged } from "../base/interfaces/Events";
-import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
 import { IDrillableItem, OnFiredDrillEvent } from "../base/interfaces/DrillEvents";
 import { IPushData } from "../base/interfaces/PushData";
 import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";

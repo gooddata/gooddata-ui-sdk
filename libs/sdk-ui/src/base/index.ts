@@ -37,3 +37,16 @@ export {
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
 export { createIntlMock, withIntl } from "./localization/intlUtils";
+
+/*
+ * Header matching & predicates
+ */
+
+export { IMappingHeader } from "./headerMatching/MappingHeader";
+export {
+    IHeaderPredicate,
+    IHeaderPredicateContext,
+    isHeaderPredicate,
+} from "./headerMatching/HeaderPredicate";
+import * as HeaderPredicates from "./headerMatching/HeaderPredicateFactory";
+export { HeaderPredicates };

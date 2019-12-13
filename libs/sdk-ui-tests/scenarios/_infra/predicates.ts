@@ -2,28 +2,26 @@
 
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureIdentifier } from "@gooddata/sdk-model";
-import { HeaderPredicateFactory } from "@gooddata/sdk-ui";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
 
 /**
  * Predicates matching particular attribute elements
  */
 export const AttributeElements = {
     Product: {
-        Explorer: HeaderPredicateFactory.attributeItemNameMatch("Explorer"),
-        WonderKid: HeaderPredicateFactory.attributeItemNameMatch("WonderKid"),
+        Explorer: HeaderPredicates.attributeItemNameMatch("Explorer"),
+        WonderKid: HeaderPredicates.attributeItemNameMatch("WonderKid"),
     },
     Region: {
-        EastCoast: HeaderPredicateFactory.attributeItemNameMatch("East Coast"),
-        WestCoast: HeaderPredicateFactory.attributeItemNameMatch("West Coast"),
+        EastCoast: HeaderPredicates.attributeItemNameMatch("East Coast"),
+        WestCoast: HeaderPredicates.attributeItemNameMatch("West Coast"),
     },
 };
 
-export const AmountMeasurePredicate = HeaderPredicateFactory.identifierMatch(
+export const AmountMeasurePredicate = HeaderPredicates.identifierMatch(
     measureIdentifier(ReferenceLdm.Amount)!,
 );
-export const WonMeasurePredicate = HeaderPredicateFactory.identifierMatch(
-    measureIdentifier(ReferenceLdm.Won)!,
-);
-export const SampleXirrMeasurePredicate = HeaderPredicateFactory.identifierMatch(
+export const WonMeasurePredicate = HeaderPredicates.identifierMatch(measureIdentifier(ReferenceLdm.Won)!);
+export const SampleXirrMeasurePredicate = HeaderPredicates.identifierMatch(
     measureIdentifier(ReferenceLdm.SampleXIRR)!,
 );

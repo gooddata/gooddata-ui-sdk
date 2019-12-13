@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-import * as headerPredicateFactory from "../../factory/HeaderPredicateFactory";
-import { context, measureDescriptors } from "../../factory/tests/HeaderPredicateFactory.fixtures";
-import { IMappingHeader } from "../../interfaces/MappingHeader";
-import { IHeaderPredicate } from "../../interfaces/HeaderPredicate";
-import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../drilling";
+import * as headerPredicateFactory from "../HeaderPredicateFactory";
+import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures";
+import { IMappingHeader } from "../MappingHeader";
+import { IHeaderPredicate } from "../HeaderPredicate";
+import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../helpers/drilling";
 import { emptyFacade } from "../../../../__mocks__/fixtures";
 
 describe("isSomeHeaderPredicateMatched", () => {

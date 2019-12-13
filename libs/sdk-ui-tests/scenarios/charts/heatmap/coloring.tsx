@@ -1,10 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
+import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
-import { HeaderPredicateFactory, Heatmap, IHeatmapProps } from "@gooddata/sdk-ui";
-import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { AmountMeasurePredicate } from "../../_infra/predicates";
+import { coloringCustomizer } from "../_infra/coloringVariants";
 import { HeatmapWithMeasureRowsAndColumns } from "./base";
 
 const colorsAndPalette = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
@@ -20,9 +19,7 @@ const colorAssignment = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(
-                        measureLocalId(ReferenceLdm.Amount),
-                    ),
+                    predicate: AmountMeasurePredicate,
                     color: BlackColor,
                 },
             ],

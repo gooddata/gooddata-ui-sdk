@@ -13,7 +13,7 @@ import {
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,
 } from "../../../../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../../base/headerMatching/HeaderPredicate";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
 import { Identifier } from "@gooddata/sdk-model";
 

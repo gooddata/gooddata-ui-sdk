@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as HeaderPredicateFactory from "../../base/factory/HeaderPredicateFactory";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
+import * as HeaderPredicateFactory from "../../base/headerMatching/HeaderPredicateFactory";
+import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
 import isArray = require("lodash/isArray");
 import uniq = require("lodash/uniq");
 

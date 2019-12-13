@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
 import {
     getColorMappingPredicate,
     getColorPaletteFromColors,
@@ -12,7 +12,7 @@ import {
     attributeHeaderItem,
     context,
     measureDescriptors,
-} from "../../../base/factory/tests/HeaderPredicateFactory.fixtures";
+} from "../../../base/headerMatching/tests/HeaderPredicateFactory.fixtures";
 import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
 
 describe("Transformation", () => {

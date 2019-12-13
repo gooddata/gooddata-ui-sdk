@@ -37,8 +37,8 @@ import {
 } from "../../base/helpers/executionResultHelper";
 import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
 import { unwrap } from "../../base/helpers/utils";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
+import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
 import {
     IAxis,

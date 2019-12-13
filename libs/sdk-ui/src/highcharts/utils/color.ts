@@ -1,10 +1,9 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
 import { IChartConfig } from "../Config";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/headerMatching/HeaderPredicate";
+import { getMappingHeaderLocalIdentifier, IMappingHeader } from "../../base/headerMatching/MappingHeader";
 import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
 import { IColorMapping } from "../../base/interfaces/Colors";
 import isEmpty = require("lodash/isEmpty");

@@ -37,8 +37,8 @@ import {
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
 } from "../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../base/interfaces/MappingHeader";
+import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
+import { IMappingHeader } from "../base/headerMatching/MappingHeader";
 import { ErrorComponent } from "../base/react/ErrorComponent";
 import { LoadingComponent } from "../base/react/LoadingComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";

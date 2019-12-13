@@ -6,7 +6,7 @@ import * as React from "react";
 import { convertDrillableItemsToPredicates } from "../../base/helpers/drilling";
 import { IDrillableItem, OnFiredDrillEvent } from "../../base/interfaces/DrillEvents";
 import { OnLegendReady } from "../../base/interfaces/Events";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";

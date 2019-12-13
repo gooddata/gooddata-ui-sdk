@@ -5,7 +5,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/helpers/drilling";
 import { IChartConfig } from "../../../highcharts";
 import { IDrillableItem, IDrillEventCallback } from "../../../base/interfaces/DrillEvents";
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
 import {
     applyDrillableItems,

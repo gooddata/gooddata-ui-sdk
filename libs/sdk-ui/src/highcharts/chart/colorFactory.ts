@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     IRgbColorValue,
     IColor,
@@ -13,7 +13,7 @@ import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@goo
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
 import { DEFAULT_COLOR_PALETTE } from "../Config";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,

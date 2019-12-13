@@ -7,7 +7,7 @@ import {
     isTotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import * as CustomEventPolyfill from "custom-event";
-import { identifierMatch, uriMatch } from "../factory/HeaderPredicateFactory";
+import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
 import {
     IDrillableItem,
     IDrillEventIntersectionElement,
@@ -16,8 +16,8 @@ import {
     IDrillEventCallback,
     IDrillEvent,
 } from "../interfaces/DrillEvents";
-import { IHeaderPredicate, isHeaderPredicate } from "../interfaces/HeaderPredicate";
-import { IMappingHeader } from "../interfaces/MappingHeader";
+import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
+import { IMappingHeader } from "../headerMatching/MappingHeader";
 
 export function isSomeHeaderPredicateMatched(
     drillablePredicates: IHeaderPredicate[],
