@@ -2,7 +2,7 @@
 import capitalize = require("lodash/capitalize");
 import isEqual = require("lodash/isEqual");
 import { ILocale } from "../../../../base";
-import IntlStore from "../../../../base/translations/IntlStore";
+import IntlStore from "../../../../base/localization/IntlStore";
 import { granularityIntlCodes } from "../../constants/i18n";
 import { IMessageTranslator, IDateTranslator, IDateAndMessageTranslator } from "./Translators";
 import { convertPlatformDateStringToDate } from "../DateConversions";

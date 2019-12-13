@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
+import { DefaultLocale } from "../../../../base";
 import noop = require("lodash/noop");
 import { ConfigSection, IConfigSectionProps } from "../ConfigSection";
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("ConfigSection", () => {
     const defaultProps = {
@@ -12,7 +12,7 @@ describe("ConfigSection", () => {
         properties: {},
         propertiesMeta: {},
         title: "properties.legend.title",
-        intl: createInternalIntl(DEFAULT_LOCALE),
+        intl: createInternalIntl(DefaultLocale),
         pushData: noop,
     };
 

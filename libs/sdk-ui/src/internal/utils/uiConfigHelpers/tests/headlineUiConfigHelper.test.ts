@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
+import { DefaultLocale } from "../../../../base";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { getHeadlineUiConfig } from "../headlineUiConfigHelper";
 import * as referencePointMocks from "../../../mocks/referencePointMocks";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("headlineUiConfigHelper", () => {
     describe("getHeadlineUiConfig", () => {
-        const intl = createInternalIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DefaultLocale);
 
         describe("'canAddItems' property", () => {
             const uiConfig = getHeadlineUiConfig(

@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import noop = require("lodash/noop");
-import { IntlWrapper } from "../../../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../../../base/localization/IntlWrapper";
 import { MasterIndex } from "../../../../../__mocks__/recordings/playlist";
 import { waitForAsync } from "../../../../../testUtils/synchronization";
 

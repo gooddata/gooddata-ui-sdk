@@ -13,3 +13,8 @@ export type ILocale =
     | "pt-BR"
     | "pt-PT"
     | "zh-Hans";
+
+/**
+ * @public
+ */
+export const DefaultLocale: ILocale = "en-US";

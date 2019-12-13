@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     IInsight,
     IBucket,
@@ -25,7 +25,7 @@ import DerivedMeasureTitleSuffixFactory from "../factory/DerivedMeasureTitleSuff
 import ArithmeticMeasureTitleFactory from "../factory/ArithmeticMeasureTitleFactory";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { IMeasureTitleProps } from "../interfaces/MeasureTitle";
-import { ILocale } from "../interfaces/Locale";
+import { ILocale } from "../localization/Locale";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 

@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../../base/translations/TranslationsProvider";
+} from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";

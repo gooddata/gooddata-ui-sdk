@@ -8,12 +8,11 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
 import { VisualizationEnvironment } from "../../../../../base/constants/visualizationTypes";
-import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
 import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
-import { ILocale } from "../../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../../base/localization/Locale";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -62,7 +61,7 @@ describe("PluggableBaseChart", () => {
 
         return (
             <BaseChartConfigurationPanel
-                locale={DEFAULT_LOCALE}
+                locale={DefaultLocale}
                 properties={properties}
                 insight={insight}
                 pushData={noop}

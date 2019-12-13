@@ -5,7 +5,7 @@ import {
     getHeadlineData,
     IHeadlineDrillItemContext,
 } from "../HeadlineTransformationUtils";
-import { createIntlMock } from "../../../../../base/helpers/intlUtils";
+import { createIntlMock } from "../../../../../base/localization/intlUtils";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,

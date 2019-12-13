@@ -12,7 +12,7 @@ import Menu from "../../src/pivotTable/menu/Menu";
 import SubMenu, { ISubMenuProps } from "../../src/pivotTable/menu/SubMenu";
 import { IOnOpenedChangeParams } from "../../src/pivotTable/menu/MenuSharedTypes";
 import { EXECUTION_RESPONSE_2A_3M } from "../../src/highcharts/table/fixtures/2attributes3measures";
-import { createIntlMock } from "../../src/base/helpers/intlUtils";
+import { createIntlMock } from "../../src/base/localization/intlUtils";
 import { IMenuAggregationClickConfig } from "../../src/pivotTable/types";
 import {
     ATTRIBUTE_HEADERS_3A_LONG_NAME,

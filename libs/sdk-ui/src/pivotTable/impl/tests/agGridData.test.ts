@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { createIntlMock } from "../../../base/helpers/intlUtils";
+import { createIntlMock } from "../../../base/localization/intlUtils";
 import { createTableHeaders } from "../agGridHeaders";
 import { getRow, getRowTotals } from "../agGridData";
 

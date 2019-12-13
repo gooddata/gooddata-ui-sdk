@@ -6,7 +6,7 @@ import { ChartType, VisualizationEnvironment } from "../../base/constants/visual
 import * as VisEvents from "../../base/interfaces/Events";
 import { IInsight, ITotal, VisualizationProperties, IColorPalette } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ILocale } from "../../base/interfaces/Locale";
+import { ILocale } from "../../base/localization/Locale";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;

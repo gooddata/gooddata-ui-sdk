@@ -9,7 +9,7 @@ import { Executor, IExecutorProps } from "../execution/Executor";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IntlWrapper } from "../base/translations/IntlWrapper";
+import { IntlWrapper } from "../base/localization/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
 import { withContexts } from "../base/context/withContexts";

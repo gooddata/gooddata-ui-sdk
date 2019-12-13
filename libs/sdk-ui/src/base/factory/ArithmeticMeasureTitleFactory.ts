@@ -1,7 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
-import IntlStore from "../translations/IntlStore";
+// (C) 2007-2019 GoodData Corporation
+import IntlStore from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "../interfaces/MeasureTitle";
-import { ILocale } from "../../base/interfaces/Locale";
+import { ILocale } from "../localization/Locale";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.

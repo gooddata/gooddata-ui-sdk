@@ -52,10 +52,9 @@ import {
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { ILocale } from "../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
@@ -74,7 +73,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
-        this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
+        this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.settings = props.featureFlags;
     }

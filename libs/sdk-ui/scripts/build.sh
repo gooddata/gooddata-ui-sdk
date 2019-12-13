@@ -10,8 +10,8 @@ _clean() {
 }
 
 _common-build() {
-    mkdir -p dist/base/translations
-    cp -rf src/base/translations/bundles dist/base/translations
+    mkdir -p dist/base/localization
+    cp -rf src/base/localization/bundles dist/base/localization
 
     mkdir dist/internal
     cp -rf src/internal/assets dist/internal/

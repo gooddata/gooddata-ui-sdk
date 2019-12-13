@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { IntlWrapper } from "../../src/base/translations/IntlWrapper";
+import { IntlWrapper } from "../../src/base/localization/IntlWrapper";
 
 export function wrap(
     component: any,

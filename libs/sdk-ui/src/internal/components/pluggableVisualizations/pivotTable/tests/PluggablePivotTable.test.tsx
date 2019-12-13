@@ -29,10 +29,9 @@ import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
 import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
-import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ILocale } from "../../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../../base/localization/Locale";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],
@@ -260,7 +259,7 @@ describe("PluggablePivotTable", () => {
 
     describe("update", () => {
         function getDefaultOptions(): IVisProps {
-            const locale: ILocale = DEFAULT_LOCALE;
+            const locale: ILocale = DefaultLocale;
             const drillableItems: IDrillableItem[] = [];
             return {
                 locale,

@@ -1,15 +1,15 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
+import { DefaultLocale } from "../../../../base/localization/Locale";
 import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 describe("comboChartUiConfigHelper", () => {
     describe("setComboChartUiConfigDeprecated", () => {
-        const intl = createInternalIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DefaultLocale);
         const refPointMock = {
             ...referencePointMock.twoMeasureBucketsReferencePoint,
             uiConfig: COMBO_CHART_UICONFIG_DEPRECATED,

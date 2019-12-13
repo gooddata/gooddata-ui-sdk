@@ -8,11 +8,11 @@ import { ILoadingProps } from "../../base/simple/LoadingComponent";
 
 import { Visualization, getValidColorPalette } from "../../highcharts";
 
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../../base/translations/TranslationsProvider";
+} from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
 import { OnLegendReady } from "../../base/interfaces/Events";
 import noop = require("lodash/noop");

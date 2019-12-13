@@ -18,11 +18,11 @@ import {
 } from "@gooddata/sdk-model";
 import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
 import omit = require("lodash/omit");
-import { IntlWrapper } from "../base/translations/IntlWrapper";
+import { IntlWrapper } from "../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../base/translations/TranslationsProvider";
+} from "../base/localization/TranslationsProvider";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withContexts } from "../base/context/withContexts";
 

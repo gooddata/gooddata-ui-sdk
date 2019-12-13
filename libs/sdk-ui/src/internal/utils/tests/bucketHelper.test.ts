@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
+import { DefaultLocale } from "../../../base";
 import { ATTRIBUTE, DATE_DATASET_ATTRIBUTE, METRIC } from "../../constants/bucket";
 import {
     applyUiConfig,
@@ -49,7 +50,6 @@ import { createInternalIntl } from "../internalIntlProvider";
 import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
 import * as BucketNames from "../../../base/constants/bucketNames";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { DEFAULT_LOCALE } from "../../../base/constants/localization";
 import { IBucket } from "@gooddata/sdk-model";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../mocks/visualizationObjectMocks";
 
@@ -200,7 +200,7 @@ describe("Bucket title", () => {
 
     it("should set translated bucket titles for all buckets except filters when intl provided", () => {
         const visualizationType = VisualizationTypes.BAR;
-        const intl = createInternalIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DefaultLocale);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");
@@ -235,7 +235,7 @@ describe("Bucket title", () => {
 
     it("should not create bucket titles for disabled buckets", () => {
         const visualizationType = VisualizationTypes.PIE;
-        const intl = createInternalIntl(DEFAULT_LOCALE);
+        const intl = createInternalIntl(DefaultLocale);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");

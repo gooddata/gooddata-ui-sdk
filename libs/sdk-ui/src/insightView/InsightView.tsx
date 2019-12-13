@@ -34,8 +34,7 @@ import { ErrorComponent, IErrorProps } from "../base/simple/ErrorComponent";
 import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent";
 import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
 import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
-import { DEFAULT_LOCALE } from "../base/constants/localization";
-import { ILocale } from "../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../base/localization/Locale";
 import { withContexts } from "../base/context/withContexts";
 
 const VisualizationsCatalog = {
@@ -93,7 +92,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
         filters: [],
-        locale: DEFAULT_LOCALE,
+        locale: DefaultLocale,
         LoadingComponent,
         pushData: noop,
     };

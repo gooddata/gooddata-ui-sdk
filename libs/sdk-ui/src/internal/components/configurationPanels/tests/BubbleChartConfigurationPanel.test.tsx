@@ -2,8 +2,7 @@
 import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
-import { VisualizationTypes } from "../../../..";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
+import { DefaultLocale, VisualizationTypes } from "../../../..";
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../mocks/testMocks";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
 import ConfigSection from "../../configurationControls/ConfigSection";
@@ -41,7 +40,7 @@ describe("BubbleChartconfigurationPanel", () => {
             insight: insightWithSingleMeasure,
             isError: false,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         };
 
         const wrapper = createComponent(props);
@@ -54,7 +53,7 @@ describe("BubbleChartconfigurationPanel", () => {
             insight: insightWithSingleAttribute,
             isError: false,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         };
 
         const wrapper = createComponent(props);
@@ -67,7 +66,7 @@ describe("BubbleChartconfigurationPanel", () => {
             insight: insightWithSingleMeasure,
             isError: true,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         };
 
         const wrapper = createComponent(props);
@@ -80,7 +79,7 @@ describe("BubbleChartconfigurationPanel", () => {
             insight: insightWithSingleMeasure,
             isError: false,
             isLoading: true,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         };
 
         const wrapper = createComponent(props);
@@ -92,7 +91,7 @@ describe("BubbleChartconfigurationPanel", () => {
         const defaultProps: IConfigurationPanelContentProps = {
             isError: false,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
             type: VisualizationTypes.BUBBLE,
             featureFlags: {
                 enableAxisNameConfiguration: true,

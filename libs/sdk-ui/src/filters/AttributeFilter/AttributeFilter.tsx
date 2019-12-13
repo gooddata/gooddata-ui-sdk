@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 
 interface IAttributeFilterProps {

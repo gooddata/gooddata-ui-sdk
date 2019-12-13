@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
-import { IntlWrapper } from "../../../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../../../base/localization/IntlWrapper";
 
 import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
 import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm";

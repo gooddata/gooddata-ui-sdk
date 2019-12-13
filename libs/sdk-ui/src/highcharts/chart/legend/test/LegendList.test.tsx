@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import LegendList, { LegendSeparator } from "../LegendList";
 import { transformToDualAxesSeries } from "../helpers";
-import { withIntl } from "../../../../base/helpers/intlUtils";
+import { withIntl } from "../../../../base/localization/intlUtils";
 import LegendItem from "../LegendItem";
 import noop = require("lodash/noop");
 import { LegendAxisIndicator } from "../LegendAxisIndicator";

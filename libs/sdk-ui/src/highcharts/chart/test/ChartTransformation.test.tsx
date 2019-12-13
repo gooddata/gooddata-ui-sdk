@@ -13,7 +13,7 @@ import { IColorPaletteItem } from "@gooddata/sdk-model";
 import Chart from "../Chart";
 import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
-import { IntlWrapper } from "../../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../../base/localization/IntlWrapper";
 
 describe("ChartTransformation", () => {
     const defaultProps = {

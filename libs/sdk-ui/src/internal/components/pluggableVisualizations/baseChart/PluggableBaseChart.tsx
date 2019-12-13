@@ -61,7 +61,6 @@ import { generateDimensions } from "../../../utils/dimensions";
 import * as BucketNames from "../../../../base/constants/bucketNames";
 import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
 import * as VisEvents from "../../../../base/interfaces/Events";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     bucketsIsEmpty,
     IColorMappingItem,
@@ -74,7 +73,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
-import { ILocale } from "../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
@@ -117,7 +116,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.environment = props.environment;
         this.callbacks = props.callbacks;
         this.type = VisualizationTypes.COLUMN;
-        this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
+        this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.onError = props.callbacks.onError && this.onError.bind(this);

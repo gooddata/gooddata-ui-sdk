@@ -44,7 +44,6 @@ import { getReferencePointWithSupportedProperties } from "../../../utils/propert
 import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
 import { generateDimensions } from "../../../utils/dimensions";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -67,7 +66,7 @@ import {
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
-import { ILocale } from "../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
@@ -270,7 +269,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
-        this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
+        this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;

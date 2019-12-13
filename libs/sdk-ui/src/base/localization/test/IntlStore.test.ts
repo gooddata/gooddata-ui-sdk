@@ -1,14 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
-import IntlStore from "../../translations/IntlStore";
-import { DEFAULT_LOCALE } from "../../constants/localization";
-import { ILocale } from "../../interfaces/Locale";
+// (C) 2007-2019 GoodData Corporation
+import IntlStore from "../IntlStore";
+import { DefaultLocale, ILocale } from "../Locale";
 
 describe("IntlStore", () => {
     describe("getIntl", () => {
         it("should return intlProvider for default locale (en-US)", () => {
             const intl = IntlStore.getIntl();
 
-            expect(intl.locale).toEqual(DEFAULT_LOCALE);
+            expect(intl.locale).toEqual(DefaultLocale);
         });
 
         it("should return specific locale from supported list of localizations", () => {
@@ -18,12 +17,12 @@ describe("IntlStore", () => {
 
         it("should return default locale when locale is null", () => {
             const intl = IntlStore.getIntl(null);
-            expect(intl.locale).toEqual(DEFAULT_LOCALE);
+            expect(intl.locale).toEqual(DefaultLocale);
         });
 
         it("should return default locale when locale is undefined", () => {
             const intl = IntlStore.getIntl(undefined);
-            expect(intl.locale).toEqual(DEFAULT_LOCALE);
+            expect(intl.locale).toEqual(DefaultLocale);
         });
     });
 

@@ -2,7 +2,7 @@
 
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
-import { createIntlMock } from "../../../base/helpers/intlUtils";
+import { createIntlMock } from "../../../base/localization/intlUtils";
 import { assignDrillItemsAndType, getDrillRowData, getMeasureDrillItem } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";

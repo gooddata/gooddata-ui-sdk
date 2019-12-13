@@ -3,7 +3,6 @@ import isEmpty = require("lodash/isEmpty");
 
 import { InjectedIntl, IntlProvider, addLocaleData } from "react-intl";
 import { translations } from "@gooddata/js-utils";
-import { DEFAULT_LOCALE } from "../constants/localization";
 
 import * as deLocaleData from "react-intl/locale-data/de";
 import * as esLocaleData from "react-intl/locale-data/es";
@@ -22,7 +21,7 @@ import * as nlNL from "./bundles/nl-NL.json";
 import * as ptBR from "./bundles/pt-BR.json";
 import * as ptPT from "./bundles/pt-PT.json";
 import * as zhHans from "./bundles/zh-Hans.json";
-import { ILocale } from "../interfaces/Locale";
+import { DefaultLocale, ILocale } from "./Locale";
 
 const messagesMap = {
     "en-US": translations.removeMetadata(enUS),
@@ -43,16 +42,16 @@ function createIntl(locale: ILocale): InjectedIntl {
     return intlProvider.getChildContext().intl;
 }
 
-function getIntl(locale: ILocale = DEFAULT_LOCALE): InjectedIntl {
+export function getIntl(locale: ILocale = DefaultLocale): InjectedIntl {
     let usedLocale = locale;
     if (isEmpty(locale)) {
-        usedLocale = DEFAULT_LOCALE;
+        usedLocale = DefaultLocale;
     }
 
     return intlStore[usedLocale] || (intlStore[usedLocale] = createIntl(usedLocale));
 }
 
-function getTranslation(translationId: string, locale: ILocale, values = {}): string {
+export function getTranslation(translationId: string, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
 }

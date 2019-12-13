@@ -2,7 +2,7 @@
 import * as React from "react";
 import { IntlProvider, addLocaleData } from "react-intl";
 import { translations } from "@gooddata/js-utils";
-import { DEFAULT_LOCALE } from "../constants/localization";
+import { DefaultLocale } from "./Locale";
 
 import * as deLocaleData from "react-intl/locale-data/de";
 import * as esLocaleData from "react-intl/locale-data/es";
@@ -52,7 +52,7 @@ export interface IIntlWrapperProps {
 
 export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     public static defaultProps: IIntlWrapperProps = {
-        locale: DEFAULT_LOCALE,
+        locale: DefaultLocale,
     };
     public render() {
         const { locale } = this.props;
