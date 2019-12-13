@@ -39,8 +39,8 @@ import {
 } from "../base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
 import { IMappingHeader } from "../base/interfaces/MappingHeader";
-import { ErrorComponent } from "../base/simple/ErrorComponent";
-import { LoadingComponent } from "../base/simple/LoadingComponent";
+import { ErrorComponent } from "../base/react/ErrorComponent";
+import { LoadingComponent } from "../base/react/LoadingComponent";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {

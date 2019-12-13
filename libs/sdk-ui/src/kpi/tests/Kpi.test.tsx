@@ -5,8 +5,8 @@ import { Kpi } from "../Kpi";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { newMeasure } from "@gooddata/sdk-model";
 import { FormattedNumber } from "../FormattedNumber";
-import { createDummyPromise } from "../../base/promise/tests/toolkit";
-import { LoadingComponent } from "../../base/simple/LoadingComponent";
+import { createDummyPromise } from "../../base/react/tests/toolkit";
+import { LoadingComponent } from "../../base/react/LoadingComponent";
 
 const testCustomFormat = "$#,#.##";
 const testMeasure = newMeasure("m1", m => m.localId("m1").format(testCustomFormat));

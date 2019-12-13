@@ -3,8 +3,8 @@
 import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
 import { IHeaderPredicate } from "./HeaderPredicate";
 import * as React from "react";
-import { IErrorProps } from "../simple/ErrorComponent";
-import { ILoadingProps } from "../simple/LoadingComponent";
+import { IErrorProps } from "../react/ErrorComponent";
+import { ILoadingProps } from "../react/LoadingComponent";
 import { OnError, OnExportReady, OnLoadingChanged } from "./Events";
 import { IPushData } from "./PushData";
 

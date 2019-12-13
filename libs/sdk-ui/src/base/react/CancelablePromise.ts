@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 
 /**
- * TODO: SDK8: add docs
  * @internal
  */
 export interface ICancelablePromise<T> {
@@ -10,7 +9,6 @@ export interface ICancelablePromise<T> {
 }
 
 /**
- * TODO: SDK8: add docs
  * @internal
  */
 export class CancelError extends Error {

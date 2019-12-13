@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { shallow } from "enzyme";
 import * as React from "react";
-import { LoadingComponent } from "../../../base/simple/LoadingComponent";
+import { LoadingComponent } from "../../../base/react/LoadingComponent";
 import { RowLoadingElement } from "../RowLoadingElement";
 import { ICellRendererParams } from "ag-grid-community";
 import noop = require("lodash/noop");

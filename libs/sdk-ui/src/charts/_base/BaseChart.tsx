@@ -3,8 +3,8 @@ import * as React from "react";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
 import { ICoreChartProps } from "../chartProps";
-import { IErrorProps } from "../../base/simple/ErrorComponent";
-import { ILoadingProps } from "../../base/simple/LoadingComponent";
+import { IErrorProps } from "../../base/react/ErrorComponent";
+import { ILoadingProps } from "../../base/react/LoadingComponent";
 
 import { Visualization, getValidColorPalette } from "../../highcharts";
 

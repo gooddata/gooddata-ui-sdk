@@ -8,7 +8,7 @@ import { Subtract } from "../../base/typings/subtract";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
-import { withContexts } from "../../base/context/withContexts";
+import { withContexts } from "../../base/react/withContexts";
 
 //
 // Public interface
