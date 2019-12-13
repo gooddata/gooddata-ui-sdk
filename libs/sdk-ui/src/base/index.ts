@@ -8,3 +8,6 @@ export { LoadingComponent, ILoadingProps } from "./simple/LoadingComponent";
 export { ErrorComponent, IErrorProps } from "./simple/ErrorComponent";
 
 export { DEFAULT_LOCALE } from "./constants/localization";
+
+export { BackendProvider, useBackend, withBackend } from "./context/BackendContext";
+export { WorkspaceProvider, useWorkspace, withWorkspace } from "./context/WorkspaceContext";
