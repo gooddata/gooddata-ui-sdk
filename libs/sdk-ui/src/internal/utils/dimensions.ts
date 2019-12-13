@@ -11,9 +11,9 @@ import {
     insightTotals,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../constants/limits";
-import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../constants/bucketNames";
-import { VisType, VisualizationTypes } from "../constants/visualizationTypes";
+import { ViewByAttributesLimit } from "../../charts";
+import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../../base/constants/bucketNames";
+import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
 
 export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const row = insightBucket(insight, ATTRIBUTE);
@@ -97,7 +97,7 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
     if (viewByAttributes.length > 1) {
         // only take first two view items
         const [viewItemIdentifier, stackItemIdentifier] = viewByAttributes
-            .slice(0, VIEW_BY_ATTRIBUTES_LIMIT)
+            .slice(0, ViewByAttributesLimit)
             .map(attributeLocalId);
         return [
             {

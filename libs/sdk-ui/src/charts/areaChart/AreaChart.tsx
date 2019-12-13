@@ -7,9 +7,9 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
+import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
@@ -73,7 +73,7 @@ export function getBucketsProps(
     stackBy: IAttribute[];
 } {
     const { measures, stackBy } = props;
-    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
+    const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
     if (viewBy.length <= 1) {
         return {
@@ -95,7 +95,7 @@ export function getBucketsProps(
 }
 
 export function getConfigProps(props: IAreaChartProps): IChartConfig {
-    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
+    const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
     if (viewBy.length <= 1) {
         return getStackConfiguration(props.config);
     }
@@ -113,7 +113,7 @@ export function getConfigProps(props: IAreaChartProps): IChartConfig {
  * @param props
  */
 export function verifyBuckets(props: IAreaChartProps): void {
-    const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
+    const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
     if (viewBy.length <= 1) {
         return;
     }

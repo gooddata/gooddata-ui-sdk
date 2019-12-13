@@ -9,7 +9,6 @@ import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/
 import { IDrillableItem } from "./base/interfaces/DrillEvents";
 import { IHeaderPredicate } from "./base/interfaces/HeaderPredicate";
 import { IPushData, IColorsData } from "./base/interfaces/PushData";
-import { generateDimensions } from "./base/helpers/dimensions";
 import * as BucketNames from "./base/constants/bucketNames";
 import * as MeasureTitleHelper from "./base/helpers/measureTitleHelper";
 import * as SortsHelper from "./base/helpers/sorts";
@@ -33,8 +32,6 @@ export {
     Kpi,
     Executor,
     withExecution,
-    generateDimensions,
-    // ICommonVisualizationProps,
     IDrillableItem,
     IPushData,
     IColorsData,

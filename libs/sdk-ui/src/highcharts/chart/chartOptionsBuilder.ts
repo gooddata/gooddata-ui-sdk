@@ -19,17 +19,14 @@ import {
     TERTIARY_MEASURES,
     VIEW,
 } from "../../base/constants/bucketNames";
+import { ViewByAttributesLimit } from "../../charts/_commons/limits";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
     STACK_BY_DIMENSION_INDEX,
     VIEW_BY_DIMENSION_INDEX,
-} from "../../base/constants/dimensions";
-import {
-    HEATMAP_DATA_POINTS_LIMIT,
-    PIE_CHART_LIMIT,
-    VIEW_BY_ATTRIBUTES_LIMIT,
-} from "../../base/constants/limits";
+} from "../constants/dimensions";
+import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits";
 import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
 import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/helpers/drilling";
@@ -1551,7 +1548,7 @@ export function getChartOptions(
     const { type } = config;
 
     const isViewByTwoAttributes =
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === VIEW_BY_ATTRIBUTES_LIMIT;
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === ViewByAttributesLimit;
     let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
     let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
     let stackByAttribute: IUnwrappedAttributeHeadersWithItems;

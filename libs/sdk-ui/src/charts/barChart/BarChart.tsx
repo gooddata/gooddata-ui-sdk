@@ -8,9 +8,9 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { ViewByAttributesLimit } from "../_commons/limits";
 import { IBucketChartProps } from "../chartProps";
 import { truncate } from "../_commons/truncate";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { sanitizeConfig } from "../../highcharts";
 import { CoreBarChart } from "./CoreBarChart";
 import { stackedChartDimensions } from "../_commons/dimensions";
@@ -25,7 +25,7 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const measures = applyRatioRule(props.measures);
-        const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT);
+        const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
         return [
             newBucket(MEASURES, ...measures),

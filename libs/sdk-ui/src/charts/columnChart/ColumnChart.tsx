@@ -7,8 +7,8 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
+import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
-import { VIEW_BY_ATTRIBUTES_LIMIT } from "../../base/constants/limits";
 import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
 import { sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
@@ -25,7 +25,7 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: props => {
         const measures = applyRatioRule(props.measures);
-        const viewBy = truncate(props.viewBy, VIEW_BY_ATTRIBUTES_LIMIT); // could be one or two attributes
+        const viewBy = truncate(props.viewBy, ViewByAttributesLimit); // could be one or two attributes
 
         return [
             newBucket(MEASURES, ...measures),

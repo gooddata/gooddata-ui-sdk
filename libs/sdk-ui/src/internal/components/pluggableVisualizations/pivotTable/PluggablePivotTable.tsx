@@ -43,7 +43,7 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
-import { generateDimensions } from "../../../../base/helpers/dimensions";
+import { generateDimensions } from "../../../utils/dimensions";
 import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     attributeLocalId,

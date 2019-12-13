@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { VisualizationTypes } from "../../constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
 import {
     generateDimensions,
     generateStackedDimensions,
@@ -12,7 +12,7 @@ import {
     singleAttributeInsight,
     singleMeasureInsight,
 } from "../../../../__mocks__/fixtures";
-import { ATTRIBUTE, COLUMNS, MEASURES } from "../../constants/bucketNames";
+import { ATTRIBUTE, COLUMNS, MEASURES } from "../../../base/constants/bucketNames";
 import {
     bucketsFind,
     IBucket,

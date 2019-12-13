@@ -57,7 +57,7 @@ import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualiza
 import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
 import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { generateDimensions } from "../../../../base/helpers/dimensions";
+import { generateDimensions } from "../../../utils/dimensions";
 import * as BucketNames from "../../../../base/constants/bucketNames";
 import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
 import * as VisEvents from "../../../../base/interfaces/Events";
