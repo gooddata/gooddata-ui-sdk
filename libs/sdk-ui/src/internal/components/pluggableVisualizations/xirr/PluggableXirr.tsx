@@ -45,12 +45,12 @@ import {
     IDimension,
     newDimension,
     bucketAttributes,
+    MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "../../../../base/interfaces/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import { CoreXirr } from "../../../../charts/xirr/CoreXirr";
-import { MEASUREGROUP } from "../../../../base/constants/dimensions";
 import { ATTRIBUTE } from "../../../../base/constants/bucketNames";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
@@ -167,9 +167,11 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         const attribute = insightBucket(insight, ATTRIBUTE);
 
         if (attribute && attribute.items.length) {
-            return [newDimension([MEASUREGROUP, ...bucketAttributes(attribute).map(attributeLocalId)])];
+            return [
+                newDimension([MeasureGroupIdentifier, ...bucketAttributes(attribute).map(attributeLocalId)]),
+            ];
         }
 
-        return [newDimension([MEASUREGROUP])];
+        return [newDimension([MeasureGroupIdentifier])];
     }
 }

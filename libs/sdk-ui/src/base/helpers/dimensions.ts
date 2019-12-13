@@ -9,10 +9,10 @@ import {
     insightAttributes,
     insightBucket,
     insightTotals,
+    MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { VIEW_BY_ATTRIBUTES_LIMIT } from "../constants/limits";
 import { ATTRIBUTE, COLUMNS, MEASURES, SEGMENT, STACK, TREND, VIEW } from "../constants/bucketNames";
-import { MEASUREGROUP } from "../constants/dimensions";
 import { VisType, VisualizationTypes } from "../constants/visualizationTypes";
 
 export function getPivotTableDimensions(insight: IInsight): IDimension[] {
@@ -23,7 +23,7 @@ export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const rowAttributeIds = row ? bucketAttributes(row).map(attributeLocalId) : [];
     const columnAttributeIds = columns ? bucketAttributes(columns).map(attributeLocalId) : [];
 
-    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MEASUREGROUP] : [];
+    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
 
     const totals = insightTotals(insight);
     const totalsProp = totals.length ? { totals } : {};
@@ -45,7 +45,7 @@ function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
     if (viewBy && !bucketIsEmpty(viewBy)) {
         return [
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
             {
                 itemIdentifiers: bucketAttributes(viewBy).map(attributeLocalId),
@@ -58,7 +58,7 @@ function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: [],
         },
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
     ];
 }
@@ -71,7 +71,7 @@ function getBarDimensions(insight: IInsight): IDimension[] {
     if (!stack || bucketIsEmpty(stack)) {
         return [
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
             {
                 itemIdentifiers: viewByAttributes.map(attributeLocalId),
@@ -84,7 +84,7 @@ function getBarDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: bucketAttributes(stack).map(attributeLocalId),
         },
         {
-            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MeasureGroupIdentifier],
         },
     ];
 }
@@ -104,7 +104,7 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
                 itemIdentifiers: [stackItemIdentifier],
             },
             {
-                itemIdentifiers: [viewItemIdentifier, MEASUREGROUP],
+                itemIdentifiers: [viewItemIdentifier, MeasureGroupIdentifier],
             },
         ];
     }
@@ -112,7 +112,7 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
     if (!stackBucket || bucketIsEmpty(stackBucket)) {
         return [
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
             {
                 itemIdentifiers: viewByAttributes.map(attributeLocalId),
@@ -125,7 +125,7 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: bucketAttributes(stackBucket).map(attributeLocalId),
         },
         {
-            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MeasureGroupIdentifier],
         },
     ];
 }
@@ -138,7 +138,7 @@ function getLineDimensions(insight: IInsight): IDimension[] {
     if (!segment || bucketIsEmpty(segment)) {
         return [
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
             {
                 itemIdentifiers: trendAttributes.map(attributeLocalId),
@@ -151,13 +151,13 @@ function getLineDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: bucketAttributes(segment).map(attributeLocalId),
         },
         {
-            itemIdentifiers: [...trendAttributes.map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...trendAttributes.map(attributeLocalId), MeasureGroupIdentifier],
         },
     ];
 }
 
 export function getHeadlinesDimensions(): IDimension[] {
-    return [{ itemIdentifiers: ["measureGroup"] }];
+    return [{ itemIdentifiers: [MeasureGroupIdentifier] }];
 }
 
 function getScatterDimensions(insight: IInsight): IDimension[] {
@@ -169,7 +169,7 @@ function getScatterDimensions(insight: IInsight): IDimension[] {
                 itemIdentifiers: bucketAttributes(attribute).map(attributeLocalId),
             },
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
         ];
     }
@@ -179,7 +179,7 @@ function getScatterDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: [],
         },
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
     ];
 }
@@ -200,7 +200,7 @@ export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[]
                 itemIdentifiers: viewAttributes.map(attributeLocalId),
             },
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
         ];
     }
@@ -210,7 +210,7 @@ export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[]
             itemIdentifiers: viewAttributes.map(attributeLocalId),
         },
         {
-            itemIdentifiers: [...bucketAttributes(stack).map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...bucketAttributes(stack).map(attributeLocalId), MeasureGroupIdentifier],
         },
     ];
 }
@@ -225,7 +225,7 @@ function getBubbleDimensions(insight: IInsight): IDimension[] {
                 itemIdentifiers: bucketAttributes(view).map(attributeLocalId),
             },
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
         ];
     }
@@ -238,7 +238,7 @@ function getBubbleDimensions(insight: IInsight): IDimension[] {
             ],
         },
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
     ];
 }
@@ -306,7 +306,7 @@ export function generateStackedDimensions(insight: IInsight): IDimension[] {
             itemIdentifiers: stackAttribute ? [attributeLocalId(stackAttribute)] : [],
         },
         {
-            itemIdentifiers: [...viewAttributes.map(attributeLocalId), MEASUREGROUP],
+            itemIdentifiers: [...viewAttributes.map(attributeLocalId), MeasureGroupIdentifier],
         },
     ];
 }
@@ -315,7 +315,7 @@ export function generateStackedDimensions(insight: IInsight): IDimension[] {
 export function generateDefaultDimensions(insight: IInsight): IDimension[] {
     return [
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
         {
             itemIdentifiers: insightAttributes(insight).map(attributeLocalId),
@@ -330,7 +330,7 @@ export function generateDefaultDimensionsForPointsCharts(insight: IInsight): IDi
             itemIdentifiers: insightAttributes(insight).map(attributeLocalId),
         },
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
     ];
 }
@@ -345,14 +345,14 @@ export const generateDefaultDimensionsForRoundChart = (insight: IInsight): IDime
                 itemIdentifiers: [],
             },
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
         ];
     }
 
     return [
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
         {
             itemIdentifiers: attributes.map(attributeLocalId),
@@ -375,7 +375,7 @@ export function getTreemapDimensionsFromAFM(insight: IInsight): IDimension[] {
     if (attributes.length === 1) {
         return [
             {
-                itemIdentifiers: [MEASUREGROUP],
+                itemIdentifiers: [MeasureGroupIdentifier],
             },
             {
                 itemIdentifiers: attributes.map(attributeLocalId),
@@ -388,7 +388,7 @@ export function getTreemapDimensionsFromAFM(insight: IInsight): IDimension[] {
             itemIdentifiers: attributes.map(attributeLocalId),
         },
         {
-            itemIdentifiers: [MEASUREGROUP],
+            itemIdentifiers: [MeasureGroupIdentifier],
         },
     ];
 }
