@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import { InjectedIntl } from "react-intl";
 
-import * as BucketNames from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base/";
 import { IReferencePoint, IUiConfig, ICustomError, IBucketOfFun } from "../../interfaces/Visualization";
 import { DEFAULT_XIRR_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";

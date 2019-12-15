@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Subtract } from "../base/typings/subtract";
 import { CorePivotTable } from "./CorePivotTable";
-import { ATTRIBUTE, COLUMNS, MEASURES } from "../base/constants/bucketNames";
+import { BucketNames } from "../base";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -48,18 +48,18 @@ function getBuckets(props: IPivotTableBucketProps): IBucket[] {
     const { measures = [], rows = [], columns = [], totals = [] } = props;
 
     return [
-        newBucket(MEASURES, ...measures),
+        newBucket(BucketNames.MEASURES, ...measures),
         // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
-        newBucket(ATTRIBUTE, ...rows, ...totals),
-        newBucket(COLUMNS, ...columns),
+        newBucket(BucketNames.ATTRIBUTE, ...rows, ...totals),
+        newBucket(BucketNames.COLUMNS, ...columns),
     ];
 }
 
 function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const { buckets } = def;
-    const row = bucketsFind(buckets, ATTRIBUTE);
-    const columns = bucketsFind(buckets, COLUMNS);
-    const measures = bucketsFind(buckets, MEASURES);
+    const row = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+    const columns = bucketsFind(buckets, BucketNames.COLUMNS);
+    const measures = bucketsFind(buckets, BucketNames.MEASURES);
 
     const rowAttributeIds = bucketAttributes(row).map(attributeLocalId);
     const columnAttributeIds = bucketAttributes(columns).map(attributeLocalId);

@@ -15,7 +15,7 @@ import compact = require("lodash/compact");
 import without = require("lodash/without");
 import { InjectedIntl } from "react-intl";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
-import * as BucketNames from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
 
 import {

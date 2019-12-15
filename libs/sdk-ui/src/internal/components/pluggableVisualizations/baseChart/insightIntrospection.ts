@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { bucketItems, IInsight, insightBucket } from "@gooddata/sdk-model";
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { isBarChart, isScatterPlot, isBubbleChart } from "../../../../highcharts/utils/common";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import get = require("lodash/get");

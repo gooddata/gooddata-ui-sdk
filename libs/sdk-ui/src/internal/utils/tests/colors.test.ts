@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../base/constants/colorPalette";
 import * as MappingHeader from "../../../base/headerMatching/MappingHeader";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
@@ -171,7 +171,7 @@ describe("color utils", () => {
     describe("getColoredInputItems", () => {
         it("should return input items with valid mapping", () => {
             const colors: IColorConfiguration = {
-                colorPalette: DEFAULT_COLOR_PALETTE,
+                colorPalette: DefaultColorPalette,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },
@@ -227,7 +227,7 @@ describe("color utils", () => {
 
         it("should return input items with valid mapping from custom color", () => {
             const colors: IColorConfiguration = {
-                colorPalette: DEFAULT_COLOR_PALETTE,
+                colorPalette: DefaultColorPalette,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },
@@ -299,7 +299,7 @@ describe("color utils", () => {
 
         it("should return item with mapping of first color when mapping is invalid", () => {
             const colors: IColorConfiguration = {
-                colorPalette: DEFAULT_COLOR_PALETTE,
+                colorPalette: DefaultColorPalette,
                 colorAssignments: [
                     {
                         headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },

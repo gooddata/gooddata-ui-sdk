@@ -12,7 +12,7 @@ import {
     singleAttributeInsight,
     singleMeasureInsight,
 } from "../../../../__mocks__/fixtures";
-import { ATTRIBUTE, COLUMNS, MEASURES } from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base";
 import {
     bucketsFind,
     IBucket,
@@ -138,7 +138,7 @@ describe("getPivotTableDimensions", () => {
 
         const buckets = [
             {
-                localIdentifier: MEASURES,
+                localIdentifier: BucketNames.MEASURES,
                 items: [
                     {
                         measure: {
@@ -157,7 +157,7 @@ describe("getPivotTableDimensions", () => {
             },
             {
                 // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
-                localIdentifier: ATTRIBUTE,
+                localIdentifier: BucketNames.ATTRIBUTE,
                 items: [
                     {
                         attribute: {
@@ -170,7 +170,7 @@ describe("getPivotTableDimensions", () => {
                 ],
             },
             {
-                localIdentifier: COLUMNS,
+                localIdentifier: BucketNames.COLUMNS,
                 items: [
                     {
                         attribute: {

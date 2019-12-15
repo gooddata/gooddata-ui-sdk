@@ -13,7 +13,7 @@ import { configureOverTimeComparison, configurePercent } from "../../../utils/bu
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
 import * as VisEvents from "../../../../base/interfaces/Events";
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import {
     IBucketFilter,
     IBucketItem,

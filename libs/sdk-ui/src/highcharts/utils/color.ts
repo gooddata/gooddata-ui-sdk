@@ -4,7 +4,7 @@ import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-s
 import { IChartConfig } from "../Config";
 import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/headerMatching/HeaderPredicate";
 import { getMappingHeaderLocalIdentifier, IMappingHeader } from "../../base/headerMatching/MappingHeader";
-import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../base/constants/colorPalette";
 import { IColorMapping } from "../../base/interfaces/Colors";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
@@ -94,7 +94,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette {
             };
         });
     } catch (_ignored) {
-        return DEFAULT_COLOR_PALETTE;
+        return DefaultColorPalette;
     }
 }
 
@@ -105,13 +105,13 @@ export function getRgbString(color: IColorPaletteItem): string {
 export function getValidColorPalette(config: IChartConfig) {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
-            ? DEFAULT_COLOR_PALETTE
+            ? DefaultColorPalette
             : getColorPaletteFromColors(config.colors)
         : config.colorPalette;
 }
 
 export function isCustomPalette(palette: IColorPalette) {
-    return !isEqual(palette, DEFAULT_COLOR_PALETTE);
+    return !isEqual(palette, DefaultColorPalette);
 }
 
 export function getColorFromMapping(

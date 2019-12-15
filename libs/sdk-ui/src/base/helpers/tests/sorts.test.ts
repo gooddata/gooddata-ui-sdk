@@ -1,15 +1,15 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { getDefaultTreemapSortFromBuckets } from "../sorts";
 import { newBucket, newMeasure, newAttribute } from "@gooddata/sdk-model";
-import { SEGMENT, VIEW } from "../../constants/bucketNames";
+import { BucketNames } from "../../index";
 
 describe("sorts", () => {
     const measure1 = newMeasure("mid1", m => m.localId("m1").alias("Measure m1"));
     const attribute1 = newAttribute("aid1", a => a.localId("a1"));
     const attribute2 = newAttribute("aid2", a => a.localId("a2"));
-    const viewBucket = newBucket(VIEW, attribute1);
-    const segmentBucket = newBucket(SEGMENT, attribute2);
-    const emptySegmentBucket = newBucket(SEGMENT);
+    const viewBucket = newBucket(BucketNames.VIEW, attribute1);
+    const segmentBucket = newBucket(BucketNames.SEGMENT, attribute2);
+    const emptySegmentBucket = newBucket(BucketNames.SEGMENT);
 
     describe("getDefaultTreemapSortFromBuckets", () => {
         it("should get empty sort for only a single attribute", () => {

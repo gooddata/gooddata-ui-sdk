@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
-import * as BucketNames from "../../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../../base/constants/bucketNames";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";

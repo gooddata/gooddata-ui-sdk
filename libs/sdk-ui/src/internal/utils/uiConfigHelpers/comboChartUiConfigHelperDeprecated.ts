@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import { InjectedIntl } from "react-intl";
 
-import * as BucketNames from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base/";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";

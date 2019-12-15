@@ -12,7 +12,7 @@ import {
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../base/constants/visualizationTypes";
 import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
-import { DEFAULT_COLOR_PALETTE } from "../Config";
+import { DefaultColorPalette } from "../Config";
 import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
 import {
@@ -550,7 +550,7 @@ export function isAttributeColorPalette(type: string, dv: DataViewFacade, stackB
 
 export class ColorFactory {
     public static getColorStrategy(
-        colorPalette: IColorPalette = DEFAULT_COLOR_PALETTE,
+        colorPalette: IColorPalette = DefaultColorPalette,
         colorMapping: IColorMapping[],
         viewByAttribute: any,
         stackByAttribute: any,

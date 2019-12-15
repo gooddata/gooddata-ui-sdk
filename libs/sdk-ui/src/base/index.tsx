@@ -1,6 +1,13 @@
 // (C) 2019 GoodData Corporation
 
 /*
+ *
+ */
+
+export { DefaultColorPalette } from "./constants/colorPalette";
+export { BucketNames } from "./constants/bucketNames";
+
+/*
  * Error handling
  */
 export { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./errors/GoodDataSdkError";

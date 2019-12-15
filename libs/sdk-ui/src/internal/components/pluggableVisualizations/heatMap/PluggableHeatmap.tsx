@@ -6,7 +6,7 @@ import set = require("lodash/set");
 import tail = require("lodash/tail");
 import includes = require("lodash/includes");
 
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";

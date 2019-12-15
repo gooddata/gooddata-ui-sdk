@@ -4,7 +4,7 @@ import React = require("react");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 
 import {
     IVisConstruct,

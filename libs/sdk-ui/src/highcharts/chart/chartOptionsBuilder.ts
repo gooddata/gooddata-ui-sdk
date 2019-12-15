@@ -12,13 +12,7 @@ import {
 import * as cx from "classnames";
 import * as invariant from "invariant";
 
-import {
-    MEASURES,
-    SECONDARY_MEASURES,
-    SEGMENT,
-    TERTIARY_MEASURES,
-    VIEW,
-} from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { ViewByAttributesLimit } from "../../charts/_commons/limits";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -370,8 +364,8 @@ export function getScatterPlotSeries(
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucketEmpty = dv.isBucketEmpty(MEASURES);
-    const secondaryMeasuresBucketEmpty = dv.isBucketEmpty(SECONDARY_MEASURES);
+    const primaryMeasuresBucketEmpty = dv.isBucketEmpty(BucketNames.MEASURES);
+    const secondaryMeasuresBucketEmpty = dv.isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
     const data: ISeriesDataItem[] = dv.twoDimData().map((seriesItem: string[], seriesIndex: number) => {
         const values = seriesItem.map((value: string) => {
@@ -405,8 +399,8 @@ export function getBubbleChartSeries(
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ) {
-    const primaryMeasuresBucketEmpty = dv.isBucketEmpty(MEASURES);
-    const secondaryMeasuresBucketEmpty = dv.isBucketEmpty(SECONDARY_MEASURES);
+    const primaryMeasuresBucketEmpty = dv.isBucketEmpty(BucketNames.MEASURES);
+    const secondaryMeasuresBucketEmpty = dv.isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
     return dv.twoDimData().map((resData: any, index: number) => {
         let data: any = [];
@@ -1180,7 +1174,7 @@ function getXAxes(
 
         const firstMeasureGroupItem = measureGroupItems[0];
 
-        const noPrimaryMeasures = dv.isBucketEmpty(MEASURES);
+        const noPrimaryMeasures = dv.isBucketEmpty(BucketNames.MEASURES);
         if (noPrimaryMeasures) {
             return [
                 {
@@ -1242,7 +1236,7 @@ function getYAxes(
     const firstMeasureGroupItem = measureGroupItems[0];
     const secondMeasureGroupItem = measureGroupItems[1];
     const hasMoreThanOneMeasure = measureGroupItems.length > 1;
-    const noPrimaryMeasures = dv.isBucketEmpty(MEASURES);
+    const noPrimaryMeasures = dv.isBucketEmpty(BucketNames.MEASURES);
 
     const { measures: secondaryAxisMeasures = [] as string[] } =
         (isBarChart(type) ? config.secondary_xaxis : config.secondary_yaxis) || {};
@@ -1250,7 +1244,7 @@ function getYAxes(
     let yAxes: IAxis[] = [];
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
-        const hasSecondaryMeasure = !dv.isBucketEmpty(SECONDARY_MEASURES);
+        const hasSecondaryMeasure = !dv.isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
         if (hasSecondaryMeasure) {
             if (noPrimaryMeasures) {
@@ -1465,8 +1459,8 @@ export function getTreemapAttributes(dv: DataViewFacade): any {
     const dimensions = dv.dimensions();
     const attributeHeaderItems = dv.attributeHeaders();
 
-    if (dv.isBucketEmpty(SEGMENT)) {
-        if (dv.isBucketEmpty(VIEW)) {
+    if (dv.isBucketEmpty(BucketNames.SEGMENT)) {
+        if (dv.isBucketEmpty(BucketNames.VIEW)) {
             return {
                 viewByAttribute: null,
                 stackByAttribute: null,
@@ -1480,7 +1474,7 @@ export function getTreemapAttributes(dv: DataViewFacade): any {
             stackByAttribute: null,
         };
     }
-    if (dv.isBucketEmpty(VIEW)) {
+    if (dv.isBucketEmpty(BucketNames.VIEW)) {
         return {
             viewByAttribute: null,
             stackByAttribute: findAttributeInDimension(
@@ -1692,7 +1686,7 @@ export function getChartOptions(
             measureGroup.items[0] ? measureGroup.items[0] : null,
             measureGroup.items[1] ? measureGroup.items[1] : null,
         ];
-        if (dv.isBucketEmpty(MEASURES)) {
+        if (dv.isBucketEmpty(BucketNames.MEASURES)) {
             measures = [null, measureGroup.items[0] ? measureGroup.items[0] : null];
         }
 
@@ -1759,19 +1753,19 @@ export function getChartOptions(
         const measureGroupCopy = cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
-        if (!dv.isBucketEmpty(MEASURES)) {
+        if (!dv.isBucketEmpty(BucketNames.MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!dv.isBucketEmpty(SECONDARY_MEASURES)) {
+        if (!dv.isBucketEmpty(BucketNames.SECONDARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);
         }
 
-        if (!dv.isBucketEmpty(TERTIARY_MEASURES)) {
+        if (!dv.isBucketEmpty(BucketNames.TERTIARY_MEASURES)) {
             measures.push(measureGroup.items[0] ? measureGroupCopy.items.shift() : null);
         } else {
             measures.push(null);

@@ -8,7 +8,7 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import { MEASURES, SECONDARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base/constants/bucketNames";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
@@ -43,9 +43,9 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
         const categories = isArray(viewBy) ? [viewBy[0]] : [viewBy];
 
         return [
-            newBucket(MEASURES, ...primaryMeasures),
-            newBucket(SECONDARY_MEASURES, ...secondaryMeasures),
-            newBucket(VIEW, ...categories),
+            newBucket(BucketNames.MEASURES, ...primaryMeasures),
+            newBucket(BucketNames.SECONDARY_MEASURES, ...secondaryMeasures),
+            newBucket(BucketNames.VIEW, ...categories),
         ];
     },
     executionFactory: (props, buckets) => {

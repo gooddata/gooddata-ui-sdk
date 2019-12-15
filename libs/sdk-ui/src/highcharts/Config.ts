@@ -12,7 +12,7 @@ import {
 import { IColorAssignment, IColorMapping } from "../base/interfaces/Colors";
 import { IColorPalette } from "@gooddata/sdk-model";
 
-export { DEFAULT_COLOR_PALETTE } from "../base/constants/defaultColors";
+export { DefaultColorPalette } from "../base/constants/colorPalette";
 
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 

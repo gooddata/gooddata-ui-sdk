@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
-import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
@@ -28,9 +28,9 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit); // could be one or two attributes
 
         return [
-            newBucket(MEASURES, ...measures),
-            newBucket(ATTRIBUTE, ...viewBy),
-            newBucket(STACK, props.stackBy),
+            newBucket(BucketNames.MEASURES, ...measures),
+            newBucket(BucketNames.ATTRIBUTE, ...viewBy),
+            newBucket(BucketNames.STACK, props.stackBy),
         ];
     },
     executionFactory: (props, buckets) => {

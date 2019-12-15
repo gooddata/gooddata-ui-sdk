@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import assign = require("lodash/assign");
 
-import * as BucketNames from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base/";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { disabledOpenAsReportConfig, UICONFIG } from "../../constants/uiConfig";

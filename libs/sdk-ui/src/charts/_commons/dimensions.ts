@@ -13,15 +13,15 @@ import {
     MeasureGroupIdentifier,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
-import { ATTRIBUTE, STACK, VIEW } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 
 function isStackedChart(buckets: IBucket[]) {
-    return !bucketIsEmpty(bucketsFind(buckets, STACK));
+    return !bucketIsEmpty(bucketsFind(buckets, BucketNames.STACK));
 }
 
 function stackedDimensions(buckets: IBucket[]): IDimension[] {
-    const viewBucket = bucketsFind(buckets, ATTRIBUTE);
-    const stackBucket = bucketsFind(buckets, STACK);
+    const viewBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+    const stackBucket = bucketsFind(buckets, BucketNames.STACK);
 
     const viewByAttributes = bucketAttributes(viewBucket);
     const stackByAttribute = bucketAttribute(stackBucket);
@@ -64,8 +64,8 @@ export function roundChartDimensions(def: IExecutionDefinition): IDimension[] {
 }
 
 export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
-    const view: IBucket = bucketsFind(def.buckets, VIEW);
-    const stack: IBucket = bucketsFind(def.buckets, STACK);
+    const view: IBucket = bucketsFind(def.buckets, BucketNames.VIEW);
+    const stack: IBucket = bucketsFind(def.buckets, BucketNames.STACK);
 
     if (bucketIsEmpty(stack)) {
         return newTwoDimensional(bucketAttributes(view).map(attributeLocalId), [MeasureGroupIdentifier]);

@@ -7,7 +7,7 @@ import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeUri, measureUri } from "@gooddata/sdk-model";
 import { uriMatch } from "../../../../base/headerMatching/HeaderPredicateFactory";
-import { DEFAULT_COLOR_PALETTE } from "../../../Config";
+import { DefaultColorPalette } from "../../../Config";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 
 describe("getCategoriesForTwoAttributes", () => {
@@ -201,7 +201,7 @@ describe("getDrillableSeriesWithParentAttribute", () => {
     } = getMVSForViewByTwoAttributes(dv);
     const type = "column";
     const metricColorStrategy = new MeasureColorStrategy(
-        DEFAULT_COLOR_PALETTE,
+        DefaultColorPalette,
         undefined,
         viewByAttribute,
         stackByAttribute,

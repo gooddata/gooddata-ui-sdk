@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
 import { IBucketChartProps } from "../chartProps";
-import { MEASURES, SECONDARY_MEASURES, TERTIARY_MEASURES, VIEW } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
@@ -15,10 +15,10 @@ const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleCh
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "size", "viewBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            newBucket(MEASURES, props.xAxisMeasure),
-            newBucket(SECONDARY_MEASURES, props.yAxisMeasure),
-            newBucket(TERTIARY_MEASURES, props.size),
-            newBucket(VIEW, props.viewBy),
+            newBucket(BucketNames.MEASURES, props.xAxisMeasure),
+            newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure),
+            newBucket(BucketNames.TERTIARY_MEASURES, props.size),
+            newBucket(BucketNames.VIEW, props.viewBy),
         ];
     },
     executionFactory: (props, buckets) => {

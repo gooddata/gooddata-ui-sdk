@@ -7,7 +7,7 @@ import { InjectedIntl } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { updateConfigWithSettings } from "../../../../highcharts";
 import { METRIC } from "../../../constants/bucket";
 

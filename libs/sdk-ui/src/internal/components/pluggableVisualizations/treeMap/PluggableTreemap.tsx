@@ -7,7 +7,7 @@ import set = require("lodash/set");
 import tail = require("lodash/tail");
 import isEmpty = require("lodash/isEmpty");
 
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";

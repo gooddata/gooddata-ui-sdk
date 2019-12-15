@@ -10,7 +10,7 @@ import {
 import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps } from "../chartProps";
-import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
@@ -28,9 +28,9 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
         const { measures, viewBy, stackBy } = getBucketsProps(props);
         const sanitizedMeasures = applyRatioRule(measures);
         return [
-            newBucket(MEASURES, ...sanitizedMeasures),
-            newBucket(ATTRIBUTE, ...viewBy),
-            newBucket(STACK, ...stackBy),
+            newBucket(BucketNames.MEASURES, ...sanitizedMeasures),
+            newBucket(BucketNames.ATTRIBUTE, ...viewBy),
+            newBucket(BucketNames.STACK, ...stackBy),
         ];
     },
     executionFactory: (props, buckets) => {

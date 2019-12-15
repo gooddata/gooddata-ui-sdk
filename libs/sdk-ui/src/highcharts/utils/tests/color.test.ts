@@ -13,7 +13,7 @@ import {
     context,
     measureDescriptors,
 } from "../../../base/headerMatching/tests/HeaderPredicateFactory.fixtures";
-import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../base/constants/colorPalette";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {
@@ -52,14 +52,14 @@ describe("getColorPaletteFromColors", () => {
         const colors = ["invalid", "colors"];
         const result = getColorPaletteFromColors(colors);
 
-        expect(result).toEqual(DEFAULT_COLOR_PALETTE);
+        expect(result).toEqual(DefaultColorPalette);
     });
 });
 
 describe("getValidColorPalette", () => {
     it("should return default color palette when colors and colorPalette are not defined", () => {
         const config = {};
-        const expectedResult = DEFAULT_COLOR_PALETTE;
+        const expectedResult = DefaultColorPalette;
         const result = getValidColorPalette(config);
 
         expect(result).toEqual(expectedResult);

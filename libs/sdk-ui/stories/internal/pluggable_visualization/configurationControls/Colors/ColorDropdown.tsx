@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../../../src/base/constants/colorPalette";
 import ColorDropdown from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
 // tslint:disable-next-line:max-line-length
 import ColoredItemContent from "../../../../../src/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
@@ -18,7 +18,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorDropdown
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={false}
                 >
@@ -32,7 +32,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "guid", value: "4" }}
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={false}
                 >
@@ -59,7 +59,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorDropdown
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -73,7 +73,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "guid", value: "4" }}
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -87,7 +87,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
             <InternalIntlWrapper>
                 <ColorDropdown
                     selectedColorItem={{ type: "rgb", value: { r: 20, g: 178, b: 226 } }}
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -111,7 +111,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
                 <br />
                 <br />
                 <ColorDropdown
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >
@@ -120,7 +120,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorD
                 <br />
                 <br />
                 <ColorDropdown
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("Color selected")}
                     showCustomPicker={true}
                 >

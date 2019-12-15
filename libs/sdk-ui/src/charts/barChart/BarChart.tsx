@@ -7,7 +7,7 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { ViewByAttributesLimit } from "../_commons/limits";
 import { IBucketChartProps } from "../chartProps";
 import { truncate } from "../_commons/truncate";
@@ -28,9 +28,9 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
         return [
-            newBucket(MEASURES, ...measures),
-            newBucket(ATTRIBUTE, ...viewBy),
-            newBucket(STACK, props.stackBy),
+            newBucket(BucketNames.MEASURES, ...measures),
+            newBucket(BucketNames.ATTRIBUTE, ...viewBy),
+            newBucket(BucketNames.STACK, props.stackBy),
         ];
     },
     executionFactory: (props, buckets) => {

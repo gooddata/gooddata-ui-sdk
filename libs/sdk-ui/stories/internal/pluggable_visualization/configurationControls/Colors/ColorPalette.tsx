@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../../../src/base/constants/colorPalette";
 import ColorPalette from "../../../../../src/internal/components/configurationControls/colors/colorDropdown/ColorPalette";
 import { getLargePalette } from "../../../../../src/internal/mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../src/internal/utils/internalIntlProvider";
@@ -15,7 +15,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorP
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColorPalette
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("onColorSelected")}
                 />
             </InternalIntlWrapper>,
@@ -26,7 +26,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/ColorP
             <InternalIntlWrapper>
                 <ColorPalette
                     selectedColorGuid="7"
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     onColorSelected={action("onColorSelected")}
                 />
             </InternalIntlWrapper>,

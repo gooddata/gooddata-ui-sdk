@@ -18,7 +18,7 @@ import {
     limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper";
 
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { METRIC, BUCKETS } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper";

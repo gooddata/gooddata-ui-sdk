@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IReferencePoint, IBucketOfFun } from "../../../interfaces/Visualization";
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import {
     getDateItems,
     findBucket,

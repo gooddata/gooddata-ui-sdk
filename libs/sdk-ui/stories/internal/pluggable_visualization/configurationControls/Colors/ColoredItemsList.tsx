@@ -4,7 +4,7 @@ import { IRgbColorValue, IColor } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../src/base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../../../src/base/constants/colorPalette";
 import * as MappingHeader from "../../../../../src/base/headerMatching/MappingHeader";
 import ColoredItemsList, {
     IColoredItemsListOwnProps,
@@ -445,7 +445,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/Colore
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColoredItemsList
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     inputItems={inputItems}
                     onSelect={action("onSelect")}
                 />
@@ -456,7 +456,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/Colore
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColoredItemsList
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     inputItems={longInputItems}
                     onSelect={action("onSelect")}
                 />
@@ -478,7 +478,7 @@ storiesOf("Internal/Pluggable visualization/Configuration controls/Colors/Colore
         SmallScreenDecorator(
             <InternalIntlWrapper>
                 <ColoredItemsListTest
-                    colorPalette={DEFAULT_COLOR_PALETTE}
+                    colorPalette={DefaultColorPalette}
                     inputItems={inputItems}
                     onSelect={action("onSelect")}
                 />

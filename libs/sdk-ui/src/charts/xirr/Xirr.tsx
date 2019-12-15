@@ -11,7 +11,7 @@ import {
     newDimension,
     bucketsAttributes,
 } from "@gooddata/sdk-model";
-import { MEASURES, ATTRIBUTE } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base/constants/bucketNames";
 
 import { Subtract } from "../../base/typings/subtract";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
@@ -60,7 +60,10 @@ export function RenderXirr(props: IXirrProps): JSX.Element {
 type IXirrNonBucketProps = Subtract<IXirrProps, IXirrBucketProps>;
 
 export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
-    const buckets = [newBucket(MEASURES, props.measure), newBucket(ATTRIBUTE, props.attribute)];
+    const buckets = [
+        newBucket(BucketNames.MEASURES, props.measure),
+        newBucket(BucketNames.ATTRIBUTE, props.attribute),
+    ];
 
     const newProps: IXirrNonBucketProps = omit<IXirrProps, keyof IXirrBucketProps>(props, [
         "measure",

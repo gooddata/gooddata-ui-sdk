@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import { IInsight } from "@gooddata/sdk-model";
-import { BucketNames } from "../../../../../index";
+import { BucketNames } from "../../../../../base";
 import { countBucketItems, countItemsOnAxes } from "../insightIntrospection";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization";
 

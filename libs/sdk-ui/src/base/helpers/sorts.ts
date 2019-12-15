@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import {
     bucketAttributes,
@@ -11,7 +11,7 @@ import {
     newMeasureSort,
     SortItem,
 } from "@gooddata/sdk-model";
-import * as BucketNames from "../../base/constants/bucketNames";
+import { BucketNames } from "../index";
 
 export function getDefaultTreemapSortFromBuckets(
     viewBy: IBucket,

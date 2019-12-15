@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../base/constants/colorPalette";
 import cloneDeep = require("lodash/cloneDeep");
 
 export function getLargePalette() {
-    const largePalette = cloneDeep(DEFAULT_COLOR_PALETTE);
+    const largePalette = cloneDeep(DefaultColorPalette);
 
-    for (let i = 0; i < DEFAULT_COLOR_PALETTE.length; i++) {
-        const itemClon = cloneDeep(DEFAULT_COLOR_PALETTE[i]);
+    for (let i = 0; i < DefaultColorPalette.length; i++) {
+        const itemClon = cloneDeep(DefaultColorPalette[i]);
         itemClon.guid = i + "_" + itemClon.guid;
         largePalette.push(itemClon);
     }

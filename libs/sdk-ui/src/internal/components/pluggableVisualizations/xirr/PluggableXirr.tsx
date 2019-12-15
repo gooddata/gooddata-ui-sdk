@@ -50,7 +50,7 @@ import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import { CoreXirr } from "../../../../charts/xirr/CoreXirr";
-import { ATTRIBUTE } from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -163,7 +163,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     }
 
     private getXirrDimensions(insight: IInsight): IDimension[] {
-        const attribute = insightBucket(insight, ATTRIBUTE);
+        const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
 
         if (attribute && attribute.items.length) {
             return [

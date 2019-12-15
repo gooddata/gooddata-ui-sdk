@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
+// (C) 2007-2019 GoodData Corporation
+import { DefaultColorPalette } from "../../../base/constants/colorPalette";
 import {
     AttributeColorStrategy,
     BubbleChartColorStrategy,
@@ -133,7 +133,7 @@ describe("ColorFactory", () => {
 
             expect(colorStrategy).toBeInstanceOf(AttributeColorStrategy);
             expect(updatedPalette).toEqual(
-                DEFAULT_COLOR_PALETTE.slice(0, 2).map((defaultColorPaletteItem: IColorPaletteItem) =>
+                DefaultColorPalette.slice(0, 2).map((defaultColorPaletteItem: IColorPaletteItem) =>
                     getRgbString(defaultColorPaletteItem),
                 ),
             );
@@ -501,7 +501,7 @@ describe("ColorFactory", () => {
 
             expect(colorStrategy).toBeInstanceOf(TreemapColorStrategy);
             expect(updatedPalette).toEqual(
-                DEFAULT_COLOR_PALETTE.slice(0, 1).map((defaultColorPaletteItem: IColorPaletteItem) =>
+                DefaultColorPalette.slice(0, 1).map((defaultColorPaletteItem: IColorPaletteItem) =>
                     getRgbString(defaultColorPaletteItem),
                 ),
             );

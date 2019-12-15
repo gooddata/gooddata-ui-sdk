@@ -58,7 +58,7 @@ import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
 import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
 import { generateDimensions } from "../../../utils/dimensions";
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
 import * as VisEvents from "../../../../base/interfaces/Events";
 import {

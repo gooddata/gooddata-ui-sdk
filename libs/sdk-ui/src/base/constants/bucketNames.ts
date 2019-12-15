@@ -1,12 +1,28 @@
-// (C) 2007-2018 GoodData Corporation
-export const MEASURES = "measures";
-export const SECONDARY_MEASURES = "secondary_measures";
-export const TERTIARY_MEASURES = "tertiary_measures";
-export const ATTRIBUTE = "attribute";
-export const ATTRIBUTES = "attributes";
-export const VIEW = "view";
-export const STACK = "stack";
-export const TREND = "trend";
-export const SEGMENT = "segment";
-export const ROWS = "rows";
-export const COLUMNS = "columns";
+// (C) 2007-2019 GoodData Corporation
+const MEASURES = "measures";
+const SECONDARY_MEASURES = "secondary_measures";
+const TERTIARY_MEASURES = "tertiary_measures";
+const ATTRIBUTE = "attribute";
+const ATTRIBUTES = "attributes";
+const VIEW = "view";
+const STACK = "stack";
+const TREND = "trend";
+const SEGMENT = "segment";
+const COLUMNS = "columns";
+
+/**
+ * Standard bucket names used in the different visualizations.
+ * @internal
+ */
+export const BucketNames = {
+    MEASURES,
+    SECONDARY_MEASURES,
+    TERTIARY_MEASURES,
+    ATTRIBUTE,
+    ATTRIBUTES,
+    VIEW,
+    STACK,
+    TREND,
+    SEGMENT,
+    COLUMNS,
+};
