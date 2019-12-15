@@ -6,7 +6,7 @@ import { DataViewFacade, IMeasureGroupDescriptor, IMeasureDescriptor } from "@go
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames } from "../../../base";
 import { IChartConfig, ISeriesItem } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../utils/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
 

@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ViewByAttributesLimit } from "../../charts";
 import { BucketNames } from "../../base";
-import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { VisType, VisualizationTypes } from "../../base/vis/visualizationTypes";
 
 export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const row = insightBucket(insight, BucketNames.ATTRIBUTE);

@@ -9,7 +9,7 @@ import { getTreeLeaves } from "../agGridUtils";
 import { IDimensionItemDescriptor, IResultMeasureHeader } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
-import { getDrillIntersection } from "../../../base/helpers/drilling";
+import { getDrillIntersection } from "../../../base/vis/drilling";
 
 const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();

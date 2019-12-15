@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import * as MappingHeader from "../../base/headerMatching/MappingHeader";
+import { IMappingHeader } from "../../base";
 import { IRgbColorValue, IColor, IColorPaletteItem } from "@gooddata/sdk-model";
-import { IColorAssignment } from "../../base/interfaces/Colors";
+import { IColorAssignment } from "../../base/vis/Events";
 
 export interface IColoredItem {
     colorItem: IColor;
     color: IRgbColorValue;
-    mappingHeader?: MappingHeader.IMappingHeader;
+    mappingHeader?: IMappingHeader;
 }
 
 export interface IColorConfiguration {

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { VisType } from "../base/constants/visualizationTypes";
+import { VisType } from "../base/vis/visualizationTypes";
 import {
     ColorAxisOptions,
     DataLabelsOptionsObject,
@@ -9,8 +9,9 @@ import {
     SVGAttributes,
     SVGDOMElement,
 } from "./chart/highcharts/highchartsEntryPoint";
-import { IColorAssignment, IColorMapping } from "../base/interfaces/Colors";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColor, IColorPalette } from "@gooddata/sdk-model";
+import { IHeaderPredicate } from "../base";
+import { IColorAssignment } from "../base/vis/Events";
 
 export { DefaultColorPalette } from "../base/constants/colorPalette";
 
@@ -40,6 +41,16 @@ export interface IChartLimits {
 export interface IMeasuresStackConfig {
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IColorMapping {
+    // sent to SDK
+    predicate: IHeaderPredicate;
+    color: IColor;
 }
 
 export interface IChartConfig extends IMeasuresStackConfig {

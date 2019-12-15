@@ -24,7 +24,7 @@ import {
     isComboChart,
     isLineChart,
 } from "../../utils/common";
-import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
+import { IDrillConfig } from "../../../base/vis/DrillEvents";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 import { isPrimaryYAxis } from "../../utils/isPrimaryYAxis";
 

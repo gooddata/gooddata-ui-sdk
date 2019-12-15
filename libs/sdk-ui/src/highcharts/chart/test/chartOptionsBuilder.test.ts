@@ -37,7 +37,7 @@ import {
     TreemapColorStrategy,
 } from "../colorFactory";
 import { IChartConfig, IChartOptions, IPointData } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";

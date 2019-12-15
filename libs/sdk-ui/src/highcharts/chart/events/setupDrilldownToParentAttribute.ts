@@ -4,12 +4,12 @@ import partial = require("lodash/partial");
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { styleVariables } from "../../styles/variables";
 import { tickLabelClick } from "../../utils/drilldownEventing";
-import { ChartType } from "../../../base/constants/visualizationTypes";
+import { ChartType } from "../../../base/vis/visualizationTypes";
 import {
     IDrillConfig,
     IHighchartsCategoriesTree,
     IHighchartsParentTick,
-} from "../../../base/interfaces/DrillEvents";
+} from "../../../base/vis/DrillEvents";
 import { IHighchartsPointObject } from "../../utils/isGroupHighchartsDrillEvent";
 
 function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick): IHighchartsPointObject[] {

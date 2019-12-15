@@ -56,11 +56,11 @@ import { COLOR_MAPPING_CHANGED } from "../../configurationControls/colors/Colors
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
 import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
-import { ChartType, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { ChartType, VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { generateDimensions } from "../../../utils/dimensions";
 import { BucketNames } from "../../../../base";
 import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
-import * as VisEvents from "../../../../base/interfaces/Events";
+import * as VisEvents from "../../../../base/vis/Events";
 import {
     bucketsIsEmpty,
     IColorMappingItem,

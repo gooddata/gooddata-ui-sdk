@@ -29,7 +29,7 @@ import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigur
 
 import { BUCKETS, ATTRIBUTE, DATE } from "../../../constants/bucket";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

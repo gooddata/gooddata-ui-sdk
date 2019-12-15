@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import LegendList, { LegendSeparator } from "../LegendList";
 import { transformToDualAxesSeries } from "../helpers";
 import { withIntl } from "../../../../base/localization/intlUtils";

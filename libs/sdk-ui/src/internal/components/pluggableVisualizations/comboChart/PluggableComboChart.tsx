@@ -47,7 +47,7 @@ import {
     PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
 import { isLineChart, isAreaChart } from "../../../../highcharts";
 

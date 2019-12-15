@@ -37,7 +37,7 @@ import * as columnStackIcon from "../../assets/column/bucket-title-stack.svg";
 import * as barMeasuresIcon from "../../assets/bar/bucket-title-measures.svg";
 import * as barViewIcon from "../../assets/bar/bucket-title-view.svg";
 import * as barStackIcon from "../../assets/bar/bucket-title-stack.svg";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 
 function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,

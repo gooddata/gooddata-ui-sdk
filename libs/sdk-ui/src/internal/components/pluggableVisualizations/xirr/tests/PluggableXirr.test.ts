@@ -10,7 +10,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import * as testMocks from "../../../../mocks/testMocks";
 import { CoreXirr } from "../../../../../charts/xirr/CoreXirr";
-import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
 
 describe("PluggableXirr", () => {
     const defaultProps = {

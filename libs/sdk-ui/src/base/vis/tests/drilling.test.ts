@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { fireDrillEvent } from "../drilling";
-import { IDrillEvent } from "../../interfaces/DrillEvents";
+import { IDrillEvent } from "../DrillEvents";
 
 describe("fireDrillEvent", () => {
     it("should dispatch expected drill post message", () => {

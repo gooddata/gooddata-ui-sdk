@@ -12,7 +12,7 @@ import { InjectedIntl } from "react-intl";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
-import * as VisEvents from "../../../../base/interfaces/Events";
+import * as VisEvents from "../../../../base/vis/Events";
 import { BucketNames } from "../../../../base";
 import {
     IBucketFilter,
@@ -41,7 +41,7 @@ import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
 import { generateDimensions } from "../../../utils/dimensions";
 import {

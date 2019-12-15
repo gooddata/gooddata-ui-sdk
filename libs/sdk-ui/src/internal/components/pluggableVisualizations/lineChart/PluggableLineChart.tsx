@@ -38,7 +38,7 @@ import {
 } from "../../../utils/propertiesHelper";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableLineChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

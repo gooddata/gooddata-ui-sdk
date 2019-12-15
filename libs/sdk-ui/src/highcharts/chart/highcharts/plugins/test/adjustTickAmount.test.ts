@@ -14,7 +14,7 @@ import {
     Y_AXIS_SCORE,
 } from "../adjustTickAmount";
 import { IHighchartsAxisExtend } from "../../../../HighchartsExtend";
-import { VisualizationTypes } from "../../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../../base/vis/visualizationTypes";
 
 describe("adjustTickAmount - general", () => {
     const Y_AXIS = {

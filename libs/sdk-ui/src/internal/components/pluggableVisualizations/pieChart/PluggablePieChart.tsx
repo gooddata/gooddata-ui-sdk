@@ -38,7 +38,7 @@ import {
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
 import { removeSort } from "../../../utils/sort";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { IChartConfig, TOP } from "../../../../highcharts";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 

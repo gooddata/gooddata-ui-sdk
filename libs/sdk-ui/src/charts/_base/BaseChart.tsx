@@ -14,10 +14,10 @@ import {
     ITranslationsComponentProps,
 } from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
-import { OnLegendReady } from "../../base/interfaces/Events";
+import { OnLegendReady } from "../../base/vis/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ChartType } from "../../base/constants/visualizationTypes";
+import { ChartType } from "../../base/vis/visualizationTypes";
 import { ErrorCodes } from "../../base/";
 
 export interface IBaseChartProps extends ICoreChartProps {

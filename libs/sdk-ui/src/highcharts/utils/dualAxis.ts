@@ -3,7 +3,7 @@ import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IChartConfig } from "../Config";
 import { BucketNames } from "../../base";
-import { VisType } from "../../base/constants/visualizationTypes";
+import { VisType } from "../../base/vis/visualizationTypes";
 import { isComboChart } from "./common";
 import get = require("lodash/get");
 

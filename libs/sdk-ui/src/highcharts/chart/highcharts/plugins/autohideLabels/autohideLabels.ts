@@ -1,8 +1,8 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { getChartType } from "../../helpers";
 
 import { getDataLabelsGdcVisible, minimizeDataLabel, hideDataLabel } from "../../dataLabelsHelpers";
-import { VisualizationTypes } from "../../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../../base/vis/visualizationTypes";
 import { autohideColumnLabels, handleColumnLabelsOutsideChart } from "./autohideColumnLabels";
 import { autohideBarLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
 import autohidePieLabels from "./autohidePieLabels";

@@ -2,7 +2,7 @@
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
 import { IChartConfig } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../utils/common";
 import { BucketNames } from "../../../base";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";

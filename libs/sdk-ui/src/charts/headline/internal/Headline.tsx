@@ -2,7 +2,7 @@
 import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText";
 import * as classNames from "classnames";
 import * as React from "react";
-import { HeadlineElementType } from "../../../base/constants/visualizationTypes";
+import { HeadlineElementType } from "../../../base/vis/visualizationTypes";
 import { IChartConfig } from "../../../highcharts";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";

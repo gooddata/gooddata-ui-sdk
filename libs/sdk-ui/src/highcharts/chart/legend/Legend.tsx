@@ -5,7 +5,7 @@ import * as cx from "classnames";
 import isEmpty = require("lodash/isEmpty");
 import FluidLegend from "./FluidLegend";
 import StaticLegend from "./StaticLegend";
-import { ChartType } from "../../../base/constants/visualizationTypes";
+import { ChartType } from "../../../base/vis/visualizationTypes";
 import { isComboChart, isHeatmap } from "../../utils/common";
 import HeatmapLegend from "./HeatmapLegend";
 import { IntlWrapper } from "../../../base/localization/IntlWrapper";

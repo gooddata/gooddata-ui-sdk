@@ -33,7 +33,7 @@ import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/
 import { removeSort } from "../../../utils/sort";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

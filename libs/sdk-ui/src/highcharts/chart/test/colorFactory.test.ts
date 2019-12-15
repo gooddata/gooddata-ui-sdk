@@ -21,7 +21,7 @@ import * as fixtures from "../../../../__mocks__/fixtures";
 import { IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IColor, RgbType, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import range = require("lodash/range");
-import { IColorMapping } from "../../../base/interfaces/Colors";
+import { IColorMapping } from "../../Config";
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];

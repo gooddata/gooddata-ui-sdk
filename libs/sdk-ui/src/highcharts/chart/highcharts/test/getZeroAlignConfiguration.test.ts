@@ -5,7 +5,7 @@ import {
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration";
 import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { ISeriesItem, IChartOptions } from "../../../Config";
 
 describe("getZeroAlignConfiguration", () => {

@@ -11,7 +11,7 @@ import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interface
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
-import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../base/vis/visualizationTypes";
 import * as SortsHelper from "../../base/helpers/sorts";
 import {
     bucketAttributes,

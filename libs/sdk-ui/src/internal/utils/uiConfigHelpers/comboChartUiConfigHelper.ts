@@ -27,7 +27,7 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
-import { ChartType, VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { ChartType, VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../../highcharts";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;

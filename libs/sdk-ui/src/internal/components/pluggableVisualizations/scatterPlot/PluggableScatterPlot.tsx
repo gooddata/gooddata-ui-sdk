@@ -26,7 +26,7 @@ import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
 import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableScatterPlot extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

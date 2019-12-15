@@ -1,10 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getHighchartsOptions } from "../highChartsCreators";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { handleChartLoad } from "../highcharts/commonConfiguration";
-import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
+import { IDrillConfig } from "../../../base/vis/DrillEvents";
 
 const dataView = dummyDataView({
     attributes: [],

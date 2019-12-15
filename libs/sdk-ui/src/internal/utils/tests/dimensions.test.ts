@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import {
     generateDimensions,
     generateStackedDimensions,

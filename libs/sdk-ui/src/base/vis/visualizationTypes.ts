@@ -55,3 +55,11 @@ export type TableElementType = "cell";
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;
 
 export type VisualizationEnvironment = "none" | "dashboards";
+
+export function getVisualizationType(type: ChartType): ChartType {
+    if (type === VisualizationTypes.COMBO2) {
+        return VisualizationTypes.COMBO;
+    }
+
+    return type;
+}

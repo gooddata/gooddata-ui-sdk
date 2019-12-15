@@ -5,8 +5,7 @@ import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import * as React from "react";
 import { IErrorProps } from "../react/ErrorComponent";
 import { ILoadingProps } from "../react/LoadingComponent";
-import { OnError, OnExportReady, OnLoadingChanged } from "./Events";
-import { IPushData } from "./PushData";
+import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";
 
 /**
  * Super-interface for all visualization props; charts, tables or anything else - all should have these

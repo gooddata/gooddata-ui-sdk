@@ -7,13 +7,13 @@ import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
 
-import { IColorAssignment } from "../../base/interfaces/Colors";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import * as MappingHeader from "../../base/headerMatching/MappingHeader";
 import { ColorUtils } from "../../highcharts";
 import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+import { IColorAssignment } from "../../base/vis/Events";
 
 function getItemName(item: IColoredItem): string {
     let name = "";

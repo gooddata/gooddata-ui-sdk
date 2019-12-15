@@ -16,7 +16,7 @@ import {
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
-import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
 import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
 import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
 import { BucketNames } from "../../../../../base/constants/bucketNames";

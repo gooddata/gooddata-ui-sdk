@@ -185,7 +185,6 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
                 onExportReady: this.props.onExportReady,
-                onLoadingFinish: this.props.onLoadingFinish,
             },
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,

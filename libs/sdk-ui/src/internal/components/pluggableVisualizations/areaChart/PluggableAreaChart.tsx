@@ -2,7 +2,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { BucketNames } from "../../../../base";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";

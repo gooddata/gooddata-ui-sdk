@@ -10,8 +10,8 @@ import { getHighchartsOptions } from "../highChartsCreators";
 import Chart from "../Chart";
 import Legend from "../legend/Legend";
 import { TOP, BOTTOM, LEFT, RIGHT } from "../legend/PositionTypes";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { IDrillConfig } from "../../../base/interfaces/DrillEvents";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { IDrillConfig } from "../../../base/vis/DrillEvents";
 
 function createComponent(customProps: any = {}) {
     const chartOptions = {

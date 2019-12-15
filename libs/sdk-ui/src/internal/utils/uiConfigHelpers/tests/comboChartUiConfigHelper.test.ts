@@ -5,7 +5,7 @@ import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfig } from "../comboChartUiConfigHelper";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 describe("comboChartUiConfigHelper", () => {
     describe("setComboChartUiConfig", () => {

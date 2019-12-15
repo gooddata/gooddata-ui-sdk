@@ -15,7 +15,7 @@ import {
     isDrillableItemUri,
     IDrillEventCallback,
     IDrillEvent,
-} from "../interfaces/DrillEvents";
+} from "./DrillEvents";
 import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 

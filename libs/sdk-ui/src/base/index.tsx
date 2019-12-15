@@ -66,3 +66,19 @@ export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasure
 export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory";
 export { fillMissingTitles } from "./measureTitles/fillMissingTitles";
 export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle";
+
+/*
+ *
+ */
+
+export { IVisualizationProps, IVisualizationCallbacks } from "./vis/VisualizationProps";
+export {
+    IPushData,
+    OnError,
+    OnExportReady,
+    OnLoadingChanged,
+    ILoadingState,
+    IExportFunction,
+    IExtendedExportConfig,
+} from "./vis/Events";
+export { VisualizationTypes, VisualizationEnvironment } from "./vis/visualizationTypes";

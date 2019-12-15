@@ -12,7 +12,7 @@ import {
     shouldYAxisStartOnTickOnBubbleScatter,
     alignChart,
 } from "../helpers";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { ChartAlignTypes, IChartConfig } from "../../../Config";
 import { BOTTOM, TOP } from "../../../constants/alignments";
 

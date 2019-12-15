@@ -2,7 +2,7 @@
 import get = require("lodash/get");
 import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { BucketNames } from "../../../../base";
 import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
 

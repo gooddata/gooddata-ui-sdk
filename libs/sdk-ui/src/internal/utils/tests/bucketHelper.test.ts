@@ -48,7 +48,7 @@ import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import { createInternalIntl } from "../internalIntlProvider";
 import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { IBucket } from "@gooddata/sdk-model";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../mocks/visualizationObjectMocks";
 

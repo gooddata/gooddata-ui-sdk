@@ -2,8 +2,8 @@
 import cloneDeep = require("lodash/cloneDeep");
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/interfaces/DrillEvents";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/vis/DrillEvents";
 import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
 import { SeriesChartTypes } from "../../constants/series";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing";

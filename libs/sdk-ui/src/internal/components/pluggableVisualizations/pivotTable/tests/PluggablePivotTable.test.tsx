@@ -27,7 +27,7 @@ import {
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import SpyInstance = jest.SpyInstance;
-import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
 import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
 import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

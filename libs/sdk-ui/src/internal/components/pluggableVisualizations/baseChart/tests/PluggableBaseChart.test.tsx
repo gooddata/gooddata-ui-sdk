@@ -7,7 +7,7 @@ import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
-import { VisualizationEnvironment } from "../../../../../base/constants/visualizationTypes";
+import { VisualizationEnvironment } from "../../../../../base/vis/visualizationTypes";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");

@@ -1,10 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { generateChartOptions } from "../../test/helper";
 
 import * as fixtures from "../../../../../__mocks__/fixtures";
 import getLegend, { shouldLegendBeEnabled, getLegendItems } from "../legendBuilder";
 import { DEFAULT_LEGEND_CONFIG } from "../../../typings/legend";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 describe("shouldLegendBeEnabled", () => {
     it("should return false by default", () => {

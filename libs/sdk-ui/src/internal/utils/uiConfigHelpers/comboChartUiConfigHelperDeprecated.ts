@@ -15,7 +15,7 @@ import * as columnMeasureIcon from "../../assets/combo/bucket-title-measures-col
 import * as columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
 
 import { UICONFIG } from "../../constants/uiConfig";
-import { ChartType } from "../../../base/constants/visualizationTypes";
+import { ChartType } from "../../../base/vis/visualizationTypes";
 
 export function setComboChartUiConfigDeprecated(
     referencePoint: IExtendedReferencePoint,

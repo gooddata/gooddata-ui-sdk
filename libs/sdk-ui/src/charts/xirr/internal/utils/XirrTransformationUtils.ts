@@ -10,9 +10,9 @@ import {
     IDrillEvent,
     IDrillEventIntersectionElement,
     IDrillEventContextXirr,
-} from "../../../../base/interfaces/DrillEvents";
-import { VisualizationTypes, HeadlineElementType } from "../../../../base/constants/visualizationTypes";
-import { isSomeHeaderPredicateMatched } from "../../../../base/helpers/drilling";
+} from "../../../../base/vis/DrillEvents";
+import { VisualizationTypes, HeadlineElementType } from "../../../../base/vis/visualizationTypes";
+import { isSomeHeaderPredicateMatched } from "../../../../base/vis/drilling";
 import { IHeaderPredicate } from "../../../../base/headerMatching/HeaderPredicate";
 import { IHeadlineData } from "../../../headline/Headlines";
 

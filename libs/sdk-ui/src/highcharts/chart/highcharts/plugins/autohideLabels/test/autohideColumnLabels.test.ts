@@ -2,7 +2,7 @@
 import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
 import { IPointData, IDataLabelsConfig, IAxisConfig, ISeriesDataItem } from "../../../../../Config";
-import { VisualizationTypes } from "../../../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../../../base/vis/visualizationTypes";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {

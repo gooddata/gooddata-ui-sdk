@@ -16,7 +16,7 @@ import {
     VisElementType,
     VisType,
     XirrType,
-} from "../constants/visualizationTypes";
+} from "./visualizationTypes";
 import isEmpty = require("lodash/isEmpty");
 
 export interface IDrillableItemUri {

@@ -11,7 +11,7 @@ import { IChartConfig } from "../../Config";
 import { getRgbString } from "../../utils/color";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
 import Chart from "../Chart";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
 import { IntlWrapper } from "../../../base/localization/IntlWrapper";
 

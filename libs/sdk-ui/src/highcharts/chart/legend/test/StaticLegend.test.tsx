@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
 
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import StaticLegend from "../StaticLegend";
 import LegendItem from "../LegendItem";
 import { withIntl } from "../../../../base/localization/intlUtils";

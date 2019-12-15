@@ -25,18 +25,18 @@ import * as CustomEvent from "custom-event";
 import * as React from "react";
 
 import "../../styles/css/pivotTable.css";
-import { VisualizationTypes } from "../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../base/vis/visualizationTypes";
 import { getScrollbarWidth } from "../base/helpers/domUtils";
 import {
     convertDrillableItemsToPredicates,
     getDrillIntersection,
     isSomeHeaderPredicateMatched,
-} from "../base/helpers/drilling";
+} from "../base/vis/drilling";
 import {
     IDrillEvent,
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
-} from "../base/interfaces/DrillEvents";
+} from "../base/vis/DrillEvents";
 import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../base/headerMatching/MappingHeader";
 import { ErrorComponent } from "../base/react/ErrorComponent";
@@ -86,9 +86,8 @@ import {
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
 import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
-import { IDrillableItemPushData } from "../base/interfaces/PushData";
 import { convertError, ErrorCodes, GoodDataSdkError, IErrorDescriptors, newErrorMapping } from "../base";
-import { IExportFunction, IExtendedExportConfig } from "../base/interfaces/Events";
+import { IDrillableItemPushData, IExportFunction, IExtendedExportConfig } from "../base/vis/Events";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");

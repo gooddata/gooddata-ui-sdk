@@ -12,7 +12,7 @@ import { BUCKETS } from "../../constants/bucket";
 import { hasNoMeasures, hasNoAttribute } from "../bucketRules";
 
 import { setBucketTitles, getItemsCount } from "../bucketHelper";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 
 export const getDefaultXirrUiConfig = (): IUiConfig => cloneDeep(DEFAULT_XIRR_UICONFIG);
 

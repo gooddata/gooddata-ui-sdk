@@ -21,9 +21,9 @@ import {
     VIEW_BY_DIMENSION_INDEX,
 } from "../constants/dimensions";
 import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits";
-import { VisType, VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { VisType, VisualizationTypes } from "../../base/vis/visualizationTypes";
 import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
-import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/helpers/drilling";
+import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/vis/drilling";
 
 import {
     findAttributeInDimension,
