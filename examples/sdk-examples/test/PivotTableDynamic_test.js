@@ -7,6 +7,7 @@
 //     waitForPivotTableStopLoading,
 //     checkCellHasClassName,
 //     checkCellHasNotClassName,
+//     checkDrill,
 // } from "./utils/helpers";
 // import {
 //     measuresDrillParams,
@@ -15,6 +16,8 @@
 //     measuresColumnAndRowAttributesDrillParams,
 //     measuresAndColumnAttributesDrillParams,
 //     measuresAndRowAttributesDrillParams,
+//     attributeOnDrillExtendedParams,
+//     metricOnDrillExtendedParams,
 // } from "./PivotTableDynamicFixtures.js";
 
 // const PIVOT_TABLE_MEASURES_COLUMN_AND_ROW_ATTRIBUTES = ".s-pivot-table-measuresColumnAndRowAttributes";
@@ -23,6 +26,7 @@
 // const SORTING_PRESET_BY_MENU_CATOGORY_ASC = ".s-sorting-preset-byMenuCategory";
 // const SORTING_PRESET_BY_LOCATION_STATE_DESC = ".s-sorting-preset-byLocationState";
 // const GROUP_ROWS_PRESET_ENABLED = ".s-group-rows-preset-activeGrouping";
+// const NEW_ON_DRILL_PRESET = ".s-group-rows-preset-onDrill";
 // const TOTALS_SUBTOTAL = ".s-total-preset-franchiseFeesMaxByLocationState";
 // const TOTALS_PRESET_FRANCHISE_FEES_SUM = ".s-total-preset-franchiseFeesSum";
 // const TOTALS_PRESET_FRANCHISE_FEES_AVG = ".s-total-preset-franchiseFeesAvg";
@@ -64,14 +68,6 @@
 //         if (doClick) {
 //             await t.click(cell);
 //         }
-//     }
-// }
-
-// async function checkDrill(t, output, selector = ".s-output") {
-//     const outputElement = Selector(selector);
-//     await t.expect(outputElement.exists).ok();
-//     if (outputElement) {
-//         await t.expect(outputElement.textContent).eql(output);
 //     }
 // }
 
@@ -133,6 +129,18 @@
 //     await waitForPivotTableStopLoading(t);
 //     await checkRender(t, ".s-pivot-table-measuresAndRowAttributes", CELL_5_0, DRILLABLE_CELL_CLASSNAME, true);
 //     await checkDrill(t, measuresAndRowAttributesDrillParams);
+// });
+
+// test("should use the new onDrill event when drilling on the attributes and measures", async t => {
+//     await t.click(Selector(NEW_ON_DRILL_PRESET));
+//     await t.click(Selector(".s-bucket-preset-measuresAndRowAttributes"));
+//     await waitForPivotTableStopLoading(t);
+
+//     await checkRender(t, ".s-pivot-table-measuresAndRowAttributes", CELL_0_2, DRILLABLE_CELL_CLASSNAME, true);
+//     await checkDrill(t, attributeOnDrillExtendedParams);
+
+//     await checkRender(t, ".s-pivot-table-measuresAndRowAttributes", CELL_0_3, DRILLABLE_CELL_CLASSNAME, true);
+//     await checkDrill(t, metricOnDrillExtendedParams);
 // });
 
 // test("should sort PivotTable using sortBy prop", async t => {

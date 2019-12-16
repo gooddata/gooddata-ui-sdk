@@ -50,6 +50,7 @@ export const heatmapVisualizationUri = `/gdc/md/${demoProjectId}/obj/9284`;
 export const columnsVisualizationIdentifier = "aabOspdLbbvs";
 export const columnVisualizationIdentifier = "acFJltTsifSQ";
 export const columnVisualizationUri = `/gdc/md/${demoProjectId}/obj/6862`;
+export const comboVisualizationIdentifier = "aaTJJW6adsaj";
 export const dateDatasetIdentifier = "date.dataset.dt";
 export const dateDataSetUri = `/gdc/md/${demoProjectId}/obj/2180`;
 export const employeeNameIdentifier = "label.employee.employeename";

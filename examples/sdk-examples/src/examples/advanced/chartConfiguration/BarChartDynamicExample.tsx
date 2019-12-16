@@ -82,7 +82,7 @@ export const BarChartDynamicExample: React.FC = () => {
 
     return (
         <div>
-            <div style={style} className="s-bar-chart">
+            <div className="s-bar-chart">
                 <button className="s-change-palette" onClick={onPaletteChange}>
                     Change palette
                 </button>
@@ -95,14 +95,16 @@ export const BarChartDynamicExample: React.FC = () => {
                     Change separator
                 </button>
 
-                <BarChart
-                    backend={backend}
-                    workspace={projectId}
-                    measures={[amount]}
-                    viewBy={locationResort}
-                    stackBy={menuCategory}
-                    config={config}
-                />
+                <div style={style}>
+                    <BarChart
+                        backend={backend}
+                        workspace={projectId}
+                        measures={[amount]}
+                        viewBy={locationResort}
+                        stackBy={menuCategory}
+                        config={config}
+                    />
+                </div>
             </div>
         </div>
     );

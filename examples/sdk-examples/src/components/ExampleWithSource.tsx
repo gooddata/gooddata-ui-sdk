@@ -1,8 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter/prism";
-import { okaidia } from "react-syntax-highlighter/styles/prism";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface IExampleWithSourceProps {
     for: React.ComponentType;

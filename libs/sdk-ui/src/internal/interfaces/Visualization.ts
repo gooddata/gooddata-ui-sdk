@@ -35,8 +35,8 @@ export interface IDimensions {
 }
 
 export interface IVisProps {
-    dimensions: IDimensions;
-    custom: ICustomProps;
+    dimensions?: IDimensions;
+    custom?: ICustomProps;
     locale?: ILocale;
     config?: IGdcConfig;
 }

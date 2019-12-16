@@ -4,6 +4,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
+import "@gooddata/sdk-ui/styles/css/attributeFilter.css";
+import "@gooddata/sdk-ui/styles/css/dateFilter.css";
+import "@gooddata/sdk-ui/styles/css/headline.css";
+import "@gooddata/sdk-ui/styles/css/charts.css";
+import "@gooddata/sdk-ui/styles/css/measureValueFilter.css";
+import "@gooddata/sdk-ui/styles/css/menu.css";
+import "@gooddata/sdk-ui/styles/css/pivotTable.css";
 import "@gooddata/goodstrap/lib/styles.scss";
 import "react-datepicker/dist/react-datepicker.css";
 

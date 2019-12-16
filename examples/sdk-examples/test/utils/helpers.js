@@ -123,3 +123,24 @@ export const loginUsingLoginForm = (redirectUri = "/", retryCount = 2) => async 
 export const waitForPivotTableStopLoading = async t => {
     await t.expect(Selector(".s-pivot-table .s-loading").exists).notOk();
 };
+
+export const checkRenderChart = async (selector, t) => {
+    const loading = Selector(".s-loading");
+    const chart = Selector(selector);
+
+    await t.expect(loading.exists).ok();
+
+    await t
+        .expect(chart.exists)
+        .ok()
+        .expect(chart.textContent)
+        .ok();
+};
+
+export const checkDrill = async (t, output, selector = ".s-output") => {
+    const outputElement = Selector(selector);
+    await t.expect(outputElement.exists).ok();
+    if (outputElement) {
+        await t.expect(outputElement.textContent).eql(output);
+    }
+};

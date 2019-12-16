@@ -1,20 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { Selector } from "testcafe";
 import { config } from "./utils/config";
-import { loginUsingLoginForm } from "./utils/helpers";
-
-async function checkRenderChart(selector, t) {
-    const loading = Selector(".s-loading");
-    const chart = Selector(selector);
-
-    await t.expect(loading.exists).ok();
-
-    await t
-        .expect(chart.exists)
-        .ok()
-        .expect(chart.textContent)
-        .ok();
-}
+import { loginUsingLoginForm, checkRenderChart } from "./utils/helpers";
 
 fixture("Basic components") // eslint-disable-line no-undef
     .page(config.url)
