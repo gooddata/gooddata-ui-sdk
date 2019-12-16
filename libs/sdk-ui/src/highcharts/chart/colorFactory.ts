@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { VisualizationTypes } from "../../base/vis/visualizationTypes";
-import { findMeasureGroupInDimensions } from "../../base/helpers/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { DefaultColorPalette, IColorMapping } from "../Config";
 import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 

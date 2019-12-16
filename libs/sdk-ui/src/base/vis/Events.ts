@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
-import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorPalette, Identifier, ITotal, SortItem } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
 export interface ILoadingState {
@@ -16,18 +16,6 @@ export interface IExtendedExportConfig extends IExportConfig {
 }
 export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResult>;
 export type OnExportReady = (exportFunction: IExportFunction) => void;
-
-export interface ILegendItem {
-    name: string;
-    color: string; // hex or RGB, can be used directly in CSS style
-    onClick: () => void; // toggle to show/hide serie in chart
-}
-
-export interface ILegendData {
-    legendItems: ILegendItem[];
-}
-
-export type OnLegendReady = (data: ILegendData) => void;
 
 /**
  * TODO: SDK8: add docs

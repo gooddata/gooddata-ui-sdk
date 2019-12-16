@@ -6,6 +6,8 @@ import {
     unEscapeAngleBrackets,
     formatLegendLabel,
     getPrimaryChartType,
+    unwrap,
+    percentFormatter,
 } from "../common";
 
 describe("Common utils", () => {
@@ -128,5 +130,20 @@ describe("Common utils", () => {
 
             expect(getPrimaryChartType(chartOptions)).toEqual("column");
         });
+    });
+
+    describe("unwrap", () => {
+        it("should unwrap an object", () => {
+            expect(unwrap({ key: "value" })).toEqual("value");
+        });
+    });
+
+    describe("percentFormatter", () => {
+        it.each([["0%", 0], ["49.01%", 49.01], ["100%", 100], ["", null]])(
+            'should return "%s" when input is %s',
+            (formattedValue: string, value: number) => {
+                expect(percentFormatter(value)).toEqual(formattedValue);
+            },
+        );
     });
 });

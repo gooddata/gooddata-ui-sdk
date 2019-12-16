@@ -81,4 +81,5 @@ export {
     IExportFunction,
     IExtendedExportConfig,
 } from "./vis/Events";
+export { OnFiredDrillEvent, IDrillableItem } from "./vis/DrillEvents";
 export { VisualizationTypes, VisualizationEnvironment } from "./vis/visualizationTypes";

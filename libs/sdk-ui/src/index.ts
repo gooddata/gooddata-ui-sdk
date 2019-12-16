@@ -7,30 +7,23 @@ import { Kpi } from "./kpi/Kpi";
 import { VisualizationTypes, ChartType, VisualizationEnvironment } from "./base/vis/visualizationTypes";
 // import { Execute } from "./execution/Execute";
 import { IDrillableItem } from "./base/vis/DrillEvents";
-import * as BucketNames from "./base/constants/bucketNames";
-import * as SortsHelper from "./base/helpers/sorts";
-
 import { withExecution } from "./execution/withExecution";
 import { Executor } from "./execution/Executor";
 // tslint:disable-next-line:no-duplicate-imports
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "./base/interfaces/OverTimeComparison";
 
 export {
-    BucketNames,
     CatalogHelper,
     ChartType,
     Kpi,
     Executor,
     withExecution,
     IDrillableItem,
-    IPushData,
-    IColorsData,
     VisEvents,
     VisualizationEnvironment,
     VisualizationTypes,
     OverTimeComparisonType,
     OverTimeComparisonTypes,
-    SortsHelper,
 };
 
 // new exports
@@ -42,5 +35,4 @@ export * from "./pivotTable";
 export * from "./filters";
 
 import { InsightView } from "./insightView/InsightView";
-import { IColorsData, IPushData } from "./base/vis/Events";
 export { InsightView };

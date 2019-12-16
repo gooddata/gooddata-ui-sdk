@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IUnwrappedAttributeHeadersWithItems } from "../../../../base/helpers/types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../utils/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 import { barChartWith4MetricsAndViewByTwoAttributes } from "../../../../../__mocks__/fixtures";
 import { MeasureColorStrategy } from "../../colorFactory";

@@ -99,19 +99,3 @@ export function getNthAttributeDescriptor(
     }
     return null;
 }
-
-export function getNthAttributeLocalIdentifier(
-    attributeDescriptors: IAttributeDescriptor[],
-    headerIndex: number,
-): string {
-    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
-    return attributeDescriptor && attributeDescriptor.localIdentifier;
-}
-
-export function getNthAttributeName(
-    attributeDescriptors: IAttributeDescriptor[],
-    headerIndex: number,
-): string {
-    const attributeDescriptor = getNthAttributeDescriptor(attributeDescriptors, headerIndex);
-    return attributeDescriptor && attributeDescriptor.formOf.name;
-}

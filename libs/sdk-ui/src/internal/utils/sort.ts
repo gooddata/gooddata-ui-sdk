@@ -1,22 +1,17 @@
 // (C) 2019 GoodData Corporation
-import get = require("lodash/get");
-import set = require("lodash/set");
-import includes = require("lodash/includes");
 import every = require("lodash/every");
+import get = require("lodash/get");
+import includes = require("lodash/includes");
 import isEmpty = require("lodash/isEmpty");
-import omitBy = require("lodash/omitBy");
 import isNil = require("lodash/isNil");
-import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
-import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
-
-import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
-
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
-import * as SortsHelper from "../../base/helpers/sorts";
+import omitBy = require("lodash/omitBy");
+import set = require("lodash/set");
 import {
     bucketAttributes,
     IAttributeSortItem,
+    IBucket,
     IInsight,
+    IMeasure,
     insightAttributes,
     insightBucket,
     insightMeasures,
@@ -29,6 +24,12 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "../../base";
+
+import { VisualizationTypes } from "../../base/vis/visualizationTypes";
+import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
+import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
+
+import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
 export function getMeasureSortItems(identifier: string, direction: SortDirection): SortItem[] {
     return [newMeasureSort(identifier, direction)];
@@ -104,6 +105,29 @@ function getDefaultBarChartSort(insight: IInsight, canSortStackTotalValue: boole
     return !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
 }
 
+export function getDefaultTreemapSortFromBuckets(
+    viewBy: IBucket,
+    segmentBy: IBucket,
+    measures: IMeasure[],
+): SortItem[] {
+    const viewAttr = bucketAttributes(viewBy);
+    const stackAttr = bucketAttributes(segmentBy);
+
+    if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
+        return [newAttributeSort(viewAttr[0], "asc"), ...measures.map(m => newMeasureSort(m, "desc"))];
+    }
+
+    return [];
+}
+
+export function getDefaultTreemapSort(insight: IInsight): SortItem[] {
+    return getDefaultTreemapSortFromBuckets(
+        insightBucket(insight, BucketNames.VIEW),
+        insightBucket(insight, BucketNames.SEGMENT),
+        insightMeasures(insight),
+    );
+}
+
 // Consider disolving this function into individual components
 export function createSorts(
     type: string,
@@ -121,7 +145,7 @@ export function createSorts(
         case VisualizationTypes.BAR:
             return getDefaultBarChartSort(insight, canSortStackTotalValue);
         case VisualizationTypes.TREEMAP:
-            return SortsHelper.getDefaultTreemapSort(insight);
+            return getDefaultTreemapSort(insight);
     }
     return [];
 }

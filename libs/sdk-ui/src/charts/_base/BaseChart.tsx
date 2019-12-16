@@ -2,7 +2,7 @@
 import * as React from "react";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
-import { ICoreChartProps } from "../chartProps";
+import { ICoreChartProps, OnLegendReady } from "../chartProps";
 import { IErrorProps } from "../../base/react/ErrorComponent";
 import { ILoadingProps } from "../../base/react/LoadingComponent";
 
@@ -14,7 +14,6 @@ import {
     ITranslationsComponentProps,
 } from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
-import { OnLegendReady } from "../../base/vis/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 import { ChartType } from "../../base/vis/visualizationTypes";

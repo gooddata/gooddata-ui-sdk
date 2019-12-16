@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { unwrap } from "../../base/helpers/utils";
 import { getMappingHeaderName, IMappingHeader } from "../../base/headerMatching/MappingHeader";
 import { getIdsFromUri, getTreeLeaves } from "./agGridUtils";
 import {
@@ -25,6 +24,7 @@ import {
     isResultAttributeHeader,
     isResultMeasureHeader,
     isResultTotalHeader,
+    resultHeaderName,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeSortItem,
@@ -68,9 +68,8 @@ export const identifyResponseHeader = (header: IDimensionItemDescriptor) => {
 };
 
 export const headerToGrid = (header: IResultHeader, fieldPrefix = "") => {
-    const internalHeader = unwrap(header);
     return {
-        headerName: internalHeader.name,
+        headerName: resultHeaderName(header),
         field: fieldPrefix + identifyHeader(header),
     };
 };

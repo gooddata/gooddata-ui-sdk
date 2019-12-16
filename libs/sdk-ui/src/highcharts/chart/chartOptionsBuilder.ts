@@ -22,15 +22,10 @@ import {
 } from "../constants/dimensions";
 import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits";
 import { VisType, VisualizationTypes } from "../../base/vis/visualizationTypes";
-import { isCssMultiLineTruncationSupported } from "../../base/helpers/domUtils";
 import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/vis/drilling";
 
-import {
-    findAttributeInDimension,
-    findMeasureGroupInDimensions,
-} from "../../base/helpers/executionResultHelper";
-import { IUnwrappedAttributeHeadersWithItems } from "../../base/helpers/types";
-import { unwrap } from "../../base/helpers/utils";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../utils/executionResultHelper";
+import { IUnwrappedAttributeHeadersWithItems } from "../utils/types";
 import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
@@ -54,12 +49,14 @@ import {
     isBubbleChart,
     isChartSupported,
     isComboChart,
+    isCssMultiLineTruncationSupported,
     isHeatmap,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
     parseValue,
     stringifyChartTypes,
+    unwrap,
 } from "../utils/common";
 import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
 import {

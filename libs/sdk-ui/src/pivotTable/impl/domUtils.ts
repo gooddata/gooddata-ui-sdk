@@ -29,8 +29,3 @@ const getScrollbarWidthBody = (): number => {
  * For performance reasons this is memoized as the value is highly unlikely to change
  */
 export const getScrollbarWidth = once(getScrollbarWidthBody);
-
-export const isCssMultiLineTruncationSupported = (): boolean => {
-    // support -webkit-line-clamp
-    return "webkitLineClamp" in document.body.style;
-};

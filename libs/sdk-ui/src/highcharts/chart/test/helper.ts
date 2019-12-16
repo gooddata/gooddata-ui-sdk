@@ -1,10 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { barChartWithStackByAndViewByAttributes } from "../../../../__mocks__/fixtures";
-import {
-    findAttributeInDimension,
-    findMeasureGroupInDimensions,
-} from "../../../base/helpers/executionResultHelper";
+import { findAttributeInDimension, findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { getChartOptions } from "../chartOptionsBuilder";
 
 import {

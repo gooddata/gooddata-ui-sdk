@@ -76,6 +76,12 @@ export const AnalyticalBackendErrorTypes: {
 export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
 // @public
+export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
+
+// @public
+export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
+
+// @public
 export type AuthenticatedPrincipal = {
     userId: string;
     userMeta?: any;
@@ -637,6 +643,9 @@ export function prepareExecution(backend: IAnalyticalBackend, definition: IExecu
 export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @public
+export function resultHeaderName(header: IResultHeader): string;
 
 // @public
 export enum SettingCatalog {

@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import {
+    attributeDescriptorLocalId,
+    attributeDescriptorName,
+    IAttributeDescriptor,
+} from "@gooddata/sdk-backend-spi";
 import { TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
 
-import {
-    getNthAttributeLocalIdentifier,
-    getNthAttributeName,
-} from "../../base/helpers/executionResultHelper";
 import SubMenu from "../menu/SubMenu";
 import { IMenuAggregationClickConfig } from "../types";
 import menuHelper from "./aggregationsMenuHelper";
@@ -52,7 +52,7 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
         rowAttributeDescriptors: IAttributeDescriptor[],
         attributeHeaderIndex: number,
     ): string {
-        return getNthAttributeName(rowAttributeDescriptors, attributeHeaderIndex - 1);
+        return attributeDescriptorName(rowAttributeDescriptors[attributeHeaderIndex - 1]);
     }
 
     private getAttributeName(
@@ -80,9 +80,8 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
 
         return rowAttributeDescriptors.map(
             (_attributeDescriptor: IAttributeDescriptor, headerIndex: number) => {
-                const attributeLocalIdentifier = getNthAttributeLocalIdentifier(
-                    rowAttributeDescriptors,
-                    headerIndex,
+                const attributeLocalIdentifier = attributeDescriptorLocalId(
+                    rowAttributeDescriptors[headerIndex],
                 );
                 const isSelected = menuHelper.isTotalEnabledForAttribute(
                     attributeLocalIdentifier,

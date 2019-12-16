@@ -1,14 +1,10 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { attributeDescriptorLocalId, DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
 
-import {
-    getNthAttributeDescriptor,
-    getNthAttributeLocalIdentifier,
-} from "../../base/helpers/executionResultHelper";
 import Menu from "../menu/Menu";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import { IMenuAggregationClickConfig } from "../types";
@@ -142,7 +138,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         rowAttributeDescriptors: IAttributeDescriptor[],
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
-        const firstAttributeIdentifier = getNthAttributeLocalIdentifier(rowAttributeDescriptors, 0);
+        const firstAttributeIdentifier = attributeDescriptorLocalId(rowAttributeDescriptors[0]);
 
         return AVAILABLE_TOTALS.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
@@ -150,13 +146,13 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 totalType,
                 columnTotals,
             );
-            const attributeDescriptor = getNthAttributeDescriptor(rowAttributeDescriptors, 0);
+            const attributeDescriptor = rowAttributeDescriptors[0];
             const onClick = () =>
                 this.props.onAggregationSelect({
                     type: totalType,
                     measureIdentifiers: measureLocalIdentifiers,
                     include: !isSelected,
-                    attributeIdentifier: attributeDescriptor.localIdentifier,
+                    attributeIdentifier: attributeDescriptor.attributeHeader.localIdentifier,
                 });
             const itemClassNames = this.getItemClassNames(totalType);
             const renderSubmenu = showSubmenu && rowAttributeDescriptors.length > 0;

@@ -5,7 +5,7 @@ import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
 import { DefaultColorPalette } from "../../../base/constants/colorPalette";
 import Highcharts from "../highcharts/highchartsEntryPoint";
-import { findMeasureGroupInDimensions } from "../../../base/helpers/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import {
     buildTooltipFactory,
     buildTooltipForTwoAttributesFactory,
