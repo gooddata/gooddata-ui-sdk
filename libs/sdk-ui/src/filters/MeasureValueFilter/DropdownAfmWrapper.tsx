@@ -70,8 +70,13 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
             onApply(null, measureIdentifier);
         } else {
             const filter = isRangeConditionOperator(operator)
-                ? newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.from!, value.to)
-                : newMeasureValueFilter({ identifier: measureIdentifier }, operator, value.value!);
+                ? newMeasureValueFilter(
+                      { localIdentifier: measureIdentifier },
+                      operator,
+                      value.from!,
+                      value.to,
+                  )
+                : newMeasureValueFilter({ localIdentifier: measureIdentifier }, operator, value.value!);
             onApply(filter, measureIdentifier);
         }
     };

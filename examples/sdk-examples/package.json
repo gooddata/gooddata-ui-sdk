@@ -83,7 +83,7 @@
         "react-measure": "^2.3.0",
         "react-router-dom": "^4.2.2",
         "react-select": "^1.2.1",
-        "react-syntax-highlighter": "^6.1.2",
+        "react-syntax-highlighter": "^11.0.2",
         "react-test-renderer": "^16.4.2",
         "recharts": "^1.0.0-beta.9",
         "yup": "^0.24.1"
@@ -96,7 +96,7 @@
         "examples?": "# Default is developer domain, other options: yarn examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "start": "bash scripts/run-examples.sh",
         "build": "bash scripts/build-examples.sh",
-        "examples-server": "node examples/server/src/index.js",
+        "examples-server": "node server/src/index.js",
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",

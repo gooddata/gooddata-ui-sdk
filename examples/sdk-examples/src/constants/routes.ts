@@ -7,6 +7,7 @@ import { TimeOverTimeComparison } from "../examples/timeOverTimeComparison";
 import { ArithmeticMeasures } from "../examples/arithmeticMeasures";
 import { Execute } from "../examples/execution";
 import { PivotTableDrilling, DrillWithExternalData } from "../examples/drill";
+import { DateFilter } from "../examples/dateFilter";
 
 import { GlobalFilters } from "../examples/advanced/globalFilters";
 import { DatePicker } from "../examples/advanced/datePicker";
@@ -16,6 +17,10 @@ import { LoadingAndError } from "../examples/advanced/loadingAndError";
 import { ChartConfiguration } from "../examples/advanced/chartConfiguration";
 import { Responsive } from "../examples/advanced/responsive";
 import { Export } from "../examples/export";
+
+import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
+import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
+import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
 
 import { Login } from "../components/login";
 import { Registration } from "../components/registration";
@@ -87,6 +92,11 @@ export const sideNavigationRoutes = [
     //     title: "Attribute Filter Components",
     //     Component: AttributeFilter,
     // },
+    {
+        path: "/date-filter-component",
+        title: "Date Filter Component",
+        Component: DateFilter,
+    },
     { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasures },
     { path: "/execute", title: "Execute Component", Component: Execute },
     {
@@ -110,16 +120,14 @@ export const hiddenPaths = [
     // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
     // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
     // { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
-    // {
-    //     path: "/hidden/measure-value-filter",
-    //     title: "Measure Value Filter",
-    //     Component: MeasureValueFilter,
-    // },
-    // {
-    //     path: "/hidden/measure-value-filter-component",
-    //     title: "Measure Value Filter Component",
-    //     Component: MeasureValueFilterComponent,
-    // },
+    // TODO BB-1694 - Add Measure Value Filter example to the menu
+    { path: "/hidden/measure-value-filter", title: "Measure Value Filter", Component: MeasureValueFilter },
+    {
+        path: "/hidden/measure-value-filter-component",
+        title: "Measure Value Filter Component",
+        Component: MeasureValueFilterComponent,
+    },
+    { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
 ];
 
 export const backendInfoRoutes = [

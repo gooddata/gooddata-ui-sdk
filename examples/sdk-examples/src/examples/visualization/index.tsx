@@ -4,6 +4,7 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { VisualizationColumnChartByIdentifierExample } from "./VisualizationColumnChartByIdentifierExample";
+import { VisualizationComboChartByIdentifierExample } from "./VisualizationComboChartByIdentifierExample";
 // import VisualizationTableExample from "../components/VisualizationTableByIdentifierExample";
 // import CustomVisualizationExample from "../components/CustomVisualizationExample";
 import { VisualizationBarByIdentifierExample } from "./VisualizationBarByIdentifierExample";
@@ -18,6 +19,7 @@ import { VisualizationTreemapByIdentifierExample } from "./VisualizationTreemapB
 import { VisualizationHeatmapByIdentifierExample } from "./VisualizationHeatmapByIdentifierExample";
 
 import VisualizationColumnChartByIdentifierExampleSRC from "!raw-loader!./VisualizationColumnChartByIdentifierExample";
+import VisualizationComboChartByIdentifierExampleSRC from "!raw-loader!./VisualizationComboChartByIdentifierExample";
 // import VisualizationTableExampleSRC from "!raw-loader!./VisualizationTableByIdentifierExample";
 // import CustomVisualizationExampleSRC from "!raw-loader!./CustomVisualizationExample";
 import VisualizationBarByIdentifierExampleSrc from "!raw-loader!./VisualizationBarByIdentifierExample";
@@ -138,6 +140,14 @@ export const Visualization = () => (
         <ExampleWithSource
             for={VisualizationHeatmapByIdentifierExample}
             source={VisualizationHeatmapByIdentifierExampleSRC}
+        />
+
+        <hr className="separator" />
+
+        <h2 id="heatmap">Combo Chart</h2>
+        <ExampleWithSource
+            for={VisualizationComboChartByIdentifierExample}
+            source={VisualizationComboChartByIdentifierExampleSRC}
         />
     </div>
 );

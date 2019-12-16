@@ -13,9 +13,9 @@ import AttributeFilterExampleSRC from "!raw-loader!./AttributeFilterExample";
 
 export const AttributeFilter = () => (
     <div>
-        <h1>Attribute Filter Components</h1>
+        <h1>Attribute Filter Component</h1>
 
-        <p>These examples show how to use the Attribute Filter components.</p>
+        <p>These examples show how to use the Attribute Filter component.</p>
 
         <hr className="separator" />
 

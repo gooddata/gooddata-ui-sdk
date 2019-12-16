@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { PivotTable, HeaderPredicateFactory } from "@gooddata/sdk-ui";
+import { PivotTable, HeaderPredicates } from "@gooddata/sdk-ui";
 import { newAttribute, newMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 
 import {
@@ -29,7 +29,7 @@ const measures = [
 
 const rows = [newAttribute(locationStateDisplayFormIdentifier)];
 
-const drillableItems = [HeaderPredicateFactory.composedFromIdentifier(totalSalesIdentifier)];
+const drillableItems = [HeaderPredicates.composedFromIdentifier(totalSalesIdentifier)];
 
 const style = { height: 200 };
 

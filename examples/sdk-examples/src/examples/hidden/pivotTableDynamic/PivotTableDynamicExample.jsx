@@ -1,13 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { Component } from "react";
-import { PivotTable, Table, HeaderPredicateFactory } from "@gooddata/sdk-ui";
-import {
-    newMeasure,
-    newAttribute,
-    newPositiveAttributeFilter,
-    newRelativeDateFilter,
-    newMeasureSort,
-} from "@gooddata/sdk-model";
+import { PivotTable, Table, HeaderPredicateFactory, Model } from "@gooddata/react-components";
+
+import "@gooddata/react-components/styles/css/main.css";
 
 import {
     projectId,
@@ -21,32 +16,25 @@ import {
     locationStateAttributeCaliforniaUri,
     monthDateIdentifierJanuary,
     dateDatasetIdentifier,
-} from "../../../constants/fixtures";
-import { ElementWithParam } from "./ElementWithParam";
+} from "../utils/fixtures";
+import { createColumnTotal } from "../utils/helpers";
+import { ElementWithParam } from "./utils/ElementWithParam";
 
-export const createColumnTotal = (measureLocalIdentifier, attributeLocalIdentifier, type = "sum") => {
-    return {
-        measureIdentifier: measureLocalIdentifier,
-        type,
-        attributeIdentifier: attributeLocalIdentifier,
-    };
-};
-
-const measureFranchiseFees = newMeasure(franchiseFeesIdentifier, m => m.localId(franchiseFeesIdentifier));
-const measureAdRoyalty = newMeasure(franchiseFeesAdRoyaltyIdentifier, m =>
-    m.localId(franchiseFeesAdRoyaltyIdentifier),
+const measureFranchiseFees = Model.measure(franchiseFeesIdentifier).localIdentifier(franchiseFeesIdentifier);
+const measureAdRoyalty = Model.measure(franchiseFeesAdRoyaltyIdentifier).localIdentifier(
+    franchiseFeesAdRoyaltyIdentifier,
 );
-const attributeLocationState = newAttribute(locationStateDisplayFormIdentifier, a =>
-    a.localId(locationStateDisplayFormIdentifier),
+const attributeLocationState = Model.attribute(locationStateDisplayFormIdentifier).localIdentifier(
+    locationStateDisplayFormIdentifier,
 );
-const attributeLocationName = newAttribute(locationNameDisplayFormIdentifier, a =>
-    a.localId(locationNameDisplayFormIdentifier),
+const attributeLocationName = Model.attribute(locationNameDisplayFormIdentifier).localIdentifier(
+    locationNameDisplayFormIdentifier,
 );
-const attributeMenuCategory = newAttribute(menuCategoryAttributeDFIdentifier, a =>
-    a.localId(menuCategoryAttributeDFIdentifier),
+const attributeMenuCategory = Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier(
+    menuCategoryAttributeDFIdentifier,
 );
-const attributeQuarter = newAttribute(quarterDateIdentifier, a => a.localId(quarterDateIdentifier));
-const attributeMonth = newAttribute(monthDateIdentifier, a => a.localId(monthDateIdentifier));
+const attributeQuarter = Model.attribute(quarterDateIdentifier).localIdentifier(quarterDateIdentifier);
+const attributeMonth = Model.attribute(monthDateIdentifier).localIdentifier(monthDateIdentifier);
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
 const columns = [attributeQuarter, attributeMonth];
@@ -216,19 +204,19 @@ const filterPresets = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: newPositiveAttributeFilter(locationStateDisplayFormIdentifier, [
+        filterItem: Model.positiveAttributeFilter(locationStateDisplayFormIdentifier, [
             locationStateAttributeCaliforniaUri,
         ]),
     },
     lastYear: {
         label: "Last year",
         key: "lastYear",
-        filterItem: newRelativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", -1, -1),
     },
     noData: {
         label: "No Data",
         key: "noData",
-        filterItem: newRelativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
+        filterItem: Model.relativeDateFilter(dateDatasetIdentifier, "GDC.time.year", 1, 1),
     },
     franchiseFeesCalifornia: {
         label: "Franchise Fees California",
@@ -237,12 +225,10 @@ const filterPresets = {
     },
 };
 
-const franchiseFeesCalifornia = newMeasure(franchiseFeesIdentifier, m =>
-    m
-        .alias("FranchiseFees (California)")
-        .filters(filterPresets.attributeCalifornia.filterItem)
-        .localId("franchiseFeesCalifornia"),
-);
+const franchiseFeesCalifornia = Model.measure(franchiseFeesIdentifier)
+    .localIdentifier("franchiseFeesCalifornia")
+    .alias("FranchiseFees (California)")
+    .filters(filterPresets.attributeCalifornia.filterItem);
 
 const sortingPresets = {
     noSort: {
@@ -253,18 +239,18 @@ const sortingPresets = {
     byMenuCategory: {
         label: "By Menu Category ASC",
         key: "byMenuCategory",
-        sortBy: [newAttributeSort(menuCategoryAttributeDFIdentifier, "asc")],
+        sortBy: [Model.attributeSortItem(menuCategoryAttributeDFIdentifier, "asc")],
     },
     byLocationState: {
         label: "By Location State DESC",
         key: "byLocationState",
-        sortBy: [newAttributeSort(locationStateDisplayFormIdentifier, "desc")],
+        sortBy: [Model.attributeSortItem(locationStateDisplayFormIdentifier, "desc")],
     },
     byQ1JanFranchiseFees: {
         label: "by Q1 / Jan / FranchiseFees DESC",
         key: "byQ1JanFranchiseFees",
         sortBy: [
-            newMeasureSort(franchiseFeesIdentifier, "desc", [
+            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
                 {
                     attributeIdentifier: quarterDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -273,15 +259,15 @@ const sortingPresets = {
                     attributeIdentifier: monthDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
                 },
-            ]),
+            ),
         ],
     },
     byLocationStateAndQ1JanFranchiseFees: {
         label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
         key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            newAttributeSort(locationStateDisplayFormIdentifier, "asc"),
-            newMeasureSort(franchiseFeesIdentifier, "desc", [
+            Model.attributeSortItem(locationStateDisplayFormIdentifier, "asc"),
+            Model.measureSortItem(franchiseFeesIdentifier, "desc").attributeLocators(
                 {
                     attributeIdentifier: quarterDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2009/elements?id=1",
@@ -290,7 +276,7 @@ const sortingPresets = {
                     attributeIdentifier: monthDateIdentifier,
                     element: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2071/elements?id=1",
                 },
-            ]),
+            ),
         ],
     },
 };
@@ -360,6 +346,19 @@ const groupRowsPresets = {
     },
 };
 
+const drillHandlingPresets = {
+    onFiredDrillEvent: {
+        label: "Old onFiredDrillEvent",
+        key: "onFiredDrillEvent",
+        value: true,
+    },
+    onDrill: {
+        label: "New onDrill",
+        key: "onDrill",
+        value: false,
+    },
+};
+
 export const getDrillableItems = drillableKeys => {
     return Object.keys(drillableKeys)
         .filter(itemKey => drillableKeys[itemKey])
@@ -399,6 +398,7 @@ export class PivotTableDrillingExample extends Component {
             pivotTableSizeKey: "default",
             maxHeightPresetKey: "none",
             groupRowsKey: "disabledGrouping",
+            drillHandlingKey: "onFiredDrillEvent",
         };
     }
 
@@ -462,7 +462,14 @@ export class PivotTableDrillingExample extends Component {
         });
     };
 
-    onDrill = drillEvent => {
+    onDrillHandlingChange = drillHandlingKey => {
+        this.setState({
+            drillHandlingKey,
+        });
+    };
+
+    onFiredDrillEvent = drillEvent => {
+        // eslint-disable-next-line no-console
         console.log(
             "onFiredDrillEvent",
             drillEvent,
@@ -472,6 +479,14 @@ export class PivotTableDrillingExample extends Component {
             drillEvent,
         });
         return true;
+    };
+
+    onDrill = drillEvent => {
+        // eslint-disable-next-line no-console
+        console.log("onDrill", drillEvent, JSON.stringify(drillEvent.drillContext.intersection, null, 2));
+        this.setState({
+            drillEvent,
+        });
     };
 
     render() {
@@ -487,6 +502,7 @@ export class PivotTableDrillingExample extends Component {
             pivotTableSizeKey,
             maxHeightPresetKey,
             groupRowsKey,
+            drillHandlingKey,
         } = this.state;
         const { bucketProps } = bucketPresets[bucketPresetKey];
         const { sortBy } = sortingPresets[sortingPresetKey];
@@ -522,6 +538,9 @@ export class PivotTableDrillingExample extends Component {
         });
 
         const groupRows = getGroupRows(groupRowsKey);
+        const drillHandlerProp = {
+            [drillHandlingKey]: this[drillHandlingKey],
+        };
 
         return (
             <div>
@@ -699,6 +718,24 @@ export class PivotTableDrillingExample extends Component {
                         );
                     })}
                 </div>
+                <div className="presets">
+                    Drill handling:{" "}
+                    {Object.keys(drillHandlingPresets).map(presetItemKey => {
+                        const { key, label } = drillHandlingPresets[presetItemKey];
+                        return (
+                            <ElementWithParam
+                                key={key}
+                                className={`preset-option gd-button gd-button-secondary s-group-rows-preset-${key} ${
+                                    drillHandlingKey === key ? " is-active" : ""
+                                }`}
+                                onClick={this.onDrillHandlingChange}
+                                params={[key]}
+                            >
+                                {label}
+                            </ElementWithParam>
+                        );
+                    })}
+                </div>
 
                 <div
                     className={`s-pivot-table-${bucketPresetKey}`}
@@ -716,7 +753,7 @@ export class PivotTableDrillingExample extends Component {
                         {...bucketPropsWithFilters}
                         {...filtersProp}
                         drillableItems={drillableItems}
-                        onFiredDrillEvent={this.onDrill}
+                        {...drillHandlerProp}
                         sortBy={sortBy}
                         config={{
                             maxHeight: maxHeightPresets[maxHeightPresetKey].value,
@@ -735,7 +772,7 @@ export class PivotTableDrillingExample extends Component {
                         {...tableBucketProps}
                         {...filtersProp}
                         drillableItems={drillableItems}
-                        onFiredDrillEvent={this.onDrill}
+                        onFiredDrillEvent={this.onFiredDrillEvent}
                         sortBy={sortBy}
                         totals={grandTotalsOnly}
                     />
