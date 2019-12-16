@@ -1,5 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
-import CatalogHelper from "../CatalogHelper";
+// (C) 2007-2019 GoodData Corporation
+import { CatalogHelper } from "../CatalogHelper";
 
 describe("CatalogHelper", () => {
     const catalogJson = {

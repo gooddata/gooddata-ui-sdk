@@ -2,9 +2,13 @@
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IChartConfig, IColorMapping } from "../Config";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/headerMatching/HeaderPredicate";
-import { getMappingHeaderLocalIdentifier, IMappingHeader } from "../../base/headerMatching/MappingHeader";
-import { DefaultColorPalette } from "../../base/constants/colorPalette";
+import {
+    getMappingHeaderLocalIdentifier,
+    IMappingHeader,
+    DefaultColorPalette,
+    IHeaderPredicate,
+    IHeaderPredicateContext,
+} from "../../base";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
 

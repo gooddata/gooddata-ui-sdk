@@ -14,9 +14,7 @@ import flatMap = require("lodash/flatMap");
 import compact = require("lodash/compact");
 import without = require("lodash/without");
 import { InjectedIntl } from "react-intl";
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
-import { BucketNames } from "../../base";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
+import { BucketNames, OverTimeComparisonType, OverTimeComparisonTypes, VisualizationTypes } from "../../base";
 
 import {
     IBucketFilter,

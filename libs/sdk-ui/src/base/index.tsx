@@ -49,7 +49,14 @@ export { createIntlMock, withIntl } from "./localization/intlUtils";
  * Header matching & predicates
  */
 
-export { IMappingHeader } from "./headerMatching/MappingHeader";
+export {
+    IMappingHeader,
+    getMappingHeaderLocalIdentifier,
+    hasMappingHeaderLocalIdentifier,
+    getMappingHeaderUri,
+    getMappingHeaderName,
+    getMappingHeaderIdentifier,
+} from "./headerMatching/MappingHeader";
 export {
     IHeaderPredicate,
     IHeaderPredicateContext,
@@ -80,6 +87,11 @@ export {
     ILoadingState,
     IExportFunction,
     IExtendedExportConfig,
+    IDrillableItemPushData,
+    IColorAssignment,
 } from "./vis/Events";
 export { OnFiredDrillEvent, IDrillableItem } from "./vis/DrillEvents";
-export { VisualizationTypes, VisualizationEnvironment } from "./vis/visualizationTypes";
+export { VisualizationTypes, VisualizationEnvironment, ChartType } from "./vis/visualizationTypes";
+export { Subtract } from "./typings/subtract";
+export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
+export { CatalogHelper } from "./helpers/CatalogHelper";

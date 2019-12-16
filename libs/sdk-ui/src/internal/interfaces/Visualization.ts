@@ -1,11 +1,16 @@
 // (C) 2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IDrillableItem } from "../../base/vis/DrillEvents";
-import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison";
-import { ChartType } from "../../base/vis/visualizationTypes";
+import {
+    OverTimeComparisonType,
+    IDrillableItem,
+    ChartType,
+    IPushData,
+    IVisualizationCallbacks,
+    ILocale,
+    VisualizationEnvironment,
+} from "../../base";
 import { IInsight, ITotal, VisualizationProperties, IColorPalette } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IPushData, IVisualizationCallbacks, ILocale, VisualizationEnvironment } from "../../base";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;

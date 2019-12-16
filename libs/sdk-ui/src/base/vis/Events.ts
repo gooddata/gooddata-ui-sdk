@@ -18,8 +18,7 @@ export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<I
 export type OnExportReady = (exportFunction: IExportFunction) => void;
 
 /**
- * TODO: SDK8: add docs
- * @public
+ * @internal
  */
 export interface IColorAssignment {
     // << send from SDK up

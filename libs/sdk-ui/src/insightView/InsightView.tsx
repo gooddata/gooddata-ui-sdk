@@ -32,10 +32,7 @@ import { PluggableXirr } from "../internal/components/pluggableVisualizations/xi
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import { ErrorComponent, IErrorProps } from "../base/react/ErrorComponent";
 import { LoadingComponent, ILoadingProps } from "../base/react/LoadingComponent";
-import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
-import { fillMissingTitles } from "../base/measureTitles/fillMissingTitles";
-import { DefaultLocale, ILocale } from "../base/localization/Locale";
-import { withContexts } from "../base/react/withContexts";
+import { GoodDataSdkError, fillMissingTitles, DefaultLocale, ILocale, withContexts } from "../base";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,

@@ -1,9 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-
-import { Subtract } from "../base/typings/subtract";
 import { CorePivotTable } from "./CorePivotTable";
-import { BucketNames } from "../base";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -22,9 +19,11 @@ import { IntlWrapper } from "../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../base/localization/TranslationsProvider";
+    withContexts,
+    Subtract,
+    BucketNames,
+} from "../base";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withContexts } from "../base/react/withContexts";
 
 /**
  * Prepares new execution matching pivot table props.

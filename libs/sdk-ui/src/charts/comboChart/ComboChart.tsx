@@ -8,7 +8,7 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";

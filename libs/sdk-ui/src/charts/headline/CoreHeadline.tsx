@@ -1,17 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { IntlWrapper } from "../../base/localization/IntlWrapper";
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps,
-} from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "../_base/fixEmptyHeaderItems";
 import { ILoadingInjectedProps, withEntireDataView } from "../_base/NewLoadingHOC";
-import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
+import {
+    newErrorMapping,
+    IErrorDescriptors,
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+    IntlWrapper,
+    ErrorCodes,
+} from "../../base";
 import { ICommonChartProps, ICoreChartProps } from "../chartProps";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ErrorCodes } from "../../base/errors/GoodDataSdkError";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;
 export class HeadlineStateless extends React.Component<Props, {}> {
