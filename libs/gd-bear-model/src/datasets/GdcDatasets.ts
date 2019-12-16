@@ -1,16 +1,15 @@
 // (C) 2019 GoodData Corporation
-import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
  * @public
  */
-export namespace GdcDataSets {
+export namespace GdcDatasets {
     /**
      * Represents the current status of CSV source.
      *
      * @public
      */
-    export type DataSetLoadStatus =
+    export type DatasetLoadStatus =
         | "RUNNING"
         | "OK"
         | "ERROR"
@@ -23,7 +22,7 @@ export namespace GdcDataSets {
      *
      * @public
      */
-    export interface IDataSetUser {
+    export interface IDatasetUser {
         login: string;
         fullName: string;
         profileUri: string;
@@ -34,9 +33,9 @@ export namespace GdcDataSets {
      *
      * @public
      */
-    export interface IDataSetLoadInfo {
-        owner: IDataSetUser;
-        status: DataSetLoadStatus;
+    export interface IDatasetLoadInfo {
+        owner: IDatasetUser;
+        status: DatasetLoadStatus;
         created: string;
     }
 
@@ -80,66 +79,25 @@ export namespace GdcDataSets {
      *
      * @public
      */
-    export interface IDataSet {
+    export interface IDataset {
         dataset: {
             name: string;
             dataHeader: IDataHeader;
             dataSetId: string;
             loadedRowCount: number;
-            dataSetLoadStatus: DataSetLoadStatus;
-            firstSuccessfulUpdate?: IDataSetLoadInfo;
-            lastSuccessfulUpdate?: IDataSetLoadInfo;
-            lastUpdate?: IDataSetLoadInfo;
+            dataSetLoadStatus: DatasetLoadStatus;
+            firstSuccessfulUpdate?: IDatasetLoadInfo;
+            lastSuccessfulUpdate?: IDatasetLoadInfo;
+            lastUpdate?: IDatasetLoadInfo;
         };
     }
 
     /**
      * @public
      */
-    export interface IDataSetResponse {
+    export interface IDatasetsResponse {
         datasets: {
-            items: IDataSet[];
+            items: IDataset[];
         };
-    }
-
-    /**
-     * TODO: SDK8 add docs
-     *
-     * @public
-     */
-    export interface IDateDataSetAttribute {
-        attributeMeta: GdcMetadata.IObjectMeta;
-        defaultDisplayFormMeta: GdcMetadata.IObjectMeta;
-        type: string;
-    }
-
-    /**
-     * TODO: SDK8 add docs
-     *
-     * @public
-     */
-    export interface IDateDataSet {
-        relevance: number;
-        availableDateAttributes?: IDateDataSetAttribute[];
-        meta: GdcMetadata.IObjectMeta;
-    }
-
-    /**
-     * TODO: SDK8 add docs
-     *
-     * @public
-     */
-    export interface IDateDataSetResponseContent {
-        dateDataSets: IDateDataSet[];
-        unavailableDateDataSetsCount?: number;
-    }
-
-    /**
-     * TODO: SDK8 add docs
-     *
-     * @public
-     */
-    export interface IDateDataSetResponse {
-        dateDataSetsResponse: IDateDataSetResponseContent;
     }
 }

@@ -1,9 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { ExperimentalExecutionsModule } from "./execution/experimental-executions";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { ExecuteAfmModule } from "./execution/execute-afm";
 import { XhrModule } from "./xhr";
 import { MetadataModule } from "./metadata";
+import { GdcVisualizationObject, GdcCatalog } from "@gooddata/gd-bear-model";
 
 /**
  * Execution endpoints
@@ -50,7 +51,11 @@ export class ExecutionModule {
         );
     }
 
-    public mdToExecutionDefinitionsAndColumns(projectId: string, mdObj: any, options = {}) {
+    public mdToExecutionDefinitionsAndColumns(
+        projectId: string,
+        mdObj: GdcVisualizationObject.IVisualizationObjectContent,
+        options: { attributesMap?: {}; removeDateItems?: boolean } = {},
+    ): Promise<GdcCatalog.IColumnsAndDefinitions> {
         return this.getExperimentalExecutionsModule().mdToExecutionDefinitionsAndColumns(
             projectId,
             mdObj,

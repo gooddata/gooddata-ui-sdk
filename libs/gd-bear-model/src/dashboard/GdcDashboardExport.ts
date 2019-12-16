@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 
 /**
- * @internal
+ * @public
  */
 export namespace GdcDashboardExport {
     export type RelativeType = "relative";

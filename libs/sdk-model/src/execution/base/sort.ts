@@ -162,7 +162,7 @@ export type SortEntityIds = {
  *
  * The ids are returned in an categorized way.
  *
- * @internal
+ * @public
  */
 export function sortEntityIds(sort: SortItem): SortEntityIds {
     invariant(sort, "sort item must be specified");

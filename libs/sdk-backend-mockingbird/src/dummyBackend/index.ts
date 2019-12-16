@@ -20,8 +20,8 @@ import {
     IWorkspaceStylingService,
     NoDataError,
     NotSupported,
-    IWorkspaceCatalog,
-    IWorkspaceDataSetsService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -176,10 +176,10 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
-        catalog(): IWorkspaceCatalog {
+        catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");
         },
-        dataSets(): IWorkspaceDataSetsService {
+        dataSets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
         },
     };

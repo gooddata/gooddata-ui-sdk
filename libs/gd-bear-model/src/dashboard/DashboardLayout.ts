@@ -2,7 +2,7 @@
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
 
 /**
- * @internal
+ * @public
  */
 export namespace GdcDashboardLayout {
     export type Layout = IFluidLayout;

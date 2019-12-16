@@ -18,9 +18,9 @@ import {
     IExportResult,
     IExportConfig,
     IDataView,
-    IWorkspaceCatalog,
-    IWorkspaceDataSetsService,
+    IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
+    IWorkspaceCatalogFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -117,11 +117,11 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.styling();
     }
 
-    public catalog(): IWorkspaceCatalog {
+    public catalog(): IWorkspaceCatalogFactory {
         return this.decorated.catalog();
     }
 
-    public dataSets(): IWorkspaceDataSetsService {
+    public dataSets(): IWorkspaceDatasetsService {
         return this.decorated.dataSets();
     }
 }

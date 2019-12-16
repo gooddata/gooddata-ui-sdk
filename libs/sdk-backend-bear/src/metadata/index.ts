@@ -18,6 +18,7 @@ import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConve
 import { convertVisualization } from "../toSdkModel/VisualizationConverter";
 import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
+import { convertObjectMeta } from "../toSdkModel/MetaConverter";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -210,13 +211,13 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
                     return {
                         type: "metadataObject",
                         value: token.value,
-                        meta: objectByUri[token.value].meta,
+                        meta: convertObjectMeta(objectByUri[token.value].meta),
                     };
                 } else if (token.type === "identifier") {
                     return {
                         type: "metadataObject",
                         value: token.value,
-                        meta: objectByIdentifier[token.value].meta,
+                        meta: convertObjectMeta(objectByIdentifier[token.value].meta),
                     };
                 }
 

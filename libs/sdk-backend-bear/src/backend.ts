@@ -19,7 +19,6 @@ import defaultTo = require("lodash/defaultTo");
 import isEmpty = require("lodash/isEmpty");
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { convertInsight } from "./fromSdkModel/InsightConverter";
-import { GdcDataSets } from "@gooddata/gd-bear-model";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -54,7 +53,6 @@ export type BearBackendConfig = {
  */
 type BearLegacyFunctions = {
     openAsReport?(workspace: string, insight: IInsight): Promise<string>;
-    loadDateDataSets?(workspace: string, options: any): Promise<GdcDataSets.IDateDataSetResponse>;
 };
 
 /**
@@ -114,9 +112,6 @@ export class BearBackend implements IAnalyticalBackend {
                     return this.authApiCall(sdk =>
                         sdk.md.openVisualizationAsReport(workspace, { visualizationObject }),
                     );
-                },
-                loadDateDataSets: (workspace: string, options: any) => {
-                    return this.authApiCall(sdk => sdk.catalogue.loadDateDataSets(workspace, options));
                 },
             };
 

@@ -40,6 +40,16 @@ export namespace GdcVisualizationObject {
 
     export type ObjQualifier = IObjUriQualifier | IObjIdentifierQualifier;
 
+    export function isObjUriQualifier(objQualifier: ObjQualifier): objQualifier is IObjUriQualifier {
+        return !isEmpty(objQualifier) && (objQualifier as IObjUriQualifier).uri !== undefined;
+    }
+
+    export function isObjIdentifierQualifier(
+        objQualifier: ObjQualifier,
+    ): objQualifier is IObjIdentifierQualifier {
+        return !isEmpty(objQualifier) && (objQualifier as IObjIdentifierQualifier).identifier !== undefined;
+    }
+
     export interface IPositiveAttributeFilter {
         positiveAttributeFilter: {
             displayForm: ObjQualifier;

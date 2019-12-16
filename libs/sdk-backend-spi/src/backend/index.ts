@@ -6,8 +6,8 @@ import { IExecutionFactory, IPreparedExecution } from "../workspace/execution";
 import { IWorkspaceSettingsService } from "../workspace/settings";
 import { IWorkspaceMetadata } from "../workspace/insights";
 import { IWorkspaceStylingService } from "../workspace/styling";
-import { IWorkspaceCatalog } from "../workspace/ldm/catalog";
-import { IWorkspaceDataSetsService } from "../workspace/ldm/dataSets";
+import { IWorkspaceCatalogFactory } from "../workspace/ldm/catalog";
+import { IWorkspaceDatasetsService } from "../workspace/ldm/datasets";
 import { IWorkspaceQueryFactory } from "../workspace";
 
 /**
@@ -162,14 +162,14 @@ export interface IAnalyticalWorkspace {
     settings(): IWorkspaceSettingsService;
 
     /**
-     * Returns service that can be used to query workspace catalog items - attributes, measures, facts, dates, and datasets
+     * Returns service that can be used to query workspace catalog items - attributes, measures, facts and date data sets
      */
-    catalog(): IWorkspaceCatalog;
+    catalog(): IWorkspaceCatalogFactory;
 
     /**
-     * Returns service that can be used to query data sets and data data sets defined in this workspace.
+     * Returns service that can be used to query data sets defined in this workspace.
      */
-    dataSets(): IWorkspaceDataSetsService;
+    dataSets(): IWorkspaceDatasetsService;
 }
 
 /**

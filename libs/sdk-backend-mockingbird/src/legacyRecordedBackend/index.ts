@@ -22,8 +22,8 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    IWorkspaceCatalog,
-    IWorkspaceDataSetsService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -168,10 +168,10 @@ function recordedWorkspace(
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
         },
-        catalog(): IWorkspaceCatalog {
+        catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");
         },
-        dataSets(): IWorkspaceDataSetsService {
+        dataSets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
         },
     };

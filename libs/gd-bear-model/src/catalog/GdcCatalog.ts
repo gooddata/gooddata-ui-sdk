@@ -1,7 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
+
 /**
  *
- * @internal
+ * @public
  */
 export namespace GdcCatalog {
     export type CatalogItemType = "attribute" | "metric" | "fact";
@@ -31,8 +33,8 @@ export namespace GdcCatalog {
         };
     }
 
-    export function isCatalogAttribute(item: CatalogItem): item is ICatalogAttribute {
-        return item.type === "attribute";
+    export function isCatalogAttribute(obj: any): obj is ICatalogAttribute {
+        return !isEmpty(obj) && (obj as ICatalogAttribute).type === "attribute";
     }
 
     export interface ICatalogMetric extends ICatalogItemBase {
@@ -41,23 +43,31 @@ export namespace GdcCatalog {
         readonly format: string;
     }
 
-    export function isCatalogMetric(item: CatalogItem): item is ICatalogMetric {
-        return item.type === "metric";
+    export function isCatalogMetric(obj: any): obj is ICatalogMetric {
+        return !isEmpty(obj) && (obj as ICatalogMetric).type === "metric";
     }
 
     export interface ICatalogFact extends ICatalogItemBase {
         readonly type: "fact";
     }
 
-    export function isCatalogFact(item: CatalogItem): item is ICatalogFact {
-        return item.type === "fact";
+    export function isCatalogFact(obj: any): obj is ICatalogFact {
+        return !isEmpty(obj) && (obj as ICatalogFact).type === "fact";
     }
 
     export type CatalogItem = ICatalogAttribute | ICatalogMetric | ICatalogFact;
 
-    export type ItemDescription = {
-        uri: string;
-    };
+    export type ItemDescription = { uri: string } | { expression: string };
+
+    export interface IColumnsAndDefinitions {
+        columns: string[];
+        definitions: Array<{
+            metricDefinition: {
+                identifier: string;
+                uri: string;
+            };
+        }>;
+    }
 
     // request params for GET /gdc/internal/projects/${projectId}/catalog/items
     export interface ILoadCatalogItemsParams {

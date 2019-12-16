@@ -12,10 +12,13 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDataSet } from '@gooddata/sdk-model';
-import { IDateDataSet } from '@gooddata/sdk-model';
+import { IDataset } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -174,8 +177,8 @@ export interface IAnalyticalBackend {
 
 // @public
 export interface IAnalyticalWorkspace {
-    catalog(): IWorkspaceCatalog;
-    dataSets(): IWorkspaceDataSetsService;
+    catalog(): IWorkspaceCatalogFactory;
+    dataSets(): IWorkspaceDatasetsService;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
     metadata(): IWorkspaceMetadata;
@@ -323,40 +326,6 @@ export interface IInsightQueryOptions {
 export interface IInsightQueryResult extends IPagedResource<IInsight> {
 }
 
-// @public (undocumented)
-export interface ILoadAvailableCatalogItemsOptions {
-    // (undocumented)
-    readonly identifiers: string[];
-    // (undocumented)
-    readonly types?: CatalogItemType[];
-}
-
-// @public (undocumented)
-export interface ILoadCatalogGroupsOptions {
-    // (undocumented)
-    readonly csvDataSets?: string[];
-    // (undocumented)
-    readonly excludeWithTags?: string[];
-    // (undocumented)
-    readonly includeWithTags?: string[];
-    // (undocumented)
-    readonly production?: 1 | 0;
-}
-
-// @public (undocumented)
-export interface ILoadCatalogItemsOptions {
-    // (undocumented)
-    readonly csvDataSets?: string[];
-    // (undocumented)
-    readonly excludeWithTags?: string[];
-    // (undocumented)
-    readonly includeWithTags?: string[];
-    // (undocumented)
-    readonly production?: 1 | 0;
-    // (undocumented)
-    readonly types?: CatalogItemType[];
-}
-
 // @public
 export interface IMeasureDescriptor {
     // (undocumented)
@@ -495,21 +464,97 @@ export interface ITotalDescriptor {
 }
 
 // @public
-export interface IWorkspaceCatalog {
+export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
     // (undocumented)
-    loadAvailableItemsIdentifiers(options: ILoadAvailableCatalogItemsOptions): Promise<string[]>;
-    // (undocumented)
-    loadGroups(options?: ILoadCatalogGroupsOptions): Promise<ICatalogGroup[]>;
-    // (undocumented)
-    loadItems(options?: ILoadCatalogItemsOptions): Promise<CatalogItem[]>;
+    availableItems(): IWorkspaceCatalogAvailableItemsFactory;
 }
 
 // @public
-export interface IWorkspaceDataSetsService {
+export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogAvailableItemsFactory, IWorkspaceCatalogWithAvailableItemsFactoryOptions> {
     // (undocumented)
-    getDataSets(): Promise<IDataSet[]>;
+    forInsight(insight: IInsightWithoutIdentifier): IWorkspaceCatalogAvailableItemsFactory;
     // (undocumented)
-    getDateDataSets(): Promise<IDateDataSet[]>;
+    forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
+    // (undocumented)
+    load(): Promise<IWorkspaceCatalogWithAvailableItems>;
+}
+
+// @public
+export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions> {
+    // (undocumented)
+    load(): Promise<IWorkspaceCatalog>;
+}
+
+// @public
+export interface IWorkspaceCatalogFactoryMethods<T, TOptions> {
+    // (undocumented)
+    excludeTags(tags: string[]): T;
+    // (undocumented)
+    forDataset(datasets: string): T;
+    // (undocumented)
+    forTypes(types: CatalogItemType[]): T;
+    // (undocumented)
+    includeTags(tags: string[]): T;
+    // (undocumented)
+    withOptions(options: TOptions): T;
+}
+
+// @public
+export interface IWorkspaceCatalogFactoryOptions {
+    // (undocumented)
+    dataset?: string;
+    // (undocumented)
+    excludeTags: string[];
+    // (undocumented)
+    includeTags: string[];
+    // (undocumented)
+    production: boolean;
+    // (undocumented)
+    types: CatalogItemType[];
+}
+
+// @public
+export interface IWorkspaceCatalogMethods {
+    // (undocumented)
+    getAttributes(): ICatalogAttribute[];
+    // (undocumented)
+    getDateDatasets(): ICatalogDateDataset[];
+    // (undocumented)
+    getFacts(): ICatalogFact[];
+    // (undocumented)
+    getGroups(): ICatalogGroup[];
+    // (undocumented)
+    getItems(): CatalogItem[];
+    // (undocumented)
+    getMeasures(): ICatalogMeasure[];
+}
+
+// @public
+export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
+    // (undocumented)
+    getAvailableAttributes(): ICatalogAttribute[];
+    // (undocumented)
+    getAvailableDateDatasets(): ICatalogDateDataset[];
+    // (undocumented)
+    getAvailableFacts(): ICatalogFact[];
+    // (undocumented)
+    getAvailableItems(): CatalogItem[];
+    // (undocumented)
+    getAvailableMeasures(): ICatalogMeasure[];
+}
+
+// @public
+export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
+    // (undocumented)
+    insight?: IInsightWithoutIdentifier;
+    // (undocumented)
+    items?: AttributeOrMeasure[];
+}
+
+// @public
+export interface IWorkspaceDatasetsService {
+    // (undocumented)
+    getDatasets(): Promise<IDataset[]>;
 }
 
 // @public

@@ -1,3 +1,6 @@
+// (C) 2019 GoodData Corporation
+import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
+
 // (C) 2007-2018 GoodData Corporation
 export const optionsForEmptySelection = {
     types: ["metric", "attribute", "fact"],
@@ -997,6 +1000,9 @@ export const loadDateDataSetsResponse = {
 
 export const optionsForOnlyDateBuckets = {
     bucketItems: {
+        visualizationClass: {
+            uri: "/gdc/dummy/uri",
+        },
         buckets: [
             {
                 localIdentifier: "attribute",
@@ -1039,8 +1045,11 @@ export const optionsForOnlyDateBuckets = {
     },
 };
 
-export const optionsForPureMAQL = {
+export const optionsForPureMAQL: { bucketItems: GdcVisualizationObject.IVisualizationObjectContent } = {
     bucketItems: {
+        visualizationClass: {
+            uri: "/gdc/dummy/uri",
+        },
         buckets: [
             {
                 localIdentifier: "measures",
@@ -1113,7 +1122,7 @@ export const optionsForPureMAQL = {
             },
             {
                 absoluteDateFilter: {
-                    dataset: {
+                    dataSet: {
                         uri: "/gdc/md/ovs4ke6eyaus033gyojhv1rh7u1bukmy/obj/2180",
                     },
                     to: "2016-09-30",

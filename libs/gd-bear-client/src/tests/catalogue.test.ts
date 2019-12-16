@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
@@ -358,7 +358,16 @@ describe("Catalogue", () => {
                         .mockReturnValue(Promise.resolve(mdToExecutionDefinitionAndColumnsMock)),
                 });
 
-                const result = await catalogueModule.loadItemDescriptionObjects(projectId, {}, []);
+                const result = await catalogueModule.loadItemDescriptionObjects(
+                    projectId,
+                    {
+                        visualizationClass: {
+                            uri: "/gdc/dummy/uri",
+                        },
+                        buckets: [],
+                    },
+                    [],
+                );
 
                 expect(result).toEqual(loadItemDescriptionObjectsMockResult);
             });

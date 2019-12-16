@@ -9,8 +9,12 @@ export { GdcDashboardExport } from "./dashboard/GdcDashboardExport";
 export { GdcDashboardLayout } from "./dashboard/DashboardLayout";
 export { GdcCatalog } from "./catalog/GdcCatalog";
 export { GdcMetadata } from "./meta/GdcMetadata";
-export { GdcDataSets } from "./dataSets/GdcDataSets";
+export { GdcDatasets } from "./datasets/GdcDatasets";
+export { GdcDateDataSets } from "./dateDataSets/GdcDateDataSets";
 export { GdcProject } from "./project/GdcProject";
+
+export { GdcPaging } from "./base/GdcPaging";
+export { MaqlExpression, NumberAsString, Timestamp, Uri } from "./aliases";
 
 export { sanitizeDateFilters } from "./dashboard/utils";
 export { getAttributesDisplayForms } from "./visualizationObject/utils";
