@@ -12,7 +12,7 @@ import {
     isScatterPlot,
     isTreemap,
 } from "../../utils/common";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from "../../typings/legend";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { isStackedChart } from "./helpers";

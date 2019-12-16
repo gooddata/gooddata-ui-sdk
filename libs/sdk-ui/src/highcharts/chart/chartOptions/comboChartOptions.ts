@@ -4,9 +4,9 @@ import get = require("lodash/get");
 import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
-import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base";
 import { IChartConfig, ISeriesItem } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../utils/common";
 import { NORMAL_STACK } from "../highcharts/getOptionalStackingConfiguration";
 
@@ -58,7 +58,7 @@ export function getComboChartSeries(
         measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
     });
 
-    [MEASURES, SECONDARY_MEASURES].forEach((name: string, index: number) => {
+    [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES].forEach((name: string, index: number) => {
         (measureBuckets[name] || []).forEach((measureIndex: number) => {
             const chartType: string = CHART_ORDER[types[index]]
                 ? types[index]

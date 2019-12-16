@@ -5,7 +5,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import {
@@ -33,7 +33,7 @@ import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/
 import { removeSort } from "../../../utils/sort";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

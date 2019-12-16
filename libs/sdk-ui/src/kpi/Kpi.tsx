@@ -3,16 +3,16 @@ import * as React from "react";
 import { IAnalyticalBackend, DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { ILoadingProps, LoadingComponent } from "../base/simple/LoadingComponent";
-import { IErrorProps } from "../base/simple/ErrorComponent";
+import { ILoadingProps, LoadingComponent } from "../base/react/LoadingComponent";
+import { IErrorProps } from "../base/react/ErrorComponent";
 import { Executor, IExecutorProps } from "../execution/Executor";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { IntlWrapper } from "../base/translations/IntlWrapper";
+import { IntlWrapper } from "../base/localization/IntlWrapper";
 import get = require("lodash/get");
 import isNil = require("lodash/isNil");
-import { withContexts } from "../base/context/withContexts";
+import { withContexts } from "../base/react/withContexts";
 //
 // Internals
 //

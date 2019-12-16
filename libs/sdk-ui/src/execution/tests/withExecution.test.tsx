@@ -5,8 +5,8 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IMeasure, IFilter } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IWithExecution, withExecution } from "../withExecution";
-import { WithLoadingResult } from "../../base/promise/withLoading";
-import { createDummyPromise } from "../../base/promise/tests/toolkit";
+import { WithLoadingResult } from "../../base/react/withLoading";
+import { createDummyPromise } from "../../base/react/tests/toolkit";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { IChartOptions } from "../../../Config";
 import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart";
 

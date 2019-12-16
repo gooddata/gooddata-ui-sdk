@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
-import { MEASURES, VIEW } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CorePieChart } from "./CorePieChart";
@@ -14,7 +14,10 @@ import { withChart } from "../_base/withChart";
 const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps> = {
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
     bucketsFactory: props => {
-        return [newBucket(MEASURES, ...props.measures), newBucket(VIEW, props.viewBy)];
+        return [
+            newBucket(BucketNames.MEASURES, ...props.measures),
+            newBucket(BucketNames.VIEW, props.viewBy),
+        ];
     },
     executionFactory: (props, buckets) => {
         const { backend, workspace } = props;

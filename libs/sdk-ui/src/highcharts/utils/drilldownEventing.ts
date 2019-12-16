@@ -6,10 +6,10 @@ import * as invariant from "invariant";
 import {
     ChartElementType,
     ChartType,
+    getVisualizationType,
     VisType,
     VisualizationTypes,
-} from "../../base/constants/visualizationTypes";
-import { getVisualizationType } from "../../base/helpers/visualizationType";
+} from "../../base/vis/visualizationTypes";
 import {
     IDrillConfig,
     IDrillEvent,
@@ -18,7 +18,7 @@ import {
     IDrillEventContextPoint,
     IDrillPoint,
     OnFiredDrillEvent,
-} from "../../base/interfaces/DrillEvents";
+} from "../../base/vis/DrillEvents";
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";

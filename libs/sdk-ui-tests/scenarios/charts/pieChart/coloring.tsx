@@ -1,12 +1,10 @@
 // (C) 2007-2019 GoodData Corporation
+import { IPieChartProps, PieChart } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
-import { PieChart, HeaderPredicateFactory, IPieChartProps } from "@gooddata/sdk-ui";
+import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
+import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates";
 import { coloringCustomizer } from "../_infra/coloringVariants";
-import { BlackColor, CustomColorPalette, RedColor, CustomPaletteColor } from "../../_infra/colors";
-import { measureLocalId } from "@gooddata/sdk-model";
-import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
-import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
@@ -21,13 +19,11 @@ const colorAssignment = scenariosFor<IPieChartProps>("PieChart", PieChart)
             colorPalette: CustomColorPalette,
             colorMapping: [
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(
-                        measureLocalId(ReferenceLdm.Amount),
-                    ),
+                    predicate: AmountMeasurePredicate,
                     color: BlackColor,
                 },
                 {
-                    predicate: HeaderPredicateFactory.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
+                    predicate: WonMeasurePredicate,
                     color: CustomPaletteColor,
                 },
             ],

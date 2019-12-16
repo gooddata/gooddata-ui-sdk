@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 import { getIdsFromUri, getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
 import {
     FIELD_SEPARATOR,

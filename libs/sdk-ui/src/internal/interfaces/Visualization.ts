@@ -1,12 +1,11 @@
 // (C) 2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IDrillableItem } from "../../base/interfaces/DrillEvents";
+import { IDrillableItem } from "../../base/vis/DrillEvents";
 import { OverTimeComparisonType } from "../../base/interfaces/OverTimeComparison";
-import { ChartType, VisualizationEnvironment } from "../../base/constants/visualizationTypes";
-import * as VisEvents from "../../base/interfaces/Events";
+import { ChartType } from "../../base/vis/visualizationTypes";
 import { IInsight, ITotal, VisualizationProperties, IColorPalette } from "@gooddata/sdk-model";
 import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ILocale } from "../../base/interfaces/Locale";
+import { IPushData, IVisualizationCallbacks, ILocale, VisualizationEnvironment } from "../../base";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;
@@ -46,9 +45,8 @@ export interface IVisualizationOptions {
     dateOptionsDisabled: boolean;
 }
 
-export interface IVisCallbacks extends VisEvents.IEvents {
-    afterRender?(): void;
-    pushData(data: any, options?: IVisualizationOptions): void;
+export interface IVisCallbacks extends IVisualizationCallbacks {
+    pushData(data: IPushData, options?: IVisualizationOptions): void;
 }
 
 export interface IBucketFilterElement {

@@ -1,6 +1,8 @@
 // (C) 2019 GoodData Corporation
 export { IBucketChartProps, IChartCallbacks, ICommonChartProps, ICoreChartProps } from "./chartProps";
 
+export { ViewByAttributesLimit } from "./_commons/limits";
+
 export { AreaChart, IAreaChartProps } from "./areaChart/AreaChart";
 
 export { BarChart, IBarChartProps } from "./barChart/BarChart";

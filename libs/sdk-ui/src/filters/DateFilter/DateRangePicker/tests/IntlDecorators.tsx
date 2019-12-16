@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { addLocaleDataToReactIntl } from "../../../../base/translations/IntlStore";
-import { IntlWrapper } from "../../../../base/translations/IntlWrapper";
+import { addLocaleDataToReactIntl } from "../../../../base/localization/IntlStore";
+import { IntlWrapper } from "../../../../base/localization/IntlWrapper";
 
 addLocaleDataToReactIntl();
 

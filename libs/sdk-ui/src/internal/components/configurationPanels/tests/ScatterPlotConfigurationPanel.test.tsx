@@ -6,14 +6,13 @@ import { insightWithSingleAttribute } from "../../../mocks/testMocks";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { VisualizationTypes } from "../../../..";
+import { DefaultLocale, VisualizationTypes } from "../../../..";
 
 describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(
         props: IConfigurationPanelContentProps = {
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         },
     ) {
         return shallow<IConfigurationPanelContentProps, null>(<ScatterPlotConfigurationPanel {...props} />, {
@@ -50,7 +49,7 @@ describe("ScatterPlotConfigurationPanel", () => {
         const defaultProps: IConfigurationPanelContentProps = {
             isError: false,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
             type: VisualizationTypes.SCATTER,
             featureFlags: {
                 enableAxisNameConfiguration: true,

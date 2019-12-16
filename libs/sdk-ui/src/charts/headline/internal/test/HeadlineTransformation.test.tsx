@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import HeadlineTransformation, { IHeadlineTransformationProps } from "../HeadlineTransformation";
 import Headline from "../Headline";
-import { withIntl } from "../../../../base/helpers/intlUtils";
+import { withIntl } from "../../../../base/localization/intlUtils";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,

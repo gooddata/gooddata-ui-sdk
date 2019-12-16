@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import set = require("lodash/set");
 import {
     getDataLabelAttributes,
@@ -12,7 +12,7 @@ import {
 
 import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 
 describe("dataLabelsHelpers", () => {

@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
-import { ATTRIBUTE, MEASURES, SECONDARY_MEASURES } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
 import { CoreScatterPlot } from "./CoreScatterPlot";
@@ -15,9 +15,9 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            newBucket(MEASURES, props.xAxisMeasure),
-            newBucket(SECONDARY_MEASURES, props.yAxisMeasure),
-            newBucket(ATTRIBUTE, props.attribute),
+            newBucket(BucketNames.MEASURES, props.xAxisMeasure),
+            newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure),
+            newBucket(BucketNames.ATTRIBUTE, props.attribute),
         ];
     },
     executionFactory: (props, buckets) => {

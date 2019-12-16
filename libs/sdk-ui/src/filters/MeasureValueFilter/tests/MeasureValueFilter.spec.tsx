@@ -6,7 +6,7 @@ import { newMeasureValueFilter } from "@gooddata/sdk-model";
 
 import MVFDropdownFragment from "./fragments/MeasureValueFilter";
 import { DropdownAfmWrapper, IDropdownProps } from "../DropdownAfmWrapper";
-import { withIntl } from "../../../base/helpers/intlUtils";
+import { withIntl } from "../../../base/localization/intlUtils";
 
 const renderComponent = (props?: Partial<IDropdownProps>) => {
     const defaultProps: IDropdownProps = {

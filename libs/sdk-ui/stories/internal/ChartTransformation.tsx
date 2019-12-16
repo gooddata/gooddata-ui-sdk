@@ -6,7 +6,7 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 
 import { ChartTransformation, FLUID_LEGEND_THRESHOLD } from "../../src/highcharts";
 import { immutableSet } from "../../src/highcharts/utils/common";
-import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
+import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../src/highcharts/constants/dimensions";
 
 import fixtureDataSets, * as fixtures from "../test_data/fixtures";
 

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { mount } from "enzyme";
 import * as React from "react";
-import { createIntlMock } from "../../../base/helpers/intlUtils";
+import { createIntlMock } from "../../../base/localization/intlUtils";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
 import { AVAILABLE_TOTALS } from "../agGridConst";

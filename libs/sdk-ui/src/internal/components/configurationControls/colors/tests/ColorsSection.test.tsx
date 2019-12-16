@@ -2,7 +2,7 @@
 import { IColor } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
 import * as React from "react";
-import { DEFAULT_COLOR_PALETTE } from "../../../../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../../../base/constants/colorPalette";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
@@ -12,7 +12,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");
 
 const colors: IColorConfiguration = {
-    colorPalette: DEFAULT_COLOR_PALETTE,
+    colorPalette: DefaultColorPalette,
     colorAssignments: [
         {
             headerItem: { attributeHeaderItem: { uri: "/ahi1", name: "abc" } },

@@ -2,8 +2,8 @@
 import get = require("lodash/get");
 import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
-import { MEASURES, SECONDARY_MEASURES } from "../../../../base/constants/bucketNames";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
+import { BucketNames } from "../../../../base";
 import { newBucket, newDefForBuckets } from "@gooddata/sdk-model";
 
 describe("Combo Configuration", () => {
@@ -90,7 +90,7 @@ describe("Combo Configuration", () => {
         };
         const {
             plotOptions: { series: series },
-        } = getComboConfiguration(config, getDefinition(MEASURES));
+        } = getComboConfiguration(config, getDefinition(BucketNames.MEASURES));
         expect(series.states.inactive.opacity).toBe(1);
     });
 
@@ -101,7 +101,7 @@ describe("Combo Configuration", () => {
         };
         const {
             plotOptions: { series: series },
-        } = getComboConfiguration(config, getDefinition(SECONDARY_MEASURES));
+        } = getComboConfiguration(config, getDefinition(BucketNames.SECONDARY_MEASURES));
         expect(series.states.inactive.opacity).toBe(1);
     });
 
@@ -112,14 +112,14 @@ describe("Combo Configuration", () => {
         };
         const {
             plotOptions: { series: series },
-        } = getComboConfiguration(config, getDefinition(SECONDARY_MEASURES));
+        } = getComboConfiguration(config, getDefinition(BucketNames.SECONDARY_MEASURES));
         expect(get(series, "states.inactive.opacity")).not.toBe(1);
     });
 
     it("should not disable saturation other series for default combo", () => {
         const {
             plotOptions: { series: series },
-        } = getComboConfiguration({}, getDefinition(MEASURES));
+        } = getComboConfiguration({}, getDefinition(BucketNames.MEASURES));
         expect(get(series, "states.inactive.opacity")).not.toBe(1);
     });
 });

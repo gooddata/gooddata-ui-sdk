@@ -1,6 +1,5 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 
-import { STACK_BY_DIMENSION_INDEX, VIEW_BY_DIMENSION_INDEX } from "../../constants/dimensions";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
@@ -10,19 +9,15 @@ describe("findMeasureGroupInDimensions", () => {
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
-        const expectedValue = (sampleDimensions[VIEW_BY_DIMENSION_INDEX]
-            .headers[1] as IMeasureGroupDescriptor).measureGroupHeader;
+        const expectedValue = (sampleDimensions[1].headers[1] as IMeasureGroupDescriptor).measureGroupHeader;
         expect(returnValue).toBe(expectedValue);
     });
 
     it("should throw an error if measureGroup is not the last header on it's dimension", () => {
         const invalidDimensions = [
             {
-                ...sampleDimensions[VIEW_BY_DIMENSION_INDEX],
-                headers: [
-                    ...sampleDimensions[VIEW_BY_DIMENSION_INDEX].headers,
-                    ...sampleDimensions[STACK_BY_DIMENSION_INDEX].headers,
-                ],
+                ...sampleDimensions[1],
+                headers: [...sampleDimensions[1].headers, ...sampleDimensions[0].headers],
             },
         ];
         expect(findMeasureGroupInDimensions.bind(this, invalidDimensions)).toThrow();
@@ -33,24 +28,18 @@ describe("findAttributeInDimension", () => {
     const dimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
     const headerItems = fixtures.barChartWithStackByAndViewByAttributes.allHeaders();
     it("should return the view by attribute header with header items", () => {
-        const returnValue = findAttributeInDimension(
-            dimensions[VIEW_BY_DIMENSION_INDEX],
-            headerItems[VIEW_BY_DIMENSION_INDEX],
-        );
+        const returnValue = findAttributeInDimension(dimensions[1], headerItems[1]);
         const expectedValue = {
-            ...(dimensions[VIEW_BY_DIMENSION_INDEX].headers[0] as IAttributeDescriptor).attributeHeader,
-            items: headerItems[VIEW_BY_DIMENSION_INDEX][0],
+            ...(dimensions[1].headers[0] as IAttributeDescriptor).attributeHeader,
+            items: headerItems[1][0],
         };
         expect(returnValue).toEqual(expectedValue);
     });
     it("should return the stack by attribute header with header items", () => {
-        const returnValue = findAttributeInDimension(
-            dimensions[STACK_BY_DIMENSION_INDEX],
-            headerItems[STACK_BY_DIMENSION_INDEX],
-        );
+        const returnValue = findAttributeInDimension(dimensions[0], headerItems[0]);
         const expectedValue = {
-            ...(dimensions[STACK_BY_DIMENSION_INDEX].headers[0] as IAttributeDescriptor).attributeHeader,
-            items: headerItems[STACK_BY_DIMENSION_INDEX][0],
+            ...(dimensions[0].headers[0] as IAttributeDescriptor).attributeHeader,
+            items: headerItems[0][0],
         };
         expect(returnValue).toEqual(expectedValue);
     });

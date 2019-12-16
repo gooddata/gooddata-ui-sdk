@@ -7,10 +7,10 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 import { Execution } from "@gooddata/gd-bear-model";
 
 import { Visualization } from "../../src/highcharts";
-import * as headerPredicateFactory from "../../src/base/factory/HeaderPredicateFactory";
+import * as headerPredicateFactory from "../../src/base/headerMatching/HeaderPredicateFactory";
 import { wrap } from "../utils/wrap";
 import * as fixtures from "../test_data/fixtures";
-import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/base/constants/dimensions";
+import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/constants/dimensions";
 
 import "../../styles/scss/charts.scss";
 import "../../styles/scss/table.scss";

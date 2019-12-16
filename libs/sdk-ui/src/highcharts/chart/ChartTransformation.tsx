@@ -3,10 +3,10 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import * as React from "react";
 
-import { convertDrillableItemsToPredicates } from "../../base/helpers/drilling";
-import { IDrillableItem, OnFiredDrillEvent } from "../../base/interfaces/DrillEvents";
-import { OnLegendReady } from "../../base/interfaces/Events";
-import { IHeaderPredicate } from "../../base/interfaces/HeaderPredicate";
+import { convertDrillableItemsToPredicates } from "../../base/vis/drilling";
+import { IDrillableItem, OnFiredDrillEvent } from "../../base/vis/DrillEvents";
+import { OnLegendReady } from "../../base/vis/Events";
+import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";

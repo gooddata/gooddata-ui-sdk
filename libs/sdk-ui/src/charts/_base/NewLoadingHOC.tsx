@@ -13,12 +13,16 @@ import * as React from "react";
 import { injectIntl, InjectedIntl } from "react-intl";
 import { ErrorCodes, GoodDataSdkError } from "../../base/errors/GoodDataSdkError";
 import { convertError } from "../../base/errors/errorHandling";
-import { ILoadingState, IExportFunction, IExtendedExportConfig } from "../../base/interfaces/Events";
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import {
+    ILoadingState,
+    IExportFunction,
+    IExtendedExportConfig,
+    IDrillableItemPushData,
+} from "../../base/vis/Events";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-import { IDrillableItemPushData } from "../../base/interfaces/PushData";
 
 interface IDataViewLoadState {
     isLoading: boolean;

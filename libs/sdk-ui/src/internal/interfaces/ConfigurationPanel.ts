@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { AxisType } from "./AxisType";
 import { IVisualizationProperties } from "./Visualization";
-import { IPushData } from "../../base/interfaces/PushData";
+import { IPushData } from "../../base";
 
 export interface IConfigItemSubsection {
     disabled: boolean;

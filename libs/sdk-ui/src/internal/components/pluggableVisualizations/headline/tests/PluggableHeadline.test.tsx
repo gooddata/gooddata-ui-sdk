@@ -16,10 +16,10 @@ import {
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
-import { IDrillableItem } from "../../../../../base/interfaces/DrillEvents";
+import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
 import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
 import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
-import * as BucketNames from "../../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../../base/constants/bucketNames";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep = require("lodash/cloneDeep");
 

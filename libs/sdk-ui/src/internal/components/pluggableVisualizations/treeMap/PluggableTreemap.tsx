@@ -7,7 +7,7 @@ import set = require("lodash/set");
 import tail = require("lodash/tail");
 import isEmpty = require("lodash/isEmpty");
 
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -36,7 +36,7 @@ import {
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper";
 import { removeSort } from "../../../utils/sort";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as BucketNames from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 import { IInsight, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
 //

@@ -3,8 +3,8 @@ import * as React from "react";
 import compose = require("lodash/flowRight");
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 import { IBucketChartProps, ICoreChartProps } from "../chartProps";
-import { withContexts } from "../../base/context/withContexts";
-import { wrapDisplayName } from "../../base/hoc/wrapDisplayName";
+import { withContexts } from "../../base/react/withContexts";
+import { wrapDisplayName } from "../../base/react/wrapDisplayName";
 
 /**
  * Hoc that transforms incoming props to BaseChart props according to chart definition

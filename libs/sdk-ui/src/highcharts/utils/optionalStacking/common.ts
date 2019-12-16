@@ -10,7 +10,7 @@ import {
     measureDoesComputeRatio,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
-import { MEASURES } from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base";
 import { IChartConfig } from "../../Config";
 
 function isMeasureArray(obj: any): obj is IMeasure[] {
@@ -22,7 +22,7 @@ export function sanitizeConfig(input: IMeasure[] | IBucket[] = [], config: IChar
         return config;
     }
 
-    const measures = isMeasureArray(input) ? input : bucketMeasures(bucketsFind(input, MEASURES));
+    const measures = isMeasureArray(input) ? input : bucketMeasures(bucketsFind(input, BucketNames.MEASURES));
 
     if (measures) {
         const isComputeRatio = isComputeRatioMeasure(measures[0]);

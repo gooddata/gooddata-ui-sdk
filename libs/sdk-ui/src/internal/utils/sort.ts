@@ -11,7 +11,7 @@ import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interface
 
 import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
 
-import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../base/vis/visualizationTypes";
 import * as SortsHelper from "../../base/helpers/sorts";
 import {
     bucketAttributes,
@@ -28,7 +28,7 @@ import {
     sortEntityIds,
     SortItem,
 } from "@gooddata/sdk-model";
-import * as BucketNames from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 
 export function getMeasureSortItems(identifier: string, direction: SortDirection): SortItem[] {
     return [newMeasureSort(identifier, direction)];

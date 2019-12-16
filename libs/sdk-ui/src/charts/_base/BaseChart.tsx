@@ -3,21 +3,21 @@ import * as React from "react";
 import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
 import { ICoreChartProps } from "../chartProps";
-import { IErrorProps } from "../../base/simple/ErrorComponent";
-import { ILoadingProps } from "../../base/simple/LoadingComponent";
+import { IErrorProps } from "../../base/react/ErrorComponent";
+import { ILoadingProps } from "../../base/react/LoadingComponent";
 
 import { Visualization, getValidColorPalette } from "../../highcharts";
 
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
-} from "../../base/translations/TranslationsProvider";
+} from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
-import { OnLegendReady } from "../../base/interfaces/Events";
+import { OnLegendReady } from "../../base/vis/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ChartType } from "../../base/constants/visualizationTypes";
+import { ChartType } from "../../base/vis/visualizationTypes";
 import { ErrorCodes } from "../../base/";
 
 export interface IBaseChartProps extends ICoreChartProps {

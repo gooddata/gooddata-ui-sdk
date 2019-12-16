@@ -1,10 +1,10 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { shallow } from "enzyme";
+import { DefaultLocale } from "../../../../base";
 import ConfigurationPanelContent, {
     IConfigurationPanelContentProps,
 } from "../../configurationPanels/ConfigurationPanelContent";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 
 class DummyConfigurationPanel extends ConfigurationPanelContent {
     constructor(props: IConfigurationPanelContentProps) {
@@ -24,7 +24,7 @@ class DummyConfigurationPanel extends ConfigurationPanelContent {
 describe("ConfigurationPanelContent", () => {
     function createComponent(
         props: IConfigurationPanelContentProps = {
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
         },
     ) {
         return shallow<IConfigurationPanelContentProps, null>(<DummyConfigurationPanel {...props} />, {

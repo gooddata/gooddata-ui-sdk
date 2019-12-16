@@ -3,7 +3,7 @@ import range = require("lodash/range");
 import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
-import { DEFAULT_COLOR_PALETTE } from "../../../base/constants/defaultColors";
+import { DefaultColorPalette } from "../../../base/constants/colorPalette";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../../base/helpers/executionResultHelper";
 import {
@@ -26,7 +26,7 @@ import {
 import { DEFAULT_CATEGORIES_LIMIT } from "../highcharts/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { PIE_CHART_LIMIT } from "../../../base/constants/limits";
+import { PIE_CHART_LIMIT } from "../../constants/limits";
 import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import {
@@ -37,15 +37,15 @@ import {
     TreemapColorStrategy,
 } from "../colorFactory";
 import { IChartConfig, IChartOptions, IPointData } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
-import { uriMatch } from "../../../base/factory/HeaderPredicateFactory";
+import { uriMatch } from "../../../base/headerMatching/HeaderPredicateFactory";
 
-const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[0]);
-const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DEFAULT_COLOR_PALETTE[1]);
+const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
+const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
 
 function getMVSTreemap(dv: DataViewFacade) {
     const dimensions = dv.dimensions();
@@ -318,7 +318,7 @@ describe("chartOptionsBuilder", () => {
             const stackByAttribute = parameters[4];
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -379,7 +379,7 @@ describe("chartOptionsBuilder", () => {
             const stackByAttribute = parameters[4];
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -425,7 +425,7 @@ describe("chartOptionsBuilder", () => {
             const stackByAttribute = parameters[4];
 
             const metricColorStrategy = new MeasureColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -443,7 +443,7 @@ describe("chartOptionsBuilder", () => {
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -478,13 +478,13 @@ describe("chartOptionsBuilder", () => {
                 expect(pieSeriesItemData.map(pointData => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
-                    getRgbString(DEFAULT_COLOR_PALETTE[2]),
+                    getRgbString(DefaultColorPalette[2]),
                 ]);
 
                 expect(treemapSeriesItemData.map(pointData => pointData.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
-                    getRgbString(DEFAULT_COLOR_PALETTE[2]),
+                    getRgbString(DefaultColorPalette[2]),
                 ]);
             });
 
@@ -519,7 +519,7 @@ describe("chartOptionsBuilder", () => {
             const stackByAttribute = parameters[4];
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -537,7 +537,7 @@ describe("chartOptionsBuilder", () => {
             );
 
             const treeMapColorStrategy = new TreemapColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -604,7 +604,7 @@ describe("chartOptionsBuilder", () => {
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -637,7 +637,7 @@ describe("chartOptionsBuilder", () => {
                 expect(seriesData.map((seriesItem: any) => seriesItem.color)).toEqual([
                     FIRST_DEFAULT_COLOR_ITEM_AS_STRING,
                     SECOND_DEFAULT_COLOR_ITEM_AS_STRING,
-                    getRgbString(DEFAULT_COLOR_PALETTE[2]),
+                    getRgbString(DefaultColorPalette[2]),
                 ]);
             });
 
@@ -674,7 +674,7 @@ describe("chartOptionsBuilder", () => {
             const type = "column";
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -722,7 +722,7 @@ describe("chartOptionsBuilder", () => {
                     const stackByAttribute = parameters[4];
 
                     const attributeColorStrategy = new AttributeColorStrategy(
-                        DEFAULT_COLOR_PALETTE,
+                        DefaultColorPalette,
                         undefined,
                         viewByAttribute,
                         stackByAttribute,
@@ -1178,7 +1178,7 @@ describe("chartOptionsBuilder", () => {
                 const type = "treemap";
 
                 const treeMapColorStrategy = new TreemapColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1228,7 +1228,7 @@ describe("chartOptionsBuilder", () => {
                 const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                 const type = "treemap";
                 const treeMapColorStrategy = new TreemapColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1283,7 +1283,7 @@ describe("chartOptionsBuilder", () => {
                 const type = "treemap";
 
                 const treeMapColorStrategy = new TreemapColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1348,7 +1348,7 @@ describe("chartOptionsBuilder", () => {
                 const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                 const type = "treemap";
                 const treeMapColorStrategy = new TreemapColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1442,7 +1442,7 @@ describe("chartOptionsBuilder", () => {
                 const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                 const type = "treemap";
                 const treeMapColorStrategy = new TreemapColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1578,7 +1578,7 @@ describe("chartOptionsBuilder", () => {
             const type = "scatter";
 
             const metricColorStrategy = new MeasureColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -1662,7 +1662,7 @@ describe("chartOptionsBuilder", () => {
                 const type = "scatter";
 
                 const metricColorStrategy = new MeasureColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1698,7 +1698,7 @@ describe("chartOptionsBuilder", () => {
             const type = "bubble";
 
             const attributeColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -1799,7 +1799,7 @@ describe("chartOptionsBuilder", () => {
                 const type = "bubble";
 
                 const attributeColorStrategy = new AttributeColorStrategy(
-                    DEFAULT_COLOR_PALETTE,
+                    DefaultColorPalette,
                     undefined,
                     viewByAttribute,
                     stackByAttribute,
@@ -1837,7 +1837,7 @@ describe("chartOptionsBuilder", () => {
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const metricColorStrategy = new MeasureColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -1884,7 +1884,7 @@ describe("chartOptionsBuilder", () => {
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const metricColorStrategy = new MeasureColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -1931,7 +1931,7 @@ describe("chartOptionsBuilder", () => {
             const type = "column";
 
             const attColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -2122,7 +2122,7 @@ describe("chartOptionsBuilder", () => {
             const type = "column";
 
             const attColorStrategy = new AttributeColorStrategy(
-                DEFAULT_COLOR_PALETTE,
+                DefaultColorPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -2797,7 +2797,7 @@ describe("chartOptionsBuilder", () => {
             it("should assign 3 colors from default colorPalette", () => {
                 const seriesColors = chartOptions.data.series.map((serie: any) => serie.color);
                 expect(seriesColors).toEqual(
-                    DEFAULT_COLOR_PALETTE.slice(0, 3).map((defaultColor: IColorPaletteItem) =>
+                    DefaultColorPalette.slice(0, 3).map((defaultColor: IColorPaletteItem) =>
                         getRgbString(defaultColor),
                     ),
                 );

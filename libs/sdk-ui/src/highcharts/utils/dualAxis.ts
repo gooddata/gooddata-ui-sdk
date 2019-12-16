@@ -2,8 +2,8 @@
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IChartConfig } from "../Config";
-import { SECONDARY_MEASURES } from "../../base/constants/bucketNames";
-import { VisType } from "../../base/constants/visualizationTypes";
+import { BucketNames } from "../../base";
+import { VisType } from "../../base/vis/visualizationTypes";
 import { isComboChart } from "./common";
 import get = require("lodash/get");
 
@@ -11,7 +11,7 @@ export function setMeasuresToSecondaryAxis(config: IChartConfig = {}, dv: DataVi
     const isDualAxis: boolean = get(config, "dualAxis", true);
     const type: VisType = get(config, "type");
     const { secondary_yaxis: secondaryYAxis, ...remainConfig } = config;
-    const secondaryMeasuresIds = dv.bucketMeasures(SECONDARY_MEASURES).map(measureLocalId);
+    const secondaryMeasuresIds = dv.bucketMeasures(BucketNames.SECONDARY_MEASURES).map(measureLocalId);
 
     if (!isComboChart(type)) {
         return config;

@@ -12,9 +12,9 @@ import {
     STACK_BY_DIMENSION_INDEX,
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
-} from "../../../base/constants/dimensions";
+} from "../../constants/dimensions";
 
-import { IHeaderPredicate } from "../../../base/interfaces/HeaderPredicate";
+import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
 import { IChartOptions } from "../../Config";
 
 export function generateChartOptions(

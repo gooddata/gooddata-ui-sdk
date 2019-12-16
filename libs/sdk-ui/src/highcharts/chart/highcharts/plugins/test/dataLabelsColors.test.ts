@@ -1,8 +1,8 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { isWhiteNotContrastEnough } from "../dataLabelsColors";
 
 import { getRgbString } from "../../../../utils/color";
-import { DEFAULT_COLOR_PALETTE } from "../../../../Config";
+import { DefaultColorPalette } from "../../../../Config";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
 
 describe("dataLabelsColors", () => {
@@ -16,8 +16,8 @@ describe("dataLabelsColors", () => {
         });
 
         it("should fullfill UX requirement for default color palette", () => {
-            const result: boolean[] = DEFAULT_COLOR_PALETTE.map(
-                (defaultColorPaletteItem: IColorPaletteItem) => getRgbString(defaultColorPaletteItem),
+            const result: boolean[] = DefaultColorPalette.map((defaultColorPaletteItem: IColorPaletteItem) =>
+                getRgbString(defaultColorPaletteItem),
             ).map((defaultColor: string) => isWhiteNotContrastEnough(defaultColor));
 
             // first 17 colors should return false -> have white label

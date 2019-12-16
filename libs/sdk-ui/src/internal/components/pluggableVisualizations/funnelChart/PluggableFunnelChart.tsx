@@ -12,7 +12,7 @@ import {
 import { PluggablePieChart } from "../pieChart/PluggablePieChart";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableFunnelChart extends PluggablePieChart {
     constructor(props: IVisConstruct) {

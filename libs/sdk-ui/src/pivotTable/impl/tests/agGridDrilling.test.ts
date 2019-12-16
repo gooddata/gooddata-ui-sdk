@@ -1,15 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 
 import * as fixtures from "../../../../__mocks__/fixtures";
-import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
-import { createIntlMock } from "../../../base/helpers/intlUtils";
+import { IMappingHeader } from "../../../base/headerMatching/MappingHeader";
+import { createIntlMock } from "../../../base/localization/intlUtils";
 import { assignDrillItemsAndType, getDrillRowData, getMeasureDrillItem } from "../agGridDrilling";
 import { IGridHeader } from "../agGridTypes";
 import { getTreeLeaves } from "../agGridUtils";
 import { IDimensionItemDescriptor, IResultMeasureHeader } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
-import { getDrillIntersection } from "../../../base/helpers/drilling";
+import { getDrillIntersection } from "../../../base/vis/drilling";
 
 const pivotTableWithColumnAndRowAttributes = fixtures.pivotTableWithColumnAndRowAttributes;
 const intl = createIntlMock();

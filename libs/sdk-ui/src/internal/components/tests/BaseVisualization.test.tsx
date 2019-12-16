@@ -11,8 +11,8 @@ import * as testMocks from "../../mocks/testMocks";
 import { emptyReferencePoint } from "../../mocks/referencePointMocks";
 
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
-import { IDrillableItem } from "../../../base/interfaces/DrillEvents";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { IDrillableItem } from "../../../base/vis/DrillEvents";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 const { delay } = testUtils;

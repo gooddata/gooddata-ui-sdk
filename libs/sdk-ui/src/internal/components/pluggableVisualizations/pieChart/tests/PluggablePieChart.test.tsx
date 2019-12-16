@@ -1,16 +1,16 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
+import { DefaultLocale } from "../../../../../base/localization/Locale";
 import { PluggablePieChart } from "../PluggablePieChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
-import { DEFAULT_LOCALE } from "../../../../../base/constants/localization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggablePieChart", () => {
     const defaultProps = {
-        locale: DEFAULT_LOCALE,
+        locale: DefaultLocale,
         projectId: "PROJECTID",
         element: "body",
         configPanelElement: null as string,

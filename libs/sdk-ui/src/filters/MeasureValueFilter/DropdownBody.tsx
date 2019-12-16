@@ -3,7 +3,7 @@ import * as React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 
-import { IntlWrapper } from "../../base/translations/IntlWrapper";
+import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import OperatorDropdown from "./OperatorDropdown";
 import RangeInput from "./RangeInput";
 import ComparisonInput from "./ComparisonInput";

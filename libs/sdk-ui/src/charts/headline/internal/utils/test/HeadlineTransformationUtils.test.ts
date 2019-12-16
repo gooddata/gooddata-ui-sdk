@@ -5,7 +5,7 @@ import {
     getHeadlineData,
     IHeadlineDrillItemContext,
 } from "../HeadlineTransformationUtils";
-import { createIntlMock } from "../../../../../base/helpers/intlUtils";
+import { createIntlMock } from "../../../../../base/localization/intlUtils";
 import {
     headlineWithOneMeasure,
     headlineWithOneMeasureWithIdentifier,
@@ -20,7 +20,7 @@ import {
     headlineWithTwoMeasuresWithIdentifier,
 } from "../../../../../../__mocks__/fixtures";
 import { IHeadlineData } from "../../../Headlines";
-import { identifierMatch, uriMatch } from "../../../../../base/factory/HeaderPredicateFactory";
+import { identifierMatch, uriMatch } from "../../../../../base/headerMatching/HeaderPredicateFactory";
 
 describe("HeadlineTransformationUtils", () => {
     describe("getData", () => {

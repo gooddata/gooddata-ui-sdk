@@ -5,7 +5,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { COLUMN_BAR_CHART_UICONFIG } from "../../../constants/uiConfig";
 import { IVisConstruct, IUiConfig } from "../../../interfaces/Visualization";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {

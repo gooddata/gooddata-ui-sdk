@@ -35,7 +35,6 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-import { DEFAULT_LOCALE } from "../../../../base/constants/localization";
 import {
     IInsight,
     insightProperties,
@@ -45,13 +44,13 @@ import {
     IDimension,
     newDimension,
     bucketAttributes,
+    MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { ILocale } from "../../../../base/interfaces/Locale";
+import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import { CoreXirr } from "../../../../charts/xirr/CoreXirr";
-import { MEASUREGROUP } from "../../../../base/constants/dimensions";
-import { ATTRIBUTE } from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -67,7 +66,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         this.element = props.element;
         this.configPanelElement = props.configPanelElement;
         this.callbacks = props.callbacks;
-        this.locale = props.locale ? props.locale : DEFAULT_LOCALE;
+        this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.settings = props.featureFlags;
     }
@@ -164,12 +163,14 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     }
 
     private getXirrDimensions(insight: IInsight): IDimension[] {
-        const attribute = insightBucket(insight, ATTRIBUTE);
+        const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
 
         if (attribute && attribute.items.length) {
-            return [newDimension([MEASUREGROUP, ...bucketAttributes(attribute).map(attributeLocalId)])];
+            return [
+                newDimension([MeasureGroupIdentifier, ...bucketAttributes(attribute).map(attributeLocalId)]),
+            ];
         }
 
-        return [newDimension([MEASUREGROUP])];
+        return [newDimension([MeasureGroupIdentifier])];
     }
 }

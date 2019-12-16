@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
-import { IDrillableItem } from "../../base/interfaces/DrillEvents";
-import * as VisEvents from "../../base/interfaces/Events";
-import { VisualizationEnvironment } from "../../base/constants/visualizationTypes";
+import { IDrillableItem } from "../../base/vis/DrillEvents";
+import * as VisEvents from "../../base/vis/Events";
+import { VisualizationEnvironment } from "../../base/vis/visualizationTypes";
 import {
     IBucketItem,
     IFeatureFlags,
@@ -34,7 +34,7 @@ import isEqual = require("lodash/isEqual");
 import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-import { ILocale } from "../../base/interfaces/Locale";
+import { ILocale } from "../../base/localization/Locale";
 
 // visualization catalogue - add your new visualization here
 const VisualizationsCatalog = {

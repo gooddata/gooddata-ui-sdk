@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
-import { ATTRIBUTE, MEASURES, STACK } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../chartProps";
@@ -16,9 +16,9 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
     bucketPropsKeys: ["measures", "trendBy", "segmentBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
-            newBucket(MEASURES, ...props.measures),
-            newBucket(ATTRIBUTE, props.trendBy),
-            newBucket(STACK, props.segmentBy),
+            newBucket(BucketNames.MEASURES, ...props.measures),
+            newBucket(BucketNames.ATTRIBUTE, props.trendBy),
+            newBucket(BucketNames.STACK, props.segmentBy),
         ];
     },
     executionFactory: (props, buckets) => {

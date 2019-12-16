@@ -30,13 +30,12 @@ import { PluggableTreemap } from "../internal/components/pluggableVisualizations
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { PluggableXirr } from "../internal/components/pluggableVisualizations/xirr/PluggableXirr";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
-import { ErrorComponent, IErrorProps } from "../base/simple/ErrorComponent";
-import { LoadingComponent, ILoadingProps } from "../base/simple/LoadingComponent";
+import { ErrorComponent, IErrorProps } from "../base/react/ErrorComponent";
+import { LoadingComponent, ILoadingProps } from "../base/react/LoadingComponent";
 import { GoodDataSdkError } from "../base/errors/GoodDataSdkError";
-import { fillMissingTitles } from "../base/helpers/measureTitleHelper";
-import { DEFAULT_LOCALE } from "../base/constants/localization";
-import { ILocale } from "../base/interfaces/Locale";
-import { withContexts } from "../base/context/withContexts";
+import { fillMissingTitles } from "../base/measureTitles/fillMissingTitles";
+import { DefaultLocale, ILocale } from "../base/localization/Locale";
+import { withContexts } from "../base/react/withContexts";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,
@@ -93,7 +92,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     public static defaultProps: Partial<IInsightViewProps> = {
         ErrorComponent,
         filters: [],
-        locale: DEFAULT_LOCALE,
+        locale: DefaultLocale,
         LoadingComponent,
         pushData: noop,
     };
@@ -186,7 +185,6 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
                 onExportReady: this.props.onExportReady,
-                onLoadingFinish: this.props.onLoadingFinish,
             },
             configPanelElement: ".gd-configuration-panel-content", // this is apparently a well-know constant (see BaseVisualization)
             element: `#${this.elementId}`,

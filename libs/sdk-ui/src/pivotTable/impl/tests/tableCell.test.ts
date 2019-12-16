@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import {
     getCellClassNames,
     getCellStyleAndFormattedValue,
     getMeasureCellFormattedValue,
     getMeasureCellStyle,
 } from "../tableCell";
-import { IMappingHeader } from "../../../base/interfaces/MappingHeader";
+import { IMappingHeader } from "../../../base/headerMatching/MappingHeader";
 import { pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 

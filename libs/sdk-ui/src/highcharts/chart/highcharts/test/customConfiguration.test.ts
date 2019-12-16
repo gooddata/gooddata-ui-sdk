@@ -13,13 +13,13 @@ import {
     getTooltipPositionInChartContainer,
 } from "../customConfiguration";
 import { IPointData, ISeriesDataItem } from "../../../Config";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { immutableSet } from "../../../utils/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
 } from "../../chartOptionsBuilder";
-import { IDrillConfig } from "../../../../base/interfaces/DrillEvents";
+import { IDrillConfig } from "../../../../base/vis/DrillEvents";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {

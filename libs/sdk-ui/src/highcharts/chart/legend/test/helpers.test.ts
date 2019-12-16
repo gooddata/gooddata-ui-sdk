@@ -16,7 +16,7 @@ import {
     LEGEND_SEPARATOR,
     groupSeriesItemsByType,
 } from "../helpers";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { ISeriesItem } from "../../../Config";
 
 describe("helpers", () => {

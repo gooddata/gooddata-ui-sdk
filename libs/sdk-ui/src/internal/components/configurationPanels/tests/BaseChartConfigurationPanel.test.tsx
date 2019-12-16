@@ -6,7 +6,7 @@ import { insightWithSingleAttribute } from "../../../mocks/testMocks";
 import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { VisualizationTypes, DEFAULT_LOCALE } from "../../../..";
+import { VisualizationTypes, DefaultLocale } from "../../../..";
 
 describe("BaseChartConfigurationPanel", () => {
     describe("axis name configuration", () => {
@@ -58,7 +58,7 @@ describe("BaseChartConfigurationPanel", () => {
         const defaultProps: IConfigurationPanelContentProps = {
             isError: false,
             isLoading: false,
-            locale: DEFAULT_LOCALE,
+            locale: DefaultLocale,
             type: VisualizationTypes.COLUMN,
             featureFlags: {
                 enableAxisNameConfiguration: true,

@@ -1,12 +1,10 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { getMappingHeaderLocalIdentifier } from "../../base/helpers/mappingHeader";
-import { IChartConfig } from "../Config";
-import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/interfaces/HeaderPredicate";
-import { IMappingHeader } from "../../base/interfaces/MappingHeader";
-import { DEFAULT_COLOR_PALETTE } from "../../base/constants/defaultColors";
-import { IColorMapping } from "../../base/interfaces/Colors";
+import { IChartConfig, IColorMapping } from "../Config";
+import { IHeaderPredicate, IHeaderPredicateContext } from "../../base/headerMatching/HeaderPredicate";
+import { getMappingHeaderLocalIdentifier, IMappingHeader } from "../../base/headerMatching/MappingHeader";
+import { DefaultColorPalette } from "../../base/constants/colorPalette";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");
 
@@ -95,7 +93,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette {
             };
         });
     } catch (_ignored) {
-        return DEFAULT_COLOR_PALETTE;
+        return DefaultColorPalette;
     }
 }
 
@@ -106,13 +104,13 @@ export function getRgbString(color: IColorPaletteItem): string {
 export function getValidColorPalette(config: IChartConfig) {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)
-            ? DEFAULT_COLOR_PALETTE
+            ? DefaultColorPalette
             : getColorPaletteFromColors(config.colors)
         : config.colorPalette;
 }
 
 export function isCustomPalette(palette: IColorPalette) {
-    return !isEqual(palette, DEFAULT_COLOR_PALETTE);
+    return !isEqual(palette, DefaultColorPalette);
 }
 
 export function getColorFromMapping(

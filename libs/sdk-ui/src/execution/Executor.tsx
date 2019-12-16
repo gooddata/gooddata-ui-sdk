@@ -2,7 +2,7 @@
 import React from "react";
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult } from "../base/promise/withLoading";
+import { WithLoadingResult } from "../base/react/withLoading";
 
 /**
  * TODO: SDK8: add docs

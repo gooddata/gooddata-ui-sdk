@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
-import * as BucketNames from "../../../../base/constants/bucketNames";
+import { BucketNames } from "../../../../base";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import {
@@ -47,7 +47,7 @@ import {
     PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
 import { isLineChart, isAreaChart } from "../../../../highcharts";
 

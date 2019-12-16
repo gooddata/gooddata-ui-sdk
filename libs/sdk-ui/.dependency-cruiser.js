@@ -200,6 +200,18 @@ options = {
             },
         },
         {
+            name: "base-dependents-through-index",
+            comment: "Other components depending on base must do so through its index.ts.",
+            severity: "error",
+            from: {
+                pathNot: "^(src/base)",
+            },
+            to: {
+                path:
+                    "src/base/(constants|context|errors|factory|hoc|interfaces|promise|simple|translations|typings)",
+            },
+        },
+        {
             name: "charts-dependencies",
             comment: "Charts must only depend on base and highcharts.",
             severity: "error",
@@ -233,6 +245,17 @@ options = {
             },
         },
         {
+            name: "filter-dependencies",
+            comment: "Filters must only depend on base",
+            severity: "error",
+            from: {
+                path: "src/filters",
+            },
+            to: {
+                pathNot: "^(src/filters|src/base|styles)",
+            },
+        },
+        {
             name: "global-index-import",
             comment: "No one must depend on global index",
             severity: "error",
@@ -249,8 +272,7 @@ options = {
              for a complete list
         */
         doNotFollow: {
-            path:
-                ".*(node_modules|gd-bear|sdk-model|sdk-backend|_defunct|__mocks__|stories|spec|test|tests).*",
+            path: ".*(node_modules|gd-bear|sdk-model|sdk-backend|__mocks__|stories|spec|test|tests).*",
             dependencyTypes: ["npm", "npm-dev", "npm-optional", "npm-peer", "npm-bundled", "npm-no-pkg"],
         },
 

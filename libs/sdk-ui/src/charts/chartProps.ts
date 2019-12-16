@@ -1,14 +1,13 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { IErrorProps } from "../base/simple/ErrorComponent";
-import { ILoadingProps } from "../base/simple/LoadingComponent";
+import { IErrorProps } from "../base/react/ErrorComponent";
+import { ILoadingProps } from "../base/react/LoadingComponent";
 import { IChartConfig } from "../highcharts";
-import { OnError, OnExportReady, OnLoadingChanged } from "../base/interfaces/Events";
-import { IHeaderPredicate } from "../base/interfaces/HeaderPredicate";
-import { IDrillableItem, OnFiredDrillEvent } from "../base/interfaces/DrillEvents";
-import { IPushData } from "../base/interfaces/PushData";
-import { IVisualizationCallbacks, IVisualizationProps } from "../base/interfaces/VisualizationProps";
+import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "../base/vis/Events";
+import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
+import { IDrillableItem, OnFiredDrillEvent } from "../base/vis/DrillEvents";
+import { IVisualizationCallbacks, IVisualizationProps } from "../base/vis/VisualizationProps";
 
 /**
  * Props applicable for all charts

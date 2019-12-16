@@ -2,9 +2,9 @@
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
 import { IChartConfig } from "../../Config";
-import { VisualizationTypes } from "../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../utils/common";
-import { MEASURES, SECONDARY_MEASURES } from "../../../base/constants/bucketNames";
+import { BucketNames } from "../../../base";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";
 import get = require("lodash/get");
 
@@ -33,8 +33,8 @@ export function getDefaultChartType(config?: IChartConfig) {
 function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinition): boolean {
     const { primaryChartType, secondaryChartType } = getDefaultComboTypes(config);
     const buckets = definition ? definition.buckets : [];
-    const primaryBucket = bucketsFind(buckets, MEASURES);
-    const secondaryBucket = bucketsFind(buckets, SECONDARY_MEASURES);
+    const primaryBucket = bucketsFind(buckets, BucketNames.MEASURES);
+    const secondaryBucket = bucketsFind(buckets, BucketNames.SECONDARY_MEASURES);
     const isEmptyPrimaryMeasure = !primaryBucket || bucketIsEmpty(primaryBucket);
     const isEmptySecondaryMeasure = !secondaryBucket || bucketIsEmpty(secondaryBucket);
     const isLineChartOnLeftAxis = isLineChart(primaryChartType);

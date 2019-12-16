@@ -2,10 +2,10 @@
 import * as React from "react";
 import noop = require("lodash/noop");
 import { mount } from "enzyme";
-import { VisualizationTypes } from "../../../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import Legend from "../Legend";
 import HeatmapLegend from "../HeatmapLegend";
-import { withIntl } from "../../../../base/helpers/intlUtils";
+import { withIntl } from "../../../../base/localization/intlUtils";
 
 describe("Legend", () => {
     const series = [

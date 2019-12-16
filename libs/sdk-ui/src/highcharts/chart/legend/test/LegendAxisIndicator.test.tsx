@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { ILegendAxisIndicatorProps, LegendAxisIndicator } from "../LegendAxisIndicator";
-import { withIntl } from "../../../../base/helpers/intlUtils";
+import { withIntl } from "../../../../base/localization/intlUtils";
 
 describe("LegendAxisIndicator", () => {
     function createComponent(props: ILegendAxisIndicatorProps) {

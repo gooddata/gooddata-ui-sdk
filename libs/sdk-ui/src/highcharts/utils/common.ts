@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
 import setWith = require("lodash/setWith");
 import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import { numberFormat } from "@gooddata/numberjs";
 
-import { VisualizationTypes } from "../../base/constants/visualizationTypes";
+import { VisualizationTypes } from "../../base/vis/visualizationTypes";
 import { ISeriesItem, IChartOptions } from "../Config";
 
 // lodash/fp does not provide typings

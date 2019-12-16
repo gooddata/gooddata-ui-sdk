@@ -2,13 +2,13 @@
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IFilter, IMeasure, newBucket } from "@gooddata/sdk-model";
 import * as React from "react";
-import { MEASURES } from "../../base/constants/bucketNames";
+import { BucketNames } from "../../base";
 
 import { Subtract } from "../../base/typings/subtract";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
-import { withContexts } from "../../base/context/withContexts";
+import { withContexts } from "../../base/react/withContexts";
 
 //
 // Public interface
@@ -51,7 +51,7 @@ export function RenderHeadline(props: IHeadlineProps): JSX.Element {
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
 
 export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
-    const buckets = [newBucket(MEASURES, props.primaryMeasure, props.secondaryMeasure)];
+    const buckets = [newBucket(BucketNames.MEASURES, props.primaryMeasure, props.secondaryMeasure)];
 
     const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IHeadlineBucketProps>(props, [
         "primaryMeasure",
