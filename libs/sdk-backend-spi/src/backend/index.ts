@@ -9,6 +9,7 @@ import { IWorkspaceStylingService } from "../workspace/styling";
 import { IWorkspaceCatalogFactory } from "../workspace/ldm/catalog";
 import { IWorkspaceDatasetsService } from "../workspace/ldm/datasets";
 import { IWorkspaceQueryFactory } from "../workspace";
+import { IWorkspacePermissionsFactory } from "../workspace/permissions";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -170,6 +171,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query data sets defined in this workspace.
      */
     dataSets(): IWorkspaceDatasetsService;
+
+    /**
+     * Returns service that can be used to query workspace permissions
+     */
+    permissions(): IWorkspacePermissionsFactory;
 }
 
 /**

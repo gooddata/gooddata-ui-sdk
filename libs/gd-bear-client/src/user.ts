@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
+import { GdcUser } from "@gooddata/gd-bear-model";
 
 export interface IUserConfigsSettingItem {
     settingItem: {
@@ -214,5 +215,24 @@ export class UserModule {
             .get("/gdc/app/account/bootstrap")
             .then((r: any) => r.getData())
             .then((result: any) => result.bootstrapResource.current.featureFlags);
+    }
+
+    /**
+     * Returns bootstrap resource for the currently logged in user.
+     */
+    public getBootstrapResource(
+        options: { projectId?: string; productId?: string; clientId?: string } = {},
+    ): Promise<GdcUser.IBootstrapResource> {
+        const { projectId, productId, clientId } = options;
+        let uri = "/gdc/app/account/bootstrap";
+
+        if (projectId) {
+            uri = `${uri}?projectUri=/gdc/projects/${projectId}`;
+        } else if (productId && clientId) {
+            // projectId can be replaced by combination of productId + clientId
+            uri = `${uri}?projectUri=/gdc/projects/client:${productId}:${clientId}`;
+        }
+
+        return this.xhr.getParsed<GdcUser.IBootstrapResource>(uri);
     }
 }

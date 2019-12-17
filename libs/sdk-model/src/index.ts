@@ -307,4 +307,4 @@ export {
 
 export { factoryNotationFor } from "./execution/objectFactoryNotation";
 
-export { IWorkspace } from "./workspace";
+export { IWorkspace, IWorkspacePermissions, WorkspacePermission } from "./workspace";

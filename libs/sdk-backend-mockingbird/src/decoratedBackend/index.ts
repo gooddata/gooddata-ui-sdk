@@ -21,6 +21,7 @@ import {
     IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
     IWorkspaceCatalogFactory,
+    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -123,6 +124,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public dataSets(): IWorkspaceDatasetsService {
         return this.decorated.dataSets();
+    }
+
+    public permissions(): IWorkspacePermissionsFactory {
+        return this.decorated.permissions();
     }
 }
 

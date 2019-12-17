@@ -16,6 +16,7 @@ import {
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
+    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordingIndex, WorkspaceRecordings } from "./types";
@@ -99,6 +100,9 @@ function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = 
             throw new NotSupported("not supported");
         },
         dataSets(): IWorkspaceDatasetsService {
+            throw new NotSupported("not supported");
+        },
+        permissions(): IWorkspacePermissionsFactory {
             throw new NotSupported("not supported");
         },
     };
