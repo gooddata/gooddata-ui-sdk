@@ -11,15 +11,16 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { injectIntl, InjectedIntl } from "react-intl";
-import { ErrorCodes, GoodDataSdkError } from "../../base/errors/GoodDataSdkError";
-import { convertError } from "../../base/errors/errorHandling";
 import {
     ILoadingState,
     IExportFunction,
     IExtendedExportConfig,
     IDrillableItemPushData,
-} from "../../base/vis/Events";
-import { IntlWrapper } from "../../base/localization/IntlWrapper";
+    convertError,
+    ErrorCodes,
+    GoodDataSdkError,
+    IntlWrapper,
+} from "../../base";
 import { ICoreChartProps } from "../chartProps";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");

@@ -11,13 +11,10 @@ import {
     newDimension,
     bucketsAttributes,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "../../base/constants/bucketNames";
-
-import { Subtract } from "../../base/typings/subtract";
+import { BucketNames, Subtract, withContexts } from "../../base";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreXirr } from "./CoreXirr";
 import omit = require("lodash/omit");
-import { withContexts } from "../../base/react/withContexts";
 
 //
 // Public interface

@@ -26,7 +26,7 @@ import * as React from "react";
 
 import "../../styles/css/pivotTable.css";
 import { VisualizationTypes } from "../base/vis/visualizationTypes";
-import { getScrollbarWidth } from "../base/helpers/domUtils";
+import { getScrollbarWidth } from "./impl/domUtils";
 import {
     convertDrillableItemsToPredicates,
     getDrillIntersection,

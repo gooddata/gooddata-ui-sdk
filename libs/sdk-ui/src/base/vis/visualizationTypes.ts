@@ -1,4 +1,8 @@
 // (C) 2007-2019 GoodData Corporation
+
+/**
+ * @internal
+ */
 export const VisualizationTypes = {
     BAR: "bar" as "bar",
     COLUMN: "column" as "column",
@@ -24,6 +28,9 @@ export const VisualizationTypes = {
     XIRR: "xirr" as "xirr",
 };
 
+/**
+ * @internal
+ */
 export type ChartType =
     | "bar"
     | "column"
@@ -44,6 +51,7 @@ export type ChartType =
     | "funnel"
     | "pareto"
     | "alluvial";
+
 export type HeadlineType = "headline";
 export type XirrType = "xirr";
 export type TableType = "table";

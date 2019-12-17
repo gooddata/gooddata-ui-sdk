@@ -1,9 +1,11 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
+import { BucketNames } from "../../../base";
 import {
     createSorts,
     getAttributeSortItem,
     getBucketItemIdentifiers,
+    getDefaultTreemapSortFromBuckets,
     removeInvalidSort,
     setSortItems,
 } from "../sort";
@@ -23,7 +25,15 @@ import {
     insightWithTwoMeasuresAndTwoViewBy,
     insightWithTwoMeasuresAndViewBy,
 } from "../../mocks/testMocks";
-import { IAttributeSortItem, IMeasureSortItem, insightSetSorts, SortItem } from "@gooddata/sdk-model";
+import {
+    IAttributeSortItem,
+    IMeasureSortItem,
+    insightSetSorts,
+    newAttribute,
+    newBucket,
+    newMeasure,
+    SortItem,
+} from "@gooddata/sdk-model";
 
 const attributeSort: IAttributeSortItem = {
     attributeSortItem: {
@@ -521,5 +531,43 @@ describe("setSortItems", () => {
         });
 
         expect(setSortItems(refPoint)).toBe(refPoint);
+    });
+});
+
+describe("getDefaultTreemapSortFromBuckets", () => {
+    const measure1 = newMeasure("mid1", m => m.localId("m1").alias("Measure m1"));
+    const attribute1 = newAttribute("aid1", a => a.localId("a1"));
+    const attribute2 = newAttribute("aid2", a => a.localId("a2"));
+    const viewBucket = newBucket(BucketNames.VIEW, attribute1);
+    const segmentBucket = newBucket(BucketNames.SEGMENT, attribute2);
+    const emptySegmentBucket = newBucket(BucketNames.SEGMENT);
+
+    it("should get empty sort for only a single attribute", () => {
+        const sort = getDefaultTreemapSortFromBuckets(viewBucket, emptySegmentBucket, [measure1]);
+        expect(sort).toEqual([]);
+    });
+
+    it("should get attribute and measure sort if view by and stack by", () => {
+        const sort = getDefaultTreemapSortFromBuckets(viewBucket, segmentBucket, [measure1]);
+        expect(sort).toEqual([
+            {
+                attributeSortItem: {
+                    direction: "asc",
+                    attributeIdentifier: "a1",
+                },
+            },
+            {
+                measureSortItem: {
+                    direction: "desc",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: "m1",
+                            },
+                        },
+                    ],
+                },
+            },
+        ]);
     });
 });

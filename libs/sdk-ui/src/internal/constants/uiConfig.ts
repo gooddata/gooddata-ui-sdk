@@ -2,8 +2,7 @@
 import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "./bucket";
-import { OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
+import { OverTimeComparisonTypes, VisualizationTypes } from "../../base";
 
 export const MAX_METRICS_COUNT = 20;
 export const DEFAULT_PIE_METRICS_COUNT = 1;

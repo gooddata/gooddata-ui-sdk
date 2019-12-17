@@ -16,7 +16,7 @@ import {
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../constants/bucket";
 
 import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../interfaces/Visualization";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base/interfaces/OverTimeComparison";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base";
 
 const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],

@@ -1,13 +1,20 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { IErrorProps } from "../base/react/ErrorComponent";
-import { ILoadingProps } from "../base/react/LoadingComponent";
+import {
+    IHeaderPredicate,
+    IErrorProps,
+    ILoadingProps,
+    IDrillableItem,
+    OnFiredDrillEvent,
+    IPushData,
+    OnError,
+    OnExportReady,
+    OnLoadingChanged,
+    IVisualizationCallbacks,
+    IVisualizationProps,
+} from "../base";
 import { IChartConfig } from "../highcharts";
-import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "../base/vis/Events";
-import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
-import { IDrillableItem, OnFiredDrillEvent } from "../base/vis/DrillEvents";
-import { IVisualizationCallbacks, IVisualizationProps } from "../base/vis/VisualizationProps";
 
 /**
  * Props applicable for all charts
@@ -49,6 +56,18 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
+export interface ILegendItem {
+    name: string;
+    color: string; // hex or RGB, can be used directly in CSS style
+    onClick: () => void; // toggle to show/hide serie in chart
+}
+
+export interface ILegendData {
+    legendItems: ILegendItem[];
+}
+
+export type OnLegendReady = (data: ILegendData) => void;
+
 /**
  * Defines callbacks to execute for different events.
  *
@@ -69,6 +88,11 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
      * Called when loading status of the chart changes - chart starts loading or stops loading
      */
     onLoadingChanged?: OnLoadingChanged;
+
+    /**
+     * Called when legend is rendered.
+     */
+    onLegendReady?: OnLegendReady;
 
     /**
      * Called when user triggers a drill on a chart.

@@ -26,7 +26,6 @@ import {
     ISeriesItem,
     IPointData,
 } from "../../Config";
-import { percentFormatter } from "../../../base/helpers/utils";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
@@ -41,6 +40,7 @@ import {
     isRotationInRange,
     isScatterPlot,
     isTreemap,
+    percentFormatter,
 } from "../../utils/common";
 import {
     shouldEndOnTick,

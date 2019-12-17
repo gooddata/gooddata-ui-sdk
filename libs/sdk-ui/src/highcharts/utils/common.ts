@@ -1,12 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
-import setWith = require("lodash/setWith");
 import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
+// (C) 2007-2019 GoodData Corporation
+import isNil = require("lodash/isNil");
+import setWith = require("lodash/setWith");
 import { numberFormat } from "@gooddata/numberjs";
 
 import { VisualizationTypes } from "../../base/vis/visualizationTypes";
-import { ISeriesItem, IChartOptions } from "../Config";
+import { IChartOptions, ISeriesItem } from "../Config";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp
@@ -137,4 +139,17 @@ export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
     const targetSeries = series.find((item: ISeriesItem) => item.yAxis === 0);
 
     return get(targetSeries, "type", chartOptions.type);
+};
+
+export const unwrap = (wrappedObject: any) => {
+    return wrappedObject[Object.keys(wrappedObject)[0]];
+};
+
+export function percentFormatter(value: number): string {
+    return isNil(value) ? "" : `${parseFloat(value.toFixed(2))}%`;
+}
+
+export const isCssMultiLineTruncationSupported = (): boolean => {
+    // support -webkit-line-clamp
+    return "webkitLineClamp" in document.body.style;
 };

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import get = require("lodash/get");
-import { IUnwrappedAttributeHeadersWithItems } from "../../../base/helpers/types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../utils/types";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 type NameAndCategories = {

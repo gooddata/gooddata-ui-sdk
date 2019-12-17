@@ -2,13 +2,10 @@
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IFilter, IMeasure, newBucket } from "@gooddata/sdk-model";
 import * as React from "react";
-import { BucketNames } from "../../base";
-
-import { Subtract } from "../../base/typings/subtract";
+import { BucketNames, withContexts, Subtract } from "../../base";
 import { ICoreChartProps, IBucketChartProps } from "../chartProps";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
-import { withContexts } from "../../base/react/withContexts";
 
 //
 // Public interface

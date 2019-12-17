@@ -56,11 +56,17 @@ import { COLOR_MAPPING_CHANGED } from "../../configurationControls/colors/Colors
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
 import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
-import { ChartType, VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { generateDimensions } from "../../../utils/dimensions";
-import { BucketNames } from "../../../../base";
-import { GoodDataSdkError } from "../../../../base/errors/GoodDataSdkError";
-import * as VisEvents from "../../../../base/vis/Events";
+import {
+    GoodDataSdkError,
+    BucketNames,
+    DefaultLocale,
+    ILocale,
+    ChartType,
+    VisualizationTypes,
+    IExportFunction,
+    ILoadingState,
+} from "../../../../base";
 import {
     bucketsIsEmpty,
     IColorMappingItem,
@@ -73,7 +79,6 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
-import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
@@ -476,14 +481,14 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private onExportReady(exportResult: VisEvents.IExportFunction) {
+    private onExportReady(exportResult: IExportFunction) {
         const { onExportReady } = this.callbacks;
         if (onExportReady) {
             onExportReady(exportResult);
         }
     }
 
-    private onLoadingChanged(loadingState: VisEvents.ILoadingState) {
+    private onLoadingChanged(loadingState: ILoadingState) {
         const onLoadingChanged = get(this.callbacks, "onLoadingChanged");
 
         if (onLoadingChanged) {

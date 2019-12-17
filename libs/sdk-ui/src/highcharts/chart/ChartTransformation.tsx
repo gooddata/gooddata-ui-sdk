@@ -5,8 +5,8 @@ import * as React from "react";
 
 import { convertDrillableItemsToPredicates } from "../../base/vis/drilling";
 import { IDrillableItem, OnFiredDrillEvent } from "../../base/vis/DrillEvents";
-import { OnLegendReady } from "../../base/vis/Events";
 import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
+import { OnLegendReady } from "../../charts/chartProps";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";

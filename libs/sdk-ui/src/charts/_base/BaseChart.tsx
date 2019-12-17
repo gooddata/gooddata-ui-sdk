@@ -1,24 +1,22 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { newErrorMapping, IErrorDescriptors } from "../../base/errors/errorHandling";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
-import { ICoreChartProps } from "../chartProps";
-import { IErrorProps } from "../../base/react/ErrorComponent";
-import { ILoadingProps } from "../../base/react/LoadingComponent";
-
+import { ICoreChartProps, OnLegendReady } from "../chartProps";
 import { Visualization, getValidColorPalette } from "../../highcharts";
-
-import { IntlWrapper } from "../../base/localization/IntlWrapper";
-import {
-    IntlTranslationsProvider,
-    ITranslationsComponentProps,
-} from "../../base/localization/TranslationsProvider";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
-import { OnLegendReady } from "../../base/vis/Events";
 import noop = require("lodash/noop");
 import { defaultCoreChartProps } from "../_commons/defaultProps";
-import { ChartType } from "../../base/vis/visualizationTypes";
-import { ErrorCodes } from "../../base/";
+import {
+    newErrorMapping,
+    IErrorDescriptors,
+    ErrorCodes,
+    ChartType,
+    IErrorProps,
+    ILoadingProps,
+    IntlWrapper,
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "../../base/";
 
 export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;

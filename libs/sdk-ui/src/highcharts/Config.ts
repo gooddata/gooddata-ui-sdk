@@ -10,10 +10,8 @@ import {
     SVGDOMElement,
 } from "./chart/highcharts/highchartsEntryPoint";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { IHeaderPredicate } from "../base";
-import { IColorAssignment } from "../base/vis/Events";
-
-export { DefaultColorPalette } from "../base/constants/colorPalette";
+import { IHeaderPredicate, IColorAssignment } from "../base";
+export { DefaultColorPalette } from "../base";
 
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 

@@ -238,3 +238,43 @@ export function isResultTotalHeader(obj: any): obj is IResultTotalHeader {
         (obj as IResultTotalHeader).totalHeaderItem.type !== undefined
     );
 }
+
+//
+//
+//
+
+/**
+ * Returns item name contained within a result header.
+ *
+ * @param header - header of any type
+ * @public
+ */
+export function resultHeaderName(header: IResultHeader): string {
+    if (isResultAttributeHeader(header)) {
+        return header.attributeHeaderItem.name;
+    } else if (isResultMeasureHeader(header)) {
+        return header.measureHeaderItem.name;
+    }
+
+    return header.totalHeaderItem.name;
+}
+
+/**
+ * Returns local identifier of attribute described in the provided attribute descriptor.
+ *
+ * @param descriptor - attribute descriptor, must be specified
+ * @public
+ */
+export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string {
+    return descriptor.attributeHeader.localIdentifier;
+}
+
+/**
+ * Returns name of attribute described in the provided attribute descriptor.
+ *
+ * @param descriptor - attribute descriptor, must be specified
+ * @public
+ */
+export function attributeDescriptorName(descriptor: IAttributeDescriptor): string {
+    return descriptor.attributeHeader.formOf.name;
+}

@@ -41,6 +41,9 @@ export {
     isResultAttributeHeader,
     isResultMeasureHeader,
     isResultTotalHeader,
+    resultHeaderName,
+    attributeDescriptorLocalId,
+    attributeDescriptorName,
 } from "./workspace/execution/results";
 
 export {
