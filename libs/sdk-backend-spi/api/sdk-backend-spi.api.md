@@ -244,23 +244,19 @@ export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescr
 
 // @public
 export interface IElementQuery {
-    // (undocumented)
     query(): Promise<IElementQueryResult>;
-    // (undocumented)
     withLimit(limit: number): IElementQuery;
-    // (undocumented)
     withOffset(offset: number): IElementQuery;
-    // (undocumented)
+    // @alpha
     withOptions(options: IElementQueryOptions): IElementQuery;
 }
 
 // @public
 export interface IElementQueryFactory {
-    // (undocumented)
-    forObject(objectId: string): IElementQuery;
+    forObject(identifier: string): IElementQuery;
 }
 
-// @public
+// @alpha (undocumented)
 export interface IElementQueryOptions {
     // (undocumented)
     complement?: boolean;
