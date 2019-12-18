@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-10T13:40:46.992Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-18T15:57:02.482Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./executions/uiTestScenarios/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -70,6 +70,11 @@ const fp_25e8b42b55d25626eb58ce1e1445e827 = {
     dataView_all: require("./executions/uiTestScenarios/25e8b42b55d25626eb58ce1e1445e827/dataView_all.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/25e8b42b55d25626eb58ce1e1445e827/dataView_o0_0s100_1000.json"),
 };
+const fp_25fe923ba24a7ab26924f2ace0708d79 = {
+    definition: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/dataView_all.json"),
+};
 const fp_26f497ae131ba545d6d2c99f657eadb4 = {
     definition: require("./executions/uiTestScenarios/26f497ae131ba545d6d2c99f657eadb4/definition.json"),
     executionResult: require("./executions/uiTestScenarios/26f497ae131ba545d6d2c99f657eadb4/executionResult.json"),
@@ -115,6 +120,11 @@ const fp_594ead2e492fb1b8667bbf69adcb50eb = {
     executionResult: require("./executions/uiTestScenarios/594ead2e492fb1b8667bbf69adcb50eb/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/594ead2e492fb1b8667bbf69adcb50eb/dataView_o0_0s100_1000.json"),
 };
+const fp_5a60f663e1f2746c75414849c25f5dd3 = {
+    definition: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/dataView_all.json"),
+};
 const fp_5bd4511e5e5ffbfbf812f92016a69e6f = {
     definition: require("./executions/uiTestScenarios/5bd4511e5e5ffbfbf812f92016a69e6f/definition.json"),
     executionResult: require("./executions/uiTestScenarios/5bd4511e5e5ffbfbf812f92016a69e6f/executionResult.json"),
@@ -129,6 +139,11 @@ const fp_609da17972496a184007e17cfa7e7fb5 = {
     definition: require("./executions/uiTestScenarios/609da17972496a184007e17cfa7e7fb5/definition.json"),
     executionResult: require("./executions/uiTestScenarios/609da17972496a184007e17cfa7e7fb5/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/609da17972496a184007e17cfa7e7fb5/dataView_all.json"),
+};
+const fp_61ddd89532ddd0cc1610d20e670e33b6 = {
+    definition: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/dataView_all.json"),
 };
 const fp_6848cc9453391aba2260aa1ee3359b25 = {
     definition: require("./executions/uiTestScenarios/6848cc9453391aba2260aa1ee3359b25/definition.json"),
@@ -317,21 +332,6 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
-const fp_25fe923ba24a7ab26924f2ace0708d79 = {
-    definition: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/definition.json"),
-    executionResult: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/executionResult.json"),
-    dataView_all: require("./executions/uiTestScenarios/25fe923ba24a7ab26924f2ace0708d79/dataView_all.json"),
-};
-const fp_5a60f663e1f2746c75414849c25f5dd3 = {
-    definition: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/definition.json"),
-    executionResult: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/executionResult.json"),
-    dataView_all: require("./executions/uiTestScenarios/5a60f663e1f2746c75414849c25f5dd3/dataView_all.json"),
-};
-const fp_61ddd89532ddd0cc1610d20e670e33b6 = {
-    definition: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/definition.json"),
-    executionResult: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/executionResult.json"),
-    dataView_all: require("./executions/uiTestScenarios/61ddd89532ddd0cc1610d20e670e33b6/dataView_all.json"),
-};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: fp_06890d7172183531342ed8e17d70e01a,
@@ -481,74 +481,77 @@ export const Scenarios = {
         CorrectConfig: fp_61ddd89532ddd0cc1610d20e670e33b6,
     },
 };
+const df_label_product_id_name = {
+    elements: require("./metadata/label.product.id.name/elements.json"),
+    obj: require("./metadata/label.product.id.name/obj.json"),
+};
 export const Recordings = {
-    ws_testWorkspace: {
-        executions: {
-            fp_06890d7172183531342ed8e17d70e01a,
-            fp_06d00ebfd7c655837f2488f562fbaf3f,
-            fp_0a15e759c2eadbe7290e04aac4c25103,
-            fp_10ffd737dc921a808c49ad3872f11cb3,
-            fp_1407ee212bc8a079b1048ff976726a8e,
-            fp_16421675f8e90b1ade1754bad1423a48,
-            fp_167b9e0fc1beac6dfd3b6768d7fe0c89,
-            fp_1d1a699a1370a108a14d9a5ee0c30555,
-            fp_1e3f44f4d59bc898e1fa599ea22adb38,
-            fp_211047a73c74f5befa9dfc79d0587123,
-            fp_2111960a5050e0ed00c0820ee47af935,
-            fp_212d3ef83bf6d322ba67d545c6da0623,
-            fp_25e8b42b55d25626eb58ce1e1445e827,
-            fp_26f497ae131ba545d6d2c99f657eadb4,
-            fp_2a7164f01dc4b2cac5b0eb9957b05d08,
-            fp_3a17a149960e30fb65ecaf041c1b91db,
-            fp_4156d5a7fe235c9dfcb63c9c281a0f01,
-            fp_447476beb0fc409270b836171a0e3e8c,
-            fp_4c21b7b0a21f1854f7ba9480a49c9300,
-            fp_4feae4498f7ba55bc256e5a5f421915c,
-            fp_59432d48715dbb61bfa9f23c22b31338,
-            fp_594ead2e492fb1b8667bbf69adcb50eb,
-            fp_5bd4511e5e5ffbfbf812f92016a69e6f,
-            fp_60311b4abe2c66fbff6a1a1e698c5dbc,
-            fp_609da17972496a184007e17cfa7e7fb5,
-            fp_6848cc9453391aba2260aa1ee3359b25,
-            fp_6ab9e6de324f28755282f7badb97733e,
-            fp_71f5f5c9e71eb35a63e0c56fdcbe28dd,
-            fp_7ac584de6032c302b2f24c441a8b50db,
-            fp_7f724c8addfa4246cbb03f39196a390a,
-            fp_80446c9557b1fbac900f0e72ec2cd3ef,
-            fp_8cd121df1173fe55cb499f598d74064b,
-            fp_910805b6a9da4af389f5857543f8cb1b,
-            fp_950ff0cd0837e130146a69d0945bfe24,
-            fp_9718841c8d9c00a19b93d84212be8012,
-            fp_97399c725102e8d868b81a0773188079,
-            fp_9a413288aa8a402c7df30ca38e83f4de,
-            fp_9bd19c250856c8a1c2296bd955d070ab,
-            fp_9d6d68c533e723a932fe7a9981dbc1a2,
-            fp_9fc4953386b04c9baf270eb862755197,
-            fp_a31e38ec0c13a447faa3bd456295c03f,
-            fp_a5d8e3808e6b4519d0e2a52ddd62ee05,
-            fp_af203ca12ba1e949e9bd95d1c9de433e,
-            fp_b189b6cff02840b91bf305261194e268,
-            fp_b3666de392b1ca6adc8194f919628a48,
-            fp_b7ed0cf372eefa1f07097a021bc0589b,
-            fp_ba308d65323b0eadb082b9b74f4c38c6,
-            fp_bbffbaf55539508c70461d726e4e6d00,
-            fp_bcf469b28d042c06d19f6021885de43d,
-            fp_be2317db16a7fa529c5705751c56c58a,
-            fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
-            fp_c0dc3b1f95458ccbd42f6416f049a93c,
-            fp_c72da84ed07fd0ade60a1c144ef0a849,
-            fp_c9fcb3657be4b478f026a31a30b8289c,
-            fp_d55e9d2990c761a1a10670bfe893675c,
-            fp_da14ae7731c4699616e645d3e00d2000,
-            fp_e1130eb55df7cfbb2f03afdd21467903,
-            fp_e7ff0568924d22c6687e253be623374d,
-            fp_e88aeb9d972e5493d3a9ba2063dea3e9,
-            fp_f8eb5e66709f2ea572a139e5e7790931,
-            fp_fa12ddadd752df55fbabeae6d22ecb4d,
-            fp_feb4ad60c9bd6a1dd6003afd669e25c8,
-            fp_25fe923ba24a7ab26924f2ace0708d79,
-            fp_5a60f663e1f2746c75414849c25f5dd3,
-            fp_61ddd89532ddd0cc1610d20e670e33b6,
-        },
+    executions: {
+        fp_06890d7172183531342ed8e17d70e01a,
+        fp_06d00ebfd7c655837f2488f562fbaf3f,
+        fp_0a15e759c2eadbe7290e04aac4c25103,
+        fp_10ffd737dc921a808c49ad3872f11cb3,
+        fp_1407ee212bc8a079b1048ff976726a8e,
+        fp_16421675f8e90b1ade1754bad1423a48,
+        fp_167b9e0fc1beac6dfd3b6768d7fe0c89,
+        fp_1d1a699a1370a108a14d9a5ee0c30555,
+        fp_1e3f44f4d59bc898e1fa599ea22adb38,
+        fp_211047a73c74f5befa9dfc79d0587123,
+        fp_2111960a5050e0ed00c0820ee47af935,
+        fp_212d3ef83bf6d322ba67d545c6da0623,
+        fp_25e8b42b55d25626eb58ce1e1445e827,
+        fp_25fe923ba24a7ab26924f2ace0708d79,
+        fp_26f497ae131ba545d6d2c99f657eadb4,
+        fp_2a7164f01dc4b2cac5b0eb9957b05d08,
+        fp_3a17a149960e30fb65ecaf041c1b91db,
+        fp_4156d5a7fe235c9dfcb63c9c281a0f01,
+        fp_447476beb0fc409270b836171a0e3e8c,
+        fp_4c21b7b0a21f1854f7ba9480a49c9300,
+        fp_4feae4498f7ba55bc256e5a5f421915c,
+        fp_59432d48715dbb61bfa9f23c22b31338,
+        fp_594ead2e492fb1b8667bbf69adcb50eb,
+        fp_5a60f663e1f2746c75414849c25f5dd3,
+        fp_5bd4511e5e5ffbfbf812f92016a69e6f,
+        fp_60311b4abe2c66fbff6a1a1e698c5dbc,
+        fp_609da17972496a184007e17cfa7e7fb5,
+        fp_61ddd89532ddd0cc1610d20e670e33b6,
+        fp_6848cc9453391aba2260aa1ee3359b25,
+        fp_6ab9e6de324f28755282f7badb97733e,
+        fp_71f5f5c9e71eb35a63e0c56fdcbe28dd,
+        fp_7ac584de6032c302b2f24c441a8b50db,
+        fp_7f724c8addfa4246cbb03f39196a390a,
+        fp_80446c9557b1fbac900f0e72ec2cd3ef,
+        fp_8cd121df1173fe55cb499f598d74064b,
+        fp_910805b6a9da4af389f5857543f8cb1b,
+        fp_950ff0cd0837e130146a69d0945bfe24,
+        fp_9718841c8d9c00a19b93d84212be8012,
+        fp_97399c725102e8d868b81a0773188079,
+        fp_9a413288aa8a402c7df30ca38e83f4de,
+        fp_9bd19c250856c8a1c2296bd955d070ab,
+        fp_9d6d68c533e723a932fe7a9981dbc1a2,
+        fp_9fc4953386b04c9baf270eb862755197,
+        fp_a31e38ec0c13a447faa3bd456295c03f,
+        fp_a5d8e3808e6b4519d0e2a52ddd62ee05,
+        fp_af203ca12ba1e949e9bd95d1c9de433e,
+        fp_b189b6cff02840b91bf305261194e268,
+        fp_b3666de392b1ca6adc8194f919628a48,
+        fp_b7ed0cf372eefa1f07097a021bc0589b,
+        fp_ba308d65323b0eadb082b9b74f4c38c6,
+        fp_bbffbaf55539508c70461d726e4e6d00,
+        fp_bcf469b28d042c06d19f6021885de43d,
+        fp_be2317db16a7fa529c5705751c56c58a,
+        fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
+        fp_c0dc3b1f95458ccbd42f6416f049a93c,
+        fp_c72da84ed07fd0ade60a1c144ef0a849,
+        fp_c9fcb3657be4b478f026a31a30b8289c,
+        fp_d55e9d2990c761a1a10670bfe893675c,
+        fp_da14ae7731c4699616e645d3e00d2000,
+        fp_e1130eb55df7cfbb2f03afdd21467903,
+        fp_e7ff0568924d22c6687e253be623374d,
+        fp_e88aeb9d972e5493d3a9ba2063dea3e9,
+        fp_f8eb5e66709f2ea572a139e5e7790931,
+        fp_fa12ddadd752df55fbabeae6d22ecb4d,
+        fp_feb4ad60c9bd6a1dd6003afd669e25c8,
     },
+    metadata: { displayForms: { df_label_product_id_name } },
 };
