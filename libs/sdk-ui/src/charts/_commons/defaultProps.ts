@@ -3,10 +3,7 @@ import noop = require("lodash/noop");
 import { ErrorComponent } from "../../base/react/ErrorComponent";
 import { LoadingComponent } from "../../base/react/LoadingComponent";
 import { ICoreChartProps } from "../chartProps";
-
-const defaultErrorHandler = (error: any) => {
-    console.error("Error in execution:", { error }); // tslint:disable-line no-console
-};
+import { defaultErrorHandler } from "../../base";
 
 export const defaultCoreChartProps: Partial<ICoreChartProps> = {
     execution: undefined,
