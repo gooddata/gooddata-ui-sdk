@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { createUniqueVariableName } from "../variableNaming";
+import { createUniqueVariableName, createUniqueVariableNameForIdentifier } from "../variableNaming";
 
 describe("createUniqueVariableName", () => {
     describe("scenario transformation", () => {
@@ -13,6 +13,14 @@ describe("createUniqueVariableName", () => {
 
         it.each(TEST_DATA)("should return '%s' when input is '%s'", (expectedResult, input) => {
             expect(createUniqueVariableName(input)).toEqual(expectedResult);
+        });
+    });
+
+    describe("scenario transformation", () => {
+        const TEST_DATA: Array<[string, string]> = [["my_df", "my.df"], ["funny_df__1", "funny.df..1"]];
+
+        it.each(TEST_DATA)("should return '%s' when input is '%s'", (expectedResult, input) => {
+            expect(createUniqueVariableNameForIdentifier(input)).toEqual(expectedResult);
         });
     });
 

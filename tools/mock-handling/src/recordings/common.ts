@@ -11,14 +11,29 @@ export type RecordingIndexEntry = {
     [type: string]: string;
 };
 
+export enum RecordingType {
+    Execution = "execution",
+    DisplayForms = "displayForms",
+}
+
 /**
- *
+ * Recording of any type implements this interface.
  */
 export interface IRecording {
     /**
      * Directory where all assets for this recording are stored.
      */
     directory: string;
+
+    /**
+     * Returns type of this recording.
+     */
+    getRecordingType(): RecordingType;
+
+    /**
+     * Returns unique name of this recording
+     */
+    getRecordingName(): string;
 
     /**
      * Tests whether the recording is complete == there is nothing more to capture from the backend.
@@ -34,15 +49,14 @@ export interface IRecording {
     makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void>;
 
     /**
-     *
-     */
-    getRecordingName(): string;
-
-    /**
      * Gets an entry that will represent this recording in the main recording index.
      */
     getEntryForRecordingIndex(): RecordingIndexEntry;
 }
+
+//
+//
+//
 
 export function toJsonString(obj: any, keys?: string[]): string {
     if (keys) {

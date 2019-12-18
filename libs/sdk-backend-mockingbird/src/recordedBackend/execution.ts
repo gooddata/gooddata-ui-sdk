@@ -24,10 +24,10 @@ import {
     IFilter,
     SortItem,
 } from "@gooddata/sdk-model";
-import { ExecutionRecording, WorkspaceRecordings } from "./types";
+import { ExecutionRecording, RecordingIndex } from "./types";
 
 export class RecordedExecutionFactory extends AbstractExecutionFactory {
-    constructor(private readonly recordings: WorkspaceRecordings, workspace: string) {
+    constructor(private readonly recordings: RecordingIndex, workspace: string) {
         super(workspace);
     }
 
@@ -43,7 +43,7 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
-    recordings: WorkspaceRecordings = {},
+    recordings: RecordingIndex = {},
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
 

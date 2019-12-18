@@ -5,21 +5,11 @@ import { IExecutionDefinition, IAttributeDisplayForm, IAttributeElement } from "
  * @internal
  */
 export type RecordingIndex = {
-    [workspace: string]: WorkspaceRecordings;
-};
-
-/**
- * @internal
- */
-export type WorkspaceRecordings = {
     executions?: {
         [fp: string]: ExecutionRecording;
     };
     metadata?: {
-        attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
-    };
-    elements?: {
-        [id: string]: IAttributeElement[];
+        displayForms?: { [id: string]: DisplayFormRecording };
     };
 };
 
@@ -30,4 +20,12 @@ export type ExecutionRecording = {
     definition: IExecutionDefinition;
     executionResult: any;
     [dataViews: string]: any;
+};
+
+/**
+ * @internal
+ */
+export type DisplayFormRecording = {
+    obj: IAttributeDisplayForm;
+    elements: IAttributeElement[];
 };

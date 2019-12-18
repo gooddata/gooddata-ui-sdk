@@ -2,7 +2,7 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { createUniqueVariableName } from "./variableNaming";
+import { createUniqueVariableName } from "../base/variableNaming";
 import flatMap = require("lodash/flatMap");
 import groupBy = require("lodash/groupBy");
 import { ExecutionRecording } from "../recordings/execution";
@@ -74,7 +74,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
  *
  * @param recordings - recordings to generate constants for
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
- *   relativized from require()
+ *   made relative for require()
  */
 export function generateConstantsForExecutions(
     recordings: ExecutionRecording[],

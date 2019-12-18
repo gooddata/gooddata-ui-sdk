@@ -5,7 +5,7 @@ import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-b
 import * as fs from "fs";
 import * as path from "path";
 import { logWarn } from "../cli/loggers";
-import { IRecording, readJsonSync, RecordingIndexEntry, writeAsJsonSync } from "./common";
+import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import isArray = require("lodash/isArray");
 import isEmpty = require("lodash/isEmpty");
 import isObject = require("lodash/isObject");
@@ -169,6 +169,10 @@ export class ExecutionRecording implements IRecording {
 
         this.scenarios = loadScenarios(directory);
         this.dataViewRequests = loadDataViewRequests(directory);
+    }
+
+    public getRecordingType(): RecordingType {
+        return RecordingType.Execution;
     }
 
     public getRecordingName(): string {

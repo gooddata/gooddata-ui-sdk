@@ -60,6 +60,17 @@ export function createUniqueVariableName(title: string, scope: TakenNamesSet = {
 }
 
 /**
+ * Given metadata object identifier, this function returns a valid typescript variable name. Optionally this
+ * function can assure uniqueness of the returned name within some scope.
+ *
+ * @param id - metadata object identifier
+ * @param scope - uniqueness scope
+ */
+export function createUniqueVariableNameForIdentifier(id: string, scope: TakenNamesSet = {}): string {
+    return createUniqueName(id.replace(/\./g, "_"), scope);
+}
+
+/**
  * Given workspace id, return variable name for the workspace.
  */
 export function workspaceName(workspace: string): string {

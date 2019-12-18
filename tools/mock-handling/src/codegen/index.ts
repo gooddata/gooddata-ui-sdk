@@ -10,10 +10,12 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
-import { generateConstantsForExecutions } from "./executionRecording";
-import { workspaceName } from "./variableNaming";
-import groupBy = require("lodash/groupBy");
+import { generateConstantsForExecutions } from "./execution";
 import { ExecutionRecording } from "../recordings/execution";
+import { IRecording, RecordingType } from "../recordings/common";
+import { DisplayFormRecording } from "../recordings/displayForms";
+import { generateConstantsForDisplayForms } from "./displayForm";
+import groupBy = require("lodash/groupBy");
 
 const FILE_DIRECTIVES = ["/* tslint:disable:file-header */", "/* tslint:disable:variable-name */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
@@ -48,18 +50,22 @@ function initialize(targetDir: string): TypescriptOutput {
 }
 
 function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableStatementStructure> {
-    const executionsByWorkspace = Object.entries(groupBy(input.executions, e => e.definition.workspace));
-    const workspaceEntries = executionsByWorkspace.map(
-        ([ws, execs]) =>
-            `${workspaceName(ws)}: { executions: { ${execs.map(e => e.getRecordingName()).join(",")} } }`,
-    );
+    const executionsInit = `executions: {${input
+        .executions()
+        .map(e => e.getRecordingName())
+        .join(",")}}`;
+    const validElementsInit = `metadata: { displayForms: {${input
+        .displayForms()
+        .map(e => e.getRecordingName())
+        .join(",")}}}`;
+
     return {
         declarationKind: VariableDeclarationKind.Const,
         isExported: true,
         declarations: [
             {
                 name: MainIndexConstName,
-                initializer: `{ ${workspaceEntries.join(",")} }`,
+                initializer: `{ ${executionsInit}, ${validElementsInit} }`,
             },
         ],
     };
@@ -69,7 +75,8 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string): T
     const output = initialize(targetDir);
     const { sourceFile } = output;
 
-    sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions, targetDir));
+    sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
+    sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
     sourceFile.addVariableStatement(generateIndexConst(input));
 
     return output;
@@ -78,9 +85,23 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string): T
 /**
  * Input to TS codegen that creates index with pointers to all recordings.
  */
-export type IndexGeneratorInput = {
-    executions: ExecutionRecording[];
+type IndexGeneratorInput = {
+    executions: () => ExecutionRecording[];
+    displayForms: () => DisplayFormRecording[];
 };
+
+function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
+    const categorized = groupBy(recordings, rec => rec.getRecordingType());
+
+    return {
+        executions: () => {
+            return (categorized[RecordingType.Execution] as ExecutionRecording[]) || [];
+        },
+        displayForms: () => {
+            return (categorized[RecordingType.DisplayForms] as DisplayFormRecording[]) || [];
+        },
+    };
+}
 
 /**
  * Given various types of recordings, this function will generate and write `index.ts` file in the root of
@@ -89,10 +110,11 @@ export type IndexGeneratorInput = {
  * The index will use require() to reference the JSON files. It is assumed that all paths on input to this function
  * are absolute, the code will relativize paths as needed.
  *
- * @param input - recordings to include in the index
+ * @param recordings - recordings to include in the index
  * @param targetDir - absolute path to directory where the index should be created
  */
-export function generateRecordingIndex(input: IndexGeneratorInput, targetDir: string): void {
+export function generateRecordingIndex(recordings: IRecording[], targetDir: string): void {
+    const input = createGeneratorInput(recordings);
     const output = transformToTypescript(input, targetDir);
     const { sourceFile } = output;
     const generatedTypescript = sourceFile.getFullText();
