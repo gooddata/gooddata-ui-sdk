@@ -41,7 +41,7 @@ export interface IElementQuery {
     /**
      * Sets number of valid elements to return per page.
      *
-     * @param limit - desired max number of valid elements per page
+     * @param limit - desired max number of valid elements per page; must be a positive number
      */
     withLimit(limit: number): IElementQuery;
 
