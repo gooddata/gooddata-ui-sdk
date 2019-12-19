@@ -30,6 +30,7 @@ import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
+import { WorkspacePermission } from '@gooddata/sdk-model';
 
 // @public
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
@@ -188,6 +189,7 @@ export interface IAnalyticalWorkspace {
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
     metadata(): IWorkspaceMetadata;
+    permissions(): IWorkspacePermissionsFactory;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
     // (undocumented)
@@ -583,6 +585,12 @@ export interface IWorkspaceMetadata {
     updateInsight(insight: IInsight): Promise<IInsight>;
 }
 
+// @public (undocumented)
+export interface IWorkspacePermissionsFactory {
+    // (undocumented)
+    forCurrentUser(): Promise<IWorkspaceUserPermissions>;
+}
+
 // @public
 export interface IWorkspaceQuery {
     query(): Promise<IWorkspaceQueryResult>;
@@ -613,6 +621,11 @@ export interface IWorkspaceSettingsService {
 // @public
 export interface IWorkspaceStylingService {
     colorPalette(): Promise<IColorPalette>;
+}
+
+// @public (undocumented)
+export interface IWorkspaceUserPermissions {
+    hasPermission(permission: WorkspacePermission): boolean;
 }
 
 // @public

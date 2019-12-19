@@ -963,6 +963,11 @@ export interface IWorkspace {
     title: string;
 }
 
+// @public (undocumented)
+export type IWorkspacePermissions = {
+    [permission in WorkspacePermission]: boolean;
+};
+
 // @public
 export type LocalIdRef = {
     localIdentifier: Identifier;
@@ -1207,6 +1212,9 @@ export function visClassUrl(vc: IVisualizationClass): string;
 export type VisualizationProperties = {
     [key: string]: any;
 };
+
+// @public (undocumented)
+export type WorkspacePermission = "canAccessWorkbench" | "canCreateVisualization" | "canManageAnalyticalDashboard" | "canUploadNonProductionCSV" | "canCreateReport" | "canExecuteRaw" | "canExportReport";
 
 
 // (No @packageDocumentation comment for this package)

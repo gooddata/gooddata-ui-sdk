@@ -104,3 +104,5 @@ export { IPagedResource } from "./common/paging";
 export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
 
 export { IWorkspaceQuery, IWorkspaceQueryFactory, IWorkspaceQueryResult } from "./workspace";
+
+export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";

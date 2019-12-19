@@ -9,6 +9,7 @@ import {
     IWorkspaceStylingService,
     IWorkspaceDatasetsService,
     IWorkspaceCatalogFactory,
+    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./executionFactory";
 import { AuthenticatedCallGuard } from "./commonTypes";
@@ -18,6 +19,7 @@ import { BearWorkspaceElements } from "./elements";
 import { BearWorkspaceCatalogFactory } from "./catalog/factory";
 import { BearWorkspaceDataSets } from "./dataSets";
 import { BearWorkspaceSettings } from "./settings";
+import { BearWorkspacePermissionsFactory } from "./permissions";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -48,5 +50,9 @@ export class BearWorkspace implements IAnalyticalWorkspace {
 
     public dataSets(): IWorkspaceDatasetsService {
         return new BearWorkspaceDataSets(this.authCall, this.workspace);
+    }
+
+    public permissions(): IWorkspacePermissionsFactory {
+        return new BearWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 }

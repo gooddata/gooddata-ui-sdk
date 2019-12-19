@@ -10,6 +10,7 @@ import {
     NotImplemented,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
+    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import { TigerExecution } from "./executionFactory";
@@ -43,5 +44,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public dataSets(): IWorkspaceDatasetsService {
         throw new NotImplemented("dataSets service not yet implemented");
+    }
+
+    public permissions(): IWorkspacePermissionsFactory {
+        throw new NotImplemented("permissions service not yet implemented");
     }
 }

@@ -1232,17 +1232,15 @@ export namespace GdcProject {
     // (undocumented)
     export interface IUserProject {
         // (undocumented)
-        links: {
-            self: Uri;
+        userProject: {
+            projectState: UserProjectState;
+            userState: UserProjectState;
+            projectDescription: string;
+            projectTitle: string;
+            links: {
+                self: Uri;
+            };
         };
-        // (undocumented)
-        projectDescription: string;
-        // (undocumented)
-        projectState: UserProjectState;
-        // (undocumented)
-        projectTitle: string;
-        // (undocumented)
-        userState: UserProjectState;
     }
     // (undocumented)
     export interface IUserProjectsResponse {
@@ -1254,6 +1252,387 @@ export namespace GdcProject {
     }
     // (undocumented)
     export type UserProjectState = "ENABLED" | "DISABLED";
+}
+
+// @public (undocumented)
+export namespace GdcUser {
+    // (undocumented)
+    export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
+    // (undocumented)
+    export interface IAccountSetting {
+        // (undocumented)
+        authenticationModes?: "SSO" | "PASSWORD";
+        // (undocumented)
+        companyName?: string | null;
+        // (undocumented)
+        country?: string | null;
+        // (undocumented)
+        created?: Timestamp;
+        // (undocumented)
+        effectiveIpWhitelist?: string[] | null;
+        // (undocumented)
+        email?: Email | null;
+        // (undocumented)
+        firstName: string;
+        // (undocumented)
+        ipWhitelist?: string[] | null;
+        // (undocumented)
+        language?: string;
+        // (undocumented)
+        lastName: string;
+        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        licence?: BooleanAsString;
+        // (undocumented)
+        links?: {
+            projects?: Uri;
+            self?: Uri;
+            domain?: Uri;
+            auditEvents?: Uri;
+        };
+        // Warning: (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        login?: Email | null;
+        // (undocumented)
+        old_password?: string;
+        // (undocumented)
+        password?: string;
+        // (undocumented)
+        phoneNumber?: string | null;
+        // (undocumented)
+        position?: string | null;
+        // (undocumented)
+        ssoProvider?: string | null;
+        // (undocumented)
+        timezone?: number | null;
+        // (undocumented)
+        updated?: Timestamp;
+        // (undocumented)
+        verifyPassword?: string;
+    }
+    // (undocumented)
+    export interface IBootstrapResource {
+        // (undocumented)
+        bootstrapResource: {
+            accountSetting: IAccountSetting;
+            profileSetting: IProfileSetting;
+            hostnameBase: string;
+            settings?: IUISettings;
+            current?: {
+                project: IProject | null;
+                featureFlags?: IFeatureFlags;
+                projectPermissions: IProjectPermissions | null;
+                projectTemplates: ITemplateInfo[] | null;
+                projectIcons: IProjectIcons[] | null;
+                dataUploadsInfo: IDataUploadInfo | null;
+                loginMD5: string | null;
+                integrations: Array<IIntegration | IZendesk4Integration>;
+                projectStyleSettings?: IStyleSettingsType | null;
+                clusterStatus?: "ONLINE" | "OFFLINE";
+                requiresRedirect: boolean;
+                timezone: ITimezoneInfo | null;
+                analyticalDashboards?: Uri[] | null;
+                walkMe?: string | null;
+                walkMeEnvironment?: string | null;
+                includeTrialSnippet?: string | null;
+                clientSecret?: string;
+                user?: {
+                    passwordExpirationTimestamp?: DateString;
+                };
+            };
+        };
+    }
+    // (undocumented)
+    export interface IDataUploadInfo {
+        // (undocumented)
+        statusesCount: {
+            [status in DataUploadStatus]?: number;
+        };
+    }
+    // (undocumented)
+    export interface IFeatureFlags {
+        // (undocumented)
+        [key: string]: number | boolean | string;
+    }
+    // (undocumented)
+    export interface IIntegration {
+        // (undocumented)
+        active: boolean;
+        // (undocumented)
+        projectTemplate: Uri;
+    }
+    // (undocumented)
+    export interface IProcessBody {
+        // (undocumented)
+        finished: TimeIso8601;
+        // (undocumented)
+        links: {
+            self: Uri;
+        };
+        // Warning: (ae-forgotten-export) The symbol "TimeIso8601" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        started: TimeIso8601;
+        // (undocumented)
+        status: IStatus;
+    }
+    // (undocumented)
+    export interface IProfileSetting {
+        // (undocumented)
+        currentProjectUri: Uri | null;
+        // (undocumented)
+        defaults?: {
+            projectUri: string;
+            dashboardUri?: string;
+            tabId?: string;
+            links?: {
+                self: Uri;
+            };
+        };
+        // (undocumented)
+        hints: {
+            [key: string]: boolean;
+        };
+        // (undocumented)
+        links?: {
+            self: Uri;
+            profile: Uri;
+        };
+        // (undocumented)
+        navigationState?: "collapsed" | "pinned" | "floating";
+        // (undocumented)
+        npsLastParticipation?: Timestamp;
+        // (undocumented)
+        projectSettings: {
+            [projectUri: string]: {
+                dashboard: Uri | null;
+                tab: string | null;
+                recentSearches: string[];
+                introDisplayed?: boolean;
+                manageReportsSettings?: {
+                    folder?: string;
+                    orderBy?: number;
+                    tags?: string[];
+                };
+            };
+        };
+        // (undocumented)
+        releaseNotice: string[];
+        // (undocumented)
+        separators?: ISeparators;
+    }
+    // (undocumented)
+    export interface IProject {
+        // (undocumented)
+        content: {
+            guidedNavigation: BooleanAsString;
+            authorizationToken?: string | null;
+            state?: "PREPARING" | "PREPARED" | "LOADING" | "ENABLED" | "DISABLED" | "DELETED" | "ARCHIVED" | "MIGRATED";
+            isPublic?: BooleanAsString;
+            cluster?: string;
+            driver?: "mysql" | "Pg" | "vertica";
+            environment?: "PRODUCTION" | "DEVELOPMENT" | "TESTING";
+        };
+        // (undocumented)
+        links?: {
+            self: Uri;
+            users: Uri;
+            userRoles?: Uri;
+            userPermissions?: Uri;
+            roles: Uri;
+            invitations: Uri;
+            ldm: Uri;
+            ldm_thumbnail: Uri;
+            metadata: Uri;
+            publicartifacts: Uri;
+            uploads?: Uri;
+            templates: Uri;
+            connectors: Uri;
+            dataload: Uri;
+            schedules: Uri;
+            execute: Uri;
+            clearCaches: Uri;
+            projectFeatureFlags: Uri;
+            config?: Uri;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IProjectIcons {
+        // (undocumented)
+        icon: string;
+        // (undocumented)
+        integration: Uri;
+    }
+    // (undocumented)
+    export interface IProjectPermissions {
+        // (undocumented)
+        links?: {
+            project: Uri;
+            user: Uri;
+        };
+        // (undocumented)
+        permissions: {
+            [permission in ProjectPermission]: BooleanAsString;
+        };
+    }
+    // (undocumented)
+    export interface ISeparators {
+        // (undocumented)
+        decimal: string;
+        // (undocumented)
+        thousand: string;
+    }
+    // (undocumented)
+    export interface IStatus {
+        // (undocumented)
+        code: "NEW" | "SCHEDULED" | "DOWNLOADING" | "DOWNLOADED" | "TRANSFORMING" | "TRANSFORMED" | "UPLOADING" | "UPLOADED" | "SYNCHRONIZED" | "ERROR" | "USER_ERROR";
+        // (undocumented)
+        description: string;
+        // (undocumented)
+        detail: string;
+    }
+    // (undocumented)
+    export interface IStyleSettingsType {
+        // (undocumented)
+        chartFont?: {
+            family: string;
+        };
+        // (undocumented)
+        chartPalette: Array<{
+            guid: string;
+            fill: {
+                r: number;
+                g: number;
+                b: number;
+            };
+        }>;
+    }
+    // (undocumented)
+    export interface ITemplateInfo {
+        // (undocumented)
+        connectorId?: string;
+        // (undocumented)
+        createIntegration?: string;
+        // (undocumented)
+        url: Uri | null;
+        // (undocumented)
+        urn: string;
+        // (undocumented)
+        version: string;
+    }
+    // (undocumented)
+    export interface ITimezoneInfo {
+        // (undocumented)
+        currentOffsetMs: number;
+        // (undocumented)
+        displayName: string;
+        // (undocumented)
+        id: string;
+        // (undocumented)
+        shortDisplayName: string;
+    }
+    // (undocumented)
+    export interface IUISettings {
+        // (undocumented)
+        activeColor?: string;
+        // (undocumented)
+        appleTouchIconUrl?: Uri;
+        // (undocumented)
+        applicationBackgroundColor?: string;
+        // (undocumented)
+        applicationBackgroundUrl?: Uri;
+        // (undocumented)
+        applicationTitle: string;
+        // (undocumented)
+        brandColor?: string;
+        // (undocumented)
+        displayAccountPage: boolean;
+        // (undocumented)
+        displayFlashNews: boolean;
+        // (undocumented)
+        displayNPS?: boolean;
+        // (undocumented)
+        displayProjects: boolean;
+        // (undocumented)
+        documentationUrl?: string;
+        // (undocumented)
+        faviconUrl?: Uri | null;
+        // (undocumented)
+        headerColor?: string;
+        // (undocumented)
+        headerTextColor?: string;
+        // (undocumented)
+        hideRegistration?: boolean;
+        // (undocumented)
+        highlightColor?: string;
+        // (undocumented)
+        includeTrialSnippet?: string;
+        // (undocumented)
+        isBranded: boolean;
+        // (undocumented)
+        largeLogoUrl?: Uri;
+        // (undocumented)
+        logoUrl: Uri;
+        // (undocumented)
+        organizationName: string;
+        // (undocumented)
+        privacyPolicyUrl?: Uri;
+        // (undocumented)
+        securityStatementUrl?: Uri;
+        // (undocumented)
+        showServiceProviderInitiatedLogin?: boolean;
+        // (undocumented)
+        showSSOCustomUnauthorizedLoginPage?: boolean;
+        // (undocumented)
+        skipClientRedirect?: boolean;
+        // (undocumented)
+        ssoExpiredUrl?: Uri;
+        // (undocumented)
+        ssoLogoutUrl?: Uri;
+        // (undocumented)
+        ssoUnauthorizedUrl?: Uri;
+        // (undocumented)
+        supportEmail?: string;
+        // (undocumented)
+        supportForumUrl?: string;
+        // (undocumented)
+        termsOfUseUrl?: Uri;
+        // (undocumented)
+        trustUrl?: Uri;
+        // (undocumented)
+        useOnboarding?: boolean;
+        // (undocumented)
+        walkMe?: string;
+        // (undocumented)
+        walkMeEnvironment?: string;
+    }
+    // (undocumented)
+    export interface IZendesk4Integration {
+        // (undocumented)
+        active: boolean;
+        // (undocumented)
+        lastFinishedProcess?: IProcessBody | null;
+        // (undocumented)
+        lastSuccessfulProcess?: IProcessBody | null;
+        // (undocumented)
+        links?: {
+            self: Uri;
+            processes: Uri;
+            configuration: Uri;
+        };
+        // (undocumented)
+        projectTemplate: Uri;
+        // (undocumented)
+        runningProcess?: IProcessBody | null;
+        // (undocumented)
+        ui?: {};
+    }
+    // (undocumented)
+    export type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
 }
 
 // @public (undocumented)
@@ -1572,6 +1951,10 @@ export type Timestamp = string;
 // @public (undocumented)
 export type Uri = string;
 
+
+// Warnings were encountered during analysis:
+//
+// dist/user/GdcUser.d.ts:249:21 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

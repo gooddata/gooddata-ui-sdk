@@ -12,3 +12,23 @@ export interface IWorkspace {
     title: string;
     description: string;
 }
+
+/**
+ * @public
+ */
+export type WorkspacePermission =
+    | "canAccessWorkbench"
+    | "canCreateVisualization"
+    | "canManageAnalyticalDashboard"
+    | "canUploadNonProductionCSV"
+    | "canCreateReport"
+    | "canExecuteRaw"
+    | "canExportReport";
+
+/**
+ *
+ * @public
+ */
+export type IWorkspacePermissions = {
+    [permission in WorkspacePermission]: boolean;
+};
