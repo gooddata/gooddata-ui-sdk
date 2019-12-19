@@ -1,13 +1,13 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import NamePositionControl from "./NamePositionControl";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
-class NameSubsection extends React.PureComponent<IConfigItemSubsection & InjectedIntlProps, {}> {
+class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps, {}> {
     public render() {
         const { axisVisible, axisNameVisible } = this.getControlProperties();
         const { axis, properties, pushData, disabled, configPanelDisabled } = this.props;

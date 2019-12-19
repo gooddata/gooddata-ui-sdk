@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import classNames from "classnames";
 import capitalize = require("lodash/capitalize");
 import { string as stringUtils } from "@gooddata/js-utils";
@@ -14,7 +14,7 @@ export interface IOperatorDropdownItemOwnProps {
     onClick: (identifier: MeasureValueFilterOperator) => void;
 }
 
-export type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & InjectedIntlProps;
+export type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
 
 export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownItemProps> {
     public render() {

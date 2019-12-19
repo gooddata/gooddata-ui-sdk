@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { BucketNames } from "../../../base/";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG } from "../../constants/uiConfig";
@@ -15,7 +15,7 @@ import * as bubbleViewByIcon from "../../assets/bubble/bucket-title-view-by.svg"
 
 export function setBubbleChartUiConfig(
     referencePoint: IExtendedReferencePoint,
-    intl: InjectedIntl,
+    intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);

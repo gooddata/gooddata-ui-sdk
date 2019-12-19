@@ -33,7 +33,7 @@
     "dependencies": {
         "lodash": "^4.17.15",
         "prop-types": "^15.6.0",
-        "react-intl": "^2.4.0"
+        "react-intl": "^3.6.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",
@@ -50,7 +50,6 @@
         "@types/prop-types": "^15.7.3",
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.3",
-        "@types/react-intl": "^2.3.5",
         "@types/stringify-object": "^3.2.0",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",

@@ -4,7 +4,7 @@ import cx from "classnames";
 import { DayPickerProps } from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 import DayPickerInput from "react-day-picker/DayPickerInput";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../utils/DateConversions";
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
@@ -27,7 +27,7 @@ interface IDateRangePickerProps {
     isMobile: boolean;
 }
 
-export class DateRangePickerComponent extends React.Component<IDateRangePickerProps & InjectedIntlProps> {
+export class DateRangePickerComponent extends React.Component<IDateRangePickerProps & WrappedComponentProps> {
     private fromInputRef = React.createRef<DayPickerInput>();
     private toInputRef = React.createRef<DayPickerInput>();
 

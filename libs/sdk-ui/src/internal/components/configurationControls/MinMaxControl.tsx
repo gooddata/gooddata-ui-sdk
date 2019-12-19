@@ -2,7 +2,7 @@
 import * as React from "react";
 import get = require("lodash/get");
 import Message from "@gooddata/goodstrap/lib/Messages/Message";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 
 import ConfigSubsection from "../configurationControls/ConfigSubsection";
 import InputControl from "../configurationControls/InputControl";
@@ -23,8 +23,11 @@ const defaultMinMaxControlState = {
     },
 };
 
-class MinMaxControl extends React.Component<IMinMaxControlProps & InjectedIntlProps, IMinMaxControlState> {
-    public static getDerivedStateFromProps(props: IMinMaxControlProps & InjectedIntlProps) {
+class MinMaxControl extends React.Component<
+    IMinMaxControlProps & WrappedComponentProps,
+    IMinMaxControlState
+> {
+    public static getDerivedStateFromProps(props: IMinMaxControlProps & WrappedComponentProps) {
         if (get(props, ["propertiesMeta", "undoApplied"], false)) {
             return defaultMinMaxControlState;
         }
@@ -32,7 +35,7 @@ class MinMaxControl extends React.Component<IMinMaxControlProps & InjectedIntlPr
         return null;
     }
 
-    constructor(props: IMinMaxControlProps & InjectedIntlProps) {
+    constructor(props: IMinMaxControlProps & WrappedComponentProps) {
         super(props);
         this.state = defaultMinMaxControlState;
     }

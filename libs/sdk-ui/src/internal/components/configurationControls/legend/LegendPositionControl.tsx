@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import DropdownControl from "../DropdownControl";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns";
@@ -15,7 +15,7 @@ export interface ILegendPositionControl {
     pushData: (data: any) => any;
 }
 
-class LegendPositionControl extends React.PureComponent<ILegendPositionControl & InjectedIntlProps, {}> {
+class LegendPositionControl extends React.PureComponent<ILegendPositionControl & WrappedComponentProps, {}> {
     public render() {
         return (
             <DropdownControl

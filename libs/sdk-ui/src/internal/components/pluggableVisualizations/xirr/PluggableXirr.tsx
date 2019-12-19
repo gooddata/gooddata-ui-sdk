@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { render } from "react-dom";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
@@ -55,7 +55,7 @@ import { BucketNames } from "../../../../base";
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;
     private callbacks: IVisCallbacks;
-    private intl: InjectedIntl;
+    private intl: IntlShape;
     private locale: ILocale;
     private visualizationProperties: IVisualizationProperties;
     private element: string;

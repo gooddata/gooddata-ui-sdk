@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import get = require("lodash/get");
 import { AxisType } from "../../../interfaces/AxisType";
@@ -15,7 +15,7 @@ export interface ILabelSubsection {
     pushData: (data: any) => any;
 }
 
-class LabelSubsection extends React.PureComponent<ILabelSubsection & InjectedIntlProps, {}> {
+class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComponentProps, {}> {
     public render() {
         const { axisVisible, axisLabelsEnabled } = this.getControlProperties();
 

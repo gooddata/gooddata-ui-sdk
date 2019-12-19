@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
+import { IntlShape } from "react-intl";
 import * as classNames from "classnames";
 
 import { IMenu, IMenuAggregationClickConfig } from "../types";
@@ -26,7 +27,7 @@ export interface IHeaderCellProps {
     getDataView?: () => DataViewFacade;
     getColumnTotals?: () => ITotal[];
     colId?: string;
-    intl?: ReactIntl.InjectedIntl;
+    intl?: IntlShape;
 }
 
 export interface IHeaderCellState {

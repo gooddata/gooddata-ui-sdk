@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { render } from "react-dom";
 import {
     IBucketItem,
@@ -92,7 +92,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
     protected callbacks: IVisCallbacks;
     protected type: ChartType;
-    protected intl: InjectedIntl;
+    protected intl: IntlShape;
     protected featureFlags: ISettings;
     protected isError: boolean;
     protected isLoading: boolean;

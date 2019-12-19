@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import get = require("lodash/get");
 
 import DropdownControl from "../DropdownControl";
@@ -17,7 +17,7 @@ export interface ILabelRotationControl {
     pushData: (data: any) => any;
 }
 
-class LabelRotationControl extends React.PureComponent<ILabelRotationControl & InjectedIntlProps, {}> {
+class LabelRotationControl extends React.PureComponent<ILabelRotationControl & WrappedComponentProps, {}> {
     public render() {
         const { axisVisible, axisLabelsEnabled, axisRotation } = this.getControlProperties();
 

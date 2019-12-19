@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/vis/drilling";
 import { IChartConfig } from "../../../highcharts";
@@ -24,8 +24,9 @@ export interface IXirrTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-class XirrTransformation extends React.Component<IXirrTransformationProps & InjectedIntlProps> {
-    public static defaultProps: Partial<IXirrTransformationProps> = {
+class XirrTransformation extends React.Component<IXirrTransformationProps & WrappedComponentProps> {
+    public static defaultProps: Partial<IXirrTransformationProps & WrappedComponentProps> = {
+        config: {},
         drillableItems: [],
         onDrill: () => true,
         onAfterRender: noop,

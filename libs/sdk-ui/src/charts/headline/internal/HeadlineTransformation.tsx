@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/vis/drilling";
 import { IChartConfig } from "../../../highcharts";
 import { IDrillableItem, IDrillEventCallback } from "../../../base/vis/DrillEvents";
@@ -28,14 +28,14 @@ export interface IHeadlineTransformationProps {
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */
-class HeadlineTransformation extends React.Component<IHeadlineTransformationProps & InjectedIntlProps> {
-    public static defaultProps: Partial<IHeadlineTransformationProps> = {
+class HeadlineTransformation extends React.Component<IHeadlineTransformationProps & WrappedComponentProps> {
+    public static defaultProps: Partial<IHeadlineTransformationProps & WrappedComponentProps> = {
         drillableItems: [],
         onDrill: () => true,
         onAfterRender: noop,
     };
 
-    constructor(props: IHeadlineTransformationProps & InjectedIntlProps) {
+    constructor(props: IHeadlineTransformationProps & WrappedComponentProps) {
         super(props);
 
         this.handleFiredDrillEvent = this.handleFiredDrillEvent.bind(this);

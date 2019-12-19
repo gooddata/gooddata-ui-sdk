@@ -5,7 +5,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import * as HttpStatusCodes from "http-status-codes";
-import { InjectedIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./GoodDataSdkError";
 
 /**
@@ -30,7 +30,7 @@ export interface IErrorDescriptors {
  * @returns always new instance
  * @public
  */
-export function newErrorMapping(intl: InjectedIntl): IErrorDescriptors {
+export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
     return {
         [ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY]: {
             icon: "icon-cloud-rain",

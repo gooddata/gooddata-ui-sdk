@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import * as uuid from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
@@ -37,12 +37,12 @@ const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
 };
 
 class ColorDropdown extends React.PureComponent<
-    IColorDropdownProps & InjectedIntlProps,
+    IColorDropdownProps & WrappedComponentProps,
     IColorDropdownState
 > {
     private id: string;
 
-    constructor(props: IColorDropdownProps & InjectedIntlProps) {
+    constructor(props: IColorDropdownProps & WrappedComponentProps) {
         super(props);
         this.id = uuid.v4();
         this.state = {

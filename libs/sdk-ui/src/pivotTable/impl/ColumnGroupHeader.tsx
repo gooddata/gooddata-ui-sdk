@@ -3,6 +3,8 @@ import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { ITotal } from "@gooddata/sdk-model";
 import { ColGroupDef, IHeaderGroupParams } from "ag-grid-community";
 import * as React from "react";
+import { IntlShape } from "react-intl";
+
 import { IMenu, IMenuAggregationClickConfig } from "../types";
 
 import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
@@ -12,7 +14,7 @@ export interface IProps extends IHeaderGroupParams {
     getColumnTotals: () => ITotal[];
     getDataView: () => DataViewFacade;
     onMenuAggregationClick: (config: IMenuAggregationClickConfig) => void;
-    intl: ReactIntl.InjectedIntl;
+    intl: IntlShape;
 }
 
 export interface IColumnGroupDef extends ColGroupDef {

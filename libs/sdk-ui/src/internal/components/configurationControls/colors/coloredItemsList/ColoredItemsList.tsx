@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as CustomEvent from "custom-event";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { DropdownBody } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 
@@ -26,7 +26,7 @@ export interface IColoredItemsListState {
     searchString?: string;
 }
 
-export type IColoredItemsListProps = IColoredItemsListOwnProps & InjectedIntlProps;
+export type IColoredItemsListProps = IColoredItemsListOwnProps & WrappedComponentProps;
 
 class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColoredItemsListState> {
     public static defaultProps: Partial<IColoredItemsListProps> = {

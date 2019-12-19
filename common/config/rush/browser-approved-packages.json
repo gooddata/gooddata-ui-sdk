@@ -27,6 +27,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@formatjs/intl-pluralrules",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/catalog-export",
       "allowedCategories": [ "tools" ]
     },
@@ -356,6 +360,10 @@
     },
     {
       "name": "foundation-sites",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "full-icu",
       "allowedCategories": [ "production" ]
     },
     {
