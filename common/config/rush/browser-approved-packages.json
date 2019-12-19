@@ -351,6 +351,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "fixed-data-table-2",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "foundation-sites",
       "allowedCategories": [ "production" ]
     },
