@@ -20,6 +20,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { IntlWrapper } from "../../base/localization/IntlWrapper";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
+import { defaultErrorHandler, OnError } from "../../base";
 
 interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
@@ -34,6 +35,8 @@ interface IAttributeFilterProps {
     locale?: string;
     FilterLoading?: React.ComponentType;
     FilterError?: React.ComponentType<{ error?: any }>;
+
+    onError?: OnError;
 }
 
 interface IAttributeFilterState {
@@ -65,6 +68,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError,
         fullscreenOnMobile: false,
+        onError: defaultErrorHandler,
     };
 
     public state: IAttributeFilterState = {
@@ -160,6 +164,8 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             this.setState({ title: displayForm.title, error: null, isLoading: false });
         } catch (error) {
             this.setState({ title: "", error, isLoading: false });
+
+            this.props.onError(error);
         }
     };
 

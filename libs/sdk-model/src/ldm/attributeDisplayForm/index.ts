@@ -75,7 +75,7 @@ export function attributeDisplayFormAttributeUri(displayForm: IAttributeDisplayF
 /**
  * Gets identifier of the attribute the display form is a form of.
  *
- * @param attribute - attribute display form to work with
+ * @param displayForm - attribute display form to work with
  * @returns display form identifier as string, undefined if display for not specified using identifier
  * @public
  */

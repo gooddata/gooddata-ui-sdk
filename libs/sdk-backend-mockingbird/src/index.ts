@@ -4,7 +4,7 @@ export { dummyBackend, dummyDataView, dummyDataFacade } from "./dummyBackend";
 
 export { recordedBackend } from "./recordedBackend";
 
-export { RecordingIndex, WorkspaceRecordings, ExecutionRecording } from "./recordedBackend/types";
+export { RecordingIndex, ExecutionRecording } from "./recordedBackend/types";
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 

@@ -1,14 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
-import pmap from "p-map";
 import * as fs from "fs";
 import * as path from "path";
 import { logInfo, logWarn } from "../cli/loggers";
-import { DataRecorderConfig } from "../base/types";
 import { ExecutionDefinitionFile, ExecutionRecording } from "./execution";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IRecording } from "./common";
 
 export const ExecutionRecordingDir = "executions";
-export type OnRecordingCaptured = (recording: ExecutionRecording, error?: string) => void;
 
 function locateDefinitions(executionsDir: string): string[] {
     const entries = fs.readdirSync(executionsDir, { withFileTypes: true, encoding: "utf-8" });
@@ -45,7 +42,7 @@ function isNonNullRecording(obj: any): obj is ExecutionRecording {
     return obj !== null;
 }
 
-export async function discoverExecutionRecordings(recordingDir: string): Promise<ExecutionRecording[]> {
+export async function discoverExecutionRecordings(recordingDir: string): Promise<IRecording[]> {
     const executionsDir = path.join(recordingDir, ExecutionRecordingDir);
 
     if (!fs.existsSync(executionsDir)) {
@@ -63,33 +60,4 @@ export async function discoverExecutionRecordings(recordingDir: string): Promise
     }
 
     return (await locateDefinitions(executionsDir)).map(loadRecording).filter(isNonNullRecording);
-}
-
-export async function populateExecutionRecordings(
-    recordings: ExecutionRecording[],
-    backend: IAnalyticalBackend,
-    config: DataRecorderConfig,
-    onCaptured: OnRecordingCaptured,
-): Promise<ExecutionRecording[]> {
-    return pmap(
-        recordings,
-        rec => {
-            return rec
-                .makeRecording(backend, config.projectId!)
-                .then(_ => {
-                    onCaptured(rec);
-
-                    return rec;
-                })
-                .catch(err => {
-                    onCaptured(
-                        rec,
-                        `An error '${err}' has occurred while obtaining data for recording in ${rec.directory}; it is highly likely that the execution definition is semantically incorrect and leads to un-executable input. Suggestion: try it out in Analytical Designer.`,
-                    );
-
-                    return rec;
-                });
-        },
-        { concurrency: 4 },
-    );
 }

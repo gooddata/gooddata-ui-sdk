@@ -3,6 +3,5 @@ import * as Axis from "./constants/axis";
 import * as PluggableVisualizationTypes from "./interfaces/Visualization";
 import * as DrillablePredicatesUtils from "./utils/drillablePredicates";
 import { BaseVisualization } from "./components/BaseVisualization";
-import * as DefaultHandlers from "./utils/defaultHandlers";
 
-export { Axis, PluggableVisualizationTypes, DrillablePredicatesUtils, BaseVisualization, DefaultHandlers };
+export { Axis, PluggableVisualizationTypes, DrillablePredicatesUtils, BaseVisualization };

@@ -6,7 +6,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import * as HttpStatusCodes from "http-status-codes";
 import { InjectedIntl } from "react-intl";
-import { isGoodDataSdkError, GoodDataSdkError, ErrorCodes } from "./GoodDataSdkError";
+import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./GoodDataSdkError";
 
 /**
  * Mapping between error code and human readable description of the error.
@@ -98,4 +98,13 @@ export function convertError(error: any): GoodDataSdkError {
     }
 
     return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
+}
+
+/**
+ * Default error handler - logs error to console as error.
+ *
+ * @param error - error to log
+ */
+export function defaultErrorHandler(error: any) {
+    console.error(error); // tslint:disable-line:no-console
 }

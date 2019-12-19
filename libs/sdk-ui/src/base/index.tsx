@@ -11,7 +11,12 @@ export { BucketNames } from "./constants/bucketNames";
  * Error handling
  */
 export { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./errors/GoodDataSdkError";
-export { IErrorDescriptors, newErrorMapping, convertError } from "./errors/errorHandling";
+export {
+    IErrorDescriptors,
+    newErrorMapping,
+    convertError,
+    defaultErrorHandler,
+} from "./errors/errorHandling";
 
 /*
  * Base React stuff

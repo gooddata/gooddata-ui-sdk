@@ -4,6 +4,7 @@ import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
+import pickBy from "lodash/pickBy";
 import qs from "qs";
 import { GdcExecuteAFM, GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
@@ -793,7 +794,10 @@ export class MetadataModule {
      *      - elementsMeta {Object}
      */
     public getValidElements(projectId: string, id: string, options: IValidElementsOptions = {}) {
-        const query = pick(options, ["limit", "offset", "order", "filter", "prompt"]);
+        const query = pickBy(
+            pick(options, ["limit", "offset", "order", "filter", "prompt"]),
+            val => val !== undefined,
+        );
         const queryParams = queryString(query);
         const pickedOptions = pick(options, [
             "uris",

@@ -79,7 +79,14 @@ export function recordedBackend(index: RecordingIndex, config?: AnalyticalBacken
 //
 // @internal (undocumented)
 export type RecordingIndex = {
-    [workspace: string]: WorkspaceRecordings;
+    executions?: {
+        [fp: string]: ExecutionRecording;
+    };
+    metadata?: {
+        displayForms?: {
+            [id: string]: DisplayFormRecording;
+        };
+    };
 };
 
 // Warning: (ae-internal-missing-underscore) The name "withEventing" should be prefixed with an underscore because the declaration is marked as @internal
@@ -87,23 +94,10 @@ export type RecordingIndex = {
 // @internal
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "WorkspaceRecordings" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type WorkspaceRecordings = {
-    executions?: {
-        [fp: string]: ExecutionRecording;
-    };
-    metadata?: {
-        attributeDisplayForm?: {
-            [id: string]: IAttributeDisplayForm;
-        };
-    };
-    elements?: {
-        [id: string]: IAttributeElement[];
-    };
-};
 
+// Warnings were encountered during analysis:
+//
+// dist/recordedBackend/types.d.ts:11:13 - (ae-forgotten-export) The symbol "DisplayFormRecording" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

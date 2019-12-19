@@ -7,6 +7,7 @@ import gooddata from "@gooddata/gd-bear-client";
 import * as pkg from "../package.json";
 import * as process from "process";
 import * as path from "path";
+import pmap from "p-map";
 import { log, logError, logInfo, logSuccess } from "./cli/loggers";
 import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
@@ -16,12 +17,9 @@ import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./ba
 import { generateRecordingIndex } from "./codegen";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ExecutionRecording } from "./recordings/execution";
-import {
-    discoverExecutionRecordings,
-    OnRecordingCaptured,
-    populateExecutionRecordings,
-} from "./recordings/executionRepository";
+import { discoverExecutionRecordings } from "./recordings/executionRepository";
+import { IRecording } from "./recordings/common";
+import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
 
 program
     .version(pkg.version)
@@ -76,16 +74,16 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
     };
 }
 
-async function runAndCaptureExecutionRecordings(
-    recordings: ExecutionRecording[],
+async function captureRecordings(
+    recordings: IRecording[],
     backend: IAnalyticalBackend,
     config: DataRecorderConfig,
-): Promise<ExecutionRecording[]> {
+): Promise<IRecording[]> {
     const executionSpinner = ora();
     let successes = 0;
     executionSpinner.start("Running and capturing executions");
 
-    const onCapture: OnRecordingCaptured = (_, err?: string): void => {
+    const onCaptured = (_: IRecording, err?: string): void => {
         if (err) {
             executionSpinner.info(`${chalk.red(err)}`);
             return;
@@ -95,14 +93,32 @@ async function runAndCaptureExecutionRecordings(
         executionSpinner.info(`Processed ${successes}/${recordings.length} execution(s)`);
     };
 
-    const results = await populateExecutionRecordings(recordings, backend, config, onCapture);
+    const results = await pmap(
+        recordings,
+        rec => {
+            return rec
+                .makeRecording(backend, config.projectId!)
+                .then(_ => {
+                    onCaptured(rec);
+
+                    return rec;
+                })
+                .catch(err => {
+                    onCaptured(
+                        rec,
+                        `An error '${err}' has occurred while obtaining data for recording in ${rec.directory}; it is highly likely that the recording definition is semantically incorrect.`,
+                    );
+
+                    return rec;
+                });
+        },
+        { concurrency: 4 },
+    );
 
     if (successes < recordings.length) {
-        executionSpinner.warn(
-            "Not all executions run successfully and were captured. See previous messages.",
-        );
+        executionSpinner.warn("Not all recordings were successfully captured. See previous messages.");
     } else {
-        executionSpinner.succeed("All executions run successfully and were captured.");
+        executionSpinner.succeed("All recordings were successfully captured.");
     }
 
     return results;
@@ -131,16 +147,19 @@ async function run() {
     }
 
     const absoluteRecordingDir = path.resolve(recordingDir);
-    const executions = await discoverExecutionRecordings(absoluteRecordingDir);
-    const executionsWithoutData = executions.filter(e => !e.isComplete());
+    const recordings = [
+        ...(await discoverExecutionRecordings(absoluteRecordingDir)),
+        ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
+    ];
+    const incompleteRecordings = recordings.filter(e => !e.isComplete());
 
     logInfo(
-        `Discovered ${executions.length} execution recordings; out of these ${executionsWithoutData.length} are missing recorded data.`,
+        `Discovered ${recordings.length} recordings; out of these ${incompleteRecordings.length} are missing recorded data.`,
     );
 
-    let executionsToProcess = executions.filter(e => e.isComplete());
+    let recordingsToIndex = recordings.filter(e => e.isComplete());
 
-    if (executionsWithoutData.length) {
+    if (incompleteRecordings.length) {
         /*
          * So there is stuff to do; first make sure tool has complete config, prompt user for anything that was
          * not on file or as CLI tool args.
@@ -155,18 +174,14 @@ async function run() {
             new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
         );
 
-        const newRecordings = await runAndCaptureExecutionRecordings(
-            executionsWithoutData,
-            backend,
-            fullConfig,
-        );
+        const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 
-        executionsToProcess = executionsToProcess.concat(newRecordings.filter(e => e.isComplete()));
+        recordingsToIndex = recordingsToIndex.concat(newRecordings.filter(e => e.isComplete()));
     }
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
 
-    generateRecordingIndex({ executions: executionsToProcess }, absoluteRecordingDir);
+    generateRecordingIndex(recordingsToIndex, absoluteRecordingDir);
 
     logSuccess("Done");
 

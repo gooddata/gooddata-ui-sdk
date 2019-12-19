@@ -7,6 +7,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { IAttributeElement } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -37,7 +38,10 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     ) {}
 
     public withLimit(limit: number): IElementQuery {
+        invariant(limit > 0, "limit must be a positive number");
+
         this.limit = limit;
+
         return this;
     }
 

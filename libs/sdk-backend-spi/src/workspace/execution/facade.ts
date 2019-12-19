@@ -24,6 +24,7 @@ import {
     isResultAttributeHeader,
 } from "./results";
 import isArray = require("lodash/isArray");
+import invariant from "ts-invariant";
 
 type BucketIndex = {
     [key: string]: IBucket;
@@ -398,10 +399,10 @@ export class DataViewFacade {
 
         const e = d[0];
 
-        if (isArray(e)) {
-            // TODO: SDK8: switch to invariant?
-            throw new Error();
-        }
+        invariant(
+            !isArray(e),
+            "trying to work with single-dim data while the underlying data view has two dims",
+        );
 
         return d as DataValue[];
     }

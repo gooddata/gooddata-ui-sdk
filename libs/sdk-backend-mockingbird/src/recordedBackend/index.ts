@@ -12,14 +12,15 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    UnexpectedResponseError,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
     IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedExecutionFactory } from "./execution";
-import { RecordingIndex, WorkspaceRecordings } from "./types";
+import { RecordingIndex } from "./types";
+import { RecordedElementQueryFactory } from "./elements";
+import { RecordedMetadata } from "./metadata";
 
 const defaultConfig = { hostname: "test" };
 
@@ -55,14 +56,7 @@ export function recordedBackend(
         },
 
         workspace(id: string): IAnalyticalWorkspace {
-            const workspaceEntry = `ws_${id}`;
-            const workspaceRecordings = index[workspaceEntry];
-
-            if (!workspaceRecordings) {
-                throw new UnexpectedResponseError("Workspace recordings not found", 404, {});
-            }
-
-            return recordedWorkspace(id, index[workspaceEntry]);
+            return recordedWorkspace(id, index);
         },
         workspaces(): IWorkspaceQueryFactory {
             throw new NotSupported("not supported");
@@ -78,19 +72,19 @@ export function recordedBackend(
     return backend;
 }
 
-function recordedWorkspace(workspace: string, recordings: WorkspaceRecordings = {}): IAnalyticalWorkspace {
+function recordedWorkspace(workspace: string, recordings: RecordingIndex = {}): IAnalyticalWorkspace {
     return {
         workspace,
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace);
         },
         elements(): IElementQueryFactory {
-            throw new NotSupported("not supported");
-        },
-        settings(): IWorkspaceSettingsService {
-            throw new NotSupported("not supported");
+            return new RecordedElementQueryFactory(recordings);
         },
         metadata(): IWorkspaceMetadata {
+            return new RecordedMetadata(recordings);
+        },
+        settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {
