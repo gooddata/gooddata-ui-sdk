@@ -9,11 +9,10 @@ import compact = require("lodash/compact");
 
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
-import * as MappingHeader from "../../base/headerMatching/MappingHeader";
 import { ColorUtils } from "../../highcharts";
 import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
-import { IColorAssignment } from "../../base/vis/Events";
+import { IColorAssignment, IMappingHeader } from "../../base";
 
 function getItemName(item: IColoredItem): string {
     let name = "";
@@ -84,7 +83,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
 
 export function getProperties(
     properties: IVisualizationProperties,
-    item: MappingHeader.IMappingHeader,
+    item: IMappingHeader,
     color: IColor,
 ): IVisualizationProperties {
     if (isMeasureDescriptor(item)) {

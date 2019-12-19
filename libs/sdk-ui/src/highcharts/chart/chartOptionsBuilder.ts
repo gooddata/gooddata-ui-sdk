@@ -12,7 +12,15 @@ import {
 import * as cx from "classnames";
 import * as invariant from "invariant";
 
-import { BucketNames } from "../../base";
+import {
+    BucketNames,
+    VisType,
+    VisualizationTypes,
+    getDrillIntersection,
+    isSomeHeaderPredicateMatched,
+    IHeaderPredicate,
+    IMappingHeader,
+} from "../../base";
 import { ViewByAttributesLimit } from "../../charts/_commons/limits";
 import {
     PARENT_ATTRIBUTE_INDEX,
@@ -21,13 +29,9 @@ import {
     VIEW_BY_DIMENSION_INDEX,
 } from "../constants/dimensions";
 import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits";
-import { VisType, VisualizationTypes } from "../../base/vis/visualizationTypes";
-import { getDrillIntersection, isSomeHeaderPredicateMatched } from "../../base/vis/drilling";
 
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { IUnwrappedAttributeHeadersWithItems } from "../utils/types";
-import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
-import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
 import {
     IAxis,

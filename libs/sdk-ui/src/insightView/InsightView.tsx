@@ -30,9 +30,17 @@ import { PluggableTreemap } from "../internal/components/pluggableVisualizations
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
 import { PluggableXirr } from "../internal/components/pluggableVisualizations/xirr/PluggableXirr";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
-import { ErrorComponent, IErrorProps } from "../base/react/ErrorComponent";
-import { LoadingComponent, ILoadingProps } from "../base/react/LoadingComponent";
-import { GoodDataSdkError, fillMissingTitles, DefaultLocale, ILocale, withContexts } from "../base";
+import {
+    GoodDataSdkError,
+    fillMissingTitles,
+    DefaultLocale,
+    ILocale,
+    withContexts,
+    LoadingComponent,
+    ILoadingProps,
+    ErrorComponent,
+    IErrorProps,
+} from "../base";
 
 const VisualizationsCatalog = {
     bar: PluggableBarChart,

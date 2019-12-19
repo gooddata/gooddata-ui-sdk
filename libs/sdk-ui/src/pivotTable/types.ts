@@ -2,7 +2,7 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IAttribute, IFilter, ITotal, SortItem, TotalType } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks, IVisualizationProps } from "../base/vis/VisualizationProps";
+import { IVisualizationCallbacks, IVisualizationProps } from "../base";
 import { WrappedComponentProps } from "react-intl";
 
 export interface IMenu {

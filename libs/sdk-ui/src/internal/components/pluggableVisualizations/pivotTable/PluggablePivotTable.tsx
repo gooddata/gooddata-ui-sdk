@@ -12,8 +12,14 @@ import { IntlShape } from "react-intl";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 
-import * as VisEvents from "../../../../base/vis/Events";
-import { BucketNames } from "../../../../base";
+import {
+    BucketNames,
+    IExportFunction,
+    VisualizationEnvironment,
+    VisualizationTypes,
+    DefaultLocale,
+    ILocale,
+} from "../../../../base";
 import {
     IBucketFilter,
     IBucketItem,
@@ -41,7 +47,6 @@ import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationEnvironment, VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
 import { generateDimensions } from "../../../utils/dimensions";
 import {
@@ -66,7 +71,6 @@ import {
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
 import { ICorePivotTableProps } from "../../../../pivotTable/types";
-import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
@@ -451,7 +455,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected onExportReady(exportResult: VisEvents.IExportFunction) {
+    protected onExportReady(exportResult: IExportFunction) {
         const { onExportReady } = this.callbacks;
         if (onExportReady) {
             onExportReady(exportResult);

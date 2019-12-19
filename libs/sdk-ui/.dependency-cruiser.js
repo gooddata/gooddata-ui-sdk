@@ -208,7 +208,7 @@ options = {
             },
             to: {
                 path:
-                    "src/base/(constants|context|errors|factory|hoc|interfaces|promise|simple|translations|typings)",
+                    "src/base/(constants|errors|headerMatching|helpers|interfaces|localization|measureTitles|react|typings|vis)",
             },
         },
         {

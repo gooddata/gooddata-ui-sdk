@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as HeaderPredicateFactory from "../../base/headerMatching/HeaderPredicateFactory";
-import { IHeaderPredicate } from "../../base/headerMatching/HeaderPredicate";
+import { IHeaderPredicate, HeaderPredicates } from "../../base";
 import isArray = require("lodash/isArray");
 import uniq = require("lodash/uniq");
 
@@ -62,11 +61,9 @@ export async function convertPostMessageToDrillablePredicates(
     //  will call the factory with 3 args (value, index and all values)
 
     return [
-        ...simpleUris.map(uri => HeaderPredicateFactory.uriMatch(uri)),
-        ...simpleIdentifiers.map(identifier => HeaderPredicateFactory.identifierMatch(identifier)),
-        ...composedFromUris.map(uri => HeaderPredicateFactory.composedFromUri(uri)),
-        ...composedFromIdentifiers.map(identifier =>
-            HeaderPredicateFactory.composedFromIdentifier(identifier),
-        ),
+        ...simpleUris.map(uri => HeaderPredicates.uriMatch(uri)),
+        ...simpleIdentifiers.map(identifier => HeaderPredicates.identifierMatch(identifier)),
+        ...composedFromUris.map(uri => HeaderPredicates.composedFromUri(uri)),
+        ...composedFromIdentifiers.map(identifier => HeaderPredicates.composedFromIdentifier(identifier)),
     ];
 }

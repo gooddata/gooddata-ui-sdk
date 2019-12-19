@@ -4,7 +4,7 @@ import set = require("lodash/set");
 import get = require("lodash/get");
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "../../../base/";
+import { BucketNames, ChartType, VisualizationTypes } from "../../../base/";
 import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
@@ -27,7 +27,6 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
-import { ChartType, VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { isLineChart } from "../../../highcharts";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;

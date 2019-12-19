@@ -1,9 +1,14 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
-import { IDrillableItem } from "../../base/vis/DrillEvents";
-import * as VisEvents from "../../base/vis/Events";
-import { VisualizationEnvironment } from "../../base/vis/visualizationTypes";
+import {
+    IDrillableItem,
+    VisualizationEnvironment,
+    OnError,
+    OnExportReady,
+    OnLoadingChanged,
+    ILocale,
+} from "../../base";
 import {
     IBucketItem,
     IFeatureFlags,
@@ -20,7 +25,7 @@ import { PluggableLineChart } from "./pluggableVisualizations/lineChart/Pluggabl
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
 import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggablePieChart";
 import { PluggableDonutChart } from "./pluggableVisualizations/donutChart/PluggableDonutChart";
-// import { PluggablePivotTable } from "../../_defunct/internal/components/pluggableVisualizations/pivotTable/PluggablePivotTable";
+import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
 import { PluggableHeadline } from "./pluggableVisualizations/headline/PluggableHeadline";
 import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
 import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
@@ -34,7 +39,6 @@ import isEqual = require("lodash/isEqual");
 import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-import { ILocale } from "../../base/localization/Locale";
 
 // visualization catalogue - add your new visualization here
 const VisualizationsCatalog = {
@@ -44,7 +48,7 @@ const VisualizationsCatalog = {
     area: PluggableAreaChart,
     pie: PluggablePieChart,
     donut: PluggableDonutChart,
-    // table: PluggablePivotTable,
+    table: PluggablePivotTable,
     headline: PluggableHeadline,
     scatter: PluggableScatterPlot,
     bubble: PluggableBubbleChart,
@@ -70,9 +74,9 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     visualizationsCatalog?: object;
     newDerivedBucketItems?: IBucketItem[];
     referencePoint?: IReferencePoint;
-    onError: VisEvents.OnError;
-    onExportReady: VisEvents.OnExportReady;
-    onLoadingChanged: VisEvents.OnLoadingChanged;
+    onError: OnError;
+    onExportReady: OnExportReady;
+    onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
     backend: IAnalyticalBackend;
     onExtendedReferencePointChanged?(): void;

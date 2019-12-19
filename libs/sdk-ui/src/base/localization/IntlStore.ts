@@ -29,7 +29,7 @@ const messagesMap = {
 
 const intlStore = {};
 
-function getIntl(locale: ILocale = DefaultLocale): IntlShape {
+export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
     let usedLocale = locale;
     if (isEmpty(locale)) {
         usedLocale = DefaultLocale;
@@ -47,8 +47,3 @@ export function getTranslation(translationId: string, locale: ILocale, values = 
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
 }
-
-export default {
-    getIntl,
-    getTranslation,
-};

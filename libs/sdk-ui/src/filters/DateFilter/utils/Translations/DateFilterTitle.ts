@@ -1,8 +1,7 @@
 // (C) 2019 GoodData Corporation
 import capitalize = require("lodash/capitalize");
 import isEqual = require("lodash/isEqual");
-import { ILocale } from "../../../../base";
-import IntlStore from "../../../../base/localization/IntlStore";
+import { ILocale, getIntl } from "../../../../base";
 import { granularityIntlCodes } from "../../constants/i18n";
 import { IMessageTranslator, IDateTranslator, IDateAndMessageTranslator } from "./Translators";
 import { convertPlatformDateStringToDate } from "../DateConversions";
@@ -185,7 +184,7 @@ const getDateFilterRepresentationByFilterType = (
  * @returns {string} Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
 export const getDateFilterTitle = (filter: ExtendedDateFilters.DateFilterOption, locale: ILocale): string => {
-    const translator = IntlStore.getIntl(locale);
+    const translator = getIntl(locale);
 
     return getDateFilterRepresentationByFilterType(filter, translator);
 };
@@ -226,7 +225,7 @@ export const getDateFilterRepresentation = (
     filter: ExtendedDateFilters.DateFilterOption,
     locale: ILocale,
 ): string => {
-    const translator = IntlStore.getIntl(locale);
+    const translator = getIntl(locale);
 
     return getDateFilterRepresentationUsingTranslator(filter, translator);
 };

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
+import { IMappingHeader } from "../../base";
 import { getIdsFromUri, getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
 import {
     FIELD_SEPARATOR,

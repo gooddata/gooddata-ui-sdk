@@ -1,9 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
-import { ErrorComponent } from "../../base/react/ErrorComponent";
-import { LoadingComponent } from "../../base/react/LoadingComponent";
+import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "../../base";
 import { ICoreChartProps } from "../chartProps";
-import { defaultErrorHandler } from "../../base";
 
 export const defaultCoreChartProps: Partial<ICoreChartProps> = {
     execution: undefined,

@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { VisType } from "../base/vis/visualizationTypes";
 import {
     ColorAxisOptions,
     DataLabelsOptionsObject,
@@ -10,7 +9,7 @@ import {
     SVGDOMElement,
 } from "./chart/highcharts/highchartsEntryPoint";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
-import { IHeaderPredicate, IColorAssignment } from "../base";
+import { IHeaderPredicate, IColorAssignment, VisType } from "../base";
 export { DefaultColorPalette } from "../base";
 
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

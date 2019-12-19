@@ -11,7 +11,7 @@ import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
 import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
 import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { ISeriesItem } from "../../Config";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../../base";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;

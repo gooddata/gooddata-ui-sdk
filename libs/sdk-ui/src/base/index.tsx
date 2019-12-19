@@ -6,6 +6,7 @@
 
 export { DefaultColorPalette } from "./constants/colorPalette";
 export { BucketNames } from "./constants/bucketNames";
+export { visualizationIsBetaWarning } from "./helpers/logging";
 
 /*
  * Error handling
@@ -40,7 +41,7 @@ export { wrapDisplayName } from "./react/wrapDisplayName";
  */
 
 export { ILocale, DefaultLocale } from "./localization/Locale";
-export { getTranslation } from "./localization/IntlStore";
+export { getTranslation, getIntl } from "./localization/IntlStore";
 export { IntlWrapper, IIntlWrapperProps, messagesMap } from "./localization/IntlWrapper";
 export {
     TranslationsProvider,
@@ -94,9 +95,48 @@ export {
     IExtendedExportConfig,
     IDrillableItemPushData,
     IColorAssignment,
+    DrillableItemType,
+    IColorsData,
 } from "./vis/Events";
-export { OnFiredDrillEvent, IDrillableItem } from "./vis/DrillEvents";
-export { VisualizationTypes, VisualizationEnvironment, ChartType } from "./vis/visualizationTypes";
+export {
+    OnFiredDrillEvent,
+    IDrillableItem,
+    DrillEventIntersectionElementHeader,
+    IDrillableItemIdentifier,
+    IDrillableItemUri,
+    IDrillConfig,
+    IDrillEvent,
+    IDrillEventCallback,
+    IDrillEventContext,
+    IDrillEventContextGroup,
+    IDrillEventContextHeadline,
+    IDrillEventContextPoint,
+    IDrillEventContextTable,
+    IDrillEventContextXirr,
+    IDrillEventIntersectionElement,
+    IDrillIntersectionAttributeItem,
+    IDrillPoint,
+    isDrillableItemIdentifier,
+    isDrillableItemUri,
+    isDrillIntersectionAttributeItem,
+    IHighchartsCategoriesTree,
+    IHighchartsParentTick,
+} from "./vis/DrillEvents";
+export {
+    convertDrillableItemsToPredicates,
+    isSomeHeaderPredicateMatched,
+    getDrillIntersection,
+    fireDrillEvent,
+} from "./vis/drilling";
+export {
+    VisualizationTypes,
+    VisualizationEnvironment,
+    ChartType,
+    VisType,
+    HeadlineElementType,
+    getVisualizationType,
+    ChartElementType,
+} from "./vis/visualizationTypes";
 export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
 export { CatalogHelper } from "./helpers/CatalogHelper";

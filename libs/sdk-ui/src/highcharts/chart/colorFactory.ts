@@ -10,10 +10,9 @@ import {
     IColorPaletteItem,
 } from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
+import { VisualizationTypes, IMappingHeader, IColorAssignment } from "../../base";
 import { findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { DefaultColorPalette, IColorMapping } from "../Config";
-import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
 
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,
@@ -28,7 +27,6 @@ import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
 import uniqBy = require("lodash/uniqBy");
-import { IColorAssignment } from "../../base/vis/Events";
 
 export interface IColorStrategy {
     getColorByIndex(index: number): string;

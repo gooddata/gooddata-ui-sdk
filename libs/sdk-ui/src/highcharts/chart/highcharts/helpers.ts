@@ -14,7 +14,7 @@ import min = require("lodash/min");
 import max = require("lodash/max");
 import isNil = require("lodash/isNil");
 
-import { VisualizationTypes, VisType } from "../../../base/vis/visualizationTypes";
+import { VisualizationTypes, VisType } from "../../../base";
 import { isBarChart } from "../../utils/common";
 import { ISeriesItem, ISeriesDataItem, IChartConfig, ChartAlignTypes } from "../../Config";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";

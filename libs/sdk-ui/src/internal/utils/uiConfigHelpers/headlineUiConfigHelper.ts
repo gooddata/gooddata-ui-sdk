@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "../../../base/";
+import { BucketNames, VisualizationTypes } from "../../../base/";
 import { IBucketOfFun, IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -16,7 +16,6 @@ import { getTranslation } from "./../translations";
 
 import * as headlineMeasuresIcon from "../../assets/headline/bucket-title-measures.svg";
 import * as headlineSecondaryMeasuresIcon from "../../assets/headline/bucket-title-secondary-measures.svg";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 
 export function getDefaultHeadlineUiConfig(): IUiConfig {
     return cloneDeep(DEFAULT_HEADLINE_UICONFIG);

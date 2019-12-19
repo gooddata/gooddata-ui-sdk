@@ -2,10 +2,14 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/vis/drilling";
 import { IChartConfig } from "../../../highcharts";
-import { IDrillableItem, IDrillEventCallback } from "../../../base/vis/DrillEvents";
-import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
+import {
+    IHeaderPredicate,
+    IDrillableItem,
+    IDrillEventCallback,
+    convertDrillableItemsToPredicates,
+    fireDrillEvent,
+} from "../../../base";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "./Headline";
 import {
     applyDrillableItems,

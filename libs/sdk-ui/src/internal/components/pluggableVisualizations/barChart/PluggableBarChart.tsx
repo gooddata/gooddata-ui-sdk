@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { render } from "react-dom";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../../../base";
 import cloneDeep = require("lodash/cloneDeep");
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { COLUMN_BAR_CHART_UICONFIG } from "../../../constants/uiConfig";
