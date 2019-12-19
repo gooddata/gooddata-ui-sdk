@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IMappingHeader } from "../../base/headerMatching/MappingHeader";
+import { IMappingHeader } from "../../base";
 import { CellEvent, ColDef, GridOptions } from "ag-grid-community";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { ITotal, SortDirection } from "@gooddata/sdk-model";

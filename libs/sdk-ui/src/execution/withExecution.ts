@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base/react/withLoading";
+import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base";
 
 /**
  * TODO: SDK8: add docs

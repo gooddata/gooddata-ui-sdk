@@ -15,13 +15,13 @@ import {
 } from "@gooddata/sdk-model";
 import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
 import omit = require("lodash/omit");
-import { IntlWrapper } from "../base/localization/IntlWrapper";
 import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
     withContexts,
     Subtract,
     BucketNames,
+    IntlWrapper,
 } from "../base";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 

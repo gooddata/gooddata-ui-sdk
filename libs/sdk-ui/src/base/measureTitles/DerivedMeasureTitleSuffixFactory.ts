@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import IntlStore from "../localization/IntlStore";
+import { getTranslation } from "../localization/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { ILocale } from "../localization/Locale";
 
@@ -45,6 +45,6 @@ export class DerivedMeasureTitleSuffixFactory {
     }
 
     private translateKey(localizationKey: string): string {
-        return IntlStore.getTranslation(localizationKey, this.locale);
+        return getTranslation(localizationKey, this.locale);
     }
 }

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import flatMap = require("lodash/flatMap");
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../../../base";
 import { getChartType, getVisibleSeries, isStacked, getShapeAttributes } from "../helpers";
 
 import { getDataLabelAttributes } from "../dataLabelsHelpers";

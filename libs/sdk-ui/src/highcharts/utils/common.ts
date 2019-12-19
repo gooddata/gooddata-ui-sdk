@@ -2,12 +2,11 @@
 import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
-// (C) 2007-2019 GoodData Corporation
 import isNil = require("lodash/isNil");
 import setWith = require("lodash/setWith");
 import { numberFormat } from "@gooddata/numberjs";
 
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../base";
 import { IChartOptions, ISeriesItem } from "../Config";
 
 // lodash/fp does not provide typings

@@ -4,15 +4,12 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "../../../base/";
+import { BucketNames, VisualizationTypes } from "../../../base/";
 import { IReferencePoint, IUiConfig, ICustomError, IBucketOfFun } from "../../interfaces/Visualization";
 import { DEFAULT_XIRR_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
-
 import { hasNoMeasures, hasNoAttribute } from "../bucketRules";
-
 import { setBucketTitles, getItemsCount } from "../bucketHelper";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 
 export const getDefaultXirrUiConfig = (): IUiConfig => cloneDeep(DEFAULT_XIRR_UICONFIG);
 

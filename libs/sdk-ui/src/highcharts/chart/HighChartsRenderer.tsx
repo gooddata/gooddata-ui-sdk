@@ -16,7 +16,7 @@ import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
 import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../base";
 import { IChartConfig } from "../Config";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { alignChart } from "./highcharts/helpers";

@@ -2,10 +2,14 @@
 import * as React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
-import { convertDrillableItemsToPredicates, fireDrillEvent } from "../../../base/vis/drilling";
 import { IChartConfig } from "../../../highcharts";
-import { IDrillableItem, IDrillEventCallback } from "../../../base/vis/DrillEvents";
-import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
+import {
+    IDrillableItem,
+    IDrillEventCallback,
+    IHeaderPredicate,
+    convertDrillableItemsToPredicates,
+    fireDrillEvent,
+} from "../../../base";
 import { getHeadlineData, applyDrillableItems, buildDrillEventData } from "./utils/XirrTransformationUtils";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import Headline, { IHeadlineFiredDrillEventItemContext } from "../../headline/internal/Headline";

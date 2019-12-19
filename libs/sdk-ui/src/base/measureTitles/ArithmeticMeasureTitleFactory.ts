@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import IntlStore from "../localization/IntlStore";
+import { getTranslation } from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
 
@@ -93,6 +93,6 @@ export class ArithmeticMeasureTitleFactory {
     }
 
     private translateKey(localizationKey: string, values: any): string {
-        return IntlStore.getTranslation(localizationKey, this.locale, values);
+        return getTranslation(localizationKey, this.locale, values);
     }
 }

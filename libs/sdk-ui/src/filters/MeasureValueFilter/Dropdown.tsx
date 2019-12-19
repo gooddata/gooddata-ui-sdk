@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IntlWrapper } from "../../base/localization/IntlWrapper";
+import { IntlWrapper } from "../../base";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { DropdownButton as DefaultDropdownButton } from "./DropdownButton";
 import { DropdownBody } from "./DropdownBody";

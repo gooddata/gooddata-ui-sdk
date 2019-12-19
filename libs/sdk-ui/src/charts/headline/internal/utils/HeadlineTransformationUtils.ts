@@ -6,14 +6,15 @@ import isNumber = require("lodash/isNumber");
 import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import { IntlShape } from "react-intl";
-import { HeadlineElementType, VisualizationTypes } from "../../../../base/vis/visualizationTypes";
-import { isSomeHeaderPredicateMatched } from "../../../../base/vis/drilling";
 import {
     IDrillEvent,
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,
-} from "../../../../base/vis/DrillEvents";
-import { IHeaderPredicate } from "../../../../base/headerMatching/HeaderPredicate";
+    IHeaderPredicate,
+    isSomeHeaderPredicateMatched,
+    HeadlineElementType,
+    VisualizationTypes,
+} from "../../../../base";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
 import { Identifier } from "@gooddata/sdk-model";
 

@@ -47,10 +47,9 @@ import {
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import { CoreXirr } from "../../../../charts/xirr/CoreXirr";
-import { BucketNames } from "../../../../base";
+import { BucketNames, DefaultLocale, ILocale } from "../../../../base";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;

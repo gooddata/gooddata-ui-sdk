@@ -7,13 +7,14 @@ import { Identifier } from "@gooddata/sdk-model";
 
 import { calculateXirr } from "./calculateXirr";
 import {
+    VisualizationTypes,
+    HeadlineElementType,
     IDrillEvent,
     IDrillEventIntersectionElement,
     IDrillEventContextXirr,
-} from "../../../../base/vis/DrillEvents";
-import { VisualizationTypes, HeadlineElementType } from "../../../../base/vis/visualizationTypes";
-import { isSomeHeaderPredicateMatched } from "../../../../base/vis/drilling";
-import { IHeaderPredicate } from "../../../../base/headerMatching/HeaderPredicate";
+    isSomeHeaderPredicateMatched,
+    IHeaderPredicate,
+} from "../../../../base";
 import { IHeadlineData } from "../../../headline/Headlines";
 
 export interface IXirrExecutionData {

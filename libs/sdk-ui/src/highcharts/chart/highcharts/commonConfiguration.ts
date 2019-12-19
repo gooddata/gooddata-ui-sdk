@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import invoke = require("lodash/invoke");
 import isEmpty = require("lodash/isEmpty");
 import set = require("lodash/set");
-import { IDrillConfig } from "../../../base/vis/DrillEvents";
+import { IDrillConfig } from "../../../base";
 import { IHighchartsAxisExtend } from "../../HighchartsExtend";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";

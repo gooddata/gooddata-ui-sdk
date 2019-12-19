@@ -3,7 +3,7 @@ import * as React from "react";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import MediaQuery from "react-responsive";
 import { ExtendedDateFilters, IExtendedDateFilterErrors } from "./interfaces/ExtendedDateFilters";
-import { IntlWrapper } from "../../base/localization/IntlWrapper";
+import { IntlWrapper } from "../../base";
 import * as MediaQueries from "./constants/MediaQueries";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody";

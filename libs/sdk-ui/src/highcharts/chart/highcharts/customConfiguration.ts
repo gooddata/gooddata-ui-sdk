@@ -17,7 +17,7 @@ import * as cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
-import { ChartType, VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { IDrillConfig, ChartType, VisualizationTypes } from "../../../base";
 import {
     IAxis,
     IChartConfig,
@@ -51,7 +51,6 @@ import {
 } from "./helpers";
 
 import getOptionalStackingConfiguration from "./getOptionalStackingConfiguration";
-import { IDrillConfig } from "../../../base/vis/DrillEvents";
 import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 import { getAxisNameConfiguration } from "./getAxisNameConfiguration";

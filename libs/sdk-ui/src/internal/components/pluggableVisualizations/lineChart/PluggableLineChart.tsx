@@ -3,7 +3,7 @@ import * as React from "react";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { BucketNames } from "../../../../base";
+import { BucketNames, VisualizationTypes } from "../../../../base";
 import { render } from "react-dom";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -38,7 +38,6 @@ import {
 } from "../../../utils/propertiesHelper";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableLineChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

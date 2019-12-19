@@ -5,7 +5,7 @@ import set = require("lodash/set");
 import forEach = require("lodash/forEach");
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "../../../base/";
+import { BucketNames, VisualizationTypes } from "../../../base/";
 import {
     IExtendedReferencePoint,
     IBucketOfFun,
@@ -37,7 +37,6 @@ import * as columnStackIcon from "../../assets/column/bucket-title-stack.svg";
 import * as barMeasuresIcon from "../../assets/bar/bucket-title-measures.svg";
 import * as barViewIcon from "../../assets/bar/bucket-title-view.svg";
 import * as barStackIcon from "../../assets/bar/bucket-title-stack.svg";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 
 function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,

@@ -6,7 +6,7 @@ import set = require("lodash/set");
 import tail = require("lodash/tail");
 import includes = require("lodash/includes");
 
-import { BucketNames } from "../../../../base";
+import { BucketNames, VisualizationTypes } from "../../../../base";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
@@ -29,7 +29,6 @@ import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigur
 
 import { BUCKETS, ATTRIBUTE, DATE } from "../../../constants/bucket";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

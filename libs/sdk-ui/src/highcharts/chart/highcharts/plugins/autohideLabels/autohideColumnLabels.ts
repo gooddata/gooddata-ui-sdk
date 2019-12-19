@@ -31,7 +31,7 @@ import {
     hasShape,
     hasLabelInside,
 } from "../../dataLabelsHelpers";
-import { VisualizationTypes } from "../../../../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../../../../base";
 import {
     IPointData,
     IAxisConfig,

@@ -2,7 +2,7 @@
 import { getChartType } from "../../helpers";
 
 import { getDataLabelsGdcVisible, minimizeDataLabel, hideDataLabel } from "../../dataLabelsHelpers";
-import { VisualizationTypes } from "../../../../../base/vis/visualizationTypes";
+import { VisualizationTypes } from "../../../../../base";
 import { autohideColumnLabels, handleColumnLabelsOutsideChart } from "./autohideColumnLabels";
 import { autohideBarLabels, handleBarLabelsOutsideChart } from "./autohideBarLabels";
 import autohidePieLabels from "./autohidePieLabels";

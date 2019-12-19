@@ -7,7 +7,7 @@ import { IntlShape } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import { BucketNames } from "../../../../base";
+import { BucketNames, DefaultLocale, ILocale } from "../../../../base";
 import { updateConfigWithSettings } from "../../../../highcharts";
 import { METRIC } from "../../../constants/bucket";
 
@@ -54,7 +54,6 @@ import {
 import { CoreHeadline } from "../../../../charts/headline/CoreHeadline";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { DefaultLocale, ILocale } from "../../../../base/localization/Locale";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 
 export class PluggableHeadline extends AbstractPluggableVisualization {

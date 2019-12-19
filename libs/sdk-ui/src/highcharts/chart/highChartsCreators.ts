@@ -2,7 +2,7 @@
 import get = require("lodash/get");
 import merge = require("lodash/merge");
 import * as invariant from "invariant";
-import { IDrillConfig } from "../../base/vis/DrillEvents";
+import { VisualizationTypes, IDrillConfig } from "../../base";
 import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
@@ -22,7 +22,6 @@ import { getTreemapConfiguration } from "./highcharts/treemapConfiguration";
 import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
-import { VisualizationTypes } from "../../base/vis/visualizationTypes";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
 const chartConfigurationMap = {

@@ -1,8 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { render } from "react-dom";
-import { BucketNames } from "../../../../base";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
+import { BucketNames, VisualizationTypes } from "../../../../base";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";

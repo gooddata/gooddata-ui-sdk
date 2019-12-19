@@ -9,8 +9,6 @@ import {
     getVisualizationType,
     VisType,
     VisualizationTypes,
-} from "../../base/vis/visualizationTypes";
-import {
     IDrillConfig,
     IDrillEvent,
     IDrillEventContext,
@@ -18,7 +16,7 @@ import {
     IDrillEventContextPoint,
     IDrillPoint,
     OnFiredDrillEvent,
-} from "../../base/vis/DrillEvents";
+} from "../../base";
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
 import { isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";

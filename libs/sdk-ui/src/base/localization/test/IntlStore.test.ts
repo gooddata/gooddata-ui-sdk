@@ -1,27 +1,27 @@
 // (C) 2007-2019 GoodData Corporation
-import IntlStore from "../IntlStore";
 import { DefaultLocale, ILocale } from "../Locale";
+import { getIntl, getTranslation } from "../IntlStore";
 
 describe("IntlStore", () => {
     describe("getIntl", () => {
         it("should return intlProvider for default locale (en-US)", () => {
-            const intl = IntlStore.getIntl();
+            const intl = getIntl();
 
             expect(intl.locale).toEqual(DefaultLocale);
         });
 
         it("should return specific locale from supported list of localizations", () => {
-            const intl = IntlStore.getIntl("de-DE");
+            const intl = getIntl("de-DE");
             expect(intl.locale).toEqual("de-DE");
         });
 
         it("should return default locale when locale is null", () => {
-            const intl = IntlStore.getIntl(null);
+            const intl = getIntl(null);
             expect(intl.locale).toEqual(DefaultLocale);
         });
 
         it("should return default locale when locale is undefined", () => {
-            const intl = IntlStore.getIntl(undefined);
+            const intl = getIntl(undefined);
             expect(intl.locale).toEqual(DefaultLocale);
         });
     });
@@ -42,14 +42,14 @@ describe("IntlStore", () => {
 
             it("should return message in en-US", () => {
                 localizations.forEach(locale => {
-                    const result = IntlStore.getTranslation("visualizations.more", locale);
+                    const result = getTranslation("visualizations.more", locale);
                     expect(result).toBeTruthy();
                 });
             });
 
             it("should return message in en-US with replaced placeholders for values", () => {
                 localizations.forEach(locale => {
-                    const result = IntlStore.getTranslation("gs.list.limitExceeded", locale, {
+                    const result = getTranslation("gs.list.limitExceeded", locale, {
                         limit: 42,
                     });
                     expect(result).toBeTruthy();
@@ -61,7 +61,7 @@ describe("IntlStore", () => {
         it("should return default message in production environment when translationId was not found", () => {
             process.env.NODE_ENV = "production";
 
-            const result = IntlStore.getTranslation("unknown_id", "fr-FR");
+            const result = getTranslation("unknown_id", "fr-FR");
             expect(result).toEqual("unknown_id");
 
             process.env.NODE_ENV = "test";

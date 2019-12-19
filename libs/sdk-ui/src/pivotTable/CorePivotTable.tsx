@@ -25,22 +25,28 @@ import * as CustomEvent from "custom-event";
 import * as React from "react";
 
 import "../../styles/css/pivotTable.css";
-import { VisualizationTypes } from "../base/vis/visualizationTypes";
 import { getScrollbarWidth } from "./impl/domUtils";
 import {
+    convertError,
+    ErrorCodes,
+    GoodDataSdkError,
+    IErrorDescriptors,
+    newErrorMapping,
+    VisualizationTypes,
     convertDrillableItemsToPredicates,
     getDrillIntersection,
     isSomeHeaderPredicateMatched,
-} from "../base/vis/drilling";
-import {
     IDrillEvent,
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
-} from "../base/vis/DrillEvents";
-import { IHeaderPredicate } from "../base/headerMatching/HeaderPredicate";
-import { IMappingHeader } from "../base/headerMatching/MappingHeader";
-import { ErrorComponent } from "../base/react/ErrorComponent";
-import { LoadingComponent } from "../base/react/LoadingComponent";
+    IMappingHeader,
+    ErrorComponent,
+    LoadingComponent,
+    IHeaderPredicate,
+    IDrillableItemPushData,
+    IExportFunction,
+    IExtendedExportConfig,
+} from "../base";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {
@@ -86,8 +92,6 @@ import {
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
 import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
-import { convertError, ErrorCodes, GoodDataSdkError, IErrorDescriptors, newErrorMapping } from "../base";
-import { IDrillableItemPushData, IExportFunction, IExtendedExportConfig } from "../base/vis/Events";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
