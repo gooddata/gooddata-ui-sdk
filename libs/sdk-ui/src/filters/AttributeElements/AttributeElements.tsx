@@ -2,11 +2,12 @@
 import * as React from "react";
 import isEqual = require("lodash/isEqual");
 import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { defaultErrorHandler, OnError } from "../../base";
 
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
 import { IAttributeElementsChildren } from "./types";
 
-interface IAttributeElementsProps {
+export interface IAttributeElementsProps {
     backend: IAnalyticalBackend;
     workspace: string;
     identifier: string;
@@ -15,6 +16,7 @@ interface IAttributeElementsProps {
     offset?: number;
     options?: IElementQueryOptions;
     children?(props: IAttributeElementsChildren): React.ReactNode;
+    onError?: OnError;
 }
 
 interface IAttributeElementsState {
@@ -29,8 +31,9 @@ interface IAttributeElementsState {
  */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     public static defaultProps: Partial<IAttributeElementsProps> = {
-        options: null,
+        options: {},
         children: AttributeElementsDefaultChildren,
+        onError: defaultErrorHandler,
     };
 
     public state: IAttributeElementsState = {
@@ -101,6 +104,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             this.setState({ validElements: elements, isLoading: false });
         } catch (error) {
             this.setState({ isLoading: false, error });
+            this.props.onError(error);
         }
     };
 

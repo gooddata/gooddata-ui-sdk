@@ -1,17 +1,18 @@
 // (C) 2019 GoodData Corporation
+import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { attributeIdentifier } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
-import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { waitForAsync } from "../../../../testUtils/synchronization";
 
 import { AttributeElements } from "../AttributeElements";
 
 describe("AttributeElements", () => {
-    const backend = legacyRecordedBackend(MasterIndex);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
-    const identifier = "label.method.method";
-    const anotherIdentifier = "label.status.status";
+    const identifier = attributeIdentifier(ReferenceLdm.Product.Name);
+    const anotherIdentifier = attributeIdentifier(ReferenceLdm.Department);
 
     const renderComponent = (props: any = {}) =>
         shallow(
@@ -29,8 +30,8 @@ describe("AttributeElements", () => {
 
         expect(children).toHaveBeenCalledTimes(2);
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
-        expect(children.mock.calls[1][0].validElements.items.length).toEqual(8);
-        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items.length).toEqual(7);
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("CompuSci");
     });
 
     it("should load more attribute elements using the loadMore function", async () => {
@@ -41,7 +42,7 @@ describe("AttributeElements", () => {
 
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
         expect(children.mock.calls[1][0].validElements.items.length).toEqual(1);
-        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("CompuSci");
 
         await children.mock.calls[1][0].loadMore();
 
@@ -49,7 +50,7 @@ describe("AttributeElements", () => {
 
         expect(children.mock.calls[3][0].isLoading).toEqual(false);
         expect(children.mock.calls[3][0].validElements.items.length).toEqual(2);
-        expect(children.mock.calls[3][0].validElements.items[1].title).toEqual("GET");
+        expect(children.mock.calls[3][0].validElements.items[1].title).toEqual("Educationly");
     });
 
     it("should load different attribute when identifier prop changes", async () => {
@@ -63,7 +64,7 @@ describe("AttributeElements", () => {
 
         expect(children).toHaveBeenCalledTimes(2);
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
-        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("DELETE");
+        expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("CompuSci");
 
         wrapper.setProps({ identifier: anotherIdentifier });
 
@@ -71,6 +72,6 @@ describe("AttributeElements", () => {
 
         const lastCallArguments = children.mock.calls[children.mock.calls.length - 1][0];
         expect(lastCallArguments.isLoading).toEqual(false);
-        expect(lastCallArguments.validElements.items[0].title).toEqual("100");
+        expect(lastCallArguments.validElements.items[0].title).toEqual("Direct Sales");
     });
 });

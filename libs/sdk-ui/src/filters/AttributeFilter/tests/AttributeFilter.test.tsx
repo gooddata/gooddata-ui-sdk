@@ -1,23 +1,27 @@
 // (C) 2019 GoodData Corporation
+import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as React from "react";
 import { mount } from "enzyme";
 import noop = require("lodash/noop");
-import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { MasterIndex } from "../../../../__mocks__/recordings/playlist";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { waitForAsync } from "../../../../testUtils/synchronization";
 
 import { AttributeFilter } from "../AttributeFilter";
 import { AttributeDropdown } from "../AttributeDropdown/AttributeDropdown";
-import { newPositiveAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
+import {
+    newPositiveAttributeFilter,
+    newNegativeAttributeFilter,
+    attributeIdentifier,
+} from "@gooddata/sdk-model";
 
 describe("AttributeFilter", () => {
-    const backend = legacyRecordedBackend(MasterIndex);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
 
     it("should be in loading state until attribute display form title is loaded", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", [])}
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -30,7 +34,7 @@ describe("AttributeFilter", () => {
     it("should download attribute display form title", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", [])}
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -40,7 +44,7 @@ describe("AttributeFilter", () => {
         await waitForAsync();
         rendered.update();
 
-        expect(rendered.find(AttributeDropdown).prop("title")).toEqual("Method");
+        expect(rendered.find(AttributeDropdown).prop("title")).toEqual("Product Name");
     });
 
     it("should display error if attribute display form title load fails", async () => {
@@ -50,6 +54,7 @@ describe("AttributeFilter", () => {
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
+                onError={noop}
             />,
         );
 
@@ -65,7 +70,7 @@ describe("AttributeFilter", () => {
         console.warn = warnMock;
         mount(
             <AttributeFilter
-                identifier="label.method.method"
+                identifier={attributeIdentifier(ReferenceLdm.Product.Name)}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -81,11 +86,12 @@ describe("AttributeFilter", () => {
         expect(() => {
             mount(
                 <AttributeFilter
-                    filter={newPositiveAttributeFilter("label.method.method", [])}
-                    identifier="label.method.method"
+                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                    identifier={attributeIdentifier(ReferenceLdm.Product.Name)}
                     backend={backend}
                     onApply={noop}
                     workspace={workspace}
+                    onError={noop}
                 />,
             );
         }).toThrow();
@@ -94,7 +100,7 @@ describe("AttributeFilter", () => {
     it("should extract selection from filter definition with text values", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", ["DELETE"])}
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={noop}
                 workspace={workspace}
@@ -104,14 +110,14 @@ describe("AttributeFilter", () => {
         await waitForAsync();
         rendered.update();
 
-        expect(rendered.find(AttributeDropdown).prop("selectedItems")).toEqual([{ title: "DELETE" }]);
+        expect(rendered.find(AttributeDropdown).prop("selectedItems")).toEqual([{ title: "CompuSci" }]);
     });
 
     it("should extract selection from filter definition with uri values", async () => {
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", {
-                    uris: ["/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110"],
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+                    uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
                 })}
                 backend={backend}
                 onApply={noop}
@@ -123,7 +129,7 @@ describe("AttributeFilter", () => {
         rendered.update();
 
         expect(rendered.find(AttributeDropdown).prop("selectedItems")).toEqual([
-            { uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110" },
+            { uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678" },
         ]);
     });
 
@@ -131,7 +137,7 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", ["DELETE"])}
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={onApply}
                 workspace={workspace}
@@ -144,14 +150,14 @@ describe("AttributeFilter", () => {
         rendered.find(AttributeDropdown).prop("onApply")(
             [
                 {
-                    title: "DELETE",
-                    uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110",
+                    title: "CompuSci",
+                    uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678",
                 },
             ],
             false,
         );
 
-        const expectedFilter = newPositiveAttributeFilter("label.method.method", ["DELETE"]);
+        const expectedFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"]);
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
     });
@@ -160,7 +166,7 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", ["DELETE"])}
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"])}
                 backend={backend}
                 onApply={onApply}
                 workspace={workspace}
@@ -173,14 +179,14 @@ describe("AttributeFilter", () => {
         rendered.find(AttributeDropdown).prop("onApply")(
             [
                 {
-                    title: "DELETE",
-                    uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110",
+                    title: "CompuSci",
+                    uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678",
                 },
             ],
             true,
         );
 
-        const expectedFilter = newNegativeAttributeFilter("label.method.method", ["DELETE"]);
+        const expectedFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["CompuSci"]);
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
     });
@@ -189,8 +195,8 @@ describe("AttributeFilter", () => {
         const onApply = jest.fn();
         const rendered = mount(
             <AttributeFilter
-                filter={newPositiveAttributeFilter("label.method.method", {
-                    uris: ["/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110"],
+                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+                    uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
                 })}
                 backend={backend}
                 onApply={onApply}
@@ -204,15 +210,15 @@ describe("AttributeFilter", () => {
         rendered.find(AttributeDropdown).prop("onApply")(
             [
                 {
-                    title: "DELETE",
-                    uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110",
+                    title: "CompuSci",
+                    uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678",
                 },
             ],
             false,
         );
 
-        const expectedFilter = newPositiveAttributeFilter("label.method.method", {
-            uris: ["/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110"],
+        const expectedFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+            uris: ["/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678"],
         });
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
