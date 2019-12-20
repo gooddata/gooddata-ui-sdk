@@ -393,15 +393,5 @@ export const MasterIndex = {
             fp_4b5b81db22b54c8005c3d40d4e7d139c: TreemapWithThreeMetrics,
             fp_d81a1d01654699ff102ae5be3839bcde: TreemapWithTwoMetricsAndStackByAttribute,
         },
-        metadata: {
-            attributeDisplayForm: {
-                label_method_method: require("./metadata/testWorkspace/attributeDisplayForm/label.method.method.json"),
-                label_status_status: require("./metadata/testWorkspace/attributeDisplayForm/label.status.status.json"),
-            },
-        },
-        elements: {
-            label_method_method: require("./elements/testWorkspace/label.method.method.json"),
-            label_status_status: require("./elements/testWorkspace/label.status.status.json"),
-        },
     },
 };
