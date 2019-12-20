@@ -56,18 +56,18 @@ export type DummyBackendConfig = AnalyticalBackendConfig & {
  */
 export const defaultDummyBackendConfig: DummyBackendConfig = {
     hostname: "test",
-    raiseNoDataExceptions: false,
+    raiseNoDataExceptions: true,
 };
 
 /**
  * Returns dummy backend - this backend focuses on the execution 'branch' of the SPI. it implements
- * execution factory et al. in a way, that the returned result and data view have a correct execution
- * definition but have no data whatsoever.
+ * execution factory and prepared execution so that clients receive NoData exception when trying to obtain
+ * results.
  *
- * This implementation is suitable when:
- * - testing code which builds and configures an instance of IPreparedExecution.
- * - testing code which works with IDataView's' execution definition
+ * This implementation is suitable when testing code which builds and configures an instance of IPreparedExecution or
+ * testing component behavior when backend returns no results.
  *
+ * @remarks see {@link dummyBackendEmptyData} for a variant of dummy backend
  * @param config - optionally provide configuration of the backend (host/user)
  * @internal
  */
@@ -100,6 +100,20 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
     };
 
     return noopBackend;
+}
+
+/**
+ * Convenience function to create a dummy backend configured to NOT throw exceptions when client requests
+ * data view. Instead, it returns an empty data view (which does not follow the SPI contract...)
+ *
+ * While this behavior violates contract of the SPI, a backend configured in this way is suitable for
+ * particular test scenarios - for instance in tests that exercise logic which only works with IDataView's
+ * execution definition.
+ *
+ * @internal
+ */
+export function dummyBackendEmptyData(): IAnalyticalBackend {
+    return dummyBackend({ hostname: "test", raiseNoDataExceptions: false });
 }
 
 /**

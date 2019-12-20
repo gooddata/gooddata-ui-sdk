@@ -1,12 +1,12 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import { shallow } from "enzyme";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IAttribute, IMeasure, IFilter } from "@gooddata/sdk-model";
+import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IWithExecution, withExecution } from "../withExecution";
-import { WithLoadingResult } from "../../base/react/withLoading";
+import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
+import { shallow } from "enzyme";
+import * as React from "react";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
+import { WithLoadingResult } from "../../base/react/withLoading";
+import { IWithExecution, withExecution } from "../withExecution";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];
@@ -32,7 +32,7 @@ const renderEnhancedComponent = <R extends object>(
     const Component = withExecution({
         ...hocConfig,
         execution: ({ attributes, measures, filters }) =>
-            dummyBackend()
+            dummyBackendEmptyData()
                 .workspace("dummy")
                 .execution()
                 .forItems([...attributes, ...measures], filters),
@@ -111,7 +111,7 @@ describe("withExecution", () => {
         const randomProp = "laRandom";
 
         const Component = withExecution({
-            execution: dummyBackend()
+            execution: dummyBackendEmptyData()
                 .workspace("dummy")
                 .execution()
                 .forItems([]),
