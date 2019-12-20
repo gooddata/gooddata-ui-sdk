@@ -9,23 +9,20 @@ import {
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     IDataView,
-    IElementQuery,
     IElementQueryFactory,
-    IElementQueryOptions,
-    IElementQueryResult,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspaceMetadata,
+    IWorkspacePermissionsFactory,
+    IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
-    IWorkspaceQueryFactory,
-    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -33,14 +30,11 @@ import {
     defWithSorting,
     DimensionGenerator,
     IAttributeDisplayForm,
+    IAttributeElement,
     IDimension,
     IExecutionDefinition,
     IFilter,
-    IInsight,
-    IVisualizationClass,
     SortItem,
-    IMeasureExpressionToken,
-    IAttributeElement,
 } from "@gooddata/sdk-model";
 
 const defaultConfig = { hostname: "test" };
@@ -158,13 +152,13 @@ function recordedWorkspace(
             return new RecordedExecutionFactory(recordings, workspace);
         },
         elements(): IElementQueryFactory {
-            return recordedElementsQueryFactory(recordings);
+            throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {
-            return recordedWorkspaceMetadata(recordings);
+            throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {
             throw new NotSupported("not supported");
@@ -286,112 +280,6 @@ function recordedPreparedExecution(
         },
         equals(other: IPreparedExecution): boolean {
             return fp === other.fingerprint();
-        },
-    };
-}
-
-function recordedWorkspaceMetadata(recordings: LegacyWorkspaceRecordings = {}): IWorkspaceMetadata {
-    return {
-        getAttributeDisplayForm: async (id: string): Promise<IAttributeDisplayForm> => {
-            const recording =
-                recordings.metadata &&
-                recordings.metadata.attributeDisplayForm &&
-                recordings.metadata.attributeDisplayForm[id.replace(/\./g, "_")];
-
-            if (!recording) {
-                throw new Error("Recording not found");
-            }
-
-            return recording;
-        },
-        getInsight(_id: string): Promise<IInsight> {
-            throw new NotSupported("not supported");
-        },
-        getInsights(_options) {
-            throw new NotSupported("not supported");
-        },
-        createInsight(_insight) {
-            throw new NotSupported("not supported");
-        },
-        updateInsight(_insight) {
-            throw new NotSupported("not supported");
-        },
-        deleteInsight(_id) {
-            throw new NotSupported("not supported");
-        },
-        getVisualizationClass(_id: string): Promise<IVisualizationClass> {
-            throw new NotSupported("not supported");
-        },
-        getVisualizationClasses(): Promise<IVisualizationClass[]> {
-            throw new NotSupported("not supported");
-        },
-        getMeasureExpressionTokens(_id: string): Promise<IMeasureExpressionToken[]> {
-            throw new NotSupported("not supported");
-        },
-    };
-}
-
-function recordedElementsQueryFactory(recordings: LegacyWorkspaceRecordings = {}): IElementQueryFactory {
-    return {
-        forObject(objectId: string): IElementQuery {
-            return recordedElementQuery(objectId, recordings);
-        },
-    };
-}
-
-function recordedElementQuery(objectId: string, recordings: LegacyWorkspaceRecordings = {}): IElementQuery {
-    let _limit = 50;
-    let _offset = 0;
-    let _filter = "";
-
-    const queryWorker = async (offset: number, limit: number): Promise<IElementQueryResult> => {
-        const recording = recordings.elements && recordings.elements[objectId.replace(/\./g, "_")];
-
-        if (!recording) {
-            throw new Error("Recording not found");
-        }
-
-        const slice = recording
-            .filter(_filter ? item => item.title.toLowerCase().includes(_filter.toLowerCase()) : Boolean)
-            .slice(offset, offset + limit);
-
-        const emptyResult: IElementQueryResult = {
-            items: [],
-            limit,
-            offset: recording.length,
-            totalCount: recording.length,
-            next: () => Promise.resolve(emptyResult),
-        };
-
-        const hasNextPage = offset + limit < recording.length;
-
-        return {
-            items: slice,
-            limit: Math.min(limit, slice.length),
-            next() {
-                return hasNextPage ? queryWorker(offset + limit, limit) : Promise.resolve(emptyResult);
-            },
-            offset: Math.min(offset, recording.length),
-            totalCount: recording.length,
-        };
-    };
-
-    return {
-        query(): Promise<IElementQueryResult> {
-            return queryWorker(_offset, _limit);
-        },
-        withLimit(limit: number): IElementQuery {
-            _limit = limit;
-            return this;
-        },
-        withOffset(offset: number): IElementQuery {
-            _offset = offset;
-            return this;
-        },
-        withOptions(options: IElementQueryOptions): IElementQuery {
-            // other options are ignored for now
-            _filter = (options && options.filter) || "";
-            return this;
         },
     };
 }

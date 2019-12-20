@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { newMeasure } from "@gooddata/sdk-model";
-import { dummyBackend } from "../../dummyBackend";
+import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { withEventing } from "../index";
 
 function prepareExecution(backend: IAnalyticalBackend): IPreparedExecution {
@@ -32,7 +32,7 @@ describe("withEventing backend", () => {
 
     it("emits successfulExecute even if no data", async () => {
         const successfulExecute = jest.fn();
-        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), { successfulExecute });
+        const backend = withEventing(dummyBackend(), { successfulExecute });
 
         await prepareExecution(backend).execute();
 
@@ -41,7 +41,7 @@ describe("withEventing backend", () => {
 
     it("emits successfulResultReadAll", async () => {
         const successfulResultReadAll = jest.fn();
-        const backend = withEventing(dummyBackend(), { successfulResultReadAll });
+        const backend = withEventing(dummyBackendEmptyData(), { successfulResultReadAll });
 
         await (await prepareExecution(backend).execute()).readAll();
 
@@ -50,7 +50,7 @@ describe("withEventing backend", () => {
 
     it("emits successfulResultReadWindow", async () => {
         const successfulResultReadWindow = jest.fn();
-        const backend = withEventing(dummyBackend(), { successfulResultReadWindow });
+        const backend = withEventing(dummyBackendEmptyData(), { successfulResultReadWindow });
 
         await (await prepareExecution(backend).execute()).readWindow([1, 2], [100, 1000]);
 
@@ -59,7 +59,7 @@ describe("withEventing backend", () => {
 
     it("emits failedResultReadAll", async () => {
         const failedResultReadAll = jest.fn();
-        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), { failedResultReadAll });
+        const backend = withEventing(dummyBackend(), { failedResultReadAll });
 
         try {
             await (await prepareExecution(backend).execute()).readAll();
@@ -72,7 +72,7 @@ describe("withEventing backend", () => {
 
     it("emits failedResultReadWindow", async () => {
         const failedResultReadWindow = jest.fn();
-        const backend = withEventing(dummyBackend({ raiseNoDataExceptions: true }), {
+        const backend = withEventing(dummyBackend(), {
             failedResultReadWindow,
         });
 

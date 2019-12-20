@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 
-export { dummyBackend, dummyDataView, dummyDataFacade } from "./dummyBackend";
+export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade } from "./dummyBackend";
 
 export { recordedBackend } from "./recordedBackend";
 

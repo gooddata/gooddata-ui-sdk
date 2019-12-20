@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-18T15:57:02.482Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-20T10:42:51.557Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./executions/uiTestScenarios/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -485,6 +485,10 @@ const df_label_product_id_name = {
     elements: require("./metadata/label.product.id.name/elements.json"),
     obj: require("./metadata/label.product.id.name/obj.json"),
 };
+const df_label_owner_department = {
+    elements: require("./metadata/label.owner.department/elements.json"),
+    obj: require("./metadata/label.owner.department/obj.json"),
+};
 export const Recordings = {
     executions: {
         fp_06890d7172183531342ed8e17d70e01a,
@@ -553,5 +557,5 @@ export const Recordings = {
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
     },
-    metadata: { displayForms: { df_label_product_id_name } },
+    metadata: { displayForms: { df_label_product_id_name, df_label_owner_department } },
 };

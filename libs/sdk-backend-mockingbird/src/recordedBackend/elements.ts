@@ -46,7 +46,7 @@ class RecordedElements implements IElementQuery {
         const { filter } = this.options;
 
         if (filter !== undefined) {
-            elements = elements.filter(item => item.title.toLowerCase().includes(filter));
+            elements = elements.filter(item => item.title.toLowerCase().includes(filter.toLowerCase()));
         }
 
         return Promise.resolve(new RecordedResult(elements, this.limit, this.offset));
@@ -56,6 +56,8 @@ class RecordedElements implements IElementQuery {
         if (limit <= 0) {
             throw new Error("Limit must be positive number");
         }
+
+        this.limit = limit;
 
         return this;
     }
@@ -81,7 +83,7 @@ class RecordedResult implements IElementQueryResult {
 
     constructor(private all: IAttributeElement[], limit: number, offset: number) {
         // this will naturally return empty items if at the end of data; limit will always be positive
-        this.items = all.slice(offset, limit);
+        this.items = all.slice(offset, offset + limit);
 
         // offset is at most at the end of all available elements
         this.offset = Math.min(offset, this.all.length);

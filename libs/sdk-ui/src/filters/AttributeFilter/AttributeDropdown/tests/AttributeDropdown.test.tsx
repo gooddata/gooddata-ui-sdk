@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
+import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { attributeIdentifier } from "@gooddata/sdk-model";
 import * as React from "react";
 import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import noop = require("lodash/noop");
 import { IntlWrapper } from "../../../../base";
-import { MasterIndex } from "../../../../../__mocks__/recordings/playlist";
 import { waitForAsync } from "../../../../../testUtils/synchronization";
 
 import { AttributeDropdown } from "../AttributeDropdown";
@@ -16,8 +17,9 @@ import { AttributeFilterItem } from "../AttributeFilterItem";
  *  -> all is good. The failed test run was in batch test mode (no interactive jest run)
  */
 describe("AttributeDropdown", () => {
-    const backend = legacyRecordedBackend(MasterIndex);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
+    const testAttributeIdentifier = attributeIdentifier(ReferenceLdm.Product.Name);
 
     function renderComponent(props: any = {}) {
         const onApply = props.onApply || noop;
@@ -49,7 +51,7 @@ describe("AttributeDropdown", () => {
     });
 
     it("should render overlay with loaded items", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method" });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
@@ -61,7 +63,7 @@ describe("AttributeDropdown", () => {
 
     it("should fire onApply with the proper selection", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method", onApply });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -78,14 +80,19 @@ describe("AttributeDropdown", () => {
 
         expect(onApply).toHaveBeenCalledTimes(1);
         expect(onApply).toHaveBeenCalledWith(
-            [{ title: "DELETE", uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/375/elements?id=110" }],
+            [
+                {
+                    title: "CompuSci",
+                    uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678",
+                },
+            ],
             true,
         );
     });
 
     it("should keep selection after Apply", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method", onApply });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -106,12 +113,12 @@ describe("AttributeDropdown", () => {
         await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
-        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(7);
+        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(6);
     });
 
     it("should reset selection on Cancel", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method", onApply });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -132,11 +139,11 @@ describe("AttributeDropdown", () => {
         await waitForAsync(); // There have to be two of those for some reason :-/
         wrapper.update();
 
-        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(8);
+        expect(wrapper.find(".s-attribute-filter-list-item-selected").length).toEqual(7);
     });
 
     it("should limit items by search string", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method" });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -147,7 +154,7 @@ describe("AttributeDropdown", () => {
         wrapper
             .find("input")
             .first()
-            .simulate("change", { target: { value: "DELETE" } });
+            .simulate("change", { target: { value: "CompuSci" } });
 
         await waitForDebounce();
         await waitForAsync();
@@ -159,7 +166,7 @@ describe("AttributeDropdown", () => {
     });
 
     it("should reset search string on cancel", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: "label.method.method" });
+        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
@@ -169,12 +176,12 @@ describe("AttributeDropdown", () => {
         wrapper
             .find("input")
             .first()
-            .simulate("change", { target: { value: "DELETE" } });
+            .simulate("change", { target: { value: "CompuSci" } });
 
         await waitForDebounce();
 
         wrapper.update();
-        expect(wrapper.find("InvertableList").prop("searchString")).toBe("DELETE");
+        expect(wrapper.find("InvertableList").prop("searchString")).toBe("CompuSci");
 
         wrapper.find("button.s-cancel").simulate("click");
         wrapper.update();

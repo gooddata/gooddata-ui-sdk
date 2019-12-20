@@ -31,6 +31,11 @@ export type AnalyticalBackendCallbacks = {
 // @internal
 export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 
+// Warning: (ae-internal-missing-underscore) The name "dummyBackendEmptyData" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function dummyBackendEmptyData(): IAnalyticalBackend;
+
 // Warning: (ae-internal-missing-underscore) The name "dummyDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
