@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
 import set = require("lodash/set");
 import noop = require("lodash/noop");
@@ -762,7 +762,10 @@ describe("getCustomizedConfiguration", () => {
                 expect(result).toBe("55.55%");
             });
 
-            it.each([["left", false], ["right", true]])(
+            it.each([
+                ["left", false],
+                ["right", true],
+            ])(
                 "should format data labels to percentage for %s single axis chart",
                 (_: string, opposite: boolean) => {
                     const dataLabel = {
@@ -781,7 +784,10 @@ describe("getCustomizedConfiguration", () => {
                 },
             );
 
-            it.each([["", "primary", false, "55.55%"], [" not", "secondary", true, "123"]])(
+            it.each([
+                ["", "primary", false, "55.55%"],
+                [" not", "secondary", true, "123"],
+            ])(
                 "should %s format data labels to percentage for dual axis chart on %s axis",
                 (_negation: string, _axis: string, opposite: boolean, expected: string) => {
                     const dataLabel = {

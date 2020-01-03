@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { AttributeInBucket, MeasureInBucket, newBucket, IBucket, AttributeOrMeasure } from "../index";
 import { Account, Activity, Velocity, Won } from "../../../../__mocks__/model";
@@ -30,7 +30,10 @@ const MeasureBucket3 = newBucket("measureBucket3", Won, Velocity.Min);
 const BucketWithTotals1 = newBucket("bucketWithTotals1", Won, Total1);
 const BucketWithTotals2 = newBucket("bucketWithTotals2", Won, Total2);
 
-const InvalidScenarios: Array<[string, any]> = [["input undefined", undefined], ["input null", null]];
+const InvalidScenarios: Array<[string, any]> = [
+    ["input undefined", undefined],
+    ["input null", null],
+];
 
 describe("bucketsAttributes", () => {
     const Scenarios: Array<[string, any, any, IAttribute[]]> = [

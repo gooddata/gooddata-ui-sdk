@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { isUri } from "@gooddata/gd-bear-client";
@@ -27,13 +27,10 @@ const traverse = (obj: any, convert: StringTransformation): any => {
     if (isArray(obj)) {
         return obj.map(a => traverse(a, convert));
     } else if (isObject(obj)) {
-        return Object.keys(obj).reduce(
-            (result, key) => {
-                result[key] = traverse((obj as any)[key], convert);
-                return result;
-            },
-            {} as any,
-        );
+        return Object.keys(obj).reduce((result, key) => {
+            result[key] = traverse((obj as any)[key], convert);
+            return result;
+        }, {} as any);
     } else if (isString(obj)) {
         return convert(obj);
     } else {

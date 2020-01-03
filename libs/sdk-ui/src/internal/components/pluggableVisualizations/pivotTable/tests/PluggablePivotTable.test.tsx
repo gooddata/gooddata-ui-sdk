@@ -357,9 +357,9 @@ describe("PluggablePivotTable", () => {
                 true,
             );
 
-            const extendedReferencePointPromise: Promise<
-                IExtendedReferencePoint
-            > = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
+                sourceReferencePoint,
+            );
 
             it("should return a new reference point with adapted buckets", () => {
                 const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
@@ -398,9 +398,9 @@ describe("PluggablePivotTable", () => {
                 sourceReferencePoint.buckets[2].items,
             );
 
-            const extendedReferencePointPromise: Promise<
-                IExtendedReferencePoint
-            > = pivotTable.getExtendedReferencePoint(sourceReferencePoint);
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
+                sourceReferencePoint,
+            );
 
             it("should return a new reference point with adapted buckets", () => {
                 const expectedBuckets: IBucketOfFun[] = mockPivotTableReferencePoint.buckets;
@@ -450,9 +450,9 @@ describe("PluggablePivotTable", () => {
             );
             const expectedSortItems: SortItem[] = [validAttributeSort, validMeasureSort];
 
-            const extendedReferencePointPromise: Promise<
-                IExtendedReferencePoint
-            > = pivotTable.getExtendedReferencePoint(mockPivotTableReferencePoint);
+            const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = pivotTable.getExtendedReferencePoint(
+                mockPivotTableReferencePoint,
+            );
             return extendedReferencePointPromise.then(extendedReferencePoint => {
                 expect(extendedReferencePoint.properties.sortItems).toEqual(expectedSortItems);
             });

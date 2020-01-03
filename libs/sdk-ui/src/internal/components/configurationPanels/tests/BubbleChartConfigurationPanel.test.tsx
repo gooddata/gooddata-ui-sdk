@@ -232,7 +232,10 @@ describe("BubbleChartconfigurationPanel", () => {
             expect(yAxisSection.props().disabled).toEqual(true);
         });
 
-        it.each([[false, true, "measures"], [true, false, "secondary_measures"]])(
+        it.each([
+            [false, true, "measures"],
+            [true, false, "secondary_measures"],
+        ])(
             "should render configuration panel with X axis name section is disabled=%s and Y axis name section is disabled=%s",
             (
                 expectedXAxisSectionDisabled: boolean,

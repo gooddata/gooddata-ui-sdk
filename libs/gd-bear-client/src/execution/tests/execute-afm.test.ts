@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import range from "lodash/range";
@@ -40,7 +40,10 @@ function createMeasureHeaderItem(name: string, order: number): GdcExecution.IRes
 
 function getExecutionResult(): GdcExecution.IExecutionResult {
     return {
-        data: [[11, 12], [51, 52]],
+        data: [
+            [11, 12],
+            [51, 52],
+        ],
         paging: {
             count: [2, 2],
             offset: [0, 0],
@@ -429,7 +432,10 @@ describe("mergePage", () => {
         it("should return correct result for 1 attribute (with 3 values) and 3 measures with limit=[2,2]", () => {
             const pageWithOffset0x0: GdcExecution.IExecutionResult = {
                 headerItems: [[[A1, A2]], [[M1, M2]]],
-                data: [[11, 12], [21, 22]],
+                data: [
+                    [11, 12],
+                    [21, 22],
+                ],
                 paging: {
                     count: [2, 2],
                     offset: [0, 0],
@@ -474,7 +480,10 @@ describe("mergePage", () => {
 
             expect(mergedFirstTwoPages).toEqual({
                 headerItems: [[[A1, A2]], [[M1, M2, M3]]],
-                data: [[11, 12, 13], [21, 22, 23]],
+                data: [
+                    [11, 12, 13],
+                    [21, 22, 23],
+                ],
                 paging: {
                     count: [2, 3],
                     offset: [0, 0],
@@ -486,7 +495,11 @@ describe("mergePage", () => {
 
             expect(mergedFirstThreePages).toEqual({
                 headerItems: [[[A1, A2, A3]], [[M1, M2, M3]]],
-                data: [[11, 12, 13], [21, 22, 23], [31, 32]],
+                data: [
+                    [11, 12, 13],
+                    [21, 22, 23],
+                    [31, 32],
+                ],
                 paging: {
                     count: [3, 3],
                     offset: [0, 0],
@@ -498,7 +511,11 @@ describe("mergePage", () => {
 
             expect(mergedAllFourPages).toEqual({
                 headerItems: [[[A1, A2, A3]], [[M1, M2, M3]]],
-                data: [[11, 12, 13], [21, 22, 23], [31, 32, 33]],
+                data: [
+                    [11, 12, 13],
+                    [21, 22, 23],
+                    [31, 32, 33],
+                ],
                 paging: {
                     count: [3, 3],
                     offset: [0, 0],

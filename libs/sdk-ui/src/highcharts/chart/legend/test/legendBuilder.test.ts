@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { generateChartOptions } from "../../test/helper";
 
 import * as fixtures from "../../../../../__mocks__/fixtures";
@@ -70,7 +70,10 @@ describe("shouldLegendBeEnabled", () => {
         const chartOptions = {
             type: VisualizationTypes.HEATMAP,
             colorAxis: {
-                dataClasses: [{ from: 1, to: 2 }, { from: 2, to: 3 }],
+                dataClasses: [
+                    { from: 1, to: 2 },
+                    { from: 2, to: 3 },
+                ],
             },
         };
 

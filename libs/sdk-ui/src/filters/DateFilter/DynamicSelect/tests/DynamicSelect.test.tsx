@@ -107,7 +107,12 @@ describe("DynamicSelect", () => {
         expect(input).toHaveValue("today");
     });
 
-    it.each([["   ", 25, 2, 0], ["0", 1, 0, 0], ["day", 2, 0, 0], ["no match", 0, 0, 1]])(
+    it.each([
+        ["   ", 25, 2, 0],
+        ["0", 1, 0, 0],
+        ["day", 2, 0, 0],
+        ["no match", 0, 0, 1],
+    ])(
         'should render menu and items on input value "%s"',
         (inputValue, optionCount: number, separatorCount: number, noMatchHeadingCount: number) => {
             const mounted = mountDynamicSelect();

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import { DefaultLocale } from "../../../../base";
 import * as referencePointMock from "../../../mocks/referencePointMocks";
@@ -54,7 +54,10 @@ describe("comboChartUiConfigHelper", () => {
             },
         );
 
-        it.each([[true, true], [false, false]])(
+        it.each([
+            [true, true],
+            [false, false],
+        ])(
             "should set canStackInPercent as %s when dual axis is %s",
             (expectation: boolean, dualAxis: boolean) => {
                 const refPoint = {

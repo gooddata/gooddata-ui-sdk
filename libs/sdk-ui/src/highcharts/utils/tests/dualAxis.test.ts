@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { comboChartWith3MetricsAndViewByAttribute } from "../../../../__mocks__/fixtures";
 import { setMeasuresToSecondaryAxis } from "../dualAxis";
 import { IChartConfig } from "../../Config";
@@ -12,7 +12,10 @@ describe("setMeasuresToSecondaryAxis", () => {
         },
     };
 
-    const TEST_CASES = [["", true, expectedDualAxisConfig], ["", undefined, expectedDualAxisConfig]];
+    const TEST_CASES = [
+        ["", true, expectedDualAxisConfig],
+        ["", undefined, expectedDualAxisConfig],
+    ];
 
     it.each(TEST_CASES)(
         "should %s add measures to secondary axis when dualAxis=%s",

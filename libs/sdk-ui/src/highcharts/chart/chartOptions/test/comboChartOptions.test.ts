@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { comboFacade, dummyMeasureGroup } from "../../../../../__mocks__/fixtures";
 import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 import { ISeriesItem } from "../../../Config";
@@ -53,7 +53,10 @@ describe("getComboChartStackingConfig", () => {
         ).toBe(PERCENT_STACK);
     });
 
-    it.each([[NORMAL_STACK, true], [null, false]])(
+    it.each([
+        [NORMAL_STACK, true],
+        [null, false],
+    ])(
         "should return %s stack value when 'Stack Measures' config is %s",
         (stackValue: string | null, stackMeasures: boolean) => {
             expect(

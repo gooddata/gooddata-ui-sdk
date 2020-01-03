@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import Highcharts from "../highchartsEntryPoint";
 import getOptionalStackingConfiguration, {
@@ -110,22 +110,22 @@ describe("getOptionalStackingConfiguration", () => {
             },
         );
 
-        it.each([[NORMAL_STACK, { stackMeasures: true }], [PERCENT_STACK, { stackMeasuresToPercent: true }]])(
-            "should return series config with %s stacking",
-            (type: any, chartConfig: IChartConfig) => {
-                const chartOptions = { yAxes: [{}] };
-                const config = { series: Array(2).fill({ yAxis: 0 }) };
+        it.each([
+            [NORMAL_STACK, { stackMeasures: true }],
+            [PERCENT_STACK, { stackMeasuresToPercent: true }],
+        ])("should return series config with %s stacking", (type: any, chartConfig: IChartConfig) => {
+            const chartOptions = { yAxes: [{}] };
+            const config = { series: Array(2).fill({ yAxis: 0 }) };
 
-                const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
-                expect(result).toEqual({
-                    series: Array(2).fill({
-                        yAxis: 0,
-                        stack: 0,
-                        stacking: type,
-                    }),
-                });
-            },
-        );
+            const result = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+            expect(result).toEqual({
+                series: Array(2).fill({
+                    yAxis: 0,
+                    stack: 0,
+                    stacking: type,
+                }),
+            });
+        });
 
         it('should "stackMeasuresToPercent" always overwrite "stackMeasures" setting', () => {
             const chartOptions = { yAxes: [{}] };
@@ -265,7 +265,11 @@ describe("getOptionalStackingConfiguration", () => {
             });
         });
 
-        it.each([["", true], ["", "auto"], [" not", false]])(
+        it.each([
+            ["", true],
+            ["", "auto"],
+            [" not", false],
+        ])(
             'should%s show stack label when "dataLabel.visible" is %s',
             (_negation: string, visible: boolean | string) => {
                 const chartOptions = {
@@ -394,43 +398,43 @@ describe("getOptionalStackingConfiguration", () => {
                 },
             );
 
-            it.each([["stackMeasures", NORMAL_STACK], ["stackMeasuresToPercent", PERCENT_STACK]])(
-                "should NOT apply %s on secondary y-axis",
-                (stackConfig: string, stackType: string) => {
-                    const config = {
-                        yAxis: [{}, {}],
-                        series: [
-                            {
-                                yAxis: 0,
-                                type: VisualizationTypes.COLUMN,
-                            },
-                            {
-                                yAxis: 1,
-                                type: VisualizationTypes.AREA,
-                            },
-                        ],
-                    };
-                    const chartConfig = { [stackConfig]: true };
-                    const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
-
-                    expect(series).toEqual([
+            it.each([
+                ["stackMeasures", NORMAL_STACK],
+                ["stackMeasuresToPercent", PERCENT_STACK],
+            ])("should NOT apply %s on secondary y-axis", (stackConfig: string, stackType: string) => {
+                const config = {
+                    yAxis: [{}, {}],
+                    series: [
                         {
                             yAxis: 0,
-                            stack: 0,
-                            stacking: stackType,
                             type: VisualizationTypes.COLUMN,
-                            dataLabels: { style: WHITE_LABEL },
                         },
                         {
                             yAxis: 1,
-                            stack: null,
-                            stacking: null,
                             type: VisualizationTypes.AREA,
-                            dataLabels: { style: BLACK_LABEL },
                         },
-                    ]);
-                },
-            );
+                    ],
+                };
+                const chartConfig = { [stackConfig]: true };
+                const { series } = getStackMeasuresConfiguration(chartOptions, config, chartConfig);
+
+                expect(series).toEqual([
+                    {
+                        yAxis: 0,
+                        stack: 0,
+                        stacking: stackType,
+                        type: VisualizationTypes.COLUMN,
+                        dataLabels: { style: WHITE_LABEL },
+                    },
+                    {
+                        yAxis: 1,
+                        stack: null,
+                        stacking: null,
+                        type: VisualizationTypes.AREA,
+                        dataLabels: { style: BLACK_LABEL },
+                    },
+                ]);
+            });
 
             it("should return series with no stack config", () => {
                 const chartOptions = {
@@ -600,14 +604,14 @@ describe("getOptionalStackingConfiguration", () => {
     });
 
     describe("getSanitizedStackingForSeries", () => {
-        it.each([["primary axis", 0], ["secondary axis", 1]])(
-            "should return the same series if series belong to %s",
-            (_axisName: string, axisIndex: number) => {
-                const series: ISeriesItem[] = [{ yAxis: axisIndex }];
-                const result = getSanitizedStackingForSeries(series);
-                expect(result).toEqual(series);
-            },
-        );
+        it.each([
+            ["primary axis", 0],
+            ["secondary axis", 1],
+        ])("should return the same series if series belong to %s", (_axisName: string, axisIndex: number) => {
+            const series: ISeriesItem[] = [{ yAxis: axisIndex }];
+            const result = getSanitizedStackingForSeries(series);
+            expect(result).toEqual(series);
+        });
         it.each([[PERCENT_STACK], [NORMAL_STACK]])(
             "should return the sanitized series if secondary axis has %s stack",
             (stacking: null | string) => {

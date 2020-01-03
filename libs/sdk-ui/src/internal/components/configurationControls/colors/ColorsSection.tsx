@@ -62,7 +62,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
     private isColoredListVisible() {
         const { colors, hasMeasures, controlsDisabled, isLoading } = this.props;
 
-        return isLoading || (!controlsDisabled && (colors && colors.colorPalette && hasMeasures));
+        return isLoading || (!controlsDisabled && colors && colors.colorPalette && hasMeasures);
     }
 
     private renderResetButton() {

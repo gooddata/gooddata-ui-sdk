@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import compose = require("lodash/flowRight");
 import { withBackend } from "./BackendContext";
 import { withWorkspace } from "./WorkspaceContext";
@@ -12,9 +12,5 @@ import { wrapDisplayName } from "./wrapDisplayName";
 export function withContexts<T extends { backend?: IAnalyticalBackend; workspace?: string }>(
     Chart: React.ComponentType<T>,
 ): React.ComponentType<T> {
-    return compose(
-        wrapDisplayName("withContexts"),
-        withBackend,
-        withWorkspace,
-    )(Chart);
+    return compose(wrapDisplayName("withContexts"), withBackend, withWorkspace)(Chart);
 }

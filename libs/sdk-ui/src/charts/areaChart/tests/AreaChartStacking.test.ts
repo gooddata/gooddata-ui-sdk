@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getBucketsProps, getConfigProps, IAreaChartProps } from "../AreaChart";
 import { IChartConfig } from "../../../highcharts";
 import { AttributeOrMeasure, IAttribute, IMeasure } from "@gooddata/sdk-model";
@@ -99,7 +99,10 @@ describe("getPropsForArea", () => {
             });
         });
 
-        it.each([[true, false], [false, true]])(
+        it.each([
+            [true, false],
+            [false, true],
+        ])(
             'should return props with "%s" stackMeasures overwrites "%s" stacking config',
             (stackMeasures: boolean, stacking: boolean) => {
                 const props: IAreaChartProps = {
@@ -122,7 +125,10 @@ describe("getPropsForArea", () => {
             },
         );
 
-        it.each([[true, false], [false, true]])(
+        it.each([
+            [true, false],
+            [false, true],
+        ])(
             'should return props with "%s" stackMeasuresToPercent overwrites "%s" stacking config',
             (stackMeasuresToPercent: boolean, stacking: boolean) => {
                 const props: IAreaChartProps = {

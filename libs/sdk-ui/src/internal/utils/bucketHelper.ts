@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import set = require("lodash/set");
 import get = require("lodash/get");
 import uniq = require("lodash/uniq");
@@ -116,9 +116,11 @@ function findDerivedTypesReferencedByArithmeticMeasure(
             }
             if (isArithmeticBucketItem(operand)) {
                 visitedMeasures.add(operandIdentifier);
-                findDerivedTypesReferencedByArithmeticMeasure(operand, allMeasures, visitedMeasures).forEach(
-                    (type: OverTimeComparisonType) => types.add(type),
-                );
+                findDerivedTypesReferencedByArithmeticMeasure(
+                    operand,
+                    allMeasures,
+                    visitedMeasures,
+                ).forEach((type: OverTimeComparisonType) => types.add(type));
             } else if (isDerivedBucketItem(operand) && !types.has(operand.overTimeComparisonType)) {
                 types.add(operand.overTimeComparisonType);
             }
@@ -292,7 +294,11 @@ export function getItemsCount(buckets: IBucketOfFun[], localIdentifier: string):
 }
 
 export function getBucketItems(buckets: IBucketOfFun[], localIdentifier: string): IBucketItem[] {
-    return get(buckets.find(bucket => bucket.localIdentifier === localIdentifier), "items", []);
+    return get(
+        buckets.find(bucket => bucket.localIdentifier === localIdentifier),
+        "items",
+        [],
+    );
 }
 
 // return bucket items matching localIdentifiers from any bucket

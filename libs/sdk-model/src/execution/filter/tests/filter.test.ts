@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { Account, ClosedDate, Won } from "../../../../__mocks__/model";
 import {
@@ -36,7 +36,10 @@ const RelativeDateFilter = newRelativeDateFilter(
 
 const MeasureValueFilter = newMeasureValueFilter(Won, "EQUAL_TO", 42);
 
-const InvalidScenarios: Array<[string, any]> = [["filter undefined", undefined], ["filter null", undefined]];
+const InvalidScenarios: Array<[string, any]> = [
+    ["filter undefined", undefined],
+    ["filter null", undefined],
+];
 
 describe("filterIsEmpty", () => {
     const Scenarios: Array<[boolean, string, any]> = [
