@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 export const ColumnChartWithSingleMeasureAndViewBy = {
     measures: [ReferenceLdm.Amount],
@@ -58,7 +58,16 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     })
     .addScenario("single measure with viewBy", ColumnChartWithSingleMeasureAndViewBy)
     .addScenario("single measure with viewBy and stackBy", ColumnChartWithSingleMeasureViewByAndStackBy)
+    .addScenario("single measure with viewBy and stackBy filtered to single stack", {
+        measures: [ReferenceLdm.Amount],
+        viewBy: [ReferenceLdm.Product.Name],
+        stackBy: ReferenceLdm.Region,
+        filters: [newPositiveAttributeFilter(ReferenceLdm.Region, ["East Coast"])],
+    })
     .addScenario("single measure with two viewBy and stack", ColumnChartWithSingleMeasureAndTwoViewByAndStack)
+    .addScenario("two measures", {
+        measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
+    })
     .addScenario("two measures with viewBy", ColumnChartWithTwoMeasuresAndViewBy)
     .addScenario("two measures with two viewBy", ColumnChartWithTwoMeasuresAndTwoViewBy)
     .addScenario("two measures with viewBy sorted by attribute", {
