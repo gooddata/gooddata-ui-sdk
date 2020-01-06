@@ -4,7 +4,7 @@ DISCLAIMER: the process described below is run manually now, but we want to auto
 
 ## Bumping the version
 
-First, you need to specify which version you want to create. To do that, edit the `"nextBump"` property in `common/config/version-policies.json`.
+First, you might need to specify which version you want to create (in case the version you are trying to release is not the same type as the current one, e.g. minor after an alpha release). To do that, edit the `"nextBump"` property in `common/config/rush/version-policies.json`.
 Then bump the version – this will update all the package.json files and if the new version is not a prerelease, it will update CHANGELOGS as well:
 
 ```bash
