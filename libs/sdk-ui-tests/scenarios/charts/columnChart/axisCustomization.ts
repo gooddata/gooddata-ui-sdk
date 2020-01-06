@@ -58,11 +58,46 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
             },
         },
     })
+    .addScenario("no gridline", {
+        ...ColumnChartWithTwoMeasuresAndViewBy,
+        config: {
+            grid: {
+                enabled: false,
+            },
+        },
+    })
     .addScenario("dual axis with one right measure and three left", {
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
             secondary_yaxis: {
                 measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+            },
+        },
+    })
+    .addScenario("dual axis with right axis labels rotated", {
+        ...ColumnChartWithArithmeticMeasuresAndViewBy,
+        config: {
+            secondary_yaxis: {
+                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                rotation: "45",
+            },
+        },
+    })
+    .addScenario("dual axis with hidden right Y axis", {
+        ...ColumnChartWithArithmeticMeasuresAndViewBy,
+        config: {
+            secondary_yaxis: {
+                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                visible: false,
+            },
+        },
+    })
+    .addScenario("dual axis with no labels on right Y axis", {
+        ...ColumnChartWithArithmeticMeasuresAndViewBy,
+        config: {
+            secondary_yaxis: {
+                measures: [measureLocalId(ReferenceLdmExt.CalculatedWonLostRatio)],
+                labelsEnabled: false,
             },
         },
     })
@@ -86,6 +121,17 @@ const axisConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         config: {
             xaxis: {
+                visible: false,
+            },
+        },
+    })
+    .addScenario("X and Y axis invisible", {
+        ...ColumnChartWithTwoMeasuresAndTwoViewBy,
+        config: {
+            xaxis: {
+                visible: false,
+            },
+            yaxis: {
                 visible: false,
             },
         },

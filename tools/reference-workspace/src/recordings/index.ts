@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2019-12-20T10:42:51.557Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-06T12:43:36.486Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./executions/uiTestScenarios/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -332,6 +332,11 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
+const fp_077ae3cab38d80b798b2e91a133aea10 = {
+    definition: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/dataView_all.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: fp_06890d7172183531342ed8e17d70e01a,
@@ -409,6 +414,7 @@ export const Scenarios = {
     },
     ColumnChart: {
         TwoMeasuresWithViewBySortedByAttribute: fp_1407ee212bc8a079b1048ff976726a8e,
+        TwoMeasures: fp_2111960a5050e0ed00c0820ee47af935,
         SingleMeasureWithViewByAndStackBy: fp_4feae4498f7ba55bc256e5a5f421915c,
         ViewByDateAndPoPMeasure: fp_59432d48715dbb61bfa9f23c22b31338,
         TwoMeasuresWithTwoViewBy: fp_97399c725102e8d868b81a0773188079,
@@ -418,6 +424,7 @@ export const Scenarios = {
         SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
         TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
         SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
+        SingleMeasureWithViewByAndStackByFilteredToSingleStack: fp_077ae3cab38d80b798b2e91a133aea10,
     },
     Headline: {
         TwoMeasuresOnePoP: fp_1e3f44f4d59bc898e1fa599ea22adb38,
@@ -556,6 +563,7 @@ export const Recordings = {
         fp_f8eb5e66709f2ea572a139e5e7790931,
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
+        fp_077ae3cab38d80b798b2e91a133aea10,
     },
     metadata: { displayForms: { df_label_product_id_name, df_label_owner_department } },
 };

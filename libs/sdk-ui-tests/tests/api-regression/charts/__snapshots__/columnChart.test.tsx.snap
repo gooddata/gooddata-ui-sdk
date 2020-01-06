@@ -2627,6 +2627,142 @@ Object {
 }
 `;
 
+exports[`ColumnChart with X and Y axis invisible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with X and Y axis invisible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+    "xaxis": Object {
+      "visible": false,
+    },
+    "yaxis": Object {
+      "visible": false,
+    },
+  },
+}
+`;
+
 exports[`ColumnChart with X axis invisible should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -4117,6 +4253,364 @@ Object {
 }
 `;
 
+exports[`ColumnChart with dual axis with hidden right Y axis should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with dual axis with hidden right Y axis should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      ],
+      "visible": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+}
+`;
+
+exports[`ColumnChart with dual axis with no labels on right Y axis should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with dual axis with no labels on right Y axis should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_yaxis": Object {
+      "labelsEnabled": false,
+      "measures": Array [
+        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      ],
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+}
+`;
+
 exports[`ColumnChart with dual axis with one right measure and three left should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -4295,6 +4789,185 @@ Object {
 }
 `;
 
+exports[`ColumnChart with dual axis with right axis labels rotated should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with dual axis with right axis labels rotated should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "secondary_yaxis": Object {
+      "measures": Array [
+        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+      ],
+      "rotation": "45",
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+}
+`;
+
 exports[`ColumnChart with force disable drill on axes should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -4426,6 +5099,122 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+}
+`;
+
+exports[`ColumnChart with no gridline should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with no gridline should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "grid": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
 }
 `;
 
@@ -5699,6 +6488,126 @@ Object {
 `;
 
 exports[`ColumnChart with single measure with two viewBy and stack should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+}
+`;
+
+exports[`ColumnChart with single measure with viewBy and stackBy filtered to single stack should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "positiveAttributeFilter": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "in": Object {
+          "values": Array [
+            "East Coast",
+          ],
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with single measure with viewBy and stackBy filtered to single stack should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "stackMeasures": undefined,
@@ -7505,6 +8414,99 @@ Object {
   "drillableItems": Array [
     [Function],
   ],
+}
+`;
+
+exports[`ColumnChart with two measures should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ColumnChart with two measures should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
 }
 `;
 

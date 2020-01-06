@@ -1,0 +1,6 @@
+[
+    {
+        "vis": "ColumnChart",
+        "scenario": "single measure with viewBy and stackBy filtered to single stack"
+    }
+]

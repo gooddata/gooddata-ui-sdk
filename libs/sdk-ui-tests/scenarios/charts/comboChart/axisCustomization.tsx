@@ -35,10 +35,20 @@ const axisNameConfig = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({ groupUnder: "axis name configuration" })
     .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, axisNameCustomization);
 
+const others = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario("dual axis disabled", {
+        ...ComboChartWithTwoMeasuresAndViewBy,
+        config: {
+            dualAxis: false,
+        },
+    });
+
 export default [
     twoMeasures,
     twoMeasuresNoSlicing,
     multipleMeasures,
     multipleMeasuresNoSlicing,
     axisNameConfig,
+    others,
 ];
