@@ -30,8 +30,8 @@
         "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.0",
-        "@gooddata/sdk-model": "^8.0.0-alpha.0",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.1",
+        "@gooddata/sdk-model": "^8.0.0-alpha.1",
         "lodash": "^4.17.15"
     },
     "devDependencies": {
