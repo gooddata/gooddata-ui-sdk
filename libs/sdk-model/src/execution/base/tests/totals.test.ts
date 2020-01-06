@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { newTotal, totalIsNative } from "../totals";
 import { Account, Won } from "../../../../__mocks__/model";
@@ -39,7 +39,10 @@ describe("isNativeTotal", () => {
         [false, "non-native total", newTotal("sum", Won, Account.Default)],
     ];
 
-    const InvalidScenario: Array<[string, any]> = [["undefined total", undefined], ["null total", null]];
+    const InvalidScenario: Array<[string, any]> = [
+        ["undefined total", undefined],
+        ["null total", null],
+    ];
 
     it.each(Scenarios)("should return %s when %s", (expectedResult, _desc, input) => {
         expect(totalIsNative(input)).toEqual(expectedResult);

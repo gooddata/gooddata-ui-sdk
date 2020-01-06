@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import range = require("lodash/range");
 import set = require("lodash/set");
 import isNil = require("lodash/isNil");
@@ -3089,7 +3089,10 @@ describe("chartOptionsBuilder", () => {
                 expect(chartOptions.yAxes[0].format).toBe(expectedPercentageFormat);
             });
 
-            it.each([[null, false], [NORMAL_STACK, true]])(
+            it.each([
+                [null, false],
+                [NORMAL_STACK, true],
+            ])(
                 "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
                 (stackingValue: string, stackMeasures: boolean) => {
                     const chartOptions = generateChartOptions(

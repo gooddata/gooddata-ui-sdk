@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import values from "lodash/fp/values";
 import first from "lodash/first";
 import flow from "lodash/flow";
@@ -166,10 +166,7 @@ export namespace GdcMetadata {
     }
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
-        const unwrappedObject: IObject = flow(
-            values,
-            first,
-        )(object);
+        const unwrappedObject: IObject = flow(values, first)(object);
 
         return unwrappedObject;
     }

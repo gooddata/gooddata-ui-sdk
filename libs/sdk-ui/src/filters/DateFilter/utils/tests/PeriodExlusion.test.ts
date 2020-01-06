@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { canExcludeCurrentPeriod, applyExcludeCurrentPeriod } from "../PeriodExlusion";
 import { ExtendedDateFilters } from "../../interfaces/ExtendedDateFilters";
 
@@ -121,9 +121,11 @@ describe("applyExcludeCurrentPeriod", () => {
         expect(actual).toEqual(input);
     });
 
-    const Scenarios: Array<
-        [string, ExtendedDateFilters.DateFilterOption, ExtendedDateFilters.DateFilterOption]
-    > = [
+    const Scenarios: Array<[
+        string,
+        ExtendedDateFilters.DateFilterOption,
+        ExtendedDateFilters.DateFilterOption,
+    ]> = [
         [
             "allTime",
             {

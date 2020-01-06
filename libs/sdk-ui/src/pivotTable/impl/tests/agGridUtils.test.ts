@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     getIdsFromUri,
     sanitizeField,
@@ -67,7 +67,11 @@ describe("getRowNodeId", () => {
 describe("getGridIndex", () => {
     const gridDistance = 20;
 
-    it.each([["100", 100, 5], ["110", 110, 5], ["99", 99, 4]])(
+    it.each([
+        ["100", 100, 5],
+        ["110", 110, 5],
+        ["99", 99, 4],
+    ])(
         "should return correct row index when scrolltop is %s",
         (_: string, scrollTop: number, expectedRowIndex: number) => {
             expect(getGridIndex(scrollTop, gridDistance)).toEqual(expectedRowIndex);

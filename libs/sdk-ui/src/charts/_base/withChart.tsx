@@ -26,8 +26,4 @@ function withChartDefinition<TBucketProps extends object, TProps extends TBucket
 export const withChart = <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
     chartDefinition: IChartDefinition<TBucketProps, TProps>,
 ) => (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> =>
-    compose(
-        wrapDisplayName("withChart"),
-        withContexts,
-        withChartDefinition(chartDefinition),
-    )(Chart);
+    compose(wrapDisplayName("withChart"), withContexts, withChartDefinition(chartDefinition))(Chart);

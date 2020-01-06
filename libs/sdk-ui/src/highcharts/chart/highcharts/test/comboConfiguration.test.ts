@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import { IChartConfig } from "../../../Config";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
@@ -50,7 +50,12 @@ describe("Combo Configuration", () => {
             expect(getDefaultChartType(config)).toEqual(type);
         });
 
-        it.each([[COLUMN, LINE], [COLUMN, AREA], [LINE, COLUMN], [AREA, COLUMN]])(
+        it.each([
+            [COLUMN, LINE],
+            [COLUMN, AREA],
+            [LINE, COLUMN],
+            [AREA, COLUMN],
+        ])(
             "should return 'column' if primaryChartType=%s and secondaryChartType=%s",
             (primaryChartType: any, secondaryChartType: any) => {
                 const config: IChartConfig = {

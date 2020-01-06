@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     adjustTicks,
     ALIGNED,
@@ -78,14 +78,14 @@ describe("adjustTickAmount - general", () => {
             },
         );
 
-        it.each([["left", getLeftAxis(), -900, 1200], ["right", getRightAxis(), -12000, 9000]])(
-            "should min/max be updated on %s axis",
-            (_side: any, axis: any, min: number, max: number) => {
-                customAdjustTickAmount.call(axis);
-                expect(axis.min).toBe(min);
-                expect(axis.max).toBe(max);
-            },
-        );
+        it.each([
+            ["left", getLeftAxis(), -900, 1200],
+            ["right", getRightAxis(), -12000, 9000],
+        ])("should min/max be updated on %s axis", (_side: any, axis: any, min: number, max: number) => {
+            customAdjustTickAmount.call(axis);
+            expect(axis.min).toBe(min);
+            expect(axis.max).toBe(max);
+        });
     });
 
     describe("should adjust tick amount with user-input min/max", () => {
@@ -137,13 +137,13 @@ describe("adjustTickAmount - general", () => {
             },
         );
 
-        it.each([["left", leftAxis, -105, 0], ["right", rightAxis, -5600, 0]])(
-            "should min/max be updated on %s axis",
-            (_side: any, axis: any, min: number, max: number) => {
-                expect(axis.min).toBe(min);
-                expect(axis.max).toBe(max);
-            },
-        );
+        it.each([
+            ["left", leftAxis, -105, 0],
+            ["right", rightAxis, -5600, 0],
+        ])("should min/max be updated on %s axis", (_side: any, axis: any, min: number, max: number) => {
+            expect(axis.min).toBe(min);
+            expect(axis.max).toBe(max);
+        });
 
         it("should two axes be zero aligned", () => {
             expect(leftAxis.tickPositions.indexOf(0)).toBe(rightAxis.tickPositions.indexOf(0));
@@ -511,7 +511,10 @@ describe("adjustTickAmount - detail", () => {
     });
 
     describe("getDirection", () => {
-        it.each([["left", null, {}], ["right", {}, null]])(
+        it.each([
+            ["left", null, {}],
+            ["right", {}, null],
+        ])(
             "should return ALIGN when %s axis is null",
             (_axisSide: string, primaryAxis: IHighchartsAxisExtend, secondaryAxis: IHighchartsAxisExtend) => {
                 expect(getDirection(primaryAxis, secondaryAxis)).toBe(ALIGNED);

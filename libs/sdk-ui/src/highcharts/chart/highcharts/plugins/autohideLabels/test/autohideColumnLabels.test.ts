@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
 import { IPointData, IDataLabelsConfig, IAxisConfig, ISeriesDataItem } from "../../../../../Config";
@@ -132,7 +132,12 @@ describe("getStackTotalGroups", () => {
         };
         const yAxis: IAxisConfig[] = [
             {
-                stacks: { column0: [{ x: 0, total: 678 }, { x: 1, total: 958 }] },
+                stacks: {
+                    column0: [
+                        { x: 0, total: 678 },
+                        { x: 1, total: 958 },
+                    ],
+                },
                 stackTotalGroup,
             },
         ] as any;
@@ -163,7 +168,12 @@ describe("getStackItems", () => {
     it("should return stack items", () => {
         const yAxis: IAxisConfig[] = [
             {
-                stacks: { column0: [{ x: 0, total: 678 }, { x: 1, total: 958 }] },
+                stacks: {
+                    column0: [
+                        { x: 0, total: 678 },
+                        { x: 1, total: 958 },
+                    ],
+                },
             },
         ] as any[];
         const stackItems = autohideColumnLabels.getStackItems(yAxis);
@@ -172,7 +182,10 @@ describe("getStackItems", () => {
     });
 
     it("should return data label items", () => {
-        const data: ISeriesDataItem[] = [{ x: 6, y: 7 }, { x: 8, y: 9 }];
+        const data: ISeriesDataItem[] = [
+            { x: 6, y: 7 },
+            { x: 8, y: 9 },
+        ];
         const yAxis: IAxisConfig[] = [
             {
                 stacks: {},
@@ -193,7 +206,11 @@ describe("getStackItems", () => {
 });
 
 describe("areNeighborsOverlapping", () => {
-    const clientRect = [{ right: 100, left: 10 }, { right: 101, left: 99 }, { right: 102, left: 250 }];
+    const clientRect = [
+        { right: 100, left: 10 },
+        { right: 101, left: 99 },
+        { right: 102, left: 250 },
+    ];
     function getElement(index: number) {
         return {
             getBoundingClientRect: () => {
@@ -207,13 +224,13 @@ describe("areNeighborsOverlapping", () => {
     const withoutOverlapLabel: IDataLabelsConfig[][] = [
         [{ element: getElement(1) }, { element: getElement(2) }],
     ] as any;
-    it.each([[true, overlaplabels], [false, withoutOverlapLabel]])(
-        "should return overlap is %s",
-        (isOverlap: boolean, labels: IDataLabelsConfig[][]) => {
-            const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
-            expect(areNeighborsOverlapping).toEqual(isOverlap);
-        },
-    );
+    it.each([
+        [true, overlaplabels],
+        [false, withoutOverlapLabel],
+    ])("should return overlap is %s", (isOverlap: boolean, labels: IDataLabelsConfig[][]) => {
+        const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
+        expect(areNeighborsOverlapping).toEqual(isOverlap);
+    });
 });
 
 describe("areLabelsOverlappingColumns", () => {

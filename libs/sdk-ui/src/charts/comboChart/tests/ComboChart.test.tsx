@@ -70,7 +70,10 @@ describe("ComboChart", () => {
             expect(configProps.stackMeasuresToPercent).toBeFalsy();
         });
 
-        it.each([["primary", [M5, M5WithRatio], []], ["secondary", [], [M5, M5WithRatio]]])(
+        it.each([
+            ["primary", [M5, M5WithRatio], []],
+            ["secondary", [], [M5, M5WithRatio]],
+        ])(
             "should ignore computeRatio when %s measure bucket has multiple items",
             (_name: any, primaryMeasures: any, secondaryMeasures: any) => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);

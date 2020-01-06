@@ -159,7 +159,10 @@ describe("CorePivotTable", () => {
 describe("getParsedFields", () => {
     it("should return last parsed field from colId", () => {
         expect(getParsedFields("a_2009")).toEqual([["a", "2009"]]);
-        expect(getParsedFields("a_2009_4-a_2071_12")).toEqual([["a", "2009", "4"], ["a", "2071", "12"]]);
+        expect(getParsedFields("a_2009_4-a_2071_12")).toEqual([
+            ["a", "2009", "4"],
+            ["a", "2071", "12"],
+        ]);
         expect(getParsedFields("a_2009_4-a_2071_12-m_3")).toEqual([
             ["a", "2009", "4"],
             ["a", "2071", "12"],

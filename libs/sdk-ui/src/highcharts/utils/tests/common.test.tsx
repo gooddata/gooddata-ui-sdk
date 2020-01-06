@@ -139,11 +139,13 @@ describe("Common utils", () => {
     });
 
     describe("percentFormatter", () => {
-        it.each([["0%", 0], ["49.01%", 49.01], ["100%", 100], ["", null]])(
-            'should return "%s" when input is %s',
-            (formattedValue: string, value: number) => {
-                expect(percentFormatter(value)).toEqual(formattedValue);
-            },
-        );
+        it.each([
+            ["0%", 0],
+            ["49.01%", 49.01],
+            ["100%", 100],
+            ["", null],
+        ])('should return "%s" when input is %s', (formattedValue: string, value: number) => {
+            expect(percentFormatter(value)).toEqual(formattedValue);
+        });
     });
 });

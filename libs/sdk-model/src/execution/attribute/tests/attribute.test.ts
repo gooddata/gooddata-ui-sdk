@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     attributeIdentifier,
     attributeLocalId,
@@ -27,7 +27,10 @@ const AttributeWithAlias: IAttribute = {
     },
 };
 
-const InvalidScenarios: Array<[string, any]> = [["attribute undefined", undefined], ["attribute null", null]];
+const InvalidScenarios: Array<[string, any]> = [
+    ["attribute undefined", undefined],
+    ["attribute null", null],
+];
 
 describe("attributeLocalId", () => {
     it("should return local identifier", () => {

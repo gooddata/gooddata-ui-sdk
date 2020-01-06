@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     dimensionSetTotals,
@@ -91,7 +91,10 @@ describe("dimensionTotals", () => {
         expect(dimensionTotals(input)).toEqual(expected);
     });
 
-    const InvalidScenarios: Array<[string, any]> = [["dim undefined", undefined], ["dim null", null]];
+    const InvalidScenarios: Array<[string, any]> = [
+        ["dim undefined", undefined],
+        ["dim null", null],
+    ];
 
     it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
         expect(() => dimensionTotals(input)).toThrow();

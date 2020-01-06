@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     applyRatioRule,
@@ -59,7 +59,10 @@ const BucketWithManyAttrs = newBucket("BucketWithManyAttrs", Account.Name, Accou
 const BucketWithMeasureAndAttr = newBucket("BucketWithMeasureAndAttr", Won, Account.Name);
 const BucketWithEverything = newBucket("BucketWithMeasureAndAttr", Won, Account.Name, Total);
 
-const InvalidScenarios: Array<[string, any]> = [["undefined input", undefined], ["null input", null]];
+const InvalidScenarios: Array<[string, any]> = [
+    ["undefined input", undefined],
+    ["null input", null],
+];
 
 describe("bucketIsEmpty", () => {
     const Scenarios: Array<[boolean, string, any]> = [

@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import get from "lodash/get";
@@ -82,9 +82,10 @@ function expectColumns(expected: string[], reportDefinition: IReportDefinition) 
 }
 
 function expectMetricDefinition(expected: IMetricDefinition, reportDefinition: IReportDefinition) {
-    const actualMetricDefinitions: IMetricDefinition[] = get(reportDefinition, "definitions").map(
-        (definition: any) => get(definition, "metricDefinition"),
-    );
+    const actualMetricDefinitions: IMetricDefinition[] = get(
+        reportDefinition,
+        "definitions",
+    ).map((definition: any) => get(definition, "metricDefinition"));
 
     const defFound = find(actualMetricDefinitions, expected);
 

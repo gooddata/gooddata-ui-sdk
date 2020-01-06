@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import * as TJS from "typescript-json-schema";
 import * as fs from "fs";
@@ -86,7 +86,10 @@ function generateAndWrite(input: GeneratorInput, output: GeneratorOutput) {
 
     console.log(`Found ${symbols.length} types: ${symbols.map(s => s.name).join(", ")}`);
 
-    const definition = generator.getSchemaForSymbols(symbols.map(s => s.name), true);
+    const definition = generator.getSchemaForSymbols(
+        symbols.map(s => s.name),
+        true,
+    );
 
     fs.writeFileSync(output.file, JSON.stringify(definition, null, 4), { encoding: "utf-8" });
 

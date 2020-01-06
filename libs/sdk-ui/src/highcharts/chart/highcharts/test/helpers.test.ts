@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     shouldFollowPointer,
     shouldFollowPointerForDualAxes,
@@ -849,7 +849,10 @@ describe("helpers", () => {
             };
         }
 
-        it.each([[TOP, 0, undefined, undefined, 100], [BOTTOM, undefined, 0, 100, undefined]])(
+        it.each([
+            [TOP, 0, undefined, undefined, 100],
+            [BOTTOM, undefined, 0, 100, undefined],
+        ])(
             "should update chart margin %s",
             (
                 verticalAlign: ChartAlignTypes,
