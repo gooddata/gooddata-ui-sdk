@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
@@ -9,7 +9,7 @@ import {
     ICatalogGroup,
     ICatalogDateDataset,
     AttributeOrMeasure,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import {
@@ -74,7 +74,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
         return this.withOptions({ items });
     }
 
-    public forInsight(insight: IInsightWithoutIdentifier): IWorkspaceCatalogAvailableItemsFactory {
+    public forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({ insight });
     }
 
@@ -89,7 +89,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             (type): type is CompatibleCatalogItemType => type !== "dateDataset",
         );
         const bearTypes = compatibleBearItemTypes.map(convertItemType);
-        const itemsInsight: IInsightWithoutIdentifier = {
+        const itemsInsight: IInsightDefinition = {
             insight: {
                 title: "",
                 filters: [],

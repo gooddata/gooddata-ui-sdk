@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     CatalogItemType,
     CatalogItem,
@@ -8,7 +8,7 @@ import {
     ICatalogFact,
     AttributeOrMeasure,
     ICatalogDateDataset,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
 } from "@gooddata/sdk-model";
 
 /**
@@ -30,7 +30,7 @@ export interface IWorkspaceCatalogFactoryOptions {
  */
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
     items?: AttributeOrMeasure[];
-    insight?: IInsightWithoutIdentifier;
+    insight?: IInsightDefinition;
 }
 
 /**
@@ -54,7 +54,7 @@ export interface IWorkspaceCatalogAvailableItemsFactory
         IWorkspaceCatalogWithAvailableItemsFactoryOptions
     > {
     forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
-    forInsight(insight: IInsightWithoutIdentifier): IWorkspaceCatalogAvailableItemsFactory;
+    forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory;
     load(): Promise<IWorkspaceCatalogWithAvailableItems>;
 }
 

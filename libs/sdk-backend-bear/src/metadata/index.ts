@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
@@ -10,7 +10,7 @@ import {
     IInsight,
     IAttributeDisplayForm,
     IMeasureExpressionToken,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
     insightId,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
@@ -92,7 +92,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         };
     };
 
-    public createInsight = async (insight: IInsightWithoutIdentifier): Promise<IInsight> => {
+    public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         return this.authCall(sdk =>
             sdk.md.saveVisualization(this.workspace, { visualizationObject: convertInsight(insight) }),
         );
@@ -111,7 +111,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         await this.authCall(sdk => sdk.md.deleteVisualization(uri));
     };
 
-    public openInsightAsReport = async (insight: IInsightWithoutIdentifier): Promise<string> => {
+    public openInsightAsReport = async (insight: IInsightDefinition): Promise<string> => {
         const visualizationObject = convertInsight(insight);
         return this.authCall(sdk =>
             sdk.md.openVisualizationAsReport(this.workspace, { visualizationObject }),

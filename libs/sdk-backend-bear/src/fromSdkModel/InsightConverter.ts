@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
     insightBuckets,
     insightVisualizationClassUri,
     IBucket,
@@ -43,7 +43,7 @@ const convertBucket = (bucket: IBucket): GdcVisualizationObject.IBucket => {
 };
 
 const convertInsightContent = (
-    insight: IInsightWithoutIdentifier,
+    insight: IInsightDefinition,
 ): GdcVisualizationObject.IVisualizationObjectContent => {
     const { properties, references } = convertUrisToReferences({
         properties: insightProperties(insight),
@@ -63,9 +63,7 @@ const convertInsightContent = (
     };
 };
 
-export const convertInsight = (
-    insight: IInsightWithoutIdentifier,
-): GdcVisualizationObject.IVisualizationObject => {
+export const convertInsight = (insight: IInsightDefinition): GdcVisualizationObject.IVisualizationObject => {
     return {
         content: convertInsightContent(insight),
         meta: {
