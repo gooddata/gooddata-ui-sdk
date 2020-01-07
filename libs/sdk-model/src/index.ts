@@ -266,6 +266,8 @@ export {
     visClassUrl,
 } from "./insight";
 
+export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
+
 export {
     CatalogItemType,
     CatalogItem,

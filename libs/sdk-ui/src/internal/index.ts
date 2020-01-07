@@ -1,7 +1,15 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import * as Axis from "./constants/axis";
-import * as PluggableVisualizationTypes from "./interfaces/Visualization";
 import * as DrillablePredicatesUtils from "./utils/drillablePredicates";
-import { BaseVisualization } from "./components/BaseVisualization";
+export { Axis, DrillablePredicatesUtils };
 
-export { Axis, PluggableVisualizationTypes, DrillablePredicatesUtils, BaseVisualization };
+export { BaseVisualization } from "./components/BaseVisualization";
+export { IVisualizationCatalog, DefaultVisualizationCatalog } from "./components/VisualizationCatalog";
+export {
+    IVisualization,
+    IVisConstruct,
+    IVisCallbacks,
+    IVisProps,
+    IVisualizationProperties,
+    IVisualizationOptions,
+} from "./interfaces/Visualization";

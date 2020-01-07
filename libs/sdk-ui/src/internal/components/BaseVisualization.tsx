@@ -1,13 +1,15 @@
 // (C) 2019 GoodData Corporation
+import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IInsight, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
 import * as React from "react";
 import * as uuid from "uuid";
 import {
     IDrillableItem,
-    VisualizationEnvironment,
+    ILocale,
     OnError,
     OnExportReady,
     OnLoadingChanged,
-    ILocale,
+    VisualizationEnvironment,
 } from "../../base";
 import {
     IBucketItem,
@@ -18,46 +20,15 @@ import {
     IVisConstruct,
     IVisualization,
 } from "../interfaces/Visualization";
-import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";
-import { PluggableColumnChart } from "./pluggableVisualizations/columnChart/PluggableColumnChart";
-import { PluggableHeatmap } from "./pluggableVisualizations/heatMap/PluggableHeatmap";
-import { PluggableLineChart } from "./pluggableVisualizations/lineChart/PluggableLineChart";
-import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
-import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggablePieChart";
-import { PluggableDonutChart } from "./pluggableVisualizations/donutChart/PluggableDonutChart";
-import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
-import { PluggableHeadline } from "./pluggableVisualizations/headline/PluggableHeadline";
-import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
-import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
-import { PluggableComboChart } from "./pluggableVisualizations/comboChart/PluggableComboChart";
-import { PluggableTreemap } from "./pluggableVisualizations/treeMap/PluggableTreemap";
-import { PluggableFunnelChart } from "./pluggableVisualizations/funnelChart/PluggableFunnelChart";
-import { PluggableBubbleChart } from "./pluggableVisualizations/bubbleChart/PluggableBubbleChart";
-import { IInsight, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import isEqual = require("lodash/isEqual");
+import {
+    DefaultVisualizationCatalog,
+    IVisualizationCatalog,
+    PluggableVisualizationFactory,
+} from "./VisualizationCatalog";
 import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
-
-// visualization catalogue - add your new visualization here
-const VisualizationsCatalog = {
-    bar: PluggableBarChart,
-    column: PluggableColumnChart,
-    line: PluggableLineChart,
-    area: PluggableAreaChart,
-    pie: PluggablePieChart,
-    donut: PluggableDonutChart,
-    table: PluggablePivotTable,
-    headline: PluggableHeadline,
-    scatter: PluggableScatterPlot,
-    bubble: PluggableBubbleChart,
-    heatmap: PluggableHeatmap,
-    combo: PluggableComboChartDeprecated, // old combo chart
-    combo2: PluggableComboChart, // new combo chart
-    treemap: PluggableTreemap,
-    funnel: PluggableFunnelChart,
-};
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     projectId: string;
@@ -71,7 +42,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     drillableItems: IDrillableItem[];
     totalsEditAllowed?: boolean;
     featureFlags?: IFeatureFlags;
-    visualizationsCatalog?: object;
+    visualizationCatalog?: IVisualizationCatalog;
     newDerivedBucketItems?: IBucketItem[];
     referencePoint?: IReferencePoint;
     onError: OnError;
@@ -85,7 +56,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
 
 export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps, null> {
     public static defaultProps: Partial<IBaseVisualizationProps> = {
-        visualizationsCatalog: VisualizationsCatalog,
+        visualizationCatalog: DefaultVisualizationCatalog,
         newDerivedBucketItems: [],
         referencePoint: null,
         onExtendedReferencePointChanged: noop,
@@ -176,11 +147,16 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.visualization.unmount();
         }
 
-        const type = visClassUrl(visualizationClass).split(":")[1];
+        const visUri = visClassUrl(visualizationClass);
+        let visFactory: PluggableVisualizationFactory | undefined;
 
-        const visConstructor = this.props.visualizationsCatalog[type];
+        try {
+            visFactory = this.props.visualizationCatalog.forUri(visUri);
+        } catch (e) {
+            console.error(`Error: unsupported visualization type - ${visUri}`); // tslint:disable-line
+        }
 
-        if (visConstructor) {
+        if (visFactory) {
             const constInput: IVisConstruct = {
                 projectId,
                 locale,
@@ -200,9 +176,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 visualizationProperties: insightProperties(props.insight),
             };
 
-            this.visualization = new visConstructor(constInput);
-        } else {
-            console.error(`Error: unsupported visualization type - ${type}`); // tslint:disable-line
+            this.visualization = visFactory(constInput);
         }
     }
 
