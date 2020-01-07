@@ -30,6 +30,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    RenderFunction,
 } from "../../../interfaces/Visualization";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
@@ -266,6 +267,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private visualizationProperties: IVisualizationProperties;
     private locale: ILocale;
     private environment: VisualizationEnvironment;
+    private renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
         super();
@@ -277,6 +279,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.intl = createInternalIntl(this.locale);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;
+        this.renderFun = props.renderFun;
     }
 
     public unmount() {
@@ -416,7 +419,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
             if (isNil(height)) {
-                render(
+                this.renderFun(
                     <Measure client={true}>
                         {({ measureRef, contentRect }: any) => {
                             const usedHeight = Math.floor(contentRect.client.height || 0);
@@ -444,14 +447,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 return;
             }
 
-            render(
+            this.renderFun(
                 <div style={{ height: 328, textAlign: "left" }} className="gd-table-dashboard-wrapper">
                     <CorePivotTable {...pivotTableProps} />
                 </div>,
                 document.querySelector(this.element),
             );
         } else {
-            render(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
+            this.renderFun(<CorePivotTable {...pivotTableProps} />, document.querySelector(this.element));
         }
     }
 

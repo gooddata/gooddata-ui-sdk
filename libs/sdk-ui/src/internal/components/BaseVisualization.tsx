@@ -2,6 +2,7 @@
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { IInsight, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
 import * as React from "react";
+import { render } from "react-dom";
 import * as uuid from "uuid";
 import {
     IDrillableItem,
@@ -31,6 +32,7 @@ import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
+    backend: IAnalyticalBackend;
     projectId: string;
     insight: IInsight;
     config?: IGdcConfig;
@@ -49,12 +51,12 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onExportReady: OnExportReady;
     onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
-    backend: IAnalyticalBackend;
     onExtendedReferencePointChanged?(): void;
     onNewDerivedBucketItemsPlaced?(): void;
+    renderer?(component: any, target: Element): void;
 }
 
-export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps, null> {
+export class BaseVisualization extends React.PureComponent<IBaseVisualizationProps> {
     public static defaultProps: Partial<IBaseVisualizationProps> = {
         visualizationCatalog: DefaultVisualizationCatalog,
         newDerivedBucketItems: [],
@@ -63,6 +65,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         onNewDerivedBucketItemsPlaced: noop,
         isMdObjectValid: true,
         featureFlags: {},
+        renderer: render,
     };
 
     private componentId: string;
@@ -141,7 +144,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     private setupVisualization(props: IBaseVisualizationProps) {
-        const { visualizationClass, environment, locale, featureFlags, projectId } = props;
+        const { visualizationClass, environment, locale, featureFlags, projectId, renderer } = props;
 
         if (this.visualization) {
             this.visualization.unmount();
@@ -174,6 +177,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 },
                 featureFlags,
                 visualizationProperties: insightProperties(props.insight),
+                renderFun: renderer,
             };
 
             this.visualization = visFactory(constInput);

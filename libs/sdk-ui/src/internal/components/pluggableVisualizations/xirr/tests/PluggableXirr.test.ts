@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import cloneDeep = require("lodash/cloneDeep");
@@ -25,6 +25,7 @@ describe("PluggableXirr", () => {
             onLoadingChanged: jest.fn(),
             onError: jest.fn(),
         },
+        renderFun: jest.fn(),
     };
 
     const executionFactory = dummyBackend()
@@ -91,9 +92,9 @@ describe("PluggableXirr", () => {
             const reactCreateElementSpy = jest
                 .spyOn(React, "createElement")
                 .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
+            const mockRenderFun = jest.fn();
 
-            const xirr = createComponent();
+            const xirr = createComponent({ ...defaultProps, renderFun: mockRenderFun });
             const options: IVisProps = getTestOptions();
 
             xirr.update(options, testMocks.insightWithSingleMeasure, executionFactory);
@@ -111,13 +112,12 @@ describe("PluggableXirr", () => {
                 LoadingComponent: null,
                 execution: expect.any(Object),
             });
-            expect(reactRenderSpy).toHaveBeenCalledWith(
+            expect(mockRenderFun).toHaveBeenCalledWith(
                 fakeElement,
                 document.querySelector(defaultProps.element),
             );
 
             reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {
@@ -125,12 +125,13 @@ describe("PluggableXirr", () => {
             const reactCreateElementSpy = jest
                 .spyOn(React, "createElement")
                 .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
+            const mockRenderFun = jest.fn();
 
             const xirr = createComponent({
                 featureFlags: {
                     disableKpiDashboardHeadlineUnderline: true,
                 },
+                renderFun: mockRenderFun,
             });
 
             const options: IVisProps = getTestOptions();
@@ -154,7 +155,6 @@ describe("PluggableXirr", () => {
             });
 
             reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
         });
     });
 

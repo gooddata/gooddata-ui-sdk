@@ -1,32 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { dummyBackend, withEventing } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend, isNoDataError } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { mount, ReactWrapper } from "enzyme";
 import React from "react";
 import { PropsFactory, VisProps } from "../../src";
+import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
 import omit = require("lodash/omit");
-
-export type DataViewRequests = {
-    allData?: boolean;
-    windows?: RequestedWindow[];
-};
-
-export type RequestedWindow = {
-    offset: number[];
-    size: number[];
-};
-
-/**
- * Recorded chart interactions
- */
-export type ChartInteractions = {
-    triggeredExecution?: IExecutionDefinition;
-    dataViewRequests: DataViewRequests;
-    effectiveProps?: any;
-};
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {
@@ -38,39 +18,6 @@ function errorHandler(error: GoodDataSdkError) {
 
     // tslint:disable-next-line:no-console
     console.error("Possibly unexpected exception during enzyme mount of the chart", error);
-}
-
-export function backendWithCapturing(): [IAnalyticalBackend, Promise<ChartInteractions>] {
-    const interactions: ChartInteractions = {
-        dataViewRequests: {},
-    };
-
-    let dataRequestResolver: (interactions: ChartInteractions) => void;
-    const capturedInteractions = new Promise<ChartInteractions>(resolve => {
-        dataRequestResolver = resolve;
-    });
-
-    const backend = withEventing(dummyBackend({ hostname: "test", raiseNoDataExceptions: true }), {
-        beforeExecute: def => {
-            interactions.triggeredExecution = def;
-        },
-        failedResultReadAll: _ => {
-            interactions.dataViewRequests.allData = true;
-
-            dataRequestResolver(interactions);
-        },
-        failedResultReadWindow: (offset: number[], size: number[]) => {
-            if (!interactions.dataViewRequests.windows) {
-                interactions.dataViewRequests.windows = [];
-            }
-
-            interactions.dataViewRequests.windows.push({ offset, size });
-
-            dataRequestResolver(interactions);
-        },
-    });
-
-    return [backend, capturedInteractions];
 }
 
 export type EffectivePropsExtractor = (wrapper: ReactWrapper) => any;

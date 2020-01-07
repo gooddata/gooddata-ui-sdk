@@ -22,6 +22,7 @@ import {
     IVisualizationProperties,
     IBucketItem,
     IBucketOfFun,
+    RenderFunction,
 } from "../../../interfaces/Visualization";
 import {
     sanitizeUnusedFilters,
@@ -65,6 +66,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     private visualizationProperties: IVisualizationProperties;
     private element: string;
     private settings?: ISettings;
+    private renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
         super();
@@ -75,6 +77,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.settings = props.featureFlags;
+        this.renderFun = props.renderFun;
     }
 
     public unmount() {
@@ -147,7 +150,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions({ itemIdentifiers: ["measureGroup"] });
 
-        render(
+        this.renderFun(
             <CoreHeadline
                 execution={execution}
                 drillableItems={drillableItems}

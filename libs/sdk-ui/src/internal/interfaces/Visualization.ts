@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import {
     OverTimeComparisonType,
@@ -16,6 +16,8 @@ export interface IFeatureFlags {
     [property: string]: string | boolean | number;
 }
 
+export type RenderFunction = (component: any, target: Element) => void;
+
 export interface IVisConstruct {
     backend: IAnalyticalBackend;
     projectId: string;
@@ -26,6 +28,7 @@ export interface IVisConstruct {
     locale?: ILocale;
     featureFlags?: IFeatureFlags;
     visualizationProperties: VisualizationProperties;
+    renderFun: RenderFunction;
 }
 
 export interface ICustomProps {

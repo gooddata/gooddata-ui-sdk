@@ -26,7 +26,6 @@ import {
 } from "../../../../interfaces/Visualization";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
-import SpyInstance = jest.SpyInstance;
 import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
 import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
 import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
@@ -238,6 +237,7 @@ describe("PluggablePivotTable", () => {
         visualizationProperties: {},
         element: "#tableElement",
         configPanelElement: null as string,
+        renderFun: ReactDom.render,
         callbacks: {
             afterRender: noop,
             pushData: noop,
@@ -280,25 +280,11 @@ describe("PluggablePivotTable", () => {
             return createElementSpy;
         }
 
-        function spyOnRender() {
-            const renderSpy = jest.spyOn(ReactDom, "render");
-            renderSpy.mockImplementation(noop);
-            return renderSpy;
-        }
-
-        function spyOnCleanup(renderSpy: SpyInstance<any>, createElementSpy: SpyInstance<any>) {
-            const targetNode = document.querySelector(defaultProps.element);
-            expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
-
-            createElementSpy.mockRestore();
-            renderSpy.mockRestore();
-        }
-
         it("should not render table when dataSource is missing", () => {
-            const pivotTable = createComponent();
+            const renderSpy = jest.fn(noop);
+            const pivotTable = createComponent({ ...defaultProps, renderFun: renderSpy });
 
             const createElementSpy = spyOnFakeElement();
-            const renderSpy = spyOnRender();
 
             const options = getDefaultOptions();
             pivotTable.update({ ...options }, testMocks.emptyInsight, executionFactory);
@@ -310,10 +296,9 @@ describe("PluggablePivotTable", () => {
         });
 
         it("should render PivotTable passing down all the necessary properties", () => {
-            const pivotTable = createComponent();
-
+            const renderSpy = jest.fn(noop);
+            const pivotTable = createComponent({ ...defaultProps, renderFun: renderSpy });
             const createElementSpy = spyOnFakeElement();
-            const renderSpy = spyOnRender();
 
             const options = getDefaultOptions();
             pivotTable.update(options, testMocks.dummyInsight, executionFactory);
@@ -340,7 +325,8 @@ describe("PluggablePivotTable", () => {
             expect(props.ErrorComponent).toEqual(null);
             expect(props.LoadingComponent).toEqual(null);
 
-            spyOnCleanup(renderSpy, createElementSpy);
+            const targetNode = document.querySelector(defaultProps.element);
+            expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
         });
     });
 

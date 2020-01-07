@@ -22,6 +22,7 @@ import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
 import { BucketNames } from "../../../../../base/constants/bucketNames";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep = require("lodash/cloneDeep");
+import noop = require("lodash/noop");
 
 describe("PluggableHeadline", () => {
     const defaultProps = {
@@ -30,6 +31,7 @@ describe("PluggableHeadline", () => {
         element: "body",
         configPanelElement: "invalid",
         visualizationProperties: {},
+        renderFun: noop,
         callbacks: {
             afterRender: jest.fn(),
             pushData: jest.fn(),
@@ -119,9 +121,9 @@ describe("PluggableHeadline", () => {
             const reactCreateElementSpy = jest
                 .spyOn(React, "createElement")
                 .mockImplementation(() => fakeElement);
-            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
+            const mockRenderFun = jest.fn();
 
-            const headline = createComponent();
+            const headline = createComponent({ ...defaultProps, renderFun: mockRenderFun });
             const options: IVisProps = getTestOptions();
 
             headline.update(options, testMocks.insightWithSingleMeasure, executionFactory);
@@ -139,13 +141,12 @@ describe("PluggableHeadline", () => {
                 LoadingComponent: null,
                 execution: expect.any(Object),
             });
-            expect(reactRenderSpy).toHaveBeenCalledWith(
+            expect(mockRenderFun).toHaveBeenCalledWith(
                 fakeElement,
                 document.querySelector(defaultProps.element),
             );
 
             reactCreateElementSpy.mockReset();
-            reactRenderSpy.mockReset();
         });
 
         it("should correctly set config.disableDrillUnderline from FeatureFlag disableKpiDashboardHeadlineUnderline", () => {

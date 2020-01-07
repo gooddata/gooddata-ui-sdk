@@ -10,7 +10,8 @@ import * as path from "path";
 import * as process from "process";
 import allScenarios from "../../scenarios";
 import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
-import { ChartInteractions, DataViewRequests, mountChartAndCapture } from "../_infra/render";
+import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
+import { mountChartAndCapture } from "../_infra/render";
 
 type AllScenariosType = [string, string, ScenarioTestInput<any>];
 type AnyComponentTest = ScenarioTestInput<any>;

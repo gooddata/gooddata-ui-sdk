@@ -38,6 +38,7 @@ describe("PluggableLineChart", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
+        renderFun: noop,
     };
 
     function createComponent(props = defaultProps) {

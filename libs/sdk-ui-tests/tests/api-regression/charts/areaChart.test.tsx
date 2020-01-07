@@ -3,7 +3,9 @@
 import { IAreaChartProps } from "@gooddata/sdk-ui";
 import areaScenarios from "../../../scenarios/charts/areaChart";
 import { ScenarioTestInput } from "../../../src";
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
 import { mountChartAndCapture } from "../../_infra/render";
+import { mountInsight } from "../../_infra/renderPlugVis";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 import flatMap = require("lodash/flatMap");
 
@@ -29,6 +31,16 @@ describe("AreaChart", () => {
             expect(interactions.effectiveProps).toBeDefined();
             expect(interactions.effectiveProps!.execution).toBeDefined();
             expect(cleanupCoreChartProps(interactions.effectiveProps)).toMatchSnapshot();
+        });
+
+        it("should be transformable to insight definition", async () => {
+            const interactions = await promisedInteractions;
+
+            const insight = createInsightDefinitionForChart("AreaChart", _desc, interactions);
+
+            const plugVizInteractions = await mountInsight(insight);
+
+            expect(plugVizInteractions.triggeredExecution).toEqual(interactions.triggeredExecution);
         });
     });
 });

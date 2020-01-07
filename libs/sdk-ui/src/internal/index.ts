@@ -9,6 +9,7 @@ export {
     DefaultVisualizationCatalog,
     FullVisualizationCatalog,
 } from "./components/VisualizationCatalog";
+
 export {
     IVisualization,
     IVisConstruct,

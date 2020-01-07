@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
+import { render } from "react-dom";
 import noop = require("lodash/noop");
 
 import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -152,6 +153,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             projectId: this.props.workspace,
             visualizationProperties: insightProperties(this.insight),
             featureFlags: this.settings,
+            renderFun: render,
         });
     };
 
