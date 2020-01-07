@@ -1,0 +1,88 @@
+// (C) 2020 GoodData Corporation
+import identity = require("lodash/identity");
+import { IInsightDefinition, VisualizationProperties } from "./index";
+import { IBucket } from "../execution/buckets";
+import { IFilter } from "../execution/filter";
+import { SortItem } from "../execution/base/sort";
+
+/*
+ * Factory & builder for insight instances. Keeping it in test infrastructure for now, will see later on
+ * whether we should move it to prod code and expose on public API.
+ */
+
+/**
+ * Creates new, empty insight definition, optionally modifying its content.
+ *
+ * @param classUri - visualization class URI (e.g. local:bar, local:table..)
+ * @param modifications - modification function which will be called with builder to update the insight
+ * @internal
+ */
+export function newInsightDefinition(
+    classUri: string,
+    modifications: InsightModifications = identity,
+): IInsightDefinition {
+    const builder = new InsightDefinitionBuilder(classUri);
+
+    return modifications(builder).build();
+}
+
+/**
+ * @internal
+ */
+export type InsightModifications = (builder: InsightDefinitionBuilder) => InsightDefinitionBuilder;
+
+/**
+ * Insight definition builder can be used to set various properties of the insight using fluent API.
+ *
+ * @internal
+ */
+export class InsightDefinitionBuilder {
+    private insight: IInsightDefinition["insight"];
+
+    constructor(visClassUri: string) {
+        this.insight = {
+            visualizationClassUri: visClassUri,
+            title: "Untitled",
+            buckets: [],
+            filters: [],
+            sorts: [],
+            properties: {},
+        };
+    }
+
+    public title = (title: string): InsightDefinitionBuilder => {
+        this.insight.title = title;
+
+        return this;
+    };
+
+    public buckets = (buckets: IBucket[]): InsightDefinitionBuilder => {
+        this.insight.buckets = buckets;
+
+        return this;
+    };
+
+    public filters = (filters: IFilter[]): InsightDefinitionBuilder => {
+        this.insight.filters = filters;
+
+        return this;
+    };
+
+    public sorts = (sorts: SortItem[]): InsightDefinitionBuilder => {
+        this.insight.sorts = sorts;
+
+        return this;
+    };
+
+    public properties = (properties: VisualizationProperties): InsightDefinitionBuilder => {
+        this.insight.properties = properties;
+
+        return this;
+    };
+
+    public build = (): IInsightDefinition => {
+        return {
+            insight: this.insight,
+        };
+    };
+}

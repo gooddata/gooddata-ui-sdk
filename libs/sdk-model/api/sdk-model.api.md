@@ -650,6 +650,25 @@ export function insightBucket(insight: IInsightDefinition, idOrFun?: string | Bu
 // @public
 export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): IBucket[];
 
+// Warning: (ae-internal-missing-underscore) The name "InsightDefinitionBuilder" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class InsightDefinitionBuilder {
+    constructor(visClassUri: string);
+    // (undocumented)
+    buckets: (buckets: IBucket[]) => InsightDefinitionBuilder;
+    // (undocumented)
+    build: () => IInsightDefinition;
+    // (undocumented)
+    filters: (filters: IFilter[]) => InsightDefinitionBuilder;
+    // (undocumented)
+    properties: (properties: VisualizationProperties) => InsightDefinitionBuilder;
+    // (undocumented)
+    sorts: (sorts: SortItem[]) => InsightDefinitionBuilder;
+    // (undocumented)
+    title: (title: string) => InsightDefinitionBuilder;
+}
+
 // @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
 
@@ -667,6 +686,11 @@ export function insightId(insight: IInsight): string;
 
 // @public
 export function insightMeasures(insight: IInsightDefinition): IMeasure[];
+
+// Warning: (ae-internal-missing-underscore) The name "InsightModifications" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type InsightModifications = (builder: InsightDefinitionBuilder) => InsightDefinitionBuilder;
 
 // @public
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
@@ -1113,6 +1137,11 @@ export function newDefForItems(workspace: string, items: AttributeOrMeasure[], f
 
 // @public
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
+
+// Warning: (ae-internal-missing-underscore) The name "newInsightDefinition" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function newInsightDefinition(classUri: string, modifications?: InsightModifications): IInsightDefinition;
 
 // @public
 export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
