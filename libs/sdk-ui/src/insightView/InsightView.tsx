@@ -70,7 +70,10 @@ const getVisualizationForInsight = (insight: IInsight) => {
     return VisualizationsCatalog[key];
 };
 
-interface IInsightViewProps extends Partial<IVisCallbacks> {
+/**
+ * @public
+ */
+export interface IInsightViewProps extends Partial<IVisCallbacks> {
     backend?: IAnalyticalBackend;
     workspace?: string;
     ErrorComponent?: React.ComponentType<IErrorProps>;
@@ -296,4 +299,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     }
 }
 
+/**
+ * @public
+ */
 export const InsightView = withContexts(RenderInsightView);

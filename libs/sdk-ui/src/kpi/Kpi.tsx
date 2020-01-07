@@ -3,7 +3,7 @@ import * as React from "react";
 import { IAnalyticalBackend, DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IMeasure, IFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { Executor, IExecutorProps } from "../execution/Executor";
+import { Executor, IExecutorProps } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { WrappedComponentProps, injectIntl } from "react-intl";
