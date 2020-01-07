@@ -28,6 +28,7 @@ import { PluggableComboChartDeprecated } from "../internal/components/pluggableV
 import { PluggableComboChart } from "../internal/components/pluggableVisualizations/comboChart/PluggableComboChart";
 import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
 import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
+import { PluggablePivotTable } from "../internal/components/pluggableVisualizations/pivotTable/PluggablePivotTable";
 import { PluggableXirr } from "../internal/components/pluggableVisualizations/xirr/PluggableXirr";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import {
@@ -49,7 +50,7 @@ const VisualizationsCatalog = {
     area: PluggableAreaChart,
     pie: PluggablePieChart,
     donut: PluggableDonutChart,
-    // table: PluggablePivotTable,
+    table: PluggablePivotTable,
     headline: PluggableHeadline,
     scatter: PluggableScatterPlot,
     bubble: PluggableBubbleChart,
