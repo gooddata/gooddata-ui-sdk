@@ -14,6 +14,7 @@ import { AbstractPluggableVisualization } from "../pluggableVisualizations/Abstr
 import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { IDrillableItem } from "../../../base/vis/DrillEvents";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
 
 const { delay } = testUtils;
 
@@ -32,9 +33,9 @@ class DummyClass extends AbstractPluggableVisualization {
 }
 
 describe("BaseVisualization", () => {
-    const defaultVisualizationsCatalog = {
+    const defaultVisualizationsCatalog = new CatalogViaTypeToClassMap({
         table: DummyClass,
-    };
+    });
 
     const defaultProps: IBaseVisualizationProps = {
         projectId: "PROJECTID",
@@ -48,7 +49,7 @@ describe("BaseVisualization", () => {
         onLoadingChanged: noop,
         afterRender: noop,
         pushData: noop,
-        visualizationsCatalog: defaultVisualizationsCatalog,
+        visualizationCatalog: defaultVisualizationsCatalog,
         onExtendedReferencePointChanged: noop,
         onNewDerivedBucketItemsPlaced: noop,
     };
@@ -99,13 +100,14 @@ describe("BaseVisualization", () => {
             }
         }
 
-        const visualizationsCatalog = {
+        const visualizationCatalog = new CatalogViaTypeToClassMap({
             table: DummyTable,
             column: DummyColumn,
-        };
+        });
+
         const component = createComponent({
             ...defaultProps,
-            visualizationsCatalog,
+            visualizationCatalog,
             ...customProps,
         });
 
@@ -347,7 +349,7 @@ describe("BaseVisualization", () => {
     });
 
     describe("getExtendedReferencePoint in componentDidMount", () => {
-        let visualizationsCatalog: any;
+        let visualizationCatalog: IVisualizationCatalog;
         let getExtendedReferencePointMock = jest.fn();
         let originalConsoleError: any;
 
@@ -369,19 +371,19 @@ describe("BaseVisualization", () => {
                 }
             }
 
-            visualizationsCatalog = { table: DummyTable };
+            visualizationCatalog = new CatalogViaTypeToClassMap({ table: DummyTable });
         });
 
         afterEach(() => {
             getExtendedReferencePointMock = null;
-            visualizationsCatalog = {};
+            visualizationCatalog = defaultVisualizationsCatalog;
         });
 
         it("should not call getExtendedReferencePoint if vis type is unknown", () => {
             createComponent({
                 ...defaultProps,
                 visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
-                visualizationsCatalog,
+                visualizationCatalog,
             });
 
             return delay().then(() => {
@@ -393,7 +395,7 @@ describe("BaseVisualization", () => {
             createComponent({
                 ...defaultProps,
                 referencePoint: null,
-                visualizationsCatalog,
+                visualizationCatalog,
             });
 
             return delay().then(() => {
@@ -404,7 +406,7 @@ describe("BaseVisualization", () => {
         it("should not call getExtendedReferencePoint if no callback is provided", () => {
             createComponent({
                 ...defaultProps,
-                visualizationsCatalog,
+                visualizationCatalog,
                 onExtendedReferencePointChanged: null,
             });
 

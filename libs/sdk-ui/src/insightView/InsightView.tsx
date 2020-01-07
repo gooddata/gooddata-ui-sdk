@@ -1,35 +1,12 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import * as uuid from "uuid";
-import last = require("lodash/last");
 import noop = require("lodash/noop");
 
 import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import {
-    IInsight,
-    IFilter,
-    insightProperties,
-    insightVisualizationClassUri,
-    IColorPalette,
-} from "@gooddata/sdk-model";
+import { IInsight, IFilter, insightProperties, IColorPalette } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, IVisCallbacks } from "../internal/interfaces/Visualization";
-import { PluggableBarChart } from "../internal/components/pluggableVisualizations/barChart/PluggableBarChart";
-import { PluggableColumnChart } from "../internal/components/pluggableVisualizations/columnChart/PluggableColumnChart";
-import { PluggableLineChart } from "../internal/components/pluggableVisualizations/lineChart/PluggableLineChart";
-import { PluggableAreaChart } from "../internal/components/pluggableVisualizations/areaChart/PluggableAreaChart";
-import { PluggablePieChart } from "../internal/components/pluggableVisualizations/pieChart/PluggablePieChart";
-import { PluggableDonutChart } from "../internal/components/pluggableVisualizations/donutChart/PluggableDonutChart";
-import { PluggableHeadline } from "../internal/components/pluggableVisualizations/headline/PluggableHeadline";
-import { PluggableScatterPlot } from "../internal/components/pluggableVisualizations/scatterPlot/PluggableScatterPlot";
-import { PluggableBubbleChart } from "../internal/components/pluggableVisualizations/bubbleChart/PluggableBubbleChart";
-import { PluggableHeatmap } from "../internal/components/pluggableVisualizations/heatMap/PluggableHeatmap";
-import { PluggableComboChartDeprecated } from "../internal/components/pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
-import { PluggableComboChart } from "../internal/components/pluggableVisualizations/comboChart/PluggableComboChart";
-import { PluggableTreemap } from "../internal/components/pluggableVisualizations/treeMap/PluggableTreemap";
-import { PluggableFunnelChart } from "../internal/components/pluggableVisualizations/funnelChart/PluggableFunnelChart";
-import { PluggablePivotTable } from "../internal/components/pluggableVisualizations/pivotTable/PluggablePivotTable";
-import { PluggableXirr } from "../internal/components/pluggableVisualizations/xirr/PluggableXirr";
+import { IVisualization, IVisProps, IVisCallbacks, DefaultVisualizationCatalog } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
 import {
     GoodDataSdkError,
@@ -42,33 +19,6 @@ import {
     ErrorComponent,
     IErrorProps,
 } from "../base";
-
-const VisualizationsCatalog = {
-    bar: PluggableBarChart,
-    column: PluggableColumnChart,
-    line: PluggableLineChart,
-    area: PluggableAreaChart,
-    pie: PluggablePieChart,
-    donut: PluggableDonutChart,
-    table: PluggablePivotTable,
-    headline: PluggableHeadline,
-    scatter: PluggableScatterPlot,
-    bubble: PluggableBubbleChart,
-    heatmap: PluggableHeatmap,
-    combo: PluggableComboChartDeprecated, // old combo chart
-    combo2: PluggableComboChart, // new combo chart
-    treemap: PluggableTreemap,
-    funnel: PluggableFunnelChart,
-    xirr: PluggableXirr,
-};
-
-const getVisualizationForInsight = (insight: IInsight) => {
-    const visClassUri = insightVisualizationClassUri(insight);
-    // the identifiers follow the "local:visualizationType" format
-    const split = visClassUri.split(":");
-    const key = last(split) as keyof typeof VisualizationsCatalog;
-    return VisualizationsCatalog[key];
-};
 
 /**
  * @public
@@ -169,9 +119,9 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
             return;
         }
 
-        const Visualization = getVisualizationForInsight(this.insight);
+        const visualizationFactory = DefaultVisualizationCatalog.forInsight(this.insight);
 
-        this.visualization = new Visualization({
+        this.visualization = visualizationFactory({
             backend: this.props.backend,
             callbacks: {
                 onError: error => {
