@@ -53,7 +53,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -169,7 +169,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -285,7 +285,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -405,7 +405,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -567,7 +567,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -722,7 +722,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -826,7 +826,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -948,7 +948,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1064,7 +1064,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1180,7 +1180,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1300,7 +1300,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1416,7 +1416,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1532,7 +1532,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1648,7 +1648,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1764,7 +1764,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -1880,7 +1880,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -2027,7 +2027,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -2140,7 +2140,7 @@ Object {
     },
     Object {
       "items": Array [],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -2235,7 +2235,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -2335,7 +2335,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -2433,7 +2433,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -2541,7 +2541,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -2649,7 +2649,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -2760,7 +2760,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [
@@ -2859,7 +2859,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -2960,7 +2960,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3073,7 +3073,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3187,7 +3187,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3301,7 +3301,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3415,7 +3415,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3529,7 +3529,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3643,7 +3643,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3756,7 +3756,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -3876,7 +3876,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],
@@ -4002,7 +4002,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "view",
     },
     Object {
       "items": Array [],

@@ -53,11 +53,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -167,11 +167,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -281,11 +281,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -399,11 +399,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -559,11 +559,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -712,11 +712,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -816,11 +816,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -932,11 +932,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1046,11 +1046,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1160,11 +1160,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1278,11 +1278,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1392,11 +1392,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1496,11 +1496,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1665,11 +1665,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1769,11 +1769,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -1938,11 +1938,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2052,11 +2052,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2166,11 +2166,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2280,11 +2280,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2394,11 +2394,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2498,11 +2498,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2667,11 +2667,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2771,11 +2771,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -2940,11 +2940,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3055,11 +3055,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3202,11 +3202,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3338,11 +3338,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3534,11 +3534,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3650,11 +3650,11 @@ Object {
     },
     Object {
       "items": Array [],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3730,11 +3730,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3820,7 +3820,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [
@@ -3833,7 +3833,7 @@ Object {
           },
         },
       ],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -3912,11 +3912,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -4006,11 +4006,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -4119,11 +4119,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [
@@ -4238,11 +4238,11 @@ Object {
           },
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "trend",
     },
     Object {
       "items": Array [],
-      "localIdentifier": "stack",
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": Array [

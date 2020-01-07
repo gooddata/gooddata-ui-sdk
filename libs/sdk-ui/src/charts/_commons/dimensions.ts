@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     attributeLocalId,
@@ -15,13 +15,19 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "../../base";
 
-function isStackedChart(buckets: IBucket[]) {
-    return !bucketIsEmpty(bucketsFind(buckets, BucketNames.STACK));
+function isStackedChart(buckets: IBucket[], stackBucketName: string) {
+    const stackBucket = bucketsFind(buckets, stackBucketName);
+
+    return stackBucket && !bucketIsEmpty(stackBucket);
 }
 
-function stackedDimensions(buckets: IBucket[]): IDimension[] {
-    const viewBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-    const stackBucket = bucketsFind(buckets, BucketNames.STACK);
+function stackedDimensions(
+    buckets: IBucket[],
+    viewBucketName: string,
+    stackBucketName: string,
+): IDimension[] {
+    const viewBucket = bucketsFind(buckets, viewBucketName);
+    const stackBucket = bucketsFind(buckets, stackBucketName);
 
     const viewByAttributes = bucketAttributes(viewBucket);
     const stackByAttribute = bucketAttribute(stackBucket);
@@ -44,9 +50,16 @@ export function defaultDimensions(def: IExecutionDefinition): IDimension[] {
     return newTwoDimensional([MeasureGroupIdentifier], bucketsAttributes(def.buckets).map(attributeLocalId));
 }
 
-export function stackedChartDimensions(def: IExecutionDefinition): IDimension[] {
+export function stackedChartDimensions(
+    def: IExecutionDefinition,
+    viewBucketName: string = BucketNames.VIEW,
+    stackBucketName: string = BucketNames.STACK,
+): IDimension[] {
     const { buckets } = def;
-    return isStackedChart(buckets) ? stackedDimensions(buckets) : defaultDimensions(def);
+
+    return isStackedChart(buckets, stackBucketName)
+        ? stackedDimensions(buckets, viewBucketName, stackBucketName)
+        : defaultDimensions(def);
 }
 
 export function pointyChartDimensions(def: IExecutionDefinition): IDimension[] {
