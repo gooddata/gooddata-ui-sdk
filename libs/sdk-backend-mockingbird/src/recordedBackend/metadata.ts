@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     IInsightQueryOptions,
@@ -12,7 +12,7 @@ import {
     IVisualizationClass,
     IMeasureExpressionToken,
     IAttributeDisplayForm,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
 } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
@@ -54,7 +54,7 @@ export class RecordedMetadata implements IWorkspaceMetadata {
         throw new NotSupported("not supported");
     }
 
-    public createInsight(_: IInsightWithoutIdentifier): Promise<IInsight> {
+    public createInsight(_: IInsightDefinition): Promise<IInsight> {
         throw new NotSupported("not supported");
     }
 

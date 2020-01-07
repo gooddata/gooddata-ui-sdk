@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import intersection = require("lodash/intersection");
 import { SortEntityIds, sortEntityIds, SortItem } from "../execution/base/sort";
@@ -26,7 +26,7 @@ import { IColor } from "../colors";
  *
  * @public
  */
-export interface IInsight {
+export type IInsight = IInsightDefinition & {
     insight: {
         /**
          * Unique identifier of the Insight
@@ -37,7 +37,16 @@ export interface IInsight {
          * Link to the insight.
          */
         uri?: string;
+    };
+};
 
+/**
+ * Insight definition specifies what and how should be visualized by an insight.
+ *
+ * @public
+ */
+export type IInsightDefinition = {
+    insight: {
         /**
          * User-assigned title of this insight
          */
@@ -75,16 +84,6 @@ export interface IInsight {
          */
         properties: VisualizationProperties;
     };
-}
-
-/**
- * Represents an Insight without identifier. This is useful when working with Insight that do not have any identifier yet
- * (i.e. they have not been saved to the platform yet).
- *
- * @public
- */
-export type IInsightWithoutIdentifier = {
-    insight: Omit<IInsight["insight"], "identifier">;
 };
 
 /**
@@ -196,7 +195,7 @@ export function isInsight(obj: any): obj is IInsight {
  * @public
  */
 export function insightBucket(
-    insight: IInsightWithoutIdentifier,
+    insight: IInsightDefinition,
     idOrFun: string | BucketPredicate = anyBucket,
 ): IBucket | undefined {
     invariant(insight, "insight must be specified");
@@ -212,7 +211,7 @@ export function insightBucket(
  * @returns empty list if none match
  * @public
  */
-export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: string[]): IBucket[] {
+export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): IBucket[] {
     invariant(insight, "insight must be specified");
 
     if (isEmpty(ids)) {
@@ -229,7 +228,7 @@ export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: strin
  * @returns empty if one
  * @public
  */
-export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[] {
+export function insightMeasures(insight: IInsightDefinition): IMeasure[] {
     invariant(insight, "insight must be specified");
 
     return bucketsMeasures(insight.insight.buckets);
@@ -242,7 +241,7 @@ export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[] 
  * @returns true if any measures, false if not
  * @public
  */
-export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean {
+export function insightHasMeasures(insight: IInsightDefinition): boolean {
     invariant(insight, "insight must be specified");
 
     return insightMeasures(insight).length > 0;
@@ -255,7 +254,7 @@ export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean 
  * @returns empty if none
  * @public
  */
-export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribute[] {
+export function insightAttributes(insight: IInsightDefinition): IAttribute[] {
     invariant(insight, "insight must be specified");
 
     return bucketsAttributes(insight.insight.buckets);
@@ -268,7 +267,7 @@ export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribut
  * @returns true if any measures, false if not
  * @public
  */
-export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolean {
+export function insightHasAttributes(insight: IInsightDefinition): boolean {
     invariant(insight, "insight must be specified");
 
     return insightAttributes(insight).length > 0;
@@ -282,7 +281,7 @@ export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolea
  * @returns true if at least one measure or attribute, false if none
  * @public
  */
-export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boolean {
+export function insightHasDataDefined(insight: IInsightDefinition): boolean {
     invariant(insight, "insight must be specified");
 
     return (
@@ -296,7 +295,7 @@ export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boole
  * @param insight - insight to work with
  * @public
  */
-export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[] {
+export function insightFilters(insight: IInsightDefinition): IFilter[] {
     invariant(insight, "insight must be specified");
 
     return insight.insight.filters;
@@ -312,7 +311,7 @@ export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[] {
  * @returns array of valid sorts
  * @public
  */
-export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[] {
+export function insightSorts(insight: IInsightDefinition): SortItem[] {
     invariant(insight, "insight must be specified");
 
     const attributeIds = insightAttributes(insight).map(attributeLocalId);
@@ -339,7 +338,7 @@ export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[] {
  * @returns empty if none
  * @public
  */
-export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[] {
+export function insightTotals(insight: IInsightDefinition): ITotal[] {
     invariant(insight, "insight must be specified");
 
     return bucketsTotals(insight.insight.buckets);
@@ -352,7 +351,7 @@ export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[] {
  * @returns empty object is no properties
  * @public
  */
-export function insightProperties(insight: IInsightWithoutIdentifier): VisualizationProperties {
+export function insightProperties(insight: IInsightDefinition): VisualizationProperties {
     invariant(insight, "insight must be specified");
 
     return insight.insight.properties;
@@ -364,7 +363,7 @@ export function insightProperties(insight: IInsightWithoutIdentifier): Visualiza
  * @param insight - insight to get vis class URI for
  * @public
  */
-export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier): string {
+export function insightVisualizationClassUri(insight: IInsightDefinition): string {
     invariant(insight, "insight to get vis class URI from must be defined");
 
     return insight.insight.visualizationClassUri;
@@ -377,7 +376,7 @@ export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier)
  * @returns the insight title
  * @public
  */
-export function insightTitle(insight: IInsightWithoutIdentifier): string {
+export function insightTitle(insight: IInsightDefinition): string {
     invariant(insight, "insight to get title from must be defined");
 
     return insight.insight.title;
@@ -407,9 +406,9 @@ export function insightId(insight: IInsight): string {
  */
 export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
 export function insightSetProperties(
-    insight: IInsightWithoutIdentifier,
+    insight: IInsightDefinition,
     properties: VisualizationProperties = {},
-): IInsightWithoutIdentifier {
+): IInsightDefinition {
     invariant(insight, "insight must be specified");
 
     return {
@@ -430,10 +429,7 @@ export function insightSetProperties(
  * @public
  */
 export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
-export function insightSetSorts(
-    insight: IInsightWithoutIdentifier,
-    sorts: SortItem[] = [],
-): IInsightWithoutIdentifier {
+export function insightSetSorts(insight: IInsightDefinition, sorts: SortItem[] = []): IInsightDefinition {
     invariant(insight, "insight must be specified");
 
     return {

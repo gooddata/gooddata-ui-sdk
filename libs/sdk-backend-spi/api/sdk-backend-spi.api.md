@@ -23,7 +23,7 @@ import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
-import { IInsightWithoutIdentifier } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
@@ -476,7 +476,7 @@ export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
 // @public
 export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogAvailableItemsFactory, IWorkspaceCatalogWithAvailableItemsFactoryOptions> {
     // (undocumented)
-    forInsight(insight: IInsightWithoutIdentifier): IWorkspaceCatalogAvailableItemsFactory;
+    forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory;
     // (undocumented)
     forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
     // (undocumented)
@@ -550,7 +550,7 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
 // @public
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
     // (undocumented)
-    insight?: IInsightWithoutIdentifier;
+    insight?: IInsightDefinition;
     // (undocumented)
     items?: AttributeOrMeasure[];
 }
@@ -564,7 +564,7 @@ export interface IWorkspaceDatasetsService {
 // @public
 export interface IWorkspaceMetadata {
     // (undocumented)
-    createInsight(insight: IInsightWithoutIdentifier): Promise<IInsight>;
+    createInsight(insight: IInsightDefinition): Promise<IInsight>;
     // (undocumented)
     deleteInsight(id: string): Promise<void>;
     getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;

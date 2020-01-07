@@ -545,11 +545,16 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 }
 
 // @public
-export interface IInsight {
-    // (undocumented)
+export type IInsight = IInsightDefinition & {
     insight: {
         identifier: string;
         uri?: string;
+    };
+};
+
+// @public
+export type IInsightDefinition = {
+    insight: {
         title: string;
         visualizationClassUri: string;
         buckets: IBucket[];
@@ -557,11 +562,6 @@ export interface IInsight {
         sorts: SortItem[];
         properties: VisualizationProperties;
     };
-}
-
-// @public
-export type IInsightWithoutIdentifier = {
-    insight: Omit<IInsight["insight"], "identifier">;
 };
 
 // @public
@@ -642,34 +642,34 @@ export interface INegativeAttributeFilter {
 }
 
 // @public
-export function insightAttributes(insight: IInsightWithoutIdentifier): IAttribute[];
+export function insightAttributes(insight: IInsightDefinition): IAttribute[];
 
 // @public
-export function insightBucket(insight: IInsightWithoutIdentifier, idOrFun?: string | BucketPredicate): IBucket | undefined;
+export function insightBucket(insight: IInsightDefinition, idOrFun?: string | BucketPredicate): IBucket | undefined;
 
 // @public
-export function insightBuckets(insight: IInsightWithoutIdentifier, ...ids: string[]): IBucket[];
+export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): IBucket[];
 
 // @public
-export function insightFilters(insight: IInsightWithoutIdentifier): IFilter[];
+export function insightFilters(insight: IInsightDefinition): IFilter[];
 
 // @public
-export function insightHasAttributes(insight: IInsightWithoutIdentifier): boolean;
+export function insightHasAttributes(insight: IInsightDefinition): boolean;
 
 // @public
-export function insightHasDataDefined(insight: IInsightWithoutIdentifier): boolean;
+export function insightHasDataDefined(insight: IInsightDefinition): boolean;
 
 // @public
-export function insightHasMeasures(insight: IInsightWithoutIdentifier): boolean;
+export function insightHasMeasures(insight: IInsightDefinition): boolean;
 
 // @public
 export function insightId(insight: IInsight): string;
 
 // @public
-export function insightMeasures(insight: IInsightWithoutIdentifier): IMeasure[];
+export function insightMeasures(insight: IInsightDefinition): IMeasure[];
 
 // @public
-export function insightProperties(insight: IInsightWithoutIdentifier): VisualizationProperties;
+export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
 
 // @public
 export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
@@ -678,16 +678,16 @@ export function insightSetProperties(insight: IInsight, properties?: Visualizati
 export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
 
 // @public
-export function insightSorts(insight: IInsightWithoutIdentifier): SortItem[];
+export function insightSorts(insight: IInsightDefinition): SortItem[];
 
 // @public
-export function insightTitle(insight: IInsightWithoutIdentifier): string;
+export function insightTitle(insight: IInsightDefinition): string;
 
 // @public
-export function insightTotals(insight: IInsightWithoutIdentifier): ITotal[];
+export function insightTotals(insight: IInsightDefinition): ITotal[];
 
 // @public
-export function insightVisualizationClassUri(insight: IInsightWithoutIdentifier): string;
+export function insightVisualizationClassUri(insight: IInsightDefinition): string;
 
 // @public (undocumented)
 export interface IObjectExpressionToken {

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 export {
     IAttribute,
@@ -242,7 +242,7 @@ export {
 
 export {
     IInsight,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
     IVisualizationClass,
     VisualizationProperties,
     IColorMappingItem,

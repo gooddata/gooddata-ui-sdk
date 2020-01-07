@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     IVisualizationClass,
     IInsight,
     IAttributeDisplayForm,
     IMeasureExpressionToken,
-    IInsightWithoutIdentifier,
+    IInsightDefinition,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -19,7 +19,7 @@ export interface IWorkspaceMetadata {
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     getInsight(id: string): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
-    createInsight(insight: IInsightWithoutIdentifier): Promise<IInsight>;
+    createInsight(insight: IInsightDefinition): Promise<IInsight>;
     updateInsight(insight: IInsight): Promise<IInsight>;
     deleteInsight(id: string): Promise<void>;
     /**
