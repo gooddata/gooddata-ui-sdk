@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 import last = require("lodash/last");
-
 import { IInsightDefinition, insightVisualizationClassUri } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../../base";
 import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
@@ -19,6 +18,7 @@ import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggableP
 import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
 import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
 import { PluggableTreemap } from "./pluggableVisualizations/treeMap/PluggableTreemap";
+import { PluggableXirr } from "./pluggableVisualizations/xirr/PluggableXirr";
 
 /**
  * Factories that create a new instance of pluggable visualization.
@@ -117,3 +117,13 @@ const DefaultVisualizations = {
 export const DefaultVisualizationCatalog: IVisualizationCatalog = new CatalogViaTypeToClassMap(
     DefaultVisualizations,
 );
+
+/**
+ * Pluggable visualization catalog containing all available visualizations.
+ *
+ * @alpha
+ */
+export const FullVisualizationCatalog: IVisualizationCatalog = new CatalogViaTypeToClassMap({
+    ...DefaultVisualizations,
+    xirr: PluggableXirr,
+});
