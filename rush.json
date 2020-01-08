@@ -316,6 +316,7 @@
             "packageName": "@gooddata/catalog-export",
             "projectFolder": "tools/catalog-export",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
