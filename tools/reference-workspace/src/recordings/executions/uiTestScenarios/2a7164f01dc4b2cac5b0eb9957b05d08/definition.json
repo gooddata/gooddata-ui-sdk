@@ -31,7 +31,7 @@
             ]
         },
         {
-            "localIdentifier": "view",
+            "localIdentifier": "trend",
             "items": [
                 {
                     "attribute": {
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "localIdentifier": "stack",
+            "localIdentifier": "segment",
             "items": []
         }
     ],

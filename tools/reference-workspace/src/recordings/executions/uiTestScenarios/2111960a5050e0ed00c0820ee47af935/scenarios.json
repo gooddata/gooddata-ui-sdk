@@ -1,10 +1,10 @@
 [
     {
-        "vis": "ComboChart",
-        "scenario": "one primary and secondary measure no viewBy"
-    },
-    {
         "vis": "ColumnChart",
         "scenario": "two measures"
+    },
+    {
+        "vis": "ComboChart",
+        "scenario": "one primary and secondary measure no viewBy"
     }
 ]

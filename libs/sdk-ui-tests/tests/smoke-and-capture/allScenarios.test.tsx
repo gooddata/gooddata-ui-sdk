@@ -11,7 +11,9 @@ import * as process from "process";
 import allScenarios from "../../scenarios";
 import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
+import { createInsightDefinitionForChart } from "../_infra/insightFactory";
 import { mountChartAndCapture } from "../_infra/render";
+import { mountInsight } from "../_infra/renderPlugVis";
 
 type AllScenariosType = [string, string, ScenarioTestInput<any>];
 type AnyComponentTest = ScenarioTestInput<any>;
@@ -156,17 +158,31 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
  * @param vis - visualization for which the scenario is being stored
  * @param scenario - detail about test scenario
  * @param interactions - chart interactions with the backend
+ * @param plugVizInteractions - plug viz interactions with the backend
  */
 function storeScenarioDefinition(
     vis: string,
     scenario: ScenarioTestInput<any>,
     interactions: ChartInteractions,
+    plugVizInteractions?: ChartInteractions,
 ) {
     if (!StoreLocation) {
         return;
     }
 
+    const { triggeredExecution: componentExecution } = interactions;
+    const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
     const recordingDir = storeDefinition(interactions);
+
+    if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
+        /*
+         * As-is, we react components and plug viz for the same bucket MAY to different executions
+         * due to plug viz automagically adding sorts (desired UX). different sorts in exec means different
+         * fingerprint. if that happens, make sure the exec definition for the plug viz variant of the
+         * scenario is also stored.
+         */
+        storeDefinition(plugVizInteractions!);
+    }
 
     if (!scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta")) {
         storeScenarioMetadata(recordingDir, vis, scenario[ScenarioTestMembers.ScenarioName]);
@@ -200,6 +216,17 @@ describe("all scenarios", () => {
             return;
         }
 
-        storeScenarioDefinition(vis, scenario, interactions);
+        const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
+
+        if (vis !== "PivotTable") {
+            /*
+             * TODO: remove this restriction after mock-rendering plug pivot table works
+             */
+            const plugVizInteractions = await mountInsight(insight);
+
+            storeScenarioDefinition(vis, scenario, interactions, plugVizInteractions);
+        } else {
+            storeScenarioDefinition(vis, scenario, interactions);
+        }
     });
 });

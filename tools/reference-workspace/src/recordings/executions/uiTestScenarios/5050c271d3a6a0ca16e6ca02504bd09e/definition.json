@@ -1,0 +1,68 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": []
+        },
+        {
+            "localIdentifier": "stack",
+            "items": []
+        }
+    ],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": []
+        }
+    ],
+    "filters": [],
+    "sortBy": [
+        {
+            "measureSortItem": {
+                "direction": "desc",
+                "locators": [
+                    {
+                        "measureLocatorItem": {
+                            "measureIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
