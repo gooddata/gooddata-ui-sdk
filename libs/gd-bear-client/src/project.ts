@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
-import qs from "qs";
+// (C) 2007-2020 GoodData Corporation
 import { getIn, handlePolling, getAllPagesByOffsetLimit } from "./util";
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
 import { XhrModule, ApiResponse } from "./xhr";
 import { GdcProject } from "@gooddata/gd-bear-model";
+import { stringify } from "./utils/queryString";
 
 const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },
@@ -129,7 +129,7 @@ export class ProjectModule {
             projectStates: "ENABLED",
             userState: "ENABLED",
         };
-        const uri = `/gdc/internal/projects/?${qs.stringify(mergedOptions)}`;
+        const uri = `/gdc/internal/projects/?${stringify(mergedOptions)}`;
         return this.xhr.get(uri).then(res => res.getData());
     }
 

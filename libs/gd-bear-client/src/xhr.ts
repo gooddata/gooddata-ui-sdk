@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -6,7 +6,7 @@ import defaults from "lodash/defaults";
 import merge from "lodash/merge";
 import result from "lodash/result";
 import { name as pkgName, version as pkgVersion } from "../package.json";
-import * as qs from "qs";
+import { stringify } from "./utils/queryString";
 
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
@@ -230,7 +230,7 @@ export class XhrModule {
         const { data, ...restSettings } = settings;
         let urlWithParams = url;
         if (data) {
-            urlWithParams = `${url}?${qs.stringify(data)}`;
+            urlWithParams = `${url}?${stringify(data)}`;
         }
         return this.ajax<T>(urlWithParams, merge({ method: "GET" }, restSettings)).then(response =>
             response.getData(),

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/gd-bear-client",
+            "comment": "fix querystring serialization array format",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/gd-bear-client",
+    "email": "dan.homola@gooddata.com"
+}

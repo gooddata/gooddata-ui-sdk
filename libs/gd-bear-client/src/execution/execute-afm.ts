@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import invariant from "invariant";
 import qs from "qs";
 import range from "lodash/range";
@@ -7,6 +7,7 @@ import { GdcExecution, GdcExecuteAFM } from "@gooddata/gd-bear-model";
 
 import { XhrModule } from "../xhr";
 import { convertExecutionToJson } from "./execute-afm.convert";
+import { stringify } from "../utils/queryString";
 
 export const DEFAULT_LIMIT = 1000;
 
@@ -279,7 +280,7 @@ export function replaceLimitAndOffsetInUri(oldUri: string, limit: number[], offs
         offset: offset.join(","),
     };
 
-    return uriPart + qs.stringify(query, { addQueryPrefix: true });
+    return uriPart + stringify(query, { addQueryPrefix: true });
 }
 
 export function getNextOffset(limit: number[], offset: number[], total: number[]): number[] {
