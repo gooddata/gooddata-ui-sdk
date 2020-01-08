@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
+import { defSetSorts } from "@gooddata/sdk-model";
 import { IAreaChartProps } from "@gooddata/sdk-ui";
 import areaScenarios from "../../../scenarios/charts/areaChart";
 import { ScenarioTestInput } from "../../../src";
@@ -9,7 +10,9 @@ import { mountInsight } from "../../_infra/renderPlugVis";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 import flatMap = require("lodash/flatMap");
 
-describe("AreaChart", () => {
+const Chart = "AreaChart";
+
+describe(Chart, () => {
     const Scenarios: Array<ScenarioTestInput<IAreaChartProps>> = flatMap(areaScenarios, group =>
         group.forTestTypes("api").asTestInput(),
     );
@@ -33,14 +36,19 @@ describe("AreaChart", () => {
             expect(cleanupCoreChartProps(interactions.effectiveProps)).toMatchSnapshot();
         });
 
-        it("should be transformable to insight definition", async () => {
+        it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
 
-            const insight = createInsightDefinitionForChart("AreaChart", _desc, interactions);
+            const insight = createInsightDefinitionForChart(Chart, _desc, interactions);
 
             const plugVizInteractions = await mountInsight(insight);
 
-            expect(plugVizInteractions.triggeredExecution).toEqual(interactions.triggeredExecution);
+            // remove sorts from both original and plug viz exec - simply because plug vis will automatically
+            // create sorts
+            const originalExecutionWithoutSorts = defSetSorts(interactions.triggeredExecution!);
+            const executionWithoutSorts = defSetSorts(plugVizInteractions.triggeredExecution!);
+
+            expect(executionWithoutSorts).toEqual(originalExecutionWithoutSorts);
         });
     });
 });

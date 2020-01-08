@@ -30,7 +30,7 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
 class PlugVisRendererUsingEnzyme {
     public result: ReactWrapper | undefined;
 
-    public renderer(component: any, _: Element): void {
+    public renderFun(component: any, _: Element): void {
         this.result = mount(component);
     }
 }
@@ -56,7 +56,7 @@ export async function mountInsight(insight: IInsightDefinition): Promise<ChartIn
             onError={noop}
             pushData={noop}
             onLoadingChanged={noop}
-            renderer={enzymeRenderer.renderer}
+            renderer={enzymeRenderer.renderFun}
         />,
     );
     const interactions = await promisedInteractions;
