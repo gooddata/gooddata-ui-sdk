@@ -1,11 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import qs from "qs";
 import { GdcExecuteAFM, GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
@@ -15,6 +14,7 @@ import {
     SortDirection,
     IGetObjectsByQueryWithPagingResponse,
 } from "./interfaces";
+import { stringify } from "./utils/queryString";
 
 export interface IValidElementsOptions {
     limit?: number;
@@ -220,7 +220,7 @@ export class MetadataModule {
         options: IGetObjectsByQueryOptions,
     ): Promise<IGetObjectsByQueryWithPagingResponse<T>> {
         const getTotalCount = options && options.getTotalCount ? 1 : 0;
-        const uri = `/gdc/md/${projectId}/objects/query?${qs.stringify({ ...options, getTotalCount })}`;
+        const uri = `/gdc/md/${projectId}/objects/query?${stringify({ ...options, getTotalCount })}`;
         return this.xhr
             .get(uri)
             .then((r: ApiResponse) => r.getData())
