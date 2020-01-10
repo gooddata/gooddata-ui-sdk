@@ -4,6 +4,7 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
+import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
 
 type ObjectTypes = "fact" | "label" | "dateDataSet";
 
@@ -39,4 +40,13 @@ export function toDisplayFormQualifier(ref: ObjRef): ObjQualifier {
  */
 export function toDateDataSetQualifier(ref: ObjRef): ObjQualifier {
     return toObjQualifier(ref, "dateDataSet");
+}
+
+/**
+ * @internal
+ */
+export function toLocalIdentifier(localIdentifier: string): ILocalIdentifierQualifier {
+    return {
+        localIdentifier,
+    };
 }

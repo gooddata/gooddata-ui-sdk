@@ -14,7 +14,12 @@ import {
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
-import { toDateDataSetQualifier, toFactQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
+import {
+    toDateDataSetQualifier,
+    toFactQualifier,
+    toDisplayFormQualifier,
+    toLocalIdentifier,
+} from "./ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 
@@ -113,7 +118,7 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): Execute
 
     return {
         popMeasure: {
-            measureIdentifier: popMeasureDefinition.measureIdentifier,
+            measureIdentifier: toLocalIdentifier(popMeasureDefinition.measureIdentifier),
             popAttribute: toDisplayFormQualifier(attributeRef),
         },
     };
@@ -126,7 +131,7 @@ function convertPreviousPeriodMeasureDefinition(
 
     return {
         previousPeriodMeasure: {
-            measureIdentifier: previousPeriodMeasure.measureIdentifier,
+            measureIdentifier: toLocalIdentifier(previousPeriodMeasure.measureIdentifier),
             dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => {
                 const dataSetRef = dateDataSet.dataSet;
 
@@ -145,7 +150,7 @@ function convertArithmeticMeasureDefinition(
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {
-            measureIdentifiers: arithmeticMeasure.measureIdentifiers.slice(),
+            measureIdentifiers: arithmeticMeasure.measureIdentifiers.map(toLocalIdentifier),
             operator: arithmeticMeasure.operator,
         },
     };

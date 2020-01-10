@@ -67,17 +67,17 @@ export namespace ExecuteAFM {
     export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
     export interface IArithmeticMeasure {
-        measureIdentifiers: Identifier[];
+        measureIdentifiers: ILocalIdentifierQualifier[];
         operator: ArithmeticMeasureOperator;
     }
 
     export interface IPopMeasure {
-        measureIdentifier: Identifier;
+        measureIdentifier: ILocalIdentifierQualifier;
         popAttribute: ObjQualifier;
     }
 
     export interface IPreviousPeriodMeasure {
-        measureIdentifier: Identifier;
+        measureIdentifier: ILocalIdentifierQualifier;
         dateDataSets: IPreviousPeriodDateDataSet[];
     }
 
@@ -94,6 +94,10 @@ export namespace ExecuteAFM {
             id: string;
             type: string;
         };
+    }
+
+    export interface ILocalIdentifierQualifier {
+        localIdentifier: string;
     }
 
     export type CompatibilityFilter = IExpressionFilter | FilterItem;
@@ -144,16 +148,16 @@ export namespace ExecuteAFM {
     }
 
     export interface ITotalItem {
-        measureIdentifier: Identifier;
+        measureIdentifier: ILocalIdentifierQualifier;
         type: TotalType;
-        attributeIdentifier: Identifier;
+        attributeIdentifier: ILocalIdentifierQualifier;
     }
 
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
     export interface INativeTotalItem {
-        measureIdentifier: Identifier;
-        attributeIdentifiers: Identifier[];
+        measureIdentifier: ILocalIdentifierQualifier;
+        attributeIdentifiers: ILocalIdentifierQualifier[];
     }
 
     export interface IDimension {
@@ -167,7 +171,7 @@ export namespace ExecuteAFM {
     export interface IAttributeSortItem {
         attributeSortItem: {
             direction: SortDirection;
-            attributeIdentifier: Identifier;
+            attributeIdentifier: ILocalIdentifierQualifier;
             aggregation?: "sum";
         };
     }
@@ -183,14 +187,14 @@ export namespace ExecuteAFM {
 
     export interface IAttributeLocatorItem {
         attributeLocatorItem: {
-            attributeIdentifier: Identifier;
+            attributeIdentifier: ILocalIdentifierQualifier;
             element: string;
         };
     }
 
     export interface IMeasureLocatorItem {
         measureLocatorItem: {
-            measureIdentifier: Identifier;
+            measureIdentifier: ILocalIdentifierQualifier;
         };
     }
 }
