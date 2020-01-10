@@ -534,12 +534,12 @@ export const Scenarios = {
     },
 };
 const df_label_product_id_name = {
-    elements: require("./metadata/label.product.id.name/elements.json"),
-    obj: require("./metadata/label.product.id.name/obj.json"),
+    elements: require("./metadata/displayForms/label.product.id.name/elements.json"),
+    obj: require("./metadata/displayForms/label.product.id.name/obj.json"),
 };
 const df_label_owner_department = {
-    elements: require("./metadata/label.owner.department/elements.json"),
-    obj: require("./metadata/label.owner.department/obj.json"),
+    elements: require("./metadata/displayForms/label.owner.department/elements.json"),
+    obj: require("./metadata/displayForms/label.owner.department/obj.json"),
 };
 export const Recordings = {
     executions: {
