@@ -30,12 +30,12 @@
         "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.2",
-        "@gooddata/sdk-model": "^8.0.0-alpha.2",
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.3",
+        "@gooddata/sdk-model": "^8.0.0-alpha.3",
         "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "@gooddata/catalog-export": "^8.0.0-alpha.2",
+        "@gooddata/catalog-export": "^8.0.0-alpha.3",
         "@gooddata/mock-handling": "1.0.0",
         "@gooddata/tslint-config": "1.0.0",
         "@types/jest": "^24.0.6",
