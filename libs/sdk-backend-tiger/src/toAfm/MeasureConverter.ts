@@ -1,5 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
-import { NotSupported } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2020 GoodData Corporation
 import {
     IArithmeticMeasureDefinition,
     IMeasure,
@@ -11,11 +10,11 @@ import {
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
-    isUriRef,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { toDateDataSetQualifier, toFactQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 
@@ -98,13 +97,9 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
 
     const measureRef = measureDefinition.item;
 
-    if (isUriRef(measureRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying measures by URI");
-    }
-
     return {
         measure: {
-            item: measureRef,
+            item: toFactQualifier(measureRef),
             ...filtersProp,
             ...aggregationProp,
             ...computeRatioProp,
@@ -116,14 +111,10 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): Execute
     const { popMeasureDefinition } = definition;
     const attributeRef = popMeasureDefinition.popAttribute;
 
-    if (isUriRef(attributeRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying attributes by URI");
-    }
-
     return {
         popMeasure: {
             measureIdentifier: popMeasureDefinition.measureIdentifier,
-            popAttribute: attributeRef,
+            popAttribute: toDisplayFormQualifier(attributeRef),
         },
     };
 }
@@ -139,12 +130,8 @@ function convertPreviousPeriodMeasureDefinition(
             dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => {
                 const dataSetRef = dateDataSet.dataSet;
 
-                if (isUriRef(dataSetRef)) {
-                    throw new NotSupported("Tiger backend does nto allow specifying date data sets by URI.");
-                }
-
                 return {
-                    dataSet: dataSetRef,
+                    dataSet: toDateDataSetQualifier(dataSetRef),
                     periodsAgo: dateDataSet.periodsAgo,
                 };
             }),

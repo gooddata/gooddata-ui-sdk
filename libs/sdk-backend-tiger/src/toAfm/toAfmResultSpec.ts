@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import compact = require("lodash/compact");
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
@@ -17,6 +17,7 @@ import {
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
+import { toDisplayFormQualifier } from "./ObjRefConverter";
 import isEmpty = require("lodash/isEmpty");
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
@@ -24,12 +25,8 @@ function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttri
     const aliasProp = alias ? { alias } : {};
     const displayFromRef = attribute.attribute.displayForm;
 
-    if (isUriRef(displayFromRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying display forms by URI");
-    }
-
     return {
-        displayForm: displayFromRef,
+        displayForm: toDisplayFormQualifier(displayFromRef),
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
     };

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 export namespace ExecuteAFM {
     export interface IExecution {
@@ -90,7 +90,10 @@ export namespace ExecuteAFM {
     export type ObjQualifier = IObjIdentifierQualifier;
 
     export interface IObjIdentifierQualifier {
-        identifier: string;
+        identifier: {
+            id: string;
+            type: string;
+        };
     }
 
     export type CompatibilityFilter = IExpressionFilter | FilterItem;
