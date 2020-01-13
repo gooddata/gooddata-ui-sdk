@@ -4,11 +4,13 @@ import { mount } from "enzyme";
 import { Headline } from "../Headline";
 import { CoreHeadline } from "../CoreHeadline";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { M1 } from "../../tests/fixtures";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("Headline", () => {
     it("should render with custom SDK", () => {
-        const wrapper = mount(<Headline workspace="foo" primaryMeasure={M1} backend={dummyBackend()} />);
+        const wrapper = mount(
+            <Headline workspace="foo" primaryMeasure={ReferenceLdm.Amount} backend={dummyBackend()} />,
+        );
         expect(wrapper.find(CoreHeadline)).toHaveLength(1);
     });
 });

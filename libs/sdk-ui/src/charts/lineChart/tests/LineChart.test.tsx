@@ -2,58 +2,21 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { LineChart } from "../LineChart";
-import { IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
+import {
+    newAttributeSort,
+    newTwoDimensional,
+    attributeLocalId,
+    MeasureGroupIdentifier,
+} from "@gooddata/sdk-model";
 import { CoreLineChart } from "../CoreLineChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { M1 } from "../../tests/fixtures";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("LineChart", () => {
-    const measure: IMeasure = {
-        measure: {
-            localIdentifier: "m1",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "xyz123",
-                    },
-                },
-            },
-        },
-    };
-
-    const attribute: IAttribute = {
-        attribute: {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "attribute1",
-            },
-        },
-    };
-
-    const attribute2: IAttribute = {
-        attribute: {
-            localIdentifier: "a2",
-            displayForm: {
-                identifier: "attribute2",
-            },
-        },
-    };
-
-    const measureSortItem: IMeasureSortItem = {
-        measureSortItem: {
-            direction: "asc",
-            locators: [
-                {
-                    measureLocatorItem: {
-                        measureIdentifier: "m1",
-                    },
-                },
-            ],
-        },
-    };
-
     it("should render with custom SDK", () => {
-        const wrapper = mount(<LineChart workspace="foo" backend={dummyBackend()} measures={[M1]} />);
+        const wrapper = mount(
+            <LineChart workspace="foo" backend={dummyBackend()} measures={[ReferenceLdm.Amount]} />,
+        );
         expect(wrapper.find(CoreLineChart)).toHaveLength(1);
     });
 
@@ -62,21 +25,17 @@ describe("LineChart", () => {
             <LineChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[measure]}
-                trendBy={attribute}
-                segmentBy={attribute2}
-                sortBy={[measureSortItem]}
+                measures={[ReferenceLdm.Amount]}
+                trendBy={ReferenceLdm.CreatedQuarterYear}
+                segmentBy={ReferenceLdm.Region}
+                sortBy={[newAttributeSort(ReferenceLdm.CreatedQuarterYear, "asc")]}
             />,
         );
 
-        const expectedDims = [
-            {
-                itemIdentifiers: ["a2"],
-            },
-            {
-                itemIdentifiers: ["a1", "measureGroup"],
-            },
-        ];
+        const expectedDims = newTwoDimensional(
+            [attributeLocalId(ReferenceLdm.Region)],
+            [attributeLocalId(ReferenceLdm.CreatedQuarterYear), MeasureGroupIdentifier],
+        );
 
         expect(wrapper.find(CoreLineChart)).toHaveLength(1);
         expect(wrapper.find(CoreLineChart).prop("execution")).toBeDefined();

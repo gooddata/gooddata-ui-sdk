@@ -4,69 +4,23 @@ import { mount, ReactWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import {
     attributeLocalId,
     AttributeOrMeasure,
-    IAttribute,
-    IMeasure,
-    IMeasureSortItem,
     MeasureGroupIdentifier,
     newTwoDimensional,
+    newAttributeSort,
 } from "@gooddata/sdk-model";
 import { CoreBarChart } from "../CoreBarChart";
-import { M1, M1WithRatio } from "../../tests/fixtures";
 
 function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(<BarChart config={config} workspace="foo" backend={dummyBackend()} measures={measures} />);
 }
 
 describe("BarChart", () => {
-    const measure: IMeasure = {
-        measure: {
-            localIdentifier: "m1",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "xyz123",
-                    },
-                },
-            },
-        },
-    };
-
-    const attribute: IAttribute = {
-        attribute: {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "attribute1",
-            },
-        },
-    };
-
-    const attribute2: IAttribute = {
-        attribute: {
-            localIdentifier: "a2",
-            displayForm: {
-                identifier: "attribute2",
-            },
-        },
-    };
-
-    const measureSortItem: IMeasureSortItem = {
-        measureSortItem: {
-            direction: "asc",
-            locators: [
-                {
-                    measureLocatorItem: {
-                        measureIdentifier: "m1",
-                    },
-                },
-            ],
-        },
-    };
-
     it("should render with custom SDK", () => {
-        const wrapper = renderChart([M1]);
+        const wrapper = renderChart([]);
         expect(wrapper.find(CoreBarChart)).toHaveLength(1);
     });
 
@@ -77,16 +31,16 @@ describe("BarChart", () => {
             <BarChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[measure]}
-                viewBy={attribute}
-                stackBy={attribute2}
-                sortBy={[measureSortItem]}
+                measures={[ReferenceLdm.Amount]}
+                viewBy={ReferenceLdm.Product.Name}
+                stackBy={ReferenceLdm.Region}
+                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "asc")]}
             />,
         );
 
         const exceptedDimensions = newTwoDimensional(
-            [attributeLocalId(attribute2)],
-            [attributeLocalId(attribute), MeasureGroupIdentifier],
+            [attributeLocalId(ReferenceLdm.Region)],
+            [attributeLocalId(ReferenceLdm.Product.Name), MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreBarChart)).toHaveLength(1);
@@ -101,7 +55,7 @@ describe("BarChart", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([M1], config);
+            const wrapper = renderChart([ReferenceLdm.Amount], config);
             expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
@@ -109,7 +63,7 @@ describe("BarChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([M1WithRatio], config);
+            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], config);
             expect(wrapper.find(CoreBarChart).prop("config")).toEqual({
                 stackMeasures: false,
                 stackMeasuresToPercent: false,

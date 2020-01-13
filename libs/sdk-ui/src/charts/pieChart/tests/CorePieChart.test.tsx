@@ -3,12 +3,16 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import { CorePieChart } from "../CorePieChart";
-import { dummyExecution } from "../../tests/fixtures";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { prepareExecution } from "@gooddata/sdk-backend-spi";
+import { emptyDef } from "@gooddata/sdk-model";
 import { BaseChart } from "../../_base/BaseChart";
 
 describe("PieChart", () => {
     it("should render BaseChart", () => {
-        const wrapper = shallow(<CorePieChart execution={dummyExecution} />);
+        const wrapper = shallow(
+            <CorePieChart execution={prepareExecution(dummyBackend(), emptyDef("testWorkspace"))} />,
+        );
         expect(wrapper.find(BaseChart).length).toBe(1);
     });
 });

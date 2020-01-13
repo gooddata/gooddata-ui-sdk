@@ -4,9 +4,15 @@ import { mount, ReactWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { AttributeOrMeasure, IAttribute, IMeasure, IMeasureSortItem } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    newMeasureSort,
+    newTwoDimensional,
+    attributeLocalId,
+    MeasureGroupIdentifier,
+} from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";
-import { M1, M1WithRatio } from "../../tests/fixtures";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 
 function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(
@@ -15,52 +21,8 @@ function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): Rea
 }
 
 describe("ColumnChart", () => {
-    const measure: IMeasure = {
-        measure: {
-            localIdentifier: "m1",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "xyz123",
-                    },
-                },
-            },
-        },
-    };
-
-    const attribute: IAttribute = {
-        attribute: {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "attribute1",
-            },
-        },
-    };
-
-    const attribute2: IAttribute = {
-        attribute: {
-            localIdentifier: "a2",
-            displayForm: {
-                identifier: "attribute2",
-            },
-        },
-    };
-
-    const measureSortItem: IMeasureSortItem = {
-        measureSortItem: {
-            direction: "asc",
-            locators: [
-                {
-                    measureLocatorItem: {
-                        measureIdentifier: "m1",
-                    },
-                },
-            ],
-        },
-    };
-
     it("should render with custom SDK", () => {
-        const wrapper = renderChart([M1]);
+        const wrapper = renderChart([]);
         expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
     });
 
@@ -69,21 +31,17 @@ describe("ColumnChart", () => {
             <ColumnChart
                 workspace="foo"
                 backend={dummyBackend()}
-                measures={[measure]}
-                viewBy={attribute}
-                stackBy={attribute2}
-                sortBy={[measureSortItem]}
+                measures={[ReferenceLdm.Amount]}
+                viewBy={ReferenceLdm.Product.Name}
+                stackBy={ReferenceLdm.Region}
+                sortBy={[newMeasureSort(ReferenceLdm.Won, "asc")]}
             />,
         );
 
-        const expectedDims = [
-            {
-                itemIdentifiers: ["a2"],
-            },
-            {
-                itemIdentifiers: ["a1", "measureGroup"],
-            },
-        ];
+        const expectedDims = newTwoDimensional(
+            [attributeLocalId(ReferenceLdm.Region)],
+            [attributeLocalId(ReferenceLdm.Product.Name), MeasureGroupIdentifier],
+        );
 
         expect(wrapper.find(CoreColumnChart)).toHaveLength(1);
         expect(wrapper.find(CoreColumnChart).prop("execution")).toBeDefined();
@@ -94,7 +52,7 @@ describe("ColumnChart", () => {
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([M1], config);
+            const wrapper = renderChart([ReferenceLdm.Amount], config);
             expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
@@ -102,7 +60,7 @@ describe("ColumnChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([M1WithRatio], config);
+            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], config);
             expect(wrapper.find(CoreColumnChart).prop("config")).toEqual({
                 stackMeasures: false,
                 stackMeasuresToPercent: false,

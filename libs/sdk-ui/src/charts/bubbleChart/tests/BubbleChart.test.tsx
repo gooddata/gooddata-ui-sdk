@@ -2,69 +2,21 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { BubbleChart } from "../BubbleChart";
-import { IAttribute, IAttributeSortItem, IMeasure } from "@gooddata/sdk-model";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreBubbleChart } from "../CoreBubbleChart";
-import { M1 } from "../../tests/fixtures";
+import {
+    newAttributeSort,
+    newTwoDimensional,
+    MeasureGroupIdentifier,
+    attributeLocalId,
+} from "@gooddata/sdk-model";
 
 describe("BubbleChart", () => {
-    const measure: IMeasure = {
-        measure: {
-            localIdentifier: "m1",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "xyz123",
-                    },
-                },
-            },
-        },
-    };
-
-    const secondaryMeasure: IMeasure = {
-        measure: {
-            localIdentifier: "m2",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "abc321",
-                    },
-                },
-            },
-        },
-    };
-
-    const tertiaryMeasure: IMeasure = {
-        measure: {
-            localIdentifier: "m3",
-            definition: {
-                measureDefinition: {
-                    item: {
-                        identifier: "size",
-                    },
-                },
-            },
-        },
-    };
-
-    const attribute: IAttribute = {
-        attribute: {
-            localIdentifier: "a1",
-            displayForm: {
-                identifier: "attribute1",
-            },
-        },
-    };
-
-    const attributeSortItem: IAttributeSortItem = {
-        attributeSortItem: {
-            direction: "desc",
-            attributeIdentifier: "attribute1",
-        },
-    };
-
     it("should render with custom SDK", () => {
-        const wrapper = mount(<BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={M1} />);
+        const wrapper = mount(
+            <BubbleChart workspace="foo" backend={dummyBackend()} xAxisMeasure={ReferenceLdm.Amount} />,
+        );
         expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
     });
 
@@ -73,22 +25,18 @@ describe("BubbleChart", () => {
             <BubbleChart
                 workspace="foo"
                 backend={dummyBackend()}
-                xAxisMeasure={measure}
-                yAxisMeasure={secondaryMeasure}
-                size={tertiaryMeasure}
-                viewBy={attribute}
-                sortBy={[attributeSortItem]}
+                xAxisMeasure={ReferenceLdm.Amount}
+                yAxisMeasure={ReferenceLdm.WinRate}
+                size={ReferenceLdm.Probability}
+                viewBy={ReferenceLdm.Product.Name}
+                sortBy={[newAttributeSort(ReferenceLdm.Product.Name, "desc")]}
             />,
         );
 
-        const expectedDims = [
-            {
-                itemIdentifiers: ["a1"],
-            },
-            {
-                itemIdentifiers: ["measureGroup"],
-            },
-        ];
+        const expectedDims = newTwoDimensional(
+            [attributeLocalId(ReferenceLdm.Product.Name)],
+            [MeasureGroupIdentifier],
+        );
 
         expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
         expect(wrapper.find(CoreBubbleChart).prop("execution")).toBeDefined();
