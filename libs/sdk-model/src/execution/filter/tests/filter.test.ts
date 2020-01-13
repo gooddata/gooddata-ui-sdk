@@ -19,16 +19,12 @@ import {
     absoluteDateFilterValues,
     relativeDateFilterValues,
 } from "../index";
-import { objectRefValue, ObjRef } from "../../base";
+import { ObjRef } from "../../base";
 
-const AbsoluteDateFilter = newAbsoluteDateFilter(
-    objectRefValue(ClosedDate.MmDdYyyy.attribute.displayForm),
-    "2018",
-    "2019",
-);
+const AbsoluteDateFilter = newAbsoluteDateFilter(ClosedDate.MmDdYyyy.attribute.displayForm, "2018", "2019");
 
 const RelativeDateFilter = newRelativeDateFilter(
-    objectRefValue(ClosedDate.MmDdYyyy.attribute.displayForm),
+    ClosedDate.MmDdYyyy.attribute.displayForm,
     "GDC.time.date",
     -6,
     0,

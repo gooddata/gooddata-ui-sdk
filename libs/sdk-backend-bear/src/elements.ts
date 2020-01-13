@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IElementQueryFactory,
     IElementQuery,
@@ -6,14 +6,14 @@ import {
     IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedCallGuard } from "./commonTypes";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef, isUriRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public forObject(identifier: string): IElementQuery {
-        return new BearWorkspaceElementsQuery(this.authCall, identifier, this.workspace);
+    public forDisplayForm(ref: ObjRef): IElementQuery {
+        return new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
 }
 
@@ -33,7 +33,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
 
     constructor(
         private readonly authCall: AuthenticatedCallGuard,
-        private readonly identifier: string,
+        private readonly ref: ObjRef,
         private readonly workspace: string,
     ) {}
 
@@ -59,13 +59,15 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
+    private async objRefToUri(ref: ObjRef): Promise<string> {
+        return isUriRef(ref)
+            ? ref.uri
+            : this.authCall(sdk => sdk.md.getObjectUri(this.workspace, ref.identifier));
+    }
+
     private async getObjectId(): Promise<string> {
         if (!this.objectId) {
-            const uri = await this.authCall(sdk =>
-                sdk.md
-                    .getUrisFromIdentifiers(this.workspace, [this.identifier])
-                    .then(result => result[0].uri),
-            );
+            const uri = await this.objRefToUri(this.ref);
             this.objectId = getObjectIdFromUri(uri);
         }
 

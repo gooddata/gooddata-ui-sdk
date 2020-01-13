@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { attributeIdentifier } from "@gooddata/sdk-model";
+import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
 import * as React from "react";
 import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
@@ -19,7 +19,7 @@ import { AttributeFilterItem } from "../AttributeFilterItem";
 describe("AttributeDropdown", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
-    const testAttributeIdentifier = attributeIdentifier(ReferenceLdm.Product.Name);
+    const testAttributeRef = idRef(attributeIdentifier(ReferenceLdm.Product.Name));
 
     function renderComponent(props: any = {}) {
         const onApply = props.onApply || noop;
@@ -51,7 +51,7 @@ describe("AttributeDropdown", () => {
     });
 
     it("should render overlay with loaded items", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef });
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
@@ -63,7 +63,7 @@ describe("AttributeDropdown", () => {
 
     it("should fire onApply with the proper selection", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -92,7 +92,7 @@ describe("AttributeDropdown", () => {
 
     it("should keep selection after Apply", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -118,7 +118,7 @@ describe("AttributeDropdown", () => {
 
     it("should reset selection on Cancel", async () => {
         const onApply = jest.fn();
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier, onApply });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef, onApply });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -143,7 +143,7 @@ describe("AttributeDropdown", () => {
     });
 
     it("should limit items by search string", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef });
 
         wrapper.find(DropdownButton).simulate("click");
 
@@ -166,7 +166,7 @@ describe("AttributeDropdown", () => {
     });
 
     it("should reset search string on cancel", async () => {
-        const wrapper = renderComponent({ title: "Foo", identifier: testAttributeIdentifier });
+        const wrapper = renderComponent({ title: "Foo", displayForm: testAttributeRef });
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();

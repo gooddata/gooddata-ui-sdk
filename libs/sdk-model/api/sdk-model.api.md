@@ -20,9 +20,12 @@ export const anyMeasure: MeasurePredicate;
 export function applyRatioRule<T extends AttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
 // @public
+export function areObjRefsEqual(a: ObjRefInScope | null | undefined, b: ObjRefInScope | null | undefined): boolean;
+
+// @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
     // @internal
-    constructor(measureIds: string[], operator: ArithmeticMeasureOperator);
+    constructor(measureIds: Identifier[], operator: ArithmeticMeasureOperator);
 }
 
 // @public
@@ -37,7 +40,7 @@ export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjR
 // @public
 export class AttributeBuilder implements IAttribute {
     // @internal
-    constructor(displayFormId: string);
+    constructor(displayForm: ObjRef);
     // (undocumented)
     alias: (alias: string) => this;
     // (undocumented)
@@ -46,7 +49,7 @@ export class AttributeBuilder implements IAttribute {
     build: () => {
         attribute: {
             localIdentifier: string;
-            displayForm: import("../base").ObjRef;
+            displayForm: ObjRef;
             alias?: string | undefined;
         };
     };
@@ -518,6 +521,9 @@ export const idMatchBucket: (id: string) => BucketPredicate;
 export const idMatchMeasure: (id: string) => MeasurePredicate;
 
 // @public
+export function idRef(identifier: Identifier): IdentifierRef;
+
+// @public
 export interface IExecutionDefinition {
     // (undocumented)
     readonly attributes: IAttribute[];
@@ -893,6 +899,9 @@ export function isIdentifierRef(obj: any): obj is IdentifierRef;
 export function isInsight(obj: any): obj is IInsight;
 
 // @public
+export function isLocalIdRef(obj: any): obj is LocalIdRef;
+
+// @public
 export function isMeasure(obj: any): obj is IMeasure;
 
 // @public
@@ -909,6 +918,9 @@ export function isMeasureValueFilter(obj: any): obj is IMeasureValueFilter;
 
 // @public
 export function isNegativeAttributeFilter(obj: any): obj is INegativeAttributeFilter;
+
+// @public
+export function isObjRef(obj: any): obj is ObjRef;
 
 // @public
 export function isPoPMeasure(obj: any): obj is IMeasure<IPoPMeasureDefinition>;
@@ -1000,6 +1012,9 @@ export type LocalIdRef = {
 };
 
 // @public
+export function localIdRef(localIdentifier: Identifier): LocalIdRef;
+
+// @public
 export type LocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 
 // @public
@@ -1020,7 +1035,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 // @public
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // @internal
-    constructor(measureOrId: IMeasure<IMeasureDefinition> | string);
+    constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef);
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
@@ -1111,13 +1126,13 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
-export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter;
+export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
 
 // @public
-export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | string>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
+export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | Identifier>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
-export function newAttribute(displayFormId: string, modifications?: AttributeModifications): IAttribute;
+export function newAttribute(displayForm: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
 // @public
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
@@ -1146,7 +1161,7 @@ export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimen
 export function newInsightDefinition(classUri: string, modifications?: InsightModifications): IInsightDefinition;
 
 // @public
-export function newMeasure(measureId: string, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
+export function newMeasure(measure: ObjRef | Identifier, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
@@ -1155,19 +1170,19 @@ export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: S
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, operator: ComparisonConditionOperator | RangeConditionOperator, val1: number, val2?: number): IMeasureValueFilter;
 
 // @public
-export function newNegativeAttributeFilter(attributeOrId: IAttribute | string, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
-export function newPopMeasure(measureOrId: IMeasure | string, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function newPopMeasure(measureOrLocalId: IMeasure | Identifier, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrId: IAttribute | string, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
 
 // @public
-export function newPreviousPeriodMeasure(measureIdOrId: IMeasure | string, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
+export function newPreviousPeriodMeasure(measureIdOrLocalId: IMeasure | Identifier, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
 
 // @public
-export function newRelativeDateFilter(dateDataSetId: string, granularity: string, from: number, to: number): IRelativeDateFilter;
+export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: string, from: number, to: number): IRelativeDateFilter;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | string, attributeOrId: IAttribute | string, alias?: string): ITotal;
@@ -1187,7 +1202,7 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
     // @internal
-    constructor(measureId: string, popAttributeId: string);
+    constructor(measureId: Identifier, popAttributeId: Identifier);
 }
 
 // @public
@@ -1232,9 +1247,15 @@ export function totalIsNative(total: ITotal): boolean;
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
 
 // @public
+export type Uri = string;
+
+// @public
 export type UriRef = {
-    uri: string;
+    uri: Uri;
 };
+
+// @public
+export function uriRef(uri: Uri): UriRef;
 
 // @public
 export function visClassUrl(vc: IVisualizationClass): string;

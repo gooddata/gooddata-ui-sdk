@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { Velocity, Won } from "../../../../__mocks__/model";
 import { modifyMeasure, newArithmeticMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
@@ -28,7 +28,7 @@ const SimpleMeasureWithRatio = modifyMeasure(Won, m => m.ratio());
 const SimpleMeasureWithUri = modifyMeasure(Won);
 SimpleMeasureWithUri.measure.definition.measureDefinition.item = { uri: "/uri" };
 const SimpleMeasureWithFilters = modifyMeasure(Won, m =>
-    m.filters(newPositiveAttributeFilter("myAttribute", ["foo"])),
+    m.filters(newPositiveAttributeFilter({ identifier: "myAttribute" }, ["foo"])),
 );
 
 const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");

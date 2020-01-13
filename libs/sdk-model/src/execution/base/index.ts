@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
@@ -11,6 +11,13 @@ import invariant from "ts-invariant";
 export type Identifier = string;
 
 /**
+ * Type for all URI's.
+ *
+ * @public
+ */
+export type Uri = string;
+
+/**
  * Model object reference using object's URI.
  *
  * NOTE: using URI references is discouraged. URIs are workspace-specific and thus any application
@@ -19,7 +26,7 @@ export type Identifier = string;
  * @public
  */
 export type UriRef = {
-    uri: string;
+    uri: Uri;
 };
 
 /**
@@ -84,6 +91,15 @@ export function isIdentifierRef(obj: any): obj is IdentifierRef {
 }
 
 /**
+ * Type guard checking whether object is an Identifier Reference or an URI reference.
+ *
+ * @public
+ */
+export function isObjRef(obj: any): obj is ObjRef {
+    return isUriRef(obj) || isIdentifierRef(obj);
+}
+
+/**
  * Type guard checking whether object is a localId Reference.
  *
  * @public
@@ -107,4 +123,26 @@ export function objectRefValue(objRef: ObjRef | ObjRefInScope): string {
     }
 
     return objRef.localIdentifier;
+}
+
+/**
+ * Returns a value indicating whether the two ObjRef instances are semantically equal (i.e. are of the same type and have the same value).
+ * Null and undefined are considered equal to each other.
+ *
+ * @public
+ */
+export function areObjRefsEqual(
+    a: ObjRefInScope | null | undefined,
+    b: ObjRefInScope | null | undefined,
+): boolean {
+    if (a == null) {
+        return b == null;
+    }
+    if (isIdentifierRef(a)) {
+        return isIdentifierRef(b) && a.identifier === b.identifier;
+    }
+    if (isUriRef(a)) {
+        return isUriRef(b) && a.uri === b.uri;
+    }
+    return isLocalIdRef(b) && a.localIdentifier === b.localIdentifier;
 }
