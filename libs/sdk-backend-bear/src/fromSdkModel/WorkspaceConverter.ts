@@ -1,13 +1,19 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcProject, GdcUser } from "@gooddata/gd-bear-model";
 import { IWorkspace, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 export const convertUserProject = ({ userProject }: GdcProject.IUserProject): IWorkspace => {
-    return {
+    const workspace: IWorkspace = {
         description: userProject.projectDescription,
         title: userProject.projectTitle,
         id: userProject.links.self.match(/\/gdc\/projects\/(.+)/i)![1],
     };
+
+    if (userProject.isDemo) {
+        workspace.isDemo = true;
+    }
+
+    return workspace;
 };
 
 export const convertPermissions = ({ permissions }: GdcUser.IProjectPermissions): IWorkspacePermissions => {

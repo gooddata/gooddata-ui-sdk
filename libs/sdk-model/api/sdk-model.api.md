@@ -984,6 +984,8 @@ export interface IWorkspace {
     // (undocumented)
     id: string;
     // (undocumented)
+    isDemo?: boolean;
+    // (undocumented)
     title: string;
 }
 
