@@ -3,7 +3,7 @@
 import {
     IInsight,
     IInsightDefinition,
-    insightVisualizationClassUri,
+    insightVisualizationUrl,
     IVisualizationClass,
 } from "@gooddata/sdk-model";
 import { FullVisualizationCatalog, BaseVisualization } from "@gooddata/sdk-ui/dist/internal";
@@ -13,7 +13,7 @@ import noop = require("lodash/noop");
 import React from "react";
 
 function createVisualizationClass(insight: IInsightDefinition): IVisualizationClass {
-    const visClassUri = insightVisualizationClassUri(insight);
+    const visClassUri = insightVisualizationUrl(insight);
 
     return {
         visualizationClass: {

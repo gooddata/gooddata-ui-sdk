@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames } from "../../../../../base";
@@ -14,7 +14,7 @@ describe("countItemsOnAxesInMdObject", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassUri: "vcId",
+                visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -40,7 +40,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassUri: "vcId",
+                visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -68,7 +68,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassUri: "vcId",
+                visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
@@ -96,7 +96,7 @@ describe("countItemsOnAxes", () => {
                 properties: {},
                 sorts: [],
                 title: "My Insight",
-                visualizationClassUri: "vcId",
+                visualizationUrl: "vcId",
                 buckets: [
                     { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
                     { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },

@@ -298,7 +298,7 @@ export const singleMeasureInsight: IInsight = {
     insight: {
         identifier: "singleMeasureInsight",
         uri: "/some/uri/singleMeasureInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -331,7 +331,7 @@ export const singleAttributeInsight: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",
         uri: "/some/uri/singleAttributeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "attribute",
@@ -358,7 +358,7 @@ export const insightWithSorts: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",
         uri: "/some/uri/singleAttributeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -427,7 +427,7 @@ export const insightWithTotals: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",
         uri: "/some/uri/singleAttributeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -477,7 +477,7 @@ export const insightWithoutTotals: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",
         uri: "/some/uri/singleAttributeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -533,7 +533,7 @@ export const insightWithProperties: IInsight = {
     insight: {
         identifier: "singleAttributeInsight",
         uri: "/some/uri/singleAttributeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -610,7 +610,7 @@ export const insightWithPoP: IInsight = {
     insight: {
         identifier: "popMeasureInsight",
         uri: "/some/uri/popMeasureInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -673,7 +673,7 @@ export const insightWithPoPAndAlias: IInsight = {
     insight: {
         identifier: "popMeasureWithAliasInsight",
         uri: "/some/uri/popMeasureInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -737,7 +737,7 @@ export const insightWithArithmeticAndDerivedMeasures: IInsight = {
     insight: {
         identifier: "arithmeticAndDerivedMeasureInsight",
         uri: "/some/uri/arithmeticAndDerivedMeasureInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -795,7 +795,7 @@ export const insightWithArithmeticMeasureTree: IInsight = {
     insight: {
         identifier: "arithmeticMeasureTreeInsight",
         uri: "/some/uri/arithmeticMeasureTreeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -888,7 +888,7 @@ export const insightWithComplexArithmeticMeasureTree: IInsight = {
     insight: {
         identifier: "complexArithmeticMeasureTreeInsight",
         uri: "/some/uri/complexArithmeticMeasureTreeInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",
@@ -1150,7 +1150,7 @@ export const insightWithMultipleMeasureBuckets: IInsight = {
     insight: {
         identifier: "multipleMeasureBucketsInsight",
         uri: "/some/uri/multipleMeasureBucketsInsight",
-        visualizationClassUri: "testClassId",
+        visualizationUrl: "local:test",
         buckets: [
             {
                 localIdentifier: "measures",

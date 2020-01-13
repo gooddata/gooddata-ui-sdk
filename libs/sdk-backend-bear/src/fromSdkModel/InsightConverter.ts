@@ -3,7 +3,7 @@ import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
     IInsightDefinition,
     insightBuckets,
-    insightVisualizationClassUri,
+    insightVisualizationUrl,
     IBucket,
     AttributeOrMeasure,
     isMeasure,
@@ -53,7 +53,7 @@ const convertInsightContent = (
     return {
         buckets: insightBuckets(insight).map(convertBucket),
         visualizationClass: {
-            uri: insightVisualizationClassUri(insight),
+            uri: insightVisualizationUrl(insight),
         },
         filters: insightFilters(insight)
             .filter(shouldFilterBeIncluded)

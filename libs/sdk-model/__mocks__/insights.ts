@@ -23,7 +23,7 @@ export class InsightBuilder {
 
     constructor(visClassUri: string) {
         this.insight = {
-            visualizationClassUri: visClassUri,
+            visualizationUrl: visClassUri,
             title: "Untitled",
             buckets: [],
             filters: [],

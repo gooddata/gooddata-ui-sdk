@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import last = require("lodash/last");
-import { IInsightDefinition, insightVisualizationClassUri } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../../base";
 import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
@@ -77,7 +77,7 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         /*
          * the URIs follow "local:visualizationType" format
          */
-        const visClassUri = insightVisualizationClassUri(insight);
+        const visClassUri = insightVisualizationUrl(insight);
 
         return this.forUri(visClassUri);
     }
