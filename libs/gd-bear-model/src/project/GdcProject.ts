@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcPaging } from "../base/GdcPaging";
 import { Uri } from "../aliases";
 
@@ -17,6 +17,7 @@ export namespace GdcProject {
             links: {
                 self: Uri;
             };
+            isDemo?: boolean;
         };
     }
 

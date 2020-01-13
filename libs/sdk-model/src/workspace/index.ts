@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
  * Workspace represents a set of related data, insights and so on.
@@ -11,6 +11,7 @@ export interface IWorkspace {
     id: string;
     title: string;
     description: string;
+    isDemo?: boolean;
 }
 
 /**
