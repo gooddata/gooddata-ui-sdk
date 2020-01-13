@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IWorkspace } from "@gooddata/sdk-model";
 import { IPagedResource } from "../common/paging";
 
@@ -45,6 +45,12 @@ export interface IWorkspaceQuery {
     withOffset(offset: number): IWorkspaceQuery;
 
     /**
+     * Sets a text to search
+     * @param search - text to search
+     */
+    withSearch(search: string): IWorkspaceQuery;
+
+    /**
      * Executes the query and returns the result asynchronously.
      */
     query(): Promise<IWorkspaceQueryResult>;
@@ -55,4 +61,6 @@ export interface IWorkspaceQuery {
  *
  * @public
  */
-export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {}
+export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {
+    search: string | undefined;
+}

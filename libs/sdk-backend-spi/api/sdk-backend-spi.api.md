@@ -592,6 +592,7 @@ export interface IWorkspaceQuery {
     query(): Promise<IWorkspaceQueryResult>;
     withLimit(limit: number): IWorkspaceQuery;
     withOffset(offset: number): IWorkspaceQuery;
+    withSearch(search: string): IWorkspaceQuery;
 }
 
 // @public
@@ -602,6 +603,8 @@ export interface IWorkspaceQueryFactory {
 
 // @public
 export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {
+    // (undocumented)
+    search: string | undefined;
 }
 
 // @public

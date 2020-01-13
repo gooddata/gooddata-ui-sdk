@@ -21,6 +21,15 @@ export namespace GdcProject {
         };
     }
 
+    export interface IUserProjectsParams {
+        limit: number;
+        offset: number;
+        userId: string;
+        projectStates: "ENABLED";
+        userState: "ENABLED";
+        titleSubstring?: string;
+    }
+
     export interface IUserProjectsResponse {
         userProjects: {
             items: IUserProject[];
