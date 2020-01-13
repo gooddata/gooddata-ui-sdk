@@ -1,35 +1,28 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import compact = require("lodash/compact");
-import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
-import { convertMeasure } from "./MeasureConverter";
+import isEmpty = require("lodash/isEmpty");
 import {
     attributeLocalId,
-    attributesFind,
     bucketItems,
     bucketsFindAttribute,
     dimensionTotals,
     IAttribute,
-    isAttribute,
-    isUriRef,
-    totalIsNative,
-    MeasureGroupIdentifier,
     IExecutionDefinition,
+    isAttribute,
+    totalIsNative,
 } from "@gooddata/sdk-model";
-import { NotSupported } from "@gooddata/sdk-backend-spi";
-import isEmpty = require("lodash/isEmpty");
+import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { convertMeasure } from "./MeasureConverter";
+import { toDisplayFormQualifier, toLocalIdentifier } from "./ObjRefConverter";
 
 function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
     const displayFromRef = attribute.attribute.displayForm;
 
-    if (isUriRef(displayFromRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying display forms by URI");
-    }
-
     return {
-        displayForm: displayFromRef,
+        displayForm: toDisplayFormQualifier(displayFromRef),
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
     };
@@ -81,41 +74,27 @@ function convertNativeTotals(def: IExecutionDefinition): ExecuteAFM.INativeTotal
         const rollupAttributes = bucketItems(attribute.bucket)
             .slice(0, attribute.idx)
             .filter(isAttribute)
-            .map(attributeLocalId);
+            .map(attributeLocalId)
+            .map(toLocalIdentifier);
 
         // and create native total such, that it rolls up all those attributes
         return {
-            measureIdentifier: t.measureIdentifier,
+            measureIdentifier: toLocalIdentifier(t.measureIdentifier),
             attributeIdentifiers: rollupAttributes,
         };
     });
 }
 
 function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
-    def.dimensions.forEach(dim => {
-        dim.itemIdentifiers.forEach(item => {
-            if (item === MeasureGroupIdentifier) {
-                return;
-            }
-
-            const attr = attributesFind(def.attributes, item);
-
-            if (!attr) {
-                throw new Error(`invalid invariant: dimension specifies undefined attr ${item}`);
-            }
-
-            const attrRef = attr.attribute.displayForm;
-
-            if (isUriRef(attrRef)) {
-                throw new NotSupported("tiger does not support attributes specified by uri");
-            }
-        });
-
-        if (dim.totals) {
-            throw new NotSupported("Tiger backend does not support totals.");
+    return def.dimensions.map(dim => {
+        if (!isEmpty(dim.totals)) {
+            throw new Error("Tiger backend does not support totals.");
         }
+
+        return {
+            itemIdentifiers: dim.itemIdentifiers,
+        };
     });
-    return def.dimensions;
 }
 
 function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {

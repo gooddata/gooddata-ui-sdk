@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     filterIsEmpty,
@@ -13,17 +13,13 @@ import {
     isAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
-    isUriRef,
 } from "@gooddata/sdk-model";
 import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import { toDateDataSetQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
-    const attributeRef = filter.positiveAttributeFilter.displayForm;
+    const displayFormRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
-
-    if (isUriRef(attributeRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying attributes by URI.");
-    }
 
     if (!isAttributeElementsByValue(attributeElements)) {
         throw new NotSupported("Tiger backend only allows specifying attribute elements by value");
@@ -31,7 +27,7 @@ function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPo
 
     return {
         positiveAttributeFilter: {
-            displayForm: attributeRef,
+            displayForm: toDisplayFormQualifier(displayFormRef),
             in: attributeElements,
         },
     };
@@ -42,12 +38,8 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
         return null;
     }
 
-    const attributeRef = filter.negativeAttributeFilter.displayForm;
+    const displayFormRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
-
-    if (isUriRef(attributeRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying attributes by URI.");
-    }
 
     if (!isAttributeElementsByValue(attributeElements)) {
         throw new NotSupported("Tiger backend only allows specifying attribute elements by value");
@@ -55,7 +47,7 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
 
     return {
         negativeAttributeFilter: {
-            displayForm: attributeRef,
+            displayForm: toDisplayFormQualifier(displayFormRef),
             notIn: attributeElements,
         },
     };
@@ -78,13 +70,9 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
 
     const dataSetRef = absoluteDateFilter.dataSet;
 
-    if (isUriRef(dataSetRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying date data set by URI.");
-    }
-
     return {
         absoluteDateFilter: {
-            dataSet: dataSetRef,
+            dataSet: toDateDataSetQualifier(dataSetRef),
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
         },
@@ -100,13 +88,9 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
 
     const dataSetRef = relativeDateFilter.dataSet;
 
-    if (isUriRef(dataSetRef)) {
-        throw new NotSupported("Tiger backend does not allow specifying date data set by URI.");
-    }
-
     return {
         relativeDateFilter: {
-            dataSet: dataSetRef,
+            dataSet: toDateDataSetQualifier(dataSetRef),
             granularity: relativeDateFilter.granularity,
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
