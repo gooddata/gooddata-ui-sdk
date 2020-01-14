@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converts execution definition to AFM Execution AFM Execution with definition that has no filter 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {},
+    "resultSpec": Object {},
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {
+      "attributes": Array [
+        Object {
+          "alias": "alias",
+          "displayForm": Object {
+            "identifier": "attribute1",
+          },
+          "localIdentifier": "a_attribute1",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "attribute2",
+          },
+          "localIdentifier": "a2",
+        },
+      ],
+    },
+    "resultSpec": Object {},
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with definition with filters 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {
+      "attributes": Array [
+        Object {
+          "displayForm": Object {
+            "identifier": "label.account.id.name",
+          },
+          "localIdentifier": "a_label.account.id.name",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.activity.id.subject",
+          },
+          "localIdentifier": "a_label.activity.id.subject",
+        },
+      ],
+      "filters": Array [
+        Object {
+          "positiveAttributeFilter": Object {
+            "displayForm": Object {
+              "identifier": "label.account.id.name",
+            },
+            "in": Object {
+              "values": Array [
+                "myAccount",
+              ],
+            },
+          },
+        },
+      ],
+      "measures": Array [
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+      ],
+    },
+    "resultSpec": Object {},
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with dimensions 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {},
+    "resultSpec": Object {
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "localId1",
+          ],
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with dimensions with native totals and attribute is in bucket 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {
+      "attributes": Array [
+        Object {
+          "displayForm": Object {
+            "identifier": "label.activity.id",
+          },
+          "localIdentifier": "a_label.activity.id",
+        },
+        Object {
+          "displayForm": Object {
+            "identifier": "label.account.id.name",
+          },
+          "localIdentifier": "a_label.account.id.name",
+        },
+      ],
+      "measures": Array [
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+        Object {
+          "definition": Object {
+            "measure": Object {
+              "item": Object {
+                "identifier": "acugFHNJgsBy",
+              },
+            },
+          },
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+      ],
+      "nativeTotals": Array [
+        Object {
+          "attributeIdentifiers": Array [],
+          "measureIdentifier": "m_acugFHNJgsBy",
+        },
+      ],
+    },
+    "resultSpec": Object {
+      "dimensions": Array [
+        Object {
+          "itemIdentifiers": Array [
+            "localId1",
+          ],
+        },
+        Object {
+          "itemIdentifiers": Array [
+            "measureGroup",
+          ],
+          "totals": Array [
+            Object {
+              "attributeIdentifier": "a_label.account.id.name",
+              "measureIdentifier": "m_acugFHNJgsBy",
+              "type": "nat",
+            },
+          ],
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with empty definition 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {},
+    "resultSpec": Object {},
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution AFM Execution with sorts 1`] = `
+Object {
+  "execution": Object {
+    "afm": Object {},
+    "resultSpec": Object {
+      "sorts": Array [
+        Object {
+          "attributeSortItem": Object {
+            "attributeIdentifier": "a_label.account.id.name",
+            "direction": "asc",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"invalid invariant"`;

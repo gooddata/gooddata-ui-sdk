@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`measure converter should return converted alias 1`] = `
+Object {
+  "alias": "alias",
+  "definition": Object {
+    "measure": Object {
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "localIdentifier": "m_foo",
+}
+`;
+
+exports[`measure converter should return converted arithmetic measure definition from model to AFM 1`] = `
+Object {
+  "definition": Object {
+    "arithmeticMeasure": Object {
+      "measureIdentifiers": Array [
+        "foo",
+        "bar",
+      ],
+      "operator": "sum",
+    },
+  },
+  "localIdentifier": "m_foo_bar",
+}
+`;
+
+exports[`measure converter should return converted definition 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "filters": Array [
+        Object {
+          "positiveAttributeFilter": Object {
+            "displayForm": Object {
+              "identifier": "filter",
+            },
+            "in": Object {
+              "uris": Array [
+                "baz",
+              ],
+            },
+          },
+        },
+      ],
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "localIdentifier": "m_foo",
+}
+`;
+
+exports[`measure converter should return converted pop measure definition from model to AFM 1`] = `
+Object {
+  "definition": Object {
+    "popMeasure": Object {
+      "measureIdentifier": "m_acugFHNJgsBy",
+      "popAttribute": Object {
+        "identifier": "attr",
+      },
+    },
+  },
+  "localIdentifier": "m_m_acugFHNJgsBy_attr",
+}
+`;
+
+exports[`measure converter should return converted previous period measure from model to AFM 1`] = `
+Object {
+  "definition": Object {
+    "previousPeriodMeasure": Object {
+      "dateDataSets": Array [
+        Object {
+          "dataSet": Object {
+            "identifier": "bar",
+          },
+          "periodsAgo": 3,
+        },
+      ],
+      "measureIdentifier": "foo",
+    },
+  },
+  "localIdentifier": "m_foo_previous_period",
+}
+`;
+
+exports[`measure converter should return format of measure: change 1`] = `
+Object {
+  "definition": Object {
+    "arithmeticMeasure": Object {
+      "measureIdentifiers": Array [
+        "foo",
+        "bar",
+      ],
+      "operator": "change",
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_foo_bar",
+}
+`;
+
+exports[`measure converter should return format of measure: count 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "aggregation": "count",
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "format": "#,##0",
+  "localIdentifier": "m_foo_count",
+}
+`;
+
+exports[`measure converter should return format of measure: ratio 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "computeRatio": true,
+      "item": Object {
+        "identifier": "foo",
+      },
+    },
+  },
+  "format": "#,##0.00%",
+  "localIdentifier": "m_foo",
+}
+`;
+
+exports[`measure converter should return local indentifier of measure 1`] = `
+Object {
+  "definition": Object {
+    "measure": Object {
+      "item": Object {
+        "identifier": "aangOxLSeztu",
+      },
+    },
+  },
+  "localIdentifier": "m_aangOxLSeztu",
+}
+`;
+
+exports[`measure converter should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
