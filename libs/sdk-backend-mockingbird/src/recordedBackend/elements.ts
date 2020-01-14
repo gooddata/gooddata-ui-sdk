@@ -7,6 +7,7 @@ import {
     IElementQueryResult,
     IPagedResource,
     UnexpectedResponseError,
+    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { RecordingIndex } from "./types";
 import { IAttributeElement, ObjRef, isUriRef } from "@gooddata/sdk-model";
@@ -33,9 +34,7 @@ class RecordedElements implements IElementQuery {
         }
 
         if (isUriRef(this.ref)) {
-            return Promise.reject(
-                new UnexpectedResponseError("Identifying displayForm by uri is not supported yet", 400, {}),
-            );
+            return Promise.reject(new NotImplemented("Identifying displayForm by uri is not supported yet"));
         }
 
         const recording = this.recordings.metadata.displayForms[

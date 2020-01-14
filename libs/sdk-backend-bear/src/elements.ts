@@ -5,9 +5,11 @@ import {
     IElementQueryOptions,
     IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { AuthenticatedCallGuard } from "./commonTypes";
-import { IAttributeElement, ObjRef, isUriRef } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+
+import { AuthenticatedCallGuard } from "./commonTypes";
+import { objRefToUri } from "./utils/api";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -59,15 +61,9 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
-    private async objRefToUri(ref: ObjRef): Promise<string> {
-        return isUriRef(ref)
-            ? ref.uri
-            : this.authCall(sdk => sdk.md.getObjectUri(this.workspace, ref.identifier));
-    }
-
     private async getObjectId(): Promise<string> {
         if (!this.objectId) {
-            const uri = await this.objRefToUri(this.ref);
+            const uri = await objRefToUri(this.ref, this.workspace, this.authCall);
             this.objectId = getObjectIdFromUri(uri);
         }
 

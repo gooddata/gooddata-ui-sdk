@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
+import { attributeAttributeDisplayFormObjRef } from "@gooddata/sdk-model";
 import * as React from "react";
 import { mount } from "enzyme";
 import { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
@@ -19,7 +19,7 @@ import { AttributeFilterItem } from "../AttributeFilterItem";
 describe("AttributeDropdown", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
-    const testAttributeRef = idRef(attributeIdentifier(ReferenceLdm.Product.Name));
+    const testAttributeRef = attributeAttributeDisplayFormObjRef(ReferenceLdm.Product.Name);
 
     function renderComponent(props: any = {}) {
         const onApply = props.onApply || noop;

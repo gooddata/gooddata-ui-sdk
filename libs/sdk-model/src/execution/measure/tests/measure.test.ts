@@ -22,13 +22,14 @@ import {
 import { ObjRef } from "../../base";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import { IFilter } from "../../filter";
+import { idRef } from "../../base/factory";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifyMeasure(Won, m => m.ratio());
 const SimpleMeasureWithUri = modifyMeasure(Won);
 SimpleMeasureWithUri.measure.definition.measureDefinition.item = { uri: "/uri" };
 const SimpleMeasureWithFilters = modifyMeasure(Won, m =>
-    m.filters(newPositiveAttributeFilter({ identifier: "myAttribute" }, ["foo"])),
+    m.filters(newPositiveAttributeFilter(idRef("myAttribute"), ["foo"])),
 );
 
 const ArithmeticMeasure = newArithmeticMeasure([Won, Velocity.Min], "sum");
