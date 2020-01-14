@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     modifyMeasure,
     newArithmeticMeasure,
@@ -46,3 +46,12 @@ export const WonPopClosedYear = newPopMeasure(ReferenceLdm.Won, "closed.year", m
 export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
     { dataSet: "closed", periodsAgo: 1 },
 ]);
+/**
+ * Measure that computes ratio
+ */
+export const AmountWithRatio = modifyMeasure(ReferenceLdm.Amount, m =>
+    m
+        .alias("Amount with Ratio")
+        .ratio()
+        .localId("Amount with Ratio"),
+);

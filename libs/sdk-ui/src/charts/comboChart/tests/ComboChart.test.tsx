@@ -4,18 +4,19 @@ import { mount } from "enzyme";
 import { ComboChart } from "../ComboChart";
 import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";
-import { IMeasure, newMeasure } from "@gooddata/sdk-model";
-import { M1, M2, M3, M4 } from "../../tests/fixtures";
+import { IMeasure, measureDisableComputeRatio } from "@gooddata/sdk-model";
 
+//Need to turn off ratio in the ReferenceLdmExt.AmountWithRatio
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
-                primaryMeasures={[M1]}
-                secondaryMeasures={[M2]}
+                primaryMeasures={[ReferenceLdm.Amount]}
+                secondaryMeasures={[ReferenceLdm.Won]}
             />,
         );
         expect(wrapper.find(CoreComboChart)).toHaveLength(1);
@@ -26,8 +27,8 @@ describe("ComboChart", () => {
             <ComboChart
                 workspace="foo"
                 backend={dummyBackend()}
-                primaryMeasures={[M3]}
-                secondaryMeasures={[M4]}
+                primaryMeasures={[ReferenceLdm.Amount]}
+                secondaryMeasures={[ReferenceLdm.Won]}
             />,
         );
         expect(wrapper.find(CoreComboChart)).toHaveLength(1);
@@ -51,11 +52,9 @@ describe("ComboChart", () => {
         }
 
         const config = { stackMeasures: true, stackMeasuresToPercent: true };
-        const M5 = newMeasure("m5", m => m.localId("m5"));
-        const M5WithRatio = newMeasure("m5ratio", m => m.localId("m5ratio").ratio());
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([M5], [], config);
+            const wrapper = renderChart([ReferenceLdm.Amount], [], config);
             const configProps = wrapper.find(CoreComboChart).prop("config");
 
             expect(configProps.stackMeasures).toBeTruthy();
@@ -63,7 +62,7 @@ describe("ComboChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([M5WithRatio], [], config);
+            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], [], config);
             const configProps = wrapper.find(CoreComboChart).prop("config");
 
             expect(configProps.stackMeasures).toBeFalsy();
@@ -71,16 +70,16 @@ describe("ComboChart", () => {
         });
 
         it.each([
-            ["primary", [M5, M5WithRatio], []],
-            ["secondary", [], [M5, M5WithRatio]],
+            ["primary", [ReferenceLdm.Amount, ReferenceLdmExt.AmountWithRatio], []],
+            ["secondary", [], [ReferenceLdm.Amount, ReferenceLdmExt.AmountWithRatio]],
         ])(
             "should ignore computeRatio when %s measure bucket has multiple items",
             (_name: any, primaryMeasures: any, secondaryMeasures: any) => {
                 const wrapper = renderChart(primaryMeasures, secondaryMeasures, config);
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
-                    newMeasure("m5", m => m.localId("m5")),
-                    newMeasure("m5ratio", m => m.localId("m5ratio")),
+                    ReferenceLdm.Amount,
+                    measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
                 ];
 
                 expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -88,27 +87,30 @@ describe("ComboChart", () => {
         );
 
         it("should ignore computeRatio when dual axis is OFF and # of measures > 1", () => {
-            const M1WithRatio = newMeasure("m1ratio", m => m.localId("m1ratio").ratio());
-            const wrapper = renderChart([M1WithRatio], [M5WithRatio], {
-                ...config,
-                dualAxis: false,
-            });
+            const wrapper = renderChart(
+                [ReferenceLdmExt.AmountWithRatio],
+                [ReferenceLdmExt.AmountWithRatio],
+                {
+                    ...config,
+                    dualAxis: false,
+                },
+            );
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                newMeasure("m1ratio", m => m.localId("m1ratio")),
-                newMeasure("m5ratio", m => m.localId("m5ratio")),
+                measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
+                measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);
         });
 
         it("should apply computeRatio when dual axis is OFF and # of measures = 1", () => {
-            const wrapper = renderChart([], [M5WithRatio], {
+            const wrapper = renderChart([], [ReferenceLdmExt.AmountWithRatio], {
                 ...config,
                 dualAxis: false,
             });
             const execution = wrapper.find(CoreComboChart).prop("execution");
-            const expectedMeasure = [newMeasure("m5ratio", m => m.localId("m5ratio").ratio())];
+            const expectedMeasure = [ReferenceLdmExt.AmountWithRatio];
 
             expect(execution.definition.measures).toEqual(expectedMeasure);
         });

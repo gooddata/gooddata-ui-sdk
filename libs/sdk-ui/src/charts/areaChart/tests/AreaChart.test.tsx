@@ -6,8 +6,8 @@ import { AreaChart } from "../AreaChart";
 import { IChartConfig } from "../../../highcharts";
 import { AttributeOrMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreAreaChart } from "../CoreAreaChart";
-import { M1, M1WithRatio } from "../../tests/fixtures";
 
 function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): ReactWrapper {
     return mount(<AreaChart config={config} workspace="test" backend={dummyBackend()} measures={measures} />);
@@ -15,15 +15,18 @@ function renderChart(measures: AttributeOrMeasure[], config?: IChartConfig): Rea
 
 describe("AreaChart", () => {
     it("should render with custom SDK", () => {
-        const wrapper = renderChart([M1]);
+        const wrapper = renderChart([ReferenceLdm.Amount]);
         expect(wrapper.find(CoreAreaChart)).toHaveLength(1);
     });
 
     describe("Stacking", () => {
-        const config = { stackMeasures: true, stackMeasuresToPercent: true };
+        const config = {
+            stackMeasures: true,
+            stackMeasuresToPercent: true,
+        };
 
         it("should NOT reset stackMeasuresToPercent in case of one measure", () => {
-            const wrapper = renderChart([M1], config);
+            const wrapper = renderChart([ReferenceLdm.Amount], config);
             expect(wrapper.find(CoreAreaChart).prop("config")).toEqual({
                 stacking: true,
                 stackMeasures: true,
@@ -32,7 +35,7 @@ describe("AreaChart", () => {
         });
 
         it("should reset stackMeasures, stackMeasuresToPercent in case of one measure and computeRatio", () => {
-            const wrapper = renderChart([M1WithRatio], config);
+            const wrapper = renderChart([ReferenceLdmExt.AmountWithRatio], config);
             expect(wrapper.find(CoreAreaChart).prop("config")).toEqual({
                 stacking: true,
                 stackMeasures: false,
