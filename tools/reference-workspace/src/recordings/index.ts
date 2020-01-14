@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-06T12:43:36.486Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-08T15:35:09.879Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./executions/uiTestScenarios/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -13,6 +13,11 @@ const fp_06d00ebfd7c655837f2488f562fbaf3f = {
     executionResult: require("./executions/uiTestScenarios/06d00ebfd7c655837f2488f562fbaf3f/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/06d00ebfd7c655837f2488f562fbaf3f/dataView_o0_0s100_1000.json"),
 };
+const fp_077ae3cab38d80b798b2e91a133aea10 = {
+    definition: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/dataView_all.json"),
+};
 const fp_0a15e759c2eadbe7290e04aac4c25103 = {
     definition: require("./executions/uiTestScenarios/0a15e759c2eadbe7290e04aac4c25103/definition.json"),
     executionResult: require("./executions/uiTestScenarios/0a15e759c2eadbe7290e04aac4c25103/executionResult.json"),
@@ -22,6 +27,11 @@ const fp_10ffd737dc921a808c49ad3872f11cb3 = {
     definition: require("./executions/uiTestScenarios/10ffd737dc921a808c49ad3872f11cb3/definition.json"),
     executionResult: require("./executions/uiTestScenarios/10ffd737dc921a808c49ad3872f11cb3/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/10ffd737dc921a808c49ad3872f11cb3/dataView_all.json"),
+};
+const fp_110525f8f35d8bd2e6a07555453c50bb = {
+    definition: require("./executions/uiTestScenarios/110525f8f35d8bd2e6a07555453c50bb/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/110525f8f35d8bd2e6a07555453c50bb/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/110525f8f35d8bd2e6a07555453c50bb/dataView_all.json"),
 };
 const fp_1407ee212bc8a079b1048ff976726a8e = {
     definition: require("./executions/uiTestScenarios/1407ee212bc8a079b1048ff976726a8e/definition.json"),
@@ -37,6 +47,11 @@ const fp_167b9e0fc1beac6dfd3b6768d7fe0c89 = {
     definition: require("./executions/uiTestScenarios/167b9e0fc1beac6dfd3b6768d7fe0c89/definition.json"),
     executionResult: require("./executions/uiTestScenarios/167b9e0fc1beac6dfd3b6768d7fe0c89/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/167b9e0fc1beac6dfd3b6768d7fe0c89/dataView_all.json"),
+};
+const fp_183ae5486ff43cb685facc721e99ba69 = {
+    definition: require("./executions/uiTestScenarios/183ae5486ff43cb685facc721e99ba69/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/183ae5486ff43cb685facc721e99ba69/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/183ae5486ff43cb685facc721e99ba69/dataView_all.json"),
 };
 const fp_1d1a699a1370a108a14d9a5ee0c30555 = {
     definition: require("./executions/uiTestScenarios/1d1a699a1370a108a14d9a5ee0c30555/definition.json"),
@@ -110,6 +125,11 @@ const fp_4feae4498f7ba55bc256e5a5f421915c = {
     executionResult: require("./executions/uiTestScenarios/4feae4498f7ba55bc256e5a5f421915c/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/4feae4498f7ba55bc256e5a5f421915c/dataView_all.json"),
 };
+const fp_5050c271d3a6a0ca16e6ca02504bd09e = {
+    definition: require("./executions/uiTestScenarios/5050c271d3a6a0ca16e6ca02504bd09e/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/5050c271d3a6a0ca16e6ca02504bd09e/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/5050c271d3a6a0ca16e6ca02504bd09e/dataView_all.json"),
+};
 const fp_59432d48715dbb61bfa9f23c22b31338 = {
     definition: require("./executions/uiTestScenarios/59432d48715dbb61bfa9f23c22b31338/definition.json"),
     executionResult: require("./executions/uiTestScenarios/59432d48715dbb61bfa9f23c22b31338/executionResult.json"),
@@ -176,6 +196,16 @@ const fp_80446c9557b1fbac900f0e72ec2cd3ef = {
     executionResult: require("./executions/uiTestScenarios/80446c9557b1fbac900f0e72ec2cd3ef/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/80446c9557b1fbac900f0e72ec2cd3ef/dataView_o0_0s100_1000.json"),
 };
+const fp_81acdc275248465b0e365b89929bab13 = {
+    definition: require("./executions/uiTestScenarios/81acdc275248465b0e365b89929bab13/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/81acdc275248465b0e365b89929bab13/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/81acdc275248465b0e365b89929bab13/dataView_all.json"),
+};
+const fp_894b97b3d60322732ad7fc8361ab92e4 = {
+    definition: require("./executions/uiTestScenarios/894b97b3d60322732ad7fc8361ab92e4/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/894b97b3d60322732ad7fc8361ab92e4/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/894b97b3d60322732ad7fc8361ab92e4/dataView_all.json"),
+};
 const fp_8cd121df1173fe55cb499f598d74064b = {
     definition: require("./executions/uiTestScenarios/8cd121df1173fe55cb499f598d74064b/definition.json"),
     executionResult: require("./executions/uiTestScenarios/8cd121df1173fe55cb499f598d74064b/executionResult.json"),
@@ -231,6 +261,11 @@ const fp_a5d8e3808e6b4519d0e2a52ddd62ee05 = {
     executionResult: require("./executions/uiTestScenarios/a5d8e3808e6b4519d0e2a52ddd62ee05/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/a5d8e3808e6b4519d0e2a52ddd62ee05/dataView_all.json"),
 };
+const fp_aaabc8a2e851cb0e8a767fc5e2a74876 = {
+    definition: require("./executions/uiTestScenarios/aaabc8a2e851cb0e8a767fc5e2a74876/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/aaabc8a2e851cb0e8a767fc5e2a74876/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/aaabc8a2e851cb0e8a767fc5e2a74876/dataView_all.json"),
+};
 const fp_af203ca12ba1e949e9bd95d1c9de433e = {
     definition: require("./executions/uiTestScenarios/af203ca12ba1e949e9bd95d1c9de433e/definition.json"),
     executionResult: require("./executions/uiTestScenarios/af203ca12ba1e949e9bd95d1c9de433e/executionResult.json"),
@@ -245,6 +280,11 @@ const fp_b3666de392b1ca6adc8194f919628a48 = {
     definition: require("./executions/uiTestScenarios/b3666de392b1ca6adc8194f919628a48/definition.json"),
     executionResult: require("./executions/uiTestScenarios/b3666de392b1ca6adc8194f919628a48/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/b3666de392b1ca6adc8194f919628a48/dataView_all.json"),
+};
+const fp_b557967dc1342fd5050691971a336628 = {
+    definition: require("./executions/uiTestScenarios/b557967dc1342fd5050691971a336628/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/b557967dc1342fd5050691971a336628/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/b557967dc1342fd5050691971a336628/dataView_all.json"),
 };
 const fp_b7ed0cf372eefa1f07097a021bc0589b = {
     definition: require("./executions/uiTestScenarios/b7ed0cf372eefa1f07097a021bc0589b/definition.json"),
@@ -292,6 +332,11 @@ const fp_c9fcb3657be4b478f026a31a30b8289c = {
     dataView_all: require("./executions/uiTestScenarios/c9fcb3657be4b478f026a31a30b8289c/dataView_all.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/c9fcb3657be4b478f026a31a30b8289c/dataView_o0_0s100_1000.json"),
 };
+const fp_ce18fd68a149f5ca8206e698fdd0bf1b = {
+    definition: require("./executions/uiTestScenarios/ce18fd68a149f5ca8206e698fdd0bf1b/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/ce18fd68a149f5ca8206e698fdd0bf1b/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/ce18fd68a149f5ca8206e698fdd0bf1b/dataView_all.json"),
+};
 const fp_d55e9d2990c761a1a10670bfe893675c = {
     definition: require("./executions/uiTestScenarios/d55e9d2990c761a1a10670bfe893675c/definition.json"),
     executionResult: require("./executions/uiTestScenarios/d55e9d2990c761a1a10670bfe893675c/executionResult.json"),
@@ -306,6 +351,11 @@ const fp_e1130eb55df7cfbb2f03afdd21467903 = {
     definition: require("./executions/uiTestScenarios/e1130eb55df7cfbb2f03afdd21467903/definition.json"),
     executionResult: require("./executions/uiTestScenarios/e1130eb55df7cfbb2f03afdd21467903/executionResult.json"),
     dataView_all: require("./executions/uiTestScenarios/e1130eb55df7cfbb2f03afdd21467903/dataView_all.json"),
+};
+const fp_e6fad6bd41de9327b8cf7f2f66107562 = {
+    definition: require("./executions/uiTestScenarios/e6fad6bd41de9327b8cf7f2f66107562/definition.json"),
+    executionResult: require("./executions/uiTestScenarios/e6fad6bd41de9327b8cf7f2f66107562/executionResult.json"),
+    dataView_all: require("./executions/uiTestScenarios/e6fad6bd41de9327b8cf7f2f66107562/dataView_all.json"),
 };
 const fp_e7ff0568924d22c6687e253be623374d = {
     definition: require("./executions/uiTestScenarios/e7ff0568924d22c6687e253be623374d/definition.json"),
@@ -331,11 +381,6 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     definition: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/definition.json"),
     executionResult: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./executions/uiTestScenarios/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
-};
-const fp_077ae3cab38d80b798b2e91a133aea10 = {
-    definition: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/definition.json"),
-    executionResult: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/executionResult.json"),
-    dataView_all: require("./executions/uiTestScenarios/077ae3cab38d80b798b2e91a133aea10/dataView_all.json"),
 };
 export const Scenarios = {
     ComboChart: {
@@ -378,6 +423,20 @@ export const Scenarios = {
         SingleMeasureWithColumnAttribute: fp_fa12ddadd752df55fbabeae6d22ecb4d,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: fp_feb4ad60c9bd6a1dd6003afd669e25c8,
     },
+    ColumnChart: {
+        SingleMeasureWithViewByAndStackByFilteredToSingleStack: fp_077ae3cab38d80b798b2e91a133aea10,
+        TwoMeasuresWithViewBySortedByAttribute: fp_1407ee212bc8a079b1048ff976726a8e,
+        TwoMeasures: fp_2111960a5050e0ed00c0820ee47af935,
+        SingleMeasureWithViewByAndStackBy: fp_4feae4498f7ba55bc256e5a5f421915c,
+        ViewByDateAndPoPMeasure: fp_59432d48715dbb61bfa9f23c22b31338,
+        TwoMeasuresWithTwoViewBy: fp_97399c725102e8d868b81a0773188079,
+        ArithmeticMeasures: fp_a31e38ec0c13a447faa3bd456295c03f,
+        TwoMeasuresWithViewBySortedByMeasure: fp_af203ca12ba1e949e9bd95d1c9de433e,
+        SingleMeasure: fp_b189b6cff02840b91bf305261194e268,
+        SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
+        TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
+        SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
+    },
     LineChart: {
         TwoMeasuresWithTrendByAndSortByMeasure: fp_0a15e759c2eadbe7290e04aac4c25103,
         ArithmeticMeasures: fp_167b9e0fc1beac6dfd3b6768d7fe0c89,
@@ -411,20 +470,6 @@ export const Scenarios = {
         SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
         TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
         SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
-    },
-    ColumnChart: {
-        TwoMeasuresWithViewBySortedByAttribute: fp_1407ee212bc8a079b1048ff976726a8e,
-        TwoMeasures: fp_2111960a5050e0ed00c0820ee47af935,
-        SingleMeasureWithViewByAndStackBy: fp_4feae4498f7ba55bc256e5a5f421915c,
-        ViewByDateAndPoPMeasure: fp_59432d48715dbb61bfa9f23c22b31338,
-        TwoMeasuresWithTwoViewBy: fp_97399c725102e8d868b81a0773188079,
-        ArithmeticMeasures: fp_a31e38ec0c13a447faa3bd456295c03f,
-        TwoMeasuresWithViewBySortedByMeasure: fp_af203ca12ba1e949e9bd95d1c9de433e,
-        SingleMeasure: fp_b189b6cff02840b91bf305261194e268,
-        SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
-        TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
-        SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
-        SingleMeasureWithViewByAndStackByFilteredToSingleStack: fp_077ae3cab38d80b798b2e91a133aea10,
     },
     Headline: {
         TwoMeasuresOnePoP: fp_1e3f44f4d59bc898e1fa599ea22adb38,
@@ -489,22 +534,25 @@ export const Scenarios = {
     },
 };
 const df_label_product_id_name = {
-    elements: require("./metadata/label.product.id.name/elements.json"),
-    obj: require("./metadata/label.product.id.name/obj.json"),
+    elements: require("./metadata/displayForms/label.product.id.name/elements.json"),
+    obj: require("./metadata/displayForms/label.product.id.name/obj.json"),
 };
 const df_label_owner_department = {
-    elements: require("./metadata/label.owner.department/elements.json"),
-    obj: require("./metadata/label.owner.department/obj.json"),
+    elements: require("./metadata/displayForms/label.owner.department/elements.json"),
+    obj: require("./metadata/displayForms/label.owner.department/obj.json"),
 };
 export const Recordings = {
     executions: {
         fp_06890d7172183531342ed8e17d70e01a,
         fp_06d00ebfd7c655837f2488f562fbaf3f,
+        fp_077ae3cab38d80b798b2e91a133aea10,
         fp_0a15e759c2eadbe7290e04aac4c25103,
         fp_10ffd737dc921a808c49ad3872f11cb3,
+        fp_110525f8f35d8bd2e6a07555453c50bb,
         fp_1407ee212bc8a079b1048ff976726a8e,
         fp_16421675f8e90b1ade1754bad1423a48,
         fp_167b9e0fc1beac6dfd3b6768d7fe0c89,
+        fp_183ae5486ff43cb685facc721e99ba69,
         fp_1d1a699a1370a108a14d9a5ee0c30555,
         fp_1e3f44f4d59bc898e1fa599ea22adb38,
         fp_211047a73c74f5befa9dfc79d0587123,
@@ -519,6 +567,7 @@ export const Recordings = {
         fp_447476beb0fc409270b836171a0e3e8c,
         fp_4c21b7b0a21f1854f7ba9480a49c9300,
         fp_4feae4498f7ba55bc256e5a5f421915c,
+        fp_5050c271d3a6a0ca16e6ca02504bd09e,
         fp_59432d48715dbb61bfa9f23c22b31338,
         fp_594ead2e492fb1b8667bbf69adcb50eb,
         fp_5a60f663e1f2746c75414849c25f5dd3,
@@ -532,6 +581,8 @@ export const Recordings = {
         fp_7ac584de6032c302b2f24c441a8b50db,
         fp_7f724c8addfa4246cbb03f39196a390a,
         fp_80446c9557b1fbac900f0e72ec2cd3ef,
+        fp_81acdc275248465b0e365b89929bab13,
+        fp_894b97b3d60322732ad7fc8361ab92e4,
         fp_8cd121df1173fe55cb499f598d74064b,
         fp_910805b6a9da4af389f5857543f8cb1b,
         fp_950ff0cd0837e130146a69d0945bfe24,
@@ -543,9 +594,11 @@ export const Recordings = {
         fp_9fc4953386b04c9baf270eb862755197,
         fp_a31e38ec0c13a447faa3bd456295c03f,
         fp_a5d8e3808e6b4519d0e2a52ddd62ee05,
+        fp_aaabc8a2e851cb0e8a767fc5e2a74876,
         fp_af203ca12ba1e949e9bd95d1c9de433e,
         fp_b189b6cff02840b91bf305261194e268,
         fp_b3666de392b1ca6adc8194f919628a48,
+        fp_b557967dc1342fd5050691971a336628,
         fp_b7ed0cf372eefa1f07097a021bc0589b,
         fp_ba308d65323b0eadb082b9b74f4c38c6,
         fp_bbffbaf55539508c70461d726e4e6d00,
@@ -555,15 +608,16 @@ export const Recordings = {
         fp_c0dc3b1f95458ccbd42f6416f049a93c,
         fp_c72da84ed07fd0ade60a1c144ef0a849,
         fp_c9fcb3657be4b478f026a31a30b8289c,
+        fp_ce18fd68a149f5ca8206e698fdd0bf1b,
         fp_d55e9d2990c761a1a10670bfe893675c,
         fp_da14ae7731c4699616e645d3e00d2000,
         fp_e1130eb55df7cfbb2f03afdd21467903,
+        fp_e6fad6bd41de9327b8cf7f2f66107562,
         fp_e7ff0568924d22c6687e253be623374d,
         fp_e88aeb9d972e5493d3a9ba2063dea3e9,
         fp_f8eb5e66709f2ea572a139e5e7790931,
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
-        fp_077ae3cab38d80b798b2e91a133aea10,
     },
     metadata: { displayForms: { df_label_product_id_name, df_label_owner_department } },
 };

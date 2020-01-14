@@ -4,7 +4,12 @@ import * as DrillablePredicatesUtils from "./utils/drillablePredicates";
 export { Axis, DrillablePredicatesUtils };
 
 export { BaseVisualization } from "./components/BaseVisualization";
-export { IVisualizationCatalog, DefaultVisualizationCatalog } from "./components/VisualizationCatalog";
+export {
+    IVisualizationCatalog,
+    DefaultVisualizationCatalog,
+    FullVisualizationCatalog,
+} from "./components/VisualizationCatalog";
+
 export {
     IVisualization,
     IVisConstruct,

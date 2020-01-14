@@ -11,22 +11,6 @@ import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { insightSetProperties } from "@gooddata/sdk-model";
 
-jest.mock("react-dom", () => {
-    const renderObject = {
-        render: () => {
-            return;
-        },
-    };
-
-    return {
-        render: renderObject.render,
-        unmountComponentAtNode: () => {
-            return;
-        },
-        renderObject,
-    };
-});
-
 describe("PluggableAreaChart", () => {
     const defaultProps = {
         projectId: "PROJECTID",
@@ -40,6 +24,7 @@ describe("PluggableAreaChart", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
+        renderFun: noop,
     };
 
     const executionFactory = dummyBackend()
@@ -181,20 +166,17 @@ describe("PluggableAreaChart", () => {
         };
 
         it("should modify stack by default of area by config stackMeasures properties", async () => {
-            const renderObject = require("react-dom");
-            const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(defaultProps);
+            const mockRenderFun = jest.fn();
+            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
 
-            verifyStackMeasuresConfig(areaChart, null, spyOnRender);
-            verifyStackMeasuresConfig(areaChart, true, spyOnRender);
-            verifyStackMeasuresConfig(areaChart, false, spyOnRender);
-            spyOnRender.mockRestore();
+            verifyStackMeasuresConfig(areaChart, null, mockRenderFun);
+            verifyStackMeasuresConfig(areaChart, true, mockRenderFun);
+            verifyStackMeasuresConfig(areaChart, false, mockRenderFun);
         });
 
         it("should modify stackMeasures and stackMeasuresToPercent properties from true to false", async () => {
-            const renderObject = require("react-dom");
-            const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(defaultProps);
+            const mockRenderFun = jest.fn();
+            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
 
             const visualizationProperties = {
                 properties: {
@@ -212,17 +194,15 @@ describe("PluggableAreaChart", () => {
 
             areaChart.update(options, testInsight, executionFactory);
 
-            const renderCallsCount = spyOnRender.mock.calls.length;
-            const renderArguments: any = spyOnRender.mock.calls[renderCallsCount - 1][0];
+            const renderCallsCount = mockRenderFun.mock.calls.length;
+            const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];
             expect(renderArguments.props.config.stackMeasures).toBe(false);
             expect(renderArguments.props.config.stackMeasuresToPercent).toBe(false);
-            spyOnRender.mockRestore();
         });
 
         it("should reset custom controls properties", async () => {
-            const renderObject = require("react-dom");
-            const spyOnRender = jest.spyOn(renderObject, "render");
-            const areaChart = createComponent(defaultProps);
+            const mockRenderFun = jest.fn();
+            const areaChart = createComponent({ ...defaultProps, renderFun: mockRenderFun });
 
             const visualizationProperties = {
                 properties: {
@@ -244,11 +224,10 @@ describe("PluggableAreaChart", () => {
 
             areaChart.update(options, testInsight, executionFactory);
 
-            const renderCallsCount = spyOnRender.mock.calls.length;
-            const renderArguments: any = spyOnRender.mock.calls[renderCallsCount - 1][0];
+            const renderCallsCount = mockRenderFun.mock.calls.length;
+            const renderArguments: any = mockRenderFun.mock.calls[renderCallsCount - 1][0];
             expect(renderArguments.props.config.stackMeasures).toBe(true);
             expect(renderArguments.props.config.stackMeasuresToPercent).toBe(true);
-            spyOnRender.mockRestore();
         });
 
         it("should reuse one measure, only one category and one category as stack", async () => {

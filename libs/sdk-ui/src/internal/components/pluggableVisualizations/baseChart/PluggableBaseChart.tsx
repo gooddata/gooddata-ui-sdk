@@ -112,6 +112,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected locale: ILocale;
     protected environment: string;
     private element: string;
+    private renderFun: (component: any, target: Element) => void;
 
     constructor(props: IVisConstruct) {
         super();
@@ -132,7 +133,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
         this.setCustomControlsProperties({});
-
+        this.renderFun = props.renderFun;
         this.supportedPropertiesList = this.getSupportedPropertiesList();
     }
 
@@ -268,7 +269,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
             );
 
-        render(
+        this.renderFun(
             <BaseChart
                 execution={execution}
                 afterRender={afterRender}

@@ -26,6 +26,7 @@ describe("PluggableColumnBarCharts", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
+        renderFun: noop,
     };
 
     function createComponent(props = defaultProps) {

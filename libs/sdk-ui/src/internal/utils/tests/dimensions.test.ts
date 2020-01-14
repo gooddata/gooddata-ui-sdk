@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import {
@@ -103,7 +103,7 @@ function newInsight(buckets: IBucket[]): IInsight {
         insight: {
             identifier: "test",
             title: "no name",
-            visualizationClassUri: "classId",
+            visualizationUrl: "classId",
             buckets,
             filters: [],
             sorts: [],

@@ -556,7 +556,7 @@ export type IInsight = IInsightDefinition & {
 export type IInsightDefinition = {
     insight: {
         title: string;
-        visualizationClassUri: string;
+        visualizationUrl: string;
         buckets: IBucket[];
         filters: IFilter[];
         sorts: SortItem[];
@@ -710,8 +710,8 @@ export function insightTitle(insight: IInsightDefinition): string;
 // @public
 export function insightTotals(insight: IInsightDefinition): ITotal[];
 
-// @public
-export function insightVisualizationClassUri(insight: IInsightDefinition): string;
+// @alpha
+export function insightVisualizationUrl(insight: IInsightDefinition): string;
 
 // @public (undocumented)
 export interface IObjectExpressionToken {

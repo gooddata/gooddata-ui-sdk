@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { BucketNames } from "../../base";
 import { IInsight, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
@@ -10,7 +10,7 @@ export const EMPTY_TITLE = "empty_title";
 
 export const emptyInsight: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [],
         filters: [],
         sorts: [],
@@ -23,7 +23,7 @@ export const emptyInsight: IInsight = {
 
 export const dummyInsight: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: "attribute",
@@ -41,7 +41,7 @@ export const dummyInsight: IInsight = {
 
 export const insightWithStacking: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -98,7 +98,7 @@ export const insightWithStacking: IInsight = {
 
 export const insightWithSingleMeasureAndTwoViewBy: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -154,7 +154,7 @@ export const insightWithSingleMeasureAndTwoViewBy: IInsight = {
 
 export const insightWithNoMeasureAndTwoViewBy: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.VIEW,
@@ -193,7 +193,7 @@ export const insightWithNoMeasureAndTwoViewBy: IInsight = {
 
 export const insightWithTwoMeasuresAndViewBy: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -253,7 +253,7 @@ export const insightWithTwoMeasuresAndViewBy: IInsight = {
 
 export const insightWithTwoMeasuresAndTwoViewBy: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -321,7 +321,7 @@ export const insightWithTwoMeasuresAndTwoViewBy: IInsight = {
 
 export const insightWithSingleMeasure: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -352,7 +352,7 @@ export const insightWithSingleMeasure: IInsight = {
 
 export const insightWithSingleMeasureAndViewBy: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -396,7 +396,7 @@ export const insightWithSingleMeasureAndViewBy: IInsight = {
 
 export const insightWithSingleMeasureAndViewByAndStack: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -453,7 +453,7 @@ export const insightWithSingleMeasureAndViewByAndStack: IInsight = {
 
 export const insightWithSingleMeasureAndStack: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -497,7 +497,7 @@ export const insightWithSingleMeasureAndStack: IInsight = {
 
 export const insightWithSingleAttribute: IInsight = {
     insight: {
-        visualizationClassUri: "column",
+        visualizationUrl: "column",
         buckets: [
             {
                 localIdentifier: BucketNames.VIEW,

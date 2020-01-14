@@ -53,9 +53,15 @@ export type IInsightDefinition = {
         title: string;
 
         /**
-         * URI of the visualization class that should be used to render this insight.
+         * URL of visualization that should be used to render this insight. This is a link to the location
+         * where the visualization assets are stored and where they should be loaded and linked from.
+         *
+         * Note: at the moment, the SDK supports only compile-time linkage; for this the visualization URL
+         * is in format "local:visName" (as in "local:bar" for BarChart)
+         *
+         * @alpha
          */
-        visualizationClassUri: string;
+        visualizationUrl: string;
 
         /**
          * Buckets of attributes, measures and totals to render on the visualization.
@@ -358,15 +364,19 @@ export function insightProperties(insight: IInsightDefinition): VisualizationPro
 }
 
 /**
- * Gets visualization class URI of an insight.
+ * Gets URL of visualization that should be used to render this insight. This is a link to the location
+ * where the visualization assets are stored and where they should be loaded and linked from.
  *
- * @param insight - insight to get vis class URI for
- * @public
+ * Note: at the moment, the SDK supports only compile-time linkage; for this the visualization URL
+ * is in format "local:visName" (as in "local:bar" for BarChart)
+ *
+ * @param insight - insight to get visualization URL from
+ * @alpha
  */
-export function insightVisualizationClassUri(insight: IInsightDefinition): string {
+export function insightVisualizationUrl(insight: IInsightDefinition): string {
     invariant(insight, "insight to get vis class URI from must be defined");
 
-    return insight.insight.visualizationClassUri;
+    return insight.insight.visualizationUrl;
 }
 
 /**

@@ -8,7 +8,7 @@ Object {
     "properties": Object {},
     "sorts": Array [],
     "title": "Untitled",
-    "visualizationClassUri": "local:bar",
+    "visualizationUrl": "local:bar",
   },
 }
 `;
@@ -59,7 +59,7 @@ Object {
       },
     ],
     "title": "Untitled",
-    "visualizationClassUri": "local:bar",
+    "visualizationUrl": "local:bar",
   },
 }
 `;
@@ -76,7 +76,7 @@ Object {
     },
     "sorts": Array [],
     "title": "Untitled",
-    "visualizationClassUri": "local:bar",
+    "visualizationUrl": "local:bar",
   },
 }
 `;
@@ -89,7 +89,7 @@ Object {
     "properties": Object {},
     "sorts": Array [],
     "title": "My Insight",
-    "visualizationClassUri": "local:bar",
+    "visualizationUrl": "local:bar",
   },
 }
 `;

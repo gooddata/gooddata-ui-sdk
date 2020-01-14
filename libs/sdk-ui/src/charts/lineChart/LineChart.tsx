@@ -1,5 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
+import {
+    AttributeOrMeasure,
+    IAttribute,
+    IFilter,
+    SortItem,
+    newBucket,
+    IExecutionDefinition,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "../../base";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
@@ -12,13 +19,17 @@ import { withChart } from "../_base/withChart";
 // Internals
 //
 
+function lineChartDimensions(def: IExecutionDefinition) {
+    return stackedChartDimensions(def, BucketNames.TREND, BucketNames.SEGMENT);
+}
+
 const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartProps> = {
     bucketPropsKeys: ["measures", "trendBy", "segmentBy", "filters", "sortBy"],
     bucketsFactory: props => {
         return [
             newBucket(BucketNames.MEASURES, ...props.measures),
-            newBucket(BucketNames.ATTRIBUTE, props.trendBy),
-            newBucket(BucketNames.STACK, props.segmentBy),
+            newBucket(BucketNames.TREND, props.trendBy),
+            newBucket(BucketNames.SEGMENT, props.segmentBy),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -30,7 +41,7 @@ const lineChartDefinition: IChartDefinition<ILineChartBucketProps, ILineChartPro
             .execution()
             .forBuckets(buckets, props.filters)
             .withSorting(...props.sortBy)
-            .withDimensions(stackedChartDimensions);
+            .withDimensions(lineChartDimensions);
     },
 };
 

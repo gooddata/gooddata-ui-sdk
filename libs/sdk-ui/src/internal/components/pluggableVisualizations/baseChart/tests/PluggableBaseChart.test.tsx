@@ -14,21 +14,6 @@ import noop = require("lodash/noop");
 import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
 import { DefaultLocale, ILocale } from "../../../../../base/localization/Locale";
 
-jest.mock("react-dom", () => {
-    const renderObject = {
-        render: () => {
-            return;
-        }, // spy on render
-    };
-    return {
-        render: renderObject.render,
-        unmountComponentAtNode: () => {
-            return;
-        },
-        renderObject,
-    };
-});
-
 describe("PluggableBaseChart", () => {
     const dashboardEnvironment: VisualizationEnvironment = "dashboards";
     const noneEnvironment: VisualizationEnvironment = "none";
@@ -50,6 +35,7 @@ describe("PluggableBaseChart", () => {
         backend: dummyBackend(),
         visualizationProperties: {},
         callbacks,
+        renderFun: noop,
     };
 
     function createComponent(props = defaultProps) {
@@ -80,10 +66,8 @@ describe("PluggableBaseChart", () => {
     });
 
     it("should not render chart when insight has no data to render", () => {
-        const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
-
-        const props = { ...defaultProps };
+        const mockRenderFun = jest.fn();
+        const props = { ...defaultProps, renderFun: mockRenderFun };
 
         const visualization = createComponent(props);
         const options: IVisProps = {
@@ -96,14 +80,12 @@ describe("PluggableBaseChart", () => {
 
         visualization.update(options, testMocks.emptyInsight, executionFactory);
 
-        expect(spyOnRender).toHaveBeenCalledTimes(0);
+        expect(mockRenderFun).toHaveBeenCalledTimes(0);
     });
 
     it("should render chart with height and right legend position when environment is dashboards", () => {
-        const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
-
-        const props = { ...defaultProps, environment: dashboardEnvironment };
+        const mockRenderFun = jest.fn();
+        const props = { ...defaultProps, environment: dashboardEnvironment, renderFun: mockRenderFun };
         const expectedHeight = 5;
 
         const visualization = createComponent(props);
@@ -117,20 +99,18 @@ describe("PluggableBaseChart", () => {
 
         visualization.update(options, testMocks.dummyInsight, executionFactory);
 
-        const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+        const renderCallsCount = mockRenderFun.mock.calls.length;
+        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
 
-        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
             .props as IBaseChartProps;
         expect(renderProps.config.legend.position).toEqual("right");
         expect(renderProps.height).toEqual(5);
     });
 
     it("should render chart with legend on right when it is auto positioned and environment is dashboards", () => {
-        const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
-
-        const props = { ...defaultProps, environment: dashboardEnvironment };
+        const mockRenderFun = jest.fn();
+        const props = { ...defaultProps, environment: dashboardEnvironment, renderFun: mockRenderFun };
         const expectedHeight = 5;
 
         const visualization = createComponent(props);
@@ -153,19 +133,17 @@ describe("PluggableBaseChart", () => {
 
         visualization.update(options, testInsight, executionFactory);
 
-        const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+        const renderCallsCount = mockRenderFun.mock.calls.length;
+        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
 
-        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
             .props as IBaseChartProps;
         expect(renderProps.config.legend.position).toEqual("right");
     });
 
     it("should render chart with legend on right when it is auto positioned and visualization is stacked", () => {
-        const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
-
-        const props = { ...defaultProps };
+        const mockRenderFun = jest.fn();
+        const props = { ...defaultProps, renderFun: mockRenderFun };
         const expectedHeight = 5;
 
         const visualization = createComponent(props);
@@ -189,21 +167,26 @@ describe("PluggableBaseChart", () => {
 
         visualization.update(options, testInsight, executionFactory);
 
-        const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+        const renderCallsCount = mockRenderFun.mock.calls.length;
+        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
 
-        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
             .props as IBaseChartProps;
         expect(renderProps.config.legend.position).toEqual("right");
     });
 
     it("should render configuration panel with correct properties", () => {
+        // this is used in plug viz to render the visualization itself
+        const mockRenderFun = jest.fn();
+
+        // while this .. a remnant from the past .. will be picked up by config panel rendering
+        //  which does not allow override of the renderFun.
         const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
+        const mockReactRender = jest.spyOn(renderObject, "render");
 
         const expectedHeight = 5;
 
-        const props = { ...defaultProps, configPanelElement: "body" };
+        const props = { ...defaultProps, configPanelElement: "body", renderFun: mockRenderFun };
         const visualization = createComponent(props);
         const options: IVisProps = {
             dimensions: { height: expectedHeight },
@@ -217,8 +200,8 @@ describe("PluggableBaseChart", () => {
         const expectedConfigPanelElement = dummyConfigurationRenderer(testMocks.dummyInsight);
 
         // arguments of last called render method
-        const renderCallsCount = spyOnRender.mock.calls.length;
-        const renderArguments: any = spyOnRender.mock.calls[renderCallsCount - 1][0];
+        const renderCallsCount = mockReactRender.mock.calls.length;
+        const renderArguments: any = mockReactRender.mock.calls[renderCallsCount - 1][0];
 
         // compare without intl and pushData
         expect({
@@ -228,10 +211,8 @@ describe("PluggableBaseChart", () => {
     });
 
     it("should render chart with undefined height", async () => {
-        const renderObject = require("react-dom");
-        const spyOnRender = jest.spyOn(renderObject, "render");
-
-        const props = { ...defaultProps, environment: noneEnvironment };
+        const mockRenderFun = jest.fn();
+        const props = { ...defaultProps, environment: noneEnvironment, renderFun: mockRenderFun };
 
         const visualization = createComponent(props);
         const options: IVisProps = {
@@ -247,10 +228,10 @@ describe("PluggableBaseChart", () => {
 
         visualization.update(options, testInsight, executionFactory);
 
-        const renderCallsCount = spyOnRender.mock.calls.length;
-        expect(spyOnRender.mock.calls[renderCallsCount - 1][0]).toBeDefined();
+        const renderCallsCount = mockRenderFun.mock.calls.length;
+        expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
 
-        const renderProps: IBaseChartProps = (spyOnRender.mock.calls[renderCallsCount - 1][0] as any)
+        const renderProps: IBaseChartProps = (mockRenderFun.mock.calls[renderCallsCount - 1][0] as any)
             .props as IBaseChartProps;
         expect(renderProps.height).toBeUndefined();
     });

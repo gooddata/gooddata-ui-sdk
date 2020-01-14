@@ -29,7 +29,7 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
         const sanitizedMeasures = applyRatioRule(measures);
         return [
             newBucket(BucketNames.MEASURES, ...sanitizedMeasures),
-            newBucket(BucketNames.ATTRIBUTE, ...viewBy),
+            newBucket(BucketNames.VIEW, ...viewBy),
             newBucket(BucketNames.STACK, ...stackBy),
         ];
     },

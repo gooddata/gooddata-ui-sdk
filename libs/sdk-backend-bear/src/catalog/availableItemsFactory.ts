@@ -95,7 +95,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 filters: [],
                 properties: {},
                 sorts: [],
-                visualizationClassUri: "",
+                visualizationUrl: "",
                 buckets: [
                     {
                         items,

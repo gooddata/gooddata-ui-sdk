@@ -29,7 +29,7 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
 
         return [
             newBucket(BucketNames.MEASURES, ...measures),
-            newBucket(BucketNames.ATTRIBUTE, ...viewBy),
+            newBucket(BucketNames.VIEW, ...viewBy),
             newBucket(BucketNames.STACK, props.stackBy),
         ];
     },

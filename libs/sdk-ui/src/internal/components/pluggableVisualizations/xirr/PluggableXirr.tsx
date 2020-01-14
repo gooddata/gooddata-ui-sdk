@@ -17,6 +17,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    RenderFunction,
 } from "../../../interfaces/Visualization";
 import {
     sanitizeUnusedFilters,
@@ -59,6 +60,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     private visualizationProperties: IVisualizationProperties;
     private element: string;
     private settings?: ISettings;
+    private renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
         super();
@@ -68,6 +70,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         this.locale = props.locale ? props.locale : DefaultLocale;
         this.intl = createInternalIntl(this.locale);
         this.settings = props.featureFlags;
+        this.renderFun = props.renderFun;
     }
 
     public unmount() {
@@ -124,7 +127,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getXirrDimensions(insight));
 
-        render(
+        this.renderFun(
             <CoreXirr
                 execution={execution}
                 drillableItems={drillableItems}

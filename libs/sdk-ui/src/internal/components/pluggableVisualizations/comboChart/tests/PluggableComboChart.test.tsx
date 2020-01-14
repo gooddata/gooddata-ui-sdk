@@ -30,6 +30,7 @@ describe("PluggableComboChart", () => {
         },
         backend: dummyBackend(),
         visualizationProperties: {},
+        renderFun: noop,
     };
     const primaryMeasureBucketProps: IBucketOfFun = {
         localIdentifier: "measures",

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IInsight,
     IBucket,
@@ -173,7 +173,7 @@ export const convertVisualization = (
             sorts: parsedProperties.sortItems || [],
             title: meta.title!,
             uri: meta.uri,
-            visualizationClassUri,
+            visualizationUrl: visualizationClassUri,
         },
     };
 };
