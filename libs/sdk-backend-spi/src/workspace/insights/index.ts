@@ -6,6 +6,7 @@ import {
     IAttributeDisplayForm,
     IMeasureExpressionToken,
     IInsightDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -15,25 +16,25 @@ import { IPagedResource } from "../../common/paging";
  * @public
  */
 export interface IWorkspaceMetadata {
-    getVisualizationClass(id: string): Promise<IVisualizationClass>;
+    getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
-    getInsight(id: string): Promise<IInsight>;
+    getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     updateInsight(insight: IInsight): Promise<IInsight>;
-    deleteInsight(id: string): Promise<void>;
+    deleteInsight(ref: ObjRef): Promise<void>;
     /**
      * Gets the attribute display form with the provided identifier.
-     * @param id - identifier of the attribute display form to retrieve
+     * @param ref - ref of the attribute display form to retrieve
      * @public
      */
-    getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
 
     /**
      * Get measure expression tokens for provided measure identifier
-     * @param id - identifier of the measure
+     * @param ref - ref of the measure
      */
-    getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
+    getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
 }
 
 /**

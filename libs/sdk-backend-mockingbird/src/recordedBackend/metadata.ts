@@ -13,6 +13,8 @@ import {
     IMeasureExpressionToken,
     IAttributeDisplayForm,
     IInsightDefinition,
+    isUriRef,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
@@ -20,15 +22,25 @@ import { identifierToRecording } from "./utils";
 export class RecordedMetadata implements IWorkspaceMetadata {
     constructor(private readonly recordings: RecordingIndex) {}
 
-    public getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm> {
+    public getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 
-        const recording = this.recordings.metadata.displayForms["df_" + identifierToRecording(id)];
+        if (isUriRef(ref)) {
+            return Promise.reject(
+                new UnexpectedResponseError("Identifying displayForm by uri is not supported yet", 400, {}),
+            );
+        }
+
+        const recording = this.recordings.metadata.displayForms[
+            "df_" + identifierToRecording(ref.identifier)
+        ];
 
         if (!recording) {
-            return Promise.reject(new UnexpectedResponseError(`No element recordings for df ${id}`, 404, {}));
+            return Promise.reject(
+                new UnexpectedResponseError(`No element recordings for df ${ref.identifier}`, 404, {}),
+            );
         }
 
         return Promise.resolve(recording.obj);
@@ -38,7 +50,7 @@ export class RecordedMetadata implements IWorkspaceMetadata {
     //  not implemented down from here
     //
 
-    public getMeasureExpressionTokens(_: string): Promise<IMeasureExpressionToken[]> {
+    public getMeasureExpressionTokens(_: ObjRef): Promise<IMeasureExpressionToken[]> {
         throw new NotSupported("not supported");
     }
 
@@ -46,7 +58,7 @@ export class RecordedMetadata implements IWorkspaceMetadata {
         throw new NotSupported("not supported");
     }
 
-    public getInsight(_: string): Promise<IInsight> {
+    public getInsight(_: ObjRef): Promise<IInsight> {
         throw new NotSupported("not supported");
     }
 
@@ -58,11 +70,11 @@ export class RecordedMetadata implements IWorkspaceMetadata {
         throw new NotSupported("not supported");
     }
 
-    public deleteInsight(_: string): Promise<void> {
+    public deleteInsight(_: ObjRef): Promise<void> {
         throw new NotSupported("not supported");
     }
 
-    public getVisualizationClass(_: string): Promise<IVisualizationClass> {
+    public getVisualizationClass(_: ObjRef): Promise<IVisualizationClass> {
         throw new NotSupported("not supported");
     }
 

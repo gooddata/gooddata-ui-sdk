@@ -5,7 +5,7 @@ import { render } from "react-dom";
 import noop = require("lodash/noop");
 
 import { IAnalyticalBackend, IAnalyticalWorkspace, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IFilter, insightProperties, IColorPalette } from "@gooddata/sdk-model";
+import { IInsight, IFilter, insightProperties, IColorPalette, idRef } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, IVisCallbacks, DefaultVisualizationCatalog } from "../internal";
 import { ExecutionFactoryWithPresetFilters } from "./ExecutionFactoryWithPresetFilters";
@@ -170,7 +170,9 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
     };
 
     private getInsight = () => {
-        return this.getRemoteResource<IInsight>(workspace => workspace.metadata().getInsight(this.props.id));
+        return this.getRemoteResource<IInsight>(workspace =>
+            workspace.metadata().getInsight(idRef(this.props.id)),
+        );
     };
 
     private getColorPaletteFromProject = () => {

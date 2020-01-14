@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import flow = require("lodash/flow");
 import identity = require("lodash/identity");
 import isArray = require("lodash/isArray");
@@ -83,7 +83,7 @@ const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Con
 // converters for each supported object to Model notation string
 const convertAttribute: Converter<IAttribute> = ({ attribute }) => {
     const builder = getBuilder("a => a", [addAlias(attribute), addLocalId(attribute)]);
-    return `newAttribute("${getObjQualifierValue(attribute.displayForm)}", ${builder})`;
+    return `newAttribute(${stringify(attribute.displayForm)}, ${builder})`;
 };
 
 const baseMeasureDotAdders = (measure: IMeasure["measure"]) => [
@@ -100,7 +100,7 @@ const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasure
         addFilters(definition.measureDefinition),
         addRatio(definition.measureDefinition),
     ]);
-    return `newMeasure("${getObjQualifierValue(definition.measureDefinition.item)}", ${builder})`;
+    return `newMeasure(${stringify(definition.measureDefinition.item)}, ${builder})`;
 };
 
 const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) => {
@@ -166,28 +166,28 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
     absoluteDateFilter: { dataSet, from, to },
 }) => {
-    const args = [getObjQualifierValue(dataSet), from, to].filter(identity).map(stringify);
+    const args = [dataSet, from, to].filter(identity).map(stringify);
     return `newAbsoluteDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
-    const args = [getObjQualifierValue(dataSet), granularity, from, to].filter(identity).map(stringify);
+    const args = [dataSet, granularity, from, to].filter(identity).map(stringify);
     return `newRelativeDateFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({
     positiveAttributeFilter: { displayForm, in: inValues },
 }) => {
-    const args = [getObjQualifierValue(displayForm), inValues].filter(identity).map(stringify);
+    const args = [displayForm, inValues].filter(identity).map(stringify);
     return `newPositiveAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 
 const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
     negativeAttributeFilter: { displayForm, notIn },
 }) => {
-    const args = [getObjQualifierValue(displayForm), notIn].filter(identity).map(stringify);
+    const args = [displayForm, notIn].filter(identity).map(stringify);
     return `newNegativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
 };
 

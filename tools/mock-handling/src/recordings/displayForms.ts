@@ -1,11 +1,11 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import { IAnalyticalBackend, IElementQuery } from "@gooddata/sdk-backend-spi";
 import { isEqual } from "lodash";
 import fs from "fs";
 import path from "path";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement, idRef } from "@gooddata/sdk-model";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 
 //
@@ -73,7 +73,7 @@ export class DisplayFormRecording implements IRecording {
         const obj = await backend
             .workspace(workspace)
             .metadata()
-            .getAttributeDisplayForm(this.displayFormId);
+            .getAttributeDisplayForm(idRef(this.displayFormId));
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });
@@ -116,7 +116,7 @@ export class DisplayFormRecording implements IRecording {
         let validElements = backend
             .workspace(workspace)
             .elements()
-            .forObject(this.displayFormId);
+            .forDisplayForm(idRef(this.displayFormId));
 
         if (offset !== undefined) {
             validElements = validElements.withOffset(offset);

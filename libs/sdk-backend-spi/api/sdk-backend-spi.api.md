@@ -28,6 +28,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
+import { ObjRef } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
@@ -253,7 +254,7 @@ export interface IElementQuery {
 
 // @public
 export interface IElementQueryFactory {
-    forObject(identifier: string): IElementQuery;
+    forDisplayForm(ref: ObjRef): IElementQuery;
 }
 
 // @alpha (undocumented)
@@ -566,15 +567,15 @@ export interface IWorkspaceMetadata {
     // (undocumented)
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     // (undocumented)
-    deleteInsight(id: string): Promise<void>;
-    getAttributeDisplayForm(id: string): Promise<IAttributeDisplayForm>;
+    deleteInsight(ref: ObjRef): Promise<void>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
     // (undocumented)
-    getInsight(id: string): Promise<IInsight>;
+    getInsight(ref: ObjRef): Promise<IInsight>;
     // (undocumented)
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
-    getMeasureExpressionTokens(id: string): Promise<IMeasureExpressionToken[]>;
+    getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     // (undocumented)
-    getVisualizationClass(id: string): Promise<IVisualizationClass>;
+    getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     // (undocumented)

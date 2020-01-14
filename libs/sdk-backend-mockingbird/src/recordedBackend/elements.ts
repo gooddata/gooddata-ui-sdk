@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     IElementQuery,
@@ -7,16 +7,17 @@ import {
     IElementQueryResult,
     IPagedResource,
     UnexpectedResponseError,
+    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { RecordingIndex } from "./types";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef, isUriRef } from "@gooddata/sdk-model";
 import { identifierToRecording } from "./utils";
 
 export class RecordedElementQueryFactory implements IElementQueryFactory {
     constructor(private recordings: RecordingIndex) {}
 
-    public forObject(identifier: string): IElementQuery {
-        return new RecordedElements(identifier, this.recordings);
+    public forDisplayForm(ref: ObjRef): IElementQuery {
+        return new RecordedElements(ref, this.recordings);
     }
 }
 
@@ -25,20 +26,24 @@ class RecordedElements implements IElementQuery {
     private offset: number = 0;
     private options: IElementQueryOptions = {};
 
-    constructor(private displayForm: string, private recordings: RecordingIndex) {}
+    constructor(private ref: ObjRef, private recordings: RecordingIndex) {}
 
     public query(): Promise<IElementQueryResult> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 
+        if (isUriRef(this.ref)) {
+            return Promise.reject(new NotImplemented("Identifying displayForm by uri is not supported yet"));
+        }
+
         const recording = this.recordings.metadata.displayForms[
-            "df_" + identifierToRecording(this.displayForm)
+            "df_" + identifierToRecording(this.ref.identifier)
         ];
 
         if (!recording) {
             return Promise.reject(
-                new UnexpectedResponseError(`No element recordings for df ${this.displayForm}`, 404, {}),
+                new UnexpectedResponseError(`No element recordings for df ${this.ref.identifier}`, 404, {}),
             );
         }
 

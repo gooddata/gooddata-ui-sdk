@@ -12,6 +12,7 @@ import {
     IMeasureExpressionToken,
     IInsightDefinition,
     insightId,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConverter";
@@ -19,12 +20,13 @@ import { convertVisualization } from "../toSdkModel/VisualizationConverter";
 import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { convertObjectMeta } from "../toSdkModel/MetaConverter";
+import { objRefToUri } from "../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public getVisualizationClass = async (id: string): Promise<IVisualizationClass> => {
-        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+    public getVisualizationClass = async (ref: ObjRef): Promise<IVisualizationClass> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visClassResult = await this.authCall(
             sdk => sdk.md.getObjects(this.workspace, [uri]) as Promise<any>,
         );
@@ -43,8 +45,8 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         return visualizationClassesResult.map(convertVisualizationClass);
     };
 
-    public getInsight = async (id: string): Promise<IInsight> => {
-        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+    public getInsight = async (ref: ObjRef): Promise<IInsight> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const visualization = await this.authCall(sdk => sdk.md.getVisualization(uri));
 
         const visClassResult: any[] = await this.authCall(sdk =>
@@ -106,8 +108,8 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
     };
 
-    public deleteInsight = async (id: string): Promise<void> => {
-        const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+    public deleteInsight = async (ref: ObjRef): Promise<void> => {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
         await this.authCall(sdk => sdk.md.deleteVisualization(uri));
     };
 
@@ -118,8 +120,8 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
     };
 
-    public getAttributeDisplayForm = async (id: string): Promise<IAttributeDisplayForm> => {
-        const displayFormUri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
+    public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayForm> => {
+        const displayFormUri = await objRefToUri(ref, this.workspace, this.authCall);
         const displayFormDetails = await this.authCall(sdk => sdk.md.getObjectDetails(displayFormUri));
 
         return {
@@ -131,10 +133,9 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         };
     };
 
-    public async getMeasureExpressionTokens(identifier: string): Promise<IMeasureExpressionToken[]> {
-        const metricMetadata = await this.authCall(sdk =>
-            sdk.md.getObjectByIdentifier(this.workspace, identifier),
-        );
+    public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        const metricMetadata = await this.authCall(sdk => sdk.xhr.getParsed<GdcMetadata.WrappedObject>(uri));
 
         if (!GdcMetadata.isWrappedMetric(metricMetadata)) {
             throw new Error(

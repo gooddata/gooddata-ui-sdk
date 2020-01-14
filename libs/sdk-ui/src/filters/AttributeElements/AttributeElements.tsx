@@ -2,6 +2,7 @@
 import * as React from "react";
 import isEqual = require("lodash/isEqual");
 import { IAnalyticalBackend, IElementQueryOptions, IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError } from "../../base";
 
 import { AttributeElementsDefaultChildren } from "./AttributeElementsDefaultChildren";
@@ -10,7 +11,7 @@ import { IAttributeElementsChildren } from "./types";
 export interface IAttributeElementsProps {
     backend: IAnalyticalBackend;
     workspace: string;
-    identifier: string;
+    displayForm: ObjRef;
 
     limit?: number;
     offset?: number;
@@ -52,7 +53,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
 
     public componentDidUpdate(prevProps: IAttributeElementsProps): void {
         const needsInvalidation =
-            this.props.identifier !== prevProps.identifier ||
+            !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
             this.props.workspace !== prevProps.workspace ||
             !isEqual(this.props.options, prevProps.options);
 
@@ -87,7 +88,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
     };
 
     public getValidElements = async () => {
-        const { workspace, options, identifier, offset, limit } = this.props;
+        const { workspace, options, displayForm, offset, limit } = this.props;
 
         this.setState({ isLoading: true, error: null });
 
@@ -95,7 +96,7 @@ export class AttributeElements extends React.PureComponent<IAttributeElementsPro
             const elements = await this.getBackend()
                 .workspace(workspace)
                 .elements()
-                .forObject(identifier)
+                .forDisplayForm(displayForm)
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
                 .withOptions(options)

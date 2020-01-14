@@ -1,19 +1,21 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IElementQueryFactory,
     IElementQuery,
     IElementQueryOptions,
     IElementQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { AuthenticatedCallGuard } from "./commonTypes";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+
+import { AuthenticatedCallGuard } from "./commonTypes";
+import { objRefToUri } from "./utils/api";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public forObject(identifier: string): IElementQuery {
-        return new BearWorkspaceElementsQuery(this.authCall, identifier, this.workspace);
+    public forDisplayForm(ref: ObjRef): IElementQuery {
+        return new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
 }
 
@@ -33,7 +35,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
 
     constructor(
         private readonly authCall: AuthenticatedCallGuard,
-        private readonly identifier: string,
+        private readonly ref: ObjRef,
         private readonly workspace: string,
     ) {}
 
@@ -61,11 +63,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
 
     private async getObjectId(): Promise<string> {
         if (!this.objectId) {
-            const uri = await this.authCall(sdk =>
-                sdk.md
-                    .getUrisFromIdentifiers(this.workspace, [this.identifier])
-                    .then(result => result[0].uri),
-            );
+            const uri = await objRefToUri(this.ref, this.workspace, this.authCall);
             this.objectId = getObjectIdFromUri(uri);
         }
 

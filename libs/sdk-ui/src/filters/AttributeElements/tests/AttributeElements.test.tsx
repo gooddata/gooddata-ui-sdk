@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { attributeIdentifier } from "@gooddata/sdk-model";
+import { attributeIdentifier, idRef } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -16,7 +16,12 @@ describe("AttributeElements", () => {
 
     const renderComponent = (props: any = {}) =>
         shallow(
-            <AttributeElements {...props} backend={backend} workspace={workspace} identifier={identifier} />,
+            <AttributeElements
+                {...props}
+                backend={backend}
+                workspace={workspace}
+                displayForm={idRef(identifier)}
+            />,
         );
 
     it("should load attribute elements by display form identifier", async () => {
@@ -66,7 +71,7 @@ describe("AttributeElements", () => {
         expect(children.mock.calls[1][0].isLoading).toEqual(false);
         expect(children.mock.calls[1][0].validElements.items[0].title).toEqual("CompuSci");
 
-        wrapper.setProps({ identifier: anotherIdentifier });
+        wrapper.setProps({ displayForm: idRef(anotherIdentifier) });
 
         await waitForAsync();
 

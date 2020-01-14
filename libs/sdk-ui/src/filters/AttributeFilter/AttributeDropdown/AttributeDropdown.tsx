@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -25,7 +25,7 @@ export interface IAttributeDropdownProps {
 
     backend: IAnalyticalBackend;
     workspace: string;
-    identifier: string;
+    displayForm: ObjRef;
 
     selectedItems?: Array<Partial<IAttributeElement>>;
     isInverted?: boolean;
@@ -96,7 +96,7 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
 
     public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
         const needsInvalidation =
-            this.props.identifier !== prevProps.identifier ||
+            !areObjRefsEqual(this.props.displayForm, prevProps.displayForm) ||
             this.props.workspace !== prevProps.workspace ||
             this.state.searchString !== prevState.searchString;
 
@@ -161,14 +161,14 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
     };
 
     private loadElements = async (offset: number, limit: number) => {
-        const { workspace, identifier } = this.props;
+        const { workspace, displayForm } = this.props;
 
         this.setState({ isLoading: true });
 
         const newElements = await this.getBackend()
             .workspace(workspace)
             .elements()
-            .forObject(identifier)
+            .forDisplayForm(displayForm)
             .withOptions({
                 ...(this.state.searchString ? { filter: this.state.searchString } : {}),
             })

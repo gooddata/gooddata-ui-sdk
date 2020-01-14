@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
 import { isDimension, MeasureGroupIdentifier, newDimension } from "../dimension";
 import { Won } from "../../../../__mocks__/model";
-import { isIdentifierRef, isLocalIdRef, isUriRef } from "../index";
+import { isIdentifierRef, isLocalIdRef, isUriRef, isObjRef } from "../index";
 import { isAttributeLocator, isAttributeSort, isMeasureLocator, isMeasureSort } from "../sort";
 import { isTotal } from "../totals";
 
@@ -43,6 +43,19 @@ describe("dimension type guard", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isIdentifierRef(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isObjRef", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "uri ref", { uri: "/" }],
+            [true, "identifier ref", { identifier: "id" }],
+            [false, "localId ref", { localIdentifier: "localId" }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isObjRef(input)).toBe(expectedResult);
         });
     });
 

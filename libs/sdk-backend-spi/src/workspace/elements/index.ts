@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { SortDirection, IAttributeElement } from "@gooddata/sdk-model";
+// (C) 2019-2020 GoodData Corporation
+import { SortDirection, IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
 /**
@@ -26,10 +26,9 @@ export interface IElementQueryOptions {
 export interface IElementQueryFactory {
     /**
      * Creates query for valid elements of display form with the provided identifier.
-     * TODO: SDK8: rename to forDisplayForm
-     * @param identifier - display form identifier
+     * @param ref - display form ref
      */
-    forObject(identifier: string): IElementQuery;
+    forDisplayForm(ref: ObjRef): IElementQuery;
 }
 
 /**

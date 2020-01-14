@@ -6,7 +6,6 @@ import {
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
     filterAttributeDisplayForm,
-    isIdentifierRef,
     isPositiveAttributeFilter,
     filterAttributeElements,
     isAttributeElementsByValue,
@@ -15,6 +14,8 @@ import {
     IAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    ObjRef,
+    idRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -93,7 +94,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         }
     }
 
-    private getIdentifier = () => {
+    private getObjRef = (): ObjRef => {
         const { filter, identifier } = this.props;
 
         if (filter && identifier) {
@@ -101,10 +102,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         }
 
         if (filter) {
-            const displayFormRef = filterAttributeDisplayForm(filter);
-            if (isIdentifierRef(displayFormRef)) {
-                return displayFormRef.identifier;
-            }
+            return filterAttributeDisplayForm(filter);
         }
 
         if (identifier) {
@@ -112,7 +110,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             console.warn(
                 "Definition of an attribute using 'identifier' is deprecated, use 'filter' property instead. Please see the documentation of [AttributeFilter component](https://sdk.gooddata.com/gooddata-ui/docs/attribute_filter_component.html) for further details.",
             );
-            return identifier;
+            return idRef(identifier);
         }
     };
 
@@ -158,7 +156,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
             const displayForm = await this.getBackend()
                 .workspace(this.props.workspace)
                 .metadata()
-                .getAttributeDisplayForm(this.getIdentifier());
+                .getAttributeDisplayForm(this.getObjRef());
 
             this.setState({ title: displayForm.title, error: null, isLoading: false });
         } catch (error) {
@@ -175,7 +173,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
         const filterFactory = isInverted ? newNegativeAttributeFilter : newPositiveAttributeFilter;
 
         const filter = filterFactory(
-            this.getIdentifier(),
+            this.getObjRef(),
             useUriElements
                 ? { uris: selectedItems.map(item => item.uri) }
                 : { values: selectedItems.map(item => item.title) },
@@ -198,7 +196,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                     <FilterError error={error} />
                 ) : (
                     <AttributeDropdown
-                        identifier={this.getIdentifier()}
+                        displayForm={this.getObjRef()}
                         backend={backend}
                         workspace={workspace}
                         onApply={this.onApply}

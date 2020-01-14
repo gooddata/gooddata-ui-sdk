@@ -26,6 +26,7 @@ export {
 
 export {
     Identifier,
+    Uri,
     UriRef,
     IdentifierRef,
     LocalIdRef,
@@ -34,6 +35,9 @@ export {
     isUriRef,
     isIdentifierRef,
     objectRefValue,
+    isLocalIdRef,
+    areObjRefsEqual,
+    isObjRef,
 } from "./execution/base";
 
 export {
@@ -46,6 +50,8 @@ export {
     MeasureGroupIdentifier,
     dimensionSetTotals,
 } from "./execution/base/dimension";
+
+export { idRef, uriRef, localIdRef } from "./execution/base/factory";
 
 export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals";
 

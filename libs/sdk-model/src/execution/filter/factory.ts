@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import invariant from "ts-invariant";
 import {
     AttributeElements,
@@ -10,30 +10,34 @@ import {
     IRelativeDateFilter,
     RangeConditionOperator,
 } from "./index";
-import { attributeIdentifier, IAttribute } from "../attribute";
-import { ObjRefInScope } from "../base";
+import { IAttribute, attributeAttributeDisplayFormObjRef } from "../attribute";
+import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../base";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
+import { idRef } from "../base/factory";
 
 /**
  * Creates a new positive attribute filter.
  *
- * @param attributeOrId - either instance of attribute to create filter for or identifier of attribute's display form
- *  if the input is attribute object, then it is expected that attribute references display form by identifier
+ * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param inValues - values to filter for; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_
  * @public
  */
 export function newPositiveAttributeFilter(
-    attributeOrId: IAttribute | string,
+    attributeOrRef: IAttribute | ObjRef | Identifier,
     inValues: AttributeElements | string[],
 ): IPositiveAttributeFilter {
-    const displayFormId =
-        typeof attributeOrId === "string" ? attributeOrId : attributeIdentifier(attributeOrId)!;
+    const objRef = isObjRef(attributeOrRef)
+        ? attributeOrRef
+        : typeof attributeOrRef === "string"
+        ? idRef(attributeOrRef)
+        : attributeAttributeDisplayFormObjRef(attributeOrRef);
+
     const inObject: AttributeElements = Array.isArray(inValues) ? { values: inValues } : inValues;
 
     return {
         positiveAttributeFilter: {
-            displayForm: { identifier: displayFormId },
+            displayForm: objRef,
             in: inObject,
         },
     };
@@ -42,23 +46,26 @@ export function newPositiveAttributeFilter(
 /**
  * Creates a new negative attribute filter.
  *
- * @param attributeOrId - either instance of attribute to create filter for or identifier of attribute's display form;
- *  if the input is attribute object, then it is expected that attribute references display form by identifier
+ * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param notInValues - values to filter out; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_
  * @public
  */
 export function newNegativeAttributeFilter(
-    attributeOrId: IAttribute | string,
+    attributeOrRef: IAttribute | ObjRef | Identifier,
     notInValues: AttributeElements | string[],
 ): INegativeAttributeFilter {
-    const displayFormId =
-        typeof attributeOrId === "string" ? attributeOrId : attributeIdentifier(attributeOrId)!;
+    const objRef = isObjRef(attributeOrRef)
+        ? attributeOrRef
+        : typeof attributeOrRef === "string"
+        ? idRef(attributeOrRef)
+        : attributeAttributeDisplayFormObjRef(attributeOrRef);
+
     const notInObject: AttributeElements = Array.isArray(notInValues) ? { values: notInValues } : notInValues;
 
     return {
         negativeAttributeFilter: {
-            displayForm: { identifier: displayFormId },
+            displayForm: objRef,
             notIn: notInObject,
         },
     };
@@ -67,15 +74,20 @@ export function newNegativeAttributeFilter(
 /**
  * Creates a new absolute date filter.
  *
- * @param dateDataSetId - identifier of the date data set to filter on
+ * @param dateDataSet - ref or identifier of the date data set to filter on
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
  * @public
  */
-export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: string): IAbsoluteDateFilter {
+export function newAbsoluteDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    from: string,
+    to: string,
+): IAbsoluteDateFilter {
+    const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
         absoluteDateFilter: {
-            dataSet: { identifier: dateDataSetId },
+            dataSet,
             from,
             to,
         },
@@ -85,21 +97,22 @@ export function newAbsoluteDateFilter(dateDataSetId: string, from: string, to: s
 /**
  * Creates a new relative date filter.
  *
- * @param dateDataSetId - identifier of the date data set to filter on
+ * @param dateDataSet - ref or identifier of the date data set to filter on
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @public
  */
 export function newRelativeDateFilter(
-    dateDataSetId: string,
+    dateDataSet: ObjRef | Identifier,
     granularity: string,
     from: number,
     to: number,
 ): IRelativeDateFilter {
+    const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
         relativeDateFilter: {
-            dataSet: { identifier: dateDataSetId },
+            dataSet,
             granularity,
             from,
             to,

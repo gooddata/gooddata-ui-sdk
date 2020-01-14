@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import identity = require("lodash/identity");
 import {
@@ -14,8 +14,9 @@ import {
     measureIdentifier,
     measureLocalId,
 } from "./index";
-import { Identifier } from "../base";
+import { Identifier, ObjRef, isObjRef, objectRefValue } from "../base";
 import { IMeasureFilter } from "../filter";
+import { idRef } from "../base/factory";
 
 /**
  * Simplified Previous Period Data DataSet specification
@@ -57,7 +58,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> imple
         return this;
     };
 
-    public localId = (localId: string) => {
+    public localId = (localId: Identifier) => {
         this.measure.localIdentifier = localId;
         this.customLocalId = true;
         return this;
@@ -86,21 +87,22 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     /**
      * @internal
      */
-    constructor(measureOrId: IMeasure<IMeasureDefinition> | string) {
+    constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef) {
         super();
 
-        if (typeof measureOrId === "string") {
+        if (isObjRef(measureOrRef)) {
             this.measure.definition = {
                 measureDefinition: {
-                    item: { identifier: measureOrId },
+                    item: measureOrRef,
                 },
             };
-            this.measure.localIdentifier = `m_${measureOrId}`;
-            this.measureId = measureOrId;
+            const refValue = objectRefValue(measureOrRef);
+            this.measure.localIdentifier = `m_${refValue}`;
+            this.measureId = refValue;
         } else {
-            this.measure = cloneDeep(measureOrId.measure);
+            this.measure = cloneDeep(measureOrRef.measure);
             this.customLocalId = true;
-            this.measureId = measureIdentifier(measureOrId)!;
+            this.measureId = measureIdentifier(measureOrRef)!;
         }
     }
 
@@ -134,7 +136,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
     /**
      * @internal
      */
-    constructor(measureIds: string[], operator: ArithmeticMeasureOperator) {
+    constructor(measureIds: Identifier[], operator: ArithmeticMeasureOperator) {
         super();
         this.measure.definition = {
             arithmeticMeasure: {
@@ -157,7 +159,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     /**
      * @internal
      */
-    constructor(measureId: string, popAttributeId: string) {
+    constructor(measureId: Identifier, popAttributeId: Identifier) {
         super();
         this.measure.definition = {
             popMeasureDefinition: {
@@ -208,15 +210,16 @@ export type MeasureModifications<TBuilder> = (builder: TBuilder) => TBuilder;
 
 /**
  * Creates a new measure with the specified identifier and optional modifications and localIdentifier.
- * @param measureId - identifier of the measure
+ * @param measure - ref of identifier of the measure
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newMeasure(
-    measureId: string,
+    measure: ObjRef | Identifier,
     modifications: MeasureModifications<MeasureBuilder> = identity,
 ): IMeasure<IMeasureDefinition> {
-    const builder = new MeasureBuilder(measureId);
+    const ref = isObjRef(measure) ? measure : idRef(measure);
+    const builder = new MeasureBuilder(ref);
 
     return modifications(builder).build();
 }
@@ -248,7 +251,7 @@ export function modifyMeasure(
  * @public
  */
 export function newArithmeticMeasure(
-    measuresOrIds: ReadonlyArray<IMeasure | string>,
+    measuresOrIds: ReadonlyArray<IMeasure | Identifier>,
     operator: ArithmeticMeasureOperator,
     modifications: MeasureModifications<ArithmeticMeasureBuilder> = identity,
 ): IMeasure<IArithmeticMeasureDefinition> {
@@ -260,17 +263,18 @@ export function newArithmeticMeasure(
 
 /**
  * Creates a new PoP measure with the specified identifier and PoP attribute identifier and optional modifications and localIdentifier.
- * @param measureOrId - measure or identifier of the measure
+ * @param measureOrLocalId - measure or local identifier of the measure
  * @param popAttributeId - identifier of the PoP attribute
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newPopMeasure(
-    measureOrId: IMeasure | string,
+    measureOrLocalId: IMeasure | Identifier,
     popAttributeId: string,
     modifications: MeasureModifications<PoPMeasureBuilder> = identity,
 ): IMeasure<IPoPMeasureDefinition> {
-    const measureId = typeof measureOrId === "string" ? measureOrId : measureLocalId(measureOrId);
+    const measureId =
+        typeof measureOrLocalId === "string" ? measureOrLocalId : measureLocalId(measureOrLocalId);
     const builder = new PoPMeasureBuilder(measureId, popAttributeId);
 
     return modifications(builder).build();
@@ -278,17 +282,18 @@ export function newPopMeasure(
 
 /**
  * Creates a new Previous Period measure with the specified measure identifier and date data sets and optional modifications and localIdentifier.
- * @param measureIdOrId - measure or identifier of the measure to create Previous Period measure for
+ * @param measureIdOrLocalId - measure or local identifier of the measure to create Previous Period measure for
  * @param dateDataSets - date data sets to use in the Previous Period calculation
  * @param modifications - optional modifications (e.g. alias, title, etc.)
  * @public
  */
 export function newPreviousPeriodMeasure(
-    measureIdOrId: IMeasure | string,
+    measureIdOrLocalId: IMeasure | Identifier,
     dateDataSets: IPreviousPeriodDateDataSetSimple[],
     modifications: MeasureModifications<PreviousPeriodMeasureBuilder> = identity,
 ): IMeasure<IPreviousPeriodMeasureDefinition> {
-    const measureId = typeof measureIdOrId === "string" ? measureIdOrId : measureLocalId(measureIdOrId);
+    const measureId =
+        typeof measureIdOrLocalId === "string" ? measureIdOrLocalId : measureLocalId(measureIdOrLocalId);
     const builder = new PreviousPeriodMeasureBuilder(measureId, dateDataSets);
 
     return modifications(builder).build();
