@@ -26,6 +26,7 @@ export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent";
 export { ErrorComponent, IErrorProps } from "./react/ErrorComponent";
 export { BackendProvider, useBackend, withBackend } from "./react/BackendContext";
 export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/WorkspaceContext";
+export { usePagedResource } from "./react/usePagedResource";
 export { withContexts } from "./react/withContexts";
 export {
     withLoading,
