@@ -7,7 +7,7 @@ dependencies:
   '@babel/runtime': 7.8.3
   '@formatjs/intl-pluralrules': 1.3.9
   '@gooddata/frontend-npm-scripts': 1.0.1
-  '@gooddata/goodstrap': 66.0.0
+  '@gooddata/goodstrap': 66.1.0
   '@gooddata/js-utils': 3.10.0
   '@gooddata/numberjs': 3.2.4
   '@gooddata/tslint-config': 1.0.0_typescript@3.7.4
@@ -18,6 +18,7 @@ dependencies:
   '@rush-temp/gd-bear-model': 'file:projects/gd-bear-model.tgz'
   '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:projects/reference-workspace.tgz'
+  '@rush-temp/reference-workspace-mgmt': 'file:projects/reference-workspace-mgmt.tgz'
   '@rush-temp/schema-gen': 'file:projects/schema-gen.tgz'
   '@rush-temp/sdk-backend-bear': 'file:projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:projects/sdk-backend-mockingbird.tgz'
@@ -1318,7 +1319,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-3Szx0DjNucb7Zq7HvF9fZieJTKOYOMI1lCbX/Qgq3XOun08E3iZSclMEHJ6//NtJAZwaf4NevTKQImQylvRpBw==
-  /@gooddata/goodstrap/66.0.0:
+  /@gooddata/goodstrap/66.1.0:
     dependencies:
       '@gooddata/js-utils': 3.10.0
       babel-runtime: 6.26.0
@@ -1350,8 +1351,8 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-/iG3070N54MwxGy/QIuORkuUBSwEUcm68ELkV0bikwKrzcB3D/2CSRCGdZmmaftdGjWFKLzN55ER0T5gW77WXg==
-  /@gooddata/goodstrap/66.0.0_react-dom@16.12.0+react@16.12.0:
+      integrity: sha512-Wg1wg7NNBacqLONpSMFiiNrZN7N/6THpKxmVdNjoyqa34myTF3VEhLfEtM4fpfRpKaXrGgqXC4oyOoWgAI2fTA==
+  /@gooddata/goodstrap/66.1.0_react-dom@16.12.0+react@16.12.0:
     dependencies:
       '@gooddata/js-utils': 3.10.0
       babel-runtime: 6.26.0
@@ -1385,7 +1386,7 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-/iG3070N54MwxGy/QIuORkuUBSwEUcm68ELkV0bikwKrzcB3D/2CSRCGdZmmaftdGjWFKLzN55ER0T5gW77WXg==
+      integrity: sha512-Wg1wg7NNBacqLONpSMFiiNrZN7N/6THpKxmVdNjoyqa34myTF3VEhLfEtM4fpfRpKaXrGgqXC4oyOoWgAI2fTA==
   /@gooddata/js-utils/3.10.0:
     dependencies:
       js-cookie: 2.2.1
@@ -2306,7 +2307,7 @@ packages:
       react-draggable: 4.2.0
       react-helmet-async: 1.0.4_react-dom@16.12.0+react@16.12.0
       react-hotkeys: 2.0.0_react@16.12.0
-      react-sizeme: 2.6.10_75e41294fa833faf4530b305a6d9f4fe
+      react-sizeme: 2.6.11_react-dom@16.12.0+react@16.12.0
       regenerator-runtime: 0.13.3
       resolve-from: 5.0.0
       semver: 6.3.0
@@ -4906,7 +4907,7 @@ packages:
       postcss-modules-scope: 2.1.1
       postcss-modules-values: 3.0.0
       postcss-value-parser: 4.0.2
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       webpack: 4.41.5_webpack@4.41.5
     dev: false
     engines:
@@ -6274,7 +6275,7 @@ packages:
   /file-loader/4.3.0_webpack@4.41.5:
     dependencies:
       loader-utils: 1.2.3
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       webpack: 4.41.5_webpack@4.41.5
     dev: false
     engines:
@@ -11056,7 +11057,7 @@ packages:
   /raw-loader/3.1.0_webpack@4.41.5:
     dependencies:
       loader-utils: 1.2.3
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       webpack: 4.41.5_webpack@4.41.5
     dev: false
     engines:
@@ -11429,7 +11430,7 @@ packages:
       react: ^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0
     resolution:
       integrity: sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
-  /react-sizeme/2.6.10_75e41294fa833faf4530b305a6d9f4fe:
+  /react-sizeme/2.6.11_react-dom@16.12.0+react@16.12.0:
     dependencies:
       element-resize-detector: 1.1.16
       invariant: 2.2.4
@@ -11440,11 +11441,10 @@ packages:
       throttle-debounce: 2.1.0
     dev: false
     peerDependencies:
-      prop-types: ^15.0.0-0
       react: ^0.14.0 || ^15.0.0-0 || ^16.0.0
       react-dom: ^0.14.0 || ^15.0.0-0 || ^16.0.0
     resolution:
-      integrity: sha512-OJAPQxSqbcpbsXFD+fr5ARw4hNSAOimWcaTOLcRkIqnTp9+IFWY0w3Qdw1sMez6Ao378aimVL/sW6TTsgigdOA==
+      integrity: sha512-t/803grbHfvBnpPzjpzzvyl5L9Dj3ACMQS7qeScQoxDRmFC2VAU2gF+DYkclBDV9HN8hLFOWRdGkuN0xwGNZXQ==
   /react-syntax-highlighter/11.0.2_react@16.12.0:
     dependencies:
       '@babel/runtime': 7.8.3
@@ -12126,7 +12126,7 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-i27Mic4KovM/lnGsy8whRCHhc7VicJajAjTrYg11K9zfZXnYIt4k5F+kZkwjnrhKzLic/HLU4j11mjsz2G/75g==
-  /schema-utils/2.6.1:
+  /schema-utils/2.6.2:
     dependencies:
       ajv: 6.10.2
       ajv-keywords: 3.4.1_ajv@6.10.2
@@ -12134,7 +12134,7 @@ packages:
     engines:
       node: '>= 8.9.0'
     resolution:
-      integrity: sha512-0WXHDs1VDJyo+Zqs9TKLKyD/h7yDpHUhEFsM2CzkICFdoX1av+GBq/J2xRTFfsQO5kBfhZzANf2VcIm84jqDbg==
+      integrity: sha512-sazKNMBX/jwrXRkOI7N6dtiTVYqzSckzol8SGuHt0lE/v3xSW6cUkOqzu6Bq2tW+dlUzq3CWIqHU3ZKauliqdg==
   /scss-tokenizer/0.2.3:
     dependencies:
       js-base64: 2.5.1
@@ -12938,7 +12938,7 @@ packages:
   /style-loader/1.1.2_webpack@4.41.5:
     dependencies:
       loader-utils: 1.2.3
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       webpack: 4.41.5_webpack@4.41.5
     dev: false
     engines:
@@ -13095,7 +13095,7 @@ packages:
       cacache: 13.0.1
       find-cache-dir: 3.2.0
       jest-worker: 24.9.0
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       serialize-javascript: 2.1.2
       source-map: 0.6.1
       terser: 4.6.3
@@ -13530,7 +13530,7 @@ packages:
       integrity: sha512-g5JVHCIJwzfISaXpXE1qvNalca5Jwob6FjI4AoPlqMusJ6ftFE7IkkFoMhVLRgK+4Kx3gkzb8UZK5t5yTTvEmA==
   /tsutils/3.17.1_typescript@3.7.4:
     dependencies:
-      tslib: 1.10.0
+      tslib: 1.9.0
       typescript: 3.7.4
     dev: false
     engines:
@@ -13756,7 +13756,7 @@ packages:
       file-loader: 4.3.0_webpack@4.41.5
       loader-utils: 1.2.3
       mime: 2.4.4
-      schema-utils: 2.6.1
+      schema-utils: 2.6.2
       webpack: 4.41.5_webpack@4.41.5
     dev: false
     engines:
@@ -14166,7 +14166,7 @@ packages:
       integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   /wide-align/1.1.3:
     dependencies:
-      string-width: 2.1.1
+      string-width: 1.0.2
     dev: false
     resolution:
       integrity: sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
@@ -14495,7 +14495,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-axtMKepWBZ5bR1lrNDBOsDVGTlfGVhnUlaQxwYcD/y971gOvJf8xSzok6fXrqp3Xe6wausDndl8/gh7K2vQN8Q==
+      integrity: sha512-uCOkt0sPxpYxwyG5ZOKsE4zUp9MYdbcSIQ2jesNwzbEGWj8SIgdpzUkUsKChlyz5Qwt1HcDiNPfdypWnMRhpOQ==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/gd-bear-client.tgz':
@@ -14538,7 +14538,7 @@ packages:
     dev: false
     name: '@rush-temp/gd-bear-client'
     resolution:
-      integrity: sha512-u61ib/YdpBRZL94Fac9CCvXr9bGMOQjnkHsadoHEdOB6Sbg3hOU2E8DCBYQyj00X9qklKOgqWDjFPKwg+zhB7A==
+      integrity: sha512-V7p1RGEjt1eVQXcUU3aJGemLnvasYf4cQ1EETJg+0T3RvYF96/eNeU83KqLLNo7MVbDC3VvAsvaP7bDS6Xm/1g==
       tarball: 'file:projects/gd-bear-client.tgz'
     version: 0.0.0
   'file:projects/gd-bear-model.tgz':
@@ -14591,8 +14591,27 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-z+mxMYCrcrzDp/kwpGiNVij1P1Hz/wNN/JELjFQ5ljrpmO1yQ52/4S5YoMqlaAcXYi3tIY7HJTcoCfEmKXaoLA==
+      integrity: sha512-PMEBCZGWQ/TWE1hcnzE654GNTaL76MuS6j/gNa07YrK/405WmWvHUOM1C19M0Zyv/AfzVxaMOKczIPzhYcM/tw==
       tarball: 'file:projects/mock-handling.tgz'
+    version: 0.0.0
+  'file:projects/reference-workspace-mgmt.tgz':
+    dependencies:
+      '@gooddata/tslint-config': 1.0.0_typescript@3.7.4
+      '@types/jest': 24.0.25
+      '@types/lodash': 4.14.149
+      '@types/node': 10.17.13
+      jest: 24.9.0
+      jest-junit: 3.7.0
+      prettier: 1.19.1
+      ts-jest: 24.3.0_jest@24.9.0
+      tslint: 5.20.1_typescript@3.7.4
+      tslint-config-prettier: 1.18.0
+      typescript: 3.7.4
+    dev: false
+    name: '@rush-temp/reference-workspace-mgmt'
+    resolution:
+      integrity: sha512-PSqdnV3tEfDn1EC6GkbTbLKz7ky/wqn6ywfKEpSebN5CG6oEVn+sbYgjsr+Gx1FfEt3muUmZnCJr8rA3ppx/LA==
+      tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
     dependencies:
@@ -14611,7 +14630,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-cxQbBHH2T2g6WeWKlGMUL2xm2dMXUlQ0J+n3T3ms2dOzFr6Ha7zetsnsNUNOyET8oBSbHK16gdDY2wH5h8wNBQ==
+      integrity: sha512-7hfYNX+Hww48L4ZktOsxvtDEPuHiXJu665UhgPnhWjGVzvzXckKXeuaCWuqfh2K2ye4Hn3pu1YtF4uWQI7RddA==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/schema-gen.tgz':
@@ -14661,7 +14680,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-/6Oh9XXmoQH8UexjwZ+jiQy3SPi5pc1BoBOordql3m90koZW0oCqr7l5o19q8mEGtZoUG+fREmOMqX3HO2xgaw==
+      integrity: sha512-MPcFfONX3BBPXC3qNXwup7B9Rxm1xxSmrKfOQzub96kikpNtrDIEDJA6ywVGOc3SYqrLr5OH17TYIFC1xybyoQ==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -14682,7 +14701,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-PO1zyS9CRfT3tCyxWww0aIQqdGVqpDBNoIS+DQ83AI9jpFQ3FNu2gs4fSy/2TD7TdHwZ2bDHB4RUIVz7cKR/kw==
+      integrity: sha512-qmRnD4B82ExCfWlwdBSDiNJp+qRCjYQwqdBikEjF5rFtDFv8hifEIpXI8UWuAXah3U2YKfUFT4RXUscF8kqqKA==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -14705,7 +14724,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-DByuOehepomVSxmlwNNarg3hQjcnpaRDFaQenOOlfJz/oQ0idhdCNmlL+NFdT6XkDTBBMTqW7cqH4tOvwXfnuw==
+      integrity: sha512-2iHsoCvnjuWdyCe41/s1cHH3F0i1U18yMIwO7b4qvm/Dg9WVKNs8yen7HFDQlEo9Qvq+RfFXgjPBc/R7MK6s5w==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -14728,7 +14747,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-XruzSA7mt92QMWn5VlGCgQnQ1yZCmOBImA829eaOIH+SXFbiItLqIxZp6dwLC9gX2NnAzAafJP/T3wwd/N+9zg==
+      integrity: sha512-I70/9FNvMLlZIOLQl0dBUb1Jn7uCzPf/FEg8abZk19gmvJdH5TQTh0vfpeMW6n/YR6L1q5v0qJ0qoVYqGGR2iQ==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -14860,13 +14879,13 @@ packages:
     peerDependencies:
       webpack: '*'
     resolution:
-      integrity: sha512-LUHT4JUiQ+2eXOGJHv5sddeFXGfmpT4iA8FRDgF60lRbBgHjctsoqI5R6/QsyV6byWRBzZQSk6xRL90hGhrsAw==
+      integrity: sha512-YNxi3oFwAwH6Ameg39R+RbwW4a4keaN2BfO1rFKzvDZzCX1BTkDZ9ngCIEqLOuX7SNvyhTMAD3f0aPmibr7n9Q==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/goodstrap': 66.0.0_react-dom@16.12.0+react@16.12.0
+      '@gooddata/goodstrap': 66.1.0_react-dom@16.12.0+react@16.12.0
       '@gooddata/js-utils': 3.10.0
       '@gooddata/numberjs': 3.2.4
       '@gooddata/tslint-config': 1.0.0_typescript@3.7.4
@@ -14929,10 +14948,9 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-cqICn+NNChE89+Ofw9863V+6yTxaTf6mT/fdsgQeJyUMnzNgvhkaN1zjNJa+c2V6F+i3kJeLNpSdkxAKD2qDgg==
+      integrity: sha512-Z3Qw2WREVxYT3Mt5nFluY+hidh96mIxAkAEy4UY6VdwnnCouLlBeOB2sEkNhPDTOmw8JaABTKvBe2l5sTCm+Tg==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
-registry: ''
 specifiers:
   '@babel/core': ^7.7.2
   '@babel/plugin-proposal-export-default-from': ^7.7.4
@@ -14953,6 +14971,7 @@ specifiers:
   '@rush-temp/gd-bear-model': 'file:./projects/gd-bear-model.tgz'
   '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:./projects/reference-workspace.tgz'
+  '@rush-temp/reference-workspace-mgmt': 'file:./projects/reference-workspace-mgmt.tgz'
   '@rush-temp/schema-gen': 'file:./projects/schema-gen.tgz'
   '@rush-temp/sdk-backend-bear': 'file:./projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:./projects/sdk-backend-mockingbird.tgz'
