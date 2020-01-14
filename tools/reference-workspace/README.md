@@ -19,7 +19,7 @@ The reference workspace is created by deploying a GoodSales/2 fixture from gdc-t
 
 This is stored in [src/ldm](src/ldm) and consists of two files:
 
--   The auto-generated `full.ts` - this is created by running `./bin/refresh-ldm.sh` script
+-   The auto-generated `full.ts` - this is created by running `npm run refresh-ldm` script
 
     Note: the script has an existing workspace hardcoded; either ask for access to this workspace or
     change the script to use your own workspace.
@@ -59,8 +59,8 @@ The rules for recording entries are as follows:
         and stored. Sometimes tests need all the data from backend, sometimes they work with particular
         windows. This is specified here. Check out existing files in `uiTestScenarios` for examples.
 
-Once you create this, run `./bin/refresh-recordings.sh && npm run build`. This will invoke the mock handling
-tool to obtain the data from the live reference workspace.
+Once you create this, run `npm run refresh-ldm` script. This will invoke the mock handling tool to obtain the
+data from the live reference workspace.
 
 #### Valid elements
 

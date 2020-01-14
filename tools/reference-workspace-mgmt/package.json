@@ -1,9 +1,9 @@
 {
-    "name": "@gooddata/reference-workspace",
-    "version": "8.0.0-alpha.0",
+    "name": "@gooddata/reference-workspace-mgmt",
+    "version": "1.0.0",
     "author": "GoodData",
-    "description": "GoodData SDK TypeScript skeleton",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/reference-workspace",
+    "description": "Command line tools for reference workspace management",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/reference-workspace-mgmt",
     "license": "BSD-3-Clause",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -17,8 +17,7 @@
     },
     "scripts": {
         "dev": "tsc --watch",
-        "copy-data": "cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
@@ -27,14 +26,11 @@
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check",
-        "refresh-ldm": "../reference-workspace-mgmt/bin/refresh-ldm.sh && npm run build",
-        "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run build"
+        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.4",
-        "@gooddata/sdk-model": "^8.0.0-alpha.4",
-        "lodash": "^4.17.15"
+        "@gooddata/catalog-export": "^8.0.0-alpha.3",
+        "@gooddata/mock-handling": "1.0.0"
     },
     "devDependencies": {
         "@gooddata/tslint-config": "1.0.0",
