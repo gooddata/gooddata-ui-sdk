@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IWorkspaceQueryFactory, IWorkspaceQuery, IWorkspaceQueryResult } from "@gooddata/sdk-backend-spi";
 import { AuthenticatedCallGuard } from "./commonTypes";
 import { convertUserProject } from "./fromSdkModel/WorkspaceConverter";
@@ -18,6 +18,7 @@ export class BearWorkspaceQueryFactory implements IWorkspaceQueryFactory {
 class BearWorkspaceQuery implements IWorkspaceQuery {
     private limit: number = 100;
     private offset: number = 0;
+    private search: string | undefined = undefined;
 
     constructor(private readonly authCall: AuthenticatedCallGuard, private readonly userId?: string) {}
 
@@ -31,16 +32,25 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
         return this;
     }
 
-    public query(): Promise<IWorkspaceQueryResult> {
-        return this.queryWorker(this.offset, this.limit);
+    public withSearch(search: string): IWorkspaceQuery {
+        this.search = search;
+        return this;
     }
 
-    private async queryWorker(offset: number, limit: number): Promise<IWorkspaceQueryResult> {
+    public query(): Promise<IWorkspaceQueryResult> {
+        return this.queryWorker(this.offset, this.limit, this.search);
+    }
+
+    private async queryWorker(
+        offset: number,
+        limit: number,
+        search?: string,
+    ): Promise<IWorkspaceQueryResult> {
         const {
             userProjects: { paging, items },
         } = await this.authCall(async (sdk, { principal }) => {
             const userId = this.userId || principal.userId;
-            return sdk.project.getProjectsWithPaging(userId, offset, limit);
+            return sdk.project.getProjectsWithPaging(userId, offset, limit, search);
         });
 
         const serverOffset = paging.offset;
@@ -49,6 +59,7 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
         const hasNextPage = serverOffset + count < totalCount;
 
         const emptyResult: IWorkspaceQueryResult = {
+            search,
             items: [],
             limit: count,
             offset: totalCount,
@@ -57,12 +68,13 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
         };
 
         return {
+            search,
             items: items.map(convertUserProject),
             limit: paging.limit,
             offset: paging.offset,
             totalCount: paging.totalCount,
             next: hasNextPage
-                ? () => this.queryWorker(offset + count, limit)
+                ? () => this.queryWorker(offset + count, limit, search)
                 : () => Promise.resolve(emptyResult),
         };
     }

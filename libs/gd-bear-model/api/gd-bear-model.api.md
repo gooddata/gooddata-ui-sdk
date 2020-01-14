@@ -1244,6 +1244,21 @@ export namespace GdcProject {
         };
     }
     // (undocumented)
+    export interface IUserProjectsParams {
+        // (undocumented)
+        limit: number;
+        // (undocumented)
+        offset: number;
+        // (undocumented)
+        projectStates: "ENABLED";
+        // (undocumented)
+        titleSubstring?: string;
+        // (undocumented)
+        userId: string;
+        // (undocumented)
+        userState: "ENABLED";
+    }
+    // (undocumented)
     export interface IUserProjectsResponse {
         // (undocumented)
         userProjects: {

@@ -120,15 +120,20 @@ export class ProjectModule {
         userId: string,
         offset: number,
         limit: number,
+        search?: string,
     ): Promise<GdcProject.IUserProjectsResponse> {
         // inspired by ProjectDataSource in goodstrap. Maybe the /gdc/account/profile/${profileId}/projects would be suitable as well.
-        const mergedOptions = {
+        const mergedOptions: GdcProject.IUserProjectsParams = {
             limit,
             offset,
             userId,
             projectStates: "ENABLED",
             userState: "ENABLED",
         };
+        if (search) {
+            mergedOptions.titleSubstring = search;
+        }
+
         const uri = `/gdc/internal/projects/?${stringify(mergedOptions)}`;
         return this.xhr.get(uri).then(res => res.getData());
     }
