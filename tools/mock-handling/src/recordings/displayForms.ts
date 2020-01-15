@@ -21,7 +21,7 @@ const DisplayFormRequestFile = "request.json";
 const DisplayFormElements = "elements.json";
 const DisplayFormObj = "obj.json";
 
-export type DisplayFormRequest = {
+export type DisplayFormRecordingSpec = {
     offset?: number;
     elementCount?: number;
 };
@@ -29,15 +29,15 @@ export type DisplayFormRequest = {
 export class DisplayFormRecording implements IRecording {
     public readonly directory: string;
     private readonly displayFormId: string;
-    private readonly request: DisplayFormRequest;
+    private readonly spec: DisplayFormRecordingSpec;
     private readonly requestFile: string;
     private readonly elementFile: string;
     private readonly objFile: string;
 
-    constructor(rootDir: string, displayFormId: string, request: DisplayFormRequest = {}) {
+    constructor(rootDir: string, displayFormId: string, spec: DisplayFormRecordingSpec = {}) {
         this.directory = path.join(rootDir, displayFormId);
         this.displayFormId = displayFormId;
-        this.request = request;
+        this.spec = spec;
 
         this.requestFile = path.join(this.directory, DisplayFormRequestFile);
         this.elementFile = path.join(this.directory, DisplayFormElements);
@@ -57,7 +57,7 @@ export class DisplayFormRecording implements IRecording {
             fs.existsSync(this.directory) &&
             fs.existsSync(this.elementFile) &&
             fs.existsSync(this.objFile) &&
-            isEqual(this.request, this.getRecordedRequest())
+            isEqual(this.spec, this.getRecordedSpec())
         );
     }
 
@@ -79,7 +79,7 @@ export class DisplayFormRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        writeAsJsonSync(this.requestFile, this.request);
+        writeAsJsonSync(this.requestFile, this.spec);
         writeAsJsonSync(this.elementFile, elements);
         writeAsJsonSync(this.objFile, obj);
     }
@@ -90,7 +90,7 @@ export class DisplayFormRecording implements IRecording {
     ): Promise<IAttributeElement[]> {
         const validElements = this.createValidElementsQuery(backend, workspace);
         const result: IAttributeElement[] = [];
-        const { elementCount } = this.request;
+        const { elementCount } = this.spec;
 
         let page = await validElements.query();
 
@@ -111,7 +111,7 @@ export class DisplayFormRecording implements IRecording {
     }
 
     private createValidElementsQuery(backend: IAnalyticalBackend, workspace: string): IElementQuery {
-        const { offset, elementCount } = this.request;
+        const { offset, elementCount } = this.spec;
 
         let validElements = backend
             .workspace(workspace)
@@ -129,11 +129,11 @@ export class DisplayFormRecording implements IRecording {
         return validElements;
     }
 
-    private getRecordedRequest(): DisplayFormRequest {
+    private getRecordedSpec(): DisplayFormRecordingSpec {
         if (!fs.existsSync(this.requestFile)) {
             return {};
         }
 
-        return readJsonSync(this.requestFile) as DisplayFormRequest;
+        return readJsonSync(this.requestFile) as DisplayFormRecordingSpec;
     }
 }

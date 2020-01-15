@@ -2,14 +2,13 @@
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
-import { createUniqueVariableName } from "../base/variableNaming";
-import flatMap = require("lodash/flatMap");
+import { createUniqueVariableName, TakenNamesSet } from "../base/variableNaming";
+import { InsightRecording } from "../recordings/insights";
 import groupBy = require("lodash/groupBy");
-import { ExecutionRecording } from "../recordings/execution";
 
-const ScenariosConstName = "Scenarios";
+const InsightIndexConstName = "Insights";
 
-function executionRecordingInit(rec: ExecutionRecording, targetDir: string): string {
+function insightRecordingInit(rec: InsightRecording, targetDir: string): string {
     const entries = Object.entries(rec.getEntryForRecordingIndex());
 
     return `{ ${entries
@@ -18,7 +17,7 @@ function executionRecordingInit(rec: ExecutionRecording, targetDir: string): str
 }
 
 function generateRecordingConst(
-    rec: ExecutionRecording,
+    rec: InsightRecording,
     targetDir: string,
 ): OptionalKind<VariableStatementStructure> {
     return {
@@ -27,7 +26,7 @@ function generateRecordingConst(
         declarations: [
             {
                 name: rec.getRecordingName(),
-                initializer: executionRecordingInit(rec, targetDir),
+                initializer: insightRecordingInit(rec, targetDir),
             },
         ],
     };
@@ -37,21 +36,26 @@ function generateRecordingConst(
 // generating initializer for map of maps .. fun times.
 //
 
-type VisScenarioRecording = [string, string, ExecutionRecording];
+type VisScenarioToInsight = [string, string, InsightRecording];
 
-function generateScenarioForVis(entries: VisScenarioRecording[]): string {
+function generateScenarioForVis(entries: VisScenarioToInsight[]): string {
+    const scope: TakenNamesSet = {};
+
     return `{ ${entries
-        .map(
-            ([_, entryName, entryRecording]) =>
-                `${createUniqueVariableName(entryName, {})}: ${entryRecording.getRecordingName()}`,
-        )
+        .map(([_, entryName, entryRecording]) => {
+            const varName = createUniqueVariableName(entryName, scope);
+            scope[varName] = true;
+
+            return `${varName}: ${entryRecording.getRecordingName()}`;
+        })
         .join(",")} }`;
 }
 
-function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
-    const recsWithVisAndScenario = flatMap(recordings, rec =>
-        rec.scenarios.map<VisScenarioRecording>(s => [s.vis, s.scenario, rec]),
-    );
+function generateInsightsConst(recordings: InsightRecording[]): OptionalKind<VariableStatementStructure> {
+    const recsWithVisAndScenario: VisScenarioToInsight[] = recordings
+        .filter(rec => rec.hasVisAndScenarioInfo())
+        .map(rec => [rec.getVisName(), rec.getScenarioName(), rec]);
+
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
 
     return {
@@ -59,7 +63,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
         isExported: true,
         declarations: [
             {
-                name: ScenariosConstName,
+                name: InsightIndexConstName,
                 initializer: `{ ${entriesByVis
                     .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
                     .join(",")} }`,
@@ -69,16 +73,15 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
 }
 
 /**
- * Generate constants for the execution recordings. This function will return non-exported constant per recording
- * and then also an exported 'Scenarios' constant that is a map from vis => scenario => recording.
+ * Generate constants for insight recordings. This function will return non-exported constant per recording.
  *
  * @param recordings - recordings to generate constants for
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
  *   made relative for require()
  */
-export function generateConstantsForExecutions(
-    recordings: ExecutionRecording[],
+export function generateConstantsForInsights(
+    recordings: InsightRecording[],
     targetDir: string,
 ): Array<OptionalKind<VariableStatementStructure>> {
-    return [...recordings.map(r => generateRecordingConst(r, targetDir)), generateScenariosConst(recordings)];
+    return [...recordings.map(r => generateRecordingConst(r, targetDir)), generateInsightsConst(recordings)];
 }

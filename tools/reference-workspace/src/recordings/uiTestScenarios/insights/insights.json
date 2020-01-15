@@ -1,29 +1,47 @@
 {
     "AreaChart.e80bf4ebc24cbc39d86ca97282172fcf": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario AreaChart - single measure."
     },
     "AreaChart.bd511d3c202d84ee031c1bce941d8836": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy."
     },
     "AreaChart.e358d37eb4c795329cc38a452119a27f": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with viewBy and stackBy",
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy."
     },
     "AreaChart.9cb0f16b2c1490701cf6c6eb97a0a19b": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with two viewBy",
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with two viewBy."
     },
     "AreaChart.bafd3a2033d8b1a777545d3405366577": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy",
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy."
     },
     "AreaChart.8f53367f6a190fef81bbac91f75d6774": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with undefined values",
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with undefined values."
     },
     "AreaChart.4a5648d301e9433dd86f29b018d07c24": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by attribute."
     },
     "AreaChart.99ca17d14477cb944ab717b2fbb689c2": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
         "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by measure."
     },
     "AreaChart.9dcc2062144882efb08dd9860c609e62": {
+        "visName": "AreaChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario AreaChart - arithmetic measures."
     },
     "AreaChart.c6ffab0eb08c78513374575ee10d9c93": {
@@ -102,36 +120,58 @@
         "comment": "Auto-generated insight for test scenario AreaChart - undefined values and disabled stacking."
     },
     "BarChart.4196e82136666d47bd3eba69e4efc08b": {
+        "visName": "BarChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario BarChart - single measure."
     },
     "BarChart.aea2baaf3c17ea4192caf713064ea511": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario BarChart - single measure with viewBy."
     },
     "BarChart.14cd08471789cc1d023e0ee3fd2d8403": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with viewBy and stackBy",
         "comment": "Auto-generated insight for test scenario BarChart - single measure with viewBy and stackBy."
     },
     "BarChart.03285d3957e7dca0e025403e3f47c077": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with two viewBy and stack",
         "comment": "Auto-generated insight for test scenario BarChart - single measure with two viewBy and stack."
     },
     "BarChart.56b46641d4d69113e8073f60f6408a7c": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy",
         "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy."
     },
     "BarChart.b8e7b0e68fd150ed874280cdcb3d89b8": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with two viewBy",
         "comment": "Auto-generated insight for test scenario BarChart - two measures with two viewBy."
     },
     "BarChart.bd1380555e9e2369f9936cdc08865e6e": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with two viewBy, filtered to single value",
         "comment": "Auto-generated insight for test scenario BarChart - two measures with two viewBy, filtered to single value."
     },
     "BarChart.b048b67226580f5fc190ce98f1840b2e": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
         "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy sorted by attribute."
     },
     "BarChart.6732aa7d36279ecc1f7e45f057fef40f": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
         "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy sorted by measure."
     },
     "BarChart.1cf330f13c2cc2f65ca59cbd90588fc9": {
+        "visName": "BarChart",
+        "scenarioName": "viewBy date and PoP measure",
         "comment": "Auto-generated insight for test scenario BarChart - viewBy date and PoP measure."
     },
     "BarChart.15fc97b28b625488f50ef9788b4bebfa": {
+        "visName": "BarChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario BarChart - arithmetic measures."
     },
     "BarChart.0d9da93ffe3fdbac288331046c047d53": {
@@ -297,24 +337,38 @@
         "comment": "Auto-generated insight for test scenario BarChart - single measure, two viewBy and stacking with drilling on parent."
     },
     "BubbleChart.83d07c07a4f59faa75a2fb707eed81f0": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis measure",
         "comment": "Auto-generated insight for test scenario BubbleChart - x axis measure."
     },
     "BubbleChart.cb1c86bb70814a82dfa28fce5df21a1a": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis measure with viewBy",
         "comment": "Auto-generated insight for test scenario BubbleChart - x axis measure with viewBy."
     },
     "BubbleChart.041a8962d16d5e65649d3a501de2d8bf": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis and size measures with viewBy",
         "comment": "Auto-generated insight for test scenario BubbleChart - x axis and size measures with viewBy."
     },
     "BubbleChart.d398669fbe2387eb0a4d054a009b094a": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis measures with viewBy",
         "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis measures with viewBy."
     },
     "BubbleChart.21387681756cbfe1ead550f506023852": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis and size measures with viewBy",
         "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy."
     },
     "BubbleChart.b370e338e087675a2a7ab75d07174f49": {
+        "visName": "BubbleChart",
+        "scenarioName": "arithmetic measure",
         "comment": "Auto-generated insight for test scenario BubbleChart - arithmetic measure."
     },
     "BubbleChart.674ef3ec57b8ee733233ee6a8fd92737": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis and size measures with viewBy and sorted by attr",
         "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy and sorted by attr."
     },
     "BubbleChart.7affa6f83768a44ccdcb2aecf9c58f1f": {
@@ -390,39 +444,63 @@
         "comment": "Auto-generated insight for test scenario BubbleChart -  - forced hidden."
     },
     "ColumnChart.3a6db700118d1eb8ddc35e02c58061b3": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure."
     },
     "ColumnChart.9f6c2ae4f09edc06f4367b94eda36f64": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy."
     },
     "ColumnChart.9ae1ebbf000345f50a13e17f5b999b16": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy and stackBy",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy and stackBy."
     },
     "ColumnChart.41bf42ba68d58785f32635d0f6b72954": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy and stackBy filtered to single stack",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy and stackBy filtered to single stack."
     },
     "ColumnChart.39f08190cd283a0108e2a9132ba67873": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with two viewBy and stack",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with two viewBy and stack."
     },
     "ColumnChart.4eb138f02825ff9279767ced883846e1": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures."
     },
     "ColumnChart.9b0669c8dddc725f1d7048a8f8ed6786": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy",
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy."
     },
     "ColumnChart.7c9baf0accff045e028f98345a6d051f": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with two viewBy",
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures with two viewBy."
     },
     "ColumnChart.f8745667793247cc50849dcd650ed857": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy sorted by attribute."
     },
     "ColumnChart.fab6a568999ee1038e9602f70b1dfdc2": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy sorted by measure."
     },
     "ColumnChart.bf97b3485ae42116f54627a32db3d879": {
+        "visName": "ColumnChart",
+        "scenarioName": "viewBy date and PoP measure",
         "comment": "Auto-generated insight for test scenario ColumnChart - viewBy date and PoP measure."
     },
     "ColumnChart.4184b8098761c70a3660d90edc2cc510": {
+        "visName": "ColumnChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario ColumnChart - arithmetic measures."
     },
     "ColumnChart.24579a56dade52531f97d9b35ceb70df": {
@@ -594,39 +672,63 @@
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with stack to 100%."
     },
     "ComboChart.ca1e539d588f813e9ca0d328a0c785f6": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary measure",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary measure."
     },
     "ComboChart.2ae2157df661ce59c07fee006f144f82": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary measure with viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary measure with viewBy."
     },
     "ComboChart.ea057ed74c0fe3c3493b6317b011fd4b": {
+        "visName": "ComboChart",
+        "scenarioName": "two secondary measure with viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - two secondary measure with viewBy."
     },
     "ComboChart.91f72493224f356a0984dc2313dfa98f": {
+        "visName": "ComboChart",
+        "scenarioName": "one secondary measure with viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - one secondary measure with viewBy."
     },
     "ComboChart.10009853681fd157ddad638f3420674b": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure no viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure no viewBy."
     },
     "ComboChart.a5b5972f08043c7ad8e8a7314718db21": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by attr",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by attr."
     },
     "ComboChart.78c0d7479f0c79e5a84e6679521e823e": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by primary measure",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by primary measure."
     },
     "ComboChart.08f5d79508be933cf3c413ea2686e1d3": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by secondary measure",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by secondary measure."
     },
     "ComboChart.19a75d709f0a29f6d554da3fd8947c12": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy."
     },
     "ComboChart.c907334c4ab5f3059bdfac4050ed8266": {
+        "visName": "ComboChart",
+        "scenarioName": "multiple primary and secondary measures with viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - multiple primary and secondary measures with viewBy."
     },
     "ComboChart.be9798f64150071c10a578ff3b11de6b": {
+        "visName": "ComboChart",
+        "scenarioName": "multiple measures and no viewBy",
         "comment": "Auto-generated insight for test scenario ComboChart - multiple measures and no viewBy."
     },
     "ComboChart.3e965dfa84bd6b2137df4f8ce9079435": {
+        "visName": "ComboChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario ComboChart - arithmetic measures."
     },
     "ComboChart.856af2a1602b2818dc0ae016ca36860e": {
@@ -837,15 +939,23 @@
         "comment": "Auto-generated insight for test scenario ComboChart - 'Stack Measures' on and 'Stack to 100%' on."
     },
     "DonutChart.3af9e1e9534a73731abf43f4f6b45a4a": {
+        "visName": "DonutChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario DonutChart - single measure."
     },
     "DonutChart.d9fc12c2789ae1ac550da9049ab5b8ae": {
+        "visName": "DonutChart",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario DonutChart - two measures."
     },
     "DonutChart.216da1d03170ec649269e3d8cf296281": {
+        "visName": "DonutChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario DonutChart - single measure with viewBy."
     },
     "DonutChart.71515606befac670ece99e15df646a5f": {
+        "visName": "DonutChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario DonutChart - arithmetic measures."
     },
     "DonutChart.4d2bc31e42cc8be019c9ae6e60c0ee54": {
@@ -924,18 +1034,28 @@
         "comment": "Auto-generated insight for test scenario DonutChart - assign color to attributes."
     },
     "FunnelChart.d9c554a687fc8e9e2bf1e7f6662a203a": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure."
     },
     "FunnelChart.ee78293277eff14c7c5a2b411c217670": {
+        "visName": "FunnelChart",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario FunnelChart - two measures."
     },
     "FunnelChart.e7a3d4755a1d32e494918d0ec8cace06": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy."
     },
     "FunnelChart.8d0deb6f02c4fccecff747c6f91acdbc": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure with viewBy sorted by attribute",
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy sorted by attribute."
     },
     "FunnelChart.935b2a25a68e54db36d5a2d398ff1234": {
+        "visName": "FunnelChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario FunnelChart - arithmetic measures."
     },
     "FunnelChart.ba183f11f1c659759f299ba64bc2dcdd": {
@@ -957,15 +1077,23 @@
         "comment": "Auto-generated insight for test scenario FunnelChart - assign color to attributes."
     },
     "Headline.a1624d0d4ef0c18a1d84937b0f56232e": {
+        "visName": "Headline",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario Headline - single measure."
     },
     "Headline.8e0c213f5d09189755bfa7cad7733a9a": {
+        "visName": "Headline",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario Headline - two measures."
     },
     "Headline.2451f3ddb19b91887f25219e6ed241e6": {
+        "visName": "Headline",
+        "scenarioName": "two measures with german separators",
         "comment": "Auto-generated insight for test scenario Headline - two measures with german separators."
     },
     "Headline.e68748d0ffcdbffdebbb6baecb74de1e": {
+        "visName": "Headline",
+        "scenarioName": "two measures one PoP",
         "comment": "Auto-generated insight for test scenario Headline - two measures one PoP."
     },
     "Headline.383feefe7d4e0751275e56c6473fbe3a": {
@@ -981,18 +1109,28 @@
         "comment": "Auto-generated insight for test scenario Headline - drilling on two measures with underlining disabled."
     },
     "Heatmap.5ddd61ed4fe6626de7b1184a6add9cc2": {
+        "visName": "Heatmap",
+        "scenarioName": "measure only",
         "comment": "Auto-generated insight for test scenario Heatmap - measure only."
     },
     "Heatmap.383e4cb13d636b6be3028626fefa7780": {
+        "visName": "Heatmap",
+        "scenarioName": "measure and rows",
         "comment": "Auto-generated insight for test scenario Heatmap - measure and rows."
     },
     "Heatmap.92bb179ec15e7066c24dde28c61f3703": {
+        "visName": "Heatmap",
+        "scenarioName": "measure and columns",
         "comment": "Auto-generated insight for test scenario Heatmap - measure and columns."
     },
     "Heatmap.50c05502487ddc4633048789802e726b": {
+        "visName": "Heatmap",
+        "scenarioName": "measure, rows and columns",
         "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns."
     },
     "Heatmap.548bbc2e120eb0aeb73e4f625f807da7": {
+        "visName": "Heatmap",
+        "scenarioName": "measure, rows and columns with null data points",
         "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns with null data points."
     },
     "Heatmap.153f94e0a8b24920d3e4d251f9d13ac1": {
@@ -1053,27 +1191,43 @@
         "comment": "Auto-generated insight for test scenario Heatmap -  - invisible."
     },
     "LineChart.5aa35f211eea6a84306587d0c5d88f5a": {
+        "visName": "LineChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario LineChart - single measure."
     },
     "LineChart.b34d92ab682cfc3e750166974764e1e7": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with trendBy",
         "comment": "Auto-generated insight for test scenario LineChart - single measure with trendBy."
     },
     "LineChart.0ea50d29cd3270fdec0d85b9d71ad6b5": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with % and trendBy",
         "comment": "Auto-generated insight for test scenario LineChart - single measure with % and trendBy."
     },
     "LineChart.384cc789d674cab0eafbcde77b527f07": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy",
         "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy."
     },
     "LineChart.6435fc6c70acf23fc0ed5f27767e6bb8": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy and sort by measure",
         "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy and sort by measure."
     },
     "LineChart.d67c202ff9de1002a4881fae7b73e27f": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy and sort by attribute",
         "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy and sort by attribute."
     },
     "LineChart.9ac8646d3947235f7503886a42bcf733": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with trendBy and segmentBy",
         "comment": "Auto-generated insight for test scenario LineChart - single measure with trendBy and segmentBy."
     },
     "LineChart.c6ff1c3dca020d1d64ea4a9b2980ee68": {
+        "visName": "LineChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario LineChart - arithmetic measures."
     },
     "LineChart.bed6a16cdca5f3c3c5950fc2d1fae0c7": {
@@ -1155,15 +1309,23 @@
         "comment": "Auto-generated insight for test scenario LineChart -  - forced hidden."
     },
     "PieChart.98be49b0beb9a43f9a3f52f720b4ccc5": {
+        "visName": "PieChart",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario PieChart - single measure."
     },
     "PieChart.13b5a3327a3e66870c649cd7518c0f93": {
+        "visName": "PieChart",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario PieChart - two measures."
     },
     "PieChart.94dde51d58e55f91e6a990abbd4a02fb": {
+        "visName": "PieChart",
+        "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario PieChart - single measure with viewBy."
     },
     "PieChart.ac6d1ea455547232e780faa66fcc5c44": {
+        "visName": "PieChart",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario PieChart - arithmetic measures."
     },
     "PieChart.30f3634854a8b5cace749b7a8aa33b14": {
@@ -1242,18 +1404,28 @@
         "comment": "Auto-generated insight for test scenario PieChart - assign color to attributes."
     },
     "ScatterPlot.aedf080d6f8ff9a77ec23025077ad52f": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x axis measure",
         "comment": "Auto-generated insight for test scenario ScatterPlot - x axis measure."
     },
     "ScatterPlot.3c3a502615d28f9fd19b0dc26f1e35d2": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x axis measure and attribute",
         "comment": "Auto-generated insight for test scenario ScatterPlot - x axis measure and attribute."
     },
     "ScatterPlot.817d207aaa815a04ba0a61505b43ac92": {
+        "visName": "ScatterPlot",
+        "scenarioName": "y axis measure and attribute",
         "comment": "Auto-generated insight for test scenario ScatterPlot - y axis measure and attribute."
     },
     "ScatterPlot.60a1689ea78a2061869c760eaacfd6b4": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x and y axis measures and attribute",
         "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute."
     },
     "ScatterPlot.5e843ed38abfbda364f30ea98f1c8023": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x and y axis measures and attribute with attr sorting",
         "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with attr sorting."
     },
     "ScatterPlot.722461a58381ff1d667721a5780cb79a": {
@@ -1299,21 +1471,33 @@
         "comment": "Auto-generated insight for test scenario ScatterPlot -  - forced hidden."
     },
     "Treemap.1e0024953bfe4931d91aefbf693b730e": {
+        "visName": "Treemap",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario Treemap - single measure."
     },
     "Treemap.70e08a9334a908bc92f0ab00373e94eb": {
+        "visName": "Treemap",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario Treemap - two measures."
     },
     "Treemap.9ac4f99ab675d19e462883ab6cbf6a39": {
+        "visName": "Treemap",
+        "scenarioName": "single measure and viewBy",
         "comment": "Auto-generated insight for test scenario Treemap - single measure and viewBy."
     },
     "Treemap.eb82ded63a0c1f2592c0ea629fea3613": {
+        "visName": "Treemap",
+        "scenarioName": "single measure, viewBy and segment",
         "comment": "Auto-generated insight for test scenario Treemap - single measure, viewBy and segment."
     },
     "Treemap.e9cc0b95ce97468ae211f1f0eb014205": {
+        "visName": "Treemap",
+        "scenarioName": "two measures and viewBy",
         "comment": "Auto-generated insight for test scenario Treemap - two measures and viewBy."
     },
     "Treemap.084906c7167517929c57655fe8fa8c36": {
+        "visName": "Treemap",
+        "scenarioName": "arithmetic measures and segment",
         "comment": "Auto-generated insight for test scenario Treemap - arithmetic measures and segment."
     },
     "Treemap.ba0aa40481709788b6726e4bd6d2d37f": {
@@ -1362,12 +1546,18 @@
         "comment": "Auto-generated insight for test scenario Treemap -  - forced hidden."
     },
     "Xirr.d44e79bca7524bf4bafadc8d4910e67c": {
+        "visName": "Xirr",
+        "scenarioName": "only measure",
         "comment": "Auto-generated insight for test scenario Xirr - only measure."
     },
     "Xirr.b6db91e7e010141f9602b4423a66f570": {
+        "visName": "Xirr",
+        "scenarioName": "correct config",
         "comment": "Auto-generated insight for test scenario Xirr - correct config."
     },
     "Xirr.8a679a68d4844b230cf5d8d968c1aa44": {
+        "visName": "Xirr",
+        "scenarioName": "semantically wrong measure",
         "comment": "Auto-generated insight for test scenario Xirr - semantically wrong measure."
     },
     "XIRR.a4595274e781f8e6d6f69dcf34ef8b3a": {
@@ -1377,45 +1567,73 @@
         "comment": "Auto-generated insight for test scenario XIRR - drilling on single measure with underlining disabled."
     },
     "PivotTable.65dd099d15344827b35e2f2181ea5aef": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure."
     },
     "PivotTable.26b4213995b4f9bbaebc55491fed9ed4": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row attribute",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with row attribute."
     },
     "PivotTable.a44c6abe1e4158818433bcab60cbf8cd": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with column attribute",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with column attribute."
     },
     "PivotTable.54eb1ebf08a0226e779d2563e0b038e2": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row and column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with row and column attributes."
     },
     "PivotTable.eaec2a9fb4e5555ec7e45a1784453cb4": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and one column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and one column attributes."
     },
     "PivotTable.2a156cfdec6afd35d3d8e6c41f021d9d": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and two column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and two column attributes."
     },
     "PivotTable.786dd8560f8674d279b2f299bf72feb0": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures."
     },
     "PivotTable.56b3a2f6831b3284eb7fd376e28ef7ad": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row attribute",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with row attribute."
     },
     "PivotTable.2e74a9bda9033064c8faa5c3f073f2fa": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with column attribute",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with column attribute."
     },
     "PivotTable.706846c0f3035f123704f41025870ae3": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row and column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with row and column attributes."
     },
     "PivotTable.47a182e9d81b7792318ccc5fe3ae25a6": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and one column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and one column attributes."
     },
     "PivotTable.ae1c54a809fc6ed2fcd14abd8988cfc2": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and two column attributes",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and two column attributes."
     },
     "PivotTable.8e968cff44fd1e4d2b5a7f96cf58fe36": {
+        "visName": "PivotTable",
+        "scenarioName": "empty values",
         "comment": "Auto-generated insight for test scenario PivotTable - empty values."
     },
     "PivotTable.b5bccc6081bdb949031a37cec1564b1c": {
+        "visName": "PivotTable",
+        "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario PivotTable - arithmetic measures."
     },
     "PivotTable.446acc0bb6b8088a8772e6cb3e0689e4": {
@@ -1440,33 +1658,53 @@
         "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 300."
     },
     "PivotTable.9b708c0436dbaa5ad9c807a6f633e3ed": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by first row attr",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by first row attr."
     },
     "PivotTable.0d3234aea1379842da928f62559a3015": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by second row attr",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr."
     },
     "PivotTable.5cf4e5316283b174301b8b141a1d33a5": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by first measure",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by first measure."
     },
     "PivotTable.b3c5a80616e05ebba986ff89d2471f70": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by second measure",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by second measure."
     },
     "PivotTable.b80b3d414546b214644f45f6b05c7a18": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and single grand total",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure and single grand total."
     },
     "PivotTable.0fbbe3a5943e302613127898997c3f86": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and multiple grand totals",
         "comment": "Auto-generated insight for test scenario PivotTable - single measure and multiple grand totals."
     },
     "PivotTable.1319f9c2809b4b599e48fe135c651169": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and single grand total for each",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total for each."
     },
     "PivotTable.d8f69f7155ed67ca5b1f272d8ad76d38": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple grand totals for each",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple grand totals for each."
     },
     "PivotTable.d3910df0175d1a7e1a4dd5a2d338a521": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple subtotals."
     },
     "PivotTable.7829b5a7d8d0731324b538a0e07851f0": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
     }
 }

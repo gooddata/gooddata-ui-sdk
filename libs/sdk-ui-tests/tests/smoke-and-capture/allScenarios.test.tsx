@@ -195,13 +195,13 @@ function storeScenarioDefinition(
     }
 }
 
-function storeInsight(vis: string, def: IInsightDefinition) {
+function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: IInsightDefinition) {
     if (!InsightsDir) {
         return;
     }
 
     const hasher = new SparkMD5();
-    const id = `${vis}.${hasher.append(JSON.stringify(def)).end()}`;
+    const id = `${visName}.${hasher.append(JSON.stringify(def)).end()}`;
     const persistentInsight: IInsight = { insight: { identifier: id, ...def.insight } };
     const insightDir = path.join(InsightsDir!, id);
 
@@ -214,7 +214,18 @@ function storeInsight(vis: string, def: IInsightDefinition) {
     const insightIndexFile = path.join(InsightsDir!, InsightIndexFileName);
     const insightIndex = fs.existsSync(insightIndexFile) ? readJsonSync(insightIndexFile) : {};
 
+    /*
+     * Inclusion of scenario information in the insight recording definition makes the mock-handling tool
+     * to include the insight in Insight index - meaning the insight can be accessed programatically such
+     * as 'Insight.BarChart.TwoMeasures' etc.
+     */
+    const shouldIncludeScenario = !scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta");
+    const scenarioInfo = shouldIncludeScenario
+        ? { visName, scenarioName: scenario[ScenarioTestMembers.ScenarioName] }
+        : {};
+
     insightIndex[id] = {
+        ...scenarioInfo,
         comment: `Auto-generated insight for test scenario ${insightTitle(def)}.`,
     };
 
@@ -263,6 +274,6 @@ describe("all scenarios", () => {
             storeScenarioDefinition(vis, scenario, interactions);
         }
 
-        storeInsight(vis, insight);
+        storeInsight(vis, scenario, insight);
     });
 });
