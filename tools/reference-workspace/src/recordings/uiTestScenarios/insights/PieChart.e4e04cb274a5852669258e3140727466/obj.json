@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "identifier": "PieChart.e4e04cb274a5852669258e3140727466",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - single measure and viewBy - disabled",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "legend": {
+                    "enabled": false
+                }
+            }
+        }
+    }
+}

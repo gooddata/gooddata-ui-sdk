@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "identifier": "DonutChart.05eb1f75f53b6143acab4d82df21a701",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart -  - forced visible and german separators",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                },
+                "separators": {
+                    "thousand": ".",
+                    "decimal": ","
+                }
+            }
+        }
+    }
+}

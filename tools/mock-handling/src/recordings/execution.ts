@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
@@ -66,7 +66,7 @@ function loadDefinition(directory: string): [IExecutionDefinition, string] {
     if (calculatedFingerprint !== fingerprint) {
         logWarn(`The actual fingerprint ('${calculatedFingerprint}') of the execution definition stored in ${directory} does not match the directory in which it is stored. 
         If you created this definition manually then you do not have to worry about this warning. If this definition is supposed to be created
-        by automation (such as the write-exec-defs scripts) then it indicates manual tampering.`);
+        by automation (such as the populate-ref scripts) then it indicates manual tampering.`);
     }
 
     return [definition, calculatedFingerprint];

@@ -1,0 +1,86 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.d4c34b26002398d421754a19fe559390",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot -  - invisible",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "xaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                }
+            }
+        }
+    }
+}

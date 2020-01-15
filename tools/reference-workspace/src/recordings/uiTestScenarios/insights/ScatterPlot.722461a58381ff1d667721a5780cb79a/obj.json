@@ -1,0 +1,70 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.722461a58381ff1d667721a5780cb79a",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - Y axis min/max configuration",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "yaxis": {
+                    "min": "0.5",
+                    "max": "0.55"
+                },
+                "xaxis": {
+                    "min": "5000000",
+                    "max": "15000000"
+                }
+            }
+        }
+    }
+}

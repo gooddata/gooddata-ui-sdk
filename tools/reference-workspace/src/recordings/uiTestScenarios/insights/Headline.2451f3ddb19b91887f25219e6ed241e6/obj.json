@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "identifier": "Headline.2451f3ddb19b91887f25219e6ed241e6",
+        "visualizationUrl": "local:headline",
+        "title": "Headline - two measures with german separators",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "separators": {
+                    "thousand": ".",
+                    "decimal": ","
+                }
+            }
+        }
+    }
+}

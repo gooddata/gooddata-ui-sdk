@@ -1,0 +1,120 @@
+{
+    "insight": {
+        "identifier": "FunnelChart.af9e6b1d918c8fcfba1cfcf24ca4d7c1",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - assign color to measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                            "alias": "Calculated 'Lost' measure"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "colorPalette": [
+                    {
+                        "guid": "01",
+                        "fill": {
+                            "r": 195,
+                            "g": 49,
+                            "b": 73
+                        }
+                    },
+                    {
+                        "guid": "02",
+                        "fill": {
+                            "r": 168,
+                            "g": 194,
+                            "b": 86
+                        }
+                    },
+                    {
+                        "guid": "03",
+                        "fill": {
+                            "r": 243,
+                            "g": 217,
+                            "b": 177
+                        }
+                    },
+                    {
+                        "guid": "04",
+                        "fill": {
+                            "r": 194,
+                            "g": 153,
+                            "b": 121
+                        }
+                    },
+                    {
+                        "guid": "05",
+                        "fill": {
+                            "r": 162,
+                            "g": 37,
+                            "b": 34
+                        }
+                    }
+                ],
+                "colorMapping": [
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
+                    },
+                    {
+                        "color": {
+                            "type": "guid",
+                            "value": "05"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

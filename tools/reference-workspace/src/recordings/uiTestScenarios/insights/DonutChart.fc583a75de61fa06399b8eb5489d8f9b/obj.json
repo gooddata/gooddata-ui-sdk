@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "identifier": "DonutChart.fc583a75de61fa06399b8eb5489d8f9b",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart -  - middle",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "chart": {
+                    "verticalAlign": "middle"
+                }
+            }
+        }
+    }
+}

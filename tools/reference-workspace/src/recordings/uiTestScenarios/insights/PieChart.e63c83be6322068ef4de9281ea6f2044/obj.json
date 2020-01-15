@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "identifier": "PieChart.e63c83be6322068ef4de9281ea6f2044",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart -  - forced visible and german separators",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "dataLabels": {
+                    "visible": true
+                },
+                "separators": {
+                    "thousand": ".",
+                    "decimal": ","
+                }
+            }
+        }
+    }
+}

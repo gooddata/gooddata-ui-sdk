@@ -1,0 +1,65 @@
+{
+    "insight": {
+        "identifier": "LineChart.bed6a16cdca5f3c3c5950fc2d1fae0c7",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - Y axis min/max configuration",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "yaxis": {
+                    "min": "5000000",
+                    "max": "25000000"
+                }
+            }
+        }
+    }
+}

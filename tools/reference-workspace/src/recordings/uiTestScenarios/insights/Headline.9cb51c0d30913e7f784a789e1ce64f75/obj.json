@@ -1,0 +1,33 @@
+{
+    "insight": {
+        "identifier": "Headline.9cb51c0d30913e7f784a789e1ce64f75",
+        "visualizationUrl": "local:headline",
+        "title": "Headline - drilling on single measure with underlining disabled",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "disableDrillUnderline": true
+            }
+        }
+    }
+}

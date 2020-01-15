@@ -1,0 +1,86 @@
+{
+    "insight": {
+        "identifier": "LineChart.328a2ee40db06b43ffc954d068f0573a",
+        "visualizationUrl": "local:line",
+        "title": "LineChart -  - low",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "secondary_yaxis": {
+                    "measures": ["m_acugFHNJgsBy"],
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "xaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                }
+            }
+        }
+    }
+}

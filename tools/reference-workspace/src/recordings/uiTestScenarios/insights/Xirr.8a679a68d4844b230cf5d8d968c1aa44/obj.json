@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "identifier": "Xirr.8a679a68d4844b230cf5d8d968c1aa44",
+        "visualizationUrl": "local:xirr",
+        "title": "Xirr - semantically wrong measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abYgDBRagANw"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abYgDBRagANw"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "timeline.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {}
+    }
+}

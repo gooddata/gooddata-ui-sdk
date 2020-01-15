@@ -22,8 +22,8 @@
     },
     {
       "commandKind": "bulk",
-      "name": "write-exec-defs",
-      "summary": "Makes projects write definitions of executions to reference workspace. These definitions can then be executed and their results recorded in the reference workspace as well.",
+      "name": "populate-ref",
+      "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
       "safeForSimultaneousRushProcesses": true,
       "enableParallelism": true,
       "ignoreDependencyOrder": true,

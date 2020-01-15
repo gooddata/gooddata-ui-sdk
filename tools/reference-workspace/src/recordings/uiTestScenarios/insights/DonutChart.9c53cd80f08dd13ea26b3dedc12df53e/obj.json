@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "identifier": "DonutChart.9c53cd80f08dd13ea26b3dedc12df53e",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart -  - custom colors",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "colors": [
+                    "rgb(33, 41, 195)",
+                    "rgb(18, 194, 25)",
+                    "rgb(243, 56, 47)",
+                    "rgb(240, 239, 8)",
+                    "rgb(131, 131, 131)"
+                ]
+            }
+        }
+    }
+}

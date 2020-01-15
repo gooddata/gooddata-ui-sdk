@@ -1,0 +1,94 @@
+{
+    "insight": {
+        "identifier": "BarChart.fb6795f5fa9c039d38c60b490496ee2f",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart -  - low",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "secondary_xaxis": {
+                    "measures": ["m_acugFHNJgsBy"],
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "xaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "low"
+                    }
+                }
+            }
+        }
+    }
+}

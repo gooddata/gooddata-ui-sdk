@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "identifier": "PieChart.4ea28d14549562f476f1dbc3534c6804",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart -  - bottom",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "chart": {
+                    "verticalAlign": "bottom"
+                }
+            }
+        }
+    }
+}
