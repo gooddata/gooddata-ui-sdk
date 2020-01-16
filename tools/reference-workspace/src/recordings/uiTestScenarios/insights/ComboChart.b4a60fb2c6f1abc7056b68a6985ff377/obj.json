@@ -1,0 +1,86 @@
+{
+    "insight": {
+        "identifier": "ComboChart.b4a60fb2c6f1abc7056b68a6985ff377",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart -  - invisible",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "xaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "visible": false,
+                        "position": "middle"
+                    }
+                }
+            }
+        }
+    }
+}

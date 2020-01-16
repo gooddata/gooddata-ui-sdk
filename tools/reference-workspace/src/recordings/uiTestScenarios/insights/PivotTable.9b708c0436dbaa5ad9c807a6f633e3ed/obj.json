@@ -1,0 +1,78 @@
+{
+    "insight": {
+        "identifier": "PivotTable.9b708c0436dbaa5ad9c807a6f633e3ed",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - single measure pivot sorted by first row attr",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.department"
+                            },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "columns",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.product.id.name",
+                    "direction": "desc"
+                }
+            }
+        ],
+        "properties": {}
+    }
+}

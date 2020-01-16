@@ -1,0 +1,103 @@
+{
+    "insight": {
+        "identifier": "BubbleChart.cb4aa4879872bc84992ad6d0f2d70dd0",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - single axis - middle",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "xaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "middle"
+                    }
+                },
+                "yaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "middle"
+                    }
+                },
+                "secondary_xaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "middle"
+                    }
+                },
+                "secondary_yaxis": {
+                    "name": {
+                        "visible": true,
+                        "position": "middle"
+                    }
+                }
+            }
+        }
+    }
+}

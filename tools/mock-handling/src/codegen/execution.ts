@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
@@ -52,7 +52,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
     const recsWithVisAndScenario = flatMap(recordings, rec =>
         rec.scenarios.map<VisScenarioRecording>(s => [s.vis, s.scenario, rec]),
     );
-    const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, r => r[0]));
+    const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
 
     return {
         declarationKind: VariableDeclarationKind.Const,

@@ -660,7 +660,7 @@ export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): I
 //
 // @internal
 export class InsightDefinitionBuilder {
-    constructor(visClassUri: string);
+    constructor(visualizationUrl: string);
     // (undocumented)
     buckets: (buckets: IBucket[]) => InsightDefinitionBuilder;
     // (undocumented)
@@ -1158,7 +1158,7 @@ export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimen
 // Warning: (ae-internal-missing-underscore) The name "newInsightDefinition" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function newInsightDefinition(classUri: string, modifications?: InsightModifications): IInsightDefinition;
+export function newInsightDefinition(visualizationUrl: string, modifications?: InsightModifications): IInsightDefinition;
 
 // @public
 export function newMeasure(measure: ObjRef | Identifier, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;

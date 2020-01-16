@@ -1,0 +1,72 @@
+{
+    "insight": {
+        "identifier": "ComboChart.08f5d79508be933cf3c413ea2686e1d3",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - one primary and secondary measure with viewBy sorted by secondary measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "properties": {}
+    }
+}

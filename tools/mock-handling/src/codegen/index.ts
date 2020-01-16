@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import * as fs from "fs";
 import * as path from "path";
@@ -10,11 +10,13 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
-import { generateConstantsForExecutions } from "./execution";
-import { ExecutionRecording } from "../recordings/execution";
 import { IRecording, RecordingType } from "../recordings/common";
 import { DisplayFormRecording } from "../recordings/displayForms";
+import { ExecutionRecording } from "../recordings/execution";
+import { InsightRecording } from "../recordings/insights";
 import { generateConstantsForDisplayForms } from "./displayForm";
+import { generateConstantsForExecutions } from "./execution";
+import { generateConstantsForInsights } from "./insight";
 import groupBy = require("lodash/groupBy");
 
 const FILE_DIRECTIVES = ["/* tslint:disable:file-header */", "/* tslint:disable:variable-name */"];
@@ -49,15 +51,19 @@ function initialize(targetDir: string): TypescriptOutput {
     };
 }
 
+function recNameList(recs: IRecording[]): string {
+    return recs.map(r => r.getRecordingName()).join(",");
+}
+
 function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableStatementStructure> {
     const executionsInit = `executions: {${input
         .executions()
         .map(e => e.getRecordingName())
         .join(",")}}`;
-    const validElementsInit = `metadata: { displayForms: {${input
-        .displayForms()
-        .map(e => e.getRecordingName())
-        .join(",")}}}`;
+
+    const metadataInit = `metadata: { displayForms: {${recNameList(
+        input.displayForms(),
+    )}}, insights: { ${recNameList(input.insights())} } }`;
 
     return {
         declarationKind: VariableDeclarationKind.Const,
@@ -65,7 +71,7 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
         declarations: [
             {
                 name: MainIndexConstName,
-                initializer: `{ ${executionsInit}, ${validElementsInit} }`,
+                initializer: `{ ${executionsInit}, ${metadataInit} }`,
             },
         ],
     };
@@ -77,6 +83,7 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string): T
 
     sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
     sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
+    sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
     sourceFile.addVariableStatement(generateIndexConst(input));
 
     return output;
@@ -88,6 +95,7 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string): T
 type IndexGeneratorInput = {
     executions: () => ExecutionRecording[];
     displayForms: () => DisplayFormRecording[];
+    insights: () => InsightRecording[];
 };
 
 function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
@@ -99,6 +107,9 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
         },
         displayForms: () => {
             return (categorized[RecordingType.DisplayForms] as DisplayFormRecording[]) || [];
+        },
+        insights: () => {
+            return (categorized[RecordingType.Insights] as InsightRecording[]) || [];
         },
     };
 }

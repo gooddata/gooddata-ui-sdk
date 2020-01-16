@@ -1,0 +1,82 @@
+{
+    "insight": {
+        "identifier": "ComboChart.69ce871376cb9057da31db9cab353c00",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - column-line",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                            "alias": "Calculated 'Lost' measure"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                                        "m_acugFHNJgsBy"
+                                    ],
+                                    "operator": "ratio"
+                                }
+                            },
+                            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+                            "alias": "Ratio of Won and Lost"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "primaryChartType": "column",
+                "secondaryChartType": "line"
+            }
+        }
+    }
+}

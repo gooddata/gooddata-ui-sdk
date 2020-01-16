@@ -16,10 +16,7 @@ Progress and tasks are tracked in RAIL-1791.
 ### Getting started
 
 1.  Install nvm; for instance: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
-2.  Make sure Python2 and c++ compile toolchain are installed on your machine
-    These are needed to build native parts of the node-sass packages. If you do not have them installed then
-    the `rush install` will fail once it downloads all packages and tries to install them.
-3.  Clone and bootstrap
+2.  Clone and bootstrap
 
     ```bash
     git clone git@github.com:gooddata/gooddata-ui-sdk.git
@@ -30,11 +27,11 @@ Progress and tasks are tracked in RAIL-1791.
     rush install
     ```
 
-4.  Build: `rush build`
+3.  Build: `rush build`
 
 ### After you pull latest changes
 
-Always run `rush install`; this will make sure all the dependencies from the shrinkwrap file will be install in all
+Always run `rush install`; this will make sure all the dependencies from the shrinkwrap file will be installed in all
 the projects managed in the repository.
 
 In case the pull brings in new projects use `rush link --force` to ensure symlinks between dependent projects are
@@ -51,7 +48,7 @@ read the [official documentation](https://rushjs.io/pages/intro/welcome/).
 
 Long story short here are facts and commands you need to know:
 
--   lockfile (shrinkwrap file) is stored in pnpm-lock.yaml
+-   lockfile (shrinkwrap file) is stored in pnpm-lock.yaml.
 
 -   the [common](common) directory contains Rush and project configuration including:
 
@@ -59,23 +56,26 @@ Long story short here are facts and commands you need to know:
     -   [git hooks scripts](common/git-hooks) which will be automatically installed by Rush
     -   [custom scripts](common/scripts) that can be integrated into
 
--   `rush install` - installs dependencies according to the lock file
+-   `rush install` - installs dependencies according to the lock file.
 
 -   `rush update` - conservatively install dependencies describes in package.json files, update lockfile
-    This will only install / update dependencies that you have modified
+    This will only install / update dependencies that you have modified.
 
 -   `rush update --full` - install and update all dependencies according to the semver, update lockfile
     This is a more aggressive mode in which Rush will install and use latest applicable versions of packages, possibly
-    resulting in a massive change to the lockfile. There is no need to run this as part
+    resulting in a massive change to the lockfile. There is no need to run this as part of typical feature
+    development.
 
 -   `rush build` - builds all the projects, in the right order, possibly skipping those that have no changes since
     the last build.
 
--   `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository
+-   `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository.
 
--   `rush add` - adds a new dependency to a project
+-   `rush add` - adds a new dependency to a project.
 
 #### Bulk projects commands
+
+On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):
 
 | Command                | Description                                                                                                                                                                  |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -85,7 +85,6 @@ Long story short here are facts and commands you need to know:
 | `rush test-ci`         | Tests code in all projects in CI mode with coverage reporting.                                                                                                               |
 | `rush prettier-check`  | Verifies code formatting in all projects.                                                                                                                                    |
 | `rush prettier-write`  | Formats code in all projects.                                                                                                                                                |
-| `rush api-extractor`   | Runs api-extractor in all applicable sub projects.                                                                                                                           |
 | `rush write-exec-defs` | Makes projects write definitions of executions to reference workspace. These definitions can then be executed and their results recorded in the reference workspace as well. |
 
 > New multi project CLI commands can be defined in [command-line.json](common/config/rush/command-line.json) file.
@@ -134,7 +133,7 @@ consistent across subprojects. This is the default mode, if you run into technic
 
 #### How do I remove dependencies from a project?
 
-Simply remove the dependencies from package.json and then run `rush update --full`
+Remove the dependencies from package.json and then run `rush update`.
 
 #### How do I build stuff?
 
@@ -176,7 +175,7 @@ more information. Bear in mind the naming conventions described in the developer
 
 #### How do I describe my changes for the CHANGELOG?
 
-Simply run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
+Run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
 
 There will probably be a check step in the future that will make sure you ran the `rush change` command.
 

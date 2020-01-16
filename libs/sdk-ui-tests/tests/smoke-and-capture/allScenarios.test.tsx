@@ -4,10 +4,11 @@ import flatMap = require("lodash/flatMap");
 import unionBy = require("lodash/unionBy");
 import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
-import { defFingerprint } from "@gooddata/sdk-model";
+import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
+import SparkMD5 from "spark-md5";
 import allScenarios from "../../scenarios";
 import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
@@ -19,10 +20,13 @@ type AllScenariosType = [string, string, ScenarioTestInput<any>];
 type AnyComponentTest = ScenarioTestInput<any>;
 
 const StoreEnvVar = "GDC_STORE_DEFS";
-const StoreLocation = initializeStore(process.env[StoreEnvVar]);
+const ExecutionsDir = initializeStore(process.env[StoreEnvVar], "executions");
+const InsightsDir = initializeStore(process.env[StoreEnvVar], "insights");
 const DefinitionFileName = "definition.json";
 const RequestsFileName = "requests.json";
 const ScenariosFileName = "scenarios.json";
+const InsightIndexFileName = "insights.json";
+const InsightFileName = "obj.json";
 
 function toJsonString(obj: any): string {
     return JSON.stringify(obj, null, 4);
@@ -36,11 +40,13 @@ function readJsonSync(file: string): any {
     return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
 }
 
-function initializeStore(dir: string | undefined): string | undefined {
-    if (!dir) {
+function initializeStore(rootDir: string | undefined, subdir: string): string | undefined {
+    if (!rootDir) {
         // no store dir => no problem, definitions will not be stored
         return;
     }
+
+    const dir = path.join(rootDir, subdir);
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
@@ -103,7 +109,7 @@ function storeRequests(interactions: ChartInteractions, recordingDir: string): v
 function storeDefinition(interactions: ChartInteractions): string {
     const { triggeredExecution } = interactions;
     const fp = defFingerprint(triggeredExecution!);
-    const recordingDir = path.join(StoreLocation!, fp);
+    const recordingDir = path.join(ExecutionsDir!, fp);
 
     if (!fs.existsSync(recordingDir)) {
         fs.mkdirSync(recordingDir);
@@ -166,7 +172,7 @@ function storeScenarioDefinition(
     interactions: ChartInteractions,
     plugVizInteractions?: ChartInteractions,
 ) {
-    if (!StoreLocation) {
+    if (!ExecutionsDir) {
         return;
     }
 
@@ -176,9 +182,9 @@ function storeScenarioDefinition(
 
     if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution!)) {
         /*
-         * As-is, we react components and plug viz for the same bucket MAY to different executions
-         * due to plug viz automagically adding sorts (desired UX). different sorts in exec means different
-         * fingerprint. if that happens, make sure the exec definition for the plug viz variant of the
+         * As-is, react components and plug viz for the same bucket MAY lead to different executions
+         * due to plug viz auto-magically adding sorts (desired UX). different sorts in exec means different
+         * execution. if that happens, make sure the exec definition for the plug viz variant of the
          * scenario is also stored.
          */
         storeDefinition(plugVizInteractions!);
@@ -187,6 +193,45 @@ function storeScenarioDefinition(
     if (!scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta")) {
         storeScenarioMetadata(recordingDir, vis, scenario[ScenarioTestMembers.ScenarioName]);
     }
+}
+
+function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: IInsightDefinition) {
+    if (!InsightsDir) {
+        return;
+    }
+
+    const hasher = new SparkMD5();
+    const id = `${visName}.${hasher.append(JSON.stringify(def)).end()}`;
+    const persistentInsight: IInsight = { insight: { identifier: id, ...def.insight } };
+    const insightDir = path.join(InsightsDir!, id);
+
+    if (!fs.existsSync(insightDir)) {
+        fs.mkdirSync(insightDir);
+    }
+
+    writeAsJsonSync(path.join(insightDir, InsightFileName), persistentInsight);
+
+    const insightIndexFile = path.join(InsightsDir!, InsightIndexFileName);
+    const insightIndex = fs.existsSync(insightIndexFile) ? readJsonSync(insightIndexFile) : {};
+
+    /*
+     * Inclusion of scenario information in the insight recording definition makes the mock-handling tool
+     * to include the insight in Insight index - meaning the insight can be accessed programatically such
+     * as 'Insight.BarChart.TwoMeasures' etc.
+     */
+    const shouldIncludeScenario = !scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta");
+    const scenarioInfo = shouldIncludeScenario
+        ? { visName, scenarioName: scenario[ScenarioTestMembers.ScenarioName] }
+        : {};
+
+    insightIndex[id] = {
+        ...scenarioInfo,
+        comment: `Auto-generated insight for test scenario ${insightTitle(def)}.`,
+    };
+
+    writeAsJsonSync(insightIndexFile, insightIndex);
+
+    return;
 }
 
 describe("all scenarios", () => {
@@ -228,5 +273,7 @@ describe("all scenarios", () => {
         } else {
             storeScenarioDefinition(vis, scenario, interactions);
         }
+
+        storeInsight(vis, scenario, insight);
     });
 });

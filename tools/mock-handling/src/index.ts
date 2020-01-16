@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import program from "commander";
 import ora from "ora";
 import chalk from "chalk";
@@ -20,6 +20,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { IRecording } from "./recordings/common";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
+import { discoverInsightRecordings } from "./recordings/insightsRepository";
 
 program
     .version(pkg.version)
@@ -150,6 +151,7 @@ async function run() {
     const recordings = [
         ...(await discoverExecutionRecordings(absoluteRecordingDir)),
         ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
+        ...(await discoverInsightRecordings(absoluteRecordingDir)),
     ];
     const incompleteRecordings = recordings.filter(e => !e.isComplete());
 

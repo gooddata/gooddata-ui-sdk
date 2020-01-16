@@ -1,0 +1,42 @@
+{
+    "insight": {
+        "identifier": "Xirr.b6db91e7e010141f9602b4423a66f570",
+        "visualizationUrl": "local:xirr",
+        "title": "Xirr - correct config",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aadpHDMBecIy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aadpHDMBecIy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "timeline.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {}
+    }
+}

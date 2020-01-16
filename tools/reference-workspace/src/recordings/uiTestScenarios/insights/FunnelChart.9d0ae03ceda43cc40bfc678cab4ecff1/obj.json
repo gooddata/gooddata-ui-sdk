@@ -1,0 +1,109 @@
+{
+    "insight": {
+        "identifier": "FunnelChart.9d0ae03ceda43cc40bfc678cab4ecff1",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - assign color to attributes",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "colorPalette": [
+                    {
+                        "guid": "01",
+                        "fill": {
+                            "r": 195,
+                            "g": 49,
+                            "b": 73
+                        }
+                    },
+                    {
+                        "guid": "02",
+                        "fill": {
+                            "r": 168,
+                            "g": 194,
+                            "b": 86
+                        }
+                    },
+                    {
+                        "guid": "03",
+                        "fill": {
+                            "r": 243,
+                            "g": 217,
+                            "b": 177
+                        }
+                    },
+                    {
+                        "guid": "04",
+                        "fill": {
+                            "r": 194,
+                            "g": 153,
+                            "b": 121
+                        }
+                    },
+                    {
+                        "guid": "05",
+                        "fill": {
+                            "r": 162,
+                            "g": 37,
+                            "b": 34
+                        }
+                    }
+                ],
+                "colorMapping": [
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
+                    },
+                    {
+                        "color": {
+                            "type": "rgb",
+                            "value": {
+                                "r": 255,
+                                "g": 0,
+                                "b": 0
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,7 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import fs = require("fs");
 import pick = require("lodash/pick");
+import isEmpty = require("lodash/isEmpty");
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and
@@ -14,6 +15,7 @@ export type RecordingIndexEntry = {
 export enum RecordingType {
     Execution = "execution",
     DisplayForms = "displayForms",
+    Insights = "insights",
 }
 
 /**
@@ -72,4 +74,8 @@ export function writeAsJsonSync(file: string, obj: any, keys?: string[]) {
 
 export function readJsonSync(file: string): any {
     return JSON.parse(fs.readFileSync(file, { encoding: "utf-8" }));
+}
+
+export function isNonNullRecording(rec: any | null): rec is IRecording {
+    return !isEmpty(rec) && (rec as IRecording).directory !== undefined;
 }

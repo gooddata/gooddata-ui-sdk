@@ -129,20 +129,22 @@ Note: visual regression tests will fail if you run them before capturing executi
 
 Note: visual regression tests will fail if you run them before capturing execution definition and data recordings.
 
-### Capturing execution definitions and execution recordings
+### Capturing recording definitions and recordings
 
-Execution definitions and the recordings are accumulated in the reference-workspace project. This is intended to be a
+Recording definitions and the recordings are accumulated in the reference-workspace project. This is intended to be a
 single source of all recordings done on top of the UI Reference Workspace.
 
-Execution definitions for visualizations being tested here can be captured using the specialized 'smoke-and-capture'
-test suite. This test suite takes all scenarios and renders the components using a backend instrumented to capture
-the definitions. This test suite is intentionally excluded from the main test runs and has to be triggered
-manually: `npm run write-exec-defs` or using `rush write-exec-defs` (this works from anywhere)
+Execution definitions and insight definitions for test scenarios included in this project can be captured and stored
+in reference-workspace using the specialized 'smoke-and-capture test suite. This test suite takes all scenarios and
+renders the components using a backend instrumented to capture the definitions.
+
+This test suite is intentionally excluded from the main test runs and has to be triggered manually:
+`npm run populate-ref` or using `rush populate-ref` (this works from anywhere)
 
 This command will execute the 'smoke-and-capture' suite that will store execution definitions in the reference-workspace
 project.
 
-After this, you can navigate to the **reference-workspace** project and execute: `./bin/refresh-recordings.sh`
+After this, you can navigate to the **reference-workspace** project and execute: `npm run refresh-recordings`
 
 ### TL;DR
 

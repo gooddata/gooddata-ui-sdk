@@ -1,0 +1,72 @@
+{
+    "insight": {
+        "identifier": "BarChart.1cf330f13c2cc2f65ca59cbd90588fc9",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - viewBy date and PoP measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "popMeasureDefinition": {
+                                    "measureIdentifier": "m_acugFHNJgsBy",
+                                    "popAttribute": {
+                                        "identifier": "closed.year"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                            "alias": "Won Last Year"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {}
+    }
+}

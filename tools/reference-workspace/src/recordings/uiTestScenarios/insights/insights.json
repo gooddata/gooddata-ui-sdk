@@ -1,0 +1,1710 @@
+{
+    "AreaChart.e80bf4ebc24cbc39d86ca97282172fcf": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure."
+    },
+    "AreaChart.bd511d3c202d84ee031c1bce941d8836": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy."
+    },
+    "AreaChart.e358d37eb4c795329cc38a452119a27f": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with viewBy and stackBy",
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy."
+    },
+    "AreaChart.9cb0f16b2c1490701cf6c6eb97a0a19b": {
+        "visName": "AreaChart",
+        "scenarioName": "single measure with two viewBy",
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with two viewBy."
+    },
+    "AreaChart.bafd3a2033d8b1a777545d3405366577": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy",
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy."
+    },
+    "AreaChart.8f53367f6a190fef81bbac91f75d6774": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with undefined values",
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with undefined values."
+    },
+    "AreaChart.4a5648d301e9433dd86f29b018d07c24": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by attribute."
+    },
+    "AreaChart.99ca17d14477cb944ab717b2fbb689c2": {
+        "visName": "AreaChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy sorted by measure."
+    },
+    "AreaChart.9dcc2062144882efb08dd9860c609e62": {
+        "visName": "AreaChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario AreaChart - arithmetic measures."
+    },
+    "AreaChart.c6ffab0eb08c78513374575ee10d9c93": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - auto legend."
+    },
+    "AreaChart.32e528c4a283ab4afcc214309b97506f": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - legend on left."
+    },
+    "AreaChart.92dbb5481c227177f2786bce02de505b": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - legend on right."
+    },
+    "AreaChart.afddb318a5977bae8f097791ca639c4d": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - legend on top."
+    },
+    "AreaChart.15d188810039ba9f67578f7926187b7f": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - legend at bottom."
+    },
+    "AreaChart.577284c516c2dfd1fdc1117a3a165491": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - disabled."
+    },
+    "AreaChart.2ab81ea704ce59feb1a8fe79b960e244": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - default."
+    },
+    "AreaChart.a643e9ea1394bf9871510b261e363b4a": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - auto visibility."
+    },
+    "AreaChart.29bf90bb4df75ba62c8be684872c3e1f": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - forced visible."
+    },
+    "AreaChart.8e81990d3eddb6341a7c359f617eb18d": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - forced visible and german separators."
+    },
+    "AreaChart.76c6875b6b4d66d31d4d243569b4b418": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - forced hidden."
+    },
+    "AreaChart.7c8f85ce9aca223fc026f6ddae2230ff": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - custom palette."
+    },
+    "AreaChart.1e0fac34e883da83a93b212a6e5583ad": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - custom colors."
+    },
+    "AreaChart.891d16ea202843deffaf406f346cc38e": {
+        "comment": "Auto-generated insight for test scenario AreaChart -  - custom palette preferred over colors."
+    },
+    "AreaChart.d50b93f94e8bec5cfd2cc4b94ae93cb5": {
+        "comment": "Auto-generated insight for test scenario AreaChart - Y axis configuration."
+    },
+    "AreaChart.1b19902bea8c84fa7a53d720dd73db77": {
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and disabled stacking."
+    },
+    "AreaChart.ef26e9113f76136f70ce3c0d80f9eeda": {
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and enabled stacking."
+    },
+    "AreaChart.683e650911406a55196afdaa5721b5f4": {
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and disabled stack measures."
+    },
+    "AreaChart.0c5e761f994ace4b6f1075d5202114fe": {
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and enabled stack measures."
+    },
+    "AreaChart.db17fb0e64312a4195fcd466ebaa71f3": {
+        "comment": "Auto-generated insight for test scenario AreaChart - two measures with viewBy and stack measures to percent."
+    },
+    "AreaChart.1b9f721a9142e5cdb64d08710afaa40b": {
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and stack to percent."
+    },
+    "AreaChart.43e4d2a74dd8fa5b9b8cf943cbb92896": {
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and stack to percent with labels."
+    },
+    "AreaChart.f893670d3d00cee219436f2b3309e3d2": {
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and disabled stacking."
+    },
+    "AreaChart.898e1e55d1b1c08bfa0ff56c0add5582": {
+        "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stack to percent."
+    },
+    "AreaChart.d6ae1f92cc6162c60bcb6908b8edfc5e": {
+        "comment": "Auto-generated insight for test scenario AreaChart - undefined values and disabled stacking."
+    },
+    "BarChart.4196e82136666d47bd3eba69e4efc08b": {
+        "visName": "BarChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario BarChart - single measure."
+    },
+    "BarChart.aea2baaf3c17ea4192caf713064ea511": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario BarChart - single measure with viewBy."
+    },
+    "BarChart.14cd08471789cc1d023e0ee3fd2d8403": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with viewBy and stackBy",
+        "comment": "Auto-generated insight for test scenario BarChart - single measure with viewBy and stackBy."
+    },
+    "BarChart.03285d3957e7dca0e025403e3f47c077": {
+        "visName": "BarChart",
+        "scenarioName": "single measure with two viewBy and stack",
+        "comment": "Auto-generated insight for test scenario BarChart - single measure with two viewBy and stack."
+    },
+    "BarChart.56b46641d4d69113e8073f60f6408a7c": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy."
+    },
+    "BarChart.b8e7b0e68fd150ed874280cdcb3d89b8": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with two viewBy",
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with two viewBy."
+    },
+    "BarChart.bd1380555e9e2369f9936cdc08865e6e": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with two viewBy, filtered to single value",
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with two viewBy, filtered to single value."
+    },
+    "BarChart.b048b67226580f5fc190ce98f1840b2e": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy sorted by attribute."
+    },
+    "BarChart.6732aa7d36279ecc1f7e45f057fef40f": {
+        "visName": "BarChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with viewBy sorted by measure."
+    },
+    "BarChart.1cf330f13c2cc2f65ca59cbd90588fc9": {
+        "visName": "BarChart",
+        "scenarioName": "viewBy date and PoP measure",
+        "comment": "Auto-generated insight for test scenario BarChart - viewBy date and PoP measure."
+    },
+    "BarChart.15fc97b28b625488f50ef9788b4bebfa": {
+        "visName": "BarChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario BarChart - arithmetic measures."
+    },
+    "BarChart.0d9da93ffe3fdbac288331046c047d53": {
+        "comment": "Auto-generated insight for test scenario BarChart - X axis min/max configuration."
+    },
+    "BarChart.25884e96e5cc6c754b8d776b4a9a0129": {
+        "comment": "Auto-generated insight for test scenario BarChart - X axis on top."
+    },
+    "BarChart.239ce9500e3d7a6db4ac53682b9cac3b": {
+        "comment": "Auto-generated insight for test scenario BarChart - dual axis with one top measure and three bottom."
+    },
+    "BarChart.41aa01b2ae0aaa417af16f3ada94a1e6": {
+        "comment": "Auto-generated insight for test scenario BarChart - dual axis when two viewBy attributes."
+    },
+    "BarChart.eceefd6190a0fac2fb44fb2db51c488b": {
+        "comment": "Auto-generated insight for test scenario BarChart - Y axis rotation."
+    },
+    "BarChart.ef3048ffb3a47892ed56af22acb484f4": {
+        "comment": "Auto-generated insight for test scenario BarChart - Y axis invisible."
+    },
+    "BarChart.702bf4288b19a0cde1a4a606570c13e7": {
+        "comment": "Auto-generated insight for test scenario BarChart - X axis on top with two viewBy attributes."
+    },
+    "BarChart.aaa5c2eec70d26e7715fa93c7f7331fa": {
+        "comment": "Auto-generated insight for test scenario BarChart - single axis - low."
+    },
+    "BarChart.3407c696681e3a4d25e14972f30e693c": {
+        "comment": "Auto-generated insight for test scenario BarChart - single axis - middle."
+    },
+    "BarChart.aaca62f5249e6233667448d2bcfbaf47": {
+        "comment": "Auto-generated insight for test scenario BarChart - single axis - high."
+    },
+    "BarChart.159c8a799b36550e5ef6974ccfc0a735": {
+        "comment": "Auto-generated insight for test scenario BarChart - single axis - invisible."
+    },
+    "BarChart.fb6795f5fa9c039d38c60b490496ee2f": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - low."
+    },
+    "BarChart.5371e02f0c02aa046e7e1ea80938f370": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - middle."
+    },
+    "BarChart.b02409694f82ae2a6a451db14b2dc17a": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - high."
+    },
+    "BarChart.5d1473e880a4bb2d7c2230f856681d65": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - invisible."
+    },
+    "BarChart.9a56186ab6b21214c999f0c79e8403f3": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - 90."
+    },
+    "BarChart.40e154c44db99996da8545700516a3ad": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - -90."
+    },
+    "BarChart.b5cc2dabfad4b3e7c479261db4bef190": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - 60."
+    },
+    "BarChart.de0a537347ac657f14b93b53517a929e": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - -60."
+    },
+    "BarChart.73b0764d08107db0c1bcece140a9df1a": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - default."
+    },
+    "BarChart.1f6150213e30d3ce5ede919a27ea6a64": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - custom palette."
+    },
+    "BarChart.2d7bf6f612d54b552e2e63059b94dff9": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - custom colors."
+    },
+    "BarChart.fdc022f1cd4b218eee9bfcb2c5a26ede": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - custom palette preferred over colors."
+    },
+    "BarChart.9d3dc5f2247277a191f569bcbffba66b": {
+        "comment": "Auto-generated insight for test scenario BarChart - assign color to measures."
+    },
+    "BarChart.c9ce4cc8b2f8af6e83c77c6018e2ca98": {
+        "comment": "Auto-generated insight for test scenario BarChart - assign color to master measure impacts derived PoP."
+    },
+    "BarChart.8ae863948cbb4b83ed52bc65587f4240": {
+        "comment": "Auto-generated insight for test scenario BarChart - assign color to attribute element stack."
+    },
+    "BarChart.97b5a21a3f910ad5563bb885439fca84": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - auto legend."
+    },
+    "BarChart.7cb2793d2c58a593a9b07ae9991e4fbf": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - legend on left."
+    },
+    "BarChart.d91c8373db78f9bf712cb13a284e0e6e": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - legend on right."
+    },
+    "BarChart.ddfc7f57df4ea3125e83da4de5c432ff": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - legend on top."
+    },
+    "BarChart.d334edde1d11ea095277e589e92a085a": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - legend at bottom."
+    },
+    "BarChart.9fa7968e8086384d428c19cbe8fdeb13": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - disabled."
+    },
+    "BarChart.3ebdca270d6f2c8598994e680b0967e9": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - auto visibility."
+    },
+    "BarChart.265a7da0e2b6fcd5e2dc8564e441a695": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - forced visible."
+    },
+    "BarChart.0bbe8bfb9ea1f10ee142cf3bd02c31c5": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - forced visible and german separators."
+    },
+    "BarChart.094d6553511fd0d52d1ca43905b99c54": {
+        "comment": "Auto-generated insight for test scenario BarChart -  - forced hidden."
+    },
+    "BarChart.79026bd19246da2c09082634cddd0640": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy with stackMeasures."
+    },
+    "BarChart.1bed188b055207502820e92fdeddbd91": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy with stackMeasuresToPercent."
+    },
+    "BarChart.b9e8996e57a79ece98be60f62567b704": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy with top axis and stackMeasuresToPercent."
+    },
+    "BarChart.29d05ece2f71673f8a5960dd1d397107": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with dual axis ignores stack measures."
+    },
+    "BarChart.99feb79b82e1241f1a4bf53b63a30d19": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures with dual axis and stack measures to 100%."
+    },
+    "BarChart.989d3661b5e527e79174f6e089f7f1ca": {
+        "comment": "Auto-generated insight for test scenario BarChart - stack measures and dual axis."
+    },
+    "BarChart.0495745808145ce1e3042035421c01c5": {
+        "comment": "Auto-generated insight for test scenario BarChart - stack measures to 100% and dual axis."
+    },
+    "BarChart.1fcb23ad081fea491b35dc43c272bf41": {
+        "comment": "Auto-generated insight for test scenario BarChart - stack measures to 100% with dual axis and axis min/max."
+    },
+    "BarChart.8747caed9c33982b2d5a0cb58750effc": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure ignores stack measures."
+    },
+    "BarChart.160136c2c39f5003f04a503018e7dd6b": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure with stack to 100%."
+    },
+    "BarChart.47464316b11d457b28cc56fadc3fb882": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure and viewBy with drilling on bars."
+    },
+    "BarChart.5455613df0e93b26b3335e9a66b37835": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure and two viewBy with drilling on parent attribute."
+    },
+    "BarChart.a5e11f3d074f9582e069c028010c8e57": {
+        "comment": "Auto-generated insight for test scenario BarChart - force disable drill on axes."
+    },
+    "BarChart.fe3f92aa46afbac9b637767ff5e884cb": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure and two viewBy with drilling on child attribute."
+    },
+    "BarChart.dfe8ec526fe565b0a59e53ac0c0027fb": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy, dual axis, with drilling on child attribute."
+    },
+    "BarChart.a8880aafc5fa6bd8c30d541564c6b9be": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy, dual axis, with drilling on parent attribute."
+    },
+    "BarChart.ecfaf31b9211c5e64692115b46a1d5ee": {
+        "comment": "Auto-generated insight for test scenario BarChart - two measures and two viewBy, dual axis, with drilling on parent and child attribute."
+    },
+    "BarChart.0b5edeaa646a086efd0397d561afd047": {
+        "comment": "Auto-generated insight for test scenario BarChart - single measure, two viewBy and stacking with drilling on parent."
+    },
+    "BubbleChart.83d07c07a4f59faa75a2fb707eed81f0": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis measure",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x axis measure."
+    },
+    "BubbleChart.cb1c86bb70814a82dfa28fce5df21a1a": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis measure with viewBy",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x axis measure with viewBy."
+    },
+    "BubbleChart.041a8962d16d5e65649d3a501de2d8bf": {
+        "visName": "BubbleChart",
+        "scenarioName": "x axis and size measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x axis and size measures with viewBy."
+    },
+    "BubbleChart.d398669fbe2387eb0a4d054a009b094a": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis measures with viewBy."
+    },
+    "BubbleChart.21387681756cbfe1ead550f506023852": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis and size measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy."
+    },
+    "BubbleChart.b370e338e087675a2a7ab75d07174f49": {
+        "visName": "BubbleChart",
+        "scenarioName": "arithmetic measure",
+        "comment": "Auto-generated insight for test scenario BubbleChart - arithmetic measure."
+    },
+    "BubbleChart.674ef3ec57b8ee733233ee6a8fd92737": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis and size measures with viewBy and sorted by attr",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy and sorted by attr."
+    },
+    "BubbleChart.7affa6f83768a44ccdcb2aecf9c58f1f": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - X axis min/max configuration."
+    },
+    "BubbleChart.1c5cf7db407c0159784e353e21776ee1": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - Y axis min/max configuration."
+    },
+    "BubbleChart.f54738aca0f6145d5f7a25bfd5bd3450": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - Y axis max only configuration."
+    },
+    "BubbleChart.51d13bfd8036c65bf92feb6b8156c7af": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - X axis max only configuration."
+    },
+    "BubbleChart.dee05e8950f976db101fc75197541edc": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - X and Y axis min/max configuration."
+    },
+    "BubbleChart.86fc195642950c70b20421be40d080f9": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - single axis - low."
+    },
+    "BubbleChart.cb4aa4879872bc84992ad6d0f2d70dd0": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - single axis - middle."
+    },
+    "BubbleChart.770cf1515a5431743b40a2c120e46909": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - single axis - high."
+    },
+    "BubbleChart.4650fa1220d893cfd851438d1d6859fa": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - single axis - invisible."
+    },
+    "BubbleChart.5b28d2e252edf0f5461e00ea2710c1ed": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - default."
+    },
+    "BubbleChart.fa9d047368e35eaf92cdcd08494a3db6": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - custom palette."
+    },
+    "BubbleChart.a6ee8802a2a4a786bc3296251cd42699": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - custom colors."
+    },
+    "BubbleChart.a814751597cf4b3bba41be68318c42e2": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - custom palette preferred over colors."
+    },
+    "BubbleChart.663d358122bb388562cefbd1ff22cee5": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - assign color to attribute bubbles."
+    },
+    "BubbleChart.a7bd540f135b2cada844ea020080bfb7": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - auto legend."
+    },
+    "BubbleChart.e59b93cafdfa58c51b19c712e935ff78": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - legend on left."
+    },
+    "BubbleChart.013e16010d3e8e24cb5908cce83aa667": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - legend on right."
+    },
+    "BubbleChart.463bddb6daf4f3f3888777570fb4ddca": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - legend on top."
+    },
+    "BubbleChart.2f91458b8b54e561e6eb29c06ac6a0de": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - legend at bottom."
+    },
+    "BubbleChart.8b8f2ed615398879b6db7bc40f15d92d": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - disabled."
+    },
+    "BubbleChart.248af7d53b75c77a95198474381aaad7": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - auto visibility."
+    },
+    "BubbleChart.dbe457745e39208e9a2c29b1584a5ed8": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - forced visible."
+    },
+    "BubbleChart.8d3262766a8fbab6ef4152113c49618a": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - forced visible and german separators."
+    },
+    "BubbleChart.c3721ea72e2ec30a0dda996322ddbe08": {
+        "comment": "Auto-generated insight for test scenario BubbleChart -  - forced hidden."
+    },
+    "ColumnChart.3a6db700118d1eb8ddc35e02c58061b3": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure."
+    },
+    "ColumnChart.9f6c2ae4f09edc06f4367b94eda36f64": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy."
+    },
+    "ColumnChart.9ae1ebbf000345f50a13e17f5b999b16": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy and stackBy",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy and stackBy."
+    },
+    "ColumnChart.41bf42ba68d58785f32635d0f6b72954": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with viewBy and stackBy filtered to single stack",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy and stackBy filtered to single stack."
+    },
+    "ColumnChart.39f08190cd283a0108e2a9132ba67873": {
+        "visName": "ColumnChart",
+        "scenarioName": "single measure with two viewBy and stack",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure with two viewBy and stack."
+    },
+    "ColumnChart.4eb138f02825ff9279767ced883846e1": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures."
+    },
+    "ColumnChart.9b0669c8dddc725f1d7048a8f8ed6786": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy",
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy."
+    },
+    "ColumnChart.7c9baf0accff045e028f98345a6d051f": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with two viewBy",
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with two viewBy."
+    },
+    "ColumnChart.f8745667793247cc50849dcd650ed857": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy sorted by attribute",
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy sorted by attribute."
+    },
+    "ColumnChart.fab6a568999ee1038e9602f70b1dfdc2": {
+        "visName": "ColumnChart",
+        "scenarioName": "two measures with viewBy sorted by measure",
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with viewBy sorted by measure."
+    },
+    "ColumnChart.bf97b3485ae42116f54627a32db3d879": {
+        "visName": "ColumnChart",
+        "scenarioName": "viewBy date and PoP measure",
+        "comment": "Auto-generated insight for test scenario ColumnChart - viewBy date and PoP measure."
+    },
+    "ColumnChart.4184b8098761c70a3660d90edc2cc510": {
+        "visName": "ColumnChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario ColumnChart - arithmetic measures."
+    },
+    "ColumnChart.24579a56dade52531f97d9b35ceb70df": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - Y axis min/max configuration."
+    },
+    "ColumnChart.71e8e37f6edbe57342339fc8a3b25655": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - Y axis on right."
+    },
+    "ColumnChart.e4061e6e01397c22e18c098106c67fff": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - no gridline."
+    },
+    "ColumnChart.37347efba18c8e47be2c7029d2793dcd": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with one right measure and three left."
+    },
+    "ColumnChart.ee0374b6436033ce4fad4dde9b815c81": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with right axis labels rotated."
+    },
+    "ColumnChart.da027e137e95c7688878869fd32df184": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with hidden right Y axis."
+    },
+    "ColumnChart.4c5201e46fddfcb2375caa5b33f511da": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with no labels on right Y axis."
+    },
+    "ColumnChart.813e34e2c45ed034868145077c428c17": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dual axis when two viewBy attributes."
+    },
+    "ColumnChart.a66268eb21fe0bb50fb9b39adcf665d2": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - X axis rotation."
+    },
+    "ColumnChart.162c612708db961c7baebbfc2f399f5d": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - X axis invisible."
+    },
+    "ColumnChart.e7a7381c4e118d953e585b04269ad7ad": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - X and Y axis invisible."
+    },
+    "ColumnChart.6e254dbc4c323c88d5955c884bb9a9ea": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - Y axis on right with two viewBy attributes."
+    },
+    "ColumnChart.442d428a923a105f44e294262b3567de": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single axis - low."
+    },
+    "ColumnChart.9bb9a73eda543bc9a6fee3739f46079e": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single axis - middle."
+    },
+    "ColumnChart.c1edeca4a5cb824824ae74a6daec048a": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single axis - high."
+    },
+    "ColumnChart.12dcaff8642774c290836ea9a9f7009a": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single axis - invisible."
+    },
+    "ColumnChart.fc843d8708457d216846342361b97f4e": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - low."
+    },
+    "ColumnChart.ff7fa32366938d757bd0b658ffcbb650": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - middle."
+    },
+    "ColumnChart.2998c4f7fd421a9f6d5dc86e92431513": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - high."
+    },
+    "ColumnChart.70a6c1b8ae8cde55e28d2ad929221904": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - invisible."
+    },
+    "ColumnChart.cbdc870e6c452d09051426741cd712a2": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - default."
+    },
+    "ColumnChart.ea6b9625b3cb479b5eb6fcdb3cccdd66": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - custom palette."
+    },
+    "ColumnChart.cd92db6ee1ac2429ab9240922f1dc4f9": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - custom colors."
+    },
+    "ColumnChart.b18d36fd874b9c278578ecec65e5fd8e": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - custom palette preferred over colors."
+    },
+    "ColumnChart.2469212ce0ae3f4add1d1da0c6993a72": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to measures."
+    },
+    "ColumnChart.47eda02949d13d1c0b6708b194370de1": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to master measure impacts derived PoP."
+    },
+    "ColumnChart.2dd00d6038125bea38c463a179728be5": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to attribute element stack."
+    },
+    "ColumnChart.78fe7302a3cdbfea7df1250afcacae5d": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - auto legend."
+    },
+    "ColumnChart.3187b74b7ea89a79a5e708dff634a75b": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - legend on left."
+    },
+    "ColumnChart.46cbb12e90846ecc4f84d12c944eb31d": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - legend on right."
+    },
+    "ColumnChart.878f70f29b84a2fb87846ca346dae3c0": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - legend on top."
+    },
+    "ColumnChart.7282887977d42d07f99b532677b2f735": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - legend at bottom."
+    },
+    "ColumnChart.08e48c82ec523bb18a83bffba21ac123": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - disabled."
+    },
+    "ColumnChart.800f140e77b133639e882bb68f9246f9": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - auto visibility."
+    },
+    "ColumnChart.071d314da6ad8f9b55eefed174d13758": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - forced visible."
+    },
+    "ColumnChart.66ffb16b989ce67bb85fcc154ed1fb11": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - forced visible and german separators."
+    },
+    "ColumnChart.0c6f75e41234b2f9de5e28a5e77d4c9d": {
+        "comment": "Auto-generated insight for test scenario ColumnChart -  - forced hidden."
+    },
+    "ColumnChart.985324afdc12dc8170841448df2910be": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure and viewBy with drilling on bars."
+    },
+    "ColumnChart.dfa41d2c25f188355cf8904d0a8eb8b5": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure and two viewBy with drilling on parent attribute."
+    },
+    "ColumnChart.ca159ab2b852e9cafaf5a067a21bdd6a": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - force disable drill on axes."
+    },
+    "ColumnChart.b901b8b9652a25f15aaa86c2a3bb6eff": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure and two viewBy with drilling on child attribute."
+    },
+    "ColumnChart.35202bf040ea098a6b7546ac7cecc1e7": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy, dual axis, with drilling on child attribute."
+    },
+    "ColumnChart.cc73c70471bbdf1c2e9d22ffb23f7fe2": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy, dual axis, with drilling on parent attribute."
+    },
+    "ColumnChart.fc8580ffc53d64620c2053d8d6843333": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy, dual axis, with drilling on parent and child attribute."
+    },
+    "ColumnChart.897967b521eb654b7a52a37c9628ac20": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure, two viewBy and stacking with drilling on parent."
+    },
+    "ColumnChart.91a11d792bddc1fe6245ba43f2c8c30c": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure, two viewBy and stacking with drilling on child."
+    },
+    "ColumnChart.c12baa6b0797572268a61f2ebe6e582c": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy with stackMeasures."
+    },
+    "ColumnChart.137fefab9235076b59e445dce8588cb9": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy with stackMeasuresToPercent."
+    },
+    "ColumnChart.c1bc51e107796a977784979c059f7444": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy with right axis and stackMeasuresToPercent."
+    },
+    "ColumnChart.ff817fc30e075e021cec1729fee18114": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with dual axis ignores stack measures."
+    },
+    "ColumnChart.7a5586a0b09cfe80fde1e3de9f799aa0": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - two measures with dual axis and stack measures to 100%."
+    },
+    "ColumnChart.5eb23909940ee09c149b1f5c647cba5e": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - stack measures and dual axis."
+    },
+    "ColumnChart.6db8850529f9f4c507678d3a4f48ebcd": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - stack measures to 100% and dual axis."
+    },
+    "ColumnChart.b4032aa49fa904641b9fdbba563ef6b3": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - stack measures to 100% with dual axis and axis min/max."
+    },
+    "ColumnChart.fe25c84a5f0d33efe2e3639a1ff2f4da": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure ignores stack measures."
+    },
+    "ColumnChart.40f2f463c5e91d7c5e69199dfd18442f": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - single measure with stack to 100%."
+    },
+    "ComboChart.ca1e539d588f813e9ca0d328a0c785f6": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary measure",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary measure."
+    },
+    "ComboChart.2ae2157df661ce59c07fee006f144f82": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary measure with viewBy."
+    },
+    "ComboChart.ea057ed74c0fe3c3493b6317b011fd4b": {
+        "visName": "ComboChart",
+        "scenarioName": "two secondary measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - two secondary measure with viewBy."
+    },
+    "ComboChart.91f72493224f356a0984dc2313dfa98f": {
+        "visName": "ComboChart",
+        "scenarioName": "one secondary measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - one secondary measure with viewBy."
+    },
+    "ComboChart.10009853681fd157ddad638f3420674b": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure no viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure no viewBy."
+    },
+    "ComboChart.a5b5972f08043c7ad8e8a7314718db21": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by attr",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by attr."
+    },
+    "ComboChart.78c0d7479f0c79e5a84e6679521e823e": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by primary measure",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by primary measure."
+    },
+    "ComboChart.08f5d79508be933cf3c413ea2686e1d3": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy sorted by secondary measure",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy sorted by secondary measure."
+    },
+    "ComboChart.19a75d709f0a29f6d554da3fd8947c12": {
+        "visName": "ComboChart",
+        "scenarioName": "one primary and secondary measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - one primary and secondary measure with viewBy."
+    },
+    "ComboChart.c907334c4ab5f3059bdfac4050ed8266": {
+        "visName": "ComboChart",
+        "scenarioName": "multiple primary and secondary measures with viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - multiple primary and secondary measures with viewBy."
+    },
+    "ComboChart.be9798f64150071c10a578ff3b11de6b": {
+        "visName": "ComboChart",
+        "scenarioName": "multiple measures and no viewBy",
+        "comment": "Auto-generated insight for test scenario ComboChart - multiple measures and no viewBy."
+    },
+    "ComboChart.3e965dfa84bd6b2137df4f8ce9079435": {
+        "visName": "ComboChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario ComboChart - arithmetic measures."
+    },
+    "ComboChart.856af2a1602b2818dc0ae016ca36860e": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-column."
+    },
+    "ComboChart.225af0c383a8ff79cffd2060b047d2d5": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-area."
+    },
+    "ComboChart.04058c3e902d15504e4db57bd98f0fa9": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-line."
+    },
+    "ComboChart.fd578d8a3b901d470f56b44467ba9727": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-line."
+    },
+    "ComboChart.64ba95adb1f79ec8c918dbf006428225": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-column."
+    },
+    "ComboChart.6d7e4b1e0a1ba87a0568c74ab08eb401": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-area."
+    },
+    "ComboChart.eaf840bf8de8843f782b5faeee4bf181": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-column."
+    },
+    "ComboChart.8154650fb2d3ee0c2b586096748438d7": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-area."
+    },
+    "ComboChart.6cf3660f7d16b94eeb73af86cd984677": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-line."
+    },
+    "ComboChart.e6e61fad4206a16000633e3ba87f2f1d": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-column."
+    },
+    "ComboChart.407817c9253230f38effe31d7b7f0e95": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-area."
+    },
+    "ComboChart.82ea0aecc623f735ff457772c4291c8c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-line."
+    },
+    "ComboChart.a264ac86569d931c1024bc27acbee299": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-line."
+    },
+    "ComboChart.f43654aa617290422b4a8f24a9bae425": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-column."
+    },
+    "ComboChart.b76e8964b1e02c9dd51e31ce669508a1": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-area."
+    },
+    "ComboChart.47f1e33b8ccad7e0b4ec931ed6b63285": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-column."
+    },
+    "ComboChart.df6e12a3c5d7040042f078cd1531aad3": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-area."
+    },
+    "ComboChart.10fc9c050efc1d612e56dff82355c43a": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-line."
+    },
+    "ComboChart.a0b58a8332ccfc1e8a1eb536d3272991": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-column."
+    },
+    "ComboChart.5f051d100c2774c9c61555f8c673f2c6": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-area."
+    },
+    "ComboChart.a6b789916a5029079f819ca4fa47bc72": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-line."
+    },
+    "ComboChart.00d703b663fa07439a054f173a519e69": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-line."
+    },
+    "ComboChart.4a03df2395ec1dd8b6cc7f90a9b3c91c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-column."
+    },
+    "ComboChart.67f35be11874985a8aa09f43bdcf1d01": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-area."
+    },
+    "ComboChart.bb70b58e87ea0e8d031807175ff93bb2": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-column."
+    },
+    "ComboChart.42f3817d4a18fe9a7042be553e00d81f": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-area."
+    },
+    "ComboChart.3ef4d5f342190f1e3bc14ab0c606a51c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-line."
+    },
+    "ComboChart.7629a79fe8037dd20caf6893dde8b9aa": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-column."
+    },
+    "ComboChart.c728906de62f27f43ecc53586c4857ab": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-area."
+    },
+    "ComboChart.8f2427c8a641c4f2c81bad3c756646d2": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-line."
+    },
+    "ComboChart.69ce871376cb9057da31db9cab353c00": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-line."
+    },
+    "ComboChart.1d821abb9814308153ddf43a95723adb": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-column."
+    },
+    "ComboChart.f98ea12a0a1bd8c4700ff58e653f86d7": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column-area."
+    },
+    "ComboChart.6120441573d77fcab30ed4c35a1ae9e1": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-column."
+    },
+    "ComboChart.1f3b1edc881c9b88510a185bb4ac98df": {
+        "comment": "Auto-generated insight for test scenario ComboChart - line-area."
+    },
+    "ComboChart.0ed11775932d8424e187eb3d9217d6f3": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area-line."
+    },
+    "ComboChart.31932ebf4f5285da5ee64d660cfe35c5": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - low."
+    },
+    "ComboChart.d8de6eea572c2b27a15cb26c1b5639bd": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - middle."
+    },
+    "ComboChart.a4d1e65ba81927e4df305aae669ad4cd": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - high."
+    },
+    "ComboChart.b4a60fb2c6f1abc7056b68a6985ff377": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - invisible."
+    },
+    "ComboChart.b203ca84c98421169b55e6b7ec431075": {
+        "comment": "Auto-generated insight for test scenario ComboChart - dual axis disabled."
+    },
+    "ComboChart.2f75416777d45d41c51877cb2cd03fb5": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - auto legend."
+    },
+    "ComboChart.bf1ca44a7f728caa9530bee39e18fb84": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - legend on left."
+    },
+    "ComboChart.7baba68289463debcefd1fee5a7cd015": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - legend on right."
+    },
+    "ComboChart.4c3750c2c910274a84ade6099f0d7cb4": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - legend on top."
+    },
+    "ComboChart.35e9f6ffd73e540d87ac4aa03e2369e9": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - legend at bottom."
+    },
+    "ComboChart.27bf6a39e9e9028fb7236ab438bfc12b": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - disabled."
+    },
+    "ComboChart.0161c1ab9d391b40c1d8c995aecb16d9": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - default."
+    },
+    "ComboChart.b1e73a9fca85b042e1c946ea51d673cc": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - auto visibility."
+    },
+    "ComboChart.d0ba8fee115084a640c2c68a8978af94": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - forced visible."
+    },
+    "ComboChart.5c13789577d16921f54c0ae0ccdddfa9": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - forced visible and german separators."
+    },
+    "ComboChart.41409f38428357636d0c3a74a496bc9f": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - forced hidden."
+    },
+    "ComboChart.adf3a658e223ada92f032d165f730b32": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - default."
+    },
+    "ComboChart.c7922709c84e8db983c56c1bd1ac7d6d": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - custom palette."
+    },
+    "ComboChart.256d0b05d913782273967260c65509c3": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - custom colors."
+    },
+    "ComboChart.08ed280c90bea6584c1bd8c371d8e38c": {
+        "comment": "Auto-generated insight for test scenario ComboChart -  - custom palette preferred over colors."
+    },
+    "ComboChart.85b7a4864f9c2a4bfdf16a7b247f0a70": {
+        "comment": "Auto-generated insight for test scenario ComboChart - assign color to measures."
+    },
+    "ComboChart.579f3437d1f42a3d1e6a0d72915ec226": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column."
+    },
+    "ComboChart.2c634372d58df01f07d266e1ffd413ac": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area."
+    },
+    "ComboChart.969899b5b9db9cbdd0e47feac5eed71a": {
+        "comment": "Auto-generated insight for test scenario ComboChart - column."
+    },
+    "ComboChart.6b5a76a13532fb0e784bcac2e012638c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - area."
+    },
+    "ComboChart.92d967f1f6d7e27c9ae6387ab9458d6a": {
+        "comment": "Auto-generated insight for test scenario ComboChart - normal stacking."
+    },
+    "ComboChart.329344f5226d4300208b8f8ff203bab8": {
+        "comment": "Auto-generated insight for test scenario ComboChart - stack to 100%."
+    },
+    "ComboChart.45926542fd58aab72b2aa72e57d3cdc9": {
+        "comment": "Auto-generated insight for test scenario ComboChart - secondary is column."
+    },
+    "ComboChart.ce5727c60ca40ab933be7b19bf3bfde7": {
+        "comment": "Auto-generated insight for test scenario ComboChart - secondary is area."
+    },
+    "ComboChart.674edf559bb8d95b6870355e3506b21d": {
+        "comment": "Auto-generated insight for test scenario ComboChart - secondary is column."
+    },
+    "ComboChart.d555422c43654e21567a94901873eaf2": {
+        "comment": "Auto-generated insight for test scenario ComboChart - secondary is area."
+    },
+    "ComboChart.21a5a0720397c560750544ec2aed00d3": {
+        "comment": "Auto-generated insight for test scenario ComboChart - 'Stack Measures' off and 'Stack to 100%' on."
+    },
+    "ComboChart.a4d85b7156802cbf66f7a87af981e224": {
+        "comment": "Auto-generated insight for test scenario ComboChart - 'Stack Measures' on and 'Stack to 100%' on."
+    },
+    "DonutChart.3af9e1e9534a73731abf43f4f6b45a4a": {
+        "visName": "DonutChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure."
+    },
+    "DonutChart.d9fc12c2789ae1ac550da9049ab5b8ae": {
+        "visName": "DonutChart",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures."
+    },
+    "DonutChart.216da1d03170ec649269e3d8cf296281": {
+        "visName": "DonutChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure with viewBy."
+    },
+    "DonutChart.71515606befac670ece99e15df646a5f": {
+        "visName": "DonutChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario DonutChart - arithmetic measures."
+    },
+    "DonutChart.4d2bc31e42cc8be019c9ae6e60c0ee54": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - auto legend."
+    },
+    "DonutChart.e52bc81285c58f0325599ec6820fc51e": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - legend on left."
+    },
+    "DonutChart.f872fcb02629f47d30c50ed246ae3bc1": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - legend on right."
+    },
+    "DonutChart.2a07d2bd4a9d1bd45a58a83c446face0": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - legend on top."
+    },
+    "DonutChart.7988e77e71479faaee51f14c611271a5": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - legend at bottom."
+    },
+    "DonutChart.26a3ae5c6c811166d48f46eb6ab8eb97": {
+        "comment": "Auto-generated insight for test scenario DonutChart - two measures - disabled."
+    },
+    "DonutChart.eaa9bc13ec45aa62753004f2e6b18eb1": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - auto legend."
+    },
+    "DonutChart.e211afb2a74846dcc94c24c9db9e1c57": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - legend on left."
+    },
+    "DonutChart.22ecb888157004165aaa82fd7040176a": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - legend on right."
+    },
+    "DonutChart.29f62d8ba208182da4f41ee3a819a6ff": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - legend on top."
+    },
+    "DonutChart.cc754c8abf132118d24981e06ae070d0": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - legend at bottom."
+    },
+    "DonutChart.5210607cbd63681c7b2fb873241ee5d9": {
+        "comment": "Auto-generated insight for test scenario DonutChart - single measure and viewBy - disabled."
+    },
+    "DonutChart.98e15f697f0bad1729b1ea807409ddc8": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - default."
+    },
+    "DonutChart.324ae151c955f5672faf9baadabd4143": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - auto visibility."
+    },
+    "DonutChart.1e51934f5d105fc749a2bac256054f98": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - forced visible."
+    },
+    "DonutChart.05eb1f75f53b6143acab4d82df21a701": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - forced visible and german separators."
+    },
+    "DonutChart.a643e7a3ee8ace3919d349401777a2db": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - forced hidden."
+    },
+    "DonutChart.b1db46a0947ebb0df7d383f601c8d1fe": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - bottom."
+    },
+    "DonutChart.fc583a75de61fa06399b8eb5489d8f9b": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - middle."
+    },
+    "DonutChart.bf946c8bddcde73897dfdf9c8fd16baf": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - top."
+    },
+    "DonutChart.fcdb1caf450bd0a472f2c0cf168fc024": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - custom palette."
+    },
+    "DonutChart.9c53cd80f08dd13ea26b3dedc12df53e": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - custom colors."
+    },
+    "DonutChart.1774b117bb6556a434a55ac87df96d70": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - custom palette preferred over colors."
+    },
+    "DonutChart.4e454123ccbcf765feab59ea1e29dd83": {
+        "comment": "Auto-generated insight for test scenario DonutChart - assign color to measures."
+    },
+    "DonutChart.8f30d67089a11f7c47f1d2923f67f76a": {
+        "comment": "Auto-generated insight for test scenario DonutChart - assign color to attributes."
+    },
+    "FunnelChart.d9c554a687fc8e9e2bf1e7f6662a203a": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario FunnelChart - single measure."
+    },
+    "FunnelChart.ee78293277eff14c7c5a2b411c217670": {
+        "visName": "FunnelChart",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario FunnelChart - two measures."
+    },
+    "FunnelChart.e7a3d4755a1d32e494918d0ec8cace06": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy."
+    },
+    "FunnelChart.8d0deb6f02c4fccecff747c6f91acdbc": {
+        "visName": "FunnelChart",
+        "scenarioName": "single measure with viewBy sorted by attribute",
+        "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy sorted by attribute."
+    },
+    "FunnelChart.935b2a25a68e54db36d5a2d398ff1234": {
+        "visName": "FunnelChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario FunnelChart - arithmetic measures."
+    },
+    "FunnelChart.ba183f11f1c659759f299ba64bc2dcdd": {
+        "comment": "Auto-generated insight for test scenario FunnelChart -  - default."
+    },
+    "FunnelChart.c668d28979d22cc372283b46983d7847": {
+        "comment": "Auto-generated insight for test scenario FunnelChart -  - custom palette."
+    },
+    "FunnelChart.9c4925816a07309104e0bafcb005a403": {
+        "comment": "Auto-generated insight for test scenario FunnelChart -  - custom colors."
+    },
+    "FunnelChart.320af0933831d6f861129a01b0c922bf": {
+        "comment": "Auto-generated insight for test scenario FunnelChart -  - custom palette preferred over colors."
+    },
+    "FunnelChart.af9e6b1d918c8fcfba1cfcf24ca4d7c1": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - assign color to measures."
+    },
+    "FunnelChart.9d0ae03ceda43cc40bfc678cab4ecff1": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - assign color to attributes."
+    },
+    "Headline.a1624d0d4ef0c18a1d84937b0f56232e": {
+        "visName": "Headline",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario Headline - single measure."
+    },
+    "Headline.8e0c213f5d09189755bfa7cad7733a9a": {
+        "visName": "Headline",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario Headline - two measures."
+    },
+    "Headline.2451f3ddb19b91887f25219e6ed241e6": {
+        "visName": "Headline",
+        "scenarioName": "two measures with german separators",
+        "comment": "Auto-generated insight for test scenario Headline - two measures with german separators."
+    },
+    "Headline.e68748d0ffcdbffdebbb6baecb74de1e": {
+        "visName": "Headline",
+        "scenarioName": "two measures one PoP",
+        "comment": "Auto-generated insight for test scenario Headline - two measures one PoP."
+    },
+    "Headline.383feefe7d4e0751275e56c6473fbe3a": {
+        "comment": "Auto-generated insight for test scenario Headline - drilling on single measure."
+    },
+    "Headline.9cb51c0d30913e7f784a789e1ce64f75": {
+        "comment": "Auto-generated insight for test scenario Headline - drilling on single measure with underlining disabled."
+    },
+    "Headline.dd007ac0f215dec77e712530f4bdb463": {
+        "comment": "Auto-generated insight for test scenario Headline - drilling on two measures."
+    },
+    "Headline.6dbe82bff4c68a0044f4ce9eb4d579ce": {
+        "comment": "Auto-generated insight for test scenario Headline - drilling on two measures with underlining disabled."
+    },
+    "Heatmap.5ddd61ed4fe6626de7b1184a6add9cc2": {
+        "visName": "Heatmap",
+        "scenarioName": "measure only",
+        "comment": "Auto-generated insight for test scenario Heatmap - measure only."
+    },
+    "Heatmap.383e4cb13d636b6be3028626fefa7780": {
+        "visName": "Heatmap",
+        "scenarioName": "measure and rows",
+        "comment": "Auto-generated insight for test scenario Heatmap - measure and rows."
+    },
+    "Heatmap.92bb179ec15e7066c24dde28c61f3703": {
+        "visName": "Heatmap",
+        "scenarioName": "measure and columns",
+        "comment": "Auto-generated insight for test scenario Heatmap - measure and columns."
+    },
+    "Heatmap.50c05502487ddc4633048789802e726b": {
+        "visName": "Heatmap",
+        "scenarioName": "measure, rows and columns",
+        "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns."
+    },
+    "Heatmap.548bbc2e120eb0aeb73e4f625f807da7": {
+        "visName": "Heatmap",
+        "scenarioName": "measure, rows and columns with null data points",
+        "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns with null data points."
+    },
+    "Heatmap.153f94e0a8b24920d3e4d251f9d13ac1": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - default."
+    },
+    "Heatmap.3abc03453a00ba7f088d32459d4e4a85": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - custom palette."
+    },
+    "Heatmap.653e3985adc8ac47a5be5cedec646c16": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - custom colors."
+    },
+    "Heatmap.7664786c8328c8483d922265aa1a1b4f": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - custom palette preferred over colors."
+    },
+    "Heatmap.3522cd3c1f44e154e9e55dd1f010206d": {
+        "comment": "Auto-generated insight for test scenario Heatmap - assign color to measures."
+    },
+    "Heatmap.bf72bbcb61e9b55eb894bbd1acdb4367": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - auto legend."
+    },
+    "Heatmap.0adcc17864ad6fed21ed24d7e3d1c134": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - legend on left."
+    },
+    "Heatmap.213ca5ec20edc13d10313580a1cbddf6": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - legend on right."
+    },
+    "Heatmap.eef3835305c73c44cf7b9c6bc1f33061": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - legend on top."
+    },
+    "Heatmap.f1d4efc747133d6d662b3ad123c1dd26": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - legend at bottom."
+    },
+    "Heatmap.3444b1bbe86a1d3f392d5eefefabcef2": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - disabled."
+    },
+    "Heatmap.4695caa5da3e156a92559ce7fc97c2bc": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - auto visibility."
+    },
+    "Heatmap.9e69d1963c5d87142a0bc08e99ca359c": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - forced visible."
+    },
+    "Heatmap.2163d3582f53a43043bd63956aad7ba5": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - forced visible and german separators."
+    },
+    "Heatmap.6cc1e920a250f29a24337c9e546757c7": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - forced hidden."
+    },
+    "Heatmap.3ce923c7831da3a2a1eae3cb7f6753e7": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - low."
+    },
+    "Heatmap.34fc320049e4ddad9d204b0ff5afe257": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - middle."
+    },
+    "Heatmap.0e118425bcac83920ec0a528d4e80fc5": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - high."
+    },
+    "Heatmap.9d3f0084954a0617f264aea910456600": {
+        "comment": "Auto-generated insight for test scenario Heatmap -  - invisible."
+    },
+    "LineChart.5aa35f211eea6a84306587d0c5d88f5a": {
+        "visName": "LineChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario LineChart - single measure."
+    },
+    "LineChart.b34d92ab682cfc3e750166974764e1e7": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with trendBy",
+        "comment": "Auto-generated insight for test scenario LineChart - single measure with trendBy."
+    },
+    "LineChart.0ea50d29cd3270fdec0d85b9d71ad6b5": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with % and trendBy",
+        "comment": "Auto-generated insight for test scenario LineChart - single measure with % and trendBy."
+    },
+    "LineChart.384cc789d674cab0eafbcde77b527f07": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy",
+        "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy."
+    },
+    "LineChart.6435fc6c70acf23fc0ed5f27767e6bb8": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy and sort by measure",
+        "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy and sort by measure."
+    },
+    "LineChart.d67c202ff9de1002a4881fae7b73e27f": {
+        "visName": "LineChart",
+        "scenarioName": "two measures with trendBy and sort by attribute",
+        "comment": "Auto-generated insight for test scenario LineChart - two measures with trendBy and sort by attribute."
+    },
+    "LineChart.9ac8646d3947235f7503886a42bcf733": {
+        "visName": "LineChart",
+        "scenarioName": "single measure with trendBy and segmentBy",
+        "comment": "Auto-generated insight for test scenario LineChart - single measure with trendBy and segmentBy."
+    },
+    "LineChart.c6ff1c3dca020d1d64ea4a9b2980ee68": {
+        "visName": "LineChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario LineChart - arithmetic measures."
+    },
+    "LineChart.bed6a16cdca5f3c3c5950fc2d1fae0c7": {
+        "comment": "Auto-generated insight for test scenario LineChart - Y axis min/max configuration."
+    },
+    "LineChart.49f71fa19d8897291a5025181b0d7a59": {
+        "comment": "Auto-generated insight for test scenario LineChart - Y axis on the right."
+    },
+    "LineChart.03947d6669a897b915838bc3dda12467": {
+        "comment": "Auto-generated insight for test scenario LineChart - dual axes with one right measure."
+    },
+    "LineChart.a31d1689299b2f4f6fdd71588521d599": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - low."
+    },
+    "LineChart.92e8f247ace2c8dcbf86ec335b75b9f3": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - middle."
+    },
+    "LineChart.75ad459ff1096cd5859cb0e90b9f6056": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - high."
+    },
+    "LineChart.e67ef5663f1f63fc878ad41e9f0163ed": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - invisible."
+    },
+    "LineChart.328a2ee40db06b43ffc954d068f0573a": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - low."
+    },
+    "LineChart.d4ad279d1d6bd7370297ff4dbd5282ac": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - middle."
+    },
+    "LineChart.489b8ae66b5d742b87583b8ace906341": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - high."
+    },
+    "LineChart.b132463d81c8dfe1085a15282701242b": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - invisible."
+    },
+    "LineChart.68208f8bc32d784ea958c8ba5bae5567": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - default."
+    },
+    "LineChart.487dabebb6ea594b4dade2af9d7b9d47": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - custom palette."
+    },
+    "LineChart.062cec4c4c34c71304071b5f341d8e84": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - custom colors."
+    },
+    "LineChart.bff9a104065a8f91ea2816305cb86722": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - custom palette preferred over colors."
+    },
+    "LineChart.ea07450c6ce7c22c781198b4018bc2d3": {
+        "comment": "Auto-generated insight for test scenario LineChart - assign color to measures."
+    },
+    "LineChart.cd75b8e63a9e7eb53b9f9b4a8ff4cb73": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - auto legend."
+    },
+    "LineChart.ad4bbb13ac2aa98076b45d682ee10bd5": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - legend on left."
+    },
+    "LineChart.773a38dc16970476a923f9a4cba1e580": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - legend on right."
+    },
+    "LineChart.ab9747a6f1c3e0af1e8d02dd5444a323": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - legend on top."
+    },
+    "LineChart.2bd5ec2b836a02ccb7104eee8d3fb484": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - legend at bottom."
+    },
+    "LineChart.7d54744642a9d06358be317dc3b215fb": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - disabled."
+    },
+    "LineChart.6af455a94bc02bd6e0ace8bccaab5b87": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - auto visibility."
+    },
+    "LineChart.02196cce0b5a90d435678fcccce9095e": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - forced visible."
+    },
+    "LineChart.a788431efbb37c98b0e3599984255b0b": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - forced visible and german separators."
+    },
+    "LineChart.23fd5c042fd1f6262387dae5a813e451": {
+        "comment": "Auto-generated insight for test scenario LineChart -  - forced hidden."
+    },
+    "PieChart.98be49b0beb9a43f9a3f52f720b4ccc5": {
+        "visName": "PieChart",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario PieChart - single measure."
+    },
+    "PieChart.13b5a3327a3e66870c649cd7518c0f93": {
+        "visName": "PieChart",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario PieChart - two measures."
+    },
+    "PieChart.94dde51d58e55f91e6a990abbd4a02fb": {
+        "visName": "PieChart",
+        "scenarioName": "single measure with viewBy",
+        "comment": "Auto-generated insight for test scenario PieChart - single measure with viewBy."
+    },
+    "PieChart.ac6d1ea455547232e780faa66fcc5c44": {
+        "visName": "PieChart",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario PieChart - arithmetic measures."
+    },
+    "PieChart.30f3634854a8b5cace749b7a8aa33b14": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - auto legend."
+    },
+    "PieChart.b10d222217eff0e8b0865d13fe0327e1": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - legend on left."
+    },
+    "PieChart.5e0d51939d8d82cff0f8cdacd5e01b6e": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - legend on right."
+    },
+    "PieChart.1e94f8b503d216c4b197d643bd327217": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - legend on top."
+    },
+    "PieChart.1b26dc316911ffdd8842cb05118aee04": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - legend at bottom."
+    },
+    "PieChart.4552af318cdf8db6eede766b86d42b20": {
+        "comment": "Auto-generated insight for test scenario PieChart - two measures - disabled."
+    },
+    "PieChart.af8a942e9793b656d803ca812235997f": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - auto legend."
+    },
+    "PieChart.4723386c4a6eb14c08505b13c0d12a78": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - legend on left."
+    },
+    "PieChart.2b83a59307ec565f3190b1c68eead41a": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - legend on right."
+    },
+    "PieChart.9ce62651d347d6f73a20226ff1f56175": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - legend on top."
+    },
+    "PieChart.f55a7d4d713273ce9f9277c32c514c5b": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - legend at bottom."
+    },
+    "PieChart.e4e04cb274a5852669258e3140727466": {
+        "comment": "Auto-generated insight for test scenario PieChart - single measure and viewBy - disabled."
+    },
+    "PieChart.26a21547d40817d4cb8dd2a369551db6": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - default."
+    },
+    "PieChart.5590939e640e76a3620f8c7f41974bf3": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - auto visibility."
+    },
+    "PieChart.79eb07603b36ac0e0e19c96f104f4ef4": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - forced visible."
+    },
+    "PieChart.e63c83be6322068ef4de9281ea6f2044": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - forced visible and german separators."
+    },
+    "PieChart.dcfaf5bb5f3e75e9197b5c213ffd0c62": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - forced hidden."
+    },
+    "PieChart.4ea28d14549562f476f1dbc3534c6804": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - bottom."
+    },
+    "PieChart.cf965100ee538baf67a7e9325e0ad98f": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - middle."
+    },
+    "PieChart.f235e59bf481fb3509642a46b65968b3": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - top."
+    },
+    "PieChart.344a72b033cba263a76495eebbc6557a": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - custom palette."
+    },
+    "PieChart.a1d0b2cb18d41074237175bccc00793f": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - custom colors."
+    },
+    "PieChart.46606a87ba510da3546d367afc28702f": {
+        "comment": "Auto-generated insight for test scenario PieChart -  - custom palette preferred over colors."
+    },
+    "PieChart.8264484b0e7661715ebf68306cd1278e": {
+        "comment": "Auto-generated insight for test scenario PieChart - assign color to measures."
+    },
+    "PieChart.83a7fc6a514fe98543922329baded46d": {
+        "comment": "Auto-generated insight for test scenario PieChart - assign color to attributes."
+    },
+    "ScatterPlot.aedf080d6f8ff9a77ec23025077ad52f": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x axis measure",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x axis measure."
+    },
+    "ScatterPlot.3c3a502615d28f9fd19b0dc26f1e35d2": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x axis measure and attribute",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x axis measure and attribute."
+    },
+    "ScatterPlot.817d207aaa815a04ba0a61505b43ac92": {
+        "visName": "ScatterPlot",
+        "scenarioName": "y axis measure and attribute",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - y axis measure and attribute."
+    },
+    "ScatterPlot.60a1689ea78a2061869c760eaacfd6b4": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x and y axis measures and attribute",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute."
+    },
+    "ScatterPlot.5e843ed38abfbda364f30ea98f1c8023": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x and y axis measures and attribute with attr sorting",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with attr sorting."
+    },
+    "ScatterPlot.722461a58381ff1d667721a5780cb79a": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - Y axis min/max configuration."
+    },
+    "ScatterPlot.cfed367183189fd07676039255c5c761": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - low."
+    },
+    "ScatterPlot.429201122ca80dd802038986b3caff13": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - middle."
+    },
+    "ScatterPlot.27373bf8f5630c4e7c303498ea302d65": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - high."
+    },
+    "ScatterPlot.d4c34b26002398d421754a19fe559390": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - invisible."
+    },
+    "ScatterPlot.4095fb5ac6f247e748cf4343c9f38bee": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - default."
+    },
+    "ScatterPlot.b9bd3524098784722382400a03367297": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - custom palette."
+    },
+    "ScatterPlot.21eb2648f69373cda01150192f75aabc": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - custom colors."
+    },
+    "ScatterPlot.e6d61a5e59838e45ef23d785060b79ac": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - custom palette preferred over colors."
+    },
+    "ScatterPlot.5b7117515c70e7436100297e0517b9a8": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - assign color to measures."
+    },
+    "ScatterPlot.735e79c324a085630c5eca93aa17ee67": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - auto visibility."
+    },
+    "ScatterPlot.af17e1f31e246ad1b8619933f42759b9": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - forced visible."
+    },
+    "ScatterPlot.e5a7fd56fde416b810e86f2c76cc55b0": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - forced visible and german separators."
+    },
+    "ScatterPlot.284a8fa86de9b48d1e48293d72e4ff2c": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot -  - forced hidden."
+    },
+    "Treemap.1e0024953bfe4931d91aefbf693b730e": {
+        "visName": "Treemap",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario Treemap - single measure."
+    },
+    "Treemap.70e08a9334a908bc92f0ab00373e94eb": {
+        "visName": "Treemap",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario Treemap - two measures."
+    },
+    "Treemap.9ac4f99ab675d19e462883ab6cbf6a39": {
+        "visName": "Treemap",
+        "scenarioName": "single measure and viewBy",
+        "comment": "Auto-generated insight for test scenario Treemap - single measure and viewBy."
+    },
+    "Treemap.eb82ded63a0c1f2592c0ea629fea3613": {
+        "visName": "Treemap",
+        "scenarioName": "single measure, viewBy and segment",
+        "comment": "Auto-generated insight for test scenario Treemap - single measure, viewBy and segment."
+    },
+    "Treemap.e9cc0b95ce97468ae211f1f0eb014205": {
+        "visName": "Treemap",
+        "scenarioName": "two measures and viewBy",
+        "comment": "Auto-generated insight for test scenario Treemap - two measures and viewBy."
+    },
+    "Treemap.084906c7167517929c57655fe8fa8c36": {
+        "visName": "Treemap",
+        "scenarioName": "arithmetic measures and segment",
+        "comment": "Auto-generated insight for test scenario Treemap - arithmetic measures and segment."
+    },
+    "Treemap.ba0aa40481709788b6726e4bd6d2d37f": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - default."
+    },
+    "Treemap.fec69e188a286349b926859cb4e75f96": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - custom palette."
+    },
+    "Treemap.96fa76b2f86285f7c6d3364406cd476b": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - custom colors."
+    },
+    "Treemap.fb80bb6fbd1193bb4e147a8fa8e70284": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - custom palette preferred over colors."
+    },
+    "Treemap.da3817ee398ab3a0932ef4a216e8f354": {
+        "comment": "Auto-generated insight for test scenario Treemap - assign color to attributes."
+    },
+    "Treemap.2cd5aaca990c62077246e6a992b61508": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - auto legend."
+    },
+    "Treemap.d72eb97352083ea04d503cec58bc3f83": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - legend on left."
+    },
+    "Treemap.8fb36efe16555dcf1a687fe0fcfa12e7": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - legend on right."
+    },
+    "Treemap.d0b6eb22ceb117c59ff39f19b9a22c1f": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - legend on top."
+    },
+    "Treemap.f501a1b6ff9b81c1f241da005ea005eb": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - legend at bottom."
+    },
+    "Treemap.df8112a5f15013e44d305a632dc35a00": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - disabled."
+    },
+    "Treemap.4b88fc4070e2f21835303ecab455ddae": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - auto visibility."
+    },
+    "Treemap.301d1168af5b2597877a0e268168f43d": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - forced visible."
+    },
+    "Treemap.78e2788e6e3a0ebd5a216760dc707566": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - forced visible and german separators."
+    },
+    "Treemap.47b3acc52c8a4145d30089e2e34015cb": {
+        "comment": "Auto-generated insight for test scenario Treemap -  - forced hidden."
+    },
+    "Xirr.d44e79bca7524bf4bafadc8d4910e67c": {
+        "visName": "Xirr",
+        "scenarioName": "only measure",
+        "comment": "Auto-generated insight for test scenario Xirr - only measure."
+    },
+    "Xirr.b6db91e7e010141f9602b4423a66f570": {
+        "visName": "Xirr",
+        "scenarioName": "correct config",
+        "comment": "Auto-generated insight for test scenario Xirr - correct config."
+    },
+    "Xirr.8a679a68d4844b230cf5d8d968c1aa44": {
+        "visName": "Xirr",
+        "scenarioName": "semantically wrong measure",
+        "comment": "Auto-generated insight for test scenario Xirr - semantically wrong measure."
+    },
+    "XIRR.a4595274e781f8e6d6f69dcf34ef8b3a": {
+        "comment": "Auto-generated insight for test scenario XIRR - drilling on single measure."
+    },
+    "XIRR.926385f09623ff2cf1f6d0bd4af05132": {
+        "comment": "Auto-generated insight for test scenario XIRR - drilling on single measure with underlining disabled."
+    },
+    "PivotTable.65dd099d15344827b35e2f2181ea5aef": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure."
+    },
+    "PivotTable.26b4213995b4f9bbaebc55491fed9ed4": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with row attribute."
+    },
+    "PivotTable.a44c6abe1e4158818433bcab60cbf8cd": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with column attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with column attribute."
+    },
+    "PivotTable.54eb1ebf08a0226e779d2563e0b038e2": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row and column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with row and column attributes."
+    },
+    "PivotTable.eaec2a9fb4e5555ec7e45a1784453cb4": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and one column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and one column attributes."
+    },
+    "PivotTable.2a156cfdec6afd35d3d8e6c41f021d9d": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and two column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and two column attributes."
+    },
+    "PivotTable.786dd8560f8674d279b2f299bf72feb0": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures."
+    },
+    "PivotTable.56b3a2f6831b3284eb7fd376e28ef7ad": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with row attribute."
+    },
+    "PivotTable.2e74a9bda9033064c8faa5c3f073f2fa": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with column attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with column attribute."
+    },
+    "PivotTable.706846c0f3035f123704f41025870ae3": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row and column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with row and column attributes."
+    },
+    "PivotTable.47a182e9d81b7792318ccc5fe3ae25a6": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and one column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and one column attributes."
+    },
+    "PivotTable.ae1c54a809fc6ed2fcd14abd8988cfc2": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and two column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and two column attributes."
+    },
+    "PivotTable.8e968cff44fd1e4d2b5a7f96cf58fe36": {
+        "visName": "PivotTable",
+        "scenarioName": "empty values",
+        "comment": "Auto-generated insight for test scenario PivotTable - empty values."
+    },
+    "PivotTable.b5bccc6081bdb949031a37cec1564b1c": {
+        "visName": "PivotTable",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario PivotTable - arithmetic measures."
+    },
+    "PivotTable.446acc0bb6b8088a8772e6cb3e0689e4": {
+        "comment": "Auto-generated insight for test scenario PivotTable - german number format."
+    },
+    "PivotTable.42c99367614ce8c5d9170c935525b1e4": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and max height 200."
+    },
+    "PivotTable.8321d7d97febd7fa1ce3060a35e9c317": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and max height 300."
+    },
+    "PivotTable.a0c326f1b1fa3dcf665c763e94d3d76a": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and no grouping."
+    },
+    "PivotTable.b7ec3cd8bc529d1bbf85f89d06645ae6": {
+        "comment": "Auto-generated insight for test scenario PivotTable - measure format with colors."
+    },
+    "PivotTable.3e5f574262c6f986a0e9f8ed64e95331": {
+        "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 200."
+    },
+    "PivotTable.68c4d2a981320680d8fab994eafaad43": {
+        "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 300."
+    },
+    "PivotTable.9b708c0436dbaa5ad9c807a6f633e3ed": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by first row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by first row attr."
+    },
+    "PivotTable.0d3234aea1379842da928f62559a3015": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by second row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr."
+    },
+    "PivotTable.5cf4e5316283b174301b8b141a1d33a5": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by first measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by first measure."
+    },
+    "PivotTable.b3c5a80616e05ebba986ff89d2471f70": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by second measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by second measure."
+    },
+    "PivotTable.b80b3d414546b214644f45f6b05c7a18": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and single grand total",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure and single grand total."
+    },
+    "PivotTable.0fbbe3a5943e302613127898997c3f86": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and multiple grand totals",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure and multiple grand totals."
+    },
+    "PivotTable.1319f9c2809b4b599e48fe135c651169": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and single grand total for each",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total for each."
+    },
+    "PivotTable.d8f69f7155ed67ca5b1f272d8ad76d38": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple grand totals for each",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple grand totals for each."
+    },
+    "PivotTable.d3910df0175d1a7e1a4dd5a2d338a521": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple subtotals",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple subtotals."
+    },
+    "PivotTable.7829b5a7d8d0731324b538a0e07851f0": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and grand totals and multiple subtotals",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
+    }
+}

@@ -13,15 +13,15 @@ import { SortItem } from "../execution/base/sort";
 /**
  * Creates new, empty insight definition, optionally modifying its content.
  *
- * @param classUri - visualization class URI (e.g. local:bar, local:table..)
+ * @param visualizationUrl - visualization URL (e.g. local:bar, local:table..)
  * @param modifications - modification function which will be called with builder to update the insight
  * @internal
  */
 export function newInsightDefinition(
-    classUri: string,
+    visualizationUrl: string,
     modifications: InsightModifications = identity,
 ): IInsightDefinition {
-    const builder = new InsightDefinitionBuilder(classUri);
+    const builder = new InsightDefinitionBuilder(visualizationUrl);
 
     return modifications(builder).build();
 }
@@ -39,9 +39,9 @@ export type InsightModifications = (builder: InsightDefinitionBuilder) => Insigh
 export class InsightDefinitionBuilder {
     private insight: IInsightDefinition["insight"];
 
-    constructor(visClassUri: string) {
+    constructor(visualizationUrl: string) {
         this.insight = {
-            visualizationUrl: visClassUri,
+            visualizationUrl,
             title: "Untitled",
             buckets: [],
             filters: [],

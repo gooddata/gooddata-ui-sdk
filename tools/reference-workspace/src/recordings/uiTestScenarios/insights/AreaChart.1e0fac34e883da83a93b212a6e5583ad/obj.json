@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "identifier": "AreaChart.1e0fac34e883da83a93b212a6e5583ad",
+        "visualizationUrl": "local:area",
+        "title": "AreaChart -  - custom colors",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "colors": [
+                    "rgb(33, 41, 195)",
+                    "rgb(18, 194, 25)",
+                    "rgb(243, 56, 47)",
+                    "rgb(240, 239, 8)",
+                    "rgb(131, 131, 131)"
+                ]
+            }
+        }
+    }
+}

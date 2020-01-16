@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.cd92db6ee1ac2429ab9240922f1dc4f9",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart -  - custom colors",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "controls": {
+                "colors": [
+                    "rgb(33, 41, 195)",
+                    "rgb(18, 194, 25)",
+                    "rgb(243, 56, 47)",
+                    "rgb(240, 239, 8)",
+                    "rgb(131, 131, 131)"
+                ]
+            }
+        }
+    }
+}
