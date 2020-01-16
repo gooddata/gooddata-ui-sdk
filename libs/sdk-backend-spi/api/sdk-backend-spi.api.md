@@ -319,12 +319,9 @@ export interface IExportResult {
 // @public
 export interface IInsightQueryOptions {
     author?: string;
-    // (undocumented)
     limit?: number;
-    // (undocumented)
     offset?: number;
-    // (undocumented)
-    orderBy?: "id" | "title" | "updated";
+    orderBy?: InsightOrdering;
 }
 
 // @public
@@ -351,6 +348,9 @@ export interface IMeasureGroupDescriptor {
         totalItems?: ITotalDescriptor[];
     };
 }
+
+// @public
+export type InsightOrdering = "id" | "title" | "updated";
 
 // @public
 export interface IPagedResource<TItem> {
@@ -571,7 +571,6 @@ export interface IWorkspaceMetadata {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
     // (undocumented)
     getInsight(ref: ObjRef): Promise<IInsight>;
-    // (undocumented)
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     // (undocumented)
