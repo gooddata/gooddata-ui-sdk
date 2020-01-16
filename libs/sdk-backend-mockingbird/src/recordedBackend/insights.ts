@@ -4,7 +4,6 @@ import {
     IInsightQueryOptions,
     IInsightQueryResult,
     InsightOrdering,
-    IPagedResource,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,7 +15,7 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
-import { identifierToRecording } from "./utils";
+import { identifierToRecording, RecordingPager } from "./utils";
 import isEmpty = require("lodash/isEmpty");
 
 let adHocInsightCounter = 1;
@@ -61,7 +60,7 @@ export class RecordedInsights {
         const { limit = 50, offset = 0, orderBy } = query ?? {};
 
         if (isEmpty(this.insights)) {
-            return Promise.resolve(new PagedInsightsResult([], limit, offset));
+            return Promise.resolve(new RecordingPager<IInsight>([], limit, offset));
         }
 
         const insights = Object.values(this.insights).map(rec => rec.obj);
@@ -70,7 +69,7 @@ export class RecordedInsights {
             insights.sort(comparator(orderBy));
         }
 
-        return Promise.resolve(new PagedInsightsResult(insights, limit, offset));
+        return Promise.resolve(new RecordingPager<IInsight>(insights, limit, offset));
     }
 
     public updateInsight(insight: IInsight): Promise<IInsight> {
@@ -119,34 +118,4 @@ function comparator(orderBy: InsightOrdering): Comparator {
      * part of the IInsight.
      */
     return idComparator;
-}
-
-class PagedInsightsResult implements IInsightQueryResult {
-    public readonly items: IInsight[];
-    public readonly limit: number;
-    public readonly offset: number;
-    public readonly totalCount: number;
-
-    constructor(private readonly all: IInsight[], limit: number, offset: number) {
-        // this will naturally return empty items if at the end of data; limit will always be positive
-        this.items = all.slice(offset, offset + limit);
-
-        // offset is at most at the end of all available elements
-        this.offset = Math.min(offset, all.length);
-        // limit is capped to size of current page
-
-        this.limit = Math.max(limit, this.items.length);
-
-        this.totalCount = all.length;
-    }
-
-    public next(): Promise<IPagedResource<IInsight>> {
-        if (this.items.length === 0) {
-            return Promise.resolve(this);
-        }
-
-        return Promise.resolve(
-            new PagedInsightsResult(this.all, this.limit, this.offset + this.items.length),
-        );
-    }
 }

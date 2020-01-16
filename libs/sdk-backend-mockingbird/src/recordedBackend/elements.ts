@@ -5,13 +5,12 @@ import {
     IElementQueryFactory,
     IElementQueryOptions,
     IElementQueryResult,
-    IPagedResource,
-    UnexpectedResponseError,
     NotImplemented,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement, isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
-import { IAttributeElement, ObjRef, isUriRef } from "@gooddata/sdk-model";
-import { identifierToRecording } from "./utils";
+import { identifierToRecording, RecordingPager } from "./utils";
 
 export class RecordedElementQueryFactory implements IElementQueryFactory {
     constructor(private recordings: RecordingIndex) {}
@@ -54,7 +53,7 @@ class RecordedElements implements IElementQuery {
             elements = elements.filter(item => item.title.toLowerCase().includes(filter.toLowerCase()));
         }
 
-        return Promise.resolve(new RecordedResult(elements, this.limit, this.offset));
+        return Promise.resolve(new RecordingPager<IAttributeElement>(elements, this.limit, this.offset));
     }
 
     public withLimit(limit: number): IElementQuery {
@@ -77,33 +76,5 @@ class RecordedElements implements IElementQuery {
         this.options = options;
 
         return this;
-    }
-}
-
-class RecordedResult implements IElementQueryResult {
-    public readonly items: IAttributeElement[];
-    public readonly limit: number;
-    public readonly offset: number;
-    public readonly totalCount: number;
-
-    constructor(private all: IAttributeElement[], limit: number, offset: number) {
-        // this will naturally return empty items if at the end of data; limit will always be positive
-        this.items = all.slice(offset, offset + limit);
-
-        // offset is at most at the end of all available elements
-        this.offset = Math.min(offset, this.all.length);
-        // limit is capped to size of current page
-
-        this.limit = Math.max(limit, this.items.length);
-
-        this.totalCount = all.length;
-    }
-
-    public next(): Promise<IPagedResource<IAttributeElement>> {
-        if (this.items.length === 0) {
-            return Promise.resolve(this);
-        }
-
-        return Promise.resolve(new RecordedResult(this.all, this.limit, this.offset + this.items.length));
     }
 }
