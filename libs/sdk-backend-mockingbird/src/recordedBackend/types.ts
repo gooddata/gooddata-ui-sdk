@@ -1,5 +1,10 @@
-// (C) 2019 GoodData Corporation
-import { IExecutionDefinition, IAttributeDisplayForm, IAttributeElement } from "@gooddata/sdk-model";
+// (C) 2019-2020 GoodData Corporation
+import {
+    IExecutionDefinition,
+    IAttributeDisplayForm,
+    IAttributeElement,
+    IInsight,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -10,6 +15,7 @@ export type RecordingIndex = {
     };
     metadata?: {
         displayForms?: { [id: string]: DisplayFormRecording };
+        insights?: { [id: string]: InsightRecording };
     };
 };
 
@@ -28,4 +34,11 @@ export type ExecutionRecording = {
 export type DisplayFormRecording = {
     obj: IAttributeDisplayForm;
     elements: IAttributeElement[];
+};
+
+/**
+ * @internal
+ */
+export type InsightRecording = {
+    obj: IInsight;
 };
