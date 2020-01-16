@@ -12,6 +12,9 @@ import { IAttributeElement, isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
 
+/**
+ * @internal
+ */
 export class RecordedElementQueryFactory implements IElementQueryFactory {
     constructor(private recordings: RecordingIndex) {}
 

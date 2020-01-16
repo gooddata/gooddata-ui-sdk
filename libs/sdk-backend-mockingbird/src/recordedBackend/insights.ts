@@ -20,6 +20,9 @@ import isEmpty = require("lodash/isEmpty");
 
 let adHocInsightCounter = 1;
 
+/**
+ * @internal
+ */
 export class RecordedInsights {
     private readonly insights: { [id: string]: InsightRecording };
 

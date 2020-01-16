@@ -20,6 +20,9 @@ import { RecordedInsights } from "./insights";
 import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
 
+/**
+ * @internal
+ */
 export class RecordedMetadata implements IWorkspaceMetadata {
     private insights: RecordedInsights;
 

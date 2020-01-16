@@ -2,10 +2,16 @@
 
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 
+/**
+ * @internal
+ */
 export function identifierToRecording(id: string): string {
     return id.replace(/\./g, "_");
 }
 
+/**
+ * @internal
+ */
 export class RecordingPager<T> implements IPagedResource<T> {
     public readonly items: T[];
     public readonly limit: number;
