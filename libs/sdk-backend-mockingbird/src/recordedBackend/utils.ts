@@ -18,7 +18,7 @@ export class RecordingPager<T> implements IPagedResource<T> {
     public readonly offset: number;
     public readonly totalCount: number;
 
-    constructor(private readonly all: T[], limit: number, offset: number) {
+    constructor(private readonly all: T[], limit: number = 50, offset: number = 0) {
         // this will naturally return empty items if at the end of data; limit will always be positive
         this.items = all.slice(offset, offset + limit);
 

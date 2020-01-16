@@ -17,24 +17,30 @@ import {
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
 import isEmpty = require("lodash/isEmpty");
+import cloneDeep = require("lodash/cloneDeep");
 
 let adHocInsightCounter = 1;
 
 /**
+ * Note: the impl always makes / gives clones of recorded insights to prevent mutable operations
+ * impacting the recordings and thus violate client-server interaction integrity (client mutates, server
+ * suddenly starts returning modified data for everyone)
+ *
  * @internal
  */
 export class RecordedInsights {
     private readonly insights: { [id: string]: InsightRecording };
 
-    constructor(recordings: RecordingIndex) {
+    constructor(recordings: RecordingIndex = {}) {
         this.insights = recordings.metadata?.insights ?? {};
     }
 
     public createInsight(def: IInsightDefinition): Promise<IInsight> {
         const newId = `adHocInsight_${adHocInsightCounter++}`;
-        const newInsight = { insight: { identifier: newId, ...def.insight } };
+        const newInsight = { insight: { identifier: newId, ...cloneDeep(def.insight) } };
+        const recordingId = recId(newId);
 
-        this.insights[newId] = { obj: newInsight };
+        this.insights[recordingId] = { obj: newInsight };
 
         return Promise.resolve(newInsight);
     }
@@ -49,24 +55,24 @@ export class RecordedInsights {
          * insight in the recording index
          */
         const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
-        const recordingId = `i_${identifierToRecording(id)}`;
+        const recordingId = recId(identifierToRecording(id));
         const recording = this.insights[recordingId];
 
         if (!recording) {
             return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
         }
 
-        return Promise.resolve(recording.obj);
+        return Promise.resolve(cloneDeep(recording.obj));
     }
 
     public getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
-        const { limit = 50, offset = 0, orderBy } = query ?? {};
+        const { limit, offset, orderBy } = query ?? {};
 
         if (isEmpty(this.insights)) {
             return Promise.resolve(new RecordingPager<IInsight>([], limit, offset));
         }
 
-        const insights = Object.values(this.insights).map(rec => rec.obj);
+        const insights = Object.values(this.insights).map(rec => cloneDeep(rec.obj));
 
         if (orderBy) {
             insights.sort(comparator(orderBy));
@@ -77,25 +83,27 @@ export class RecordedInsights {
 
     public updateInsight(insight: IInsight): Promise<IInsight> {
         const id = insightId(insight);
-        const existingRecording = this.insights[id];
+        const recordingId = recId(id);
+        const existingRecording = this.insights[recordingId];
 
         if (!existingRecording) {
             return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
         }
 
-        existingRecording.obj = insight;
+        existingRecording.obj = cloneDeep(insight);
 
-        return Promise.resolve(insight);
+        return Promise.resolve(existingRecording.obj);
     }
 
     public deleteInsight(ref: ObjRef): Promise<void> {
         const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+        const recordingId = recId(id);
 
-        if (!this.insights[id]) {
+        if (!this.insights[recordingId]) {
             return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
         }
 
-        delete this.insights[id];
+        delete this.insights[recordingId];
 
         return Promise.resolve();
     }
@@ -117,8 +125,12 @@ function comparator(orderBy: InsightOrdering): Comparator {
     }
 
     /*
-     * note: ID comparator is used for both orderBy 'id' and 'updated'. simply because 'updated' is not yet
-     * part of the IInsight.
+     * note: ID comparator is used for both orderBy 'id' and 'updated'. That is because 'updated' is not yet
+     * part of the IInsight so there's nothing to sort by.
      */
     return idComparator;
+}
+
+function recId(forId: string): string {
+    return `i_${identifierToRecording(forId)}`;
 }
