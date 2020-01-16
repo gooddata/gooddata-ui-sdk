@@ -1,59 +1,77 @@
 // (C) 2007-2020 GoodData Corporation
-import values from "lodash/values";
 import { ICancelablePromise, makeCancelable } from "./CancelablePromise";
+import values = require("lodash/values");
 
 /**
- * Simple promise cache
- * After reset() call, it does not dispatch .then() on pending promises
+ * Simple promise cache, that allows promise canceling
+ * After reset() call, it cancels pending promises
  * @internal
  */
-export class PromiseCache<P, T, E = any> {
-    private cache: {
-        [key: string]: ICancelablePromise<T>;
+export class PromiseCache<TParams, TResult, TError = any> {
+    private promises: {
+        [key: string]: ICancelablePromise<TResult>;
+    } = {};
+    private params: {
+        [key: string]: TParams;
     } = {};
     private results: {
-        [key: string]: T;
+        [key: string]: TResult;
     } = {};
     private errors: {
-        [key: string]: E;
-    };
+        [key: string]: TError;
+    } = {};
 
     constructor(
-        private readonly handler: (params: P) => Promise<T>,
-        private readonly getCacheKey: (params: P) => string = JSON.stringify,
+        private readonly handler: (params: TParams) => Promise<TResult>,
+        private readonly getCacheKey: (params: TParams) => string = JSON.stringify,
     ) {}
 
-    public reset = () => {
-        values(this.cache).forEach(cancelablePromise => cancelablePromise.cancel());
-        this.cache = {};
-        this.results = {};
-        this.errors = {};
-    };
-
-    public getResult = (params: P): T | undefined => {
+    public getResult = (params: TParams): TResult | undefined => {
         const cacheKey = this.getCacheKey(params);
         return this.results[cacheKey];
     };
 
-    public getError = (params: P): E | undefined => {
+    public getError = (params: TParams): TError | undefined => {
         const cacheKey = this.getCacheKey(params);
         return this.errors[cacheKey];
     };
 
-    public load = (params: P): Promise<T> => {
+    public getPromise = (params: TParams): Promise<TResult> | undefined => {
         const cacheKey = this.getCacheKey(params);
-        const cachedPromise = this.cache[cacheKey];
+        const cachedPromise = this.promises[cacheKey];
         if (cachedPromise) {
             return cachedPromise.promise;
         }
+    };
 
+    public reset = () => {
+        values(this.params).forEach(this.cancel);
+        this.params = {};
+        this.promises = {};
+        this.results = {};
+        this.errors = {};
+    };
+
+    public cancel = (params: TParams): void => {
+        const cacheKey = this.getCacheKey(params);
+        const cancelablePromise = this.promises[cacheKey];
+        if (cancelablePromise) {
+            cancelablePromise.cancel();
+        }
+    };
+
+    public load = (params: TParams): Promise<TResult> => {
+        const cacheKey = this.getCacheKey(params);
+        const cachedPromise = this.promises[cacheKey];
+        if (cachedPromise) {
+            return cachedPromise.promise;
+        }
         const cancelablePromise = makeCancelable(this.handler(params));
         cancelablePromise.promise
             .then(result => (this.results[cacheKey] = result))
-            .catch(error => (this.errors[error] = error));
+            .catch(error => (this.errors[cacheKey] = error));
 
-        this.cache[cacheKey] = cancelablePromise;
-
+        this.promises[cacheKey] = cancelablePromise;
         return cancelablePromise.promise;
     };
 }

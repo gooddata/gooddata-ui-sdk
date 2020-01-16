@@ -1,15 +1,76 @@
 // (C) 2007-2020 GoodData Corporation
-import { useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { PromiseCache } from "./PromiseCache";
 
 /**
- * Hook that returns local component PromiseCache
  * @internal
  */
-export function usePromiseCache<P, T>(
-    promiseFactory: (params: P) => Promise<T>,
-    getCacheKey?: (params: P) => string,
+
+interface IUsePromiseCacheState<TResult, TError> {
+    results: TResult[];
+    errors: TError[];
+}
+
+const initialState: IUsePromiseCacheState<any, any> = {
+    results: [],
+    errors: [],
+};
+
+/**
+ * Hook for promise caching
+ * It caches promises by params passed to provided factory function
+ * It returns only new results
+ * @internal
+ */
+export function usePromiseCache<TParams, TResult, TError>(
+    promiseFactory: (params: TParams) => Promise<TResult>,
+    fetchParams: TParams[],
+    fetchDeps: React.DependencyList,
+    resetDeps: React.DependencyList,
+    getCacheKey?: (params: TParams) => string,
 ) {
-    const promiseCache = useMemo(() => new PromiseCache(promiseFactory, getCacheKey), []);
-    return promiseCache;
+    const promiseCacheRef = useRef<PromiseCache<TParams, TResult, TError>>();
+    const [state, setState] = useState<IUsePromiseCacheState<TResult, TError>>(initialState);
+
+    const setInitialState = () => setState(initialState);
+    const setResults = (results: TResult[]) => setState(state => ({ ...state, results }));
+    const setErrors = (errors: TError[]) => setState(state => ({ ...state, errors }));
+
+    useEffect(() => {
+        promiseCacheRef.current = new PromiseCache(promiseFactory, getCacheKey);
+
+        return () => {
+            promiseCacheRef.current.reset();
+            setInitialState();
+        };
+    }, resetDeps);
+
+    useEffect(() => {
+        const newParams = fetchParams.filter(params => !promiseCacheRef.current.getResult(params));
+        const newPromises = newParams.map(promiseCacheRef.current.load);
+
+        if (newPromises.length === 0) {
+            return;
+        }
+
+        // Because promises have their own lifecycle independent on react lifecycle,
+        // we need to check if promise cache was not reseted before their resolution
+        // and our results are still relevant.
+        // We do this by storing current promise cache in effect closure
+        // so when promises are resolved, we have still access to it
+        const usedPromiseCache = promiseCacheRef.current;
+        Promise.all(newPromises)
+            .then(results => {
+                if (usedPromiseCache === promiseCacheRef.current) {
+                    setResults(results);
+                }
+            })
+            .catch(errors => {
+                if (usedPromiseCache === promiseCacheRef.current) {
+                    setErrors(errors);
+                }
+            });
+    }, fetchDeps);
+
+    return state;
 }

@@ -1,34 +1,39 @@
 // (C) 2007-2020 GoodData Corporation
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import { usePromiseCache } from "./usePromiseCache";
 
 /**
  * @internal
  */
-interface IUsePagedResourceState<T> {
+interface IUsePagedResourceState<TItem> {
     totalItemsCount: number;
-    items: Array<T | undefined>;
+    items: Array<TItem | undefined>;
 }
 
 /**
- * Hook for loading and caching paged resource
+ * Hook for getting data from paged resource
  * @public
  */
-export function usePagedResource<T, TItem>(
-    loadPagedResource: (params: T) => Promise<IPagedResource<TItem>>,
-    getCacheKey?: (params: T) => string,
-) {
-    const promiseCache = usePromiseCache(loadPagedResource, getCacheKey);
-    const [state, setState] = useState<IUsePagedResourceState<TItem>>({
+export function usePagedResource<TParams, TItem>(
+    resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>,
+    fetchParams: TParams[],
+    fetchDeps: React.DependencyList,
+    resetDeps: React.DependencyList,
+    getCacheKey?: (params: TParams) => string,
+    initialState: IUsePagedResourceState<TItem> = {
         totalItemsCount: undefined,
         items: [],
-    });
+    },
+) {
+    const [state, setState] = useState<IUsePagedResourceState<TItem>>(initialState);
 
-    const mergeResourceResult = (result: IPagedResource<TItem>) => {
+    const reset = () => setState(initialState);
+
+    const mergeResult = (result: IPagedResource<TItem>) =>
         setState(state => {
-            const isFirstLoad = typeof state.totalItemsCount === "undefined";
-            const items = isFirstLoad ? new Array(result.totalCount) : [...state.items];
+            const isFirstResult = typeof state.totalItemsCount === "undefined";
+            const items = isFirstResult ? new Array(result.totalCount) : [...state.items];
 
             items.splice(result.offset, result.limit, ...result.items);
 
@@ -37,31 +42,23 @@ export function usePagedResource<T, TItem>(
                 items,
             };
         });
-    };
 
-    const reset = () => {
-        promiseCache.reset();
-        setState({
-            items: [],
-            totalItemsCount: undefined,
-        });
-    };
+    const { results } = usePromiseCache(resourceFactory, fetchParams, fetchDeps, resetDeps, getCacheKey);
 
-    const load = (params: T) => {
-        if (promiseCache.getResult(params)) {
-            return;
-        }
-        promiseCache
-            .load(params)
-            .then(mergeResourceResult)
-            .catch();
-    };
+    useEffect(() => {
+        // We want to reset state only after resetDeps are changed, not on first run
+        return () => {
+            reset();
+        };
+    }, resetDeps);
+
+    useEffect(() => {
+        results.forEach(mergeResult);
+    }, [results]);
 
     const { items, totalItemsCount } = state;
 
     return {
-        load,
-        reset,
         items,
         totalItemsCount,
     };
