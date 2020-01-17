@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
 
 /**
  * @internal
@@ -19,6 +20,9 @@ export class RecordingPager<T> implements IPagedResource<T> {
     public readonly totalCount: number;
 
     constructor(private readonly all: T[], limit: number = 50, offset: number = 0) {
+        invariant(offset >= 0, "paging offset must be non-negative");
+        invariant(limit > 0, "limit must be a positive number");
+
         // this will naturally return empty items if at the end of data; limit will always be positive
         this.items = all.slice(offset, offset + limit);
 
@@ -31,11 +35,11 @@ export class RecordingPager<T> implements IPagedResource<T> {
         this.totalCount = all.length;
     }
 
-    public next(): Promise<IPagedResource<T>> {
+    public async next(): Promise<IPagedResource<T>> {
         if (this.items.length === 0) {
-            return Promise.resolve(this);
+            return this;
         }
 
-        return Promise.resolve(new RecordingPager(this.all, this.limit, this.offset + this.items.length));
+        return new RecordingPager(this.all, this.limit, this.offset + this.items.length);
     }
 }

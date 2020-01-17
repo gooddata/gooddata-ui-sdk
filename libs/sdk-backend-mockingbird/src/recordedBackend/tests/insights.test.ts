@@ -87,7 +87,7 @@ describe("recorded insights", () => {
         expect(page.totalCount).toEqual(4);
     });
 
-    it("should default to page size 50 when limit provided in options", async () => {
+    it("should default to page size 50 when limit is not provided in options", async () => {
         const page = await TestInsights.getInsights();
 
         expect(page.limit).toEqual(50);

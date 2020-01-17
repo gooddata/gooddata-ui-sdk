@@ -35,19 +35,19 @@ export class RecordedInsights {
         this.insights = recordings.metadata?.insights ?? {};
     }
 
-    public createInsight(def: IInsightDefinition): Promise<IInsight> {
+    public async createInsight(def: IInsightDefinition): Promise<IInsight> {
         const newId = `adHocInsight_${adHocInsightCounter++}`;
         const newInsight = { insight: { identifier: newId, ...cloneDeep(def.insight) } };
         const recordingId = recId(newId);
 
         this.insights[recordingId] = { obj: newInsight };
 
-        return Promise.resolve(newInsight);
+        return newInsight;
     }
 
-    public getInsight(ref: ObjRef): Promise<IInsight> {
+    public async getInsight(ref: ObjRef): Promise<IInsight> {
         if (isEmpty(this.insights)) {
-            return Promise.reject(new UnexpectedResponseError("No insight recordings", 404, {}));
+            throw new UnexpectedResponseError("No insight recordings", 404, {});
         }
 
         /*
@@ -59,17 +59,17 @@ export class RecordedInsights {
         const recording = this.insights[recordingId];
 
         if (!recording) {
-            return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
+            throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
-        return Promise.resolve(cloneDeep(recording.obj));
+        return cloneDeep(recording.obj);
     }
 
-    public getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
+    public async getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
         const { limit, offset, orderBy } = query ?? {};
 
         if (isEmpty(this.insights)) {
-            return Promise.resolve(new RecordingPager<IInsight>([], limit, offset));
+            return new RecordingPager<IInsight>([], limit, offset);
         }
 
         const insights = Object.values(this.insights).map(rec => cloneDeep(rec.obj));
@@ -78,34 +78,34 @@ export class RecordedInsights {
             insights.sort(comparator(orderBy));
         }
 
-        return Promise.resolve(new RecordingPager<IInsight>(insights, limit, offset));
+        return new RecordingPager<IInsight>(insights, limit, offset);
     }
 
-    public updateInsight(insight: IInsight): Promise<IInsight> {
+    public async updateInsight(insight: IInsight): Promise<IInsight> {
         const id = insightId(insight);
         const recordingId = recId(id);
         const existingRecording = this.insights[recordingId];
 
         if (!existingRecording) {
-            return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
+            throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
         existingRecording.obj = cloneDeep(insight);
 
-        return Promise.resolve(existingRecording.obj);
+        return existingRecording.obj;
     }
 
-    public deleteInsight(ref: ObjRef): Promise<void> {
+    public async deleteInsight(ref: ObjRef): Promise<void> {
         const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
         const recordingId = recId(id);
 
         if (!this.insights[recordingId]) {
-            return Promise.reject(new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {}));
+            throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
         delete this.insights[recordingId];
 
-        return Promise.resolve();
+        return;
     }
 }
 
