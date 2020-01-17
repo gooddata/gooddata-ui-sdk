@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     AbstractExecutionFactory,
@@ -26,6 +26,9 @@ import {
 } from "@gooddata/sdk-model";
 import { ExecutionRecording, RecordingIndex } from "./types";
 
+/**
+ * @internal
+ */
 export class RecordedExecutionFactory extends AbstractExecutionFactory {
     constructor(private readonly recordings: RecordingIndex, workspace: string) {
         super(workspace);

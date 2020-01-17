@@ -16,11 +16,19 @@ import {
     isUriRef,
     ObjRef,
 } from "@gooddata/sdk-model";
+import { RecordedInsights } from "./insights";
 import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
 
+/**
+ * @internal
+ */
 export class RecordedMetadata implements IWorkspaceMetadata {
-    constructor(private readonly recordings: RecordingIndex) {}
+    private insights: RecordedInsights;
+
+    constructor(private readonly recordings: RecordingIndex) {
+        this.insights = new RecordedInsights(recordings);
+    }
 
     public getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
@@ -47,30 +55,34 @@ export class RecordedMetadata implements IWorkspaceMetadata {
     }
 
     //
+    // insights services.. all methods delegate to stand-alone class
+    //
+
+    public updateInsight(insight: IInsight): Promise<IInsight> {
+        return this.insights.updateInsight(insight);
+    }
+
+    public getInsight(ref: ObjRef): Promise<IInsight> {
+        return this.insights.getInsight(ref);
+    }
+
+    public getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
+        return this.insights.getInsights(query);
+    }
+
+    public createInsight(def: IInsightDefinition): Promise<IInsight> {
+        return this.insights.createInsight(def);
+    }
+
+    public deleteInsight(ref: ObjRef): Promise<void> {
+        return this.insights.deleteInsight(ref);
+    }
+
+    //
     //  not implemented down from here
     //
 
     public getMeasureExpressionTokens(_: ObjRef): Promise<IMeasureExpressionToken[]> {
-        throw new NotSupported("not supported");
-    }
-
-    public updateInsight(_: IInsight): Promise<IInsight> {
-        throw new NotSupported("not supported");
-    }
-
-    public getInsight(_: ObjRef): Promise<IInsight> {
-        throw new NotSupported("not supported");
-    }
-
-    public getInsights(_?: IInsightQueryOptions): Promise<IInsightQueryResult> {
-        throw new NotSupported("not supported");
-    }
-
-    public createInsight(_: IInsightDefinition): Promise<IInsight> {
-        throw new NotSupported("not supported");
-    }
-
-    public deleteInsight(_: ObjRef): Promise<void> {
         throw new NotSupported("not supported");
     }
 

@@ -12,6 +12,7 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IInsight } from '@gooddata/sdk-model';
 
 // Warning: (ae-internal-missing-underscore) The name "AnalyticalBackendCallbacks" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -91,6 +92,9 @@ export type RecordingIndex = {
         displayForms?: {
             [id: string]: DisplayFormRecording;
         };
+        insights?: {
+            [id: string]: InsightRecording;
+        };
     };
 };
 
@@ -103,6 +107,7 @@ export function withEventing(realBackend: IAnalyticalBackend, callbacks: Analyti
 // Warnings were encountered during analysis:
 //
 // dist/recordedBackend/types.d.ts:11:13 - (ae-forgotten-export) The symbol "DisplayFormRecording" needs to be exported by the entry point index.d.ts
+// dist/recordedBackend/types.d.ts:14:13 - (ae-forgotten-export) The symbol "InsightRecording" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 export {
     IAnalyticalBackend,
@@ -53,7 +53,12 @@ export {
     SettingCatalog,
 } from "./workspace/settings";
 
-export { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "./workspace/insights";
+export {
+    IWorkspaceMetadata,
+    InsightOrdering,
+    IInsightQueryOptions,
+    IInsightQueryResult,
+} from "./workspace/insights";
 
 export {
     IWorkspaceCatalogFactory,
