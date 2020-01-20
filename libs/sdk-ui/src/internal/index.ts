@@ -17,4 +17,5 @@ export {
     IVisProps,
     IVisualizationProperties,
     IVisualizationOptions,
+    ConfigPanelClassName,
 } from "./interfaces/Visualization";

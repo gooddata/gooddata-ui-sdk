@@ -1,16 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
+import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, IInsight, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
 import {
-    OverTimeComparisonType,
-    IDrillableItem,
     ChartType,
+    IDrillableItem,
+    ILocale,
     IPushData,
     IVisualizationCallbacks,
-    ILocale,
+    OverTimeComparisonType,
     VisualizationEnvironment,
 } from "../../base";
-import { IInsight, ITotal, VisualizationProperties, IColorPalette } from "@gooddata/sdk-model";
-import { IExecutionFactory, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;
@@ -259,3 +259,11 @@ export interface IGdcConfig {
     separators?: ISeparators;
     colorPalette?: IColorPalette;
 }
+
+/**
+ * Class name of element where pluggable visualization is supposed to render its configuration
+ * panels.
+ *
+ * @alpha
+ */
+export const ConfigPanelClassName = "gd-configuration-panel-content";

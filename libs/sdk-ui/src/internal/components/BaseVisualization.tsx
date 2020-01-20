@@ -13,6 +13,7 @@ import {
     VisualizationEnvironment,
 } from "../../base";
 import {
+    ConfigPanelClassName,
     IBucketItem,
     IFeatureFlags,
     IGdcConfig,
@@ -68,13 +69,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         renderer: render,
     };
 
-    private componentId: string;
+    private visElementId: string;
     private visualization: IVisualization;
     private executionFactory: IExecutionFactory;
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
-        this.componentId = uuid.v4();
+        this.visElementId = uuid.v4();
         this.executionFactory = props.backend.workspace(props.projectId).execution();
     }
 
@@ -96,13 +97,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.visualizationClass,
             this.props.visualizationClass,
         );
-        const referencePointChanged = this.bucketReferencePointHasChanged(
+        const referencePointChanged = BaseVisualization.bucketReferencePointHasChanged(
             this.props.referencePoint,
             nextProps.referencePoint,
         );
 
         if (visualizationClassChanged) {
-            this.componentId = uuid.v4();
+            this.visElementId = uuid.v4();
             this.setupVisualization(nextProps);
         }
 
@@ -128,19 +129,15 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     public render() {
-        return <div key={this.componentId} style={{ height: "100%" }} className={this.getClassName()} />;
+        return <div key={this.visElementId} style={{ height: "100%" }} className={this.getClassName()} />;
     }
 
-    private getVisualizationClassName(): string {
-        return `gd-vis-${this.componentId}`;
-    }
-
-    private getConfigPanelClassName(): string {
-        return "gd-configuration-panel-content";
+    private getVisElementClassName(): string {
+        return `gd-vis-${this.visElementId}`;
     }
 
     private getClassName(): string {
-        return `gd-base-visualization ${this.getVisualizationClassName()}`;
+        return `gd-base-visualization ${this.getVisElementClassName()}`;
     }
 
     private setupVisualization(props: IBaseVisualizationProps) {
@@ -160,13 +157,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
 
         if (visFactory) {
-            const constInput: IVisConstruct = {
+            const constructorParams: IVisConstruct = {
                 projectId,
                 locale,
                 environment,
                 backend: props.backend,
-                element: `.${this.getVisualizationClassName()}`,
-                configPanelElement: `.${this.getConfigPanelClassName()}`,
+                element: `.${this.getVisElementClassName()}`,
+                configPanelElement: `.${ConfigPanelClassName}`,
                 callbacks: {
                     afterRender: props.afterRender,
                     onLoadingChanged: props.onLoadingChanged,
@@ -180,29 +177,31 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 renderFun: renderer,
             };
 
-            this.visualization = visFactory(constInput);
+            this.visualization = visFactory(constructorParams);
         }
     }
 
     private updateVisualization() {
-        if (this.visualization) {
-            this.visualization.update(
-                {
-                    locale: this.props.locale,
-                    dimensions: {
-                        height: this.props.height,
-                    },
-                    custom: {
-                        stickyHeaderOffset: this.props.stickyHeaderOffset,
-                        drillableItems: this.props.drillableItems,
-                        totalsEditAllowed: this.props.totalsEditAllowed,
-                    },
-                    config: this.props.config,
-                },
-                this.props.insight,
-                this.executionFactory,
-            );
+        if (!this.visualization) {
+            return;
         }
+
+        this.visualization.update(
+            {
+                locale: this.props.locale,
+                dimensions: {
+                    height: this.props.height,
+                },
+                custom: {
+                    stickyHeaderOffset: this.props.stickyHeaderOffset,
+                    drillableItems: this.props.drillableItems,
+                    totalsEditAllowed: this.props.totalsEditAllowed,
+                },
+                config: this.props.config,
+            },
+            this.props.insight,
+            this.executionFactory,
+        );
     }
 
     private triggerPlaceNewDerivedBucketItems(props: IBaseVisualizationProps) {
@@ -228,7 +227,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    private bucketReferencePointHasChanged(
+    private static bucketReferencePointHasChanged(
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
