@@ -25,7 +25,18 @@ export function createInsightDefinitionForChart(
     interactions: ChartInteractions,
 ): IInsightDefinition {
     const chartConfig: IChartConfig | undefined = interactions.effectiveProps.config;
-    const properties: VisualizationProperties = chartConfig !== undefined ? { controls: chartConfig } : {};
+
+    /*
+     * Indeed, the properties content is stored in 'properties' entry in insight AND the content itself
+     * is wrapper in another object under 'properties' entry.
+     *
+     * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight from
+     * bear visualization object.
+     *
+     * TODO: remove this double wrap
+     */
+    const properties: VisualizationProperties =
+        chartConfig !== undefined ? { properties: { controls: chartConfig } } : {};
     const execution = interactions.triggeredExecution;
     const visClassUri = visNameToUri(name);
 

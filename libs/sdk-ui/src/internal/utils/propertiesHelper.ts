@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import has = require("lodash/has");
 import set = require("lodash/set");
@@ -79,6 +79,7 @@ export function getSupportedProperties(
     visualizationProperties: IVisualizationProperties,
     supportedPropertiesList: string[],
 ): IVisualizationProperties {
+    // TODO: remove the need to have properties content wrapper in yet another 'properties' object
     const controls = get(visualizationProperties, "properties.controls", {});
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
 
