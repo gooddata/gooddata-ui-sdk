@@ -9,7 +9,7 @@ export const convertUserProject = ({ userProject }: GdcProject.IUserProject): IW
         id: userProject.links.self.match(/\/gdc\/projects\/(.+)/i)![1],
     };
 
-    if (userProject.isDemo) {
+    if (userProject.demoProject) {
         workspace.isDemo = true;
     }
 
