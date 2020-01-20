@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "identifier": "DonutChart.eb4a4b8bf0b1cc8b9f97e691c6fe3a6a",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - vertical alignment - middle",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "chart": {
+                        "verticalAlign": "middle"
+                    }
+                }
+            }
+        }
+    }
+}
