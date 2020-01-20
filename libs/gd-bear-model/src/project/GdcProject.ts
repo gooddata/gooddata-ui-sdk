@@ -17,7 +17,7 @@ export namespace GdcProject {
             links: {
                 self: Uri;
             };
-            isDemo?: boolean;
+            demoProject?: boolean;
         };
     }
 
