@@ -1,0 +1,71 @@
+/*
+ * root report element
+ */
+.plugviz-report {
+    width: 100%;
+}
+
+/*
+ * inner styles of config panels are in SDK; outer style (containers) are in AD :/ adding some dumb
+ * "styling" here so that the panels are in a row. the container visuals are not subject to testing
+ */
+.gd-bubble-trigger > div {
+    display: flex;
+    flex-direction: row;
+}
+
+/*
+ * each config panel is contained in a 'bucket item'
+ */
+.adi-bucket-item {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ * header item is the name of the configuration panel.  this is clickable and expands/collapses the
+ * panel.
+ */
+.adi-bucket-item-header {
+    width: 220px;
+    cursor: pointer;
+}
+
+/*
+ * container for all render variants
+ */
+.render-variants {
+}
+
+/*
+ *
+ */
+.ad-like-render {
+    width: 825px;
+    height: 650px;
+    border: 2px black solid;
+    padding: 40px;
+    margin: 10px;
+}
+
+/*
+ * container of size similar to dashboard container for widgets that occupy 12 cols
+ */
+.dashboard-like-12 {
+    width: 1362px;
+    height: 362px;
+    border: 2px black solid;
+    padding: 40px;
+    margin: 10px;
+}
+
+/*
+ * container of size similar to dashboard container for widgets that occupy 6 cols
+ */
+.dashboard-like-6 {
+    width: 665px;
+    height: 362px;
+    border: 2px black solid;
+    padding: 40px;
+    margin: 10px;
+}
