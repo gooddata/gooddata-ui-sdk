@@ -9,10 +9,12 @@ import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayForm } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-backend-spi';
 
 // Warning: (ae-internal-missing-underscore) The name "AnalyticalBackendCallbacks" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -24,6 +26,14 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadAll?: (error: any) => void;
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "DisplayFormRecording" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type DisplayFormRecording = {
+    obj: IAttributeDisplayForm;
+    elements: IAttributeElement[];
 };
 
 // Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
@@ -56,6 +66,13 @@ export type ExecutionRecording = {
     [dataViews: string]: any;
 };
 
+// Warning: (ae-internal-missing-underscore) The name "InsightRecording" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type InsightRecording = {
+    obj: IInsight;
+};
+
 // Warning: (ae-internal-missing-underscore) The name "LegacyExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal @deprecated
@@ -79,7 +96,15 @@ export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): D
 // Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function recordedBackend(index: RecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
+export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "RecordedBackendConfig" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type RecordedBackendConfig = AnalyticalBackendConfig & {
+    globalSettings?: ISettings;
+    globalPalette?: IColorPalette;
+};
 
 // Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -103,11 +128,6 @@ export type RecordingIndex = {
 // @internal
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
-
-// Warnings were encountered during analysis:
-//
-// dist/recordedBackend/types.d.ts:11:13 - (ae-forgotten-export) The symbol "DisplayFormRecording" needs to be exported by the entry point index.d.ts
-// dist/recordedBackend/types.d.ts:14:13 - (ae-forgotten-export) The symbol "InsightRecording" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

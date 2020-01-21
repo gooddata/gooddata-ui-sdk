@@ -1,10 +1,16 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade } from "./dummyBackend";
 
 export { recordedBackend } from "./recordedBackend";
 
-export { RecordingIndex, ExecutionRecording } from "./recordedBackend/types";
+export {
+    RecordingIndex,
+    ExecutionRecording,
+    InsightRecording,
+    DisplayFormRecording,
+    RecordedBackendConfig,
+} from "./recordedBackend/types";
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 
