@@ -4,6 +4,7 @@ import {
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import * as ReferenceLdm from "./full";
 
@@ -55,3 +56,9 @@ export const AmountWithRatio = modifyMeasure(ReferenceLdm.Amount, m =>
         .ratio()
         .localId("Amount with Ratio"),
 );
+/**
+ * A reference to date data set of the 'Closed' dimension
+ */
+export const ClosedDataDatasetRef: ObjRef = {
+    identifier: "closed",
+};

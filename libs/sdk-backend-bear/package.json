@@ -42,6 +42,7 @@
         "uuid": "^3.3.3"
     },
     "devDependencies": {
+        "@gooddata/reference-workspace": "^8.0.0-alpha.0",
         "@gooddata/tslint-config": "1.0.0",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^24.0.6",
