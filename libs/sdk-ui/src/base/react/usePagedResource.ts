@@ -43,7 +43,13 @@ export function usePagedResource<TParams, TItem>(
             };
         });
 
-    const { results } = usePromiseCache(resourceFactory, fetchParams, fetchDeps, resetDeps, getCacheKey);
+    const { isLoading, results } = usePromiseCache(
+        resourceFactory,
+        fetchParams,
+        fetchDeps,
+        resetDeps,
+        getCacheKey,
+    );
 
     useEffect(() => {
         // We want to reset state only after resetDeps are changed, not on first run
@@ -59,6 +65,7 @@ export function usePagedResource<TParams, TItem>(
     const { items, totalItemsCount } = state;
 
     return {
+        isLoading,
         items,
         totalItemsCount,
     };

@@ -7,11 +7,13 @@ import { PromiseCache } from "./PromiseCache";
  */
 
 interface IUsePromiseCacheState<TResult, TError> {
+    isLoading: boolean;
     results: TResult[];
     errors: TError[];
 }
 
 const initialState: IUsePromiseCacheState<any, any> = {
+    isLoading: false,
     results: [],
     errors: [],
 };
@@ -35,6 +37,7 @@ export function usePromiseCache<TParams, TResult, TError>(
     const setInitialState = () => setState(initialState);
     const setResults = (results: TResult[]) => setState(state => ({ ...state, results }));
     const setErrors = (errors: TError[]) => setState(state => ({ ...state, errors }));
+    const setLoading = (isLoading: boolean) => setState(state => ({ ...state, isLoading }));
 
     useEffect(() => {
         promiseCacheRef.current = new PromiseCache(promiseFactory, getCacheKey);
@@ -59,13 +62,16 @@ export function usePromiseCache<TParams, TResult, TError>(
         // We do this by storing current promise cache in effect closure
         // so when promises are resolved, we have still access to it
         const usedPromiseCache = promiseCacheRef.current;
+        setLoading(true);
         Promise.all(newPromises)
             .then(results => {
+                setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setResults(results);
                 }
             })
             .catch(errors => {
+                setLoading(false);
                 if (usedPromiseCache === promiseCacheRef.current) {
                     setErrors(errors);
                 }
