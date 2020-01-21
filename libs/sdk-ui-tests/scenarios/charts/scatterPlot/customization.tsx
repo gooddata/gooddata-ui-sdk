@@ -7,6 +7,6 @@ import { ScatterPlotWithMeasuresAndAttribute } from "./base";
 const dataLabelScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", ScatterPlotWithMeasuresAndAttribute, dataLabelCustomizer);
+    .addScenarios("data labels", ScatterPlotWithMeasuresAndAttribute, dataLabelCustomizer);
 
 export default [dataLabelScenarios];

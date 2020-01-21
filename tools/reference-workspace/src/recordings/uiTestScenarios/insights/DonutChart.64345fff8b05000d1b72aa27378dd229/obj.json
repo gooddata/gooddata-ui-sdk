@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "identifier": "DonutChart.64345fff8b05000d1b72aa27378dd229",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - vertical alignment - top",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "chart": {
+                        "verticalAlign": "top"
+                    }
+                }
+            }
+        }
+    }
+}

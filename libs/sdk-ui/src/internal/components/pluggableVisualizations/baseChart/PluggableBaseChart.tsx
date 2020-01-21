@@ -522,7 +522,7 @@ function isStacked(insight: IInsight): boolean {
 
 function areAllMeasuresOnSingleAxis(insight: IInsight, secondaryYAxis: IAxisConfig): boolean {
     const measureCount = insightMeasures(insight).length;
-    const numberOfMeasureOnSecondaryAxis = secondaryYAxis ? secondaryYAxis.measures.length : 0;
+    const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
     return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
 }
 

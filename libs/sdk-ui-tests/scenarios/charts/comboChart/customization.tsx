@@ -8,11 +8,11 @@ import { ComboChartWithTwoMeasuresAndViewBy } from "./base";
 const legendScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, legendCustomizer);
+    .addScenarios("legend position", ComboChartWithTwoMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
+    .addScenarios("data labels", ComboChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

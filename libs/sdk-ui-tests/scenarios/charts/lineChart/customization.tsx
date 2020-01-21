@@ -8,11 +8,11 @@ import { LineChartTwoMeasuresWithTrendyBy } from "./base";
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", LineChartTwoMeasuresWithTrendyBy, legendCustomizer);
+    .addScenarios("legend position", LineChartTwoMeasuresWithTrendyBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", LineChartTwoMeasuresWithTrendyBy, dataLabelCustomizer);
+    .addScenarios("data labels", LineChartTwoMeasuresWithTrendyBy, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

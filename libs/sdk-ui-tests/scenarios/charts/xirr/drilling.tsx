@@ -4,8 +4,8 @@ import { IXirrProps, Xirr } from "@gooddata/sdk-ui";
 import { scenariosFor } from "../../../src";
 import { SampleXirrMeasurePredicate } from "../../_infra/predicates";
 
-export default scenariosFor<IXirrProps>("XIRR", Xirr)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+export default scenariosFor<IXirrProps>("Xirr", Xirr)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("drilling on single measure", {
         measure: ReferenceLdm.SampleXIRR,
         attribute: ReferenceLdm.TimelineYear,

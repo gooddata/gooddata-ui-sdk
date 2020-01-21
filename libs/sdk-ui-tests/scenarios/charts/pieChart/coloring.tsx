@@ -8,11 +8,11 @@ import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./b
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", PieChartWithSingleMeasureAndViewBy, coloringCustomizer);
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .addScenarios("coloring", PieChartWithSingleMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IPieChartProps>("PieChart", PieChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("assign color to measures", {
         ...PieChartWithTwoMeasures,
         config: {

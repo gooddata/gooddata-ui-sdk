@@ -1,0 +1,88 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.1b3c6e4a1c180d27c1733979a792490f",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - axis name configuration - invisible",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

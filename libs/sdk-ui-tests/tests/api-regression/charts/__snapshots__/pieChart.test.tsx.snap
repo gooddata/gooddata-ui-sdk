@@ -1,1204 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PieChart with  - auto visibility should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - auto visibility should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": "auto",
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - bottom should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - bottom should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "bottom",
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - custom colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - custom colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colors": Array [
-      "rgb(33, 41, 195)",
-      "rgb(18, 194, 25)",
-      "rgb(243, 56, 47)",
-      "rgb(240, 239, 8)",
-      "rgb(131, 131, 131)",
-    ],
-  },
-}
-`;
-
-exports[`PieChart with  - custom palette preferred over colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - custom palette preferred over colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
-          "b": 73,
-          "g": 49,
-          "r": 195,
-        },
-        "guid": "01",
-      },
-      Object {
-        "fill": Object {
-          "b": 86,
-          "g": 194,
-          "r": 168,
-        },
-        "guid": "02",
-      },
-      Object {
-        "fill": Object {
-          "b": 177,
-          "g": 217,
-          "r": 243,
-        },
-        "guid": "03",
-      },
-      Object {
-        "fill": Object {
-          "b": 121,
-          "g": 153,
-          "r": 194,
-        },
-        "guid": "04",
-      },
-      Object {
-        "fill": Object {
-          "b": 34,
-          "g": 37,
-          "r": 162,
-        },
-        "guid": "05",
-      },
-    ],
-    "colors": Array [
-      "rgb(33, 41, 195)",
-      "rgb(18, 194, 25)",
-      "rgb(243, 56, 47)",
-      "rgb(240, 239, 8)",
-      "rgb(131, 131, 131)",
-    ],
-  },
-}
-`;
-
-exports[`PieChart with  - custom palette should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - custom palette should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
-          "b": 73,
-          "g": 49,
-          "r": 195,
-        },
-        "guid": "01",
-      },
-      Object {
-        "fill": Object {
-          "b": 86,
-          "g": 194,
-          "r": 168,
-        },
-        "guid": "02",
-      },
-      Object {
-        "fill": Object {
-          "b": 177,
-          "g": 217,
-          "r": 243,
-        },
-        "guid": "03",
-      },
-      Object {
-        "fill": Object {
-          "b": 121,
-          "g": 153,
-          "r": 194,
-        },
-        "guid": "04",
-      },
-      Object {
-        "fill": Object {
-          "b": 34,
-          "g": 37,
-          "r": 162,
-        },
-        "guid": "05",
-      },
-    ],
-  },
-}
-`;
-
-exports[`PieChart with  - default should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - default should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - default should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - default should create expected props for core chart 1`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`PieChart with  - default should create expected props for core chart 2`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`PieChart with  - default should create expected props for core chart 3`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`PieChart with  - forced hidden should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - forced hidden should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": false,
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - forced visible and german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - forced visible and german separators should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-    "separators": Object {
-      "decimal": ",",
-      "thousand": ".",
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - forced visible should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - forced visible should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - middle should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - middle should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "middle",
-    },
-  },
-}
-`;
-
-exports[`PieChart with  - top should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with  - top should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "top",
-    },
-  },
-}
-`;
-
 exports[`PieChart with arithmetic measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
@@ -1639,7 +440,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - auto legend should create expected execution definition 1`] = `
+exports[`PieChart with coloring - custom colors should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1715,7 +516,866 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - auto legend should create expected props for core chart 1`] = `
+exports[`PieChart with coloring - custom colors should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colors": Array [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+}
+`;
+
+exports[`PieChart with coloring - custom palette preferred over colors should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with coloring - custom palette preferred over colors should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colorPalette": Array [
+      Object {
+        "fill": Object {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      Object {
+        "fill": Object {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      Object {
+        "fill": Object {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      Object {
+        "fill": Object {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      Object {
+        "fill": Object {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": Array [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+}
+`;
+
+exports[`PieChart with coloring - custom palette should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with coloring - custom palette should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colorPalette": Array [
+      Object {
+        "fill": Object {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      Object {
+        "fill": Object {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      Object {
+        "fill": Object {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      Object {
+        "fill": Object {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      Object {
+        "fill": Object {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+  },
+}
+`;
+
+exports[`PieChart with coloring - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with coloring - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`PieChart with data labels - auto visibility should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with data labels - auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": "auto",
+    },
+  },
+}
+`;
+
+exports[`PieChart with data labels - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with data labels - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`PieChart with data labels - forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with data labels - forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": false,
+    },
+  },
+}
+`;
+
+exports[`PieChart with data labels - forced visible and german separators should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with data labels - forced visible and german separators should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+    "separators": Object {
+      "decimal": ",",
+      "thousand": ".",
+    },
+  },
+}
+`;
+
+exports[`PieChart with data labels - forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with data labels - forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - single measure and viewBy - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - single measure and viewBy - auto legend should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1725,7 +1385,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - disabled should create expected execution definition 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - disabled should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1801,7 +1461,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - disabled should create expected props for core chart 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - disabled should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1811,7 +1471,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend at bottom should create expected execution definition 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend at bottom should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1887,7 +1547,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend at bottom should create expected props for core chart 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend at bottom should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1897,7 +1557,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on left should create expected execution definition 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on left should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1973,7 +1633,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on left should create expected props for core chart 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on left should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1983,7 +1643,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on right should create expected execution definition 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on right should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2059,7 +1719,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on right should create expected props for core chart 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on right should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -2069,7 +1729,7 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on top should create expected execution definition 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on top should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2145,7 +1805,547 @@ Object {
 }
 `;
 
-exports[`PieChart with single measure and viewBy - legend on top should create expected props for core chart 1`] = `
+exports[`PieChart with legend position - single measure and viewBy - legend on top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "top",
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - auto legend should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "auto",
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - disabled should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - disabled should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend at bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend at bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "bottom",
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on left should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "left",
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on right should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "right",
+    },
+  },
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with legend position - two measures - legend on top should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -2291,546 +2491,6 @@ Object {
 
 exports[`PieChart with single measure with viewBy should create expected props for core chart 1`] = `Object {}`;
 
-exports[`PieChart with two measures - auto legend should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - auto legend should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "auto",
-    },
-  },
-}
-`;
-
-exports[`PieChart with two measures - disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "enabled": false,
-    },
-  },
-}
-`;
-
-exports[`PieChart with two measures - legend at bottom should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - legend at bottom should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "bottom",
-    },
-  },
-}
-`;
-
-exports[`PieChart with two measures - legend on left should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - legend on left should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "left",
-    },
-  },
-}
-`;
-
-exports[`PieChart with two measures - legend on right should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - legend on right should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "right",
-    },
-  },
-}
-`;
-
-exports[`PieChart with two measures - legend on top should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`PieChart with two measures - legend on top should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "top",
-    },
-  },
-}
-`;
-
 exports[`PieChart with two measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
@@ -2912,3 +2572,343 @@ Object {
 `;
 
 exports[`PieChart with two measures should create expected props for core chart 1`] = `Object {}`;
+
+exports[`PieChart with vertical alignment - bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with vertical alignment - bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "bottom",
+    },
+  },
+}
+`;
+
+exports[`PieChart with vertical alignment - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with vertical alignment - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`PieChart with vertical alignment - middle should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with vertical alignment - middle should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "middle",
+    },
+  },
+}
+`;
+
+exports[`PieChart with vertical alignment - top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PieChart with vertical alignment - top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "top",
+    },
+  },
+}
+`;

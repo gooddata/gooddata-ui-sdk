@@ -200,6 +200,10 @@ function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: II
         return;
     }
 
+    if (scenario[ScenarioTestMembers.Tags].includes("mock-no-insight")) {
+        return;
+    }
+
     const hasher = new SparkMD5();
     const id = `${visName}.${hasher.append(JSON.stringify(def)).end()}`;
     const persistentInsight: IInsight = { insight: { identifier: id, ...def.insight } };

@@ -9,16 +9,16 @@ import { HeatmapWithMeasureRowsAndColumns } from "./base";
 const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", HeatmapWithMeasureRowsAndColumns, legendCustomizer);
+    .addScenarios("legend position", HeatmapWithMeasureRowsAndColumns, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", HeatmapWithMeasureRowsAndColumns, dataLabelCustomizer);
+    .addScenarios("data labels", HeatmapWithMeasureRowsAndColumns, dataLabelCustomizer);
 
 const axisNameScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withVisualTestConfig({ groupUnder: "axis name configuration" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", HeatmapWithMeasureRowsAndColumns, axisNameCustomization);
+    .addScenarios("axis name configuration", HeatmapWithMeasureRowsAndColumns, axisNameCustomization);
 
 export default [legendScenarios, dataLabelScenarios, axisNameScenarios];

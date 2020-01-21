@@ -13,7 +13,7 @@ import { AttributeElements } from "../../_infra/predicates";
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ screenshotSize: { width: 800, height: 600 } })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("single measure and viewBy with drilling on bars", {
         ...BarChartWithSingleMeasureAndViewBy,
         drillableItems: [AttributeElements.Product.Explorer, AttributeElements.Product.WonderKid],

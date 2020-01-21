@@ -1,1710 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Treemap with  - auto legend should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - auto legend should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "auto",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - auto visibility should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - auto visibility should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": "auto",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - custom colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - custom colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colors": Array [
-      "rgb(33, 41, 195)",
-      "rgb(18, 194, 25)",
-      "rgb(243, 56, 47)",
-      "rgb(240, 239, 8)",
-      "rgb(131, 131, 131)",
-    ],
-  },
-}
-`;
-
-exports[`Treemap with  - custom palette preferred over colors should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - custom palette preferred over colors should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
-          "b": 73,
-          "g": 49,
-          "r": 195,
-        },
-        "guid": "01",
-      },
-      Object {
-        "fill": Object {
-          "b": 86,
-          "g": 194,
-          "r": 168,
-        },
-        "guid": "02",
-      },
-      Object {
-        "fill": Object {
-          "b": 177,
-          "g": 217,
-          "r": 243,
-        },
-        "guid": "03",
-      },
-      Object {
-        "fill": Object {
-          "b": 121,
-          "g": 153,
-          "r": 194,
-        },
-        "guid": "04",
-      },
-      Object {
-        "fill": Object {
-          "b": 34,
-          "g": 37,
-          "r": 162,
-        },
-        "guid": "05",
-      },
-    ],
-    "colors": Array [
-      "rgb(33, 41, 195)",
-      "rgb(18, 194, 25)",
-      "rgb(243, 56, 47)",
-      "rgb(240, 239, 8)",
-      "rgb(131, 131, 131)",
-    ],
-  },
-}
-`;
-
-exports[`Treemap with  - custom palette should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - custom palette should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "colorPalette": Array [
-      Object {
-        "fill": Object {
-          "b": 73,
-          "g": 49,
-          "r": 195,
-        },
-        "guid": "01",
-      },
-      Object {
-        "fill": Object {
-          "b": 86,
-          "g": 194,
-          "r": 168,
-        },
-        "guid": "02",
-      },
-      Object {
-        "fill": Object {
-          "b": 177,
-          "g": 217,
-          "r": 243,
-        },
-        "guid": "03",
-      },
-      Object {
-        "fill": Object {
-          "b": 121,
-          "g": 153,
-          "r": 194,
-        },
-        "guid": "04",
-      },
-      Object {
-        "fill": Object {
-          "b": 34,
-          "g": 37,
-          "r": 162,
-        },
-        "guid": "05",
-      },
-    ],
-  },
-}
-`;
-
-exports[`Treemap with  - default should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - default should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - default should create expected props for core chart 1`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`Treemap with  - default should create expected props for core chart 2`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`Treemap with  - disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "enabled": false,
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - forced hidden should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - forced hidden should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": false,
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - forced visible and german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - forced visible and german separators should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-    "separators": Object {
-      "decimal": ",",
-      "thousand": ".",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - forced visible should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - forced visible should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - legend at bottom should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - legend at bottom should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "bottom",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - legend on left should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - legend on left should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "left",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - legend on right should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - legend on right should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "right",
-    },
-  },
-}
-`;
-
-exports[`Treemap with  - legend on top should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.owner.region",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.owner.region",
-            },
-            "localIdentifier": "a_label.owner.region",
-          },
-        },
-      ],
-      "localIdentifier": "segment",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-        "a_label.owner.region",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`Treemap with  - legend on top should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "top",
-    },
-  },
-}
-`;
-
 exports[`Treemap with arithmetic measures and segment should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -2008,6 +303,1711 @@ Object {
         "guid": "05",
       },
     ],
+  },
+}
+`;
+
+exports[`Treemap with coloring - custom colors should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with coloring - custom colors should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colors": Array [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+}
+`;
+
+exports[`Treemap with coloring - custom palette preferred over colors should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with coloring - custom palette preferred over colors should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colorPalette": Array [
+      Object {
+        "fill": Object {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      Object {
+        "fill": Object {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      Object {
+        "fill": Object {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      Object {
+        "fill": Object {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      Object {
+        "fill": Object {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": Array [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+}
+`;
+
+exports[`Treemap with coloring - custom palette should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with coloring - custom palette should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "colorPalette": Array [
+      Object {
+        "fill": Object {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      Object {
+        "fill": Object {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      Object {
+        "fill": Object {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      Object {
+        "fill": Object {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      Object {
+        "fill": Object {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Treemap with coloring - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with coloring - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`Treemap with data labels - auto visibility should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with data labels - auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": "auto",
+    },
+  },
+}
+`;
+
+exports[`Treemap with data labels - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with data labels - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`Treemap with data labels - forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with data labels - forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": false,
+    },
+  },
+}
+`;
+
+exports[`Treemap with data labels - forced visible and german separators should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with data labels - forced visible and german separators should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+    "separators": Object {
+      "decimal": ",",
+      "thousand": ".",
+    },
+  },
+}
+`;
+
+exports[`Treemap with data labels - forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with data labels - forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - auto legend should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "auto",
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - disabled should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - disabled should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - legend at bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - legend at bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "bottom",
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - legend on left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - legend on left should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "left",
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - legend on right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - legend on right should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "right",
+    },
+  },
+}
+`;
+
+exports[`Treemap with legend position - legend on top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`Treemap with legend position - legend on top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "top",
+    },
   },
 }
 `;

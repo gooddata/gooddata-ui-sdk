@@ -1,177 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DonutChart with  - auto visibility should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - auto visibility should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": "auto",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with  - bottom should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - bottom should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "bottom",
-    },
-  },
-}
-`;
-
 exports[`DonutChart with  - custom colors should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -595,607 +423,9 @@ Object {
 }
 `;
 
-exports[`DonutChart with  - default should create expected execution definition 2`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - default should create expected execution definition 3`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
 exports[`DonutChart with  - default should create expected props for core chart 1`] = `
 Object {
   "config": Object {},
-}
-`;
-
-exports[`DonutChart with  - default should create expected props for core chart 2`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`DonutChart with  - default should create expected props for core chart 3`] = `
-Object {
-  "config": Object {},
-}
-`;
-
-exports[`DonutChart with  - forced hidden should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - forced hidden should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": false,
-    },
-  },
-}
-`;
-
-exports[`DonutChart with  - forced visible and german separators should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - forced visible and german separators should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-    "separators": Object {
-      "decimal": ",",
-      "thousand": ".",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with  - forced visible should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - forced visible should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "dataLabels": Object {
-      "visible": true,
-    },
-  },
-}
-`;
-
-exports[`DonutChart with  - middle should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - middle should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "middle",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with  - top should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with  - top should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "chart": Object {
-      "verticalAlign": "top",
-    },
-  },
 }
 `;
 
@@ -1639,7 +869,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - auto legend should create expected execution definition 1`] = `
+exports[`DonutChart with data labels - auto visibility should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1715,7 +945,437 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - auto legend should create expected props for core chart 1`] = `
+exports[`DonutChart with data labels - auto visibility should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": "auto",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with data labels - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with data labels - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`DonutChart with data labels - forced hidden should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with data labels - forced hidden should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": false,
+    },
+  },
+}
+`;
+
+exports[`DonutChart with data labels - forced visible and german separators should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with data labels - forced visible and german separators should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+    "separators": Object {
+      "decimal": ",",
+      "thousand": ".",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with data labels - forced visible should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with data labels - forced visible should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - single measure and viewBy - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - single measure and viewBy - auto legend should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1725,7 +1385,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - disabled should create expected execution definition 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - disabled should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1801,7 +1461,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - disabled should create expected props for core chart 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - disabled should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1811,7 +1471,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend at bottom should create expected execution definition 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend at bottom should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1887,7 +1547,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend at bottom should create expected props for core chart 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend at bottom should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1897,7 +1557,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on left should create expected execution definition 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on left should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1973,7 +1633,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on left should create expected props for core chart 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on left should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -1983,7 +1643,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on right should create expected execution definition 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on right should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2059,7 +1719,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on right should create expected props for core chart 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on right should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -2069,7 +1729,7 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on top should create expected execution definition 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on top should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -2145,7 +1805,547 @@ Object {
 }
 `;
 
-exports[`DonutChart with single measure and viewBy - legend on top should create expected props for core chart 1`] = `
+exports[`DonutChart with legend position - single measure and viewBy - legend on top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "top",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - auto legend should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "auto",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - disabled should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - disabled should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend at bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend at bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "bottom",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on left should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "left",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on right should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "right",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with legend position - two measures - legend on top should create expected props for core chart 1`] = `
 Object {
   "config": Object {
     "legend": Object {
@@ -2291,546 +2491,6 @@ Object {
 
 exports[`DonutChart with single measure with viewBy should create expected props for core chart 1`] = `Object {}`;
 
-exports[`DonutChart with two measures - auto legend should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - auto legend should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "auto",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with two measures - disabled should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - disabled should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "enabled": false,
-    },
-  },
-}
-`;
-
-exports[`DonutChart with two measures - legend at bottom should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - legend at bottom should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "bottom",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with two measures - legend on left should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - legend on left should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "left",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with two measures - legend on right should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - legend on right should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "right",
-    },
-  },
-}
-`;
-
-exports[`DonutChart with two measures - legend on top should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-  ],
-  "sortBy": Array [],
-  "workspace": "testWorkspace",
-}
-`;
-
-exports[`DonutChart with two measures - legend on top should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "legend": Object {
-      "position": "top",
-    },
-  },
-}
-`;
-
 exports[`DonutChart with two measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],
@@ -2912,3 +2572,343 @@ Object {
 `;
 
 exports[`DonutChart with two measures should create expected props for core chart 1`] = `Object {}`;
+
+exports[`DonutChart with vertical alignment - bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with vertical alignment - bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "bottom",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with vertical alignment - default should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with vertical alignment - default should create expected props for core chart 1`] = `
+Object {
+  "config": Object {},
+}
+`;
+
+exports[`DonutChart with vertical alignment - middle should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with vertical alignment - middle should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "middle",
+    },
+  },
+}
+`;
+
+exports[`DonutChart with vertical alignment - top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`DonutChart with vertical alignment - top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "chart": Object {
+      "verticalAlign": "top",
+    },
+  },
+}
+`;

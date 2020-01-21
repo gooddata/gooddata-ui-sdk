@@ -1,0 +1,88 @@
+{
+    "insight": {
+        "identifier": "ComboChart.41766482f096c04c97ac6aabf1d22e79",
+        "visualizationUrl": "local:combo2",
+        "title": "ComboChart - axis name configuration - invisible",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

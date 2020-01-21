@@ -8,11 +8,11 @@ import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", BubbleChartWithAllMeasuresAndAttribute, coloringCustomizer);
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .addScenarios("coloring", BubbleChartWithAllMeasuresAndAttribute, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("assign color to attribute bubbles", {
         ...BubbleChartWithAllMeasuresAndAttribute,
         config: {

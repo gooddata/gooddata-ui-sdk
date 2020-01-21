@@ -8,11 +8,11 @@ import { BarChartWithTwoMeasuresAndViewBy } from "./base";
 const legendScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", BarChartWithTwoMeasuresAndViewBy, legendCustomizer);
+    .addScenarios("legend position", BarChartWithTwoMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", BarChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
+    .addScenarios("data labels", BarChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

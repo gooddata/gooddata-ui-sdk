@@ -37,8 +37,11 @@ export type TestTypes = "api" | "visual";
  * -  "mock-no-scenario-meta' - indicates that the capture & mock handling tooling should not include the
  *    tagged scenario in the execution's scenario meta, thus ensuring that the scenario does not appear
  *    in the Scenarios mapping in recording index
+ *
+ * - "mock-no-insight" - indicates that the capture & mock handling tooling should not create insight for
+ *   the tagged scenario.
  */
-export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta";
+export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta" | "mock-no-insight";
 
 export type ScenarioTag = SignificantTags | string;
 

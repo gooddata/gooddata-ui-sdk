@@ -7,14 +7,12 @@ import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
 
 const legendScenarios = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
-    .addScenarios("", BubbleChartWithAllMeasuresAndAttribute, legendCustomizer, m =>
-        m.withTags("vis-config-only", "mock-no-scenario-meta"),
-    );
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("legend position", BubbleChartWithAllMeasuresAndAttribute, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
-    .addScenarios("", BubbleChartWithAllMeasuresAndAttribute, dataLabelCustomizer, m =>
-        m.withTags("vis-config-only", "mock-no-scenario-meta"),
-    );
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("data labels", BubbleChartWithAllMeasuresAndAttribute, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

@@ -1,0 +1,87 @@
+{
+    "insight": {
+        "identifier": "LineChart.4c7d00bb9d2e2889b2e9c5185c7889f6",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - single axis name configuration - high",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,28 +1,31 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
-    AnalyticalBackendConfig,
     AuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     IElementQueryFactory,
     IExecutionFactory,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspaceMetadata,
+    IWorkspacePermissionsFactory,
+    IWorkspaceQueryFactory,
+    IWorkspaceSettings,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
-    IWorkspaceQueryFactory,
-    IWorkspacePermissionsFactory,
 } from "@gooddata/sdk-backend-spi";
-import { RecordedExecutionFactory } from "./execution";
-import { RecordingIndex } from "./types";
+import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
+import { RecordedExecutionFactory } from "./execution";
 import { RecordedMetadata } from "./metadata";
+import { RecordedBackendConfig, RecordingIndex } from "./types";
 
-const defaultConfig = { hostname: "test" };
+const defaultConfig: RecordedBackendConfig = {
+    hostname: "test",
+};
 
 /**
  * Creates new backend that will be providing recorded results to the caller. The recorded results are provided
@@ -40,7 +43,7 @@ const defaultConfig = { hostname: "test" };
  */
 export function recordedBackend(
     index: RecordingIndex,
-    config: AnalyticalBackendConfig = defaultConfig,
+    config: RecordedBackendConfig = defaultConfig,
 ): IAnalyticalBackend {
     const backend: IAnalyticalBackend = {
         capabilities: {},
@@ -56,7 +59,7 @@ export function recordedBackend(
         },
 
         workspace(id: string): IAnalyticalWorkspace {
-            return recordedWorkspace(id, index);
+            return recordedWorkspace(id, index, config);
         },
         workspaces(): IWorkspaceQueryFactory {
             throw new NotSupported("not supported");
@@ -72,7 +75,11 @@ export function recordedBackend(
     return backend;
 }
 
-function recordedWorkspace(workspace: string, recordings: RecordingIndex = {}): IAnalyticalWorkspace {
+function recordedWorkspace(
+    workspace: string,
+    recordings: RecordingIndex = {},
+    implConfig: RecordedBackendConfig,
+): IAnalyticalWorkspace {
     return {
         workspace,
         execution(): IExecutionFactory {
@@ -85,10 +92,21 @@ function recordedWorkspace(workspace: string, recordings: RecordingIndex = {}): 
             return new RecordedMetadata(recordings);
         },
         settings(): IWorkspaceSettingsService {
-            throw new NotSupported("not supported");
+            return {
+                async query(): Promise<IWorkspaceSettings> {
+                    return {
+                        workspace,
+                        ...(implConfig.globalSettings ?? {}),
+                    };
+                },
+            };
         },
         styling(): IWorkspaceStylingService {
-            throw new NotSupported("not supported");
+            return {
+                async colorPalette(): Promise<IColorPalette> {
+                    return implConfig.globalPalette ?? [];
+                },
+            };
         },
         catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");

@@ -8,11 +8,11 @@ import { TreemapWithMeasureViewByAndSegmentBy } from "./base";
 const legendScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", TreemapWithMeasureViewByAndSegmentBy, legendCustomizer);
+    .addScenarios("legend position", TreemapWithMeasureViewByAndSegmentBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", TreemapWithMeasureViewByAndSegmentBy, dataLabelCustomizer);
+    .addScenarios("data labels", TreemapWithMeasureViewByAndSegmentBy, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

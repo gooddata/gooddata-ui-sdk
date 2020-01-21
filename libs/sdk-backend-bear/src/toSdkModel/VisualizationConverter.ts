@@ -168,7 +168,9 @@ export const convertVisualization = (
         insight: {
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? content.filters.map(convertFilter) : [],
-            identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
+            // we assume that identifier is always defined for visualizations
+            identifier: meta.identifier!,
+            // TODO: remove the need to have properties content wrapper in yet another 'properties' object
             properties: { properties: parsedProperties },
             sorts: parsedProperties.sortItems || [],
             title: meta.title!,

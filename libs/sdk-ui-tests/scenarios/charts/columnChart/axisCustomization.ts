@@ -17,7 +17,11 @@ const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Colu
         screenshotSize: { width: 800, height: 600 },
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("single axis", ColumnChartWithTwoMeasuresAndViewBy, axisNameCustomization);
+    .addScenarios(
+        "single axis name customization",
+        ColumnChartWithTwoMeasuresAndViewBy,
+        axisNameCustomization,
+    );
 
 const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({
@@ -26,7 +30,7 @@ const dualAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", Column
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios(
-        "",
+        "dual axis name customization",
         {
             ...ColumnChartWithArithmeticMeasuresAndViewBy,
             config: {
