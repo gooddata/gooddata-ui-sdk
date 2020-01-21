@@ -12,11 +12,11 @@ import {
 
 const colorsAndPalette = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", BarChartWithTwoMeasuresAndViewBy, coloringCustomizer);
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .addScenarios("coloring", BarChartWithTwoMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IBarChartProps>("BarChart", BarChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("assign color to measures", {
         ...BarChartWithTwoMeasuresAndViewBy,
         config: {

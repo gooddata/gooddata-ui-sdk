@@ -8,20 +8,20 @@ import { legendCustomizer } from "../_infra/legendVariants";
 
 const legendScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
-    .addScenarios("", AreaChartWithTwoMeasuresAndViewBy, legendCustomizer, m =>
+    .addScenarios("legend position", AreaChartWithTwoMeasuresAndViewBy, legendCustomizer, m =>
         m.withTags("vis-config-only", "mock-no-scenario-meta"),
     );
 
 const dataLabelScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
-    .addScenarios("", AreaChartWithTwoMeasuresAndViewBy, dataLabelCustomizer, m =>
+    .addScenarios("data labels", AreaChartWithTwoMeasuresAndViewBy, dataLabelCustomizer, m =>
         m.withTags("vis-config-only", "mock-no-scenario-meta"),
     );
 
 const coloringScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .addScenarios("", AreaChartWithTwoMeasuresAndViewBy, coloringCustomizer, m =>
-        m.withTags("vis-config-only", "mock-no-scenario-meta"),
+    .addScenarios("coloring", AreaChartWithTwoMeasuresAndViewBy, coloringCustomizer, m =>
+        m.withTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight"),
     );
 
 const yAxisScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)

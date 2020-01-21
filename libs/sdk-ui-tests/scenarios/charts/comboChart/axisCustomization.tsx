@@ -13,27 +13,35 @@ import { comboVariants } from "./_variants";
 const twoMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis two measures with slicing" })
-    .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, comboVariants);
+    .addScenarios("dual axis two measures with slicing", ComboChartWithTwoMeasuresAndViewBy, comboVariants);
 
 const twoMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis two measures without slicing" })
-    .addScenarios("", ComboChartWithTwoMeasuresAndNoViewBy, comboVariants);
+    .addScenarios("dual axis two measures with slicing", ComboChartWithTwoMeasuresAndNoViewBy, comboVariants);
 
 const multipleMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis multiple measures with slicing" })
-    .addScenarios("", ComboChartWithArithmeticMeasuresAndViewBy, comboVariants);
+    .addScenarios(
+        "dual axis two measures with slicing",
+        ComboChartWithArithmeticMeasuresAndViewBy,
+        comboVariants,
+    );
 
 const multipleMeasuresNoSlicing = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis multiple measures without slicing" })
-    .addScenarios("", ComboChartWithMultipleMeasuresAndNoViewBy, comboVariants);
+    .addScenarios(
+        "dual axis multiple measures without slicing",
+        ComboChartWithMultipleMeasuresAndNoViewBy,
+        comboVariants,
+    );
 
 const axisNameConfig = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "axis name configuration" })
-    .addScenarios("", ComboChartWithTwoMeasuresAndViewBy, axisNameCustomization);
+    .addScenarios("axis name configuration", ComboChartWithTwoMeasuresAndViewBy, axisNameCustomization);
 
 const others = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")

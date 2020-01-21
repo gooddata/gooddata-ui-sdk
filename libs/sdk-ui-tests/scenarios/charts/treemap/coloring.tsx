@@ -8,11 +8,11 @@ import { AttributeElements } from "../../_infra/predicates";
 
 const colorsAndPalette = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", TreemapWithMeasureViewByAndSegmentBy, coloringCustomizer);
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .addScenarios("coloring", TreemapWithMeasureViewByAndSegmentBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<ITreemapProps>("Treemap", Treemap)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("assign color to attributes", {
         ...TreemapWithMeasureViewByAndSegmentBy,
         config: {

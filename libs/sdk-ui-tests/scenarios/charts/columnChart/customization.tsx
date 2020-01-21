@@ -8,11 +8,11 @@ import { ColumnChartWithTwoMeasuresAndViewBy } from "./base";
 const legendScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "legend position" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", ColumnChartWithTwoMeasuresAndViewBy, legendCustomizer);
+    .addScenarios("legend position", ColumnChartWithTwoMeasuresAndViewBy, legendCustomizer);
 
 const dataLabelScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "data labels" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("", ColumnChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
+    .addScenarios("data labels", ColumnChartWithTwoMeasuresAndViewBy, dataLabelCustomizer);
 
 export default [legendScenarios, dataLabelScenarios];

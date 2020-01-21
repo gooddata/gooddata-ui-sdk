@@ -25,6 +25,6 @@ const axisConfig = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
 const axisNameScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "axis name configuration" })
-    .addScenarios("", ScatterPlotWithMeasuresAndAttribute, axisNameCustomization);
+    .addScenarios("axis name configuration", ScatterPlotWithMeasuresAndAttribute, axisNameCustomization);
 
 export default [axisConfig, axisNameScenarios];

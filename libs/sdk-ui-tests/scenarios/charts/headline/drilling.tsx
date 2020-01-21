@@ -5,7 +5,7 @@ import { scenariosFor } from "../../../src";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
 
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
     .addScenario("drilling on single measure", {
         primaryMeasure: ReferenceLdm.Won,
         drillableItems: [WonMeasurePredicate],

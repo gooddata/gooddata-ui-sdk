@@ -39,13 +39,13 @@ const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)
 const singleAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "single axis name configuration" })
-    .addScenarios("", LineChartTwoMeasuresWithTrendyBy, axisNameCustomization);
+    .addScenarios("single axis name configuration", LineChartTwoMeasuresWithTrendyBy, axisNameCustomization);
 
 const dualAxisNameScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "dual axis name configuration" })
     .addScenarios(
-        "",
+        "dual axis name configuration",
         {
             ...LineChartTwoMeasuresWithTrendyBy,
             config: {

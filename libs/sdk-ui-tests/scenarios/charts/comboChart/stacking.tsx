@@ -17,14 +17,14 @@ import {
 const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures with different chart type" })
-    .addScenario("column", {
+    .addScenario("stack primary measures with different chart type - column", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "column",
             stackMeasures: true,
         },
     })
-    .addScenario("area", {
+    .addScenario("stack primary measures with different chart type - area", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "area",
@@ -35,14 +35,14 @@ const stackMeasuresDiffCharts = scenariosFor<IComboChartProps>("ComboChart", Com
 const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures to 100% with different chart type" })
-    .addScenario("column", {
+    .addScenario("stack primary measures to 100% with different chart type - column", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "column",
             stackMeasuresToPercent: true,
         },
     })
-    .addScenario("area", {
+    .addScenario("stack primary measures to 100% with different chart type - area", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "area",
@@ -53,7 +53,7 @@ const stackMeasuresToPercentDiffCharts = scenariosFor<IComboChartProps>("ComboCh
 const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "stack primary measures when both column chart" })
-    .addScenario("normal stacking", {
+    .addScenario("stack primary measures when both column chart - normal stacking", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "column",
@@ -61,7 +61,7 @@ const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart
             stackMeasures: true,
         },
     })
-    .addScenario("stack to 100%", {
+    .addScenario("stack primary measures when both column chart - stack to 100%", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {
             primaryChartType: "column",
@@ -74,7 +74,7 @@ const stackMeasuresBothChartsColumn = scenariosFor<IComboChartProps>("ComboChart
 const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are on line chart" })
-    .addScenario("secondary is column", {
+    .addScenario("discard stacking when primary measures are on line chart - secondary is column", {
         ...ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
         config: {
             primaryChartType: "line",
@@ -82,7 +82,7 @@ const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
             stackMeasures: true,
         },
     })
-    .addScenario("secondary is area", {
+    .addScenario("discard stacking when primary measures are on line chart - secondary is area", {
         ...ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
         config: {
             primaryChartType: "line",
@@ -94,7 +94,7 @@ const discardStacking = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
 const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .withVisualTestConfig({ groupUnder: "discard stacking when primary measures are not specified" })
-    .addScenario("secondary is column", {
+    .addScenario("discard stacking when primary measures are not specified - secondary is column", {
         ...ComboChartWithTwoSecondaryMeasures,
         config: {
             primaryChartType: "line",
@@ -102,7 +102,7 @@ const discardStackingWhenNoPrimary = scenariosFor<IComboChartProps>("ComboChart"
             stackMeasures: true,
         },
     })
-    .addScenario("secondary is area", {
+    .addScenario("discard stacking when primary measures are not specified - secondary is area", {
         ...ComboChartWithTwoSecondaryMeasures,
         config: {
             primaryChartType: "line",
