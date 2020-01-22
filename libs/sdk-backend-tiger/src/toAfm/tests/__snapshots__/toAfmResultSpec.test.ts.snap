@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has filters 1`] = `
+Object {
+  "execution": Object {
+    "attributes": Array [
+      Object {
+        "displayForm": Object {
+          "identifier": Object {
+            "id": "label.account.id.name",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_label.account.id.name",
+      },
+      Object {
+        "displayForm": Object {
+          "identifier": Object {
+            "id": "label.activity.id.subject",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_label.activity.id.subject",
+      },
+    ],
+    "filters": Array [
+      Object {
+        "positiveAttributeFilter": Object {
+          "displayForm": Object {
+            "identifier": Object {
+              "id": "label.account.id.name",
+              "type": "label",
+            },
+          },
+          "in": Object {
+            "values": Array [
+              "myAccount",
+            ],
+          },
+        },
+      },
+    ],
+    "measures": Array [
+      Object {
+        "definition": Object {
+          "measure": Object {
+            "item": Object {
+              "identifier": Object {
+                "id": "acugFHNJgsBy",
+                "type": "fact",
+              },
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    ],
+  },
+  "project": "test workspace",
+  "resultSpec": Object {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has no filter 1`] = `
+Object {
+  "execution": Object {},
+  "project": "test workspace",
+  "resultSpec": Object {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has one attribute with alias and one attribute without localId 1`] = `
+Object {
+  "execution": Object {
+    "attributes": Array [
+      Object {
+        "alias": "alias",
+        "displayForm": Object {
+          "identifier": Object {
+            "id": "attribute1",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a_attribute1",
+      },
+      Object {
+        "displayForm": Object {
+          "identifier": Object {
+            "id": "attribute2",
+            "type": "label",
+          },
+        },
+        "localIdentifier": "a2",
+      },
+    ],
+  },
+  "project": "test workspace",
+  "resultSpec": Object {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with dimensions 1`] = `
+Object {
+  "execution": Object {},
+  "project": "test workspace",
+  "resultSpec": Object {
+    "dimensions": Array [
+      Object {
+        "itemIdentifiers": Array [
+          "localId1",
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with empty definition 1`] = `
+Object {
+  "execution": Object {},
+  "project": "test workspace",
+  "resultSpec": Object {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution should return AFM Execution with sorts 1`] = `
+Object {
+  "execution": Object {},
+  "project": "test workspace",
+  "resultSpec": Object {},
+}
+`;
+
+exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"Tiger backend does not support totals."`;
+
+exports[`converts execution definition to AFM Execution throw when dimension has non-native totals 1`] = `"Tiger backend does not support totals."`;

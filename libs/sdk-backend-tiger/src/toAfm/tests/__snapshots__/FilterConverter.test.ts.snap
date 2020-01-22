@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter from model to AFM with all attributes 1`] = `
+Object {
+  "absoluteDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": "2019-08-06",
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'from' attribute 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'to' attribute 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with date granularity 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": -11,
+    "granularity": "GDC.time.date",
+    "to": 0,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with missing 'to' parameter 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": 5,
+    "granularity": "GDC.time.date",
+    "to": NaN,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with mission 'from' parameter 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with month granularity 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": -3,
+    "granularity": "GDC.time.month",
+    "to": 9,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with quarter granularity 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": 25,
+    "granularity": "GDC.time.quarter",
+    "to": -2,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with week granularity 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": 50,
+    "granularity": "GDC.time.week_us",
+    "to": 100,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert relative date filter should return AFM relative date filter with year granularity 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": 2,
+    "granularity": "GDC.time.year",
+    "to": 7,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return absolute date filter 1`] = `
+Object {
+  "absoluteDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": "2019-08-06",
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return negative attribute filter 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "notIn": Object {
+      "values": Array [
+        "other value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return null when filter is empty 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return positive attribute filter 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "in": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return relative date filter 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataSet": Object {
+      "identifier": Object {
+        "id": "closed",
+        "type": "dateDataSet",
+      },
+    },
+    "from": 20,
+    "granularity": "GDC.time.date",
+    "to": 30,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying attribute elements by value 2`] = `"Tiger backend only allows specifying attribute elements by value"`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error when visualization object filter does not support measure value filters 1`] = `"Tiger backend does not support measure value filters"`;
