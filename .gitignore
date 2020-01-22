@@ -77,3 +77,6 @@ libs/**/src/**/*.jsx
 .rush/temp/**
 .gdcatalogrc
 .gdmockrc
+
+# CI scripts create these
+ci/
