@@ -46,6 +46,13 @@ const ScenarioConfig = [
     },
     {
         /*
+         * Tests for pluggable visualizations. All backstop config is provided on per-story basis.
+         */
+        idRegex: /04.*/g,
+        config: {},
+    },
+    {
+        /*
          * Tests for Filtering components
          */
         idRegex: /(10).*/g,
