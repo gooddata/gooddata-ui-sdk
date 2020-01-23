@@ -18,4 +18,5 @@ export {
     IVisualizationProperties,
     IVisualizationOptions,
     ConfigPanelClassName,
+    IGdcConfig,
 } from "./interfaces/Visualization";
