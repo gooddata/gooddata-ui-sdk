@@ -1,0 +1,91 @@
+{
+    "insight": {
+        "identifier": "BarChart.b03591675fc603c7f27acfa92e7cb762",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - two measures with two viewBy, filtered to single value",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": {
+                        "identifier": "label.product.id.name"
+                    },
+                    "in": {
+                        "values": ["WonderKid"]
+                    }
+                }
+            },
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": {
+                        "identifier": "label.owner.region"
+                    },
+                    "in": {
+                        "values": ["East Coast"]
+                    }
+                }
+            }
+        ],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}
