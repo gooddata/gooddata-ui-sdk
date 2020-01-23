@@ -8,7 +8,6 @@ import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@goo
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
-import SparkMD5 from "spark-md5";
 import allScenarios from "../../scenarios";
 import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
@@ -204,8 +203,7 @@ function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: II
         return;
     }
 
-    const hasher = new SparkMD5();
-    const id = `${visName}.${hasher.append(JSON.stringify(def)).end()}`;
+    const id = scenario[ScenarioTestMembers.InsightId];
     const persistentInsight: IInsight = { insight: { identifier: id, ...def.insight } };
     const insightDir = path.join(InsightsDir!, id);
 
@@ -274,10 +272,9 @@ describe("all scenarios", () => {
             const plugVizInteractions = await mountInsight(insight);
 
             storeScenarioDefinition(vis, scenario, interactions, plugVizInteractions);
+            storeInsight(vis, scenario, insight);
         } else {
             storeScenarioDefinition(vis, scenario, interactions);
         }
-
-        storeInsight(vis, scenario, insight);
     });
 });
