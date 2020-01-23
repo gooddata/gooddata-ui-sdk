@@ -3,6 +3,7 @@
 import { IInsightDefinition, newInsightDefinition, VisualizationProperties } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui";
 import { ChartInteractions } from "./backendWithCapturing";
+import { chartConfigToVisProperties } from "./utils";
 
 function visNameToUri(name: string): string {
     if (name === "PivotTable") {
@@ -26,17 +27,7 @@ export function createInsightDefinitionForChart(
 ): IInsightDefinition {
     const chartConfig: IChartConfig | undefined = interactions.effectiveProps.config;
 
-    /*
-     * Indeed, the properties content is stored in 'properties' entry in insight AND the content itself
-     * is wrapper in another object under 'properties' entry.
-     *
-     * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight from
-     * bear visualization object.
-     *
-     * TODO: remove this double wrap
-     */
-    const properties: VisualizationProperties =
-        chartConfig !== undefined ? { properties: { controls: chartConfig } } : {};
+    const properties: VisualizationProperties = chartConfigToVisProperties(chartConfig);
     const execution = interactions.triggeredExecution;
     const visClassUri = visNameToUri(name);
 
