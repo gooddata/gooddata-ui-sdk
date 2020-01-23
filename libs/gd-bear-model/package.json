@@ -11,7 +11,7 @@
         "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
         "test": "jest --watch",
         "test-once": "jest",
-        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --config jest.ci.js",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
