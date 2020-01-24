@@ -316,7 +316,7 @@
             "packageName": "@gooddata/reference-workspace",
             "projectFolder": "tools/reference-workspace",
             "reviewCategory": "tools",
-            "shouldPublish": false
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/catalog-export",
