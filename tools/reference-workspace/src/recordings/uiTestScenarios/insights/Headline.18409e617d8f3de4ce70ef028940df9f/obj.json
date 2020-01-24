@@ -1,0 +1,47 @@
+{
+    "insight": {
+        "identifier": "Headline.18409e617d8f3de4ce70ef028940df9f",
+        "visualizationUrl": "local:headline",
+        "title": "Headline - two measures one PoP",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "popMeasureDefinition": {
+                                    "measureIdentifier": "m_acugFHNJgsBy",
+                                    "popAttribute": {
+                                        "identifier": "closed.year"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                            "alias": "Won Last Year"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

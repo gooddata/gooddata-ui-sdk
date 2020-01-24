@@ -21,7 +21,7 @@ const dataLabelScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
 const coloringScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .addScenarios("coloring", AreaChartWithTwoMeasuresAndViewBy, coloringCustomizer, m =>
-        m.withTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight"),
+        m.withTags("vis-config-only", "mock-no-scenario-meta"),
     );
 
 const yAxisScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)

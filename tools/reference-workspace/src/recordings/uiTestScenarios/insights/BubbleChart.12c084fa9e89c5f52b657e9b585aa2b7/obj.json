@@ -1,0 +1,105 @@
+{
+    "insight": {
+        "identifier": "BubbleChart.12c084fa9e89c5f52b657e9b585aa2b7",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - axis name customization - high",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "high"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

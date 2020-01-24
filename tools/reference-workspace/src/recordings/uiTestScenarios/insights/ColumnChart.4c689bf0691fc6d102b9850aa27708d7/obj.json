@@ -1,0 +1,115 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.4c689bf0691fc6d102b9850aa27708d7",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - dual axis name customization - invisible",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                            "alias": "Calculated 'Lost' measure"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                                        "m_acugFHNJgsBy"
+                                    ],
+                                    "operator": "ratio"
+                                }
+                            },
+                            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+                            "alias": "Ratio of Won and Lost"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "secondary_yaxis": {
+                        "measures": ["m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy"],
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": false,
+                            "position": "middle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

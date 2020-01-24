@@ -24,8 +24,12 @@ export function axisRotationVariants<T extends VisProps>(
     baseProps: UnboundVisProps<T>,
 ): Array<ScenarioNameAndProps<T>> {
     return ConfigVariants.map(([rotation]) => {
+        /*
+         * stories use the scenario name as story name. the minus sign messes things up and would lead
+         * to duplicate stories..
+         */
         return [
-            `${baseName} - ${rotation}`,
+            `${baseName} - ${rotation.replace("-", "minus")}`,
             { ...baseProps, config: updateAxisSettings(rotation, baseProps.config) },
         ];
     });

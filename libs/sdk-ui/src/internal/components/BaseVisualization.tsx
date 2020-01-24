@@ -52,6 +52,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onExportReady: OnExportReady;
     onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
+    configPanelClassName?: string;
     onExtendedReferencePointChanged?(): void;
     onNewDerivedBucketItemsPlaced?(): void;
     renderer?(component: any, target: Element): void;
@@ -65,6 +66,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         onExtendedReferencePointChanged: noop,
         onNewDerivedBucketItemsPlaced: noop,
         isMdObjectValid: true,
+        configPanelClassName: ConfigPanelClassName,
         featureFlags: {},
         renderer: render,
     };
@@ -141,7 +143,15 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
     }
 
     private setupVisualization(props: IBaseVisualizationProps) {
-        const { visualizationClass, environment, locale, featureFlags, projectId, renderer } = props;
+        const {
+            visualizationClass,
+            environment,
+            locale,
+            featureFlags,
+            projectId,
+            configPanelClassName,
+            renderer,
+        } = props;
 
         if (this.visualization) {
             this.visualization.unmount();
@@ -163,7 +173,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 environment,
                 backend: props.backend,
                 element: `.${this.getVisElementClassName()}`,
-                configPanelElement: `.${ConfigPanelClassName}`,
+                configPanelElement: `.${configPanelClassName}`,
                 callbacks: {
                     afterRender: props.afterRender,
                     onLoadingChanged: props.onLoadingChanged,

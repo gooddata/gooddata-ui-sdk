@@ -1,0 +1,76 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.cdc2b8d037f24c07224dd03b037d0db6",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - viewBy date and PoP measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "popMeasureDefinition": {
+                                    "measureIdentifier": "m_acugFHNJgsBy",
+                                    "popAttribute": {
+                                        "identifier": "closed.year"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                            "alias": "Won Last Year"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

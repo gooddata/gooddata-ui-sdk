@@ -1,0 +1,88 @@
+{
+    "insight": {
+        "identifier": "LineChart.6d0d6d69278737b242311496e2f8ac55",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - dual axis name configuration - middle",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "secondary_yaxis": {
+                        "measures": ["m_acugFHNJgsBy"],
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

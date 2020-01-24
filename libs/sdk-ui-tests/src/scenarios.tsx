@@ -7,6 +7,7 @@ import invariant from "ts-invariant";
 import identity = require("lodash/identity");
 import intersection = require("lodash/intersection");
 import isEmpty = require("lodash/isEmpty");
+import SparkMD5 from "spark-md5";
 
 //
 // Base types
@@ -61,6 +62,8 @@ export type ScenarioTestInput<T extends VisProps> = [
     React.ComponentType<T>,
     PropsFactory<T>,
     ScenarioTag[],
+    TestConfiguration,
+    string,
 ];
 
 /**
@@ -71,6 +74,8 @@ export enum ScenarioTestMembers {
     Component = 1,
     PropsFactory = 2,
     Tags = 3,
+    TestConfig = 4,
+    InsightId = 5,
 }
 
 export interface IScenario<T extends VisProps> {
@@ -285,13 +290,25 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      * -  name that should be used in the test - derived from the scenario name
      * -  react component realizing the respective visualization
      * -  props factory for the react component
+     * -  scenario tags
+     * -  identifier of insight which reflects this test scenario
      *
      * It is then the responsibility of the test code to instantiate and use the component in the way it
      * sees fit.
      */
     public asTestInput = (): Array<ScenarioTestInput<T>> => {
-        return this.scenarioList.map(u => {
-            return [u.name, this.component, u.propsFactory, u.tags];
+        return this.scenarioList.map(scenario => {
+            const hasher = new SparkMD5();
+            const insightId = `${this.vis}.${hasher.append(scenario.name).end()}`;
+
+            return [
+                scenario.name,
+                this.component,
+                scenario.propsFactory,
+                scenario.tags,
+                this.testConfig,
+                insightId,
+            ];
         });
     };
 

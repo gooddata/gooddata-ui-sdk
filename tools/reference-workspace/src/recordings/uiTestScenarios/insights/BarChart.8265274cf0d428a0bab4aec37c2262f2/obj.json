@@ -1,0 +1,96 @@
+{
+    "insight": {
+        "identifier": "BarChart.8265274cf0d428a0bab4aec37c2262f2",
+        "visualizationUrl": "local:bar",
+        "title": "BarChart - dual axis name customization - middle",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "secondary_xaxis": {
+                        "measures": ["m_acugFHNJgsBy"],
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "xaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    },
+                    "secondary_yaxis": {
+                        "name": {
+                            "visible": true,
+                            "position": "middle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
