@@ -1,8 +1,8 @@
 {
     "insight": {
-        "identifier": "BarChart.c3ffd37e5bc0bf8a14b8629f4d86a112",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - coloring - custom palette preferred over colors",
+        "identifier": "PieChart.bbb607434db20df6d945549e6a8d179f",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - coloring - custom palette",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -17,18 +17,6 @@
                                 }
                             },
                             "localIdentifier": "m_aangOxLSeztu"
-                        }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
                 ]
@@ -45,10 +33,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "localIdentifier": "stack",
-                "items": []
             }
         ],
         "filters": [],

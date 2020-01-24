@@ -1,0 +1,89 @@
+{
+    "insight": {
+        "identifier": "ColumnChart.fd53ca43c9076948a92236a96dfd6ef8",
+        "visualizationUrl": "local:column",
+        "title": "ColumnChart - assign color to master measure impacts derived PoP",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "popMeasureDefinition": {
+                                    "measureIdentifier": "m_acugFHNJgsBy",
+                                    "popAttribute": {
+                                        "identifier": "closed.year"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                            "alias": "Won Last Year"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

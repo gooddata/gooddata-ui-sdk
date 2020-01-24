@@ -86,26 +86,22 @@
                     "secondary_yaxis": {
                         "measures": ["m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy"],
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "xaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "yaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "secondary_xaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     }
                 }

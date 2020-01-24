@@ -1,0 +1,82 @@
+{
+    "insight": {
+        "identifier": "Treemap.64e0e56f4a244209f568cab8049a0170",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - assign color to attributes",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        },
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 255,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

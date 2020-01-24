@@ -58,26 +58,22 @@
                 "controls": {
                     "xaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "yaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "secondary_xaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "secondary_yaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "middle"
+                            "position": "center"
                         }
                     }
                 }

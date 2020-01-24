@@ -1,8 +1,8 @@
 {
     "insight": {
-        "identifier": "AreaChart.d00593ddbf2951f27c33eb10e13b5bc7",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - coloring - default",
+        "identifier": "PieChart.64e0e56f4a244209f568cab8049a0170",
+        "visualizationUrl": "local:pie",
+        "title": "PieChart - assign color to attributes",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -17,18 +17,6 @@
                                 }
                             },
                             "localIdentifier": "m_aangOxLSeztu"
-                        }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
                 ]
@@ -45,17 +33,36 @@
                         }
                     }
                 ]
-            },
-            {
-                "localIdentifier": "stack",
-                "items": []
             }
         ],
         "filters": [],
         "sorts": [],
         "properties": {
             "properties": {
-                "controls": {}
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        },
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 255,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         }
     }

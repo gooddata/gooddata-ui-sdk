@@ -1,0 +1,69 @@
+{
+    "insight": {
+        "identifier": "FunnelChart.64e0e56f4a244209f568cab8049a0170",
+        "visualizationUrl": "local:funnel",
+        "title": "FunnelChart - assign color to attributes",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        },
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 255,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

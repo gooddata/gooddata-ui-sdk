@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "identifier": "DonutChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "visualizationUrl": "local:donut",
+        "title": "DonutChart - assign color to measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        },
+                        {
+                            "color": {
+                                "type": "guid",
+                                "value": "05"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

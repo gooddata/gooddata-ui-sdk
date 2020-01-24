@@ -1,8 +1,8 @@
 {
     "insight": {
-        "identifier": "AreaChart.9d97a0a0b41da0e8d174620057ea0f64",
-        "visualizationUrl": "local:area",
-        "title": "AreaChart - coloring - custom colors",
+        "identifier": "Heatmap.bbb607434db20df6d945549e6a8d179f",
+        "visualizationUrl": "local:heatmap",
+        "title": "Heatmap - coloring - custom palette",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -17,18 +17,6 @@
                                 }
                             },
                             "localIdentifier": "m_aangOxLSeztu"
-                        }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
                 ]
@@ -48,7 +36,16 @@
             },
             {
                 "localIdentifier": "stack",
-                "items": []
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
             }
         ],
         "filters": [],

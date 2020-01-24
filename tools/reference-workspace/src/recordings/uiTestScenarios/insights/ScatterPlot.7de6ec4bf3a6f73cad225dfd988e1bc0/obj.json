@@ -59,26 +59,22 @@
                 "controls": {
                     "xaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "low"
+                            "position": "left"
                         }
                     },
                     "yaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "low"
+                            "position": "bottom"
                         }
                     },
                     "secondary_xaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "low"
+                            "position": "left"
                         }
                     },
                     "secondary_yaxis": {
                         "name": {
-                            "visible": true,
-                            "position": "low"
+                            "position": "bottom"
                         }
                     }
                 }

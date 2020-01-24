@@ -1,8 +1,8 @@
 {
     "insight": {
-        "identifier": "BarChart.d00593ddbf2951f27c33eb10e13b5bc7",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - coloring - default",
+        "identifier": "Heatmap.d2316ee2458d6855e8d7349bbe1e305c",
+        "visualizationUrl": "local:heatmap",
+        "title": "Heatmap - assign color to measures",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -17,18 +17,6 @@
                                 }
                             },
                             "localIdentifier": "m_aangOxLSeztu"
-                        }
-                    },
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "acugFHNJgsBy"
-                                    }
-                                }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
                         }
                     }
                 ]
@@ -48,14 +36,36 @@
             },
             {
                 "localIdentifier": "stack",
-                "items": []
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
             }
         ],
         "filters": [],
         "sorts": [],
         "properties": {
             "properties": {
-                "controls": {}
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         }
     }

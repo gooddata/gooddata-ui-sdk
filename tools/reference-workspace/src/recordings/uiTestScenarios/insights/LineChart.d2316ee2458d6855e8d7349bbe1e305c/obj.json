@@ -1,8 +1,8 @@
 {
     "insight": {
-        "identifier": "BarChart.9d97a0a0b41da0e8d174620057ea0f64",
-        "visualizationUrl": "local:bar",
-        "title": "BarChart - coloring - custom colors",
+        "identifier": "LineChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "visualizationUrl": "local:line",
+        "title": "LineChart - assign color to measures",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -34,20 +34,20 @@
                 ]
             },
             {
-                "localIdentifier": "view",
+                "localIdentifier": "trend",
                 "items": [
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "created.aci81lMifn6q"
                             },
-                            "localIdentifier": "a_label.product.id.name"
+                            "localIdentifier": "a_created.aci81lMifn6q"
                         }
                     }
                 ]
             },
             {
-                "localIdentifier": "stack",
+                "localIdentifier": "segment",
                 "items": []
             }
         ],
@@ -55,7 +55,20 @@
         "sorts": [],
         "properties": {
             "properties": {
-                "controls": {}
+                "controls": {
+                    "colorMapping": [
+                        {
+                            "color": {
+                                "type": "rgb",
+                                "value": {
+                                    "r": 0,
+                                    "g": 0,
+                                    "b": 0
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         }
     }
