@@ -15,11 +15,24 @@ import SparkMD5 from "spark-md5";
 
 export type VisProps = IPivotTableProps | IBucketChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
-export type UnboundVisPropsCustomizer<T extends VisProps> = (
+
+/**
+ * ScenarioCustomizers can be used in ScenarioGroup's addScenarios() method as a way to conveniently
+ * create multiple variants from a single 'base' scenario. Given base name, props and tags the customizer
+ * returns an array of 0 to N customized scenarios. Those are then added to the group.
+ *
+ * For each customized scenario, the function MUST return name and props. Optionally, it MAY also include
+ * custom tags for the scenario. If the tags are not specified (null or undefined) then nothing is done
+ * in regards to the tags and so scenario will inherit default tags from the scenario group. Otherwise the
+ * array of tags is used as-is (with empty array effectively clearing up any inherited defaults).
+ */
+export type ScenarioCustomizer<T extends VisProps> = (
     baseName: string,
     baseProps: UnboundVisProps<T>,
-) => Array<[string, UnboundVisProps<T>]>;
-export type ScenarioNameAndProps<T extends VisProps> = [string, UnboundVisProps<T>];
+    baseTags: ScenarioTag[],
+) => Array<CustomizedScenario<T>>;
+
+export type CustomizedScenario<T extends VisProps> = [string, UnboundVisProps<T>, ScenarioTag[]?];
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 
 //
@@ -230,7 +243,15 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     /**
      * Adds multiple test scenarios; given base name & props of the scenario this method will use the
      * provided customizer function to expand base into multiple contrete scenarios. It then adds those
-     * one-by-one.
+     * one-by-one using the {@link addScenario} method.
+     *
+     * When adding scenarios in bulk fashion, the scenario tagging works as follows:
+     *
+     * -  scenario inherits any default tags already set for the scenario group
+     * -  IF customizer returns tags for the customizer scenario, they will be used as is, replacing anything
+     *    set so far
+     * -  IF the modifications use builder's withTags() call, then tags provided on that call will be used as is,
+     *    replacing anything set so far
      *
      * @param baseName - base name for the scenario variants
      * @param baseProps - base props for the scenario variants
@@ -240,13 +261,24 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
     public addScenarios(
         baseName: string,
         baseProps: UnboundVisProps<T>,
-        customizer: UnboundVisPropsCustomizer<T>,
+        customizer: ScenarioCustomizer<T>,
         m: ScenarioModification<T> = identity,
     ): ScenarioGroup<T> {
-        const variants = customizer(baseName, baseProps);
+        const variants = customizer(baseName, baseProps, this.defaultTags);
 
-        variants.forEach(([name, props]) => {
-            this.addScenario(name, props, m);
+        variants.forEach(([name, props, tags]) => {
+            this.addScenario(name, props, builder => {
+                /*
+                 * Customizer MAY specify that particular scenarios should have certain tags.
+                 *
+                 * If customizer returns non-null, non-undefined tags, they are applied as-is.
+                 */
+                if (tags) {
+                    builder.withTags(...tags);
+                }
+
+                return m(builder);
+            });
         });
 
         return this;

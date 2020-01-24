@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { IChartConfig, IAxisNameConfig } from "@gooddata/sdk-ui";
-import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
+import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
 
 function getConfig(nameConfig: IAxisNameConfig): IChartConfig {
     const { visible = true, position = "middle" } = nameConfig;
@@ -57,7 +57,7 @@ function merge(original: IChartConfig = {}, axisNames: IChartConfig): IChartConf
 export function axisNameCustomization<T extends VisProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
-): Array<ScenarioNameAndProps<T>> {
+): Array<CustomizedScenario<T>> {
     return ConfigVariants.map(([variantName, config]) => {
         return [`${baseName} - ${variantName}`, { ...baseProps, config: merge(baseProps.config, config) }];
     });
