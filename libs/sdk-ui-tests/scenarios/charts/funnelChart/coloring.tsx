@@ -8,11 +8,11 @@ import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } fr
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", FunnelChartWithMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...FunnelChartWithArithmeticMeasures,
         config: {

@@ -8,11 +8,11 @@ import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from 
 
 const colorsAndPalette = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", DonutChartWithSingleMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...DonutChartWithTwoMeasures,
         config: {

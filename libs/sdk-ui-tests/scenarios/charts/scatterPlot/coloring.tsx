@@ -8,7 +8,7 @@ import { ScatterPlotWithMeasuresAndAttribute } from "./base";
 
 const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ScatterPlotWithMeasuresAndAttribute, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)

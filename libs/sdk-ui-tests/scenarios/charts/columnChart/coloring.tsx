@@ -12,11 +12,11 @@ import {
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ColumnChartWithTwoMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...ColumnChartWithTwoMeasuresAndViewBy,
         config: {

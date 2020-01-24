@@ -9,11 +9,11 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ComboChartWithArithmeticMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...ComboChartWithArithmeticMeasuresAndViewBy,
         config: {

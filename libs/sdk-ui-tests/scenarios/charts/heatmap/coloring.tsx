@@ -8,11 +8,11 @@ import { HeatmapWithMeasureRowsAndColumns } from "./base";
 
 const colorsAndPalette = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", HeatmapWithMeasureRowsAndColumns, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...HeatmapWithMeasureRowsAndColumns,
         config: {

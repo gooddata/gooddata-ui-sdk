@@ -8,11 +8,11 @@ import { LineChartTwoMeasuresWithTrendyBy } from "./base";
 
 const colorsAndPalette = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", LineChartTwoMeasuresWithTrendyBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<ILineChartProps>("LineChart", LineChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenario("assign color to measures", {
         ...LineChartTwoMeasuresWithTrendyBy,
         config: {
