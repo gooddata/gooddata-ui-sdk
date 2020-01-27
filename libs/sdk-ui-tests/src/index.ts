@@ -1,3 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
-export * from "./scenarios";
+export * from "./scenarioGroup";
+export * from "./scenario";
+export * from "./scenarioTestInput";
