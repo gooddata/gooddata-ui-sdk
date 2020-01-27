@@ -5,6 +5,8 @@ import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
 import { BubbleChartWithAllMeasuresAndAttribute } from "./base";
 import { AttributeElements } from "../../_infra/predicates";
+import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { Product } from "../../_infra/data";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
@@ -13,21 +15,25 @@ const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleCh
 
 const colorAssignment = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenario("assign color to attribute bubbles", {
-        ...BubbleChartWithAllMeasuresAndAttribute,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: AttributeElements.Product.Explorer,
-                    color: BlackColor,
-                },
-                {
-                    predicate: AttributeElements.Product.WonderKid,
-                    color: RedColor,
-                },
-            ],
+    .addScenario(
+        "assign color to attribute bubbles",
+        {
+            ...BubbleChartWithAllMeasuresAndAttribute,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AttributeElements.Product.Explorer,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: AttributeElements.Product.WonderKid,
+                        color: RedColor,
+                    },
+                ],
+            },
         },
-    });
+        m => m.withInsightConverter(replaceMappingPredicates(Product.Explorer, Product.WonderKid)),
+    );
 
 export default [colorsAndPalette, colorAssignment];
