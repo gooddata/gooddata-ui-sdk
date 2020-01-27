@@ -52,7 +52,6 @@ import { BaseChart } from "../../../../charts/_base/BaseChart";
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getValidProperties } from "../../../utils/colors";
-import { COLOR_MAPPING_CHANGED } from "../../configurationControls/colors/ColorsSection";
 import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
 import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
@@ -329,33 +328,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return generateDimensions(insight, this.type);
     }
 
-    protected colorMappingChanged(data: any) {
-        this.visualizationProperties = {
-            ...this.visualizationProperties,
-            ...data.properties,
-        };
-        this.references = isEmptyObject(data.references)
-            ? {}
-            : {
-                  ...this.references,
-                  ...data.references,
-              };
-        this.ignoreUndoRedo = true;
-
-        // TODO: SDK8: this is weird; push data callback triggers this call;
-        //  why should plug viz bother with this? seems more like responsibility of the PV client
-        /*
-        this.update(
-            this.options,
-            {
-                properties: this.visualizationProperties,
-                propertiesMeta: this.propertiesMeta,
-            },
-            this.insight,
-            __execution__factory__ WTF?
-        );*/
-    }
-
     protected handleConfirmedColorMapping(data: any) {
         const pushData: any = get(this.callbacks, "pushData", noop);
         const resultingData = data;
@@ -396,9 +368,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const pushData = get(this.callbacks, "pushData", noop) as any;
 
         const resultingData = data;
-        if (data.messageId === COLOR_MAPPING_CHANGED) {
-            this.colorMappingChanged(data);
-        } else if (data.colors) {
+        if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
             pushData({
