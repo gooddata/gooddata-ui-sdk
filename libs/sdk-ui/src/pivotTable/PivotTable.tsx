@@ -60,12 +60,12 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const columns = bucketsFind(buckets, BucketNames.COLUMNS);
     const measures = bucketsFind(buckets, BucketNames.MEASURES);
 
-    const rowAttributeIds = bucketAttributes(row).map(attributeLocalId);
-    const columnAttributeIds = bucketAttributes(columns).map(attributeLocalId);
+    const rowAttributeIds = row ? bucketAttributes(row).map(attributeLocalId) : [];
+    const columnAttributeIds = columns ? bucketAttributes(columns).map(attributeLocalId) : [];
 
-    const measuresItemIdentifiers = !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
+    const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
 
-    const totals = bucketTotals(row);
+    const totals = row ? bucketTotals(row) : [];
     const totalsProp = totals.length ? { totals } : {};
 
     return [

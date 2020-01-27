@@ -29,8 +29,8 @@ function stackedDimensions(
     const viewBucket = bucketsFind(buckets, viewBucketName);
     const stackBucket = bucketsFind(buckets, stackBucketName);
 
-    const viewByAttributes = bucketAttributes(viewBucket);
-    const stackByAttribute = bucketAttribute(stackBucket);
+    const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
+    const stackByAttribute = stackBucket && bucketAttribute(stackBucket);
 
     const stackByAttributeLocalIdentifier = stackByAttribute
         ? stackByAttribute.attribute.localIdentifier
@@ -77,15 +77,17 @@ export function roundChartDimensions(def: IExecutionDefinition): IDimension[] {
 }
 
 export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
-    const view: IBucket = bucketsFind(def.buckets, BucketNames.VIEW);
-    const stack: IBucket = bucketsFind(def.buckets, BucketNames.STACK);
+    const view = bucketsFind(def.buckets, BucketNames.VIEW);
+    const viewAttributeLocalIdentifiers = view ? bucketAttributes(view).map(attributeLocalId) : [];
 
-    if (bucketIsEmpty(stack)) {
-        return newTwoDimensional(bucketAttributes(view).map(attributeLocalId), [MeasureGroupIdentifier]);
+    const stack = bucketsFind(def.buckets, BucketNames.STACK);
+
+    if (!stack || bucketIsEmpty(stack)) {
+        return newTwoDimensional(viewAttributeLocalIdentifiers, [MeasureGroupIdentifier]);
     }
 
     return newTwoDimensional(
-        bucketAttributes(view).map(attributeLocalId),
+        viewAttributeLocalIdentifiers,
         bucketAttributes(stack)
             .map(attributeLocalId)
             .concat([MeasureGroupIdentifier]),

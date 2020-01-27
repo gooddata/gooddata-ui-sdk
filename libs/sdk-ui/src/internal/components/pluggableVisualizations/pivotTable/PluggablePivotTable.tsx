@@ -165,12 +165,14 @@ export function adaptReferencePointSortItemsToPivotTable(
 
 function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], buckets: IBucket[]): SortItem[] {
     const measureLocalIdentifiers = bucketsMeasures(buckets).map(measureLocalId);
-    const rowAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.ATTRIBUTE)).map(
-        attributeLocalId,
-    );
-    const columnAttributeLocalIdentifiers = bucketAttributes(bucketsFind(buckets, BucketNames.COLUMNS)).map(
-        attributeLocalId,
-    );
+
+    const rowBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+    const rowAttributeLocalIdentifiers = rowBucket ? bucketAttributes(rowBucket).map(attributeLocalId) : [];
+
+    const columnBucket = bucketsFind(buckets, BucketNames.COLUMNS);
+    const columnAttributeLocalIdentifiers = columnBucket
+        ? bucketAttributes(columnBucket).map(attributeLocalId)
+        : [];
 
     return adaptSortItemsToPivotTable(
         originalSortItems,
