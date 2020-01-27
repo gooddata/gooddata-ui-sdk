@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`chartConfigToControls should convert secondary xaxis alignment - high 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_xaxis": Object {
+        "name": Object {
+          "position": "right",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert secondary xaxis alignment - low 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_xaxis": Object {
+        "name": Object {
+          "position": "left",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert secondary xaxis alignment - middle 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_xaxis": Object {
+        "name": Object {
+          "position": "center",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert secondary yaxis alignment - high 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_yaxis": Object {
+        "name": Object {
+          "position": "top",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert secondary yaxis alignment - low 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_yaxis": Object {
+        "name": Object {
+          "position": "bottom",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert secondary yaxis alignment - middle 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "secondary_yaxis": Object {
+        "name": Object {
+          "position": "center",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert xaxis alignment - high 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "xaxis": Object {
+        "name": Object {
+          "position": "right",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert xaxis alignment - low 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "xaxis": Object {
+        "name": Object {
+          "position": "left",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert xaxis alignment - middle 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "xaxis": Object {
+        "name": Object {
+          "position": "center",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert yaxis alignment - high 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "yaxis": Object {
+        "name": Object {
+          "position": "top",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert yaxis alignment - low 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "yaxis": Object {
+        "name": Object {
+          "position": "bottom",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`chartConfigToControls should convert yaxis alignment - middle 1`] = `
+Object {
+  "properties": Object {
+    "controls": Object {
+      "yaxis": Object {
+        "name": Object {
+          "position": "center",
+        },
+      },
+    },
+  },
+}
+`;
