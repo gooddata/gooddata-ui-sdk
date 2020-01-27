@@ -89,6 +89,16 @@ export type IInsightDefinition = {
          * any way.
          */
         properties: VisualizationProperties;
+
+        /**
+         * Last update date - YYYY-MM-DD HH:mm:ss
+         */
+        updated?: string;
+
+        /**
+         * Insight is locked for editing & deleting
+         */
+        isLocked?: boolean;
     };
 };
 

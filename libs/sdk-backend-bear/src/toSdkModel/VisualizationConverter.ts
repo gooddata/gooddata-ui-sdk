@@ -176,6 +176,8 @@ export const convertVisualization = (
             title: meta.title!,
             uri: meta.uri,
             visualizationUrl: visualizationClassUri,
+            updated: meta.updated,
+            isLocked: meta.locked,
         },
     };
 };

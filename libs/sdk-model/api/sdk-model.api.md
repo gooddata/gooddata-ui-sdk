@@ -567,6 +567,8 @@ export type IInsightDefinition = {
         filters: IFilter[];
         sorts: SortItem[];
         properties: VisualizationProperties;
+        updated?: string;
+        isLocked?: boolean;
     };
 };
 
