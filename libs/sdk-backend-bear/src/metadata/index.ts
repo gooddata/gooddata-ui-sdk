@@ -4,7 +4,7 @@ import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
 import { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "@gooddata/sdk-backend-spi";
-import { GdcVisualizationClass, GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcVisualizationClass, GdcMetadata, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
     IVisualizationClass,
     IInsight,
@@ -64,13 +64,35 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const {
-            items,
+            items: visualizations,
             paging: { count, offset, totalCount },
         } = await this.authCall(sdk =>
-            sdk.md.getObjectsByQueryWithPaging(this.workspace, {
+            sdk.md.getObjectsByQueryWithPaging<GdcVisualizationObject.IVisualization>(this.workspace, {
                 category: "visualizationObject",
                 ...mergedOptions,
             }),
+        );
+
+        const visualizationClasses = await this.getVisualizationClasses();
+        const visualizationClassUrlByVisualizationClassUri: {
+            [key: string]: string;
+        } = visualizationClasses.reduce((acc, el) => {
+            if (!el.visualizationClass.uri) {
+                return acc;
+            }
+            return {
+                ...acc,
+                [el.visualizationClass.uri]: el.visualizationClass.url,
+            };
+        }, {});
+
+        const insights = visualizations.map(visualization =>
+            convertVisualization(
+                visualization,
+                visualizationClassUrlByVisualizationClassUri[
+                    visualization.visualizationObject.content.visualizationClass.uri
+                ],
+            ),
         );
 
         const emptyResult: IInsightQueryResult = {
@@ -84,7 +106,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const hasNextPage = offset + count < totalCount!;
 
         return {
-            items,
+            items: insights,
             limit: count,
             offset,
             totalCount: totalCount!,

@@ -322,6 +322,7 @@ export interface IInsightQueryOptions {
     limit?: number;
     offset?: number;
     orderBy?: InsightOrdering;
+    title?: string;
 }
 
 // @public

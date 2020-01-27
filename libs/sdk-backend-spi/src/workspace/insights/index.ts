@@ -81,6 +81,11 @@ export interface IInsightQueryOptions {
      * Optionally filter insights by their author. The value of this property is login of the author.
      */
     author?: string;
+
+    /**
+     * Optionally filter insights by their title
+     */
+    title?: string;
 }
 
 /**
