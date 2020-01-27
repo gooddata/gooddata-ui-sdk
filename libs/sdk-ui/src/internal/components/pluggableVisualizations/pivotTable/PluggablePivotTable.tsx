@@ -409,7 +409,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             pushData,
             onError,
             onExportReady: this.onExportReady,
-            LoadingComponent: null as any,
             ErrorComponent: null as any,
             intl: this.intl,
         };

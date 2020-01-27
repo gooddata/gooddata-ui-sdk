@@ -322,8 +322,8 @@ describe("PluggablePivotTable", () => {
             expect(props.onLoadingChanged).toEqual(defaultProps.callbacks.onLoadingChanged);
             expect(props.pushData).toEqual(defaultProps.callbacks.pushData);
             expect(props.totalsEditAllowed).toEqual(options.custom.totalsEditAllowed);
-            expect(props.ErrorComponent).toEqual(null);
-            expect(props.LoadingComponent).toEqual(null);
+            expect(props.ErrorComponent).toBeNull();
+            expect(props.LoadingComponent).toBeUndefined();
 
             const targetNode = document.querySelector(defaultProps.element);
             expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
