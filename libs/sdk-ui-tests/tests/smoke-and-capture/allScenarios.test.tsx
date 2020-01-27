@@ -9,14 +9,13 @@ import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
 import allScenarios from "../../scenarios";
-import { ScenarioTestInput, ScenarioTestMembers } from "../../src";
+import { IScenario } from "../../src";
 import { ChartInteractions, DataViewRequests } from "../_infra/backendWithCapturing";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory";
 import { mountChartAndCapture } from "../_infra/render";
 import { mountInsight } from "../_infra/renderPlugVis";
 
-type AllScenariosType = [string, string, ScenarioTestInput<any>];
-type AnyComponentTest = ScenarioTestInput<any>;
+type AllScenariosType = [string, string, IScenario<any>];
 
 const StoreEnvVar = "GDC_STORE_DEFS";
 const ExecutionsDir = initializeStore(process.env[StoreEnvVar], "executions");
@@ -166,8 +165,7 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
  * @param plugVizInteractions - plug viz interactions with the backend
  */
 function storeScenarioDefinition(
-    vis: string,
-    scenario: ScenarioTestInput<any>,
+    scenario: IScenario<any>,
     interactions: ChartInteractions,
     plugVizInteractions?: ChartInteractions,
 ) {
@@ -189,22 +187,24 @@ function storeScenarioDefinition(
         storeDefinition(plugVizInteractions!);
     }
 
-    if (!scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta")) {
-        storeScenarioMetadata(recordingDir, vis, scenario[ScenarioTestMembers.ScenarioName]);
+    if (!scenario.tags.includes("mock-no-scenario-meta")) {
+        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name);
     }
 }
 
-function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: IInsightDefinition) {
+function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     if (!InsightsDir) {
         return;
     }
 
-    if (scenario[ScenarioTestMembers.Tags].includes("mock-no-insight")) {
+    if (scenario.tags.includes("mock-no-insight")) {
         return;
     }
 
-    const id = scenario[ScenarioTestMembers.InsightId];
-    const persistentInsight: IInsight = { insight: { identifier: id, ...def.insight } };
+    const id = scenario.insightId;
+    const persistentInsight: IInsight = scenario.insightConverter({
+        insight: { identifier: id, ...def.insight },
+    });
     const insightDir = path.join(InsightsDir!, id);
 
     if (!fs.existsSync(insightDir)) {
@@ -221,10 +221,8 @@ function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: II
      * to include the insight in Insight index - meaning the insight can be accessed programatically such
      * as 'Insight.BarChart.TwoMeasures' etc.
      */
-    const shouldIncludeScenario = !scenario[ScenarioTestMembers.Tags].includes("mock-no-scenario-meta");
-    const scenarioInfo = shouldIncludeScenario
-        ? { visName, scenarioName: scenario[ScenarioTestMembers.ScenarioName] }
-        : {};
+    const shouldIncludeScenario = !scenario.tags.includes("mock-no-scenario-meta");
+    const scenarioInfo = shouldIncludeScenario ? { visName: scenario.vis, scenarioName: scenario.name } : {};
 
     insightIndex[id] = {
         ...scenarioInfo,
@@ -238,18 +236,15 @@ function storeInsight(visName: string, scenario: ScenarioTestInput<any>, def: II
 
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
-        const testInputs: AnyComponentTest[] = s.asTestInput();
+        const testInputs: Array<IScenario<any>> = s.asScenarioList();
 
         return testInputs.map(t => {
-            return [s.vis, t[0], t];
+            return [t.vis, t.name, t];
         });
     });
 
     it.each(Scenarios)("%s %s should lead to execution", async (vis, scenarioName, scenario) => {
-        const interactions = await mountChartAndCapture(
-            scenario[ScenarioTestMembers.Component],
-            scenario[ScenarioTestMembers.PropsFactory],
-        );
+        const interactions = await mountChartAndCapture(scenario.component, scenario.propsFactory);
 
         expect(interactions.triggeredExecution).toBeDefined();
 
@@ -271,10 +266,10 @@ describe("all scenarios", () => {
              */
             const plugVizInteractions = await mountInsight(insight);
 
-            storeScenarioDefinition(vis, scenario, interactions, plugVizInteractions);
-            storeInsight(vis, scenario, insight);
+            storeScenarioDefinition(scenario, interactions, plugVizInteractions);
+            storeInsight(scenario, insight);
         } else {
-            storeScenarioDefinition(vis, scenario, interactions);
+            storeScenarioDefinition(scenario, interactions);
         }
     });
 });
