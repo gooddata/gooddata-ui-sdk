@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-27T11:20:21.414Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-27T16:26:46.126Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./uiTestScenarios/executions/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -555,6 +555,10 @@ const df_label_product_id_name = {
 const df_label_owner_department = {
     elements: require("./metadata/displayForms/label.owner.department/elements.json"),
     obj: require("./metadata/displayForms/label.owner.department/obj.json"),
+};
+const df_label_owner_region = {
+    elements: require("./metadata/displayForms/label.owner.region/elements.json"),
+    obj: require("./metadata/displayForms/label.owner.region/obj.json"),
 };
 const i_AreaChart_8ef289b689ae537d4e12f480fc195396 = {
     obj: require("./uiTestScenarios/insights/AreaChart.8ef289b689ae537d4e12f480fc195396/obj.json"),
@@ -1945,7 +1949,7 @@ export const Recordings = {
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
     },
     metadata: {
-        displayForms: { df_label_product_id_name, df_label_owner_department },
+        displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
         insights: {
             i_AreaChart_8ef289b689ae537d4e12f480fc195396,
             i_AreaChart_9cc307ef6d15c8bb10976e9a52347281,
