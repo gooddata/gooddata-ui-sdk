@@ -988,7 +988,11 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         return Math.min(totalHeight, maxHeight);
     }
 
-    private updateDesiredHeight(dv: DataViewFacade): void {
+    private updateDesiredHeight(dv: DataViewFacade | null): void {
+        if (!dv) {
+            return;
+        }
+
         const desiredHeight = this.calculateDesiredHeight(dv);
 
         if (this.state.desiredHeight !== desiredHeight) {
