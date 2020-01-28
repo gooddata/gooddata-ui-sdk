@@ -45,6 +45,7 @@ import {
     LoadingComponent,
     newErrorMapping,
     VisualizationTypes,
+    ILoadingState,
 } from "../base";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
@@ -201,7 +202,15 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         );
     }
 
+    private onLoadingChanged = (loadingState: ILoadingState): void => {
+        const { onLoadingChanged } = this.props;
+        if (onLoadingChanged) {
+            onLoadingChanged(loadingState);
+        }
+    };
+
     private initialize(execution: IPreparedExecution): void {
+        this.onLoadingChanged({ isLoading: true });
         execution
             .execute()
             .then(result => {
@@ -234,7 +243,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                         );
 
                         this.setGridDataSource(this.agGridDataSource);
-
+                        this.onLoadingChanged({ isLoading: false });
                         this.props.onExportReady(this.currentResult.export.bind(this.currentResult));
                         this.setState({ tableReady: true });
 
