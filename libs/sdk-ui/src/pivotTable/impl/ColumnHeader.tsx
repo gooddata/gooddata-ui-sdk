@@ -11,7 +11,7 @@ import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
 import { ITotal, SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends IHeaderParams {
-    menu?: IMenu;
+    menu?: () => IMenu;
     getColumnTotals?: () => ITotal[];
     getDataView?: () => DataViewFacade;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
@@ -72,7 +72,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 defaultSortDirection={this.getDefaultSortDirection()}
                 onSortClick={this.onSortRequested}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
-                menu={menu}
+                menu={menu()}
                 colId={column.getColDef().field}
                 getColumnTotals={this.props.getColumnTotals}
                 getDataView={this.props.getDataView}

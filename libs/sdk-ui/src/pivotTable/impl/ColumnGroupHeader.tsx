@@ -10,7 +10,7 @@ import { IMenu, IMenuAggregationClickConfig } from "../types";
 import HeaderCell, { ALIGN_LEFT } from "./HeaderCell";
 
 export interface IProps extends IHeaderGroupParams {
-    menu?: IMenu;
+    menu?: () => IMenu;
     getColumnTotals: () => ITotal[];
     getDataView: () => DataViewFacade;
     onMenuAggregationClick: (config: IMenuAggregationClickConfig) => void;
@@ -37,7 +37,7 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 enableSorting={false}
                 menuPosition={ALIGN_LEFT}
                 textAlign={ALIGN_LEFT}
-                menu={showMenu ? menu : null}
+                menu={showMenu ? menu() : null}
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 colId={columnGroupDef.field}
                 getColumnTotals={this.props.getColumnTotals}

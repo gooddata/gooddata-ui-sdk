@@ -25,27 +25,26 @@ import * as CustomEvent from "custom-event";
 import * as React from "react";
 
 import "../../styles/css/pivotTable.css";
-import { getScrollbarWidth } from "./impl/domUtils";
 import {
+    convertDrillableItemsToPredicates,
     convertError,
     ErrorCodes,
-    GoodDataSdkError,
-    IErrorDescriptors,
-    newErrorMapping,
-    VisualizationTypes,
-    convertDrillableItemsToPredicates,
+    ErrorComponent,
     getDrillIntersection,
-    isSomeHeaderPredicateMatched,
+    GoodDataSdkError,
+    IDrillableItemPushData,
     IDrillEvent,
     IDrillEventContextTable,
     IDrillEventIntersectionElement,
-    IMappingHeader,
-    ErrorComponent,
-    LoadingComponent,
-    IHeaderPredicate,
-    IDrillableItemPushData,
+    IErrorDescriptors,
     IExportFunction,
     IExtendedExportConfig,
+    IHeaderPredicate,
+    IMappingHeader,
+    isSomeHeaderPredicateMatched,
+    LoadingComponent,
+    newErrorMapping,
+    VisualizationTypes,
 } from "../base";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
@@ -71,7 +70,6 @@ import {
 } from "./impl/agGridTypes";
 import {
     cellRenderer,
-    generateAgGridComponentKey,
     getMeasureFormat,
     getRowNodeId,
     getTreeLeaves,
@@ -79,6 +77,7 @@ import {
 } from "./impl/agGridUtils";
 import ColumnGroupHeader from "./impl/ColumnGroupHeader";
 import ColumnHeader from "./impl/ColumnHeader";
+import { getScrollbarWidth } from "./impl/domUtils";
 import { IGroupingProvider } from "./impl/GroupingProvider";
 import { RowLoadingElement } from "./impl/RowLoadingElement";
 import {
@@ -91,7 +90,7 @@ import {
 
 import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
 
-import { ICorePivotTableProps, IMenuAggregationClickConfig } from "./types";
+import { ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEqual = require("lodash/isEqual");
@@ -101,7 +100,6 @@ import sumBy = require("lodash/sumBy");
 export interface ICorePivotTableState {
     tableReady: boolean;
     columnTotals: ITotal[];
-    agGridRerenderNumber: number;
     desiredHeight: number | undefined;
     error?: string;
 }
@@ -165,7 +163,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.state = {
             tableReady: false,
             columnTotals: cloneDeep(defTotals(execution.definition, 0)),
-            agGridRerenderNumber: 1,
             desiredHeight: config.maxHeight,
         };
 
@@ -176,7 +173,9 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         this.setState(
             {
                 tableReady: false,
+                columnTotals: cloneDeep(defTotals(execution.definition, 0)),
                 error: undefined,
+                desiredHeight: this.props.config.maxHeight,
             },
             () => {
                 this.gridApi = null;
@@ -290,15 +289,13 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     public componentDidUpdate(prevProps: ICorePivotTableProps) {
         if (this.isReinitNeeded(prevProps)) {
             this.reinitialize(this.props.execution);
-        }
-
-        if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-            this.forceRerender();
+        } else if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
+            this.gridApi.refreshHeader();
         }
     }
 
     public render() {
-        const { LoadingComponent, ErrorComponent, execution } = this.props;
+        const { LoadingComponent, ErrorComponent } = this.props;
         const { desiredHeight, error } = this.state;
 
         if (error) {
@@ -330,15 +327,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    <AgGridReact
-                        {...this.gridOptions}
-                        // To force Ag grid rerender because AFAIK there is no way
-                        // to tell Ag grid header cell to rerender
-                        key={generateAgGridComponentKey(
-                            execution.definition,
-                            this.state.agGridRerenderNumber,
-                        )}
-                    />
+                    <AgGridReact {...this.gridOptions} />
                 </div>
             </div>
         );
@@ -398,12 +387,6 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         }
     }
 
-    private forceRerender() {
-        this.setState(state => ({
-            agGridRerenderNumber: state.agGridRerenderNumber + 1,
-        }));
-    }
-
     //
     // getters / setters / manipulators
     //
@@ -418,6 +401,10 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
 
     private getDataView = () => {
         return this.visibleData;
+    };
+
+    private getMenuConfig = (): IMenu => {
+        return this.props.config?.menu ?? {};
     };
 
     private getGridApi = () => this.gridApi;
@@ -688,13 +675,11 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
     // grid options & styling;
     // TODO: refactor to move all this outside of the file
     //
-
     private createGridOptions = (): ICustomGridOptions => {
         const tableHeaders = this.tableHeaders;
         const { pageSize } = this.props;
         const totalRowCount = this.visibleData.firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
-        const menu = get(this.props, ["config", "menu"]);
 
         /*
          * This is a half-workaround around the visual weirdness where upon load/sort ag-grid renders full
@@ -727,7 +712,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 cellClass: this.getCellClass(null),
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
-                    menu,
+                    menu: this.getMenuConfig,
                     enableSorting: true,
                     ...commonHeaderComponentParams,
                 },
@@ -740,7 +725,7 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
                 children: [],
                 headerGroupComponentFramework: ColumnGroupHeader as any,
                 headerGroupComponentParams: {
-                    menu,
+                    menu: this.getMenuConfig,
                     ...commonHeaderComponentParams,
                 },
             },
