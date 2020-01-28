@@ -329,7 +329,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handleConfirmedColorMapping(data: any) {
-        const pushData: any = get(this.callbacks, "pushData", noop);
+        const { pushData = noop } = this.callbacks;
         const resultingData = data;
         this.colors = data.colors;
 
@@ -365,7 +365,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handlePushData = (data: any) => {
-        const pushData = get(this.callbacks, "pushData", noop) as any;
+        const { pushData = noop } = this.callbacks;
 
         const resultingData = data;
         if (data.colors) {
