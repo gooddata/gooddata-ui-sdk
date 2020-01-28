@@ -10,7 +10,9 @@ import {
     IAttribute,
     IMeasureFilter,
 } from "@gooddata/sdk-model";
+import compact = require("lodash/compact");
 import isEmpty = require("lodash/isEmpty");
+import isNil = require("lodash/isNil");
 import omit = require("lodash/omit");
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
@@ -26,7 +28,7 @@ const convertAttributeElements = (items: string[]): AttributeElements => {
     return isUri(first) ? { uris: items } : { values: items };
 };
 
-const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter => {
+const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter | null => {
     if (GdcVisualizationObject.isMeasureValueFilter(filter)) {
         return {
             measureValueFilter: {
@@ -39,7 +41,7 @@ const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter =
     return convertMeasureFilter(filter);
 };
 
-const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter => {
+const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFilter | null => {
     if (GdcVisualizationObject.isAttributeFilter(filter)) {
         if (GdcVisualizationObject.isPositiveAttributeFilter(filter)) {
             return {
@@ -65,11 +67,17 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
                 },
             };
         }
+
+        // check for all-time filters with missing bounds (even one missing bound suggests an all time filter)
+        if (isNil(filter.relativeDateFilter.from) || isNil(filter.relativeDateFilter.to)) {
+            return null;
+        }
+
         return {
             relativeDateFilter: {
                 ...filter.relativeDateFilter,
-                from: filter.relativeDateFilter.from || 0, // TODO can we really do this (should we?)
-                to: filter.relativeDateFilter.to || 0,
+                from: filter.relativeDateFilter.from,
+                to: filter.relativeDateFilter.to,
             },
         };
     }
@@ -91,7 +99,7 @@ const convertMeasureDefinition = (
     return {
         measureDefinition: {
             ...definition.measureDefinition,
-            filters: filters ? filters.map(convertMeasureFilter) : [],
+            filters: filters ? compact(filters.map(convertMeasureFilter)) : [],
         },
     };
 };
@@ -167,7 +175,7 @@ export const convertVisualization = (
     return {
         insight: {
             buckets: content.buckets.map(convertBucket),
-            filters: content.filters ? content.filters.map(convertFilter) : [],
+            filters: content.filters ? compact(content.filters.map(convertFilter)) : [],
             // we assume that identifier is always defined for visualizations
             identifier: meta.identifier!,
             // TODO: remove the need to have properties content wrapper in yet another 'properties' object
