@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import every = require("lodash/every");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
@@ -108,8 +108,8 @@ export function getDefaultTreemapSortFromBuckets(
     segmentBy: IBucket,
     measures: IMeasure[],
 ): SortItem[] {
-    const viewAttr = bucketAttributes(viewBy);
-    const stackAttr = bucketAttributes(segmentBy);
+    const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
+    const stackAttr = segmentBy ? bucketAttributes(segmentBy) : [];
 
     if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
         return [newAttributeSort(viewAttr[0], "asc"), ...measures.map(m => newMeasureSort(m, "desc"))];

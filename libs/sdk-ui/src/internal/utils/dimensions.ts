@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     attributeLocalId,
     bucketAttribute,
@@ -216,12 +216,13 @@ export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[]
 
 function getBubbleDimensions(insight: IInsight): IDimension[] {
     const view = insightBucket(insight, BucketNames.VIEW);
+    const viewAttributes = view ? bucketAttributes(view) : [];
     const stack = insightBucket(insight, BucketNames.STACK);
 
     if (!stack || bucketIsEmpty(stack)) {
         return [
             {
-                itemIdentifiers: bucketAttributes(view).map(attributeLocalId),
+                itemIdentifiers: viewAttributes.map(attributeLocalId),
             },
             {
                 itemIdentifiers: [MeasureGroupIdentifier],
@@ -232,7 +233,7 @@ function getBubbleDimensions(insight: IInsight): IDimension[] {
     return [
         {
             itemIdentifiers: [
-                ...bucketAttributes(view).map(attributeLocalId),
+                ...viewAttributes.map(attributeLocalId),
                 ...bucketAttributes(stack).map(attributeLocalId),
             ],
         },
