@@ -1093,6 +1093,76 @@ Object {
 }
 `;
 
+exports[`PivotTable with single attribute should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`PivotTable with single attribute should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": undefined,
+  "groupRows": true,
+  "locale": "en-US",
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable with single measure and multiple grand totals should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

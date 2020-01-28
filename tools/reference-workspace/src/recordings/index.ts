@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-27T16:26:46.126Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-28T18:20:37.106Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./uiTestScenarios/executions/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -397,6 +397,11 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
+const fp_0e56a48ee138385d68177ecababeeb75 = {
+    definition: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/dataView_o0_0s100_1000.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: fp_06890d7172183531342ed8e17d70e01a,
@@ -437,6 +442,7 @@ export const Scenarios = {
         TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: fp_e88aeb9d972e5493d3a9ba2063dea3e9,
         SingleMeasureWithColumnAttribute: fp_fa12ddadd752df55fbabeae6d22ecb4d,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: fp_feb4ad60c9bd6a1dd6003afd669e25c8,
+        SingleAttribute: fp_0e56a48ee138385d68177ecababeeb75,
     },
     ColumnChart: {
         SingleMeasureWithViewByAndStackByFilteredToSingleStack: fp_077ae3cab38d80b798b2e91a133aea10,
@@ -1947,6 +1953,7 @@ export const Recordings = {
         fp_f8eb5e66709f2ea572a139e5e7790931,
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
+        fp_0e56a48ee138385d68177ecababeeb75,
     },
     metadata: {
         displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
