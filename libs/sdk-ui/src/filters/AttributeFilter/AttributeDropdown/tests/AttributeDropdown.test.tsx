@@ -83,7 +83,7 @@ describe("AttributeDropdown", () => {
             [
                 {
                     title: "CompuSci",
-                    uri: "/gdc/md/toxhzx243k4c1u04nby9pnewvsnxt3lp/obj/1054/elements?id=165678",
+                    uri: "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
                 },
             ],
             true,

@@ -77,17 +77,8 @@
     "AreaChart.7a58e4d0caf0ad13518609485152ad4f": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - forced hidden."
     },
-    "AreaChart.d00593ddbf2951f27c33eb10e13b5bc7": {
-        "comment": "Auto-generated insight for test scenario AreaChart - coloring - default."
-    },
     "AreaChart.bbb607434db20df6d945549e6a8d179f": {
         "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette."
-    },
-    "AreaChart.9d97a0a0b41da0e8d174620057ea0f64": {
-        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom colors."
-    },
-    "AreaChart.c3ffd37e5bc0bf8a14b8629f4d86a112": {
-        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette preferred over colors."
     },
     "AreaChart.b56a230469ace5c0f2ae1d72da021510": {
         "comment": "Auto-generated insight for test scenario AreaChart - Y axis configuration."
@@ -234,17 +225,8 @@
     "BarChart.f816d66db239cfb318cb6b03f468c6bc": {
         "comment": "Auto-generated insight for test scenario BarChart - dual axis label rotation - minus60."
     },
-    "BarChart.d00593ddbf2951f27c33eb10e13b5bc7": {
-        "comment": "Auto-generated insight for test scenario BarChart - coloring - default."
-    },
     "BarChart.bbb607434db20df6d945549e6a8d179f": {
         "comment": "Auto-generated insight for test scenario BarChart - coloring - custom palette."
-    },
-    "BarChart.9d97a0a0b41da0e8d174620057ea0f64": {
-        "comment": "Auto-generated insight for test scenario BarChart - coloring - custom colors."
-    },
-    "BarChart.c3ffd37e5bc0bf8a14b8629f4d86a112": {
-        "comment": "Auto-generated insight for test scenario BarChart - coloring - custom palette preferred over colors."
     },
     "BarChart.d2316ee2458d6855e8d7349bbe1e305c": {
         "comment": "Auto-generated insight for test scenario BarChart - assign color to measures."
@@ -379,6 +361,12 @@
     },
     "BubbleChart.808f6b96cba0385d5b1964a71e6c4144": {
         "comment": "Auto-generated insight for test scenario BubbleChart - axis name customization - invisible."
+    },
+    "BubbleChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - coloring - custom palette."
+    },
+    "BubbleChart.fb08d26638573a25adf208466a9b385a": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - assign color to attribute bubbles."
     },
     "BubbleChart.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario BubbleChart - legend position - auto legend."
@@ -532,6 +520,18 @@
     },
     "ColumnChart.4c689bf0691fc6d102b9850aa27708d7": {
         "comment": "Auto-generated insight for test scenario ColumnChart - dual axis name customization - invisible."
+    },
+    "ColumnChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - coloring - custom palette."
+    },
+    "ColumnChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to measures."
+    },
+    "ColumnChart.fd53ca43c9076948a92236a96dfd6ef8": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to master measure impacts derived PoP."
+    },
+    "ColumnChart.5393dd15200ecbcff34c96f924ba90ab": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - assign color to attribute element stack."
     },
     "ColumnChart.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario ColumnChart - legend position - auto legend."
@@ -758,6 +758,12 @@
     "ComboChart.7a58e4d0caf0ad13518609485152ad4f": {
         "comment": "Auto-generated insight for test scenario ComboChart - data labels - forced hidden."
     },
+    "ComboChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario ComboChart - coloring - custom palette."
+    },
+    "ComboChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario ComboChart - assign color to measures."
+    },
     "ComboChart.c319faf2782eb47c25fb07ca70f34b7d": {
         "comment": "Auto-generated insight for test scenario ComboChart - stack primary measures with different chart type - column."
     },
@@ -877,6 +883,15 @@
     "DonutChart.39fce7b0df70638639e798aec5d8d578": {
         "comment": "Auto-generated insight for test scenario DonutChart - vertical alignment - default."
     },
+    "DonutChart.c65366d1830dd2af261b80143bd72efc": {
+        "comment": "Auto-generated insight for test scenario DonutChart -  - custom palette."
+    },
+    "DonutChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario DonutChart - assign color to measures."
+    },
+    "DonutChart.64e0e56f4a244209f568cab8049a0170": {
+        "comment": "Auto-generated insight for test scenario DonutChart - assign color to attributes."
+    },
     "FunnelChart.8ef289b689ae537d4e12f480fc195396": {
         "visName": "FunnelChart",
         "scenarioName": "single measure",
@@ -901,6 +916,15 @@
         "visName": "FunnelChart",
         "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario FunnelChart - arithmetic measures."
+    },
+    "FunnelChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - coloring - custom palette."
+    },
+    "FunnelChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - assign color to measures."
+    },
+    "FunnelChart.64e0e56f4a244209f568cab8049a0170": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - assign color to attributes."
     },
     "Headline.8ef289b689ae537d4e12f480fc195396": {
         "visName": "Headline",
@@ -946,6 +970,12 @@
         "visName": "Heatmap",
         "scenarioName": "measure, rows and columns with null data points",
         "comment": "Auto-generated insight for test scenario Heatmap - measure, rows and columns with null data points."
+    },
+    "Heatmap.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario Heatmap - coloring - custom palette."
+    },
+    "Heatmap.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario Heatmap - assign color to measures."
     },
     "Heatmap.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - auto legend."
@@ -1065,6 +1095,12 @@
     "LineChart.c6db70ebf33514414fa52eacdf3ad519": {
         "comment": "Auto-generated insight for test scenario LineChart - dual axis name configuration - invisible."
     },
+    "LineChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario LineChart - coloring - custom palette."
+    },
+    "LineChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario LineChart - assign color to measures."
+    },
     "LineChart.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario LineChart - legend position - auto legend."
     },
@@ -1181,6 +1217,15 @@
     "PieChart.39fce7b0df70638639e798aec5d8d578": {
         "comment": "Auto-generated insight for test scenario PieChart - vertical alignment - default."
     },
+    "PieChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario PieChart - coloring - custom palette."
+    },
+    "PieChart.d2316ee2458d6855e8d7349bbe1e305c": {
+        "comment": "Auto-generated insight for test scenario PieChart - assign color to measures."
+    },
+    "PieChart.64e0e56f4a244209f568cab8049a0170": {
+        "comment": "Auto-generated insight for test scenario PieChart - assign color to attributes."
+    },
     "ScatterPlot.7072f99684d930af81e3e50bdca4e678": {
         "visName": "ScatterPlot",
         "scenarioName": "x axis measure",
@@ -1220,6 +1265,9 @@
     },
     "ScatterPlot.cf4f75964c20716b4de5d9a0351e88c4": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - axis name configuration - invisible."
+    },
+    "ScatterPlot.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - coloring - custom palette."
     },
     "ScatterPlot.d2316ee2458d6855e8d7349bbe1e305c": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - assign color to measures."
@@ -1268,6 +1316,12 @@
         "visName": "Treemap",
         "scenarioName": "arithmetic measures and segment",
         "comment": "Auto-generated insight for test scenario Treemap - arithmetic measures and segment."
+    },
+    "Treemap.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario Treemap - coloring - custom palette."
+    },
+    "Treemap.64e0e56f4a244209f568cab8049a0170": {
+        "comment": "Auto-generated insight for test scenario Treemap - assign color to attributes."
     },
     "Treemap.906a11baa5260d55cdac1f7cc74cd9e8": {
         "comment": "Auto-generated insight for test scenario Treemap - legend position - auto legend."

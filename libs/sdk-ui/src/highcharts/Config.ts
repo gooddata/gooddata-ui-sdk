@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import {
     ColorAxisOptions,
@@ -12,44 +12,10 @@ import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { IHeaderPredicate, IColorAssignment, VisType } from "../base";
 export { DefaultColorPalette } from "../base";
 
-export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
-
-export type IDataLabelsVisible = string | boolean;
-
-export interface IDataLabelsConfig {
-    visible?: IDataLabelsVisible;
-    width?: number;
-    padding?: number;
-    element?: HTMLDOMElement | SVGDOMElement;
-}
-
-export interface ILegendConfig {
-    enabled?: boolean;
-    position?: PositionType;
-    responsive?: boolean;
-}
-
-export interface IChartLimits {
-    series?: number;
-    categories?: number;
-    dataPoints?: number;
-}
-
-export interface IMeasuresStackConfig {
-    stackMeasures?: boolean;
-    stackMeasuresToPercent?: boolean;
-}
-
 /**
  * TODO: SDK8: add docs
  * @public
  */
-export interface IColorMapping {
-    // sent to SDK
-    predicate: IHeaderPredicate;
-    color: IColor;
-}
-
 export interface IChartConfig extends IMeasuresStackConfig {
     colors?: string[];
     colorPalette?: IColorPalette;
@@ -78,10 +44,86 @@ export interface IChartConfig extends IMeasuresStackConfig {
     disableDrillUnderline?: boolean;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export type IDataLabelsVisible = string | boolean;
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export type ChartAlignTypes = "top" | "bottom" | "middle";
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IDataLabelsConfig {
+    visible?: IDataLabelsVisible;
+    width?: number;
+    padding?: number;
+    element?: HTMLDOMElement | SVGDOMElement;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface ILegendConfig {
+    enabled?: boolean;
+    position?: PositionType;
+    responsive?: boolean;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IChartLimits {
+    series?: number;
+    categories?: number;
+    dataPoints?: number;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IMeasuresStackConfig {
+    stackMeasures?: boolean;
+    stackMeasuresToPercent?: boolean;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
+export interface IColorMapping {
+    // sent to SDK
+    predicate: IHeaderPredicate;
+    color: IColor;
+}
+
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IStackLabels {
     enabled?: boolean;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IHighChartAxis {
     AXIS_LINE_COLOR: string;
     categories: string[];
@@ -95,20 +137,36 @@ export interface IHighChartAxis {
     visible?: boolean;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IYAxisConfig {
     yAxis?: IHighChartAxis[];
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IStackMeasuresConfig {
     series?: ISeriesItem[];
     yAxis?: IHighChartAxis[];
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IAxisNameConfig {
     visible?: boolean;
     position?: Highcharts.AxisTitleAlignValue;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IAxisConfig {
     visible?: boolean;
     labelsEnabled?: boolean;
@@ -122,6 +180,10 @@ export interface IAxisConfig {
     name?: IAxisNameConfig;
 }
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export interface IAxis {
     label: string;
     format?: string;
@@ -129,6 +191,13 @@ export interface IAxis {
     seriesIndices?: number[];
 }
 
+//
+// Internals. TODO: move them out of here
+//
+
+/**
+ * @internal
+ */
 export interface ISeriesDataItem {
     x?: number;
     y: number;
@@ -136,11 +205,17 @@ export interface ISeriesDataItem {
     name?: string;
 }
 
+/**
+ * @internal
+ */
 export interface IStackItem {
     column0?: StackItemObject[];
     column?: ISeriesDataItem[];
 }
 
+/**
+ * @internal
+ */
 export interface ISeriesItem {
     name?: string;
     data?: ISeriesDataItem[];
@@ -159,13 +234,9 @@ export interface ISeriesItem {
     dataLabelsGroup?: SVGAttributes;
 }
 
-export interface IShapeArgsConfig {
-    width?: number;
-    heigth?: number;
-    x?: number;
-    y?: number;
-}
-
+/**
+ * @internal
+ */
 export interface IChartOptions {
     type?: string;
     stacking?: string;
@@ -189,15 +260,25 @@ export interface IChartOptions {
     forceDisableDrillOnAxes?: boolean;
 }
 
+/**
+ * @internal
+ */
 export interface IPatternOptionsObject {
     path: SVGAttributes;
     width: number;
     height: number;
 }
+
+/**
+ * @internal
+ */
 export interface IPatternObject {
     pattern: IPatternOptionsObject;
 }
 
+/**
+ * @internal
+ */
 export interface IPointData {
     /**
      * Custom properties set by custom data options.
@@ -225,16 +306,25 @@ export interface IPointData {
     category?: ICategory;
 }
 
+/**
+ * @internal
+ */
 export interface ICategoryParent {
     name: string;
 }
 
 // since applying 'grouped-categories' plugin, 'category' type is replaced from string to object in highchart
+/**
+ * @internal
+ */
 export interface ICategory {
     name: string;
     parent?: ICategoryParent;
 }
 
+/**
+ * @internal
+ */
 export interface ISeriesItemConfig {
     color: string;
     legendIndex: number;
@@ -244,6 +334,9 @@ export interface ISeriesItemConfig {
     xAxis?: number;
 }
 
+/**
+ * @internal
+ */
 export interface IClientRect {
     width?: number;
     height?: number;
@@ -252,5 +345,3 @@ export interface IClientRect {
     x?: number;
     y?: number;
 }
-
-export type ChartAlignTypes = "top" | "bottom" | "middle";

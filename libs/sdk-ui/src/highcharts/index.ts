@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 export {
     IChartConfig,
     PositionType,
@@ -8,6 +8,14 @@ export {
     IDataLabelsConfig,
     IAxisNameConfig,
     ChartAlignTypes,
+    IColorMapping,
+    IAxis,
+    IDataLabelsVisible,
+    IHighChartAxis,
+    IMeasuresStackConfig,
+    IStackLabels,
+    IStackMeasuresConfig,
+    IYAxisConfig,
 } from "./Config";
 
 import Chart from "./chart/Chart";

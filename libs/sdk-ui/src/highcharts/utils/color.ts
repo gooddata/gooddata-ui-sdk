@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IChartConfig, IColorMapping } from "../Config";
@@ -140,14 +140,22 @@ export function getRgbStringFromRGB(color: IRgbColorValue) {
     return `rgb(${color.r},${color.g},${color.b})`;
 }
 
-export function getColorMappingPredicate(idOrUri: string): IHeaderPredicate {
+/**
+ * Creates new predicate for mapping colors to chart entities:
+ *
+ * -  if attribute header, URI is expected to match testValue
+ * -  otherwise (attr or measure descriptor) expecting local identifier match
+ *
+ * @param testValue - right hand side to test against
+ */
+export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (isResultAttributeHeader(header)) {
-            return idOrUri ? idOrUri === header.attributeHeaderItem.uri : false;
+            return testValue ? testValue === header.attributeHeaderItem.uri : false;
         }
 
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        return headerLocalIdentifier ? headerLocalIdentifier === idOrUri : false;
+        return headerLocalIdentifier ? headerLocalIdentifier === testValue : false;
     };
 }
 

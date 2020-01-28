@@ -5,45 +5,56 @@ import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "..
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base";
+import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { Product } from "../../_infra/data";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 const colorsAndPalette = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("", DonutChartWithSingleMeasureAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
-    .addScenario("assign color to measures", {
-        ...DonutChartWithTwoMeasures,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: AmountMeasurePredicate,
-                    color: BlackColor,
-                },
-                {
-                    predicate: WonMeasurePredicate,
-                    color: CustomPaletteColor,
-                },
-            ],
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario(
+        "assign color to measures",
+        {
+            ...DonutChartWithTwoMeasures,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AmountMeasurePredicate,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: WonMeasurePredicate,
+                        color: CustomPaletteColor,
+                    },
+                ],
+            },
         },
-    })
-    .addScenario("assign color to attributes", {
-        ...DonutChartWithSingleMeasureAndViewBy,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: AttributeElements.Product.WonderKid,
-                    color: BlackColor,
-                },
-                {
-                    predicate: AttributeElements.Product.Explorer,
-                    color: RedColor,
-                },
-            ],
+        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+    )
+    .addScenario(
+        "assign color to attributes",
+        {
+            ...DonutChartWithSingleMeasureAndViewBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AttributeElements.Product.WonderKid,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: AttributeElements.Product.Explorer,
+                        color: RedColor,
+                    },
+                ],
+            },
         },
-    });
+        m => m.withInsightConverter(replaceMappingPredicates(Product.WonderKid, Product.Explorer)),
+    );
 
 export default [colorsAndPalette, colorAssignment];

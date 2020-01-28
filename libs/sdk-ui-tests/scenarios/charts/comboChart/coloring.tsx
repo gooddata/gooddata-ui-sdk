@@ -1,34 +1,39 @@
 // (C) 2007-2019 GoodData Corporation
 import { scenariosFor } from "../../../src";
-import { ComboChart, HeaderPredicates, IComboChartProps } from "@gooddata/sdk-ui";
+import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui";
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors";
-import { measureLocalId } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates";
+import { replaceMappingPredicates } from "../_infra/insightConverters";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ComboChartWithArithmeticMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
-    .addScenario("assign color to measures", {
-        ...ComboChartWithArithmeticMeasuresAndViewBy,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Amount)),
-                    color: BlackColor,
-                },
-                {
-                    predicate: HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceLdm.Won)),
-                    color: CustomPaletteColor,
-                },
-            ],
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario(
+        "assign color to measures",
+        {
+            ...ComboChartWithArithmeticMeasuresAndViewBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AmountMeasurePredicate,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: WonMeasurePredicate,
+                        color: CustomPaletteColor,
+                    },
+                ],
+            },
         },
-    });
+        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Amount, ReferenceLdm.Won)),
+    );
 
 export default [colorsAndPalette, colorAssignment];

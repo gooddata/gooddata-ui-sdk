@@ -9,57 +9,79 @@ import {
     ColumnChartWithSingleMeasureViewByAndStackBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base";
+import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { measureLocalId } from "@gooddata/sdk-model";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { Region } from "../../_infra/data";
 
 const colorsAndPalette = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withVisualTestConfig({ groupUnder: "coloring" })
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", ColumnChartWithTwoMeasuresAndViewBy, coloringCustomizer);
 
 const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
-    .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
-    .addScenario("assign color to measures", {
-        ...ColumnChartWithTwoMeasuresAndViewBy,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: AmountMeasurePredicate,
-                    color: BlackColor,
-                },
-                {
-                    predicate: WonMeasurePredicate,
-                    color: CustomPaletteColor,
-                },
-            ],
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario(
+        "assign color to measures",
+        {
+            ...ColumnChartWithTwoMeasuresAndViewBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AmountMeasurePredicate,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: WonMeasurePredicate,
+                        color: CustomPaletteColor,
+                    },
+                ],
+            },
         },
-    })
-    .addScenario("assign color to master measure impacts derived PoP", {
-        ...ColumnChartViewByDateAndPop,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: WonMeasurePredicate,
-                    color: BlackColor,
-                },
-            ],
+        m =>
+            m.withInsightConverter(
+                replaceMappingPredicates(
+                    measureLocalId(ReferenceLdm.Amount),
+                    measureLocalId(ReferenceLdm.Won),
+                ),
+            ),
+    )
+    .addScenario(
+        "assign color to master measure impacts derived PoP",
+        {
+            ...ColumnChartViewByDateAndPop,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: WonMeasurePredicate,
+                        color: BlackColor,
+                    },
+                ],
+            },
         },
-    })
-    .addScenario("assign color to attribute element stack", {
-        ...ColumnChartWithSingleMeasureViewByAndStackBy,
-        config: {
-            colorPalette: CustomColorPalette,
-            colorMapping: [
-                {
-                    predicate: AttributeElements.Region.EastCoast,
-                    color: BlackColor,
-                },
-                {
-                    predicate: AttributeElements.Region.WestCoast,
-                    color: RedColor,
-                },
-            ],
+        m => m.withInsightConverter(replaceMappingPredicates(measureLocalId(ReferenceLdm.Won))),
+    )
+    .addScenario(
+        "assign color to attribute element stack",
+        {
+            ...ColumnChartWithSingleMeasureViewByAndStackBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: AttributeElements.Region.EastCoast,
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: AttributeElements.Region.WestCoast,
+                        color: RedColor,
+                    },
+                ],
+            },
         },
-    });
+        m => m.withInsightConverter(replaceMappingPredicates(Region.EastCoast, Region.WestCoast)),
+    );
 
 export default [colorsAndPalette, colorAssignment];

@@ -59,26 +59,22 @@
                     "secondary_yaxis": {
                         "measures": ["m_acugFHNJgsBy"],
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "xaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "yaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     },
                     "secondary_xaxis": {
                         "name": {
-                            "visible": false,
-                            "position": "middle"
+                            "position": "center"
                         }
                     }
                 }

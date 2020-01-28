@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { UnboundVisProps, VisProps, ScenarioNameAndProps } from "../../../src";
+import { UnboundVisProps, VisProps, CustomizedScenario } from "../../../src";
 import { ILegendConfig } from "@gooddata/sdk-ui";
 
 const LegendVariants: Array<[string, ILegendConfig]> = [
@@ -15,7 +15,7 @@ const LegendVariants: Array<[string, ILegendConfig]> = [
 export function legendCustomizer<T extends VisProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
-): Array<ScenarioNameAndProps<T>> {
+): Array<CustomizedScenario<T>> {
     return LegendVariants.map(([variantName, legendConfig]) => {
         return [
             `${baseName} - ${variantName}`,

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { IChartConfig } from "@gooddata/sdk-ui";
-import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
+import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
 
 const ConfigVariants: Array<[string, IChartConfig]> = [
     ["bottom", { chart: { verticalAlign: "bottom" } }],
@@ -12,7 +12,7 @@ const ConfigVariants: Array<[string, IChartConfig]> = [
 export function chartAlignmentVariants<T extends VisProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
-): Array<ScenarioNameAndProps<T>> {
+): Array<CustomizedScenario<T>> {
     return ConfigVariants.map(([variantName, config]) => {
         return [`${baseName} - ${variantName}`, { ...baseProps, config }];
     });

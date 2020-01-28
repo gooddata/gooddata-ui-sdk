@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { ScenarioNameAndProps, UnboundVisProps, VisProps } from "../../../src";
+import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
 import { IChartConfig } from "@gooddata/sdk-ui";
 import cloneDeep = require("lodash/cloneDeep");
 
@@ -22,7 +22,7 @@ function updateAxisSettings(rotation: string, config: IChartConfig = {}): IChart
 export function axisRotationVariants<T extends VisProps>(
     baseName: string,
     baseProps: UnboundVisProps<T>,
-): Array<ScenarioNameAndProps<T>> {
+): Array<CustomizedScenario<T>> {
     return ConfigVariants.map(([rotation]) => {
         /*
          * stories use the scenario name as story name. the minus sign messes things up and would lead

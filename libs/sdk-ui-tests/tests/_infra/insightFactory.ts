@@ -3,7 +3,7 @@
 import { IInsightDefinition, newInsightDefinition, VisualizationProperties } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui";
 import { ChartInteractions } from "./backendWithCapturing";
-import { chartConfigToVisProperties } from "./utils";
+import { chartConfigToVisProperties } from "./chartConfigToVisProps";
 
 function visNameToUri(name: string): string {
     if (name === "PivotTable") {
