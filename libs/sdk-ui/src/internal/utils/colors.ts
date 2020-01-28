@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import set = require("lodash/set");
 import isEqual = require("lodash/isEqual");
@@ -72,7 +72,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
         },
     ];
 
-    const previousColorMapping = get(properties, "controls.colorMapping", []);
+    const previousColorMapping = get(properties, ["controls", "colorMapping"]) || [];
 
     const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
     const newProperties = cloneDeep(properties);
