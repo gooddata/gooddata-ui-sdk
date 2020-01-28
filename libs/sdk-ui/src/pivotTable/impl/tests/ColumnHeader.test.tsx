@@ -26,6 +26,7 @@ const getColumnHeader = (props = {}, { type = "MEASURE_COLUMN", colGroupId = "a_
         reactContainer: null,
         showColumnMenu: jest.fn(),
         setSort: jest.fn(),
+        menu: jest.fn(),
         ...props,
     };
 

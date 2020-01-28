@@ -1,4 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
+import { IExecutionResult, isMeasureGroupDescriptor, isTotalDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDimension } from "@gooddata/sdk-model";
 import { ICellRendererParams } from "ag-grid-community";
 import { getMappingHeaderUri, IMappingHeader } from "../../base";
 import {
@@ -11,8 +13,6 @@ import {
     ROW_TOTAL,
 } from "./agGridConst";
 import { IGridHeader } from "./agGridTypes";
-import { IExecutionResult, isTotalDescriptor, isMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import { IDimension, defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import escape = require("lodash/escape");
 
 /*
@@ -164,8 +164,4 @@ export function getSubtotalStyles(dimension: IDimension): string[] {
 
     // Grand total (first) has no styles
     return [null, ...subtotalStyles];
-}
-
-export function generateAgGridComponentKey(def: IExecutionDefinition, rendererId: number): string {
-    return `agGridKey-${defFingerprint(def)}-${rendererId}`;
 }
