@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GridApi } from "ag-grid-community";
 import ApiWrapper from "./agGridApiWrapper";
 import { IGridTotalsRow } from "./agGridTypes";
 import isEqual = require("lodash/isEqual");
 
-export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) => {
-    const currentTotalsCount = gridApi.getPinnedBottomRowCount();
+export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]) => {
+    const currentTotalsCount = gridApi?.getPinnedBottomRowCount() ?? 0;
     const newTotalsCount = newTotals === null ? 0 : newTotals.length;
 
     if (currentTotalsCount !== newTotalsCount) {
@@ -21,8 +21,8 @@ export const areTotalsChanged = (gridApi: GridApi, newTotals: IGridTotalsRow[]) 
     return false;
 };
 
-export const isInvalidGetRowsRequest = (startRow: number, gridApi: GridApi): boolean => {
-    const bottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(gridApi);
+export const isInvalidGetRowsRequest = (startRow: number, gridApi: GridApi | undefined): boolean => {
+    const bottomRowIndex = gridApi ? ApiWrapper.getPaginationBottomRowIndex(gridApi) : null;
     if (bottomRowIndex !== null) {
         return startRow > bottomRowIndex;
     }
