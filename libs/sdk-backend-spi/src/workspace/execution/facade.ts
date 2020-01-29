@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     bucketIsEmpty,
     bucketMeasures,
@@ -421,13 +421,13 @@ export class DataViewFacade {
         const d = this.dataView.data;
 
         if (d === null) {
-            return [[]];
+            return [];
         }
 
         const e = d[0];
 
         if (e === null || !e) {
-            return [[]];
+            return [];
         }
 
         return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);

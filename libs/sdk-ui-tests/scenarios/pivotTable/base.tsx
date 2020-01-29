@@ -33,6 +33,9 @@ export const PivotTableWithArithmeticMeasures = {
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
+    .addScenario("single attribute", {
+        rows: [ReferenceLdm.Product.Name],
+    })
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })
