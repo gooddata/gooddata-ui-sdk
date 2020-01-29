@@ -29,7 +29,7 @@
         "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/catalog-export": "^8.0.0-alpha.5",
+        "@gooddata/catalog-export": "^8.0.0-alpha.6",
         "@gooddata/mock-handling": "1.0.0"
     },
     "devDependencies": {
