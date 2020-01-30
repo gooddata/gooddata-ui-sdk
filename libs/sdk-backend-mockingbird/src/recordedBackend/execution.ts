@@ -3,6 +3,7 @@
 import {
     AbstractExecutionFactory,
     DataValue,
+    DataViewFacade,
     IDataView,
     IDimensionDescriptor,
     IExecutionFactory,
@@ -24,7 +25,36 @@ import {
     IFilter,
     SortItem,
 } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import { ExecutionRecording, RecordingIndex } from "./types";
+
+//
+//
+//
+
+const DataViewPrefix = "dataView_";
+
+/**
+ * @internal
+ */
+export const DataViewAll = `${DataViewPrefix}all`;
+
+/**
+ * @internal
+ */
+export const dataViewWindow = (offset: number[], size: number[]) =>
+    `${DataViewPrefix}${dataViewWindowId(offset, size)}`;
+
+const dataViewWindowId = (offset: number[], size: number[]) => `o${offset.join("_")}s${size.join("_")}`;
+
+/**
+ * @internal
+ */
+export const DataViewFirstPage = dataViewWindow([0, 0], [100, 1000]);
+
+//
+//
+//
 
 /**
  * @internal
@@ -77,10 +107,6 @@ function recordedPreparedExecution(
         },
     };
 }
-
-const DataViewPrefix = "dataView_";
-const DataViewAll = `${DataViewPrefix}all`;
-const dataViewWindowId = (offset: number[], size: number[]) => `o${offset.join("_")}s${size.join("_")}`;
 
 class RecordedExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -155,7 +181,9 @@ class RecordedDataView implements IDataView {
         this.offset = recordedDataView.offset;
         this.totalCount = recordedDataView.totalCount;
 
-        this._fp = defFingerprint(this.definition) + "/dataView/*";
+        this._fp = `${defFingerprint(this.definition)}/dataView/${this.offset.join(",")}_${this.count.join(
+            ",",
+        )}`;
     }
 
     public equals = (other: IDataView): boolean => {
@@ -165,4 +193,35 @@ class RecordedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fp;
     };
+}
+
+//
+//
+//
+
+/**
+ * Creates a new data view facade for the provided recording. If the recording contains multiple sets of dataViews
+ * (e.g. for different windows etc), then it is possible to provide dataViewId to look up the particular view. By default,
+ * the data view with all data is wrapped in the facade.
+ *
+ * @remarks see {@link dataViewWindow}
+ *
+ * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
+ * @param dataViewId - optionally identifier of the data view; defaults to view with all data
+ * @internal
+ */
+export function recordedDataView(
+    recording: ExecutionRecording,
+    dataViewId: string = DataViewAll,
+): DataViewFacade {
+    const definition = recording.definition;
+    const factory = new RecordedExecutionFactory({}, "testWorkspace");
+    const result = new RecordedExecutionResult(definition, factory, recording);
+    const data = recording[dataViewId];
+
+    invariant(data, `data for view ${dataViewId} could not be found in the recording`);
+
+    const dataView = new RecordedDataView(result, definition, data);
+
+    return new DataViewFacade(dataView);
 }

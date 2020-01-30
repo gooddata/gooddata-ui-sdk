@@ -12,6 +12,13 @@ export {
     RecordedBackendConfig,
 } from "./recordedBackend/types";
 
+export {
+    recordedDataView,
+    DataViewAll,
+    dataViewWindow,
+    DataViewFirstPage,
+} from "./recordedBackend/execution";
+
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 
 export {

@@ -28,6 +28,21 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
 
+// Warning: (ae-internal-missing-underscore) The name "DataViewAll" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const DataViewAll: string;
+
+// Warning: (ae-internal-missing-underscore) The name "DataViewFirstPage" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const DataViewFirstPage: string;
+
+// Warning: (ae-internal-missing-underscore) The name "dataViewWindow" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const dataViewWindow: (offset: number[], size: number[]) => string;
+
 // Warning: (ae-internal-missing-underscore) The name "DisplayFormRecording" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
@@ -105,6 +120,11 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "recordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function recordedDataView(recording: ExecutionRecording, dataViewId?: string): DataViewFacade;
 
 // Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
 //

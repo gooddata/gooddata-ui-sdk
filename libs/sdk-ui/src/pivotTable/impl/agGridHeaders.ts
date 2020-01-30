@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { getMappingHeaderName, IMappingHeader } from "../../base";
 import { getIdsFromUri, getTreeLeaves } from "./agGridUtils";
@@ -216,8 +216,10 @@ export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) =
     };
 };
 
-export const getMinimalRowData = (data: DataValue[][], rowHeaderItems: IResultHeader[][]) => {
-    const numberOfRowHeaderItems = (rowHeaderItems[0] || []).length;
+export const getMinimalRowData = (dv: DataViewFacade) => {
+    const data = dv.twoDimData();
+    const rowHeaders = dv.allHeaders()[0];
+    const numberOfRowHeaderItems = (rowHeaders[0] || []).length;
 
     return data.length > 0
         ? data
