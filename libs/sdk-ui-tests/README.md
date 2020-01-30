@@ -203,11 +203,13 @@ Tests can be triggered as follows:
 
 Additional BackstopJS modes are also available:
 
--   `npm run backstop-reference` - take reference screenshots for new stories
+-   `npm run backstop-reference` - build storybook and take reference screenshots for all stories
+-   `npm run backstop-reference-nobuild` - take reference screenshots for all new scenarios for existing stories
 -   `npm run backstop-approve` - update screenshots that differ from reference
 
-Note: the 'backstop' commands do not trigger `build-storybook` script.
-Also remember: backstop can run in incremental mode and can filter test scenarios to exercise
+Note: the 'backstop' commands do not trigger `build-storybook` script except for `npm run backstop-reference`.
+Also remember: backstop can run in incremental mode and can filter test scenarios to exercise. To run specific
+scenarios, pass a `--filter=<scenarioLabelRegex>` argument (case sensitive).
 
 ## Technical Funny Stuff
 
