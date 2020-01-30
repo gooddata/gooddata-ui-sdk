@@ -23,6 +23,7 @@ import { AgGridReact } from "ag-grid-react";
 import * as classNames from "classnames";
 import * as CustomEvent from "custom-event";
 import * as React from "react";
+import { injectIntl } from "react-intl";
 
 import "../../styles/css/pivotTable.css";
 import {
@@ -46,6 +47,7 @@ import {
     newErrorMapping,
     VisualizationTypes,
     ILoadingState,
+    IntlWrapper,
 } from "../base";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
@@ -117,7 +119,7 @@ export const WATCHING_TABLE_RENDERED_MAX_TIME = 15000;
  *
  * @internal
  */
-export class CorePivotTable extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
+export class CorePivotTablePure extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
     public static defaultProps: Partial<ICorePivotTableProps> = {
         locale: "en-US",
         drillableItems: [],
@@ -998,3 +1000,11 @@ export class CorePivotTable extends React.Component<ICorePivotTableProps, ICoreP
         return target.classList.contains("ag-header-cell-resize");
     }
 }
+
+const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
+
+export const CorePivotTable: React.FC<ICorePivotTableProps> = props => (
+    <IntlWrapper locale={props.locale}>
+        <CorePivotTableWithIntl {...props} />
+    </IntlWrapper>
+);

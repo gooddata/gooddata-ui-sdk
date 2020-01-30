@@ -5,7 +5,7 @@ import { createIntlMock } from "../../base/localization/intlUtils";
 import noop = require("lodash/noop");
 
 import {
-    CorePivotTable,
+    CorePivotTablePure,
     WATCHING_TABLE_RENDERED_INTERVAL,
     WATCHING_TABLE_RENDERED_MAX_TIME,
 } from "../CorePivotTable";
@@ -28,12 +28,12 @@ describe("CorePivotTable", () => {
         customProps: Partial<ICorePivotTableProps> = {},
         execution: IPreparedExecution = singleMeasureExec,
     ) {
-        return mount(<CorePivotTable execution={execution} intl={intl} {...customProps} />);
+        return mount(<CorePivotTablePure execution={execution} intl={intl} {...customProps} />);
     }
 
     function getTableInstance(customProps: Partial<ICorePivotTableProps> = {}) {
         const wrapper = renderComponent(customProps);
-        const table = wrapper.find(CorePivotTable);
+        const table = wrapper.find(CorePivotTablePure);
         return table.instance() as any;
     }
 
