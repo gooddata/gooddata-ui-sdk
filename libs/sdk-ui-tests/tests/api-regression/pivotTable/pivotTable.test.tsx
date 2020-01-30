@@ -9,7 +9,7 @@ import { ReactWrapper } from "enzyme";
 import flatMap = require("lodash/flatMap");
 
 function tablePropsExtractor(wrapper: ReactWrapper): any {
-    const child = wrapper.find("CorePivotTable");
+    const child = wrapper.find("CorePivotTablePure");
 
     return child.props();
 }

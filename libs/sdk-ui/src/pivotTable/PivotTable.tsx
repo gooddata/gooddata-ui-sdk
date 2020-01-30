@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
-import { CorePivotTable } from "./CorePivotTable";
+import { CorePivotTablePure } from "./CorePivotTable";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -103,7 +103,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
                         return (
-                            <CorePivotTable
+                            <CorePivotTablePure
                                 {...corePivotProps}
                                 intl={translationProps.intl}
                                 execution={execution}
