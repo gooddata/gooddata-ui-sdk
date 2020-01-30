@@ -32,7 +32,8 @@
         "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
         "backstop-test": "npm run story-extractor && bash backstop/run-backstop.sh test",
         "backstop-approve": "npm run story-extractor && bash backstop/run-backstop.sh approve",
-        "backstop-reference": "npm run story-extractor && bash backstop/run-backstop.sh reference"
+        "backstop-reference": "npm run build-storybook && npm run story-extractor && bash backstop/run-backstop.sh reference",
+        "backstop-reference-nobuild": "npm run story-extractor && bash backstop/run-backstop.sh reference"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {

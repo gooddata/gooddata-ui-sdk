@@ -48,7 +48,6 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
             `properties.controls.${this.props.axis}.labelsEnabled`,
             true,
         );
-
         return {
             axisVisible,
             axisLabelsEnabled,

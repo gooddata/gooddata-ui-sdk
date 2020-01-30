@@ -60,7 +60,6 @@ class ConfigSubsection extends React.Component<
     private renderToggleSwitch() {
         if (this.props.canBeToggled) {
             const { toggledOn, toggleDisabled, showDisabledMessage } = this.props;
-
             return (
                 <DisabledBubbleMessage
                     className="input-checkbox-toggle"
