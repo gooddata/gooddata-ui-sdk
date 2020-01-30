@@ -25,6 +25,13 @@ const stories = require("./stories");
 
 const ScenarioConfig = [
     {
+        // special case for pivot table single column story - it does not have a .s-loading-done
+        idRegex: /single column/gi,
+        config: {
+            readySelector: ".screenshot-wrapper .s-pivot-table",
+        },
+    },
+    {
         // this is for customization stories that generate multiple variants with different config; we have
         // a special ready wrapper for these
         idRegex: /.*(data labels|coloring|legend)/g,

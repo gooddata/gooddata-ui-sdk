@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-28T18:20:37.106Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-01-29T14:23:37.010Z; */
 
 const fp_06890d7172183531342ed8e17d70e01a = {
     definition: require("./uiTestScenarios/executions/06890d7172183531342ed8e17d70e01a/definition.json"),
@@ -22,6 +22,11 @@ const fp_0a15e759c2eadbe7290e04aac4c25103 = {
     definition: require("./uiTestScenarios/executions/0a15e759c2eadbe7290e04aac4c25103/definition.json"),
     executionResult: require("./uiTestScenarios/executions/0a15e759c2eadbe7290e04aac4c25103/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/0a15e759c2eadbe7290e04aac4c25103/dataView_all.json"),
+};
+const fp_0e56a48ee138385d68177ecababeeb75 = {
+    definition: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/dataView_o0_0s100_1000.json"),
 };
 const fp_10ffd737dc921a808c49ad3872f11cb3 = {
     definition: require("./uiTestScenarios/executions/10ffd737dc921a808c49ad3872f11cb3/definition.json"),
@@ -397,10 +402,10 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
-const fp_0e56a48ee138385d68177ecababeeb75 = {
-    definition: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/executionResult.json"),
-    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/0e56a48ee138385d68177ecababeeb75/dataView_o0_0s100_1000.json"),
+const fp_f0101644e1a4fb5c1fefd97a5e12bafa = {
+    definition: require("./uiTestScenarios/executions/f0101644e1a4fb5c1fefd97a5e12bafa/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/f0101644e1a4fb5c1fefd97a5e12bafa/executionResult.json"),
+    dataView_o0_0s100_1000: require("./uiTestScenarios/executions/f0101644e1a4fb5c1fefd97a5e12bafa/dataView_o0_0s100_1000.json"),
 };
 export const Scenarios = {
     ComboChart: {
@@ -419,6 +424,7 @@ export const Scenarios = {
     },
     PivotTable: {
         TwoMeasuresAndMultipleSubtotals: fp_06d00ebfd7c655837f2488f562fbaf3f,
+        SingleAttribute: fp_0e56a48ee138385d68177ecababeeb75,
         SingleMeasureWithTwoRowAndOneColumnAttributes: fp_16421675f8e90b1ade1754bad1423a48,
         TwoMeasuresWithRowAttribute: fp_1d1a699a1370a108a14d9a5ee0c30555,
         SingleMeasureWithRowAndColumnAttributes: fp_212d3ef83bf6d322ba67d545c6da0623,
@@ -442,7 +448,7 @@ export const Scenarios = {
         TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: fp_e88aeb9d972e5493d3a9ba2063dea3e9,
         SingleMeasureWithColumnAttribute: fp_fa12ddadd752df55fbabeae6d22ecb4d,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: fp_feb4ad60c9bd6a1dd6003afd669e25c8,
-        SingleAttribute: fp_0e56a48ee138385d68177ecababeeb75,
+        SingleColumn: fp_f0101644e1a4fb5c1fefd97a5e12bafa,
     },
     ColumnChart: {
         SingleMeasureWithViewByAndStackByFilteredToSingleStack: fp_077ae3cab38d80b798b2e91a133aea10,
@@ -1879,6 +1885,7 @@ export const Recordings = {
         fp_06d00ebfd7c655837f2488f562fbaf3f,
         fp_077ae3cab38d80b798b2e91a133aea10,
         fp_0a15e759c2eadbe7290e04aac4c25103,
+        fp_0e56a48ee138385d68177ecababeeb75,
         fp_10ffd737dc921a808c49ad3872f11cb3,
         fp_110525f8f35d8bd2e6a07555453c50bb,
         fp_1407ee212bc8a079b1048ff976726a8e,
@@ -1953,7 +1960,7 @@ export const Recordings = {
         fp_f8eb5e66709f2ea572a139e5e7790931,
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
-        fp_0e56a48ee138385d68177ecababeeb75,
+        fp_f0101644e1a4fb5c1fefd97a5e12bafa,
     },
     metadata: {
         displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
