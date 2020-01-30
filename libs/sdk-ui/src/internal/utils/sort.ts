@@ -12,7 +12,6 @@ import {
     IBucket,
     IInsight,
     IMeasure,
-    insightAttributes,
     insightBucket,
     insightMeasures,
     insightSorts,
@@ -56,10 +55,11 @@ export function getAttributeSortItem(
 }
 
 function getDefaultTableSort(insight: IInsight): SortItem[] {
-    const attributes = insightAttributes(insight);
+    const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+    const rowAttributes = rowBucket ? bucketAttributes(rowBucket) : [];
 
-    if (attributes.length > 0) {
-        return [newAttributeSort(attributes[0], SORT_DIR_ASC)];
+    if (rowAttributes.length > 0) {
+        return [newAttributeSort(rowAttributes[0], SORT_DIR_ASC)];
     }
 
     const measures = insightMeasures(insight);
