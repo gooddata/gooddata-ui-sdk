@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { DataViewFacade, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
@@ -21,7 +21,7 @@ export function createAgGridDatasource(
     return new AgGridDatasource(config, initialDv, gridApiProvider, intl);
 }
 
-export type GridApiProvider = () => GridApi;
+export type GridApiProvider = () => GridApi | undefined;
 
 export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
@@ -97,7 +97,7 @@ export class AgGridDatasource implements IDatasource {
          * This seems to trigger re-render of column/row headers, thus ensuring that sort indicators
          * are shown correctly.
          */
-        this.gridApiProvider().refreshHeader();
+        this.gridApiProvider()?.refreshHeader();
 
         /*
          * Grouping provider is stateful, keeps accumulating info about pages; now that the pages

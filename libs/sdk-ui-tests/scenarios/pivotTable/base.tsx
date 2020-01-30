@@ -36,6 +36,9 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("single attribute", {
         rows: [ReferenceLdm.Product.Name],
     })
+    .addScenario("single column", {
+        columns: [ReferenceLdm.Product.Name],
+    })
     .addScenario("single measure", {
         measures: [ReferenceLdm.Amount],
     })
