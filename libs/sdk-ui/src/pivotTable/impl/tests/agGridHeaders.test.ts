@@ -1,22 +1,24 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { IAttributeDescriptor, IResultHeader, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 import * as fixtures from "../../../../__mocks__/fixtures";
 import {
     assortDimensionDescriptors,
+    getAttributeSortItemFieldAndDirection,
+    getColumnHeaders,
+    getFields,
+    getMeasureSortItemFieldAndDirection,
+    getMinimalRowData,
+    getRowHeaders,
     headerToGrid,
     identifyHeader,
     identifyResponseHeader,
-    getRowHeaders,
-    getFields,
-    getColumnHeaders,
-    getMinimalRowData,
     mergeHeaderEndIndex,
     shouldMergeHeaders,
-    getAttributeSortItemFieldAndDirection,
-    getMeasureSortItemFieldAndDirection,
 } from "../agGridHeaders";
-import { IAttributeDescriptor, IResultHeader, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
@@ -246,22 +248,29 @@ describe("assortDimensionDescriptors", () => {
 });
 
 describe("getMinimalRowData", () => {
+    const NoMeasureData = recordedDataView(
+        ReferenceRecordings.Scenarios.PivotTable.SingleAttribute,
+        DataViewFirstPage,
+    );
+    const WithMeasureData = recordedDataView(
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute,
+        DataViewFirstPage,
+    );
+
     it("should return a two-dimensional array of empty values when no measure data are available", () => {
-        expect(getMinimalRowData([], fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0])).toEqual([
-            [null],
-            [null],
-            [null],
-            [null],
-            [null],
-            [null],
-        ]);
+        const result = getMinimalRowData(NoMeasureData);
+        const expectedLength = NoMeasureData.allHeaders()[0][0].length;
+
+        expect(result.length).toEqual(expectedLength);
+        expect(result.filter(e => e[0] === null).length).toEqual(expectedLength);
     });
 
     it("should return a identical data if measure data is available", () => {
-        const data = [[1], [2], [3]];
-        expect(getMinimalRowData(data, fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0])).toBe(
-            data,
-        );
+        const result = getMinimalRowData(WithMeasureData);
+        const expectedLength = WithMeasureData.twoDimData().length;
+
+        expect(result.length).toEqual(expectedLength);
+        expect(result).toEqual(WithMeasureData.twoDimData());
     });
 });
 

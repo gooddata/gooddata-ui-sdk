@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import { IMappingHeader } from "../../base";
@@ -210,7 +210,7 @@ export function createRowData(
         }
     }
 
-    const minimalRowData: DataValue[][] = getMinimalRowData(dv.twoDimData(), headerItems[0]);
+    const minimalRowData: DataValue[][] = getMinimalRowData(dv);
 
     const subtotalStyles = getSubtotalStyles(dimensions ? dimensions[0] : null);
     const rowData = minimalRowData.map((dataRow: DataValue[], dataRowIndex: number) =>
