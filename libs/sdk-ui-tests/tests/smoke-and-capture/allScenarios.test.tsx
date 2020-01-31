@@ -260,16 +260,9 @@ describe("all scenarios", () => {
 
         const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
 
-        if (vis !== "PivotTable") {
-            /*
-             * TODO: remove this restriction after mock-rendering plug pivot table works
-             */
-            const plugVizInteractions = await mountInsight(insight);
+        const plugVizInteractions = await mountInsight(insight);
 
-            storeScenarioDefinition(scenario, interactions, plugVizInteractions);
-            storeInsight(scenario, insight);
-        } else {
-            storeScenarioDefinition(scenario, interactions);
-        }
+        storeScenarioDefinition(scenario, interactions, plugVizInteractions);
+        storeInsight(scenario, insight);
     });
 });
