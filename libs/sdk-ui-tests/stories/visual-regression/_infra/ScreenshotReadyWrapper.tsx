@@ -1,9 +1,15 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
-import sum = require("lodash/sum");
+import sumBy = require("lodash/sumBy");
+
+/**
+ * Ready resolver function is called to determine whether the screenshot div has
+ * all content ready => image can be captured.
+ */
+export type ReadyResolverFunction = (element: HTMLElement) => boolean;
 
 export interface IScreenshotReadyWrapperProps {
-    resolver: (element: HTMLElement) => boolean;
+    resolver: ReadyResolverFunction;
     interval?: number;
     className?: string;
 }
@@ -78,7 +84,9 @@ export class ScreenshotReadyWrapper extends React.Component<
     }
 }
 
-type ReadyResolverFunction = (element: HTMLElement) => boolean;
+//
+// Different ready selector implementations
+//
 
 export function createHighChartResolver(numOfCharts: number) {
     return (element: HTMLElement) => {
@@ -86,24 +94,56 @@ export function createHighChartResolver(numOfCharts: number) {
     };
 }
 
-const ClassNames = ["s-pivot-table s-loading-done", "highcharts-container", "s-headline-value"];
+export type ElementCountSelectorFun = (element: HTMLElement) => number;
+export type ElementCountSelector = string | ElementCountSelectorFun;
+
+/**
+ * This is a specialized element count selector, which returns number of pivot tables that are already
+ * loaded (have at least one row of data shown).
+ *
+ * @param element
+ */
+function loadedPivotTableSelector(element: HTMLElement): number {
+    const tables = element.querySelectorAll<HTMLElement>(".s-pivot-table");
+
+    return sumBy(tables, table => (table.querySelector(".s-loading-done") !== null ? 1 : 0));
+}
+
+const DefaultSelectors = ["highcharts-container", "s-headline-value", loadedPivotTableSelector];
 
 /**
  * Creates resolver which returns true if specified element contains at least `numOfElements` number of elements
- * that have _any_ of the classes in the provided list of classes. Each string of the list will be
- * used to call getElementsByClassName, sum of found elements >= than `numOfElements` means a match.
+ * that match the provided element count selectors. These selectors can be of two types:
+ *
+ * -  string: this is then used as input to getElementsByClassName
+ * -  function (HTMLElement) => number: this will be called to obtain element count using whatever intricate way
+ *    is needed
  *
  * @param numOfElements - number of elements that must be found before
- * @param classNames - list of classes; default is list of usual suspects that we use (pivot, highcharts, headline)
+ * @param selectors - list of classes; default is list of usual suspects that we use (pivot, highcharts, headline)
  */
-export function createAnyMatchResolver(numOfElements: number, classNames: string[] = ClassNames) {
+export function createElementCountResolver(
+    numOfElements: number,
+    selectors: ElementCountSelector[] = DefaultSelectors,
+) {
     return (element: HTMLElement) => {
-        const totalCount = sum(classNames.map(selector => element.getElementsByClassName(selector).length));
+        const totalCount = sumBy(selectors, selector => {
+            if (typeof selector === "string") {
+                return element.getElementsByClassName(selector).length;
+            }
+
+            return selector(element);
+        });
 
         return totalCount >= numOfElements;
     };
 }
 
+/**
+ * Composes multiple resolvers using AND operand == all resolvers must match.
+ *
+ * @param resolvers - resolvers to compose from
+ */
 export function andResolver(...resolvers: ReadyResolverFunction[]): ReadyResolverFunction {
     return (element: HTMLElement) => {
         return resolvers.every(resolver => resolver(element));
