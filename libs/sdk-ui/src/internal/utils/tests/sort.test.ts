@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import { BucketNames } from "../../../base";
 import {
@@ -16,14 +16,15 @@ import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../constants/sort";
 import { ATTRIBUTE, FILTERS, METRIC } from "../../constants/bucket";
 import {
     emptyInsight,
-    insightWithNoMeasureAndTwoViewBy,
     insightWithSingleMeasure,
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
     insightWithSingleMeasureAndViewByAndStack,
     insightWithTwoMeasuresAndTwoViewBy,
-    insightWithTwoMeasuresAndViewBy,
+    insightWithSingleMeasureAndOneAttribute,
+    insightWithNoMeasureAndOneAttribute,
+    insightWithNoMeasureAndOneColumn,
 } from "../../mocks/testMocks";
 import {
     IAttributeSortItem,
@@ -74,7 +75,7 @@ Object.freeze(referencePoint);
 describe("createSorts", () => {
     describe("default sorting", () => {
         describe("table", () => {
-            it("should sort by first attribute ASC", () => {
+            it("should sort by first row attribute ASC", () => {
                 const expectedSorts: SortItem[] = [
                     {
                         attributeSortItem: {
@@ -83,10 +84,10 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("table", insightWithNoMeasureAndTwoViewBy)).toEqual(expectedSorts);
+                expect(createSorts("table", insightWithNoMeasureAndOneAttribute)).toEqual(expectedSorts);
             });
 
-            it("should sort by first attribute ASC if there are some measures", () => {
+            it("should sort by first row attribute ASC if there are some measures", () => {
                 const expectedSorts: SortItem[] = [
                     {
                         attributeSortItem: {
@@ -95,10 +96,10 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("table", insightWithTwoMeasuresAndViewBy)).toEqual(expectedSorts);
+                expect(createSorts("table", insightWithSingleMeasureAndOneAttribute)).toEqual(expectedSorts);
             });
 
-            it("should sort by first measure DESC if there are no attributes", () => {
+            it("should sort by first measure DESC if there are no row attributes", () => {
                 const expectedSort: SortItem[] = [
                     {
                         measureSortItem: {
@@ -114,6 +115,11 @@ describe("createSorts", () => {
                     },
                 ];
                 expect(createSorts("table", insightWithSingleMeasure)).toEqual(expectedSort);
+            });
+
+            it("should not sort by column attribute", () => {
+                const expectedSorts: SortItem[] = [];
+                expect(createSorts("table", insightWithNoMeasureAndOneColumn)).toEqual(expectedSorts);
             });
         });
 

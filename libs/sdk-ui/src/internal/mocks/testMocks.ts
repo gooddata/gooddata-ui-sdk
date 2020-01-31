@@ -522,6 +522,104 @@ export const insightWithSingleAttribute: IInsight = {
     },
 };
 
+export const insightWithNoMeasureAndOneAttribute: IInsight = {
+    insight: {
+        visualizationUrl: "table",
+        buckets: [
+            {
+                localIdentifier: BucketNames.ATTRIBUTE,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with no measure and one attribute",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const insightWithSingleMeasureAndOneAttribute: IInsight = {
+    insight: {
+        visualizationUrl: "table",
+        buckets: [
+            {
+                localIdentifier: BucketNames.MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: BucketNames.ATTRIBUTE,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single measure and one attribute",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
+export const insightWithNoMeasureAndOneColumn: IInsight = {
+    insight: {
+        visualizationUrl: "table",
+        buckets: [
+            {
+                localIdentifier: BucketNames.COLUMNS,
+                items: [
+                    {
+                        attribute: {
+                            localIdentifier: "a1",
+                            displayForm: {
+                                uri: "/gdc/md/project/obj/1028",
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with no measure and one column",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
 //
 // Visualization classes
 //
