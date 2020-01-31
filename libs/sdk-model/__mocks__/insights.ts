@@ -30,6 +30,7 @@ export class InsightBuilder {
             sorts: [],
             properties: {},
             identifier: "random",
+            uri: "random",
         };
     }
 
@@ -59,6 +60,18 @@ export class InsightBuilder {
 
     public properties = (properties: VisualizationProperties): InsightBuilder => {
         this.insight.properties = properties;
+
+        return this;
+    };
+
+    public isLocked = (isLocked: boolean): InsightBuilder => {
+        this.insight.isLocked = isLocked;
+
+        return this;
+    };
+
+    public updated = (updated: string): InsightBuilder => {
+        this.insight.updated = updated;
 
         return this;
     };

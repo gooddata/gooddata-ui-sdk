@@ -74,6 +74,7 @@ describe("BaseChartConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -110,6 +111,7 @@ describe("BaseChartConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -157,6 +159,7 @@ describe("BaseChartConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -193,6 +196,7 @@ describe("BaseChartConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",

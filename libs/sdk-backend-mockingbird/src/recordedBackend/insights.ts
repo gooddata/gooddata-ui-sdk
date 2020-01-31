@@ -37,7 +37,7 @@ export class RecordedInsights {
 
     public async createInsight(def: IInsightDefinition): Promise<IInsight> {
         const newId = `adHocInsight_${adHocInsightCounter++}`;
-        const newInsight = { insight: { identifier: newId, ...cloneDeep(def.insight) } };
+        const newInsight = { insight: { identifier: newId, uri: newId, ...cloneDeep(def.insight) } };
         const recordingId = recId(newId);
 
         this.insights[recordingId] = { obj: newInsight };

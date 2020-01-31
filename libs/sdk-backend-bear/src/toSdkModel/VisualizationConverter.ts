@@ -182,7 +182,7 @@ export const convertVisualization = (
             properties: { properties: parsedProperties },
             sorts: parsedProperties.sortItems || [],
             title: meta.title!,
-            uri: meta.uri,
+            uri: meta.uri!,
             visualizationUrl: visualizationClassUri,
             updated: meta.updated,
             isLocked: meta.locked,

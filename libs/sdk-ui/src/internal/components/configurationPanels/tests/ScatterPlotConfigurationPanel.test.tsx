@@ -29,6 +29,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                 visualizationUrl: "vc",
                 properties: {},
                 identifier: "id",
+                uri: "test",
                 buckets: [
                     {
                         localIdentifier: measureBucket,
@@ -65,6 +66,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -127,6 +129,7 @@ describe("ScatterPlotConfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [] as any,
                 },
             };

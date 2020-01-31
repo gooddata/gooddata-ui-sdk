@@ -25,6 +25,7 @@ describe("BubbleChartconfigurationPanel", () => {
                 visualizationUrl: "vc",
                 properties: {},
                 identifier: "id",
+                uri: "test",
                 buckets: [
                     {
                         localIdentifier: measureBucket,
@@ -107,6 +108,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -169,6 +171,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [] as any,
                 },
             };
@@ -196,6 +199,7 @@ describe("BubbleChartconfigurationPanel", () => {
                     visualizationUrl: "vc",
                     properties: {},
                     identifier: "id",
+                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",

@@ -11,6 +11,7 @@ describe("countItemsOnAxesInMdObject", () => {
             insight: {
                 filters: [],
                 identifier: "insight",
+                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -37,6 +38,7 @@ describe("countItemsOnAxes", () => {
             insight: {
                 filters: [],
                 identifier: "insight",
+                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -65,6 +67,7 @@ describe("countItemsOnAxes", () => {
             insight: {
                 filters: [],
                 identifier: "insight",
+                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -93,6 +96,7 @@ describe("countItemsOnAxes", () => {
             insight: {
                 filters: [],
                 identifier: "insight",
+                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",

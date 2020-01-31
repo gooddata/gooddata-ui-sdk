@@ -554,7 +554,7 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 export type IInsight = IInsightDefinition & {
     insight: {
         identifier: string;
-        uri?: string;
+        uri: string;
     };
 };
 
@@ -693,6 +693,9 @@ export function insightHasMeasures(insight: IInsightDefinition): boolean;
 export function insightId(insight: IInsight): string;
 
 // @public
+export function insightIsLocked(insight: IInsightDefinition): boolean;
+
+// @public
 export function insightMeasures(insight: IInsightDefinition): IMeasure[];
 
 // Warning: (ae-internal-missing-underscore) The name "InsightModifications" should be prefixed with an underscore because the declaration is marked as @internal
@@ -717,6 +720,12 @@ export function insightTitle(insight: IInsightDefinition): string;
 
 // @public
 export function insightTotals(insight: IInsightDefinition): ITotal[];
+
+// @public
+export function insightUpdated(insight: IInsightDefinition): string | undefined;
+
+// @public
+export function insightUri(insight: IInsight): string;
 
 // @alpha
 export function insightVisualizationUrl(insight: IInsightDefinition): string;
@@ -981,7 +990,7 @@ export interface IVisualizationClass {
     // (undocumented)
     visualizationClass: {
         identifier: string;
-        uri?: string;
+        uri: string;
         title: string;
         url: string;
         icon: string;
