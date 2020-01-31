@@ -7,6 +7,9 @@ import { cleanupCorePivotTableProps } from "../../_infra/utils";
 import { IPivotTableProps } from "@gooddata/sdk-ui";
 import { ReactWrapper } from "enzyme";
 import flatMap = require("lodash/flatMap");
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
+import { mountInsight } from "../../_infra/renderPlugVis";
+import { defSetSorts } from "@gooddata/sdk-model";
 
 function tablePropsExtractor(wrapper: ReactWrapper): any {
     const child = wrapper.find("CorePivotTablePure");
@@ -14,7 +17,9 @@ function tablePropsExtractor(wrapper: ReactWrapper): any {
     return child.props();
 }
 
-describe("PivotTable", () => {
+const Vis = "PivotTable";
+
+describe(Vis, () => {
     const Scenarios: Array<ScenarioTestInput<IPivotTableProps>> = flatMap(pivotTableScenarios, group =>
         group.forTestTypes("api").asTestInput(),
     );
@@ -34,6 +39,21 @@ describe("PivotTable", () => {
             expect(interactions.effectiveProps).toBeDefined();
             expect(interactions.effectiveProps!.execution).toBeDefined();
             expect(cleanupCorePivotTableProps(interactions.effectiveProps)).toMatchSnapshot();
+        });
+
+        it("should lead to same execution when rendered as insight via plug viz", async () => {
+            const interactions = await promisedInteractions;
+
+            const insight = createInsightDefinitionForChart(Vis, _desc, interactions);
+
+            const plugVizInteractions = await mountInsight(insight);
+
+            // remove sorts from both original and plug viz exec - simply because plug vis will automatically
+            // create sorts
+            const originalExecutionWithoutSorts = defSetSorts(interactions.triggeredExecution!);
+            const executionWithoutSorts = defSetSorts(plugVizInteractions.triggeredExecution!);
+
+            expect(executionWithoutSorts).toEqual(originalExecutionWithoutSorts);
         });
     });
 });

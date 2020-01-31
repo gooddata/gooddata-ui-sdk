@@ -1370,5 +1370,156 @@
         "visName": "Xirr",
         "scenarioName": "semantically wrong measure",
         "comment": "Auto-generated insight for test scenario Xirr - semantically wrong measure."
+    },
+    "PivotTable.9ddbefd6f3a99502a1a0484d7d8aee1a": {
+        "visName": "PivotTable",
+        "scenarioName": "single attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - single attribute."
+    },
+    "PivotTable.7279f1fcabc2fd575bce04d2e9142c48": {
+        "visName": "PivotTable",
+        "scenarioName": "single column",
+        "comment": "Auto-generated insight for test scenario PivotTable - single column."
+    },
+    "PivotTable.8ef289b689ae537d4e12f480fc195396": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure."
+    },
+    "PivotTable.2b868d64e7a7ce2bce71dded8398465e": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with row attribute."
+    },
+    "PivotTable.92f66bb6d0d1d4c5bd4ba41fdcbee739": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with column attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with column attribute."
+    },
+    "PivotTable.1af20242ab575367d12fa0e8b53fac9c": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with row and column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with row and column attributes."
+    },
+    "PivotTable.219f3307d7ac4e00d0f8e5bd19ff6164": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and one column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and one column attributes."
+    },
+    "PivotTable.65ed68011c241c018516518f84cfb55c": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure with two row and two column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure with two row and two column attributes."
+    },
+    "PivotTable.51644dbb3eee42350f18648735e991a5": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures."
+    },
+    "PivotTable.bd7b43bdcd93b53e5d664a8f87fa50dc": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with row attribute."
+    },
+    "PivotTable.251970e2f3eb12985a7cdcf337adc826": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with column attribute",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with column attribute."
+    },
+    "PivotTable.60af8d9a90f51e159d04f068b345abd0": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with row and column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with row and column attributes."
+    },
+    "PivotTable.5d359652098b3f81c222bc04bab3ec04": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and one column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and one column attributes."
+    },
+    "PivotTable.9cc1ac3204a29b3abb1148ede8316e8b": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with two row and two column attributes",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with two row and two column attributes."
+    },
+    "PivotTable.69ba352397c2125d904f5b23c52a4296": {
+        "visName": "PivotTable",
+        "scenarioName": "empty values",
+        "comment": "Auto-generated insight for test scenario PivotTable - empty values."
+    },
+    "PivotTable.cd3cc060d88881aa7fabaaf9cf8bf64c": {
+        "visName": "PivotTable",
+        "scenarioName": "arithmetic measures",
+        "comment": "Auto-generated insight for test scenario PivotTable - arithmetic measures."
+    },
+    "PivotTable.af59bb647cdd7534410d0b9efdd7cf2c": {
+        "comment": "Auto-generated insight for test scenario PivotTable - german number format."
+    },
+    "PivotTable.4e99ad7171942773b6ba55ae0a57c1a0": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and max height 200."
+    },
+    "PivotTable.3652e3b4a89f10057812d11ef78a09cc": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and max height 300."
+    },
+    "PivotTable.dbd49a25bb1c43964da2ae118fbfe2db": {
+        "comment": "Auto-generated insight for test scenario PivotTable - no totals and no grouping."
+    },
+    "PivotTable.d8e3cc6c79b7e91b508fb5292a2a6205": {
+        "comment": "Auto-generated insight for test scenario PivotTable - measure format with colors."
+    },
+    "PivotTable.431c5cd0b3aca62ca96fb9159d6ceff9": {
+        "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 200."
+    },
+    "PivotTable.498779d190e344603ded6bd442111171": {
+        "comment": "Auto-generated insight for test scenario PivotTable - totals and max height 300."
+    },
+    "PivotTable.7496eaf1da1fbcc70c9dc481498dfc76": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by first row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by first row attr."
+    },
+    "PivotTable.dce2d9655ea37cc0b00a5bdfc6335da8": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure pivot sorted by second row attr",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr."
+    },
+    "PivotTable.dceee41dc2c88e477f906598745585ff": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by first measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by first measure."
+    },
+    "PivotTable.d2e898c6cd9f14b3af293871a094bbc9": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures with single row attr sorted by second measure",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by second measure."
+    },
+    "PivotTable.bf6e433e02c2a1c1eb89f470e17d894b": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and single grand total",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure and single grand total."
+    },
+    "PivotTable.69df3cc9841ce25b295068b8aabe6c2e": {
+        "visName": "PivotTable",
+        "scenarioName": "single measure and multiple grand totals",
+        "comment": "Auto-generated insight for test scenario PivotTable - single measure and multiple grand totals."
+    },
+    "PivotTable.ea52a59d74e8a5a69e77d264dce816b7": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and single grand total for each",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total for each."
+    },
+    "PivotTable.99c3b8468ddb0897fcbc45a32216b432": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple grand totals for each",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple grand totals for each."
+    },
+    "PivotTable.7128c90aa452a118bfec78f9b62b4c65": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and multiple subtotals",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and multiple subtotals."
+    },
+    "PivotTable.0e469fed5a845bbdffa1aa67b30a16f4": {
+        "visName": "PivotTable",
+        "scenarioName": "two measures and grand totals and multiple subtotals",
+        "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
     }
 }

@@ -1,0 +1,37 @@
+{
+    "insight": {
+        "identifier": "PivotTable.9ddbefd6f3a99502a1a0484d7d8aee1a",
+        "visualizationUrl": "local:table",
+        "title": "PivotTable - single attribute",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "columns",
+                "items": []
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

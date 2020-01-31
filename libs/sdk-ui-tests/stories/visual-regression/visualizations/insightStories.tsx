@@ -26,7 +26,7 @@ import { ScenarioTestInput, ScenarioTestMembers } from "../../../src";
 import AllTestScenarioGroups from "../../../scenarios";
 import {
     andResolver,
-    createAnyMatchResolver,
+    createElementCountResolver,
     ScreenshotReadyWrapper,
 } from "../_infra/ScreenshotReadyWrapper";
 import { withScreenshot } from "../_infra/backstopWrapper";
@@ -146,8 +146,8 @@ const DoNotRenderConfigPanel = "this-classname-should-not-exist-in-the-document"
  * the screenshot before the expander is rendered.
  */
 const ReportReadyResolver = andResolver(
-    createAnyMatchResolver(3),
-    createAnyMatchResolver(1, [ConfigurationPanelWrapper.DefaultExpandAllClassName]),
+    createElementCountResolver(3),
+    createElementCountResolver(1, [ConfigurationPanelWrapper.DefaultExpandAllClassName]),
 );
 
 function plugVizStory(insight: IInsight, testScenario: ScenarioTestInput<any>) {
