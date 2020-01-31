@@ -18,6 +18,7 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
     return {
         visualizationClass: {
             identifier: visClassUri,
+            uri: "test",
             url: visClassUri,
             title: visClassUri,
             icon: "none",
@@ -40,6 +41,7 @@ export async function mountInsight(insight: IInsightDefinition): Promise<ChartIn
     const persistedInsight: IInsight = {
         insight: {
             identifier: "test",
+            uri: "test",
             ...insight.insight,
         },
     };

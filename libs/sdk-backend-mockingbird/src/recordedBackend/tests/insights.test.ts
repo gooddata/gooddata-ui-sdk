@@ -10,6 +10,7 @@ function testInsight(id: string, title?: string): IInsight {
     return {
         insight: {
             identifier: id,
+            uri: "test",
             ...newInsightDefinition("local:test", m => m.title(title ?? "Untitled test insight")).insight,
         },
     };

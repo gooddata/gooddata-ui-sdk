@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     IFilter,
@@ -31,6 +31,9 @@ import {
     insightHasMeasures,
     insightMeasures,
     insightId,
+    insightUri,
+    insightIsLocked,
+    insightUpdated,
 } from "../index";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -292,6 +295,51 @@ describe("insightId", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightId(input)).toThrow();
+    });
+});
+
+describe("insightUri", () => {
+    it("should return the uri", () => {
+        expect(insightUri(EmptyInsight)).toEqual("random");
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightUri(input)).toThrow();
+    });
+});
+
+describe("insightIsLocked", () => {
+    const LockedInsight = newInsight(VisClassId, m => m.isLocked(true));
+
+    const Scenarios: Array<[boolean, string, any]> = [
+        [false, "non-locked insight", EmptyInsight],
+        [true, "locked insight", LockedInsight],
+    ];
+
+    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
+        expect(insightIsLocked(insightArg)).toBe(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightIsLocked(input)).toThrow();
+    });
+});
+
+describe("insightUpdated", () => {
+    const insightUpdatedDate = "2020-01-31 13:24:07";
+    const UpdatedInsight = newInsight(VisClassId, m => m.updated(insightUpdatedDate));
+
+    const Scenarios: Array<[string | undefined, string, any]> = [
+        [undefined, "insight that has not been updated", EmptyInsight],
+        [insightUpdatedDate, "updated insight", UpdatedInsight],
+    ];
+
+    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, insightArg) => {
+        expect(insightUpdated(insightArg)).toBe(expectedResult);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightUpdated(input)).toThrow();
     });
 });
 

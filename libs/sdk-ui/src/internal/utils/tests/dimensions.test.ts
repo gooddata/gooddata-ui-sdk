@@ -102,6 +102,7 @@ function newInsight(buckets: IBucket[]): IInsight {
     return {
         insight: {
             identifier: "test",
+            uri: "test",
             title: "no name",
             visualizationUrl: "classId",
             buckets,

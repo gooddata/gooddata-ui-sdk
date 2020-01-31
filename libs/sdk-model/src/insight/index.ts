@@ -36,7 +36,7 @@ export type IInsight = IInsightDefinition & {
         /**
          * Link to the insight.
          */
-        uri?: string;
+        uri: string;
     };
 };
 
@@ -119,7 +119,7 @@ export interface IVisualizationClass {
         /**
          * Link to visualization class object.
          */
-        uri?: string;
+        uri: string;
 
         /**
          * Human readable name of the visualization (Bar Chart, Pivot Table)
@@ -413,6 +413,45 @@ export function insightId(insight: IInsight): string {
     invariant(insight, "insight to get id of must be defined");
 
     return insight.insight.identifier;
+}
+
+/**
+ * Gets the insight uri
+ *
+ * @param insight - insight to get uri of
+ * @returns the insight uri
+ * @public
+ */
+export function insightUri(insight: IInsight): string {
+    invariant(insight, "insight to get uri of must be defined");
+
+    return insight.insight.uri;
+}
+
+/**
+ * Gets the date of the last insight update
+ *
+ * @param insight - insight
+ * @returns string - YYYY-MM-DD HH:mm:ss
+ * @public
+ */
+export function insightUpdated(insight: IInsightDefinition): string | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.updated;
+}
+
+/**
+ * Checks if insight is locked
+ *
+ * @param insight - insight
+ * @returns boolean
+ * @public
+ */
+export function insightIsLocked(insight: IInsightDefinition): boolean {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.isLocked || false;
 }
 
 /**

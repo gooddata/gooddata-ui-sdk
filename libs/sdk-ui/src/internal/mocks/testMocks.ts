@@ -627,6 +627,7 @@ export const insightWithNoMeasureAndOneColumn: IInsight = {
 export const dummyTableVisualizationClass: IVisualizationClass = {
     visualizationClass: {
         identifier: "tableVis",
+        uri: "test",
         url: "local:table",
         title: EMPTY_TITLE,
         icon: "",
@@ -638,6 +639,7 @@ export const dummyTableVisualizationClass: IVisualizationClass = {
 export const dummyColumnVisualizationClass: IVisualizationClass = {
     visualizationClass: {
         identifier: "columnVis",
+        uri: "test",
         title: EMPTY_TITLE,
         url: "local:column",
         icon: "",
@@ -650,6 +652,7 @@ export const dummyUnknownTypeVisualizationClass: IVisualizationClass = {
     visualizationClass: {
         title: EMPTY_TITLE,
         identifier: "fun",
+        uri: "test",
         url: "unknown",
         icon: "",
         iconSelected: "",
