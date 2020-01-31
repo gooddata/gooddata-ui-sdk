@@ -62,9 +62,12 @@ function getDefaultTableSort(insight: IInsight): SortItem[] {
         return [newAttributeSort(rowAttributes[0], SORT_DIR_ASC)];
     }
 
+    const colBucket = insightBucket(insight, BucketNames.COLUMNS);
+    const colAttributes = colBucket ? bucketAttributes(colBucket) : [];
+
     const measures = insightMeasures(insight);
 
-    if (measures.length > 0) {
+    if (measures.length > 0 && colAttributes.length === 0) {
         return [newMeasureSort(measures[0], SORT_DIR_DESC)];
     }
 
