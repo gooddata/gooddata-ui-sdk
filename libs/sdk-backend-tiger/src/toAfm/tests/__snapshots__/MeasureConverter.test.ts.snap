@@ -64,7 +64,7 @@ Object {
           "dataSet": Object {
             "identifier": Object {
               "id": "bar",
-              "type": "dateDataSet",
+              "type": "dataSet",
             },
           },
           "periodsAgo": 3,
@@ -263,7 +263,7 @@ Object {
             "dataSet": Object {
               "identifier": Object {
                 "id": "closed",
-                "type": "dateDataSet",
+                "type": "dataSet",
               },
             },
             "from": "2019-08-06",
@@ -275,7 +275,7 @@ Object {
             "dataSet": Object {
               "identifier": Object {
                 "id": "closed",
-                "type": "dateDataSet",
+                "type": "dataSet",
               },
             },
             "from": 5,
@@ -298,4 +298,4 @@ Object {
 
 exports[`measure converter should throw an error when measure definition is not supported 1`] = `"The measure definition is not supported: {}"`;
 
-exports[`measure converter should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow specifying dateDataSet by URI"`;
+exports[`measure converter should throw an error when toObjQualifier gets an URI ref 1`] = `"Tiger backend does not allow referencing objects by URI."`;

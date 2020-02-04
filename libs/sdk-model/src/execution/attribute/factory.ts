@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import identity = require("lodash/identity");
 import { IAttribute } from "./index";
-import { ObjRef, objectRefValue, Identifier, isObjRef } from "../base";
+import { ObjRef, objRefToString, Identifier, isObjRef } from "../base";
 import { idRef } from "../base/factory";
 
 /**
@@ -20,7 +20,7 @@ export class AttributeBuilder implements IAttribute {
     constructor(displayForm: ObjRef) {
         this.attribute = {
             displayForm,
-            localIdentifier: `a_${objectRefValue(displayForm)}`,
+            localIdentifier: `a_${objRefToString(displayForm)}`,
         };
     }
 

@@ -30,6 +30,11 @@ export type UriRef = {
 };
 
 /**
+ * @public
+ */
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet";
+
+/**
  * Model object reference using object's unique identifier.
  *
  * NOTE: this is preferred way to reference model objects.
@@ -37,6 +42,24 @@ export type UriRef = {
  * @public
  */
 export type IdentifierRef = {
+    /**
+     * Type of object being referenced.
+     *
+     * -  This field MUST be specified when working with backends which have identifiers unique on workspace+type level
+     *    instead of the entire workspace level. Tiger backend requires this field.
+     *
+     * -  Backends with workspace-unique identifiers MUST ignore this field.
+     *
+     * Note: the best way to avoid this conundrum is to actually avoid manually creating/typing the object references.
+     * The catalog-exporter tool is capable to generate code from your LDM and will create correct references - allowing
+     * you to treat references opaquely. Same stands for the various services provided the backend-spi - reference-able
+     * entities returned by backend-spi will typically have the 'ref' property that contains correct object reference.
+     */
+    type?: ObjectType;
+
+    /**
+     * The actual identifier.
+     */
     identifier: Identifier;
 };
 
@@ -51,10 +74,12 @@ export type LocalIdRef = {
 };
 
 /**
- * Model object reference. Objects can be referenced by their URI or by identifier.
+ * Model object reference.
  *
- * NOTE: using URI references is discouraged. URIs are workspace-specific and thus any application
- * which references model objects using their URI will not work on multiple workspaces.
+ * Note: you should avoid manually creating and maintaining object references. The recommended practice is to
+ * treat your logical data model as code; you can achieve this by using the catalog-exporter tool which can
+ * create code representation of the various LDM entities. You can then use this code in conjuction with the
+ * various factory and builder methods in sdk-model to conveniently construct visualizations.
  *
  * @public
  */
@@ -109,15 +134,18 @@ export function isLocalIdRef(obj: any): obj is LocalIdRef {
 }
 
 /**
- * Retrieves value of object reference.
+ * Retrieves string representation of object reference. This is purely for purposes for representation of
+ * references in text, debug and test purposes.
  *
- * @public
+ * @internal
  */
-export function objectRefValue(objRef: ObjRef | ObjRefInScope): string {
+export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
     invariant(objRef, "object reference must not be undefined");
 
     if (isIdentifierRef(objRef)) {
-        return objRef.identifier;
+        const typePrefix = objRef.type ? `${objRef.type}_` : "";
+
+        return `${typePrefix}${objRef.identifier}`;
     } else if (isUriRef(objRef)) {
         return objRef.uri;
     }
@@ -139,7 +167,7 @@ export function areObjRefsEqual(
         return b == null;
     }
     if (isIdentifierRef(a)) {
-        return isIdentifierRef(b) && a.identifier === b.identifier;
+        return isIdentifierRef(b) && a.identifier === b.identifier && a.type === b.type;
     }
     if (isUriRef(a)) {
         return isUriRef(b) && a.uri === b.uri;

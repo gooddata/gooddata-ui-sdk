@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import {
     filterIsEmpty,
@@ -13,14 +13,28 @@ import {
     isMeasureValueFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { toBearRef, toScopedBearRef } from "../utils/ObjRefConverter";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     if (!isPositiveAttributeFilter(filter)) {
         if (filterIsEmpty(filter)) {
             return null;
         }
+
+        return {
+            negativeAttributeFilter: {
+                displayForm: toBearRef(filter.negativeAttributeFilter.displayForm),
+                notIn: filter.negativeAttributeFilter.notIn,
+            },
+        };
     }
-    return filter;
+
+    return {
+        positiveAttributeFilter: {
+            displayForm: toBearRef(filter.positiveAttributeFilter.displayForm),
+            in: filter.positiveAttributeFilter.in,
+        },
+    };
 }
 
 export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): GdcExecuteAFM.FilterItem | null {
@@ -32,7 +46,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): GdcExecu
 
     return {
         absoluteDateFilter: {
-            dataSet: absoluteDateFilter.dataSet,
+            dataSet: toBearRef(absoluteDateFilter.dataSet),
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
         },
@@ -48,7 +62,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): GdcExecu
 
     return {
         relativeDateFilter: {
-            dataSet: relativeDateFilter.dataSet,
+            dataSet: toBearRef(relativeDateFilter.dataSet),
             granularity: relativeDateFilter.granularity,
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
@@ -63,7 +77,12 @@ export function convertMeasureValueFilter(
         return null;
     }
 
-    return filter;
+    return {
+        measureValueFilter: {
+            measure: toScopedBearRef(filter.measureValueFilter.measure),
+            condition: filter.measureValueFilter.condition,
+        },
+    };
 }
 
 export function convertFilter(filter: IFilter): GdcExecuteAFM.ExtendedFilter | null {

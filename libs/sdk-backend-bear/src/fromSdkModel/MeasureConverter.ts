@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
     IMeasureDefinitionType,
@@ -25,8 +25,19 @@ import {
     IPreviousPeriodMeasureDefinition,
     measurePreviousPeriodDateDataSets,
     measureFilters,
+    IPreviousPeriodDateDataSet,
 } from "@gooddata/sdk-model";
+import { toBearRef } from "../utils/ObjRefConverter";
 import { convertFilter, shouldFilterBeIncluded } from "./FilterConverter";
+
+const convertPreviousPeriodDataSet = (
+    dataSet: IPreviousPeriodDateDataSet,
+): GdcVisualizationObject.IPreviousPeriodDateDataSet => {
+    return {
+        dataSet: toBearRef(dataSet.dataSet),
+        periodsAgo: dataSet.periodsAgo,
+    };
+};
 
 const convertPreviousPeriodMeasureDefinition = (
     measure: IMeasure<IPreviousPeriodMeasureDefinition>,
@@ -34,7 +45,7 @@ const convertPreviousPeriodMeasureDefinition = (
     return {
         previousPeriodMeasure: {
             measureIdentifier: measureMasterIdentifier(measure)!,
-            dateDataSets: measurePreviousPeriodDateDataSets(measure)!,
+            dateDataSets: measurePreviousPeriodDateDataSets(measure)!.map(convertPreviousPeriodDataSet),
         },
     };
 };
@@ -45,7 +56,7 @@ const convertPoPMeasureDefinition = (
     return {
         popMeasureDefinition: {
             measureIdentifier: measureMasterIdentifier(measure)!,
-            popAttribute: measurePopAttribute(measure)!,
+            popAttribute: toBearRef(measurePopAttribute(measure)!),
         },
     };
 };

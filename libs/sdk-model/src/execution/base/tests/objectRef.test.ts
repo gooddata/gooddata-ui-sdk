@@ -1,24 +1,24 @@
 // (C) 2019-2020 GoodData Corporation
-import { objectRefValue, ObjRef, ObjRefInScope, areObjRefsEqual } from "../index";
+import { objRefToString, ObjRef, ObjRefInScope, areObjRefsEqual } from "../index";
 
-describe("objectRefValue", () => {
+describe("objRefToString", () => {
     const Scenarios: Array<[string, ObjRef, string | undefined]> = [
         ["return uri for UriRef", { uri: "/uri" }, "/uri"],
         ["return identifier of IdentifierRef", { identifier: "id" }, "id"],
     ];
 
     it.each(Scenarios)("should %s", (_desc, input, expected) => {
-        expect(objectRefValue(input)).toEqual(expected);
+        expect(objRefToString(input)).toEqual(expected);
     });
 
     it("should throw if input null", () => {
         // @ts-ignore
-        expect(() => objectRefValue(null)).toThrow();
+        expect(() => objRefToString(null)).toThrow();
     });
 
     it("should throw if input undefined", () => {
         // @ts-ignore
-        expect(() => objectRefValue(undefined)).toThrow();
+        expect(() => objRefToString(undefined)).toThrow();
     });
 });
 
@@ -39,10 +39,34 @@ describe("areObjRefsEqual", () => {
             { identifier: "/identifier" },
         ],
         [
+            true,
+            "identifier, identifier, same value",
+            { identifier: "/identifier", type: "attribute" },
+            { identifier: "/identifier", type: "attribute" },
+        ],
+        [
             false,
             "identifier, identifier, different value",
             { identifier: "/identifier1" },
             { identifier: "/identifier2" },
+        ],
+        [
+            false,
+            "identifier, identifier, different value same obj type",
+            { identifier: "/identifier1", type: "attribute" },
+            { identifier: "/identifier2", type: "attribute" },
+        ],
+        [
+            false,
+            "identifier, identifier, different obj types",
+            { identifier: "/identifier1", type: "fact" },
+            { identifier: "/identifier1", type: "attribute" },
+        ],
+        [
+            false,
+            "identifier, identifier, one is missing obj type",
+            { identifier: "/identifier1" },
+            { identifier: "/identifier1", type: "attribute" },
         ],
         [
             true,

@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { objectRefValue } from "../base";
+// (C) 2019-2020 GoodData Corporation
+import { objRefToString } from "../base";
 import {
     IAttributeFilter,
     IDateFilter,
@@ -16,21 +16,21 @@ import invariant from "ts-invariant";
 
 function filterObjectRef(filter: IFilter): string {
     if (isMeasureValueFilter(filter)) {
-        return objectRefValue(filter.measureValueFilter.measure);
+        return objRefToString(filter.measureValueFilter.measure);
     }
 
     if (isDateFilter(filter)) {
         if (isAbsoluteDateFilter(filter)) {
-            return objectRefValue(filter.absoluteDateFilter.dataSet);
+            return objRefToString(filter.absoluteDateFilter.dataSet);
         }
-        return objectRefValue(filter.relativeDateFilter.dataSet);
+        return objRefToString(filter.relativeDateFilter.dataSet);
     }
 
     if (isPositiveAttributeFilter(filter)) {
-        return objectRefValue(filter.positiveAttributeFilter.displayForm);
+        return objRefToString(filter.positiveAttributeFilter.displayForm);
     }
 
-    return objectRefValue(filter.negativeAttributeFilter.displayForm);
+    return objRefToString(filter.negativeAttributeFilter.displayForm);
 }
 
 type FilterByType = {
@@ -68,6 +68,11 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  *   -  filters from the addedFilters list override filters in the original list
  *
  * TODO: we seem to be missing the original logic that was cleaning up filters if the new filter was ALL_TIME?
+ *
+ * TODO: this logic is not in the right place; filter merging needs to be done by backend implementation
+ *  to be able to correctly identify objects being filtered on - regardless of how they are referenced. this
+ *  function will return bogus if one filter references say display form by URI and the other references
+ *  the same display form by identifier.
  *
  * @param originalFilters - original filters to merge with
  * @param addedFilters - new filters to add on top of original
