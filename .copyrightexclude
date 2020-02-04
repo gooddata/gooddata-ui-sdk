@@ -20,3 +20,4 @@
 # Excluded files
 .github/*
 common/*
+tools/mock-handling/src/index.ts
