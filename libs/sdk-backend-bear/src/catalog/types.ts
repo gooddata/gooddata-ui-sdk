@@ -6,7 +6,7 @@ import { ICatalogMeasure } from "@gooddata/sdk-model";
  * @internal
  */
 export interface IAttributeByKey {
-    [key: string]: GdcMetadata.IAttribute;
+    [key: string]: GdcMetadata.IWrappedAttribute;
 }
 
 /**

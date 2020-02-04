@@ -110,7 +110,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                         ...acc,
                         attributeByUri: {
                             ...acc.attributeByUri,
-                            [el.attribute.meta.uri]: el.attribute,
+                            [el.attribute.meta.uri]: el,
                         },
                     };
                 }
