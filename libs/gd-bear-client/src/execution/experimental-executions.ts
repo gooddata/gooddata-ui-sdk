@@ -107,11 +107,11 @@ function isDerived(measure: any) {
 }
 
 function getAttrTypeFromMap(dfUri: string, attributesMap: any) {
-    return get(get(attributesMap, [dfUri], {}), ["attribute", "content", "type"]);
+    return get(attributesMap, [dfUri, "attribute", "content", "type"]);
 }
 
 function getAttrUriFromMap(dfUri: string, attributesMap: any) {
-    return get(get(attributesMap, [dfUri], {}), ["attribute", "meta", "uri"]);
+    return get(attributesMap, [dfUri, "attribute", "meta", "uri"]);
 }
 
 function isAttrFilterNegative(attributeFilter: any) {
