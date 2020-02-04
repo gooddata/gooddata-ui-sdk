@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
     IFilter,
@@ -21,6 +21,7 @@ import {
     relativeDateFilterValues,
     absoluteDateFilterValues,
 } from "@gooddata/sdk-model";
+import { toBearRef } from "../utils/ObjRefConverter";
 
 const convertMeasureValueFilter = (
     filter: IMeasureValueFilter,
@@ -44,7 +45,7 @@ const convertRelativeDateFilter = (
 ): GdcVisualizationObject.IRelativeDateFilter => {
     return {
         relativeDateFilter: {
-            dataSet: filterAttributeDisplayForm(filter),
+            dataSet: toBearRef(filterAttributeDisplayForm(filter)),
             ...relativeDateFilterValues(filter),
         },
     };
@@ -55,7 +56,7 @@ const convertAbsoluteDateFilter = (
 ): GdcVisualizationObject.IAbsoluteDateFilter => {
     return {
         absoluteDateFilter: {
-            dataSet: filterAttributeDisplayForm(filter),
+            dataSet: toBearRef(filterAttributeDisplayForm(filter)),
             ...absoluteDateFilterValues(filter),
         },
     };
@@ -67,7 +68,7 @@ const convertNegativeAttributeFilter = (
     const elements = filterAttributeElements(filter);
     return {
         negativeAttributeFilter: {
-            displayForm: filterAttributeDisplayForm(filter),
+            displayForm: toBearRef(filterAttributeDisplayForm(filter)),
             notIn: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
         },
     };
@@ -79,7 +80,7 @@ const convertPositiveAttributeFilter = (
     const elements = filterAttributeElements(filter);
     return {
         positiveAttributeFilter: {
-            displayForm: filterAttributeDisplayForm(filter),
+            displayForm: toBearRef(filterAttributeDisplayForm(filter)),
             in: isAttributeElementsByRef(elements) ? elements.uris : elements.values,
         },
     };

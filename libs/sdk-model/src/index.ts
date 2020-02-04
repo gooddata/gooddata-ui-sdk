@@ -25,6 +25,7 @@ export {
 } from "./ldm/attributeDisplayForm";
 
 export {
+    ObjectType,
     Identifier,
     Uri,
     UriRef,
@@ -34,7 +35,7 @@ export {
     ObjRefInScope,
     isUriRef,
     isIdentifierRef,
-    objectRefValue,
+    objRefToString,
     isLocalIdRef,
     areObjRefsEqual,
     isObjRef,

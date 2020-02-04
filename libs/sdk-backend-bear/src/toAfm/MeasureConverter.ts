@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IArithmeticMeasureDefinition,
     IMeasure,
@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertMeasureFilter } from "./FilterConverter";
+import { toBearRef } from "../utils/ObjRefConverter";
 import compact = require("lodash/compact");
 import get = require("lodash/get");
 
@@ -69,7 +70,7 @@ function convertSimpleMeasureDefinition(
 
     return {
         measure: {
-            item: measureDefinition.item,
+            item: toBearRef(measureDefinition.item),
             ...filtersProp,
             ...aggregationProp,
             ...computeRatioProp,
@@ -82,7 +83,7 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExec
     return {
         popMeasure: {
             measureIdentifier: popMeasureDefinition.measureIdentifier,
-            popAttribute: popMeasureDefinition.popAttribute,
+            popAttribute: toBearRef(popMeasureDefinition.popAttribute),
         },
     };
 }
@@ -95,7 +96,7 @@ function convertPreviousPeriodMeasureDefinition(
         previousPeriodMeasure: {
             measureIdentifier: previousPeriodMeasure.measureIdentifier,
             dateDataSets: previousPeriodMeasure.dateDataSets.map(dateDataSet => ({
-                dataSet: dateDataSet.dataSet,
+                dataSet: toBearRef(dateDataSet.dataSet),
                 periodsAgo: dateDataSet.periodsAgo,
             })),
         },

@@ -14,7 +14,7 @@ import {
     measureIdentifier,
     measureLocalId,
 } from "./index";
-import { Identifier, ObjRef, isObjRef, objectRefValue } from "../base";
+import { Identifier, ObjRef, isObjRef, objRefToString } from "../base";
 import { IMeasureFilter } from "../filter";
 import { idRef } from "../base/factory";
 
@@ -96,7 +96,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
                     item: measureOrRef,
                 },
             };
-            const refValue = objectRefValue(measureOrRef);
+            const refValue = objRefToString(measureOrRef);
             this.measure.localIdentifier = `m_${refValue}`;
             this.measureId = refValue;
         } else {

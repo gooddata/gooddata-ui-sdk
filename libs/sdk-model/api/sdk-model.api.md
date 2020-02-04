@@ -502,6 +502,7 @@ export type Identifier = string;
 
 // @public
 export type IdentifierRef = {
+    type?: ObjectType;
     identifier: Identifier;
 };
 
@@ -521,7 +522,7 @@ export const idMatchBucket: (id: string) => BucketPredicate;
 export const idMatchMeasure: (id: string) => MeasurePredicate;
 
 // @public
-export function idRef(identifier: Identifier): IdentifierRef;
+export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
 export interface IExecutionDefinition {
@@ -1201,14 +1202,19 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | string, attrib
 // @public
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
-// @public
-export function objectRefValue(objRef: ObjRef | ObjRefInScope): string;
+// @public (undocumented)
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
 
 // @public
 export type ObjRefInScope = ObjRef | LocalIdRef;
+
+// Warning: (ae-internal-missing-underscore) The name "objRefToString" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {

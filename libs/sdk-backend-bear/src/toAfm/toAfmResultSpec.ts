@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import compact = require("lodash/compact");
 import isEmpty = require("lodash/isEmpty");
 import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
@@ -15,12 +15,13 @@ import {
     totalIsNative,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
+import { toBearRef } from "../utils/ObjRefConverter";
 
 function convertAttribute(attribute: IAttribute, idx: number): GdcExecuteAFM.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
     return {
-        displayForm: attribute.attribute.displayForm,
+        displayForm: toBearRef(attribute.attribute.displayForm),
         localIdentifier: attribute.attribute.localIdentifier || `a${idx + 1}`,
         ...aliasProp,
     };
