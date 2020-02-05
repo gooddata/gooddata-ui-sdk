@@ -7,12 +7,12 @@ import { CatalogItemType, ICatalogGroup, isCatalogMeasure, ICatalogDateDataset }
 import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
 import {
     convertItemType,
-    CompatibleCatalogItemType,
     convertDateDataset,
     convertAttribute,
     convertMeasure,
     convertFact,
     convertGroup,
+    isCompatibleCatalogItemType,
 } from "../toSdkModel/CatalogConverter";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { IDisplayFormByKey, IAttributeByKey, ICatalogMeasureByKey } from "./types";
@@ -63,21 +63,9 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     }
 
     public async load() {
-        const { types, includeTags, excludeTags, dataset, production } = this.options;
-        const includeDateDatasets = types.includes("dateDataset");
-        const compatibleBearItemTypes = types.filter(
-            (type): type is CompatibleCatalogItemType => type !== "dateDataset",
-        );
-        const bearItemTypes = compatibleBearItemTypes.map(convertItemType);
-        const bearCatalogItems = await this.authCall(sdk =>
-            sdk.catalogue.loadAllItems(this.workspace, {
-                types: bearItemTypes,
-                includeWithTags: includeTags,
-                excludeWithTags: excludeTags,
-                production: production ? 1 : 0,
-                csvDataSets: dataset ? [dataset] : [],
-            }),
-        );
+        const { includeTags, excludeTags, dataset, production } = this.options;
+
+        const bearCatalogItems = await this.loadBearCatalogItems();
         const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
 
         const attributeUris = flow(
@@ -145,18 +133,6 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             {},
         );
 
-        let dateDatasets: ICatalogDateDataset[] = [];
-        if (includeDateDatasets) {
-            const result = await this.authCall(sdk =>
-                sdk.catalogue.loadDateDataSets(this.workspace, {
-                    returnAllDateDataSets: true,
-                    dataSetIdentifier: this.options.dataset,
-                    attributesMap: attributeByDisplayFormUri,
-                }),
-            );
-            dateDatasets = result.dateDataSets.map(convertDateDataset);
-        }
-
         const catalogItems = bearCatalogItems.map(item => {
             if (GdcCatalog.isCatalogAttribute(item)) {
                 return convertAttribute(item, displayFormByUri[item.links.defaultDisplayForm]);
@@ -174,6 +150,8 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                     [el.id]: el,
                 };
             }, {});
+
+        const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
 
         const allCatalogItems = [...catalogItems, ...dateDatasets];
 
@@ -201,4 +179,42 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             },
         );
     }
+
+    private loadDateDatasets = async (attributesMap: IAttributeByKey): Promise<ICatalogDateDataset[]> => {
+        const { types } = this.options;
+
+        const includeDateDatasets = types.includes("dateDataset");
+        if (!includeDateDatasets) {
+            return [];
+        }
+
+        const result = await this.authCall(sdk =>
+            sdk.catalogue.loadDateDataSets(this.workspace, {
+                returnAllDateDataSets: true,
+                dataSetIdentifier: this.options.dataset,
+                attributesMap,
+            }),
+        );
+        return result.dateDataSets.map(convertDateDataset);
+    };
+
+    private loadBearCatalogItems = async (): Promise<GdcCatalog.CatalogItem[]> => {
+        const { types, includeTags, excludeTags, dataset, production } = this.options;
+
+        const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
+        if (compatibleBearItemTypes.length === 0) {
+            return [];
+        }
+
+        const bearItemTypes = compatibleBearItemTypes.map(convertItemType);
+        return this.authCall(sdk =>
+            sdk.catalogue.loadAllItems(this.workspace, {
+                types: bearItemTypes,
+                includeWithTags: includeTags,
+                excludeWithTags: excludeTags,
+                production: production ? 1 : 0,
+                csvDataSets: dataset ? [dataset] : [],
+            }),
+        );
+    };
 }

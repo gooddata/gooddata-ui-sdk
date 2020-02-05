@@ -17,6 +17,9 @@ import { convertObjectMeta } from "./MetaConverter";
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;
 
+export const isCompatibleCatalogItemType = (type: CatalogItemType): type is CompatibleCatalogItemType =>
+    type !== "dateDataset";
+
 const bearItemTypeByCatalogItemType: {
     [catalogItemType in CompatibleCatalogItemType]: GdcCatalog.CatalogItemType;
 } = {
