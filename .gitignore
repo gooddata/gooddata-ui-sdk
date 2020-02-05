@@ -74,9 +74,11 @@ common/temp/**
 package-deps.json
 libs/**/src/**/*.js
 libs/**/src/**/*.jsx
-.rush/temp/**
+.rush/**
 .gdcatalogrc
 .gdmockrc
 
 # CI scripts create these
-ci/
+libs/**/ci/
+tools/**/ci/
+skel/**/ci/
