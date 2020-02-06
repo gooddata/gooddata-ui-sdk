@@ -1,9 +1,14 @@
 // (C) 2019 GoodData Corporation
 import { IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
-import flow from "lodash/fp/flow";
-import uniq from "lodash/fp/uniq";
-import map from "lodash/fp/map";
-import { CatalogItemType, ICatalogGroup, isCatalogMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
+import partition from "lodash/partition";
+import uniq from "lodash/uniq";
+import {
+    CatalogItemType,
+    ICatalogGroup,
+    isCatalogMeasure,
+    ICatalogDateDataset,
+    CatalogItem,
+} from "@gooddata/sdk-model";
 import { GdcMetadata, GdcCatalog } from "@gooddata/gd-bear-model";
 import {
     convertItemType,
@@ -17,6 +22,72 @@ import {
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { IDisplayFormByKey, IAttributeByKey, ICatalogMeasureByKey } from "./types";
 import { BearWorkspaceCatalog } from "./catalog";
+
+type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
+
+const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey) => (
+    item: GdcCatalog.CatalogItem,
+): CatalogItem => {
+    if (GdcCatalog.isCatalogAttribute(item)) {
+        return convertAttribute(item, displayForms[item.links.defaultDisplayForm]);
+    } else if (GdcCatalog.isCatalogMetric(item)) {
+        return convertMeasure(item);
+    }
+    return convertFact(item);
+};
+
+const createLookups = (
+    displayFormsAndAttributes: BearDisplayFormOrAttribute[],
+): {
+    displayFormById: IDisplayFormByKey;
+    displayFormByUri: IDisplayFormByKey;
+    attributeByDisplayFormUri: IAttributeByKey;
+} => {
+    const [attributes, displayForms] = partition(displayFormsAndAttributes, GdcMetadata.isWrappedAttribute);
+
+    const attributeByUri = attributes.reduce(
+        (acc: IAttributeByKey, el) => ({
+            ...acc,
+            [el.attribute.meta.uri]: el,
+        }),
+        {},
+    );
+
+    const displayFormByUri = displayForms.reduce(
+        (acc: IDisplayFormByKey, el) => ({
+            ...acc,
+            [el.attributeDisplayForm.meta.uri]: el.attributeDisplayForm,
+        }),
+        {},
+    );
+
+    const displayFormById = displayForms.reduce(
+        (acc: IDisplayFormByKey, el) => ({
+            ...acc,
+            [el.attributeDisplayForm.meta.identifier]: el.attributeDisplayForm,
+        }),
+        {},
+    );
+
+    const attributeByDisplayFormUri = Object.keys(displayFormByUri).reduce(
+        (acc: IAttributeByKey, displayFormUri) => {
+            const displayForm = displayFormByUri[displayFormUri];
+            const attributeUri = displayForm.content.formOf;
+            const attribute = attributeByUri[attributeUri];
+            return {
+                ...acc,
+                [displayFormUri]: attribute,
+            };
+        },
+        {},
+    );
+
+    return {
+        attributeByDisplayFormUri,
+        displayFormById,
+        displayFormByUri,
+    };
+};
 
 export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -63,108 +134,10 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     }
 
     public async load() {
-        const { includeTags, excludeTags, dataset, production } = this.options;
-
-        const bearCatalogItems = await this.loadBearCatalogItems();
-        const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
-
-        const attributeUris = flow(
-            map((attr: GdcCatalog.ICatalogAttribute) => attr.links.self),
-            uniq,
-        )(bearCatalogAttributes);
-        const displayFormUris = flow(
-            map((attr: GdcCatalog.ICatalogAttribute) => attr.links.defaultDisplayForm),
-            uniq,
-        )(bearCatalogAttributes);
-
-        const displayFormsAndAttributes = await this.authCall(sdk =>
-            sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute>(
-                this.workspace,
-                [...attributeUris, ...displayFormUris],
-            ),
-        );
-
-        const { displayFormByUri, displayFormById, attributeByUri } = displayFormsAndAttributes.reduce(
-            (
-                acc: {
-                    displayFormById: IDisplayFormByKey;
-                    displayFormByUri: IDisplayFormByKey;
-                    attributeByUri: IAttributeByKey;
-                },
-                el,
-            ) => {
-                if (GdcMetadata.isWrappedAttribute(el)) {
-                    return {
-                        ...acc,
-                        attributeByUri: {
-                            ...acc.attributeByUri,
-                            [el.attribute.meta.uri]: el,
-                        },
-                    };
-                }
-                return {
-                    ...acc,
-                    displayFormByUri: {
-                        ...acc.displayFormByUri,
-                        [el.attributeDisplayForm.meta.uri]: el.attributeDisplayForm,
-                    },
-                    displayFormById: {
-                        ...acc.displayFormById,
-                        [el.attributeDisplayForm.meta.identifier]: el.attributeDisplayForm,
-                    },
-                };
-            },
-            {
-                displayFormById: {},
-                displayFormByUri: {},
-                attributeByUri: {},
-            },
-        );
-        const attributeByDisplayFormUri = Object.keys(displayFormByUri).reduce(
-            (acc: IAttributeByKey, displayFormUri) => {
-                const displayForm = displayFormByUri[displayFormUri];
-                const attributeUri = displayForm.content.formOf;
-                const attribute = attributeByUri[attributeUri];
-                return {
-                    ...acc,
-                    [displayFormUri]: attribute,
-                };
-            },
-            {},
-        );
-
-        const catalogItems = bearCatalogItems.map(item => {
-            if (GdcCatalog.isCatalogAttribute(item)) {
-                return convertAttribute(item, displayFormByUri[item.links.defaultDisplayForm]);
-            } else if (GdcCatalog.isCatalogMetric(item)) {
-                return convertMeasure(item);
-            }
-            return convertFact(item);
-        });
-
-        const catalogMeasureById = catalogItems
-            .filter(isCatalogMeasure)
-            .reduce((acc: ICatalogMeasureByKey, el) => {
-                return {
-                    ...acc,
-                    [el.id]: el,
-                };
-            }, {});
-
-        const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
-
-        const allCatalogItems = [...catalogItems, ...dateDatasets];
-
-        const bearCatalogGroups = await this.authCall(sdk =>
-            sdk.catalogue.loadGroups(this.workspace, {
-                includeWithTags: includeTags,
-                excludeWithTags: excludeTags,
-                production: production ? 1 : 0,
-                csvDataSets: dataset ? [dataset] : [],
-            }),
-        );
-
-        const catalogGroups: ICatalogGroup[] = bearCatalogGroups.map(convertGroup);
+        const [{ allCatalogItems, mappings }, catalogGroups] = await Promise.all([
+            this.loadAllCatalogItemsAndMappings(),
+            this.loadCatalogGroups(),
+        ]);
 
         return new BearWorkspaceCatalog(
             this.authCall,
@@ -172,13 +145,40 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             catalogGroups,
             allCatalogItems,
             this.options,
-            {
+            mappings,
+        );
+    }
+
+    private loadAllCatalogItemsAndMappings = async () => {
+        const bearCatalogItems = await this.loadBearCatalogItems();
+
+        const bearDisplayFormsAndAttributes = await this.loadBearDisplayFormsAndAttributes(bearCatalogItems);
+
+        const { attributeByDisplayFormUri, displayFormById, displayFormByUri } = createLookups(
+            bearDisplayFormsAndAttributes,
+        );
+
+        const catalogItems = bearCatalogItems.map(bearCatalogItemToCatalogItem(displayFormByUri));
+        const dateDatasets = await this.loadDateDatasets(attributeByDisplayFormUri);
+        const allCatalogItems = [...catalogItems, ...dateDatasets];
+
+        const catalogMeasureById = catalogItems.filter(isCatalogMeasure).reduce(
+            (acc: ICatalogMeasureByKey, el) => ({
+                ...acc,
+                [el.id]: el,
+            }),
+            {},
+        );
+
+        return {
+            allCatalogItems,
+            mappings: {
                 attributeByDisplayFormUri,
                 displayFormById,
                 catalogMeasureById,
             },
-        );
-    }
+        };
+    };
 
     private loadDateDatasets = async (attributesMap: IAttributeByKey): Promise<ICatalogDateDataset[]> => {
         const { types } = this.options;
@@ -216,5 +216,35 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 csvDataSets: dataset ? [dataset] : [],
             }),
         );
+    };
+
+    private loadBearDisplayFormsAndAttributes = async (
+        bearCatalogItems: GdcCatalog.CatalogItem[],
+    ): Promise<BearDisplayFormOrAttribute[]> => {
+        const bearCatalogAttributes = bearCatalogItems.filter(GdcCatalog.isCatalogAttribute);
+        const attributeUris = bearCatalogAttributes.map(attr => attr.links.self);
+        const displayFormUris = bearCatalogAttributes.map(attr => attr.links.defaultDisplayForm);
+
+        return this.authCall(sdk =>
+            sdk.md.getObjects<BearDisplayFormOrAttribute>(
+                this.workspace,
+                uniq([...attributeUris, ...displayFormUris]),
+            ),
+        );
+    };
+
+    private loadCatalogGroups = async (): Promise<ICatalogGroup[]> => {
+        const { includeTags, excludeTags, dataset, production } = this.options;
+
+        const bearCatalogGroups = await this.authCall(sdk =>
+            sdk.catalogue.loadGroups(this.workspace, {
+                includeWithTags: includeTags,
+                excludeWithTags: excludeTags,
+                production: production ? 1 : 0,
+                csvDataSets: dataset ? [dataset] : [],
+            }),
+        );
+
+        return bearCatalogGroups.map(convertGroup);
     };
 }

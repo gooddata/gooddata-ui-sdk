@@ -14,8 +14,8 @@ import {
 import { AuthenticatedCallGuard } from "../commonTypes";
 import {
     convertItemType,
-    CompatibleCatalogItemType,
     convertDateDataset,
+    isCompatibleCatalogItemType,
 } from "../toSdkModel/CatalogConverter";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
@@ -79,16 +79,11 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     }
 
     public async load() {
-        const { types = this.options.types, items = this.options.items || [], insight } = this.options;
+        const { items = [], insight } = this.options;
         if (items.length === 0 && !insight) {
             throw new Error("No items or insight was specified!");
         }
 
-        const includeDateDatasets = types.includes("dateDataset");
-        const compatibleBearItemTypes = types.filter(
-            (type): type is CompatibleCatalogItemType => type !== "dateDataset",
-        );
-        const bearTypes = compatibleBearItemTypes.map(convertItemType);
         const itemsInsight: IInsightDefinition = {
             insight: {
                 title: "",
@@ -168,6 +163,24 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             },
         };
 
+        const [availableCatalogItems, availableDateDatasets] = await Promise.all([
+            this.loadAvailableCatalogItems(sanitizedVisualizationObject),
+            this.loadAvailableDateDatasets(sanitizedVisualizationObject),
+        ]);
+
+        const allAvailableCatalogItems = [...availableCatalogItems, ...availableDateDatasets];
+
+        return new BearWorkspaceCatalogWithAvailableItems(this.groups, this.items, allAvailableCatalogItems);
+    }
+
+    private loadAvailableCatalogItems = async (
+        sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
+    ): Promise<CatalogItem[]> => {
+        const { types } = this.options;
+
+        const compatibleBearItemTypes = types.filter(isCompatibleCatalogItemType);
+
+        const bearTypes = compatibleBearItemTypes.map(convertItemType);
         const itemDescriptions = await this.authCall(sdk =>
             sdk.catalogue.loadItemDescriptionObjects(
                 this.workspace,
@@ -185,22 +198,27 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
             }),
         );
 
-        let dateDatasets: ICatalogDateDataset[] = [];
-        if (includeDateDatasets) {
-            const result = await this.authCall(sdk =>
-                sdk.catalogue.loadDateDataSets(this.workspace, {
-                    bucketItems: sanitizedVisualizationObject.content,
-                    includeAvailableDateAttributes: true,
-                    dataSetIdentifier: this.options.dataset,
-                    attributesMap: this.mappings.attributeByDisplayFormUri,
-                }),
-            );
-            dateDatasets = result.dateDataSets.map(convertDateDataset);
+        return this.items.filter(item => availableItemUris.includes(item.uri));
+    };
+
+    private loadAvailableDateDatasets = async (
+        sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
+    ): Promise<ICatalogDateDataset[]> => {
+        const { types, dataset } = this.options;
+
+        const includeDateDatasets = types.includes("dateDataset");
+        if (!includeDateDatasets) {
+            return [];
         }
 
-        const availableCatalogItems = this.items.filter(item => availableItemUris.includes(item.uri));
-        const allAvailableCatalogItems = [...availableCatalogItems, ...dateDatasets];
-
-        return new BearWorkspaceCatalogWithAvailableItems(this.groups, this.items, allAvailableCatalogItems);
-    }
+        const result = await this.authCall(sdk =>
+            sdk.catalogue.loadDateDataSets(this.workspace, {
+                bucketItems: sanitizedVisualizationObject.content,
+                includeAvailableDateAttributes: true,
+                dataSetIdentifier: dataset,
+                attributesMap: this.mappings.attributeByDisplayFormUri,
+            }),
+        );
+        return result.dateDataSets.map(convertDateDataset);
+    };
 }
