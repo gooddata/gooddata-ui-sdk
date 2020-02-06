@@ -15,6 +15,7 @@ import { DisplayFormRecording } from "../recordings/displayForms";
 import { ExecutionRecording } from "../recordings/execution";
 import { InsightRecording } from "../recordings/insights";
 import { generateConstantsForDisplayForms } from "./displayForm";
+import { generateConstantsForDataSamples } from "./dataSample";
 import { generateConstantsForExecutions } from "./execution";
 import { generateConstantsForInsights } from "./insight";
 import groupBy = require("lodash/groupBy");
@@ -33,8 +34,8 @@ type TypescriptOutput = {
     sourceFile: SourceFile;
 };
 
-function initialize(targetDir: string): TypescriptOutput {
-    const outputFile = path.join(targetDir, "index.ts");
+function initialize(targetDir: string, fileName: string): TypescriptOutput {
+    const outputFile = path.join(targetDir, fileName);
     const project = new Project({});
 
     const sourceFile = project.createSourceFile(
@@ -47,7 +48,7 @@ function initialize(targetDir: string): TypescriptOutput {
 
     return {
         project,
-        sourceFile,
+        sourceFile: sourceFile,
     };
 }
 
@@ -77,14 +78,22 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
     };
 }
 
-function transformToTypescript(input: IndexGeneratorInput, targetDir: string): TypescriptOutput {
-    const output = initialize(targetDir);
-    const { sourceFile } = output;
+function transformToTypescript(
+    input: IndexGeneratorInput,
+    targetDir: string,
+    fileName: string,
+): TypescriptOutput {
+    const output = initialize(targetDir, fileName);
+    const sourceFile = output.sourceFile;
 
-    sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
-    sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
-    sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
-    sourceFile.addVariableStatement(generateIndexConst(input));
+    if (fileName === "dataSample.ts") {
+        sourceFile.addVariableStatements(generateConstantsForDataSamples(input.displayForms(), targetDir));
+    } else {
+        sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
+        sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
+        sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
+        sourceFile.addVariableStatement(generateIndexConst(input));
+    }
 
     return output;
 }
@@ -114,8 +123,31 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
     };
 }
 
+function generateRecordingIndex(recordings: IRecording[], targetDir: string): void {
+    const input = createGeneratorInput(recordings);
+    const output = transformToTypescript(input, targetDir, "index.ts");
+    const sourceFile = output.sourceFile;
+    const generatedTypescript = sourceFile.getFullText();
+    const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
+
+    fs.writeFileSync(sourceFile.getFilePath(), formattedTypescript, { encoding: "utf-8" });
+}
+
+function generateDataSample(recordings: IRecording[], targetDir: string): void {
+    const input = createGeneratorInput(recordings);
+    const output = transformToTypescript(input, targetDir, "dataSample.ts");
+    const sourceFile = output.sourceFile;
+    const generatedTypescriptForDataSample = sourceFile.getFullText();
+    const formattedTypescriptForDataSample = format(generatedTypescriptForDataSample, {
+        parser: "typescript",
+        printWidth: 120,
+    });
+
+    fs.writeFileSync(sourceFile.getFilePath(), formattedTypescriptForDataSample, { encoding: "utf-8" });
+}
+
 /**
- * Given various types of recordings, this function will generate and write `index.ts` file in the root of
+ * Given various types of recordings, this function will generate and write `dataSample.ts and index.ts` file in the root of
  * the recordings directory.
  *
  * The index will use require() to reference the JSON files. It is assumed that all paths on input to this function
@@ -124,12 +156,8 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
  * @param recordings - recordings to include in the index
  * @param targetDir - absolute path to directory where the index should be created
  */
-export function generateRecordingIndex(recordings: IRecording[], targetDir: string): void {
-    const input = createGeneratorInput(recordings);
-    const output = transformToTypescript(input, targetDir);
-    const { sourceFile } = output;
-    const generatedTypescript = sourceFile.getFullText();
-    const formattedTypescript = format(generatedTypescript, { parser: "typescript", printWidth: 120 });
 
-    fs.writeFileSync(sourceFile.getFilePath(), formattedTypescript, { encoding: "utf-8" });
+export function generateAllFiles(recordings: IRecording[], targetDir: string): void {
+    generateRecordingIndex(recordings, targetDir);
+    generateDataSample(recordings, targetDir);
 }

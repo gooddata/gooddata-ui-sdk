@@ -5,7 +5,7 @@ import { IAnalyticalBackend, IElementQuery } from "@gooddata/sdk-backend-spi";
 import { isEqual } from "lodash";
 import fs from "fs";
 import path from "path";
-import { IAttributeElement, idRef } from "@gooddata/sdk-model";
+import { IAttributeElement, idRef, IAttributeDisplayForm } from "@gooddata/sdk-model";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 
 //
@@ -31,7 +31,7 @@ export class DisplayFormRecording implements IRecording {
     private readonly displayFormId: string;
     private readonly spec: DisplayFormRecordingSpec;
     private readonly requestFile: string;
-    private readonly elementFile: string;
+    public readonly elementFile: string;
     private readonly objFile: string;
 
     constructor(rootDir: string, displayFormId: string, spec: DisplayFormRecordingSpec = {}) {
@@ -50,6 +50,18 @@ export class DisplayFormRecording implements IRecording {
 
     public getRecordingName(): string {
         return `df_${createUniqueVariableNameForIdentifier(this.displayFormId)}`;
+    }
+
+    public getAttributeElements(): IAttributeElement[] {
+        const elements = readJsonSync(this.elementFile) as IAttributeElement[];
+
+        return elements;
+    }
+
+    public getDisplayFormTitle(): string {
+        const obj = readJsonSync(this.objFile) as IAttributeDisplayForm;
+
+        return obj.title;
     }
 
     public isComplete(): boolean {

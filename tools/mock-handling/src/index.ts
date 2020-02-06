@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // (C) 2007-2020 GoodData Corporation
+
 import program from "commander";
 import ora from "ora";
 import chalk from "chalk";
@@ -14,7 +15,7 @@ import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
-import { generateRecordingIndex } from "./codegen";
+import { generateAllFiles } from "./codegen";
 import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { discoverExecutionRecordings } from "./recordings/executionRepository";
@@ -183,7 +184,7 @@ async function run() {
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);
 
-    generateRecordingIndex(recordingsToIndex, absoluteRecordingDir);
+    generateAllFiles(recordingsToIndex, absoluteRecordingDir);
 
     logSuccess("Done");
 
