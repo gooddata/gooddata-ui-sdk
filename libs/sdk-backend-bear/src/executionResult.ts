@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { GdcExecution } from "@gooddata/gd-bear-model";
 import { IExportConfig as GdcExportConfig } from "@gooddata/gd-bear-client";
@@ -81,7 +81,7 @@ export class BearExecutionResult implements IExecutionResult {
             sdk.report.exportResult(
                 this.definition.workspace,
                 this.execResponse.links.executionResult,
-                options,
+                optionsForBackend,
             ),
         );
     }
