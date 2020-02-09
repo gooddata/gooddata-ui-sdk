@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "DonutChart.39fce7b0df70638639e798aec5d8d578",
+        "uri": "DonutChart.39fce7b0df70638639e798aec5d8d578",
         "visualizationUrl": "local:donut",
         "title": "DonutChart - vertical alignment - default",
         "buckets": [

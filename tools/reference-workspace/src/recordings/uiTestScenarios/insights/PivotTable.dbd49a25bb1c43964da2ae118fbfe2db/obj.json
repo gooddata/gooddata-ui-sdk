@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.dbd49a25bb1c43964da2ae118fbfe2db",
+        "uri": "PivotTable.dbd49a25bb1c43964da2ae118fbfe2db",
         "visualizationUrl": "local:table",
         "title": "PivotTable - no totals and no grouping",
         "buckets": [

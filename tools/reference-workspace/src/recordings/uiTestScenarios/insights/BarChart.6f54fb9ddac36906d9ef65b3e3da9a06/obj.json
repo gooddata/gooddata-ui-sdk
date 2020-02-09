@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.6f54fb9ddac36906d9ef65b3e3da9a06",
+        "uri": "BarChart.6f54fb9ddac36906d9ef65b3e3da9a06",
         "visualizationUrl": "local:bar",
         "title": "BarChart - two measures with dual axis ignores stack measures",
         "buckets": [

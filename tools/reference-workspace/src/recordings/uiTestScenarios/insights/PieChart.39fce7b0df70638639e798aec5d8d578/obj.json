@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PieChart.39fce7b0df70638639e798aec5d8d578",
+        "uri": "PieChart.39fce7b0df70638639e798aec5d8d578",
         "visualizationUrl": "local:pie",
         "title": "PieChart - vertical alignment - default",
         "buckets": [

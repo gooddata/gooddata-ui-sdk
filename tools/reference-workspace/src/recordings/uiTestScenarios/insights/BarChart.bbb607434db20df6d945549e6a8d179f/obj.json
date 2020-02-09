@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.bbb607434db20df6d945549e6a8d179f",
+        "uri": "BarChart.bbb607434db20df6d945549e6a8d179f",
         "visualizationUrl": "local:bar",
         "title": "BarChart - coloring - custom palette",
         "buckets": [

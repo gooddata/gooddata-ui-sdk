@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.3638e1d2f74f3b4836831ad3fedcc929",
+        "uri": "ColumnChart.3638e1d2f74f3b4836831ad3fedcc929",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - single measure ignores stack measures",
         "buckets": [

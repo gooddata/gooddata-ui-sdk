@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.498779d190e344603ded6bd442111171",
+        "uri": "PivotTable.498779d190e344603ded6bd442111171",
         "visualizationUrl": "local:table",
         "title": "PivotTable - totals and max height 300",
         "buckets": [

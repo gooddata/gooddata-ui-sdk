@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.bbb607434db20df6d945549e6a8d179f",
+        "uri": "ColumnChart.bbb607434db20df6d945549e6a8d179f",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - coloring - custom palette",
         "buckets": [

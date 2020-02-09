@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Treemap.6fa16fadaa587d902ef12feac0056feb",
+        "uri": "Treemap.6fa16fadaa587d902ef12feac0056feb",
         "visualizationUrl": "local:treemap",
         "title": "Treemap - two measures and viewBy",
         "buckets": [

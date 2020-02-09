@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ScatterPlot.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "ScatterPlot.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:scatter",
         "title": "ScatterPlot - assign color to measures",
         "buckets": [

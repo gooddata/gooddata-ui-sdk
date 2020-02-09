@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.694936e626dd560ec4581373069b668e",
+        "uri": "ColumnChart.694936e626dd560ec4581373069b668e",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - no gridline",
         "buckets": [

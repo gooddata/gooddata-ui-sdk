@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.8265274cf0d428a0bab4aec37c2262f2",
+        "uri": "BarChart.8265274cf0d428a0bab4aec37c2262f2",
         "visualizationUrl": "local:bar",
         "title": "BarChart - dual axis name customization - middle",
         "buckets": [

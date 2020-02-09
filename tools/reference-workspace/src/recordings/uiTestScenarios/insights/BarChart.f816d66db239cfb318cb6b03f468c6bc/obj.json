@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.f816d66db239cfb318cb6b03f468c6bc",
+        "uri": "BarChart.f816d66db239cfb318cb6b03f468c6bc",
         "visualizationUrl": "local:bar",
         "title": "BarChart - dual axis label rotation - minus60",
         "buckets": [

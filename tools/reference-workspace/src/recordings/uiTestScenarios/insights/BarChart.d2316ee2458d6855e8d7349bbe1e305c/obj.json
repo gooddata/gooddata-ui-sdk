@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "BarChart.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:bar",
         "title": "BarChart - assign color to measures",
         "buckets": [

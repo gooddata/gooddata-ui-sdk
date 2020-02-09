@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "AreaChart.65ada4e10d966d21ddddd9e184b5dcee",
+        "uri": "AreaChart.65ada4e10d966d21ddddd9e184b5dcee",
         "visualizationUrl": "local:area",
         "title": "AreaChart - two measures with undefined values",
         "buckets": [

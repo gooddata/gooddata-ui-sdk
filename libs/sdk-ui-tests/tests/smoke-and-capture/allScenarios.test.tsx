@@ -40,6 +40,11 @@ function readJsonSync(file: string): any {
 
 function initializeStore(rootDir: string | undefined, subdir: string): string | undefined {
     if (!rootDir) {
+        // tslint:disable-next-line:no-console
+        console.warn(
+            `The smoke-and-capture suite is not configured with store root. The suite will run but will not produce any results for ${subdir}`,
+        );
+
         // no store dir => no problem, definitions will not be stored
         return;
     }
@@ -203,7 +208,7 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
 
     const id = scenario.insightId;
     const persistentInsight: IInsight = scenario.insightConverter({
-        insight: { identifier: id, ...def.insight },
+        insight: { identifier: id, uri: id, ...def.insight },
     });
     const insightDir = path.join(InsightsDir!, id);
 

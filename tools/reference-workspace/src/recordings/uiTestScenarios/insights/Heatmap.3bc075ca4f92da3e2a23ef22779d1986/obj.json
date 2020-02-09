@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.3bc075ca4f92da3e2a23ef22779d1986",
+        "uri": "Heatmap.3bc075ca4f92da3e2a23ef22779d1986",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - data labels - auto visibility",
         "buckets": [

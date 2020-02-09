@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.3638e1d2f74f3b4836831ad3fedcc929",
+        "uri": "BarChart.3638e1d2f74f3b4836831ad3fedcc929",
         "visualizationUrl": "local:bar",
         "title": "BarChart - single measure ignores stack measures",
         "buckets": [

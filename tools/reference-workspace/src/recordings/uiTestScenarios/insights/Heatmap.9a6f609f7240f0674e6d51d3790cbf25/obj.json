@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.9a6f609f7240f0674e6d51d3790cbf25",
+        "uri": "Heatmap.9a6f609f7240f0674e6d51d3790cbf25",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - legend position - legend at bottom",
         "buckets": [

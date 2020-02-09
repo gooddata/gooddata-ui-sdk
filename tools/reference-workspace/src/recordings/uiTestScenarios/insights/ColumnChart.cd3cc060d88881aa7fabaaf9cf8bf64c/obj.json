@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.cd3cc060d88881aa7fabaaf9cf8bf64c",
+        "uri": "ColumnChart.cd3cc060d88881aa7fabaaf9cf8bf64c",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - arithmetic measures",
         "buckets": [

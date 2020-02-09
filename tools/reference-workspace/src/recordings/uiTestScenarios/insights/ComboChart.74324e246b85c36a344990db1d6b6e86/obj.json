@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.74324e246b85c36a344990db1d6b6e86",
+        "uri": "ComboChart.74324e246b85c36a344990db1d6b6e86",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - 'Stack Measures' on and 'Stack to 100%' on",
         "buckets": [

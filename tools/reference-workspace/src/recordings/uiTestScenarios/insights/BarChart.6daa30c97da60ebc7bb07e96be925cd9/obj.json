@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.6daa30c97da60ebc7bb07e96be925cd9",
+        "uri": "BarChart.6daa30c97da60ebc7bb07e96be925cd9",
         "visualizationUrl": "local:bar",
         "title": "BarChart - dual axis with one top measure and three bottom",
         "buckets": [

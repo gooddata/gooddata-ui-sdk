@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.cd3cc060d88881aa7fabaaf9cf8bf64c",
+        "uri": "BarChart.cd3cc060d88881aa7fabaaf9cf8bf64c",
         "visualizationUrl": "local:bar",
         "title": "BarChart - arithmetic measures",
         "buckets": [

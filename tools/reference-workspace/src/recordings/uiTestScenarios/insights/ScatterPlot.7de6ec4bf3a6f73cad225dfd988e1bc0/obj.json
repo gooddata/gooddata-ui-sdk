@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ScatterPlot.7de6ec4bf3a6f73cad225dfd988e1bc0",
+        "uri": "ScatterPlot.7de6ec4bf3a6f73cad225dfd988e1bc0",
         "visualizationUrl": "local:scatter",
         "title": "ScatterPlot - axis name configuration - low",
         "buckets": [

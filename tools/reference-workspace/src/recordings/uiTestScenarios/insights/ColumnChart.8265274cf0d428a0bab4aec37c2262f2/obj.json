@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.8265274cf0d428a0bab4aec37c2262f2",
+        "uri": "ColumnChart.8265274cf0d428a0bab4aec37c2262f2",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - dual axis name customization - middle",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.99c3b8468ddb0897fcbc45a32216b432",
+        "uri": "PivotTable.99c3b8468ddb0897fcbc45a32216b432",
         "visualizationUrl": "local:table",
         "title": "PivotTable - two measures and multiple grand totals for each",
         "buckets": [

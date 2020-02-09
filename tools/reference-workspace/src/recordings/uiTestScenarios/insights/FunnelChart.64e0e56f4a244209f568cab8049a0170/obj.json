@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "FunnelChart.64e0e56f4a244209f568cab8049a0170",
+        "uri": "FunnelChart.64e0e56f4a244209f568cab8049a0170",
         "visualizationUrl": "local:funnel",
         "title": "FunnelChart - assign color to attributes",
         "buckets": [

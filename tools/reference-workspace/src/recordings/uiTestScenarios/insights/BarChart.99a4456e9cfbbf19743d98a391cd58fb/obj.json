@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.99a4456e9cfbbf19743d98a391cd58fb",
+        "uri": "BarChart.99a4456e9cfbbf19743d98a391cd58fb",
         "visualizationUrl": "local:bar",
         "title": "BarChart - data labels - forced visible and german separators",
         "buckets": [

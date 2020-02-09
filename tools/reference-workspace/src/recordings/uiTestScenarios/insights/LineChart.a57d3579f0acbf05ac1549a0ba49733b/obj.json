@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.a57d3579f0acbf05ac1549a0ba49733b",
+        "uri": "LineChart.a57d3579f0acbf05ac1549a0ba49733b",
         "visualizationUrl": "local:line",
         "title": "LineChart - legend position - legend on left",
         "buckets": [

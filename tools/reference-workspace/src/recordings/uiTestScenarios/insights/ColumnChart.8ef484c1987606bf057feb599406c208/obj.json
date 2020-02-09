@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.8ef484c1987606bf057feb599406c208",
+        "uri": "ColumnChart.8ef484c1987606bf057feb599406c208",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - Y axis min/max configuration",
         "buckets": [

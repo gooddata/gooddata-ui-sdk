@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "ColumnChart.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - assign color to measures",
         "buckets": [

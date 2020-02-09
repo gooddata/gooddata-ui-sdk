@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.3ed42f4308cb67a949e8dcfc9cdbdeed",
+        "uri": "BubbleChart.3ed42f4308cb67a949e8dcfc9cdbdeed",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - X axis min/max configuration",
         "buckets": [

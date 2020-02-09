@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.74fce7793764e7045524fb6e2a36dabd",
+        "uri": "BubbleChart.74fce7793764e7045524fb6e2a36dabd",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - x axis measure with viewBy",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.a57d3579f0acbf05ac1549a0ba49733b",
+        "uri": "BubbleChart.a57d3579f0acbf05ac1549a0ba49733b",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - legend position - legend on left",
         "buckets": [

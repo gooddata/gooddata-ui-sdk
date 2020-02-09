@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.c6db70ebf33514414fa52eacdf3ad519",
+        "uri": "LineChart.c6db70ebf33514414fa52eacdf3ad519",
         "visualizationUrl": "local:line",
         "title": "LineChart - dual axis name configuration - invisible",
         "buckets": [

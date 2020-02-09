@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "FunnelChart.8ef289b689ae537d4e12f480fc195396",
+        "uri": "FunnelChart.8ef289b689ae537d4e12f480fc195396",
         "visualizationUrl": "local:funnel",
         "title": "FunnelChart - single measure",
         "buckets": [

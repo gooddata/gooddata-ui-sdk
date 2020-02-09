@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "AreaChart.b56a230469ace5c0f2ae1d72da021510",
+        "uri": "AreaChart.b56a230469ace5c0f2ae1d72da021510",
         "visualizationUrl": "local:area",
         "title": "AreaChart - Y axis configuration",
         "buckets": [

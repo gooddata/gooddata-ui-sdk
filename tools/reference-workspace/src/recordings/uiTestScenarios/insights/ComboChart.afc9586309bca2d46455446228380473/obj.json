@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.afc9586309bca2d46455446228380473",
+        "uri": "ComboChart.afc9586309bca2d46455446228380473",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - stack primary measures to 100% with different chart type - area",
         "buckets": [

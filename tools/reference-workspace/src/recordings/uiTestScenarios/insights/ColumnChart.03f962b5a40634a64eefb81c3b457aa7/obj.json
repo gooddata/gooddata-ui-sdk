@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.03f962b5a40634a64eefb81c3b457aa7",
+        "uri": "ColumnChart.03f962b5a40634a64eefb81c3b457aa7",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - two measures with dual axis and stack measures to 100%",
         "buckets": [

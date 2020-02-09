@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.e7f501e07a5b5400f9eea38e61abe7c0",
+        "uri": "BarChart.e7f501e07a5b5400f9eea38e61abe7c0",
         "visualizationUrl": "local:bar",
         "title": "BarChart - stack measures to 100% with dual axis and axis min/max",
         "buckets": [

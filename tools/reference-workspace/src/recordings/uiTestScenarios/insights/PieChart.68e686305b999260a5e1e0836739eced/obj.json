@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PieChart.68e686305b999260a5e1e0836739eced",
+        "uri": "PieChart.68e686305b999260a5e1e0836739eced",
         "visualizationUrl": "local:pie",
         "title": "PieChart - legend position - single measure and viewBy - legend at bottom",
         "buckets": [

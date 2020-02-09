@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.8d044034c460506cff3d319e4eb7a0e7",
+        "uri": "BarChart.8d044034c460506cff3d319e4eb7a0e7",
         "visualizationUrl": "local:bar",
         "title": "BarChart - single axis name customization - middle",
         "buckets": [

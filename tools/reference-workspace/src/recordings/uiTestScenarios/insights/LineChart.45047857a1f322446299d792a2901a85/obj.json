@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.45047857a1f322446299d792a2901a85",
+        "uri": "LineChart.45047857a1f322446299d792a2901a85",
         "visualizationUrl": "local:line",
         "title": "LineChart - data labels - forced visible",
         "buckets": [

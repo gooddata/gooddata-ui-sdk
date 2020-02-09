@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "AreaChart.724f361b66f8db62f9a5cf3917a5ebb8",
+        "uri": "AreaChart.724f361b66f8db62f9a5cf3917a5ebb8",
         "visualizationUrl": "local:area",
         "title": "AreaChart - two measures with viewBy sorted by attribute",
         "buckets": [

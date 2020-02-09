@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.fb08d26638573a25adf208466a9b385a",
+        "uri": "BubbleChart.fb08d26638573a25adf208466a9b385a",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - assign color to attribute bubbles",
         "buckets": [

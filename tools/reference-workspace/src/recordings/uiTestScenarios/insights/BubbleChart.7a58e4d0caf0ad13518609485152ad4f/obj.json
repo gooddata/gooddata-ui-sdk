@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.7a58e4d0caf0ad13518609485152ad4f",
+        "uri": "BubbleChart.7a58e4d0caf0ad13518609485152ad4f",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - data labels - forced hidden",
         "buckets": [

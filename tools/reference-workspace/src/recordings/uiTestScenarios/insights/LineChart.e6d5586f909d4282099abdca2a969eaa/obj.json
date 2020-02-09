@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.e6d5586f909d4282099abdca2a969eaa",
+        "uri": "LineChart.e6d5586f909d4282099abdca2a969eaa",
         "visualizationUrl": "local:line",
         "title": "LineChart - single measure with % and trendBy",
         "buckets": [

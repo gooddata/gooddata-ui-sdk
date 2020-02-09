@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.7a58e4d0caf0ad13518609485152ad4f",
+        "uri": "BarChart.7a58e4d0caf0ad13518609485152ad4f",
         "visualizationUrl": "local:bar",
         "title": "BarChart - data labels - forced hidden",
         "buckets": [

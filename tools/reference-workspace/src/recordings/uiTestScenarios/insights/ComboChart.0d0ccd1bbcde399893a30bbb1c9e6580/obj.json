@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.0d0ccd1bbcde399893a30bbb1c9e6580",
+        "uri": "ComboChart.0d0ccd1bbcde399893a30bbb1c9e6580",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - two secondary measure with viewBy",
         "buckets": [
