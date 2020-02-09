@@ -15,6 +15,9 @@ The main constraints - hard rules - in the architecture are:
 2.  Packages on one layer MUST depend only on packages either on same layer or one layer down
 3.  Packages on one layer MUST NOT have cyclic dependencies
 
+> Also check out [Technology & architecture decisions log](./decisions.md) to get more background information about
+> various decisions we did as part of this project.
+
 ## Package Overview
 
 ### Naming conventions

@@ -2,12 +2,12 @@
 
 ## Status
 
-This repo is currently in semi-cowboy development mode:
+This repo is currently in pre-release quality:
 
--   `rush build` must never fail
--   `rush test-once` must never fail
--   storybooks may fail for now
--   live examples may fail to compile (they are not managed by Rush)
+-   continuous integration is in place
+-   automated checks to verify build + unit tests
+-   end-to-end visual regression tests are in place but not yet run during checks
+-   live examples are included in monorepo but disconnected from Rush; they may fail to build
 
 Progress and tasks are tracked in RAIL-1791.
 
@@ -41,7 +41,7 @@ After that run `rush build`.
 
 ### Contributor manual / FAQ
 
-#### What is Rush?
+#### Rush primer
 
 Rush is an opinionated monorepo management tool that comes with batteries included. We strongly encourage you to
 read the [official documentation](https://rushjs.io/pages/intro/welcome/).
@@ -49,6 +49,9 @@ read the [official documentation](https://rushjs.io/pages/intro/welcome/).
 Long story short here are facts and commands you need to know:
 
 -   lockfile (shrinkwrap file) is stored in pnpm-lock.yaml.
+
+-   Rush maintains internal registry of packages in common/temp; all package dependencies are symlinked; projects
+    within the monorepo are also symlinked
 
 -   the [common](common) directory contains Rush and project configuration including:
 
@@ -77,40 +80,16 @@ Long story short here are facts and commands you need to know:
 
 On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):
 
-| Command                | Description                                                                                                                                                                  |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rush validate`        | Validates code in all projects.                                                                                                                                              |
-| `rush validate-ci`     | Validates code in all projects in CI mode.                                                                                                                                   |
-| `rush test-once`       | Tests code in all projects.                                                                                                                                                  |
-| `rush test-ci`         | Tests code in all projects in CI mode with coverage reporting.                                                                                                               |
-| `rush prettier-check`  | Verifies code formatting in all projects.                                                                                                                                    |
-| `rush prettier-write`  | Formats code in all projects.                                                                                                                                                |
-| `rush write-exec-defs` | Makes projects write definitions of executions to reference workspace. These definitions can then be executed and their results recorded in the reference workspace as well. |
-
-> New multi project CLI commands can be defined in [command-line.json](common/config/rush/command-line.json) file.
-
-#### Why Rush and not Lerna / Yarn workspaces?
-
-Several reasons:
-
-1.  Rush in conjuction with PNPM construct node_modules the correct way
-2.  Product vs toolbox philosophy; Rush comes with an opinion and useful built-in functionality to tackle several
-    problems related to managing external dependencies
-3.  Good documentation, simple setup
-
-That said if evidence mounts up indicating that Rush is not the right choice for this project, we will migrate
-to Lerna, most likely Lerna + NPM.
-
-#### Why PNPM and not Yarn or NPM?
-
-PNPM has an interesting value proposition and in contrast with say Yarn actually delivers unique, useful
-functionality on top of what is in NPM. We want to give it a try - it is proven to work well in large projects
-at Microsoft.
-
-You can read more about package managers in [this article](https://rushjs.io/pages/maintainer/package_managers/).
-
-Also from a honest pragmatic point of view, Rush really only works well with PNMP; its Yarn support is experimental and
-while it can work with NPM it needs some ancient version :)
+| Command               | Description                                                             |
+| --------------------- | ----------------------------------------------------------------------- |
+| `rush audit`          | Performs security audit of all packages listed in global lock file      |
+| `rush validate`       | Validates code in all projects.                                         |
+| `rush validate-ci`    | Validates code in all projects in CI mode.                              |
+| `rush test-once`      | Tests code in all projects.                                             |
+| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.          |
+| `rush prettier-check` | Verifies code formatting in all projects.                               |
+| `rush prettier-write` | Formats code in all projects.                                           |
+| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions. |
 
 #### How do I add new / update existing dependency in a project?
 
@@ -138,7 +117,8 @@ Remove the dependencies from package.json and then run `rush update`.
 #### How do I build stuff?
 
 To build everything, run `rush build`; this will trigger parallel execution of build scripts defined in each subproject's
-`package.json`. Rush honors the dependencies between subprojects and will build them in correct order.
+`package.json`. Rush will only build projects which have changed since the last build. Also, Rush honors the dependencies
+between projects and will build them in correct order.
 
 To build a single subproject with its dependencies:
 
@@ -147,13 +127,19 @@ rush build -t @gooddata/react-components
 ```
 
 If you want to build _just_ single subproject, you can navigate to the subproject directory and invoke build using
-npm:
+`npm`:
 
 ```bash
 npm run build
 ```
 
-#### There are so many packages - where do I put my contributions?
+or rushx:
+
+```bash
+rushx build
+```
+
+#### Where do I put my contributions?
 
 Please go ahead and familiarize yourself with the GoodData.UI SDK architecture, layering and packaging design
 which are all documented in our [Developer's Guide](docs/sdk-dev.md).
