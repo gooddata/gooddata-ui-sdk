@@ -1,58 +1,58 @@
 {
-  "name": "@gooddata/gd-bear-model",
-  "version": "8.0.0-alpha.11",
-  "description": "TypeScript definition files for GoodData platform",
-  "typings": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
-    "prepublish": "npm run build",
-    "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-    "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
-    "test": "jest --watch",
-    "test-once": "jest",
-    "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
-    "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
-    "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-    "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
-    "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci",
-    "prettier-check": "prettier --check 'src/**/*.ts'",
-    "prettier-write": "prettier --write 'src/**/*.ts'"
-  },
-  "config": {
-    "tslint": "./src/{,**/}*.ts"
-  },
-  "files": [
-    "dist",
-    "src/index.ts",
-    "README.md"
-  ],
-  "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-model",
-  "keywords": [
-    "typescript",
-    "gooddata",
-    "types"
-  ],
-  "author": "GoodData",
-  "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/gooddata/gooddata-typings/issues"
-  },
-  "homepage": "https://github.com/gooddata/gooddata-typings#readme",
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
-  "devDependencies": {
-    "@gooddata/tslint-config": "1.0.0",
-    "@microsoft/api-extractor": "^7.3.8",
-    "@types/jest": "^24.0.6",
-    "@types/lodash": "^4.14.123",
-    "jest": "^24.7.1",
-    "jest-junit": "^3.0.0",
-    "prettier": "~1.19.1",
-    "ts-jest": "^24.1.0",
-    "tslint": "^5.14.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "3.7.4"
-  }
+    "name": "@gooddata/gd-bear-model",
+    "version": "8.0.0-alpha.12",
+    "description": "TypeScript definition files for GoodData platform",
+    "typings": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "prepublish": "npm run build",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "dev": "tsc -p tsconfig.dev.json --watch --noEmit",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
+        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci",
+        "prettier-check": "prettier --check 'src/**/*.ts'",
+        "prettier-write": "prettier --write 'src/**/*.ts'"
+    },
+    "config": {
+        "tslint": "./src/{,**/}*.ts"
+    },
+    "files": [
+        "dist",
+        "src/index.ts",
+        "README.md"
+    ],
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-model",
+    "keywords": [
+        "typescript",
+        "gooddata",
+        "types"
+    ],
+    "author": "GoodData",
+    "license": "BSD-3-Clause",
+    "bugs": {
+        "url": "https://github.com/gooddata/gooddata-typings/issues"
+    },
+    "homepage": "https://github.com/gooddata/gooddata-typings#readme",
+    "dependencies": {
+        "lodash": "^4.17.15"
+    },
+    "devDependencies": {
+        "@gooddata/tslint-config": "1.0.0",
+        "@microsoft/api-extractor": "^7.3.8",
+        "@types/jest": "^24.0.6",
+        "@types/lodash": "^4.14.123",
+        "jest": "^24.7.1",
+        "jest-junit": "^3.0.0",
+        "prettier": "~1.19.1",
+        "ts-jest": "^24.1.0",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.7.4"
+    }
 }
