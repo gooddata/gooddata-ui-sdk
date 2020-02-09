@@ -50,7 +50,7 @@
         "@types/inquirer": "^6.5.0",
         "@types/jest": "^24.0.6",
         "@types/lodash": "^4.14.123",
-        "@types/node": "^10.14.18",
+        "@types/node": "^12.12.26",
         "@types/prettier": "~1.18.2",
         "jest": "^24.7.1",
         "jest-junit": "^3.0.0",
