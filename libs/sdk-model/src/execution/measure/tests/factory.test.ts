@@ -10,7 +10,7 @@ import {
     newPreviousPeriodMeasure,
 } from "../factory";
 import { measureLocalId } from "../index";
-import { idRef } from "../../base/factory";
+import { idRef } from "../../../objRef/factory";
 
 describe("measure factories", () => {
     describe("newMeasure", () => {

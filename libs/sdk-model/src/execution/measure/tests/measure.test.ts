@@ -25,10 +25,10 @@ import {
     measureTitle,
     measureUri,
 } from "../index";
-import { ObjRef } from "../../base";
+import { ObjRef } from "../../../objRef";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import { IFilter } from "../../filter";
-import { idRef } from "../../base/factory";
+import { idRef } from "../../../objRef/factory";
 
 const SimpleMeasureWithIdentifier = Won;
 const SimpleMeasureWithRatio = modifySimpleMeasure(Won, m => m.ratio());

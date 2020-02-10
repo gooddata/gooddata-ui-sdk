@@ -18,12 +18,14 @@ import {
     NotSupported,
     IUserService,
     NotImplemented,
+    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedMetadata } from "./metadata";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
+import { RecordedInsights } from "./insights";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -98,6 +100,9 @@ function recordedWorkspace(
         },
         metadata(): IWorkspaceMetadata {
             return new RecordedMetadata(recordings);
+        },
+        insights(): IWorkspaceInsights {
+            return new RecordedInsights(recordings);
         },
         settings(): IWorkspaceSettingsService {
             return {

@@ -2,7 +2,7 @@
 import { AnalyticalBackendConfig, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
-    IAttributeDisplayForm,
+    IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     IInsight,
     IColorPalette,
@@ -60,7 +60,7 @@ export type ScenarioRecording = {
  * @internal
  */
 export type DisplayFormRecording = {
-    obj: IAttributeDisplayForm;
+    obj: IAttributeDisplayFormMetadataObject;
     elements: IAttributeElement[];
 };
 

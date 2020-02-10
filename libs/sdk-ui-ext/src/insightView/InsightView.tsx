@@ -171,7 +171,7 @@ class RenderInsightView extends React.Component<IInsightViewProps, IInsightViewS
 
     private getInsight = () => {
         return this.getRemoteResource<IInsight>(workspace =>
-            workspace.metadata().getInsight(idRef(this.props.id)),
+            workspace.insights().getInsight(idRef(this.props.id)),
         );
     };
 

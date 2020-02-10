@@ -1,11 +1,12 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IMeasureDescriptor,
     IDimensionDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { Execution } from "../gd-tiger-model/Execution";
+import { Execution } from "@gooddata/gd-tiger-client";
+
 import isAttributeHeader = Execution.isAttributeHeader;
 
 function transformDimension(dim: Execution.IResultDimension): IDimensionDescriptor {

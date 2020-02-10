@@ -1,4 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
+export {
+    Builder,
+    BuilderConstructor,
+    BuilderModifications,
+    ExtractBuilderType,
+    IBuilder,
+    builderFactory,
+} from "./base/builder";
 
 export {
     IAttribute,
@@ -22,14 +30,6 @@ export {
 } from "./execution/attribute/factory";
 
 export {
-    IAttributeDisplayForm,
-    attributeDisplayFormId,
-    attributeDisplayFormTitle,
-    attributeDisplayFormAttributeId,
-    attributeDisplayFormAttributeUri,
-} from "./ldm/attributeDisplayForm";
-
-export {
     ObjectType,
     Identifier,
     Uri,
@@ -44,7 +44,7 @@ export {
     isLocalIdRef,
     areObjRefsEqual,
     isObjRef,
-} from "./execution/base";
+} from "./objRef";
 
 export {
     IDimension,
@@ -59,7 +59,7 @@ export {
     ItemInDimension,
 } from "./execution/base/dimension";
 
-export { idRef, uriRef, localIdRef } from "./execution/base/factory";
+export { idRef, uriRef, localIdRef } from "./objRef/factory";
 
 export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals";
 
@@ -302,7 +302,46 @@ export {
     isCatalogDateDataset,
     ICatalogItemBase,
     IGroupableCatalogItemBase,
+    IGroupableCatalogItemBuilder,
+    GroupableCatalogItem,
+    CatalogAttributeBuilder,
+    CatalogDateAttributeBuilder,
+    CatalogDateDatasetBuilder,
+    CatalogFactBuilder,
+    CatalogGroupBuilder,
+    CatalogMeasureBuilder,
+    GroupableCatalogItemBuilder,
+    newCatalogAttribute,
+    newCatalogDateAttribute,
+    newCatalogDateDataset,
+    newCatalogFact,
+    newCatalogGroup,
+    newCatalogMeasure,
+    catalogItemMetadataObject,
 } from "./ldm/catalog";
+
+export {
+    AttributeDisplayFormMetadataObjectBuilder,
+    AttributeMetadataObjectBuilder,
+    DataSetMetadataObjectBuilder,
+    FactMetadataObjectBuilder,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IDataSetMetadataObject,
+    IFactMetadataObject,
+    IMeasureMetadataObject,
+    IMetadataObject,
+    MeasureMetadataObjectBuilder,
+    MetadataObject,
+    MetadataObjectBuilder,
+    IMetadataObjectBuilder,
+    newAttributeDisplayFormMetadataObject,
+    newAttributeMetadataObject,
+    newFactMetadataObject,
+    newMeasureMetadataObject,
+    newDataSetMetadataObject,
+    metadataObjectId,
+} from "./ldm/metadata";
 
 export {
     DataColumnType,
@@ -315,8 +354,6 @@ export {
 } from "./ldm/datasets";
 
 export { IAttributeElement } from "./ldm/attributeElement";
-
-export { IObjectMeta } from "./common/objectMeta";
 
 export {
     IMeasureExpressionToken,

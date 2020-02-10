@@ -403,6 +403,13 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/gd-tiger-client",
+            "projectFolder": "libs/gd-tiger-client",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/gd-bear-client",
             "projectFolder": "libs/gd-bear-client",
             "reviewCategory": "production",

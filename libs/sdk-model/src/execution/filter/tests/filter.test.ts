@@ -19,7 +19,7 @@ import {
     absoluteDateFilterValues,
     relativeDateFilterValues,
 } from "../index";
-import { ObjRef } from "../../base";
+import { ObjRef } from "../../../objRef";
 
 const AbsoluteDateFilter = newAbsoluteDateFilter(ClosedDate.MmDdYyyy.attribute.displayForm, "2018", "2019");
 

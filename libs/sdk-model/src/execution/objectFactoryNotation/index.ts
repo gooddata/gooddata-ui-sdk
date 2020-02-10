@@ -5,7 +5,7 @@ import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
 import isString = require("lodash/isString");
 import stringifyObject = require("stringify-object");
-import { ObjRef } from "../base";
+import { ObjRef } from "../../objRef";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,

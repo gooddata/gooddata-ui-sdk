@@ -1,52 +1,46 @@
 // (C) 2019 GoodData Corporation
-import { ICatalogAttribute, ICatalogMeasure, ICatalogFact, ICatalogDateDataset } from "../src";
 
-export const catalogAttribute: ICatalogAttribute = {
-    id: "attr",
-    uri: "/attributes/attr",
-    type: "attribute",
-    title: "Attribute",
-    description: "",
-    groups: [],
-    production: true,
-    defaultDisplayForm: {
-        id: "label.attr",
-        description: "",
-        production: true,
-        title: "Attribute Display Form",
-        uri: "/labels/label",
-    },
-};
+import {
+    newCatalogAttribute,
+    newAttributeDisplayFormMetadataObject,
+    newAttributeMetadataObject,
+    idRef,
+    newCatalogMeasure,
+    newMeasureMetadataObject,
+    newCatalogFact,
+    newFactMetadataObject,
+    newCatalogDateDataset,
+} from "../src";
+import { newDataSetMetadataObject } from "../src/ldm/metadata/dataSet/factory";
 
-export const catalogMeasure: ICatalogMeasure = {
-    id: "measure",
-    uri: "/measures/measure",
-    type: "measure",
-    title: "Measure",
-    description: "",
-    groups: [],
-    production: true,
-    expression: "SELECT SUM([/attributes/attr])",
-    format: "#,##",
-};
+export const catalogAttribute = newCatalogAttribute(catalogA =>
+    catalogA
+        .attribute(newAttributeMetadataObject(idRef("attr.attr"), attribute => attribute.title("Attribute")))
+        .defaultDisplayForm(
+            newAttributeDisplayFormMetadataObject(idRef("label.attr"), displayForm =>
+                displayForm.title("Attribute display form"),
+            ),
+        ),
+);
 
-export const catalogFact: ICatalogFact = {
-    id: "fact",
-    uri: "/facts/fact",
-    type: "fact",
-    title: "Fact",
-    description: "",
-    groups: [],
-    production: true,
-};
+export const catalogMeasure = newCatalogMeasure(catalogM =>
+    catalogM.measure(
+        newMeasureMetadataObject(idRef("measure"), measure =>
+            measure
+                .title("Measure")
+                .expression("SELECT SUM([/attributes/attr])")
+                .format("#,##"),
+        ),
+    ),
+);
 
-export const catalogDateDataset: ICatalogDateDataset = {
-    id: "dateDataset",
-    uri: "/dateDatasets/dateDataset",
-    type: "dateDataset",
-    title: "Date Dataset",
-    description: "",
-    production: true,
-    dateAttributes: [],
-    relevance: 0,
-};
+export const catalogFact = newCatalogFact(catalogF =>
+    catalogF.fact(newFactMetadataObject(idRef("fact"), fact => fact.title("Fact"))),
+);
+
+export const catalogDateDataset = newCatalogDateDataset(catalogD =>
+    catalogD
+        .dataSet(newDataSetMetadataObject(idRef("dataSet"), x => x.title("DataSet Date")))
+        .dateAttributes([])
+        .relevance(0),
+);

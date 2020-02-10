@@ -12,7 +12,7 @@ import {
     isPreviousPeriodMeasureDefinition,
     MeasureAggregation,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import {
     toDateDataSetQualifier,

@@ -55,6 +55,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@gooddata/gd-tiger-client",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/goodstrap",
       "allowedCategories": [ "production" ]
     },
@@ -127,6 +131,14 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@muellerbbm-vas/grivet",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@openapitools/openapi-generator-cli",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/addon-actions",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -192,6 +204,10 @@
     },
     {
       "name": "@types/json-stable-stringify",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/jsonapi-serializer",
       "allowedCategories": [ "production" ]
     },
     {
@@ -291,7 +307,15 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "api-spec-converter",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "async",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "autorest",
       "allowedCategories": [ "production" ]
     },
     {
@@ -463,6 +487,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "jsona",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "jsonapi-serializer",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "kitsu",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "lodash",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -496,6 +532,10 @@
     },
     {
       "name": "nodelist-foreach-polyfill",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "openapi-generator",
       "allowedCategories": [ "production" ]
     },
     {
@@ -571,6 +611,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "sarala-json-api-data-formatter",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "sass-loader",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -637,6 +681,10 @@
     {
       "name": "typescript-json-schema",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "url",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "uuid",

@@ -19,9 +19,9 @@ import {
     MeasureAggregation,
     measureLocalId,
 } from "./index";
-import { Identifier, isObjRef, ObjRef, objRefToString } from "../base";
+import { Identifier, isObjRef, ObjRef, objRefToString } from "../../objRef";
 import { IMeasureFilter } from "../filter";
-import { idRef } from "../base/factory";
+import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
 
 /**

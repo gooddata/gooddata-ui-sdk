@@ -5,7 +5,7 @@ import { IAnalyticalBackend, IElementQuery } from "@gooddata/sdk-backend-spi";
 import { isEqual } from "lodash";
 import fs from "fs";
 import path from "path";
-import { IAttributeElement, idRef, IAttributeDisplayForm } from "@gooddata/sdk-model";
+import { IAttributeElement, idRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming";
 
 //
@@ -59,7 +59,7 @@ export class DisplayFormRecording implements IRecording {
     }
 
     public getDisplayFormTitle(): string {
-        const obj = readJsonSync(this.objFile) as IAttributeDisplayForm;
+        const obj = readJsonSync(this.objFile) as IAttributeDisplayFormMetadataObject;
 
         return obj.title;
     }

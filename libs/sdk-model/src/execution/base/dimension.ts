@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import invariant from "ts-invariant";
-import { Identifier } from "./index";
+import { Identifier } from "../../objRef/index";
 import { isTotal, ITotal } from "./totals";
 import isEmpty = require("lodash/isEmpty");
 

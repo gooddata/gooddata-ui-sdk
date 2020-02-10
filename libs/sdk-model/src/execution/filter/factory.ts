@@ -11,9 +11,9 @@ import {
     RangeConditionOperator,
 } from "./index";
 import { IAttribute, attributeAttributeDisplayFormObjRef } from "../attribute";
-import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../base";
+import { ObjRefInScope, ObjRef, isObjRef, Identifier } from "../../objRef";
 import { IMeasure, isMeasure, measureLocalId } from "../measure";
-import { idRef } from "../base/factory";
+import { idRef } from "../../objRef/factory";
 
 /**
  * Creates a new positive attribute filter.

@@ -5,6 +5,8 @@ import {
     IInsightQueryResult,
     InsightOrdering,
     UnexpectedResponseError,
+    IWorkspaceInsights,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -13,6 +15,7 @@ import {
     insightTitle,
     isIdentifierRef,
     ObjRef,
+    IVisualizationClass,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
@@ -28,7 +31,7 @@ let adHocInsightCounter = 1;
  *
  * @internal
  */
-export class RecordedInsights {
+export class RecordedInsights implements IWorkspaceInsights {
     private readonly insights: { [id: string]: InsightRecording };
 
     constructor(recordings: RecordingIndex = {}) {
@@ -106,6 +109,18 @@ export class RecordedInsights {
         delete this.insights[recordingId];
 
         return;
+    }
+
+    //
+    //  not implemented down from here
+    //
+
+    public getVisualizationClass(_: ObjRef): Promise<IVisualizationClass> {
+        throw new NotSupported("not supported");
+    }
+
+    public getVisualizationClasses(): Promise<IVisualizationClass[]> {
+        throw new NotSupported("not supported");
     }
 }
 

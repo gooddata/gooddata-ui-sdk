@@ -14,7 +14,7 @@ import {
     isPositiveAttributeFilter,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { toDateDataSetQualifier, toDisplayFormQualifier } from "./ObjRefConverter";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {

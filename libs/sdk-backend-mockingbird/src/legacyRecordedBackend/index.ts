@@ -24,13 +24,14 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     IUserService,
+    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
-    IAttributeDisplayForm,
+    IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     IDimension,
     IExecutionDefinition,
@@ -60,7 +61,7 @@ export type LegacyWorkspaceRecordings = {
         [fp: string]: LegacyExecutionRecording;
     };
     metadata?: {
-        attributeDisplayForm?: { [id: string]: IAttributeDisplayForm };
+        attributeDisplayForm?: { [id: string]: IAttributeDisplayFormMetadataObject };
     };
     elements?: {
         [id: string]: IAttributeElement[];
@@ -100,7 +101,6 @@ export function legacyRecordedBackend(
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
         },
-
         currentUser(): IUserService {
             throw new NotSupported("not yet supported");
         },
@@ -165,6 +165,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {
+            throw new NotSupported("not supported");
+        },
+        insights(): IWorkspaceInsights {
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {

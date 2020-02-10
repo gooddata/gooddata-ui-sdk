@@ -2,19 +2,27 @@
 
 export {
     IAnalyticalBackend,
-    IAnalyticalWorkspace,
     BackendCapabilities,
     AnalyticalBackendConfig,
     AnalyticalBackendFactory,
     prepareExecution,
-    IAuthenticationProvider,
-    AuthenticationContext,
-    AuthenticatedPrincipal,
-    IUserService,
 } from "./backend";
+
+export {
+    AuthenticatedAsyncCall,
+    AuthenticatedCallGuard,
+    IAuthenticatedAsyncCallContext,
+    AuthProviderCallGuard,
+    AuthenticatedPrincipal,
+    AuthenticationContext,
+    IAuthProviderCallGuard,
+    IAuthenticationProvider,
+    NoopAuthProvider,
+} from "./auth";
 
 export { ISettings, SettingCatalog } from "./common/settings";
 
+export { IUserService } from "./user";
 export { IUserSettingsService, IUserSettings } from "./user/settings";
 
 export {
@@ -54,11 +62,13 @@ export {
 export { IWorkspaceSettingsService, IWorkspaceSettings } from "./workspace/settings";
 
 export {
-    IWorkspaceMetadata,
+    IWorkspaceInsights,
     InsightOrdering,
     IInsightQueryOptions,
     IInsightQueryResult,
 } from "./workspace/insights";
+
+export { IWorkspaceMetadata } from "./workspace/metadata";
 
 export {
     IWorkspaceCatalogFactory,
@@ -70,6 +80,8 @@ export {
     IWorkspaceCatalogFactoryMethods,
     IWorkspaceCatalogMethods,
 } from "./workspace/ldm/catalog";
+
+export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
 
 export {
     IElementQueryFactory,
@@ -92,6 +104,7 @@ export {
     NotSupported,
     NotImplemented,
     NotAuthenticated,
+    ErrorConverter,
     isAnalyticalBackendError,
     isNoDataError,
     isDataTooLargeError,
@@ -106,8 +119,11 @@ export {
 
 export { IPagedResource } from "./common/paging";
 
-export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
-
-export { IWorkspaceQuery, IWorkspaceQueryFactory, IWorkspaceQueryResult } from "./workspace";
+export {
+    IAnalyticalWorkspace,
+    IWorkspaceQuery,
+    IWorkspaceQueryFactory,
+    IWorkspaceQueryResult,
+} from "./workspace";
 
 export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";

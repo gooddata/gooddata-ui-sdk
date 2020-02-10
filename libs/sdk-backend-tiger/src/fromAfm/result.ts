@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { DataValue, IResultAttributeHeader, IResultHeader } from "@gooddata/sdk-backend-spi";
-import { Execution } from "../gd-tiger-model/Execution";
+import { Execution } from "@gooddata/gd-tiger-client";
 import isArray = require("lodash/isArray");
 import isAttributeHeaderItem = Execution.isAttributeHeaderItem;
 

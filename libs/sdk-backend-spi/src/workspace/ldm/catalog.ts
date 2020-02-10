@@ -9,6 +9,7 @@ import {
     AttributeOrMeasure,
     ICatalogDateDataset,
     IInsightDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -17,10 +18,10 @@ import {
  * @public
  */
 export interface IWorkspaceCatalogFactoryOptions {
-    dataset?: string;
+    dataset?: ObjRef;
     types: CatalogItemType[];
-    includeTags: string[];
-    excludeTags: string[];
+    includeTags: ObjRef[];
+    excludeTags: ObjRef[];
     production: boolean;
 }
 
@@ -86,10 +87,10 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
  * @public
  */
 export interface IWorkspaceCatalogFactoryMethods<T, TOptions> {
-    forDataset(datasets: string): T;
+    forDataset(dataset: ObjRef): T;
     forTypes(types: CatalogItemType[]): T;
-    includeTags(tags: string[]): T;
-    excludeTags(tags: string[]): T;
+    includeTags(tags: ObjRef[]): T;
+    excludeTags(tags: ObjRef[]): T;
     withOptions(options: TOptions): T;
 }
 

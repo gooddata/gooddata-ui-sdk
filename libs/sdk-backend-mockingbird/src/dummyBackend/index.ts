@@ -25,6 +25,7 @@ import {
     IWorkspaceQueryFactory,
     IWorkspacePermissionsFactory,
     IUserService,
+    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -192,6 +193,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         metadata(): IWorkspaceMetadata {
+            throw new NotSupported("not supported");
+        },
+        insights(): IWorkspaceInsights {
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {

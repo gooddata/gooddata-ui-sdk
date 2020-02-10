@@ -63,7 +63,11 @@ Object {
 
 exports[`converts execution definition to AFM Execution should return AFM Execution with definition that has no filter 1`] = `
 Object {
-  "execution": Object {},
+  "execution": Object {
+    "attributes": Array [],
+    "filters": Array [],
+    "measures": Array [],
+  },
   "project": "test workspace",
   "resultSpec": Object {},
 }
@@ -93,6 +97,8 @@ Object {
         "localIdentifier": "a_attribute2",
       },
     ],
+    "filters": Array [],
+    "measures": Array [],
   },
   "project": "test workspace",
   "resultSpec": Object {},
@@ -101,7 +107,11 @@ Object {
 
 exports[`converts execution definition to AFM Execution should return AFM Execution with dimensions 1`] = `
 Object {
-  "execution": Object {},
+  "execution": Object {
+    "attributes": Array [],
+    "filters": Array [],
+    "measures": Array [],
+  },
   "project": "test workspace",
   "resultSpec": Object {
     "dimensions": Array [
@@ -117,7 +127,11 @@ Object {
 
 exports[`converts execution definition to AFM Execution should return AFM Execution with empty definition 1`] = `
 Object {
-  "execution": Object {},
+  "execution": Object {
+    "attributes": Array [],
+    "filters": Array [],
+    "measures": Array [],
+  },
   "project": "test workspace",
   "resultSpec": Object {},
 }
@@ -125,7 +139,11 @@ Object {
 
 exports[`converts execution definition to AFM Execution should return AFM Execution with sorts 1`] = `
 Object {
-  "execution": Object {},
+  "execution": Object {
+    "attributes": Array [],
+    "filters": Array [],
+    "measures": Array [],
+  },
   "project": "test workspace",
   "resultSpec": Object {},
 }

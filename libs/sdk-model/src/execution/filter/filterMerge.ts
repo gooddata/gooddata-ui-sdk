@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { objRefToString } from "../base";
+import { objRefToString } from "../../objRef";
 import {
     IAttributeFilter,
     IDateFilter,

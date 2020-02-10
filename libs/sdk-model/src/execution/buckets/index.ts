@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
-import { Identifier } from "../base";
+import { Identifier } from "../../objRef";
 import {
     anyMeasure,
     idMatchMeasure,
@@ -12,7 +12,7 @@ import {
 } from "../measure";
 import { isTotal, ITotal } from "../base/totals";
 import invariant from "ts-invariant";
-import { modifySimpleMeasure } from "../..";
+import { modifySimpleMeasure } from "../measure/factory";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.

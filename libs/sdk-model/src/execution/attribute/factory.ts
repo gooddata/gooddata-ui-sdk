@@ -3,8 +3,8 @@ import identity = require("lodash/identity");
 import cloneDeep = require("lodash/cloneDeep");
 import isEmpty = require("lodash/isEmpty");
 import { IAttribute, isAttribute } from "./index";
-import { ObjRef, objRefToString, Identifier, isObjRef } from "../base";
-import { idRef } from "../base/factory";
+import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef";
+import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
 
 type AttributeBuilderInput = Identifier | ObjRef | IAttribute;

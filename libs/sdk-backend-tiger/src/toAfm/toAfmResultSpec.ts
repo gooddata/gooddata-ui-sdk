@@ -11,7 +11,7 @@ import {
     isAttribute,
     totalIsNative,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import { toDisplayFormQualifier, toLocalIdentifier } from "./ObjRefConverter";
@@ -30,15 +30,15 @@ function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttri
 
 function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
     const attributes: ExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
-    const attrProp = attributes.length ? { attributes } : {};
+    const attrProp = { attributes };
 
     const measures: ExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
-    const measuresProp = measures.length ? { measures } : {};
+    const measuresProp = { measures };
 
     const filters: ExecuteAFM.CompatibilityFilter[] = def.filters
         ? compact(def.filters.map(convertVisualizationObjectFilter))
         : [];
-    const filtersProp = filters.length ? { filters } : {};
+    const filtersProp = { filters };
 
     const nativeTotals = convertNativeTotals(def);
     const nativeTotalsProp = nativeTotals.length ? { nativeTotals } : {};
