@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { GridApi, RowNode } from "ag-grid-community";
+// (C) 2007-2020 GoodData Corporation
+import { GridApi, RowNode } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./GroupingProvider";
 import { colIdIsSimpleAttribute, getGridIndex } from "./agGridUtils";
 import ApiWrapper from "./agGridApiWrapper";

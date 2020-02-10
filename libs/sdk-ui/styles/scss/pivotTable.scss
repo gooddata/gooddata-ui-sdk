@@ -2,7 +2,7 @@
 @import "~@gooddata/goodstrap/lib/core/styles/variables";
 @import "~@gooddata/goodstrap/lib/Button/styles/variables";
 
-$ag-icons-path: "~ag-grid-community/src/styles/ag-theme-balham/icons/";
+$ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
 
 $border-color: transparent;
 $font-size: 12px;
@@ -21,8 +21,8 @@ $cell-border-color: transparentize($gd-color-disabled, 0.5);
 $header-cell-resize-width: 20px;
 
 .gd-table-component {
-    @import "~ag-grid-community/src/styles/ag-grid";
-    @import "~ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham";
+    @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
+    @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham";
 
     .gd-table {
         .ag-root-wrapper {

@@ -1,4 +1,6 @@
 dependencies:
+  '@ag-grid-community/all-modules': 22.1.1
+  '@ag-grid-community/react': 22.1.2
   '@babel/core': 7.8.4
   '@babel/plugin-proposal-export-default-from': 7.8.3_@babel+core@7.8.4
   '@babel/plugin-transform-typescript': 7.8.3_@babel+core@7.8.4
@@ -63,8 +65,6 @@ dependencies:
   '@types/spark-md5': 3.0.2
   '@types/stringify-object': 3.2.0
   '@types/uuid': 3.4.7
-  ag-grid-community: 20.0.0
-  ag-grid-react: 20.0.0_ag-grid-community@20.0.0
   async: 2.6.3
   awesome-typescript-loader: 5.2.1_typescript@3.7.4
   axios: 0.19.2
@@ -95,7 +95,7 @@ dependencies:
   invariant: 2.2.4
   isomorphic-fetch: 2.2.1
   jest: 25.1.0
-  jest-environment-enzyme: 7.1.2_enzyme@3.11.0+jest@25.1.0
+  jest-environment-jsdom-fourteen: 1.0.1
   jest-enzyme: 7.1.2_enzyme@3.11.0+jest@25.1.0
   jest-junit: 3.7.0
   js-object-pretty-print: 0.2.0
@@ -140,6 +140,59 @@ dependencies:
   webpack-dev-server: 3.10.3_02f068594a87170f90c9165a6718c67c
 lockfileVersion: 5.1
 packages:
+  /@ag-grid-community/all-modules/22.1.1:
+    dependencies:
+      '@ag-grid-community/client-side-row-model': 22.1.1
+      '@ag-grid-community/core': 22.1.1
+      '@ag-grid-community/csv-export': 22.1.1
+      '@ag-grid-community/infinite-row-model': 22.1.1
+    dev: false
+    resolution:
+      integrity: sha512-VBUbl3HRZoFKoQf/79Qq6vEUaAutF5voWq6vv6tPnDsojbCpGRrlPxAmL+Ypb39JE3oEYvW+Y/5ksKEGlab1kg==
+  /@ag-grid-community/client-side-row-model/22.1.1:
+    dependencies:
+      '@ag-grid-community/core': 22.1.1
+    dev: false
+    resolution:
+      integrity: sha512-lLqYuYHngb8pC5wSnBRYzszBDeTxRkz6TmxpVP8CHYM3QSqe2xUTp8KFkzO+RrlySB7uCCx1ym0bOR4vRkkaAw==
+  /@ag-grid-community/core/22.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-x9dLUnsIsa+3bsweYKM8UWN42b7i5FDMvGpabAlOS0jAcJRs6krZUBK8XyZwzCc2vELuoBQ6VrKG5RWCN2phjg==
+  /@ag-grid-community/csv-export/22.1.1:
+    dependencies:
+      '@ag-grid-community/core': 22.1.1
+    dev: false
+    resolution:
+      integrity: sha512-x7BcFRVVwP8LWOpFqGv+Z7DP4RqDVnf+MwMeHAT2VeMDU9oHYS0Dr3tr5Z8XMEV0pQFWj79iwwC8wrvwXkG8Lg==
+  /@ag-grid-community/infinite-row-model/22.1.1:
+    dependencies:
+      '@ag-grid-community/core': 22.1.1
+    dev: false
+    resolution:
+      integrity: sha512-GWSxNvqkrDsEsvMuB7Lq0Ucp9oWPejttAgAFOXLtWzDJGZ8M1ndv5OHAA4ubTm0z0VLU9q3Ysoc4pr19E600Og==
+  /@ag-grid-community/react/22.1.2:
+    dependencies:
+      prop-types: 15.7.2
+    dev: false
+    peerDependencies:
+      '@ag-grid-community/core': ~22.1.1
+      react: ^16.3.0
+      react-dom: ^16.3.0
+    resolution:
+      integrity: sha512-rouYVp1NFq4hwBMmazMQ5sxcmwImcBOQC2YVn5/39uoP8+3UHTNcimMbKviAN+jMQgIHDlBTTBgjDAH9mMKmQg==
+  /@ag-grid-community/react/22.1.2_react-dom@16.12.0+react@16.12.0:
+    dependencies:
+      prop-types: 15.7.2
+      react: 16.12.0
+      react-dom: 16.12.0_react@16.12.0
+    dev: false
+    peerDependencies:
+      '@ag-grid-community/core': ~22.1.1
+      react: ^16.3.0
+      react-dom: ^16.3.0
+    resolution:
+      integrity: sha512-rouYVp1NFq4hwBMmazMQ5sxcmwImcBOQC2YVn5/39uoP8+3UHTNcimMbKviAN+jMQgIHDlBTTBgjDAH9mMKmQg==
   /@babel/code-frame/7.5.5:
     dependencies:
       '@babel/highlight': 7.8.3
@@ -3083,37 +3136,6 @@ packages:
       node: '>= 0.12.0'
     resolution:
       integrity: sha512-aT6camzM4xEA54YVJYSqxz1kv4IHnQZRtThJJHhUMRExaU5spC7jX5ugSwTaTgJliIgs4VhZOk7htClvQ/LmRA==
-  /ag-grid-community/20.0.0:
-    deprecated: ag-grid-community is now deprecated - please use @ag-grid-community/all-modules. See www.ag-grid.com/javascript-grid-modules/ for more information.
-    dev: false
-    resolution:
-      integrity: sha512-KOvUnZsf1FY/0wt77xNRHJl76nxGwMuVZpEAAQvAsv+TrODXETSP9JcJskVBjr+s5VLvGaxJNfV7JQTc1ZPS5w==
-  /ag-grid-react/20.0.0_77cdd5cb7e746b899524c66049b60692:
-    dependencies:
-      ag-grid-community: 20.0.0
-      prop-types: 15.7.2
-      react: 16.12.0
-      react-dom: 16.12.0_react@16.12.0
-    deprecated: ag-grid-react is now deprecated - please use @ag-grid-community/react. See www.ag-grid.com/javascript-grid-modules/ for more information.
-    dev: false
-    peerDependencies:
-      ag-grid-community: ^20.0.0
-      react: ^15.5.0 || ^16.0.0
-      react-dom: ^15.5.0 || ^16.0.0
-    resolution:
-      integrity: sha512-0DAuUsF3qtI6cndtC1UkMT3h9iiIrK/ecgZZJme65h4Lyp08j5qz+u+jFWWm60LGnLL6+0uqPWLZoOA+TSgUpg==
-  /ag-grid-react/20.0.0_ag-grid-community@20.0.0:
-    dependencies:
-      ag-grid-community: 20.0.0
-      prop-types: 15.7.2
-    deprecated: ag-grid-react is now deprecated - please use @ag-grid-community/react. See www.ag-grid.com/javascript-grid-modules/ for more information.
-    dev: false
-    peerDependencies:
-      ag-grid-community: ^20.0.0
-      react: ^15.5.0 || ^16.0.0
-      react-dom: ^15.5.0 || ^16.0.0
-    resolution:
-      integrity: sha512-0DAuUsF3qtI6cndtC1UkMT3h9iiIrK/ecgZZJme65h4Lyp08j5qz+u+jFWWm60LGnLL6+0uqPWLZoOA+TSgUpg==
   /aggregate-error/3.0.1:
     dependencies:
       clean-stack: 2.2.0
@@ -8518,6 +8540,28 @@ packages:
       react: ^0.13.0 || ^0.14.0 || ^15.0.0 || >=16.x
     resolution:
       integrity: sha512-3tfaYAzO7qZSRrv+srQnfK16Vu5XwH/pHi8FpoqSHjKKngbHzXf7aBCBuWh8y3w0OtknHRfDMFrC60Khj+g1hA==
+  /jest-environment-jsdom-fifteen/1.0.2:
+    dependencies:
+      '@jest/environment': 24.9.0
+      '@jest/fake-timers': 24.9.0
+      '@jest/types': 24.9.0
+      jest-mock: 24.9.0
+      jest-util: 24.9.0
+      jsdom: 15.2.1
+    dev: false
+    resolution:
+      integrity: sha512-nfrnAfwklE1872LIB31HcjM65cWTh1wzvMSp10IYtPJjLDUbTTvDpajZgIxUnhRmzGvogdHDayCIlerLK0OBBg==
+  /jest-environment-jsdom-fourteen/1.0.1:
+    dependencies:
+      '@jest/environment': 24.9.0
+      '@jest/fake-timers': 24.9.0
+      '@jest/types': 24.9.0
+      jest-mock: 24.9.0
+      jest-util: 24.9.0
+      jsdom: 14.1.0
+    dev: false
+    resolution:
+      integrity: sha512-DojMX1sY+at5Ep+O9yME34CdidZnO3/zfPh8UW+918C5fIZET5vCjfkegixmsi7AtdYfkr4bPlIzmWnlvQkP7Q==
   /jest-environment-jsdom/24.9.0:
     dependencies:
       '@jest/environment': 24.9.0
@@ -9018,6 +9062,39 @@ packages:
     dev: false
     resolution:
       integrity: sha512-y8Px43oyiBM13Zc1z780FrfNLJCXTL40EWlty/LXUtcjykRBNgLlCjWXpfSPBl2iv+N7koQN+dvqszHZgT/Fjw==
+  /jsdom/14.1.0:
+    dependencies:
+      abab: 2.0.3
+      acorn: 6.4.0
+      acorn-globals: 4.3.4
+      array-equal: 1.0.0
+      cssom: 0.3.8
+      cssstyle: 1.4.0
+      data-urls: 1.1.0
+      domexception: 1.0.1
+      escodegen: 1.14.1
+      html-encoding-sniffer: 1.0.2
+      nwsapi: 2.2.0
+      parse5: 5.1.0
+      pn: 1.1.0
+      request: 2.88.0
+      request-promise-native: 1.0.8_request@2.88.0
+      saxes: 3.1.11
+      symbol-tree: 3.2.4
+      tough-cookie: 2.5.0
+      w3c-hr-time: 1.0.1
+      w3c-xmlserializer: 1.1.2
+      webidl-conversions: 4.0.2
+      whatwg-encoding: 1.0.5
+      whatwg-mimetype: 2.3.0
+      whatwg-url: 7.1.0
+      ws: 6.2.1
+      xml-name-validator: 3.0.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-O901mfJSuTdwU2w3Sn+74T+RnDVP+FuV5fH8tcPWyqrseRAb0s5xOtPgCFiPOtLcyK7CLIJwPyD83ZqQWvA5ng==
   /jsdom/15.2.1:
     dependencies:
       abab: 2.0.3
@@ -15518,6 +15595,8 @@ packages:
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
     dependencies:
+      '@ag-grid-community/all-modules': 22.1.1
+      '@ag-grid-community/react': 22.1.2_react-dom@16.12.0+react@16.12.0
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/goodstrap': 66.4.0_react-dom@16.12.0+react@16.12.0
       '@gooddata/js-utils': 3.10.0
@@ -15539,8 +15618,6 @@ packages:
       '@types/react-responsive': 8.0.2
       '@types/react-window': 1.8.1
       '@types/uuid': 3.4.7
-      ag-grid-community: 20.0.0
-      ag-grid-react: 20.0.0_77cdd5cb7e746b899524c66049b60692
       classnames: 2.2.6
       custom-event: 1.0.1
       date-fns: 2.9.0
@@ -15558,6 +15635,8 @@ packages:
       invariant: 2.2.4
       jest: 25.1.0
       jest-environment-enzyme: 7.1.2_9ea07cae9748490ddf3f947a1de16a52
+      jest-environment-jsdom-fifteen: 1.0.2
+      jest-environment-jsdom-fourteen: 1.0.1
       jest-enzyme: 7.1.2_9ea07cae9748490ddf3f947a1de16a52
       jest-junit: 3.7.0
       lodash: 4.17.15
@@ -15582,10 +15661,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-yWm35v/XY4DESvwV+c9Q5a9QiRdXb3AdImmOZ63bvS7VirDwpElCVdqmf3RbmPw71gb2bZUBu46bZNVFjxnjzQ==
+      integrity: sha512-xC31MnSR242jUiUc6c+2+qTH0j+xvkNDC4bijbbHYOyzsCuQzhpHNkWJQ/2N89nTSI54DQNG8mhy4NDKUrpZOQ==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
+  '@ag-grid-community/all-modules': 22.1.1
+  '@ag-grid-community/react': 22.1.2
   '@babel/core': ^7.7.2
   '@babel/plugin-proposal-export-default-from': ^7.7.4
   '@babel/plugin-transform-typescript': ^7.7.4
@@ -15650,8 +15732,6 @@ specifiers:
   '@types/spark-md5': ^3.0.1
   '@types/stringify-object': ^3.2.0
   '@types/uuid': ^3.4.5
-  ag-grid-community: 20.0.0
-  ag-grid-react: 20.0.0
   async: ^2.1.5
   awesome-typescript-loader: ^5.2.1
   axios: ^0.19.0
@@ -15682,7 +15762,7 @@ specifiers:
   invariant: ^2.2.2
   isomorphic-fetch: ^2.2.1
   jest: ^25.1.0
-  jest-environment-enzyme: ^7.1.2
+  jest-environment-jsdom-fourteen: 1.0.1
   jest-enzyme: ^7.1.2
   jest-junit: ^3.0.0
   js-object-pretty-print: ^0.2.0

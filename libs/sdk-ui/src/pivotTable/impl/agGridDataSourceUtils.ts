@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { GridApi } from "ag-grid-community";
+import { GridApi } from "@ag-grid-community/all-modules";
 import ApiWrapper from "./agGridApiWrapper";
 import { IGridTotalsRow } from "./agGridTypes";
 import isEqual = require("lodash/isEqual");

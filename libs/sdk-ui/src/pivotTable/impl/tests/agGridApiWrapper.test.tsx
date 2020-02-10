@@ -1,10 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { AgGridReact } from "ag-grid-react";
+import { AgGridReact } from "@ag-grid-community/react";
 
 import ApiWrapper from "../agGridApiWrapper";
-import { GridApi, GridReadyEvent, IDatasource, IGetRowsParams, ICellRendererParams } from "ag-grid-community";
+import {
+    AllCommunityModules,
+    FirstDataRenderedEvent,
+    GridApi,
+    GridReadyEvent,
+    ICellRendererParams,
+} from "@ag-grid-community/all-modules";
 import { ICustomGridOptions } from "../agGridTypes";
 
 describe("agGridApiWrapper", () => {
@@ -14,19 +20,12 @@ describe("agGridApiWrapper", () => {
     const firstAttributeFirstRowValue = "Attr #1 Row #1";
 
     function renderComponent(customProps = {}) {
-        const datasource: IDatasource = {
-            getRows: (params: IGetRowsParams) => {
-                params.successCallback([
-                    {
-                        [firstAttributeColumnId]: firstAttributeFirstRowValue,
-                    },
-                ]);
-            },
-        };
-
         const gridOptions: ICustomGridOptions = {
-            rowModelType: "infinite",
-            datasource,
+            rowData: [
+                {
+                    [firstAttributeColumnId]: firstAttributeFirstRowValue,
+                },
+            ],
             columnDefs: [
                 {
                     children: [
@@ -46,18 +45,20 @@ describe("agGridApiWrapper", () => {
             ],
         };
 
-        const defaultProps = { gridOptions };
-
-        return mount(<AgGridReact {...defaultProps} {...customProps} />);
+        return mount(<AgGridReact modules={AllCommunityModules} {...gridOptions} {...customProps} />);
     }
 
     async function renderGridReady() {
         return new Promise<GridApi>(resolve => {
             const onGridReady = (params: GridReadyEvent) => {
                 params.api.setPinnedTopRowData([{ [firstAttributeColumnId]: firstAttributePinnedTopValue }]);
+            };
+
+            const onFirstDataRendered = (params: FirstDataRenderedEvent) => {
                 resolve(params.api);
             };
-            renderComponent({ onGridReady });
+
+            renderComponent({ onGridReady, onFirstDataRendered });
         });
     }
 
@@ -91,7 +92,7 @@ describe("agGridApiWrapper", () => {
 
         it("should return null when GridApi is not providing bottomRowIndex attribute", async () => {
             const api = await renderGridReady();
-            (api as any).paginationProxy.bottomRowIndex = undefined;
+            (api as any).paginationProxy.bottomRowBounds = undefined;
 
             const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
 
@@ -100,7 +101,7 @@ describe("agGridApiWrapper", () => {
 
         it("should return number when GridApi return 0 as bottomRowIndex", async () => {
             const api = await renderGridReady();
-            (api as any).paginationProxy.bottomRowIndex = 0;
+            (api as any).paginationProxy.bottomRowBounds = { rowIndex: 0 };
 
             const paginationBottomRowIndex = ApiWrapper.getPaginationBottomRowIndex(api);
 

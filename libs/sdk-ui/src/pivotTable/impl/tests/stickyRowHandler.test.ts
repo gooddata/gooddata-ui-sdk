@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IScrollPosition,
     stickyRowExists,
@@ -6,7 +6,7 @@ import {
     updateStickyRowPosition,
 } from "../stickyRowHandler";
 import { IGroupingProvider } from "../GroupingProvider";
-import { GridApi } from "ag-grid-community";
+import { GridApi } from "@ag-grid-community/all-modules";
 
 describe("stickyRowHandler", () => {
     function getFakeGridApi(fakeGetDisplayedRowAtIndex: any = jest.fn()): GridApi {
