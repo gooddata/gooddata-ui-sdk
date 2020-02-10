@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ScatterPlot.45047857a1f322446299d792a2901a85",
+        "uri": "ScatterPlot.45047857a1f322446299d792a2901a85",
         "visualizationUrl": "local:scatter",
         "title": "ScatterPlot - data labels - forced visible",
         "buckets": [

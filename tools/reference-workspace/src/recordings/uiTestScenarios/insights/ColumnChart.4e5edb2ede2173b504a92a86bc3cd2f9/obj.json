@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.4e5edb2ede2173b504a92a86bc3cd2f9",
+        "uri": "ColumnChart.4e5edb2ede2173b504a92a86bc3cd2f9",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - data labels - default",
         "buckets": [

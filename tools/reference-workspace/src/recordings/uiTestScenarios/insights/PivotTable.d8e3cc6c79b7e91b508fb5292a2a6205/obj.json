@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.d8e3cc6c79b7e91b508fb5292a2a6205",
+        "uri": "PivotTable.d8e3cc6c79b7e91b508fb5292a2a6205",
         "visualizationUrl": "local:table",
         "title": "PivotTable - measure format with colors",
         "buckets": [

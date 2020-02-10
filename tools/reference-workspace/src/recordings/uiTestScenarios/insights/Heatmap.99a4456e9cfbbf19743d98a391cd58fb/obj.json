@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.99a4456e9cfbbf19743d98a391cd58fb",
+        "uri": "Heatmap.99a4456e9cfbbf19743d98a391cd58fb",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - data labels - forced visible and german separators",
         "buckets": [

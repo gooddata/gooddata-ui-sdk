@@ -1,6 +1,13 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { calculateXirr } from "../calculateXirr";
 
+/*
+ * NOTE
+ *
+ * calculateXirr does a good amount of float-point arithmetic and thus is subject to all the funny stuff that comes
+ * with it. to mitigate false negatives stemming from 'changes in runtime environment', these tests assert
+ * results on arbitrary and reasonably small precision.
+ */
 describe("calculateXirr", () => {
     it("should compute XIRR value for yearly input", () => {
         // source of data: https://en.wikipedia.org/wiki/Internal_rate_of_return
@@ -11,8 +18,8 @@ describe("calculateXirr", () => {
             { when: new Date("01/01/21"), amount: 48100 },
         ];
 
-        const actual = calculateXirr(xirrInput);
-        const expected = 0.05958953474733984;
+        const actual = calculateXirr(xirrInput).toPrecision(8);
+        const expected = "0.059589535";
         expect(actual).toEqual(expected);
     });
 
@@ -26,8 +33,8 @@ describe("calculateXirr", () => {
             { when: new Date("04/01/09"), amount: 2750 },
         ];
 
-        const actual = calculateXirr(xirrInput);
-        const expected = 0.37336253350955556;
+        const actual = calculateXirr(xirrInput).toPrecision(8);
+        const expected = "0.37336253";
         expect(actual).toEqual(expected);
     });
 

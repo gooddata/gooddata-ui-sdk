@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PieChart.64e0e56f4a244209f568cab8049a0170",
+        "uri": "PieChart.64e0e56f4a244209f568cab8049a0170",
         "visualizationUrl": "local:pie",
         "title": "PieChart - assign color to attributes",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.3bc075ca4f92da3e2a23ef22779d1986",
+        "uri": "ComboChart.3bc075ca4f92da3e2a23ef22779d1986",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - data labels - auto visibility",
         "buckets": [

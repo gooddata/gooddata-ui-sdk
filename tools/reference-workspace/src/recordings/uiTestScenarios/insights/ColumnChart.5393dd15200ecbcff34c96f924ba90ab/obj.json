@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.5393dd15200ecbcff34c96f924ba90ab",
+        "uri": "ColumnChart.5393dd15200ecbcff34c96f924ba90ab",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - assign color to attribute element stack",
         "buckets": [

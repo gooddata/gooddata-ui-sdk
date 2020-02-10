@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.5af03e33b6d20c32448f3b4680561661",
+        "uri": "Heatmap.5af03e33b6d20c32448f3b4680561661",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - measure, rows and columns with null data points",
         "buckets": [

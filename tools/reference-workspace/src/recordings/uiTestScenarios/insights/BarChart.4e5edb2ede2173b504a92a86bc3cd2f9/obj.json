@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.4e5edb2ede2173b504a92a86bc3cd2f9",
+        "uri": "BarChart.4e5edb2ede2173b504a92a86bc3cd2f9",
         "visualizationUrl": "local:bar",
         "title": "BarChart - data labels - default",
         "buckets": [

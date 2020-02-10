@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.99a4456e9cfbbf19743d98a391cd58fb",
+        "uri": "ComboChart.99a4456e9cfbbf19743d98a391cd58fb",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - data labels - forced visible and german separators",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.99a4456e9cfbbf19743d98a391cd58fb",
+        "uri": "BubbleChart.99a4456e9cfbbf19743d98a391cd58fb",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - data labels - forced visible and german separators",
         "buckets": [

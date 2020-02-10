@@ -115,6 +115,8 @@ function createVisualizationClass(insight: IInsightDefinition): IVisualizationCl
 
     return {
         visualizationClass: {
+            orderIndex: 0,
+            uri: visClassUri,
             identifier: visClassUri,
             url: visClassUri,
             title: visClassUri,

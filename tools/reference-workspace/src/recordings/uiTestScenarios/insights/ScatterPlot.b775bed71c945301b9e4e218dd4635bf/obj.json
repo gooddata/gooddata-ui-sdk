@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ScatterPlot.b775bed71c945301b9e4e218dd4635bf",
+        "uri": "ScatterPlot.b775bed71c945301b9e4e218dd4635bf",
         "visualizationUrl": "local:scatter",
         "title": "ScatterPlot - x and y axis measures and attribute",
         "buckets": [

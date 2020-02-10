@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.6b4ad2cfa5231d33a72a6c873e893155",
+        "uri": "Heatmap.6b4ad2cfa5231d33a72a6c873e893155",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - axis name configuration - high",
         "buckets": [

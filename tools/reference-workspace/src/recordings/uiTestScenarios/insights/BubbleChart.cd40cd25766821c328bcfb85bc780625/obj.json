@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BubbleChart.cd40cd25766821c328bcfb85bc780625",
+        "uri": "BubbleChart.cd40cd25766821c328bcfb85bc780625",
         "visualizationUrl": "local:bubble",
         "title": "BubbleChart - X axis max only configuration",
         "buckets": [

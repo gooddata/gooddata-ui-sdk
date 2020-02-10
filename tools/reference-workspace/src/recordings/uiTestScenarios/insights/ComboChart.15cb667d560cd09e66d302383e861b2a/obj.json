@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.15cb667d560cd09e66d302383e861b2a",
+        "uri": "ComboChart.15cb667d560cd09e66d302383e861b2a",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - stack primary measures when both column chart - normal stacking",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.06b7e642b21780ee6f498f4fe689fe63",
+        "uri": "ComboChart.06b7e642b21780ee6f498f4fe689fe63",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - one primary measure",
         "buckets": [

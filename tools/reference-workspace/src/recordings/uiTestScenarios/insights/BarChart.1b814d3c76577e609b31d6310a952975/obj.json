@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.1b814d3c76577e609b31d6310a952975",
+        "uri": "BarChart.1b814d3c76577e609b31d6310a952975",
         "visualizationUrl": "local:bar",
         "title": "BarChart - X axis on top",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.58a71c95c1755089780119456b6271f7",
+        "uri": "BarChart.58a71c95c1755089780119456b6271f7",
         "visualizationUrl": "local:bar",
         "title": "BarChart - two measures with two viewBy",
         "buckets": [

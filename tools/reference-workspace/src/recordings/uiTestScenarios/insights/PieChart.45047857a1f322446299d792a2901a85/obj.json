@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PieChart.45047857a1f322446299d792a2901a85",
+        "uri": "PieChart.45047857a1f322446299d792a2901a85",
         "visualizationUrl": "local:pie",
         "title": "PieChart - data labels - forced visible",
         "buckets": [

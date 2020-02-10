@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.dceee41dc2c88e477f906598745585ff",
+        "uri": "PivotTable.dceee41dc2c88e477f906598745585ff",
         "visualizationUrl": "local:table",
         "title": "PivotTable - two measures with single row attr sorted by first measure",
         "buckets": [

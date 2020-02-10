@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "PivotTable.7279f1fcabc2fd575bce04d2e9142c48",
+        "uri": "PivotTable.7279f1fcabc2fd575bce04d2e9142c48",
         "visualizationUrl": "local:table",
         "title": "PivotTable - single column",
         "buckets": [

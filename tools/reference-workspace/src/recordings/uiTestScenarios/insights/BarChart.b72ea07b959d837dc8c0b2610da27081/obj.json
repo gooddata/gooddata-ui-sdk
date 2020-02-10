@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.b72ea07b959d837dc8c0b2610da27081",
+        "uri": "BarChart.b72ea07b959d837dc8c0b2610da27081",
         "visualizationUrl": "local:bar",
         "title": "BarChart - dual axis when two viewBy attributes",
         "buckets": [

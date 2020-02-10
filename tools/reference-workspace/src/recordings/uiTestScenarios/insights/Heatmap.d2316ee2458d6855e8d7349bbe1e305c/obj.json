@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "Heatmap.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - assign color to measures",
         "buckets": [

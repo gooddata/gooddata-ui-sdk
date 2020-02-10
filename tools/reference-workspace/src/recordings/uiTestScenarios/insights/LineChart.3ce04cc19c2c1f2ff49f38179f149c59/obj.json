@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.3ce04cc19c2c1f2ff49f38179f149c59",
+        "uri": "LineChart.3ce04cc19c2c1f2ff49f38179f149c59",
         "visualizationUrl": "local:line",
         "title": "LineChart - single axis name configuration - low",
         "buckets": [

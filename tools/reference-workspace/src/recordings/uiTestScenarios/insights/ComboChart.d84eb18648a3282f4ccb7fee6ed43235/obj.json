@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.d84eb18648a3282f4ccb7fee6ed43235",
+        "uri": "ComboChart.d84eb18648a3282f4ccb7fee6ed43235",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - dual axis multiple measures without slicingline-column",
         "buckets": [

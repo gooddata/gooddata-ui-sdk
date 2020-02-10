@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.e7f501e07a5b5400f9eea38e61abe7c0",
+        "uri": "ColumnChart.e7f501e07a5b5400f9eea38e61abe7c0",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - stack measures to 100% with dual axis and axis min/max",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "LineChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "LineChart.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:line",
         "title": "LineChart - assign color to measures",
         "buckets": [

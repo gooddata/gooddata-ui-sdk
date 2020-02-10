@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ComboChart.24dd163cd4650621b684e612ecb97d59",
+        "uri": "ComboChart.24dd163cd4650621b684e612ecb97d59",
         "visualizationUrl": "local:combo2",
         "title": "ComboChart - discard stacking when primary measures are not specified - secondary is area",
         "buckets": [

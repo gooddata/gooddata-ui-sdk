@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.58a71c95c1755089780119456b6271f7",
+        "uri": "ColumnChart.58a71c95c1755089780119456b6271f7",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - two measures with two viewBy",
         "buckets": [

@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "DonutChart.8ef289b689ae537d4e12f480fc195396",
+        "uri": "DonutChart.8ef289b689ae537d4e12f480fc195396",
         "visualizationUrl": "local:donut",
         "title": "DonutChart - single measure",
         "buckets": [

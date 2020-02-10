@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "Heatmap.cddadab3015c1b025746b2c492e3724b",
+        "uri": "Heatmap.cddadab3015c1b025746b2c492e3724b",
         "visualizationUrl": "local:heatmap",
         "title": "Heatmap - measure, rows and columns",
         "buckets": [

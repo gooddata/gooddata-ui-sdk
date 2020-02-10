@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.e5a1cb3e45f6f8906cb6b1d11f1e8ed6",
+        "uri": "BarChart.e5a1cb3e45f6f8906cb6b1d11f1e8ed6",
         "visualizationUrl": "local:bar",
         "title": "BarChart - Y axis rotation",
         "buckets": [

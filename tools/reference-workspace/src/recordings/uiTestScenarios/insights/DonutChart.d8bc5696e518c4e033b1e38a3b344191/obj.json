@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "DonutChart.d8bc5696e518c4e033b1e38a3b344191",
+        "uri": "DonutChart.d8bc5696e518c4e033b1e38a3b344191",
         "visualizationUrl": "local:donut",
         "title": "DonutChart - legend position - two measures - auto legend",
         "buckets": [

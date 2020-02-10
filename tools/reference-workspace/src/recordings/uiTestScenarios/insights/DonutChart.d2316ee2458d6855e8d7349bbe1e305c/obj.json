@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "DonutChart.d2316ee2458d6855e8d7349bbe1e305c",
+        "uri": "DonutChart.d2316ee2458d6855e8d7349bbe1e305c",
         "visualizationUrl": "local:donut",
         "title": "DonutChart - assign color to measures",
         "buckets": [

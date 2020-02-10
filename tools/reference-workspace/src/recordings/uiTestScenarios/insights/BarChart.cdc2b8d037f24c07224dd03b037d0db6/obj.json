@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.cdc2b8d037f24c07224dd03b037d0db6",
+        "uri": "BarChart.cdc2b8d037f24c07224dd03b037d0db6",
         "visualizationUrl": "local:bar",
         "title": "BarChart - viewBy date and PoP measure",
         "buckets": [

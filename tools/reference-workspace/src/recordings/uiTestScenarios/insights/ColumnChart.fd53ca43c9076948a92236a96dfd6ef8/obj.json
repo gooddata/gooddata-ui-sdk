@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "ColumnChart.fd53ca43c9076948a92236a96dfd6ef8",
+        "uri": "ColumnChart.fd53ca43c9076948a92236a96dfd6ef8",
         "visualizationUrl": "local:column",
         "title": "ColumnChart - assign color to master measure impacts derived PoP",
         "buckets": [

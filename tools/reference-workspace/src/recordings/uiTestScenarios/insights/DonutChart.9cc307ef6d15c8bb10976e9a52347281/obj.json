@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "DonutChart.9cc307ef6d15c8bb10976e9a52347281",
+        "uri": "DonutChart.9cc307ef6d15c8bb10976e9a52347281",
         "visualizationUrl": "local:donut",
         "title": "DonutChart - single measure with viewBy",
         "buckets": [

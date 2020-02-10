@@ -1,6 +1,7 @@
 {
     "insight": {
         "identifier": "BarChart.3ed42f4308cb67a949e8dcfc9cdbdeed",
+        "uri": "BarChart.3ed42f4308cb67a949e8dcfc9cdbdeed",
         "visualizationUrl": "local:bar",
         "title": "BarChart - X axis min/max configuration",
         "buckets": [
