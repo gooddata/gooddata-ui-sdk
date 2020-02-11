@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { VisualizationTypes } from "../../base";
+// (C) 2019-2020 GoodData Corporation
+import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const AXIS = {
     PRIMARY: "primary",

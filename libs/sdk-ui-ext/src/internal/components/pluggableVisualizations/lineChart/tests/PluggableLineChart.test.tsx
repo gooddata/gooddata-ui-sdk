@@ -7,7 +7,7 @@ import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import { AXIS } from "../../../../constants/axis";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
-import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 jest.mock("react-dom", () => {

@@ -48,7 +48,6 @@ import {
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { createSorts, removeSort } from "../../../utils/sort";
 
-import { BaseChart } from "../../../../charts/_base/BaseChart";
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getValidProperties } from "../../../utils/colors";
@@ -57,6 +56,7 @@ import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
 import { generateDimensions } from "../../../utils/dimensions";
 import {
+    BaseChart,
     GoodDataSdkError,
     BucketNames,
     DefaultLocale,
@@ -65,7 +65,10 @@ import {
     VisualizationTypes,
     IExportFunction,
     ILoadingState,
-} from "../../../../base";
+    ColorUtils,
+    IAxisConfig,
+    IChartConfig,
+} from "@gooddata/sdk-ui";
 import {
     bucketsIsEmpty,
     IColorMappingItem,
@@ -77,7 +80,6 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
-import { ColorUtils, IAxisConfig, IChartConfig } from "../../../../highcharts";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");

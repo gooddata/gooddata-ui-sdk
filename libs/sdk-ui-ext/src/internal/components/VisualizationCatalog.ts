@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import last = require("lodash/last");
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "../../base";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
 import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";

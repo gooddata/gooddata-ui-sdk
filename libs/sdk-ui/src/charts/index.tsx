@@ -2,6 +2,7 @@
 export { IBucketChartProps, IChartCallbacks, ICommonChartProps, ICoreChartProps } from "./chartProps";
 
 export { ViewByAttributesLimit } from "./_commons/limits";
+export { BaseChart, IBaseChartProps } from "./_base/BaseChart";
 
 export { AreaChart, IAreaChartProps } from "./areaChart/AreaChart";
 
@@ -18,6 +19,7 @@ export { DonutChart, IDonutChartProps } from "./donutChart/DonutChart";
 export { FunnelChart, IFunnelChartProps } from "./funnelChart/FunnelChart";
 
 export { Headline, IHeadlineProps } from "./headline/Headline";
+export { CoreHeadline } from "./headline/CoreHeadline";
 
 export { Heatmap, IHeatmapProps } from "./heatmap/Heatmap";
 
@@ -30,5 +32,7 @@ export { ScatterPlot, IScatterPlotProps } from "./scatterPlot/ScatterPlot";
 export { Treemap, ITreemapProps } from "./treemap/Treemap";
 
 export { Xirr, IXirrProps } from "./xirr/Xirr";
+
+export { CoreXirr } from "./xirr/CoreXirr";
 
 export { withJsxExport } from "./withJsxExport";

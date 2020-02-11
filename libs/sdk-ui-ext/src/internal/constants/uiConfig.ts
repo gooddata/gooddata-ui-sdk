@@ -1,8 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "./bucket";
-import { OverTimeComparisonTypes, VisualizationTypes } from "../../base";
+import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const MAX_METRICS_COUNT = 20;
 export const DEFAULT_PIE_METRICS_COUNT = 1;

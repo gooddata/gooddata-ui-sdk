@@ -3,7 +3,7 @@ import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import get = require("lodash/get");
 import includes = require("lodash/includes");
-import { BucketNames } from "../../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import * as classNames from "classnames";

@@ -19,7 +19,7 @@ import {
     ILoadingProps,
     ErrorComponent,
     IErrorProps,
-} from "../base";
+} from "@gooddata/sdk-ui";
 
 /**
  * @public

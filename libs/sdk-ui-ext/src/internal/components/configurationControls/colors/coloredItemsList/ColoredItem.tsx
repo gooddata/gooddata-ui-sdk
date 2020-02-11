@@ -6,7 +6,7 @@ import ColoredItemContent from "./ColoredItemContent";
 import ColorDropdown from "../colorDropdown/ColorDropdown";
 import { IColoredItem, IColoredItemDropdownItem } from "../../../../interfaces/Colors";
 import { isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IMappingHeader } from "../../../../../base";
+import { IMappingHeader } from "@gooddata/sdk-ui";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;

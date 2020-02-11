@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "../../../base/";
+import { BucketNames } from "@gooddata/sdk-ui";
 import {
     IExtendedReferencePoint,
     IBucketOfFun,

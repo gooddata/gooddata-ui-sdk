@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     MAX_METRICS_COUNT,
     DEFAULT_PIE_METRICS_COUNT,
@@ -16,7 +16,7 @@ import {
 import { METRIC, FACT, ATTRIBUTE, DATE } from "../constants/bucket";
 
 import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../interfaces/Visualization";
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],

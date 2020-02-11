@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 
 import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization";
 import * as bucketRules from "../bucketRules";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
-import { BucketNames } from "../../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 describe("isShowInPercentAllowed", () => {
     it("should return true if buckets rules met", () => {

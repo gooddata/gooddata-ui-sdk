@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import includes = require("lodash/includes");
-import { ChartType, VisualizationTypes } from "../../base";
+import { ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 const openAsReportSupportingVisualizations: ChartType[] = [
     VisualizationTypes.COLUMN,

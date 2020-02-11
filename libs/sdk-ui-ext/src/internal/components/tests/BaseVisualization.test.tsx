@@ -11,8 +11,7 @@ import * as testMocks from "../../mocks/testMocks";
 import { emptyReferencePoint } from "../../mocks/referencePointMocks";
 
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
-import { IDrillableItem } from "../../../base/vis/DrillEvents";
+import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
 

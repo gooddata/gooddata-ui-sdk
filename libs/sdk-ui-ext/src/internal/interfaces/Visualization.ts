@@ -10,7 +10,7 @@ import {
     IVisualizationCallbacks,
     OverTimeComparisonType,
     VisualizationEnvironment,
-} from "../../base";
+} from "@gooddata/sdk-ui";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;

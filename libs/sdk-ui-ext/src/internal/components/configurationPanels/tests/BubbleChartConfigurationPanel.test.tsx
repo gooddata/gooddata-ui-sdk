@@ -2,7 +2,7 @@
 import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
-import { DefaultLocale, VisualizationTypes } from "../../../..";
+import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import { insightWithSingleAttribute, insightWithSingleMeasure } from "../../../mocks/testMocks";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
 import ConfigSection from "../../configurationControls/ConfigSection";

@@ -26,11 +26,10 @@ import {
 } from "../../../../interfaces/Visualization";
 import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
-import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
-import { CorePivotTable } from "../../../../../pivotTable/CorePivotTable";
+import { IDrillableItem, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { CorePivotTable } from "@gooddata/sdk-ui-pivot";
 import { SortItem, IMeasureSortItem, IAttributeSortItem, SortDirection } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { DefaultLocale, ILocale } from "../../../../../base/localization/Locale";
 
 const getMockReferencePoint = (
     measures: IBucketItem[] = [],

@@ -9,8 +9,7 @@ import { IVisConstruct, IVisProps, IBucketOfFun, IFilters } from "../../../../in
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import * as testMocks from "../../../../mocks/testMocks";
-import { CoreXirr } from "../../../../../charts/xirr/CoreXirr";
-import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
+import { CoreXirr, IDrillableItem } from "@gooddata/sdk-ui";
 
 describe("PluggableXirr", () => {
     const defaultProps = {

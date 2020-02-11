@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { BucketNames } from "../../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 import {
     createSorts,
     getAttributeSortItem,

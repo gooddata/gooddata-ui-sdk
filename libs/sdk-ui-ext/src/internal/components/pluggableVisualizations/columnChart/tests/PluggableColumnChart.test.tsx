@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import { PluggableColumnChart } from "../PluggableColumnChart";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
-import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableColumnChart", () => {

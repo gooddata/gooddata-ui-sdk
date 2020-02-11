@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import some = require("lodash/some");
 import every = require("lodash/every");
 import isEmpty = require("lodash/isEmpty");
 import reduce = require("lodash/reduce");
 
-import { BucketNames } from "../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 import {
     IFiltersBucketItem,
     IBucketItem,

@@ -1,7 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
-import { DefaultLocale, BucketNames } from "../../../base";
 import { ATTRIBUTE, DATE_DATASET_ATTRIBUTE, METRIC } from "../../constants/bucket";
 import {
     applyUiConfig,
@@ -47,8 +46,7 @@ import {
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import { createInternalIntl } from "../internalIntlProvider";
-import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { DefaultLocale, BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucket } from "@gooddata/sdk-model";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../mocks/visualizationObjectMocks";
 

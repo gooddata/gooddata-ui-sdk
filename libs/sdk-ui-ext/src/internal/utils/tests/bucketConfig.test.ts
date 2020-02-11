@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 
 import { DATE, DATE_DATASET_ATTRIBUTE, GRANULARITY } from "../../constants/bucket";
@@ -6,7 +6,7 @@ import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../../const
 import { IExtendedReferencePoint, IFiltersBucketItem } from "../../interfaces/Visualization";
 import * as referencePointMocks from "../../mocks/referencePointMocks";
 import { configurePercent, configureOverTimeComparison } from "../bucketConfig";
-import { OverTimeComparisonTypes } from "../../../base/interfaces/OverTimeComparison";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 describe("configure Percent and Over Time Comparison helper functions", () => {
     const samePeriodPreviousYearFilter: IFiltersBucketItem = {

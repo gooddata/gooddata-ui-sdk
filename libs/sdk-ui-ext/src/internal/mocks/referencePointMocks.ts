@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IReferencePoint, IBucketItem, IFilters } from "../interfaces/Visualization";
-import { OverTimeComparisonTypes } from "../../base";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 export const masterMeasureItems: IBucketItem[] = [
     {

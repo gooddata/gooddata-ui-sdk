@@ -16,10 +16,7 @@ import {
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
-import { IDrillableItem } from "../../../../../base/vis/DrillEvents";
-import { OverTimeComparisonTypes } from "../../../../../base/interfaces/OverTimeComparison";
-import { CoreHeadline } from "../../../../../charts/headline/CoreHeadline";
-import { BucketNames } from "../../../../../base/constants/bucketNames";
+import { IDrillableItem, OverTimeComparisonTypes, CoreHeadline, BucketNames } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");

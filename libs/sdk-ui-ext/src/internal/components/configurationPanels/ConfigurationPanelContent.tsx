@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import { DefaultLocale, ChartType } from "../../../base";
+import { DefaultLocale, ChartType } from "@gooddata/sdk-ui";
 
 import { IFeatureFlags, IReferences, IVisualizationProperties } from "../../interfaces/Visualization";
 import { IColorConfiguration } from "../../interfaces/Colors";

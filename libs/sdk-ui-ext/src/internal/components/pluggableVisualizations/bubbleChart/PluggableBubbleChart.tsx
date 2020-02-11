@@ -18,7 +18,7 @@ import {
     limitNumberOfMeasuresInBuckets,
 } from "../../../utils/bucketHelper";
 
-import { BucketNames, VisualizationTypes } from "../../../../base";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { METRIC, BUCKETS } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper";

@@ -6,7 +6,7 @@ import { insightWithSingleAttribute } from "../../../mocks/testMocks";
 import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { VisualizationTypes, DefaultLocale } from "../../../..";
+import { VisualizationTypes, DefaultLocale } from "@gooddata/sdk-ui";
 
 describe("BaseChartConfigurationPanel", () => {
     describe("axis name configuration", () => {

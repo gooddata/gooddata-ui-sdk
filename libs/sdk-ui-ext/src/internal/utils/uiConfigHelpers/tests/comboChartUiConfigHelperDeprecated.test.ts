@@ -1,11 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
-import { DefaultLocale } from "../../../../base/localization/Locale";
+import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 describe("comboChartUiConfigHelper", () => {
     describe("setComboChartUiConfigDeprecated", () => {

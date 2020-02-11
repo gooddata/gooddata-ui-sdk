@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import get = require("lodash/get");
 import { IntlShape } from "react-intl";
 
-import { BucketNames, ChartType, VisualizationTypes } from "../../../base/";
+import { BucketNames, ChartType, VisualizationTypes, isLineChart } from "@gooddata/sdk-ui";
 import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
@@ -27,7 +27,6 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
-import { isLineChart } from "../../../highcharts";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 

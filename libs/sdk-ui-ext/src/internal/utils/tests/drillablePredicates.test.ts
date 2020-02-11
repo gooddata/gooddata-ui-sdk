@@ -1,8 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
-import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
-import * as HeaderPredicateFactory from "../../../base/headerMatching/HeaderPredicateFactory";
+import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: SpyInstance;
@@ -18,10 +17,10 @@ describe("convertPostMessageToDrillablePredicates", () => {
     }
 
     beforeEach(() => {
-        uriMatchSpy = jest.spyOn(HeaderPredicateFactory, "uriMatch");
-        identifierMatchSpy = jest.spyOn(HeaderPredicateFactory, "identifierMatch");
-        composedFromUriSpy = jest.spyOn(HeaderPredicateFactory, "composedFromUri");
-        composedFromIdentifierSpy = jest.spyOn(HeaderPredicateFactory, "composedFromIdentifier");
+        uriMatchSpy = jest.spyOn(HeaderPredicates, "uriMatch");
+        identifierMatchSpy = jest.spyOn(HeaderPredicates, "identifierMatch");
+        composedFromUriSpy = jest.spyOn(HeaderPredicates, "composedFromUri");
+        composedFromIdentifierSpy = jest.spyOn(HeaderPredicates, "composedFromIdentifier");
     });
 
     afterEach(() => {

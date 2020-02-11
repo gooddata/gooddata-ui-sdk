@@ -1,0 +1,583 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateDimensions area chart should generate dimensions for area with one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [],
+  },
+]
+`;
+
+exports[`generateDimensions area chart should generate dimensions for area with one measure and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions area chart should generate dimensions for area with one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions area chart should generate dimensions for area with one measure, two view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions area chart should generate dimensions for area with one measure, view attribute and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure 2`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure and stack attribute 2`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure and view attribute 2`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure, view attribute and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions column/bar chart should generate dimensions for one measure, view attribute and stack attribute 2`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions heatmap should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions heatmap should generate dimensions for one measure and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions heatmap should generate dimensions for one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions heatmap should generate dimensions for one measure, view attribute and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions line chart should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [],
+  },
+]
+`;
+
+exports[`generateDimensions line chart should generate dimensions for one measure and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions line chart should generate dimensions for one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions line chart should generate dimensions for one measure, view attribute and stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions pie chart should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions pie chart should generate dimensions for one measure and 2 view attributes 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "a2",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions pie chart should generate dimensions for one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions pie chart should generate dimensions for two measures 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions for one attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a_label.product.id.name",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions for one measure and 2 attributes 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions for one measure and attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions for two measures 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions table should generate dimensions with totals 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+    "totals": Array [
+      Object {
+        "alias": "Sum",
+        "attributeIdentifier": "a1",
+        "measureIdentifier": "m1",
+        "type": "sum",
+      },
+      Object {
+        "attributeIdentifier": "a1",
+        "measureIdentifier": "m2",
+        "type": "sum",
+      },
+      Object {
+        "attributeIdentifier": "a1",
+        "measureIdentifier": "m1",
+        "type": "nat",
+      },
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions treemap should generate dimensions for one measure 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions treemap should generate dimensions for one measure and view attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+]
+`;
+
+exports[`generateDimensions treemap should generate dimensions for two measures 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateStackedDimensions measure and stack by only 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateStackedDimensions should return 2 attributes along with measureGroup 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "a2",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`generateStackedDimensions should return 2 attributes along with measureGroup and return 1 stack attribute 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+      "a3",
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`getHeadlinesDimensions should always return just one dimension with a measureGroup 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "measureGroup",
+    ],
+  },
+]
+`;
+
+exports[`getPivotTableDimensions should return row attributes in the first dimensions, column attributes and measureGroup in second dimension 1`] = `
+Array [
+  Object {
+    "itemIdentifiers": Array [
+      "a1",
+    ],
+  },
+  Object {
+    "itemIdentifiers": Array [
+      "a2",
+      "measureGroup",
+    ],
+  },
+]
+`;

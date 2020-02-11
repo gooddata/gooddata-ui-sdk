@@ -1,6 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { DefaultColorPalette } from "../../../base/constants/colorPalette";
-import * as MappingHeader from "../../../base/headerMatching/MappingHeader";
+// (C) 2019-2020 GoodData Corporation
+import { DefaultColorPalette, IMappingHeader } from "@gooddata/sdk-ui";
 import { IColorConfiguration, IColoredItem } from "../../interfaces/Colors";
 import { getColoredInputItems, getProperties, getSearchedItems, getValidProperties } from "../colors";
 import { GuidType, IColor } from "@gooddata/sdk-model";
@@ -111,7 +110,7 @@ describe("color utils", () => {
             value: guid,
         };
 
-        const attributeItem: MappingHeader.IMappingHeader = {
+        const attributeItem: IMappingHeader = {
             attributeHeaderItem: {
                 uri: "/a1",
                 name: "",
@@ -119,7 +118,7 @@ describe("color utils", () => {
         };
 
         it("should assign measure item to properties", () => {
-            const measureItem: MappingHeader.IMappingHeader = {
+            const measureItem: IMappingHeader = {
                 measureHeaderItem: {
                     localIdentifier: "m1",
                     name: "measure1",

@@ -22,7 +22,7 @@ import {
     sortEntityIds,
     SortItem,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationTypes } from "../../base";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
 import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
 

@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { newInsightDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "../../../base";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { PluggableBarChart } from "../pluggableVisualizations/barChart/PluggableBarChart";
 import { CatalogViaTypeToClassMap } from "../VisualizationCatalog";
 

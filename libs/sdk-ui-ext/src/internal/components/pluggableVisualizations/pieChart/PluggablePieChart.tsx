@@ -4,7 +4,7 @@ import React = require("react");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { BucketNames, VisualizationTypes } from "../../../../base";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import {
     IVisConstruct,
@@ -38,7 +38,7 @@ import {
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
 import { removeSort } from "../../../utils/sort";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { IChartConfig, TOP } from "../../../../highcharts";
+import { IChartConfig, TOP } from "@gooddata/sdk-ui";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 
 export class PluggablePieChart extends PluggableBaseChart {

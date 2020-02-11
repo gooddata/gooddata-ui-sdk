@@ -14,7 +14,12 @@ import flatMap = require("lodash/flatMap");
 import compact = require("lodash/compact");
 import without = require("lodash/without");
 import { IntlShape } from "react-intl";
-import { BucketNames, OverTimeComparisonType, OverTimeComparisonTypes, VisualizationTypes } from "../../base";
+import {
+    BucketNames,
+    OverTimeComparisonType,
+    OverTimeComparisonTypes,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
 
 import {
     IBucketFilter,

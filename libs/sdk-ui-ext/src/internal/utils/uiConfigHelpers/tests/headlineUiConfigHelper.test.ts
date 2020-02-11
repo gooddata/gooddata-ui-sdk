@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { DefaultLocale } from "../../../../base";
+// (C) 2019-2020 GoodData Corporation
+import { DefaultLocale } from "@gooddata/sdk-ui";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { getHeadlineUiConfig } from "../headlineUiConfigHelper";
 import * as referencePointMocks from "../../../mocks/referencePointMocks";

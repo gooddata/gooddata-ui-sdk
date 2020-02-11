@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
+import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
 import {
     generateDimensions,
     generateStackedDimensions,
@@ -8,21 +8,22 @@ import {
     getPivotTableDimensions,
 } from "../dimensions";
 import {
-    insightWithProperties,
-    singleAttributeInsight,
-    singleMeasureInsight,
-} from "../../../../__mocks__/fixtures";
-import { BucketNames } from "../../../base";
-import {
     bucketsFind,
     IBucket,
-    IDimension,
     IInsight,
     insightBucket,
     insightBuckets,
     ITotal,
     newBucket,
+    insightSetProperties,
 } from "@gooddata/sdk-model";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
+const singleMeasureInsight = ReferenceRecordings.Insights.Headline.SingleMeasure.obj as IInsight;
+const singleAttributeInsight = ReferenceRecordings.Insights.PivotTable.SingleAttribute.obj as IInsight;
+const insightWithProperties = insightSetProperties(singleMeasureInsight, {
+    controls: { xaxis: { visible: true } },
+});
 
 /*
  * WARNING: tests in this file rely on mutating insight and mutating buckets. We should revisit all the tests here.
@@ -115,28 +116,13 @@ function newInsight(buckets: IBucket[]): IInsight {
 
 describe("getHeadlinesDimensions", () => {
     it("should always return just one dimension with a measureGroup", () => {
-        const expectedDimensions: IDimension[] = [
-            {
-                itemIdentifiers: ["measureGroup"],
-            },
-        ];
-
-        expect(getHeadlinesDimensions()).toEqual(expectedDimensions);
+        expect(getHeadlinesDimensions()).toMatchSnapshot();
     });
 });
 
 describe("getPivotTableDimensions", () => {
     // tslint:disable-next-line:max-line-length
     it("should return row attributes in the first dimensions, column attributes and measureGroup in second dimension", () => {
-        const expectedDimensions: IDimension[] = [
-            {
-                itemIdentifiers: ["a1"],
-            },
-            {
-                itemIdentifiers: ["a2", "measureGroup"],
-            },
-        ];
-
         const buckets = [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -185,82 +171,42 @@ describe("getPivotTableDimensions", () => {
             },
         ];
 
-        expect(getPivotTableDimensions(newInsight(buckets))).toEqual(expectedDimensions);
+        expect(getPivotTableDimensions(newInsight(buckets))).toMatchSnapshot();
     });
 });
 
 describe("generateDimensions", () => {
     describe("column/bar chart", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: [],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.COLUMN)).toEqual(
-                expectedDimensions,
-            );
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.BAR)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.COLUMN)).toMatchSnapshot();
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.BAR)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.COLUMN)).toEqual(
-                expectedDimensions,
-            );
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.BAR)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.COLUMN),
+            ).toMatchSnapshot();
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.BAR),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
 
-            expect(generateDimensions(visualizationWithStackAttribute, VisualizationTypes.COLUMN)).toEqual(
-                expectedDimensions,
-            );
-            expect(generateDimensions(visualizationWithStackAttribute, VisualizationTypes.BAR)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithStackAttribute, VisualizationTypes.COLUMN),
+            ).toMatchSnapshot();
+            expect(
+                generateDimensions(visualizationWithStackAttribute, VisualizationTypes.BAR),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
                 addAttribute(visualization, 1, "view"),
@@ -270,70 +216,35 @@ describe("generateDimensions", () => {
 
             expect(
                 generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.COLUMN),
-            ).toEqual(expectedDimensions);
+            ).toMatchSnapshot();
             expect(
                 generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.BAR),
-            ).toEqual(expectedDimensions);
+            ).toMatchSnapshot();
         });
     });
     describe("area chart", () => {
         it("should generate dimensions for area with one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: [],
-                },
-            ];
             const dimensions = generateDimensions(singleMeasureInsight, VisualizationTypes.AREA);
-            expect(dimensions).toEqual(expectedDimensions);
+            expect(dimensions).toMatchSnapshot();
         });
 
         it("should generate dimensions for area with one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
             const dimensions = generateDimensions(visualizationWithViewAttribute, VisualizationTypes.AREA);
 
-            expect(dimensions).toEqual(expectedDimensions);
+            expect(dimensions).toMatchSnapshot();
         });
 
         it("should generate dimensions for area with one measure and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
             const dimensions = generateDimensions(visualizationWithStackAttribute, VisualizationTypes.AREA);
 
-            expect(dimensions).toEqual(expectedDimensions);
+            expect(dimensions).toMatchSnapshot();
         });
 
         it("should generate dimensions for area with one measure, view attribute and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
                 addAttribute(visualization, 1, "view"),
@@ -345,19 +256,10 @@ describe("generateDimensions", () => {
                 VisualizationTypes.AREA,
             );
 
-            expect(dimensions).toEqual(expectedDimensions);
+            expect(dimensions).toMatchSnapshot();
         });
 
         it("should generate dimensions for area with one measure, two view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithTwoViewAttributes = addAttribute(
                 addAttribute(visualization, 1, "view"),
@@ -369,71 +271,33 @@ describe("generateDimensions", () => {
                 VisualizationTypes.AREA,
             );
 
-            expect(dimensions).toEqual(expectedDimensions);
+            expect(dimensions).toMatchSnapshot();
         });
     });
     describe("heatmap", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.HEATMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.HEATMAP)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.HEATMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.HEATMAP),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
 
-            expect(generateDimensions(visualizationWithStackAttribute, VisualizationTypes.HEATMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithStackAttribute, VisualizationTypes.HEATMAP),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["a2", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
                 addAttribute(visualization, 1, "view"),
@@ -443,71 +307,33 @@ describe("generateDimensions", () => {
 
             expect(
                 generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.HEATMAP),
-            ).toEqual(expectedDimensions);
+            ).toMatchSnapshot();
         });
     });
     describe("line chart", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: [],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.LINE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.LINE)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "trend");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "segment");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a2"],
-                },
-                {
-                    itemIdentifiers: ["a1", "measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
                 addAttribute(visualization, 1, "trend"),
@@ -517,53 +343,24 @@ describe("generateDimensions", () => {
 
             expect(
                 generateDimensions(visualizationWithViewAndStackAttribute, VisualizationTypes.LINE),
-            ).toEqual(expectedDimensions);
+            ).toMatchSnapshot();
         });
     });
     describe("pie chart", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.PIE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.PIE)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.PIE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.PIE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and 2 view attributes", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1", "a2"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWith2ViewAttributes = addAttribute(
                 addAttribute(visualization, 1, "view"),
@@ -571,140 +368,60 @@ describe("generateDimensions", () => {
                 "view",
             );
 
-            expect(generateDimensions(visualizationWith2ViewAttributes, VisualizationTypes.PIE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWith2ViewAttributes, VisualizationTypes.PIE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for two measures", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWith2Measures = addMeasure(visualization, 2);
 
-            expect(generateDimensions(visualizationWith2Measures, VisualizationTypes.PIE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(visualizationWith2Measures, VisualizationTypes.PIE)).toMatchSnapshot();
         });
     });
     describe("treemap", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.TREEMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.TREEMAP)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and view attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-                {
-                    itemIdentifiers: ["a1"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
 
-            expect(generateDimensions(visualizationWithViewAttribute, VisualizationTypes.TREEMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithViewAttribute, VisualizationTypes.TREEMAP),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for two measures", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWith2Measures = addMeasure(visualization, 2);
 
-            expect(generateDimensions(visualizationWith2Measures, VisualizationTypes.TREEMAP)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWith2Measures, VisualizationTypes.TREEMAP),
+            ).toMatchSnapshot();
         });
     });
     describe("table", () => {
         it("should generate dimensions for one measure", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
-            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleMeasureInsight, VisualizationTypes.TABLE)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: [],
-                },
-            ];
-
-            expect(generateDimensions(singleAttributeInsight, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(singleAttributeInsight, VisualizationTypes.TABLE)).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and attribute", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWithAttribute = addAttribute(visualization, 1, "attribute");
 
-            expect(generateDimensions(visualizationWithAttribute, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWithAttribute, VisualizationTypes.TABLE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for one measure and 2 attributes", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: ["a1", "a2"],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWith2Attributes = addAttribute(
                 addAttribute(visualization, 1, "attribute"),
@@ -712,58 +429,21 @@ describe("generateDimensions", () => {
                 "attribute",
             );
 
-            expect(generateDimensions(visualizationWith2Attributes, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWith2Attributes, VisualizationTypes.TABLE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions for two measures", () => {
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
-
             const visualization = singleMeasureInsight;
             const visualizationWith2Measures = addMeasure(visualization, 2);
 
-            expect(generateDimensions(visualizationWith2Measures, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(
+                generateDimensions(visualizationWith2Measures, VisualizationTypes.TABLE),
+            ).toMatchSnapshot();
         });
 
         it("should generate dimensions with totals", () => {
-            const expectedTotals: ITotal[] = [
-                {
-                    alias: "Sum",
-                    measureIdentifier: "m1",
-                    attributeIdentifier: "a1",
-                    type: "sum",
-                },
-                {
-                    measureIdentifier: "m2",
-                    attributeIdentifier: "a1",
-                    type: "sum",
-                },
-                {
-                    measureIdentifier: "m1",
-                    attributeIdentifier: "a1",
-                    type: "nat",
-                },
-            ];
-
-            const expectedDimensions: IDimension[] = [
-                {
-                    itemIdentifiers: [],
-                    totals: expectedTotals,
-                },
-                {
-                    itemIdentifiers: ["measureGroup"],
-                },
-            ];
             const visualization = insightWithProperties;
             const visualizationWithTotals = addTotals(visualization, "attribute", [
                 {
@@ -784,24 +464,13 @@ describe("generateDimensions", () => {
                 },
             ]);
 
-            expect(generateDimensions(visualizationWithTotals, VisualizationTypes.TABLE)).toEqual(
-                expectedDimensions,
-            );
+            expect(generateDimensions(visualizationWithTotals, VisualizationTypes.TABLE)).toMatchSnapshot();
         });
     });
 });
 
 describe("generateStackedDimensions", () => {
     it("measure and stack by only", () => {
-        const expectedDimensions: IDimension[] = [
-            {
-                itemIdentifiers: ["a2"],
-            },
-            {
-                itemIdentifiers: ["measureGroup"],
-            },
-        ];
-
         const buckets = [
             {
                 localIdentifier: "measures",
@@ -836,7 +505,7 @@ describe("generateStackedDimensions", () => {
             },
         ];
 
-        expect(generateStackedDimensions(newInsight(buckets))).toEqual(expectedDimensions);
+        expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
     });
 
     it("should return 2 attributes along with measureGroup", () => {
@@ -884,15 +553,8 @@ describe("generateStackedDimensions", () => {
                 items: [],
             },
         ];
-        const expectedDimensions: IDimension[] = [
-            {
-                itemIdentifiers: [],
-            },
-            {
-                itemIdentifiers: ["a1", "a2", "measureGroup"],
-            },
-        ];
-        expect(generateStackedDimensions(newInsight(buckets))).toEqual(expectedDimensions);
+
+        expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
     });
 
     it("should return 2 attributes along with measureGroup and return 1 stack attribute", () => {
@@ -949,14 +611,7 @@ describe("generateStackedDimensions", () => {
                 ],
             },
         ];
-        const expectedDimensions: IDimension[] = [
-            {
-                itemIdentifiers: ["a2"],
-            },
-            {
-                itemIdentifiers: ["a1", "a3", "measureGroup"],
-            },
-        ];
-        expect(generateStackedDimensions(newInsight(buckets))).toEqual(expectedDimensions);
+
+        expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
     });
 });

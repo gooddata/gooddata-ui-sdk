@@ -2,7 +2,7 @@
 import { IColor } from "@gooddata/sdk-model";
 import { mount } from "enzyme";
 import * as React from "react";
-import { DefaultColorPalette } from "../../../../../base/constants/colorPalette";
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IColorConfiguration } from "../../../../interfaces/Colors";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 

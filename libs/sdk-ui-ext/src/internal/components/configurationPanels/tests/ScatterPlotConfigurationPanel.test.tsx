@@ -7,7 +7,7 @@ import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";
-import { DefaultLocale, VisualizationTypes } from "../../../..";
+import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 
 describe("ScatterPlotConfigurationPanel", () => {
     function createComponent(

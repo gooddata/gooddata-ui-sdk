@@ -1,8 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import { BucketNames, OverTimeComparisonTypes } from "../../../base/";
+import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { getTranslation } from "../translations";
 
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";

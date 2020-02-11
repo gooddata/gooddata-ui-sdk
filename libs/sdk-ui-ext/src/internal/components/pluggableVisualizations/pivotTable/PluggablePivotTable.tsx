@@ -19,7 +19,7 @@ import {
     VisualizationTypes,
     DefaultLocale,
     ILocale,
-} from "../../../../base";
+} from "@gooddata/sdk-ui";
 import {
     IBucketFilter,
     IBucketItem,
@@ -48,7 +48,7 @@ import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { CorePivotTable } from "../../../../pivotTable/CorePivotTable";
+import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { generateDimensions } from "../../../utils/dimensions";
 import {
     attributeLocalId,
@@ -71,7 +71,6 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { createSorts } from "../../../utils/sort";
-import { ICorePivotTableProps } from "../../../../pivotTable/types";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 

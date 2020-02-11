@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import forEach = require("lodash/forEach");
 import set = require("lodash/set");
 import isEmpty = require("lodash/isEmpty");
@@ -6,7 +6,7 @@ import includes = require("lodash/includes");
 import isEqual = require("lodash/isEqual");
 import cloneDeep = require("lodash/cloneDeep");
 
-import { OverTimeComparisonType, OverTimeComparisonTypes } from "../../base";
+import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket";
 import { IBucketItem, IBucketUiConfig, IExtendedReferencePoint } from "../interfaces/Visualization";
 import {

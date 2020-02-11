@@ -1,11 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
-import { DefaultLocale } from "../../../../base";
+import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../mocks/referencePointMocks";
 import { setComboChartUiConfig } from "../comboChartUiConfigHelper";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig";
-import { VisualizationTypes } from "../../../../base/vis/visualizationTypes";
 
 describe("comboChartUiConfigHelper", () => {
     describe("setComboChartUiConfig", () => {

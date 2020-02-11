@@ -1,18 +1,21 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
-import { BucketNames } from "../../../../../base/constants/bucketNames";
+import {
+    BucketNames,
+    VisualizationEnvironment,
+    IBaseChartProps,
+    DefaultLocale,
+    ILocale,
+} from "@gooddata/sdk-ui";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../mocks/testMocks";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
-import { VisualizationEnvironment } from "../../../../../base/vis/visualizationTypes";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
-import { IBaseChartProps } from "../../../../../charts/_base/BaseChart";
-import { DefaultLocale, ILocale } from "../../../../../base/localization/Locale";
 
 describe("PluggableBaseChart", () => {
     const dashboardEnvironment: VisualizationEnvironment = "dashboards";

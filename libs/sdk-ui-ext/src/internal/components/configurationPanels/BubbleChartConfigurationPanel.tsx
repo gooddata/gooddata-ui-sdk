@@ -21,7 +21,7 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
 import { bucketsIsEmpty, IInsight, insightBuckets } from "@gooddata/sdk-model";
-import { BucketNames } from "../../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {

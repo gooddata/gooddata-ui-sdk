@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { getXirrBuckets } from "../xirrBucketHelper";
 import { IReferencePoint, IBucketOfFun } from "../../../../interfaces/Visualization";
-import { BucketNames } from "../../../../../base";
+import { BucketNames } from "@gooddata/sdk-ui";
 import * as referencePointMocks from "../../../../mocks/referencePointMocks";
 
 describe("xirrBucketHelper", () => {

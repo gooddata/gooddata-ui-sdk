@@ -12,7 +12,7 @@ import * as nlNL from "../translations/nl-NL.json";
 import * as ptBR from "../translations/pt-BR.json";
 import * as ptPT from "../translations/pt-PT.json";
 import * as zhHans from "../translations/zh-Hans.json";
-import { DefaultLocale, ILocale } from "../../base";
+import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
 export const messagesMap = {
     "en-US": translations.removeMetadata(enUS),

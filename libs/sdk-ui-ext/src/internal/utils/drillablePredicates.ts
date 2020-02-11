@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { IHeaderPredicate, HeaderPredicates } from "../../base";
+// (C) 2019-2020 GoodData Corporation
+import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
 import isArray = require("lodash/isArray");
 import uniq = require("lodash/uniq");
 

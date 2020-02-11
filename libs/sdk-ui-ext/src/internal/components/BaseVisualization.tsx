@@ -11,7 +11,7 @@ import {
     OnExportReady,
     OnLoadingChanged,
     VisualizationEnvironment,
-} from "../../base";
+} from "@gooddata/sdk-ui";
 import {
     ConfigPanelClassName,
     IBucketItem,

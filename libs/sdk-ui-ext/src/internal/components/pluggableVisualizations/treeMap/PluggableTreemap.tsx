@@ -7,7 +7,7 @@ import set = require("lodash/set");
 import tail = require("lodash/tail");
 import isEmpty = require("lodash/isEmpty");
 
-import { BucketNames, VisualizationTypes } from "../../../../base";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
