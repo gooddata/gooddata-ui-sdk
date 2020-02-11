@@ -6,7 +6,6 @@ import { AgGridReact } from "@ag-grid-community/react";
 import ApiWrapper from "../agGridApiWrapper";
 import {
     AllCommunityModules,
-    FirstDataRenderedEvent,
     GridApi,
     GridReadyEvent,
     ICellRendererParams,
@@ -19,7 +18,7 @@ describe("agGridApiWrapper", () => {
     const firstAttributePinnedTopValue = "Attr #1 Pinned top value";
     const firstAttributeFirstRowValue = "Attr #1 Row #1";
 
-    function renderComponent(customProps = {}) {
+    function renderComponent(resolve: (gridApi: GridApi) => void, customProps = {}) {
         const gridOptions: ICustomGridOptions = {
             rowData: [
                 {
@@ -33,6 +32,22 @@ describe("agGridApiWrapper", () => {
                             headerName: "Attr #1",
                             field: firstAttributeColumnId,
                             cellRenderer: (params: ICellRendererParams) => {
+                                /*
+                                 * resolve 'component rendered' promise after at least one value is actually rendered;
+                                 *
+                                 * this was needed to fix flaky tests; they were crashing because we look at ag-grid
+                                 * internals (:() and from them query rendered DOM element.
+                                 *
+                                 * if the promise is resolved earlier than this, then ag-grid internals (row/cell)
+                                 * are in place but query for span that contains value will return null because
+                                 * nothing is yet rendered in that cell.
+                                 *
+                                 * NOTE: there is something seriously wrong in how we do this sticky-ness, this flaky
+                                 * test is a symptom of a deeper problem; suspicion is that we need to use different
+                                 * approach to obtain the stickied row.. perhaps instrument our renderers to help with
+                                 * it.. same as this test cell renderer does :/
+                                 */
+                                resolve(params.api);
                                 return params.value;
                             },
                         },
@@ -54,11 +69,7 @@ describe("agGridApiWrapper", () => {
                 params.api.setPinnedTopRowData([{ [firstAttributeColumnId]: firstAttributePinnedTopValue }]);
             };
 
-            const onFirstDataRendered = (params: FirstDataRenderedEvent) => {
-                resolve(params.api);
-            };
-
-            renderComponent({ onGridReady, onFirstDataRendered });
+            renderComponent(resolve, { onGridReady });
         });
     }
 
