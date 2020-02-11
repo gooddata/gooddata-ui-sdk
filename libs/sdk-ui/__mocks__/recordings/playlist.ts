@@ -259,36 +259,6 @@ export const PieChartWithMetricsOnlyFundata = {
     result: require("./execution/pie_chart_with_metrics_only_fundata/result.json"),
 };
 
-export const PivotTableWith2Metrics4AttributesSubtotals = {
-    definition: require("./execution/pivot_table_with_2_metrics_4_attributes_subtotals/definition.json"),
-    response: require("./execution/pivot_table_with_2_metrics_4_attributes_subtotals/response.json"),
-    result: require("./execution/pivot_table_with_2_metrics_4_attributes_subtotals/result.json"),
-};
-
-export const PivotTableWith3Metrics = {
-    definition: require("./execution/pivot_table_with_3_metrics/definition.json"),
-    response: require("./execution/pivot_table_with_3_metrics/response.json"),
-    result: require("./execution/pivot_table_with_3_metrics/result.json"),
-};
-
-export const PivotTableWithColumnAndRowAttributes = {
-    definition: require("./execution/pivot_table_with_column_and_row_attributes/definition.json"),
-    response: require("./execution/pivot_table_with_column_and_row_attributes/response.json"),
-    result: require("./execution/pivot_table_with_column_and_row_attributes/result.json"),
-};
-
-export const PivotTableWithColumnRowAttributesAndTotals = {
-    definition: require("./execution/pivot_table_with_column_row_attributes_and_totals/definition.json"),
-    response: require("./execution/pivot_table_with_column_row_attributes_and_totals/response.json"),
-    result: require("./execution/pivot_table_with_column_row_attributes_and_totals/result.json"),
-};
-
-export const PivotTableWithSubtotals = {
-    definition: require("./execution/pivot_table_with_subtotals/definition.json"),
-    response: require("./execution/pivot_table_with_subtotals/response.json"),
-    result: require("./execution/pivot_table_with_subtotals/result.json"),
-};
-
 export const ScatterPlotWith2MetricsAndAttribute = {
     definition: require("./execution/scatter_plot_with_2_metrics_and_attribute/definition.json"),
     response: require("./execution/scatter_plot_with_2_metrics_and_attribute/response.json"),
@@ -370,7 +340,6 @@ export const MasterIndex = {
             fp_f8a55bf206246c9ed76b5eb455c1a45c: BarChartWithoutAttributes,
             fp_4b146f4139daf56999dc16e76d478de9: BubbleChartWith1Metric,
             fp_14f9897772326f7e811f4aa9a20d871d: BubbleChartWith2MetricsAndAttributeNoPrimaries,
-            fp_55304bc00ec27220f829c2dca5d39598: PivotTableWith3Metrics,
             fp_bcc9d43c8427eeb41548d866b1630374: BubbleChartWith3MetricsAndAttributeNullsInData,
             fp_7ae5322d5061eae29d76993176d7c595: ColumnChartWithMeasureAndViewBy,
             fp_21efe764109d6cbbc1c9617b90920bdc: ColumnChartWithMeasureAndViewByAndComputeRatio,
@@ -382,10 +351,6 @@ export const MasterIndex = {
             fp_7ba00bd46fb37f68fbb549e997f349dd: HeatMapWithEmptyCells,
             fp_16dd93e14c96b0317d74f5e0e37792ff: HeatMapWithMetricRowColumn,
             fp_551204e9d10f29532c64d0aad6d9b19b: PieChartWithMetricsOnlyFundata,
-            fp_aa85c00c8865ebd87306dfcbd3a0b0eb: PivotTableWith2Metrics4AttributesSubtotals,
-            fp_84acd0317cc59f61730ee0f6a6c4be4f: PivotTableWithColumnAndRowAttributes,
-            fp_596534ac273b3de52c52e80ea3800f63: PivotTableWithColumnRowAttributesAndTotals,
-            fp_36ec6f7abe20534235d623e50ebb4f53: PivotTableWithSubtotals,
             fp_f28b82a9ed53ff7655a633dca593e1fb: ScatterPlotWith2MetricsAndAttributeWithPrimary,
             fp_939756fa0fd99eba324e3da62c0f87d1: TreemapWithMetricAndViewByAttribute1element,
             fp_539276f8275d76bce58f585086fd2cf4: TreemapWithMetricViewByAndStackByAttribute,
