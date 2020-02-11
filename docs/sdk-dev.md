@@ -127,7 +127,7 @@ React wrappers for the Highcharts library are implemented here together with a h
 **Rule of thumb**: if you are writing code that in any way directly interfaces with the Highcharts library, then
 it is highly likely that this code SHOULD be located in this package.
 
-##### @gooddata/sdk-ui-pivot-table
+##### @gooddata/sdk-ui-pivot
 
 React wrappers for the ag-grid library are implemented here. On top of them stands our implementation of PivotTable.
 
@@ -147,9 +147,10 @@ React components that can be used to define attribute or measure filters are imp
 
 Non-visual, 'supporting' components... Executor, BucketExecutor and the like.
 
-##### @gooddata/sdk-ui-vis-loader
+##### @gooddata/sdk-ui-ext
 
-Standalone visualization loader component - e.g. the Visualization URI component.
+GoodData.UI extensions. Components and other code where we are not yet fully done is located here. This
+can be production code but with alpha-quality API, or non-production code that we produce for 'try outs'.
 
 ##### @gooddata/sdk-ui
 
