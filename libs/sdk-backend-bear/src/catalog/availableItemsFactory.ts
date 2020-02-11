@@ -17,7 +17,7 @@ import {
     convertDateDataset,
     isCompatibleCatalogItemType,
 } from "../toSdkModel/CatalogConverter";
-import { convertInsight } from "../fromSdkModel/InsightConverter";
+import { convertInsightDefinition } from "../fromSdkModel/InsightConverter";
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { IUriMappings } from "./types";
 import { BearWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
@@ -98,7 +98,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 ],
             },
         };
-        const visualizationObject = convertInsight(insight || itemsInsight);
+        const visualizationObject = convertInsightDefinition(insight || itemsInsight);
 
         // loadItemDescriptionObjects + loadDateDataSets consumes only visualizationObject with specified uris
         // so map identifiers to uris

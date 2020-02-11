@@ -18,7 +18,7 @@ import { AuthenticatedCallGuard } from "../commonTypes";
 import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConverter";
 import { convertVisualization } from "../toSdkModel/VisualizationConverter";
 import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
-import { convertInsight } from "../fromSdkModel/InsightConverter";
+import { convertInsightDefinition, convertInsight } from "../fromSdkModel/InsightConverter";
 import { convertObjectMeta } from "../toSdkModel/MetaConverter";
 import { objRefToUri } from "../utils/api";
 
@@ -118,7 +118,9 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         return this.authCall(sdk =>
-            sdk.md.saveVisualization(this.workspace, { visualizationObject: convertInsight(insight) }),
+            sdk.md.saveVisualization(this.workspace, {
+                visualizationObject: convertInsightDefinition(insight),
+            }),
         );
     };
 
@@ -136,7 +138,7 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     };
 
     public openInsightAsReport = async (insight: IInsightDefinition): Promise<string> => {
-        const visualizationObject = convertInsight(insight);
+        const visualizationObject = convertInsightDefinition(insight);
         return this.authCall(sdk =>
             sdk.md.openVisualizationAsReport(this.workspace, { visualizationObject }),
         );
