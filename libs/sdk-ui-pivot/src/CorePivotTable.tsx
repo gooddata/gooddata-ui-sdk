@@ -26,7 +26,7 @@ import * as CustomEvent from "custom-event";
 import * as React from "react";
 import { injectIntl } from "react-intl";
 
-import "../../styles/css/pivotTable.css";
+import "../styles/css/pivotTable.css";
 import {
     convertDrillableItemsToPredicates,
     convertError,
@@ -49,7 +49,7 @@ import {
     VisualizationTypes,
     ILoadingState,
     IntlWrapper,
-} from "../base";
+} from "@gooddata/sdk-ui";
 import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
 import ApiWrapper from "./impl/agGridApiWrapper";
 import {
@@ -1007,6 +1007,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
 const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @internal
+ */
 export const CorePivotTable: React.FC<ICorePivotTableProps> = props => (
     <IntlWrapper locale={props.locale}>
         <CorePivotTableWithIntl {...props} />

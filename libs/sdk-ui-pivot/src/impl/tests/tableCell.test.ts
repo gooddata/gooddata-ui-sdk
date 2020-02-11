@@ -1,22 +1,54 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     getCellClassNames,
     getCellStyleAndFormattedValue,
     getMeasureCellFormattedValue,
     getMeasureCellStyle,
 } from "../tableCell";
-import { IMappingHeader } from "../../../base/headerMatching/MappingHeader";
-import { pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
-import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMappingHeader } from "@gooddata/sdk-ui";
+import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-const rowHeaders = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0);
-const measureHeaders = pivotTableWithColumnAndRowAttributes.measureDescriptors();
+const fixtures = recordedDataView(
+    ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+    DataViewFirstPage,
+);
+const rowHeaders = fixtures.dimensionItemDescriptors(0);
+const measureHeaders = fixtures.measureDescriptors();
 
-const ATTRIBUTE_HEADER: IMappingHeader = rowHeaders[0] as IAttributeDescriptor;
-const FIRST_MEASURE_HEADER: IMappingHeader = measureHeaders[0];
-const SECOND_MEASURE_HEADER: IMappingHeader = measureHeaders[1];
-const THIRD_MEASURE_HEADER: IMappingHeader = measureHeaders[2];
-const FOURTH_MEASURE_HEADER: IMappingHeader = measureHeaders[3];
+//
+// Cell formatting is done based on attribute or measure headers
+//
+
+function customizeFormat(desc: IMeasureDescriptor, format: string): IMeasureDescriptor {
+    return {
+        measureHeaderItem: {
+            ...desc.measureHeaderItem,
+            format,
+        },
+    };
+}
+
+const DefaultAttributeHeader: IMappingHeader = rowHeaders[0] as IAttributeDescriptor;
+
+const HeaderWithFractions: IMappingHeader = measureHeaders[0];
+const HeaderWithCustomNumberFormat: IMappingHeader = customizeFormat(
+    measureHeaders[0],
+    "[>=0]$#,##0;[<0]-$#,##0",
+);
+const HeaderWithCustomColor: IMappingHeader = customizeFormat(
+    measureHeaders[0],
+    "[red][>=0]$#,##0;[<0]-$#,##0",
+);
+const HeaderWithCustomBgColor: IMappingHeader = customizeFormat(
+    measureHeaders[0],
+    "[backgroundColor=ffff00][red][>=0]$#,##0;[<0]-$#,##0",
+);
+
+//
+//
+//
 
 describe("Table utils - Cell", () => {
     describe("getCellClassNames", () => {
@@ -33,14 +65,16 @@ describe("Table utils - Cell", () => {
 
     describe("getCellStyleAndFormattedValue", () => {
         it("should get style and formattedValue for attribute", () => {
-            expect(getCellStyleAndFormattedValue(ATTRIBUTE_HEADER, { uri: "foo", name: "Apple" })).toEqual({
+            expect(
+                getCellStyleAndFormattedValue(DefaultAttributeHeader, { uri: "foo", name: "Apple" }),
+            ).toEqual({
                 style: {},
                 formattedValue: "Apple",
             });
         });
 
         it("should get styled dash when the value is null", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, null)).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomNumberFormat, null)).toEqual({
                 style: {
                     color: "#94a1ad",
                     fontWeight: "bold",
@@ -50,14 +84,14 @@ describe("Table utils - Cell", () => {
         });
 
         it("should get style and formattedValue for measure without color", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.89")).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomNumberFormat, "1234567.89")).toEqual({
                 style: {},
                 formattedValue: "$1,234,568",
             });
         });
 
         it("should get style and formattedValue for measure with color", () => {
-            expect(getCellStyleAndFormattedValue(SECOND_MEASURE_HEADER, "9876543.21")).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomColor, "9876543.21")).toEqual({
                 style: {
                     color: "#FF0000",
                 },
@@ -66,7 +100,7 @@ describe("Table utils - Cell", () => {
         });
 
         it("should get style and formattedValue for measure with color and backgroundColor", () => {
-            expect(getCellStyleAndFormattedValue(THIRD_MEASURE_HEADER, "9876543.21")).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomBgColor, "9876543.21")).toEqual({
                 style: {
                     backgroundColor: "#ffff00",
                     color: "#FF0000",
@@ -76,7 +110,7 @@ describe("Table utils - Cell", () => {
         });
 
         it("should apply color when the argument applyColor is true", () => {
-            expect(getCellStyleAndFormattedValue(SECOND_MEASURE_HEADER, "9876543.21", true)).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomColor, "9876543.21", true)).toEqual({
                 style: {
                     color: "#FF0000",
                 },
@@ -85,7 +119,7 @@ describe("Table utils - Cell", () => {
         });
 
         it("should apply color and backgroundColor when the argument applyColor is true", () => {
-            expect(getCellStyleAndFormattedValue(THIRD_MEASURE_HEADER, "9876543.21", true)).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomBgColor, "9876543.21", true)).toEqual({
                 style: {
                     backgroundColor: "#ffff00",
                     color: "#FF0000",
@@ -95,14 +129,14 @@ describe("Table utils - Cell", () => {
         });
 
         it("should NOT apply color or backgroundColor whe the argument applyColor is false", () => {
-            expect(getCellStyleAndFormattedValue(THIRD_MEASURE_HEADER, "9876543.21", false)).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomBgColor, "9876543.21", false)).toEqual({
                 style: {},
                 formattedValue: "$9,876,543",
             });
         });
 
         it("should get styled dash when the value is null even if the param applyColor is false", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, null, false)).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomNumberFormat, null, false)).toEqual({
                 style: {
                     color: "#94a1ad",
                     fontWeight: "bold",
@@ -112,14 +146,14 @@ describe("Table utils - Cell", () => {
         });
 
         it("should get style and formattedValue if separators are not defined (integer number)", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567")).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomNumberFormat, "1234567")).toEqual({
                 style: {},
                 formattedValue: "$1,234,567",
             });
         });
 
         it("should get style and formattedValue if separators are not defined (float number)", () => {
-            expect(getCellStyleAndFormattedValue(FIRST_MEASURE_HEADER, "1234567.49")).toEqual({
+            expect(getCellStyleAndFormattedValue(HeaderWithCustomNumberFormat, "1234567.49")).toEqual({
                 style: {},
                 formattedValue: "$1,234,567",
             });
@@ -127,7 +161,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are dot and comma (small integer number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "123", undefined, {
+                getCellStyleAndFormattedValue(HeaderWithFractions, "123", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -139,7 +173,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are dot and comma (big integer number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567", undefined, {
+                getCellStyleAndFormattedValue(HeaderWithFractions, "1234567", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -151,7 +185,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are dot and comma (float number)", () => {
             expect(
-                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(HeaderWithFractions, "1234567.89", undefined, {
                     thousand: ".",
                     decimal: ",",
                 }),
@@ -163,7 +197,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are empty strings", () => {
             expect(
-                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(HeaderWithFractions, "1234567.89", undefined, {
                     thousand: "",
                     decimal: "",
                 }),
@@ -175,7 +209,7 @@ describe("Table utils - Cell", () => {
 
         it("should get style and formattedValue if separators are spaces", () => {
             expect(
-                getCellStyleAndFormattedValue(FOURTH_MEASURE_HEADER, "1234567.89", undefined, {
+                getCellStyleAndFormattedValue(HeaderWithFractions, "1234567.89", undefined, {
                     thousand: " ",
                     decimal: " ",
                 }),

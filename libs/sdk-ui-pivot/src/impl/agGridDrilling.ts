@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { getMappingHeaderUri, IMappingHeader } from "../../base";
+import { getMappingHeaderUri, IMappingHeader } from "@gooddata/sdk-ui";
 import { getIdsFromUri } from "./agGridUtils";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "./agGridConst";
 import { ColDef } from "@ag-grid-community/all-modules";

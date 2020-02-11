@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import * as React from "react";
-import { LoadingComponent } from "../../base";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 /**
  * This component is passed to AG-Grid and will be used to render loading indicator on row-level

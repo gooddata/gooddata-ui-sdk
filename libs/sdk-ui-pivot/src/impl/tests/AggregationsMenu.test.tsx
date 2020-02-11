@@ -1,17 +1,22 @@
 // (C) 2019 GoodData Corporation
 import { mount } from "enzyme";
 import * as React from "react";
-import { createIntlMock } from "../../../base/localization/intlUtils";
+import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
 import { AVAILABLE_TOTALS } from "../agGridConst";
-import { pivotTableWith3Metrics, pivotTableWithColumnAndRowAttributes } from "../../../../__mocks__/fixtures";
-import { ITotal } from "@gooddata/sdk-model";
+import { attributeLocalId, ITotal, measureLocalId } from "@gooddata/sdk-model";
+import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("AggregationsMenu", () => {
     const intlMock = createIntlMock();
     const attributeColumnId = "a_6_2-m_0";
-    const getDataView = () => pivotTableWithColumnAndRowAttributes;
+    const fixture = recordedDataView(
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
+        DataViewFirstPage,
+    );
+    const getDataView = () => fixture;
     const getTotals = () => [] as ITotal[];
     const onMenuOpenedChange = jest.fn();
     const onAggregationSelect = jest.fn();
@@ -51,13 +56,13 @@ describe("AggregationsMenu", () => {
         const totals: ITotal[] = [
             {
                 type: "sum",
-                attributeIdentifier: "state", // first row attribute => grand totals, selected right in menu
-                measureIdentifier: "franchiseFeesIdentifier",
+                attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name), // first row attribute => grand totals, selected right in menu
+                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
             },
             {
                 type: "min",
-                attributeIdentifier: "location", // second row attr => subtotals, selected in submenu
-                measureIdentifier: "franchiseFeesIdentifier",
+                attributeIdentifier: attributeLocalId(ReferenceLdm.Department), // second row attr => subtotals, selected in submenu
+                measureIdentifier: measureLocalId(ReferenceLdm.Amount),
             },
         ];
         const wrapper = render({ getTotals: () => totals });
@@ -102,9 +107,14 @@ describe("AggregationsMenu", () => {
     });
 
     it("should not render any submenu when there is no row attribute", () => {
+        const fixture = recordedDataView(
+            ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
+            DataViewFirstPage,
+        );
+
         const wrapper = render({
             showSubmenu: true,
-            getDataView: () => pivotTableWith3Metrics,
+            getDataView: () => fixture,
         });
 
         expect(wrapper.find(AggregationsSubMenu).length).toBe(0);

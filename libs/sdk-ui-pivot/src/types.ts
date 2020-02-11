@@ -1,15 +1,25 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AttributeOrMeasure, IAttribute, IFilter, ITotal, SortItem, TotalType } from "@gooddata/sdk-model";
-import { IVisualizationCallbacks, IVisualizationProps } from "../base";
+import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 
+/**
+ * TODO: SDK8 - add docs
+ *
+ * @public
+ */
 export interface IMenu {
     aggregations?: boolean;
     aggregationsSubMenu?: boolean;
 }
 
+/**
+ * TODO: SDK8 - add docs
+ *
+ * @public
+ */
 export interface IPivotTableConfig {
     separators?: ISeparators;
     menu?: IMenu;
@@ -53,11 +63,21 @@ export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
     return cell && (cell as IAttributeCell).uri !== undefined;
 }
 
+/**
+ * TODO: SDK8 - add docs
+ *
+ * @public
+ */
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
 }
 
+/**
+ * TODO: SDK8 - add docs
+ *
+ * @public
+ */
 export interface IPivotTableBucketProps {
     measures?: AttributeOrMeasure[];
     rows?: IAttribute[];
@@ -74,6 +94,11 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
     execution: IPreparedExecution;
 }
 
+/**
+ * TODO: SDK8 - add docs
+ *
+ * @public
+ */
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     pageSize?: number;
     config?: IPivotTableConfig;

@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
-import { getMappingHeaderUri, IMappingHeader } from "../../base";
+import { getMappingHeaderUri, IMappingHeader } from "@gooddata/sdk-ui";
 import {
     DOT_PLACEHOLDER,
     FIELD_SEPARATOR,

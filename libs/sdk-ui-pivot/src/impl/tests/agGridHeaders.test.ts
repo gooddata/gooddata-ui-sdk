@@ -1,10 +1,15 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
-import { IAttributeDescriptor, IResultHeader, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
-import * as fixtures from "../../../../__mocks__/fixtures";
+import {
+    DataViewFacade,
+    IAttributeDescriptor,
+    IResultHeader,
+    isAttributeDescriptor,
+    isMeasureDescriptor,
+} from "@gooddata/sdk-backend-spi";
+import { attributeLocalId, IAttributeSortItem, IMeasureSortItem } from "@gooddata/sdk-model";
 import {
     assortDimensionDescriptors,
     getAttributeSortItemFieldAndDirection,
@@ -20,50 +25,40 @@ import {
     shouldMergeHeaders,
 } from "../agGridHeaders";
 
+const fixture = recordedDataView(
+    ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+    DataViewFirstPage,
+);
+
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
-        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0])).toBe(
-            "a_2210_6340109",
-        );
+        expect(identifyHeader(fixture.allHeaders()[0][0][0])).toMatchSnapshot();
     });
 
     it("should return correct field key for a measure header", () => {
-        expect(identifyHeader(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1][2][0])).toBe(
-            "m_0",
-        );
+        expect(identifyHeader(fixture.allHeaders()[1][1][0])).toMatchSnapshot();
     });
 });
 describe("identifyResponseHeader", () => {
     it("should return correct field key for an attribute response header", () => {
-        expect(
-            identifyResponseHeader(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0)[0],
-            ),
-        ).toBe("a_2211");
+        expect(identifyResponseHeader(fixture.dimensionItemDescriptors(0)[0])).toMatchSnapshot();
     });
 });
 
 describe("headerToGrid", () => {
     it("should return correct grid header for an attribute header with correct prefix", () => {
-        expect(
-            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0], "prefix_"),
-        ).toEqual({ field: "prefix_a_2210_6340109", headerName: "Alabama" });
+        expect(headerToGrid(fixture.allHeaders()[0][0][0], "prefix_")).toMatchSnapshot();
     });
 
     it("should return correct grid header for a measure header with correct prefix", () => {
-        expect(
-            headerToGrid(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1][2][0], "prefix_"),
-        ).toEqual({ field: "prefix_m_0", headerName: "$ Franchise Fees" });
+        expect(headerToGrid(fixture.allHeaders()[1][1][0], "prefix_")).toMatchSnapshot();
     });
 });
 
 describe("getColumnHeaders", () => {
     it("should return hierarchical column headers", () => {
         expect(
-            getColumnHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1],
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(1),
-            ),
+            getColumnHeaders(fixture.allHeaders()[1], fixture.dimensionItemDescriptors(1)),
         ).toMatchSnapshot();
     });
 });
@@ -71,179 +66,58 @@ describe("getColumnHeaders", () => {
 describe("getRowHeaders", () => {
     it("should return an array of grid headers", () => {
         expect(
-            getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
-                    0,
-                ) as IAttributeDescriptor[],
-                {},
-                false,
-            ),
-        ).toEqual([
-            {
-                field: "a_2211",
-                headerName: "Location State",
-                type: "ROW_ATTRIBUTE_COLUMN",
-                drillItems: [
-                    {
-                        attributeHeader: {
-                            identifier: "label.restaurantlocation.locationstate",
-                            localIdentifier: "state",
-                            name: "Location State",
-                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
-                            formOf: {
-                                identifier: "attr.restaurantlocation.locationstate",
-                                name: "Location State",
-                                uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210",
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                field: "a_2205",
-                headerName: "Location Name",
-                type: "ROW_ATTRIBUTE_COLUMN",
-                drillItems: [
-                    {
-                        attributeHeader: {
-                            identifier: "label.restaurantlocation.locationname",
-                            localIdentifier: "location",
-                            name: "Location Name",
-                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205",
-                            formOf: {
-                                identifier: "attr.restaurantlocation.locationname",
-                                name: "Location Name",
-                                uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204",
-                            },
-                        },
-                    },
-                ],
-            },
-        ]);
+            getRowHeaders(fixture.dimensionItemDescriptors(0) as IAttributeDescriptor[], {}, false),
+        ).toMatchSnapshot();
     });
     it("should return an array of grid headers with row group settings and extended by custom options", () => {
         expect(
             getRowHeaders(
-                fixtures.pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
-                    0,
-                ) as IAttributeDescriptor[],
+                fixture.dimensionItemDescriptors(0) as IAttributeDescriptor[],
                 { type: "custom" },
                 true,
             ),
-        ).toEqual([
-            {
-                field: "a_2211",
-                headerName: "Location State",
-                hide: true,
-                rowGroup: true,
-                type: "custom",
-                drillItems: [
-                    {
-                        attributeHeader: {
-                            identifier: "label.restaurantlocation.locationstate",
-                            localIdentifier: "state",
-                            name: "Location State",
-                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2211",
-                            formOf: {
-                                identifier: "attr.restaurantlocation.locationstate",
-                                name: "Location State",
-                                uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210",
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                field: "a_2205",
-                headerName: "Location Name",
-                hide: true,
-                rowGroup: true,
-                type: "custom",
-                drillItems: [
-                    {
-                        attributeHeader: {
-                            identifier: "label.restaurantlocation.locationname",
-                            localIdentifier: "location",
-                            name: "Location Name",
-                            uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2205",
-                            formOf: {
-                                identifier: "attr.restaurantlocation.locationname",
-                                name: "Location Name",
-                                uri: "/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2204",
-                            },
-                        },
-                    },
-                ],
-            },
-        ]);
+        ).toMatchSnapshot();
     });
 });
 
 describe("getFields", () => {
-    it("should return an array of all column fields", () => {
-        expect(getFields(fixtures.pivotTableWithColumnAndRowAttributes.allHeaders()[1])).toEqual([
-            "a_2009_1-a_2071_1-m_0",
-            "a_2009_1-a_2071_1-m_1",
-            "a_2009_1-a_2071_1-m_2",
-            "a_2009_1-a_2071_1-m_3",
-            "a_2009_1-a_2071_2-m_0",
-            "a_2009_1-a_2071_2-m_1",
-            "a_2009_1-a_2071_2-m_2",
-            "a_2009_1-a_2071_2-m_3",
-            "a_2009_1-a_2071_3-m_0",
-            "a_2009_1-a_2071_3-m_1",
-            "a_2009_1-a_2071_3-m_2",
-            "a_2009_1-a_2071_3-m_3",
-            "a_2009_2-a_2071_4-m_0",
-            "a_2009_2-a_2071_4-m_1",
-            "a_2009_2-a_2071_4-m_2",
-            "a_2009_2-a_2071_4-m_3",
-            "a_2009_2-a_2071_5-m_0",
-            "a_2009_2-a_2071_5-m_1",
-            "a_2009_2-a_2071_5-m_2",
-            "a_2009_2-a_2071_5-m_3",
-            "a_2009_2-a_2071_6-m_0",
-            "a_2009_2-a_2071_6-m_1",
-            "a_2009_2-a_2071_6-m_2",
-            "a_2009_2-a_2071_6-m_3",
-            "a_2009_3-a_2071_7-m_0",
-            "a_2009_3-a_2071_7-m_1",
-            "a_2009_3-a_2071_7-m_2",
-            "a_2009_3-a_2071_7-m_3",
-            "a_2009_3-a_2071_8-m_0",
-            "a_2009_3-a_2071_8-m_1",
-            "a_2009_3-a_2071_8-m_2",
-            "a_2009_3-a_2071_8-m_3",
-            "a_2009_3-a_2071_9-m_0",
-            "a_2009_3-a_2071_9-m_1",
-            "a_2009_3-a_2071_9-m_2",
-            "a_2009_3-a_2071_9-m_3",
-            "a_2009_4-a_2071_10-m_0",
-            "a_2009_4-a_2071_10-m_1",
-            "a_2009_4-a_2071_10-m_2",
-            "a_2009_4-a_2071_10-m_3",
-            "a_2009_4-a_2071_11-m_0",
-            "a_2009_4-a_2071_11-m_1",
-            "a_2009_4-a_2071_11-m_2",
-            "a_2009_4-a_2071_11-m_3",
-            "a_2009_4-a_2071_12-m_0",
-            "a_2009_4-a_2071_12-m_1",
-            "a_2009_4-a_2071_12-m_2",
-            "a_2009_4-a_2071_12-m_3",
-        ]);
+    const Fixtures: Array<[string, DataViewFacade]> = [
+        [
+            "single measure, single column",
+            recordedDataView(
+                ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
+                DataViewFirstPage,
+            ),
+        ],
+        [
+            "single measure, multiple columns",
+            recordedDataView(
+                ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes,
+                DataViewFirstPage,
+            ),
+        ],
+        [
+            "two measures, single columns",
+            recordedDataView(
+                ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAndColumnAttributes,
+                DataViewFirstPage,
+            ),
+        ],
+    ];
+
+    it.each(Fixtures)("should correctly obtain column fields for %s", (_desc, facade) => {
+        expect(getFields(facade.allHeaders()[1])).toMatchSnapshot();
     });
 });
 
 describe("assortDimensionDescriptors", () => {
     it("should return attribute and measure dimension headers", () => {
-        const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
+        const dimensions = fixture.dimensions();
         const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
-        expect(attributeDescriptors).toHaveLength(4);
-        expect(attributeDescriptors.filter(header => isAttributeDescriptor(header))).toHaveLength(4);
-        expect(measureDescriptors).toHaveLength(4);
-        expect(measureDescriptors.filter(header => header.hasOwnProperty("measureHeaderItem"))).toHaveLength(
-            4,
-        );
+        expect(attributeDescriptors).toHaveLength(2);
+        expect(attributeDescriptors.filter(header => isAttributeDescriptor(header))).toHaveLength(2);
+        expect(measureDescriptors).toHaveLength(1);
+        expect(measureDescriptors.filter(header => isMeasureDescriptor(header))).toHaveLength(1);
     });
 });
 
@@ -345,24 +219,24 @@ describe("conversion from header matrix to hierarchy", () => {
 });
 
 describe("getAttributeSortItemFieldAndDirection", () => {
-    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
+    const dimensions = fixture.dimensions();
     const { attributeDescriptors } = assortDimensionDescriptors(dimensions);
     const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: {
             direction: "asc",
-            attributeIdentifier: "state",
+            attributeIdentifier: attributeLocalId(ReferenceLdm.Product.Name),
         },
     };
     it("should return matching key and direction from attributeDescriptors", () => {
         expect(getAttributeSortItemFieldAndDirection(attributeSortItem, attributeDescriptors)).toEqual([
-            "a_2211",
+            "a_1055",
             "asc",
         ]);
     });
 });
 
 describe("getMeasureSortItemFieldAndDirection", () => {
-    const dimensions = fixtures.pivotTableWithColumnAndRowAttributes.dimensions();
+    const dimensions = fixture.dimensions();
     const { measureDescriptors } = assortDimensionDescriptors(dimensions);
     const measureSortItem: IMeasureSortItem = {
         measureSortItem: {

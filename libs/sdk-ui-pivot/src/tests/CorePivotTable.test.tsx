@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import { createIntlMock } from "../../base/localization/intlUtils";
+import { createIntlMock } from "@gooddata/sdk-ui";
 import noop = require("lodash/noop");
 
 import {
@@ -14,15 +14,17 @@ import * as stickyRowHandler from "../impl/stickyRowHandler";
 import agGridApiWrapper from "../impl/agGridApiWrapper";
 import { ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
-import { legacyRecordedBackend } from "@gooddata/sdk-backend-mockingbird";
-import { MasterIndex } from "../../../__mocks__/recordings/playlist";
-import { headlineWithOneMeasure } from "../../../__mocks__/fixtures";
+import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const intl = createIntlMock();
 
 describe("CorePivotTable", () => {
-    const backend = legacyRecordedBackend(MasterIndex);
-    const singleMeasureExec = prepareExecution(backend, headlineWithOneMeasure.definition);
+    const backend = recordedBackend(ReferenceRecordings.Recordings);
+    const singleMeasureExec = prepareExecution(
+        backend,
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes.definition,
+    );
 
     function renderComponent(
         customProps: Partial<ICorePivotTableProps> = {},

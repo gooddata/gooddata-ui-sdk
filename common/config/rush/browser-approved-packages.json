@@ -99,6 +99,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-ext",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "production" ]
     },

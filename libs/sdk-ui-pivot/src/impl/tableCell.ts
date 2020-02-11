@@ -1,8 +1,8 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import * as classNames from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { IMappingHeader } from "../../base";
+import { IMappingHeader } from "@gooddata/sdk-ui";
 
 import {
     isAttributeCell,

@@ -22,7 +22,7 @@ import {
     Subtract,
     BucketNames,
     IntlWrapper,
-} from "../base";
+} from "@gooddata/sdk-ui";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -120,5 +120,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
 /**
  * Update link to documentation [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
+ *
+ * @public
  */
 export const PivotTable = withContexts(RenderPivotTable);
