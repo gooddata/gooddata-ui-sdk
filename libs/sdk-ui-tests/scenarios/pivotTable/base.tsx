@@ -2,7 +2,7 @@
 
 import { scenariosFor } from "../../src";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui";
+import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],

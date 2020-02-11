@@ -4,13 +4,13 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/base";
-import ColorDropdown from "@gooddata/sdk-ui/dist/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
-import ColoredItemContent from "@gooddata/sdk-ui/dist/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
+import ColorDropdown from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
+import ColoredItemContent from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
 import { getLargePalette } from "../mocks/testColorHelper";
 import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { ConfigurationControls } from "../../_infra/storyGroups";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui/dist/internal/utils/internalIntlProvider";
-import "@gooddata/sdk-ui/styles/internal/css/config_panel.css";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];

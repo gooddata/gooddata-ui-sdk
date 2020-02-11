@@ -19,6 +19,8 @@
         "baseUrl": "../..",
         "paths": {
             "@gooddata/sdk-ui": ["libs/sdk-ui/src"],
+            "@gooddata/sdk-ui-ext": ["libs/sdk-ui-ext/src"],
+            "@gooddata/sdk-ui-pivot": ["libs/sdk-ui-pivot/src"],
             "@gooddata/sdk-model": ["libs/sdk-model/src"],
             "@gooddata/sdk-backend-spi": ["libs/sdk-backend-spi/src"],
             "@gooddata/sdk-backend-mockingbird": ["libs/sdk-backend-mockingbird/src"],

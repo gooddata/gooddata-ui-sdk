@@ -9,7 +9,7 @@ import { ScenarioGroup } from "../../../src";
 import groupBy = require("lodash/groupBy");
 
 import "@gooddata/sdk-ui/styles/css/main.css";
-import "@gooddata/sdk-ui/styles/css/pivotTable.css";
+import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
 import { withScreenshot } from "../_infra/backstopWrapper";
 import { ScenarioStories } from "../_infra/storyGroups";
 

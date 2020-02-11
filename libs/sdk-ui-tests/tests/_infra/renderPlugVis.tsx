@@ -6,7 +6,7 @@ import {
     insightVisualizationUrl,
     IVisualizationClass,
 } from "@gooddata/sdk-model";
-import { FullVisualizationCatalog, BaseVisualization } from "@gooddata/sdk-ui/dist/internal";
+import { FullVisualizationCatalog, BaseVisualization } from "@gooddata/sdk-ui-ext/dist/internal";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
 import { mount, ReactWrapper } from "enzyme";
 import noop = require("lodash/noop");

@@ -2,7 +2,7 @@
 
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui";
+import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { scenariosFor } from "../../src";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,

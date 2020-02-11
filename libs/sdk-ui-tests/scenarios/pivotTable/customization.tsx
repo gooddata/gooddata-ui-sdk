@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui";
+import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { scenariosFor } from "../../src";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base";
 import { GermanNumberFormat } from "../_infra/formatting";
