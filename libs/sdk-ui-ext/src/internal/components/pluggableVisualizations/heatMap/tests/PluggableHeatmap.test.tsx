@@ -2,8 +2,8 @@
 import noop = require("lodash/noop");
 import get = require("lodash/get");
 import { PluggableHeatmap } from "../PluggableHeatmap";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 

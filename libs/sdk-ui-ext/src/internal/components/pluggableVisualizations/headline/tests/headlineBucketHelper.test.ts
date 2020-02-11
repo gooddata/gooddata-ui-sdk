@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig";
 import { IBucketOfFun, IBucketItem, IExtendedReferencePoint } from "../../../../interfaces/Visualization";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,

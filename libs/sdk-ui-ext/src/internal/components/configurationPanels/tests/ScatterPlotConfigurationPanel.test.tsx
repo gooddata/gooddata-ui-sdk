@@ -2,7 +2,7 @@
 import { IInsight, newMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
-import { insightWithSingleAttribute } from "../../../mocks/testMocks";
+import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
 import ScatterPlotConfigurationPanel from "../ScatterPlotConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import ConfigSection from "../../configurationControls/ConfigSection";

@@ -2,7 +2,7 @@
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import { createInternalIntl } from "../../internalIntlProvider";
 import { getHeadlineUiConfig } from "../headlineUiConfigHelper";
-import * as referencePointMocks from "../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
 
 describe("headlineUiConfigHelper", () => {
     describe("getHeadlineUiConfig", () => {

@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 import get = require("lodash/get");
-import * as referencePointMocks from "../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IVisProps, IVisConstruct } from "../../../interfaces/Visualization";
 import { MAX_VIEW_COUNT } from "../../../constants/uiConfig";
-import * as uiConfigMocks from "../../../mocks/uiConfigMocks";
-import * as testMocks from "../../../mocks/testMocks";
+import * as uiConfigMocks from "../../../tests/mocks/uiConfigMocks";
+import * as testMocks from "../../../tests/mocks/testMocks";
 import {
     COLUMN_CHART_SUPPORTED_PROPERTIES,
     OPTIONAL_STACKING_PROPERTIES,

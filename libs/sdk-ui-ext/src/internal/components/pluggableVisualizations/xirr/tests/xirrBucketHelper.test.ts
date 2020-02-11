@@ -2,7 +2,7 @@
 import { getXirrBuckets } from "../xirrBucketHelper";
 import { IReferencePoint, IBucketOfFun } from "../../../../interfaces/Visualization";
 import { BucketNames } from "@gooddata/sdk-ui";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 
 describe("xirrBucketHelper", () => {
     const validMeasureBucket: IBucketOfFun = {

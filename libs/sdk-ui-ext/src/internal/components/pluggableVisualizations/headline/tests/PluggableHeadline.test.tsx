@@ -3,9 +3,9 @@ import * as React from "react";
 import * as ReactDom from "react-dom";
 
 import { PluggableHeadline } from "../PluggableHeadline";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
-import * as testMocks from "../../../../mocks/testMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,

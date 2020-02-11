@@ -5,7 +5,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import merge = require("lodash/merge");
 import { PROPERTY_CONTROLS } from "../../../../constants/properties";
 import { PluggableComboChart } from "../PluggableComboChart";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,

@@ -10,7 +10,7 @@ import {
     setSortItems,
 } from "../sort";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
-import * as referencePointMocks from "../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../constants/sort";
 import { ATTRIBUTE, FILTERS, METRIC } from "../../constants/bucket";
@@ -25,7 +25,7 @@ import {
     insightWithSingleMeasureAndOneAttribute,
     insightWithNoMeasureAndOneAttribute,
     insightWithNoMeasureAndOneColumn,
-} from "../../mocks/testMocks";
+} from "../../tests/mocks/testMocks";
 import {
     IAttributeSortItem,
     IMeasureSortItem,

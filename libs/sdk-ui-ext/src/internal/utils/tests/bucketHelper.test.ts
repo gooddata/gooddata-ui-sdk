@@ -44,11 +44,11 @@ import {
     IUiConfig,
 } from "../../interfaces/Visualization";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
-import * as referencePointMocks from "../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
 import { createInternalIntl } from "../internalIntlProvider";
 import { DefaultLocale, BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucket } from "@gooddata/sdk-model";
-import { oneMeasureOneStack, oneMeasureOneView } from "../../mocks/visualizationObjectMocks";
+import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks";
 
 const simpleMeasure1 = { localIdentifier: "m1" };
 const simpleMeasure2 = { localIdentifier: "m2" };

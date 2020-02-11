@@ -2,7 +2,7 @@
 import { IAttribute, IInsight, IMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
-import { insightWithSingleAttribute } from "../../../mocks/testMocks";
+import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
 import BaseChartConfigurationPanel from "../BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 import NameSubsection from "../../configurationControls/axis/NameSubsection";

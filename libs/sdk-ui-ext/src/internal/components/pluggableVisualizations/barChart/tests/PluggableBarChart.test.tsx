@@ -3,7 +3,7 @@ import noop = require("lodash/noop");
 import get = require("lodash/get");
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { PluggableBarChart } from "../PluggableBarChart";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 

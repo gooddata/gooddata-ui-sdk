@@ -3,17 +3,6 @@ process.env = Object.assign(process.env, { NODE_ICU_DATA: "node_modules/full-icu
 const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
     ...base,
-    /*
-     * cannot use jest-environment-enzyme nor latest jsdom from Jest 25.
-     *
-     * see: https://github.com/ag-grid/ag-grid/issues/3488
-     *
-     * TODO: split pivot table to separate package asap and keep this dirt only in that other project.
-     *  using jsdom 14 we are losing the Jest-advertised performance boost that comes with jsdom 15
-     */
-    testEnvironment: "jest-environment-jsdom-fourteen",
-    testEnvironmentOptions: {
-        enzymeAdapter: "react16",
-    },
+    testEnvironment: "jsdom",
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
 };

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     getSupportedPropertiesControls,
     getSupportedProperties,
@@ -13,11 +13,11 @@ import {
     twoMeasureBucketsReferencePoint,
     measuresOnSecondaryAxisAndAttributeReferencePoint,
     oneMetricAndCategoryAndStackReferencePoint,
-} from "../../mocks/referencePointMocks";
+} from "../../tests/mocks/referencePointMocks";
 import {
     simpleStackedBaseUiConfig,
     multipleMetricsAndCategoriesBaseUiConfig,
-} from "../../mocks/uiConfigMocks";
+} from "../../tests/mocks/uiConfigMocks";
 import { OPTIONAL_STACKING_PROPERTIES } from "../../constants/supportedProperties";
 import {
     IExtendedReferencePoint,

@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop = require("lodash/noop");
 import { PluggableComboChartDeprecated } from "../PluggableComboChartDeprecated";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableComboChartDeprecated", () => {

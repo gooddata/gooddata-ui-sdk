@@ -2,7 +2,7 @@
 import { IVisProps } from "../../../interfaces/Visualization";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { BucketNames } from "@gooddata/sdk-ui";
-import * as referencePointMocks from "../../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
 
 describe("AbstractPluggableVisualization", () => {
     class DummyPluggableVisualization extends AbstractPluggableVisualization {

@@ -9,9 +9,9 @@ import {
     ILocale,
 } from "@gooddata/sdk-ui";
 import { PluggableBaseChart } from "../PluggableBaseChart";
-import * as testMocks from "../../../../mocks/testMocks";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
+import * as testMocks from "../../../../tests/mocks/testMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, insightSetProperties } from "@gooddata/sdk-model";

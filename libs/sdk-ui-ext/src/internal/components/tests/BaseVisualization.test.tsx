@@ -7,8 +7,8 @@ import { testUtils } from "@gooddata/js-utils";
 import { BaseVisualization, IBaseVisualizationProps } from "../BaseVisualization";
 import { IBucketItem, IReferencePoint, IVisConstruct, IVisProps } from "../../interfaces/Visualization";
 
-import * as testMocks from "../../mocks/testMocks";
-import { emptyReferencePoint } from "../../mocks/referencePointMocks";
+import * as testMocks from "../../tests/mocks/testMocks";
+import { emptyReferencePoint } from "../../tests/mocks/referencePointMocks";
 
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization";
 import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";

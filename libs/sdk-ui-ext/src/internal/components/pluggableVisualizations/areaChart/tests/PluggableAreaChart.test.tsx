@@ -4,9 +4,9 @@ import noop = require("lodash/noop");
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
 import { PluggableAreaChart } from "../PluggableAreaChart";
 
-import * as testMocks from "../../../../mocks/testMocks";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
+import * as testMocks from "../../../../tests/mocks/testMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { insightSetProperties } from "@gooddata/sdk-model";

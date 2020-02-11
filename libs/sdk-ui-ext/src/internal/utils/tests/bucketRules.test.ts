@@ -4,7 +4,7 @@ import set = require("lodash/set");
 
 import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization";
 import * as bucketRules from "../bucketRules";
-import * as referencePointMocks from "../../mocks/referencePointMocks";
+import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 describe("isShowInPercentAllowed", () => {

@@ -5,7 +5,7 @@ import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import ColorPalette, { IColorPaletteProps } from "../ColorPalette";
 import ColorPaletteItem from "../ColorPaletteItem";
-import { getLargePalette, colorPalette } from "../../../../../mocks/testColorHelper";
+import { getLargePalette, colorPalette } from "../../../../../tests/mocks/testColorHelper";
 
 const defaultProps: IColorPaletteProps = {
     selectedColorGuid: undefined,

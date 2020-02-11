@@ -5,7 +5,7 @@ import noop = require("lodash/noop");
 import cloneDeep = require("lodash/cloneDeep");
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { IColor } from "@gooddata/sdk-model";
-import { colorPalette } from "../../../../../mocks/testColorHelper";
+import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownProps, IconPosition } from "../ColorDropdown";
 import ColorPaletteItem from "../ColorPaletteItem";

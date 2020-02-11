@@ -11,11 +11,11 @@ import {
     DEFAULT_HEADLINE_METRICS_COUNT,
     DEFAULT_XIRR_METRICS_COUNT,
     DEFAULT_XIRR_ATTRIBUTES_COUNT,
-} from "../constants/uiConfig";
+} from "../../constants/uiConfig";
 
-import { METRIC, FACT, ATTRIBUTE, DATE } from "../constants/bucket";
+import { METRIC, FACT, ATTRIBUTE, DATE } from "../../constants/bucket";
 
-import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../interfaces/Visualization";
+import { IExportUiConfig, IOpenAsReportUiConfig, IUiConfig } from "../../interfaces/Visualization";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 const measuresBase = {

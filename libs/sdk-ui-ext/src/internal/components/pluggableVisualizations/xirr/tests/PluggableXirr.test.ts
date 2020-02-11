@@ -6,9 +6,9 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { PluggableXirr } from "../PluggableXirr";
 import { IVisConstruct, IVisProps, IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
-import * as referencePointMocks from "../../../../mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../mocks/uiConfigMocks";
-import * as testMocks from "../../../../mocks/testMocks";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
+import * as testMocks from "../../../../tests/mocks/testMocks";
 import { CoreXirr, IDrillableItem } from "@gooddata/sdk-ui";
 
 describe("PluggableXirr", () => {
