@@ -11,12 +11,12 @@ import {
     IVisualizationClass,
 } from "@gooddata/sdk-model";
 
-import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui/dist/internal";
+import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/dist/internal";
 
 import "@gooddata/sdk-ui/styles/css/main.css";
-import "@gooddata/sdk-ui/styles/css/pivotTable.css";
-import "@gooddata/sdk-ui/styles/internal/css/config_panel.css";
-import "@gooddata/sdk-ui/styles/internal/css/dropdown_icons.css";
+import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
+import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";

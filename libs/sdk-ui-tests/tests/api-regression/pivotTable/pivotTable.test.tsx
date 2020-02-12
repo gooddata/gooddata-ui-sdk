@@ -4,7 +4,7 @@ import pivotTableScenarios from "../../../scenarios/pivotTable";
 import { ScenarioTestInput } from "../../../src";
 import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCorePivotTableProps } from "../../_infra/utils";
-import { IPivotTableProps } from "@gooddata/sdk-ui";
+import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { ReactWrapper } from "enzyme";
 import flatMap = require("lodash/flatMap");
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

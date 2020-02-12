@@ -4,9 +4,9 @@ import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import { useState } from "react";
-import NameSubsection from "@gooddata/sdk-ui/dist/internal/components/configurationControls/axis/NameSubsection";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui/dist/internal/utils/internalIntlProvider";
-import "@gooddata/sdk-ui/styles/internal/css/config_panel.css";
+import NameSubsection from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/NameSubsection";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWrapper";
 import { ConfigurationControls } from "../../_infra/storyGroups";
 

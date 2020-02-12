@@ -27,9 +27,20 @@ export { FLUID_LEGEND_THRESHOLD } from "./chart/HighChartsRenderer";
 export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
 export { updateConfigWithSettings } from "./chart/chartOptions/chartOptionsForSettings";
 
-// TODO: SDK8: this should go away; its exported for drills
-
-export { isLineChart, isAreaChart } from "./utils/common";
+export {
+    isLineChart,
+    isAreaChart,
+    isBarChart,
+    isBubbleChart,
+    isColumnChart,
+    isComboChart,
+    isDonutChart,
+    isHeatmap,
+    isTreemap,
+    isScatterPlot,
+    isPieChart,
+    isPieOrDonutChart,
+} from "./utils/common";
 
 export { sanitizeConfig } from "./utils/optionalStacking/common";
 

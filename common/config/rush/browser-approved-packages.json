@@ -99,6 +99,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-ext",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-pivot",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/test-storybook",
       "allowedCategories": [ "production", "tools" ]
     },

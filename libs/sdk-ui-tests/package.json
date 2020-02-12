@@ -69,12 +69,16 @@
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "^8.0.0-alpha.13",
+        "@gooddata/sdk-ui-ext": "^8.0.0-alpha.13",
+        "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.13",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
         "typescript": ">= 2.5.3"
     },
     "devDependencies": {
         "@gooddata/sdk-ui": "^8.0.0-alpha.13",
+        "@gooddata/sdk-ui-ext": "^8.0.0-alpha.13",
+        "@gooddata/sdk-ui-pivot": "^8.0.0-alpha.13",
         "@gooddata/tslint-config": "1.0.0",
         "@types/enzyme": "^3.10.3",
         "@types/enzyme-adapter-react-16": "^1.0.5",

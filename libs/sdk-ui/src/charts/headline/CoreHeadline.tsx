@@ -72,4 +72,9 @@ export class HeadlineStateless extends React.Component<Props, {}> {
     }
 }
 
+/**
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ *
+ * @internal
+ */
 export const CoreHeadline = withEntireDataView(HeadlineStateless);

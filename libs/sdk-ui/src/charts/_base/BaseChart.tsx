@@ -18,6 +18,11 @@ import {
     ITranslationsComponentProps,
 } from "../../base/";
 
+/**
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ *
+ * @internal
+ */
 export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;
     visualizationComponent?: React.ComponentClass<any>; // for testing
@@ -99,4 +104,9 @@ class StatelessBaseChart extends React.Component<Props, {}> {
     }
 }
 
+/**
+ * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
+ *
+ * @internal
+ */
 export const BaseChart = withEntireDataView(StatelessBaseChart);

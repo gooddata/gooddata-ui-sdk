@@ -2,7 +2,6 @@
 
 _build_styles() {
     node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
 }
 
 _clean() {
@@ -12,10 +11,6 @@ _clean() {
 _common-build() {
     mkdir -p dist/base/localization
     cp -rf src/base/localization/bundles dist/base/localization
-
-    mkdir dist/internal
-    cp -rf src/internal/assets dist/internal/
-    cp -rf src/internal/translations dist/internal/
 
     _build_styles
 }

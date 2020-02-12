@@ -240,21 +240,6 @@ export const pieChartWithMetricsOnly = legacyRecordedDataFacade(rec.PieChartWith
 export const pieChartWithMetricsOnlyFundata = legacyRecordedDataFacade(rec.PieChartWithMetricsOnlyFundata);
 
 //
-// Pivot table recordings
-//
-export const pivotTableWith2Metrics4AttributesSubtotals = legacyRecordedDataFacade(
-    rec.PivotTableWith2Metrics4AttributesSubtotals,
-);
-export const pivotTableWith3Metrics = legacyRecordedDataFacade(rec.PivotTableWith3Metrics);
-export const pivotTableWithColumnAndRowAttributes = legacyRecordedDataFacade(
-    rec.PivotTableWithColumnAndRowAttributes,
-);
-export const pivotTableWithColumnRowAttributesAndTotals = legacyRecordedDataFacade(
-    rec.PivotTableWithColumnRowAttributesAndTotals,
-);
-export const pivotTableWithSubtotals = legacyRecordedDataFacade(rec.PivotTableWithSubtotals);
-
-//
 // Scatter plot recording
 //
 

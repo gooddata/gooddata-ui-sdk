@@ -3,7 +3,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import { PivotTable } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
 import { withScreenshot } from "../../_infra/backstopWrapper";
 import { CustomStories } from "../../_infra/storyGroups";
