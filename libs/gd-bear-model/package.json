@@ -14,10 +14,10 @@
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
         "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
-        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
-        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci",
         "prettier-check": "prettier --check 'src/**/*.ts'",
-        "prettier-write": "prettier --write 'src/**/*.ts'"
+        "prettier-write": "prettier --write 'src/**/*.ts'",
+        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
+        "validate-ci": "npm run tslint-ci && npm run prettier-check"
     },
     "config": {
         "tslint": "./src/{,**/}*.ts"
