@@ -14,6 +14,10 @@ import {
     insightTitle,
     insightFilters,
     insightProperties,
+    insightId,
+    insightUri,
+    insightIsLocked,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { convertUrisToReferences } from "../toSdkModel/ReferenceConverter";
 import { serializeProperties } from "../toSdkModel/PropertiesConverter";
@@ -63,11 +67,26 @@ const convertInsightContent = (
     };
 };
 
-export const convertInsight = (insight: IInsightDefinition): GdcVisualizationObject.IVisualizationObject => {
+export const convertInsightDefinition = (
+    insight: IInsightDefinition,
+): GdcVisualizationObject.IVisualizationObject => {
     return {
         content: convertInsightContent(insight),
         meta: {
             title: insightTitle(insight),
+        },
+    };
+};
+
+export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {
+    const convertedDefinition = convertInsightDefinition(insight);
+    return {
+        content: convertedDefinition.content,
+        meta: {
+            ...convertedDefinition.meta,
+            identifier: insightId(insight),
+            uri: insightUri(insight),
+            locked: insightIsLocked(insight),
         },
     };
 };
