@@ -21,7 +21,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendPositionControl`, module)
                     <LegendPositionControl
                         disabled={true}
                         showDisabledMessage={true}
-                        properties={() => {}}
+                        properties={{}}
                         value=""
                         pushData={action("onPositionSelect")}
                     />
@@ -36,7 +36,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendPositionControl`, module)
                     <LegendPositionControl
                         disabled={false}
                         showDisabledMessage={false}
-                        properties={() => {}}
+                        properties={{}}
                         value=""
                         pushData={action("onPositionSelect")}
                     />
@@ -67,7 +67,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendPositionControl`, module)
                     <LegendPositionControl
                         disabled={false}
                         showDisabledMessage={false}
-                        properties={() => {}}
+                        properties={{}}
                         value=""
                         pushData={action("onPositionSelect")}
                     />

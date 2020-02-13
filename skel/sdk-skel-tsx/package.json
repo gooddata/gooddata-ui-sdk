@@ -27,7 +27,7 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "tsc -p tsconfig.build.json --noEmit && npm run tslint-ci && npm run prettier-check"
+        "validate-ci": "npm run tslint-ci && npm run prettier-check"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {

@@ -28,10 +28,10 @@ export type DisplayFormRecordingSpec = {
 
 export class DisplayFormRecording implements IRecording {
     public readonly directory: string;
+    public readonly elementFile: string;
     private readonly displayFormId: string;
     private readonly spec: DisplayFormRecordingSpec;
     private readonly requestFile: string;
-    public readonly elementFile: string;
     private readonly objFile: string;
 
     constructor(rootDir: string, displayFormId: string, spec: DisplayFormRecordingSpec = {}) {

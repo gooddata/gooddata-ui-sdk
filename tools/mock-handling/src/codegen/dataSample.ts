@@ -22,8 +22,12 @@ function generateRecordingForDataSample(entries: DataSampleRecording[]): string 
 }
 
 function comparatorDataSample(a: [string, DataSampleRecording[]], b: [string, DataSampleRecording[]]) {
-    if (a[0] < b[0]) return -1;
-    if (a[0] > b[0]) return 1;
+    if (a[0] < b[0]) {
+        return -1;
+    } else if (a[0] > b[0]) {
+        return 1;
+    }
+
     return 0;
 }
 

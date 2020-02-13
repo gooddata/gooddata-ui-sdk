@@ -8,7 +8,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";
 import { IMeasure, measureDisableComputeRatio } from "@gooddata/sdk-model";
 
-//Need to turn off ratio in the ReferenceLdmExt.AmountWithRatio
+// need to turn off ratio in the ReferenceLdmExt.AmountWithRatio
 describe("ComboChart", () => {
     it("should render with custom SDK", () => {
         const wrapper = mount(

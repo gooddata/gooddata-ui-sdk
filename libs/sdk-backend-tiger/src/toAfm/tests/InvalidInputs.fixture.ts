@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-//@ts-nocheck
+// @ts-nocheck
 /**
  * A garbage file that creates fixtures to bypass typescript strict type checking
  * in order to test invalid inputs
@@ -20,19 +20,17 @@ import {
 } from "@gooddata/sdk-model";
 import { ReferenceLdmExt, ReferenceLdm } from "@gooddata/reference-workspace";
 
-//Absolute Filter
 export const absoluteFilter = {
-    //Invalid "To" input
+    // Invalid "To" input
     withoutTo: newAbsoluteDateFilter(ReferenceLdmExt.dataSet, "2019-08-06"),
-    //Invalid "From" input
+    // Invalid "From" input
     withoutFrom: newAbsoluteDateFilter(ReferenceLdmExt.dataSet, undefined, "2019-08-12"),
 };
 
-//Relative Filter
 export const relativeFilter = {
-    //Invalid "To" input
+    // Invalid "To" input
     withoutTo: newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 5),
-    //Invalid "From" input
+    // Invalid "From" input
     withoutFrom: newRelativeDateFilter(
         ReferenceLdmExt.ClosedDataDatasetRef,
         DateGranularity.date,
@@ -41,16 +39,15 @@ export const relativeFilter = {
     ),
 };
 
-//Visualization Object Filter
 export const visualizationObjectFilter = {
-    //Tiger database only allows specifying attribute elements by value
+    // Tiger only allows specifying attribute elements by value
     positiveAttributeFilter: newPositiveAttributeFilter(ReferenceLdm.Product.Name, { uris: "value" }),
     negativeAttributeFilter: newNegativeAttributeFilter(ReferenceLdm.Product.Name, { uris: "value" }),
-    //Tiger database does not support measure value filters
+    // Tiger does not support measure value filters
     measureValueFilter: newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN_OR_EQUAL_TO", 5),
 };
 
-//Measure converter: unsupported measure definition
+// Measure converter: unsupported measure definition
 export const invalidMeasureDefinition: IMeasure = {
     measure: {
         definition: {},
@@ -58,12 +55,12 @@ export const invalidMeasureDefinition: IMeasure = {
     },
 };
 
-//Measure converter: ObjRefConverter received an URI ref
+// Measure converter: ObjRefConverter received an URI ref
 export const invalidObjQualifier = newPreviousPeriodMeasure("foo", [
     { dataSet: { uri: "/" }, periodsAgo: 3 },
 ]);
 
-//Definition with defined Alias
+// Definition with defined Alias
 export const defWithAlias: IExecutionDefinition = {
     workspace: "test workspace",
     buckets: [],
@@ -77,7 +74,7 @@ export const defWithAlias: IExecutionDefinition = {
     dimensions: [],
 };
 
-//Definition with undefined filters
+// Definition with undefined filters
 export const defWithoutFilters: IExecutionDefinition = {
     workspace: "test workspace",
     buckets: [],

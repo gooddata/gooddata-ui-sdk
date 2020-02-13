@@ -7,7 +7,7 @@ import { IntlShape } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import { updateConfigWithSettings } from "@gooddata/sdk-ui";
+import { CoreXirr, BucketNames, DefaultLocale, ILocale, updateConfigWithSettings } from "@gooddata/sdk-ui";
 
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import {
@@ -49,7 +49,6 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-import { CoreXirr, BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;
