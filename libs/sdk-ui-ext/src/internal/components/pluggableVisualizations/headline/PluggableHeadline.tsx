@@ -7,8 +7,13 @@ import { IntlShape } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
-import { updateConfigWithSettings } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    DefaultLocale,
+    ILocale,
+    CoreHeadline,
+    updateConfigWithSettings,
+} from "@gooddata/sdk-ui";
 import { METRIC } from "../../../constants/bucket";
 
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -52,7 +57,6 @@ import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-import { CoreHeadline } from "@gooddata/sdk-ui";
 import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";

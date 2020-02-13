@@ -2,8 +2,7 @@
 
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import LabelSubsection from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/LabelSubsection";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
@@ -56,6 +55,12 @@ storiesOf(`${ConfigurationControls}/Axis/LabelSubsection`, module)
     .add("axis: Enabled", () => {
         const HandleState = () => {
             const [axisProperties, setAxisProperties] = useState({});
+            const onPushData = (data: any) => {
+                const { properties } = data;
+                action("onSubsectionSelect")(data);
+                setAxisProperties({ ...properties });
+            };
+
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
@@ -64,11 +69,7 @@ storiesOf(`${ConfigurationControls}/Axis/LabelSubsection`, module)
                             configPanelDisabled={true}
                             axis="xaxis"
                             properties={axisProperties}
-                            pushData={data => {
-                                const { properties } = data;
-                                action("onSubsectionSelect")(data);
-                                setAxisProperties({ ...properties });
-                            }}
+                            pushData={onPushData}
                         />
                     </InternalIntlWrapper>
                 </div>
@@ -80,6 +81,12 @@ storiesOf(`${ConfigurationControls}/Axis/LabelSubsection`, module)
     .add("axis: Enabled - localized", () => {
         const HandleState = () => {
             const [axisProperties, setAxisProperties] = useState({});
+            const onPushData = (data: any) => {
+                const { properties } = data;
+                action("onSubsectionSelect")(data);
+                setAxisProperties({ ...properties });
+            };
+
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper locale={german}>
@@ -88,11 +95,7 @@ storiesOf(`${ConfigurationControls}/Axis/LabelSubsection`, module)
                             configPanelDisabled={true}
                             axis="yaxis"
                             properties={axisProperties}
-                            pushData={data => {
-                                const { properties } = data;
-                                action("onSubsectionSelect")(data);
-                                setAxisProperties({ ...properties });
-                            }}
+                            pushData={onPushData}
                         />
                     </InternalIntlWrapper>
                 </div>

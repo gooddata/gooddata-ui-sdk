@@ -3,7 +3,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes, isLineChart, isAreaChart } from "@gooddata/sdk-ui";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import {
@@ -48,7 +48,6 @@ import {
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
-import { isLineChart, isAreaChart } from "@gooddata/sdk-ui";
 
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;

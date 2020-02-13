@@ -2,8 +2,7 @@
 
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import LegendSection from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
@@ -45,6 +44,12 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
     .add("LegendSection: Enabled", () => {
         const HandleState = () => {
             const [axisProperties, setAxisProperties] = useState({});
+            const onPushData = (data: any) => {
+                action("onLegendSectionToggle")(data);
+                const { properties } = data;
+                setAxisProperties({ ...properties });
+            };
+
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
@@ -52,11 +57,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                             controlsDisabled={false}
                             properties={axisProperties}
                             propertiesMeta={axisProperties}
-                            pushData={data => {
-                                action("onLegendSectionToggle")(data);
-                                const { properties } = data;
-                                setAxisProperties({ ...properties });
-                            }}
+                            pushData={onPushData}
                         />
                     </InternalIntlWrapper>
                 </div>
@@ -67,6 +68,12 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
     .add("LegendSection: Enabled - localized", () => {
         const HandleState = () => {
             const [axisProperties, setAxisProperties] = useState({});
+            const onPushData = (data: any) => {
+                action("onLegendSectionToggle")(data);
+                const { properties } = data;
+                setAxisProperties({ ...properties });
+            };
+
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper locale={german}>
@@ -74,11 +81,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                             controlsDisabled={false}
                             properties={axisProperties}
                             propertiesMeta={axisProperties}
-                            pushData={data => {
-                                action("onLegendSectionToggle")(data);
-                                const { properties } = data;
-                                setAxisProperties({ ...properties });
-                            }}
+                            pushData={onPushData}
                         />
                     </InternalIntlWrapper>
                 </div>
