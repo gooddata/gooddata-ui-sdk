@@ -304,12 +304,14 @@
             "packageName": "@gooddata/sdk-ui-pivot",
             "projectFolder": "libs/sdk-ui-pivot",
             "reviewCategory": "production",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui-ext",
             "projectFolder": "libs/sdk-ui-ext",
             "reviewCategory": "production",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
