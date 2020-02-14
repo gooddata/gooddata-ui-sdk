@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
@@ -656,12 +656,6 @@ describe("localIdentifierMatch", () => {
 
     it("should not match predicate when measureHeaderItem localIdentifier does not match", () => {
         const predicate = headerPredicateFactory.localIdentifierMatch("someOtherLocalIdentifier");
-
-        expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
-    });
-
-    it("should not match predicate when empty localIdentifier provided", () => {
-        const predicate = headerPredicateFactory.localIdentifierMatch(null);
 
         expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
     });

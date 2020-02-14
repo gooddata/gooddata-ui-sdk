@@ -1,0 +1,186 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [
+        {
+            "localIdentifier": "measures",
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "popMeasureDefinition": {
+                                "measureIdentifier": "m_acugFHNJgsBy",
+                                "popAttribute": {
+                                    "identifier": "closed.year"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                        "alias": "Won Last Year"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                "operator": "difference"
+                            }
+                        },
+                        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                        "alias": "Calculated 'Lost' measure"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_m_aangOxLSeztu_m_acugFHNJgsBy", "m_acugFHNJgsBy"],
+                                "operator": "ratio"
+                            }
+                        },
+                        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+                        "alias": "Ratio of Won and Lost"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "view",
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "closed.aag81lMifn6q"
+                        },
+                        "localIdentifier": "a_closed.aag81lMifn6q"
+                    }
+                }
+            ]
+        },
+        {
+            "localIdentifier": "stack",
+            "items": []
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "closed.aag81lMifn6q"
+                },
+                "localIdentifier": "a_closed.aag81lMifn6q"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "acugFHNJgsBy"
+                        }
+                    }
+                },
+                "localIdentifier": "m_acugFHNJgsBy"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "popMeasureDefinition": {
+                        "measureIdentifier": "m_acugFHNJgsBy",
+                        "popAttribute": {
+                            "identifier": "closed.year"
+                        }
+                    }
+                },
+                "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+                "alias": "Won Last Year"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                        "operator": "difference"
+                    }
+                },
+                "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                "alias": "Calculated 'Lost' measure"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "arithmeticMeasure": {
+                        "measureIdentifiers": ["m_m_aangOxLSeztu_m_acugFHNJgsBy", "m_acugFHNJgsBy"],
+                        "operator": "ratio"
+                    }
+                },
+                "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+                "alias": "Ratio of Won and Lost"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_closed.aag81lMifn6q"]
+        }
+    ],
+    "filters": [],
+    "sortBy": [
+        {
+            "measureSortItem": {
+                "direction": "desc",
+                "locators": [
+                    {
+                        "measureLocatorItem": {
+                            "measureIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,6 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { barChartWithStackByAndViewByAttributes } from "../../../../__mocks__/fixtures";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { getChartOptions } from "../chartOptionsBuilder";
 
@@ -11,11 +10,15 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../../constants/dimensions";
 
-import { IHeaderPredicate } from "../../../base/headerMatching/HeaderPredicate";
+import { IHeaderPredicate } from "@gooddata/sdk-ui";
 import { IChartOptions } from "../../Config";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
+const defaultDv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy);
 
 export function generateChartOptions(
-    dv: DataViewFacade = barChartWithStackByAndViewByAttributes,
+    dv: DataViewFacade = defaultDv,
     config: any = {
         type: "column",
         stacking: false,

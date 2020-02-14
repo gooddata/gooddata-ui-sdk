@@ -1,7 +1,8 @@
 // (C) 2020 GoodData Corporation
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-02-05T14:13:35.546Z; */
+/* tslint:disable:no-var-requires */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-02-15T09:16:38.630Z; */
 
 const fp_00fb574265b6e8dc980d1ffe730310fd = {
     definition: require("./uiTestScenarios/executions/00fb574265b6e8dc980d1ffe730310fd/definition.json"),
@@ -502,6 +503,16 @@ const fp_feb4ad60c9bd6a1dd6003afd669e25c8 = {
     executionResult: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/feb4ad60c9bd6a1dd6003afd669e25c8/dataView_o0_0s100_1000.json"),
 };
+const fp_293251d61de4dc9ff8eaa44b74d2f895 = {
+    definition: require("./uiTestScenarios/executions/293251d61de4dc9ff8eaa44b74d2f895/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/293251d61de4dc9ff8eaa44b74d2f895/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/293251d61de4dc9ff8eaa44b74d2f895/dataView_all.json"),
+};
+const fp_9d8a099a7988d7a934d2ef62e27fc2e9 = {
+    definition: require("./uiTestScenarios/executions/9d8a099a7988d7a934d2ef62e27fc2e9/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/9d8a099a7988d7a934d2ef62e27fc2e9/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/9d8a099a7988d7a934d2ef62e27fc2e9/dataView_all.json"),
+};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: fp_06890d7172183531342ed8e17d70e01a,
@@ -592,6 +603,7 @@ export const Scenarios = {
         SingleMeasureWithViewBy: fp_b7ed0cf372eefa1f07097a021bc0589b,
         TwoMeasuresWithViewBy: fp_ba308d65323b0eadb082b9b74f4c38c6,
         SingleMeasureWithTwoViewByAndStack: fp_be2ce56a335f31e1c30f7fb5e54bb2c5,
+        FourMeasuresAndPoP: fp_9d8a099a7988d7a934d2ef62e27fc2e9,
     },
     Headline: {
         TwoMeasuresOnePoP: fp_1e3f44f4d59bc898e1fa599ea22adb38,
@@ -1948,6 +1960,9 @@ const i_PivotTable_7128c90aa452a118bfec78f9b62b4c65 = {
 const i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4 = {
     obj: require("./uiTestScenarios/insights/PivotTable.0e469fed5a845bbdffa1aa67b30a16f4/obj.json"),
 };
+const i_BarChart_351271a3823e83b6e6aaeca7bb867934 = {
+    obj: require("./uiTestScenarios/insights/BarChart.351271a3823e83b6e6aaeca7bb867934/obj.json"),
+};
 export const Insights = {
     AreaChart: {
         SingleMeasure: i_AreaChart_8ef289b689ae537d4e12f480fc195396,
@@ -1972,6 +1987,7 @@ export const Insights = {
         TwoMeasuresWithViewBySortedByMeasure: i_BarChart_266a49cffa9d4dedaa54594111b540fc,
         ViewByDateAndPoPMeasure: i_BarChart_cdc2b8d037f24c07224dd03b037d0db6,
         ArithmeticMeasures: i_BarChart_cd3cc060d88881aa7fabaaf9cf8bf64c,
+        FourMeasuresAndPoP: i_BarChart_351271a3823e83b6e6aaeca7bb867934,
     },
     BubbleChart: {
         XAxisMeasure: i_BubbleChart_7072f99684d930af81e3e50bdca4e678,
@@ -2202,6 +2218,8 @@ export const Recordings = {
         fp_f8eb5e66709f2ea572a139e5e7790931,
         fp_fa12ddadd752df55fbabeae6d22ecb4d,
         fp_feb4ad60c9bd6a1dd6003afd669e25c8,
+        fp_293251d61de4dc9ff8eaa44b74d2f895,
+        fp_9d8a099a7988d7a934d2ef62e27fc2e9,
     },
     metadata: {
         displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
@@ -2633,6 +2651,7 @@ export const Recordings = {
             i_PivotTable_99c3b8468ddb0897fcbc45a32216b432,
             i_PivotTable_7128c90aa452a118bfec78f9b62b4c65,
             i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4,
+            i_BarChart_351271a3823e83b6e6aaeca7bb867934,
         },
     },
 };

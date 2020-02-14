@@ -1,11 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
-import * as fixtures from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
+
+const TestRecording = recordedDataView(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+);
 
 describe("findMeasureGroupInDimensions", () => {
-    const sampleDimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
+    const sampleDimensions = TestRecording.dimensions();
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
@@ -25,8 +30,8 @@ describe("findMeasureGroupInDimensions", () => {
 });
 
 describe("findAttributeInDimension", () => {
-    const dimensions = fixtures.barChartWithStackByAndViewByAttributes.dimensions();
-    const headerItems = fixtures.barChartWithStackByAndViewByAttributes.allHeaders();
+    const dimensions = TestRecording.dimensions();
+    const headerItems = TestRecording.allHeaders();
     it("should return the view by attribute header with header items", () => {
         const returnValue = findAttributeInDimension(dimensions[1], headerItems[1]);
         const expectedValue = {

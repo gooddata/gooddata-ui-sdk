@@ -1521,5 +1521,10 @@
         "visName": "PivotTable",
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
+    },
+    "BarChart.351271a3823e83b6e6aaeca7bb867934": {
+        "visName": "BarChart",
+        "scenarioName": "four measures and PoP",
+        "comment": "Auto-generated insight for test scenario BarChart - four measures and PoP."
     }
 }

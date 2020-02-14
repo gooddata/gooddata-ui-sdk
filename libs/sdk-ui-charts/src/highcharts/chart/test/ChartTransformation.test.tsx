@@ -5,18 +5,30 @@ import noop = require("lodash/noop");
 import get = require("lodash/get");
 
 import ChartTransformation from "../ChartTransformation";
-import * as fixtures from "../../../../__mocks__/fixtures";
 import HighChartsRenderer from "../HighChartsRenderer";
 import { IChartConfig } from "../../Config";
 import { getRgbString } from "../../utils/color";
-import { IColorPaletteItem } from "@gooddata/sdk-model";
+import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import Chart from "../Chart";
 import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+
+const BarChartNoAttributes = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
+const BarChartView = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
+const BarChartMultipleMeasures = recordedDataView(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures);
+const BarChartTwoMeasures = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
+const BarChartViewAndStack = recordedDataView(
+    ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+);
+const AreaChartMultiMeasures = recordedDataView(ReferenceRecordings.Scenarios.AreaChart.ArithmeticMeasures);
+const ColumnChartViewBy = recordedDataView(ReferenceRecordings.Scenarios.ColumnChart.SingleMeasureWithViewBy);
+const PieChartSingleMeasure = recordedDataView(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
 
 describe("ChartTransformation", () => {
     const defaultProps = {
-        ...fixtures.barChartWithoutAttributes,
+        dataView: BarChartNoAttributes.dataView,
         config: {
             type: "column",
             legend: {
@@ -66,7 +78,7 @@ describe("ChartTransformation", () => {
         };
         const componentProps = {
             renderer,
-            dataView: fixtures.barChartWithStackByAndViewByAttributes.dataView,
+            dataView: BarChartViewAndStack.dataView,
             config: {
                 ...defaultProps.config,
                 colorPalette: customColorPalette,
@@ -84,7 +96,7 @@ describe("ChartTransformation", () => {
         };
 
         function createChartRendererProps(
-            executionData = fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
+            executionData = AreaChartMultiMeasures.dataView,
             config: IChartConfig = {},
         ) {
             const renderer = jest.fn().mockReturnValue(<div />);
@@ -102,56 +114,43 @@ describe("ChartTransformation", () => {
         }
 
         it("should be enabled by default for area chart", () => {
-            const passedProps = createChartRendererProps(
-                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
-            );
+            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView);
             expect(passedProps.chartOptions.stacking).toEqual("normal");
         });
 
         it("should be enabled by configuration", () => {
-            const passedProps = createChartRendererProps(
-                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
-                {
-                    stacking: true,
-                },
-            );
+            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
+                stacking: true,
+            });
             expect(passedProps.chartOptions.stacking).toEqual("normal");
         });
 
         it("should be disabled by configuration", () => {
-            const passedProps = createChartRendererProps(
-                fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
-                {
-                    stacking: false,
-                },
-            );
+            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
+                stacking: false,
+            });
             expect(passedProps.chartOptions.stacking).toBeNull();
         });
 
         describe("getChartConfig", () => {
             it("should keep stack measures configuration", () => {
-                const passedProps = createChartRendererProps(
-                    fixtures.areaChartWith3MetricsAndViewByAttribute.dataView,
-                    {
-                        stackMeasures: true,
-                        stackMeasuresToPercent: true,
-                    },
-                );
+                const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
+                });
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should keep stack measures configuration without stackBy", () => {
-                const passedProps = createChartRendererProps(
-                    fixtures.columnChartWithMeasureAndViewBy.dataView,
-                    {
-                        stackMeasures: true,
-                        stackMeasuresToPercent: true,
-                    },
-                );
+                const passedProps = createChartRendererProps(ColumnChartViewBy.dataView, {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
+                });
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should sanitized stack measures configuration with computeRatio", () => {
                 const passedProps = createChartRendererProps(
-                    fixtures.columnChartWithMeasureAndViewByAndComputeRatio.dataView,
+                    ColumnChartViewBy.dataView,
+                    // TODO fixtures.columnChartWithMeasureAndViewByAndComputeRatio.dataView,
                     {
                         stackMeasures: true,
                         stackMeasuresToPercent: true,
@@ -170,10 +169,7 @@ describe("ChartTransformation", () => {
             },
         };
         let pushData: any;
-        function createChartRendererProps(
-            executionData = fixtures.barChartWithStackByAndViewByAttributes,
-            config: IChartConfig = {},
-        ) {
+        function createChartRendererProps(executionData = BarChartViewAndStack, config: IChartConfig = {}) {
             const renderer = jest.fn().mockReturnValue(<div />);
             pushData = jest.fn();
             mount(
@@ -191,98 +187,22 @@ describe("ChartTransformation", () => {
         }
 
         it("should be always disabled for single series and push this info out", () => {
-            const passedProps = createChartRendererProps(fixtures.barChartWithViewByAttribute);
+            const passedProps = createChartRendererProps(BarChartView);
             expect(passedProps.legend.enabled).toEqual(false);
-            expect(pushData).toBeCalledWith({
-                colors: {
-                    colorAssignments: [
-                        {
-                            color: {
-                                type: "guid",
-                                value: "1",
-                            },
-                            headerItem: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "ah1EuQxwaCqs",
-                                    localIdentifier: "amountMetric",
-                                    name: "Amount",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1279",
-                                },
-                            },
-                        },
-                    ],
-                    colorPalette: undefined,
-                },
-                propertiesMeta: {
-                    legend_enabled: false,
-                },
-            });
+
+            expect(pushData).toMatchSnapshot();
         });
 
         it("should be enabled & on the top by default and push this info out", () => {
-            const passedProps = createChartRendererProps(fixtures.barChartWith3MetricsAndViewByAttribute);
+            const passedProps = createChartRendererProps(BarChartMultipleMeasures);
             expect(passedProps.legend.enabled).toEqual(true);
             expect(passedProps.legend.position).toEqual(TOP);
-            expect(pushData).toBeCalledWith({
-                colors: {
-                    colorAssignments: [
-                        {
-                            color: {
-                                type: "guid",
-                                value: "1",
-                            },
-                            headerItem: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "af2Ewj9Re2vK",
-                                    localIdentifier: "lostMetric",
-                                    name: "<button>Lost</button> ...",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                                },
-                            },
-                        },
-                        {
-                            color: {
-                                type: "guid",
-                                value: "2",
-                            },
-                            headerItem: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "afSEwRwdbMeQ",
-                                    localIdentifier: "wonMetric",
-                                    name: "Won",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
-                                },
-                            },
-                        },
-                        {
-                            color: {
-                                type: "guid",
-                                value: "3",
-                            },
-                            headerItem: {
-                                measureHeaderItem: {
-                                    format: "#,##0.00",
-                                    identifier: "alUEwmBtbwSh",
-                                    localIdentifier: "expectedMetric",
-                                    name: "Expected",
-                                    uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1285",
-                                },
-                            },
-                        },
-                    ],
-                    colorPalette: undefined,
-                },
-                propertiesMeta: {
-                    legend_enabled: true,
-                },
-            });
+
+            expect(pushData).toMatchSnapshot();
         });
 
         it("should be able to disable default", () => {
-            const passedProps = createChartRendererProps(fixtures.barChartWith3MetricsAndViewByAttribute, {
+            const passedProps = createChartRendererProps(BarChartMultipleMeasures, {
                 legend: {
                     enabled: false,
                 },
@@ -295,7 +215,7 @@ describe("ChartTransformation", () => {
         it("should be invoked if data series is over limit", () => {
             const onDataTooLarge = jest.fn();
             const props = {
-                ...fixtures.barChartWith3MetricsAndViewByAttribute,
+                ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
                     ...defaultProps.config,
@@ -311,7 +231,7 @@ describe("ChartTransformation", () => {
         it("should be invoked if data categories is over limit", () => {
             const onDataTooLarge = jest.fn();
             const props = {
-                ...fixtures.barChartWith3MetricsAndViewByAttribute,
+                ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
                     ...defaultProps.config,
@@ -327,7 +247,7 @@ describe("ChartTransformation", () => {
         it("should be invoked on component mount", () => {
             const onDataTooLarge = jest.fn();
             const props = {
-                ...fixtures.barChartWith3MetricsAndViewByAttribute,
+                ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
                     ...defaultProps.config,
@@ -344,7 +264,7 @@ describe("ChartTransformation", () => {
         it("should be invoked on props change", () => {
             const onDataTooLarge = jest.fn();
             const props = {
-                ...fixtures.barChartWith3MetricsAndViewByAttribute,
+                ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
                     ...defaultProps.config,
@@ -373,7 +293,8 @@ describe("ChartTransformation", () => {
 
     describe("onNegativeValues", () => {
         const pieChartPropsWithNegativeValue = {
-            dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
+            dataView: PieChartSingleMeasure.dataView,
+            // TODO dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
             config: {
                 ...defaultProps.config,
                 type: "pie",
@@ -445,7 +366,7 @@ describe("ChartTransformation", () => {
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(0);
             expect(onNegativeValues).toHaveBeenCalledTimes(1);
 
-            wrapper.setProps(fixtures.pieChartWithMetricsOnly);
+            wrapper.setProps(PieChartSingleMeasure);
             expect(wrapper.find(HighChartsRenderer)).toHaveLength(1);
         });
     });
@@ -455,7 +376,7 @@ describe("ChartTransformation", () => {
     describe.each(AlignableCharts)("%s chart alignments", (type: string) => {
         function render(chartConfig: IChartConfig) {
             const props = {
-                ...fixtures.pieChartWithMetricsOnly,
+                ...PieChartSingleMeasure,
                 config: {
                     type,
                     ...chartConfig,
@@ -481,7 +402,7 @@ describe("ChartTransformation", () => {
     describe("axis labels alignment on dual bar chart", () => {
         function createComponent(chartConfig: IChartConfig) {
             const props = {
-                ...fixtures.barChartWith2MetricsAndViewByAttribute,
+                dataView: BarChartTwoMeasures.dataView,
                 config: {
                     type: VisualizationTypes.BAR,
                     ...chartConfig,
@@ -498,7 +419,7 @@ describe("ChartTransformation", () => {
         it("should align secondary Y axis labels to left", () => {
             const chartConfig: IChartConfig = {
                 secondary_xaxis: {
-                    measures: ["wonMetric"],
+                    measures: [measureLocalId(ReferenceLdm.Won)],
                     rotation: "90",
                 },
             };
@@ -516,7 +437,7 @@ describe("ChartTransformation", () => {
                     rotation: "90",
                 },
                 secondary_xaxis: {
-                    measures: ["wonMetric"],
+                    measures: [measureLocalId(ReferenceLdm.Won)],
                     rotation: "90",
                 },
             };
@@ -536,7 +457,7 @@ describe("ChartTransformation", () => {
             const chartConfig: IChartConfig = {
                 type: VisualizationTypes.COLUMN,
                 secondary_yaxis: {
-                    measures: ["wonMetric"],
+                    measures: [measureLocalId(ReferenceLdm.Won)],
                     rotation: "90",
                 },
             };
