@@ -73,6 +73,12 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
     }
 }
 
+function recordedExecutionKey(defOrFingerprint: IExecutionDefinition | string): string {
+    const fp = typeof defOrFingerprint === "string" ? defOrFingerprint : defFingerprint(defOrFingerprint);
+
+    return `fp_${fp}`;
+}
+
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
@@ -90,7 +96,8 @@ function recordedPreparedExecution(
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
-                const recording = recordings.executions && recordings.executions["fp_" + fp];
+                const key = recordedExecutionKey(fp);
+                const recording = recordings.executions && recordings.executions[key];
 
                 if (!recording) {
                     reject(new NoDataError("recording was not found"));
@@ -204,6 +211,10 @@ class RecordedDataView implements IDataView {
  * (e.g. for different windows etc), then it is possible to provide dataViewId to look up the particular view. By default,
  * the data view with all data is wrapped in the facade.
  *
+ * The returned view is linked to a valid result; calling transform() returns an instance of prepared execution which
+ * is executable as-is (and leads to the same result). However any modification to this prepared execution would
+ * lead a NO_DATA errors (because that different data is not included in the index)
+ *
  * @remarks see {@link dataViewWindow}
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
@@ -215,7 +226,17 @@ export function recordedDataView(
     dataViewId: string = DataViewAll,
 ): DataViewFacade {
     const definition = recording.definition;
-    const factory = new RecordedExecutionFactory({}, "testWorkspace");
+
+    /*
+     * construct ad-hoc recording index that contains input recording.
+     *
+     * this enables limited facade => result => transform => exec flow.
+     */
+    const recordingKey = recordedExecutionKey(definition);
+    const adHocIndex: RecordingIndex = { executions: {} };
+    adHocIndex.executions![recordingKey] = recording;
+
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
     const result = new RecordedExecutionResult(definition, factory, recording);
     const data = recording[dataViewId];
 
