@@ -301,6 +301,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-filters",
+            "projectFolder": "libs/sdk-ui-filters",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-pivot",
             "projectFolder": "libs/sdk-ui-pivot",
             "reviewCategory": "production",
