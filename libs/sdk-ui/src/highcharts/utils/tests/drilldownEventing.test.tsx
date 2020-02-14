@@ -5,9 +5,14 @@ import { newDefForItems } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "../../../base/vis/visualizationTypes";
 import { IDrillConfig, IDrillEventIntersectionElement } from "../../../base/vis/DrillEvents";
 import Highcharts from "../../chart/highcharts/highchartsEntryPoint";
-import { SeriesChartTypes } from "../../constants/series";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
+
+const SeriesChartTypes = {
+    COLUMN: "column",
+    LINE: "line",
+    AREA: "area",
+};
 
 describe("Drilldown Eventing", () => {
     jest.useFakeTimers();
