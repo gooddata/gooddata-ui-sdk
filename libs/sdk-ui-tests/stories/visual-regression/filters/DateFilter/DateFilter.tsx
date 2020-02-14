@@ -1,12 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { DateFilter, defaultDateFilterOptions, ExtendedDateFilters } from "@gooddata/sdk-ui";
+import { DateFilter, defaultDateFilterOptions, ExtendedDateFilters } from "@gooddata/sdk-ui-filters";
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 import { FilterStories } from "../../_infra/storyGroups";
 
-import "@gooddata/sdk-ui/styles/css/dateFilter.css";
+import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
