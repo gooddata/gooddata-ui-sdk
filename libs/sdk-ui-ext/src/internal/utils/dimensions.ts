@@ -11,7 +11,8 @@ import {
     insightTotals,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisType, VisualizationTypes, ViewByAttributesLimit } from "@gooddata/sdk-ui";
+import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { ViewByAttributesLimit } from "@gooddata/sdk-ui-charts";
 
 export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     const row = insightBucket(insight, BucketNames.ATTRIBUTE);

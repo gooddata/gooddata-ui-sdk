@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { scenariosFor } from "../../../src";
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui";
+import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithSingleMeasureAndViewBy,

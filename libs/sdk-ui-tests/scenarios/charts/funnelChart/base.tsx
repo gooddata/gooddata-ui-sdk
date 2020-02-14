@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { newAttributeSort } from "@gooddata/sdk-model";
-import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui";
+import { FunnelChart, IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export const FunnelChartWithMeasureAndViewBy = {

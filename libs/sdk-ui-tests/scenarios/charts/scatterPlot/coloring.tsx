@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui";
+import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors";
 import { AmountMeasurePredicate } from "../../_infra/predicates";

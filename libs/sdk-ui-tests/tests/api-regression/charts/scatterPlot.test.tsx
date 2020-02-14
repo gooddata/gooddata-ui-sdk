@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IScatterPlotProps } from "@gooddata/sdk-ui";
+import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import scatterPlotScenarios from "../../../scenarios/charts/scatterPlot";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

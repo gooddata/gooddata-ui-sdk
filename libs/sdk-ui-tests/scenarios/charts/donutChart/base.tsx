@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui";
+import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export const DonutChartWithTwoMeasures = {

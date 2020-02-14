@@ -8,7 +8,7 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 import { Visualization, IVisualizationProps } from "../../src/_defunct/uri/Visualization";
 import { CUSTOM_COLORS } from "../data/colors";
 import { onErrorHandler } from "../mocks";
-import "../../styles/scss/charts.scss";
+import "../../../sdk-ui-charts/styles/scss/charts.scss";
 import "../../styles/scss/table.scss";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 

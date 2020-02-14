@@ -301,6 +301,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-charts",
+            "projectFolder": "libs/sdk-ui-charts",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-filters",
             "projectFolder": "libs/sdk-ui-filters",
             "reviewCategory": "production",

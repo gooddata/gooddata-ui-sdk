@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { Xirr, IXirrProps } from "@gooddata/sdk-ui";
+import { Xirr, IXirrProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export default scenariosFor<IXirrProps>("Xirr", Xirr)

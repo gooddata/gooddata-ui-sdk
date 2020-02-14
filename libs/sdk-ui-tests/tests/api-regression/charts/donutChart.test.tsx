@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IDonutChartProps } from "@gooddata/sdk-ui";
+import { IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import donutChartScenarios from "../../../scenarios/charts/donutChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IColumnChartProps } from "@gooddata/sdk-ui";
+import { IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import columnChartScenarios from "../../../scenarios/charts/columnChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

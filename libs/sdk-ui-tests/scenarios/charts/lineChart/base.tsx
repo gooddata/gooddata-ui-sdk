@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { LineChart, ILineChartProps } from "@gooddata/sdk-ui";
+import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 

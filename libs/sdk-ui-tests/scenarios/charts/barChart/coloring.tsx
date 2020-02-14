@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui";
+import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors";
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates";

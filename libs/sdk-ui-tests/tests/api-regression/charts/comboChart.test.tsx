@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IComboChartProps } from "@gooddata/sdk-ui";
+import { IComboChartProps } from "@gooddata/sdk-ui-charts";
 import comboChartScenarios from "../../../scenarios/charts/comboChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

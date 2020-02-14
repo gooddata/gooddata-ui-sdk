@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IBubbleChartProps } from "@gooddata/sdk-ui";
+import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import bubbleChartScenarios from "../../../scenarios/charts/bubbleChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

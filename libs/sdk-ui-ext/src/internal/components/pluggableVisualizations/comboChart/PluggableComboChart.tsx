@@ -3,7 +3,8 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
-import { BucketNames, VisualizationTypes, isLineChart, isAreaChart } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { isLineChart, isAreaChart } from "@gooddata/sdk-ui-charts";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import {

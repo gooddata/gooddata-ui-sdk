@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IHeatmapProps } from "@gooddata/sdk-ui";
+import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import heatmapScenarios from "../../../scenarios/charts/heatmap";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

@@ -4,7 +4,8 @@ import set = require("lodash/set");
 import get = require("lodash/get");
 import { IntlShape } from "react-intl";
 
-import { BucketNames, ChartType, VisualizationTypes, isLineChart } from "@gooddata/sdk-ui";
+import { isLineChart } from "@gooddata/sdk-ui-charts";
+import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";

@@ -4,7 +4,7 @@ import isEmpty = require("lodash/isEmpty");
 import React from "react";
 import SparkMD5 from "spark-md5";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IBucketChartProps } from "@gooddata/sdk-ui";
+import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
 import { ScenarioTestInput } from "./scenarioTestInput";

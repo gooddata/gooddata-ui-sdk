@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { BarChart, IBarChartProps } from "@gooddata/sdk-ui";
+import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export const BarChartWithSingleMeasureAndViewBy = {
@@ -80,4 +80,14 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
         sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
     })
     .addScenario("viewBy date and PoP measure", BarChartViewByDateAndPop)
-    .addScenario("arithmetic measures", BarChartWithArithmeticMeasuresAndViewBy);
+    .addScenario("arithmetic measures", BarChartWithArithmeticMeasuresAndViewBy)
+    .addScenario("four measures and PoP", {
+        measures: [
+            ReferenceLdm.Amount,
+            ReferenceLdm.Won,
+            ReferenceLdmExt.WonPopClosedYear,
+            ReferenceLdmExt.CalculatedLost,
+            ReferenceLdmExt.CalculatedWonLostRatio,
+        ],
+        viewBy: [ReferenceLdm.ClosedYear],
+    });

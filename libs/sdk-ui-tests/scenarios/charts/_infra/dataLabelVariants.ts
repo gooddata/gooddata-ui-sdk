@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IChartConfig } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
 import { GermanNumberFormat } from "../../_infra/formatting";
 

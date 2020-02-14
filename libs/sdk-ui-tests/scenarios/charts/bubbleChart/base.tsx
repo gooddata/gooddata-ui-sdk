@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui";
+import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
 

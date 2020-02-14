@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import omit = require("lodash/omit");
 import isEmpty = require("lodash/isEmpty");
-import { IAxisConfig, IChartConfig } from "@gooddata/sdk-ui";
+import { IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 const ConfigNotApplicableInInsight: Array<keyof IChartConfig> = [
     "colorPalette",

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IChartConfig } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { CustomizedScenario, ScenarioTag, UnboundVisProps, VisProps } from "../../../src";
 import { CustomColorPalette, CustomColors } from "../../_infra/colors";
 

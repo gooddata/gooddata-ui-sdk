@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui";
+import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
 

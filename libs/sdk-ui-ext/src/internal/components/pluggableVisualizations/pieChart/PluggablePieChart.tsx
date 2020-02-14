@@ -4,7 +4,8 @@ import React = require("react");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { BucketNames, VisualizationTypes, IChartConfig, TOP } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisConstruct,

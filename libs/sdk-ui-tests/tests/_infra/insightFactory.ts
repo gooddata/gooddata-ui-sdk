@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import { IInsightDefinition, newInsightDefinition, VisualizationProperties } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { ChartInteractions } from "./backendWithCapturing";
 import { chartConfigToVisProperties } from "./chartConfigToVisProps";
 

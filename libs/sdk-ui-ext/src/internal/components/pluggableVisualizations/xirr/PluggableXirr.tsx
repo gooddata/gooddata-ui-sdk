@@ -7,7 +7,8 @@ import { IntlShape } from "react-intl";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
-import { CoreXirr, BucketNames, DefaultLocale, ILocale, updateConfigWithSettings } from "@gooddata/sdk-ui";
+import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
+import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import {

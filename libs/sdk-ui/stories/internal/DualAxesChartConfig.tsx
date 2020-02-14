@@ -5,7 +5,7 @@ import { screenshotWrap } from "@gooddata/test-storybook";
 import * as dataSet from "../test_data/chart_with_2_metrics_and_view_by_attribute";
 import { Visualization } from "../../src/highcharts";
 import { wrap } from "../utils/wrap";
-import "../../styles/scss/charts.scss";
+import "../../../sdk-ui-charts/styles/scss/charts.scss";
 import { ChartType, IChartConfig, VisualizationTypes } from "../../src";
 import { barChartWithoutAttributes } from "../test_data/fixtures";
 import { BASE_DUAL_AXIS_CHARTS } from "../data/dualAxis";
