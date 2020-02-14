@@ -330,6 +330,7 @@
             "packageName": "@gooddata/reference-workspace",
             "projectFolder": "tools/reference-workspace",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
@@ -349,6 +350,7 @@
             "packageName": "@gooddata/mock-handling",
             "projectFolder": "tools/mock-handling",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": false
         },
         {
