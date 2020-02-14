@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
+// (C) 2007-2020 GoodData Corporation
+import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     BubbleChartColorStrategy,
@@ -15,13 +15,13 @@ import {
 import { getMVS } from "./helper";
 
 import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
-
-import * as fixtures from "../../../../__mocks__/fixtures";
-import { IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IColor, RgbType, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import range = require("lodash/range");
+import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IColor, IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../Config";
 import { CUSTOM_COLOR_PALETTE } from "./colorPalette.fixture";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceData, ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import range = require("lodash/range");
 
 function getColorsFromStrategy(strategy: IColorStrategy): string[] {
     const res: string[] = [];
@@ -113,9 +113,38 @@ describe("ColorFactory", () => {
         },
     ];
 
+    const RgbPalette = [
+        {
+            guid: "red",
+            fill: {
+                r: 255,
+                g: 0,
+                b: 0,
+            },
+        },
+        {
+            guid: "green",
+            fill: {
+                r: 0,
+                g: 255,
+                b: 0,
+            },
+        },
+        {
+            guid: "blue",
+            fill: {
+                r: 0,
+                g: 0,
+                b: 255,
+            },
+        },
+    ];
+
     describe("AttributeColorStrategy", () => {
         it("should return AttributeColorStrategy with two colors from default color palette", () => {
-            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
             const colorPalette: IColorPalette = undefined;
@@ -140,38 +169,14 @@ describe("ColorFactory", () => {
         });
 
         it("should return AttributeColorStrategy with two colors from custom color palette", () => {
-            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
-            const colorPalette = [
-                {
-                    guid: "red",
-                    fill: {
-                        r: 255,
-                        g: 0,
-                        b: 0,
-                    },
-                },
-                {
-                    guid: "green",
-                    fill: {
-                        r: 0,
-                        g: 255,
-                        b: 0,
-                    },
-                },
-                {
-                    guid: "blue",
-                    fill: {
-                        r: 0,
-                        g: 0,
-                        b: 255,
-                    },
-                },
-            ];
 
             const colorStrategy = ColorFactory.getColorStrategy(
-                colorPalette,
+                RgbPalette,
                 undefined,
                 viewByAttribute,
                 stackByAttribute,
@@ -183,50 +188,21 @@ describe("ColorFactory", () => {
 
             expect(colorStrategy).toBeInstanceOf(AttributeColorStrategy);
             expect(updatedPalette).toEqual(
-                colorPalette
-                    .slice(0, 2)
-                    .map((defaultColorPaletteItem: IColorPaletteItem) =>
-                        getRgbString(defaultColorPaletteItem),
-                    ),
+                RgbPalette.slice(0, 2).map((defaultColorPaletteItem: IColorPaletteItem) =>
+                    getRgbString(defaultColorPaletteItem),
+                ),
             );
         });
 
         it("should return AttributeColorStrategy with properly applied mapping", () => {
-            const dv = fixtures.barChartWithStackByAndViewByAttributes;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bar";
-            const colorPalette = [
-                {
-                    guid: "red",
-                    fill: {
-                        r: 255,
-                        g: 0,
-                        b: 0,
-                    },
-                },
-                {
-                    guid: "green",
-                    fill: {
-                        r: 0,
-                        g: 255,
-                        b: 0,
-                    },
-                },
-                {
-                    guid: "blue",
-                    fill: {
-                        r: 0,
-                        g: 0,
-                        b: 255,
-                    },
-                },
-            ];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IResultAttributeHeader) =>
-                        headerItem.attributeHeaderItem &&
-                        headerItem.attributeHeaderItem.uri ===
-                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1225",
+                    predicate: HeaderPredicates.attributeItemNameMatch(ReferenceData.Region.EastCoast.title),
                     color: {
                         type: "guid",
                         value: "blue",
@@ -245,10 +221,7 @@ describe("ColorFactory", () => {
                     },
                 },
                 {
-                    predicate: (headerItem: IResultAttributeHeader) =>
-                        headerItem.attributeHeaderItem &&
-                        headerItem.attributeHeaderItem.uri ===
-                            "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1024/elements?id=1237",
+                    predicate: HeaderPredicates.uriMatch(ReferenceData.Region.WestCoast.uri),
                     color: {
                         type: "rgb" as RgbType,
                         value: {
@@ -261,7 +234,7 @@ describe("ColorFactory", () => {
             ];
 
             const colorStrategy = ColorFactory.getColorStrategy(
-                colorPalette,
+                RgbPalette,
                 colorMapping,
                 viewByAttribute,
                 stackByAttribute,
@@ -277,14 +250,40 @@ describe("ColorFactory", () => {
     });
 
     describe("MeasureColorStrategy", () => {
-        it("should return a palette with a lighter color for each pop measure based on it`s source measure", () => {
-            const dv = fixtures.barChartWithPopMeasureAndViewByAttribute;
+        it("should return a lighter color for derived measure, based on master measure", () => {
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure);
+            // const dv = fixtures.barChartWithPopMeasureAndViewByAttribute;
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
             const colorStrategy = ColorFactory.getColorStrategy(
                 customPalette,
-                undefined,
+                [
+                    {
+                        // first measure; no other measure derived from this;
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                        color: {
+                            type: "rgb",
+                            value: {
+                                r: 0,
+                                g: 0,
+                                b: 0,
+                            },
+                        },
+                    },
+                    {
+                        // second measure; is master; derived measure follows
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Won),
+                        color: {
+                            type: "rgb",
+                            value: {
+                                r: 50,
+                                g: 50,
+                                b: 50,
+                            },
+                        },
+                    },
+                ],
                 viewByAttribute,
                 stackByAttribute,
                 dv,
@@ -293,30 +292,14 @@ describe("ColorFactory", () => {
 
             const updatedPalette = getColorsFromStrategy(colorStrategy);
             expect(colorStrategy).toBeInstanceOf(MeasureColorStrategy);
-            expect(updatedPalette).toEqual(["rgb(173,173,173)", "rgb(50,50,50)"]);
-        });
-
-        it("should return a palette with a lighter color for each previous period based on it`s source measure", () => {
-            const dv = fixtures.barChartWithPreviousPeriodMeasure;
-            const { viewByAttribute, stackByAttribute } = getMVS(dv);
-            const type = "column";
-
-            const colorStrategy = ColorFactory.getColorStrategy(
-                customPalette,
-                undefined,
-                viewByAttribute,
-                stackByAttribute,
-                dv,
-                type,
-            );
-
-            const updatedPalette = getColorsFromStrategy(colorStrategy);
-            expect(colorStrategy).toBeInstanceOf(MeasureColorStrategy);
-            expect(updatedPalette).toEqual(["rgb(173,173,173)", "rgb(50,50,50)"]);
+            expect(updatedPalette).toEqual(["rgb(0,0,0)", "rgb(50,50,50)", "rgb(173,173,173)"]);
         });
 
         it("should rotate colors from original palette and generate lighter PoP colors", () => {
-            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            );
+            // const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
@@ -349,7 +332,10 @@ describe("ColorFactory", () => {
         });
 
         it("should rotate colors from original palette and generate lighter previous period measures", () => {
-            const dv = fixtures.barChartWithPreviousPeriodMeasureX6;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+            );
+            // const dv = fixtures.barChartWithPreviousPeriodMeasureX6;
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
@@ -383,7 +369,7 @@ describe("ColorFactory", () => {
         });
 
         it("should just return the original palette if there are no pop measures shorten to cover all legend items", () => {
-            const dv = fixtures.barChartWithoutAttributes;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
             const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
             const colorPalette: IColorPalette = undefined;
@@ -403,68 +389,8 @@ describe("ColorFactory", () => {
             expect(itemsCount).toEqual(updatedPalette.length);
         });
 
-        it("should return MeasureColorStrategy with properly applied mapping", () => {
-            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
-
-            const { viewByAttribute, stackByAttribute } = getMVS(dv);
-            const type = "column";
-            const colorMapping: IColorMapping[] = [
-                {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_1",
-                    color: {
-                        type: "guid",
-                        value: "02",
-                    },
-                },
-                {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountPopMeasure_1",
-                    color: {
-                        type: "guid",
-                        value: "03",
-                    },
-                },
-                {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure_2",
-                    color: {
-                        type: "guid",
-                        value: "03",
-                    },
-                },
-            ];
-
-            const colorStrategy = ColorFactory.getColorStrategy(
-                customPalette,
-                colorMapping,
-                viewByAttribute,
-                stackByAttribute,
-                dv,
-                type,
-            );
-
-            const updatedPalette = getColorsFromStrategy(colorStrategy);
-
-            expect(colorStrategy).toBeInstanceOf(MeasureColorStrategy);
-            expect(updatedPalette).toEqual([
-                "rgb(193,193,193)",
-                "rgb(100,100,100)",
-                "rgb(213,213,213)",
-                "rgb(150,150,150)",
-                "rgb(213,213,213)",
-                "rgb(150,150,150)",
-                "rgb(233,233,233)",
-                "rgb(200,200,200)",
-                "rgb(173,173,173)",
-                "rgb(50,50,50)",
-                "rgb(193,193,193)",
-                "rgb(100,100,100)",
-            ]);
-        });
-
         it("should return only non-derived measures in getColorAssignment", () => {
-            const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.ViewByDateAndPoPMeasure);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "column";
 
@@ -477,13 +403,13 @@ describe("ColorFactory", () => {
                 type,
             );
 
-            expect(colorStrategy.getColorAssignment().length).toEqual(6);
+            expect(colorStrategy.getColorAssignment().length).toEqual(2);
         });
     });
 
     describe("TreemapColorStrategy", () => {
         it("should return TreemapColorStrategy strategy with two colors from default color palette", () => {
-            const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "treemap";
             const colorPalette: IColorPalette = undefined;
@@ -508,14 +434,13 @@ describe("ColorFactory", () => {
         });
 
         it("should return TreemapColorStrategy with properly applied mapping", () => {
-            const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "treemap";
 
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMetric",
+                    predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
                     color: {
                         type: "guid",
                         value: "02",
@@ -541,7 +466,7 @@ describe("ColorFactory", () => {
 
     describe("HeatmapColorStrategy", () => {
         it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {
-            const dv = fixtures.heatMapWithMetricRowColumn;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -566,7 +491,7 @@ describe("ColorFactory", () => {
             "should return HeatmapColorStrategy strategy with 7 colors" +
                 " based on the first color from custom palette",
             () => {
-                const dv = fixtures.heatMapWithMetricRowColumn;
+                const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
                 const { viewByAttribute, stackByAttribute } = getMVS(dv);
                 const type = "heatmap";
 
@@ -601,7 +526,7 @@ describe("ColorFactory", () => {
             "should return HeatmapColorStrategy strategy with 7 colors" +
                 " based on the first color from custom palette when color mapping given but not applicable",
             () => {
-                const dv = fixtures.heatMapWithMetricRowColumn;
+                const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
                 const { viewByAttribute, stackByAttribute } = getMVS(dv);
                 const type = "heatmap";
 
@@ -643,7 +568,7 @@ describe("ColorFactory", () => {
         );
 
         it("should return HeatmapColorStrategy with properly applied mapping", () => {
-            const dv = fixtures.heatMapWithMetricRowColumn;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -658,8 +583,7 @@ describe("ColorFactory", () => {
             ];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "amountMeasure",
+                    predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
                     color: {
                         type: "guid",
                         value: "02",
@@ -684,15 +608,14 @@ describe("ColorFactory", () => {
 
     describe("BubbleChartStrategy", () => {
         it("should create palette with color from first measure", () => {
-            const dv = fixtures.bubbleChartWith3Metrics;
+            const dv = recordedDataView(ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "784a5018a51049078e8f7e86247e08a3",
+                    predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
                     color: {
                         type: "rgb",
                         value: {
@@ -719,16 +642,16 @@ describe("ColorFactory", () => {
         });
 
         it("should create palette with color for each attribute element", () => {
-            const dv = fixtures.bubbleChartWith3MetricsAndAttribute;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.BubbleChart.XAndYAxisAndSizeMeasuresWithViewBy,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "bubble";
 
             const expectedColors = ["rgb(0,0,0)"];
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IResultAttributeHeader) =>
-                        headerItem.attributeHeaderItem.uri ===
-                        "/gdc/md/hzyl5wlh8rnu0ixmbzlaqpzf09ttb7c8/obj/1025/elements?id=1224",
+                    predicate: HeaderPredicates.uriMatch(ReferenceData.ProductName.CompuSci.uri),
                     color: {
                         type: "rgb",
                         value: {
@@ -750,22 +673,23 @@ describe("ColorFactory", () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(BubbleChartColorStrategy);
-            expect(colorStrategy.getColorAssignment().length).toEqual(20);
+            expect(colorStrategy.getColorAssignment().length).toEqual(6);
             expect(colorStrategy.getColorByIndex(0)).toEqual(expectedColors[0]);
         });
     });
 
     describe("ScatterPlotColorStrategy", () => {
         it("should create palette with same color from first measure for all attribute elements", () => {
-            const dv = fixtures.scatterPlotWith2MetricsAndAttribute;
+            const dv = recordedDataView(
+                ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute,
+            );
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "scatter";
 
             const expectedColor = "rgb(0,0,0)";
             const colorMapping: IColorMapping[] = [
                 {
-                    predicate: (headerItem: IMeasureDescriptor) =>
-                        headerItem.measureHeaderItem.localIdentifier === "33bd337ed5534fd383861f11ff657b23",
+                    predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
                     color: {
                         type: "rgb",
                         value: {
