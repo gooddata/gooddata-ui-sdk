@@ -30,6 +30,7 @@ dependencies:
   '@rush-temp/sdk-skel-ts': 'file:projects/sdk-skel-ts.tgz'
   '@rush-temp/sdk-skel-tsx': 'file:projects/sdk-skel-tsx.tgz'
   '@rush-temp/sdk-ui': 'file:projects/sdk-ui.tgz'
+  '@rush-temp/sdk-ui-charts': 'file:projects/sdk-ui-charts.tgz'
   '@rush-temp/sdk-ui-ext': 'file:projects/sdk-ui-ext.tgz'
   '@rush-temp/sdk-ui-filters': 'file:projects/sdk-ui-filters.tgz'
   '@rush-temp/sdk-ui-pivot': 'file:projects/sdk-ui-pivot.tgz'
@@ -15544,6 +15545,74 @@ packages:
       integrity: sha512-vExtQe8Ufu9wzXo9JYxxXy1qE3s3qi8uRjyrHA1S4QtJUx/r2WTSQuwFKtguY2CwEGj/hlzx1+AzCy+sfL5P7g==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
+  'file:projects/sdk-ui-charts.tgz':
+    dependencies:
+      '@ag-grid-community/all-modules': 22.1.1
+      '@ag-grid-community/react': 22.1.2_react-dom@16.12.0+react@16.12.0
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/goodstrap': 66.4.0_react-dom@16.12.0+react@16.12.0
+      '@gooddata/js-utils': 3.10.0
+      '@gooddata/numberjs': 3.2.4
+      '@gooddata/tslint-config': 1.0.0_typescript@3.7.4
+      '@types/classnames': 2.2.3
+      '@types/enzyme': 3.10.5
+      '@types/enzyme-adapter-react-16': 1.0.6
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/invariant': 2.2.31
+      '@types/jest': 25.1.2
+      '@types/lodash': 4.14.149
+      '@types/node': 12.12.26
+      '@types/raf': 3.4.0
+      '@types/react': 16.9.19
+      '@types/react-dom': 16.9.5
+      '@types/react-measure': 2.0.5
+      '@types/react-portal': 4.0.1
+      '@types/react-responsive': 8.0.2
+      '@types/react-window': 1.8.1
+      '@types/uuid': 3.4.7
+      classnames: 2.2.6
+      custom-event: 1.0.1
+      date-fns: 2.9.0
+      dependency-cruiser: 6.3.0_typescript@3.7.4
+      downshift: 3.4.8_react@16.12.0
+      enzyme: 3.11.0
+      enzyme-adapter-react-16: 1.15.2_3302d41cb01481e7edfc8c11c26d98df
+      fixed-data-table-2: 0.7.17_react-dom@16.12.0+react@16.12.0
+      foundation-sites: 5.5.3
+      full-icu: 1.3.0
+      highcharts: 7.1.1
+      highcharts-grouped-categories: 1.1.3
+      hoist-non-react-statics: 3.3.2
+      http-status-codes: 1.4.0
+      invariant: 2.2.4
+      jest: 25.1.0
+      jest-enzyme: 7.1.2_9ea07cae9748490ddf3f947a1de16a52
+      jest-junit: 3.7.0
+      lodash: 4.17.15
+      moment: 2.24.0
+      node-sass: 4.13.1
+      node-sass-magic-importer: 5.3.2
+      prettier: 1.19.1
+      raf: 3.4.1
+      react: 16.12.0
+      react-day-picker: 7.3.0_react@16.12.0
+      react-dom: 16.12.0_react@16.12.0
+      react-dom-factories: 1.0.2
+      react-intl: 3.12.0_react@16.12.0
+      react-measure: 2.3.0_react-dom@16.12.0+react@16.12.0
+      react-responsive: 8.0.3_react@16.12.0
+      react-window: 1.8.5_react-dom@16.12.0+react@16.12.0
+      ts-jest: 25.2.0_jest@25.1.0
+      tslint: 5.20.1_typescript@3.7.4
+      tslint-config-prettier: 1.18.0
+      typescript: 3.7.4
+      uuid: 3.4.0
+    dev: false
+    name: '@rush-temp/sdk-ui-charts'
+    resolution:
+      integrity: sha512-1MHqE5Qym3yiLpVVU/pdnMuUkkNceVQLRoupBH8i5yDieBDPy+HQEGTe/MscTlGN10XYU9OzICwU8Avyzj94rg==
+      tarball: 'file:projects/sdk-ui-charts.tgz'
+    version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
@@ -15897,6 +15966,7 @@ specifiers:
   '@rush-temp/sdk-skel-ts': 'file:./projects/sdk-skel-ts.tgz'
   '@rush-temp/sdk-skel-tsx': 'file:./projects/sdk-skel-tsx.tgz'
   '@rush-temp/sdk-ui': 'file:./projects/sdk-ui.tgz'
+  '@rush-temp/sdk-ui-charts': 'file:./projects/sdk-ui-charts.tgz'
   '@rush-temp/sdk-ui-ext': 'file:./projects/sdk-ui-ext.tgz'
   '@rush-temp/sdk-ui-filters': 'file:./projects/sdk-ui-filters.tgz'
   '@rush-temp/sdk-ui-pivot': 'file:./projects/sdk-ui-pivot.tgz'

@@ -13,7 +13,7 @@ import * as fixtures from "../test_data/fixtures";
 
 import { wrap } from "../utils/wrap";
 
-import "../../styles/scss/charts.scss";
+import "../../../sdk-ui-charts/styles/scss/charts.scss";
 
 storiesOf("Internal/HighCharts/ChartProperties", module)
     .add("Dual axes chart, both axes with % format", () => {

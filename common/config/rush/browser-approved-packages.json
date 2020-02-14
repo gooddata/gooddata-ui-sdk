@@ -103,6 +103,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-filters",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-pivot",
       "allowedCategories": [ "production" ]
     },
