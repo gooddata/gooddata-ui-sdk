@@ -1,8 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IChartConfig } from "../../../Config";
-import * as fixtures from "../../../../../__mocks__/fixtures";
 import { getSanitizedStackingConfig, sanitizeConfig } from "../common";
 import { IMeasure, newMeasure } from "@gooddata/sdk-model";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {
     return newMeasure(name, m => m.localId(name));
@@ -48,7 +49,7 @@ describe("sanitizeConfig", () => {
 
 describe("getSanitizedStackingConfigFromAfm", () => {
     it("should keep config as is if afm has more than 1 measure", () => {
-        const { definition } = fixtures.barChartWith3MetricsAndViewByAttribute;
+        const { definition } = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
         const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
@@ -58,7 +59,9 @@ describe("getSanitizedStackingConfigFromAfm", () => {
     });
 
     it("should keep stacking config if afm has one measure and no stackBy", () => {
-        const { definition } = fixtures.barChartWithViewByAttribute;
+        const { definition } = recordedDataView(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy,
+        );
         const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
@@ -71,7 +74,9 @@ describe("getSanitizedStackingConfigFromAfm", () => {
     });
 
     it("should sanitized stacking config if afm has one measure and one stackBy", () => {
-        const { definition } = fixtures.barChartWithStackByAndViewByAttributes;
+        const { definition } = recordedDataView(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+        );
         const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,
@@ -81,7 +86,9 @@ describe("getSanitizedStackingConfigFromAfm", () => {
     });
 
     it("should sanitized stacking config if afm has 1 measure and isComputeRatio", () => {
-        const { definition } = fixtures.columnChartWithMeasureAndViewByAndComputeRatio;
+        const { definition } = recordedDataView(
+            ReferenceRecordings.Scenarios.ColumnChart.SingleRatioMeasureWithViewBy,
+        );
         const config: IChartConfig = {
             stackMeasures: true,
             stackMeasuresToPercent: true,

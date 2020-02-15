@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "child attribute" configured 1`] = `
+Array [
+  Object {
+    "header": Object {
+      "measureHeaderItem": Object {
+        "format": "$#,##0.00",
+        "identifier": "aangOxLSeztu",
+        "localIdentifier": "m_aangOxLSeztu",
+        "name": "Amount",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.owner.region",
+          "name": "Region",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+        },
+        "identifier": "label.owner.region",
+        "localIdentifier": "a_label.owner.region",
+        "name": "Region",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+      },
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.product.id",
+          "name": "Product",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        },
+        "identifier": "label.product.id.name",
+        "localIdentifier": "a_label.product.id.name",
+        "name": "Product Name",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      },
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "measure" configured 1`] = `
+Array [
+  Object {
+    "header": Object {
+      "measureHeaderItem": Object {
+        "format": "$#,##0.00",
+        "identifier": "aangOxLSeztu",
+        "localIdentifier": "m_aangOxLSeztu",
+        "name": "Amount",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.owner.region",
+          "name": "Region",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+        },
+        "identifier": "label.owner.region",
+        "localIdentifier": "a_label.owner.region",
+        "name": "Region",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+      },
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.product.id",
+          "name": "Product",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        },
+        "identifier": "label.product.id.name",
+        "localIdentifier": "a_label.product.id.name",
+        "name": "Product Name",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      },
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent and child attributes" configured 1`] = `
+Array [
+  Object {
+    "header": Object {
+      "measureHeaderItem": Object {
+        "format": "$#,##0.00",
+        "identifier": "aangOxLSeztu",
+        "localIdentifier": "m_aangOxLSeztu",
+        "name": "Amount",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.owner.region",
+          "name": "Region",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+        },
+        "identifier": "label.owner.region",
+        "localIdentifier": "a_label.owner.region",
+        "name": "Region",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+      },
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.product.id",
+          "name": "Product",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        },
+        "identifier": "label.product.id.name",
+        "localIdentifier": "a_label.product.id.name",
+        "name": "Product Name",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      },
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent attribute and measure" configured 1`] = `
+Array [
+  Object {
+    "header": Object {
+      "measureHeaderItem": Object {
+        "format": "$#,##0.00",
+        "identifier": "aangOxLSeztu",
+        "localIdentifier": "m_aangOxLSeztu",
+        "name": "Amount",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.owner.region",
+          "name": "Region",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+        },
+        "identifier": "label.owner.region",
+        "localIdentifier": "a_label.owner.region",
+        "name": "Region",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+      },
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.product.id",
+          "name": "Product",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        },
+        "identifier": "label.product.id.name",
+        "localIdentifier": "a_label.product.id.name",
+        "name": "Product Name",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      },
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      },
+    },
+  },
+]
+`;
+
+exports[`getDrillableSeriesWithParentAttribute should return 3 drill items with "parent attribute" configured 1`] = `
+Array [
+  Object {
+    "header": Object {
+      "measureHeaderItem": Object {
+        "format": "$#,##0.00",
+        "identifier": "aangOxLSeztu",
+        "localIdentifier": "m_aangOxLSeztu",
+        "name": "Amount",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.owner.region",
+          "name": "Region",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+        },
+        "identifier": "label.owner.region",
+        "localIdentifier": "a_label.owner.region",
+        "name": "Region",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+      },
+      "attributeHeaderItem": Object {
+        "name": "East Coast",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460488",
+      },
+    },
+  },
+  Object {
+    "header": Object {
+      "attributeHeader": Object {
+        "formOf": Object {
+          "identifier": "attr.product.id",
+          "name": "Product",
+          "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+        },
+        "identifier": "label.product.id.name",
+        "localIdentifier": "a_label.product.id.name",
+        "name": "Product Name",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+      },
+      "attributeHeaderItem": Object {
+        "name": "CompuSci",
+        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054/elements?id=165678",
+      },
+    },
+  },
+]
+`;

@@ -33,4 +33,9 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
         yAxisMeasure: ReferenceLdm.WinRate,
         attribute: ReferenceLdm.Product.Name,
         sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+    })
+    .addScenario("x and y axis measures and attribute with nulls in data", {
+        xAxisMeasure: ReferenceLdm.Amount,
+        yAxisMeasure: ReferenceLdm.WinRate,
+        attribute: ReferenceLdm.ClosedYear,
     });

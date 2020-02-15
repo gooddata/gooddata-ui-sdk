@@ -1,7 +1,9 @@
-[
-    {
-        "vis": "BubbleChart",
-        "scenario": "x axis and size measures with viewBy",
+{
+    "insight": {
+        "identifier": "BubbleChart.d97a0ab16541d3c0ddbc4fbc34da04e7",
+        "uri": "BubbleChart.d97a0ab16541d3c0ddbc4fbc34da04e7",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - x and y axis and size measures with viewBy with nulls in data",
         "buckets": [
             {
                 "localIdentifier": "measures",
@@ -22,61 +24,17 @@
             },
             {
                 "localIdentifier": "secondary_measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "tertiary_measures",
                 "items": [
                     {
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
-                                        "identifier": "abEgMnq5hyJQ"
+                                        "identifier": "abZgFKGPaGYM"
                                     }
                                 }
                             },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
-                        }
-                    }
-                ]
-            },
-            {
-                "localIdentifier": "view",
-                "items": [
-                    {
-                        "attribute": {
-                            "displayForm": {
-                                "identifier": "label.product.id.name"
-                            },
-                            "localIdentifier": "a_label.product.id.name"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "vis": "BubbleChart",
-        "scenario": "y axis and size measures with viewBy",
-        "buckets": [
-            {
-                "localIdentifier": "measures",
-                "items": []
-            },
-            {
-                "localIdentifier": "secondary_measures",
-                "items": [
-                    {
-                        "measure": {
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": {
-                                        "identifier": "aangOxLSeztu"
-                                    }
-                                }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_abZgFKGPaGYM"
                         }
                     }
                 ]
@@ -104,13 +62,20 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "closed.aag81lMifn6q"
                             },
-                            "localIdentifier": "a_label.product.id.name"
+                            "localIdentifier": "a_closed.aag81lMifn6q"
                         }
                     }
                 ]
             }
-        ]
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
     }
-]
+}

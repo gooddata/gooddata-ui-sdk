@@ -1,67 +1,89 @@
 // (C) 2007-2020 GoodData Corporation
 import { generateChartOptions } from "../../test/helper";
 
-import * as fixtures from "../../../../../__mocks__/fixtures";
-import getLegend, { shouldLegendBeEnabled, getLegendItems } from "../legendBuilder";
+import getLegend, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
 import { DEFAULT_LEGEND_CONFIG } from "../../../typings/legend";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { measureLocalId } from "@gooddata/sdk-model";
+
+const rec = recordedDataView;
 
 describe("shouldLegendBeEnabled", () => {
     it("should return false by default", () => {
-        const chartOptions = generateChartOptions(fixtures.barChartWithViewByAttribute);
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy),
+        );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if chart has more than one series", () => {
-        const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.BarChart.FourMeasuresAndPoP),
+        );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if pie chart has more than one value", () => {
-        const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, { type: "pie" });
+        const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures), {
+            type: "pie",
+        });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if the chart is stacked and has only one stack item", () => {
-        const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, {
-            type: "bar",
-        });
+        const chartOptions = generateChartOptions(
+            rec(
+                ReferenceRecordings.Scenarios.ColumnChart
+                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack,
+            ),
+            {
+                type: "column",
+            },
+        );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if the Line chart is stacked and has only one stack item", () => {
-        const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndOnlyOneStack, {
-            type: "line",
-        });
+        const chartOptions = generateChartOptions(
+            rec(
+                ReferenceRecordings.Scenarios.ColumnChart
+                    .SingleMeasureWithViewByAndStackByFilteredToSingleStack,
+            ),
+            {
+                type: "line",
+            },
+        );
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return false if the treemap is stacked and has only one measure item", () => {
-        const dv = fixtures.treemapWithMetricAndStackByAttribute;
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndSegment);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap is stacked and has many measures", () => {
-        const dv = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.ArithmeticMeasuresAndSegment);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return true if the treemap has many measures", () => {
-        const dv = fixtures.treemapWithThreeMetrics;
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.TwoMeasures);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
 
     it("should return false if the treemap has only one measures", () => {
-        const dv = fixtures.treemapWithOneMetric;
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasure);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(false);
     });
 
     it("should return true if the treemap has view by and has only one view by item", () => {
-        const dv = fixtures.treemapWithMetricAndViewByAttribute1element;
+        const dv = rec(ReferenceRecordings.Scenarios.Treemap.SingleMeasureAndViewByFilteredToOneElement);
         const chartOptions = generateChartOptions(dv, { type: "treemap" });
         expect(shouldLegendBeEnabled(chartOptions)).toBe(true);
     });
@@ -94,12 +116,14 @@ describe("shouldLegendBeEnabled", () => {
 
 describe("getLegendItems", () => {
     it("should return correct legend items for regular charts", () => {
-        const chartOptions = generateChartOptions(fixtures.barChartWith2MetricsAndViewByAttribute);
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy),
+        );
         expect(getLegendItems(chartOptions)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
-                name: "<button>Lost</button> ...",
+                name: "Amount",
                 yAxis: 0,
             },
             {
@@ -115,15 +139,18 @@ describe("getLegendItems", () => {
         const config = {
             type: "column",
             secondary_yaxis: {
-                measures: ["wonMetric"],
+                measures: [measureLocalId(ReferenceLdm.Won)],
             },
         };
-        const chartOptions = generateChartOptions(fixtures.barChartWith2MetricsAndViewByAttribute, config);
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy),
+            config,
+        );
         expect(getLegendItems(chartOptions)).toEqual([
             {
                 color: "rgb(20,178,226)",
                 legendIndex: 0,
-                name: "<button>Lost</button> ...",
+                name: "Amount",
                 yAxis: 0,
             },
             {
@@ -137,7 +164,9 @@ describe("getLegendItems", () => {
 
     it("should return correct legend items for charts with stackBy and viewBy", () => {
         // dataset with one measure
-        const chartOptions = generateChartOptions(fixtures.barChartWithStackByAndViewByAttributes);
+        const chartOptions = generateChartOptions(
+            rec(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy),
+        );
         expect(getLegendItems(chartOptions)).toEqual([
             {
                 color: "rgb(20,178,226)",
@@ -155,22 +184,19 @@ describe("getLegendItems", () => {
     });
 
     it("should return correct legend items for pie charts", () => {
-        const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, { type: "pie" });
+        const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.PieChart.TwoMeasures), {
+            type: "pie",
+        });
         expect(getLegendItems(chartOptions)).toEqual([
             {
-                color: "rgb(0,193,141)",
-                legendIndex: 0,
-                name: "Won",
-            },
-            {
                 color: "rgb(20,178,226)",
-                legendIndex: 1,
-                name: "Lost",
+                legendIndex: 0,
+                name: "Amount",
             },
             {
-                color: "rgb(229,77,66)",
-                legendIndex: 2,
-                name: "Expected",
+                color: "rgb(0,193,141)",
+                legendIndex: 1,
+                name: "Won",
             },
         ]);
     });
@@ -212,7 +238,7 @@ describe("getLegendItems", () => {
 });
 
 describe("getLegend", () => {
-    const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute);
+    const chartOptions = generateChartOptions(rec(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures));
     const legend = getLegend({}, chartOptions);
 
     it("should assign enabled: false if disabled by config", () => {

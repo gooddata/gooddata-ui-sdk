@@ -57,6 +57,10 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         measures: [ReferenceLdm.Amount],
     })
     .addScenario("single measure with viewBy", ColumnChartWithSingleMeasureAndViewBy)
+    .addScenario("single ratio measure with viewBy", {
+        measures: [ReferenceLdmExt.AmountWithRatio],
+        viewBy: [ReferenceLdm.Product.Name],
+    })
     .addScenario("single measure with viewBy and stackBy", ColumnChartWithSingleMeasureViewByAndStackBy)
     .addScenario("single measure with viewBy and stackBy filtered to single stack", {
         measures: [ReferenceLdm.Amount],

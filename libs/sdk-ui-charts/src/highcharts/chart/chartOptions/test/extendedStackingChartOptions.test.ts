@@ -1,14 +1,15 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../../utils/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
-import { barChartWith4MetricsAndViewByTwoAttributes } from "../../../../../__mocks__/fixtures";
 import { MeasureColorStrategy } from "../../colorFactory";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
-import { attributeUri, measureUri } from "@gooddata/sdk-model";
+import { attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { DefaultColorPalette } from "../../../Config";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {
@@ -192,7 +193,7 @@ describe("getCategoriesForTwoAttributes", () => {
 });
 
 describe("getDrillableSeriesWithParentAttribute", () => {
-    const dv = barChartWith4MetricsAndViewByTwoAttributes;
+    const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy);
     const {
         measureGroup,
         viewByAttribute,
@@ -215,75 +216,24 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         type,
         metricColorStrategy,
     );
-    const drillIntersectionItems = [
-        {
-            header: {
-                measureHeaderItem: {
-                    format: "#,##0.00",
-                    identifier: "aaeb7jTCfexV",
-                    localIdentifier: "c2fa878519934f39aefe9325638f2beb",
-                    name: "_Close [BOP]",
-                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/9211",
-                },
-            },
-        },
-        {
-            header: {
-                attributeHeader: {
-                    formOf: {
-                        identifier: "attr.owner.region",
-                        name: "Region",
-                        uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023",
-                    },
-                    identifier: "label.owner.region",
-                    localIdentifier: "6af145960f4145efbe4ace7504b0f1de",
-                    name: "Region",
-                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1024",
-                },
-                attributeHeaderItem: {
-                    name: "East Coast",
-                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1023/elements?id=1225",
-                },
-            },
-        },
-        {
-            header: {
-                attributeHeader: {
-                    formOf: {
-                        identifier: "attr.owner.department",
-                        name: "Department",
-                        uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026",
-                    },
-                    identifier: "label.owner.department",
-                    localIdentifier: "0e3388d37e444c369731afe398740572",
-                    name: "Department",
-                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1027",
-                },
-                attributeHeaderItem: {
-                    name: "Direct Sales",
-                    uri: "/gdc/md/jroecoqa7jywstxy1hxp8lwl2c4nc10t/obj/1026/elements?id=1226",
-                },
-            },
-        },
-    ];
 
     const attributes = dv.attributes();
     const measures = dv.measures();
 
-    const a0uri = attributeUri(attributes[0]);
-    const a1uri = attributeUri(attributes[1]);
-    const m0uri = measureUri(measures[0]);
+    const a0id = attributeIdentifier(attributes[0]);
+    const a1id = attributeIdentifier(attributes[1]);
+    const m0id = measureIdentifier(measures[0]);
 
     it.each([
-        ["parent attribute", [a0uri]],
-        ["child attribute", [a1uri]],
-        ["measure", [measureUri(measures[0])]],
+        ["parent attribute", [a0id]],
+        ["child attribute", [a1id]],
+        ["measure", [m0id]],
         // tslint:disable-next-line:max-line-length
-        ["parent and child attributes", [a0uri, a1uri]],
+        ["parent and child attributes", [a0id, a1id]],
         // tslint:disable-next-line:max-line-length
-        ["parent attribute and measure", [a0uri, m0uri]],
-    ])('should return 3 drill items with "%s" configured', (_desc: string, itemUris: string[]) => {
-        const drillableItems = itemUris.map((uri: string) => HeaderPredicates.uriMatch(uri));
+        ["parent attribute and measure", [a0id, m0id]],
+    ])('should return 3 drill items with "%s" configured', (_desc: string, itemIds: string[]) => {
+        const drillableItems = itemIds.map((id: string) => HeaderPredicates.identifierMatch(id));
         const drillableMeasuresSeriesData = getDrillableSeries(
             dv,
             seriesWithoutDrillability,
@@ -293,6 +243,6 @@ describe("getDrillableSeriesWithParentAttribute", () => {
             type,
         );
 
-        expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toEqual(drillIntersectionItems);
+        expect(drillableMeasuresSeriesData[0].data[0].drillIntersection).toMatchSnapshot();
     });
 });
