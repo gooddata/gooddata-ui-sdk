@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import invariant from "ts-invariant";
 import { Identifier } from "./index";
@@ -153,4 +153,50 @@ export function newDimension(items: DimensionItem[] = [], totals: ITotal[] = [])
         itemIdentifiers: input.ids,
         ...totalsProp,
     };
+}
+
+/**
+ * Result of search of item among list of dimensions.
+ *
+ * @public
+ */
+export type ItemInDimension = {
+    /**
+     * Content of dimension where the item was found.
+     */
+    dim: IDimension;
+
+    /**
+     * Index of dimension where the item was found.
+     */
+    dimIdx: number;
+
+    /**
+     * Index of the item within the dimension where it was found.
+     */
+    itemIdx: number;
+};
+
+/**
+ * Looks for item with the provided local identifier among the dimensions.
+ *
+ * @param dims - list of dimensions to look in
+ * @param localId - local identifier to find among item identifiers
+ * @returns list of items in dimensions, empty if not found, may contain more than one entry if
+ *  item is in multiple dimensions
+ * @public
+ */
+export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInDimension[] {
+    const result: ItemInDimension[] = [];
+
+    for (let dimIdx = 0; dimIdx < dims.length; dimIdx++) {
+        const dim = dims[dimIdx];
+        const itemIdx = dim.itemIdentifiers.findIndex(i => i === localId);
+
+        if (itemIdx >= 0) {
+            result.push({ dim, dimIdx, itemIdx });
+        }
+    }
+
+    return result;
 }

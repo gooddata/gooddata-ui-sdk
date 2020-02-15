@@ -16,6 +16,7 @@ import {
     MeasureGroupIdentifier,
     newDefForBuckets,
     newBucket,
+    attributeLocalId,
 } from "@gooddata/sdk-model";
 
 const workspace = "test workspace";
@@ -44,7 +45,10 @@ describe("converts execution definition to AFM Execution", () => {
                     newBucket("measureBucket1", ReferenceLdm.Won),
                     newBucket("attributeBucket1", ReferenceLdm.Account.Name),
                 ]),
-                newTwoDimensional(["localId1"], [MeasureGroupIdentifier, total]),
+                newTwoDimensional(
+                    [attributeLocalId(ReferenceLdm.Account.Name)],
+                    [MeasureGroupIdentifier, total],
+                ),
             ),
         ],
     ];

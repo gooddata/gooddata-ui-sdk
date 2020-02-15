@@ -2,6 +2,7 @@
 
 import {
     dimensionSetTotals,
+    dimensionsFindItem,
     dimensionTotals,
     IDimension,
     MeasureGroupIdentifier,
@@ -98,5 +99,20 @@ describe("dimensionTotals", () => {
 
     it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
         expect(() => dimensionTotals(input)).toThrow();
+    });
+});
+
+describe("dimensionsFindItem", () => {
+    const TestDimensions = newTwoDimensional(["localId1", "localId2"], ["localId3", "localId4", "localId2"]);
+
+    const Scenarios: Array<[string, IDimension[], string]> = [
+        ["find one item in first dimension", TestDimensions, "localId1"],
+        ["find one item in second dimension", TestDimensions, "localId4"],
+        ["find one item in both dimensions", TestDimensions, "localId2"],
+        ["find no item", TestDimensions, "localId0"],
+    ];
+
+    it.each(Scenarios)("should %s", (_desc, dims, id) => {
+        expect(dimensionsFindItem(dims, id)).toMatchSnapshot();
     });
 });

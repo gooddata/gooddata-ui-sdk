@@ -42,6 +42,65 @@ Object {
 }
 `;
 
+exports[`dimensionsFindItem should find no item 1`] = `Array []`;
+
+exports[`dimensionsFindItem should find one item in both dimensions 1`] = `
+Array [
+  Object {
+    "dim": Object {
+      "itemIdentifiers": Array [
+        "localId1",
+        "localId2",
+      ],
+    },
+    "dimIdx": 0,
+    "itemIdx": 1,
+  },
+  Object {
+    "dim": Object {
+      "itemIdentifiers": Array [
+        "localId3",
+        "localId4",
+        "localId2",
+      ],
+    },
+    "dimIdx": 1,
+    "itemIdx": 2,
+  },
+]
+`;
+
+exports[`dimensionsFindItem should find one item in first dimension 1`] = `
+Array [
+  Object {
+    "dim": Object {
+      "itemIdentifiers": Array [
+        "localId1",
+        "localId2",
+      ],
+    },
+    "dimIdx": 0,
+    "itemIdx": 0,
+  },
+]
+`;
+
+exports[`dimensionsFindItem should find one item in second dimension 1`] = `
+Array [
+  Object {
+    "dim": Object {
+      "itemIdentifiers": Array [
+        "localId3",
+        "localId4",
+        "localId2",
+      ],
+    },
+    "dimIdx": 1,
+    "itemIdx": 1,
+  },
+]
+`;
+
 exports[`newDimension should create a valid dimension when input arg is mix of identifiers and totals 1`] = `
 Object {
   "itemIdentifiers": Array [
