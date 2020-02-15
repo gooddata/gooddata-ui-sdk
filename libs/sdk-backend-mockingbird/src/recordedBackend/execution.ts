@@ -26,7 +26,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { ExecutionRecording, RecordingIndex } from "./types";
+import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
 
 //
 //
@@ -222,10 +222,18 @@ class RecordedDataView implements IDataView {
  * @internal
  */
 export function recordedDataView(
-    recording: ExecutionRecording,
+    recording: ScenarioRecording,
     dataViewId: string = DataViewAll,
 ): DataViewFacade {
-    const definition = recording.definition;
+    const { execution, scenarioIndex } = recording;
+    const scenario = execution.scenarios?.[scenarioIndex];
+
+    invariant(
+        scenario,
+        "unable to find test scenario recording; this is most likely because of invalid/stale recording index. please refresh recordings and rebuild.",
+    );
+
+    const definition = { ...execution.definition, buckets: scenario.buckets };
 
     /*
      * construct ad-hoc recording index that contains input recording.
@@ -234,11 +242,11 @@ export function recordedDataView(
      */
     const recordingKey = recordedExecutionKey(definition);
     const adHocIndex: RecordingIndex = { executions: {} };
-    adHocIndex.executions![recordingKey] = recording;
+    adHocIndex.executions![recordingKey] = execution;
 
     const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
-    const result = new RecordedExecutionResult(definition, factory, recording);
-    const data = recording[dataViewId];
+    const result = new RecordedExecutionResult(definition, factory, execution);
+    const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 

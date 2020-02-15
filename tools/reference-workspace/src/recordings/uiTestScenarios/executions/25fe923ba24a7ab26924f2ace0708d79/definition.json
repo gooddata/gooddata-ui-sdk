@@ -1,28 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "aadpHDMBecIy"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_aadpHDMBecIy"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "attribute",
-            "items": []
-        }
-    ],
+    "buckets": [],
     "attributes": [],
     "measures": [
         {

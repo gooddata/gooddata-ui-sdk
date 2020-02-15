@@ -1,6 +1,29 @@
 [
     {
         "vis": "Xirr",
-        "scenario": "only measure"
+        "scenario": "only measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aadpHDMBecIy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aadpHDMBecIy"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            }
+        ]
     }
 ]

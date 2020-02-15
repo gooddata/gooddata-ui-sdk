@@ -37,20 +37,23 @@ function generateRecordingConst(
 // generating initializer for map of maps .. fun times.
 //
 
-type VisScenarioRecording = [string, string, ExecutionRecording];
+type VisScenarioRecording = [string, string, ExecutionRecording, number];
 
 function generateScenarioForVis(entries: VisScenarioRecording[]): string {
     return `{ ${entries
         .map(
-            ([_, entryName, entryRecording]) =>
-                `${createUniqueVariableName(entryName, {})}: ${entryRecording.getRecordingName()}`,
+            ([_, entryName, entryRecording, scenarioIndex]) =>
+                `${createUniqueVariableName(
+                    entryName,
+                    {},
+                )}: { scenarioIndex: ${scenarioIndex}, execution: ${entryRecording.getRecordingName()}}`,
         )
         .join(",")} }`;
 }
 
 function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<VariableStatementStructure> {
     const recsWithVisAndScenario = flatMap(recordings, rec =>
-        rec.scenarios.map<VisScenarioRecording>(s => [s.vis, s.scenario, rec]),
+        rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
 

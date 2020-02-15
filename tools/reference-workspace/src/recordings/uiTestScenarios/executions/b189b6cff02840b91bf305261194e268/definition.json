@@ -1,32 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "aangOxLSeztu"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "trend",
-            "items": []
-        },
-        {
-            "localIdentifier": "segment",
-            "items": []
-        }
-    ],
+    "buckets": [],
     "attributes": [],
     "measures": [
         {

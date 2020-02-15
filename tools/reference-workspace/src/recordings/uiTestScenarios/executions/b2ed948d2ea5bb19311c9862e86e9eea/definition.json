@@ -1,28 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": []
-        },
-        {
-            "localIdentifier": "attribute",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "label.product.id.name"
-                        },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "columns",
-            "items": []
-        }
-    ],
+    "buckets": [],
     "attributes": [
         {
             "attribute": {
