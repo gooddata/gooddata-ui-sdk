@@ -29,7 +29,7 @@
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
         "validate-ci": "npm run tslint-ci && npm run prettier-check",
         "refresh-ldm": "../reference-workspace-mgmt/bin/refresh-ldm.sh && npm run build",
-        "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run build"
+        "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.14",
