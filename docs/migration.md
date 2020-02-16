@@ -4,9 +4,9 @@
 
 -   @gooddata/gd-bear-client => @gooddata/gd-bear-client
 -   @gooddata/typings => @gooddata/gd-bear-model
--   @gooddata/react-components => @gooddata/sdk-ui
+-   @gooddata/react-components => @gooddata/sdk-ui, filters, charts, pivot, ext
 
-### Changes in react-components => sdk-ui
+### Changes in react-components => sdk-ui & friends
 
 #### Removed components
 
@@ -64,3 +64,13 @@
     -   TODO: add description & migration guide
 
 -   The exported HeaderPredicateFactory is now exported as HeaderPredicates
+
+#### Styling changes
+
+-   Styles were also split into the respective packages (chart styles to sdk-ui-charts etc)
+-   To import styles for all charts: import "@gooddata/sdk-ui-charts/styles/css/main.css"
+-   To import styles for pivot: import "@gooddata/sdk-ui-pivot/styles/css/main.css"
+-   To import styles for all filters: import "@gooddata/sdk-ui-filters/styles/css/main.css"
+    -   It is however recommended to only import styles for the filters you actually use. Those
+        are in stand-alone files: attributeFilter.scss, dateFilter.scss, measureValueFilter.scss
+-   Apart from the organizational changes, there were no changes to the styles, classes etc.
