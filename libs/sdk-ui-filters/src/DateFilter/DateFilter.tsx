@@ -29,6 +29,9 @@ interface IStatePropsIntersection {
     selectedFilterOption: ExtendedDateFilters.DateFilterOption;
 }
 
+/**
+ * @beta
+ */
 export interface IDateFilterOwnProps extends IStatePropsIntersection {
     filterOptions: ExtendedDateFilters.IDateFilterOptionsByType;
     availableGranularities: ExtendedDateFilters.DateFilterGranularity[];
@@ -38,6 +41,9 @@ export interface IDateFilterOwnProps extends IStatePropsIntersection {
     locale?: string;
 }
 
+/**
+ * @beta
+ */
 export interface IDateFilterCallbackProps {
     onApply: (dateFilterOption: ExtendedDateFilters.DateFilterOption, excludeCurrentPeriod: boolean) => void;
     onCancel?: () => void;
@@ -45,6 +51,9 @@ export interface IDateFilterCallbackProps {
     onClose?: () => void;
 }
 
+/**
+ * @beta
+ */
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {}
 
 interface IDateFilterState extends IStatePropsIntersection {
@@ -53,6 +62,9 @@ interface IDateFilterState extends IStatePropsIntersection {
     isExcludeCurrentPeriodEnabled: boolean;
 }
 
+/**
+ * @beta
+ */
 export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
     public static defaultProps: Partial<IDateFilterProps> = {
         isEditMode: false,

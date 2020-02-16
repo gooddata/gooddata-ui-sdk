@@ -4,6 +4,9 @@ import * as moment from "moment";
 import { platformDateFormat } from "../constants/Platform";
 import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
 
+/**
+ * @beta
+ */
 export const defaultDateFilterOptions: ExtendedDateFilters.IDateFilterOptionsByType = {
     allTime: {
         localIdentifier: "ALL_TIME",

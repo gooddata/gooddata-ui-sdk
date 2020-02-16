@@ -1,6 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 /* tslint:disable:no-namespace */
 
+/**
+ * @beta
+ */
 export namespace ExtendedDateFilters {
     export type GUID = string;
 

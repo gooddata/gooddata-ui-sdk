@@ -29,6 +29,8 @@ interface IAttributeElementsState {
 /**
  * AttributeElements
  * is a component that lists attribute values using a children function
+ * TODO: SDK8: add docs
+ * @public
  */
 export class AttributeElements extends React.PureComponent<IAttributeElementsProps, IAttributeElementsState> {
     public static defaultProps: Partial<IAttributeElementsProps> = {

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { granularityIntlCodes } from "./constants/i18n";
 import { defaultDateFilterOptions } from "./constants/config";
 import { validateFilterOption } from "./validation/OptionValidation";
@@ -11,6 +11,9 @@ import {
 } from "./utils/Translations/DateFilterTitle";
 import { DateFilter, IDateFilterCallbackProps, IDateFilterOwnProps, IDateFilterProps } from "./DateFilter";
 
+/**
+ * @beta
+ */
 const DateFilterHelpers = {
     validateFilterOption,
     getDateFilterTitle,

@@ -44,6 +44,9 @@ const getDropdownData = (
     };
 };
 
+/**
+ * @beta
+ */
 export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
     public render() {
         const { button, measureTitle, locale, filter, displayDropdown } = this.props;

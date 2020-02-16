@@ -61,6 +61,8 @@ const DefaultFilterError = injectIntl(({ intl }) => {
 /**
  * AttributeFilter is a component that renders a dropdown populated with attribute values
  * for specified attribute display form.
+ * TODO: SDK8: add docs
+ * @public
  */
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
     public static defaultProps = {
