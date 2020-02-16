@@ -14,6 +14,7 @@ import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import * as fixtures from "../../../../__mocks__/fixtures";
 
 const BarChartNoAttributes = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
 const BarChartView = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
@@ -24,6 +25,9 @@ const BarChartViewAndStack = recordedDataView(
 );
 const AreaChartMultiMeasures = recordedDataView(ReferenceRecordings.Scenarios.AreaChart.ArithmeticMeasures);
 const ColumnChartViewBy = recordedDataView(ReferenceRecordings.Scenarios.ColumnChart.SingleMeasureWithViewBy);
+const ColumnChartWithRatioAndViewBy = recordedDataView(
+    ReferenceRecordings.Scenarios.ColumnChart.SingleRatioMeasureWithViewBy,
+);
 const PieChartSingleMeasure = recordedDataView(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
 
 describe("ChartTransformation", () => {
@@ -148,14 +152,10 @@ describe("ChartTransformation", () => {
                 expect(passedProps.chartOptions.stacking).toEqual("percent");
             });
             it("should sanitized stack measures configuration with computeRatio", () => {
-                const passedProps = createChartRendererProps(
-                    ColumnChartViewBy.dataView,
-                    // TODO fixtures.columnChartWithMeasureAndViewByAndComputeRatio.dataView,
-                    {
-                        stackMeasures: true,
-                        stackMeasuresToPercent: true,
-                    },
-                );
+                const passedProps = createChartRendererProps(ColumnChartWithRatioAndViewBy.dataView, {
+                    stackMeasures: true,
+                    stackMeasuresToPercent: true,
+                });
                 expect(passedProps.chartOptions.stacking).toBeNull();
             });
         });
@@ -293,8 +293,7 @@ describe("ChartTransformation", () => {
 
     describe("onNegativeValues", () => {
         const pieChartPropsWithNegativeValue = {
-            dataView: PieChartSingleMeasure.dataView,
-            // TODO dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
+            dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
             config: {
                 ...defaultProps.config,
                 type: "pie",

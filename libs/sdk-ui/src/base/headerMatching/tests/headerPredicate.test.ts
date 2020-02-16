@@ -1,10 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures";
 import { IMappingHeader } from "../MappingHeader";
 import { IHeaderPredicate } from "../HeaderPredicate";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling";
-import { emptyFacade } from "../../../../__mocks__/fixtures";
+import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { newDefForBuckets } from "@gooddata/sdk-model";
+
+const emptyFacade = dummyDataFacade(newDefForBuckets("testWorkspace", []));
 
 describe("isSomeHeaderPredicateMatched", () => {
     it("should return true when some of predicates match header", () => {
