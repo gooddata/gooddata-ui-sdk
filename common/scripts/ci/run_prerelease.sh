@@ -20,7 +20,7 @@ else
     echo "Publishing to NPM"
 
     # All good, do the real thing
-    # ${_RUSH} publish -p --include-all
+    ${_RUSH} publish -p --include-all
 
     if [ ! -z "$SLACK_VARS_FILE" ]; then
         echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
