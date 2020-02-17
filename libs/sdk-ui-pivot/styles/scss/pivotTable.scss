@@ -42,6 +42,11 @@ $header-cell-resize-width: 20px;
             &::after {
                 display: none;
             }
+
+            &,
+            .ag-react-container {
+                width: 100%;
+            }
         }
 
         .ag-header {
