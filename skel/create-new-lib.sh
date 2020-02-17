@@ -51,7 +51,7 @@ mv ${newlib_package}.new ${newlib_package}
 # Add new lib package into rush.json
 #
 echo "Adding new entry to rush.json"
-newlib_entry=" \"projects\": \[    {\"packageName\": \"@gooddata\/${newlib_name}\",\"projectFolder\": \"libs\/${newlib_name}\",\"reviewCategory\": \"production\"},"
+newlib_entry=" \"projects\": \[    {\"packageName\": \"@gooddata\/${newlib_name}\",\"projectFolder\": \"libs\/${newlib_name}\",\"reviewCategory\": \"production\", \"versionPolicyName\": \"sdk\" },"
 sed "s/\"projects\": \[/${newlib_entry}/" ../rush.json > ../rush.json.new
 mv ../rush.json.new ../rush.json
 ../common/temp/node_modules/.bin/prettier --write '../rush.json'
