@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IFunnelChartProps } from "@gooddata/sdk-ui";
+import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import funnelChartScenarios from "../../../scenarios/charts/funnelChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

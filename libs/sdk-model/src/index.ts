@@ -50,6 +50,8 @@ export {
     newDimension,
     MeasureGroupIdentifier,
     dimensionSetTotals,
+    dimensionsFindItem,
+    ItemInDimension,
 } from "./execution/base/dimension";
 
 export { idRef, uriRef, localIdRef } from "./execution/base/factory";

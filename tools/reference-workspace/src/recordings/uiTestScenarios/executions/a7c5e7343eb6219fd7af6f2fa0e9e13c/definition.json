@@ -1,0 +1,38 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "label.owner.region"
+                },
+                "localIdentifier": "a_label.owner.region"
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aangOxLSeztu"
+                        }
+                    }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["a_label.owner.region"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

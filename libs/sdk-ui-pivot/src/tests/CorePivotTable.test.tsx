@@ -23,7 +23,7 @@ describe("CorePivotTable", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const singleMeasureExec = prepareExecution(
         backend,
-        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes.definition,
+        ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes.execution.definition,
     );
 
     function renderComponent(

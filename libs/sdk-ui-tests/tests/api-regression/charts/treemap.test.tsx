@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { ITreemapProps } from "@gooddata/sdk-ui";
+import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import treemapScenarios from "../../../scenarios/charts/treemap";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

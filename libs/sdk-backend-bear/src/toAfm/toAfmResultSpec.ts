@@ -5,15 +5,13 @@ import { GdcExecuteAFM } from "@gooddata/gd-bear-model";
 import { convertFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import {
-    attributeLocalId,
-    bucketItems,
-    bucketsFindAttribute,
+    dimensionsFindItem,
     dimensionTotals,
     IAttribute,
-    isAttribute,
-    ITotal,
-    totalIsNative,
     IExecutionDefinition,
+    ITotal,
+    MeasureGroupIdentifier,
+    totalIsNative,
 } from "@gooddata/sdk-model";
 import { toBearRef } from "../utils/ObjRefConverter";
 
@@ -60,20 +58,23 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
     return nativeTotals.map(t => {
         // then for each native total, look across buckets (if any) for an attribute that is specified in
         // the total definition
-        const attribute = bucketsFindAttribute(def.buckets, t.attributeIdentifier);
+        const attributeInDims = dimensionsFindItem(def.dimensions, t.attributeIdentifier);
 
-        // well - there is native total for attribute that is nowhere in them buckets - this must be caught earlier
-        if (!attribute) {
-            // TODO: ensure totals referencing missing attributes is not possible
-            throw new Error("invalid invariant");
+        if (!attributeInDims.length) {
+            throw new Error(
+                `Native total references attribute that is not in any dimension: ${t.attributeIdentifier}`,
+            );
+        } else if (attributeInDims.length > 1) {
+            throw new Error(
+                `Native total references attribute that is in multiple dimensions: ${t.attributeIdentifier}`,
+            );
         }
 
-        // now, knowing the bucket and index of the attribute.. take all attributes that are before it in
-        // the bucket
-        const rollupAttributes = bucketItems(attribute.bucket)
-            .slice(0, attribute.idx)
-            .filter(isAttribute)
-            .map(attributeLocalId);
+        const attributeDim = attributeInDims[0];
+        // now, knowing the dimension and index of the attribute.. roll up all attributes that are before it
+        const rollupAttributes = attributeDim.dim.itemIdentifiers
+            .slice(0, attributeDim.itemIdx)
+            .filter(id => id !== MeasureGroupIdentifier);
 
         // and create native total such, that it rolls up all those attributes
         return {

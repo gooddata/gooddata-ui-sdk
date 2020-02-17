@@ -26,7 +26,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { ExecutionRecording, RecordingIndex } from "./types";
+import { ExecutionRecording, RecordingIndex, ScenarioRecording } from "./types";
 
 //
 //
@@ -73,6 +73,12 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
     }
 }
 
+function recordedExecutionKey(defOrFingerprint: IExecutionDefinition | string): string {
+    const fp = typeof defOrFingerprint === "string" ? defOrFingerprint : defFingerprint(defOrFingerprint);
+
+    return `fp_${fp}`;
+}
+
 function recordedPreparedExecution(
     definition: IExecutionDefinition,
     executionFactory: IExecutionFactory,
@@ -90,7 +96,8 @@ function recordedPreparedExecution(
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
-                const recording = recordings.executions && recordings.executions["fp_" + fp];
+                const key = recordedExecutionKey(fp);
+                const recording = recordings.executions && recordings.executions[key];
 
                 if (!recording) {
                     reject(new NoDataError("recording was not found"));
@@ -204,6 +211,10 @@ class RecordedDataView implements IDataView {
  * (e.g. for different windows etc), then it is possible to provide dataViewId to look up the particular view. By default,
  * the data view with all data is wrapped in the facade.
  *
+ * The returned view is linked to a valid result; calling transform() returns an instance of prepared execution which
+ * is executable as-is (and leads to the same result). However any modification to this prepared execution would
+ * lead a NO_DATA errors (because that different data is not included in the index)
+ *
  * @remarks see {@link dataViewWindow}
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
@@ -211,13 +222,31 @@ class RecordedDataView implements IDataView {
  * @internal
  */
 export function recordedDataView(
-    recording: ExecutionRecording,
+    recording: ScenarioRecording,
     dataViewId: string = DataViewAll,
 ): DataViewFacade {
-    const definition = recording.definition;
-    const factory = new RecordedExecutionFactory({}, "testWorkspace");
-    const result = new RecordedExecutionResult(definition, factory, recording);
-    const data = recording[dataViewId];
+    const { execution, scenarioIndex } = recording;
+    const scenario = execution.scenarios?.[scenarioIndex];
+
+    invariant(
+        scenario,
+        "unable to find test scenario recording; this is most likely because of invalid/stale recording index. please refresh recordings and rebuild.",
+    );
+
+    const definition = { ...execution.definition, buckets: scenario.buckets };
+
+    /*
+     * construct ad-hoc recording index that contains input recording.
+     *
+     * this enables limited facade => result => transform => exec flow.
+     */
+    const recordingKey = recordedExecutionKey(definition);
+    const adHocIndex: RecordingIndex = { executions: {} };
+    adHocIndex.executions![recordingKey] = execution;
+
+    const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace");
+    const result = new RecordedExecutionResult(definition, factory, execution);
+    const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 

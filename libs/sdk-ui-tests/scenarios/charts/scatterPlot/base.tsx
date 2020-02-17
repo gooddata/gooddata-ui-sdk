@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui";
+import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
 
@@ -33,4 +33,9 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
         yAxisMeasure: ReferenceLdm.WinRate,
         attribute: ReferenceLdm.Product.Name,
         sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+    })
+    .addScenario("x and y axis measures and attribute with nulls in data", {
+        xAxisMeasure: ReferenceLdm.Amount,
+        yAxisMeasure: ReferenceLdm.WinRate,
+        attribute: ReferenceLdm.ClosedYear,
     });

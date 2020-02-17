@@ -12,7 +12,7 @@ import {
     isMeasure,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { IColorMapping } from "@gooddata/sdk-ui";
+import { IColorMapping } from "@gooddata/sdk-ui-charts";
 import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 

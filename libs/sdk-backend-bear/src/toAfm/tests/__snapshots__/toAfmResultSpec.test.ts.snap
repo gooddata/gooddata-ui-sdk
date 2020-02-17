@@ -152,7 +152,7 @@ Object {
       "dimensions": Array [
         Object {
           "itemIdentifiers": Array [
-            "localId1",
+            "a_label.account.id.name",
           ],
         },
         Object {
@@ -200,4 +200,4 @@ Object {
 }
 `;
 
-exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"invalid invariant"`;
+exports[`converts execution definition to AFM Execution throw error with dimensions with native totals but no attribute in bucket 1`] = `"Native total references attribute that is not in any dimension: a_label.account.id.name"`;

@@ -1,50 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "aangOxLSeztu"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "view",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "label.product.id.name"
-                        },
-                        "localIdentifier": "a_label.product.id.name"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "stack",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "closed.aag81lMifn6q"
-                        },
-                        "localIdentifier": "a_closed.aag81lMifn6q"
-                    }
-                }
-            ]
-        }
-    ],
+    "buckets": [],
     "attributes": [
         {
             "attribute": {

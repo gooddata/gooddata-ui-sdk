@@ -1,10 +1,72 @@
 [
     {
         "vis": "Headline",
-        "scenario": "two measures"
+        "scenario": "two measures",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            }
+        ]
     },
     {
         "vis": "Headline",
-        "scenario": "two measures with german separators"
+        "scenario": "two measures with german separators",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "acugFHNJgsBy"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            }
+        ]
     }
 ]

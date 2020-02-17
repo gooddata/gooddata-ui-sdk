@@ -1,53 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "aangOxLSeztu"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                },
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "acugFHNJgsBy"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_acugFHNJgsBy"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "view",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "closed.aag81lMifn6q"
-                        },
-                        "localIdentifier": "a_closed.aag81lMifn6q"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "stack",
-            "items": []
-        }
-    ],
+    "buckets": [],
     "attributes": [
         {
             "attribute": {

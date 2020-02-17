@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate";
 import {
     getMappingHeaderIdentifier,
@@ -18,6 +18,7 @@ import {
     isArithmeticMeasure,
     measureArithmeticOperands,
     measureIdentifier,
+    measureLocalId,
     measureMasterIdentifier,
     measureUri,
 } from "@gooddata/sdk-model";
@@ -229,13 +230,16 @@ export function attributeItemNameMatch(name: string): IHeaderPredicate {
  *
  * @public
  */
-export function localIdentifierMatch(localIdentifier: string): IHeaderPredicate {
+export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate {
+    const localId =
+        typeof localIdOrMeasure === "string" ? localIdOrMeasure : measureLocalId(localIdOrMeasure);
+
     return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
         if (!hasMappingHeaderLocalIdentifier(header)) {
             return false;
         }
         const headerLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        return headerLocalIdentifier && headerLocalIdentifier === localIdentifier;
+        return headerLocalIdentifier && headerLocalIdentifier === localId;
     };
 }
 

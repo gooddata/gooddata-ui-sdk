@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { UnboundVisProps, VisProps, CustomizedScenario } from "../../../src";
-import { ILegendConfig } from "@gooddata/sdk-ui";
+import { ILegendConfig } from "@gooddata/sdk-ui-charts";
 
 const LegendVariants: Array<[string, ILegendConfig]> = [
     ["auto legend", { position: "auto" }],

@@ -1,6 +1,42 @@
 [
     {
         "vis": "LineChart",
-        "scenario": "single measure with % and trendBy"
+        "scenario": "single measure with % and trendBy",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "created.aci81lMifn6q"
+                            },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ]
     }
 ]

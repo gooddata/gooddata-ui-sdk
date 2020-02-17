@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IHeadlineProps } from "@gooddata/sdk-ui";
+import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import headlineScenarios from "../../../scenarios/charts/headline";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

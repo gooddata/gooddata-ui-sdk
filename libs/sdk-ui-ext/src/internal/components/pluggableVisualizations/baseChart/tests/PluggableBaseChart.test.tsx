@@ -1,13 +1,8 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { IBucketOfFun, IFilters, IVisProps } from "../../../../interfaces/Visualization";
-import {
-    BucketNames,
-    VisualizationEnvironment,
-    IBaseChartProps,
-    DefaultLocale,
-    ILocale,
-} from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationEnvironment, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { IBaseChartProps } from "@gooddata/sdk-ui-charts";
 import { PluggableBaseChart } from "../PluggableBaseChart";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";

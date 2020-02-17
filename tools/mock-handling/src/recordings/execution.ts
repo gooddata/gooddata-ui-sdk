@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
+import { defFingerprint, IExecutionDefinition, IBucket } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
@@ -150,6 +150,7 @@ export const ExecutionDefinitionFile = "definition.json";
 export type ScenarioDescriptor = {
     vis: string;
     scenario: string;
+    buckets: IBucket[];
 };
 
 export class ExecutionRecording implements IRecording {
@@ -230,11 +231,18 @@ export class ExecutionRecording implements IRecording {
             {},
         );
 
-        return {
+        const entry: RecordingIndexEntry = {
             definition: path.join(this.directory, ExecutionDefinitionFile),
             executionResult: path.join(this.directory, ExecutionResultFile),
             ...dataViewFiles,
         };
+
+        const scenariosFile = path.join(this.directory, ScenariosFile);
+        if (fs.existsSync(scenariosFile)) {
+            entry.scenarios = scenariosFile;
+        }
+
+        return entry;
     }
 
     private hasResult(): boolean {

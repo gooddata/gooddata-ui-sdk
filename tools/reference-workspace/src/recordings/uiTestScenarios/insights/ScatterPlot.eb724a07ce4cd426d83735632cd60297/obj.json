@@ -1,0 +1,64 @@
+{
+    "insight": {
+        "identifier": "ScatterPlot.eb724a07ce4cd426d83735632cd60297",
+        "uri": "ScatterPlot.eb724a07ce4cd426d83735632cd60297",
+        "visualizationUrl": "local:scatter",
+        "title": "ScatterPlot - x and y axis measures and attribute with nulls in data",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abZgFKGPaGYM"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "closed.aag81lMifn6q"
+                            },
+                            "localIdentifier": "a_closed.aag81lMifn6q"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

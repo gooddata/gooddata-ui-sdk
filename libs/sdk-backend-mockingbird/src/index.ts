@@ -9,6 +9,7 @@ export {
     ExecutionRecording,
     InsightRecording,
     DisplayFormRecording,
+    ScenarioRecording,
     RecordedBackendConfig,
 } from "./recordedBackend/types";
 

@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-_build_styles() {
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
-}
-
 _clean() {
     rm -rf dist
 }
@@ -11,8 +7,6 @@ _clean() {
 _common-build() {
     mkdir -p dist/base/localization
     cp -rf src/base/localization/bundles dist/base/localization
-
-    _build_styles
 }
 
 build() {
@@ -29,7 +23,6 @@ build-dev() {
 
 build-dev-watch() {
     _common-build
-    _build_styles
     tsc --watch -p tsconfig.dev.json
 }
 

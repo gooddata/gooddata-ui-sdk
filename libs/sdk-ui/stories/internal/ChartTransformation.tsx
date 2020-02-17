@@ -13,7 +13,7 @@ import fixtureDataSets, * as fixtures from "../test_data/fixtures";
 import { wrap } from "../utils/wrap";
 import CustomLegend from "../utils/CustomLegend";
 
-import "../../styles/scss/charts.scss";
+import "../../../sdk-ui-charts/styles/scss/charts.scss";
 import { GERMAN_SEPARATORS } from "../data/numberFormat";
 import identity = require("lodash/identity");
 

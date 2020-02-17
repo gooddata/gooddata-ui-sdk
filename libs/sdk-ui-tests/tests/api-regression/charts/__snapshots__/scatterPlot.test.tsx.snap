@@ -2165,6 +2165,113 @@ Object {
 
 exports[`ScatterPlot with x and y axis measures and attribute with attr sorting should create expected props for core chart 1`] = `Object {}`;
 
+exports[`ScatterPlot with x and y axis measures and attribute with nulls in data should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "closed.aag81lMifn6q",
+        },
+        "localIdentifier": "a_closed.aag81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "abZgFKGPaGYM",
+                },
+              },
+            },
+            "localIdentifier": "m_abZgFKGPaGYM",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "closed.aag81lMifn6q",
+            },
+            "localIdentifier": "a_closed.aag81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_closed.aag81lMifn6q",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "abZgFKGPaGYM",
+            },
+          },
+        },
+        "localIdentifier": "m_abZgFKGPaGYM",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`ScatterPlot with x and y axis measures and attribute with nulls in data should create expected props for core chart 1`] = `Object {}`;
+
 exports[`ScatterPlot with x axis measure and attribute should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

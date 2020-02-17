@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
-import { IChartConfig } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import cloneDeep = require("lodash/cloneDeep");
 
 const ConfigVariants: Array<[string]> = [["90"], ["-90"], ["60"], ["-60"]];

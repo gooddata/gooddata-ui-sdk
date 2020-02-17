@@ -1,6 +1,51 @@
 [
     {
         "vis": "ColumnChart",
-        "scenario": "single measure with viewBy and stackBy filtered to single stack"
+        "scenario": "single measure with viewBy and stackBy filtered to single stack",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            }
+        ]
     }
 ]

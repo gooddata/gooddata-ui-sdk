@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui";
+import { BubbleChart, IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort } from "@gooddata/sdk-model";
 
@@ -30,6 +30,11 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         viewBy: ReferenceLdm.Product.Name,
     })
     .addScenario("x and y axis and size measures with viewBy", BubbleChartWithAllMeasuresAndAttribute)
+    .addScenario("y axis and size measures with viewBy", {
+        yAxisMeasure: ReferenceLdm.Amount,
+        size: ReferenceLdm.Probability,
+        viewBy: ReferenceLdm.Product.Name,
+    })
     .addScenario("arithmetic measure", {
         xAxisMeasure: ReferenceLdm.Amount,
         yAxisMeasure: ReferenceLdm.Won,
@@ -42,4 +47,10 @@ export default scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
         size: ReferenceLdm.Probability,
         viewBy: ReferenceLdm.Product.Name,
         sortBy: [newAttributeSort(ReferenceLdm.Product.Name, "desc")],
+    })
+    .addScenario("x and y axis and size measures with viewBy with nulls in data", {
+        xAxisMeasure: ReferenceLdm.Amount,
+        yAxisMeasure: ReferenceLdm.WinRate,
+        size: ReferenceLdm.Probability,
+        viewBy: ReferenceLdm.ClosedYear,
     });

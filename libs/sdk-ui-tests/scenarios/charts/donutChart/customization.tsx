@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui";
+import { DonutChart, IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";

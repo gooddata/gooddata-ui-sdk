@@ -3,8 +3,5 @@ import "./polyfills";
 // new exports
 
 export * from "./base";
-export * from "./charts";
-export * from "./highcharts";
-export * from "./filters";
 export * from "./execution";
 export * from "./kpi";

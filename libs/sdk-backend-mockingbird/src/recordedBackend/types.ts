@@ -42,9 +42,18 @@ export type RecordingIndex = {
  * @internal
  */
 export type ExecutionRecording = {
+    scenarios?: any[];
     definition: IExecutionDefinition;
     executionResult: any;
     [dataViews: string]: any;
+};
+
+/**
+ * @internal
+ */
+export type ScenarioRecording = {
+    execution: ExecutionRecording;
+    scenarioIndex: number;
 };
 
 /**

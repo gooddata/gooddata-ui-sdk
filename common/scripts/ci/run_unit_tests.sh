@@ -6,4 +6,9 @@ _RUSH="${DIR}/docker_rush.sh"
 $_RUSH install
 $_RUSH build
 $_RUSH validate-ci
-$_RUSH test-ci
+
+#
+# Explicitly limiting parallelism during tests; this is because Jest already does parallel test execution on
+# per-project basis.
+#
+$_RUSH test-ci --parallelism 4

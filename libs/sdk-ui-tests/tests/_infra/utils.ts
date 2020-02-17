@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import omit = require("lodash/omit");
-import { ICoreChartProps } from "@gooddata/sdk-ui";
+import { ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution"];

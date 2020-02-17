@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { IChartConfig, IAxisNameConfig } from "@gooddata/sdk-ui";
+import { IChartConfig, IAxisNameConfig } from "@gooddata/sdk-ui-charts";
 import { CustomizedScenario, UnboundVisProps, VisProps } from "../../../src";
 
 function getConfig(nameConfig: IAxisNameConfig): IChartConfig {

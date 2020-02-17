@@ -1,6 +1,42 @@
 [
     {
         "vis": "Heatmap",
-        "scenario": "measure and columns"
+        "scenario": "measure and columns",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ]
     }
 ]

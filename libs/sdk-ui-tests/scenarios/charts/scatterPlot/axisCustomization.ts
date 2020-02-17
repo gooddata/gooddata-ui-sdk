@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 
-import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui";
+import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { ScatterPlotWithMeasuresAndAttribute } from "./base";

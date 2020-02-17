@@ -1,22 +1,157 @@
 [
     {
         "vis": "AreaChart",
-        "scenario": "single measure"
+        "scenario": "single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ]
     },
     {
         "vis": "BarChart",
-        "scenario": "single measure"
+        "scenario": "single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ]
     },
     {
         "vis": "ColumnChart",
-        "scenario": "single measure"
+        "scenario": "single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ]
     },
     {
         "vis": "ComboChart",
-        "scenario": "one primary measure"
+        "scenario": "one primary measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            }
+        ]
     },
     {
         "vis": "LineChart",
-        "scenario": "single measure"
+        "scenario": "single measure",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "trend",
+                "items": []
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ]
     }
 ]

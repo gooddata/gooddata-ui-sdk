@@ -12,7 +12,7 @@ import { wrap } from "../utils/wrap";
 import * as fixtures from "../test_data/fixtures";
 import { VIEW_BY_DIMENSION_INDEX, STACK_BY_DIMENSION_INDEX } from "../../src/highcharts/constants/dimensions";
 
-import "../../styles/scss/charts.scss";
+import "../../../sdk-ui-charts/styles/scss/charts.scss";
 import "../../styles/scss/table.scss";
 import {
     EXECUTION_REQUEST_POP,

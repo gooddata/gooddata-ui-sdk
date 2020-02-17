@@ -1,0 +1,44 @@
+[
+    {
+        "vis": "ColumnChart",
+        "scenario": "single ratio measure with viewBy",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    },
+                                    "computeRatio": true
+                                }
+                            },
+                            "localIdentifier": "Amount with Ratio",
+                            "alias": "Amount with Ratio"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "stack",
+                "items": []
+            }
+        ]
+    }
+]

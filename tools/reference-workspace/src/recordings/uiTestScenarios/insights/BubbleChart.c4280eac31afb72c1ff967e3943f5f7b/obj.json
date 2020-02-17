@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "identifier": "BubbleChart.c4280eac31afb72c1ff967e3943f5f7b",
+        "uri": "BubbleChart.c4280eac31afb72c1ff967e3943f5f7b",
+        "visualizationUrl": "local:bubble",
+        "title": "BubbleChart - y axis and size measures with viewBy",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "secondary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "tertiary_measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "abEgMnq5hyJQ"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ],
+        "filters": [],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

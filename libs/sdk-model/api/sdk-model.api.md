@@ -219,6 +219,9 @@ export type DimensionItem = Identifier | ITotal;
 export function dimensionSetTotals(dim: IDimension, totals?: ITotal[]): IDimension;
 
 // @public
+export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInDimension[];
+
+// @public
 export function dimensionTotals(dim: IDimension): ITotal[];
 
 // @public
@@ -969,6 +972,13 @@ export function isTotal(obj: any): obj is ITotal;
 
 // @public
 export function isUriRef(obj: any): obj is UriRef;
+
+// @public
+export type ItemInDimension = {
+    dim: IDimension;
+    dimIdx: number;
+    itemIdx: number;
+};
 
 // @public (undocumented)
 export interface ITextExpressionToken {

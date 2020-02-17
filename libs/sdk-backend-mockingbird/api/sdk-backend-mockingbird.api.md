@@ -76,6 +76,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 //
 // @internal (undocumented)
 export type ExecutionRecording = {
+    scenarios?: any[];
     definition: IExecutionDefinition;
     executionResult: any;
     [dataViews: string]: any;
@@ -124,7 +125,7 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
 // Warning: (ae-internal-missing-underscore) The name "recordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function recordedDataView(recording: ExecutionRecording, dataViewId?: string): DataViewFacade;
+export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): DataViewFacade;
 
 // Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -141,6 +142,14 @@ export type RecordingIndex = {
             [id: string]: InsightRecording;
         };
     };
+};
+
+// Warning: (ae-internal-missing-underscore) The name "ScenarioRecording" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type ScenarioRecording = {
+    execution: ExecutionRecording;
+    scenarioIndex: number;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "withEventing" should be prefixed with an underscore because the declaration is marked as @internal

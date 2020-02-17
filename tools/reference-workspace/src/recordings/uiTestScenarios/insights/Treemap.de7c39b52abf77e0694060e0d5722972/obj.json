@@ -1,0 +1,62 @@
+{
+    "insight": {
+        "identifier": "Treemap.de7c39b52abf77e0694060e0d5722972",
+        "uri": "Treemap.de7c39b52abf77e0694060e0d5722972",
+        "visualizationUrl": "local:treemap",
+        "title": "Treemap - single measure and viewBy filtered to one element",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "segment",
+                "items": []
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": {
+                        "identifier": "label.product.id.name"
+                    },
+                    "in": {
+                        "values": ["CompuSci"]
+                    }
+                }
+            }
+        ],
+        "sorts": [],
+        "properties": {
+            "properties": {
+                "controls": {}
+            }
+        }
+    }
+}

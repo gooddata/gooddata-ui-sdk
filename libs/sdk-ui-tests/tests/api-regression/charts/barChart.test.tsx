@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 
 import { defSetSorts } from "@gooddata/sdk-model";
-import { IBarChartProps } from "@gooddata/sdk-ui";
+import { IBarChartProps } from "@gooddata/sdk-ui-charts";
 import barChartScenarios from "../../../scenarios/charts/barChart";
 import { ScenarioTestInput } from "../../../src";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory";

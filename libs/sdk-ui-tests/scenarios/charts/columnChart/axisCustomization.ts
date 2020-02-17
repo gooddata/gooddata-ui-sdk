@@ -2,7 +2,7 @@
 
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
+import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import {

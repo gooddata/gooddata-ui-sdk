@@ -99,7 +99,15 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-ext",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-filters",
       "allowedCategories": [ "production" ]
     },
     {

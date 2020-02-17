@@ -55,8 +55,8 @@ import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualiza
 import { getTranslation } from "../../../utils/translations";
 import { AxisType } from "../../../interfaces/AxisType";
 import { generateDimensions } from "../../../utils/dimensions";
+import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import {
-    BaseChart,
     GoodDataSdkError,
     BucketNames,
     DefaultLocale,
@@ -65,9 +65,6 @@ import {
     VisualizationTypes,
     IExportFunction,
     ILoadingState,
-    ColorUtils,
-    IAxisConfig,
-    IChartConfig,
 } from "@gooddata/sdk-ui";
 import {
     bucketsIsEmpty,

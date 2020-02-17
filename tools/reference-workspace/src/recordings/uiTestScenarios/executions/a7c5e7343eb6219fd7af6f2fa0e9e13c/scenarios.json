@@ -1,0 +1,42 @@
+[
+    {
+        "vis": "Treemap",
+        "scenario": "single measure and segment",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aangOxLSeztu"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "view",
+                "items": []
+            },
+            {
+                "localIdentifier": "segment",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.owner.region"
+                            },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

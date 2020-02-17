@@ -1,53 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "aangOxLSeztu"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_aangOxLSeztu"
-                    }
-                },
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "acugFHNJgsBy"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_acugFHNJgsBy"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "trend",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "created.aci81lMifn6q"
-                        },
-                        "localIdentifier": "a_created.aci81lMifn6q"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "segment",
-            "items": []
-        }
-    ],
+    "buckets": [],
     "attributes": [
         {
             "attribute": {

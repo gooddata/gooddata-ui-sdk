@@ -2,7 +2,7 @@
 
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { ILineChartProps, LineChart } from "@gooddata/sdk-ui";
+import { ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { axisNameCustomization } from "../_infra/axisNameCustomization";
 import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base";

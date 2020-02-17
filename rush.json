@@ -301,6 +301,20 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-charts",
+            "projectFolder": "libs/sdk-ui-charts",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-filters",
+            "projectFolder": "libs/sdk-ui-filters",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-pivot",
             "projectFolder": "libs/sdk-ui-pivot",
             "reviewCategory": "production",
@@ -330,6 +344,7 @@
             "packageName": "@gooddata/reference-workspace",
             "projectFolder": "tools/reference-workspace",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         },
         {
@@ -349,6 +364,7 @@
             "packageName": "@gooddata/mock-handling",
             "projectFolder": "tools/mock-handling",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": false
         },
         {

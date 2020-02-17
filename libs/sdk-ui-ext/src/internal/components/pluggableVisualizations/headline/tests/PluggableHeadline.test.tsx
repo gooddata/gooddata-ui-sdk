@@ -16,7 +16,8 @@ import {
 } from "../../../../interfaces/Visualization";
 
 import { getMeasureItems } from "../../../../utils/bucketHelper";
-import { IDrillableItem, OverTimeComparisonTypes, CoreHeadline, BucketNames } from "@gooddata/sdk-ui";
+import { IDrillableItem, OverTimeComparisonTypes, BucketNames } from "@gooddata/sdk-ui";
+import { CoreHeadline } from "@gooddata/sdk-ui-charts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import cloneDeep = require("lodash/cloneDeep");
 import noop = require("lodash/noop");

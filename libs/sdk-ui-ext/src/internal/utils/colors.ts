@@ -11,7 +11,8 @@ import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
-import { ColorUtils, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { ColorUtils } from "@gooddata/sdk-ui-charts";
 
 function getItemName(item: IColoredItem): string {
     let name = "";

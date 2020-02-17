@@ -1,37 +1,6 @@
 {
     "workspace": "testWorkspace",
-    "buckets": [
-        {
-            "localIdentifier": "measures",
-            "items": [
-                {
-                    "measure": {
-                        "definition": {
-                            "measureDefinition": {
-                                "item": {
-                                    "identifier": "abYgDBRagANw"
-                                }
-                            }
-                        },
-                        "localIdentifier": "m_abYgDBRagANw"
-                    }
-                }
-            ]
-        },
-        {
-            "localIdentifier": "attribute",
-            "items": [
-                {
-                    "attribute": {
-                        "displayForm": {
-                            "identifier": "timeline.aag81lMifn6q"
-                        },
-                        "localIdentifier": "a_timeline.aag81lMifn6q"
-                    }
-                }
-            ]
-        }
-    ],
+    "buckets": [],
     "attributes": [
         {
             "attribute": {

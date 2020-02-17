@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui";
+import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
@@ -57,6 +57,10 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         measures: [ReferenceLdm.Amount],
     })
     .addScenario("single measure with viewBy", ColumnChartWithSingleMeasureAndViewBy)
+    .addScenario("single ratio measure with viewBy", {
+        measures: [ReferenceLdmExt.AmountWithRatio],
+        viewBy: [ReferenceLdm.Product.Name],
+    })
     .addScenario("single measure with viewBy and stackBy", ColumnChartWithSingleMeasureViewByAndStackBy)
     .addScenario("single measure with viewBy and stackBy filtered to single stack", {
         measures: [ReferenceLdm.Amount],

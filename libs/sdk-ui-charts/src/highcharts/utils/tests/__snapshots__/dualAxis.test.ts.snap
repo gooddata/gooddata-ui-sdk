@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`setMeasuresToSecondaryAxis should  add measures to secondary axis when dualAxis=true 1`] = `
+Object {
+  "dualAxis": true,
+  "secondary_yaxis": Object {
+    "measures": Array [
+      "m_acugFHNJgsBy",
+    ],
+    "rotation": "90",
+  },
+  "type": "combo2",
+}
+`;
+
+exports[`setMeasuresToSecondaryAxis should  add measures to secondary axis when dualAxis=undefined 1`] = `
+Object {
+  "dualAxis": undefined,
+  "secondary_yaxis": Object {
+    "measures": Array [
+      "m_acugFHNJgsBy",
+    ],
+    "rotation": "90",
+  },
+  "type": "combo2",
+}
+`;

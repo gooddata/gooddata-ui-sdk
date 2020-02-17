@@ -4,7 +4,13 @@ import flatMap = require("lodash/flatMap");
 import unionBy = require("lodash/unionBy");
 import isArray = require("lodash/isArray");
 import isObject = require("lodash/isObject");
-import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
+import {
+    defFingerprint,
+    IExecutionDefinition,
+    IInsight,
+    IInsightDefinition,
+    insightTitle,
+} from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
@@ -118,14 +124,19 @@ function storeDefinition(interactions: ChartInteractions): string {
         fs.mkdirSync(recordingDir);
     }
 
-    writeAsJsonSync(path.join(recordingDir, DefinitionFileName), triggeredExecution);
+    writeAsJsonSync(path.join(recordingDir, DefinitionFileName), { ...triggeredExecution, buckets: [] });
 
     storeRequests(interactions, recordingDir);
 
     return recordingDir;
 }
 
-function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: string) {
+function storeScenarioMetadata(
+    recordingDir: string,
+    vis: string,
+    scenarioName: string,
+    definition: IExecutionDefinition,
+) {
     const scenariosFile = path.join(recordingDir, ScenariosFileName);
 
     let scenarios = [];
@@ -153,7 +164,7 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
         return;
     }
 
-    scenarios.push({ vis, scenario: scenarioName });
+    scenarios.push({ vis, scenario: scenarioName, buckets: definition.buckets });
 
     writeAsJsonSync(scenariosFile, scenarios);
 }
@@ -164,7 +175,6 @@ function storeScenarioMetadata(recordingDir: string, vis: string, scenarioName: 
  * file with the actual definition and 'scenarios.json' file that enumerates test scenarios where this definition
  * is used.
  *
- * @param vis - visualization for which the scenario is being stored
  * @param scenario - detail about test scenario
  * @param interactions - chart interactions with the backend
  * @param plugVizInteractions - plug viz interactions with the backend
@@ -193,7 +203,7 @@ function storeScenarioDefinition(
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
-        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name);
+        storeScenarioMetadata(recordingDir, scenario.vis, scenario.name, componentExecution!);
     }
 }
 

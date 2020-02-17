@@ -1,5 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
-import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui";
+import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { coloringCustomizer } from "../_infra/coloringVariants";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";

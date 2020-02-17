@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
-import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui";
+import { Heatmap, IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 
 export const HeatmapWithMeasureRowsAndColumns = {
