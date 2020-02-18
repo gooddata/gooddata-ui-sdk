@@ -22,7 +22,7 @@ else
     echo "Publishing to NPM"
 
     # All good, do the real thing
-    ${_RUSH} publish -p --include-all
+    ${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all
 
     rc=$?
 
