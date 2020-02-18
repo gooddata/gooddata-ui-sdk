@@ -2,7 +2,6 @@
     "name": "@gooddata/mock-handling",
     "version": "1.0.0",
     "author": "GoodData",
-    "private": true,
     "description": "GoodData SDK TypeScript skeleton",
     "repository": "git@github.com:gooddata/gooddata-ui-sdk.git",
     "license": "BSD-3-Clause",
