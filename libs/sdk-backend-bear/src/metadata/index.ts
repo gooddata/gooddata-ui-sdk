@@ -13,6 +13,7 @@ import {
     IInsightDefinition,
     insightId,
     ObjRef,
+    insightVisualizationUrl,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConverter";
@@ -117,19 +118,30 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
-        return this.authCall(sdk =>
+        const withConvertedVisClass = await this.getInsightWithConvertedVisClass(insight);
+
+        const mdObject = await this.authCall(sdk =>
             sdk.md.saveVisualization(this.workspace, {
-                visualizationObject: convertInsightDefinition(insight),
+                visualizationObject: convertInsightDefinition(withConvertedVisClass),
             }),
         );
+
+        return convertVisualization(mdObject, insightVisualizationUrl(insight));
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         const id = insightId(insight);
         const uri = await this.authCall(sdk => sdk.md.getObjectUri(this.workspace, id));
-        return this.authCall(sdk =>
-            sdk.md.updateVisualization(this.workspace, uri, { visualizationObject: convertInsight(insight) }),
+
+        const withConvertedVisClass = await this.getInsightWithConvertedVisClass(insight);
+
+        await this.authCall(sdk =>
+            sdk.md.updateVisualization(this.workspace, uri, {
+                visualizationObject: convertInsight(withConvertedVisClass),
+            }),
         );
+        // sdk.md.updateVisualization returns just an URI, so we need to return the original insight
+        return insight;
     };
 
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
@@ -254,5 +266,30 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
 
         return expressionTokensWithDetails;
+    }
+
+    private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {
+        const allVisClasses = await this.getVisualizationClasses();
+        return allVisClasses.find(visClass => visClass.visualizationClass.url === url);
+    };
+
+    private async getInsightWithConvertedVisClass<T extends IInsight | IInsightDefinition>(
+        insight: T,
+    ): Promise<T> {
+        const visClassUrl = insightVisualizationUrl(insight);
+        const visClass = await this.getVisualizationClassByUrl(visClassUrl);
+        if (!visClass) {
+            throw new Error(`Visualization class with url ${visClassUrl} not found.`);
+        }
+
+        // tslint:disable-next-line: no-object-literal-type-assertion
+        const withFixedVisClass = {
+            insight: {
+                ...insight.insight,
+                visualizationUrl: visClass.visualizationClass.uri, // bear client expects this to be the URI, not URL
+            },
+        } as T;
+
+        return withFixedVisClass;
     }
 }
