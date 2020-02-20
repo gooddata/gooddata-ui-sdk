@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
-@import "../../../sdk-ui/styles/scss/settings";
+@import "~@gooddata/sdk-ui/styles/scss/settings";
 @import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
 @import "~@gooddata/goodstrap/lib/core/styles/Overlay";
 @import "~@gooddata/goodstrap/lib/core/styles/Spinner";
