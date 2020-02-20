@@ -872,8 +872,9 @@ export class MetadataModule {
         projectId: string,
         visualizationUri: string,
         visualization: GdcVisualizationObject.IVisualization,
-    ) {
-        return this.updateObject(projectId, visualizationUri, {
+    ): Promise<{ uri: string }> {
+        const objectId = visualizationUri.split("/").slice(-1)[0];
+        return this.updateObject(projectId, objectId, {
             visualizationObject: visualization.visualizationObject,
         });
     }
@@ -921,12 +922,12 @@ export class MetadataModule {
      * @experimental
      * @method updateObject
      * @param {String} projectId
-     * @param {String} visualizationUri
+     * @param {String} objectId
      * @param {String} obj object definition
      */
-    public updateObject(projectId: string, visualizationUri: string, obj: any) {
+    public updateObject(projectId: string, objectId: string, obj: any) {
         return this.xhr
-            .put(`/gdc/md/${projectId}/obj/${visualizationUri}`, {
+            .put(`/gdc/md/${projectId}/obj/${objectId}`, {
                 body: obj,
             })
             .then((r: ApiResponse) => r.getData());
