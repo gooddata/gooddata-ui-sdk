@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/gd-bear-client",
-    "version": "8.0.0-alpha.24",
+    "version": "8.0.0-alpha.25",
     "author": "GoodData",
     "description": "GoodData JavaScript SDK",
     "license": "BSD-3-Clause",
@@ -34,7 +34,7 @@
     },
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-bear-client",
     "dependencies": {
-        "@gooddata/gd-bear-model": "^8.0.0-alpha.24",
+        "@gooddata/gd-bear-model": "^8.0.0-alpha.25",
         "fetch-cookie": "^0.7.0",
         "invariant": "^2.2.2",
         "isomorphic-fetch": "^2.2.1",
