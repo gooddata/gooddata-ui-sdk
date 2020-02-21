@@ -8,8 +8,8 @@ import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenar
 import { withScreenshot } from "../../_infra/backstopWrapper";
 import { CustomStories } from "../../_infra/storyGroups";
 
-import "@gooddata/sdk-ui/styles/css/main.css";
-import "@gooddata/sdk-ui/styles/css/pivotTable.css";
+import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
 
 const DefaultWorkspace = "testWorkspace";
 
