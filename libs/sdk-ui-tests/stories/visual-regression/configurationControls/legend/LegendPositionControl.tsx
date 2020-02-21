@@ -8,6 +8,7 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/in
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import { ConfigurationControls } from "../../_infra/storyGroups";
 import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWrapper";
+import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
