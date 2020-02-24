@@ -27,6 +27,7 @@ import {
     measureFilters,
     IPreviousPeriodDateDataSet,
 } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 import { toBearRef } from "../utils/ObjRefConverter";
 import { convertFilter, shouldFilterBeIncluded } from "./FilterConverter";
 
@@ -82,14 +83,16 @@ const convertSimpleMeasureDefinition = (
         throw new Error("Measure has neither uri nor identifier.");
     }
 
-    const filters = measureFilters(measure) || [];
+    const aggregation = measureAggregation(measure);
+    const computeRatio = measureDoesComputeRatio(measure);
+    const filters = (measureFilters(measure) || []).filter(shouldFilterBeIncluded).map(convertFilter);
 
     return {
         measureDefinition: {
-            aggregation: measureAggregation(measure),
-            computeRatio: measureDoesComputeRatio(measure),
-            filters: filters.filter(shouldFilterBeIncluded).map(convertFilter),
             item: identifier ? { identifier } : { uri: uri! },
+            ...(aggregation && { aggregation }),
+            ...(computeRatio && { computeRatio }),
+            ...(!isEmpty(filters) && { filters }),
         },
     };
 };
@@ -113,13 +116,17 @@ const convertMeasureDefinition = (
 export const convertMeasure = (
     measure: IMeasure<IMeasureDefinitionType>,
 ): GdcVisualizationObject.IMeasure => {
+    const alias = measureAlias(measure);
+    const format = measureFormat(measure);
+    const title = measureTitle(measure);
+
     return {
         measure: {
-            alias: measureAlias(measure),
             definition: convertMeasureDefinition(measure),
-            format: measureFormat(measure),
             localIdentifier: measureLocalId(measure),
-            title: measureTitle(measure),
+            ...(alias && { alias }),
+            ...(format && { format }),
+            ...(title && { title }),
         },
     };
 };
