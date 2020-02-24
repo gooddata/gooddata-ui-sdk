@@ -19,17 +19,21 @@ import {
     insightIsLocked,
     IInsight,
 } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
+import omitBy from "lodash/omitBy";
 import { convertUrisToReferences } from "../toSdkModel/ReferenceConverter";
 import { serializeProperties } from "../toSdkModel/PropertiesConverter";
 import { convertExtendedFilter, shouldFilterBeIncluded } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 
 const convertAttribute = (attribute: IAttribute): GdcVisualizationObject.IAttribute => {
+    const alias = attributeAlias(attribute);
+
     return {
         visualizationAttribute: {
-            alias: attributeAlias(attribute),
-            displayForm: attributeAttributeDisplayFormObjRef(attribute),
             localIdentifier: attributeLocalId(attribute),
+            displayForm: attributeAttributeDisplayFormObjRef(attribute),
+            ...(alias && { alias }),
         },
     };
 };
@@ -39,10 +43,11 @@ const convertBucketItem = (bucketItem: AttributeOrMeasure): GdcVisualizationObje
 };
 
 const convertBucket = (bucket: IBucket): GdcVisualizationObject.IBucket => {
+    const { totals } = bucket;
     return {
         items: bucket.items.map(convertBucketItem),
         localIdentifier: bucket.localIdentifier,
-        totals: bucket.totals,
+        ...(!isEmpty(totals) && { totals }),
     };
 };
 
@@ -54,16 +59,20 @@ const convertInsightContent = (
         references: {},
     });
 
+    const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
+
+    const filters = insightFilters(insight)
+        .filter(shouldFilterBeIncluded)
+        .map(convertExtendedFilter);
+
     return {
         buckets: insightBuckets(insight).map(convertBucket),
-        visualizationClass: {
-            uri: insightVisualizationUrl(insight),
-        },
-        filters: insightFilters(insight)
-            .filter(shouldFilterBeIncluded)
-            .map(convertExtendedFilter),
-        properties: serializeProperties(properties),
-        references,
+        visualizationClass: { uri: insightVisualizationUrl(insight) },
+        ...(!isEmpty(nonEmptyProperties) && {
+            properties: serializeProperties(nonEmptyProperties),
+        }),
+        ...(!isEmpty(filters) && { filters }),
+        ...(!isEmpty(references) && { references }),
     };
 };
 
@@ -80,13 +89,15 @@ export const convertInsightDefinition = (
 
 export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisualizationObject => {
     const convertedDefinition = convertInsightDefinition(insight);
+    const locked = insightIsLocked(insight);
+
     return {
         content: convertedDefinition.content,
         meta: {
             ...convertedDefinition.meta,
             identifier: insightId(insight),
             uri: insightUri(insight),
-            locked: insightIsLocked(insight),
+            ...(locked && { locked }),
         },
     };
 };
