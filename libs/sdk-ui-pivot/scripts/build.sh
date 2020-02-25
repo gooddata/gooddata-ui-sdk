@@ -6,6 +6,7 @@ _build_styles() {
 
 _clean() {
     rm -rf dist
+    rm -rf styles/css
 }
 
 _common-build() {
