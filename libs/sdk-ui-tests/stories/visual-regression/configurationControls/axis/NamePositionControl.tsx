@@ -11,7 +11,6 @@ import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWr
 import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 
 storiesOf(`${ConfigurationControls}/Axis/NamePositionControls`, module)
@@ -37,16 +36,6 @@ storiesOf(`${ConfigurationControls}/Axis/NamePositionControls`, module)
                 "select-option": {
                     clickSelectors: [".gd-button-primary", ".s-left"],
                     postInteractionWait: 200,
-                },
-                "opened-mobile": {
-                    clickSelector: ".gd-button-primary",
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
-                },
-                "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-left"],
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
                 },
             },
         );
@@ -88,16 +77,6 @@ storiesOf(`${ConfigurationControls}/Axis/NamePositionControls`, module)
                 "select-option": {
                     clickSelectors: [".gd-button-primary", ".s-mitte_oben_unten"],
                     postInteractionWait: 200,
-                },
-                "opened-mobile": {
-                    clickSelector: ".gd-button-primary",
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
-                },
-                "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-mitte_oben_unten"],
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
                 },
             },
         );

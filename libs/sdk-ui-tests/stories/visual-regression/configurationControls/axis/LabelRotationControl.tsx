@@ -11,7 +11,6 @@ import { ConfigurationControls } from "../../_infra/storyGroups";
 import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 
 storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
@@ -50,16 +49,6 @@ storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
                     clickSelectors: [".gd-button-primary", ".s-30_"],
                     postInteractionWait: 200,
                 },
-                "opened-mobile": {
-                    clickSelector: ".gd-button-primary",
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
-                },
-                "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
-                },
             },
         );
     })
@@ -82,16 +71,6 @@ storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
                 "select-option": {
                     clickSelectors: [".gd-button-primary", ".s-30_"],
                     postInteractionWait: 200,
-                },
-                "opened-mobile": {
-                    clickSelector: ".gd-button-primary",
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
-                },
-                "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
-                    postInteractionWait: 200,
-                    viewports: mobileViewport,
                 },
             },
         );
