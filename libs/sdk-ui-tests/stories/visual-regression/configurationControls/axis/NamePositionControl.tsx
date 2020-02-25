@@ -3,51 +3,39 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import LabelRotationControl from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/LabelRotationControl";
+import NamePositionControl from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/NamePositionControl";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
-import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWrapper";
-import { AXIS } from "@gooddata/sdk-ui-ext/dist/internal/constants/axis";
 import { ConfigurationControls } from "../../_infra/storyGroups";
+import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWrapper";
+import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 
-storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
-    .add("disabled", () => {
-        return withScreenshot(
-            <div style={wrapperStyle} className="screenshot-target">
-                <InternalIntlWrapper>
-                    <LabelRotationControl
-                        disabled={true}
-                        configPanelDisabled={false}
-                        axis="xaxis"
-                        properties={AXIS}
-                        pushData={action("onRotationSelect")}
-                    />
-                </InternalIntlWrapper>
-            </div>,
-        );
-    })
-    .add("y-axis", () => {
+storiesOf(`${ConfigurationControls}/Axis/NamePositionControls`, module)
+    .add("x-axis", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <InternalIntlWrapper>
-                    <LabelRotationControl
+                    <NamePositionControl
                         disabled={false}
                         configPanelDisabled={false}
-                        axis="yaxis"
-                        properties={AXIS}
-                        pushData={action("onRotationSelect")}
+                        axis="xaxis"
+                        properties={{}}
+                        pushData={action("onPositionSelect")}
                     />
                 </InternalIntlWrapper>
             </div>,
             {
                 closed: {},
-                opened: { clickSelectors: [".gd-button-primary"], postInteractionWait: 200 },
+                opened: {
+                    clickSelector: ".gd-button-primary",
+                    postInteractionWait: 200,
+                },
                 "select-option": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
+                    clickSelectors: [".gd-button-primary", ".s-left"],
                     postInteractionWait: 200,
                 },
                 "opened-mobile": {
@@ -56,31 +44,49 @@ storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
                     viewports: mobileViewport,
                 },
                 "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
+                    clickSelectors: [".gd-button-primary", ".s-left"],
                     postInteractionWait: 200,
                     viewports: mobileViewport,
                 },
             },
         );
     })
-    .add("x-axis - localized", () => {
+    .add("disabled", () => {
+        return withScreenshot(
+            <div style={wrapperStyle} className="screenshot-target">
+                <InternalIntlWrapper>
+                    <NamePositionControl
+                        disabled={true}
+                        configPanelDisabled={false}
+                        axis="xaxis"
+                        properties={{}}
+                        pushData={action("onPositionSelect")}
+                    />
+                </InternalIntlWrapper>
+            </div>,
+        );
+    })
+    .add("y-axis - localized", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <InternalIntlWrapper locale={german}>
-                    <LabelRotationControl
+                    <NamePositionControl
                         disabled={false}
                         configPanelDisabled={false}
-                        axis="xaxis"
-                        properties={AXIS}
-                        pushData={action("onRotationSelect")}
+                        axis="yaxis"
+                        properties={{}}
+                        pushData={action("onPositionSelect")}
                     />
                 </InternalIntlWrapper>
             </div>,
             {
                 closed: {},
-                opened: { clickSelectors: [".gd-button-primary"], postInteractionWait: 200 },
+                opened: {
+                    clickSelector: ".gd-button-primary",
+                    postInteractionWait: 200,
+                },
                 "select-option": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
+                    clickSelectors: [".gd-button-primary", ".s-mitte_oben_unten"],
                     postInteractionWait: 200,
                 },
                 "opened-mobile": {
@@ -89,7 +95,7 @@ storiesOf(`${ConfigurationControls}/Axis/LabelRotationControl`, module)
                     viewports: mobileViewport,
                 },
                 "select-option-mobile": {
-                    clickSelectors: [".gd-button-primary", ".s-30_"],
+                    clickSelectors: [".gd-button-primary", ".s-mitte_oben_unten"],
                     postInteractionWait: 200,
                     viewports: mobileViewport,
                 },
