@@ -52,7 +52,7 @@ const backstopConfig = {
         ],
     },
     report: ["CI"],
-    asyncCaptureLimit: 5,
+    asyncCaptureLimit: 6,
     resembleOutputOptions: { ignoreAntialiasing: true },
     asyncCompareLimit: 50,
 };
