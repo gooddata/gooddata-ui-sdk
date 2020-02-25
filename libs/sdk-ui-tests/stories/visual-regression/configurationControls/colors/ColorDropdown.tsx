@@ -13,8 +13,11 @@ import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/in
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
 
-const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
+const wrapperStyle = {
+    width: 400,
+    height: 400,
+    paddingTop: 200,
+};
 const german = "de-DE";
 
 const defaultScenarios = {
@@ -23,11 +26,6 @@ const defaultScenarios = {
         clickSelector: ".icon-navigatedown",
         postInteractionWait: 200,
     },
-    "dropdown-opened-mobile": {
-        clickSelectors: [".icon-navigatedown"],
-        postInteractionWait: 200,
-        viewports: mobileViewport,
-    },
 };
 
 const customPicker = {
@@ -35,11 +33,6 @@ const customPicker = {
     "select-custom-color": {
         clickSelectors: [".s-colored-items-list-item", ".s-custom-section-button"],
         postInteractionWait: 200,
-    },
-    "select-custom-color-mobile": {
-        clickSelectors: [".s-colored-items-list-item", ".s-custom-section-button"],
-        postInteractionWait: 200,
-        viewports: mobileViewport,
     },
 };
 
