@@ -14,29 +14,118 @@ export interface IKeypressSelector {
 /** The Backstop test definition. See https://github.com/garris/BackstopJS#advanced-scenarios */
 export interface IBackstopScenarioConfig {
     [key: string]: any; // Allow for custom properties.
-    clickSelector?: string; // Click the specified DOM element prior to screenshot
-    clickSelectors?: string[]; // Simulates multiple sequential click interactions
-    cookiePath?: string; // Import cookies in JSON format
-    delay?: number; // Wait for x milliseconds
-    expect?: number; // Use with selectorExpansion true to expect number of results found
-    hideSelectors?: string[]; // Selectors set to visibility: hidden
-    hoverSelector?: string; // Move pointer over the given DOM element prior to screenshot
-    hoverSelectors?: string[]; // Simulates multiple sequential hover interactions
-    keyPressSelector?: IKeypressSelector; // Press key in the DOM element prior to screenshot
-    keyPressSelectors?: IKeypressSelector[]; // Simulates multiple sequential keypress interactions
-    misMatchThreshold?: number; // Percentage of different pixels allowed to pass test
-    onBeforeScript?: string; // Used to set up browser state e.g. cookies
-    onReadyScript?: string; // Used to modify UI state prior to screenshots e.g. hovers, clicks etc
-    postInteractionWait?: number; // Wait for selector (ms) after interacting with hover or click
-    readyEvent?: string; // Wait until this string has been logged to the console
-    readySelector?: string; // Wait until this selector exists before continuing
-    referenceUrl?: string; // Specify a different state or environment when creating reference
-    removeSelectors?: string[]; // Selectors set to display: none
-    requireSameDimensions?: boolean; // If true, any change in selector size will trigger a failure
-    selectors?: string[]; // Selectors to capture
-    selectorExpansion?: boolean; // If true, take screenshots of all matching selector instances
-    scrollToSelector?: string; // Scroll the specified DOM element into view prior to screenshots
-    viewports?: Viewport[]; // Override global viewports
+    /**
+     * Click the specified DOM element prior to screenshot
+     */
+    clickSelector?: string;
+    /**
+     * Simulates multiple sequential click interactions
+     */
+    clickSelectors?: string[];
+
+    /**
+     * Import cookies in JSON format
+     */
+    cookiePath?: string;
+
+    /**
+     * Wait for x milliseconds
+     */
+    delay?: number;
+
+    /**
+     * Use with selectorExpansion true to expect number of results found
+     */
+    expect?: number; //
+
+    /**
+     * Selectors set to visibility: hidden
+     */
+    hideSelectors?: string[];
+
+    /**
+     * Move pointer over the given DOM element prior to screenshot
+     */
+    hoverSelector?: string;
+
+    /**
+     * Simulates multiple sequential hover interactions
+     */
+    hoverSelectors?: string[];
+
+    /**
+     * Press key in the DOM element prior to screenshot
+     */
+    keyPressSelector?: IKeypressSelector;
+
+    /**
+     * Simulates multiple sequential keypress interactions
+     */
+    keyPressSelectors?: IKeypressSelector[];
+
+    /**
+     * Percentage of different pixels allowed to pass test
+     */
+    misMatchThreshold?: number;
+
+    /**
+     * Used to set up browser state e.g. cookies
+     */
+    onBeforeScript?: string;
+
+    /**
+     * Used to modify UI state prior to screenshots e.g. hovers, clicks etc
+     */
+    onReadyScript?: string;
+    /**
+     * Wait for either selector or a defined number of millis before taking screenshot
+     */
+    postInteractionWait?: string | number;
+
+    /**
+     * Wait until this string has been logged to the console
+     */
+    readyEvent?: string;
+
+    /**
+     * Wait until this selector exists before continuing
+     */
+    readySelector?: string;
+
+    /**
+     * Specify a different state or environment when creating reference
+     */
+    referenceUrl?: string;
+
+    /**
+     * Selectors set to display: none
+     */
+    removeSelectors?: string[];
+
+    /**
+     * If true, any change in selector size will trigger a failure
+     */
+    requireSameDimensions?: boolean;
+
+    /**
+     * Selectors to capture
+     */
+    selectors?: string[];
+
+    /**
+     * If true, take screenshots of all matching selector instances
+     */
+    selectorExpansion?: boolean;
+
+    /**
+     * Scroll the specified DOM element into view prior to screenshots
+     */
+    scrollToSelector?: string;
+
+    /**
+     * Override global viewports
+     */
+    viewports?: Viewport[];
 }
 
 export type Viewport = IViewportNext;
