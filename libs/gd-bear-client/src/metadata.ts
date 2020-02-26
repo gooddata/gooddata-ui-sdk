@@ -947,7 +947,7 @@ export class MetadataModule {
             .post(`/gdc/internal/projects/${projectId}/convertVisualizationObject`, {
                 body: mdObject,
             })
-            .then(res => res.data())
+            .then(res => res.getData())
             .then(({ uri }) => uri);
     }
 
