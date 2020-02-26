@@ -10,21 +10,16 @@ import { ConfigurationControls } from "../../_infra/storyGroups";
 import { withMultipleScreenshots, withScreenshot } from "../../_infra/backstopWrapper";
 import "../controlStyles.css";
 
-const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
+const wrapperStyle = {
+    width: 400,
+    height: 400,
+    padding: "1em 1em",
+};
 const german = "de-DE";
 
-const scenario = {
-    closed: {},
-    opened: {
-        clickSelectors: [".s-checkbox-toggle"],
-        postInteractionWait: 200,
-    },
-    "legend-toggle-mobile": {
-        clickSelectors: [".s-checkbox-toggle"],
-        postInteractionWait: 200,
-        viewports: mobileViewport,
-    },
+const DefaultProperties = {};
+const DefaultPropertiesMeta = {
+    legend_section: { collapsed: false },
 };
 
 storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
@@ -34,8 +29,8 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                 <InternalIntlWrapper>
                     <LegendSection
                         controlsDisabled={true}
-                        properties={{}}
-                        propertiesMeta={{}}
+                        properties={DefaultProperties}
+                        propertiesMeta={DefaultPropertiesMeta}
                         pushData={action("onLegendSectionToggle")}
                     />
                 </InternalIntlWrapper>
@@ -43,12 +38,12 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
         );
     })
     .add("LegendSection: Enabled", () => {
-        const HandleState = () => {
-            const [axisProperties, setAxisProperties] = useState({});
+        const LegendWidget = () => {
+            const [properties, setProperties] = useState(DefaultProperties);
             const onPushData = (data: any) => {
                 action("onLegendSectionToggle")(data);
                 const { properties } = data;
-                setAxisProperties({ ...properties });
+                setProperties({ ...properties });
             };
 
             return (
@@ -56,23 +51,33 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                     <InternalIntlWrapper>
                         <LegendSection
                             controlsDisabled={false}
-                            properties={axisProperties}
-                            propertiesMeta={axisProperties}
+                            properties={properties}
+                            propertiesMeta={DefaultPropertiesMeta}
                             pushData={onPushData}
                         />
                     </InternalIntlWrapper>
                 </div>
             );
         };
-        return withMultipleScreenshots(<HandleState />, scenario);
+        return withMultipleScreenshots(<LegendWidget />, {
+            closed: {},
+            opened: {
+                clickSelector: ".gd-button-primary",
+                postInteractionWait: 200,
+            },
+            "select-position": {
+                clickSelectors: [".gd-button-primary", ".s-down"],
+                postInteractionWait: 200,
+            },
+        });
     })
     .add("LegendSection: Enabled - localized", () => {
-        const HandleState = () => {
-            const [axisProperties, setAxisProperties] = useState({});
+        const LegendWidget = () => {
+            const [properties, setProperties] = useState(DefaultProperties);
             const onPushData = (data: any) => {
                 action("onLegendSectionToggle")(data);
                 const { properties } = data;
-                setAxisProperties({ ...properties });
+                setProperties({ ...properties });
             };
 
             return (
@@ -80,8 +85,8 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
                     <InternalIntlWrapper locale={german}>
                         <LegendSection
                             controlsDisabled={false}
-                            properties={axisProperties}
-                            propertiesMeta={axisProperties}
+                            properties={properties}
+                            propertiesMeta={DefaultPropertiesMeta}
                             pushData={onPushData}
                         />
                     </InternalIntlWrapper>
@@ -89,5 +94,15 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`, module)
             );
         };
 
-        return withMultipleScreenshots(<HandleState />, scenario);
+        return withMultipleScreenshots(<LegendWidget />, {
+            closed: {},
+            opened: {
+                clickSelector: ".gd-button-primary",
+                postInteractionWait: 200,
+            },
+            "select-position": {
+                clickSelectors: [".gd-button-primary", ".s-runter"],
+                postInteractionWait: 200,
+            },
+        });
     });

@@ -11,29 +11,18 @@ import { ConfigurationControls } from "../../_infra/storyGroups";
 import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
-const mobileViewport = [{ label: "mobile-view", height: 800, width: 480 }];
 const german = "de-DE";
 const defaultProps = {};
 
 const commonScenarios = {
     closed: {},
     opened: {
-        clickSelector: ".s-checkbox-toggle-label",
-        postInteractionWait: 200,
+        clickSelector: ".gd-button-primary",
+        postInteractionWait: ".gd-list",
     },
     "label-toggle": {
         clickSelectors: [".s-checkbox-toggle-label", ".s-checkbox-toggle"],
         postInteractionWait: 200,
-    },
-    "opened-mobile": {
-        clickSelector: ".s-checkbox-toggle-label",
-        postInteractionWait: 200,
-        viewports: mobileViewport,
-    },
-    "label-toggle-mobile": {
-        clickSelectors: [".s-checkbox-toggle-label", ".s-checkbox-toggle"],
-        postInteractionWait: 200,
-        viewports: mobileViewport,
     },
 };
 storiesOf(`${ConfigurationControls}/Axis/NameSubsection`, module)
