@@ -54,7 +54,8 @@ export function RenderXirr(props: IXirrProps): JSX.Element {
 // Internals
 //
 
-type IXirrNonBucketProps = Subtract<IXirrProps, IXirrBucketProps>;
+type IIrrelevantXirrProps = IXirrBucketProps & IBucketChartProps;
+type IXirrNonBucketProps = Subtract<IXirrProps, IIrrelevantXirrProps>;
 
 export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
     const buckets = [
@@ -62,10 +63,11 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
         newBucket(BucketNames.ATTRIBUTE, props.attribute),
     ];
 
-    const newProps: IXirrNonBucketProps = omit<IXirrProps, keyof IXirrBucketProps>(props, [
+    const newProps: IXirrNonBucketProps = omit<IXirrProps, keyof IIrrelevantXirrProps>(props, [
         "measure",
         "attribute",
         "filters",
+        "backend",
     ]);
 
     return {

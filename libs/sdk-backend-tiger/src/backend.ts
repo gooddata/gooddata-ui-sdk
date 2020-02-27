@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     AnalyticalBackendConfig,
     BackendCapabilities,
@@ -101,6 +101,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public authenticate(): Promise<AuthenticatedPrincipal> {
         return Promise.resolve({ userId: "anonymouse" });
+    }
+
+    public deauthenticate(): Promise<void> {
+        return Promise.resolve();
     }
 
     public workspace(id: string): IAnalyticalWorkspace {

@@ -67,6 +67,9 @@ export function recordedBackend(
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "recordedUser" });
         },
+        deauthenticate(): Promise<void> {
+            return Promise.resolve();
+        },
         isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: "recordedUser" });
         },

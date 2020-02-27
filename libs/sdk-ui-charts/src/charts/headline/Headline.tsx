@@ -45,15 +45,17 @@ export function RenderHeadline(props: IHeadlineProps): JSX.Element {
 // Internals
 //
 
-type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IHeadlineBucketProps>;
+type IIrrelevantHeadlineProps = IHeadlineBucketProps & IBucketChartProps;
+type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IIrrelevantHeadlineProps>;
 
 export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
     const buckets = [newBucket(BucketNames.MEASURES, props.primaryMeasure, props.secondaryMeasure)];
 
-    const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IHeadlineBucketProps>(props, [
+    const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IIrrelevantHeadlineProps>(props, [
         "primaryMeasure",
         "secondaryMeasure",
         "filters",
+        "backend",
     ]);
 
     return {

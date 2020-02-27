@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcExecution } from "@gooddata/gd-bear-model";
 import {
     AbstractExecutionFactory,
@@ -108,6 +108,9 @@ export function legacyRecordedBackend(
         },
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "recordedUser" });
+        },
+        deauthenticate(): Promise<void> {
+            return Promise.resolve();
         },
         isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: "recordedUser" });
