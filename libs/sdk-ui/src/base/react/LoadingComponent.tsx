@@ -1,6 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export interface ILoadingProps {
     className?: string;
     color?: string;
@@ -17,6 +22,8 @@ const baseAnimationDuration = 1.4;
 /**
  * [LoadingComponent](http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html)
  * is a component that renders a default loading indicator
+ *
+ * @public
  */
 export class LoadingComponent extends React.Component<ILoadingProps> {
     public static defaultProps: Partial<ILoadingProps> = {

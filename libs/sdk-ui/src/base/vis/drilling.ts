@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     DataViewFacade,
     isAttributeDescriptor,
@@ -19,6 +19,9 @@ import {
 import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
+/**
+ * @internal
+ */
 export function isSomeHeaderPredicateMatched(
     drillablePredicates: IHeaderPredicate[],
     header: IMappingHeader,
@@ -29,6 +32,9 @@ export function isSomeHeaderPredicateMatched(
     );
 }
 
+/**
+ * @internal
+ */
 export function convertDrillableItemsToPredicates(
     drillableItems: Array<IDrillableItem | IHeaderPredicate>,
 ): IHeaderPredicate[] {
@@ -43,7 +49,9 @@ export function convertDrillableItemsToPredicates(
     });
 }
 
-// shared by charts and table
+/**
+ * @internal
+ */
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[] {
     return drillItems.reduce(
         (
@@ -87,8 +95,10 @@ export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventI
  * Fire a new drill event built from the provided data to the target that have a 'dispatchEvent' method.
  *
  * @param drillEventFunction - custom drill event function which could process and prevent default post message event.
- * @param drillEventData - The event data in {executionContext, drillContext} format.
+ * @param drillEventData - The event data in executionContext, drillContext format.
  * @param target - The target where the built event must be dispatched.
+ *
+ * @internal
  */
 export function fireDrillEvent(
     drillEventFunction: IDrillEventCallback,

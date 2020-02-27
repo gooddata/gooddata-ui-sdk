@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
@@ -104,6 +104,7 @@ export function convertError(error: any): GoodDataSdkError {
  * Default error handler - logs error to console as error.
  *
  * @param error - error to log
+ * @public
  */
 export function defaultErrorHandler(error: any) {
     console.error(error); // tslint:disable-line:no-console

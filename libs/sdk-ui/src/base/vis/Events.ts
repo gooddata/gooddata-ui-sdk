@@ -1,20 +1,41 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorPalette, Identifier, ITotal, SortItem } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
+/**
+ * @public
+ */
 export interface ILoadingState {
     isLoading: boolean;
 }
 
+/**
+ * @public
+ */
 export type OnError = (error: GoodDataSdkError) => void;
+
+/**
+ * @public
+ */
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 
+/**
+ * @public
+ */
 export interface IExtendedExportConfig extends IExportConfig {
     includeFilterContext?: boolean;
 }
+
+/**
+ * @public
+ */
 export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResult>;
+
+/**
+ * @public
+ */
 export type OnExportReady = (exportFunction: IExportFunction) => void;
 
 /**
@@ -34,8 +55,14 @@ export interface IColorsData {
     colorPalette: IColorPalette;
 }
 
+/**
+ * @internal
+ */
 export type DrillableItemType = "measure";
 
+/**
+ * @internal
+ */
 export interface IDrillableItemPushData {
     type: DrillableItemType;
     localIdentifier: Identifier;

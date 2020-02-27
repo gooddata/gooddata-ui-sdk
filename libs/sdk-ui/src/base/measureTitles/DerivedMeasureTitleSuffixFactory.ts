@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { ILocale } from "../localization/Locale";
@@ -14,7 +14,7 @@ export class DerivedMeasureTitleSuffixFactory {
 
     /**
      * Create a new instance of the class.
-     * @param {ILocale} locale - The locale used for translation.
+     * @param locale - The locale used for translation.
      */
     constructor(locale: ILocale) {
         this.locale = locale;
@@ -24,9 +24,8 @@ export class DerivedMeasureTitleSuffixFactory {
      * Returns formatted localized suffix string for derived measure based on the over time comparison type.
      * In case when unsupported over time comparison type is provided the empty string is returned.
      *
-     * @param {OverTimeComparisonType} overTimeComparisonType - The over time comparison type for which the
+     * @param overTimeComparisonType - The over time comparison type for which the
      *      suffix must be obtained.
-     * @returns {string}
      */
     public getSuffix(overTimeComparisonType: OverTimeComparisonType): string {
         const localizationKey = this.getSuffixLocalizationKey(overTimeComparisonType);

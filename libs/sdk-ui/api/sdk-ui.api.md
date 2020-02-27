@@ -109,7 +109,9 @@ export class CatalogHelper {
     visualizationTags(name: string): string;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ChartElementType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell";
 
 // Warning: (ae-internal-missing-underscore) The name "ChartType" should be prefixed with an underscore because the declaration is marked as @internal
@@ -117,7 +119,9 @@ export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell";
 // @internal (undocumented)
 export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pareto" | "alluvial";
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "convertDrillableItemsToPredicates" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: Array<IDrillableItem | IHeaderPredicate>): IHeaderPredicate[];
 
 // @public
@@ -152,7 +156,9 @@ export class DerivedMeasureTitleSuffixFactory {
     getSuffix(overTimeComparisonType: OverTimeComparisonType): string;
     }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "DrillableItemType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type DrillableItemType = "measure";
 
 // @public (undocumented)
@@ -190,13 +196,19 @@ export const Executor: React.ComponentClass<IExecutorProps, any>;
 // @internal
 export function fillMissingTitles(insight: IInsight, locale: ILocale, maxArithmeticMeasureTitleLength?: number): IInsight;
 
-// @public
+// Warning: (ae-internal-missing-underscore) The name "fireDrillEvent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
 export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "getDrillIntersection" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "getIntl" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function getIntl(locale?: ILocale): IntlShape;
 
 // Warning: (ae-internal-missing-underscore) The name "getMappingHeaderIdentifier" should be prefixed with an underscore because the declaration is marked as @internal
@@ -219,12 +231,14 @@ export function getMappingHeaderName(header: IMappingHeader): string;
 // @internal (undocumented)
 export function getMappingHeaderUri(header: IMappingHeader): string;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "getTranslation" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function getTranslation(translationId: string, locale: ILocale, values?: {}): string;
 
-// Warning: (ae-incompatible-release-tags) The symbol "getVisualizationType" is marked as @public, but its signature references "ChartType" which is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "getVisualizationType" should be prefixed with an underscore because the declaration is marked as @internal
 //
-// @public (undocumented)
+// @internal (undocumented)
 export function getVisualizationType(type: ChartType): ChartType;
 
 // @public
@@ -255,7 +269,9 @@ export const HeaderPredicates: {
     composedFromIdentifier: typeof composedFromIdentifier;
 };
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "HeadlineElementType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 
 // Warning: (ae-internal-missing-underscore) The name "IArithmeticMeasureTitleProps" should be prefixed with an underscore because the declaration is marked as @internal
@@ -297,7 +313,9 @@ export interface IDrillableItemIdentifier {
     identifier: string;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IDrillableItemPushData" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IDrillableItemPushData {
     // (undocumented)
     localIdentifier: Identifier;
@@ -362,6 +380,8 @@ export interface IDrillEventContext {
 
 // @public (undocumented)
 export interface IDrillEventContextGroup {
+    // Warning: (ae-incompatible-release-tags) The symbol "element" is marked as @public, but its signature references "ChartElementType" which is marked as @internal
+    //
     // (undocumented)
     element: ChartElementType;
     // (undocumented)
@@ -374,6 +394,8 @@ export interface IDrillEventContextGroup {
 
 // @public (undocumented)
 export interface IDrillEventContextHeadline {
+    // Warning: (ae-incompatible-release-tags) The symbol "element" is marked as @public, but its signature references "HeadlineElementType" which is marked as @internal
+    //
     // (undocumented)
     element: HeadlineElementType;
     // (undocumented)
@@ -388,6 +410,8 @@ export interface IDrillEventContextHeadline {
 
 // @public (undocumented)
 export interface IDrillEventContextPoint {
+    // Warning: (ae-incompatible-release-tags) The symbol "element" is marked as @public, but its signature references "ChartElementType" which is marked as @internal
+    //
     // (undocumented)
     element: ChartElementType;
     // Warning: (ae-incompatible-release-tags) The symbol "elementChartType" is marked as @public, but its signature references "ChartType" which is marked as @internal
@@ -432,6 +456,8 @@ export interface IDrillEventContextTable {
 
 // @public (undocumented)
 export interface IDrillEventContextXirr {
+    // Warning: (ae-incompatible-release-tags) The symbol "element" is marked as @public, but its signature references "HeadlineElementType" which is marked as @internal
+    //
     // (undocumented)
     element: HeadlineElementType;
     // (undocumented)
@@ -478,7 +504,7 @@ export interface IErrorDescriptors {
     };
 }
 
-// @public (undocumented)
+// @public
 export interface IErrorProps {
     // (undocumented)
     className?: string;
@@ -534,13 +560,17 @@ export interface IHeaderPredicateContext {
     dv: DataViewFacade;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IHighchartsCategoriesTree" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IHighchartsCategoriesTree {
     // (undocumented)
     tick: IHighchartsParentTick;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IHighchartsParentTick" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IHighchartsParentTick {
     // (undocumented)
     label: any;
@@ -550,7 +580,9 @@ export interface IHighchartsParentTick {
     startAt: number;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IIntlWrapperProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface IIntlWrapperProps {
     // (undocumented)
     locale: string;
@@ -584,7 +616,7 @@ export interface IKpiProps {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface ILoadingProps {
     // (undocumented)
     className?: string;
@@ -628,12 +660,16 @@ export interface IMeasureTitleProps {
     title?: string;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IntlTranslationsProvider" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export const IntlTranslationsProvider: React.FC<import("react-intl").WithIntlProps<ITranslationsProviderProps & WrappedComponentProps<"intl">>> & {
     WrappedComponent: React.ComponentType<ITranslationsProviderProps & WrappedComponentProps<"intl">>;
 };
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "IntlWrapper" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     // (undocumented)
     static defaultProps: IIntlWrapperProps;
@@ -677,10 +713,14 @@ export function isGoodDataSdkError(obj: any): obj is GoodDataSdkError;
 // @public (undocumented)
 export function isHeaderPredicate(obj: any): obj is IHeaderPredicate;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "isSomeHeaderPredicateMatched" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ITranslationsComponentProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface ITranslationsComponentProps {
     // (undocumented)
     emptyHeaderString: string;
@@ -690,7 +730,9 @@ export interface ITranslationsComponentProps {
     numericSymbols: string[];
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "ITranslationsProviderProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export interface ITranslationsProviderProps {
     // (undocumented)
     children: any;
@@ -770,7 +812,9 @@ export class LoadingComponent extends React.Component<ILoadingProps> {
     render(): JSX.Element;
 }
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "messagesMap" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
 };
@@ -790,20 +834,28 @@ export type OnFiredDrillEvent = IDrillEventCallback;
 // @public (undocumented)
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "OverTimeComparisonType" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type OverTimeComparisonType = "same_period_previous_year" | "previous_period" | "nothing";
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "OverTimeComparisonTypes" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export const OverTimeComparisonTypes: {
     SAME_PERIOD_PREVIOUS_YEAR: "same_period_previous_year";
     PREVIOUS_PERIOD: "previous_period";
     NOTHING: "nothing";
 };
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "Subtract" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type Subtract<T, K> = Pick<T, Exclude<keyof T, keyof K>>;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "TranslationsProvider" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps & WrappedComponentProps> {
     // (undocumented)
     render(): any;
@@ -830,7 +882,9 @@ export const useWorkspace: () => string;
 // @public (undocumented)
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "VisualizationEnvironment" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export type VisualizationEnvironment = "none" | "dashboards";
 
 // Warning: (ae-internal-missing-underscore) The name "visualizationIsBetaWarning" should be prefixed with an underscore because the declaration is marked as @internal
@@ -866,7 +920,7 @@ export const VisualizationTypes: {
     XIRR: "xirr";
 };
 
-// @public (undocumented)
+// @public
 export function withBackend<T extends {
     backend?: IAnalyticalBackend;
 }>(Chart: React.ComponentType<T>): React.ComponentType<T>;
@@ -882,7 +936,9 @@ export function withContexts<T extends {
 // @public
 export function withExecution<T, R extends object>({ execution, mapResultToProps, events, loadOnMount, shouldRefetch, }: IWithExecution<T, R>): (WrappedComponent: import("react").ComponentType<T & R>) => import("react").ComponentClass<T, any>;
 
-// @public (undocumented)
+// Warning: (ae-internal-missing-underscore) The name "withIntl" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
 export function withIntl<P>(WrappedComponent: React.FC<P> | React.ComponentClass<P>): React.ComponentClass<P>;
 
 // @public
@@ -905,7 +961,7 @@ export type WithLoadingState<T> = {
     result: T | undefined;
 };
 
-// @public (undocumented)
+// @public
 export function withWorkspace<T extends {
     workspace?: string;
 }>(Chart: React.ComponentType<T>): React.ComponentType<T>;
@@ -923,16 +979,16 @@ export const wrapDisplayName: (hocName: string, BaseComponent?: import("react").
 
 // Warnings were encountered during analysis:
 //
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:40:5 - (ae-forgotten-export) The symbol "uriMatch" needs to be exported by the entry point index.d.ts
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:41:5 - (ae-forgotten-export) The symbol "identifierMatch" needs to be exported by the entry point index.d.ts
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:42:5 - (ae-forgotten-export) The symbol "attributeItemNameMatch" needs to be exported by the entry point index.d.ts
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:43:5 - (ae-forgotten-export) The symbol "localIdentifierMatch" needs to be exported by the entry point index.d.ts
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:44:5 - (ae-forgotten-export) The symbol "composedFromUri" needs to be exported by the entry point index.d.ts
-// dist/base/headerMatching/HeaderPredicateFactory.d.ts:45:5 - (ae-forgotten-export) The symbol "composedFromIdentifier" needs to be exported by the entry point index.d.ts
-// dist/base/helpers/CatalogHelper.d.ts:63:9 - (ae-forgotten-export) The symbol "IIdentifierWithTags" needs to be exported by the entry point index.d.ts
-// dist/base/helpers/CatalogHelper.d.ts:69:9 - (ae-forgotten-export) The symbol "IAttrItem" needs to be exported by the entry point index.d.ts
-// dist/base/helpers/CatalogHelper.d.ts:72:9 - (ae-forgotten-export) The symbol "IDataSet" needs to be exported by the entry point index.d.ts
-// dist/base/localization/IntlWrapper.d.ts:6:5 - (ae-forgotten-export) The symbol "ITranslations" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:45:5 - (ae-forgotten-export) The symbol "uriMatch" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:46:5 - (ae-forgotten-export) The symbol "identifierMatch" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:47:5 - (ae-forgotten-export) The symbol "attributeItemNameMatch" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:48:5 - (ae-forgotten-export) The symbol "localIdentifierMatch" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:49:5 - (ae-forgotten-export) The symbol "composedFromUri" needs to be exported by the entry point index.d.ts
+// dist/base/headerMatching/HeaderPredicateFactory.d.ts:50:5 - (ae-forgotten-export) The symbol "composedFromIdentifier" needs to be exported by the entry point index.d.ts
+// dist/base/helpers/CatalogHelper.d.ts:64:9 - (ae-forgotten-export) The symbol "IIdentifierWithTags" needs to be exported by the entry point index.d.ts
+// dist/base/helpers/CatalogHelper.d.ts:70:9 - (ae-forgotten-export) The symbol "IAttrItem" needs to be exported by the entry point index.d.ts
+// dist/base/helpers/CatalogHelper.d.ts:73:9 - (ae-forgotten-export) The symbol "IDataSet" needs to be exported by the entry point index.d.ts
+// dist/base/localization/IntlWrapper.d.ts:9:5 - (ae-forgotten-export) The symbol "ITranslations" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

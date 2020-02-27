@@ -10,6 +10,8 @@ import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";
 /**
  * Super-interface for all visualization props; charts, tables or anything else - all should have these
  * basic props.
+ *
+ * @public
  */
 export interface IVisualizationProps {
     /**

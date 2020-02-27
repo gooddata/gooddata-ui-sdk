@@ -32,6 +32,10 @@ export const useWorkspace = () => {
     return workspace;
 };
 
+/**
+ * TODO: SDK8: add docs
+ * @public
+ */
 export function withWorkspace<T extends { workspace?: string }>(Chart: React.ComponentType<T>) {
     const ComponentWithInjectedWorkspace: React.FC<T> = props => {
         return (

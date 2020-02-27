@@ -153,6 +153,11 @@ function matchDerivedMeasureByMasterIdentifier(
     return false;
 }
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function uriMatch(uri: string): IHeaderPredicate {
     return (header: IMappingHeader, context: IHeaderPredicateContext): boolean => {
         const { dv } = context;

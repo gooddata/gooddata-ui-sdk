@@ -18,6 +18,9 @@ interface ITranslations {
     [key: string]: string;
 }
 
+/**
+ * @internal
+ */
 export const messagesMap: { [locale: string]: ITranslations } = {
     "en-US": translations.removeMetadata(enUS),
     "de-DE": deDE,
@@ -30,10 +33,16 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "zh-Hans": zhHans,
 };
 
+/**
+ * @internal
+ */
 export interface IIntlWrapperProps {
     locale: string;
 }
 
+/**
+ * @internal
+ */
 export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     public static defaultProps: IIntlWrapperProps = {
         locale: DefaultLocale,

@@ -4,8 +4,7 @@ import { IErrorProps } from "../base/react/ErrorComponent";
 
 /**
  * TODO: SDK8: add docs
- * @param props
- * @constructor
+ *
  * @public
  */
 export const KpiError: React.StatelessComponent<IErrorProps> = props => {

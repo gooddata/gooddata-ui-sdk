@@ -33,6 +33,11 @@ export const useBackend = () => {
     return backend;
 };
 
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
 export function withBackend<T extends { backend?: IAnalyticalBackend }>(Chart: React.ComponentType<T>) {
     const ComponentWithInjectedBackend: React.FC<T> = props => {
         return (

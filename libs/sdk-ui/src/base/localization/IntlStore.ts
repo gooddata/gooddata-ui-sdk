@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 
 import { IntlShape, createIntl } from "react-intl";
@@ -29,6 +29,9 @@ const messagesMap = {
 
 const intlStore = {};
 
+/**
+ * @internal
+ */
 export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
     let usedLocale = locale;
     if (isEmpty(locale)) {
@@ -43,6 +46,9 @@ export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
     );
 }
 
+/**
+ * @internal
+ */
 export function getTranslation(translationId: string, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
     return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);

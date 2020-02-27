@@ -17,6 +17,9 @@ export function createIntlMock(customMessages = {}) {
     });
 }
 
+/**
+ * @internal
+ */
 export function withIntl<P>(
     WrappedComponent: React.FC<P> | React.ComponentClass<P>,
 ): React.ComponentClass<P> {

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 /**
  * @internal
@@ -55,15 +55,40 @@ export type ChartType =
 export type HeadlineType = "headline";
 export type XirrType = "xirr";
 export type TableType = "table";
+
+/**
+ * @public
+ */
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
+/**
+ * @internal
+ */
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell"; // 'cell' for heatmap
+
+/**
+ * @internal
+ */
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
+
+/**
+ * @internal
+ */
 export type TableElementType = "cell";
+
+/**
+ * @public
+ */
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;
 
+/**
+ * @internal
+ */
 export type VisualizationEnvironment = "none" | "dashboards";
 
+/**
+ * @internal
+ */
 export function getVisualizationType(type: ChartType): ChartType {
     if (type === VisualizationTypes.COMBO2) {
         return VisualizationTypes.COMBO;

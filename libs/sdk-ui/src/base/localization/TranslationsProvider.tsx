@@ -2,16 +2,25 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 
+/**
+ * @internal
+ */
 export interface ITranslationsProviderProps {
     children: any;
 }
 
+/**
+ * @internal
+ */
 export interface ITranslationsComponentProps {
     numericSymbols: string[];
     emptyHeaderString: string;
     intl: IntlShape;
 }
 
+/**
+ * @internal
+ */
 export class TranslationsProvider extends React.PureComponent<
     ITranslationsProviderProps & WrappedComponentProps
 > {
@@ -41,4 +50,7 @@ export class TranslationsProvider extends React.PureComponent<
     }
 }
 
+/**
+ * @internal
+ */
 export const IntlTranslationsProvider = injectIntl(TranslationsProvider);

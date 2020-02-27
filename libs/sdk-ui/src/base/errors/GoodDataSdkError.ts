@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 
@@ -40,6 +40,9 @@ export function isGoodDataSdkError(obj: any): obj is GoodDataSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).sdkError === true;
 }
 
+/**
+ * @public
+ */
 export const ErrorCodes = {
     /**
      * This error means that server could not understand the request due to invalid syntax.
