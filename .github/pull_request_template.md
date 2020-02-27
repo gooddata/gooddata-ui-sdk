@@ -6,6 +6,15 @@ Description of changes.
 
 ---
 
+Supported PR commands:
+
+| Command         | Description            |
+| --------------- | ---------------------- |
+| `ok to test`    | Re-run standard checks |
+| `extended test` | BackstopJS tests       |
+
+---
+
 # PR Checklist
 
 TBD
