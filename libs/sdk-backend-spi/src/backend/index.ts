@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IElementQueryFactory } from "../workspace/elements";
@@ -109,6 +109,13 @@ export interface IAnalyticalBackend {
      * @returns promise of authenticated principal, or rejection if authentication has failed.
      */
     authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
+
+    /**
+     * Triggers deauthentication process against the backend.
+     *
+     * @returns promise of the completed process, or rejection if deauthentication failed.
+     */
+    deauthenticate(): Promise<void>;
 
     /**
      * Returns an analytical workspace available on this backend.
@@ -255,6 +262,13 @@ export interface IAuthenticationProvider {
      * Does not trigger authentication if no principal is available.
      */
     getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
+
+    /**
+     * Clear existing authentication.
+     *
+     * @param context - context in which the authentication is done
+     */
+    deauthenticate(context: AuthenticationContext): Promise<void>;
 }
 
 /**

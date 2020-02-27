@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { factory as createSdk, SDK } from "@gooddata/gd-bear-client";
 import {
     AnalyticalBackendConfig,
@@ -178,6 +178,13 @@ export class BearBackend implements IAnalyticalBackend {
         return this.triggerAuthentication(true);
     }
 
+    public deauthenticate(): Promise<void> {
+        if (!this.authProvider) {
+            throw new NotAuthenticated("Backend is not set up with authentication provider.");
+        }
+        return this.authProvider.deauthenticate(this.getAuthenticationContext());
+    }
+
     public workspace(id: string): IAnalyticalWorkspace {
         return new BearWorkspace(this.authApiCall, id);
     }
@@ -215,6 +222,8 @@ export class BearBackend implements IAnalyticalBackend {
         });
     };
 
+    private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
+
     private triggerAuthentication = (reset: boolean = false): Promise<AuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
@@ -226,7 +235,7 @@ export class BearBackend implements IAnalyticalBackend {
             this.authProvider.reset();
         }
 
-        return this.authProvider.authenticate({ client: this.sdk });
+        return this.authProvider.authenticate(this.getAuthenticationContext());
     };
 
     private getAsyncCallContext = (): IAsyncCallContext => {
@@ -268,6 +277,12 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
 
     public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
         return this.principal;
+    }
+
+    public async deauthenticate(context: AuthenticationContext): Promise<void> {
+        const sdk = context.client as SDK;
+        // we do not return the promise to logout as we do not want to return the response
+        await sdk.user.logout();
     }
 }
 
@@ -324,6 +339,10 @@ class AuthProviderCallGuard implements IAuthenticationProvider {
 
     public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
         return this.principal;
+    }
+
+    public async deauthenticate(context: AuthenticationContext): Promise<void> {
+        return this.realProvider.deauthenticate(context);
     }
 }
 

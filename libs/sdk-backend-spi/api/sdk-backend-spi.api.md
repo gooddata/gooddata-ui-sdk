@@ -175,6 +175,7 @@ export interface IAnalyticalBackend {
     authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
     readonly capabilities: BackendCapabilities;
     readonly config: AnalyticalBackendConfig;
+    deauthenticate(): Promise<void>;
     isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
@@ -217,6 +218,7 @@ export interface IAttributeDescriptor {
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    deauthenticate(context: AuthenticationContext): Promise<void>;
     getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
 }
 

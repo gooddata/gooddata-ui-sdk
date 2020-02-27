@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     AbstractExecutionFactory,
     AnalyticalBackendConfig,
@@ -93,7 +93,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         authenticate(): Promise<AuthenticatedPrincipal> {
             return Promise.resolve({ userId: "dummyUser" });
         },
-
+        deauthenticate(): Promise<void> {
+            return Promise.resolve();
+        },
         isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: "dummyUser" });
         },

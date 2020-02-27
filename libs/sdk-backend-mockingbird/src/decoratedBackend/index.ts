@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     AnalyticalBackendConfig,
@@ -51,6 +51,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public authenticate(force?: boolean): Promise<AuthenticatedPrincipal> {
         return this.decorated.authenticate(force);
+    }
+
+    public deauthenticate(): Promise<void> {
+        return this.decorated.deauthenticate();
     }
 
     public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
