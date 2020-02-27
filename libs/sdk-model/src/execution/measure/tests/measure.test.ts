@@ -243,7 +243,7 @@ describe("measureFilters", () => {
 describe("measurePopAttribute", () => {
     const Scenarios: Array<[string, any, ObjRef | undefined]> = [
         ["undefined for measure without PoP attribute", SimpleMeasureWithIdentifier, undefined],
-        ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute" }],
+        ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute", type: "attribute" }],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {

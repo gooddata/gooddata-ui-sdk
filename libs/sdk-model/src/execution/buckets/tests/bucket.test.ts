@@ -18,7 +18,7 @@ import { InvariantError } from "ts-invariant";
 import { ITotal, newTotal } from "../../base/totals";
 import { attributeLocalId, IAttribute, idMatchAttribute } from "../../attribute";
 import { idMatchMeasure, IMeasure, measureLocalId } from "../../measure";
-import { modifyMeasure } from "../../../index";
+import { modifySimpleMeasure } from "../../../index";
 
 describe("newBucket", () => {
     const Scenarios: Array<[string, any, any[]]> = [
@@ -226,8 +226,8 @@ describe("bucketTotals", () => {
 });
 
 describe("applyRatioRule", () => {
-    const MeasureWithRatio1 = modifyMeasure(Won, m => m.ratio());
-    const MeasureWithRatio2 = modifyMeasure(Velocity.Avg, m => m.ratio());
+    const MeasureWithRatio1 = modifySimpleMeasure(Won, m => m.ratio());
+    const MeasureWithRatio2 = modifySimpleMeasure(Velocity.Avg, m => m.ratio());
 
     const Scenarios: Array<[string, any, any, any]> = [
         [
@@ -280,7 +280,7 @@ describe("applyRatioRule", () => {
         ],
     ];
 
-    it.each(Scenarios)("should return %s", (_desc, itemsArg, ruleArg, expectedResult) => {
+    it.each(Scenarios)("should %s", (_desc, itemsArg, ruleArg, expectedResult) => {
         expect(applyRatioRule(itemsArg, ruleArg)).toEqual(expectedResult);
     });
 

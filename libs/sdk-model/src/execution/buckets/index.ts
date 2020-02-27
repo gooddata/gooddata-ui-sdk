@@ -340,8 +340,8 @@ export function applyRatioRule<T extends AttributeOrMeasure>(
 }
 
 function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
-    if (isMeasure(item)) {
-        return measureDisableComputeRatio(item) as T;
+    if (isSimpleMeasure(item)) {
+        return modifySimpleMeasure(item, m => m.noRatio()) as T;
     }
     return item;
 }

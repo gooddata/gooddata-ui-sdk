@@ -1,10 +1,9 @@
-// (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import unset = require("lodash/unset");
 import invariant from "ts-invariant";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
 import { IMeasureFilter } from "../filter";
+import { modifySimpleMeasure } from "./factory";
 
 /**
  * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and
@@ -330,8 +329,7 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
         return false;
     }
 
-    const computeRatio = measure.measure.definition.measureDefinition.computeRatio;
-    return computeRatio ? computeRatio : false;
+    return !!measure.measure.definition.measureDefinition.computeRatio;
 }
 
 /**
@@ -345,15 +343,15 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
 export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
     invariant(measure, "measure must be specified");
 
-    if (!measureDoesComputeRatio(measure)) {
+    if (!isSimpleMeasure(measure)) {
         return measure;
     }
 
-    const newItem: IMeasure = cloneDeep(measure);
-    // I was not able to get any other way working for a while so doing this dirty stuff.
-    unset(newItem, ["measure", "definition", "measureDefinition", "computeRatio"]);
+    if (!measure.measure.definition.measureDefinition.computeRatio) {
+        return measure;
+    }
 
-    return newItem;
+    return modifySimpleMeasure(measure, m => m.noRatio());
 }
 
 /**

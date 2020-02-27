@@ -178,6 +178,7 @@ export {
     MeasureBuilderBase,
     newMeasure,
     modifyMeasure,
+    modifySimpleMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,

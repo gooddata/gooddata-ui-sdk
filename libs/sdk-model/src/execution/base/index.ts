@@ -134,8 +134,8 @@ export function isLocalIdRef(obj: any): obj is LocalIdRef {
 }
 
 /**
- * Retrieves string representation of object reference. This is purely for purposes for representation of
- * references in text, debug and test purposes.
+ * Retrieves string representation of object reference. This is purely for for representation of
+ * references in text, debug and tests.
  *
  * @internal
  */
@@ -143,9 +143,7 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
     invariant(objRef, "object reference must not be undefined");
 
     if (isIdentifierRef(objRef)) {
-        const typePrefix = objRef.type ? `${objRef.type}_` : "";
-
-        return `${typePrefix}${objRef.identifier}`;
+        return `${objRef.identifier}`;
     } else if (isUriRef(objRef)) {
         return objRef.uri;
     }

@@ -10,7 +10,7 @@ Object {
       },
     },
   },
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_627f0f0a_foo",
 }
 `;
 
@@ -25,7 +25,7 @@ Object {
       "operator": "sum",
     },
   },
-  "localIdentifier": "m_foo_bar",
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
 }
 `;
 
@@ -52,7 +52,7 @@ Object {
       },
     },
   },
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_foo_e2e8b1b1",
 }
 `;
 
@@ -101,7 +101,7 @@ Object {
     },
   },
   "format": "#,##0.00%",
-  "localIdentifier": "m_foo_bar",
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
 }
 `;
 
@@ -131,7 +131,7 @@ Object {
     },
   },
   "format": "#,##0.00%",
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_foo_ratio",
 }
 `;
 

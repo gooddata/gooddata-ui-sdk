@@ -42,7 +42,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -51,13 +51,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -116,7 +116,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -125,13 +125,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],

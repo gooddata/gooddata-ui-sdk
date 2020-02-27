@@ -825,7 +825,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -834,13 +834,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -914,7 +914,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -923,13 +923,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -1167,10 +1167,11 @@ Object {
                 "measureIdentifier": "m_acugFHNJgsBy",
                 "popAttribute": Object {
                   "identifier": "closed.year",
+                  "type": "attribute",
                 },
               },
             },
-            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
           },
         },
       ],
@@ -1240,10 +1241,11 @@ Object {
             "measureIdentifier": "m_acugFHNJgsBy",
             "popAttribute": Object {
               "identifier": "closed.year",
+              "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
       },
     },
   ],
@@ -2673,7 +2675,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -2682,13 +2684,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -2762,7 +2764,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -2771,13 +2773,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -2797,7 +2799,7 @@ Object {
     },
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "name": Object {
         "position": "high",
@@ -2873,7 +2875,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -2882,13 +2884,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -2962,7 +2964,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -2971,13 +2973,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -2997,7 +2999,7 @@ Object {
     },
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "name": Object {
         "position": "middle",
@@ -3073,7 +3075,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -3082,13 +3084,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -3162,7 +3164,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -3171,13 +3173,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -3197,7 +3199,7 @@ Object {
     },
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "name": Object {
         "position": "low",
@@ -3273,7 +3275,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -3282,13 +3284,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -3362,7 +3364,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -3371,13 +3373,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -3397,7 +3399,7 @@ Object {
     },
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "name": Object {
         "position": "middle",
@@ -3608,7 +3610,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -3617,13 +3619,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -3697,7 +3699,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -3706,13 +3708,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -3726,7 +3728,7 @@ Object {
   "config": Object {
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "visible": false,
     },
@@ -3787,7 +3789,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -3796,13 +3798,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -3876,7 +3878,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -3885,13 +3887,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -3906,7 +3908,7 @@ Object {
     "secondary_yaxis": Object {
       "labelsEnabled": false,
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
     },
     "stackMeasures": undefined,
@@ -3966,7 +3968,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -3975,13 +3977,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -4055,7 +4057,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -4064,13 +4066,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -4084,7 +4086,7 @@ Object {
   "config": Object {
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
     },
     "stackMeasures": undefined,
@@ -4144,7 +4146,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -4153,13 +4155,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -4233,7 +4235,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -4242,13 +4244,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -4262,7 +4264,7 @@ Object {
   "config": Object {
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "rotation": "45",
     },
@@ -7210,7 +7212,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -7219,13 +7221,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -7299,7 +7301,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -7308,13 +7310,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -7328,7 +7330,7 @@ Object {
   "config": Object {
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
     },
     "stackMeasures": true,
@@ -7388,7 +7390,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -7397,13 +7399,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -7477,7 +7479,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -7486,13 +7488,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -7506,7 +7508,7 @@ Object {
   "config": Object {
     "secondary_yaxis": Object {
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
     },
     "stackMeasures": undefined,
@@ -7566,7 +7568,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -7575,13 +7577,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -7655,7 +7657,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -7664,13 +7666,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -7685,7 +7687,7 @@ Object {
     "secondary_yaxis": Object {
       "max": "2",
       "measures": Array [
-        "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       ],
       "min": "1",
     },
@@ -9409,10 +9411,11 @@ Object {
                 "measureIdentifier": "m_acugFHNJgsBy",
                 "popAttribute": Object {
                   "identifier": "closed.year",
+                  "type": "attribute",
                 },
               },
             },
-            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
           },
         },
       ],
@@ -9482,10 +9485,11 @@ Object {
             "measureIdentifier": "m_acugFHNJgsBy",
             "popAttribute": Object {
               "identifier": "closed.year",
+              "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
       },
     },
   ],
