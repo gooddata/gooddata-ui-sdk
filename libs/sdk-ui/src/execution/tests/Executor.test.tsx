@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount } from "enzyme";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { Executor, IExecutorProps } from "../Executor";

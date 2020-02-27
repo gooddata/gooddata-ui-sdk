@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import * as React from "react";
-import { IErrorProps } from "../base";
+import React from "react";
+import { IErrorProps } from "../base/react/ErrorComponent";
 
 /**
  * TODO: SDK8: add docs

@@ -260,3 +260,17 @@ export function composedFromUri(uri: string): IHeaderPredicate {
 export function composedFromIdentifier(identifier: string): IHeaderPredicate {
     return composedFromQualifier(identifierMatch(identifier));
 }
+
+/**
+ * TODO: SDK8: add docs
+ *
+ * @public
+ */
+export const HeaderPredicates = {
+    uriMatch,
+    identifierMatch,
+    attributeItemNameMatch,
+    localIdentifierMatch,
+    composedFromUri,
+    composedFromIdentifier,
+};
