@@ -3,7 +3,6 @@ import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
 import { IMeasureFilter } from "../filter";
-import { modifySimpleMeasure } from "./factory";
 
 /**
  * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and
@@ -330,28 +329,6 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
     }
 
     return !!measure.measure.definition.measureDefinition.computeRatio;
-}
-
-/**
- * Disables compute ratio on the provided measure. This is an immutable function - returning new
- * measure with the ratio disabled.
- *
- * @param measure - measure to disable compute ratio for
- * @returns new measure with disabled ratio; same measure if ratio was not enabled in the first place
- * @public
- */
-export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
-    invariant(measure, "measure must be specified");
-
-    if (!isSimpleMeasure(measure)) {
-        return measure;
-    }
-
-    if (!measure.measure.definition.measureDefinition.computeRatio) {
-        return measure;
-    }
-
-    return modifySimpleMeasure(measure, m => m.noRatio());
 }
 
 /**

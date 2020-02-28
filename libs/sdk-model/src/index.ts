@@ -157,7 +157,6 @@ export {
     measureIdentifier,
     measureMasterIdentifier,
     measureArithmeticOperands,
-    measureDisableComputeRatio,
     measureAlias,
     measureTitle,
     measureArithmeticOperator,
