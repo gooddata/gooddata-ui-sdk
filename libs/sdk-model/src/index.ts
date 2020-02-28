@@ -14,7 +14,12 @@ export {
     attributeAttributeDisplayFormObjRef,
 } from "./execution/attribute";
 
-export { newAttribute, AttributeBuilder, AttributeModifications } from "./execution/attribute/factory";
+export {
+    newAttribute,
+    modifyAttribute,
+    AttributeBuilder,
+    AttributeModifications,
+} from "./execution/attribute/factory";
 
 export {
     IAttributeDisplayForm,

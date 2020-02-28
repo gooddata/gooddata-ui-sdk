@@ -7,6 +7,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -36,6 +37,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -97,6 +99,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -126,6 +129,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -229,6 +233,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -258,6 +263,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -354,6 +360,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -383,6 +390,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -578,6 +586,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -607,6 +616,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -876,6 +886,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -905,6 +916,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -962,6 +974,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -991,6 +1004,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1044,6 +1058,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1073,6 +1088,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1130,6 +1146,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1159,6 +1176,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1220,6 +1238,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1249,6 +1268,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1306,6 +1326,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1335,6 +1356,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1392,6 +1414,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1421,6 +1444,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1478,6 +1502,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1507,6 +1532,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1564,6 +1590,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1593,6 +1620,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1650,6 +1678,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1679,6 +1708,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1736,6 +1766,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1765,6 +1796,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2420,6 +2452,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2449,6 +2482,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2580,6 +2614,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2609,6 +2644,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2666,6 +2702,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2695,6 +2732,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2748,6 +2786,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2777,6 +2816,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2834,6 +2874,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2863,6 +2904,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },

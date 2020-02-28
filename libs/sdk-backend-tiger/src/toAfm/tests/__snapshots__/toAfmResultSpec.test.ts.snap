@@ -81,7 +81,7 @@ Object {
             "type": "label",
           },
         },
-        "localIdentifier": "a_attribute1",
+        "localIdentifier": "a_724874d1_attribute1",
       },
       Object {
         "displayForm": Object {
@@ -90,7 +90,7 @@ Object {
             "type": "label",
           },
         },
-        "localIdentifier": "a2",
+        "localIdentifier": "a_attribute2",
       },
     ],
   },

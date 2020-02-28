@@ -44,13 +44,13 @@ export function attributeAlias(attribute: IAttribute): string | undefined;
 export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef;
 
 // @public
-export class AttributeBuilder implements IAttribute {
+export class AttributeBuilder {
+    // Warning: (ae-forgotten-export) The symbol "AttributeBuilderInput" needs to be exported by the entry point index.d.ts
+    //
     // @internal
-    constructor(displayForm: ObjRef);
+    constructor(input: AttributeBuilderInput);
     // (undocumented)
     alias: (alias: string) => this;
-    // (undocumented)
-    attribute: IAttribute["attribute"];
     // (undocumented)
     build: () => {
         attribute: {
@@ -1105,9 +1105,6 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
 }
 
 // @public
-export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
-
-// @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
 
 // @public
@@ -1163,6 +1160,9 @@ export function measureValueFilterCondition(filter: IMeasureValueFilter): Measur
 export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope;
 
 // @public
+export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;
+
+// @public
 export function modifyMeasure<T extends IMeasureDefinitionType>(measure: IMeasure<T>, modifications?: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>>): IMeasure<T>;
 
 // @public
@@ -1175,7 +1175,7 @@ export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: st
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | Identifier>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
-export function newAttribute(displayForm: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
+export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
 // @public
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
