@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "abZgFKGPaGYM"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
                 ]
@@ -28,7 +28,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "created.aci81lMifn6q"
+                                "identifier": "created.aci81lMifn6q",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_created.aci81lMifn6q"
                         }

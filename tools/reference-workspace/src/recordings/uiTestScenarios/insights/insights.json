@@ -168,6 +168,11 @@
         "scenarioName": "arithmetic measures",
         "comment": "Auto-generated insight for test scenario BarChart - arithmetic measures."
     },
+    "BarChart.351271a3823e83b6e6aaeca7bb867934": {
+        "visName": "BarChart",
+        "scenarioName": "four measures and PoP",
+        "comment": "Auto-generated insight for test scenario BarChart - four measures and PoP."
+    },
     "BarChart.3ed42f4308cb67a949e8dcfc9cdbdeed": {
         "comment": "Auto-generated insight for test scenario BarChart - X axis min/max configuration."
     },
@@ -325,6 +330,11 @@
         "scenarioName": "x and y axis and size measures with viewBy",
         "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy."
     },
+    "BubbleChart.c4280eac31afb72c1ff967e3943f5f7b": {
+        "visName": "BubbleChart",
+        "scenarioName": "y axis and size measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BubbleChart - y axis and size measures with viewBy."
+    },
     "BubbleChart.f903ea1ad4ab210f856afe149a50e7da": {
         "visName": "BubbleChart",
         "scenarioName": "arithmetic measure",
@@ -334,6 +344,11 @@
         "visName": "BubbleChart",
         "scenarioName": "x and y axis and size measures with viewBy and sorted by attr",
         "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy and sorted by attr."
+    },
+    "BubbleChart.d97a0ab16541d3c0ddbc4fbc34da04e7": {
+        "visName": "BubbleChart",
+        "scenarioName": "x and y axis and size measures with viewBy with nulls in data",
+        "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy with nulls in data."
     },
     "BubbleChart.3ed42f4308cb67a949e8dcfc9cdbdeed": {
         "comment": "Auto-generated insight for test scenario BubbleChart - X axis min/max configuration."
@@ -410,6 +425,11 @@
         "visName": "ColumnChart",
         "scenarioName": "single measure with viewBy",
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with viewBy."
+    },
+    "ColumnChart.aff7171bd9738109ad9f2eb976363ab8": {
+        "visName": "ColumnChart",
+        "scenarioName": "single ratio measure with viewBy",
+        "comment": "Auto-generated insight for test scenario ColumnChart - single ratio measure with viewBy."
     },
     "ColumnChart.a3778b88a7c4bb25ec3a76a066a724ff": {
         "visName": "ColumnChart",
@@ -1251,6 +1271,11 @@
         "scenarioName": "x and y axis measures and attribute with attr sorting",
         "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with attr sorting."
     },
+    "ScatterPlot.eb724a07ce4cd426d83735632cd60297": {
+        "visName": "ScatterPlot",
+        "scenarioName": "x and y axis measures and attribute with nulls in data",
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with nulls in data."
+    },
     "ScatterPlot.8ef484c1987606bf057feb599406c208": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - Y axis min/max configuration."
     },
@@ -1292,6 +1317,11 @@
         "scenarioName": "single measure",
         "comment": "Auto-generated insight for test scenario Treemap - single measure."
     },
+    "Treemap.26a452b872ba95e4db52f34253024eab": {
+        "visName": "Treemap",
+        "scenarioName": "single measure and segment",
+        "comment": "Auto-generated insight for test scenario Treemap - single measure and segment."
+    },
     "Treemap.51644dbb3eee42350f18648735e991a5": {
         "visName": "Treemap",
         "scenarioName": "two measures",
@@ -1302,6 +1332,11 @@
         "scenarioName": "single measure and viewBy",
         "comment": "Auto-generated insight for test scenario Treemap - single measure and viewBy."
     },
+    "Treemap.de7c39b52abf77e0694060e0d5722972": {
+        "visName": "Treemap",
+        "scenarioName": "single measure and viewBy filtered to one element",
+        "comment": "Auto-generated insight for test scenario Treemap - single measure and viewBy filtered to one element."
+    },
     "Treemap.ae427323c1121cfa6e1e1e5a16711ab1": {
         "visName": "Treemap",
         "scenarioName": "single measure, viewBy and segment",
@@ -1311,6 +1346,11 @@
         "visName": "Treemap",
         "scenarioName": "two measures and viewBy",
         "comment": "Auto-generated insight for test scenario Treemap - two measures and viewBy."
+    },
+    "Treemap.5eab5beaa21251d08dcd534d52e0d98f": {
+        "visName": "Treemap",
+        "scenarioName": "two measures and segmentBy",
+        "comment": "Auto-generated insight for test scenario Treemap - two measures and segmentBy."
     },
     "Treemap.86ba1240fdf20f5b6ea44ca71426262e": {
         "visName": "Treemap",
@@ -1521,45 +1561,5 @@
         "visName": "PivotTable",
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
-    },
-    "BarChart.351271a3823e83b6e6aaeca7bb867934": {
-        "visName": "BarChart",
-        "scenarioName": "four measures and PoP",
-        "comment": "Auto-generated insight for test scenario BarChart - four measures and PoP."
-    },
-    "Treemap.26a452b872ba95e4db52f34253024eab": {
-        "visName": "Treemap",
-        "scenarioName": "single measure and segment",
-        "comment": "Auto-generated insight for test scenario Treemap - single measure and segment."
-    },
-    "Treemap.de7c39b52abf77e0694060e0d5722972": {
-        "visName": "Treemap",
-        "scenarioName": "single measure and viewBy filtered to one element",
-        "comment": "Auto-generated insight for test scenario Treemap - single measure and viewBy filtered to one element."
-    },
-    "ColumnChart.aff7171bd9738109ad9f2eb976363ab8": {
-        "visName": "ColumnChart",
-        "scenarioName": "single ratio measure with viewBy",
-        "comment": "Auto-generated insight for test scenario ColumnChart - single ratio measure with viewBy."
-    },
-    "Treemap.5eab5beaa21251d08dcd534d52e0d98f": {
-        "visName": "Treemap",
-        "scenarioName": "two measures and segmentBy",
-        "comment": "Auto-generated insight for test scenario Treemap - two measures and segmentBy."
-    },
-    "BubbleChart.c4280eac31afb72c1ff967e3943f5f7b": {
-        "visName": "BubbleChart",
-        "scenarioName": "y axis and size measures with viewBy",
-        "comment": "Auto-generated insight for test scenario BubbleChart - y axis and size measures with viewBy."
-    },
-    "ScatterPlot.eb724a07ce4cd426d83735632cd60297": {
-        "visName": "ScatterPlot",
-        "scenarioName": "x and y axis measures and attribute with nulls in data",
-        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures and attribute with nulls in data."
-    },
-    "BubbleChart.d97a0ab16541d3c0ddbc4fbc34da04e7": {
-        "visName": "BubbleChart",
-        "scenarioName": "x and y axis and size measures with viewBy with nulls in data",
-        "comment": "Auto-generated insight for test scenario BubbleChart - x and y axis and size measures with viewBy with nulls in data."
     }
 }

@@ -1,0 +1,26 @@
+{
+    "workspace": "testWorkspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m_aadpHDMBecIy",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "identifier": "aadpHDMBecIy"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [],
+    "sortBy": []
+}

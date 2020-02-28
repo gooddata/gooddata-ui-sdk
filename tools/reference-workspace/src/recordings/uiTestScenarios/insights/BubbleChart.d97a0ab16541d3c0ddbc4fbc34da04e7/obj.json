@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
                 ]
@@ -27,14 +27,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "abZgFKGPaGYM"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
                 ]
@@ -44,14 +44,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abEgMnq5hyJQ",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "abEgMnq5hyJQ"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_abEgMnq5hyJQ"
+                            }
                         }
                     }
                 ]
@@ -62,7 +62,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "closed.aag81lMifn6q"
+                                "identifier": "closed.aag81lMifn6q",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }

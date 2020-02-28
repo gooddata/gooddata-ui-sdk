@@ -1,0 +1,30 @@
+[
+    {
+        "vis": "PivotTable",
+        "scenario": "single column",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": []
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": []
+            },
+            {
+                "localIdentifier": "columns",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

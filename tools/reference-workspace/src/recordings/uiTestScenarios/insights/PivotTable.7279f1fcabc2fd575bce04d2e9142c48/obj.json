@@ -19,7 +19,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.product.id.name"
                         }

@@ -1,0 +1,49 @@
+{
+    "dimensions": [
+        {
+            "headers": []
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Amount",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+                                    "identifier": "aangOxLSeztu"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Won",
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_acugFHNJgsBy",
+                                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+                                    "identifier": "acugFHNJgsBy"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Calculated 'Lost' measure",
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "name": "Ratio of Won and Lost",
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

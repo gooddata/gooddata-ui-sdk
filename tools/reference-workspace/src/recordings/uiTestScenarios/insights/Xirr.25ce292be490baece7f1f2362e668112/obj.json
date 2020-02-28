@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abYgDBRagANw",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "abYgDBRagANw"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_abYgDBRagANw"
+                            }
                         }
                     }
                 ]
@@ -28,7 +28,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "timeline.aag81lMifn6q"
+                                "identifier": "timeline.aag81lMifn6q",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_timeline.aag81lMifn6q"
                         }

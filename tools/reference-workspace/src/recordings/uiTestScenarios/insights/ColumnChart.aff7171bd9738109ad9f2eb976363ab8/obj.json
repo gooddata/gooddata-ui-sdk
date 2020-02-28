@@ -10,6 +10,7 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "Amount with Ratio",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
@@ -18,7 +19,6 @@
                                     "computeRatio": true
                                 }
                             },
-                            "localIdentifier": "Amount with Ratio",
                             "alias": "Amount with Ratio"
                         }
                     }
@@ -30,7 +30,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.product.id.name"
                         }

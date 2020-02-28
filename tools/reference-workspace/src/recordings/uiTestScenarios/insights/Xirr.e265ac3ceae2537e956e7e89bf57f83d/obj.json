@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aadpHDMBecIy",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aadpHDMBecIy"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aadpHDMBecIy"
+                            }
                         }
                     }
                 ]
