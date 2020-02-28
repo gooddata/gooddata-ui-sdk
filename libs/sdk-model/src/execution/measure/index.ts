@@ -1,7 +1,5 @@
-// (C) 2019 GoodData Corporation
-import cloneDeep = require("lodash/cloneDeep");
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import unset = require("lodash/unset");
 import invariant from "ts-invariant";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../base";
 import { IMeasureFilter } from "../filter";
@@ -330,30 +328,7 @@ export function measureDoesComputeRatio(measure: IMeasure): boolean {
         return false;
     }
 
-    const computeRatio = measure.measure.definition.measureDefinition.computeRatio;
-    return computeRatio ? computeRatio : false;
-}
-
-/**
- * Disables compute ratio on the provided measure. This is an immutable function - returning new
- * measure with the ratio disabled.
- *
- * @param measure - measure to disable compute ratio for
- * @returns new measure with disabled ratio; same measure if ratio was not enabled in the first place
- * @public
- */
-export function measureDisableComputeRatio(measure: IMeasure): IMeasure {
-    invariant(measure, "measure must be specified");
-
-    if (!measureDoesComputeRatio(measure)) {
-        return measure;
-    }
-
-    const newItem: IMeasure = cloneDeep(measure);
-    // I was not able to get any other way working for a while so doing this dirty stuff.
-    unset(newItem, ["measure", "definition", "measureDefinition", "computeRatio"]);
-
-    return newItem;
+    return !!measure.measure.definition.measureDefinition.computeRatio;
 }
 
 /**

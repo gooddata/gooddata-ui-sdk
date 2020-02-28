@@ -13,7 +13,7 @@ Object {
       },
     },
   },
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_627f0f0a_foo",
 }
 `;
 
@@ -32,7 +32,7 @@ Object {
       "operator": "sum",
     },
   },
-  "localIdentifier": "m_foo_bar",
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
 }
 `;
 
@@ -46,7 +46,7 @@ Object {
       "popAttribute": Object {
         "identifier": Object {
           "id": "attr",
-          "type": "label",
+          "type": "attribute",
         },
       },
     },
@@ -128,7 +128,7 @@ Object {
     },
   },
   "format": "#,##0.00%",
-  "localIdentifier": "m_foo_bar",
+  "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
 }
 `;
 
@@ -215,7 +215,7 @@ Object {
     },
   },
   "format": "#,##0.00%",
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_foo_ratio",
 }
 `;
 
@@ -292,7 +292,7 @@ Object {
       },
     },
   },
-  "localIdentifier": "m_foo",
+  "localIdentifier": "m_foo_cde8881b",
 }
 `;
 

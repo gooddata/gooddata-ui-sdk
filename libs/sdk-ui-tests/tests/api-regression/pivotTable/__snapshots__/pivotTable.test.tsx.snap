@@ -7,6 +7,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -51,7 +52,7 @@ Object {
                 "operator": "difference",
               },
             },
-            "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
           },
         },
         Object {
@@ -60,13 +61,13 @@ Object {
             "definition": Object {
               "arithmeticMeasure": Object {
                 "measureIdentifiers": Array [
-                  "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
                   "m_acugFHNJgsBy",
                 ],
                 "operator": "ratio",
               },
             },
-            "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
           },
         },
       ],
@@ -78,6 +79,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -140,7 +142,7 @@ Object {
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
       },
     },
     Object {
@@ -149,13 +151,13 @@ Object {
         "definition": Object {
           "arithmeticMeasure": Object {
             "measureIdentifiers": Array [
-              "m_m_aangOxLSeztu_m_acugFHNJgsBy",
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
               "m_acugFHNJgsBy",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_m_m_aangOxLSeztu_m_acugFHNJgsBy_m_acugFHNJgsBy",
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
       },
     },
   ],
@@ -189,6 +191,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -197,6 +200,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -205,6 +209,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -213,6 +218,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -242,6 +248,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -250,6 +257,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -263,6 +271,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -271,6 +280,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -339,6 +349,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -347,6 +358,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -355,6 +367,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -363,6 +376,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -392,6 +406,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -400,6 +415,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -413,6 +429,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -421,6 +438,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -494,6 +512,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -502,6 +521,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -510,6 +530,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -518,6 +539,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -536,7 +558,7 @@ Object {
               },
             },
             "format": "[backgroundColor=ffff00][green]#,##0.00 €",
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_76bde438_aangOxLSeztu",
           },
         },
       ],
@@ -548,6 +570,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -556,6 +579,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -569,6 +593,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -577,6 +602,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -612,7 +638,7 @@ Object {
           },
         },
         "format": "[backgroundColor=ffff00][green]#,##0.00 €",
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_76bde438_aangOxLSeztu",
       },
     },
   ],
@@ -646,6 +672,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -654,6 +681,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -662,6 +690,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -670,6 +699,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -699,6 +729,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -707,6 +738,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -720,6 +752,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -728,6 +761,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -798,6 +832,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -806,6 +841,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -814,6 +850,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -822,6 +859,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -851,6 +889,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -859,6 +898,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -872,6 +912,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -880,6 +921,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -950,6 +992,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -958,6 +1001,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -966,6 +1010,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -974,6 +1019,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -1003,6 +1049,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1011,6 +1058,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -1024,6 +1072,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -1032,6 +1081,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -1100,6 +1150,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1116,6 +1167,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1170,6 +1222,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1190,6 +1243,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1240,6 +1294,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1248,6 +1303,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -1256,6 +1312,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -1264,6 +1321,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -1293,6 +1351,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1301,6 +1360,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -1336,6 +1396,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -1344,6 +1405,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -1434,6 +1496,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1442,6 +1505,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -1450,6 +1514,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -1458,6 +1523,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -1487,6 +1553,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1495,6 +1562,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -1515,6 +1583,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -1523,6 +1592,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -1598,6 +1668,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1606,6 +1677,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -1614,6 +1686,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -1622,6 +1695,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -1651,6 +1725,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1659,6 +1734,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -1672,6 +1748,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -1680,6 +1757,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -1755,6 +1833,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -1763,6 +1842,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -1771,6 +1851,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -1779,6 +1860,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -1808,6 +1890,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -1816,6 +1899,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -1829,6 +1913,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -1837,6 +1922,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -1990,6 +2076,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2023,6 +2110,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2087,6 +2175,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2095,6 +2184,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2124,6 +2214,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2137,6 +2228,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2203,6 +2295,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2232,6 +2325,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2301,6 +2395,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2309,6 +2404,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -2317,6 +2413,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2346,6 +2443,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2354,6 +2452,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -2367,6 +2466,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2434,6 +2534,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2442,6 +2543,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -2450,6 +2552,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.stage.name.stagename",
       },
@@ -2458,6 +2561,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2487,6 +2591,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2495,6 +2600,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -2508,6 +2614,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.stage.name.stagename",
           },
@@ -2516,6 +2623,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2584,6 +2692,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2592,6 +2701,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -2600,6 +2710,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -2608,6 +2719,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2649,6 +2761,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2657,6 +2770,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -2682,6 +2796,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -2690,6 +2805,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2784,6 +2900,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2792,6 +2909,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -2800,6 +2918,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -2808,6 +2927,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -2849,6 +2969,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -2857,6 +2978,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -2882,6 +3004,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -2890,6 +3013,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -2984,6 +3108,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -2992,6 +3117,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -3000,6 +3126,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -3008,6 +3135,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -3049,6 +3177,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -3057,6 +3186,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -3112,6 +3242,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -3120,6 +3251,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -3242,6 +3374,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -3250,6 +3383,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -3258,6 +3392,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -3266,6 +3401,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -3307,6 +3443,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -3315,6 +3452,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -3350,6 +3488,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -3358,6 +3497,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -3460,6 +3600,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -3468,6 +3609,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -3476,6 +3618,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -3484,6 +3627,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -3525,6 +3669,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -3533,6 +3678,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -3568,6 +3714,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -3576,6 +3723,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -3678,6 +3826,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -3686,6 +3835,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -3694,6 +3844,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -3702,6 +3853,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -3743,6 +3895,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -3751,6 +3904,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -3776,6 +3930,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -3784,6 +3939,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -3978,6 +4134,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -4023,6 +4180,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -4099,6 +4257,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4107,6 +4266,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -4148,6 +4308,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4161,6 +4322,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -4239,6 +4401,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4280,6 +4443,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4361,6 +4525,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4402,6 +4567,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4496,6 +4662,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4537,6 +4704,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4631,6 +4799,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4639,6 +4808,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -4647,6 +4817,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -4688,6 +4859,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4696,6 +4868,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -4709,6 +4882,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },
@@ -4788,6 +4962,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.product.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.product.id.name",
       },
@@ -4796,6 +4971,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.department",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.department",
       },
@@ -4804,6 +4980,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.opportunitysnapshot.forecastcategory",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
       },
@@ -4812,6 +4989,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.owner.region",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.owner.region",
       },
@@ -4853,6 +5031,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.product.id.name",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.product.id.name",
           },
@@ -4861,6 +5040,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.department",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.department",
           },
@@ -4874,6 +5054,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.opportunitysnapshot.forecastcategory",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory",
           },
@@ -4882,6 +5063,7 @@ Object {
           "attribute": Object {
             "displayForm": Object {
               "identifier": "label.owner.region",
+              "type": "displayForm",
             },
             "localIdentifier": "a_label.owner.region",
           },

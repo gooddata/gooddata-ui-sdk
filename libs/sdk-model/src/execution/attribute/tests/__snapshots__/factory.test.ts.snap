@@ -1,35 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`attribute factory visualizationAttribute should return a simple attribute 1`] = `
+exports[`modifyAttribute should generate new localId if one not provided during modification 1`] = `
+Object {
+  "attribute": Object {
+    "alias": "My Account Name",
+    "displayForm": Object {
+      "identifier": "label.account.id.name",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_84711f30_label.account.id.name",
+  },
+}
+`;
+
+exports[`modifyAttribute should use localId provided during modification 1`] = `
+Object {
+  "attribute": Object {
+    "alias": "My Account Name",
+    "displayForm": Object {
+      "identifier": "label.account.id.name",
+      "type": "displayForm",
+    },
+    "localIdentifier": "my_custom_id",
+  },
+}
+`;
+
+exports[`newAttribute should return a simple attribute 1`] = `
 Object {
   "attribute": Object {
     "displayForm": Object {
       "identifier": "foo",
+      "type": "displayForm",
     },
     "localIdentifier": "a_foo",
   },
 }
 `;
 
-exports[`attribute factory visualizationAttribute should return an attribute with a custom localId 1`] = `
+exports[`newAttribute should return an attribute with a custom localId 1`] = `
 Object {
   "attribute": Object {
     "displayForm": Object {
       "identifier": "foo",
+      "type": "displayForm",
     },
     "localIdentifier": "custom",
   },
 }
 `;
 
-exports[`attribute factory visualizationAttribute should return an attribute with an alias 1`] = `
+exports[`newAttribute should return an attribute with an alias 1`] = `
 Object {
   "attribute": Object {
     "alias": "alias",
     "displayForm": Object {
       "identifier": "foo",
+      "type": "displayForm",
     },
-    "localIdentifier": "a_foo",
+    "localIdentifier": "a_724874d1_foo",
   },
 }
 `;

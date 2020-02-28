@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "acugFHNJgsBy"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
                 ]

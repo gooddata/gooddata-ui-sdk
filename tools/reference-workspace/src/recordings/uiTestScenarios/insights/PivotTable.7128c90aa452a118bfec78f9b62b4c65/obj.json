@@ -10,26 +10,26 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "acugFHNJgsBy"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     }
                 ]
@@ -40,7 +40,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.product.id.name"
                         }
@@ -48,7 +49,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.owner.department"
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.owner.department"
                         }
@@ -83,7 +85,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.opportunitysnapshot.forecastcategory"
+                                "identifier": "label.opportunitysnapshot.forecastcategory",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.opportunitysnapshot.forecastcategory"
                         }
@@ -91,7 +94,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.owner.region"
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.owner.region"
                         }

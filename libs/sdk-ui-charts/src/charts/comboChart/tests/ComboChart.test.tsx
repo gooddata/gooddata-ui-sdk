@@ -6,7 +6,7 @@ import { IChartConfig } from "../../../highcharts";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";
-import { IMeasure, measureDisableComputeRatio } from "@gooddata/sdk-model";
+import { IMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 
 // need to turn off ratio in the ReferenceLdmExt.AmountWithRatio
 describe("ComboChart", () => {
@@ -79,7 +79,7 @@ describe("ComboChart", () => {
                 const execution = wrapper.find(CoreComboChart).prop("execution");
                 const expectedMeasures = [
                     ReferenceLdm.Amount,
-                    measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
+                    modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
                 ];
 
                 expect(execution.definition.measures).toEqual(expectedMeasures);
@@ -97,8 +97,8 @@ describe("ComboChart", () => {
             );
             const execution = wrapper.find(CoreComboChart).prop("execution");
             const expectedMeasures = [
-                measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
-                measureDisableComputeRatio(ReferenceLdmExt.AmountWithRatio),
+                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
+                modifySimpleMeasure(ReferenceLdmExt.AmountWithRatio, m => m.noRatio()),
             ];
 
             expect(execution.definition.measures).toEqual(expectedMeasures);

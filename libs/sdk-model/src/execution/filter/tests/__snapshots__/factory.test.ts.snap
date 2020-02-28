@@ -99,6 +99,7 @@ Object {
   "negativeAttributeFilter": Object {
     "displayForm": Object {
       "identifier": "label.account.id.name",
+      "type": "displayForm",
     },
     "notIn": Object {
       "values": Array [
@@ -147,6 +148,7 @@ Object {
   "positiveAttributeFilter": Object {
     "displayForm": Object {
       "identifier": "label.account.id.name",
+      "type": "displayForm",
     },
     "in": Object {
       "values": Array [

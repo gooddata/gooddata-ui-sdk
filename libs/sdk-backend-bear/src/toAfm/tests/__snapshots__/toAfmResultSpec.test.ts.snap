@@ -19,13 +19,13 @@ Object {
           "displayForm": Object {
             "identifier": "attribute1",
           },
-          "localIdentifier": "a_attribute1",
+          "localIdentifier": "a_724874d1_attribute1",
         },
         Object {
           "displayForm": Object {
             "identifier": "attribute2",
           },
-          "localIdentifier": "a2",
+          "localIdentifier": "a_attribute2",
         },
       ],
     },

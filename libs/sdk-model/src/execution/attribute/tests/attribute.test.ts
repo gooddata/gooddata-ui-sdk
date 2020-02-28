@@ -89,7 +89,11 @@ describe("attributeAlias", () => {
 
 describe("attributeAttributeDisplayFormObjRef", () => {
     const Scenarios: Array<[string, any, ObjRef]> = [
-        ["return id ref if attribute has id ref", Account.Default, { identifier: "label.account.id" }],
+        [
+            "return id ref if attribute has id ref",
+            Account.Default,
+            { identifier: "label.account.id", type: "displayForm" },
+        ],
         [
             "return uri ref if attribute defined as such",
             UriDefinedAttribute,

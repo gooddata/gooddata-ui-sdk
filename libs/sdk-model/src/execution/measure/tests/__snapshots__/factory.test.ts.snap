@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`measure factories modifyMeasure should create new measure with modified local id 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "measure2",
+  },
+}
+`;
+
+exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and custom local id 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "aggregation": "min",
+        "item": Object {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "customLocalId",
+  },
+}
+`;
+
+exports[`measure factories modifySimpleMeasure should create new measure with modified aggregation and generated local id 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "aggregation": "min",
+        "item": Object {
+          "identifier": "measure1",
+        },
+      },
+    },
+    "localIdentifier": "m_measure1_min",
+  },
+}
+`;
+
+exports[`measure factories newArithmeticMeasure should return a simple arithmetic measure 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "arithmeticMeasure": Object {
+        "measureIdentifiers": Array [
+          "foo",
+          "bar",
+        ],
+        "operator": "sum",
+      },
+    },
+    "localIdentifier": "m_3858f62230ac3c915f300c664312c63f",
+  },
+}
+`;
+
+exports[`measure factories newArithmeticMeasure should return a simple arithmetic measure from two measure objects 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "arithmeticMeasure": Object {
+        "measureIdentifiers": Array [
+          "m_afSEwRwdbMeQ",
+          "m_fact.stagehistory.velocity_min",
+        ],
+        "operator": "sum",
+      },
+    },
+    "localIdentifier": "m_f41f9d3bb81ba6c5d004ee17cac27ecd",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should honor custom-set localId for simple measures with aggregation 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "aggregation": "sum",
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "bar",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a measure with a filter 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "filters": Array [
+          Object {
+            "positiveAttributeFilter": Object {
+              "displayForm": Object {
+                "identifier": "filter",
+              },
+              "in": Object {
+                "uris": Array [
+                  "baz",
+                ],
+              },
+            },
+          },
+        ],
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_e2e8b1b1",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a measure with alias 1`] = `
+Object {
+  "measure": Object {
+    "alias": "bar",
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_cff821ae_foo",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a measure with custom localIdentifier 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "custom",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a measure with format 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "format": "bar",
+    "localIdentifier": "m_0c875c48_foo",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a measure with title 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_5e52638c_foo",
+    "title": "bar",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a simple measure 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo",
+  },
+}
+`;
+
+exports[`measure factories newMeasure should return a simple measure with different aggregation 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "aggregation": "sum",
+        "item": Object {
+          "identifier": "foo",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_sum",
+  },
+}
+`;
+
+exports[`measure factories newPopMeasure should return a simple PoP measure from attribute ref 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "popMeasureDefinition": Object {
+        "measureIdentifier": "foo",
+        "popAttribute": Object {
+          "identifier": "attr",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_attr",
+  },
+}
+`;
+
+exports[`measure factories newPopMeasure should return a simple PoP measure from other measure object 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "popMeasureDefinition": Object {
+        "measureIdentifier": "m_afSEwRwdbMeQ",
+        "popAttribute": Object {
+          "identifier": "attr",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "m_m_afSEwRwdbMeQ_attr",
+  },
+}
+`;
+
+exports[`measure factories newPopMeasure should return a simple PoP measure from shorthand attribute identifier 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "popMeasureDefinition": Object {
+        "measureIdentifier": "foo",
+        "popAttribute": Object {
+          "identifier": "attr",
+          "type": "attribute",
+        },
+      },
+    },
+    "localIdentifier": "m_foo_attr",
+  },
+}
+`;
+
+exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with objects 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "previousPeriodMeasure": Object {
+        "dateDataSets": Array [
+          Object {
+            "dataSet": Object {
+              "identifier": "bar",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "m_afSEwRwdbMeQ",
+      },
+    },
+    "localIdentifier": "m_m_afSEwRwdbMeQ_previous_period",
+  },
+}
+`;
+
+exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with strings 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "previousPeriodMeasure": Object {
+        "dateDataSets": Array [
+          Object {
+            "dataSet": Object {
+              "identifier": "bar",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "foo",
+      },
+    },
+    "localIdentifier": "m_foo_previous_period",
+  },
+}
+`;

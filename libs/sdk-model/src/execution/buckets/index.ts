@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import { anyAttribute, AttributePredicate, IAttribute, idMatchAttribute, isAttribute } from "../attribute";
 import { Identifier } from "../base";
@@ -7,11 +7,12 @@ import {
     idMatchMeasure,
     IMeasure,
     isMeasure,
-    measureDisableComputeRatio,
+    isSimpleMeasure,
     MeasurePredicate,
 } from "../measure";
 import { isTotal, ITotal } from "../base/totals";
 import invariant from "ts-invariant";
+import { modifySimpleMeasure } from "../..";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -340,8 +341,9 @@ export function applyRatioRule<T extends AttributeOrMeasure>(
 }
 
 function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
-    if (isMeasure(item)) {
-        return measureDisableComputeRatio(item) as T;
+    if (isSimpleMeasure(item)) {
+        return modifySimpleMeasure(item, m => m.noRatio()) as T;
     }
+
     return item;
 }

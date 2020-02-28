@@ -10,6 +10,7 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_76bde438_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
@@ -17,7 +18,6 @@
                                     }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu",
                             "format": "[backgroundColor=ffff00][green]#,##0.00 €"
                         }
                     }
@@ -29,7 +29,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.product.id.name"
                         }
@@ -37,7 +38,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.owner.department"
+                                "identifier": "label.owner.department",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.owner.department"
                         }
@@ -50,7 +52,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.stage.name.stagename"
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.stage.name.stagename"
                         }
@@ -58,7 +61,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.owner.region"
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.owner.region"
                         }

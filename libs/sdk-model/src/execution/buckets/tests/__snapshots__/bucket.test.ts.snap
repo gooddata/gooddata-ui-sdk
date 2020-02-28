@@ -19,6 +19,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
@@ -40,6 +41,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id",
       },
@@ -56,6 +58,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id",
       },
@@ -64,6 +67,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },
@@ -113,6 +117,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id",
       },
@@ -161,6 +166,7 @@ Object {
       "attribute": Object {
         "displayForm": Object {
           "identifier": "label.account.id.name",
+          "type": "displayForm",
         },
         "localIdentifier": "a_label.account.id.name",
       },

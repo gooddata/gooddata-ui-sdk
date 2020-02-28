@@ -1,23 +1,29 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { Velocity, Won } from "../../../../__mocks__/model";
-import { modifyMeasure, newArithmeticMeasure, newPopMeasure, newPreviousPeriodMeasure } from "../factory";
 import {
-    measureLocalId,
-    measureUri,
-    measureIdentifier,
-    measureDoesComputeRatio,
-    measureMasterIdentifier,
+    modifyMeasure,
+    modifySimpleMeasure,
+    newArithmeticMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
+} from "../factory";
+import {
+    IPreviousPeriodDateDataSet,
+    measureAggregation,
+    measureAlias,
     measureArithmeticOperands,
     measureArithmeticOperator,
-    measureAlias,
-    measureTitle,
+    measureDoesComputeRatio,
+    measureFilters,
     measureFormat,
-    measureAggregation,
+    measureIdentifier,
+    measureLocalId,
+    measureMasterIdentifier,
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
-    IPreviousPeriodDateDataSet,
-    measureFilters,
+    measureTitle,
+    measureUri,
 } from "../index";
 import { ObjRef } from "../../base";
 import { newPositiveAttributeFilter } from "../../filter/factory";
@@ -25,10 +31,10 @@ import { IFilter } from "../../filter";
 import { idRef } from "../../base/factory";
 
 const SimpleMeasureWithIdentifier = Won;
-const SimpleMeasureWithRatio = modifyMeasure(Won, m => m.ratio());
-const SimpleMeasureWithUri = modifyMeasure(Won);
+const SimpleMeasureWithRatio = modifySimpleMeasure(Won, m => m.ratio());
+const SimpleMeasureWithUri = modifySimpleMeasure(Won);
 SimpleMeasureWithUri.measure.definition.measureDefinition.item = { uri: "/uri" };
-const SimpleMeasureWithFilters = modifyMeasure(Won, m =>
+const SimpleMeasureWithFilters = modifySimpleMeasure(Won, m =>
     m.filters(newPositiveAttributeFilter(idRef("myAttribute"), ["foo"])),
 );
 
@@ -199,7 +205,9 @@ describe("measureFormat", () => {
 });
 
 describe("measureAggregation", () => {
-    const MeasureWithAggregation = modifyMeasure(SimpleMeasureWithIdentifier, m => m.aggregation("median"));
+    const MeasureWithAggregation = modifySimpleMeasure(SimpleMeasureWithIdentifier, m =>
+        m.aggregation("median"),
+    );
     const Scenarios: Array<[string, any, string | undefined]> = [
         ["undefined for measure without aggregation", SimpleMeasureWithIdentifier, undefined],
         ["aggregation value when defined", MeasureWithAggregation, "median"],
@@ -243,7 +251,7 @@ describe("measureFilters", () => {
 describe("measurePopAttribute", () => {
     const Scenarios: Array<[string, any, ObjRef | undefined]> = [
         ["undefined for measure without PoP attribute", SimpleMeasureWithIdentifier, undefined],
-        ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute" }],
+        ["PoP attribute value when defined", PopMeasure, { identifier: "myPopAttribute", type: "attribute" }],
     ];
 
     it.each(Scenarios)("should return %s", (_desc, measureArg, expectedResult) => {

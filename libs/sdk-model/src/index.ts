@@ -14,7 +14,12 @@ export {
     attributeAttributeDisplayFormObjRef,
 } from "./execution/attribute";
 
-export { newAttribute, AttributeBuilder, AttributeModifications } from "./execution/attribute/factory";
+export {
+    newAttribute,
+    modifyAttribute,
+    AttributeBuilder,
+    AttributeModifications,
+} from "./execution/attribute/factory";
 
 export {
     IAttributeDisplayForm,
@@ -157,7 +162,6 @@ export {
     measureIdentifier,
     measureMasterIdentifier,
     measureArithmeticOperands,
-    measureDisableComputeRatio,
     measureAlias,
     measureTitle,
     measureArithmeticOperator,
@@ -178,6 +182,7 @@ export {
     MeasureBuilderBase,
     newMeasure,
     modifyMeasure,
+    modifySimpleMeasure,
     newArithmeticMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,

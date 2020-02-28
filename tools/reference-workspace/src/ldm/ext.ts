@@ -5,6 +5,7 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
     ObjRef,
+    modifySimpleMeasure,
 } from "@gooddata/sdk-model";
 import * as ReferenceLdm from "./full";
 
@@ -50,7 +51,7 @@ export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
 /**
  * Measure that computes ratio
  */
-export const AmountWithRatio = modifyMeasure(ReferenceLdm.Amount, m =>
+export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, m =>
     m
         .alias("Amount with Ratio")
         .ratio()

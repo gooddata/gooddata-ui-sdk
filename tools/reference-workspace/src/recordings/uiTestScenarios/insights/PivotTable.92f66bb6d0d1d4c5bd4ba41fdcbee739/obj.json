@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
                 ]
@@ -32,7 +32,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.owner.region"
+                                "identifier": "label.owner.region",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.owner.region"
                         }

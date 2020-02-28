@@ -1,0 +1,39 @@
+[
+    {
+        "vis": "Xirr",
+        "scenario": "correct config",
+        "buckets": [
+            {
+                "localIdentifier": "measures",
+                "items": [
+                    {
+                        "measure": {
+                            "localIdentifier": "m_aadpHDMBecIy",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "aadpHDMBecIy"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "localIdentifier": "attribute",
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "timeline.aag81lMifn6q",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_timeline.aag81lMifn6q"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

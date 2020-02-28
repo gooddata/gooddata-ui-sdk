@@ -10,40 +10,41 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "acugFHNJgsBy"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "alias": "Won Last Year",
+                            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
                             "definition": {
                                 "popMeasureDefinition": {
                                     "measureIdentifier": "m_acugFHNJgsBy",
                                     "popAttribute": {
-                                        "identifier": "closed.year"
+                                        "identifier": "closed.year",
+                                        "type": "attribute"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
-                            "alias": "Won Last Year"
+                            }
                         }
                     }
                 ]
@@ -54,7 +55,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "closed.aag81lMifn6q"
+                                "identifier": "closed.aag81lMifn6q",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_closed.aag81lMifn6q"
                         }

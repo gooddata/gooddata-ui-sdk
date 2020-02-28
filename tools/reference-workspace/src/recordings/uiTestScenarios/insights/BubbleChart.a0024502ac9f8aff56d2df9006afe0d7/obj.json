@@ -10,14 +10,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
                 ]
@@ -27,14 +27,14 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_abZgFKGPaGYM",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "abZgFKGPaGYM"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_abZgFKGPaGYM"
+                            }
                         }
                     }
                 ]
@@ -49,7 +49,8 @@
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.product.id.name"
+                                "identifier": "label.product.id.name",
+                                "type": "displayForm"
                             },
                             "localIdentifier": "a_label.product.id.name"
                         }

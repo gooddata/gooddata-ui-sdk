@@ -10,26 +10,26 @@
                 "items": [
                     {
                         "measure": {
+                            "localIdentifier": "m_acugFHNJgsBy",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "acugFHNJgsBy"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_acugFHNJgsBy"
+                            }
                         }
                     },
                     {
                         "measure": {
+                            "localIdentifier": "m_aangOxLSeztu",
                             "definition": {
                                 "measureDefinition": {
                                     "item": {
                                         "identifier": "aangOxLSeztu"
                                     }
                                 }
-                            },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            }
                         }
                     }
                 ]

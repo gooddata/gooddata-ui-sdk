@@ -24,8 +24,14 @@ export function areObjRefsEqual(a: ObjRefInScope | null | undefined, b: ObjRefIn
 
 // @public
 export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeasureDefinition> {
+    // Warning: (ae-forgotten-export) The symbol "ArithmeticMeasureBuilderInput" needs to be exported by the entry point index.d.ts
+    //
     // @internal
-    constructor(measureIds: Identifier[], operator: ArithmeticMeasureOperator);
+    constructor(input: ArithmeticMeasureBuilderInput);
+    // (undocumented)
+    protected buildDefinition(): IArithmeticMeasureDefinition;
+    // (undocumented)
+    protected generateLocalId(): string;
 }
 
 // @public
@@ -38,13 +44,13 @@ export function attributeAlias(attribute: IAttribute): string | undefined;
 export function attributeAttributeDisplayFormObjRef(attribute: IAttribute): ObjRef;
 
 // @public
-export class AttributeBuilder implements IAttribute {
+export class AttributeBuilder {
+    // Warning: (ae-forgotten-export) The symbol "AttributeBuilderInput" needs to be exported by the entry point index.d.ts
+    //
     // @internal
-    constructor(displayForm: ObjRef);
+    constructor(input: AttributeBuilderInput);
     // (undocumented)
     alias: (alias: string) => this;
-    // (undocumented)
-    attribute: IAttribute["attribute"];
     // (undocumented)
     build: () => {
         attribute: {
@@ -1061,33 +1067,42 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // (undocumented)
     aggregation: (aggregation: MeasureAggregation) => this;
     // (undocumented)
+    protected buildDefinition(): IMeasureDefinition;
+    // (undocumented)
     filters: (...filters: (import("../filter").IPositiveAttributeFilter | import("../filter").INegativeAttributeFilter | import("../filter").IAbsoluteDateFilter | import("../filter").IRelativeDateFilter)[]) => this;
+    // (undocumented)
+    protected generateLocalId(): string;
+    // (undocumented)
+    noAggregation: () => this;
+    // (undocumented)
+    noRatio: () => this;
     // (undocumented)
     ratio: () => this;
 }
 
 // @public
-export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> implements IMeasure<T> {
+export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     // @internal
     protected constructor();
     // (undocumented)
     alias: (alias: string) => this;
     // (undocumented)
     build: () => IMeasure<T>;
+    protected abstract buildDefinition(): T;
     // (undocumented)
     protected customLocalId: boolean;
     // (undocumented)
     format: (format: string) => this;
+    protected abstract generateLocalId(): string;
+    // Warning: (ae-forgotten-export) The symbol "MeasureEnvelope" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    protected initializeFromExisting(measure: MeasureEnvelope): void;
     // (undocumented)
     localId: (localId: string) => this;
     // (undocumented)
-    measure: IMeasure<T>["measure"];
-    // (undocumented)
     title: (title: string) => this;
 }
-
-// @public
-export function measureDisableComputeRatio(measure: IMeasure): IMeasure;
 
 // @public
 export function measureDoesComputeRatio(measure: IMeasure): boolean;
@@ -1145,7 +1160,13 @@ export function measureValueFilterCondition(filter: IMeasureValueFilter): Measur
 export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope;
 
 // @public
-export function modifyMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
+export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;
+
+// @public
+export function modifyMeasure<T extends IMeasureDefinitionType>(measure: IMeasure<T>, modifications?: MeasureModifications<MeasureBuilderBase<IMeasureDefinitionType>>): IMeasure<T>;
+
+// @public
+export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
@@ -1154,7 +1175,7 @@ export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: st
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | Identifier>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
-export function newAttribute(displayForm: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
+export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
 // @public
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
@@ -1195,7 +1216,7 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope, op
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: AttributeElements | string[]): INegativeAttributeFilter;
 
 // @public
-export function newPopMeasure(measureOrLocalId: IMeasure | Identifier, popAttributeId: string, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
+export function newPopMeasure(measureOrLocalId: IMeasure | Identifier, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
 export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: AttributeElements | string[]): IPositiveAttributeFilter;
@@ -1228,15 +1249,27 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
+    // Warning: (ae-forgotten-export) The symbol "PoPMeasureBuilderInput" needs to be exported by the entry point index.d.ts
+    //
     // @internal
-    constructor(measureId: Identifier, popAttributeId: Identifier);
-}
+    constructor(input: PoPMeasureBuilderInput);
+    // (undocumented)
+    protected buildDefinition(): IPoPMeasureDefinition;
+    // (undocumented)
+    protected generateLocalId(): string;
+    }
 
 // @public
 export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPeriodMeasureDefinition> {
+    // Warning: (ae-forgotten-export) The symbol "PreviousPeriodMeasureBuilderInput" needs to be exported by the entry point index.d.ts
+    //
     // @internal
-    constructor(measureId: string, dateDataSets: IPreviousPeriodDateDataSetSimple[]);
-}
+    constructor(input: PreviousPeriodMeasureBuilderInput);
+    // (undocumented)
+    protected buildDefinition(): IPreviousPeriodMeasureDefinition;
+    // (undocumented)
+    protected generateLocalId(): string;
+    }
 
 // @public (undocumented)
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
