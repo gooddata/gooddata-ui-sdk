@@ -2,7 +2,7 @@
 import { ISettings } from "../../common/settings";
 
 /**
- * This query service provides access to feature flags that are in effect for particular workspace.
+ * This query service provides access to feature flags that are in effect for particular user.
  *
  * @public
  */
@@ -14,7 +14,7 @@ export interface IUserSettingsService {
 }
 
 /**
- * Settings for particular workspace.
+ * Settings for particular user.
  *
  * @public
  */
