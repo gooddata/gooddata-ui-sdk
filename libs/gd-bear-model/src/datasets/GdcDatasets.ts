@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
  * @public
@@ -83,9 +83,9 @@ export namespace GdcDatasets {
         dataset: {
             name: string;
             dataHeader: IDataHeader;
-            dataSetId: string;
+            datasetId: string;
             loadedRowCount: number;
-            dataSetLoadStatus: DatasetLoadStatus;
+            datasetLoadStatus: DatasetLoadStatus;
             firstSuccessfulUpdate?: IDatasetLoadInfo;
             lastSuccessfulUpdate?: IDatasetLoadInfo;
             lastUpdate?: IDatasetLoadInfo;

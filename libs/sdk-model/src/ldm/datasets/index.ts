@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 /**
  * Represents the current status of CSV source.
  *
@@ -71,9 +71,9 @@ export interface IDataset {
     dataset: {
         name: string;
         dataHeader: IDataHeader;
-        dataSetId: string;
+        datasetId: string;
         loadedRowCount: number;
-        dataSetLoadStatus: DatasetLoadStatus;
+        datasetLoadStatus: DatasetLoadStatus;
         firstSuccessfulUpdate?: IDatasetLoadInfo;
         lastSuccessfulUpdate?: IDatasetLoadInfo;
         lastUpdate?: IDatasetLoadInfo;

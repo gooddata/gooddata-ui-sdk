@@ -476,9 +476,9 @@ export interface IDataset {
     dataset: {
         name: string;
         dataHeader: IDataHeader;
-        dataSetId: string;
+        datasetId: string;
         loadedRowCount: number;
-        dataSetLoadStatus: DatasetLoadStatus;
+        datasetLoadStatus: DatasetLoadStatus;
         firstSuccessfulUpdate?: IDatasetLoadInfo;
         lastSuccessfulUpdate?: IDatasetLoadInfo;
         lastUpdate?: IDatasetLoadInfo;
