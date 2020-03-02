@@ -1,14 +1,9 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import noop from "lodash/noop";
 import range from "lodash/range";
-import {
-    ProjectModule,
-    parseSettingItemValue,
-    IProjectConfigSettingItem,
-    IProjectConfigResponse,
-} from "../project";
+import { ProjectModule, IProjectConfigSettingItem, IProjectConfigResponse } from "../project";
 import { XhrModule } from "../xhr";
 import { mockPollingRequest } from "./utils/polling";
 import { IColorPalette, IFeatureFlags } from "../interfaces";
@@ -601,21 +596,6 @@ describe("project", () => {
                         expect(result).toEqual(expectedFeatureFlags);
                     });
             });
-        });
-    });
-
-    describe("parseSettingItemValue", () => {
-        it("should parse boolean string values", () => {
-            expect(parseSettingItemValue("true")).toBe(true);
-            expect(parseSettingItemValue("false")).toBe(false);
-        });
-        it("should parse number values", () => {
-            expect(parseSettingItemValue("123")).toBe(123);
-            expect(parseSettingItemValue("-123.456")).toBe(-123.456);
-        });
-        it("should return string values as is", () => {
-            expect(parseSettingItemValue("abcd")).toBe("abcd");
-            expect(parseSettingItemValue("-123abc456")).toBe("-123abc456");
         });
     });
 });

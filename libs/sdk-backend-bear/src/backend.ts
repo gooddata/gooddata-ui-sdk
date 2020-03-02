@@ -10,16 +10,21 @@ import {
     IAuthenticationProvider,
     NotAuthenticated,
     IWorkspaceQueryFactory,
+    IUserService,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
+import { GdcUser } from "@gooddata/gd-bear-model";
+import invariant from "ts-invariant";
+import defaultTo = require("lodash/defaultTo");
+import isEmpty = require("lodash/isEmpty");
+
 import { AsyncCall, ErrorConverter, IAsyncCallContext } from "./commonTypes";
 import { convertApiError, isApiResponseError } from "./errorHandling";
 import { BearWorkspace } from "./workspace";
-import defaultTo = require("lodash/defaultTo");
-import isEmpty = require("lodash/isEmpty");
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { convertInsight } from "./fromSdkModel/InsightConverter";
-import { GdcUser } from "@gooddata/gd-bear-model";
+import { BearUserService } from "./user";
+import { AuthProviderCallGuard, IAuthProviderCallGuard, NoopAuthProvider } from "./auth";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -96,19 +101,19 @@ export class BearBackend implements IAnalyticalBackend {
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
-    private readonly authProvider: AuthProviderCallGuard | undefined;
+    private readonly authProvider: IAuthProviderCallGuard;
     private readonly sdk: SDK;
 
     constructor(
         config?: AnalyticalBackendConfig,
         implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
         telemetry?: TelemetryData,
-        authProvider?: AuthProviderCallGuard,
+        authProvider?: IAuthProviderCallGuard,
     ) {
         this.config = configSanitize(config);
         this.implConfig = bearConfigSanitize(implConfig);
         this.telemetry = telemetrySanitize(telemetry);
-        this.authProvider = authProvider;
+        this.authProvider = authProvider || new NoopAuthProvider();
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
 
         if (this.implConfig.onLegacyCallbacksReady) {
@@ -153,10 +158,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
         return new Promise((resolve, reject) => {
-            this.sdk.user
-                .getCurrentProfile()
+            this.authProvider
+                .getCurrentPrincipal({ client: this.sdk })
                 .then(res => {
-                    resolve(currentProfileToPrincipalInformation(res));
+                    resolve(res);
                 })
                 .catch(err => {
                     if (isNotAuthenticatedError(err)) {
@@ -170,8 +175,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
         if (!force) {
-            return this.authApiCall(sdk => {
-                return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+            return this.authApiCall(async sdk => {
+                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
+                invariant(principal, "Principal must be defined");
+                return principal!;
             });
         }
 
@@ -183,6 +190,10 @@ export class BearBackend implements IAnalyticalBackend {
             throw new NotAuthenticated("Backend is not set up with authentication provider.");
         }
         return this.authProvider.deauthenticate(this.getAuthenticationContext());
+    }
+
+    public currentUser(): IUserService {
+        return new BearUserService(this.authApiCall);
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
@@ -201,18 +212,18 @@ export class BearBackend implements IAnalyticalBackend {
      * @param call - a call which requires an authenticated session
      * @param errorConverter - converter from rest client errors to analytical backend errors
      */
-    public authApiCall = <T>(
+    public authApiCall = async <T>(
         call: AsyncCall<T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, this.getAsyncCallContext()).catch(err => {
+        return call(this.sdk, await this.getAsyncCallContext()).catch(err => {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
             }
 
             return this.triggerAuthentication()
-                .then(_ => {
-                    return call(this.sdk, this.getAsyncCallContext()).catch(e => {
+                .then(async _ => {
+                    return call(this.sdk, await this.getAsyncCallContext()).catch(e => {
                         throw errorConverter(e);
                     });
                 })
@@ -238,13 +249,16 @@ export class BearBackend implements IAnalyticalBackend {
         return this.authProvider.authenticate(this.getAuthenticationContext());
     };
 
-    private getAsyncCallContext = (): IAsyncCallContext => {
+    private getAsyncCallContext = async (): Promise<IAsyncCallContext> => {
         // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
         // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
         // thus triggering the auth process
-        const principal = defaultTo(this.authProvider && this.authProvider.getCurrentPrincipal(), {
-            userId: "__invalid__",
-        });
+        const principal = defaultTo(
+            this.authProvider && (await this.authProvider.getCurrentPrincipal({ client: this.sdk })),
+            {
+                userId: "__invalid__",
+            },
+        );
 
         return {
             principal,
@@ -252,109 +266,12 @@ export class BearBackend implements IAnalyticalBackend {
     };
 }
 
-/**
- * This implementation of authentication provider does login with fixed username and password.
- *
- * @public
- */
-export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvider {
-    private principal: AuthenticatedPrincipal | undefined;
-
-    constructor(private readonly username: string, private readonly password: string) {}
-
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
-        const sdk = context.client as SDK;
-
-        await sdk.user.login(this.username, this.password);
-
-        // retrieve full info about the authenticated user
-        const principal = await sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
-
-        this.principal = principal;
-
-        return principal;
-    }
-
-    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
-        return this.principal;
-    }
-
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
-        const sdk = context.client as SDK;
-        // we do not return the promise to logout as we do not want to return the response
-        await sdk.user.logout();
-    }
-}
-
 //
 // internals
 //
 
-/**
- * This implementation of auth provider ensures, that the auth provider is called exactly once in the happy path
- * execution where provider successfully authenticates a principal.
- *
- * If underlying provider fails, subsequent calls that need authentication will land in the provider.
- *
- * This class encapsulates the stateful nature of interaction of the provider across multiple different instances
- * of the bear backend, all of which are set with the same provider. All instances of the backend should be
- * subject to the same authentication flow AND the call to the authentication provider should be synchronized
- * through this scoped instance.
- */
-class AuthProviderCallGuard implements IAuthenticationProvider {
-    private inflightRequest: Promise<AuthenticatedPrincipal> | undefined;
-    private principal: AuthenticatedPrincipal | undefined;
-
-    constructor(private readonly realProvider: IAuthenticationProvider) {}
-
-    public reset = (): void => {
-        this.principal = undefined;
-    };
-
-    public authenticate = (context: AuthenticationContext): Promise<AuthenticatedPrincipal> => {
-        if (this.principal) {
-            return Promise.resolve(this.principal);
-        }
-
-        if (this.inflightRequest) {
-            return this.inflightRequest;
-        }
-
-        this.inflightRequest = this.realProvider
-            .authenticate(context)
-            .then(res => {
-                this.principal = res;
-                this.inflightRequest = undefined;
-
-                return res;
-            })
-            .catch(err => {
-                this.inflightRequest = undefined;
-
-                throw err;
-            });
-
-        return this.inflightRequest;
-    };
-
-    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
-        return this.principal;
-    }
-
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
-        return this.realProvider.deauthenticate(context);
-    }
-}
-
 function isNotAuthenticatedError(err: any): boolean {
     return isApiResponseError(err) && err.response.status === 401;
-}
-
-function currentProfileToPrincipalInformation(obj: any): AuthenticatedPrincipal {
-    return {
-        userId: obj.login,
-        userMeta: obj,
-    };
 }
 
 function configSanitize(config?: AnalyticalBackendConfig): AnalyticalBackendConfig {

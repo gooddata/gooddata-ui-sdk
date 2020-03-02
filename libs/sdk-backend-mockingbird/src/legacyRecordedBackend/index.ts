@@ -23,6 +23,7 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
+    IUserService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -100,6 +101,9 @@ export function legacyRecordedBackend(
             return this;
         },
 
+        currentUser(): IUserService {
+            throw new NotSupported("not yet supported");
+        },
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index[id]);
         },

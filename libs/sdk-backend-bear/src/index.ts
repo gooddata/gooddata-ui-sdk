@@ -1,7 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BearBackend, BearBackendConfig, FixedLoginAndPasswordAuthProvider } from "./backend";
+import { BearBackend, BearBackendConfig } from "./backend";
+import { FixedLoginAndPasswordAuthProvider } from "./auth";
 
 /**
  * Returns function which creates instances of Analytical Backend implementation which works with the 'bear'

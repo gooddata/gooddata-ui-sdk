@@ -22,6 +22,8 @@ import {
     IWorkspaceQueryFactory,
     IWorkspaceCatalogFactory,
     IWorkspacePermissionsFactory,
+    IUserService,
+    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -74,6 +76,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
             this.decorated.withTelemetry(componentName, props),
             this.factories,
         );
+    }
+
+    public currentUser(): IUserService {
+        throw new NotImplemented("currentUser is not yet implemented");
     }
 
     public workspace(id: string): IAnalyticalWorkspace {

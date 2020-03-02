@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get from "lodash/get";
 import { delay } from "./utils/promise";
 import { ApiResponse, ApiResponseError } from "./xhr";
@@ -165,3 +165,18 @@ export function getAllPagesByOffsetLimit(
             }, reject);
     });
 }
+
+// Parses string values to boolean, number and string
+export const parseSettingItemValue = (value: string): boolean | number | string => {
+    if (value === "true") {
+        return true;
+    }
+    if (value === "false") {
+        return false;
+    }
+    const nr = Number(value);
+    if (nr.toString() === value) {
+        return nr;
+    }
+    return value;
+};

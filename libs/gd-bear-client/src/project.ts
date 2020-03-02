@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { getIn, handlePolling, getAllPagesByOffsetLimit } from "./util";
+import { getIn, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue } from "./util";
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
 import { XhrModule, ApiResponse } from "./xhr";
@@ -49,21 +49,6 @@ export interface IProjectConfigResponse {
         items: IProjectConfigSettingItem[];
     };
 }
-
-// Parses string values to boolean, number and string
-export const parseSettingItemValue = (value: string): boolean | number | string => {
-    if (value === "true") {
-        return true;
-    }
-    if (value === "false") {
-        return false;
-    }
-    const nr = Number(value);
-    if (nr.toString() === value) {
-        return nr;
-    }
-    return value;
-};
 
 /**
  * Functions for working with projects

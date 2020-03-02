@@ -29,7 +29,7 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
     // (undocumented)
     deauthenticate(context: AuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
     }
 
 

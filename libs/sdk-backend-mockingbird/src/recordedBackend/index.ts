@@ -16,6 +16,8 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
+    IUserService,
+    NotImplemented,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -58,6 +60,9 @@ export function recordedBackend(
             return this;
         },
 
+        currentUser(): IUserService {
+            throw new NotImplemented("currentUser is not yet implemented");
+        },
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index, config);
         },
