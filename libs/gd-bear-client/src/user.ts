@@ -1,7 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/gd-bear-model";
+import { parseSettingItemValue } from "./util";
+import { IFeatureFlags } from "./interfaces";
 
 export interface IUserConfigsSettingItem {
     settingItem: {
@@ -203,6 +205,24 @@ export class UserModule {
             } = userConfigs;
 
             return items || [];
+        });
+    }
+
+    /**
+     * Gets user specific feature flags
+     *
+     * @param {String} userId - A user identifier
+     * @return {IFeatureFlags} Hash table of feature flags and their values where feature flag is the key
+     */
+    public getUserFeatureFlags(userId: string): Promise<IFeatureFlags> {
+        return this.getUserConfigs(userId).then(settingItems => {
+            const featureFlags: IFeatureFlags = {};
+            settingItems.forEach(settingItem => {
+                featureFlags[settingItem.settingItem.key] = parseSettingItemValue(
+                    settingItem.settingItem.value,
+                );
+            });
+            return featureFlags;
         });
     }
 

@@ -10,6 +10,7 @@ import { IWorkspaceCatalogFactory } from "../workspace/ldm/catalog";
 import { IWorkspaceDatasetsService } from "../workspace/ldm/datasets";
 import { IWorkspaceQueryFactory } from "../workspace";
 import { IWorkspacePermissionsFactory } from "../workspace/permissions";
+import { IUserSettingsService } from "../user/settings";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -118,6 +119,13 @@ export interface IAnalyticalBackend {
     deauthenticate(): Promise<void>;
 
     /**
+     * Returns a service for interacting with the currently authenticated user.
+     *
+     * @returns an instance that can be used to interact with the user
+     */
+    currentUser(): IUserService;
+
+    /**
      * Returns an analytical workspace available on this backend.
      *
      * @param id - identifier of the workspace
@@ -183,6 +191,18 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query workspace permissions
      */
     permissions(): IWorkspacePermissionsFactory;
+}
+
+/**
+ * Represents a user. It is an entry point to various services that can be used to inspect and modify the user.
+ *
+ * @public
+ */
+export interface IUserService {
+    /**
+     * Returns service that can be used to obtain settings that are currently in effect for the user.
+     */
+    settings(): IUserSettingsService;
 }
 
 /**
@@ -261,7 +281,7 @@ export interface IAuthenticationProvider {
      * Returns the currently authenticated principal, or undefined if not authenticated.
      * Does not trigger authentication if no principal is available.
      */
-    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
 
     /**
      * Clear existing authentication.

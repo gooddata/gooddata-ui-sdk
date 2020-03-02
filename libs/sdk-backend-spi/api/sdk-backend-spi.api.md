@@ -175,6 +175,7 @@ export interface IAnalyticalBackend {
     authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
     readonly capabilities: BackendCapabilities;
     readonly config: AnalyticalBackendConfig;
+    currentUser(): IUserService;
     deauthenticate(): Promise<void>;
     isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
@@ -219,7 +220,7 @@ export interface IAttributeDescriptor {
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     deauthenticate(context: AuthenticationContext): Promise<void>;
-    getCurrentPrincipal(): AuthenticatedPrincipal | undefined;
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
 }
 
 // @public
@@ -469,6 +470,21 @@ export interface ITotalDescriptor {
     totalHeaderItem: {
         name: string;
     };
+}
+
+// @public
+export interface IUserService {
+    settings(): IUserSettingsService;
+}
+
+// @public
+export interface IUserSettings extends ISettings {
+    userId: string;
+}
+
+// @public
+export interface IUserSettingsService {
+    query(): Promise<IUserSettings>;
 }
 
 // @public

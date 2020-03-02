@@ -10,8 +10,11 @@ import {
     IAuthenticationProvider,
     NotAuthenticated,
     IWorkspaceQueryFactory,
+    IUserService,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
+import invariant from "ts-invariant";
 import { AsyncCall, ErrorConverter, IAsyncCallContext } from "./commonTypes";
 import { convertApiError, isApiResponseError } from "./errorHandling";
 import { BearWorkspace } from "./workspace";
@@ -20,6 +23,7 @@ import isEmpty = require("lodash/isEmpty");
 import { BearWorkspaceQueryFactory } from "./workspaces";
 import { convertInsight } from "./fromSdkModel/InsightConverter";
 import { GdcUser } from "@gooddata/gd-bear-model";
+import { BearUserService } from "./user";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -96,19 +100,19 @@ export class BearBackend implements IAnalyticalBackend {
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
-    private readonly authProvider: AuthProviderCallGuard | undefined;
+    private readonly authProvider: IAuthProviderCallGuard;
     private readonly sdk: SDK;
 
     constructor(
         config?: AnalyticalBackendConfig,
         implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
         telemetry?: TelemetryData,
-        authProvider?: AuthProviderCallGuard,
+        authProvider?: IAuthProviderCallGuard,
     ) {
         this.config = configSanitize(config);
         this.implConfig = bearConfigSanitize(implConfig);
         this.telemetry = telemetrySanitize(telemetry);
-        this.authProvider = authProvider;
+        this.authProvider = authProvider || new NoopAuthProvider();
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
 
         if (this.implConfig.onLegacyCallbacksReady) {
@@ -153,8 +157,8 @@ export class BearBackend implements IAnalyticalBackend {
 
     public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
         return new Promise((resolve, reject) => {
-            this.sdk.user
-                .getCurrentProfile()
+            this.authProvider
+                .getCurrentPrincipal({ client: this.sdk })
                 .then(res => {
                     resolve(currentProfileToPrincipalInformation(res));
                 })
@@ -170,8 +174,10 @@ export class BearBackend implements IAnalyticalBackend {
 
     public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
         if (!force) {
-            return this.authApiCall(sdk => {
-                return sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+            return this.authApiCall(async sdk => {
+                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
+                invariant(principal, "Principal must be defined");
+                return principal!;
             });
         }
 
@@ -183,6 +189,10 @@ export class BearBackend implements IAnalyticalBackend {
             throw new NotAuthenticated("Backend is not set up with authentication provider.");
         }
         return this.authProvider.deauthenticate(this.getAuthenticationContext());
+    }
+
+    public currentUser(): IUserService {
+        return new BearUserService(this.authApiCall);
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
@@ -201,18 +211,18 @@ export class BearBackend implements IAnalyticalBackend {
      * @param call - a call which requires an authenticated session
      * @param errorConverter - converter from rest client errors to analytical backend errors
      */
-    public authApiCall = <T>(
+    public authApiCall = async <T>(
         call: AsyncCall<T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, this.getAsyncCallContext()).catch(err => {
+        return call(this.sdk, await this.getAsyncCallContext()).catch(err => {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
             }
 
             return this.triggerAuthentication()
-                .then(_ => {
-                    return call(this.sdk, this.getAsyncCallContext()).catch(e => {
+                .then(async _ => {
+                    return call(this.sdk, await this.getAsyncCallContext()).catch(e => {
                         throw errorConverter(e);
                     });
                 })
@@ -238,13 +248,16 @@ export class BearBackend implements IAnalyticalBackend {
         return this.authProvider.authenticate(this.getAuthenticationContext());
     };
 
-    private getAsyncCallContext = (): IAsyncCallContext => {
+    private getAsyncCallContext = async (): Promise<IAsyncCallContext> => {
         // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
         // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
         // thus triggering the auth process
-        const principal = defaultTo(this.authProvider && this.authProvider.getCurrentPrincipal(), {
-            userId: "__invalid__",
-        });
+        const principal = defaultTo(
+            this.authProvider && (await this.authProvider.getCurrentPrincipal({ client: this.sdk })),
+            {
+                userId: "__invalid__",
+            },
+        );
 
         return {
             principal,
@@ -266,16 +279,20 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
         const sdk = context.client as SDK;
 
         await sdk.user.login(this.username, this.password);
+        await this.obtainCurrentPrincipal(context);
 
-        // retrieve full info about the authenticated user
-        const principal = await sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+        invariant(this.principal, "Principal must be obtainable after login");
 
-        this.principal = principal;
-
-        return principal;
+        return this.principal!;
     }
 
-    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
+    public async getCurrentPrincipal(
+        context: AuthenticationContext,
+    ): Promise<AuthenticatedPrincipal | undefined> {
+        if (!this.principal) {
+            await this.obtainCurrentPrincipal(context);
+        }
+
         return this.principal;
     }
 
@@ -284,11 +301,21 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
         // we do not return the promise to logout as we do not want to return the response
         await sdk.user.logout();
     }
+
+    private async obtainCurrentPrincipal(context: AuthenticationContext): Promise<void> {
+        const sdk = context.client as SDK;
+        const principal = await sdk.user.getCurrentProfile().then(currentProfileToPrincipalInformation);
+        this.principal = principal;
+    }
 }
 
 //
 // internals
 //
+
+interface IAuthProviderCallGuard extends IAuthenticationProvider {
+    reset(): void;
+}
 
 /**
  * This implementation of auth provider ensures, that the auth provider is called exactly once in the happy path
@@ -301,7 +328,7 @@ export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvide
  * subject to the same authentication flow AND the call to the authentication provider should be synchronized
  * through this scoped instance.
  */
-class AuthProviderCallGuard implements IAuthenticationProvider {
+class AuthProviderCallGuard implements IAuthProviderCallGuard {
     private inflightRequest: Promise<AuthenticatedPrincipal> | undefined;
     private principal: AuthenticatedPrincipal | undefined;
 
@@ -337,12 +364,33 @@ class AuthProviderCallGuard implements IAuthenticationProvider {
         return this.inflightRequest;
     };
 
-    public getCurrentPrincipal(): AuthenticatedPrincipal | undefined {
-        return this.principal;
+    public getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+        return this.realProvider.getCurrentPrincipal(context);
     }
 
     public async deauthenticate(context: AuthenticationContext): Promise<void> {
         return this.realProvider.deauthenticate(context);
+    }
+}
+
+/**
+ * This implementation serves as a Null object for IAuthProviderCallGuard.
+ */
+class NoopAuthProvider implements IAuthProviderCallGuard {
+    public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+        throw new NotSupported("NoopAuthProvider does not support authenticate");
+    }
+
+    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+        throw new NotSupported("NoopAuthProvider does not support getCurrentPrincipal");
+    }
+
+    public deauthenticate(_context: AuthenticationContext): Promise<void> {
+        throw new NotSupported("NoopAuthProvider does not support deauthenticate");
+    }
+
+    public reset(): void {
+        throw new NotSupported("NoopAuthProvider does not support reset");
     }
 }
 

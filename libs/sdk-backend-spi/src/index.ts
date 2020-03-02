@@ -10,7 +10,12 @@ export {
     IAuthenticationProvider,
     AuthenticationContext,
     AuthenticatedPrincipal,
+    IUserService,
 } from "./backend";
+
+export { ISettings, SettingCatalog } from "./common/settings";
+
+export { IUserSettingsService, IUserSettings } from "./user/settings";
 
 export {
     IExecutionFactory,
@@ -46,12 +51,7 @@ export {
     attributeDescriptorName,
 } from "./workspace/execution/results";
 
-export {
-    IWorkspaceSettingsService,
-    IWorkspaceSettings,
-    ISettings,
-    SettingCatalog,
-} from "./workspace/settings";
+export { IWorkspaceSettingsService, IWorkspaceSettings } from "./workspace/settings";
 
 export {
     IWorkspaceMetadata,

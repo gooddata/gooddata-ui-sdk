@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./utils/polling";
 import { IExportResponse } from "../interfaces";
-import { getIn, handleHeadPolling, IPollingOptions, queryString } from "../util";
+import { getIn, handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
 import { ApiResponse, XhrModule } from "../xhr";
 
 describe("util", () => {
@@ -95,6 +95,21 @@ describe("util", () => {
                     done();
                 },
             );
+        });
+    });
+
+    describe("parseSettingItemValue", () => {
+        it("should parse boolean string values", () => {
+            expect(parseSettingItemValue("true")).toBe(true);
+            expect(parseSettingItemValue("false")).toBe(false);
+        });
+        it("should parse number values", () => {
+            expect(parseSettingItemValue("123")).toBe(123);
+            expect(parseSettingItemValue("-123.456")).toBe(-123.456);
+        });
+        it("should return string values as is", () => {
+            expect(parseSettingItemValue("abcd")).toBe("abcd");
+            expect(parseSettingItemValue("-123abc456")).toBe("-123abc456");
         });
     });
 });

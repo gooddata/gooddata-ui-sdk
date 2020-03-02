@@ -8,6 +8,7 @@ import {
     AuthenticatedPrincipal,
     IWorkspaceQueryFactory,
     NotImplemented,
+    IUserService,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosInstance } from "axios";
 import { newAxios } from "./gd-tiger-client/axios";
@@ -105,6 +106,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public deauthenticate(): Promise<void> {
         return Promise.resolve();
+    }
+
+    public currentUser(): IUserService {
+        throw new NotImplemented("currentUser not yet implemented");
     }
 
     public workspace(id: string): IAnalyticalWorkspace {

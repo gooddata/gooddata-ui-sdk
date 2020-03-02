@@ -24,6 +24,7 @@ import {
     IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
     IWorkspacePermissionsFactory,
+    IUserService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -83,6 +84,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        currentUser(): IUserService {
+            throw new NotSupported("not supported");
         },
         workspace(id: string): IAnalyticalWorkspace {
             return dummyWorkspace(id, config);

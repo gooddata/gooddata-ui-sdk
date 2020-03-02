@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import { ISettings } from "../../common/settings";
 
 /**
@@ -6,11 +6,11 @@ import { ISettings } from "../../common/settings";
  *
  * @public
  */
-export interface IWorkspaceSettingsService {
+export interface IUserSettingsService {
     /**
      * Asynchronously queries actual feature flags.
      */
-    query(): Promise<IWorkspaceSettings>;
+    query(): Promise<IUserSettings>;
 }
 
 /**
@@ -18,9 +18,9 @@ export interface IWorkspaceSettingsService {
  *
  * @public
  */
-export interface IWorkspaceSettings extends ISettings {
+export interface IUserSettings extends ISettings {
     /**
-     * Workspace to which the settings belong.
+     * User to which the settings belong.
      */
-    workspace: string;
+    userId: string;
 }
