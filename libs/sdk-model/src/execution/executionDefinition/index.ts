@@ -117,7 +117,22 @@ export function defSetDimensions(
 }
 
 /**
- * Calculates fingerprint for the execution definition.
+ * Calculates fingerprint for the execution definition. Fingerprinting is used as an _approximate_,
+ * quick, first-level assessment whether two execution definitions are or are not effectively same = they
+ * lead to the same computation on the backend.
+ *
+ * The contract and the approximate nature of the fingerprint can be described as follows:
+ *
+ * -  If two execution definitions have the same fingerprint, then they definitely are effectively the same
+ *    and backend will perform the same computation for them.
+ *
+ * -  If two execution definition have different fingerprint, they MAY OR MAY NOT lead to different execution. Or
+ *    more concrete: two executions with two different fingerprints MAY lead to the same execution and same results.
+ *
+ * While not optimal, this contract allows for safe usage of fingerprints to determine whether two
+ * execution definitions have changed. For instance it can be used in React lifecycle methods (shouldComponentUpdate)
+ * or for client-side caching.
+ *
  * @param def - execution definition
  * @public
  */
