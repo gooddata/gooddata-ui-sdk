@@ -59,6 +59,8 @@ type BearLegacyFunctions = {
         productId?: string;
         clientId?: string;
     }): Promise<GdcUser.IBootstrapResource>;
+    ajaxSetup?(setup: any): void;
+    log?(uri: string, logMessages: string[]): Promise<any>;
 };
 
 /**
@@ -126,6 +128,11 @@ export class BearBackend implements IAnalyticalBackend {
                 }) => {
                     return this.authApiCall(sdk => sdk.user.getBootstrapResource(options));
                 },
+                ajaxSetup: (settings: any) => {
+                    this.sdk.xhr.ajaxSetup(settings);
+                },
+                log: (uri: string, logMessages: string[]) =>
+                    this.sdk.xhr.post(uri, { data: JSON.stringify({ logMessages }) }),
             };
 
             this.implConfig.onLegacyCallbacksReady(legacyFunctions);
