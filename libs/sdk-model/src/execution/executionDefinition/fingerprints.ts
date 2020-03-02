@@ -1,10 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
+import stringify from "json-stable-stringify";
 import invariant from "ts-invariant";
 import { IAttribute } from "../attribute";
-import { IDimension } from "../base/dimension";
 import { SortItem } from "../base/sort";
-import { IFilter } from "../filter";
-import { IMeasure } from "../measure";
 
 /**
  * @internal
@@ -12,33 +10,12 @@ import { IMeasure } from "../measure";
 export function attributeFingerprint(attribute: IAttribute): string {
     invariant(attribute, "attribute must not be undefined");
 
-    return JSON.stringify(attribute);
-}
-
-/**
- * @internal
- */
-export function filterFingerprint(filter: IFilter): string {
-    return JSON.stringify(filter);
-}
-
-/**
- * @internal
- */
-export function measureFingerprint(measure: IMeasure): string {
-    return JSON.stringify(measure);
-}
-
-/**
- * @internal
- */
-export function dimensionFingerprint(dim: IDimension): string {
-    return JSON.stringify(dim);
+    return stringify(attribute);
 }
 
 /**
  * @internal
  */
 export function sortFingerprint(sort: SortItem): string {
-    return JSON.stringify(sort);
+    return stringify(sort);
 }

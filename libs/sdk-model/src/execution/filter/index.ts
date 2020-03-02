@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../base";
@@ -375,7 +375,7 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
  * @returns true if empty = attribute elements not specified in any way (URI or value)
  * @internal
  */
-function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
+export function attributeElementsIsEmpty(attributeElements: AttributeElements): boolean {
     invariant(attributeElements, "attribute elements must be specified");
 
     if (isAttributeElementsByRef(attributeElements)) {
