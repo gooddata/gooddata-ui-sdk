@@ -1,22 +1,20 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
+import isString = require("lodash/isString");
 import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
-import { mergeFilters } from "../filter/filterMerge";
-import {
-    attributeFingerprint,
-    dimensionFingerprint,
-    filterFingerprint,
-    measureFingerprint,
-    sortFingerprint,
-} from "./fingerprints";
-import { IDimension, dimensionTotals } from "../base/dimension";
+import { IAttribute } from "../attribute";
+import { dimensionTotals, IDimension } from "../base/dimension";
 import { SortItem } from "../base/sort";
 import { ITotal } from "../base/totals";
-import { IAttribute } from "../attribute";
 import { IBucket } from "../buckets";
 import { IFilter } from "../filter";
+import { mergeFilters } from "../filter/filterMerge";
 import { IMeasure } from "../measure";
+import { measureFingerprint } from "../measure/fingerprint";
+import { attributeFingerprint, sortFingerprint } from "./fingerprints";
+import { dimensionFingerprint } from "../base/fingerprint";
+import { filterFingerprint } from "../filter/fingerprint";
 
 /**
  * Execution definition contains 100% complete description of what will the execution compute and how will
@@ -145,7 +143,10 @@ export function defFingerprint(def: IExecutionDefinition): string {
     hasher.append(def.workspace);
     def.attributes.map(attributeFingerprint).forEach(hashFun);
     def.measures.map(measureFingerprint).forEach(hashFun);
-    def.filters.map(filterFingerprint).forEach(hashFun);
+    def.filters
+        .map(filterFingerprint)
+        .filter(isString)
+        .forEach(hashFun);
     def.sortBy.map(sortFingerprint).forEach(hashFun);
     def.dimensions.map(dimensionFingerprint).forEach(hashFun);
 
