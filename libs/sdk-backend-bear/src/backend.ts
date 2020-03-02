@@ -160,7 +160,7 @@ export class BearBackend implements IAnalyticalBackend {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
                 .then(res => {
-                    resolve(currentProfileToPrincipalInformation(res));
+                    resolve(res);
                 })
                 .catch(err => {
                     if (isNotAuthenticatedError(err)) {
