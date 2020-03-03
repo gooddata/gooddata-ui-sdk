@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import flow from "lodash/flow";
+import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
@@ -43,7 +44,13 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
                 }),
         );
 
-        return visualizationClassesResult.map(convertVisualizationClass);
+        const isVisClassNotDeprecated = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
+            visClass.visualizationClass.meta.deprecated !== "1";
+
+        return flow(
+            filter(isVisClassNotDeprecated),
+            map(convertVisualizationClass),
+        )(visualizationClassesResult);
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
