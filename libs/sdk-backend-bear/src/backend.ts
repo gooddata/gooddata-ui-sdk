@@ -66,6 +66,7 @@ type BearLegacyFunctions = {
     }): Promise<GdcUser.IBootstrapResource>;
     ajaxSetup?(setup: any): void;
     log?(uri: string, logMessages: string[]): Promise<any>;
+    updateProfileCurrentWorkspace?(workspace: string, profileSetting: GdcUser.IProfileSetting): Promise<void>;
 };
 
 /**
@@ -138,6 +139,22 @@ export class BearBackend implements IAnalyticalBackend {
                 },
                 log: (uri: string, logMessages: string[]) =>
                     this.sdk.xhr.post(uri, { data: JSON.stringify({ logMessages }) }),
+                updateProfileCurrentWorkspace: async (
+                    workspace: string,
+                    profileSetting: GdcUser.IProfileSetting,
+                ): Promise<void> => {
+                    const userId = profileSetting.links?.profile?.split("/").pop();
+                    invariant(userId, "Cannot obtain userId from IProfileSetting");
+
+                    const newProfileSetting: GdcUser.IProfileSetting = {
+                        ...profileSetting,
+                        currentProjectUri: `/gdc/projects/${workspace}`,
+                    };
+
+                    await this.authApiCall(sdk =>
+                        sdk.user.updateProfileSettings(userId!, { profileSetting: newProfileSetting }),
+                    );
+                },
             };
 
             this.implConfig.onLegacyCallbacksReady(legacyFunctions);
