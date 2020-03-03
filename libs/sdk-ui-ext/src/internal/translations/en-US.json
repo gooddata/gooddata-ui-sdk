@@ -164,6 +164,31 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.location_title.pushpin": {
+        "value": "Location",
+        "comment": "Position of a pin pushed to a map.",
+        "limit": 0
+    },
+    "dashboard.bucket.size_title.pushpin": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.size_subtitle.pushpin": {
+        "value": "Size",
+        "comment": "Size of a pin pushed to a map",
+        "limit": 0
+    },
+    "dashboard.bucket.color_title.pushpin": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.color_subtitle.pushpin": {
+        "value": "Color",
+        "comment": "Color of a pin pushed to a map",
+        "limit": 0
+    },
     "dashboard.bucket.view_title.bubble": {
         "value": "View by",
         "comment": "",
@@ -200,6 +225,11 @@
         "limit": 0
     },
     "dashboard.bucket.view_title.area": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.bullet": {
         "value": "View by",
         "comment": "",
         "limit": 0
@@ -245,6 +275,11 @@
         "limit": 0
     },
     "dashboard.bucket.segment_title.treemap": {
+        "value": "Segment by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.segment_title.pushpin": {
         "value": "Segment by",
         "comment": "",
         "limit": 0
@@ -319,12 +354,12 @@
         "comment": "",
         "limit": 0
     },
-    "dashboard.headline.error.missing_bucket_item.heading": {
+    "dashboard.error.missing_primary_bucket_item.heading": {
         "value": "No primary measure in your insight",
         "comment": "",
         "limit": 0
     },
-    "dashboard.headline.error.missing_bucket_item.text": {
+    "dashboard.error.missing_primary_bucket_item.text": {
         "value": "Add a primary measure to your insight, or switch to table.\nOnce done, you'll be able to save it.",
         "comment": "",
         "limit": 0
@@ -612,6 +647,36 @@
     "export_unsupported.colors": {
         "value": "The insight is not compatible with custom colors. To open the insight as a report, click Reset Colors in Configuration —> Colors.",
         "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_title.bullet": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_title.bullet": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_title.bullet": {
+        "value": "Measure",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.measures_subtitle.bullet": {
+        "value": "Primary",
+        "comment": "Primary measure of a bullet chart.",
+        "limit": 0
+    },
+    "dashboard.bucket.secondary_measures_subtitle.bullet": {
+        "value": "Target",
+        "comment": "Target of a bullet chart.",
+        "limit": 0
+    },
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": {
+        "value": "Comparative",
+        "comment": "Comparative measures of a bullet chart",
         "limit": 0
     }
 }
