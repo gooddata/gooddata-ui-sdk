@@ -1,31 +1,30 @@
 // (C) 2019 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import includes = require("lodash/includes");
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { BUCKETS, METRIC } from "../../../constants/bucket";
+import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
+import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
-    sanitizeUnusedFilters,
+    getAllAttributeItems,
     getMeasures,
     getPreferredBucketItems,
-    getAllAttributeItems,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
     limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
-
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { METRIC, BUCKETS } from "../../../constants/bucket";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { removeSort } from "../../../utils/sort";
 import { setScatterPlotUiConfig } from "../../../utils/uiConfigHelpers/scatterPlotUiConfigHelper";
-import { DEFAULT_SCATTERPLOT_UICONFIG } from "../../../constants/uiConfig";
 import ScatterPlotConfigurationPanel from "../../configurationPanels/ScatterPlotConfigurationPanel";
-import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import cloneDeep = require("lodash/cloneDeep");
+import includes = require("lodash/includes");
+import set = require("lodash/set");
 
 export class PluggableScatterPlot extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -100,7 +99,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

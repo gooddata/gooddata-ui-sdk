@@ -1,43 +1,43 @@
 // (C) 2019 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
+import { render } from "react-dom";
+import { AXIS, AXIS_NAME } from "../../../constants/axis";
+
+import { BUCKETS } from "../../../constants/bucket";
+import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { DEFAULT_LINE_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
+import {
+    IBucketItem,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
+    filterOutDerivedMeasures,
+    getAllAttributeItemsWithPreference,
+    getAttributeItemsWithoutStacks,
+    getDateItems,
+    getFilteredMeasuresForStackedCharts,
+    getMeasureItems,
+    getStackItems,
+    isDateBucketItem,
+    sanitizeFilters,
+} from "../../../utils/bucketHelper";
+import {
+    getReferencePointWithSupportedProperties,
+    setSecondaryMeasures,
+} from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
+
+import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { render } from "react-dom";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import {
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IVisConstruct,
-    IBucketItem,
-} from "../../../interfaces/Visualization";
-import { DEFAULT_LINE_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
-
-import { BUCKETS } from "../../../constants/bucket";
-
-import {
-    sanitizeUnusedFilters,
-    getMeasureItems,
-    getAttributeItemsWithoutStacks,
-    getStackItems,
-    getDateItems,
-    getAllAttributeItemsWithPreference,
-    isDate,
-    filterOutDerivedMeasures,
-    getFilteredMeasuresForStackedCharts,
-} from "../../../utils/bucketHelper";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
-
-import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
-import {
-    setSecondaryMeasures,
-    getReferencePointWithSupportedProperties,
-} from "../../../utils/propertiesHelper";
-import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
 export class PluggableLineChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -78,10 +78,16 @@ export class PluggableLineChart extends PluggableBaseChart {
             attributes = dateItems.slice(0, 1);
             stacks =
                 masterMeasures.length <= 1 && allAttributes.length > 1
-                    ? allAttributes.filter((attribute: IBucketItem) => !isDate(attribute)).slice(0, 1)
+                    ? allAttributes
+                          .filter((attribute: IBucketItem) => !isDateBucketItem(attribute))
+                          .slice(0, 1)
                     : stacks;
         } else {
-            if (masterMeasures.length <= 1 && allAttributes.length > 1 && !isDate(get(allAttributes, "1"))) {
+            if (
+                masterMeasures.length <= 1 &&
+                allAttributes.length > 1 &&
+                !isDateBucketItem(get(allAttributes, "1"))
+            ) {
                 stacks = allAttributes.slice(1, 2);
             }
 
@@ -117,7 +123,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

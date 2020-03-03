@@ -1,60 +1,59 @@
 // (C) 2019 GoodData Corporation
 
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IInsight, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
+
+import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
 import { IntlShape } from "react-intl";
-
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-
-import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 import { METRIC } from "../../../constants/bucket";
-import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import {
-    IReferencePoint,
+    IBucketItem,
+    IBucketOfFun,
     IExtendedReferencePoint,
+    IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-    IBucketItem,
-    IBucketOfFun,
     RenderFunction,
 } from "../../../interfaces/Visualization";
+
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
-    sanitizeUnusedFilters,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
-    isDerivedBucketItem,
-    hasDerivedBucketItems,
     findDerivedBucketItem,
     getAllItemsByType,
+    hasDerivedBucketItems,
+    isDerivedBucketItem,
     limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
+import { hasGlobalDateFilter } from "../../../utils/bucketRules";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import {
+    getReferencePointWithSupportedProperties,
+    getSupportedProperties,
+} from "../../../utils/propertiesHelper";
 import { removeSort } from "../../../utils/sort";
 import {
     getDefaultHeadlineUiConfig,
     getHeadlineUiConfig,
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,
-    tryToMapForeignBuckets,
     setHeadlineRefPointBuckets,
+    tryToMapForeignBuckets,
 } from "./headlineBucketHelper";
-import { hasGlobalDateFilter } from "../../../utils/bucketRules";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import {
-    getReferencePointWithSupportedProperties,
-    getSupportedProperties,
-} from "../../../utils/propertiesHelper";
-import { IInsight, insightProperties, insightHasDataDefined } from "@gooddata/sdk-model";
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import cloneDeep = require("lodash/cloneDeep");
+import get = require("lodash/get");
 
 export class PluggableHeadline extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -130,7 +129,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, referencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderVisualization(

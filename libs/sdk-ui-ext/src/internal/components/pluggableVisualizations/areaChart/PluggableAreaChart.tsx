@@ -1,10 +1,16 @@
 // (C) 2019 GoodData Corporation
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { BUCKETS } from "../../../constants/bucket";
+import {
+    AREA_CHART_SUPPORTED_PROPERTIES,
+    OPTIONAL_STACKING_PROPERTIES,
+} from "../../../constants/supportedProperties";
+import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../../constants/uiConfig";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -14,9 +20,7 @@ import {
     IVisConstruct,
     IVisProps,
 } from "../../../interfaces/Visualization";
-import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../../constants/uiConfig";
-
-import { BUCKETS } from "../../../constants/bucket";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
     getAllAttributeItemsWithPreference,
@@ -24,29 +28,25 @@ import {
     getDateItems,
     getFilteredMeasuresForStackedCharts,
     getStackItems,
-    isDate,
+    isDateBucketItem,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
-    sanitizeUnusedFilters,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
-
-import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
-import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
 } from "../../../utils/propertiesHelper";
-import {
-    AREA_CHART_SUPPORTED_PROPERTIES,
-    OPTIONAL_STACKING_PROPERTIES,
-} from "../../../constants/supportedProperties";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { removeSort } from "../../../utils/sort";
+
+import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
+import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
+
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
-import set = require("lodash/set");
 import negate = require("lodash/negate");
+import set = require("lodash/set");
 
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -91,7 +91,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
@@ -169,11 +169,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private getAllAttributesWithoutDate(buckets: IBucketOfFun[]): IBucketItem[] {
-        return this.getAllAttributes(buckets).filter(negate(isDate));
+        return this.getAllAttributes(buckets).filter(negate(isDateBucketItem));
     }
 
     private filterStackItems(bucketItems: IBucketItem[]): IBucketItem[] {
-        return bucketItems.filter(negate(isDate)).slice(0, MAX_STACKS_COUNT);
+        return bucketItems.filter(negate(isDateBucketItem)).slice(0, MAX_STACKS_COUNT);
     }
 
     private getBucketItems(referencePoint: IReferencePoint) {
@@ -185,7 +185,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
         const numOfAttributes = isAllowMoreThanOneViewByAttribute ? MAX_VIEW_COUNT : 1;
         let views: IBucketItem[] = getAllCategoriesAttributeItems(buckets).slice(0, numOfAttributes);
-        const hasDateItemInViewByBucket = views.some(isDate);
+        const hasDateItemInViewByBucket = views.some(isDateBucketItem);
 
         if (dateItems.length && !hasDateItemInViewByBucket) {
             const firstDateItem = dateItems[0];

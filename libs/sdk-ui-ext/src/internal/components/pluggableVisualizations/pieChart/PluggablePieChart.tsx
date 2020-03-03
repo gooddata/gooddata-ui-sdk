@@ -1,23 +1,9 @@
 // (C) 2019 GoodData Corporation
-import { render } from "react-dom";
-import React = require("react");
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import set = require("lodash/set");
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-
-import {
-    IVisConstruct,
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IGdcConfig,
-    IVisualizationProperties,
-} from "../../../interfaces/Visualization";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
+import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 
 import {
@@ -28,18 +14,32 @@ import {
 } from "../../../constants/uiConfig";
 
 import {
-    sanitizeUnusedFilters,
-    getMeasureItems,
+    IExtendedReferencePoint,
+    IGdcConfig,
+    IReferencePoint,
+    IVisConstruct,
+    IVisualizationProperties,
+} from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
     getAttributeItems,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
+    getMeasureItems,
     limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
 
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import cloneDeep = require("lodash/cloneDeep");
+import get = require("lodash/get");
+import set = require("lodash/set");
+import React = require("react");
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -104,7 +104,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

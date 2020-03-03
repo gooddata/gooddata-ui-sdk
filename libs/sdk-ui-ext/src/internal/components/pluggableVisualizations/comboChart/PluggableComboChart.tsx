@@ -4,51 +4,51 @@ import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { isLineChart, isAreaChart } from "@gooddata/sdk-ui-charts";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import {
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IVisConstruct,
-    IBucketItem,
-    IBucketOfFun,
-    IVisualizationProperties,
-    IUiConfig,
-} from "../../../interfaces/Visualization";
-
-import { METRIC, BUCKETS } from "../../../constants/bucket";
-
-import {
-    sanitizeUnusedFilters,
-    getBucketItemsByType,
-    getAllAttributeItemsWithPreference,
-    getBucketItemsWithExcludeByType,
-    applyUiConfig,
-    hasBucket,
-    findBucket,
-    getAllMeasuresShowOnSecondaryAxis,
-    getMeasureItems,
-    setMeasuresShowOnSecondaryAxis,
-} from "../../../utils/bucketHelper";
-
-import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
+import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { COMBO_CHART_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
-import {
-    getReferencePointWithSupportedProperties,
-    setSecondaryMeasures,
-    isDualAxisOrSomeSecondaryAxisMeasure,
-} from "../../../utils/propertiesHelper";
+
+import { BUCKETS, METRIC } from "../../../constants/bucket";
 import {
     PROPERTY_CONTROLS,
     PROPERTY_CONTROLS_DUAL_AXIS,
     PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
     PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
 } from "../../../constants/properties";
+import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { COMBO_CHART_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
+import {
+    IBucketItem,
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IUiConfig,
+    IVisConstruct,
+    IVisualizationProperties,
+} from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
+    applyUiConfig,
+    findBucket,
+    getAllAttributeItemsWithPreference,
+    getAllMeasuresShowOnSecondaryAxis,
+    getBucketItemsByType,
+    getBucketItemsWithExcludeByType,
+    getMeasureItems,
+    hasBucket,
+    sanitizeFilters,
+    setMeasuresShowOnSecondaryAxis,
+} from "../../../utils/bucketHelper";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
+import {
+    getReferencePointWithSupportedProperties,
+    isDualAxisOrSomeSecondaryAxisMeasure,
+    setSecondaryMeasures,
+} from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
+
+import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
@@ -117,7 +117,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         newReferencePoint = applyUiConfig(newReferencePoint);
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, referencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     public isStackMeasuresByDefault() {

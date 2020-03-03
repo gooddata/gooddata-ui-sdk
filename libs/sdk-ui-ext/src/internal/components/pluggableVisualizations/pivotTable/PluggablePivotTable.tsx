@@ -1,55 +1,11 @@
 // (C) 2019 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-import merge = require("lodash/merge");
 import flatMap = require("lodash/flatMap");
-import isNil = require("lodash/isNil");
+import get = require("lodash/get");
 import includes = require("lodash/includes");
-import * as React from "react";
-import Measure from "react-measure";
-import { render } from "react-dom";
-import { IntlShape } from "react-intl";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-
-import {
-    BucketNames,
-    IExportFunction,
-    VisualizationEnvironment,
-    VisualizationTypes,
-    DefaultLocale,
-    ILocale,
-} from "@gooddata/sdk-ui";
-import {
-    IBucketFilter,
-    IBucketItem,
-    IBucketOfFun,
-    IExtendedReferencePoint,
-    IReferencePoint,
-    IVisCallbacks,
-    IVisConstruct,
-    IVisProps,
-    IVisualizationProperties,
-    RenderFunction,
-} from "../../../interfaces/Visualization";
-
-import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
-
-import {
-    getAllItemsByType,
-    getItemsFromBuckets,
-    getTotalsFromBucket,
-    removeDuplicateBucketItems,
-    sanitizeUnusedFilters,
-} from "../../../utils/bucketHelper";
-
-import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
-import { generateDimensions } from "../../../utils/dimensions";
+import isNil = require("lodash/isNil");
+import merge = require("lodash/merge");
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -69,10 +25,56 @@ import {
     measureLocalId,
     SortItem,
 } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { createSorts } from "../../../utils/sort";
+
+import {
+    BucketNames,
+    DefaultLocale,
+    IExportFunction,
+    ILocale,
+    VisualizationEnvironment,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
+import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import * as React from "react";
+import { render } from "react-dom";
+import { IntlShape } from "react-intl";
+import Measure from "react-measure";
+
+import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
+import {
+    IAttributeFilter,
+    IBucketFilter,
+    IBucketItem,
+    IBucketOfFun,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    isAttributeFilter,
+    IVisCallbacks,
+    IVisConstruct,
+    IVisProps,
+    IVisualizationProperties,
+    RenderFunction,
+} from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
+    getAllItemsByType,
+    getItemsFromBuckets,
+    getTotalsFromBucket,
+    removeDuplicateBucketItems,
+    sanitizeFilters,
+} from "../../../utils/bucketHelper";
+import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { createSorts } from "../../../utils/sort";
+
+import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -184,7 +186,7 @@ function adaptMdObjectSortItemsToPivotTable(originalSortItems: SortItem[], bucke
 const isAttributeSortItemVisible = (_sortItem: IAttributeSortItem, _filters: IBucketFilter[]): boolean =>
     true;
 
-const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IBucketFilter): boolean =>
+const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IAttributeFilter): boolean =>
     filter.selectedElements
         ? filter.selectedElements.some(selectedElement =>
               sortItem.measureSortItem.locators.some(
@@ -197,8 +199,11 @@ const isMeasureSortItemMatchedByFilter = (sortItem: IMeasureSortItem, filter: IB
 
 const isMeasureSortItemVisible = (sortItem: IMeasureSortItem, filters: IBucketFilter[]): boolean =>
     filters.reduce((isVisible, filter) => {
-        const shouldBeMatched = !filter.isInverted;
-        return isVisible && shouldBeMatched === isMeasureSortItemMatchedByFilter(sortItem, filter);
+        if (isAttributeFilter(filter)) {
+            const shouldBeMatched = !filter.isInverted;
+            return isVisible && shouldBeMatched === isMeasureSortItemMatchedByFilter(sortItem, filter);
+        }
+        return isVisible;
     }, true);
 
 export const isSortItemVisible = (sortItem: SortItem, filters: IBucketFilter[]): boolean =>
@@ -357,9 +362,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             newReferencePoint,
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),
         );
-        newReferencePoint.filters = sanitizeUnusedFilters(newReferencePoint, referencePoint).filters;
 
-        return Promise.resolve(newReferencePoint);
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderVisualization(

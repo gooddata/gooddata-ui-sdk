@@ -1,34 +1,34 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
 import set = require("lodash/set");
+import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
 import { AXIS } from "../../constants/axis";
+import { BUCKETS } from "../../constants/bucket";
+import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT, UICONFIG, UICONFIG_AXIS } from "../../constants/uiConfig";
 import {
+    IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
-    IBucketOfFun,
 } from "../../interfaces/Visualization";
 import {
-    getFilteredMeasuresForStackedCharts,
-    getStackItems,
-    isDate,
     getAllCategoriesAttributeItems,
     getDateItems,
-    isNotDate,
+    getFilteredMeasuresForStackedCharts,
+    getStackItems,
+    isDateBucketItem,
+    isNotDateBucketItem,
 } from "../../utils/bucketHelper";
-import { MAX_STACKS_COUNT, UICONFIG_AXIS, UICONFIG, MAX_CATEGORIES_COUNT } from "../../constants/uiConfig";
 import {
     getReferencePointWithSupportedProperties,
-    setSecondaryMeasures,
-    removeImmutableOptionalStackingProperties,
     isStackingMeasure,
     isStackingToPercent,
+    removeImmutableOptionalStackingProperties,
+    setSecondaryMeasures,
 } from "../../utils/propertiesHelper";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper";
-import { BUCKETS } from "../../constants/bucket";
-import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { PluggableBaseChart } from "./baseChart/PluggableBaseChart";
 
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -78,7 +78,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         );
         const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
         let views = allAttributesWithoutStacks.slice(0, categoriesCount);
-        const hasDateItemInViewByBucket = views.some(isDate);
+        const hasDateItemInViewByBucket = views.some(isDateBucketItem);
         let stackItemIndex = categoriesCount;
         let stacks = getStackItems(buckets);
 
@@ -91,7 +91,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         if (!stacks.length && measures.length <= 1 && allAttributesWithoutStacks.length > stackItemIndex) {
             stacks = allAttributesWithoutStacks
                 .slice(stackItemIndex, allAttributesWithoutStacks.length)
-                .filter(isNotDate)
+                .filter(isNotDateBucketItem)
                 .slice(0, MAX_STACKS_COUNT);
         }
 

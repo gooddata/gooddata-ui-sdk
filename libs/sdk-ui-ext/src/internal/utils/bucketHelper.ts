@@ -8,7 +8,6 @@ import includes = require("lodash/includes");
 import every = require("lodash/every");
 import forEach = require("lodash/forEach");
 import cloneDeep = require("lodash/cloneDeep");
-import partial = require("lodash/partial");
 import isEmpty = require("lodash/isEmpty");
 import flatMap = require("lodash/flatMap");
 import compact = require("lodash/compact");
@@ -30,8 +29,11 @@ import {
     IExtendedReferencePoint,
     IFilters,
     IFiltersBucketItem,
-    IReferencePoint,
+    isDateFilter,
     IUiConfig,
+    isAttributeFilter,
+    isMeasureValueFilter,
+    IDateFilter,
 } from "../interfaces/Visualization";
 import {
     ATTRIBUTE,
@@ -54,31 +56,37 @@ import {
     ITotal,
 } from "@gooddata/sdk-model";
 
-export function removeUnusedFilters(filters: IFiltersBucketItem[], unusedBucketItems: IBucketItem[]) {
-    return filters.filter(filter => {
-        return (
-            filter.autoCreated === false ||
-            !unusedBucketItems.some(item => item.attribute === filter.attribute)
-        );
+export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
+    const measureBucketItems = getAllMeasureItems(newReferencePoint.buckets);
+
+    newReferencePoint.filters = newReferencePoint.filters || {
+        localIdentifier: "filters",
+        items: [],
+    };
+
+    const filteredFilters = newReferencePoint.filters.items.filter((filterBucketItem: IFiltersBucketItem) => {
+        const filter = filterBucketItem.filters[0];
+
+        if (isAttributeFilter(filter) || isDateFilter(filter)) {
+            if (filterBucketItem.autoCreated === false) {
+                return true;
+            }
+            return attributeBucketItems.some(
+                (attributeBucketItem: IBucketItem) => attributeBucketItem.attribute === filter.attribute,
+            );
+        } else if (isMeasureValueFilter(filter)) {
+            if (attributeBucketItems.length === 0) {
+                return false;
+            }
+            return measureBucketItems.some(
+                (measureBucketItem: IBucketItem) =>
+                    measureBucketItem.localIdentifier === filter.measureLocalIdentifier,
+            );
+        }
+
+        return false;
     });
-}
-
-export function sanitizeUnusedFilters(
-    newReferencePoint: IExtendedReferencePoint,
-    referencePoint: IReferencePoint,
-): IExtendedReferencePoint {
-    const allAttributeBucketItems = getAllAttributeItems(referencePoint.buckets);
-    const usedAttributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
-
-    const unusedAttributeBucketItems = allAttributeBucketItems.filter(
-        (bucketItem: IBucketItem) =>
-            !usedAttributeBucketItems.some((used: IBucketItem) => used.attribute === bucketItem.attribute),
-    );
-
-    const filteredFilters = removeUnusedFilters(
-        get(newReferencePoint.filters, "items", []),
-        unusedAttributeBucketItems,
-    );
 
     return {
         ...newReferencePoint,
@@ -207,22 +215,17 @@ export function filterOutIncompatibleArithmeticMeasures(
     );
 }
 
-function hasIdentifier(identifier: string, bucketItem: IBucketItem): boolean {
-    return get(bucketItem, ATTRIBUTE) === identifier;
+export function isDateBucketItem(bucketItem: IBucketItem): boolean {
+    return !!bucketItem && bucketItem.attribute === DATE_DATASET_ATTRIBUTE;
 }
 
-export const isDate = partial(hasIdentifier, DATE_DATASET_ATTRIBUTE);
+export const isNotDateBucketItem = negate(isDateBucketItem);
 
-export const isNotDate = negate(isDate);
-
-export function getDateFilter(filtersBucket: IFilters) {
-    const dateFiltersInclEmpty = flatMap<IFiltersBucketItem, IBucketFilter>(
-        filtersBucket.items,
-        filterItem => {
-            const filters = get<IFiltersBucketItem, "filters", IBucketFilter[]>(filterItem, "filters", []);
-            return filters.find(isDate);
-        },
-    );
+export function getDateFilter(filtersBucket: IFilters): IDateFilter {
+    const dateFiltersInclEmpty = flatMap(filtersBucket.items, filterItem => {
+        const filters = get<IFiltersBucketItem, "filters", IBucketFilter[]>(filterItem, "filters", []);
+        return filters.find(isDateFilter);
+    });
     const dateFilters = compact(dateFiltersInclEmpty);
     return dateFilters.length ? dateFilters[0] : null;
 }
@@ -490,6 +493,10 @@ export function getAllAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
 }
 
+function getAllMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
+    return getAllItemsByType(buckets, [METRIC]);
+}
+
 // get all attributes from buckets, but items from prefered buckets are first
 export function getAllAttributeItemsWithPreference(
     buckets: IBucketOfFun[],
@@ -510,7 +517,7 @@ export function getAllAttributeItemsWithPreference(
 }
 
 export function getDateItems(buckets: IBucketOfFun[]): IBucketItem[] {
-    return getAttributeItemsWithoutStacks(buckets).filter(isDate);
+    return getAttributeItemsWithoutStacks(buckets).filter(isDateBucketItem);
 }
 
 function hasItemsAboveLimit(bucket: IBucketOfFun, itemsLimit: number): boolean {

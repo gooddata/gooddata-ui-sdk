@@ -1,7 +1,36 @@
 // (C) 2019 GoodData Corporation
+import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
+import {
+    bucketsIsEmpty,
+    IColorMappingItem,
+    IDimension,
+    IInsight,
+    insightBuckets,
+    insightHasDataDefined,
+    insightMeasures,
+    insightProperties,
+} from "@gooddata/sdk-model";
+import {
+    BucketNames,
+    ChartType,
+    DefaultLocale,
+    GoodDataSdkError,
+    IExportFunction,
+    ILoadingState,
+    ILocale,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
+import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
-import { IntlShape } from "react-intl";
 import { render } from "react-dom";
+import { IntlShape } from "react-intl";
+
+import { BUCKETS } from "../../../constants/bucket";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT, UICONFIG } from "../../../constants/uiConfig";
+import { AxisType } from "../../../interfaces/AxisType";
+import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -15,19 +44,6 @@ import {
     IVisProps,
     IVisualizationProperties,
 } from "../../../interfaces/Visualization";
-import { IColorConfiguration } from "../../../interfaces/Colors";
-import {
-    getHighchartsAxisNameConfiguration,
-    getReferencePointWithSupportedProperties,
-    getSupportedProperties,
-    getSupportedPropertiesControls,
-    hasColorMapping,
-    isEmptyObject,
-} from "../../../utils/propertiesHelper";
-import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT, UICONFIG } from "../../../constants/uiConfig";
-import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-
-import { BUCKETS } from "../../../constants/bucket";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
@@ -37,54 +53,38 @@ import {
     getFilteredMeasuresForStackedCharts,
     getMeasureItems,
     getStackItems,
-    isDate,
-    sanitizeUnusedFilters,
+    isDateBucketItem,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
+import { getValidProperties } from "../../../utils/colors";
+import { generateDimensions } from "../../../utils/dimensions";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
+import {
+    getHighchartsAxisNameConfiguration,
+    getReferencePointWithSupportedProperties,
+    getSupportedProperties,
+    getSupportedPropertiesControls,
+    hasColorMapping,
+    isEmptyObject,
+} from "../../../utils/propertiesHelper";
+import { createSorts, removeSort } from "../../../utils/sort";
+import { getTranslation } from "../../../utils/translations";
 
 import {
     setBaseChartUiConfig,
     setBaseChartUiConfigRecommendations,
 } from "../../../utils/uiConfigHelpers/baseChartUiConfigHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
-import { createSorts, removeSort } from "../../../utils/sort";
+import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
 
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
-import { getValidProperties } from "../../../utils/colors";
-import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualizationsHelper";
-import { getTranslation } from "../../../utils/translations";
-import { AxisType } from "../../../interfaces/AxisType";
-import { generateDimensions } from "../../../utils/dimensions";
-import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
-import {
-    GoodDataSdkError,
-    BucketNames,
-    DefaultLocale,
-    ILocale,
-    ChartType,
-    VisualizationTypes,
-    IExportFunction,
-    ILoadingState,
-} from "@gooddata/sdk-ui";
-import {
-    bucketsIsEmpty,
-    IColorMappingItem,
-    IDimension,
-    IInsight,
-    insightBuckets,
-    insightHasDataDefined,
-    insightMeasures,
-    insightProperties,
-} from "@gooddata/sdk-model";
-import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
-import isEmpty = require("lodash/isEmpty");
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
+import isEmpty = require("lodash/isEmpty");
 import noop = require("lodash/noop");
-import tail = require("lodash/tail");
 import set = require("lodash/set");
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import tail = require("lodash/tail");
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -177,7 +177,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         newReferencePoint = setBaseChartUiConfig(newReferencePoint, this.intl, this.type);
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     public isOpenAsReportSupported() {
@@ -230,7 +230,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (masterMeasures.length <= 1 && allAttributes.length > 1) {
             // first attribute is taken, find next available non-date attribute
             const attributesWithoutFirst = tail(allAttributes);
-            const nonDate = attributesWithoutFirst.filter(attribute => !isDate(attribute));
+            const nonDate = attributesWithoutFirst.filter(attribute => !isDateBucketItem(attribute));
             stacks = nonDate.slice(0, 1);
         }
 

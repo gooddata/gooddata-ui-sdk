@@ -1,34 +1,33 @@
 // (C) 2019 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
-import cloneDeep = require("lodash/cloneDeep");
-import set = require("lodash/set");
-import tail = require("lodash/tail");
-import includes = require("lodash/includes");
 
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
-import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
+import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
+import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
-    sanitizeUnusedFilters,
-    getMeasureItems,
     getAllAttributeItemsWithPreference,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
+    getMeasureItems,
     getPreferredBucketItems,
     limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
 
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
 import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel";
-
-import { BUCKETS, ATTRIBUTE, DATE } from "../../../constants/bucket";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import cloneDeep = require("lodash/cloneDeep");
+import includes = require("lodash/includes");
+import set = require("lodash/set");
+import tail = require("lodash/tail");
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -92,7 +91,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {
