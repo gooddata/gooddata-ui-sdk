@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     AttributeOrMeasure,
     IBucket,
@@ -199,8 +199,8 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
 
     /**
-     * Fingerprint of this prepared execution. Each unique combination of prepared execution attributes
-     * results in an unique fingerprint - a perfect hash.
+     * Fingerprint of this prepared execution - this is effectivelly fingerprint of the execution
+     * definition underlying this instance of Prepared Execution.
      */
     fingerprint(): string;
 }
