@@ -3,22 +3,32 @@ import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import classNames from "classnames";
 import capitalize = require("lodash/capitalize");
+import noop = require("lodash/noop");
 import { string as stringUtils } from "@gooddata/js-utils";
 
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
 import { MeasureValueFilterOperator } from "./types";
 
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+
 export interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;
     operator: MeasureValueFilterOperator;
+    bubbleText?: string;
     onClick: (identifier: MeasureValueFilterOperator) => void;
 }
 
 export type IOperatorDropdownItemProps = IOperatorDropdownItemOwnProps & WrappedComponentProps;
 
 export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownItemProps> {
+    public static defaultProps: any = {
+        onClick: noop,
+        bubbleText: null,
+    };
+
     public render() {
-        const { intl, operator, selectedOperator } = this.props;
+        const { intl, operator, selectedOperator, bubbleText } = this.props;
 
         const className = classNames(
             "gd-list-item",
@@ -35,6 +45,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
             <div className={className} onClick={this.handleOnClick}>
                 <div className={`icon-${getOperatorIcon(operator)}`} title={title} />
                 <span title={title}>{capitalize(title)}</span>
+                {bubbleText && this.renderBubble(bubbleText)}
             </div>
         );
     }
@@ -44,6 +55,19 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
         onClick(operator);
         e.preventDefault();
     };
+
+    private renderBubble(message: string) {
+        return (
+            <div className="tooltip-bubble">
+                <BubbleHoverTrigger tagName={"div"} showDelay={400} hideDelay={200}>
+                    <div className="inlineBubbleHelp" />
+                    <Bubble className="bubble-primary" alignPoints={[{ align: "tc bl" }]}>
+                        {message}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </div>
+        );
+    }
 }
 
 export default injectIntl(OperatorDropdownItem);

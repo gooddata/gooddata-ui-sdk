@@ -43,6 +43,11 @@ $dialog_width: 250px;
         & > span {
             margin-left: 5px;
         }
+
+        & > .tooltip-bubble {
+            margin-right: 5px;
+            text-align: right;
+        }
     }
 }
 

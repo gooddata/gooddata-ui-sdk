@@ -6,16 +6,20 @@ import { Separator } from "@gooddata/goodstrap/lib/List/MenuList";
 import OperatorDropdownItem from "./OperatorDropdownItem";
 import { MeasureValueFilterOperator } from "./types";
 
-export interface IOperatorDropdownBodyProps {
+import { WrappedComponentProps, injectIntl } from "react-intl";
+
+export interface IOperatorDropdownBodyOwnProps {
     selectedOperator: MeasureValueFilterOperator;
     onSelect: (operator: MeasureValueFilterOperator) => void;
     onClose: () => void;
     alignTo: string;
 }
 
-export default class OperatorDropdownBody extends React.PureComponent<IOperatorDropdownBodyProps> {
+type IOperatorDropdownBodyProps = IOperatorDropdownBodyOwnProps & WrappedComponentProps;
+
+class OperatorDropdownBody extends React.PureComponent<IOperatorDropdownBodyProps> {
     public render() {
-        const { onSelect, onClose, selectedOperator, alignTo } = this.props;
+        const { onSelect, onClose, selectedOperator, alignTo, intl } = this.props;
 
         return (
             <Overlay
@@ -58,11 +62,13 @@ export default class OperatorDropdownBody extends React.PureComponent<IOperatorD
                             operator="BETWEEN"
                             selectedOperator={selectedOperator}
                             onClick={onSelect}
+                            bubbleText={intl.formatMessage({ id: "mvf.operator.between.tooltip.bubble" })}
                         />
                         <OperatorDropdownItem
                             operator="NOT_BETWEEN"
                             selectedOperator={selectedOperator}
                             onClick={onSelect}
+                            bubbleText={intl.formatMessage({ id: "mvf.operator.notBetween.tooltip.bubble" })}
                         />
                         <Separator />
                         <OperatorDropdownItem
@@ -81,3 +87,5 @@ export default class OperatorDropdownBody extends React.PureComponent<IOperatorD
         );
     }
 }
+
+export default injectIntl(OperatorDropdownBody);
