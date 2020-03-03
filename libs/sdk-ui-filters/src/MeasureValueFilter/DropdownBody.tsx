@@ -38,8 +38,8 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         const { operator, value } = props;
 
         this.state = {
-            operator,
-            value,
+            operator: operator || "ALL",
+            value: value || {},
         };
     }
 
@@ -73,19 +73,28 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
     }
 
     private renderInputSection = () => {
-        const { operator, value } = this.state;
+        const {
+            operator,
+            value: { value = null, from = null, to = null },
+        } = this.state;
 
         if (isComparisonConditionOperator(operator)) {
             return (
                 <ComparisonInput
                     value={value}
-                    onChange={this.handleValueChange}
+                    onValueChange={this.handleValueChange}
                     onEnterKeyPress={this.onApply}
                 />
             );
         } else if (isRangeConditionOperator(operator)) {
             return (
-                <RangeInput value={value} onChange={this.handleValueChange} onEnterKeyPress={this.onApply} />
+                <RangeInput
+                    from={from}
+                    to={to}
+                    onFromChange={this.handleFromChange}
+                    onToChange={this.handleToChange}
+                    onEnterKeyPress={this.onApply}
+                />
             );
         }
 
@@ -98,7 +107,11 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
 
     private handleOperatorSelection = (operator: MeasureValueFilterOperator) => this.setState({ operator });
 
-    private handleValueChange = (value: IValue) => this.setState({ value });
+    private handleValueChange = (value: number) => this.setState({ value: { ...this.state.value, value } });
+
+    private handleFromChange = (from: number) => this.setState({ value: { ...this.state.value, from } });
+
+    private handleToChange = (to: number) => this.setState({ value: { ...this.state.value, to } });
 
     private onApply = () => {
         const operator = this.state.operator === "ALL" ? null : this.state.operator;

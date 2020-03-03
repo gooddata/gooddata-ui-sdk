@@ -2,9 +2,6 @@
 import { ReactWrapper } from "enzyme";
 import { string as stringUtils } from "@gooddata/js-utils";
 
-const CLASS_DROPDOWN_BUTTON = ".s-mvf-dropdown-button";
-const CLASS_DROPDOWN_BODY = ".s-mvf-dropdown-body";
-
 const CLASS_APPLY_BUTTON = ".s-mvf-dropdown-apply";
 const CLASS_CANCEL_BUTTON = ".s-mvf-dropdown-cancel";
 
@@ -18,17 +15,7 @@ export default class MeasureValueFilterFragment {
         this.component = component;
     }
 
-    public getDropdownButton = () => this.component.find(CLASS_DROPDOWN_BUTTON).hostNodes();
     public getOperatorDropdownButton = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BUTTON).hostNodes();
-
-    public openDropdown = () => {
-        if (!this.isDropdownOpen()) {
-            this.getDropdownButton().simulate("click");
-        }
-        return this;
-    };
-
-    public isDropdownOpen = () => this.component.find(CLASS_DROPDOWN_BODY).exists();
     public isOperatorDropdownOpen = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BODY).exists();
 
     public clickApply = () => {

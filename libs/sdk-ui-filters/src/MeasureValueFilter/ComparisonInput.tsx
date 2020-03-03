@@ -2,17 +2,21 @@
 import * as React from "react";
 import Input from "@gooddata/goodstrap/lib/Form/Input";
 
-import { IInputProps } from "./DropdownBody";
+export interface IComparisonInputProps {
+    value: number;
+    onValueChange: (value: number) => void;
+    onEnterKeyPress?: () => void;
+}
 
-const ComparisonInput = ({ onChange, value, onEnterKeyPress }: IInputProps) => {
-    const onValueChange = (val: string) => onChange({ ...value, value: parseFloat(val) });
+const ComparisonInput = ({ onValueChange, value, onEnterKeyPress }: IComparisonInputProps) => {
+    const handleValueChange = (val: string) => onValueChange(parseFloat(val));
 
     return (
         <Input
             className="s-mvf-comparison-value-input"
-            value={(value && value.value) || ""}
+            value={value}
             onEnterKeyPress={onEnterKeyPress}
-            onChange={onValueChange}
+            onChange={handleValueChange}
             isSmall={true}
             autofocus={true}
         />

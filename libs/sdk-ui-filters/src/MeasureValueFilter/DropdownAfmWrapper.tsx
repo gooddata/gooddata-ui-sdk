@@ -6,6 +6,7 @@ import {
     measureValueFilterCondition,
     isRangeCondition,
     isRangeConditionOperator,
+    measureValueFilterOperator,
 } from "@gooddata/sdk-model";
 
 import { IValue, MeasureValueFilterOperator } from "./types";
@@ -13,17 +14,14 @@ import { Dropdown } from "./Dropdown";
 
 export interface IDropdownProps {
     filter?: IMeasureValueFilter;
-    button?: React.ComponentType<any>;
-    onApply: (filter: IMeasureValueFilter | null, measureIdentifier: string) => void;
-    locale?: string;
-    measureTitle?: string;
+    onApply: (filter: IMeasureValueFilter) => void;
+    onCancel: () => void;
     measureIdentifier: string;
-    displayDropdown?: boolean;
+    locale?: string;
+    anchorEl?: EventTarget | string;
 }
 
-const getDropdownData = (
-    filter: IMeasureValueFilter | undefined,
-): { operator?: MeasureValueFilterOperator; value?: IValue } => {
+const getFilterValue = (filter: IMeasureValueFilter | undefined): IValue => {
     if (!filter) {
         return {};
     }
@@ -33,15 +31,9 @@ const getDropdownData = (
         return {};
     }
 
-    const operator = isRangeCondition(condition) ? condition.range.operator : condition.comparison.operator;
-    const value = isRangeCondition(condition)
+    return isRangeCondition(condition)
         ? { from: condition.range.from, to: condition.range.to }
         : { value: condition.comparison.value };
-
-    return {
-        operator,
-        value,
-    };
 };
 
 /**
@@ -49,19 +41,16 @@ const getDropdownData = (
  */
 export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
     public render() {
-        const { button, measureTitle, locale, filter, displayDropdown } = this.props;
-
-        const { operator, value } = getDropdownData(filter);
+        const { filter, onCancel, locale, anchorEl } = this.props;
 
         return (
             <Dropdown
-                displayDropdown={displayDropdown}
-                button={button}
                 onApply={this.onApply}
-                measureTitle={measureTitle}
+                onCancel={onCancel}
+                operator={(filter && measureValueFilterOperator(filter)) || null}
+                value={(filter && getFilterValue(filter)) || null}
                 locale={locale}
-                operator={operator}
-                value={value}
+                anchorEl={anchorEl}
             />
         );
     }
@@ -70,17 +59,22 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
         const { measureIdentifier, onApply } = this.props;
 
         if (operator === null || operator === "ALL") {
-            onApply(null, measureIdentifier);
+            onApply(null);
         } else {
-            const filter = isRangeConditionOperator(operator)
-                ? newMeasureValueFilter(
-                      { localIdentifier: measureIdentifier },
-                      operator,
-                      value.from!,
-                      value.to,
-                  )
-                : newMeasureValueFilter({ localIdentifier: measureIdentifier }, operator, value.value!);
-            onApply(filter, measureIdentifier);
+            if (isRangeConditionOperator(operator)) {
+                onApply(
+                    newMeasureValueFilter(
+                        { localIdentifier: measureIdentifier },
+                        operator,
+                        value.from ?? 0,
+                        value.to ?? 0,
+                    ),
+                );
+            } else {
+                onApply(
+                    newMeasureValueFilter({ localIdentifier: measureIdentifier }, operator, value.value ?? 0),
+                );
+            }
         }
     };
 }

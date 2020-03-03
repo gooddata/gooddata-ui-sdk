@@ -71,16 +71,20 @@ export type ComparisonConditionOperator =
     | "NOT_EQUAL_TO";
 
 export interface IComparisonCondition {
-    readonly operator: ComparisonConditionOperator;
-    readonly value: number;
+    readonly comparison: {
+        readonly operator: ComparisonConditionOperator;
+        readonly value: number;
+    };
 }
 
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
 export interface IRangeCondition {
-    readonly operator: RangeConditionOperator;
-    readonly from: number;
-    readonly to: number;
+    readonly range: {
+        readonly operator: RangeConditionOperator;
+        readonly from: number;
+        readonly to: number;
+    };
 }
 
 export type IMeasureValueFilterCondition = IComparisonCondition | IRangeCondition;

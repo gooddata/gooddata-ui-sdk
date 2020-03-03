@@ -1162,6 +1162,9 @@ export function measureValueFilterCondition(filter: IMeasureValueFilter): Measur
 export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefInScope;
 
 // @public
+export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
+
+// @public
 export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;
 
 // @public

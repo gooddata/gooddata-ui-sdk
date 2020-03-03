@@ -1028,9 +1028,11 @@ describe("isSortItemVisible", () => {
         const measureValueFilter: IBucketFilter = {
             measureLocalIdentifier: "id",
             condition: {
-                operator: "BETWEEN",
-                from: 0,
-                to: 0,
+                range: {
+                    operator: "BETWEEN",
+                    from: 0,
+                    to: 0,
+                },
             },
         };
 

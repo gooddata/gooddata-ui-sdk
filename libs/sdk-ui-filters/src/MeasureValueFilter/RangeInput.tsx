@@ -2,20 +2,24 @@
 import * as React from "react";
 import Input from "@gooddata/goodstrap/lib/Form/Input";
 
-import { IInputProps } from "./DropdownBody";
+export interface IRangeInputProps {
+    from: number;
+    to: number;
+    onFromChange: (value: number) => void;
+    onToChange: (value: number) => void;
+    onEnterKeyPress?: () => void;
+}
 
-const RangeInput: React.FC<IInputProps> = ({ onChange, value, onEnterKeyPress }) => {
-    const { from = "", to = "" } = value || {};
-
-    const onFromChange = (val: string) => onChange({ ...value, from: parseFloat(val) });
-    const onToChange = (val: string) => onChange({ ...value, to: parseFloat(val) });
+const RangeInput = ({ onFromChange, onToChange, from, to, onEnterKeyPress }: IRangeInputProps) => {
+    const handleFromChange = (val: string) => onFromChange(parseFloat(val));
+    const handleToChange = (val: string) => onToChange(parseFloat(val));
 
     return (
         <div className={"gd-mvf-range-input"}>
             <Input
                 className="s-mvf-range-from-input"
                 value={from}
-                onChange={onFromChange}
+                onChange={handleFromChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
                 autofocus={true}
@@ -23,7 +27,7 @@ const RangeInput: React.FC<IInputProps> = ({ onChange, value, onEnterKeyPress })
             <Input
                 className="s-mvf-range-to-input"
                 value={to}
-                onChange={onToChange}
+                onChange={handleToChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
             />

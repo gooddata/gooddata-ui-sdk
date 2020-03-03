@@ -514,3 +514,24 @@ export function measureValueFilterCondition(
 
     return filter.measureValueFilter.condition;
 }
+
+/**
+ * Gets operator used in measure value filter condition.
+ *
+ * @param filter - filter to get operator from
+ * @returns undefined if no condition in the filter
+ * @public
+ */
+export function measureValueFilterOperator(
+    filter: IMeasureValueFilter,
+): ComparisonConditionOperator | RangeConditionOperator | undefined {
+    invariant(filter, "filter must not be undefined");
+
+    if (isComparisonCondition(filter.measureValueFilter.condition)) {
+        return filter.measureValueFilter.condition.comparison.operator;
+    } else if (isRangeCondition(filter.measureValueFilter.condition)) {
+        return filter.measureValueFilter.condition.range.operator;
+    }
+
+    return;
+}
