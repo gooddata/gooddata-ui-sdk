@@ -280,6 +280,41 @@ describe("Measure value filter", () => {
 
                 expect(onApply).toBeCalledWith(expectedFilter);
             });
+
+            it("should handle the change from comparison to range filter", () => {
+                const onApply = jest.fn();
+                const component = renderComponent({ usePercentage: true, onApply });
+
+                const expectedComparisonFilter = newMeasureValueFilter(
+                    { localIdentifier: "myMeasure" },
+                    "GREATER_THAN",
+                    1,
+                );
+
+                component
+                    .openOperatorDropdown()
+                    .selectOperator("GREATER_THAN")
+                    .setComparisonValue("100")
+                    .clickApply();
+
+                expect(onApply).toBeCalledWith(expectedComparisonFilter);
+
+                const expectedRangeFilter = newMeasureValueFilter(
+                    { localIdentifier: "myMeasure" },
+                    "BETWEEN",
+                    2,
+                    5,
+                );
+
+                component
+                    .openOperatorDropdown()
+                    .selectOperator("BETWEEN")
+                    .setRangeFrom("200")
+                    .setRangeTo("500")
+                    .clickApply();
+
+                expect(onApply).nthCalledWith(2, expectedRangeFilter);
+            });
         });
     });
 });
