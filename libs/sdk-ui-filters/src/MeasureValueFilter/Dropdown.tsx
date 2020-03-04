@@ -6,6 +6,14 @@ import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { DropdownBody } from "./DropdownBody";
 import { MeasureValueFilterOperator, IValue } from "./types";
 
+const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
+/*
+ * TODO: same thing is in sdk-ui-ext .. but filters must not depend on it. we may be in need of some lower-level
+ *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
+ *  thin layer on top of goodstrap (?)
+ */
+const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
+
 export interface IDropdownOwnProps {
     onApply: (operator: string, value?: IValue) => void;
     onCancel: () => void;
@@ -37,7 +45,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
         return (
             <Overlay
                 alignTo={anchorEl}
-                alignPoints={[{ align: "bl tl" }]}
+                alignPoints={DROPDOWN_ALIGMENTS}
                 closeOnOutsideClick={true}
                 closeOnParentScroll={true}
                 closeOnMouseDrag={true}
