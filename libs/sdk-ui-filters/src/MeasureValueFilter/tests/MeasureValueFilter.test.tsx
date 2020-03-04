@@ -222,6 +222,60 @@ describe("Measure value filter", () => {
             expect(onApply).toBeCalledWith(null);
         });
 
+        it("should compensate for JavaScript division result precision problem for comparison filter", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply, usePercentage: true });
+
+            component
+                .openOperatorDropdown()
+                .selectOperator("GREATER_THAN")
+                .setComparisonValue("42.1")
+                .clickApply();
+
+            const expectedFilter = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "GREATER_THAN",
+                0.421,
+            );
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should compensate for JavaScript division result precision problem for range filter", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply, usePercentage: true });
+
+            component
+                .openOperatorDropdown()
+                .selectOperator("BETWEEN")
+                .setRangeFrom("42.1")
+                .setRangeTo("1151.545")
+                .clickApply();
+
+            const expectedFilter = newMeasureValueFilter(
+                { localIdentifier: "myMeasure" },
+                "BETWEEN",
+                0.421,
+                11.51545,
+            );
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should compensate for JavaScript multiplication result precision problem for comparison filter", () => {
+            const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 46.001);
+
+            const component = renderComponent({ filter, usePercentage: true });
+
+            expect(component.getComparisonValueInput().props().value).toEqual("4,600.1");
+        });
+
+        it("should compensate for JavaScript multiplication result precision problem for range filter", () => {
+            const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "NOT_BETWEEN", 1.11, 4.44);
+            const component = renderComponent({ filter, usePercentage: true });
+
+            expect(component.getRangeFromInput().props().value).toEqual("111");
+            expect(component.getRangeToInput().props().value).toEqual("444");
+        });
+
         describe("apply button", () => {
             it("should enable apply button when operator is changed to all from comparison operator", () => {
                 const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "EQUAL_TO", 10);

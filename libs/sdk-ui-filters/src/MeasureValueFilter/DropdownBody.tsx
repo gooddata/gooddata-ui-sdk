@@ -20,6 +20,7 @@ export interface IDropdownBodyOwnProps {
     onCancel?: () => void;
     onApply: (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => void;
     separators?: ISeparators;
+    valuePrecision?: number;
 }
 
 export type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
@@ -28,6 +29,8 @@ interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
 }
+
+const DefaultValuePrecision = 6;
 
 class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropdownBodyState> {
     constructor(props: IDropdownBodyProps) {
@@ -185,6 +188,12 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         this.setState({ value: { ...this.state.value, to } });
     };
 
+    private trimToPrecision = (n: number): number => {
+        const { valuePrecision = DefaultValuePrecision } = this.props;
+
+        return parseFloat(n.toFixed(valuePrecision));
+    };
+
     private convertToRawValue = (
         value: IMeasureValueFilterValue,
         operator: string,
@@ -193,8 +202,8 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
             return value;
         }
         return isComparisonConditionOperator(operator)
-            ? { value: value.value / 100 }
-            : { from: value.from / 100, to: value.to / 100 };
+            ? { value: this.trimToPrecision(value.value / 100) }
+            : { from: this.trimToPrecision(value.from / 100), to: this.trimToPrecision(value.to / 100) };
     };
 
     private convertToPercentageValue = (
@@ -206,8 +215,8 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         }
 
         return isComparisonConditionOperator(operator)
-            ? { value: value.value * 100 }
-            : { from: value.from * 100, to: value.to * 100 };
+            ? { value: this.trimToPrecision(value.value * 100) }
+            : { from: this.trimToPrecision(value.from * 100), to: this.trimToPrecision(value.to * 100) };
     };
 
     private onApply = () => {
