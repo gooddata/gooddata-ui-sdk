@@ -1,9 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
+import first from "lodash/first";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
+import invariant from "ts-invariant";
 import { IWorkspaceMetadata, IInsightQueryOptions, IInsightQueryResult } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcMetadata, GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import {
@@ -15,6 +17,7 @@ import {
     insightId,
     ObjRef,
     insightVisualizationUrl,
+    IObjectMeta,
 } from "@gooddata/sdk-model";
 import { AuthenticatedCallGuard } from "../commonTypes";
 import { convertVisualizationClass } from "../toSdkModel/VisualizationClassConverter";
@@ -22,7 +25,7 @@ import { convertVisualization } from "../toSdkModel/VisualizationConverter";
 import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
 import { convertInsightDefinition, convertInsight } from "../fromSdkModel/InsightConverter";
 import { convertObjectMeta } from "../toSdkModel/MetaConverter";
-import { objRefToUri } from "../utils/api";
+import { objRefToUri, getObjectIdFromUri } from "../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -273,6 +276,23 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         );
 
         return expressionTokensWithDetails;
+    }
+
+    public async getFactDatasetMeta(ref: ObjRef): Promise<IObjectMeta> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        const objectId = getObjectIdFromUri(uri);
+
+        return this.authCall(async sdk => {
+            const usedBy = await sdk.xhr.getParsed<{ entries: IObjectMeta[] }>(
+                `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
+            );
+
+            const dataset = first(usedBy.entries);
+
+            invariant(dataset, "Fact must have a dataset associated to it.");
+
+            return dataset!;
+        });
     }
 
     private getVisualizationClassByUrl = async (url: string): Promise<IVisualizationClass | undefined> => {

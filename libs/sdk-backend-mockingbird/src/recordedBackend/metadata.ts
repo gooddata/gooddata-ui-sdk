@@ -15,6 +15,7 @@ import {
     IInsightDefinition,
     isUriRef,
     ObjRef,
+    IObjectMeta,
 } from "@gooddata/sdk-model";
 import { RecordedInsights } from "./insights";
 import { RecordingIndex } from "./types";
@@ -91,6 +92,10 @@ export class RecordedMetadata implements IWorkspaceMetadata {
     }
 
     public getVisualizationClasses(): Promise<IVisualizationClass[]> {
+        throw new NotSupported("not supported");
+    }
+
+    public getFactDatasetMeta(_: ObjRef): Promise<IObjectMeta> {
         throw new NotSupported("not supported");
     }
 }

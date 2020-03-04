@@ -7,6 +7,7 @@ import {
     IMeasureExpressionToken,
     IInsightDefinition,
     ObjRef,
+    IObjectMeta,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -46,6 +47,12 @@ export interface IWorkspaceMetadata {
      * @param ref - ref of the measure
      */
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+
+    /**
+     * Get information about the given fact's dataset
+     * @param ref - ref of the fact
+     */
+    getFactDatasetMeta(ref: ObjRef): Promise<IObjectMeta>;
 }
 
 /**

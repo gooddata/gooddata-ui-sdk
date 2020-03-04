@@ -37,3 +37,12 @@ export const userLoginMd5FromAuthenticatedPrincipal = (principal: AuthenticatedP
 
     return userLoginMd5;
 };
+
+/**
+ * Returns the objectId from the given URI.
+ * @param uri - URI to get objectId from
+ */
+export const getObjectIdFromUri = (uri: string): string => {
+    const match = /\/obj\/([^$\/\?]*)/.exec(uri);
+    return match ? match[1] : "";
+};
