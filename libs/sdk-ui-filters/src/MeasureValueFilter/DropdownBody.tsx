@@ -192,10 +192,9 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         if (!value) {
             return value;
         }
-        const rawValue: IMeasureValueFilterValue = isComparisonConditionOperator(operator)
+        return isComparisonConditionOperator(operator)
             ? { value: value.value / 100 }
             : { from: value.from / 100, to: value.to / 100 };
-        return rawValue;
     };
 
     private convertToPercentageValue = (
@@ -205,19 +204,26 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         if (!value) {
             return value;
         }
-        const rawValue: IMeasureValueFilterValue = isComparisonConditionOperator(operator)
+
+        return isComparisonConditionOperator(operator)
             ? { value: value.value * 100 }
             : { from: value.from * 100, to: value.to * 100 };
-        return rawValue;
     };
 
     private onApply = () => {
+        if (this.isApplyButtonDisabled()) {
+            return;
+        }
+
         const { usePercentage } = this.props;
+
         const operator = this.state.operator === "ALL" ? null : this.state.operator;
-        this.props.onApply(
-            operator,
-            usePercentage ? this.convertToRawValue(this.state.value, this.state.operator) : this.state.value,
-        );
+
+        const value = usePercentage
+            ? this.convertToRawValue(this.state.value, this.state.operator)
+            : this.state.value;
+
+        this.props.onApply(operator, value);
     };
 }
 
