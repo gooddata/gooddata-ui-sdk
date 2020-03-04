@@ -26,6 +26,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
+import { IObjectMeta } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -588,6 +589,7 @@ export interface IWorkspaceMetadata {
     // (undocumented)
     deleteInsight(ref: ObjRef): Promise<void>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
+    getFactDatasetMeta(ref: ObjRef): Promise<IObjectMeta>;
     // (undocumented)
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;

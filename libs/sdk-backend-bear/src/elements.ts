@@ -9,7 +9,7 @@ import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { AuthenticatedCallGuard } from "./commonTypes";
-import { objRefToUri } from "./utils/api";
+import { objRefToUri, getObjectIdFromUri } from "./utils/api";
 
 export class BearWorkspaceElements implements IElementQueryFactory {
     constructor(private readonly authCall: AuthenticatedCallGuard, public readonly workspace: string) {}
@@ -17,12 +17,6 @@ export class BearWorkspaceElements implements IElementQueryFactory {
     public forDisplayForm(ref: ObjRef): IElementQuery {
         return new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
-}
-
-// TODO move or replace
-function getObjectIdFromUri(uri: string): string {
-    const match = /\/obj\/([^$\/\?]*)/.exec(uri);
-    return match ? match[1] : "";
 }
 
 class BearWorkspaceElementsQuery implements IElementQuery {
