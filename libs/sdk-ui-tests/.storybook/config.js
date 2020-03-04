@@ -10,7 +10,7 @@ function loadStories() {
 }
 
 setOptions({
-    name: `React Components v${pkg.version} ${__COMMIT_HASH__}`,
+    name: `GoodData.UI SDK v${pkg.version} ${__COMMIT_HASH__}`,
 });
 
 configure(loadStories, module);
