@@ -16,6 +16,17 @@ $dialog_width: 250px;
     .gd-mvf-dropdown-section {
         padding: 10px 10px 0;
 
+        .gd-mvf-warning-message {
+            font-size: 12px;
+            color: $gd-color-warning-text;
+            background: transparentize($gd-color-warning, 0.85);
+            border-radius: 3px;
+            font-family: $gd-font-primary;
+            line-height: 1.4em;
+            padding: 4px 8px 4px 10px;
+            margin-top: 4px;
+        }
+
         &:last-child {
             padding-bottom: 10px;
         }

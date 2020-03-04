@@ -68,6 +68,36 @@ describe("Measure value filter", () => {
         ).toEqual(true);
     });
 
+    it("should render an input suffix for comparison value input field to display percentage sign if the measure is native percent", () => {
+        const component = renderComponent({ usePercentage: true });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+
+        expect(component.getInputSuffixes().length).toEqual(1);
+    });
+
+    it("should render an input suffix for each range value input field to display percentage sign if the measure is native percent", () => {
+        const component = renderComponent({ usePercentage: true });
+
+        component.openOperatorDropdown().selectOperator("BETWEEN");
+
+        expect(component.getInputSuffixes().length).toEqual(2);
+    });
+
+    it("should not render warning message if not provided", () => {
+        const component = renderComponent();
+
+        expect(component.getWarningMessage().length).toEqual(0);
+    });
+
+    it("should render warning message if provided", () => {
+        const warningMessage = "The filter uses actual measure values, not percentage.";
+        const component = renderComponent({ warningMessage });
+
+        expect(component.getWarningMessage().length).toEqual(1);
+        expect(component.getWarningMessageText()).toEqual(warningMessage);
+    });
+
     describe("tooltip", () => {
         const component = renderComponent();
 
@@ -139,6 +169,50 @@ describe("Measure value filter", () => {
             const onApply = jest.fn();
             const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 100);
             const component = renderComponent({ filter, onApply });
+
+            component
+                .openOperatorDropdown()
+                .selectOperator("ALL")
+                .clickApply();
+
+            expect(onApply).toBeCalledWith(null);
+        });
+
+        it("should be called with raw value when the measure is displayed as percentage with a comparison type measure value filter", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply, usePercentage: true });
+
+            const expectedFilter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "GREATER_THAN", 1);
+
+            component
+                .openOperatorDropdown()
+                .selectOperator("GREATER_THAN")
+                .setComparisonValue("100")
+                .clickApply();
+
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should be called with raw value when the measure is displayed as percentage with a range type measure value filter", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply, usePercentage: true });
+
+            const expectedFilter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 1, 2);
+
+            component
+                .openOperatorDropdown()
+                .selectOperator("BETWEEN")
+                .setRangeFrom("100")
+                .setRangeTo("200")
+                .clickApply();
+
+            expect(onApply).toBeCalledWith(expectedFilter);
+        });
+
+        it("should be called with null value when All operator is applied when the measure is displayed as percentage", () => {
+            const onApply = jest.fn();
+            const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 100);
+            const component = renderComponent({ filter, onApply, usePercentage: true });
 
             component
                 .openOperatorDropdown()

@@ -4,11 +4,19 @@ import Input from "@gooddata/goodstrap/lib/Form/Input";
 
 export interface IComparisonInputProps {
     value: number;
+    usePercentage: boolean;
+    disableAutofocus?: boolean;
     onValueChange: (value: number) => void;
     onEnterKeyPress?: () => void;
 }
 
-const ComparisonInput = ({ onValueChange, value, onEnterKeyPress }: IComparisonInputProps) => {
+const ComparisonInput = ({
+    value,
+    usePercentage,
+    disableAutofocus,
+    onValueChange,
+    onEnterKeyPress,
+}: IComparisonInputProps) => {
     const handleValueChange = (val: string) => onValueChange(parseFloat(val));
 
     return (
@@ -18,7 +26,8 @@ const ComparisonInput = ({ onValueChange, value, onEnterKeyPress }: IComparisonI
             onEnterKeyPress={onEnterKeyPress}
             onChange={handleValueChange}
             isSmall={true}
-            autofocus={true}
+            autofocus={!disableAutofocus}
+            suffix={usePercentage ? "%" : ""}
         />
     );
 };

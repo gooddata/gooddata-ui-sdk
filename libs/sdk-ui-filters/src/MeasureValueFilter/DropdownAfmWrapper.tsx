@@ -17,6 +17,8 @@ export interface IDropdownProps {
     onApply: (filter: IMeasureValueFilter) => void;
     onCancel: () => void;
     measureIdentifier: string;
+    usePercentage?: boolean;
+    warningMessage?: string;
     locale?: string;
     anchorEl?: EventTarget | string;
 }
@@ -41,7 +43,7 @@ const getFilterValue = (filter: IMeasureValueFilter | undefined): IValue => {
  */
 export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
     public render() {
-        const { filter, onCancel, locale, anchorEl } = this.props;
+        const { filter, onCancel, usePercentage, warningMessage, locale, anchorEl } = this.props;
 
         return (
             <Dropdown
@@ -49,6 +51,8 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
                 onCancel={onCancel}
                 operator={(filter && measureValueFilterOperator(filter)) || null}
                 value={(filter && getFilterValue(filter)) || null}
+                usePercentage={usePercentage}
+                warningMessage={warningMessage}
                 locale={locale}
                 anchorEl={anchorEl}
             />

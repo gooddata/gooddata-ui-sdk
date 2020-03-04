@@ -71,4 +71,10 @@ export default class MeasureValueFilterFragment {
     };
 
     public getSelectedOperatorTitle = () => this.getOperatorDropdownButton().text();
+
+    public getInputSuffixes = () => this.component.find(".gd-input-suffix");
+
+    public getWarningMessage = () => this.component.find(".s-mvf-warning-message");
+
+    public getWarningMessageText = () => this.getWarningMessage().text();
 }

@@ -5,12 +5,22 @@ import Input from "@gooddata/goodstrap/lib/Form/Input";
 export interface IRangeInputProps {
     from: number;
     to: number;
+    usePercentage: boolean;
+    disableAutofocus?: boolean;
     onFromChange: (value: number) => void;
     onToChange: (value: number) => void;
     onEnterKeyPress?: () => void;
 }
 
-const RangeInput = ({ onFromChange, onToChange, from, to, onEnterKeyPress }: IRangeInputProps) => {
+const RangeInput = ({
+    from,
+    to,
+    usePercentage,
+    disableAutofocus,
+    onFromChange,
+    onToChange,
+    onEnterKeyPress,
+}: IRangeInputProps) => {
     const handleFromChange = (val: string) => onFromChange(parseFloat(val));
     const handleToChange = (val: string) => onToChange(parseFloat(val));
 
@@ -22,7 +32,8 @@ const RangeInput = ({ onFromChange, onToChange, from, to, onEnterKeyPress }: IRa
                 onChange={handleFromChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
-                autofocus={true}
+                autofocus={!disableAutofocus}
+                suffix={usePercentage ? "%" : ""}
             />
             <Input
                 className="s-mvf-range-to-input"
@@ -30,6 +41,7 @@ const RangeInput = ({ onFromChange, onToChange, from, to, onEnterKeyPress }: IRa
                 onChange={handleToChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
+                suffix={usePercentage ? "%" : ""}
             />
         </div>
     );

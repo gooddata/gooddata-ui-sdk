@@ -11,6 +11,8 @@ export interface IDropdownOwnProps {
     onCancel: () => void;
     operator?: MeasureValueFilterOperator;
     value?: IValue;
+    usePercentage?: boolean;
+    warningMessage?: string;
     locale?: string;
     anchorEl: EventTarget | string;
 }
@@ -28,7 +30,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
     };
 
     public render() {
-        const { operator, value, locale, onCancel, anchorEl } = this.props;
+        const { operator, value, usePercentage, warningMessage, locale, onCancel, anchorEl } = this.props;
 
         const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
 
@@ -44,6 +46,8 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
                 <DropdownBody
                     operator={selectedOperator}
                     value={value}
+                    usePercentage={usePercentage}
+                    warningMessage={warningMessage}
                     locale={locale}
                     onCancel={onCancel}
                     onApply={this.onApply}
