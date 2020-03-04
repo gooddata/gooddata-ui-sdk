@@ -7,32 +7,25 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import OperatorDropdown from "./OperatorDropdown";
 import RangeInput from "./RangeInput";
 import ComparisonInput from "./ComparisonInput";
-import { IValue, MeasureValueFilterOperator } from "./types";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
-
-export interface IInputProps {
-    value?: IValue;
-    usePercentage?: boolean;
-    onChange: (value: IValue) => void;
-    onEnterKeyPress?: () => void;
-}
 
 export interface IDropdownBodyOwnProps {
     operator: MeasureValueFilterOperator;
-    value: IValue;
+    value: IMeasureValueFilterValue;
     usePercentage?: boolean;
     warningMessage?: string;
     locale?: string;
     disableAutofocus?: boolean;
     onCancel?: () => void;
-    onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
+    onApply: (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => void;
 }
 
 export type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
 
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
-    value: IValue;
+    value: IMeasureValueFilterValue;
 }
 
 class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropdownBodyState> {
@@ -139,21 +132,27 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         this.setState({ value: { ...this.state.value, to } });
     };
 
-    private convertToRawValue = (value: IValue, operator: string): IValue => {
+    private convertToRawValue = (
+        value: IMeasureValueFilterValue,
+        operator: string,
+    ): IMeasureValueFilterValue => {
         if (!value) {
             return value;
         }
-        const rawValue: IValue = isComparisonConditionOperator(operator)
+        const rawValue: IMeasureValueFilterValue = isComparisonConditionOperator(operator)
             ? { value: value.value / 100 }
             : { from: value.from / 100, to: value.to / 100 };
         return rawValue;
     };
 
-    private convertToPercentageValue = (value: IValue, operator: string): IValue => {
+    private convertToPercentageValue = (
+        value: IMeasureValueFilterValue,
+        operator: string,
+    ): IMeasureValueFilterValue => {
         if (!value) {
             return value;
         }
-        const rawValue: IValue = isComparisonConditionOperator(operator)
+        const rawValue: IMeasureValueFilterValue = isComparisonConditionOperator(operator)
             ? { value: value.value * 100 }
             : { from: value.from * 100, to: value.to * 100 };
         return rawValue;

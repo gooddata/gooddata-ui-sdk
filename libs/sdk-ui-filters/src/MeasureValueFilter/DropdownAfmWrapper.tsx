@@ -9,7 +9,7 @@ import {
     measureValueFilterOperator,
 } from "@gooddata/sdk-model";
 
-import { IValue, MeasureValueFilterOperator } from "./types";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { Dropdown } from "./Dropdown";
 
 export interface IDropdownProps {
@@ -23,7 +23,7 @@ export interface IDropdownProps {
     anchorEl?: EventTarget | string;
 }
 
-const getFilterValue = (filter: IMeasureValueFilter | undefined): IValue => {
+const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {
     if (!filter) {
         return {};
     }
@@ -59,7 +59,7 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
         );
     }
 
-    private onApply = (operator: MeasureValueFilterOperator | null, value: IValue) => {
+    private onApply = (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => {
         const { measureIdentifier, onApply } = this.props;
 
         if (operator === null || operator === "ALL") {
