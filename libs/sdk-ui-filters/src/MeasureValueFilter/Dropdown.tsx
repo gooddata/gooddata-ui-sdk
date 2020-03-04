@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { DropdownBody } from "./DropdownBody";
 import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types";
@@ -23,6 +23,7 @@ export interface IDropdownOwnProps {
     warningMessage?: string;
     locale?: string;
     anchorEl: EventTarget | string;
+    separators?: ISeparators;
 }
 
 export type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
@@ -38,7 +39,16 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
     };
 
     public render() {
-        const { operator, value, usePercentage, warningMessage, locale, onCancel, anchorEl } = this.props;
+        const {
+            operator,
+            value,
+            usePercentage,
+            warningMessage,
+            locale,
+            onCancel,
+            anchorEl,
+            separators,
+        } = this.props;
 
         const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
 
@@ -59,6 +69,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
                     locale={locale}
                     onCancel={onCancel}
                     onApply={this.onApply}
+                    separators={separators}
                 />
             </Overlay>
         );

@@ -53,7 +53,7 @@ describe("Measure value filter", () => {
         const component = renderComponent({ filter });
 
         expect(component.getSelectedOperatorTitle()).toEqual("Less than");
-        expect(component.getComparisonValueInput().props().value).toEqual(100);
+        expect(component.getComparisonValueInput().props().value).toEqual("100");
     });
 
     it("should have selected operator highlighted in operator dropdown", () => {
@@ -222,63 +222,104 @@ describe("Measure value filter", () => {
             expect(onApply).toBeCalledWith(null);
         });
 
-        describe("empty values", () => {
-            it("should be called with comparison type measure value filter with 'value' set to 0 if 'value' input is empty", () => {
-                const onApply = jest.fn();
-                const component = renderComponent({ onApply });
+        describe("apply button", () => {
+            it("should enable apply button when operator is changed to all from comparison operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "EQUAL_TO", 10);
+                const component = renderComponent({ filter });
 
-                const expectedFilter = newMeasureValueFilter(
-                    { localIdentifier: "myMeasure" },
-                    "GREATER_THAN",
-                    0,
-                );
+                component.openOperatorDropdown().selectOperator("ALL");
 
-                component
-                    .openOperatorDropdown()
-                    .selectOperator("GREATER_THAN")
-                    .clickApply();
-
-                expect(onApply).toBeCalledWith(expectedFilter);
+                expect(component.isApplyButtonDisabled()).toEqual(false);
             });
 
-            it("should be called with range type measure value filter with 'from' set to 0 if 'from' input is empty", () => {
-                const onApply = jest.fn();
-                const component = renderComponent({ onApply });
+            it("should enable apply button when value changes with comparison operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "EQUAL_TO", 10);
+                const component = renderComponent({ filter });
 
-                const expectedFilter = newMeasureValueFilter(
-                    { localIdentifier: "myMeasure" },
-                    "BETWEEN",
-                    0,
-                    100,
-                );
+                component.setComparisonValue("1000");
 
-                component
-                    .openOperatorDropdown()
-                    .selectOperator("BETWEEN")
-                    .setRangeTo("100")
-                    .clickApply();
-
-                expect(onApply).toBeCalledWith(expectedFilter);
+                expect(component.isApplyButtonDisabled()).toEqual(false);
             });
 
-            it("should be called with range type measure value filter with 'to' set to 0 if 'to' input is empty", () => {
-                const onApply = jest.fn();
-                const component = renderComponent({ onApply });
+            it("should disable apply button when value is empty with comparison operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "EQUAL_TO", 10);
+                const component = renderComponent({ filter });
 
-                const expectedFilter = newMeasureValueFilter(
-                    { localIdentifier: "myMeasure" },
-                    "BETWEEN",
-                    100,
-                    0,
-                );
+                component.setComparisonValue("");
 
-                component
-                    .openOperatorDropdown()
-                    .selectOperator("BETWEEN")
-                    .setRangeFrom("100")
-                    .clickApply();
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
 
-                expect(onApply).toBeCalledWith(expectedFilter);
+            it("should disable apply button when value is equal to prop value with comparison operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "EQUAL_TO", 10);
+                const component = renderComponent({ filter });
+
+                component.setComparisonValue("100").setComparisonValue("10");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it('should enable apply button when "from" value changes', () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.setRangeFrom("100");
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
+            it('should enable apply button when "to" value changes', () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.setRangeTo("100");
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
+            it('should disable apply button when "to" value is empty', () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.setRangeTo("");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it('should disable apply button when "from" value is empty', () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.setRangeFrom("");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it("should disable apply button when value is equal to prop value with range operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.setRangeTo("100").setRangeTo("10");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it("should enable apply button when operator is changed but value is same with comparison operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "LESS_THAN", 10);
+                const component = renderComponent({ filter });
+
+                component.openOperatorDropdown().selectOperator("GREATER_THAN");
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
+            it("should enable apply button when operator is changed but value is same with range operator", () => {
+                const filter = newMeasureValueFilter({ localIdentifier: "myMeasure" }, "BETWEEN", 10, 10);
+                const component = renderComponent({ filter });
+
+                component.openOperatorDropdown().selectOperator("NOT_BETWEEN");
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
             });
 
             it("should handle the change from comparison to range filter", () => {

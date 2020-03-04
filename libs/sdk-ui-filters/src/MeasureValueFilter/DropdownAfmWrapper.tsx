@@ -11,6 +11,7 @@ import {
 
 import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { Dropdown } from "./Dropdown";
+import { ISeparators } from "@gooddata/sdk-ui";
 
 export interface IDropdownProps {
     filter?: IMeasureValueFilter;
@@ -21,6 +22,7 @@ export interface IDropdownProps {
     warningMessage?: string;
     locale?: string;
     anchorEl?: EventTarget | string;
+    separators?: ISeparators;
 }
 
 const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {
@@ -43,7 +45,7 @@ const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueF
  */
 export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
     public render() {
-        const { filter, onCancel, usePercentage, warningMessage, locale, anchorEl } = this.props;
+        const { filter, onCancel, usePercentage, warningMessage, locale, anchorEl, separators } = this.props;
 
         return (
             <Dropdown
@@ -55,6 +57,7 @@ export class DropdownAfmWrapper extends React.PureComponent<IDropdownProps> {
                 warningMessage={warningMessage}
                 locale={locale}
                 anchorEl={anchorEl}
+                separators={separators}
             />
         );
     }

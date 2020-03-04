@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
+import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { ISeparators } from "@gooddata/sdk-ui";
 import * as React from "react";
-import Input from "@gooddata/goodstrap/lib/Form/Input";
 
 export interface IRangeInputProps {
     from: number;
@@ -10,6 +11,7 @@ export interface IRangeInputProps {
     onFromChange: (value: number) => void;
     onToChange: (value: number) => void;
     onEnterKeyPress?: () => void;
+    separators?: ISeparators;
 }
 
 const RangeInput = ({
@@ -20,28 +22,28 @@ const RangeInput = ({
     onFromChange,
     onToChange,
     onEnterKeyPress,
+    separators,
 }: IRangeInputProps) => {
-    const handleFromChange = (val: string) => onFromChange(parseFloat(val));
-    const handleToChange = (val: string) => onToChange(parseFloat(val));
-
     return (
         <div className={"gd-mvf-range-input"}>
-            <Input
+            <InputWithNumberFormat
                 className="s-mvf-range-from-input"
                 value={from}
-                onChange={handleFromChange}
+                onChange={onFromChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
                 autofocus={!disableAutofocus}
                 suffix={usePercentage ? "%" : ""}
+                separators={separators}
             />
-            <Input
+            <InputWithNumberFormat
                 className="s-mvf-range-to-input"
                 value={to}
-                onChange={handleToChange}
+                onChange={onToChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
                 suffix={usePercentage ? "%" : ""}
+                separators={separators}
             />
         </div>
     );

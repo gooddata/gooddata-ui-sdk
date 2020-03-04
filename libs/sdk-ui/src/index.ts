@@ -5,3 +5,9 @@ import "./polyfills";
 export * from "./base";
 export * from "./execution";
 export * from "./kpi";
+
+/**
+ * Common interface uses to specify number separators for the different SDK components.
+ * @public
+ */
+export { ISeparators } from "@gooddata/numberjs";
