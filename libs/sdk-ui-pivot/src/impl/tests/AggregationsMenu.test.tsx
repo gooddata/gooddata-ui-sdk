@@ -5,7 +5,16 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 import AggregationsMenu, { IAggregationsMenuProps } from "../AggregationsMenu";
 import AggregationsSubMenu from "../AggregationsSubMenu";
 import { AVAILABLE_TOTALS } from "../agGridConst";
-import { attributeLocalId, ITotal, measureLocalId } from "@gooddata/sdk-model";
+import {
+    attributeLocalId,
+    defWithFilters,
+    emptyDef,
+    ITotal,
+    measureLocalId,
+    newPositiveAttributeFilter,
+    idRef,
+    newMeasureValueFilter,
+} from "@gooddata/sdk-model";
 import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 
@@ -16,6 +25,7 @@ describe("AggregationsMenu", () => {
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
         DataViewFirstPage,
     );
+    const getExecutionDefinition = () => emptyDef("testWorkspace");
     const getDataView = () => fixture;
     const getTotals = () => [] as ITotal[];
     const onMenuOpenedChange = jest.fn();
@@ -29,6 +39,7 @@ describe("AggregationsMenu", () => {
                 isMenuButtonVisible={true}
                 showSubmenu={false}
                 colId={attributeColumnId}
+                getExecutionDefinition={getExecutionDefinition}
                 getDataView={getDataView}
                 getTotals={getTotals}
                 onMenuOpenedChange={onMenuOpenedChange}
@@ -118,5 +129,30 @@ describe("AggregationsMenu", () => {
         });
 
         expect(wrapper.find(AggregationsSubMenu).length).toBe(0);
+    });
+
+    it("should not disable any item when there is no measure value filter set", () => {
+        const defWithAttrFilter = defWithFilters(emptyDef("testWorkspace"), [
+            newPositiveAttributeFilter(idRef("some-identifier"), ["e1", "e2"]),
+        ]);
+        const wrapper = render({
+            showSubmenu: true,
+            getExecutionDefinition: () => defWithAttrFilter,
+        });
+        expect(wrapper.find(".is-disabled").length).toBe(0);
+        expect(wrapper.find(AggregationsSubMenu).length).toBe(6);
+    });
+
+    it("should disable native totals when there is at least one measure value filter set", () => {
+        const defWithMeasureValueFilter = defWithFilters(emptyDef("testWorkspace"), [
+            newMeasureValueFilter(idRef("some-identifier"), "GREATER_THAN", 10),
+        ]);
+
+        const wrapper = render({
+            showSubmenu: true,
+            getExecutionDefinition: () => defWithMeasureValueFilter,
+        });
+        expect(wrapper.find(".is-disabled").length).toBe(1);
+        expect(wrapper.find(AggregationsSubMenu).length).toBe(5);
     });
 });

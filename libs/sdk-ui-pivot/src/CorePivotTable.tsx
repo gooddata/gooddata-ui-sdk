@@ -411,6 +411,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.state.columnTotals;
     };
 
+    private getExecutionDefinition = () => {
+        return this.props.execution.definition;
+    };
+
     private getDataView = () => {
         return this.visibleData;
     };
@@ -711,6 +715,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const commonHeaderComponentParams = {
             onMenuAggregationClick: this.onMenuAggregationClick,
+            getExecutionDefinition: this.getExecutionDefinition,
             getDataView: this.getDataView,
             getColumnTotals: this.getColumnTotals,
             intl: this.props.intl,

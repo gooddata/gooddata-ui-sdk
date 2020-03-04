@@ -7,13 +7,21 @@ import * as classNames from "classnames";
 import { IMenu, IMenuAggregationClickConfig } from "../types";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
-import { ITotal, SortDirection } from "@gooddata/sdk-model";
+import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";
 export const ALIGN_RIGHT = "right";
 
-export interface IHeaderCellProps {
+export interface ICommonHeaderParams {
+    onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
+    getExecutionDefinition?: () => IExecutionDefinition;
+    getDataView?: () => DataViewFacade;
+    getColumnTotals?: () => ITotal[];
+    intl?: IntlShape;
+}
+
+export interface IHeaderCellProps extends ICommonHeaderParams {
     displayText: string;
     className?: string;
     enableSorting?: boolean;
@@ -22,12 +30,8 @@ export interface IHeaderCellProps {
     textAlign?: AlignPositions;
     sortDirection?: SortDirection;
     onSortClick?: (direction: SortDirection) => void;
-    onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     menu?: IMenu;
-    getDataView?: () => DataViewFacade;
-    getColumnTotals?: () => ITotal[];
     colId?: string;
-    intl?: IntlShape;
 }
 
 export interface IHeaderCellState {
@@ -91,7 +95,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     }
 
     private renderMenu() {
-        const { intl, colId, menu, getDataView, getColumnTotals } = this.props;
+        const { intl, colId, menu, getExecutionDefinition, getDataView, getColumnTotals } = this.props;
         const { isMenuOpen, isMenuButtonVisible } = this.state;
 
         if (!menu || !menu.aggregations) {
@@ -105,6 +109,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 isMenuOpened={isMenuOpen}
                 isMenuButtonVisible={isMenuButtonVisible}
                 showSubmenu={menu.aggregationsSubMenu}
+                getExecutionDefinition={getExecutionDefinition}
                 getDataView={getDataView}
                 getTotals={getColumnTotals}
                 onMenuOpenedChange={this.handleMenuOpenedChange}

@@ -1,21 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IHeaderParams } from "@ag-grid-community/all-modules";
+import { SortDirection } from "@gooddata/sdk-model";
 import * as React from "react";
-import { IntlShape } from "react-intl";
-import { IMenu, IMenuAggregationClickConfig } from "../types";
+import { IMenu } from "../types";
 import { COLUMN_ATTRIBUTE_COLUMN, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 
 import { getParsedFields } from "./agGridUtils";
-import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT } from "./HeaderCell";
-import { ITotal, SortDirection } from "@gooddata/sdk-model";
+import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell";
 
-export interface IColumnHeaderProps extends IHeaderParams {
+export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     menu?: () => IMenu;
-    getColumnTotals?: () => ITotal[];
-    getDataView?: () => DataViewFacade;
-    onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
-    intl?: IntlShape;
 }
 
 export interface IColumnHeaderState {
@@ -74,6 +68,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
                 onMenuAggregationClick={this.props.onMenuAggregationClick}
                 menu={menu()}
                 colId={column.getColDef().field}
+                getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
                 getDataView={this.props.getDataView}
                 intl={this.props.intl}
