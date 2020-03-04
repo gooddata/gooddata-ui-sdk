@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcMetadata } from "@gooddata/gd-bear-model";
 import { IObjectMeta } from "@gooddata/sdk-model";
 
 export const convertObjectMeta = (meta: GdcMetadata.IObjectMeta): IObjectMeta => {
-    const { identifier, title, summary, isProduction, uri } = meta;
+    const { identifier, title, summary, isProduction, uri, category } = meta;
 
     return {
         id: identifier,
@@ -11,5 +11,6 @@ export const convertObjectMeta = (meta: GdcMetadata.IObjectMeta): IObjectMeta =>
         title,
         description: summary,
         production: !!isProduction,
+        category,
     };
 };

@@ -753,6 +753,8 @@ export interface IObjectExpressionToken {
 // @public (undocumented)
 export interface IObjectMeta {
     // (undocumented)
+    readonly category?: string;
+    // (undocumented)
     readonly description: string;
     // (undocumented)
     readonly id: string;
