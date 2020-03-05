@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
-    IInsight,
+    IInsightDefinition,
     IBucket,
     AttributeOrMeasure,
     isMeasure,
@@ -220,17 +220,18 @@ function updateBucketTitles(bucket: IBucket, measureTitleProps: IMeasureTitlePro
     };
 }
 
-function updateVisualizationObjectTitles(
-    insight: IInsight,
+function updateVisualizationObjectTitles<T extends IInsightDefinition>(
+    insight: T,
     measureTitleProps: IMeasureTitleProps[],
-): IInsight {
+): T {
     const buckets = insightBuckets(insight);
+    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
             buckets: buckets.map(bucket => updateBucketTitles(bucket, measureTitleProps)),
         },
-    };
+    } as T;
 }
 
 /**
@@ -243,7 +244,7 @@ function updateVisualizationObjectTitles(
  * have the title built from the current names of the referenced master measures and type of the arithmetic
  * operation.
  *
- * @param {IInsight} insight - insight that must be processed.
+ * @param {IInsight|IInsightDefinition} insight - insight or insight definition that must be processed.
  * @param {Localization.ILocale} locale - locale used for localization of the measure titles.
  * @param {number} maxArithmeticMeasureTitleLength - maximum length of generated arithmetic measures titles.
  * Longer names will be shortened. Default value is 50 characters.
@@ -252,11 +253,11 @@ function updateVisualizationObjectTitles(
  *
  * @internal
  */
-export function fillMissingTitles(
-    insight: IInsight,
+export function fillMissingTitles<T extends IInsightDefinition>(
+    insight: T,
     locale: ILocale,
     maxArithmeticMeasureTitleLength: number = DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH,
-): IInsight {
+): T {
     const measures = insightMeasures(insight);
     const measureTitleProps = buildMeasureTitles(measures, locale, maxArithmeticMeasureTitleLength);
     return updateVisualizationObjectTitles(insight, measureTitleProps);
