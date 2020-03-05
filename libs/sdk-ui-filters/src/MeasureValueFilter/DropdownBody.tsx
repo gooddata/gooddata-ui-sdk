@@ -3,57 +3,69 @@ import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import OperatorDropdown from "./OperatorDropdown";
 import RangeInput from "./RangeInput";
 import ComparisonInput from "./ComparisonInput";
-import { IValue, MeasureValueFilterOperator } from "./types";
+import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
-
-export interface IInputProps {
-    value?: IValue;
-    onChange: (value: IValue) => void;
-    onEnterKeyPress?: () => void;
-}
 
 export interface IDropdownBodyOwnProps {
     operator: MeasureValueFilterOperator;
-    value: IValue;
+    value: IMeasureValueFilterValue;
+    usePercentage?: boolean;
+    warningMessage?: string;
     locale?: string;
+    disableAutofocus?: boolean;
     onCancel?: () => void;
-    onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
+    onApply: (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => void;
+    separators?: ISeparators;
+    valuePrecision?: number;
 }
 
 export type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
 
 interface IDropdownBodyState {
     operator: MeasureValueFilterOperator;
-    value: IValue;
+    value: IMeasureValueFilterValue;
 }
+
+const DefaultValuePrecision = 6;
 
 class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropdownBodyState> {
     constructor(props: IDropdownBodyProps) {
         super(props);
 
-        const { operator, value } = props;
+        const { operator, value, usePercentage } = props;
 
         this.state = {
-            operator,
-            value,
+            operator: operator || "ALL",
+            value: (usePercentage ? this.convertToPercentageValue(value, operator) : value) || {},
         };
     }
 
     public render() {
-        const { onCancel, intl } = this.props;
+        const { onCancel, warningMessage, intl } = this.props;
         const { operator } = this.state;
 
         return (
             <div className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body">
                 <div className="gd-mvf-dropdown-content">
+                    {warningMessage && (
+                        <div className="gd-mvf-dropdown-section">
+                            <div className="gd-mvf-warning-message s-mvf-warning-message">
+                                {warningMessage}
+                            </div>
+                        </div>
+                    )}
+
                     <div className="gd-mvf-dropdown-section">
                         <OperatorDropdown onSelect={this.handleOperatorSelection} operator={operator} />
                     </div>
-                    <div className="gd-mvf-dropdown-section">{this.renderInputSection()}</div>
+
+                    {operator !== "ALL" && (
+                        <div className="gd-mvf-dropdown-section">{this.renderInputSection()}</div>
+                    )}
                 </div>
                 <div className="gd-mvf-dropdown-footer">
                     <Button
@@ -73,36 +85,154 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
     }
 
     private renderInputSection = () => {
-        const { operator, value } = this.state;
+        const { usePercentage, disableAutofocus, separators } = this.props;
+        const {
+            operator,
+            value: { value = null, from = null, to = null },
+        } = this.state;
 
         if (isComparisonConditionOperator(operator)) {
             return (
                 <ComparisonInput
                     value={value}
-                    onChange={this.handleValueChange}
+                    usePercentage={usePercentage}
+                    onValueChange={this.handleValueChange}
                     onEnterKeyPress={this.onApply}
+                    disableAutofocus={disableAutofocus}
+                    separators={separators}
                 />
             );
         } else if (isRangeConditionOperator(operator)) {
             return (
-                <RangeInput value={value} onChange={this.handleValueChange} onEnterKeyPress={this.onApply} />
+                <RangeInput
+                    from={from}
+                    to={to}
+                    usePercentage={usePercentage}
+                    onFromChange={this.handleFromChange}
+                    onToChange={this.handleToChange}
+                    onEnterKeyPress={this.onApply}
+                    disableAutofocus={disableAutofocus}
+                    separators={separators}
+                />
             );
         }
 
         return null;
     };
 
+    private isApplyButtonDisabledForComparison() {
+        const { value = null } = this.state.value;
+
+        if (value === null) {
+            return true;
+        }
+
+        if (this.props.value === null) {
+            return false;
+        }
+
+        if (this.state.operator !== this.props.operator) {
+            return false;
+        }
+
+        return value === this.props.value.value;
+    }
+
+    private isApplyButtonDisabledForRange() {
+        const { from = null, to = null } = this.state.value;
+
+        if (from === null || to === null) {
+            return true;
+        }
+
+        if (this.props.value === null) {
+            return false;
+        }
+
+        if (this.state.operator !== this.props.operator) {
+            return false;
+        }
+
+        return from === this.props.value.from && to === this.props.value.to;
+    }
+
+    private isApplyButtonDisabledForAll() {
+        return this.props.operator === "ALL";
+    }
+
     private isApplyButtonDisabled = () => {
-        return false;
+        const { operator } = this.state;
+
+        if (isComparisonConditionOperator(operator)) {
+            return this.isApplyButtonDisabledForComparison();
+        }
+
+        if (isRangeConditionOperator(operator)) {
+            return this.isApplyButtonDisabledForRange();
+        }
+
+        return this.isApplyButtonDisabledForAll();
     };
 
     private handleOperatorSelection = (operator: MeasureValueFilterOperator) => this.setState({ operator });
 
-    private handleValueChange = (value: IValue) => this.setState({ value });
+    private handleValueChange = (value: number) => {
+        this.setState({ value: { ...this.state.value, value } });
+    };
+
+    private handleFromChange = (from: number) => {
+        this.setState({ value: { ...this.state.value, from } });
+    };
+
+    private handleToChange = (to: number) => {
+        this.setState({ value: { ...this.state.value, to } });
+    };
+
+    private trimToPrecision = (n: number): number => {
+        const { valuePrecision = DefaultValuePrecision } = this.props;
+
+        return parseFloat(n.toFixed(valuePrecision));
+    };
+
+    private convertToRawValue = (
+        value: IMeasureValueFilterValue,
+        operator: string,
+    ): IMeasureValueFilterValue => {
+        if (!value) {
+            return value;
+        }
+        return isComparisonConditionOperator(operator)
+            ? { value: this.trimToPrecision(value.value / 100) }
+            : { from: this.trimToPrecision(value.from / 100), to: this.trimToPrecision(value.to / 100) };
+    };
+
+    private convertToPercentageValue = (
+        value: IMeasureValueFilterValue,
+        operator: string,
+    ): IMeasureValueFilterValue => {
+        if (!value) {
+            return value;
+        }
+
+        return isComparisonConditionOperator(operator)
+            ? { value: this.trimToPrecision(value.value * 100) }
+            : { from: this.trimToPrecision(value.from * 100), to: this.trimToPrecision(value.to * 100) };
+    };
 
     private onApply = () => {
+        if (this.isApplyButtonDisabled()) {
+            return;
+        }
+
+        const { usePercentage } = this.props;
+
         const operator = this.state.operator === "ALL" ? null : this.state.operator;
-        this.props.onApply(operator, this.state.value);
+
+        const value = usePercentage
+            ? this.convertToRawValue(this.state.value, this.state.operator)
+            : this.state.value;
+
+        this.props.onApply(operator, value);
     };
 }
 

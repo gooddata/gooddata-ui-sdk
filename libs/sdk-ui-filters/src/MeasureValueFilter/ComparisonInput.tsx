@@ -1,20 +1,35 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import Input from "@gooddata/goodstrap/lib/Form/Input";
+import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { ISeparators } from "@gooddata/sdk-ui";
 
-import { IInputProps } from "./DropdownBody";
+export interface IComparisonInputProps {
+    value: number;
+    usePercentage: boolean;
+    disableAutofocus?: boolean;
+    onValueChange: (value: number) => void;
+    onEnterKeyPress?: () => void;
+    separators?: ISeparators;
+}
 
-const ComparisonInput = ({ onChange, value, onEnterKeyPress }: IInputProps) => {
-    const onValueChange = (val: string) => onChange({ ...value, value: parseFloat(val) });
-
+const ComparisonInput = ({
+    value,
+    usePercentage,
+    disableAutofocus,
+    onValueChange,
+    onEnterKeyPress,
+    separators,
+}: IComparisonInputProps) => {
     return (
-        <Input
+        <InputWithNumberFormat
             className="s-mvf-comparison-value-input"
-            value={(value && value.value) || ""}
+            value={value}
             onEnterKeyPress={onEnterKeyPress}
             onChange={onValueChange}
             isSmall={true}
-            autofocus={true}
+            autofocus={!disableAutofocus}
+            suffix={usePercentage ? "%" : ""}
+            separators={separators}
         />
     );
 };

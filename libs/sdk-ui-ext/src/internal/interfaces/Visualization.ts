@@ -11,6 +11,7 @@ import {
     OverTimeComparisonType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
+import { DATE_DATASET_ATTRIBUTE } from "../constants/bucket";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;
@@ -71,16 +72,20 @@ export type ComparisonConditionOperator =
     | "NOT_EQUAL_TO";
 
 export interface IComparisonCondition {
-    readonly operator: ComparisonConditionOperator;
-    readonly value: number;
+    readonly comparison: {
+        readonly operator: ComparisonConditionOperator;
+        readonly value: number;
+    };
 }
 
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
 export interface IRangeCondition {
-    readonly operator: RangeConditionOperator;
-    readonly from: number;
-    readonly to: number;
+    readonly range: {
+        readonly operator: RangeConditionOperator;
+        readonly from: number;
+        readonly to: number;
+    };
 }
 
 export type IMeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
@@ -91,18 +96,49 @@ export interface IBucketFilterInterval {
     name: string;
 }
 
-export interface IBucketFilter {
-    allElements?: IBucketFilterElement[];
-    attribute?: string;
-    interval?: IBucketFilterInterval;
-    isInverted?: boolean;
-    isModified?: boolean;
-    noData?: boolean;
-    selectedElements?: IBucketFilterElement[];
-    totalElementsCount?: number;
-    overTimeComparisonType?: OverTimeComparisonType;
-    measureLocalIdentifier?: string;
+export interface IAttributeFilter {
+    attribute: string;
+    isInverted: boolean;
+    totalElementsCount: number;
+    selectedElements: Array<{
+        title: string;
+        uri: string;
+    }>;
+}
+
+export interface IDateFilter {
+    attribute: "attr.datedataset";
+    overTimeComparisonType: OverTimeComparisonType;
+    interval: {
+        granularity: string;
+        interval: [string, string] | [number, number];
+        name: string;
+        type: "relative" | "absolute";
+    };
+}
+
+export interface IMeasureValueFilter {
+    measureLocalIdentifier: string;
     condition?: IMeasureValueFilterCondition;
+}
+
+export type IBucketFilter = IAttributeFilter | IDateFilter | IMeasureValueFilter;
+
+export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
+    return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
+}
+
+export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFilter {
+    const filterAsAttributeFilter: IAttributeFilter = filter as IAttributeFilter;
+    return (
+        !!filter &&
+        filterAsAttributeFilter.attribute !== DATE_DATASET_ATTRIBUTE &&
+        filterAsAttributeFilter.attribute !== undefined
+    );
+}
+
+export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureValueFilter {
+    return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
 }
 
 export interface ISort {

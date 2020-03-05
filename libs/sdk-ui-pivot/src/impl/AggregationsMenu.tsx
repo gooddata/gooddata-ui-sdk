@@ -1,10 +1,13 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
 import { attributeDescriptorLocalId, DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { ITotal, TotalType } from "@gooddata/sdk-model";
+import { IExecutionDefinition, isMeasureValueFilter, ITotal, TotalType } from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
 import { IntlShape } from "react-intl";
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import noop = require("lodash/noop");
 
 import Menu from "../menu/Menu";
 import { IOnOpenedChangeParams } from "../menu/MenuSharedTypes";
@@ -15,12 +18,21 @@ import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 import { getParsedFields } from "./agGridUtils";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 
+/*
+ * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
+ *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
+ *  thin layer on top of goodstrap (?)
+ */
+const SHOW_DELAY_DEFAULT = 200;
+const HIDE_DELAY_DEFAULT = 0;
+
 export interface IAggregationsMenuProps {
     intl: IntlShape;
     isMenuOpened: boolean;
     isMenuButtonVisible: boolean;
     showSubmenu: boolean;
     colId: string;
+    getExecutionDefinition: () => IExecutionDefinition;
     getDataView: () => DataViewFacade;
     getTotals: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
@@ -113,15 +125,33 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         onClick: () => void,
         isSelected: boolean,
         hasSubMenu = false,
+        isEnabled: boolean,
     ) {
-        return (
-            <Item checked={isSelected} subMenu={hasSubMenu}>
-                <div onClick={onClick} className="gd-aggregation-menu-item-inner s-menu-aggregation-inner">
-                    {this.props.intl.formatMessage({
+        const { intl } = this.props;
+        const onClickHandler = isEnabled ? onClick : noop;
+        const itemElement = (
+            <Item checked={isSelected} subMenu={hasSubMenu} disabled={!isEnabled}>
+                <div
+                    onClick={onClickHandler}
+                    className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
+                >
+                    {intl.formatMessage({
                         id: `visualizations.totals.dropdown.title.${totalType}`,
                     })}
                 </div>
             </Item>
+        );
+        return isEnabled ? (
+            itemElement
+        ) : (
+            <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
+                {itemElement}
+                <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                    {intl.formatMessage({
+                        id: "visualizations.totals.dropdown.title.nat.disabled.tooltip",
+                    })}
+                </Bubble>
+            </BubbleHoverTrigger>
         );
     }
 
@@ -133,6 +163,12 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         );
     }
 
+    private isTableFilteredByMeasureValue(): boolean {
+        const definition = this.props.getExecutionDefinition();
+
+        return definition.filters.some(isMeasureValueFilter);
+    }
+
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
@@ -140,6 +176,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     ) {
         const { intl, onAggregationSelect, showSubmenu } = this.props;
         const firstAttributeIdentifier = attributeDescriptorLocalId(rowAttributeDescriptors[0]);
+        const isFilteredByMeasureValue = this.isTableFilteredByMeasureValue();
 
         return AVAILABLE_TOTALS.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
@@ -156,8 +193,15 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                     attributeIdentifier: attributeDescriptor.attributeHeader.localIdentifier,
                 });
             const itemClassNames = this.getItemClassNames(totalType);
-            const renderSubmenu = showSubmenu && rowAttributeDescriptors.length > 0;
-            const toggler = this.renderMenuItemContent(totalType, onClick, isSelected, renderSubmenu);
+            const isEnabled = totalType !== "nat" || !isFilteredByMeasureValue;
+            const renderSubmenu = isEnabled && showSubmenu && rowAttributeDescriptors.length > 0;
+            const toggler = this.renderMenuItemContent(
+                totalType,
+                onClick,
+                isSelected,
+                renderSubmenu,
+                isEnabled,
+            );
 
             return (
                 <div className={itemClassNames} key={totalType}>

@@ -1,38 +1,38 @@
 // (C) 2019 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
+
+import { BUCKETS, METRIC } from "../../../constants/bucket";
+import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
+import {
+    IBucketItem,
+    IExtendedReferencePoint,
+    IReferencePoint,
+    IVisConstruct,
+    IVisualizationProperties,
+} from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
+    applyUiConfig,
+    getAllAttributeItemsWithPreference,
+    getAllItemsByType,
+    getBucketItemsByType,
+    getBucketItemsWithExcludeByType,
+    getFirstMasterWithDerived,
+    hasBucket,
+    sanitizeFilters,
+} from "../../../utils/bucketHelper";
+import { removeSort } from "../../../utils/sort";
+
+import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated";
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import without = require("lodash/without");
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import {
-    IReferencePoint,
-    IExtendedReferencePoint,
-    IVisConstruct,
-    IBucketItem,
-    IVisualizationProperties,
-} from "../../../interfaces/Visualization";
-
-import { METRIC, BUCKETS } from "../../../constants/bucket";
-
-import {
-    sanitizeUnusedFilters,
-    getAllItemsByType,
-    getBucketItemsByType,
-    getAllAttributeItemsWithPreference,
-    getBucketItemsWithExcludeByType,
-    applyUiConfig,
-    hasBucket,
-    getFirstMasterWithDerived,
-} from "../../../utils/bucketHelper";
-
-import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelperDeprecated";
-import { removeSort } from "../../../utils/sort";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
-import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -98,7 +98,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         newReferencePoint = applyUiConfig(newReferencePoint);
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

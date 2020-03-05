@@ -1,30 +1,29 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
-import { DropdownButton as DefaultDropdownButton } from "./DropdownButton";
 import { DropdownBody } from "./DropdownBody";
-import { getOperatorTranslationKey } from "./helpers/measureValueFilterOperator";
-import { MeasureValueFilterOperator, IValue } from "./types";
+import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types";
 
-export interface IDropdownButtonProps {
-    isActive?: boolean;
-    onClick: (e: React.SyntheticEvent) => void;
-    measureTitle?: string;
-    operator?: MeasureValueFilterOperator | null;
-    operatorTitle?: string;
-    value?: IValue | null;
-}
+const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
+/*
+ * TODO: same thing is in sdk-ui-ext .. but filters must not depend on it. we may be in need of some lower-level
+ *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide
+ *  thin layer on top of goodstrap (?)
+ */
+const DROPDOWN_ALIGMENTS = alignPoints.map(align => ({ align, offset: { x: 1, y: 0 } }));
 
 export interface IDropdownOwnProps {
-    button?: React.ComponentType<IDropdownButtonProps>;
-    onApply: (operator: MeasureValueFilterOperator | null, value: IValue) => void;
-    locale?: string;
-    measureTitle?: string;
+    onApply: (operator: string, value?: IMeasureValueFilterValue) => void;
+    onCancel: () => void;
     operator?: MeasureValueFilterOperator;
-    value?: IValue;
-    displayDropdown?: boolean;
+    value?: IMeasureValueFilterValue;
+    usePercentage?: boolean;
+    warningMessage?: string;
+    locale?: string;
+    anchorEl: EventTarget | string;
+    separators?: ISeparators;
 }
 
 export type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
@@ -35,79 +34,48 @@ interface IDropdownState {
 
 class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState> {
     public static defaultProps: Partial<IDropdownProps> = {
-        button: DefaultDropdownButton,
         value: {},
         operator: "ALL",
-        displayDropdown: false,
     };
 
-    private toggleButtonRef: EventTarget | null = null;
-
-    constructor(props: IDropdownProps) {
-        super(props);
-
-        const { displayDropdown } = props;
-
-        this.state = {
-            displayDropdown: displayDropdown || false,
-        };
-    }
-
     public render() {
-        const { intl, button, measureTitle, operator, value, locale } = this.props;
-        const { displayDropdown } = this.state;
-        const DropdownButton = button || DefaultDropdownButton;
-        const effectiveValue = value || {};
-        const selectedOperator = operator || "ALL";
-        const operatorTitle = intl.formatMessage({
-            id: getOperatorTranslationKey(selectedOperator),
-        });
+        const {
+            operator,
+            value,
+            usePercentage,
+            warningMessage,
+            locale,
+            onCancel,
+            anchorEl,
+            separators,
+        } = this.props;
+
+        const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
 
         return (
-            <>
-                <DropdownButton
-                    isActive={displayDropdown}
-                    onClick={this.toggle}
-                    measureTitle={measureTitle}
-                    operatorTitle={operatorTitle}
+            <Overlay
+                alignTo={anchorEl}
+                alignPoints={DROPDOWN_ALIGMENTS}
+                closeOnOutsideClick={true}
+                closeOnParentScroll={true}
+                closeOnMouseDrag={true}
+                onClose={onCancel}
+            >
+                <DropdownBody
                     operator={selectedOperator}
                     value={value}
+                    usePercentage={usePercentage}
+                    warningMessage={warningMessage}
+                    locale={locale}
+                    onCancel={onCancel}
+                    onApply={this.onApply}
+                    separators={separators}
                 />
-                {displayDropdown ? (
-                    <Overlay
-                        alignTo={this.toggleButtonRef}
-                        alignPoints={[{ align: "bl tl" }]}
-                        closeOnOutsideClick={true}
-                        closeOnParentScroll={true}
-                        closeOnMouseDrag={true}
-                        onClose={this.closeDropdown}
-                    >
-                        <DropdownBody
-                            operator={selectedOperator}
-                            value={effectiveValue}
-                            locale={locale}
-                            onCancel={this.closeDropdown}
-                            onApply={this.onApply}
-                        />
-                    </Overlay>
-                ) : null}
-            </>
+            </Overlay>
         );
     }
 
-    private toggle = (e: React.SyntheticEvent) => {
-        this.toggleButtonRef = !this.state.displayDropdown ? e.currentTarget : null;
-
-        this.setState(state => ({ ...state, displayDropdown: !state.displayDropdown }));
-    };
-
-    private closeDropdown = () => {
-        this.toggleButtonRef = null;
-        this.setState({ displayDropdown: false });
-    };
-
-    private onApply = (operator: MeasureValueFilterOperator | null, value: IValue) => {
-        this.closeDropdown();
+    private onApply = (operator: MeasureValueFilterOperator | null, value: IMeasureValueFilterValue) => {
         this.props.onApply(operator, value);
     };
 }

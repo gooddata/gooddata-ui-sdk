@@ -1,19 +1,26 @@
 // (C) 2019 GoodData Corporation
 
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import {
+    attributeLocalId,
+    bucketAttributes,
+    IDimension,
+    IInsight,
+    insightBucket,
+    insightHasDataDefined,
+    insightProperties,
+    MeasureGroupIdentifier,
+    newDimension,
+} from "@gooddata/sdk-model";
+import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+
+import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
 import { IntlShape } from "react-intl";
-
-import cloneDeep = require("lodash/cloneDeep");
-import get = require("lodash/get");
-
-import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
-import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
-
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import {
-    IReferencePoint,
     IExtendedReferencePoint,
+    IReferencePoint,
     IVisCallbacks,
     IVisConstruct,
     IVisProps,
@@ -21,35 +28,27 @@ import {
     RenderFunction,
 } from "../../../interfaces/Visualization";
 import {
-    sanitizeUnusedFilters,
-    removeAllDerivedMeasures,
     removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
-import { removeSort } from "../../../utils/sort";
-import { getDefaultXirrUiConfig, getXirrUiConfig } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper";
-import { getXirrBuckets } from "./xirrBucketHelper";
-
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
 
 import { hasGlobalDateFilter } from "../../../utils/bucketRules";
-import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+
+import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
 } from "../../../utils/propertiesHelper";
-import {
-    IInsight,
-    insightProperties,
-    insightHasDataDefined,
-    insightBucket,
-    attributeLocalId,
-    IDimension,
-    newDimension,
-    bucketAttributes,
-    MeasureGroupIdentifier,
-} from "@gooddata/sdk-model";
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { unmountComponentsAtNodes } from "../../../utils/domHelper";
+import { removeSort } from "../../../utils/sort";
+import { getDefaultXirrUiConfig, getXirrUiConfig } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper";
+
+import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
+import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
+import { getXirrBuckets } from "./xirrBucketHelper";
+import cloneDeep = require("lodash/cloneDeep");
+import get = require("lodash/get");
 
 export class PluggableXirr extends AbstractPluggableVisualization {
     protected configPanelElement: string;
@@ -107,7 +106,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
 
-        return sanitizeUnusedFilters(newReferencePoint, referencePoint);
+        return sanitizeFilters(newReferencePoint);
     };
 
     protected renderVisualization(

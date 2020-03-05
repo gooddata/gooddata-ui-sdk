@@ -12,6 +12,7 @@ import { IElementQueryResult } from '@gooddata/sdk-backend-spi';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import * as React from 'react';

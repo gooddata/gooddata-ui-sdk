@@ -1,17 +1,12 @@
 // (C) 2019 GoodData Corporation
-import React = require("react");
-import { render } from "react-dom";
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
+import isEmpty = require("lodash/isEmpty");
 import set = require("lodash/set");
 import tail = require("lodash/tail");
-import isEmpty = require("lodash/isEmpty");
-
+import React = require("react");
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
+import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 
@@ -21,21 +16,25 @@ import {
     TREEMAP_UICONFIG_WITH_ONE_MEASURE,
     UICONFIG,
 } from "../../../constants/uiConfig";
+import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
-    sanitizeUnusedFilters,
-    getMeasureItems,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
-    getStackItems,
     getAttributeItemsWithoutStacks,
-    isDate,
+    getMeasureItems,
+    getStackItems,
+    isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
 } from "../../../utils/bucketHelper";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
 
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper";
-import { removeSort } from "../../../utils/sort";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -72,7 +71,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         if (nonStackAttributes.length > 1 && isEmpty(stacks)) {
             // first attribute is taken, find next available non-date attribute
             const attributesWithoutFirst = tail(nonStackAttributes);
-            const nonDate = attributesWithoutFirst.filter(attribute => !isDate(attribute));
+            const nonDate = attributesWithoutFirst.filter(attribute => !isDateBucketItem(attribute));
             stacks = nonDate.slice(0, 1);
         }
 
@@ -100,7 +99,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

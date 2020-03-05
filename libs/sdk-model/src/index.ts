@@ -123,6 +123,7 @@ export {
     relativeDateFilterValues,
     measureValueFilterCondition,
     measureValueFilterMeasure,
+    measureValueFilterOperator,
 } from "./execution/filter";
 
 export {

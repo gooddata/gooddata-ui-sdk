@@ -2,9 +2,6 @@
 import { ReactWrapper } from "enzyme";
 import { string as stringUtils } from "@gooddata/js-utils";
 
-const CLASS_DROPDOWN_BUTTON = ".s-mvf-dropdown-button";
-const CLASS_DROPDOWN_BODY = ".s-mvf-dropdown-body";
-
 const CLASS_APPLY_BUTTON = ".s-mvf-dropdown-apply";
 const CLASS_CANCEL_BUTTON = ".s-mvf-dropdown-cancel";
 
@@ -18,17 +15,7 @@ export default class MeasureValueFilterFragment {
         this.component = component;
     }
 
-    public getDropdownButton = () => this.component.find(CLASS_DROPDOWN_BUTTON).hostNodes();
     public getOperatorDropdownButton = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BUTTON).hostNodes();
-
-    public openDropdown = () => {
-        if (!this.isDropdownOpen()) {
-            this.getDropdownButton().simulate("click");
-        }
-        return this;
-    };
-
-    public isDropdownOpen = () => this.component.find(CLASS_DROPDOWN_BODY).exists();
     public isOperatorDropdownOpen = () => this.component.find(CLASS_OPERATOR_DROPDOWN_BODY).exists();
 
     public clickApply = () => {
@@ -83,5 +70,21 @@ export default class MeasureValueFilterFragment {
         return this;
     };
 
+    public isApplyButtonDisabled = () => {
+        return this.component
+            .find(CLASS_APPLY_BUTTON)
+            .at(0)
+            .prop("disabled");
+    };
+
+    public pressEnterInComparisonInput = () =>
+        this.getComparisonValueInput().simulate("keydown", { keyCode: 13 });
+
     public getSelectedOperatorTitle = () => this.getOperatorDropdownButton().text();
+
+    public getInputSuffixes = () => this.component.find(".gd-input-suffix");
+
+    public getWarningMessage = () => this.component.find(".s-mvf-warning-message");
+
+    public getWarningMessageText = () => this.getWarningMessage().text();
 }

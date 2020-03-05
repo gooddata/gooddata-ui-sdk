@@ -1,31 +1,30 @@
 // (C) 2019 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
-import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
+import { BUCKETS, METRIC } from "../../../constants/bucket";
+import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
+import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig";
+import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+
+import {
+    getAllAttributeItems,
+    getMeasures,
+    getPreferredBucketItems,
+    limitNumberOfMeasuresInBuckets,
+    removeAllArithmeticMeasuresFromDerived,
+    removeAllDerivedMeasures,
+    sanitizeFilters,
+} from "../../../utils/bucketHelper";
+import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
+import { removeSort } from "../../../utils/sort";
+import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper";
+import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel";
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep = require("lodash/cloneDeep");
 import includes = require("lodash/includes");
 import set = require("lodash/set");
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IReferencePoint, IExtendedReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
-
-import {
-    sanitizeUnusedFilters,
-    getMeasures,
-    getPreferredBucketItems,
-    getAllAttributeItems,
-    removeAllDerivedMeasures,
-    removeAllArithmeticMeasuresFromDerived,
-    limitNumberOfMeasuresInBuckets,
-} from "../../../utils/bucketHelper";
-
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { METRIC, BUCKETS } from "../../../constants/bucket";
-import { removeSort } from "../../../utils/sort";
-import { setBubbleChartUiConfig } from "../../../utils/uiConfigHelpers/bubbleChartUiConfigHelper";
-import { DEFAULT_BUBBLE_CHART_CONFIG } from "../../../constants/uiConfig";
-import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import BubbleChartConfigurationPanel from "../../configurationPanels/BubbleChartConfigurationPanel";
-import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 
 export class PluggableBubbleChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -117,7 +116,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(sanitizeUnusedFilters(newReferencePoint, clonedReferencePoint));
+        return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
     protected renderConfigurationPanel() {

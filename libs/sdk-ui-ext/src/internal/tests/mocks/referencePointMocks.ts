@@ -1,6 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
-import { IReferencePoint, IBucketItem, IFilters } from "../../interfaces/Visualization";
+import {
+    IReferencePoint,
+    IBucketItem,
+    IFilters,
+    IAttributeFilter,
+    IDateFilter,
+    IMeasureValueFilter,
+    IFiltersBucketItem,
+} from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { DATE_DATASET_ATTRIBUTE } from "../../constants/bucket";
 
 export const masterMeasureItems: IBucketItem[] = [
     {
@@ -158,6 +167,45 @@ export const masterMeasuresWithPercentage: IBucketItem[] = masterMeasureItems.ma
     showInPercent: true,
 }));
 
+export const attributeFilter: IAttributeFilter = {
+    attribute: "some.attribute",
+    isInverted: false,
+    selectedElements: [],
+    totalElementsCount: 10,
+};
+
+export const dateFilter: IDateFilter = {
+    attribute: DATE_DATASET_ATTRIBUTE,
+    overTimeComparisonType: OverTimeComparisonTypes.NOTHING,
+    interval: {
+        granularity: "GDC.year",
+        interval: [-1, 0],
+        name: "name",
+        type: "absolute",
+    },
+};
+
+export const measureValueFilter: IMeasureValueFilter = {
+    measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
+    condition: {
+        comparison: {
+            operator: "GREATER_THAN",
+            value: 100,
+        },
+    },
+};
+
+export const dateFilterSamePeriodPreviousYear: IDateFilter = {
+    attribute: DATE_DATASET_ATTRIBUTE,
+    overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+    interval: {
+        granularity: "GDC.year",
+        interval: [-10, -5],
+        name: "interval",
+        type: "absolute",
+    },
+};
+
 export const dateFilterBucketAllTime: IFilters = {
     localIdentifier: "filters",
     items: [
@@ -172,7 +220,8 @@ export const dateFilterBucketAllTime: IFilters = {
                     interval: {
                         name: "all_time",
                         granularity: "GDC.time.year",
-                        interval: [],
+                        interval: [1, 3],
+                        type: "absolute",
                     },
                 },
             ],
@@ -196,6 +245,7 @@ export const samePeriodPrevYearFiltersBucket: IFilters = {
                         name: "last_year",
                         granularity: "GDC.time.year",
                         interval: ["-1", "-1"],
+                        type: "absolute",
                     },
                 },
             ],
@@ -212,6 +262,9 @@ export const attributeFilterBucketItem: IFilters = {
             filters: [
                 {
                     attribute: "attr.account.id",
+                    selectedElements: [],
+                    totalElementsCount: 10,
+                    isInverted: false,
                 },
             ],
             localIdentifier: "attr1",
@@ -261,6 +314,69 @@ export const attributeItems: IBucketItem[] = [
     },
 ];
 
+export const attributeFilters: IFiltersBucketItem[] = [
+    {
+        localIdentifier: "a1",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.owner.department",
+        filters: [
+            {
+                attribute: "attr.owner.department",
+                isInverted: false,
+                totalElementsCount: 10,
+                selectedElements: [
+                    {
+                        title: "string",
+                        uri: "string",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        localIdentifier: "a2",
+        type: "attribute",
+        aggregation: null,
+        attribute: "attr.stage.iswon",
+        filters: [
+            {
+                attribute: "attr.stage.iswon",
+                totalElementsCount: 10,
+                isInverted: true,
+                selectedElements: [
+                    {
+                        title: "string",
+                        uri: "string",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        localIdentifier: "a3",
+        type: "attribute",
+        attribute: "attr.owner.region",
+        filters: [
+            {
+                attribute: "attr.owner.region",
+                isInverted: true,
+                totalElementsCount: 10,
+                selectedElements: [],
+            },
+        ],
+    },
+];
+
+export const dateFilterItem: IBucketItem = {
+    localIdentifier: "a1",
+    type: "date",
+    attribute: "attr.datedataset",
+    aggregation: null,
+    showInPercent: null,
+    filters: [dateFilter],
+};
+
 export const dateItem: IBucketItem = {
     localIdentifier: "a1",
     type: "date",
@@ -277,22 +393,7 @@ export const overTimeComparisonDateItem: IBucketItem = {
     granularity: null,
     masterLocalIdentifier: null,
     localIdentifier: "2fb4a818526f4ca18c926b1a11adc859",
-    filters: [
-        {
-            overTimeComparisonType: "same_period_previous_year",
-            interval: {
-                interval: null,
-                name: "all_time",
-                granularity: null,
-            },
-            noData: false,
-            selectedElements: [],
-            totalElementsCount: 0,
-            allElements: [],
-            attribute: "attr.datedataset",
-            isInverted: true,
-        },
-    ],
+    filters: [dateFilterSamePeriodPreviousYear],
     attribute: "attr.datedataset",
 };
 
@@ -320,7 +421,7 @@ export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 2),
+        items: attributeFilters.slice(0, 2),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -378,7 +479,7 @@ export const simpleStackedReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 2),
+        items: attributeFilters.slice(0, 2),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -425,24 +526,6 @@ export const oneMeasureWithInvalidOverTimeComparisonRefPoint: IReferencePoint = 
         localIdentifier: "filters",
         items: [],
     },
-};
-
-export const measureWithDerivedAndOneCategoryRefPoint: IReferencePoint = {
-    buckets: [
-        {
-            localIdentifier: "measures",
-            items: [masterMeasureItems[0], derivedMeasureItems[0], masterMeasureItems[1]],
-        },
-        {
-            localIdentifier: "view",
-            items: [attributeItems[0]],
-        },
-        {
-            localIdentifier: "stack",
-            items: [],
-        },
-    ],
-    filters: samePeriodPrevYearFiltersBucket,
 };
 
 export const measureWithDerivedWithoutDateFilterRefPoint: IReferencePoint = {
@@ -631,7 +714,7 @@ export const multipleMetricsAndCategoriesReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems,
+        items: attributeFilters,
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -663,7 +746,7 @@ export const multipleMetricBucketsAndCategoryReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 1),
+        items: attributeFilters.slice(0, 1),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -687,7 +770,7 @@ export const multipleMetricBucketsWithPercentageRefPoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 1),
+        items: attributeFilters.slice(0, 1),
     },
 };
 
@@ -708,7 +791,7 @@ export const oneMetricAndManyCategoriesReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems,
+        items: attributeFilters,
     },
 };
 
@@ -729,7 +812,7 @@ export const oneMetricAndManyCategoriesAndOneStackRefPoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 3),
+        items: attributeFilters.slice(0, 3),
     },
 };
 
@@ -999,7 +1082,7 @@ export const sameCategoryAndStackReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(1, 2),
+        items: attributeFilters.slice(1, 2),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -1045,16 +1128,7 @@ export const overTimeComparisonRecommendationRefPoint: IReferencePoint = {
                 localIdentifier: "f1",
                 type: "date",
                 attribute: "attr.datedataset",
-                filters: [
-                    {
-                        attribute: "attr.datedataset",
-                        interval: {
-                            granularity: "GDC.time.year",
-                            interval: ["0", "0"],
-                            name: "last_year",
-                        },
-                    },
-                ],
+                filters: [dateFilter],
                 aggregation: null,
             },
         ],
@@ -1153,7 +1227,7 @@ export const tableTotalsReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 1),
+        items: attributeFilters.slice(0, 1),
     },
     properties: {
         sortItems: [
@@ -1193,7 +1267,7 @@ export const tableGrandAndSubtotalsReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 1),
+        items: attributeFilters.slice(0, 1),
     },
     properties: {
         sortItems: [
@@ -1327,7 +1401,7 @@ export const dateAttributeOnStackBucketReferencePoint: IReferencePoint = {
         },
         {
             localIdentifier: "stack",
-            items: [dateItem],
+            items: [dateFilterItem],
         },
     ],
     filters: {
@@ -1336,17 +1410,8 @@ export const dateAttributeOnStackBucketReferencePoint: IReferencePoint = {
             {
                 localIdentifier: "f1",
                 type: "date",
-                attribute: "attr.datedataset",
-                filters: [
-                    {
-                        attribute: "attr.datedataset",
-                        interval: {
-                            granularity: "GDC.time.year",
-                            interval: ["0", "0"],
-                            name: "last_year",
-                        },
-                    },
-                ],
+                attribute: DATE_DATASET_ATTRIBUTE,
+                filters: [dateFilter],
                 aggregation: null,
             },
         ],
@@ -1459,7 +1524,7 @@ export const twoAttributesWithFiltersReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 2),
+        items: attributeFilters.slice(0, 2),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -1475,7 +1540,7 @@ export const oneAttributeTwoFiltersReferencePoint: IReferencePoint = {
     ],
     filters: {
         localIdentifier: "filters",
-        items: attributeItems.slice(0, 2),
+        items: attributeFilters.slice(0, 2),
     },
     properties: {
         sortItems: [defaultSortItem],
@@ -1794,5 +1859,60 @@ export const twoMeasuresOneCategoryWithStackMeasuresToPercent: IReferencePoint =
         controls: {
             stackMeasuresToPercent: true,
         },
+    },
+};
+
+export const measureValueFilterReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems,
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems,
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [
+            {
+                localIdentifier: "fbv1",
+                filters: [
+                    {
+                        measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
+                        condition: {
+                            comparison: {
+                                operator: "GREATER_THAN",
+                                value: 100,
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "fbv2",
+                filters: [
+                    {
+                        measureLocalIdentifier: masterMeasureItems[1].localIdentifier,
+                        condition: {
+                            range: {
+                                operator: "BETWEEN",
+                                from: 100,
+                                to: 200,
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "fbv3",
+                filters: [
+                    {
+                        measureLocalIdentifier: masterMeasureItems[2].localIdentifier,
+                    },
+                ],
+            },
+        ],
     },
 };

@@ -142,7 +142,7 @@ export function newMeasureValueFilter(
         : measureOrRef;
 
     if (operator === "BETWEEN" || operator === "NOT_BETWEEN") {
-        invariant(val2, "measure value filter with range operator requires two numeric values");
+        invariant(val2 !== undefined, "measure value filter with range operator requires two numeric values");
 
         return {
             measureValueFilter: {

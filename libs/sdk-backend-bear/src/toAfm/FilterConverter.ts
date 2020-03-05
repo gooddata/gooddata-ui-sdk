@@ -10,8 +10,10 @@ import {
     IRelativeDateFilter,
     isAbsoluteDateFilter,
     isAttributeFilter,
+    isComparisonCondition,
     isMeasureValueFilter,
     isPositiveAttributeFilter,
+    MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
 import { toBearRef, toScopedBearRef } from "../utils/ObjRefConverter";
 
@@ -70,6 +72,34 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): GdcExecu
     };
 }
 
+// Bear supports up to 6 decimal places
+const MAX_DECIMAL_PLACES = 6;
+
+function trimNumberToSupportedPrecision(num: number): number {
+    return parseFloat(num.toFixed(MAX_DECIMAL_PLACES));
+}
+
+function trimConditionToSupportedPrecision(
+    condition: MeasureValueFilterCondition,
+): MeasureValueFilterCondition {
+    if (isComparisonCondition(condition)) {
+        return {
+            comparison: {
+                operator: condition.comparison.operator,
+                value: trimNumberToSupportedPrecision(condition.comparison.value),
+            },
+        };
+    } else {
+        return {
+            range: {
+                operator: condition.range.operator,
+                from: trimNumberToSupportedPrecision(condition.range.from),
+                to: trimNumberToSupportedPrecision(condition.range.to),
+            },
+        };
+    }
+}
+
 export function convertMeasureValueFilter(
     filter: IMeasureValueFilter,
 ): GdcExecuteAFM.IMeasureValueFilter | null {
@@ -80,7 +110,7 @@ export function convertMeasureValueFilter(
     return {
         measureValueFilter: {
             measure: toScopedBearRef(filter.measureValueFilter.measure),
-            condition: filter.measureValueFilter.condition,
+            condition: trimConditionToSupportedPrecision(filter.measureValueFilter.condition),
         },
     };
 }

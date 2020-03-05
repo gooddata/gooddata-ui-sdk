@@ -11,32 +11,7 @@ import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 describe("configure Percent and Over Time Comparison helper functions", () => {
     const samePeriodPreviousYearFilter: IFiltersBucketItem = {
         localIdentifier: "f1",
-        filters: [
-            {
-                attribute: DATE_DATASET_ATTRIBUTE,
-                overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-                interval: {
-                    granularity: "GDC.time.year",
-                    interval: ["-1", "-1"],
-                    name: "last year",
-                },
-            },
-        ],
-    };
-
-    const allTimeDateFilter: IFiltersBucketItem = {
-        localIdentifier: "f1",
-        filters: [
-            {
-                attribute: DATE_DATASET_ATTRIBUTE,
-                overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-                interval: {
-                    granularity: "GDC.time.year",
-                    interval: [],
-                    name: "all_time",
-                },
-            },
-        ],
+        filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
     };
 
     function getSingleMeasureNoFilterReferencePoint(numberOfMeasures: number): IExtendedReferencePoint {
@@ -59,7 +34,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         };
     }
 
-    function getOverTimeComparisonReferencePoint(dateFilter = allTimeDateFilter): IExtendedReferencePoint {
+    function getOverTimeComparisonReferencePoint(dateFilter: IFiltersBucketItem): IExtendedReferencePoint {
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets.secondary_measures = uiConfig.buckets.measures;
 
@@ -149,28 +124,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
     });
 
     describe("configureOverTimeComparison", () => {
-        const dateFilter = {
+        const dateFilterBucketItem: IFiltersBucketItem = {
             localIdentifier: "f1",
-            filters: [
-                {
-                    attribute: DATE_DATASET_ATTRIBUTE,
-                },
-            ],
+            filters: [referencePointMocks.dateFilter],
         };
 
-        const dateFilterWithSamePeriodPreviousYear = {
+        const dateFilterWithSamePeriodPreviousYear: IFiltersBucketItem = {
             localIdentifier: "f1",
-            filters: [
-                {
-                    attribute: DATE_DATASET_ATTRIBUTE,
-                    overTimeComparisonType: OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-                    interval: {
-                        name: "all_time",
-                        granularity: "GDC.time.year",
-                        interval: ["0", "0"],
-                    },
-                },
-            ],
+            filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
         };
 
         it(
@@ -338,7 +299,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         });
 
         it("should remove all derived measures when compare type is undefined", () => {
-            const referencePoint = getOverTimeComparisonReferencePoint(dateFilter);
+            const referencePoint = getOverTimeComparisonReferencePoint(dateFilterBucketItem);
 
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
@@ -352,16 +313,11 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         });
 
         it("should remove all derived measures when compare type is NOTHING", () => {
-            const dateFilter = {
+            const dateFilterBucketItem: IFiltersBucketItem = {
                 localIdentifier: "f1",
-                filters: [
-                    {
-                        attribute: DATE_DATASET_ATTRIBUTE,
-                        overTimeComparisonType: OverTimeComparisonTypes.NOTHING,
-                    },
-                ],
+                filters: [referencePointMocks.dateFilter],
             };
-            const referencePoint = getOverTimeComparisonReferencePoint(dateFilter);
+            const referencePoint = getOverTimeComparisonReferencePoint(dateFilterBucketItem);
 
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 

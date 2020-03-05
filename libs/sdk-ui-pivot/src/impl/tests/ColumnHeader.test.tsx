@@ -44,7 +44,7 @@ describe("ColumnHeader renderer", () => {
         expect(component.find(HeaderCell).props()).toHaveProperty("enableSorting", true);
     });
 
-    it("should disable sorting if ColumnHeader is displying a column attribute (use cse of no measures)", () => {
+    it("should disable sorting if ColumnHeader is displaying a column attribute (use cse of no measures)", () => {
         const component = shallow(
             getColumnHeader({ enableSorting: true }, { type: "COLUMN_ATTRIBUTE_COLUMN" }),
         );

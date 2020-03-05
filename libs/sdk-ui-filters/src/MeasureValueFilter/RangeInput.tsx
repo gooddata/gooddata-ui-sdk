@@ -1,31 +1,49 @@
 // (C) 2019 GoodData Corporation
+import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { ISeparators } from "@gooddata/sdk-ui";
 import * as React from "react";
-import Input from "@gooddata/goodstrap/lib/Form/Input";
 
-import { IInputProps } from "./DropdownBody";
+export interface IRangeInputProps {
+    from: number;
+    to: number;
+    usePercentage: boolean;
+    disableAutofocus?: boolean;
+    onFromChange: (value: number) => void;
+    onToChange: (value: number) => void;
+    onEnterKeyPress?: () => void;
+    separators?: ISeparators;
+}
 
-const RangeInput: React.FC<IInputProps> = ({ onChange, value, onEnterKeyPress }) => {
-    const { from = "", to = "" } = value || {};
-
-    const onFromChange = (val: string) => onChange({ ...value, from: parseFloat(val) });
-    const onToChange = (val: string) => onChange({ ...value, to: parseFloat(val) });
-
+const RangeInput = ({
+    from,
+    to,
+    usePercentage,
+    disableAutofocus,
+    onFromChange,
+    onToChange,
+    onEnterKeyPress,
+    separators,
+}: IRangeInputProps) => {
     return (
         <div className={"gd-mvf-range-input"}>
-            <Input
+            <InputWithNumberFormat
                 className="s-mvf-range-from-input"
                 value={from}
                 onChange={onFromChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
-                autofocus={true}
+                autofocus={!disableAutofocus}
+                suffix={usePercentage ? "%" : ""}
+                separators={separators}
             />
-            <Input
+            <InputWithNumberFormat
                 className="s-mvf-range-to-input"
                 value={to}
                 onChange={onToChange}
                 onEnterKeyPress={onEnterKeyPress}
                 isSmall={true}
+                suffix={usePercentage ? "%" : ""}
+                separators={separators}
             />
         </div>
     );

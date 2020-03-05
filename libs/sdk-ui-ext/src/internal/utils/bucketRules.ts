@@ -21,8 +21,8 @@ import {
     getAllAttributeItems,
     getBucketItems,
     getAllItemsByType,
-    isDate,
     getAttributeItemsWithoutStacks,
+    isDateBucketItem,
 } from "./bucketHelper";
 
 import { FILTERS, GRANULARITY, ALL_TIME, ATTRIBUTE, BUCKETS, METRIC } from "../constants/bucket";
@@ -85,7 +85,7 @@ function allRulesMet(
 }
 
 function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
-    return some(getAllAttributeItems(buckets), isDate);
+    return some(getAllAttributeItems(buckets), isDateBucketItem);
 }
 
 export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
@@ -126,7 +126,7 @@ function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
 function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
     return !some(getMeasureItems(buckets), (item: IBucketItem) => {
         const filters = get(item, FILTERS);
-        return filters && some(filters, isDate);
+        return filters && some(filters, isDateBucketItem);
     });
 }
 
@@ -148,7 +148,8 @@ export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
 }
 
 function hasFirstDate(buckets: IBucketOfFun[]): boolean {
-    return isDate(get(getAllAttributeItems(buckets), 0));
+    const firstAttributeItem = get(getAllAttributeItems(buckets), 0);
+    return firstAttributeItem && isDateBucketItem(firstAttributeItem);
 }
 
 function hasNotFirstDate(buckets: IBucketOfFun[]): boolean {
