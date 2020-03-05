@@ -50,7 +50,8 @@
         "react-day-picker": "7.3.0",
         "react-intl": "^3.6.0",
         "react-responsive": "^8.0.1",
-        "react-window": "^1.8.5"
+        "react-window": "^1.8.5",
+        "@gooddata/numberjs": "^3.2.4"
     },
     "peerDependencies": {
         "react": "^16.10.0",
