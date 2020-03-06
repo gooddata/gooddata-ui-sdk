@@ -66,14 +66,30 @@ export namespace GdcMetadata {
 
     export interface IAttribute extends IMetadataObject {
         content: {
+            dimension?: string;
             displayForms: IAttributeDisplayForm[];
+            type?: string;
         };
+    }
+
+    export interface IMaqlAstPosition {
+        line: number;
+        column: number;
+    }
+
+    export interface IMaqlTree {
+        type: string;
+        value?: string | Date | number;
+        position: IMaqlAstPosition;
+        content?: IMaqlTree;
     }
 
     export interface IMetric extends IMetadataObject {
         content: {
             expression: MaqlExpression;
-            // TODO
+            tree?: IMaqlTree;
+            format?: string;
+            folders?: string[];
         };
     }
 
