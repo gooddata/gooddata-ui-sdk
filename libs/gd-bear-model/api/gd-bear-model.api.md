@@ -1068,7 +1068,9 @@ export namespace GdcMetadata {
     export interface IAttribute extends IMetadataObject {
         // (undocumented)
         content: {
+            dimension?: string;
             displayForms: IAttributeDisplayForm[];
+            type?: string;
         };
     }
     // (undocumented)
@@ -1099,6 +1101,24 @@ export namespace GdcMetadata {
         content: any;
     }
     // (undocumented)
+    export interface IMaqlAstPosition {
+        // (undocumented)
+        column: number;
+        // (undocumented)
+        line: number;
+    }
+    // (undocumented)
+    export interface IMaqlTree {
+        // (undocumented)
+        content?: IMaqlTree;
+        // (undocumented)
+        position: IMaqlAstPosition;
+        // (undocumented)
+        type: string;
+        // (undocumented)
+        value?: string | Date | number;
+    }
+    // (undocumented)
     export interface IMetadataObject {
         // (undocumented)
         meta: IObjectMeta;
@@ -1108,6 +1128,9 @@ export namespace GdcMetadata {
         // (undocumented)
         content: {
             expression: MaqlExpression;
+            tree?: IMaqlTree;
+            format?: string;
+            folders?: string[];
         };
     }
     // (undocumented)
@@ -1863,6 +1886,8 @@ export namespace GdcVisualizationObject {
     export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter;
     // (undocumented)
     export function isDateFilter(filter: ExtendedFilter): filter is DateFilter;
+    // (undocumented)
+    export function isLocalIdentifierQualifier(objectQualifier: any): objectQualifier is ILocalIdentifierQualifier;
     // (undocumented)
     export function isMeasure(bucketItem: IMeasure | IAttribute): bucketItem is IMeasure;
     // (undocumented)

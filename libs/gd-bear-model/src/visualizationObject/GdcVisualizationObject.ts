@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import isEmpty from "lodash/isEmpty";
 
@@ -294,5 +294,14 @@ export namespace GdcVisualizationObject {
 
     export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter {
         return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
+    }
+
+    export function isLocalIdentifierQualifier(
+        objectQualifier: any,
+    ): objectQualifier is ILocalIdentifierQualifier {
+        return (
+            !isEmpty(objectQualifier) &&
+            (objectQualifier as ILocalIdentifierQualifier).localIdentifier !== undefined
+        );
     }
 }
