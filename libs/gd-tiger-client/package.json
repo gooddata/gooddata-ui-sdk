@@ -1,0 +1,57 @@
+{
+    "name": "@gooddata/gd-tiger-client",
+    "version": "8.0.0-alpha.34",
+    "author": "GoodData",
+    "description": "GoodData client for the Tiger platform",
+    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/gd-tiger-client",
+    "license": "BSD-3-Clause",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "LICENSE"
+    ],
+    "config": {
+        "tslint": "./{src,test}/**/*.ts"
+    },
+    "scripts": {
+        "dev": "tsc --watch",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "openapi-spec-dump": "curl $OPEN_API_SPEC_URL > src/generated/openapi-spec.json",
+        "openapi-generator": "openapi-generator generate -i src/generated/openapi-spec.json -g typescript-axios -o src/generated -t openapi-generator -p withInterfaces=true",
+        "generate-client": "rm -rf src/generated/* && npm run openapi-spec-dump && npm run openapi-generator",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "test": "jest --watch",
+        "test-once": "jest",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
+        "tslint": "tslint -p . -t verbose $npm_package_config_tslint",
+        "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
+        "validate-ci": "npm run tslint-ci && npm run prettier-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.34",
+        "@gooddata/sdk-model": "^8.0.0-alpha.34",
+        "axios": "^0.19.0",
+        "lodash": "^4.17.15",
+        "spark-md5": "^3.0.0"
+    },
+    "devDependencies": {
+        "@gooddata/reference-workspace": "^8.0.0-alpha.34",
+        "@gooddata/tslint-config": "1.0.0",
+        "@types/jest": "^25.1.2",
+        "@types/lodash": "^4.14.123",
+        "@types/spark-md5": "^3.0.1",
+        "jest": "^25.1.0",
+        "jest-junit": "^3.0.0",
+        "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
+        "prettier": "~1.19.1",
+        "ts-jest": "^25.2.0",
+        "tslint": "^5.14.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "3.7.4"
+    }
+}

@@ -28,7 +28,7 @@ import {
     IPreviousPeriodDateDataSet,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-import { toBearRef } from "../utils/ObjRefConverter";
+import { toBearRef } from "../fromObjRef/ObjRefConverter";
 import { convertFilter, shouldFilterBeIncluded } from "./FilterConverter";
 
 const convertPreviousPeriodDataSet = (

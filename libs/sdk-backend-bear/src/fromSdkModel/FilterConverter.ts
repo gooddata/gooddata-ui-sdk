@@ -21,7 +21,7 @@ import {
     relativeDateFilterValues,
     absoluteDateFilterValues,
 } from "@gooddata/sdk-model";
-import { toBearRef } from "../utils/ObjRefConverter";
+import { toBearRef } from "../fromObjRef/ObjRefConverter";
 
 const convertMeasureValueFilter = (
     filter: IMeasureValueFilter,

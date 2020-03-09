@@ -7,7 +7,7 @@
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IAttributeDisplayForm } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -47,7 +47,7 @@ export const dataViewWindow: (offset: number[], size: number[]) => string;
 //
 // @internal (undocumented)
 export type DisplayFormRecording = {
-    obj: IAttributeDisplayForm;
+    obj: IAttributeDisplayFormMetadataObject;
     elements: IAttributeElement[];
 };
 

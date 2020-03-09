@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
-import { ObjRef, ObjRefInScope } from "../base";
+import { ObjRef, ObjRefInScope } from "../../objRef";
 
 /**
  * Attribute elements specified by their URI.

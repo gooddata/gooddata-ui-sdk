@@ -35,7 +35,7 @@ export namespace GdcCatalog {
     // (undocumented)
     export interface ICatalogItemBase {
         // (undocumented)
-        readonly groups: string[];
+        readonly groups?: string[];
         // (undocumented)
         readonly identifier: string;
         // (undocumented)
@@ -334,8 +334,10 @@ export namespace GdcDateDataSets {
         // (undocumented)
         defaultDisplayFormMeta: GdcMetadata.IObjectMeta;
         // (undocumented)
-        type: string;
+        type: IDateDataSetAttributeGranularity;
     }
+    // (undocumented)
+    export type IDateDataSetAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
     export interface IDateDataSetResponse {
         // (undocumented)
         dateDataSetsResponse: {
@@ -1085,6 +1087,7 @@ export namespace GdcMetadata {
         };
         // (undocumented)
         links: {
+            self: string;
             elements: string;
         };
     }
@@ -1172,6 +1175,14 @@ export namespace GdcMetadata {
         // (undocumented)
         uri: string;
     }
+    // (undocumented)
+    export function isAttribute(obj: any): obj is IAttribute;
+    // (undocumented)
+    export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm;
+    // (undocumented)
+    export function isFact(obj: any): obj is IFact;
+    // (undocumented)
+    export function isMetric(obj: any): obj is IMetric;
     // (undocumented)
     export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute;
     // (undocumented)

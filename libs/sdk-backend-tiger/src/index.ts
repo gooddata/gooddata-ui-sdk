@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
@@ -11,7 +11,6 @@ import { TigerBackend } from "./backend";
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
-// @ts-ignore
 function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     return new TigerBackend(config, implConfig);
 }

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import { IDataView } from "../workspace/execution";
 
@@ -135,6 +135,13 @@ export class NotAuthenticated extends AnalyticalBackendError {
         super(message, AnalyticalBackendErrorTypes.NOT_AUTHENTICATED, cause);
     }
 }
+
+/**
+ * Error converter
+ *
+ * @public
+ */
+export type ErrorConverter = (e: any) => AnalyticalBackendError;
 
 /**
  * Type guard checking whether input is an instance of {@link AnalyticalBackendError}

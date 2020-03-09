@@ -1,14 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import {
-    IVisualizationClass,
-    IInsight,
-    IAttributeDisplayForm,
-    IMeasureExpressionToken,
-    IInsightDefinition,
-    ObjRef,
-    IObjectMeta,
-} from "@gooddata/sdk-model";
+import { IVisualizationClass, IInsight, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
 /**
@@ -16,7 +8,7 @@ import { IPagedResource } from "../../common/paging";
  *
  * @public
  */
-export interface IWorkspaceMetadata {
+export interface IWorkspaceInsights {
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     getInsight(ref: ObjRef): Promise<IInsight>;
@@ -34,25 +26,6 @@ export interface IWorkspaceMetadata {
     updateInsight(insight: IInsight): Promise<IInsight>;
 
     deleteInsight(ref: ObjRef): Promise<void>;
-
-    /**
-     * Gets the attribute display form with the provided identifier.
-     * @param ref - ref of the attribute display form to retrieve
-     * @public
-     */
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
-
-    /**
-     * Get measure expression tokens for provided measure identifier
-     * @param ref - ref of the measure
-     */
-    getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
-
-    /**
-     * Get information about the given fact's dataset
-     * @param ref - ref of the fact
-     */
-    getFactDatasetMeta(ref: ObjRef): Promise<IObjectMeta>;
 }
 
 /**

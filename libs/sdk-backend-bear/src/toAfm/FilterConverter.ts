@@ -15,7 +15,7 @@ import {
     isPositiveAttributeFilter,
     MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
-import { toBearRef, toScopedBearRef } from "../utils/ObjRefConverter";
+import { toBearRef, toScopedBearRef } from "../fromObjRef/ObjRefConverter";
 
 function convertAttributeFilter(filter: IAttributeFilter): GdcExecuteAFM.FilterItem | null {
     if (!isPositiveAttributeFilter(filter)) {

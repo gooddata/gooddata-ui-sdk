@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -19,7 +19,7 @@ export namespace GdcCatalog {
         readonly identifier: string;
         readonly summary: string;
         readonly production: boolean;
-        readonly groups: string[];
+        readonly groups?: string[];
         readonly links: {
             self: string;
         };

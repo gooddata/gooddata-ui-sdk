@@ -1,4 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
+import isEmpty from "lodash/fp/isEmpty";
 import values from "lodash/fp/values";
 import first from "lodash/first";
 import flow from "lodash/flow";
@@ -107,6 +108,7 @@ export namespace GdcMetadata {
         };
 
         links: {
+            self: string;
             elements: string;
         };
     }
@@ -163,6 +165,10 @@ export namespace GdcMetadata {
         };
     }
 
+    export function isAttribute(obj: any): obj is IAttribute {
+        return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
+    }
+
     export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute {
         return object.hasOwnProperty("attribute");
     }
@@ -173,12 +179,24 @@ export namespace GdcMetadata {
         return object.hasOwnProperty("attributeDisplayForm");
     }
 
+    export function isAttributeDisplayForm(obj: any): obj is IAttributeDisplayForm {
+        return !isEmpty(obj) && (obj as IAttributeDisplayForm).meta.category === "attributeDisplayForm";
+    }
+
     export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric {
         return object.hasOwnProperty("metric");
     }
 
+    export function isMetric(obj: any): obj is IMetric {
+        return !isEmpty(obj) && (obj as IMetric).meta.category === "metric";
+    }
+
     export function isWrappedFact(object: WrappedObject): object is IWrappedFact {
         return object.hasOwnProperty("fact");
+    }
+
+    export function isFact(obj: any): obj is IFact {
+        return !isEmpty(obj) && (obj as IFact).meta.category === "fact";
     }
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {

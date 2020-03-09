@@ -9,7 +9,7 @@ import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeDisplayForm } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -26,9 +26,10 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
-import { IObjectMeta } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
+import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
@@ -85,6 +86,12 @@ export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): st
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
 
 // @public
+export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
+
+// @public
+export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAsyncCall<TSdk, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
+
+// @public
 export type AuthenticatedPrincipal = {
     userId: string;
     userMeta?: any;
@@ -94,6 +101,21 @@ export type AuthenticatedPrincipal = {
 export type AuthenticationContext = {
     client: any;
 };
+
+// Warning: (ae-internal-missing-underscore) The name "AuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class AuthProviderCallGuard implements IAuthProviderCallGuard {
+    constructor(realProvider: IAuthenticationProvider);
+    // (undocumented)
+    authenticate: (context: AuthenticationContext) => Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    // (undocumented)
+    reset: () => void;
+}
 
 // @public
 export type BackendCapabilities = {
@@ -172,6 +194,9 @@ export class DataViewFacade {
 }
 
 // @public
+export type ErrorConverter = (e: any) => AnalyticalBackendError;
+
+// @public
 export interface IAnalyticalBackend {
     authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
     readonly capabilities: BackendCapabilities;
@@ -192,6 +217,7 @@ export interface IAnalyticalWorkspace {
     dataSets(): IWorkspaceDatasetsService;
     elements(): IElementQueryFactory;
     execution(): IExecutionFactory;
+    insights(): IWorkspaceInsights;
     metadata(): IWorkspaceMetadata;
     permissions(): IWorkspacePermissionsFactory;
     settings(): IWorkspaceSettingsService;
@@ -218,10 +244,24 @@ export interface IAttributeDescriptor {
 }
 
 // @public
+export interface IAuthenticatedAsyncCallContext {
+    // (undocumented)
+    principal: AuthenticatedPrincipal;
+}
+
+// @public
 export interface IAuthenticationProvider {
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
     deauthenticate(context: AuthenticationContext): Promise<void>;
     getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface IAuthProviderCallGuard extends IAuthenticationProvider {
+    // (undocumented)
+    reset(): void;
 }
 
 // @public
@@ -513,13 +553,13 @@ export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethod
 // @public
 export interface IWorkspaceCatalogFactoryMethods<T, TOptions> {
     // (undocumented)
-    excludeTags(tags: string[]): T;
+    excludeTags(tags: ObjRef[]): T;
     // (undocumented)
-    forDataset(datasets: string): T;
+    forDataset(dataset: ObjRef): T;
     // (undocumented)
     forTypes(types: CatalogItemType[]): T;
     // (undocumented)
-    includeTags(tags: string[]): T;
+    includeTags(tags: ObjRef[]): T;
     // (undocumented)
     withOptions(options: TOptions): T;
 }
@@ -527,11 +567,11 @@ export interface IWorkspaceCatalogFactoryMethods<T, TOptions> {
 // @public
 export interface IWorkspaceCatalogFactoryOptions {
     // (undocumented)
-    dataset?: string;
+    dataset?: ObjRef;
     // (undocumented)
-    excludeTags: string[];
+    excludeTags: ObjRef[];
     // (undocumented)
-    includeTags: string[];
+    includeTags: ObjRef[];
     // (undocumented)
     production: boolean;
     // (undocumented)
@@ -583,23 +623,27 @@ export interface IWorkspaceDatasetsService {
 }
 
 // @public
-export interface IWorkspaceMetadata {
+export interface IWorkspaceInsights {
     // (undocumented)
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     // (undocumented)
     deleteInsight(ref: ObjRef): Promise<void>;
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayForm>;
-    getFactDatasetMeta(ref: ObjRef): Promise<IObjectMeta>;
     // (undocumented)
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
-    getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     // (undocumented)
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
     // (undocumented)
     updateInsight(insight: IInsight): Promise<IInsight>;
+}
+
+// @public
+export interface IWorkspaceMetadata {
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
+    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
 }
 
 // @public (undocumented)
@@ -645,6 +689,7 @@ export interface IWorkspaceStylingService {
 
 // @public (undocumented)
 export interface IWorkspaceUserPermissions {
+    allPermissions(): IWorkspacePermissions;
     hasPermission(permission: WorkspacePermission): boolean;
 }
 
@@ -652,6 +697,20 @@ export interface IWorkspaceUserPermissions {
 export class NoDataError extends AnalyticalBackendError {
     constructor(message: string, dataView?: IDataView, cause?: Error);
     readonly dataView?: IDataView;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "NoopAuthProvider" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export class NoopAuthProvider implements IAuthProviderCallGuard {
+    // (undocumented)
+    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    // (undocumented)
+    reset(): void;
 }
 
 // @public

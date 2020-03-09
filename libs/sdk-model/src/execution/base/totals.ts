@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 import { IMeasure, measureLocalId } from "../measure";
 import { attributeLocalId, IAttribute } from "../attribute";
 import invariant from "ts-invariant";
-import { Identifier } from "./index";
+import { Identifier } from "../../objRef/index";
 
 /**
  * Supported types of totals.

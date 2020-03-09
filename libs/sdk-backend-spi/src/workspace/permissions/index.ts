@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { WorkspacePermission } from "@gooddata/sdk-model";
+// (C) 2019-2020 GoodData Corporation
+import { WorkspacePermission, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 /**
  *
@@ -14,6 +14,11 @@ export interface IWorkspacePermissionsFactory {
  * @public
  */
 export interface IWorkspaceUserPermissions {
+    /**
+     * Get all user permissions in current workspace
+     */
+    allPermissions(): IWorkspacePermissions;
+
     /**
      * Checks if user has provided permission in current workspace
      */

@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../base";
+// (C) 2019-2020 GoodData Corporation
+import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../../objRef";
 import isEmpty = require("lodash/isEmpty");
 import invariant from "ts-invariant";
 

@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IAttributeElement } from "./attributeElement";
-import { IObjectMeta } from "../common/objectMeta";
+import { IMetadataObject } from "./metadata";
 
 /**
  * Token representing part of parsed MAQL measure expression
@@ -49,7 +49,7 @@ export type IMeasureExpressionToken =
 export interface IObjectExpressionToken {
     type: "metadataObject";
     value: string;
-    meta: IObjectMeta;
+    meta: IMetadataObject;
 }
 
 /**

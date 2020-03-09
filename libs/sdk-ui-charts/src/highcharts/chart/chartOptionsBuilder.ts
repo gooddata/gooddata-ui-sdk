@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import {
     DataValue,
@@ -1543,6 +1543,7 @@ export function getChartOptions(
     const { type } = config;
 
     const isViewByTwoAttributes =
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX] &&
         attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === ViewByAttributesLimit;
     let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
     let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;

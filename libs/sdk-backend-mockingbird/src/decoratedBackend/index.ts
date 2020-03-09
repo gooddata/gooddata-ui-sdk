@@ -18,12 +18,13 @@ import {
     IExportResult,
     IExportConfig,
     IDataView,
-    IWorkspaceDatasetsService,
     IWorkspaceQueryFactory,
     IWorkspaceCatalogFactory,
+    IWorkspaceDatasetsService,
     IWorkspacePermissionsFactory,
     IUserService,
     NotImplemented,
+    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributeOrMeasure,
@@ -118,6 +119,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public metadata(): IWorkspaceMetadata {
         return this.decorated.metadata();
+    }
+
+    public insights(): IWorkspaceInsights {
+        return this.decorated.insights();
     }
 
     public settings(): IWorkspaceSettingsService {

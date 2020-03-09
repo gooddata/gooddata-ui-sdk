@@ -1,29 +1,45 @@
 // (C) 2007-2020 GoodData Corporation
-
-import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "../gd-tiger-model/ExecuteAFM";
+import isEmpty = require("lodash/isEmpty");
+import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { ExecuteAFM } from "@gooddata/gd-tiger-client";
 import ObjQualifier = ExecuteAFM.ObjQualifier;
 import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
+import { TigerAfmType } from "../types";
 
-type TigerObjectTypes = "metric" | "fact" | "attribute" | "label" | "dataSet";
+type AfmObjectType = Exclude<ObjectType, "tag">;
+
+const allValidAfmTypes: AfmObjectType[] = ["measure", "displayForm", "fact", "dataSet", "attribute"];
+
+const tigerAfmTypeByObjectAfmType: {
+    [objectType in AfmObjectType]: TigerAfmType;
+} = {
+    attribute: "attribute",
+    measure: "metric",
+    displayForm: "label",
+    dataSet: "dataSet",
+    fact: "fact",
+};
+
+const isValidAfmType = (obj: any): obj is AfmObjectType => {
+    return !isEmpty(obj) && allValidAfmTypes.some(afmType => afmType === obj);
+};
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
-function toTigerObjectType(value: ObjectType | undefined, defaultValue: TigerObjectTypes): TigerObjectTypes {
+function toTigerAfmType(value: ObjectType | undefined, defaultValue: TigerAfmType): TigerAfmType {
     if (!value) {
         return defaultValue;
     }
 
-    if (value === "measure") {
-        return "metric";
-    } else if (value === "displayForm") {
-        return "label";
+    if (!isValidAfmType(value)) {
+        throw new UnexpectedError(`Cannot convert ${value} to AFM type, ${value} is not valid AfmObjectType`);
     }
 
-    return value;
+    const type = tigerAfmTypeByObjectAfmType[value];
+    return type;
 }
 
-function toObjQualifier(ref: ObjRef, defaultValue: TigerObjectTypes): ObjQualifier {
+function toObjQualifier(ref: ObjRef, defaultValue: TigerAfmType): ObjQualifier {
     if (isUriRef(ref)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
@@ -31,7 +47,7 @@ function toObjQualifier(ref: ObjRef, defaultValue: TigerObjectTypes): ObjQualifi
     return {
         identifier: {
             id: ref.identifier,
-            type: toTigerObjectType(ref.type, defaultValue),
+            type: toTigerAfmType(ref.type, defaultValue),
         },
     };
 }

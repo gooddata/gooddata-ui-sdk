@@ -1,16 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IElementQueryFactory } from "../workspace/elements";
-import { IExecutionFactory, IPreparedExecution } from "../workspace/execution";
-import { IWorkspaceSettingsService } from "../workspace/settings";
-import { IWorkspaceMetadata } from "../workspace/insights";
-import { IWorkspaceStylingService } from "../workspace/styling";
-import { IWorkspaceCatalogFactory } from "../workspace/ldm/catalog";
-import { IWorkspaceDatasetsService } from "../workspace/ldm/datasets";
-import { IWorkspaceQueryFactory } from "../workspace";
-import { IWorkspacePermissionsFactory } from "../workspace/permissions";
-import { IUserSettingsService } from "../user/settings";
+import { IPreparedExecution } from "../workspace/execution";
+import { IWorkspaceQueryFactory, IAnalyticalWorkspace } from "../workspace";
+import { IAuthenticationProvider, AuthenticatedPrincipal } from "../auth";
+import { IUserService } from "../user";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -140,72 +134,6 @@ export interface IAnalyticalBackend {
 }
 
 /**
- * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
- * used to inspect and modify the workspace and run executions to obtain analytics for the workspace.
- *
- * @public
- */
-export interface IAnalyticalWorkspace {
-    readonly workspace: string;
-
-    /**
-     * Returns execution factory - which is an entry point to triggering executions and thus obtaining
-     * analytics from the workspace.
-     */
-    execution(): IExecutionFactory;
-
-    /**
-     * Returns service that can be used to perform read and write operations on subset of workspace's metadata.
-     */
-    metadata(): IWorkspaceMetadata;
-
-    /**
-     * Returns service that can be used to obtain workspace styling settings. These settings specify for instance
-     * what colors should be used in the charts.
-     */
-    styling(): IWorkspaceStylingService;
-
-    /**
-     * Returns service that can be used to query attribute elements for attributes defined in this workspace. For
-     * instance if workspace has data set Employee with attribute Name, then this service can be used to retrieve
-     * names of all employees.
-     */
-    elements(): IElementQueryFactory;
-
-    /**
-     * Returns service that can be used to obtain settings that are currently in effect for the workspace.
-     */
-    settings(): IWorkspaceSettingsService;
-
-    /**
-     * Returns service that can be used to query workspace catalog items - attributes, measures, facts and date data sets
-     */
-    catalog(): IWorkspaceCatalogFactory;
-
-    /**
-     * Returns service that can be used to query data sets defined in this workspace.
-     */
-    dataSets(): IWorkspaceDatasetsService;
-
-    /**
-     * Returns service that can be used to query workspace permissions
-     */
-    permissions(): IWorkspacePermissionsFactory;
-}
-
-/**
- * Represents a user. It is an entry point to various services that can be used to inspect and modify the user.
- *
- * @public
- */
-export interface IUserService {
-    /**
-     * Returns service that can be used to obtain settings that are currently in effect for the user.
-     */
-    settings(): IUserSettingsService;
-}
-
-/**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
  * can then be used by applications to enable / disable particular features.
  *
@@ -261,68 +189,6 @@ export type BackendCapabilities = {
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
-};
-
-/**
- * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
- * the current session is not authentication.
- *
- * @public
- */
-export interface IAuthenticationProvider {
-    /**
-     * Perform authentication.
-     *
-     * @param context - context in which the authentication is done
-     */
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
-
-    /**
-     * Returns the currently authenticated principal, or undefined if not authenticated.
-     * Does not trigger authentication if no principal is available.
-     */
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
-
-    /**
-     * Clear existing authentication.
-     *
-     * @param context - context in which the authentication is done
-     */
-    deauthenticate(context: AuthenticationContext): Promise<void>;
-}
-
-/**
- * Describes context in which the authentication is done. To cater for custom authentication schemes.
- * the API client of the underlying backend IS exposed anonymously to the provider - the provider SHOULD use
- * the provided API client to exercise any backend-specific authentication mechanisms.
- *
- * @public
- */
-export type AuthenticationContext = {
-    /**
-     * API client used to communicate with the backend - this can be used to perform any backend-specific,
-     * non-standard authentication.
-     */
-    client: any;
-};
-
-/**
- * Describes user, which is currently authenticated to the backend.
- *
- * @public
- */
-export type AuthenticatedPrincipal = {
-    /**
-     * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
-     * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
-     * valid email and so on).
-     */
-    userId: string;
-
-    /**
-     * Backend-specific user metadata.
-     */
-    userMeta?: any;
 };
 
 //

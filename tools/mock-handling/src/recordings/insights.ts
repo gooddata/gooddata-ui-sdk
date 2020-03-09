@@ -60,7 +60,7 @@ export class InsightRecording implements IRecording {
     public async makeRecording(backend: IAnalyticalBackend, workspace: string): Promise<void> {
         const obj = await backend
             .workspace(workspace)
-            .metadata()
+            .insights()
             .getInsight(idRef(this.insightId));
 
         if (!fs.existsSync(this.directory)) {

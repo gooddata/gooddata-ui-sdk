@@ -1,4 +1,5 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
+
 import { IDataset } from "@gooddata/sdk-model";
 
 /**

@@ -9,7 +9,7 @@ import {
     attributeAttributeDisplayFormObjRef,
 } from "../index";
 import { Account, Activity, ActivityType } from "../../../../__mocks__/model";
-import { ObjRef } from "../../base";
+import { ObjRef } from "../../../objRef";
 
 const UriDefinedAttribute: IAttribute = {
     attribute: {

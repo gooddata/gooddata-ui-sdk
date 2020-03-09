@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { Identifier } from "./index";
+// (C) 2019-2020 GoodData Corporation
+import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
 import isEmpty = require("lodash/isEmpty");
