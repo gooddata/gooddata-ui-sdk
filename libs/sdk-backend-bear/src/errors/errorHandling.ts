@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { ApiResponseError } from "@gooddata/gd-bear-client";
 import {
     AnalyticalBackendError,
@@ -8,6 +8,7 @@ import {
     ProtectedDataError,
     UnexpectedError,
     UnexpectedResponseError,
+    isAnalyticalBackendError,
 } from "@gooddata/sdk-backend-spi";
 import get from "lodash/get";
 import includes from "lodash/includes";
@@ -55,6 +56,10 @@ export function convertExecutionApiError(error: any): AnalyticalBackendError {
 }
 
 export function convertApiError(error: any): AnalyticalBackendError {
+    if (isAnalyticalBackendError(error)) {
+        return error;
+    }
+
     if (isApiResponseError(error)) {
         if (error.response.status === HttpStatusCodes.UNAUTHORIZED) {
             return new NotAuthenticated("Not authenticated against backend");
