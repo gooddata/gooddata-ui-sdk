@@ -2,7 +2,7 @@
 
 import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BearBackend, BearBackendConfig } from "./backend";
-import { FixedLoginAndPasswordAuthProvider } from "./auth";
+import { FixedLoginAndPasswordAuthProvider, ContextDeferredAuthProvider, BearAuthProviderBase } from "./auth";
 
 /**
  * Returns function which creates instances of Analytical Backend implementation which works with the 'bear'
@@ -16,6 +16,11 @@ function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnaly
     return new BearBackend(config, implConfig);
 }
 
-export { BearBackendConfig, FixedLoginAndPasswordAuthProvider };
+export {
+    BearBackendConfig,
+    FixedLoginAndPasswordAuthProvider,
+    ContextDeferredAuthProvider,
+    BearAuthProviderBase,
+};
 
 export default bearFactory;

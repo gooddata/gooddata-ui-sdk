@@ -11,6 +11,20 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 
 // @public
+export abstract class BearAuthProviderBase implements IAuthenticationProvider {
+    // (undocumented)
+    abstract authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    // (undocumented)
+    protected obtainCurrentPrincipal(context: AuthenticationContext): Promise<void>;
+    // (undocumented)
+    protected principal: AuthenticatedPrincipal | undefined;
+}
+
+// @public
 export type BearBackendConfig = {
     packageName?: string;
     packageVersion?: string;
@@ -22,14 +36,16 @@ function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnaly
 export default bearFactory;
 
 // @public
-export class FixedLoginAndPasswordAuthProvider implements IAuthenticationProvider {
+export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
+    // (undocumented)
+    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+}
+
+// @public
+export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
     constructor(username: string, password: string);
     // (undocumented)
     authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
-    // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
-    // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
     }
 
 
