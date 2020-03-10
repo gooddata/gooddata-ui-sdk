@@ -147,6 +147,28 @@ export namespace GdcCatalog {
 }
 
 // @public (undocumented)
+export namespace GdcDashboard {
+    // (undocumented)
+    export interface IAnalyticalDashboard {
+        // (undocumented)
+        content: IAnalyticalDashboardContent;
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IAnalyticalDashboardContent {
+        // (undocumented)
+        dateFilterConfig?: GdcExtendedDateFilters.IDashboardDateFilterConfig;
+        // (undocumented)
+        filterContext?: string;
+        // (undocumented)
+        layout?: GdcDashboardLayout.Layout;
+        // (undocumented)
+        widgets: string[];
+    }
+}
+
+// @public (undocumented)
 export namespace GdcDashboardExport {
     // (undocumented)
     export type AbsoluteType = "absolute";
@@ -174,6 +196,15 @@ export namespace GdcDashboardExport {
             dataSet?: string;
             attribute?: string;
         };
+    }
+    // (undocumented)
+    export interface IFilterContext {
+        // (undocumented)
+        content: {
+            filters: FilterContextItem;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
     }
     // (undocumented)
     export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter;
@@ -892,6 +923,13 @@ export namespace GdcExtendedDateFilters {
         type: AllTimeType;
     }
     // (undocumented)
+    export interface IAttributeFilterReference {
+        // (undocumented)
+        attributeFilterReference: {
+            displayForm: string;
+        };
+    }
+    // (undocumented)
     export interface IDashboardAddedPresets {
         // (undocumented)
         absolutePresets?: IDateFilterAbsolutePreset[];
@@ -920,8 +958,6 @@ export namespace GdcExtendedDateFilters {
         // (undocumented)
         to: DateString;
     }
-    // (undocumented)
-    export type IDateFilterAllTime = IDateFilterBase;
     const // (undocumented)
     isAllTimeDateFilter: (option: DateFilterOption) => option is IAllTimeDateFilter;
     const // (undocumented)
@@ -930,6 +966,14 @@ export namespace GdcExtendedDateFilters {
     isAbsoluteDateFilterPreset: (option: DateFilterOption) => option is IAbsoluteDateFilterPreset;
     const // (undocumented)
     isAbsoluteDateFilterOption: (option: DateFilterOption) => option is AbsoluteDateFilterOption;
+    // (undocumented)
+    export type IDateFilterAllTime = IDateFilterBase;
+    const // (undocumented)
+    isRelativeDateFilterForm: (option: DateFilterOption) => option is IRelativeDateFilterForm;
+    const // (undocumented)
+    isRelativeDateFilterPreset: (option: DateFilterOption) => option is IRelativeDateFilterPreset;
+    const // (undocumented)
+    isRelativeDateFilterOption: (option: DateFilterOption) => option is RelativeDateFilterOption;
     export interface IDateFilterBase {
         // (undocumented)
         localIdentifier: GUID;
@@ -938,12 +982,6 @@ export namespace GdcExtendedDateFilters {
         // (undocumented)
         visible: boolean;
     }
-    const // (undocumented)
-    isRelativeDateFilterForm: (option: DateFilterOption) => option is IRelativeDateFilterForm;
-    const // (undocumented)
-    isRelativeDateFilterPreset: (option: DateFilterOption) => option is IRelativeDateFilterPreset;
-    const // (undocumented)
-    isRelativeDateFilterOption: (option: DateFilterOption) => option is RelativeDateFilterOption;
     // (undocumented)
     export interface IDateFilterConfig {
         // (undocumented)
@@ -989,6 +1027,13 @@ export namespace GdcExtendedDateFilters {
         relativeForm?: IRelativeDateFilterForm;
         // (undocumented)
         relativePreset?: DateFilterRelativeOptionGroup;
+    }
+    // (undocumented)
+    export interface IDateFilterReference {
+        // (undocumented)
+        dateFilterReference: {
+            dataSet: string;
+        };
     }
     // (undocumented)
     export interface IDateFilterRelativeForm extends IDateFilterBase {
@@ -1062,6 +1107,55 @@ export namespace GdcExtendedDateFilters {
     export type RelativeGranularityOffset = number;
     // (undocumented)
     export type RelativePresetType = "relativePreset";
+}
+
+// @public (undocumented)
+export namespace GdcKpi {
+    // (undocumented)
+    export interface IKPI {
+        // (undocumented)
+        content: IKpiContentWithoutComparison | IKpiContentWithComparison;
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
+    // (undocumented)
+    export type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+    // (undocumented)
+    export type IKpiComparisonTypeNoComparison = "none";
+    // (undocumented)
+    export interface IKpiContentBase {
+        // (undocumented)
+        dateDataSet?: string;
+        // (undocumented)
+        dateDimension?: string;
+        // (undocumented)
+        drillTo?: IKpiProjectDashboardLink;
+        // (undocumented)
+        ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
+        // (undocumented)
+        metric: string;
+    }
+    // (undocumented)
+    export interface IKpiContentWithComparison extends IKpiContentBase {
+        // (undocumented)
+        comparisonDirection: IKpiComparisonDirection;
+        // (undocumented)
+        comparisonType: IKpiComparisonTypeComparison;
+    }
+    // (undocumented)
+    export interface IKpiContentWithoutComparison extends IKpiContentBase {
+        // (undocumented)
+        comparisonType: IKpiComparisonTypeNoComparison;
+    }
+    // (undocumented)
+    export interface IKpiProjectDashboardLink {
+        // (undocumented)
+        projectDashboard: string;
+        // (undocumented)
+        projectDashboardTab: string;
+    }
 }
 
 // @public (undocumented)
@@ -1897,6 +1991,8 @@ export namespace GdcVisualizationObject {
     // (undocumented)
     export function isAttributeFilter(filter: ExtendedFilter): filter is AttributeFilter;
     // (undocumented)
+    export function isComparisonCondition(condition: MeasureValueFilterCondition): condition is IComparisonCondition;
+    // (undocumented)
     export function isDateFilter(filter: ExtendedFilter): filter is DateFilter;
     // (undocumented)
     export function isLocalIdentifierQualifier(objectQualifier: any): objectQualifier is ILocalIdentifierQualifier;
@@ -1918,6 +2014,8 @@ export namespace GdcVisualizationObject {
     export function isPositiveAttributeFilter(filter: AttributeFilter): filter is IPositiveAttributeFilter;
     // (undocumented)
     export function isPreviousPeriodMeasureDefinition(definition: IMeasureDefinitionType): definition is IPreviousPeriodMeasureDefinition;
+    // (undocumented)
+    export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition;
     // (undocumented)
     export function isRelativeDateFilter(filter: DateFilter): filter is IRelativeDateFilter;
     // (undocumented)
@@ -1984,6 +2082,33 @@ export namespace GdcVisualizationObject {
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     // (undocumented)
     export type VisualizationType = "table" | "line" | "column" | "bar" | "pie" | "doughnut" | "combo" | "area";
+}
+
+// @public (undocumented)
+export namespace GdcVisualizationWidget {
+    // (undocumented)
+    export type IDrillDefinition = IDrillToVisualization;
+    // (undocumented)
+    export interface IDrillToVisualization {
+        // (undocumented)
+        from: GdcVisualizationObject.ILocalIdentifierQualifier;
+        // (undocumented)
+        target: "pop-up";
+        // (undocumented)
+        toVisualization: GdcVisualizationObject.IObjUriQualifier;
+    }
+    // (undocumented)
+    export interface IVisualizationWidget {
+        // (undocumented)
+        content: {
+            visualization: string;
+            dateDataSe?: string;
+            ignoreDashboardFilters: Array<GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference>;
+            drills?: IDrillDefinition;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
 }
 
 // @public (undocumented)

@@ -1,13 +1,16 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 export { GdcExecuteAFM } from "./executeAfm/GdcExecuteAFM";
 export { GdcExecution } from "./executeAfm/GdcExecution";
 export { GdcExtendedDateFilters } from "./extendedDateFilters/GdcExtendedDateFilters";
 export { GdcVisualizationObject } from "./visualizationObject/GdcVisualizationObject";
 export { GdcVisualizationClass } from "./visualizationObject/GdcVisualizationClass";
+export { GdcVisualizationWidget } from "./visualizationWidget/GdcVisualizationWidget";
 export { GdcDashboardExport } from "./dashboard/GdcDashboardExport";
-export { GdcDashboardLayout } from "./dashboard/DashboardLayout";
+export { GdcDashboardLayout } from "./dashboard/GdcDashboardLayout";
+export { GdcDashboard } from "./dashboard/GdcDashboard";
 export { GdcCatalog } from "./catalog/GdcCatalog";
+export { GdcKpi } from "./kpi/GdcKpi";
 export { GdcMetadata } from "./meta/GdcMetadata";
 export { GdcDatasets } from "./datasets/GdcDatasets";
 export { GdcDateDataSets } from "./dateDataSets/GdcDateDataSets";
