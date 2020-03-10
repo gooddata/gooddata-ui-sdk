@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get from "lodash/get";
 import find from "lodash/find";
 import omit from "lodash/omit";
@@ -154,7 +154,7 @@ export class CatalogueModule {
         const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogGroupsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/groups`,
             {
-                data: options,
+                data: omitBy(options, isEmpty),
             },
         );
 
