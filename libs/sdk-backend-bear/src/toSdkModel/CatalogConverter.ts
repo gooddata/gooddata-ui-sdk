@@ -39,57 +39,52 @@ export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.Cat
     return bearItemType;
 };
 
-export const bearMetadataObjectToBearRef = (obj: { links: { self: string } }) => uriRef(obj.links.self);
+export const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta) => uriRef(obj.uri);
+export const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem) => uriRef(obj.links.self);
 
 export const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }) => {
     const { groups = [] } = item;
     return groups.map(tagId => idRef(tagId));
 };
 
-const commonCatalogItemModifications = <
-    TItem extends {
-        identifier: string;
-        title: string;
-        summary: string;
-        links?: {
-            self: string;
-        };
-    },
-    T extends IMetadataObjectBuilder
->(
-    item: TItem,
-) => (builder: T) =>
+const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) => (
+    builder: T,
+) =>
     builder
         .id(item.identifier)
-        .uri(item.links!.self)
-        .title(item.title || "")
-        .description(item.summary || "");
+        .uri(item.uri)
+        .title(item.title)
+        .description(item.summary);
+
+const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
+    builder: T,
+) =>
+    builder
+        .id(item.identifier)
+        .uri(item.links.self)
+        .title(item.title)
+        .description(item.summary);
 
 export const convertAttribute = (
     attribute: GdcCatalog.ICatalogAttribute,
     defaultDisplayForm: GdcMetadata.IAttributeDisplayForm,
 ): ICatalogAttribute => {
-    const attrRef = bearMetadataObjectToBearRef(attribute);
-    const displayFormRef = bearMetadataObjectToBearRef(defaultDisplayForm);
+    const attrRef = bearCatalogItemToBearRef(attribute);
+    const displayFormRef = bearObjectMetaToBearRef(defaultDisplayForm.meta);
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
 
     return newCatalogAttribute(catalogA =>
         catalogA
             .attribute(attrRef, a => a.modify(commonCatalogItemModifications(attribute)))
             .defaultDisplayForm(displayFormRef, df =>
-                df
-                    .id(defaultDisplayForm.meta.identifier)
-                    .uri(defaultDisplayForm.meta.uri)
-                    .title(defaultDisplayForm.meta.title)
-                    .description(defaultDisplayForm.meta.summary)
-                    .attribute(attrRef),
+                df.modify(commonMetadataModifications(defaultDisplayForm.meta)).attribute(attrRef),
             )
             .groups(groups),
     );
 };
 
 export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasure => {
-    const measureRef = bearMetadataObjectToBearRef(metric);
+    const measureRef = bearCatalogItemToBearRef(metric);
     const groups = bearGroupableCatalogItemToTagRefs(metric);
 
     return newCatalogMeasure(catalogM =>
@@ -105,7 +100,7 @@ export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasu
 };
 
 export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
-    const factRef = bearMetadataObjectToBearRef(fact);
+    const factRef = bearCatalogItemToBearRef(fact);
 
     return newCatalogFact(catalogF =>
         catalogF.fact(factRef, f => f.modify(commonCatalogItemModifications(fact))),
@@ -116,14 +111,14 @@ const convertDateDataSetAttribute = (
     dateDatasetAttribute: GdcDateDataSets.IDateDataSetAttribute,
 ): ICatalogDateAttribute => {
     const { attributeMeta, defaultDisplayFormMeta } = dateDatasetAttribute;
-    const attributeRef = uriRef(attributeMeta.uri);
-    const displayFormRef = uriRef(defaultDisplayFormMeta.uri);
+    const attributeRef = bearObjectMetaToBearRef(attributeMeta);
+    const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
 
     return newCatalogDateAttribute(catalogDa =>
         catalogDa
-            .attribute(attributeRef, a => a.modify(commonCatalogItemModifications(attributeMeta)))
+            .attribute(attributeRef, a => a.modify(commonMetadataModifications(attributeMeta)))
             .defaultDisplayForm(displayFormRef, df =>
-                df.modify(commonCatalogItemModifications(defaultDisplayFormMeta)),
+                df.modify(commonMetadataModifications(defaultDisplayFormMeta)),
             )
             .granularity(dateDatasetAttribute.type),
     );
@@ -131,12 +126,12 @@ const convertDateDataSetAttribute = (
 
 export const convertDateDataset = (dateDataset: GdcDateDataSets.IDateDataSet): ICatalogDateDataset => {
     const { availableDateAttributes = [] } = dateDataset;
-    const dateDatasetRef = uriRef(dateDataset.meta.uri);
+    const dateDatasetRef = bearObjectMetaToBearRef(dateDataset.meta);
     const dateAttributes = availableDateAttributes.map(convertDateDataSetAttribute);
 
     return newCatalogDateDataset(catalogDs =>
         catalogDs
-            .dataSet(dateDatasetRef, ds => ds.modify(commonCatalogItemModifications(dateDataset.meta)))
+            .dataSet(dateDatasetRef, ds => ds.modify(commonMetadataModifications(dateDataset.meta)))
             .dateAttributes(dateAttributes)
             .relevance(dateDataset.relevance),
     );
