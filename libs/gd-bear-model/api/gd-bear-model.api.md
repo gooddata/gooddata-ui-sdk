@@ -1311,7 +1311,7 @@ export namespace GdcUser {
     // (undocumented)
     export interface IAccountSetting {
         // (undocumented)
-        authenticationModes?: "SSO" | "PASSWORD";
+        authenticationModes?: Array<"SSO" | "PASSWORD">;
         // (undocumented)
         companyName?: string | null;
         // (undocumented)
@@ -1371,6 +1371,7 @@ export namespace GdcUser {
             hostnameBase: string;
             settings?: IUISettings;
             current?: {
+                mapboxToken?: string;
                 project: IProject | null;
                 featureFlags?: IFeatureFlags;
                 projectPermissions: IProjectPermissions | null;
@@ -2006,7 +2007,7 @@ export type Uri = string;
 
 // Warnings were encountered during analysis:
 //
-// dist/user/GdcUser.d.ts:249:21 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
+// dist/user/GdcUser.d.ts:250:21 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
