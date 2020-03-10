@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { BooleanAsString, Timestamp, Email, Uri, TimeIso8601, DateString } from "../aliases";
 import { GdcMetadata } from "../meta/GdcMetadata";
 
@@ -22,7 +22,7 @@ export namespace GdcUser {
         old_password?: string;
         password?: string;
         verifyPassword?: string;
-        authenticationModes?: "SSO" | "PASSWORD";
+        authenticationModes?: Array<"SSO" | "PASSWORD">;
         ssoProvider?: string | null;
         language?: string;
         ipWhitelist?: string[] | null;
@@ -347,6 +347,7 @@ export namespace GdcUser {
             hostnameBase: string;
             settings?: IUISettings;
             current?: {
+                mapboxToken?: string;
                 project: IProject | null;
                 featureFlags?: IFeatureFlags;
                 projectPermissions: IProjectPermissions | null;
