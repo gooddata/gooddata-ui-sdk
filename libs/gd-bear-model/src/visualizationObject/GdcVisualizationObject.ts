@@ -304,4 +304,14 @@ export namespace GdcVisualizationObject {
             (objectQualifier as ILocalIdentifierQualifier).localIdentifier !== undefined
         );
     }
+
+    export function isComparisonCondition(
+        condition: MeasureValueFilterCondition,
+    ): condition is IComparisonCondition {
+        return !isEmpty(condition) && (condition as IComparisonCondition).comparison !== undefined;
+    }
+
+    export function isRangeCondition(condition: MeasureValueFilterCondition): condition is IRangeCondition {
+        return !isEmpty(condition) && (condition as IRangeCondition).range !== undefined;
+    }
 }

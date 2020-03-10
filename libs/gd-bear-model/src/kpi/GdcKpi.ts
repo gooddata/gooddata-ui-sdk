@@ -1,0 +1,41 @@
+// (C) 2020 GoodData Corporation
+import { GdcMetadata } from "../meta/GdcMetadata";
+import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
+
+/**
+ * @public
+ */
+export namespace GdcKpi {
+    export interface IKPI {
+        meta: GdcMetadata.IObjectMeta;
+        content: IKpiContentWithoutComparison | IKpiContentWithComparison;
+    }
+
+    export interface IKpiContentBase {
+        metric: string;
+        ignoreDashboardFilters: Array<
+            GdcExtendedDateFilters.IDateFilterReference | GdcExtendedDateFilters.IAttributeFilterReference
+        >;
+        drillTo?: IKpiProjectDashboardLink;
+        dateDimension?: string;
+        dateDataSet?: string;
+    }
+
+    export interface IKpiContentWithComparison extends IKpiContentBase {
+        comparisonType: IKpiComparisonTypeComparison;
+        comparisonDirection: IKpiComparisonDirection;
+    }
+
+    export interface IKpiContentWithoutComparison extends IKpiContentBase {
+        comparisonType: IKpiComparisonTypeNoComparison;
+    }
+
+    export interface IKpiProjectDashboardLink {
+        projectDashboard: string;
+        projectDashboardTab: string;
+    }
+
+    export type IKpiComparisonTypeNoComparison = "none";
+    export type IKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+    export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
+}

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
@@ -194,5 +194,17 @@ export namespace GdcExtendedDateFilters {
         hideOptions?: GUID[];
         hideGranularities?: DateFilterGranularity[];
         addPresets?: IDashboardAddedPresets;
+    }
+
+    export interface IDateFilterReference {
+        dateFilterReference: {
+            dataSet: string;
+        };
+    }
+
+    export interface IAttributeFilterReference {
+        attributeFilterReference: {
+            displayForm: string;
+        };
     }
 }

@@ -1,6 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
+import { GdcMetadata } from "../meta/GdcMetadata";
 
 /**
  * @public
@@ -9,6 +10,13 @@ export namespace GdcDashboardExport {
     export type RelativeType = "relative";
     export type AbsoluteType = "absolute";
     export type DateFilterType = RelativeType | AbsoluteType;
+
+    export interface IFilterContext {
+        meta: GdcMetadata.IObjectMeta;
+        content: {
+            filters: FilterContextItem;
+        };
+    }
 
     export interface IAttributeFilter {
         attributeFilter: {
