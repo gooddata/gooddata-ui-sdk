@@ -12,8 +12,8 @@ import { GdcKpi, GdcDashboard, GdcDashboardExport, GdcVisualizationWidget } from
 export interface ICopyDashboardOptions {
     /** copy new kpi and reference it in the cloned dashboard */
     copyKpi?: boolean;
-    /** copy new insight and reference it in the cloned widget */
-    copyInsight?: boolean;
+    /** copy new visualization object and reference it in the cloned widget */
+    copyVisObj?: boolean;
     /** optional, default value of name is "Copy of (current dashboard title)" */
     name?: string;
 }
@@ -25,10 +25,12 @@ export function createTranslator(
     visWidgetMap: Map<string, string>,
 ): UriTranslator {
     return (oldUri: string): string => {
-        if (kpiMap.get(oldUri) !== undefined) {
-            return kpiMap.get(oldUri) as string;
-        } else if (visWidgetMap.get(oldUri) !== undefined) {
-            return visWidgetMap.get(oldUri) as string;
+        const kpiMatch = kpiMap.get(oldUri);
+        const visWidgetMatch = visWidgetMap.get(oldUri);
+        if (kpiMatch) {
+            return kpiMatch;
+        } else if (visWidgetMatch) {
+            return visWidgetMatch;
         } else {
             return oldUri;
         }
@@ -56,13 +58,13 @@ export function updateContent(
                 return uriTranslator(uri);
             }),
         },
-        key => {
-            const uri = key.uri;
-            if (uri === undefined) {
+        value => {
+            const uri = value.uri;
+            if (!uri) {
                 return;
             }
             return {
-                ...key,
+                ...value,
                 uri: uriTranslator(uri),
             };
         },
@@ -85,9 +87,9 @@ export class MetadataModuleExt {
      * @param {string} dashboardUri uri of the dashboard
      * @param {ICopyDashboardOptions} options object with options:
      *          - default {} dashboard is cloned with new kpi reference and visualization widget is cloned with new
-     *              Insight reference
+     *              visualization object reference
      *          - copyKpi {boolean} choose whether dashboard is cloned with new Kpi reference
-     *          - copyInsight {boolean} choose whether visualization widget is cloned with new Insight reference
+     *          - copyVisObj {boolean} choose whether visualization widget is cloned with new visualization object reference
      *          - name {string} optional - choose name, default value is "Copy of (old title of the dashboard)"
      * @returns {string} uri of cloned dashboard
      * @experimental
@@ -107,11 +109,10 @@ export class MetadataModuleExt {
         const visWidgetUris: string[] = [];
         try {
             const filterContext = await this.duplicateFilterContext(projectId, objectsFromDashboard);
+            allCreatedObjUris.push(filterContext);
             const kpiMap = await this.duplicateOrKeepKpis(projectId, objectsFromDashboard, options);
-            if (options.copyKpi || typeof options.copyKpi === "undefined") {
-                allCreatedObjUris.push(filterContext, ...Array.from(kpiMap.values()));
-            } else {
-                allCreatedObjUris.push(filterContext);
+            if (this.shouldCopyKpi(options)) {
+                allCreatedObjUris.push(...Array.from(kpiMap.values()));
             }
             const visWidgetMap = await this.duplicateWidgets(projectId, objectsFromDashboard, options);
             visWidgetUris.push(...Array.from(visWidgetMap.values()));
@@ -140,13 +141,12 @@ export class MetadataModuleExt {
 
             return duplicateDashboardUri;
         } catch (err) {
-            if (options.copyInsight || typeof options.copyInsight === "undefined") {
-                visWidgetUris.forEach(uri => this.cascadingDelete(projectId, uri));
+            if (this.shouldCopyVisObj(options)) {
+                await Promise.all(visWidgetUris.map(uri => this.cascadingDelete(projectId, uri)));
             } else {
-                visWidgetUris.forEach(uri => this.metadataModule.deleteObject(uri));
+                await Promise.all(visWidgetUris.map(uri => this.metadataModule.deleteObject(uri)));
             }
-            allCreatedObjUris.forEach(uri => this.cascadingDelete(projectId, uri));
-            alert(err);
+            await Promise.all(allCreatedObjUris.map(uri => this.cascadingDelete(projectId, uri)));
             return dashboardUri;
         }
     }
@@ -161,9 +161,9 @@ export class MetadataModuleExt {
      * @experimental
      */
 
-    public async cascadingDelete(projectID: string, dashboardUri: string): Promise<void> {
+    public async cascadingDelete(projectID: string, dashboardUri: string): Promise<any> {
         const objects: any[] = await this.metadataModule.getObjectUsing(projectID, dashboardUri);
-        const currentUser: string = await (await this.userModule.getAccountInfo()).profileUri;
+        const currentUser: string = (await this.userModule.getAccountInfo()).profileUri;
 
         const objectsToBeDeleted = objects
             .filter((object: any) => object.author === currentUser)
@@ -171,7 +171,7 @@ export class MetadataModuleExt {
                 return object.link;
             });
 
-        this.xhr.post(`/gdc/md/${projectID}/objects/delete`, {
+        return this.xhr.post(`/gdc/md/${projectID}/objects/delete`, {
             body: {
                 delete: {
                     items: [dashboardUri].concat(objectsToBeDeleted),
@@ -194,21 +194,20 @@ export class MetadataModuleExt {
         options: ICopyDashboardOptions,
     ): Promise<Map<string, string>> {
         const uriMap: Map<string, string> = new Map();
-        await Promise.all(
-            objsFromDashboard
-                .filter((obj: any) => this.unwrapObj(obj).meta.category === "kpi")
-                .map(async (kpiWidget: any) => {
-                    const { kpi }: { kpi: GdcKpi.IKPI } = kpiWidget;
-                    if (options.copyKpi || typeof options.copyKpi === "undefined") {
+        if (this.shouldCopyKpi(options)) {
+            await Promise.all(
+                objsFromDashboard
+                    .filter((obj: any) => this.unwrapObj(obj).meta.category === "kpi")
+                    .map(async (kpiWidget: any) => {
+                        const { kpi }: { kpi: GdcKpi.IKPI } = kpiWidget;
                         const newUriKpiObj: string = (
                             await this.metadataModule.createObject(projectId, kpiWidget)
                         ).kpi.meta.uri;
                         uriMap.set(kpi.meta.uri, newUriKpiObj);
-                    } else {
-                        uriMap.set(kpi.meta.uri, kpi.meta.uri);
-                    }
-                }),
-        );
+                    }),
+            );
+        }
+
         return uriMap;
     }
 
@@ -237,7 +236,7 @@ export class MetadataModuleExt {
         uriMap: Map<string, string>,
     ): Promise<void> {
         const { visualizationWidget } = visWidget;
-        if (options.copyInsight || typeof options.copyInsight === "undefined") {
+        if (this.shouldCopyVisObj(options)) {
             const visObj = await this.metadataModule.getObjectDetails(
                 visualizationWidget.content.visualization,
             );
@@ -293,5 +292,13 @@ export class MetadataModuleExt {
 
     private unwrapObj(obj: any): any {
         return obj[Object.keys(obj)[0]];
+    }
+
+    private shouldCopyVisObj(options: ICopyDashboardOptions): boolean {
+        return !!(options.copyVisObj || typeof options.copyVisObj === "undefined");
+    }
+
+    private shouldCopyKpi(options: ICopyDashboardOptions): boolean {
+        return !!(options.copyKpi || typeof options.copyKpi === "undefined");
     }
 }

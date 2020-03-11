@@ -1,4 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
+import qs from "qs";
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/gd-bear-model";
@@ -254,5 +255,19 @@ export class UserModule {
         }
 
         return this.xhr.getParsed<GdcUser.IBootstrapResource>(uri);
+    }
+
+    /**
+     * Initiates SPI SAML SSO
+     * @param relayState URL of the page where the user is redirected after a successful login
+     */
+    public initiateSamlSso(relayState: string) {
+        this.xhr
+            .get(`/gdc/account/samlrequest?${qs.stringify({ relayState })}`)
+            .then(data => data.getData())
+            .then(response => {
+                const loginUrl = response.samlRequests.items[0].samlRequest.loginUrl;
+                window.location.assign(loginUrl);
+            });
     }
 }
