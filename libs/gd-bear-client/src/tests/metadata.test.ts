@@ -1,4 +1,4 @@
-// (C) 2007-2014 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
@@ -995,6 +995,11 @@ describe("metadata", () => {
                     },
                     format: "chart",
                     filters: [],
+                    having: [
+                        {
+                            expression: "[/gdc/md/asl50ejeo8bzp97i9pxlbcm3vkuvzy72/obj/405284] > 60000",
+                        },
+                    ],
                 };
 
                 fetchMock.mock(`${uri}?filter=foo`, {
@@ -1008,7 +1013,7 @@ describe("metadata", () => {
 
                 fetchMock.mock(convertorUri, {
                     body: {
-                        reportDefinition: {
+                        reportDefinitionWithInlinedMetrics: {
                             content: reportDefinitionContent,
                             links: {
                                 explain2: "/gdc/md/k26dtejorcqlqf11crn6imbeevp2q4kg/obj/8777/explain2",

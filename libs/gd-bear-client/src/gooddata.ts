@@ -1,9 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { getAttributesDisplayForms } from "@gooddata/gd-bear-model";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
 import { MetadataModule } from "./metadata";
+import { MetadataModuleExt } from "./metadataExt";
 import { ExecutionModule } from "./execution";
 import { ProjectModule } from "./project";
 import { ReportModule } from "./report/report";
@@ -35,6 +36,7 @@ export class SDK {
     public xhr: XhrModule;
     public user: UserModule;
     public md: MetadataModule;
+    public mdExt: MetadataModuleExt;
     public execution: ExecutionModule;
     public project: ProjectModule;
     public report: ReportModule;
@@ -54,6 +56,7 @@ export class SDK {
         this.xhr = new XhrModule(fetchMethod, this.configStorage);
         this.user = new UserModule(this.xhr);
         this.md = new MetadataModule(this.xhr);
+        this.mdExt = new MetadataModuleExt(this.xhr);
         this.execution = new ExecutionModule(this.xhr, this.md);
         this.project = new ProjectModule(this.xhr);
         this.report = new ReportModule(this.xhr);

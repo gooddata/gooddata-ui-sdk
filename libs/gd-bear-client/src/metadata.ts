@@ -819,7 +819,8 @@ export class MetadataModule {
                 .then(response => response.getData())
                 .then(reportDefinitionResult => ({
                     ...pickedOptions,
-                    restrictiveDefinitionContent: reportDefinitionResult.reportDefinition.content,
+                    restrictiveDefinitionContent:
+                        reportDefinitionResult.reportDefinitionWithInlinedMetrics.content,
                 }));
 
         const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
