@@ -18,4 +18,5 @@ export class AttributeMetadataObjectBuilder<
 export const newAttributeMetadataObject = (
     ref: ObjRef,
     modifications: BuilderModifications<AttributeMetadataObjectBuilder> = identity,
-): IAttributeMetadataObject => builderFactory(AttributeMetadataObjectBuilder, { ref }, modifications);
+): IAttributeMetadataObject =>
+    builderFactory(AttributeMetadataObjectBuilder, { type: "attribute", ref }, modifications);

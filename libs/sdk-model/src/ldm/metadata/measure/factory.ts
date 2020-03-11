@@ -28,4 +28,5 @@ export class MeasureMetadataObjectBuilder<
 export const newMeasureMetadataObject = (
     ref: ObjRef,
     modifications: BuilderModifications<MeasureMetadataObjectBuilder> = identity,
-): IMeasureMetadataObject => builderFactory(MeasureMetadataObjectBuilder, { ref }, modifications);
+): IMeasureMetadataObject =>
+    builderFactory(MeasureMetadataObjectBuilder, { type: "measure", ref }, modifications);

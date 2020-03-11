@@ -24,4 +24,4 @@ export const newAttributeDisplayFormMetadataObject = (
     ref: ObjRef,
     modifications: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder> = identity,
 ): IAttributeDisplayFormMetadataObject =>
-    builderFactory(AttributeDisplayFormMetadataObjectBuilder, { ref }, modifications);
+    builderFactory(AttributeDisplayFormMetadataObjectBuilder, { type: "displayForm", ref }, modifications);

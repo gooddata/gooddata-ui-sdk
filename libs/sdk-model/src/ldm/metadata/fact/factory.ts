@@ -18,4 +18,4 @@ export class FactMetadataObjectBuilder<
 export const newFactMetadataObject = (
     ref: ObjRef,
     modifications: BuilderModifications<FactMetadataObjectBuilder> = identity,
-): IFactMetadataObject => builderFactory(FactMetadataObjectBuilder, { ref }, modifications);
+): IFactMetadataObject => builderFactory(FactMetadataObjectBuilder, { type: "fact", ref }, modifications);

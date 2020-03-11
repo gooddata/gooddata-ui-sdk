@@ -18,4 +18,5 @@ export class DataSetMetadataObjectBuilder<
 export const newDataSetMetadataObject = (
     ref: ObjRef,
     modifications: BuilderModifications<DataSetMetadataObjectBuilder> = identity,
-): IDataSetMetadataObject => builderFactory(DataSetMetadataObjectBuilder, { ref }, modifications);
+): IDataSetMetadataObject =>
+    builderFactory(DataSetMetadataObjectBuilder, { type: "dataSet", ref }, modifications);
