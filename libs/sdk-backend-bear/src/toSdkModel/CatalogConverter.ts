@@ -101,9 +101,10 @@ export const convertMeasure = (metric: GdcCatalog.ICatalogMetric): ICatalogMeasu
 
 export const convertFact = (fact: GdcCatalog.ICatalogFact): ICatalogFact => {
     const factRef = bearCatalogItemToBearRef(fact);
+    const groups = bearGroupableCatalogItemToTagRefs(fact);
 
     return newCatalogFact(catalogF =>
-        catalogF.fact(factRef, f => f.modify(commonCatalogItemModifications(fact))),
+        catalogF.fact(factRef, f => f.modify(commonCatalogItemModifications(fact))).groups(groups),
     );
 };
 
