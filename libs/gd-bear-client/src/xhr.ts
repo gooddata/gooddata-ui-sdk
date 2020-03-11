@@ -26,7 +26,7 @@ const REST_API_VERSION_HEADER = "X-GDC-VERSION";
 const REST_API_DEPRECATED_VERSION_HEADER = "X-GDC-DEPRECATED";
 
 // The version used in X-GDC-VERSION header (see https://confluence.intgdc.com/display/Development/REST+API+versioning)
-const LATEST_REST_API_VERSION = 4;
+const LATEST_REST_API_VERSION = 5;
 
 /**
  * Gooddata-js package signature
