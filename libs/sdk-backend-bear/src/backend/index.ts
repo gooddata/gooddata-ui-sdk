@@ -244,24 +244,28 @@ export class BearBackend implements IAnalyticalBackend {
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
         // first, try it "normally"
+        let result: T;
+
         try {
-            return call(this.sdk, await this.getAsyncCallContext());
+            result = await call(this.sdk, await this.getAsyncCallContext());
         } catch (err) {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
+            }
+
+            // in case there was a NotAuthenticated error, trigger auth and try once again
+            try {
+                await this.triggerAuthentication();
+                result = await call(this.sdk, await this.getAsyncCallContext());
+            } catch (err) {
+                if (!isNotAuthenticatedError(err)) {
+                    throw errorConverter(err);
+                }
+                throw new NotAuthenticated("Current session is not authenticated.", err);
             }
         }
 
-        // in case there was a NotAuthenticated error, trigger auth and try once again
-        try {
-            await this.triggerAuthentication();
-            return call(this.sdk, await this.getAsyncCallContext());
-        } catch (err) {
-            if (!isNotAuthenticatedError(err)) {
-                throw errorConverter(err);
-            }
-            throw new NotAuthenticated("Current session is not authenticated.", err);
-        }
+        return result;
     };
 
     private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
