@@ -29,20 +29,17 @@ export class BearPreparedExecution implements IPreparedExecution {
 
         const afmExecution = toAfmExecution(this.definition);
 
-        return this.authCall(sdk =>
-            sdk.execution
-                .getExecutionResponse(this.definition.workspace, afmExecution)
-                .then(response => {
+        return this.authCall(
+            sdk =>
+                sdk.execution.getExecutionResponse(this.definition.workspace, afmExecution).then(response => {
                     return new BearExecutionResult(
                         this.authCall,
                         this.definition,
                         this.executionFactory,
                         response,
                     );
-                })
-                .catch(e => {
-                    throw convertExecutionApiError(e);
                 }),
+            convertExecutionApiError,
         );
     }
 
