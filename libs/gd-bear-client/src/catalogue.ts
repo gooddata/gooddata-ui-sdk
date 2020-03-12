@@ -9,6 +9,7 @@ import { XhrModule } from "./xhr";
 import { ExecutionModule } from "./execution";
 import { IAdHocItemDescription, IStoredItemDescription, ItemDescription } from "./interfaces";
 import { GdcCatalog, GdcDatasets, GdcDateDataSets, GdcVisualizationObject } from "@gooddata/gd-bear-model";
+import { omitEmpty } from "./util";
 
 const REQUEST_DEFAULTS = {
     types: ["attribute", "metric", "fact"],
@@ -114,6 +115,8 @@ export class CatalogueModule {
      * @param options GdcCatalog.ILoadCatalogItemsParams
      */
     public async loadAllItems(projectId: string, options: GdcCatalog.ILoadCatalogItemsParams = {}) {
+        const sanitizedOptions = omitEmpty(options);
+
         const loadAll = async (
             requestOptions: GdcCatalog.ILoadCatalogItemsParams,
             items: GdcCatalog.CatalogItem[] = [],
@@ -124,6 +127,7 @@ export class CatalogueModule {
                     data: requestOptions,
                 },
             );
+
             const resultItems = result.catalogItems.items;
             const updatedItems = [...items, ...resultItems];
             if (resultItems.length === requestOptions.limit) {
@@ -141,7 +145,7 @@ export class CatalogueModule {
         return loadAll({
             offset: 0,
             limit: CATALOG_ITEMS_LIMIT,
-            ...options,
+            ...sanitizedOptions,
         });
     }
 
@@ -154,7 +158,7 @@ export class CatalogueModule {
         const result = await this.xhr.getParsed<GdcCatalog.ILoadCatalogGroupsResponse>(
             `/gdc/internal/projects/${projectId}/catalog/groups`,
             {
-                data: omitBy(options, isEmpty),
+                data: omitEmpty(options),
             },
         );
 

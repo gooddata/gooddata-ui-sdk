@@ -1,7 +1,25 @@
 // (C) 2007-2020 GoodData Corporation
 import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
+import isObject from "lodash/isObject";
+import omitBy from "lodash/fp/omitBy";
 import { delay } from "./utils/promise";
 import { ApiResponse, ApiResponseError } from "./xhr";
+
+/**
+ * Omit nil or empty object/array values of the object. Keep booleans & numbers.
+ * Checks only first level object properties, does not check it recursively.
+ */
+export const omitEmpty = omitBy(val => {
+    if (isNil(val)) {
+        return true;
+    } else if (isObject(val)) {
+        return isEmpty(val);
+    }
+
+    return false;
+});
 
 /**
  * Utility methods. Mostly private
