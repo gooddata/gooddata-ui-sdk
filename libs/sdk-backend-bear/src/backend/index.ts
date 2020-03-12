@@ -252,15 +252,18 @@ export class BearBackend implements IAnalyticalBackend {
             }
         }
 
-        // in case there was a NotAuthenticated error, trigger auth and try once again
+        // in case there was a NotAuthenticated error, trigger auth...
         try {
             await this.triggerAuthentication();
+        } catch (err) {
+            throw new NotAuthenticated("Current session is not authenticated.", err);
+        }
+
+        // ...and try once again
+        try {
             return call(this.sdk, await this.getAsyncCallContext());
         } catch (err) {
-            if (!isNotAuthenticatedError(err)) {
-                throw errorConverter(err);
-            }
-            throw new NotAuthenticated("Current session is not authenticated.", err);
+            throw errorConverter(err);
         }
     };
 
