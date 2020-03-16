@@ -1,7 +1,13 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
 import { attributeDescriptorLocalId, DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition, isMeasureValueFilter, ITotal, TotalType } from "@gooddata/sdk-model";
+import {
+    IExecutionDefinition,
+    isMeasureValueFilter,
+    ITotal,
+    TotalType,
+    measureValueFilterCondition,
+} from "@gooddata/sdk-model";
 import * as classNames from "classnames";
 import * as React from "react";
 import { IntlShape } from "react-intl";
@@ -166,7 +172,10 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
     private isTableFilteredByMeasureValue(): boolean {
         const definition = this.props.getExecutionDefinition();
 
-        return definition.filters.some(isMeasureValueFilter);
+        // ignore measure value filters without condition, these are not yet specified by the user and are not sent as part of the execution
+        return definition.filters.some(
+            filter => isMeasureValueFilter(filter) && !!measureValueFilterCondition(filter),
+        );
     }
 
     private renderMainMenuItems(
