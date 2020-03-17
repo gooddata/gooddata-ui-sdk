@@ -18,7 +18,7 @@ export interface ISelectableChild {
     position?: IconPosition;
 }
 
-export interface IColorDropdownProps {
+export interface IColorDropdownOwnProps {
     selectedColorItem?: IColor;
     colorPalette: IColorPalette;
     showCustomPicker: boolean;
@@ -30,19 +30,18 @@ export interface IColorDropdownState {
     dropdownVersion: DropdownVersionType;
 }
 
+export type IColorDropdownProps = IColorDropdownOwnProps & WrappedComponentProps;
+
 const COLOR_FOR_UNKNOWN_ITEM: IRgbColorValue = {
     r: 255,
     g: 0,
     b: 0,
 };
 
-class ColorDropdown extends React.PureComponent<
-    IColorDropdownProps & WrappedComponentProps,
-    IColorDropdownState
-> {
+class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropdownState> {
     private id: string;
 
-    constructor(props: IColorDropdownProps & WrappedComponentProps) {
+    constructor(props: IColorDropdownOwnProps & WrappedComponentProps) {
         super(props);
         this.id = uuid.v4();
         this.state = {
@@ -191,4 +190,4 @@ class ColorDropdown extends React.PureComponent<
     }
 }
 
-export default injectIntl(ColorDropdown);
+export default injectIntl<"intl", IColorDropdownProps>(ColorDropdown);
