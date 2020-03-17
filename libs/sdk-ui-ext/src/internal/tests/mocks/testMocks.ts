@@ -350,6 +350,37 @@ export const insightWithSingleMeasure: IInsight = {
     },
 };
 
+export const insightWithSingleSecondaryMeasure: IInsight = {
+    insight: {
+        visualizationUrl: "column",
+        buckets: [
+            {
+                localIdentifier: BucketNames.SECONDARY_MEASURES,
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: {
+                                        uri: "/gdc/md/project/obj/1279",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        sorts: [],
+        properties: {},
+        title: "Dummy insight with single measure",
+        identifier: "myIdentifier",
+        uri: "/gdc/md/mockproject/obj/123",
+    },
+};
+
 export const insightWithSingleMeasureAndViewBy: IInsight = {
     insight: {
         visualizationUrl: "column",

@@ -95,20 +95,53 @@ describe("PluggableHeadline", () => {
             };
         }
 
-        it("should not render headline when dataSource is missing", () => {
+        it("should not render headline when insight is empty", () => {
             const fakeElement: any = "fake element";
             const reactCreateElementSpy = jest
                 .spyOn(React, "createElement")
                 .mockImplementation(() => fakeElement);
             const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
 
-            const headline = createComponent();
+            const onError = jest.fn();
+            const headline = createComponent({
+                callbacks: {
+                    ...defaultProps.callbacks,
+                    onError,
+                },
+            });
 
             const options: IVisProps = getTestOptions();
 
             headline.update({ ...options }, testMocks.emptyInsight, executionFactory);
 
             expect(reactRenderSpy).toHaveBeenCalledTimes(0);
+            expect(onError).toHaveBeenCalled();
+
+            reactCreateElementSpy.mockReset();
+            reactRenderSpy.mockReset();
+        });
+
+        it("should not render headline when insight does not have primary measures", () => {
+            const fakeElement: any = "fake element";
+            const reactCreateElementSpy = jest
+                .spyOn(React, "createElement")
+                .mockImplementation(() => fakeElement);
+            const reactRenderSpy = jest.spyOn(ReactDom, "render").mockImplementation(jest.fn());
+
+            const onError = jest.fn();
+            const headline = createComponent({
+                callbacks: {
+                    ...defaultProps.callbacks,
+                    onError,
+                },
+            });
+
+            const options: IVisProps = getTestOptions();
+
+            headline.update({ ...options }, testMocks.insightWithSingleSecondaryMeasure, executionFactory);
+
+            expect(reactRenderSpy).toHaveBeenCalledTimes(0);
+            expect(onError).toHaveBeenCalled();
 
             reactCreateElementSpy.mockReset();
             reactRenderSpy.mockReset();

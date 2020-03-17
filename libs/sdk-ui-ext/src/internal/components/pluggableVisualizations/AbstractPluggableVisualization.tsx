@@ -10,6 +10,7 @@ import {
     IVisProps,
     IVisualization,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
@@ -122,7 +123,11 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @throws error - if anything is thrown, visualization will not be rendered and the exception will be passed via onError callback
      */
     protected checkBeforeRender(insight: IInsight): boolean {
-        return insightHasDataDefined(insight);
+        if (!insightHasDataDefined(insight)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
+        }
+
+        return true;
     }
 
     /**

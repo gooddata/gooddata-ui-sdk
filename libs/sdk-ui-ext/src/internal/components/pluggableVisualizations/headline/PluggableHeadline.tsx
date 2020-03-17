@@ -1,9 +1,9 @@
 // (C) 2019 GoodData Corporation
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, insightHasDataDefined } from "@gooddata/sdk-model";
+import { bucketIsEmpty, IInsight, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
 
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, GoodDataSdkError } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
@@ -16,6 +16,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
     RenderFunction,
 } from "../../../interfaces/Visualization";
 
@@ -111,6 +112,18 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    protected checkBeforeRender(insight: IInsight): boolean {
+        super.checkBeforeRender(insight);
+
+        const measureBucket = insightBucket(insight, BucketNames.MEASURES);
+
+        if (!measureBucket || bucketIsEmpty(measureBucket)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
+        }
+
+        return true;
     }
 
     protected renderVisualization(

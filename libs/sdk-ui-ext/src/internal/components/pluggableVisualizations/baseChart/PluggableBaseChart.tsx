@@ -7,6 +7,7 @@ import {
     IInsight,
     insightBuckets,
     insightHasDataDefined,
+    insightHasMeasures,
     insightMeasures,
 } from "@gooddata/sdk-model";
 import {
@@ -38,6 +39,7 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -207,6 +209,16 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         super.updateInstanceProperties(options, insight);
 
         this.insight = insight;
+    }
+
+    protected checkBeforeRender(insight: IInsight): boolean {
+        super.checkBeforeRender(insight);
+
+        if (!insightHasMeasures(insight)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
+        }
+
+        return true;
     }
 
     protected renderVisualization(

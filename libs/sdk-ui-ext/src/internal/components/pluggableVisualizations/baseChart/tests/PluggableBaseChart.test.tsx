@@ -65,7 +65,15 @@ describe("PluggableBaseChart", () => {
 
     it("should not render chart when insight has no data to render", () => {
         const mockRenderFun = jest.fn();
-        const props = { ...defaultProps, renderFun: mockRenderFun };
+        const onError = jest.fn();
+        const props = {
+            ...defaultProps,
+            renderFun: mockRenderFun,
+            callbacks: {
+                ...callbacks,
+                onError,
+            },
+        };
 
         const visualization = createComponent(props);
         const options: IVisProps = {
@@ -79,6 +87,34 @@ describe("PluggableBaseChart", () => {
         visualization.update(options, testMocks.emptyInsight, executionFactory);
 
         expect(mockRenderFun).toHaveBeenCalledTimes(0);
+        expect(onError).toHaveBeenCalled();
+    });
+
+    it("should not render chart when insight has no measure", () => {
+        const mockRenderFun = jest.fn();
+        const onError = jest.fn();
+        const props = {
+            ...defaultProps,
+            renderFun: mockRenderFun,
+            callbacks: {
+                ...callbacks,
+                onError,
+            },
+        };
+
+        const visualization = createComponent(props);
+        const options: IVisProps = {
+            dimensions: { height: null },
+            locale: dummyLocale,
+            custom: {
+                stickyHeaderOffset: 3,
+            },
+        };
+
+        visualization.update(options, testMocks.insightWithSingleAttribute, executionFactory);
+
+        expect(mockRenderFun).toHaveBeenCalledTimes(0);
+        expect(onError).toHaveBeenCalled();
     });
 
     it("should render chart with height and right legend position when environment is dashboards", () => {
