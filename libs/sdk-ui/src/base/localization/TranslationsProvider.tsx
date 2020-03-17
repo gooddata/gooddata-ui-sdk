@@ -2,7 +2,7 @@
 import * as React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 
-export interface ITranslationsProviderProps {
+export interface ITranslationsProviderOwnProps {
     children: any;
 }
 
@@ -12,9 +12,9 @@ export interface ITranslationsComponentProps {
     intl: IntlShape;
 }
 
-export class TranslationsProvider extends React.PureComponent<
-    ITranslationsProviderProps & WrappedComponentProps
-> {
+export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
+
+export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps> {
     public render() {
         const props: ITranslationsComponentProps = {
             numericSymbols: this.getNumericSymbols(),
@@ -41,4 +41,4 @@ export class TranslationsProvider extends React.PureComponent<
     }
 }
 
-export const IntlTranslationsProvider = injectIntl(TranslationsProvider);
+export const IntlTranslationsProvider = injectIntl<"intl", ITranslationsProviderProps>(TranslationsProvider);

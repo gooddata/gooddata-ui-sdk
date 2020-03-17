@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
 import { mount } from "enzyme";
-import ConfigSubsection, { IConfigSubsectionProps } from "../ConfigSubsection";
+import ConfigSubsection, { IConfigSubsectionOwnProps } from "../ConfigSubsection";
 import DisabledBubbleMessage from "../../DisabledBubbleMessage";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 
@@ -13,7 +13,7 @@ describe("ConfigSubsection", () => {
         title: "properties.legend.title",
     };
 
-    function createComponent(customProps: Partial<IConfigSubsectionProps> = {}) {
+    function createComponent(customProps: Partial<IConfigSubsectionOwnProps> = {}) {
         const props = { ...defaultProps, ...customProps };
         return mount(
             <InternalIntlWrapper>

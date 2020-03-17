@@ -7,7 +7,7 @@ import DisabledBubbleMessage from "../DisabledBubbleMessage";
 
 import { getTranslation } from "../../utils/translations";
 
-export interface IConfigSubsectionProps {
+export interface IConfigSubsectionOwnProps {
     valuePath?: string;
     title: string;
     canBeToggled?: boolean;
@@ -22,10 +22,9 @@ export interface IConfigSubsectionState {
     disabled: boolean;
 }
 
-class ConfigSubsection extends React.Component<
-    IConfigSubsectionProps & WrappedComponentProps,
-    IConfigSubsectionState
-> {
+export type IConfigSubsectionProps = IConfigSubsectionOwnProps & WrappedComponentProps;
+
+class ConfigSubsection extends React.Component<IConfigSubsectionProps, IConfigSubsectionState> {
     public static defaultProps = {
         collapsed: true,
         canBeToggled: false,
@@ -35,7 +34,7 @@ class ConfigSubsection extends React.Component<
         showDisabledMessage: false,
     };
 
-    constructor(props: IConfigSubsectionProps & WrappedComponentProps) {
+    constructor(props: IConfigSubsectionOwnProps & WrappedComponentProps) {
         super(props);
         this.toggleValue = this.toggleValue.bind(this);
     }
@@ -97,4 +96,4 @@ class ConfigSubsection extends React.Component<
     }
 }
 
-export default injectIntl(ConfigSubsection);
+export default injectIntl<"intl", IConfigSubsectionProps>(ConfigSubsection);

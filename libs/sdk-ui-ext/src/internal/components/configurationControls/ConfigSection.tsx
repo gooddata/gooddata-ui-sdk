@@ -10,7 +10,7 @@ import DisabledBubbleMessage from "../DisabledBubbleMessage";
 
 import { getTranslation } from "../../utils/translations";
 
-export interface IConfigSectionProps {
+export interface IConfigSectionOwnProps {
     id: string;
     valuePath?: string;
     canBeToggled?: boolean;
@@ -29,10 +29,9 @@ export interface IConfigSectionState {
     collapsed: boolean;
 }
 
-export class ConfigSection extends React.Component<
-    IConfigSectionProps & WrappedComponentProps,
-    IConfigSectionState
-> {
+export type IConfigSectionProps = IConfigSectionOwnProps & WrappedComponentProps;
+
+export class ConfigSection extends React.Component<IConfigSectionProps, IConfigSectionState> {
     public static defaultProps = {
         collapsed: true,
         canBeToggled: false,
@@ -45,7 +44,7 @@ export class ConfigSection extends React.Component<
         properties: {},
     };
 
-    constructor(props: IConfigSectionProps & WrappedComponentProps) {
+    constructor(props: IConfigSectionOwnProps & WrappedComponentProps) {
         super(props);
 
         this.toggleCollapsed = this.toggleCollapsed.bind(this);
@@ -58,7 +57,7 @@ export class ConfigSection extends React.Component<
         };
     }
 
-    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionProps & WrappedComponentProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionOwnProps & WrappedComponentProps) {
         const collapsed = get(nextProps, `propertiesMeta.${this.props.id}.collapsed`, true);
         this.setState({ collapsed });
     }
@@ -154,4 +153,4 @@ export class ConfigSection extends React.Component<
     }
 }
 
-export default injectIntl(ConfigSection);
+export default injectIntl<"intl", IConfigSectionProps>(ConfigSection);

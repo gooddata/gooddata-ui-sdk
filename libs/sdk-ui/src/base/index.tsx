@@ -48,6 +48,7 @@ export {
     TranslationsProvider,
     IntlTranslationsProvider,
     ITranslationsComponentProps,
+    ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider";
 export { createIntlMock, withIntl } from "./localization/intlUtils";

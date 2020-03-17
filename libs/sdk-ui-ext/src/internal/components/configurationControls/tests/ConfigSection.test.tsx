@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import noop = require("lodash/noop");
-import { ConfigSection, IConfigSectionProps } from "../ConfigSection";
+import { ConfigSection, IConfigSectionOwnProps } from "../ConfigSection";
 import { createInternalIntl } from "../../../utils/internalIntlProvider";
 
 describe("ConfigSection", () => {
@@ -16,9 +16,9 @@ describe("ConfigSection", () => {
         pushData: noop,
     };
 
-    function createComponent(customProps: Partial<IConfigSectionProps> = {}) {
+    function createComponent(customProps: Partial<IConfigSectionOwnProps> = {}) {
         const props = { ...defaultProps, ...customProps };
-        return shallow<IConfigSectionProps, null>(
+        return shallow<IConfigSectionOwnProps, null>(
             <ConfigSection {...props}>
                 <div className="child" />
             </ConfigSection>,

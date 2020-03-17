@@ -7,13 +7,13 @@ import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
-import ColorDropdown, { IColorDropdownProps, IconPosition } from "../ColorDropdown";
+import ColorDropdown, { IColorDropdownOwnProps, IconPosition } from "../ColorDropdown";
 import ColorPaletteItem from "../ColorPaletteItem";
 import ColorPalette from "../ColorPalette";
 import CustomColorButton from "../CustomColorButton";
 import { IColoredItemContentProps } from "../../coloredItemsList/ColoredItemContent";
 
-const defaultProps: IColorDropdownProps = {
+const defaultProps: IColorDropdownOwnProps = {
     selectedColorItem: {
         type: "guid",
         value: "04",
@@ -29,9 +29,9 @@ class MockItem extends React.PureComponent<IColoredItemContentProps> {
     }
 }
 
-function createComponent(customProps: Partial<IColorDropdownProps> = {}) {
-    const props: IColorDropdownProps = { ...cloneDeep(defaultProps), ...customProps };
-    return mount<IColorDropdownProps>(
+function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
+    const props: IColorDropdownOwnProps = { ...cloneDeep(defaultProps), ...customProps };
+    return mount<IColorDropdownOwnProps>(
         <InternalIntlWrapper>
             <ColorDropdown {...props}>
                 <MockItem color={{ r: 255, g: 0, b: 0 }} text="sometext" />
