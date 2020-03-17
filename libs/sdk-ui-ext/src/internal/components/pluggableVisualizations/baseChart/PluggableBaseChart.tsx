@@ -8,22 +8,18 @@ import {
     insightBuckets,
     insightHasDataDefined,
     insightMeasures,
-    insightProperties,
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
     ChartType,
-    DefaultLocale,
     GoodDataSdkError,
     IExportFunction,
     ILoadingState,
-    ILocale,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
-import { IntlShape } from "react-intl";
 
 import { BUCKETS } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -39,7 +35,6 @@ import {
     IReferencePoint,
     IReferences,
     IUiConfig,
-    IVisCallbacks,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
@@ -59,11 +54,9 @@ import {
 import { getValidProperties } from "../../../utils/colors";
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import {
     getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
-    getSupportedProperties,
     getSupportedPropertiesControls,
     hasColorMapping,
     isEmptyObject,
@@ -88,40 +81,27 @@ import tail = require("lodash/tail");
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
-    protected callbacks: IVisCallbacks;
     protected type: ChartType;
-    protected intl: IntlShape;
     protected featureFlags: ISettings;
     protected isError: boolean;
     protected isLoading: boolean;
-    protected options: IVisProps;
-    protected visualizationProperties: IVisualizationProperties;
     protected defaultControlsProperties: IVisualizationProperties;
     protected customControlsProperties: IVisualizationProperties;
-    protected propertiesMeta: any;
     protected insight: IInsight;
-    protected supportedPropertiesList: string[];
-    protected configPanelElement: string;
     protected colors: IColorConfiguration;
     protected references: IReferences;
     protected ignoreUndoRedo: boolean;
     protected axis: string;
     protected secondaryAxis: AxisType;
-    protected locale: ILocale;
     protected environment: string;
-    private element: string;
-    private renderFun: (component: any, target: Element) => void;
+    private readonly renderFun: (component: any, target: Element) => void;
 
     constructor(props: IVisConstruct) {
-        super();
+        super(props);
+
         this.projectId = props.projectId;
-        this.element = props.element;
-        this.configPanelElement = props.configPanelElement;
         this.environment = props.environment;
-        this.callbacks = props.callbacks;
         this.type = VisualizationTypes.COLUMN;
-        this.locale = props.locale ? props.locale : DefaultLocale;
-        this.intl = createInternalIntl(this.locale);
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
         this.onError = props.callbacks.onError && this.onError.bind(this);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
@@ -137,20 +117,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     public unmount() {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
-    }
-
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        const visualizationProperties = insightProperties(insight);
-        this.options = options;
-        this.visualizationProperties = getSupportedProperties(
-            visualizationProperties,
-            this.supportedPropertiesList,
-        );
-        this.propertiesMeta = get(visualizationProperties, "propertiesMeta", null);
-        this.insight = insight;
-
-        this.renderVisualization(this.options, this.insight, executionFactory);
-        this.renderConfigurationPanel();
     }
 
     public getUiConfig(): IUiConfig {
@@ -235,6 +201,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
 
         return stacks;
+    }
+
+    protected updateInstanceProperties(options: IVisProps, insight: IInsight) {
+        super.updateInstanceProperties(options, insight);
+
+        this.insight = insight;
     }
 
     protected renderVisualization(

@@ -18,7 +18,6 @@ import {
     IMeasureSortItem,
     insightBuckets,
     insightHasDataDefined,
-    insightProperties,
     isAttributeSort,
     isMeasureLocator,
     isMeasureSort,
@@ -26,18 +25,10 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 
-import {
-    BucketNames,
-    DefaultLocale,
-    IExportFunction,
-    ILocale,
-    VisualizationEnvironment,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
+import { BucketNames, IExportFunction, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import * as React from "react";
 import { render } from "react-dom";
-import { IntlShape } from "react-intl";
 import Measure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
@@ -51,7 +42,6 @@ import {
     IExtendedReferencePoint,
     IReferencePoint,
     isAttributeFilter,
-    IVisCallbacks,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
@@ -68,7 +58,6 @@ import {
 } from "../../../utils/bucketHelper";
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { createSorts } from "../../../utils/sort";
 
@@ -266,23 +255,13 @@ export function addDefaultSort(
 export class PluggablePivotTable extends AbstractPluggableVisualization {
     // @ts-ignore
     private projectId: string;
-    private element: string;
-    private configPanelElement: string;
-    private callbacks: IVisCallbacks;
-    private intl: IntlShape;
-    private visualizationProperties: IVisualizationProperties;
-    private locale: ILocale;
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
-        super();
+        super(props);
+
         this.projectId = props.projectId;
-        this.element = props.element;
-        this.configPanelElement = props.configPanelElement;
-        this.callbacks = props.callbacks;
-        this.locale = props.locale ? props.locale : DefaultLocale;
-        this.intl = createInternalIntl(this.locale);
         this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;
         this.renderFun = props.renderFun;
@@ -290,12 +269,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     public unmount() {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
-    }
-
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        this.visualizationProperties = insightProperties(insight);
-        this.renderVisualization(options, insight, executionFactory);
-        this.renderConfigurationPanel(insight);
     }
 
     public getExtendedReferencePoint(
