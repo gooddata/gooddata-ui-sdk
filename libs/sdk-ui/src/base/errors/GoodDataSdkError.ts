@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 import isEmpty = require("lodash/isEmpty");
 
@@ -77,16 +77,6 @@ export const ErrorCodes = {
      * This error means that requested entity (e.g. a visualization) was not found on the server.
      */
     NOT_FOUND: "NOT_FOUND",
-
-    /**
-     * This error means that empty AFM was went to the GoodData.UI and as such can't be executed.
-     */
-    EMPTY_AFM: "EMPTY_AFM",
-
-    /**
-     * @internal
-     */
-    INVALID_BUCKETS: "INVALID_BUCKETS",
 
     /**
      * This error means that requested visualization is restricted by access rules within the GoodData platform.

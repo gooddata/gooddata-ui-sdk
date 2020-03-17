@@ -303,3 +303,19 @@ export interface IGdcConfig {
  * @alpha
  */
 export const ConfigPanelClassName = "gd-configuration-panel-content";
+
+/**
+ * @alpha
+ */
+export const PluggableVisualizationErrorCodes = {
+    /**
+     * If pluggable visualization is asked to render itself but its buckets do not contain the right 'stuff',
+     * then this is the error code to communicate the fact.
+     */
+    INVALID_BUCKETS: "INVALID_BUCKETS",
+
+    /**
+     * This error means that empty AFM was went to the GoodData.UI and as such can't be executed.
+     */
+    EMPTY_AFM: "EMPTY_AFM",
+};
