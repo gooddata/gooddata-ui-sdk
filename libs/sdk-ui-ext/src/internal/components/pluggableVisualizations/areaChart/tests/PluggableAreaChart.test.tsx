@@ -157,7 +157,10 @@ describe("PluggableAreaChart", () => {
                           },
                       }
                     : {};
-            const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
+            const testInsight = insightSetProperties(
+                testMocks.insightWithSingleMeasureAndViewBy,
+                visualizationProperties,
+            );
             const expected = stackMeasures === null ? true : stackMeasures;
             chart.update(options, testInsight, executionFactory);
             const renderCallsCount = spyOnRender.mock.calls.length;

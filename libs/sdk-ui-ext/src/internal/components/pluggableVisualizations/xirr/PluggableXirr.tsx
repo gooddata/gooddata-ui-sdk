@@ -94,7 +94,6 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     ) {
         const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getXirrDimensions(insight));
@@ -103,13 +102,13 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             <CoreXirr
                 execution={execution}
                 drillableItems={drillableItems}
-                onDrill={onDrill}
+                onDrill={this.onDrill}
                 locale={locale}
                 config={updateConfigWithSettings(config, this.settings)}
-                afterRender={afterRender}
-                onLoadingChanged={onLoadingChanged}
-                pushData={pushData}
-                onError={onError}
+                afterRender={this.afterRender}
+                onLoadingChanged={this.onLoadingChanged}
+                pushData={this.pushData}
+                onError={this.onError}
                 LoadingComponent={null}
                 ErrorComponent={null}
             />,
@@ -128,7 +127,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             render(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
-                    pushData={this.callbacks.pushData}
+                    pushData={this.pushData}
                     properties={getSupportedProperties(properties, this.supportedPropertiesList)}
                 />,
                 document.querySelector(this.configPanelElement),

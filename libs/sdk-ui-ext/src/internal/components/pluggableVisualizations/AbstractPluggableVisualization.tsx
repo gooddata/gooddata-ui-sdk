@@ -9,28 +9,60 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualization,
+    IVisualizationOptions,
     IVisualizationProperties,
     PluggableVisualizationErrorCodes,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { DefaultLocale, ErrorCodes, GoodDataSdkError, ILocale, isGoodDataSdkError } from "@gooddata/sdk-ui";
+import {
+    DefaultLocale,
+    ErrorCodes,
+    GoodDataSdkError,
+    IDrillEvent,
+    IExportFunction,
+    ILoadingState,
+    ILocale,
+    IPushData,
+    isGoodDataSdkError,
+} from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider";
 import { getSupportedProperties } from "../../utils/propertiesHelper";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
-    protected callbacks: IVisCallbacks;
     protected intl: IntlShape;
     protected locale: ILocale;
-    protected element: string;
-    protected configPanelElement: string;
-    protected supportedPropertiesList: string[];
+
+    /**
+     * Standard callback
+     */
+    private readonly callbacks: IVisCallbacks;
+
+    /**
+     * Classname of element where visualization should be mounted
+     */
+    protected readonly element: string;
+
+    /**
+     * Classname of element where config panel should be mounted
+     */
+    protected readonly configPanelElement: string;
+
+    /**
+     * Insight that is currently rendered by the pluggable visualization. This field is set during
+     * every call to {@link update} and will remain the same until the next update() call.
+     */
+    protected currentInsight: IInsight;
     protected visualizationProperties: IVisualizationProperties;
+    protected supportedPropertiesList: string[];
     protected propertiesMeta: any;
 
-    constructor(props: IVisConstruct) {
+    protected isError: boolean;
+    protected isLoading: boolean;
+
+    protected constructor(props: IVisConstruct) {
         this.callbacks = props.callbacks;
         this.locale = props.locale ?? DefaultLocale;
         this.intl = createInternalIntl(this.locale);
@@ -52,7 +84,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * Templated implementation of the update method. Given options, insight to render and the execution
      * factory, this function will drive the update process. It consists of the following:
      *
-     * 1. call to {@link updateInstanceProperties} - this method should update any internal state of the instance
+     * 1. call to {@link updateInstanceProperties} - this method should update any internal state
      *    of the instance's properties. Subclasses MAY override this to update state of their own private
      *    properties.
      *
@@ -81,8 +113,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         } catch (e) {
             const sdkError = isGoodDataSdkError(e) ? e : new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, e);
 
-            this.callbacks.onError(sdkError);
-            shouldRenderVisualization = false;
+            this.onError(sdkError);
+
+            return;
         }
 
         if (shouldRenderVisualization) {
@@ -112,6 +145,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             this.supportedPropertiesList,
         );
         this.propertiesMeta = visualizationProperties.propertiesMeta ?? null;
+        this.currentInsight = insight;
     }
 
     /**
@@ -151,6 +185,41 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @param insight - insight that is rendered
      */
     protected abstract renderConfigurationPanel(insight: IInsight): void;
+
+    //
+    // Callback delegates
+    //
+
+    protected onError = (error: GoodDataSdkError) => {
+        this.callbacks.onError?.(error);
+
+        this.isError = true;
+        this.renderConfigurationPanel(this.currentInsight);
+    };
+
+    protected onLoadingChanged = (loadingState: ILoadingState) => {
+        this.callbacks.onLoadingChanged?.(loadingState);
+
+        this.isError = false;
+        this.isLoading = loadingState.isLoading;
+        this.renderConfigurationPanel(this.currentInsight);
+    };
+
+    protected onExportReady = (exportResult: IExportFunction) => {
+        this.callbacks.onExportReady?.(exportResult);
+    };
+
+    protected pushData = (data: IPushData, options?: IVisualizationOptions) => {
+        this.callbacks.pushData?.(data, options);
+    };
+
+    protected afterRender = () => {
+        this.callbacks.afterRender?.();
+    };
+
+    protected onDrill = (event: IDrillEvent) => {
+        this.callbacks.onDrill?.(event);
+    };
 
     //
     // Templated implementation of addNewDerivedBucketItems contract

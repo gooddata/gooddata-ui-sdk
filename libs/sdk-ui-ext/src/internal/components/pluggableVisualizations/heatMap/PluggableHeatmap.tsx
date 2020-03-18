@@ -28,6 +28,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import includes = require("lodash/includes");
 import set = require("lodash/set");
 import tail = require("lodash/tail");
+import { IInsight } from "@gooddata/sdk-model";
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -94,7 +95,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <HeatMapConfigurationPanel
@@ -102,7 +103,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}

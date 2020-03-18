@@ -40,6 +40,7 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import set = require("lodash/set");
 import React = require("react");
+import { IInsight } from "@gooddata/sdk-model";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -107,14 +108,14 @@ export class PluggablePieChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <PieChartConfigurationPanel
                     locale={this.locale}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     pushData={this.handlePushData}
                     colors={this.colors}
                     type={this.type}

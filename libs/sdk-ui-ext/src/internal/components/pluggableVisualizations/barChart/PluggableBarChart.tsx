@@ -9,6 +9,7 @@ import { IVisConstruct, IUiConfig } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
+import { IInsight } from "@gooddata/sdk-model";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -29,7 +30,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         return BAR_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BarChartConfigurationPanel
@@ -38,7 +39,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     pushData={this.handlePushData}
                     type={this.type}
                     isError={this.isError}

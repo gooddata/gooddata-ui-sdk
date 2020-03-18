@@ -152,45 +152,6 @@ export const insightWithSingleMeasureAndTwoViewBy: IInsight = {
     },
 };
 
-export const insightWithNoMeasureAndTwoViewBy: IInsight = {
-    insight: {
-        visualizationUrl: "column",
-        buckets: [
-            {
-                localIdentifier: BucketNames.VIEW,
-                items: [
-                    {
-                        attribute: {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                uri: "/gdc/md/project/obj/1027",
-                            },
-                        },
-                    },
-                    {
-                        attribute: {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                uri: "/gdc/md/project/obj/1028",
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: BucketNames.STACK,
-                items: [],
-            },
-        ],
-        filters: [],
-        sorts: [],
-        properties: {},
-        title: "Dummy insight with two viewby attributes",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
-    },
-};
-
 export const insightWithTwoMeasuresAndViewBy: IInsight = {
     insight: {
         visualizationUrl: "column",

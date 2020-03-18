@@ -25,7 +25,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 
-import { BucketNames, IExportFunction, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";
 import { CorePivotTable, ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 import * as React from "react";
 import { render } from "react-dom";
@@ -262,7 +262,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         super(props);
 
         this.projectId = props.projectId;
-        this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
         this.environment = props.environment;
         this.renderFun = props.renderFun;
     }
@@ -353,7 +352,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const { locale, custom, dimensions, config } = options;
         const { height } = dimensions;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
 
         const execution = executionFactory
             .forInsight(insight)
@@ -377,13 +375,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const pivotTableProps: ICorePivotTableProps = {
             execution,
             drillableItems,
-            onDrill,
+            onDrill: this.onDrill,
             config: configUpdated,
             locale,
-            afterRender,
-            onLoadingChanged,
-            pushData,
-            onError,
+            afterRender: this.afterRender,
+            onLoadingChanged: this.onLoadingChanged,
+            pushData: this.pushData,
+            onError: this.onError,
             onExportReady: this.onExportReady,
             ErrorComponent: null as any,
             intl: this.intl,
@@ -435,13 +433,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected onExportReady(exportResult: IExportFunction) {
-        const { onExportReady } = this.callbacks;
-        if (onExportReady) {
-            onExportReady(exportResult);
-        }
-    }
-
     protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             const properties: IVisualizationProperties = get(
@@ -464,7 +455,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             render(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
-                    pushData={this.callbacks.pushData}
+                    pushData={this.pushData}
                     properties={sanitizedProperties}
                 />,
                 document.querySelector(this.configPanelElement),

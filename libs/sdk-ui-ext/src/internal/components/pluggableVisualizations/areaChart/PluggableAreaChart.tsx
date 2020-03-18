@@ -117,7 +117,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel
@@ -125,7 +125,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     colors={this.colors}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     references={this.references}
                     pushData={this.handlePushData}
                     type={this.type}

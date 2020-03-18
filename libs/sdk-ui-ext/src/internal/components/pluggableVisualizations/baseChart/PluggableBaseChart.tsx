@@ -6,18 +6,10 @@ import {
     IDimension,
     IInsight,
     insightBuckets,
-    insightHasDataDefined,
     insightHasMeasures,
     insightMeasures,
 } from "@gooddata/sdk-model";
-import {
-    BucketNames,
-    ChartType,
-    GoodDataSdkError,
-    IExportFunction,
-    ILoadingState,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
+import { BucketNames, ChartType, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
@@ -77,7 +69,6 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
-import noop = require("lodash/noop");
 import set = require("lodash/set");
 import tail = require("lodash/tail");
 
@@ -85,11 +76,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
     protected type: ChartType;
     protected featureFlags: ISettings;
-    protected isError: boolean;
-    protected isLoading: boolean;
     protected defaultControlsProperties: IVisualizationProperties;
     protected customControlsProperties: IVisualizationProperties;
-    protected insight: IInsight;
     protected colors: IColorConfiguration;
     protected references: IReferences;
     protected ignoreUndoRedo: boolean;
@@ -105,11 +93,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.environment = props.environment;
         this.type = VisualizationTypes.COLUMN;
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
-        this.onError = props.callbacks.onError && this.onError.bind(this);
-        this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
-        this.onLoadingChanged = props.callbacks.onLoadingChanged && this.onLoadingChanged.bind(this);
-        this.isError = false;
-        this.isLoading = false;
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
         this.setCustomControlsProperties({});
@@ -205,12 +188,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return stacks;
     }
 
-    protected updateInstanceProperties(options: IVisProps, insight: IInsight) {
-        super.updateInstanceProperties(options, insight);
-
-        this.insight = insight;
-    }
-
     protected checkBeforeRender(insight: IInsight): boolean {
         super.checkBeforeRender(insight);
 
@@ -226,19 +203,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         insight: IInsight,
         executionFactory: IExecutionFactory,
     ) {
-        if (!insightHasDataDefined(insight)) {
-            // there is nothing in the insight's bucket that can be visualized
-            // bail out
-            return;
-        }
-
         const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
-        const afterRender = get(this.callbacks, "afterRender", noop);
-        const onDrill = get(this.callbacks, "onDrill", noop);
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
@@ -254,9 +223,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.renderFun(
             <BaseChart
                 execution={execution}
-                afterRender={afterRender}
+                afterRender={this.afterRender}
                 drillableItems={drillableItems}
-                onDrill={onDrill}
+                onDrill={this.onDrill}
                 onError={this.onError}
                 onExportReady={this.onExportReady}
                 onLoadingChanged={this.onLoadingChanged}
@@ -280,12 +249,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             supportedProperties: { controls: supportedProperties },
         };
 
-        this.callbacks.pushData({
+        this.pushData({
             initialProperties,
         });
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BaseChartConfigurationPanel
@@ -293,7 +262,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}
@@ -312,7 +281,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handleConfirmedColorMapping(data: any) {
-        const { pushData = noop } = this.callbacks;
         const resultingData = data;
         this.colors = data.colors;
 
@@ -331,15 +299,15 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.visualizationProperties = resultingData.properties;
         }
 
-        this.renderConfigurationPanel();
+        this.renderConfigurationPanel(this.currentInsight);
 
         const openAsReportConfig = this.getOpenAsReportConfig(resultingData.properties);
 
         if (this.ignoreUndoRedo) {
             this.ignoreUndoRedo = false;
-            pushData(resultingData);
+            this.pushData(resultingData);
         } else {
-            pushData({
+            this.pushData({
                 openAsReport: openAsReportConfig,
                 ignoreUndoRedo: true,
                 ...resultingData,
@@ -348,13 +316,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handlePushData = (data: any) => {
-        const { pushData = noop } = this.callbacks;
-
         const resultingData = data;
         if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
-            pushData({
+            this.pushData({
                 ...resultingData,
                 references: this.references,
             });
@@ -395,16 +361,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private onError(error: GoodDataSdkError) {
-        const onError = get(this.callbacks, "onError");
-
-        if (onError) {
-            onError(error);
-            this.isError = true;
-            this.renderConfigurationPanel();
-        }
-    }
-
     private getSupportedControls(insight: IInsight) {
         let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
@@ -434,24 +390,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             ...supportedControls,
             ...customControls,
         };
-    }
-
-    private onExportReady(exportResult: IExportFunction) {
-        const { onExportReady } = this.callbacks;
-        if (onExportReady) {
-            onExportReady(exportResult);
-        }
-    }
-
-    private onLoadingChanged(loadingState: ILoadingState) {
-        const onLoadingChanged = get(this.callbacks, "onLoadingChanged");
-
-        if (onLoadingChanged) {
-            onLoadingChanged(loadingState);
-            this.isError = false;
-            this.isLoading = loadingState.isLoading;
-            this.renderConfigurationPanel();
-        }
     }
 
     private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsight) {

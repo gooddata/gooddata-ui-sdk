@@ -131,7 +131,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.dummyInsight, executionFactory);
+        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
@@ -163,7 +163,10 @@ describe("PluggableBaseChart", () => {
                 },
             },
         };
-        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(
+            testMocks.insightWithSingleMeasureAndViewBy,
+            visualizationProperties,
+        );
 
         visualization.update(options, testInsight, executionFactory);
 
@@ -230,8 +233,10 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.dummyInsight, executionFactory);
-        const expectedConfigPanelElement = dummyConfigurationRenderer(testMocks.dummyInsight);
+        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
+        const expectedConfigPanelElement = dummyConfigurationRenderer(
+            testMocks.insightWithSingleMeasureAndViewBy,
+        );
 
         // arguments of last called render method
         const renderCallsCount = mockReactRender.mock.calls.length;
@@ -258,7 +263,10 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = { controls: { legend: {} } };
-        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(
+            testMocks.insightWithSingleMeasureAndViewBy,
+            visualizationProperties,
+        );
 
         visualization.update(options, testInsight, executionFactory);
 
