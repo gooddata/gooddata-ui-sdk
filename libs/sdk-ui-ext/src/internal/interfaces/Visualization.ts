@@ -43,6 +43,9 @@ export interface IDimensions {
     height: number;
 }
 
+/**
+ * @alpha
+ */
 export interface IVisProps {
     dimensions?: IDimensions;
     custom?: ICustomProps;
@@ -265,8 +268,29 @@ export interface IExtendedReferencePoint {
     uiConfig: IUiConfig;
 }
 
+/**
+ * @alpha
+ */
 export interface IVisualization {
-    // visualizationProperties are used for visualization configuration
+    /**
+     * Update and re-render visualization to reflect change of insight state.
+     *
+     * Currently it is possible that context (AD/KD) will send insight that is not in a valid state:
+     *
+     * -  insight might be empty
+     * -  insight might not be completely defined (user did not yet specify measures etc)
+     *
+     * It is the responsibility of the implementation to verify the state of insight during the update and
+     * if there is anything amiss communicate with the context using the onError callback which it
+     * received during construction time via {@link IVisConstruct}
+     *
+     * The loading state of the visualization must be communicated using the onLoadingChanged callback which
+     * is also passed during construction time.
+     *
+     * @param props - some runtime properties
+     * @param insight - new state of insight
+     * @param executionFactory - execution factory to use when triggering calculation on backend
+     */
     update(props: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void;
 
     unmount(): void;
@@ -303,3 +327,19 @@ export interface IGdcConfig {
  * @alpha
  */
 export const ConfigPanelClassName = "gd-configuration-panel-content";
+
+/**
+ * @alpha
+ */
+export const PluggableVisualizationErrorCodes = {
+    /**
+     * If pluggable visualization is asked to render itself but its buckets do not contain the right 'stuff',
+     * then this is the error code to communicate the fact.
+     */
+    INVALID_BUCKETS: "INVALID_BUCKETS",
+
+    /**
+     * This error means that empty AFM was went to the GoodData.UI and as such can't be executed.
+     */
+    EMPTY_AFM: "EMPTY_AFM",
+};

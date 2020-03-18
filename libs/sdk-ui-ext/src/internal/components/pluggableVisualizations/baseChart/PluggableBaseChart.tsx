@@ -6,24 +6,13 @@ import {
     IDimension,
     IInsight,
     insightBuckets,
-    insightHasDataDefined,
+    insightHasMeasures,
     insightMeasures,
-    insightProperties,
 } from "@gooddata/sdk-model";
-import {
-    BucketNames,
-    ChartType,
-    DefaultLocale,
-    GoodDataSdkError,
-    IExportFunction,
-    ILoadingState,
-    ILocale,
-    VisualizationTypes,
-} from "@gooddata/sdk-ui";
+import { BucketNames, ChartType, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
-import { IntlShape } from "react-intl";
 
 import { BUCKETS } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -39,10 +28,10 @@ import {
     IReferencePoint,
     IReferences,
     IUiConfig,
-    IVisCallbacks,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    PluggableVisualizationErrorCodes,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -59,11 +48,9 @@ import {
 import { getValidProperties } from "../../../utils/colors";
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import {
     getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
-    getSupportedProperties,
     getSupportedPropertiesControls,
     hasColorMapping,
     isEmptyObject,
@@ -82,52 +69,30 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
-import noop = require("lodash/noop");
 import set = require("lodash/set");
 import tail = require("lodash/tail");
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
-    protected callbacks: IVisCallbacks;
     protected type: ChartType;
-    protected intl: IntlShape;
     protected featureFlags: ISettings;
-    protected isError: boolean;
-    protected isLoading: boolean;
-    protected options: IVisProps;
-    protected visualizationProperties: IVisualizationProperties;
     protected defaultControlsProperties: IVisualizationProperties;
     protected customControlsProperties: IVisualizationProperties;
-    protected propertiesMeta: any;
-    protected insight: IInsight;
-    protected supportedPropertiesList: string[];
-    protected configPanelElement: string;
     protected colors: IColorConfiguration;
     protected references: IReferences;
     protected ignoreUndoRedo: boolean;
     protected axis: string;
     protected secondaryAxis: AxisType;
-    protected locale: ILocale;
     protected environment: string;
-    private element: string;
-    private renderFun: (component: any, target: Element) => void;
+    private readonly renderFun: (component: any, target: Element) => void;
 
     constructor(props: IVisConstruct) {
-        super();
+        super(props);
+
         this.projectId = props.projectId;
-        this.element = props.element;
-        this.configPanelElement = props.configPanelElement;
         this.environment = props.environment;
-        this.callbacks = props.callbacks;
         this.type = VisualizationTypes.COLUMN;
-        this.locale = props.locale ? props.locale : DefaultLocale;
-        this.intl = createInternalIntl(this.locale);
         this.featureFlags = props.featureFlags ? props.featureFlags : {};
-        this.onError = props.callbacks.onError && this.onError.bind(this);
-        this.onExportReady = props.callbacks.onExportReady && this.onExportReady.bind(this);
-        this.onLoadingChanged = props.callbacks.onLoadingChanged && this.onLoadingChanged.bind(this);
-        this.isError = false;
-        this.isLoading = false;
         this.ignoreUndoRedo = false;
         this.defaultControlsProperties = {};
         this.setCustomControlsProperties({});
@@ -137,20 +102,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     public unmount() {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
-    }
-
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        const visualizationProperties = insightProperties(insight);
-        this.options = options;
-        this.visualizationProperties = getSupportedProperties(
-            visualizationProperties,
-            this.supportedPropertiesList,
-        );
-        this.propertiesMeta = get(visualizationProperties, "propertiesMeta", null);
-        this.insight = insight;
-
-        this.renderVisualization(this.options, this.insight, executionFactory);
-        this.renderConfigurationPanel();
     }
 
     public getUiConfig(): IUiConfig {
@@ -237,24 +188,26 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return stacks;
     }
 
+    protected checkBeforeRender(insight: IInsight): boolean {
+        super.checkBeforeRender(insight);
+
+        if (!insightHasMeasures(insight)) {
+            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
+        }
+
+        return true;
+    }
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsight,
         executionFactory: IExecutionFactory,
     ) {
-        if (!insightHasDataDefined(insight)) {
-            // there is nothing in the insight's bucket that can be visualized
-            // bail out
-            return;
-        }
-
         const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
-        const afterRender = get(this.callbacks, "afterRender", noop);
-        const onDrill = get(this.callbacks, "onDrill", noop);
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
@@ -270,9 +223,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.renderFun(
             <BaseChart
                 execution={execution}
-                afterRender={afterRender}
+                afterRender={this.afterRender}
                 drillableItems={drillableItems}
-                onDrill={onDrill}
+                onDrill={this.onDrill}
                 onError={this.onError}
                 onExportReady={this.onExportReady}
                 onLoadingChanged={this.onLoadingChanged}
@@ -296,12 +249,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             supportedProperties: { controls: supportedProperties },
         };
 
-        this.callbacks.pushData({
+        this.pushData({
             initialProperties,
         });
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BaseChartConfigurationPanel
@@ -309,7 +262,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                     references={this.references}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     colors={this.colors}
                     pushData={this.handlePushData}
                     type={this.type}
@@ -328,7 +281,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handleConfirmedColorMapping(data: any) {
-        const { pushData = noop } = this.callbacks;
         const resultingData = data;
         this.colors = data.colors;
 
@@ -347,15 +299,15 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.visualizationProperties = resultingData.properties;
         }
 
-        this.renderConfigurationPanel();
+        this.renderConfigurationPanel(this.currentInsight);
 
         const openAsReportConfig = this.getOpenAsReportConfig(resultingData.properties);
 
         if (this.ignoreUndoRedo) {
             this.ignoreUndoRedo = false;
-            pushData(resultingData);
+            this.pushData(resultingData);
         } else {
-            pushData({
+            this.pushData({
                 openAsReport: openAsReportConfig,
                 ignoreUndoRedo: true,
                 ...resultingData,
@@ -364,13 +316,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected handlePushData = (data: any) => {
-        const { pushData = noop } = this.callbacks;
-
         const resultingData = data;
         if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
-            pushData({
+            this.pushData({
                 ...resultingData,
                 references: this.references,
             });
@@ -411,16 +361,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private onError(error: GoodDataSdkError) {
-        const onError = get(this.callbacks, "onError");
-
-        if (onError) {
-            onError(error);
-            this.isError = true;
-            this.renderConfigurationPanel();
-        }
-    }
-
     private getSupportedControls(insight: IInsight) {
         let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
@@ -450,24 +390,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             ...supportedControls,
             ...customControls,
         };
-    }
-
-    private onExportReady(exportResult: IExportFunction) {
-        const { onExportReady } = this.callbacks;
-        if (onExportReady) {
-            onExportReady(exportResult);
-        }
-    }
-
-    private onLoadingChanged(loadingState: ILoadingState) {
-        const onLoadingChanged = get(this.callbacks, "onLoadingChanged");
-
-        if (onLoadingChanged) {
-            onLoadingChanged(loadingState);
-            this.isError = false;
-            this.isLoading = loadingState.isLoading;
-            this.renderConfigurationPanel();
-        }
     }
 
     private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsight) {

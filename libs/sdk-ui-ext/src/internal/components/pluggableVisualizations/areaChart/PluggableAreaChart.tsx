@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
@@ -62,9 +61,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return cloneDeep(DEFAULT_AREA_UICONFIG);
     }
 
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void {
+    protected updateInstanceProperties(options: IVisProps, insight: IInsight) {
+        super.updateInstanceProperties(options, insight);
+
         this.updateCustomSupportedProperties(insight);
-        super.update(options, insight, executionFactory);
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -117,7 +117,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel() {
+    protected renderConfigurationPanel(insight: IInsight) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel
@@ -125,7 +125,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                     colors={this.colors}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
-                    insight={this.insight}
+                    insight={insight}
                     references={this.references}
                     pushData={this.handlePushData}
                     type={this.type}

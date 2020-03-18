@@ -305,25 +305,6 @@ describe("PluggablePivotTable", () => {
             expect(createElementSpy).toHaveBeenCalledTimes(1);
             expect(createElementSpy.mock.calls[0][0]).toBe(CorePivotTable);
 
-            const defaultConfig = {
-                menu: {
-                    aggregations: true,
-                    aggregationsSubMenu: true,
-                },
-            };
-            const props: any = createElementSpy.mock.calls[0][1];
-            expect(props.afterRender).toEqual(defaultProps.callbacks.afterRender);
-            expect(props.drillableItems).toEqual(options.custom.drillableItems);
-            expect(props.locale).toEqual(options.locale);
-            expect(props.config).toEqual(defaultConfig);
-            expect(props.intl).toBeTruthy();
-            expect(props.onError).toEqual(defaultProps.callbacks.onError);
-            expect(props.onLoadingChanged).toEqual(defaultProps.callbacks.onLoadingChanged);
-            expect(props.pushData).toEqual(defaultProps.callbacks.pushData);
-            expect(props.totalsEditAllowed).toEqual(options.custom.totalsEditAllowed);
-            expect(props.ErrorComponent).toBeNull();
-            expect(props.LoadingComponent).toBeUndefined();
-
             const targetNode = document.querySelector(defaultProps.element);
             expect(renderSpy).toHaveBeenCalledWith({}, targetNode);
         });

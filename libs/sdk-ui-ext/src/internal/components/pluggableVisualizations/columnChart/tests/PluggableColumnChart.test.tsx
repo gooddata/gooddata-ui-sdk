@@ -85,7 +85,7 @@ describe("PluggableColumnChart", () => {
 
         createComponent(props);
 
-        expect(pushData).toBeCalledWith({ initialProperties });
+        expect(pushData).toBeCalledWith({ initialProperties }, undefined);
     });
 
     describe("Over Time Comparison", () => {

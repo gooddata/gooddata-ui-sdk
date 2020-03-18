@@ -100,18 +100,6 @@ describe("PluggableXirr", () => {
             xirr.update(options, testMocks.insightWithSingleMeasure, executionFactory);
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
-            expect(reactCreateElementSpy.mock.calls[0][1]).toMatchObject({
-                config: undefined,
-                drillableItems: options.custom.drillableItems,
-                locale: options.locale,
-                afterRender: defaultProps.callbacks.afterRender,
-                onLoadingChanged: defaultProps.callbacks.onLoadingChanged,
-                pushData: defaultProps.callbacks.pushData,
-                onError: defaultProps.callbacks.onError,
-                ErrorComponent: null,
-                LoadingComponent: null,
-                execution: expect.any(Object),
-            });
             expect(mockRenderFun).toHaveBeenCalledWith(
                 fakeElement,
                 document.querySelector(defaultProps.element),
@@ -139,20 +127,6 @@ describe("PluggableXirr", () => {
             xirr.update(options, testMocks.insightWithSingleMeasure, executionFactory);
 
             expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
-            expect(reactCreateElementSpy.mock.calls[0][1]).toMatchObject({
-                config: {
-                    disableDrillUnderline: true,
-                },
-                drillableItems: options.custom.drillableItems,
-                locale: options.locale,
-                afterRender: defaultProps.callbacks.afterRender,
-                onLoadingChanged: defaultProps.callbacks.onLoadingChanged,
-                pushData: defaultProps.callbacks.pushData,
-                onError: defaultProps.callbacks.onError,
-                ErrorComponent: null,
-                LoadingComponent: null,
-                execution: expect.any(Object),
-            });
 
             reactCreateElementSpy.mockReset();
         });

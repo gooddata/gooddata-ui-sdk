@@ -19,4 +19,5 @@ export {
     IVisualizationOptions,
     ConfigPanelClassName,
     IGdcConfig,
+    PluggableVisualizationErrorCodes,
 } from "./interfaces/Visualization";

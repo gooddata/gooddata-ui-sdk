@@ -14,12 +14,31 @@ import { AbstractPluggableVisualization } from "../pluggableVisualizations/Abstr
 import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
+import { IInsight } from "@gooddata/sdk-model";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
 
 const { delay } = testUtils;
 
 class DummyClass extends AbstractPluggableVisualization {
+    constructor(props: IVisConstruct) {
+        super(props);
+    }
+
     public update(opts?: IVisProps) {
         noop(opts);
+        return;
+    }
+
+    protected renderConfigurationPanel(_insight: IInsight): void {
+        return;
+    }
+
+    protected renderVisualization(
+        _options: IVisProps,
+        _insight: IInsight,
+        _executionFactory: IExecutionFactory,
+    ): void {
         return;
     }
 
@@ -65,7 +84,7 @@ describe("BaseVisualization", () => {
 
         class DummyTable extends DummyClass {
             constructor(props: IVisConstruct) {
-                super();
+                super(props);
                 tableConstructorCall(props);
             }
             public update(opts: IVisProps) {
@@ -86,7 +105,7 @@ describe("BaseVisualization", () => {
         const columnAddBucketItemsCall = jest.fn();
         class DummyColumn extends DummyClass {
             constructor() {
-                super();
+                super(DummyVisConstruct);
                 columnConstructorCall();
             }
 

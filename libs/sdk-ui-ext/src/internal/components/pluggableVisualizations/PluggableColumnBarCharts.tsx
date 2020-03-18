@@ -61,7 +61,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     public isOpenAsReportSupported(): boolean {
         return (
             super.isOpenAsReportSupported() &&
-            !haveManyViewItems(this.insight) &&
+            !haveManyViewItems(this.currentInsight) &&
             !isStackingMeasure(this.visualizationProperties) &&
             !isStackingToPercent(this.visualizationProperties)
         );

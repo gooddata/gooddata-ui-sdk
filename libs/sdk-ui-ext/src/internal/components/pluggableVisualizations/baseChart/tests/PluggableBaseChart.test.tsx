@@ -65,7 +65,15 @@ describe("PluggableBaseChart", () => {
 
     it("should not render chart when insight has no data to render", () => {
         const mockRenderFun = jest.fn();
-        const props = { ...defaultProps, renderFun: mockRenderFun };
+        const onError = jest.fn();
+        const props = {
+            ...defaultProps,
+            renderFun: mockRenderFun,
+            callbacks: {
+                ...callbacks,
+                onError,
+            },
+        };
 
         const visualization = createComponent(props);
         const options: IVisProps = {
@@ -79,6 +87,34 @@ describe("PluggableBaseChart", () => {
         visualization.update(options, testMocks.emptyInsight, executionFactory);
 
         expect(mockRenderFun).toHaveBeenCalledTimes(0);
+        expect(onError).toHaveBeenCalled();
+    });
+
+    it("should not render chart when insight has no measure", () => {
+        const mockRenderFun = jest.fn();
+        const onError = jest.fn();
+        const props = {
+            ...defaultProps,
+            renderFun: mockRenderFun,
+            callbacks: {
+                ...callbacks,
+                onError,
+            },
+        };
+
+        const visualization = createComponent(props);
+        const options: IVisProps = {
+            dimensions: { height: null },
+            locale: dummyLocale,
+            custom: {
+                stickyHeaderOffset: 3,
+            },
+        };
+
+        visualization.update(options, testMocks.insightWithSingleAttribute, executionFactory);
+
+        expect(mockRenderFun).toHaveBeenCalledTimes(0);
+        expect(onError).toHaveBeenCalled();
     });
 
     it("should render chart with height and right legend position when environment is dashboards", () => {
@@ -95,7 +131,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.dummyInsight, executionFactory);
+        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
 
         const renderCallsCount = mockRenderFun.mock.calls.length;
         expect(mockRenderFun.mock.calls[renderCallsCount - 1][0]).toBeDefined();
@@ -127,7 +163,10 @@ describe("PluggableBaseChart", () => {
                 },
             },
         };
-        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(
+            testMocks.insightWithSingleMeasureAndViewBy,
+            visualizationProperties,
+        );
 
         visualization.update(options, testInsight, executionFactory);
 
@@ -194,8 +233,10 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        visualization.update(options, testMocks.dummyInsight, executionFactory);
-        const expectedConfigPanelElement = dummyConfigurationRenderer(testMocks.dummyInsight);
+        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, executionFactory);
+        const expectedConfigPanelElement = dummyConfigurationRenderer(
+            testMocks.insightWithSingleMeasureAndViewBy,
+        );
 
         // arguments of last called render method
         const renderCallsCount = mockReactRender.mock.calls.length;
@@ -222,7 +263,10 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = { controls: { legend: {} } };
-        const testInsight = insightSetProperties(testMocks.dummyInsight, visualizationProperties);
+        const testInsight = insightSetProperties(
+            testMocks.insightWithSingleMeasureAndViewBy,
+            visualizationProperties,
+        );
 
         visualization.update(options, testInsight, executionFactory);
 

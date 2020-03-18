@@ -7,21 +7,17 @@ import {
     IDimension,
     IInsight,
     insightBucket,
-    insightHasDataDefined,
-    insightProperties,
     MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
-import { BucketNames, DefaultLocale, ILocale } from "@gooddata/sdk-ui";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import * as React from "react";
 import { render } from "react-dom";
-import { IntlShape } from "react-intl";
 import {
     IExtendedReferencePoint,
     IReferencePoint,
-    IVisCallbacks,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
@@ -35,8 +31,6 @@ import {
 
 import { hasGlobalDateFilter } from "../../../utils/bucketRules";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
-
-import { createInternalIntl } from "../../../utils/internalIntlProvider";
 import {
     getReferencePointWithSupportedProperties,
     getSupportedProperties,
@@ -51,34 +45,18 @@ import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 
 export class PluggableXirr extends AbstractPluggableVisualization {
-    protected configPanelElement: string;
-    private callbacks: IVisCallbacks;
-    private intl: IntlShape;
-    private locale: ILocale;
-    private visualizationProperties: IVisualizationProperties;
-    private element: string;
     private settings?: ISettings;
     private renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
-        super();
-        this.element = props.element;
-        this.configPanelElement = props.configPanelElement;
-        this.callbacks = props.callbacks;
-        this.locale = props.locale ? props.locale : DefaultLocale;
-        this.intl = createInternalIntl(this.locale);
+        super(props);
+
         this.settings = props.featureFlags;
         this.renderFun = props.renderFun;
     }
 
     public unmount() {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
-    }
-
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory) {
-        this.visualizationProperties = insightProperties(insight);
-        this.renderVisualization(options, insight, executionFactory);
-        this.renderConfigurationPanel();
     }
 
     public getExtendedReferencePoint = async (
@@ -114,13 +92,8 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         insight: IInsight,
         executionFactory: IExecutionFactory,
     ) {
-        if (!insightHasDataDefined(insight)) {
-            return;
-        }
-
         const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
-        const { afterRender, onError, onLoadingChanged, pushData, onDrill } = this.callbacks;
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getXirrDimensions(insight));
@@ -129,13 +102,13 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             <CoreXirr
                 execution={execution}
                 drillableItems={drillableItems}
-                onDrill={onDrill}
+                onDrill={this.onDrill}
                 locale={locale}
                 config={updateConfigWithSettings(config, this.settings)}
-                afterRender={afterRender}
-                onLoadingChanged={onLoadingChanged}
-                pushData={pushData}
-                onError={onError}
+                afterRender={this.afterRender}
+                onLoadingChanged={this.onLoadingChanged}
+                pushData={this.pushData}
+                onError={this.onError}
                 LoadingComponent={null}
                 ErrorComponent={null}
             />,
@@ -154,7 +127,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
             render(
                 <UnsupportedConfigurationPanel
                     locale={this.locale}
-                    pushData={this.callbacks.pushData}
+                    pushData={this.pushData}
                     properties={getSupportedProperties(properties, this.supportedPropertiesList)}
                 />,
                 document.querySelector(this.configPanelElement),
