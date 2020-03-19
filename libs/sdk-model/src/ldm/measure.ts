@@ -44,27 +44,62 @@ export type IMeasureExpressionToken =
     | ITextExpressionToken;
 
 /**
+ * Parsed maql token referencing metadata object
+ *
  * @public
  */
 export interface IObjectExpressionToken {
+    /**
+     * Expression token type
+     */
     type: "metadataObject";
+
+    /**
+     * Parsed maql value, in this case it's metadata object uri
+     */
     value: string;
+
+    /**
+     * Referenced metadata object
+     */
     meta: IMetadataObject;
 }
 
 /**
+ * Parsed maql token referencing attribute element
+ *
  * @public
  */
 export interface IAttributeElementExpressionToken {
+    /**
+     * Expression token type
+     */
     type: "attributeElement";
+
+    /**
+     * Parsed maql value, in this case it's attribute element uri
+     */
     value: string;
+
+    /**
+     * Referenced attribute element
+     */
     element: IAttributeElement;
 }
 
 /**
+ * Parsed maql text value
+ *
  * @public
  */
 export interface ITextExpressionToken {
+    /**
+     * Expression token type
+     */
     type: "text";
+
+    /**
+     * Parsed maql text value
+     */
     value: string;
 }

@@ -10,6 +10,9 @@ import { IMeasure } from "../../../execution/measure";
 import { newMeasure, MeasureModifications, MeasureBuilder } from "../../../execution/measure/factory";
 
 /**
+ * Catalog measure builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogMeasureBuilder<
@@ -40,6 +43,10 @@ export class CatalogMeasureBuilder<
 }
 
 /**
+ * Catalog measure factory
+ *
+ * @param modifications - catalog measure builder modifications to perform
+ * @returns created catalog measure
  * @public
  */
 export const newCatalogMeasure = (
@@ -47,6 +54,11 @@ export const newCatalogMeasure = (
 ): ICatalogMeasure => builderFactory(CatalogMeasureBuilder, { type: "measure" }, modifications);
 
 /**
+ * Converts catalog measure to execution measure
+ *
+ * @param catalogMeasure - catalog measure to convert
+ * @param modifications - catalog measure builder modifications to perform before conversion
+ * @returns measure converted to the execution model
  * @public
  */
 export const catalogMeasureToExecutionMeasure = (

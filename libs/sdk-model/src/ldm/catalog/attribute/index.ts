@@ -10,8 +10,19 @@ import { IGroupableCatalogItemBase } from "../group";
  * @public
  */
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
+    /**
+     * Catalog item type
+     */
     type: "attribute";
+
+    /**
+     * Attribute metadata object that catalog attribute represents
+     */
     attribute: IAttributeMetadataObject;
+
+    /**
+     * Default display form of the attribute
+     */
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
 }
 

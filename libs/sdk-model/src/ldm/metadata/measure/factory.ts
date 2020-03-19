@@ -6,6 +6,9 @@ import { MetadataObjectBuilder } from "../factory";
 import { IMeasureMetadataObject } from ".";
 
 /**
+ * Measure metadata object builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class MeasureMetadataObjectBuilder<
@@ -23,6 +26,11 @@ export class MeasureMetadataObjectBuilder<
 }
 
 /**
+ * Measure metadata object factory
+ *
+ * @param ref - measure reference
+ * @param modifications - measure builder modifications to perform
+ * @returns created measure metadata object
  * @public
  */
 export const newMeasureMetadataObject = (

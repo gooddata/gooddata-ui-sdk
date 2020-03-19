@@ -4,12 +4,19 @@ import { IGroupableCatalogItemBase } from "../group";
 import { IMeasureMetadataObject } from "../../metadata/measure";
 
 /**
- * Type representing catalog attribute
+ * Type representing catalog measure
  *
  * @public
  */
 export interface ICatalogMeasure extends IGroupableCatalogItemBase {
+    /**
+     * Catalog item type
+     */
     type: "measure";
+
+    /**
+     * Measure metadata object that catalog measure represents
+     */
     measure: IMeasureMetadataObject;
 }
 

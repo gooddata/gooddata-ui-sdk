@@ -292,7 +292,6 @@ export interface IElementQuery {
     query(): Promise<IElementQueryResult>;
     withLimit(limit: number): IElementQuery;
     withOffset(offset: number): IElementQuery;
-    // @alpha
     withOptions(options: IElementQueryOptions): IElementQuery;
 }
 
@@ -301,23 +300,15 @@ export interface IElementQueryFactory {
     forDisplayForm(ref: ObjRef): IElementQuery;
 }
 
-// @alpha (undocumented)
+// @public
 export interface IElementQueryOptions {
-    // (undocumented)
     complement?: boolean;
-    // (undocumented)
     filter?: string;
-    // (undocumented)
     includeTotalCountWithoutFilters?: boolean;
-    // (undocumented)
     order?: SortDirection;
-    // (undocumented)
     prompt?: string;
-    // (undocumented)
     restrictiveDefinition?: string;
-    // (undocumented)
     restrictiveDefinitionContent?: object;
-    // (undocumented)
     uris?: string[];
 }
 
@@ -403,7 +394,6 @@ export interface IPagedResource<TItem> {
     readonly items: TItem[];
     // (undocumented)
     readonly limit: number;
-    // (undocumented)
     next(): Promise<IPagedResource<TItem>>;
     // (undocumented)
     readonly offset: number;
@@ -530,112 +520,77 @@ export interface IUserSettingsService {
 
 // @public
 export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
-    // (undocumented)
     availableItems(): IWorkspaceCatalogAvailableItemsFactory;
 }
 
 // @public
 export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogAvailableItemsFactory, IWorkspaceCatalogWithAvailableItemsFactoryOptions> {
-    // (undocumented)
     forInsight(insight: IInsightDefinition): IWorkspaceCatalogAvailableItemsFactory;
-    // (undocumented)
     forItems(items: AttributeOrMeasure[]): IWorkspaceCatalogAvailableItemsFactory;
-    // (undocumented)
     load(): Promise<IWorkspaceCatalogWithAvailableItems>;
 }
 
 // @public
 export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions> {
-    // (undocumented)
     load(): Promise<IWorkspaceCatalog>;
 }
 
 // @public
-export interface IWorkspaceCatalogFactoryMethods<T, TOptions> {
-    // (undocumented)
-    excludeTags(tags: ObjRef[]): T;
-    // (undocumented)
-    forDataset(dataset: ObjRef): T;
-    // (undocumented)
-    forTypes(types: CatalogItemType[]): T;
-    // (undocumented)
-    includeTags(tags: ObjRef[]): T;
-    // (undocumented)
-    withOptions(options: TOptions): T;
+export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
+    excludeTags(tags: ObjRef[]): TFactory;
+    forDataset(dataset: ObjRef): TFactory;
+    forTypes(types: CatalogItemType[]): TFactory;
+    includeTags(tags: ObjRef[]): TFactory;
+    withOptions(options: TOptions): TFactory;
 }
 
 // @public
 export interface IWorkspaceCatalogFactoryOptions {
-    // (undocumented)
     dataset?: ObjRef;
-    // (undocumented)
     excludeTags: ObjRef[];
-    // (undocumented)
     includeTags: ObjRef[];
-    // (undocumented)
     production: boolean;
-    // (undocumented)
     types: CatalogItemType[];
 }
 
 // @public
 export interface IWorkspaceCatalogMethods {
-    // (undocumented)
     getAttributes(): ICatalogAttribute[];
-    // (undocumented)
     getDateDatasets(): ICatalogDateDataset[];
-    // (undocumented)
     getFacts(): ICatalogFact[];
-    // (undocumented)
     getGroups(): ICatalogGroup[];
-    // (undocumented)
     getItems(): CatalogItem[];
-    // (undocumented)
     getMeasures(): ICatalogMeasure[];
 }
 
 // @public
 export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
-    // (undocumented)
     getAvailableAttributes(): ICatalogAttribute[];
-    // (undocumented)
     getAvailableDateDatasets(): ICatalogDateDataset[];
-    // (undocumented)
     getAvailableFacts(): ICatalogFact[];
-    // (undocumented)
     getAvailableItems(): CatalogItem[];
-    // (undocumented)
     getAvailableMeasures(): ICatalogMeasure[];
 }
 
 // @public
 export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWorkspaceCatalogFactoryOptions {
-    // (undocumented)
     insight?: IInsightDefinition;
-    // (undocumented)
     items?: AttributeOrMeasure[];
 }
 
 // @public
 export interface IWorkspaceDatasetsService {
-    // (undocumented)
     getDatasets(): Promise<IDataset[]>;
 }
 
 // @public
 export interface IWorkspaceInsights {
-    // (undocumented)
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
-    // (undocumented)
     deleteInsight(ref: ObjRef): Promise<void>;
-    // (undocumented)
     getInsight(ref: ObjRef): Promise<IInsight>;
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
-    // (undocumented)
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
-    // (undocumented)
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
-    // (undocumented)
     updateInsight(insight: IInsight): Promise<IInsight>;
 }
 
@@ -646,9 +601,8 @@ export interface IWorkspaceMetadata {
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
 }
 
-// @public (undocumented)
+// @public
 export interface IWorkspacePermissionsFactory {
-    // (undocumented)
     forCurrentUser(): Promise<IWorkspaceUserPermissions>;
 }
 
@@ -687,7 +641,7 @@ export interface IWorkspaceStylingService {
     colorPalette(): Promise<IColorPalette>;
 }
 
-// @public (undocumented)
+// @public
 export interface IWorkspaceUserPermissions {
     allPermissions(): IWorkspacePermissions;
     hasPermission(permission: WorkspacePermission): boolean;

@@ -4,12 +4,19 @@ import { IGroupableCatalogItemBase } from "../group";
 import { IFactMetadataObject } from "../../metadata/fact";
 
 /**
- * Type representing catalog attribute
+ * Type representing catalog fact
  *
  * @public
  */
 export interface ICatalogFact extends IGroupableCatalogItemBase {
+    /**
+     * Catalog item type
+     */
     type: "fact";
+
+    /**
+     * Fact metadata object that catalog fact represents
+     */
     fact: IFactMetadataObject;
 }
 

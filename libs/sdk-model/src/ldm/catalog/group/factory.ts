@@ -5,6 +5,8 @@ import { ICatalogGroup, IGroupableCatalogItemBase } from ".";
 import { ObjRef } from "../../../objRef";
 
 /**
+ * Groupable catalog item builder interface
+ *
  * @public
  */
 export interface IGroupableCatalogItemBuilder<
@@ -14,6 +16,9 @@ export interface IGroupableCatalogItemBuilder<
 }
 
 /**
+ * Groupable catalog item builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase>
@@ -26,6 +31,9 @@ export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = I
 }
 
 /**
+ * Catalog group builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogGroupBuilder<T extends ICatalogGroup = ICatalogGroup> extends Builder<T> {
@@ -41,6 +49,10 @@ export class CatalogGroupBuilder<T extends ICatalogGroup = ICatalogGroup> extend
 }
 
 /**
+ * Catalog group factory
+ *
+ * @param modifications - catalog group builder modifications to perform
+ * @returns created catalog group
  * @public
  */
 export const newCatalogGroup = (

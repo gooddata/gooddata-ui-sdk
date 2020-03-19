@@ -6,6 +6,9 @@ import { MetadataObjectBuilder } from "../factory";
 import { IAttributeDisplayFormMetadataObject } from ".";
 
 /**
+ * Attribute display form metadata object builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class AttributeDisplayFormMetadataObjectBuilder<
@@ -18,6 +21,11 @@ export class AttributeDisplayFormMetadataObjectBuilder<
 }
 
 /**
+ * Attribute display form metadata object factory
+ *
+ * @param ref - attribute display form reference
+ * @param modifications - attribute diplay form builder modifications to perform
+ * @returns created attribute display form metadata object
  * @public
  */
 export const newAttributeDisplayFormMetadataObject = (

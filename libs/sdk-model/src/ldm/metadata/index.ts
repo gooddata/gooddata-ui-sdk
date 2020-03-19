@@ -27,6 +27,8 @@ export {
 };
 
 /**
+ * Type that represents any metadata object
+ *
  * @public
  */
 export type MetadataObject =
@@ -37,8 +39,10 @@ export type MetadataObject =
     | IDataSetMetadataObject;
 
 /**
+ * Get metadata object identifier
+ *
  * @public
  */
-export const metadataObjectId = <T extends IMetadataObject>(metadataObject: T) => {
+export const metadataObjectId = (metadataObject: MetadataObject): string => {
     return metadataObject.id;
 };

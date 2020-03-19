@@ -6,6 +6,9 @@ import { MetadataObjectBuilder } from "../factory";
 import { IFactMetadataObject } from ".";
 
 /**
+ * Fact metadata object builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class FactMetadataObjectBuilder<
@@ -13,6 +16,11 @@ export class FactMetadataObjectBuilder<
 > extends MetadataObjectBuilder<T> {}
 
 /**
+ * Fact metadata object factory
+ *
+ * @param ref - fact reference
+ * @param modifications - fact builder modifications to perform
+ * @returns created fact metadata object
  * @public
  */
 export const newFactMetadataObject = (

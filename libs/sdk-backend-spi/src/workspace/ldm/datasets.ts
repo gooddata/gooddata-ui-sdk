@@ -3,10 +3,15 @@
 import { IDataset } from "@gooddata/sdk-model";
 
 /**
- * TODO: SDK8: add public doc
+ * Service for querying workspace datasets
  *
  * @public
  */
 export interface IWorkspaceDatasetsService {
+    /**
+     * Receive all workspace datasets
+     *
+     * @returns promise of workspace datasets
+     */
     getDatasets(): Promise<IDataset[]>;
 }

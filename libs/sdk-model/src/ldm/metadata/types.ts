@@ -43,6 +43,5 @@ export interface IMetadataObject {
     /**
      * Is production
      */
-
     production: boolean;
 }

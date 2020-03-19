@@ -9,6 +9,8 @@ import { ISettings } from "../../common/settings";
 export interface IWorkspaceSettingsService {
     /**
      * Asynchronously queries actual feature flags.
+     *
+     * @returns promise of workspace settings
      */
     query(): Promise<IWorkspaceSettings>;
 }

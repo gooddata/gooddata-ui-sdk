@@ -2,13 +2,15 @@
 import { IMetadataObject } from "../types";
 
 /**
+ * Measure metadata object
+ *
  * @public
  */
 export interface IMeasureMetadataObject extends IMetadataObject {
     type: "measure";
 
     /**
-     * Measure MAQL expressions
+     * Measure MAQL expression
      */
     expression: string;
 

@@ -8,6 +8,9 @@ import { ObjRef, isObjRef } from "../../../objRef";
 import { FactMetadataObjectBuilder, newFactMetadataObject } from "../../metadata";
 
 /**
+ * Catalog fact builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogFactBuilder<T extends ICatalogFact = ICatalogFact> extends GroupableCatalogItemBuilder<
@@ -27,6 +30,10 @@ export class CatalogFactBuilder<T extends ICatalogFact = ICatalogFact> extends G
 }
 
 /**
+ * Catalog fact factory
+ *
+ * @param modifications - catalog fact builder modifications to perform
+ * @returns created catalog fact
  * @public
  */
 export const newCatalogFact = (

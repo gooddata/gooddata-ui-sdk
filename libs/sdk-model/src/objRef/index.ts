@@ -30,6 +30,8 @@ export type UriRef = {
 };
 
 /**
+ * Metadata object types
+ *
  * @public
  */
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag";

@@ -6,7 +6,7 @@ import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDis
 import { IDataSetMetadataObject } from "../../metadata/dataSet";
 
 /**
- * Type representing catalog date attribute date type
+ * Type representing catalog date attribute granularity
  *
  * @public
  */
@@ -36,25 +36,51 @@ export type CatalogDateAttributeGranularity =
  * @public
  */
 export interface ICatalogDateAttribute {
+    /**
+     * Date attribute granularity
+     */
     granularity: CatalogDateAttributeGranularity;
+
+    /**
+     * Date attribute metadata object
+     */
     attribute: IAttributeMetadataObject;
+
+    /**
+     * Date attribute default display form metadata object
+     */
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
 }
 
 /**
- * Type representing catalog dateDataset
+ * Type representing catalog date dataset
  *
  * @public
  */
 export interface ICatalogDateDataset extends ICatalogItemBase {
+    /**
+     * Catalog item type
+     */
     type: "dateDataset";
+
+    /**
+     * Date dataset relevance - higher is more, default relevance is 0
+     */
     relevance: number;
+
+    /**
+     * Date dataset date attributes
+     */
     dateAttributes: ICatalogDateAttribute[];
+
+    /**
+     * Dataset metadata object that catalog date dataset represents
+     */
     dataSet: IDataSetMetadataObject;
 }
 
 /**
- * Type guard checking whether CatalogItem is an instance of ICatalogDateDataset.
+ * Type guard checking whether object is an instance of ICatalogDateDataset.
  *
  * @public
  */

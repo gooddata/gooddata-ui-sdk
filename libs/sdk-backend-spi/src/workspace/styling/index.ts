@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { IColorPalette } from "@gooddata/sdk-model";
 
@@ -14,6 +14,8 @@ import { IColorPalette } from "@gooddata/sdk-model";
 export interface IWorkspaceStylingService {
     /**
      * Asynchronously returns items in the color palette.
+     *
+     * @returns promise of color palette
      */
     colorPalette(): Promise<IColorPalette>;
 }

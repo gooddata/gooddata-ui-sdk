@@ -1,6 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 /**
  * We are using Builder pattern to create sdk-model objects https://en.wikipedia.org/wiki/Builder_pattern
+ * Each sdk-model should have its own builder, and you should use it.
+ *
  * This class serves to:
  * - unify all builders & builder factories across our codebase
  * - hold all common methods and properties of builders (e.g. item & build)
