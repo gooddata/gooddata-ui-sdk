@@ -1,32 +1,27 @@
 // (C) 2020 GoodData Corporation
-import { SDK } from "@gooddata/gd-bear-client";
 import invariant from "ts-invariant";
-import {
-    AuthenticationContext,
-    AuthenticatedPrincipal,
-    IAuthenticationProvider,
-    NotAuthenticated,
-} from "@gooddata/sdk-backend-spi";
+import { NotAuthenticated } from "@gooddata/sdk-backend-spi";
+import { BearAuthenticationProvider, BearAuthenticatedPrincipal, BearAuthenticationContext } from "./types";
 
 /**
  * Base for other IAuthenticationProvider implementations.
  *
  * @public
  */
-export abstract class BearAuthProviderBase implements IAuthenticationProvider {
-    protected principal: AuthenticatedPrincipal | undefined;
+export abstract class BearAuthProviderBase implements BearAuthenticationProvider {
+    protected principal: BearAuthenticatedPrincipal | undefined;
 
-    public abstract authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    public abstract authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal>;
 
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
-        const sdk = context.client as SDK;
+    public async deauthenticate(context: BearAuthenticationContext): Promise<void> {
+        const sdk = context.client;
         // we do not return the promise to logout as we do not want to return the response
         await sdk.user.logout();
     }
 
     public async getCurrentPrincipal(
-        context: AuthenticationContext,
-    ): Promise<AuthenticatedPrincipal | undefined> {
+        context: BearAuthenticationContext,
+    ): Promise<BearAuthenticatedPrincipal | undefined> {
         if (!this.principal) {
             await this.obtainCurrentPrincipal(context);
         }
@@ -34,8 +29,8 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
         return this.principal;
     }
 
-    protected async obtainCurrentPrincipal(context: AuthenticationContext): Promise<void> {
-        const sdk = context.client as SDK;
+    protected async obtainCurrentPrincipal(context: BearAuthenticationContext): Promise<void> {
+        const sdk = context.client;
         const currentProfile = await sdk.user.getCurrentProfile();
 
         this.principal = {
@@ -51,13 +46,13 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
  * @public
  */
 export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase
-    implements IAuthenticationProvider {
+    implements BearAuthenticationProvider {
     constructor(private readonly username: string, private readonly password: string) {
         super();
     }
 
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
-        const sdk = context.client as SDK;
+    public async authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal> {
+        const sdk = context.client;
 
         await sdk.user.login(this.username, this.password);
         await this.obtainCurrentPrincipal(context);
@@ -74,9 +69,9 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase
  *
  * @public
  */
-export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
-        const sdk = context.client as SDK;
+export class ContextDeferredAuthProvider extends BearAuthProviderBase implements BearAuthenticationProvider {
+    public async authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal> {
+        const sdk = context.client;
 
         // check if the user is logged in, implicitly triggering token renewal in case it is needed
         const isLoggedIn = await sdk.user.isLoggedIn();

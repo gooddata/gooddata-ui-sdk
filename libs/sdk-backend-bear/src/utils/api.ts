@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { AuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import last from "lodash/last";
+import { BearAuthenticatedPrincipal } from "../types";
 
 /**
  * Returns a user login md5. This is used in some bear client calls as a userId.
@@ -8,7 +9,7 @@ import last from "lodash/last";
  *
  * @internal
  */
-export const userLoginMd5FromAuthenticatedPrincipal = (principal: AuthenticatedPrincipal): string => {
+export const userLoginMd5FromAuthenticatedPrincipal = (principal: BearAuthenticatedPrincipal): string => {
     const selfLink: string = principal.userMeta?.links?.self;
     const userLoginMd5 = last(selfLink.split("/"));
 

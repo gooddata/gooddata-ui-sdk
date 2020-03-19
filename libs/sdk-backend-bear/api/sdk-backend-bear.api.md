@@ -9,19 +9,32 @@ import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { SDK } from '@gooddata/gd-bear-client';
 
 // @public
-export abstract class BearAuthProviderBase implements IAuthenticationProvider {
+export type BearAnalyticalBackend = IAnalyticalBackend<SDK, BearUserMeta>;
+
+// @public
+export type BearAuthenticatedPrincipal = AuthenticatedPrincipal<BearUserMeta>;
+
+// @public
+export type BearAuthenticationContext = AuthenticationContext<SDK>;
+
+// @public
+export type BearAuthenticationProvider = IAuthenticationProvider<SDK, BearUserMeta>;
+
+// @public
+export abstract class BearAuthProviderBase implements BearAuthenticationProvider {
     // (undocumented)
-    abstract authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    abstract authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: BearAuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal | undefined>;
     // (undocumented)
-    protected obtainCurrentPrincipal(context: AuthenticationContext): Promise<void>;
+    protected obtainCurrentPrincipal(context: BearAuthenticationContext): Promise<void>;
     // (undocumented)
-    protected principal: AuthenticatedPrincipal | undefined;
+    protected principal: BearAuthenticatedPrincipal | undefined;
 }
 
 // @public
@@ -31,21 +44,24 @@ export type BearBackendConfig = {
 };
 
 // @public
-function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
+function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): BearAnalyticalBackend;
 
 export default bearFactory;
 
 // @public
-export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
+export type BearUserMeta = any;
+
+// @public
+export class ContextDeferredAuthProvider extends BearAuthProviderBase implements BearAuthenticationProvider {
     // (undocumented)
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal>;
 }
 
 // @public
-export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
+export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase implements BearAuthenticationProvider {
     constructor(username: string, password: string);
     // (undocumented)
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: BearAuthenticationContext): Promise<BearAuthenticatedPrincipal>;
     }
 
 

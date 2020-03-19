@@ -1,20 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
-import { factory as createSdk, SDK } from "@gooddata/gd-bear-client";
+import { factory as createSdk, SDK as BearClient } from "@gooddata/gd-bear-client";
 import {
     AnalyticalBackendConfig,
-    AuthenticatedPrincipal,
-    AuthenticationContext,
-    AuthenticatedAsyncCall,
     ErrorConverter,
-    IAuthenticatedAsyncCallContext,
     AuthProviderCallGuard,
     BackendCapabilities,
-    IAnalyticalBackend,
     IAnalyticalWorkspace,
-    IAuthenticationProvider,
     NotAuthenticated,
     IWorkspaceQueryFactory,
-    IAuthProviderCallGuard,
     NoopAuthProvider,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
@@ -28,6 +21,15 @@ import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { GdcUser } from "@gooddata/gd-bear-model";
+import {
+    BearAnalyticalBackend,
+    BearAuthenticationProvider,
+    BearAuthenticatedPrincipal,
+    BearAuthProviderCallGuard,
+    BearAuthenticatedAsyncCall,
+    BearAuthenticationContext,
+    BearAuthenticatedAsyncCallContext,
+} from "../types";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -101,20 +103,20 @@ type TelemetryData = {
  *   someone calls withTelemetry on this instance => in that case there is no need to re-initiate login.
  *
  */
-export class BearBackend implements IAnalyticalBackend {
+export class BearBackend implements BearAnalyticalBackend {
     public readonly capabilities: BackendCapabilities = CAPABILITIES;
     public readonly config: AnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
-    private readonly authProvider: IAuthProviderCallGuard;
-    private readonly sdk: SDK;
+    private readonly authProvider: BearAuthProviderCallGuard;
+    private readonly sdk: BearClient;
 
     constructor(
         config?: AnalyticalBackendConfig,
         implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
         telemetry?: TelemetryData,
-        authProvider?: IAuthProviderCallGuard,
+        authProvider?: BearAuthProviderCallGuard,
     ) {
         this.config = configSanitize(config);
         this.implConfig = bearConfigSanitize(implConfig);
@@ -164,11 +166,11 @@ export class BearBackend implements IAnalyticalBackend {
         }
     }
 
-    public onHostname(hostname: string): IAnalyticalBackend {
+    public onHostname(hostname: string): BearAnalyticalBackend {
         return new BearBackend({ ...this.config, hostname }, this.implConfig, this.telemetry);
     }
 
-    public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
+    public withTelemetry(componentName: string, props: object): BearAnalyticalBackend {
         return new BearBackend(
             this.config,
             this.implConfig,
@@ -177,13 +179,13 @@ export class BearBackend implements IAnalyticalBackend {
         );
     }
 
-    public withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend {
+    public withAuthentication(provider: BearAuthenticationProvider): BearAnalyticalBackend {
         const guardedAuthProvider = new AuthProviderCallGuard(provider);
 
         return new BearBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<BearAuthenticatedPrincipal | null> {
         return new Promise((resolve, reject) => {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
@@ -200,7 +202,7 @@ export class BearBackend implements IAnalyticalBackend {
         });
     }
 
-    public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
+    public authenticate(force: boolean): Promise<BearAuthenticatedPrincipal> {
         if (!force) {
             return this.authApiCall(async sdk => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
@@ -239,12 +241,12 @@ export class BearBackend implements IAnalyticalBackend {
      * @param call - a call which requires an authenticated session
      * @param errorConverter - converter from rest client errors to analytical backend errors
      */
-    public authApiCall = async <T>(
-        call: AuthenticatedAsyncCall<SDK, T>,
+    public authApiCall = async <TReturn>(
+        call: BearAuthenticatedAsyncCall<TReturn>,
         errorConverter: ErrorConverter = convertApiError,
-    ): Promise<T> => {
+    ): Promise<TReturn> => {
         // first, try it "normally"
-        let result: T;
+        let result: TReturn;
 
         try {
             result = await call(this.sdk, await this.getAsyncCallContext());
@@ -268,9 +270,9 @@ export class BearBackend implements IAnalyticalBackend {
         return result;
     };
 
-    private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): BearAuthenticationContext => ({ client: this.sdk });
 
-    private triggerAuthentication = (reset: boolean = false): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset: boolean = false): Promise<BearAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
@@ -284,7 +286,7 @@ export class BearBackend implements IAnalyticalBackend {
         return this.authProvider.authenticate(this.getAuthenticationContext());
     };
 
-    private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
+    private getAsyncCallContext = async (): Promise<BearAuthenticatedAsyncCallContext> => {
         // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
         // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
         // thus triggering the auth process
@@ -325,7 +327,7 @@ function newSdkInstance(
     config: AnalyticalBackendConfig,
     implConfig: BearBackendConfig,
     telemetry: TelemetryData,
-): SDK {
+): BearClient {
     const sdk = createSdk();
 
     if (config.hostname) {

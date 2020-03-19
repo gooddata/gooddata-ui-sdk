@@ -3,30 +3,37 @@ import { ErrorConverter, NotSupported } from "../errors";
 
 /**
  * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
- * the current session is not authentication.
+ * the current session is not authenticated.
  *
  * @public
  */
-export interface IAuthenticationProvider {
+export interface IAuthenticationProvider<TClient = any, TUser = any> {
     /**
      * Perform authentication.
      *
      * @param context - context in which the authentication is done
+     * @returns promise with currently authenticated principal
      */
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser>>;
 
     /**
      * Returns the currently authenticated principal, or undefined if not authenticated.
      * Does not trigger authentication if no principal is available.
+     *
+     * @param context - context in which the authentication is done
+     * @returns promise with currently authenticated principal, or undefined if user is not authenticated
      */
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(
+        context: AuthenticationContext<TClient>,
+    ): Promise<AuthenticatedPrincipal<TUser> | undefined>;
 
     /**
      * Clear existing authentication.
      *
      * @param context - context in which the authentication is done
+     * @returns promise
      */
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: AuthenticationContext<TClient>): Promise<void>;
 }
 
 /**
@@ -36,12 +43,12 @@ export interface IAuthenticationProvider {
  *
  * @public
  */
-export type AuthenticationContext = {
+export type AuthenticationContext<TClient> = {
     /**
      * API client used to communicate with the backend - this can be used to perform any backend-specific,
      * non-standard authentication.
      */
-    client: any;
+    client: TClient;
 };
 
 /**
@@ -49,7 +56,7 @@ export type AuthenticationContext = {
  *
  * @public
  */
-export type AuthenticatedPrincipal = {
+export type AuthenticatedPrincipal<TUser = any> = {
     /**
      * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
      * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
@@ -60,7 +67,7 @@ export type AuthenticatedPrincipal = {
     /**
      * Backend-specific user metadata.
      */
-    userMeta?: any;
+    userMeta?: TUser;
 };
 
 /**
@@ -68,8 +75,8 @@ export type AuthenticatedPrincipal = {
  *
  * @public
  */
-export interface IAuthenticatedAsyncCallContext {
-    principal: AuthenticatedPrincipal;
+export interface IAuthenticatedAsyncCallContext<TUser> {
+    principal: AuthenticatedPrincipal<TUser>;
 }
 
 /**
@@ -77,9 +84,9 @@ export interface IAuthenticatedAsyncCallContext {
  *
  * @public
  */
-export type AuthenticatedAsyncCall<TSdk, TReturn> = (
-    sdk: TSdk,
-    context: IAuthenticatedAsyncCallContext,
+export type AuthenticatedAsyncCall<TClient, TUser, TReturn> = (
+    sdk: TClient,
+    context: IAuthenticatedAsyncCallContext<TUser>,
 ) => Promise<TReturn>;
 
 /**
@@ -87,8 +94,8 @@ export type AuthenticatedAsyncCall<TSdk, TReturn> = (
  *
  * @public
  */
-export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(
-    call: AuthenticatedAsyncCall<TSdk, TReturn>,
+export type AuthenticatedCallGuard<TClient, TUser> = <TReturn>(
+    call: AuthenticatedAsyncCall<TClient, TUser, TReturn>,
     errorConverter?: ErrorConverter,
 ) => Promise<TReturn>;
 
@@ -96,7 +103,10 @@ export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(
  * see AuthProviderCallGuard
  * @internal
  */
-export interface IAuthProviderCallGuard extends IAuthenticationProvider {
+export interface IAuthProviderCallGuard<TClient, TUser> extends IAuthenticationProvider<TClient, TUser> {
+    /**
+     * Reset current principal
+     */
     reset(): void;
 }
 
@@ -117,17 +127,19 @@ export interface IAuthProviderCallGuard extends IAuthenticationProvider {
  *
  * @internal
  */
-export class AuthProviderCallGuard implements IAuthProviderCallGuard {
-    private inflightRequest: Promise<AuthenticatedPrincipal> | undefined;
-    private principal: AuthenticatedPrincipal | undefined;
+export class AuthProviderCallGuard<TClient, TUser> implements IAuthProviderCallGuard<TClient, TUser> {
+    private inflightRequest: Promise<AuthenticatedPrincipal<TUser>> | undefined;
+    private principal: AuthenticatedPrincipal<TUser> | undefined;
 
-    constructor(private readonly realProvider: IAuthenticationProvider) {}
+    constructor(private readonly realProvider: IAuthenticationProvider<TClient, TUser>) {}
 
     public reset = (): void => {
         this.principal = undefined;
     };
 
-    public authenticate = (context: AuthenticationContext): Promise<AuthenticatedPrincipal> => {
+    public authenticate = (
+        context: AuthenticationContext<TClient>,
+    ): Promise<AuthenticatedPrincipal<TUser>> => {
         if (this.principal) {
             return Promise.resolve(this.principal);
         }
@@ -153,11 +165,13 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         return this.inflightRequest;
     };
 
-    public getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+    public getCurrentPrincipal(
+        context: AuthenticationContext<TClient>,
+    ): Promise<AuthenticatedPrincipal<TUser> | undefined> {
         return this.realProvider.getCurrentPrincipal(context);
     }
 
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
+    public async deauthenticate(context: AuthenticationContext<TClient>): Promise<void> {
         return this.realProvider.deauthenticate(context);
     }
 }
@@ -167,16 +181,18 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
  *
  * @internal
  */
-export class NoopAuthProvider implements IAuthProviderCallGuard {
-    public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+export class NoopAuthProvider<TClient, TUser> implements IAuthProviderCallGuard<TClient, TUser> {
+    public authenticate(_context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser>> {
         throw new NotSupported("NoopAuthProvider does not support authenticate");
     }
 
-    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined> {
+    public getCurrentPrincipal(
+        _context: AuthenticationContext<TClient>,
+    ): Promise<AuthenticatedPrincipal<TUser> | undefined> {
         throw new NotSupported("NoopAuthProvider does not support getCurrentPrincipal");
     }
 
-    public deauthenticate(_context: AuthenticationContext): Promise<void> {
+    public deauthenticate(_context: AuthenticationContext<TClient>): Promise<void> {
         throw new NotSupported("NoopAuthProvider does not support deauthenticate");
     }
 

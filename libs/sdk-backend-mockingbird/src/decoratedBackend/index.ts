@@ -39,20 +39,20 @@ import {
 
 import isEmpty = require("lodash/isEmpty");
 
-class BackendWithDecoratedServices implements IAnalyticalBackend {
+class BackendWithDecoratedServices<TClient, TUser> implements IAnalyticalBackend<TClient, TUser> {
     public capabilities: BackendCapabilities;
     public config: AnalyticalBackendConfig;
-    private decorated: IAnalyticalBackend;
+    private decorated: IAnalyticalBackend<TClient, TUser>;
     private readonly factories: DecoratorFactories;
 
-    constructor(backend: IAnalyticalBackend, factories: DecoratorFactories = {}) {
+    constructor(backend: IAnalyticalBackend<TClient, TUser>, factories: DecoratorFactories = {}) {
         this.decorated = backend;
         this.factories = factories;
         this.capabilities = backend.capabilities;
         this.config = backend.config;
     }
 
-    public authenticate(force?: boolean): Promise<AuthenticatedPrincipal> {
+    public authenticate(force?: boolean): Promise<AuthenticatedPrincipal<TUser>> {
         return this.decorated.authenticate(force);
     }
 
@@ -60,19 +60,21 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         return this.decorated.deauthenticate();
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<AuthenticatedPrincipal<TUser> | null> {
         return this.decorated.isAuthenticated();
     }
 
-    public onHostname(hostname: string): IAnalyticalBackend {
+    public onHostname(hostname: string): IAnalyticalBackend<TClient, TUser> {
         return new BackendWithDecoratedServices(this.decorated.onHostname(hostname), this.factories);
     }
 
-    public withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend {
+    public withAuthentication(
+        provider: IAuthenticationProvider<TClient, TUser>,
+    ): IAnalyticalBackend<TClient, TUser> {
         return new BackendWithDecoratedServices(this.decorated.withAuthentication(provider), this.factories);
     }
 
-    public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
+    public withTelemetry(componentName: string, props: object): IAnalyticalBackend<TClient, TUser> {
         return new BackendWithDecoratedServices(
             this.decorated.withTelemetry(componentName, props),
             this.factories,
@@ -297,7 +299,10 @@ export type DecoratorFactories = {
  * @returns new decorated backend
  * @internal
  */
-export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories) {
+export function decoratedBackend<TClient, TUser>(
+    backend: IAnalyticalBackend<TClient, TUser>,
+    decorators: DecoratorFactories,
+) {
     if (isEmpty(decorators)) {
         return backend;
     }

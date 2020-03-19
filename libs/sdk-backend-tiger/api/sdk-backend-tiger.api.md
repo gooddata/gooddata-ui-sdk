@@ -6,11 +6,18 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { ITigerClient } from '@gooddata/gd-tiger-client';
 
 // @public
-function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
+export type TigerAnalyticalBackend = IAnalyticalBackend<ITigerClient, TigerUserMeta>;
+
+// @public
+function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): TigerAnalyticalBackend;
 
 export default tigerFactory;
+
+// @public
+export type TigerUserMeta = any;
 
 
 // (No @packageDocumentation comment for this package)

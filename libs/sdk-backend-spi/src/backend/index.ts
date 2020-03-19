@@ -13,6 +13,9 @@ import { IUserService } from "../user";
  * @public
  */
 export type AnalyticalBackendConfig = {
+    /**
+     * The hostname where the analytical backend is running
+     */
     readonly hostname?: string;
 };
 
@@ -28,10 +31,10 @@ export type AnalyticalBackendConfig = {
  * @param implConfig - platform specific configuration
  * @public
  */
-export type AnalyticalBackendFactory = (
+export type AnalyticalBackendFactory<TClient, TUser> = (
     config?: AnalyticalBackendConfig,
     implConfig?: any,
-) => IAnalyticalBackend;
+) => IAnalyticalBackend<TClient, TUser>;
 
 /**
  * This is the root of the Analytical Backend SPI. It allows configuration related to communication with the backend
@@ -42,7 +45,7 @@ export type AnalyticalBackendFactory = (
  *
  * @public
  */
-export interface IAnalyticalBackend {
+export interface IAnalyticalBackend<TClient = any, TUser = any> {
     /**
      * Configuration used for communication with this backend.
      */
@@ -60,7 +63,7 @@ export interface IAnalyticalBackend {
      * @param hostname - host[:port]
      * @returns new, unauthenticated instance
      */
-    onHostname(hostname: string): IAnalyticalBackend;
+    onHostname(hostname: string): IAnalyticalBackend<TClient, TUser>;
 
     /**
      * Sets telemetry information that SHOULD be sent to backend to track component usage.
@@ -69,7 +72,7 @@ export interface IAnalyticalBackend {
      * @param props - props
      * @returns a new instance of backend, set up with the provided telemetry
      */
-    withTelemetry(componentName: string, props: object): IAnalyticalBackend;
+    withTelemetry(componentName: string, props: object): IAnalyticalBackend<TClient, TUser>;
 
     /**
      * Sets authentication provider to be used when backend discovers current session is
@@ -78,7 +81,7 @@ export interface IAnalyticalBackend {
      * @param provider - authentication provider to use
      * @returns a new instance of backend, set up with the provider
      */
-    withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
+    withAuthentication(provider: IAuthenticationProvider<TClient, TUser>): IAnalyticalBackend<TClient, TUser>;
 
     /**
      * Tests authentication against this backend. This requires network communication and is thus
@@ -87,7 +90,7 @@ export interface IAnalyticalBackend {
      *
      * @returns promise of authenticated principal is returned if authenticated, null is returned if not authenticated.
      */
-    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
+    isAuthenticated(): Promise<AuthenticatedPrincipal<TUser> | null>;
 
     /**
      * Triggers authentication process against the backend.
@@ -103,7 +106,7 @@ export interface IAnalyticalBackend {
      *  session is already authenticated; defaults to false
      * @returns promise of authenticated principal, or rejection if authentication has failed.
      */
-    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
+    authenticate(force?: boolean): Promise<AuthenticatedPrincipal<TUser>>;
 
     /**
      * Triggers deauthentication process against the backend.
@@ -129,6 +132,8 @@ export interface IAnalyticalBackend {
 
     /**
      * Returns service that can be used to obtain available workspaces.
+     *
+     * @returns an instance that can be used to query workspaces
      */
     workspaces(): IWorkspaceQueryFactory;
 }
@@ -205,8 +210,8 @@ export type BackendCapabilities = {
  * @returns new prepared execution
  * @public
  */
-export function prepareExecution(
-    backend: IAnalyticalBackend,
+export function prepareExecution<TClient, TUser>(
+    backend: IAnalyticalBackend<TClient, TUser>,
     definition: IExecutionDefinition,
 ): IPreparedExecution {
     return backend

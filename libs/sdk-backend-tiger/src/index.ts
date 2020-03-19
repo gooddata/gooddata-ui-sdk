@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { AnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
+import { TigerAnalyticalBackend, TigerUserMeta } from "./types";
 
 /**
  * Returns function which creates instances of Analytical Backend implementation which works with the 'tiger'
@@ -11,8 +12,10 @@ import { TigerBackend } from "./backend";
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
  * @public
  */
-function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
+function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): TigerAnalyticalBackend {
     return new TigerBackend(config, implConfig);
 }
+
+export { TigerAnalyticalBackend, TigerUserMeta };
 
 export default tigerFactory;

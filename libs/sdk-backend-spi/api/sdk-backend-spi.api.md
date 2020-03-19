@@ -77,7 +77,7 @@ export const AnalyticalBackendErrorTypes: {
 };
 
 // @public
-export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
+export type AnalyticalBackendFactory<TClient, TUser> = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend<TClient, TUser>;
 
 // @public
 export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
@@ -86,33 +86,33 @@ export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): st
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
 
 // @public
-export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
+export type AuthenticatedAsyncCall<TClient, TUser, TReturn> = (sdk: TClient, context: IAuthenticatedAsyncCallContext<TUser>) => Promise<TReturn>;
 
 // @public
-export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAsyncCall<TSdk, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
+export type AuthenticatedCallGuard<TClient, TUser> = <TReturn>(call: AuthenticatedAsyncCall<TClient, TUser, TReturn>, errorConverter?: ErrorConverter) => Promise<TReturn>;
 
 // @public
-export type AuthenticatedPrincipal = {
+export type AuthenticatedPrincipal<TUser = any> = {
     userId: string;
-    userMeta?: any;
+    userMeta?: TUser;
 };
 
 // @public
-export type AuthenticationContext = {
-    client: any;
+export type AuthenticationContext<TClient> = {
+    client: TClient;
 };
 
 // Warning: (ae-internal-missing-underscore) The name "AuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export class AuthProviderCallGuard implements IAuthProviderCallGuard {
-    constructor(realProvider: IAuthenticationProvider);
+export class AuthProviderCallGuard<TClient, TUser> implements IAuthProviderCallGuard<TClient, TUser> {
+    constructor(realProvider: IAuthenticationProvider<TClient, TUser>);
     // (undocumented)
-    authenticate: (context: AuthenticationContext) => Promise<AuthenticatedPrincipal>;
+    authenticate: (context: AuthenticationContext<TClient>) => Promise<AuthenticatedPrincipal<TUser>>;
     // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: AuthenticationContext<TClient>): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser> | undefined>;
     // (undocumented)
     reset: () => void;
 }
@@ -197,16 +197,16 @@ export class DataViewFacade {
 export type ErrorConverter = (e: any) => AnalyticalBackendError;
 
 // @public
-export interface IAnalyticalBackend {
-    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
+export interface IAnalyticalBackend<TClient = any, TUser = any> {
+    authenticate(force?: boolean): Promise<AuthenticatedPrincipal<TUser>>;
     readonly capabilities: BackendCapabilities;
     readonly config: AnalyticalBackendConfig;
     currentUser(): IUserService;
     deauthenticate(): Promise<void>;
-    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
-    onHostname(hostname: string): IAnalyticalBackend;
-    withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
-    withTelemetry(componentName: string, props: object): IAnalyticalBackend;
+    isAuthenticated(): Promise<AuthenticatedPrincipal<TUser> | null>;
+    onHostname(hostname: string): IAnalyticalBackend<TClient, TUser>;
+    withAuthentication(provider: IAuthenticationProvider<TClient, TUser>): IAnalyticalBackend<TClient, TUser>;
+    withTelemetry(componentName: string, props: object): IAnalyticalBackend<TClient, TUser>;
     workspace(id: string): IAnalyticalWorkspace;
     workspaces(): IWorkspaceQueryFactory;
 }
@@ -244,23 +244,22 @@ export interface IAttributeDescriptor {
 }
 
 // @public
-export interface IAuthenticatedAsyncCallContext {
+export interface IAuthenticatedAsyncCallContext<TUser> {
     // (undocumented)
-    principal: AuthenticatedPrincipal;
+    principal: AuthenticatedPrincipal<TUser>;
 }
 
 // @public
-export interface IAuthenticationProvider {
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
-    deauthenticate(context: AuthenticationContext): Promise<void>;
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+export interface IAuthenticationProvider<TClient = any, TUser = any> {
+    authenticate(context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser>>;
+    deauthenticate(context: AuthenticationContext<TClient>): Promise<void>;
+    getCurrentPrincipal(context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser> | undefined>;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "IAuthProviderCallGuard" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export interface IAuthProviderCallGuard extends IAuthenticationProvider {
-    // (undocumented)
+export interface IAuthProviderCallGuard<TClient, TUser> extends IAuthenticationProvider<TClient, TUser> {
     reset(): void;
 }
 
@@ -702,13 +701,13 @@ export class NoDataError extends AnalyticalBackendError {
 // Warning: (ae-internal-missing-underscore) The name "NoopAuthProvider" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export class NoopAuthProvider implements IAuthProviderCallGuard {
+export class NoopAuthProvider<TClient, TUser> implements IAuthProviderCallGuard<TClient, TUser> {
     // (undocumented)
-    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(_context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser>>;
     // (undocumented)
-    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    deauthenticate(_context: AuthenticationContext<TClient>): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | undefined>;
+    getCurrentPrincipal(_context: AuthenticationContext<TClient>): Promise<AuthenticatedPrincipal<TUser> | undefined>;
     // (undocumented)
     reset(): void;
 }
@@ -729,7 +728,7 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @public
-export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+export function prepareExecution<TClient, TUser>(backend: IAnalyticalBackend<TClient, TUser>, definition: IExecutionDefinition): IPreparedExecution;
 
 // @public
 export class ProtectedDataError extends AnalyticalBackendError {

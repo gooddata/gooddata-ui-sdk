@@ -1,16 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
-import {
-    AbstractExecutionFactory,
-    IPreparedExecution,
-    NotImplemented,
-    AuthenticatedCallGuard,
-} from "@gooddata/sdk-backend-spi";
+import { AbstractExecutionFactory, IPreparedExecution, NotImplemented } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IFilter } from "@gooddata/sdk-model";
 import { TigerPreparedExecution } from "./preparedExecution";
+import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerExecution extends AbstractExecutionFactory {
-    constructor(private readonly authCall: AuthenticatedCallGuard, workspace: string) {
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard, workspace: string) {
         super(workspace);
     }
 

@@ -3,16 +3,11 @@ import { AxiosInstance } from "axios";
 import {
     AnalyticalBackendConfig,
     BackendCapabilities,
-    IAnalyticalBackend,
     IAnalyticalWorkspace,
-    IAuthenticationProvider,
-    AuthenticatedPrincipal,
     IWorkspaceQueryFactory,
     IUserService,
-    AuthenticatedAsyncCall,
     ErrorConverter,
     NotAuthenticated,
-    IAuthenticatedAsyncCallContext,
     AuthProviderCallGuard,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-client";
@@ -24,6 +19,14 @@ import { convertApiError } from "../errors/errorHandling";
 import { TigerWorkspace } from "./workspace";
 import { TigerWorkspaceQueryFactory } from "./workspaces";
 import { TigerUserService } from "./user";
+import {
+    TigerAnalyticalBackend,
+    TigerAuthProviderCallGuard,
+    TigerAuthenticationProvider,
+    TigerAuthenticatedPrincipal,
+    TigerAuthenticatedAsyncCall,
+    TigerAuthenticatedAsyncCallContext,
+} from "../types";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: false,
@@ -74,20 +77,20 @@ type TelemetryData = {
  *   someone calls withTelementry on this instance => in that case there is no need to reinitiate login.
  *
  */
-export class TigerBackend implements IAnalyticalBackend {
+export class TigerBackend implements TigerAnalyticalBackend {
     public readonly capabilities: BackendCapabilities = CAPABILITIES;
     public readonly config: AnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
     private readonly sdk: ITigerClient;
-    private readonly authProvider: AuthProviderCallGuard | undefined;
+    private readonly authProvider: TigerAuthProviderCallGuard | undefined;
 
     constructor(
         config: AnalyticalBackendConfig = {},
         implConfig: TigerBackendConfig = {},
         telemetry: TelemetryData = {},
-        authProvider?: AuthProviderCallGuard,
+        authProvider?: TigerAuthProviderCallGuard,
     ) {
         this.config = config;
         this.implConfig = implConfig;
@@ -98,15 +101,15 @@ export class TigerBackend implements IAnalyticalBackend {
         this.sdk = tigerClientFactory(axios);
     }
 
-    public onHostname(hostname: string): IAnalyticalBackend {
+    public onHostname(hostname: string): TigerAnalyticalBackend {
         return new TigerBackend({ ...this.config, hostname }, this.implConfig, this.telemetry);
     }
 
-    public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
+    public withTelemetry(componentName: string, props: object): TigerAnalyticalBackend {
         return new TigerBackend(this.config, this.implConfig, { componentName, props: Object.keys(props) });
     }
 
-    public withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend {
+    public withAuthentication(provider: TigerAuthenticationProvider): TigerAnalyticalBackend {
         const guardedAuthProvider = new AuthProviderCallGuard(provider);
 
         return new TigerBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
@@ -128,11 +131,11 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerWorkspaceQueryFactory(this.authApiCall);
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<TigerAuthenticatedPrincipal | null> {
         return Promise.resolve({ userId: "anonymouse" });
     }
 
-    public authenticate(): Promise<AuthenticatedPrincipal> {
+    public authenticate(): Promise<TigerAuthenticatedPrincipal> {
         return Promise.resolve({ userId: "anonymouse" });
     }
 
@@ -144,10 +147,10 @@ export class TigerBackend implements IAnalyticalBackend {
      * @param call - a call which requires an authenticated session
      * @param errorConverter - converter from rest client errors to analytical backend errors
      */
-    private authApiCall = async <T>(
-        call: AuthenticatedAsyncCall<ITigerClient, T>,
+    private authApiCall = async <TReturn>(
+        call: TigerAuthenticatedAsyncCall<TReturn>,
         errorConverter: ErrorConverter = convertApiError,
-    ): Promise<T> => {
+    ): Promise<TReturn> => {
         return call(this.sdk, await this.getAsyncCallContext()).catch(err => {
             if (!isNotAuthenticatedError(err)) {
                 throw errorConverter(err);
@@ -165,7 +168,7 @@ export class TigerBackend implements IAnalyticalBackend {
         });
     };
 
-    private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
+    private getAsyncCallContext = async (): Promise<TigerAuthenticatedAsyncCallContext> => {
         // use a default value that will not fail at runtime (e.g. null references) in case we are not authenticated yet
         // that way first call to authApiCall will proceed as if the principal was there and fail expectedly
         // thus triggering the auth process
@@ -181,7 +184,7 @@ export class TigerBackend implements IAnalyticalBackend {
         };
     };
 
-    private triggerAuthentication = (reset: boolean = false): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset: boolean = false): Promise<TigerAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
