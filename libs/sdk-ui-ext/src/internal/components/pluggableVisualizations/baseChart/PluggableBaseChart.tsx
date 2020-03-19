@@ -4,7 +4,7 @@ import {
     bucketsIsEmpty,
     IColorMappingItem,
     IDimension,
-    IInsight,
+    IInsightDefinition,
     insightBuckets,
     insightHasMeasures,
     insightMeasures,
@@ -188,7 +188,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return stacks;
     }
 
-    protected checkBeforeRender(insight: IInsight): boolean {
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         if (!insightHasMeasures(insight)) {
@@ -200,7 +200,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         const { dimensions = { height: undefined }, custom = {}, locale, config } = options;
@@ -254,7 +254,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         });
     }
 
-    protected renderConfigurationPanel(insight: IInsight) {
+    protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BaseChartConfigurationPanel
@@ -276,7 +276,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(insight: IInsight): IDimension[] {
+    protected getDimensions(insight: IInsightDefinition): IDimension[] {
         return generateDimensions(insight, this.type);
     }
 
@@ -361,7 +361,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private getSupportedControls(insight: IInsight) {
+    private getSupportedControls(insight: IInsightDefinition) {
         let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
@@ -392,7 +392,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         };
     }
 
-    private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsight) {
+    private getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsightDefinition) {
         const legendPosition = get(controlProperties, "legend.position", "auto");
 
         if (legendPosition === "auto") {
@@ -407,17 +407,20 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 }
 
-function isStacked(insight: IInsight): boolean {
+function isStacked(insight: IInsightDefinition): boolean {
     return !bucketsIsEmpty(insightBuckets(insight, BucketNames.STACK, BucketNames.SEGMENT));
 }
 
-function areAllMeasuresOnSingleAxis(insight: IInsight, secondaryYAxis: IAxisConfig): boolean {
+function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryYAxis: IAxisConfig): boolean {
     const measureCount = insightMeasures(insight).length;
     const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
     return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
 }
 
-function canSortStackTotalValue(insight: IInsight, supportedControls: IVisualizationProperties): boolean {
+function canSortStackTotalValue(
+    insight: IInsightDefinition,
+    supportedControls: IVisualizationProperties,
+): boolean {
     const stackMeasures = get(supportedControls, "stackMeasures", false);
     const secondaryAxis: IAxisConfig = get(supportedControls, "secondary_yaxis", { measures: [] });
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);

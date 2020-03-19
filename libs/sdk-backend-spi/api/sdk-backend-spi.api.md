@@ -43,7 +43,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
     // (undocumented)
     abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
     abstract forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     // (undocumented)
@@ -320,7 +320,7 @@ export interface IElementQueryResult extends IPagedResource<IAttributeElement> {
 export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
     forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
     forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
 }

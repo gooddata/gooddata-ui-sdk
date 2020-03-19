@@ -4,7 +4,7 @@ import {
     IBucket,
     IDimension,
     IFilter,
-    IInsight,
+    IInsightDefinition,
     SortItem,
     IExecutionDefinition,
     DimensionGenerator,
@@ -86,7 +86,7 @@ export interface IExecutionFactory {
      * @param insight - insight to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided
      */
-    forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
 
     /**
      * Prepares new execution for an insight specified by reference =\> a link. This function is asynchronous as
@@ -98,7 +98,7 @@ export interface IExecutionFactory {
      * and not do any 'freeform' execution.
      *
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
-     * pre-filled dimensions greated using the `defaultDimensionsGenerator` provided by the
+     * pre-filled dimensions created using the `defaultDimensionsGenerator` provided by the
      * `@gooddata/sdk-model` package.
      *
      * @param uri - link to insight
@@ -139,7 +139,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
         return this.forDefinition(def);
     }
 
-    public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForInsight(this.workspace, insight, filters),
             defaultDimensionsGenerator,

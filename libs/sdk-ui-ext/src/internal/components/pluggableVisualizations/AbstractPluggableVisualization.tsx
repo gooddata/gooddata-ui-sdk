@@ -14,7 +14,7 @@ import {
     PluggableVisualizationErrorCodes,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
-import { IInsight, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
@@ -54,7 +54,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * Insight that is currently rendered by the pluggable visualization. This field is set during
      * every call to {@link update} and will remain the same until the next update() call.
      */
-    protected currentInsight: IInsight;
+    protected currentInsight: IInsightDefinition;
     protected visualizationProperties: IVisualizationProperties;
     protected supportedPropertiesList: string[];
     protected propertiesMeta: any;
@@ -104,7 +104,11 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @param insight
      * @param executionFactory
      */
-    public update(options: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void {
+    public update(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): void {
         this.updateInstanceProperties(options, insight);
 
         let shouldRenderVisualization: boolean;
@@ -136,7 +140,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected updateInstanceProperties(
         // @ts-ignore
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
     ) {
         const visualizationProperties = insightProperties(insight);
 
@@ -156,7 +160,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * @returns when true is returned (default), visualization will be rendered, when false is returned no rendering is done
      * @throws error - if anything is thrown, visualization will not be rendered and the exception will be passed via onError callback
      */
-    protected checkBeforeRender(insight: IInsight): boolean {
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
         if (!insightHasDataDefined(insight)) {
             throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
         }
@@ -174,7 +178,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     protected abstract renderVisualization(
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void;
 
@@ -184,7 +188,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      *
      * @param insight - insight that is rendered
      */
-    protected abstract renderConfigurationPanel(insight: IInsight): void;
+    protected abstract renderConfigurationPanel(insight: IInsightDefinition): void;
 
     //
     // Callback delegates

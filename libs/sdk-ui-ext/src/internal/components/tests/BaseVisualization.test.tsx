@@ -14,7 +14,7 @@ import { AbstractPluggableVisualization } from "../pluggableVisualizations/Abstr
 import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
 
@@ -30,13 +30,13 @@ class DummyClass extends AbstractPluggableVisualization {
         return;
     }
 
-    protected renderConfigurationPanel(_insight: IInsight): void {
+    protected renderConfigurationPanel(_insight: IInsightDefinition): void {
         return;
     }
 
     protected renderVisualization(
         _options: IVisProps,
-        _insight: IInsight,
+        _insight: IInsightDefinition,
         _executionFactory: IExecutionFactory,
     ): void {
         return;

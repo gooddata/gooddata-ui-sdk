@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { attributeLocalId, isAttribute } from "../attribute";
 import {
     IDimension,
@@ -11,7 +11,7 @@ import { SortItem } from "../base/sort";
 import { AttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
 import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
 import { IFilter } from "../filter";
-import { IInsight, insightBuckets, insightFilters, insightSorts } from "../../insight";
+import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
 import { isMeasure } from "../measure";
 import {
     defSetDimensions,
@@ -128,7 +128,7 @@ export function newDefForBuckets(
  */
 export function newDefForInsight(
     workspace: string,
-    insight: IInsight,
+    insight: IInsightDefinition,
     filters: IFilter[] = [],
 ): IExecutionDefinition {
     invariant(workspace, "workspace to create exec def for must be specified");

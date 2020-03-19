@@ -35,7 +35,7 @@ import { removeSort } from "../../../utils/sort";
 import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConfigHelper";
 import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -103,7 +103,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected renderConfigurationPanel(insight: IInsight) {
+    protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <TreeMapConfigurationPanel

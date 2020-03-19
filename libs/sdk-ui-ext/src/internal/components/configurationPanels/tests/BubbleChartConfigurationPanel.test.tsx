@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IInsight, newMeasure } from "@gooddata/sdk-model";
+import { IInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -9,14 +9,14 @@ import ConfigSection from "../../configurationControls/ConfigSection";
 import BubbleChartConfigurationPanel from "../BubbleChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "../ConfigurationPanelContent";
 
-describe("BubbleChartconfigurationPanel", () => {
+describe("BubbleChartConfigurationPanel", () => {
     function createComponent(props: IConfigurationPanelContentProps) {
         return shallow<IConfigurationPanelContentProps, null>(<BubbleChartConfigurationPanel {...props} />, {
             lifecycleExperimental: true,
         });
     }
 
-    function newInsight(measureBucket: string): IInsight {
+    function newInsight(measureBucket: string): IInsightDefinition {
         return {
             insight: {
                 title: "My Insight",
@@ -24,8 +24,6 @@ describe("BubbleChartconfigurationPanel", () => {
                 filters: [],
                 visualizationUrl: "vc",
                 properties: {},
-                identifier: "id",
-                uri: "test",
                 buckets: [
                     {
                         localIdentifier: measureBucket,
@@ -100,15 +98,13 @@ describe("BubbleChartconfigurationPanel", () => {
         };
 
         it("should render configuration panel with enabled name sections", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -163,16 +159,14 @@ describe("BubbleChartconfigurationPanel", () => {
         });
 
         it("should render configuration panel with disabled name sections", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
-                    buckets: [] as any,
+                    buckets: [],
                 },
             };
 
@@ -191,15 +185,13 @@ describe("BubbleChartconfigurationPanel", () => {
         });
 
         it("should render configuration panel with enabled X axis name section and disabled Y axis name section", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",

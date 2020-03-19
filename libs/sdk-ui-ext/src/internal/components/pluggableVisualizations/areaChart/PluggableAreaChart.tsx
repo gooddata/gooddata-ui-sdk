@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { bucketsItems, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { render } from "react-dom";
@@ -61,7 +61,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return cloneDeep(DEFAULT_AREA_UICONFIG);
     }
 
-    protected updateInstanceProperties(options: IVisProps, insight: IInsight) {
+    protected updateInstanceProperties(options: IVisProps, insight: IInsightDefinition) {
         super.updateInstanceProperties(options, insight);
 
         this.updateCustomSupportedProperties(insight);
@@ -117,7 +117,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    protected renderConfigurationPanel(insight: IInsight) {
+    protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <LineChartBasedConfigurationPanel
@@ -138,7 +138,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         }
     }
 
-    private updateCustomSupportedProperties(insight: IInsight): void {
+    private updateCustomSupportedProperties(insight: IInsightDefinition): void {
         if (bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1) {
             this.addSupportedProperties(OPTIONAL_STACKING_PROPERTIES);
             this.setCustomControlsProperties({

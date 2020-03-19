@@ -50,7 +50,7 @@ import {
     bucketsFind,
     bucketsMeasures,
     IBucket,
-    IInsight,
+    IInsightDefinition,
     insightBuckets,
     isSimpleMeasure,
     ITotal,
@@ -410,7 +410,7 @@ export function getUniqueAttributes(buckets: IBucketOfFun[]) {
     return uniqBy(attributes, attribute => get(attribute, "attribute"));
 }
 
-export function getMeasuresFromMdObject(insight: IInsight) {
+export function getMeasuresFromMdObject(insight: IInsightDefinition) {
     if (!insight) {
         return [];
     }

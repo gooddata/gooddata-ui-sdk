@@ -19,7 +19,7 @@ import {
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 import { AxisType } from "../../interfaces/AxisType";
 import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper";
-import { IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {
@@ -137,7 +137,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
         };
     }
 
-    private isAxisDisabled(controlsDisabled: boolean, axis: AxisType, insight: IInsight): boolean {
+    private isAxisDisabled(controlsDisabled: boolean, axis: AxisType, insight: IInsightDefinition): boolean {
         const isAxisDisabled =
             axis === "xaxis"
                 ? noColumnsAndHasOneMeasure(insightBuckets(insight))

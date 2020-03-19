@@ -1,17 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { countBucketItems, countItemsOnAxes } from "../insightIntrospection";
 import { IVisualizationProperties } from "../../../../interfaces/Visualization";
 
 describe("countItemsOnAxesInMdObject", () => {
     it("should return number of items in buckets", () => {
-        const insight: IInsight = {
+        const insight: IInsightDefinition = {
             insight: {
                 filters: [],
-                identifier: "insight",
-                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -34,11 +32,9 @@ describe("countItemsOnAxesInMdObject", () => {
 
 describe("countItemsOnAxes", () => {
     it("should return number of items on axes of column chart", () => {
-        const insight: IInsight = {
+        const insight: IInsightDefinition = {
             insight: {
                 filters: [],
-                identifier: "insight",
-                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -63,11 +59,9 @@ describe("countItemsOnAxes", () => {
     });
 
     it("should return number of items on axes of bar chart", () => {
-        const insight: IInsight = {
+        const insight: IInsightDefinition = {
             insight: {
                 filters: [],
-                identifier: "insight",
-                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",
@@ -92,11 +86,9 @@ describe("countItemsOnAxes", () => {
     });
 
     it("should return number of items on axes of combo chart", () => {
-        const insight: IInsight = {
+        const insight: IInsightDefinition = {
             insight: {
                 filters: [],
-                identifier: "insight",
-                uri: "test",
                 properties: {},
                 sorts: [],
                 title: "My Insight",

@@ -5,7 +5,7 @@ import {
     bucketAttributes,
     bucketIsEmpty,
     IDimension,
-    IInsight,
+    IInsightDefinition,
     insightAttributes,
     insightBucket,
     insightTotals,
@@ -14,7 +14,7 @@ import {
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { ViewByAttributesLimit } from "@gooddata/sdk-ui-charts";
 
-export function getPivotTableDimensions(insight: IInsight): IDimension[] {
+export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
     const row = insightBucket(insight, BucketNames.ATTRIBUTE);
     const columns = insightBucket(insight, BucketNames.COLUMNS);
     const measures = insightBucket(insight, BucketNames.MEASURES);
@@ -38,7 +38,7 @@ export function getPivotTableDimensions(insight: IInsight): IDimension[] {
     ];
 }
 
-function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
+function getPieOrDonutDimensions(insight: IInsightDefinition): IDimension[] {
     const viewBy = insightBucket(insight, BucketNames.VIEW);
 
     if (viewBy && !bucketIsEmpty(viewBy)) {
@@ -62,7 +62,7 @@ function getPieOrDonutDimensions(insight: IInsight): IDimension[] {
     ];
 }
 
-function getBarDimensions(insight: IInsight): IDimension[] {
+function getBarDimensions(insight: IInsightDefinition): IDimension[] {
     const viewBy = insightBucket(insight, BucketNames.VIEW);
     const viewByAttributes = viewBy ? bucketAttributes(viewBy) : [];
     const stack = insightBucket(insight, BucketNames.STACK);
@@ -88,7 +88,7 @@ function getBarDimensions(insight: IInsight): IDimension[] {
     ];
 }
 
-function getAreaDimensions(insight: IInsight): IDimension[] {
+function getAreaDimensions(insight: IInsightDefinition): IDimension[] {
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
     const stackBucket = insightBucket(insight, BucketNames.STACK);
@@ -129,7 +129,7 @@ function getAreaDimensions(insight: IInsight): IDimension[] {
     ];
 }
 
-function getLineDimensions(insight: IInsight): IDimension[] {
+function getLineDimensions(insight: IInsightDefinition): IDimension[] {
     const trend = insightBucket(insight, BucketNames.TREND);
     const trendAttributes = trend ? bucketAttributes(trend) : [];
     const segment = insightBucket(insight, BucketNames.SEGMENT);
@@ -159,7 +159,7 @@ export function getHeadlinesDimensions(): IDimension[] {
     return [{ itemIdentifiers: [MeasureGroupIdentifier] }];
 }
 
-function getScatterDimensions(insight: IInsight): IDimension[] {
+function getScatterDimensions(insight: IInsightDefinition): IDimension[] {
     const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
 
     if (attribute && !bucketIsEmpty(attribute)) {
@@ -184,11 +184,11 @@ function getScatterDimensions(insight: IInsight): IDimension[] {
 }
 
 // Heatmap
-export function getHeatmapDimensionsFromMdObj(insight: IInsight): IDimension[] {
+export function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
     return getHeatmapDimensionsFromBuckets(insight);
 }
 
-export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[] {
+export function getHeatmapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
     const view = insightBucket(insight, BucketNames.VIEW);
     const viewAttributes = view ? bucketAttributes(view) : [];
     const stack = insightBucket(insight, BucketNames.STACK);
@@ -214,7 +214,7 @@ export function getHeatmapDimensionsFromBuckets(insight: IInsight): IDimension[]
     ];
 }
 
-function getBubbleDimensions(insight: IInsight): IDimension[] {
+function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
     const view = insightBucket(insight, BucketNames.VIEW);
     const viewAttributes = view ? bucketAttributes(view) : [];
     const stack = insightBucket(insight, BucketNames.STACK);
@@ -252,7 +252,7 @@ function getBubbleDimensions(insight: IInsight): IDimension[] {
  * @param type:VisType - visualization type string
  * @internal
  */
-export function generateDimensions(insight: IInsight, type: VisType): IDimension[] {
+export function generateDimensions(insight: IInsightDefinition, type: VisType): IDimension[] {
     switch (type) {
         case VisualizationTypes.TABLE: {
             return getPivotTableDimensions(insight);
@@ -296,7 +296,7 @@ export function generateDimensions(insight: IInsight, type: VisType): IDimension
     return [];
 }
 
-export function generateStackedDimensions(insight: IInsight): IDimension[] {
+export function generateStackedDimensions(insight: IInsightDefinition): IDimension[] {
     const viewBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
     const viewAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
     const stackAttribute = bucketAttribute(insightBucket(insight, BucketNames.STACK));
@@ -312,7 +312,7 @@ export function generateStackedDimensions(insight: IInsight): IDimension[] {
 }
 
 // for LineChart, AreaChart, BarChart, ColumnChart
-export function generateDefaultDimensions(insight: IInsight): IDimension[] {
+export function generateDefaultDimensions(insight: IInsightDefinition): IDimension[] {
     return [
         {
             itemIdentifiers: [MeasureGroupIdentifier],
@@ -324,7 +324,7 @@ export function generateDefaultDimensions(insight: IInsight): IDimension[] {
 }
 
 // for ScatterPlot and BubbleChart
-export function generateDefaultDimensionsForPointsCharts(insight: IInsight): IDimension[] {
+export function generateDefaultDimensionsForPointsCharts(insight: IInsightDefinition): IDimension[] {
     return [
         {
             itemIdentifiers: insightAttributes(insight).map(attributeLocalId),
@@ -336,7 +336,7 @@ export function generateDefaultDimensionsForPointsCharts(insight: IInsight): IDi
 }
 
 // for PieChart, DonutChart
-export const generateDefaultDimensionsForRoundChart = (insight: IInsight): IDimension[] => {
+export const generateDefaultDimensionsForRoundChart = (insight: IInsightDefinition): IDimension[] => {
     const attributes = insightAttributes(insight);
 
     if (attributes.length === 0) {
@@ -361,15 +361,15 @@ export const generateDefaultDimensionsForRoundChart = (insight: IInsight): IDime
 };
 
 // Treemap
-export function getTreemapDimensionsFromMdObj(insight: IInsight): IDimension[] {
+export function getTreemapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
     return getTreemapDimensionsFromBuckets(insight);
 }
 
-export function getTreemapDimensionsFromBuckets(insight: IInsight): IDimension[] {
+export function getTreemapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
     return getTreemapDimensionsFromAFM(insight);
 }
 
-export function getTreemapDimensionsFromAFM(insight: IInsight): IDimension[] {
+export function getTreemapDimensionsFromAFM(insight: IInsightDefinition): IDimension[] {
     const attributes = insightAttributes(insight);
 
     if (attributes.length === 1) {

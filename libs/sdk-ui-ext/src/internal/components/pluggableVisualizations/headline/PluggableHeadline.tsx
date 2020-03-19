@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { bucketIsEmpty, IInsight, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
+import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
 
 import { BucketNames, GoodDataSdkError } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
@@ -114,7 +114,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    protected checkBeforeRender(insight: IInsight): boolean {
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
@@ -128,7 +128,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         if (!insightHasDataDefined(insight)) {

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IInsight, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightProperties, IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
 import * as React from "react";
 import { render } from "react-dom";
 import * as uuid from "uuid";
@@ -35,7 +35,7 @@ import omit = require("lodash/omit");
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
     projectId: string;
-    insight: IInsight;
+    insight: IInsightDefinition;
     config?: IGdcConfig;
     visualizationClass: IVisualizationClass;
     environment?: VisualizationEnvironment;

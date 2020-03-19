@@ -2,6 +2,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import cloneDeep = require("lodash/cloneDeep");
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { COLUMN_BAR_CHART_UICONFIG } from "../../../constants/uiConfig";
@@ -9,7 +10,6 @@ import { IVisConstruct, IUiConfig } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { IInsight } from "@gooddata/sdk-model";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -30,7 +30,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         return BAR_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
     }
 
-    protected renderConfigurationPanel(insight: IInsight) {
+    protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
             render(
                 <BarChartConfigurationPanel

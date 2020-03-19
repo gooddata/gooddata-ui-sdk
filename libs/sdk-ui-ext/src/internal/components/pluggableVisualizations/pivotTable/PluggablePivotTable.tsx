@@ -14,7 +14,7 @@ import {
     IAttributeSortItem,
     IBucket,
     IDimension,
-    IInsight,
+    IInsightDefinition,
     IMeasureSortItem,
     insightBuckets,
     insightHasDataDefined,
@@ -340,7 +340,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         if (!insightHasDataDefined(insight)) {
@@ -433,7 +433,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected renderConfigurationPanel(insight: IInsight) {
+    protected renderConfigurationPanel(insight: IInsightDefinition) {
         if (document.querySelector(this.configPanelElement)) {
             const properties: IVisualizationProperties = get(
                 this.visualizationProperties,
@@ -463,7 +463,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         }
     }
 
-    protected getDimensions(insight: IInsight): IDimension[] {
+    protected getDimensions(insight: IInsightDefinition): IDimension[] {
         return generateDimensions(insight, VisualizationTypes.TABLE);
     }
 }
