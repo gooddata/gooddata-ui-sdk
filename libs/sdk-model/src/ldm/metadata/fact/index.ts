@@ -2,6 +2,8 @@
 import { IMetadataObject } from "../types";
 
 /**
+ * Fact metadata object
+ *
  * @public
  */
 export interface IFactMetadataObject extends IMetadataObject {

@@ -63,7 +63,7 @@ export class AttributeBuilder {
     localId: (localId: string) => this;
 }
 
-// @public (undocumented)
+// @public
 export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
     attribute(ref: ObjRef): this;
@@ -85,7 +85,7 @@ export type AttributeInBucket = {
 // @public
 export function attributeLocalId(attribute: IAttribute): string;
 
-// @public (undocumented)
+// @public
 export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
@@ -179,7 +179,7 @@ export function builderFactory<TItem, TBuilder extends Builder<TItem>, TBuilderC
 // @public
 export type BuilderModifications<TBuilder extends IBuilder<TItem>, TItem = ExtractBuilderType<TBuilder>> = (builder: TBuilder) => TBuilder;
 
-// @public (undocumented)
+// @public
 export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttribute> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
@@ -189,7 +189,7 @@ export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttri
     toExecutionModel(modifications?: AttributeModifications): IAttribute;
 }
 
-// @public (undocumented)
+// @public
 export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICatalogDateAttribute> extends Builder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
@@ -202,7 +202,7 @@ export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICata
 // @public
 export type CatalogDateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date";
 
-// @public (undocumented)
+// @public
 export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogDateDataset> extends Builder<T> {
     // (undocumented)
     dataSet(dataSetOrRef: IDataSetMetadataObject | ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>): this;
@@ -212,13 +212,13 @@ export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogD
     relevance(relevance: number): this;
 }
 
-// @public (undocumented)
+// @public
 export class CatalogFactBuilder<T extends ICatalogFact = ICatalogFact> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     fact(factOrRef: IFactMetadataObject | ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>): this;
 }
 
-// @public (undocumented)
+// @public
 export class CatalogGroupBuilder<T extends ICatalogGroup = ICatalogGroup> extends Builder<T> {
     // (undocumented)
     tag(tagRef: ObjRef): this;
@@ -235,7 +235,7 @@ export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataOb
 // @public
 export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
 
-// @public (undocumented)
+// @public
 export class CatalogMeasureBuilder<T extends ICatalogMeasure = ICatalogMeasure> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     measure(measureOrRef: IMeasureMetadataObject | ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>): this;
@@ -259,7 +259,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 // @public
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
-// @public (undocumented)
+// @public
 export class DataSetMetadataObjectBuilder<T extends IDataSetMetadataObject = IDataSetMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
@@ -317,7 +317,7 @@ export function emptyDef(workspace: string): IExecutionDefinition;
 // @public
 export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem> ? TItem : never;
 
-// @public (undocumented)
+// @public
 export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
@@ -336,7 +336,7 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean;
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
-// @public (undocumented)
+// @public
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends Builder<T> implements IGroupableCatalogItemBuilder<T> {
     // (undocumented)
     groups(tagRefs: ObjRef[]): this;
@@ -382,9 +382,8 @@ export interface IAttribute {
     };
 }
 
-// @public (undocumented)
+// @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
-    // (undocumented)
     attribute: ObjRef;
     // (undocumented)
     type: "displayForm";
@@ -392,19 +391,14 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
 
 // @public
 export interface IAttributeElement {
-    // (undocumented)
     readonly title: string;
-    // (undocumented)
     readonly uri: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IAttributeElementExpressionToken {
-    // (undocumented)
     element: IAttributeElement;
-    // (undocumented)
     type: "attributeElement";
-    // (undocumented)
     value: string;
 }
 
@@ -432,7 +426,7 @@ export interface IAttributeLocatorItem {
     };
 }
 
-// @public (undocumented)
+// @public
 export interface IAttributeMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "attribute";
@@ -467,48 +461,35 @@ export interface IBuilder<T> {
 
 // @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
-    // (undocumented)
     attribute: IAttributeMetadataObject;
-    // (undocumented)
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    // (undocumented)
     type: "attribute";
 }
 
 // @public
 export interface ICatalogDateAttribute {
-    // (undocumented)
     attribute: IAttributeMetadataObject;
-    // (undocumented)
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    // (undocumented)
     granularity: CatalogDateAttributeGranularity;
 }
 
 // @public
 export interface ICatalogDateDataset extends ICatalogItemBase {
-    // (undocumented)
     dataSet: IDataSetMetadataObject;
-    // (undocumented)
     dateAttributes: ICatalogDateAttribute[];
-    // (undocumented)
     relevance: number;
-    // (undocumented)
     type: "dateDataset";
 }
 
 // @public
 export interface ICatalogFact extends IGroupableCatalogItemBase {
-    // (undocumented)
     fact: IFactMetadataObject;
-    // (undocumented)
     type: "fact";
 }
 
 // @public
 export interface ICatalogGroup {
     tag: ObjRef;
-    // (undocumented)
     title: string;
 }
 
@@ -520,9 +501,7 @@ export interface ICatalogItemBase {
 
 // @public
 export interface ICatalogMeasure extends IGroupableCatalogItemBase {
-    // (undocumented)
     measure: IMeasureMetadataObject;
-    // (undocumented)
     type: "measure";
 }
 
@@ -609,7 +588,7 @@ export interface IDatasetLoadInfo {
     status: DatasetLoadStatus;
 }
 
-// @public (undocumented)
+// @public
 export interface IDataSetMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "dataSet";
@@ -671,7 +650,7 @@ export interface IExecutionDefinition {
     readonly workspace: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IFactMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "fact";
@@ -685,7 +664,7 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
     groups: ObjRef[];
 }
 
-// @public (undocumented)
+// @public
 export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends IBuilder<T> {
     // (undocumented)
     groups(tagRefs: ObjRef[]): this;
@@ -753,7 +732,7 @@ export interface IMeasureLocatorItem {
     };
 }
 
-// @public (undocumented)
+// @public
 export interface IMeasureMetadataObject extends IMetadataObject {
     expression: string;
     format: string;
@@ -800,17 +779,12 @@ export interface IMetadataObject {
     uri: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends IBuilder<T> {
-    // (undocumented)
     description(description: string): this;
-    // (undocumented)
     id(id: string): this;
-    // (undocumented)
     production(isProduction: boolean): this;
-    // (undocumented)
     title(title: string): this;
-    // (undocumented)
     uri(uri: string): this;
 }
 
@@ -904,13 +878,10 @@ export function insightUri(insight: IInsight): string;
 // @alpha
 export function insightVisualizationUrl(insight: IInsightDefinition): string;
 
-// @public (undocumented)
+// @public
 export interface IObjectExpressionToken {
-    // (undocumented)
     meta: IMetadataObject;
-    // (undocumented)
     type: "metadataObject";
-    // (undocumented)
     value: string;
 }
 
@@ -1136,11 +1107,9 @@ export type ItemInDimension = {
     itemIdx: number;
 };
 
-// @public (undocumented)
+// @public
 export interface ITextExpressionToken {
-    // (undocumented)
     type: "text";
-    // (undocumented)
     value: string;
 }
 
@@ -1179,7 +1148,7 @@ export interface IWorkspace {
     title: string;
 }
 
-// @public (undocumented)
+// @public
 export type IWorkspacePermissions = {
     [permission in WorkspacePermission]: boolean;
 };
@@ -1282,7 +1251,7 @@ export function measureLocalId(measure: IMeasure): string;
 // @public
 export function measureMasterIdentifier(measure: IMeasure): string | undefined;
 
-// @public (undocumented)
+// @public
 export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMeasureMetadataObject> extends MetadataObjectBuilder<T> {
     // (undocumented)
     expression(maql: string): this;
@@ -1320,10 +1289,10 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 // @public
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
-// @public (undocumented)
+// @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject;
 
-// @public (undocumented)
+// @public
 export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T> implements IMetadataObjectBuilder {
     // (undocumented)
     description(description: string): this;
@@ -1337,8 +1306,8 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
     uri(uri: string): this;
 }
 
-// @public (undocumented)
-export const metadataObjectId: <T extends IMetadataObject>(metadataObject: T) => string;
+// @public
+export const metadataObjectId: (metadataObject: MetadataObject) => string;
 
 // @public
 export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;
@@ -1358,13 +1327,13 @@ export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<IMeasure | Ide
 // @public
 export function newAttribute(displayFormRefOrId: ObjRef | Identifier, modifications?: AttributeModifications): IAttribute;
 
-// @public (undocumented)
+// @public
 export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder<IAttributeDisplayFormMetadataObject>, IAttributeDisplayFormMetadataObject>) => IAttributeDisplayFormMetadataObject;
 
 // @public
 export function newAttributeLocator(attributeOrId: IAttribute | string, element: string): IAttributeLocatorItem;
 
-// @public (undocumented)
+// @public
 export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder<IAttributeMetadataObject>, IAttributeMetadataObject>) => IAttributeMetadataObject;
 
 // @public
@@ -1373,25 +1342,25 @@ export function newAttributeSort(attributeOrId: IAttribute | string, sortDirecti
 // @public
 export function newBucket(localId: string, ...content: Array<AttributeOrMeasure | ITotal | undefined>): IBucket;
 
-// @public (undocumented)
+// @public
 export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder<ICatalogAttribute>, ICatalogAttribute>) => ICatalogAttribute;
 
-// @public (undocumented)
+// @public
 export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder<ICatalogDateAttribute>, ICatalogDateAttribute>) => ICatalogDateAttribute;
 
-// @public (undocumented)
+// @public
 export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder<ICatalogDateDataset>, ICatalogDateDataset>) => ICatalogDateDataset;
 
-// @public (undocumented)
+// @public
 export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder<ICatalogFact>, ICatalogFact>) => ICatalogFact;
 
-// @public (undocumented)
+// @public
 export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder<ICatalogGroup>, ICatalogGroup>) => ICatalogGroup;
 
-// @public (undocumented)
+// @public
 export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder<ICatalogMeasure>, ICatalogMeasure>) => ICatalogMeasure;
 
-// @public (undocumented)
+// @public
 export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder<IDataSetMetadataObject>, IDataSetMetadataObject>) => IDataSetMetadataObject;
 
 // @public
@@ -1406,7 +1375,7 @@ export function newDefForItems(workspace: string, items: AttributeOrMeasure[], f
 // @public
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
 
-// @public (undocumented)
+// @public
 export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder<IFactMetadataObject>, IFactMetadataObject>) => IFactMetadataObject;
 
 // Warning: (ae-internal-missing-underscore) The name "newInsightDefinition" should be prefixed with an underscore because the declaration is marked as @internal
@@ -1417,7 +1386,7 @@ export function newInsightDefinition(visualizationUrl: string, modifications?: I
 // @public
 export function newMeasure(measure: ObjRef | Identifier, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
-// @public (undocumented)
+// @public
 export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder<IMeasureMetadataObject>, IMeasureMetadataObject>) => IMeasureMetadataObject;
 
 // @public
@@ -1447,7 +1416,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | string, attrib
 // @public
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
-// @public (undocumented)
+// @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag";
 
 // @public
@@ -1539,7 +1508,7 @@ export type VisualizationProperties = {
     [key: string]: any;
 };
 
-// @public (undocumented)
+// @public
 export type WorkspacePermission = "canAccessWorkbench" | "canCreateVisualization" | "canManageAnalyticalDashboard" | "canUploadNonProductionCSV" | "canCreateReport" | "canExecuteRaw" | "canExportReport";
 
 

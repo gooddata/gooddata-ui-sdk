@@ -1,7 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
- * TODO: SDK8: add docs
+ * Interface to interact with paged asynchronous resources
+ *
  * @public
  */
 export interface IPagedResource<TItem> {
@@ -10,5 +11,10 @@ export interface IPagedResource<TItem> {
     readonly offset: number;
     readonly totalCount: number;
 
+    /**
+     * Request next page of the resource
+     *
+     * @returns promise of a paged resource with the results of next page
+     */
     next(): Promise<IPagedResource<TItem>>;
 }

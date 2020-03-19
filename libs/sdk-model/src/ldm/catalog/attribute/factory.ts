@@ -15,6 +15,9 @@ import { AttributeModifications, newAttribute } from "../../../execution/attribu
 import { IAttribute } from "../../../execution/attribute";
 
 /**
+ * Catalog attribute builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogAttributeBuilder<
@@ -60,6 +63,10 @@ export class CatalogAttributeBuilder<
 }
 
 /**
+ * Catalog attribute factory
+ *
+ * @param modifications - catalog attribute builder modifications to perform
+ * @returns created catalog attribute
  * @public
  */
 export const newCatalogAttribute = (
@@ -67,6 +74,11 @@ export const newCatalogAttribute = (
 ): ICatalogAttribute => builderFactory(CatalogAttributeBuilder, { type: "attribute" }, modifications);
 
 /**
+ * Converts catalog attribute to execution attribute
+ *
+ * @param catalogAttribute - catalog attribute to convert
+ * @param modifications - catalog attribute builder modifications to perform before conversion
+ * @returns attribute converted to the execution model
  * @public
  */
 export const catalogAttributeToExecutionAttribute = (

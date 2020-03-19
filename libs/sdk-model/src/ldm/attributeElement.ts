@@ -1,10 +1,18 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 /**
- * TODO: SDK8: add docs
+ * Attribute element represented by concrete display form
+ *
  * @public
  */
 export interface IAttributeElement {
+    /**
+     * Title of the attribute element for the given display form
+     */
     readonly title: string;
+
+    /**
+     * Uri of the attribute element
+     */
     readonly uri: string;
 }

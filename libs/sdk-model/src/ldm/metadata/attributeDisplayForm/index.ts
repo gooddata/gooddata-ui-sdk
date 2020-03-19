@@ -4,10 +4,16 @@ import { ObjRef } from "../../../objRef";
 import { IMetadataObject } from "../types";
 
 /**
+ * Attribute display form metadata object
+ *
  * @public
  */
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     type: "displayForm";
+
+    /**
+     * A reference to the attribute that displayForm represents
+     */
     attribute: ObjRef;
 }
 

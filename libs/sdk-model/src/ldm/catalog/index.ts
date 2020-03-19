@@ -13,7 +13,10 @@ import { MetadataObject } from "../metadata";
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
 
 /**
- * Catalog metadata item accessor
+ * Get metadata object that catalog item represents
+ *
+ * @param catalogItem - catalog item
+ * @returns metadata object
  * @public
  */
 export const catalogItemMetadataObject = (catalogItem: CatalogItem): MetadataObject => {

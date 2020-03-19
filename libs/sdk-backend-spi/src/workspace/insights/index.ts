@@ -4,13 +4,33 @@ import { IVisualizationClass, IInsight, IInsightDefinition, ObjRef } from "@good
 import { IPagedResource } from "../../common/paging";
 
 /**
- * TODO: SDK8: add public doc
+ * Service to query, update or delete insights, and other methods related to insights.
+ * Check IInsight for more details.
  *
  * @public
  */
 export interface IWorkspaceInsights {
+    /**
+     * Request visualization class for the given reference
+     *
+     * @param ref - visualization class reference
+     * @returns promise of visualization class
+     */
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
+
+    /**
+     * Request all visualization classes
+     *
+     * @returns promise of visualization classes
+     */
     getVisualizationClasses(): Promise<IVisualizationClass[]>;
+
+    /**
+     * Request insight for the given reference
+     *
+     * @param ref - insight reference
+     * @returns promise of insight
+     */
     getInsight(ref: ObjRef): Promise<IInsight>;
 
     /**
@@ -21,10 +41,28 @@ export interface IWorkspaceInsights {
      */
     getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
 
+    /**
+     * Create and save insight for the provided insight definition
+     *
+     * @param insight - insight definition
+     * @returns promise of created insight
+     */
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
 
+    /**
+     * Update provided insight
+     *
+     * @param insight - insight to update
+     * @returns promise of updated insight
+     */
     updateInsight(insight: IInsight): Promise<IInsight>;
 
+    /**
+     * Delete insight with the given reference
+     *
+     * @param ref - ref of the insight to delete
+     * @returns promise of undefined
+     */
     deleteInsight(ref: ObjRef): Promise<void>;
 }
 
@@ -36,7 +74,7 @@ export interface IWorkspaceInsights {
 export type InsightOrdering = "id" | "title" | "updated";
 
 /**
- * TODO: SDK8: add docs
+ * Configuration options for querying insights
  *
  * @public
  */

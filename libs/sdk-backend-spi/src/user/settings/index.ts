@@ -9,6 +9,8 @@ import { ISettings } from "../../common/settings";
 export interface IUserSettingsService {
     /**
      * Asynchronously queries actual feature flags.
+     *
+     * @returns promise of the feature flags of the current user
      */
     query(): Promise<IUserSettings>;
 }

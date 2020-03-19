@@ -4,16 +4,22 @@ import { BuilderModifications, builderFactory, Builder } from "../../../base/bui
 import { ICatalogDateDataset, ICatalogDateAttribute, CatalogDateAttributeGranularity } from ".";
 import { IAttributeMetadataObject } from "../../metadata/attribute";
 import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm";
-import { IDataSetMetadataObject } from "../../metadata/dataSet";
 import { isObjRef, ObjRef } from "../../../objRef";
 import { newAttributeMetadataObject, AttributeMetadataObjectBuilder } from "../../metadata/attribute/factory";
 import {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../../metadata/attributeDisplayForm/factory";
-import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../../metadata";
+import {
+    DataSetMetadataObjectBuilder,
+    newDataSetMetadataObject,
+    IDataSetMetadataObject,
+} from "../../metadata";
 
 /**
+ * Catalog date attribute builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogDateAttributeBuilder<
@@ -53,6 +59,10 @@ export class CatalogDateAttributeBuilder<
 }
 
 /**
+ * Catalog date attribute factory
+ *
+ * @param modifications - catalog date attribute builder modifications to perform
+ * @returns created catalog date attribute
  * @public
  */
 export const newCatalogDateAttribute = (
@@ -60,6 +70,9 @@ export const newCatalogDateAttribute = (
 ): ICatalogDateAttribute => builderFactory(CatalogDateAttributeBuilder, {}, modifications);
 
 /**
+ * Catalog date dataset builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogDateDataset> extends Builder<
@@ -89,6 +102,10 @@ export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogD
 }
 
 /**
+ * Catalog date dataset factory
+ *
+ * @param modifications - catalog date dataset builder modifications to perform
+ * @returns created catalog date dataset
  * @public
  */
 export const newCatalogDateDataset = (

@@ -8,6 +8,7 @@ import { Identifier, Uri, IdentifierRef, UriRef, LocalIdRef, ObjectType } from "
  *
  * @param identifier - identifier to use
  * @param type - referenced object type
+ * @returns identifier reference
  * @public
  */
 export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef {
@@ -17,6 +18,7 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef 
 /**
  * Creates an UriRef from an URI
  * @param uri - URI to use
+ * @returns uri reference
  * @public
  */
 export function uriRef(uri: Uri): UriRef {
@@ -26,6 +28,7 @@ export function uriRef(uri: Uri): UriRef {
 /**
  * Creates an LocalIdRef from a local identifier
  * @param localIdentifier - local identifier to use
+ * @returns local identifier reference
  * @public
  */
 export function localIdRef(localIdentifier: Identifier): LocalIdRef {

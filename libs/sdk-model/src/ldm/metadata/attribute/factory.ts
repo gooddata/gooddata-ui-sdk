@@ -6,6 +6,9 @@ import { MetadataObjectBuilder } from "../factory";
 import { IAttributeMetadataObject } from ".";
 
 /**
+ * Attribute metadata object builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class AttributeMetadataObjectBuilder<
@@ -13,6 +16,11 @@ export class AttributeMetadataObjectBuilder<
 > extends MetadataObjectBuilder<T> {}
 
 /**
+ * Attribute metadata object factory
+ *
+ * @param ref - attribute reference
+ * @param modifications - attribute builder modifications to perform
+ * @returns created attribute metadata object
  * @public
  */
 export const newAttributeMetadataObject = (

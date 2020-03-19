@@ -15,6 +15,8 @@ export interface IWorkspace {
 }
 
 /**
+ * Workpsace permission types
+ *
  * @public
  */
 export type WorkspacePermission =
@@ -27,6 +29,7 @@ export type WorkspacePermission =
     | "canExportReport";
 
 /**
+ * Dictionary of workspace permissions
  *
  * @public
  */

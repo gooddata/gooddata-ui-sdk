@@ -2,6 +2,8 @@
 import { IMetadataObject } from "../types";
 
 /**
+ * Attribute metadata object
+ *
  * @public
  */
 export interface IAttributeMetadataObject extends IMetadataObject {

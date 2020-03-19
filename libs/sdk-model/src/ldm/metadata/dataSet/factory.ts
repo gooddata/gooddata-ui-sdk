@@ -6,6 +6,9 @@ import { MetadataObjectBuilder } from "../factory";
 import { IDataSetMetadataObject } from ".";
 
 /**
+ * DataSet metadata object builder
+ * See {@link Builder}
+ *
  * @public
  */
 export class DataSetMetadataObjectBuilder<
@@ -13,6 +16,11 @@ export class DataSetMetadataObjectBuilder<
 > extends MetadataObjectBuilder<T> {}
 
 /**
+ * DataSet metadata object factory
+ *
+ * @param ref - dataset reference
+ * @param modifications - dataset builder modifications to perform
+ * @returns created dataset metadata object
  * @public
  */
 export const newDataSetMetadataObject = (

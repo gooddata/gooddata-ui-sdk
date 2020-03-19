@@ -8,10 +8,13 @@ import { ICatalogItemBase } from "../types";
  * @public
  */
 export interface ICatalogGroup {
+    /**
+     * Group title
+     */
     title: string;
 
     /**
-     * Tag reference
+     * Tag reference that catalog group represents
      */
     tag: ObjRef;
 }
@@ -23,7 +26,7 @@ export interface ICatalogGroup {
  */
 export interface IGroupableCatalogItemBase extends ICatalogItemBase {
     /**
-     * Tag references
+     * Group tag references
      */
     groups: ObjRef[];
 }

@@ -9,6 +9,8 @@ import { IUserSettingsService } from "./settings";
 export interface IUserService {
     /**
      * Returns service that can be used to obtain settings that are currently in effect for the user.
+     *
+     * @returns user settings service
      */
     settings(): IUserSettingsService;
 }
