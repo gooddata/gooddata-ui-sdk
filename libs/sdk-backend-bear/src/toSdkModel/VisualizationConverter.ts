@@ -17,15 +17,18 @@ import omit = require("lodash/omit");
 import { GdcVisualizationObject } from "@gooddata/gd-bear-model";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
-import { isUri } from "@gooddata/gd-bear-client";
+
+// we use more lenient uri "detection" here because the one in bear-client makes some legacy data fail
+// as the objId is not always just a number
+const isUriLike = (value: string): boolean => /\/gdc\/md\/\S+\/obj\/\S+/.test(value);
 
 const convertAttributeElements = (items: string[]): AttributeElements => {
     if (!items.length) {
         return { values: [] }; // TODO is this OK or we want to throw?
     }
-    // we assume that all the items either use uris, or values, not both, since there no way of representing the mixed variant
+    // we assume that all the items either use uris, or values, not both, since there is no way of representing the mixed variant
     const first = items[0];
-    return isUri(first) ? { uris: items } : { values: items };
+    return isUriLike(first) ? { uris: items } : { values: items };
 };
 
 const convertFilter = (filter: GdcVisualizationObject.ExtendedFilter): IFilter | null => {
