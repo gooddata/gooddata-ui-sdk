@@ -23,7 +23,6 @@ import {
     IWorkspaceDatasetsService,
     IWorkspacePermissionsFactory,
     IUserService,
-    NotImplemented,
     IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -80,7 +79,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
     }
 
     public currentUser(): IUserService {
-        throw new NotImplemented("currentUser is not yet implemented");
+        return this.decorated.currentUser();
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
