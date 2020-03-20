@@ -6,27 +6,17 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { dummyBackend } from '@gooddata/sdk-backend-base';
+import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
+import { dummyDataFacade } from '@gooddata/sdk-backend-base';
+import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
-import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
-
-// Warning: (ae-internal-missing-underscore) The name "AnalyticalBackendCallbacks" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type AnalyticalBackendCallbacks = {
-    beforeExecute?: (def: IExecutionDefinition) => void;
-    successfulExecute?: (result: IExecutionResult) => void;
-    successfulResultReadAll?: (dataView: IDataView) => void;
-    failedResultReadAll?: (error: any) => void;
-    successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
-    failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
-};
 
 // Warning: (ae-internal-missing-underscore) The name "DataViewAll" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -51,26 +41,13 @@ export type DisplayFormRecording = {
     elements: IAttributeElement[];
 };
 
-// Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
-// Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
+export { dummyBackend }
 
-// Warning: (ae-internal-missing-underscore) The name "dummyBackendEmptyData" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function dummyBackendEmptyData(): IAnalyticalBackend;
+export { dummyBackendEmptyData }
 
-// Warning: (ae-internal-missing-underscore) The name "dummyDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
+export { dummyDataFacade }
 
-// Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
+export { dummyDataView }
 
 // Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -151,11 +128,6 @@ export type ScenarioRecording = {
     execution: ExecutionRecording;
     scenarioIndex: number;
 };
-
-// Warning: (ae-internal-missing-underscore) The name "withEventing" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
 
 // (No @packageDocumentation comment for this package)

@@ -39,7 +39,7 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- *
+ * @internal
  */
 export type DummyBackendConfig = AnalyticalBackendConfig & {
     /**

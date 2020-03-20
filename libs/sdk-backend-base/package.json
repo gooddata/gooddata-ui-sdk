@@ -30,6 +30,8 @@
         "validate-ci": "npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
+        "@gooddata/sdk-backend-spi": "^8.0.0-alpha.44",
+        "@gooddata/sdk-model": "^8.0.0-alpha.44",
         "lodash": "^4.17.15"
     },
     "devDependencies": {

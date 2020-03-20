@@ -4,8 +4,123 @@
 
 ```ts
 
-// @public (undocumented)
-export const test = 1;
+import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { DataViewFacade } from '@gooddata/sdk-backend-spi';
+import { DimensionGenerator } from '@gooddata/sdk-model';
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IBucket } from '@gooddata/sdk-model';
+import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDimension } from '@gooddata/sdk-model';
+import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
+import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExportConfig } from '@gooddata/sdk-backend-spi';
+import { IExportResult } from '@gooddata/sdk-backend-spi';
+import { IFilter } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { SortItem } from '@gooddata/sdk-model';
+
+// @beta
+export type AnalyticalBackendCallbacks = {
+    beforeExecute?: (def: IExecutionDefinition) => void;
+    successfulExecute?: (result: IExecutionResult) => void;
+    successfulResultReadAll?: (dataView: IDataView) => void;
+    failedResultReadAll?: (error: any) => void;
+    successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView) => void;
+    failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
+};
+
+// @alpha
+export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories): IAnalyticalBackend;
+
+// @alpha
+export class DecoratedExecutionFactory implements IExecutionFactory {
+    constructor(decorated: IExecutionFactory, wrapper?: PreparedExecutionWrapper | undefined);
+    // (undocumented)
+    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    // (undocumented)
+    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    // (undocumented)
+    forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution>;
+    // (undocumented)
+    forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    }
+
+// @alpha
+export abstract class DecoratedExecutionResult implements IExecutionResult {
+    constructor(decorated: IExecutionResult, wrapper: PreparedExecutionWrapper);
+    // (undocumented)
+    readonly definition: IExecutionDefinition;
+    // (undocumented)
+    readonly dimensions: IDimensionDescriptor[];
+    // (undocumented)
+    equals(other: IExecutionResult): boolean;
+    // (undocumented)
+    export(options: IExportConfig): Promise<IExportResult>;
+    // (undocumented)
+    fingerprint(): string;
+    // (undocumented)
+    readAll(): Promise<IDataView>;
+    // (undocumented)
+    readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    // (undocumented)
+    transform(): IPreparedExecution;
+    }
+
+// @alpha
+export abstract class DecoratedPreparedExecution implements IPreparedExecution {
+    protected constructor(decorated: IPreparedExecution);
+    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    // (undocumented)
+    readonly definition: IExecutionDefinition;
+    // (undocumented)
+    equals(other: IPreparedExecution): boolean;
+    // (undocumented)
+    execute(): Promise<IExecutionResult>;
+    // (undocumented)
+    fingerprint(): string;
+    // (undocumented)
+    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    // (undocumented)
+    withSorting(...items: SortItem[]): IPreparedExecution;
+}
+
+// @alpha
+export type DecoratorFactories = {
+    execution?: (executionFactory: IExecutionFactory) => IExecutionFactory;
+};
+
+// Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "dummyBackendEmptyData" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function dummyBackendEmptyData(): IAnalyticalBackend;
+
+// Warning: (ae-internal-missing-underscore) The name "dummyDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
+
+// Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
+
+// @alpha (undocumented)
+export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
+
+// @beta
+export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
 
 // (No @packageDocumentation comment for this package)

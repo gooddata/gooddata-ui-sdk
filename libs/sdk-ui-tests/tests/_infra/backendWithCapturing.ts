@@ -1,8 +1,9 @@
 // (C) 2020 GoodData Corporation
 
-import { dummyBackend, withEventing } from "@gooddata/sdk-backend-mockingbird";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { withEventing } from "@gooddata/sdk-backend-base";
 
 export type DataViewRequests = {
     allData?: boolean;

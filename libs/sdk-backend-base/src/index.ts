@@ -1,3 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
-export const test = 1;
+export {
+    decoratedBackend,
+    DecoratorFactories,
+    DecoratedExecutionFactory,
+    DecoratedExecutionResult,
+    DecoratedPreparedExecution,
+    PreparedExecutionWrapper,
+} from "./decoratedBackend";
+export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
+export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade } from "./dummyBackend";

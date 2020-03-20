@@ -11,7 +11,12 @@
         "strictNullChecks": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noImplicitReturns": true
+        "noImplicitReturns": true,
+        "baseUrl": "..",
+        "paths": {
+            "@gooddata/sdk-model": ["sdk-model/src"],
+            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
+        }
     },
     "exclude": ["node_modules", "dist"]
 }
