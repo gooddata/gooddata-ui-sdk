@@ -98,7 +98,7 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 /**
  * Defines callbacks for events that are emitted by with eventing backend decorator.
  *
- * @internal
+ * @beta
  */
 export type AnalyticalBackendCallbacks = {
     /**
@@ -156,7 +156,7 @@ export type AnalyticalBackendCallbacks = {
  *
  * @param realBackend - backend supplying the actual implementation of SPI
  * @param callbacks - callbacks to event handlers
- * @internal
+ * @beta
  */
 export function withEventing(
     realBackend: IAnalyticalBackend,

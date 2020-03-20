@@ -1,6 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
-export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade } from "./dummyBackend";
+import {
+    dummyBackend,
+    dummyBackendEmptyData,
+    dummyDataView,
+    dummyDataFacade,
+} from "@gooddata/sdk-backend-base";
+export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade };
 
 export { recordedBackend } from "./recordedBackend";
 
@@ -19,8 +25,6 @@ export {
     dataViewWindow,
     DataViewFirstPage,
 } from "./recordedBackend/execution";
-
-export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 
 export {
     LegacyExecutionRecording,

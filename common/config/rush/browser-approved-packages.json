@@ -83,6 +83,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/sdk-backend-base",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-backend-bear",
       "allowedCategories": [ "tools" ]
     },

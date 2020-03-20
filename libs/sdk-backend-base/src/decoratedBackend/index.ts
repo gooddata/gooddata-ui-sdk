@@ -23,7 +23,6 @@ import {
     IWorkspaceDatasetsService,
     IWorkspacePermissionsFactory,
     IUserService,
-    NotImplemented,
     IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -80,7 +79,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
     }
 
     public currentUser(): IUserService {
-        throw new NotImplemented("currentUser is not yet implemented");
+        return this.decorated.currentUser();
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
@@ -146,6 +145,9 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 }
 
+/**
+ * @alpha
+ */
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
 /**
@@ -153,6 +155,8 @@ export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPrepa
  *
  * There is an opt-in functionality to decorate the prepared executions - which is a typical use case for
  * factory decorators.
+ *
+ * @alpha
  */
 export class DecoratedExecutionFactory implements IExecutionFactory {
     constructor(
@@ -189,7 +193,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
  * Abstract base class for prepared execution decorators. Implements delegates to decorated execution. Concrete
  * implementations can override just the functions they are interested in.
  *
- * @internal
+ * @alpha
  */
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
@@ -235,7 +239,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
  * The prepared execution wrap is needed here because of the transform function which normally creates new
  * instances of prepared execution - and so the decoration needs to be maintained.
  *
- * @internal
+ * @alpha
  */
 export abstract class DecoratedExecutionResult implements IExecutionResult {
     public readonly definition: IExecutionDefinition;
@@ -279,7 +283,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
  *
- * @internal
+ * @alpha
  */
 export type DecoratorFactories = {
     execution?: (executionFactory: IExecutionFactory) => IExecutionFactory;
@@ -295,7 +299,7 @@ export type DecoratorFactories = {
  * @param backend - instance of backend to decorate
  * @param decorators - configuration for the decorations
  * @returns new decorated backend
- * @internal
+ * @alpha
  */
 export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories) {
     if (isEmpty(decorators)) {
