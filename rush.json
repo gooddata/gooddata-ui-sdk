@@ -301,6 +301,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-backend-base",
+            "projectFolder": "libs/sdk-backend-base",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-charts",
             "projectFolder": "libs/sdk-ui-charts",
             "reviewCategory": "production",
