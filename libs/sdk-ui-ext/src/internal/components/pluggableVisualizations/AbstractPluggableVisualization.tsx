@@ -222,7 +222,8 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     };
 
     protected onDrill = (event: IDrillEvent) => {
-        this.callbacks.onDrill?.(event);
+        // in case onDrill is not specified, default to always firing drill events
+        return this.callbacks.onDrill ? this.callbacks.onDrill(event) : true;
     };
 
     //
