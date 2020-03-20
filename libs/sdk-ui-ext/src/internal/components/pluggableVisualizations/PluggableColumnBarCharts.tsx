@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import get = require("lodash/get");
 import set = require("lodash/set");
-import { bucketsItems, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { bucketsItems, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { AXIS } from "../../constants/axis";
 import { BUCKETS } from "../../constants/bucket";
@@ -112,6 +112,6 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 }
 
-function haveManyViewItems(insight: IInsight): boolean {
+function haveManyViewItems(insight: IInsightDefinition): boolean {
     return bucketsItems(insightBuckets(insight, BucketNames.VIEW)).length > 1;
 }

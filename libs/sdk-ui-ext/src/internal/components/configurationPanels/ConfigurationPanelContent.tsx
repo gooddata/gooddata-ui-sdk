@@ -7,7 +7,7 @@ import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
-import { IInsight, insightHasMeasures } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightHasMeasures } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
 
@@ -20,7 +20,7 @@ export interface IConfigurationPanelContentProps {
     type?: ChartType;
     isError?: boolean;
     isLoading?: boolean;
-    insight?: IInsight;
+    insight?: IInsightDefinition;
     featureFlags?: IFeatureFlags;
     axis?: string;
     pushData?(data: any): void;

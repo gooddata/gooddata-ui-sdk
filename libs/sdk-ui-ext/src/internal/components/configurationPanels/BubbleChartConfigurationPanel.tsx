@@ -20,7 +20,7 @@ import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
-import { bucketsIsEmpty, IInsight, insightBuckets } from "@gooddata/sdk-model";
+import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
@@ -177,6 +177,6 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
     }
 }
 
-function hasTertiaryMeasures(insight: IInsight): boolean {
+function hasTertiaryMeasures(insight: IInsightDefinition): boolean {
     return !bucketsIsEmpty(insightBuckets(insight, BucketNames.TERTIARY_MEASURES));
 }

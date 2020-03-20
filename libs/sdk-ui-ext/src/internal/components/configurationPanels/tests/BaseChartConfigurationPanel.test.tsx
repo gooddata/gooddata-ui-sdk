@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IAttribute, IInsight, IMeasure } from "@gooddata/sdk-model";
+import { IAttribute, IInsightDefinition, IMeasure } from "@gooddata/sdk-model";
 import * as React from "react";
 import { shallow } from "enzyme";
 import { insightWithSingleAttribute } from "../../../tests/mocks/testMocks";
@@ -66,15 +66,13 @@ describe("BaseChartConfigurationPanel", () => {
         };
 
         it("should render configuration panel with enabled name sections in single axis chart", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -103,15 +101,13 @@ describe("BaseChartConfigurationPanel", () => {
         });
 
         it("should render configuration panel with enabled name sections in dual axis chart", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -151,15 +147,13 @@ describe("BaseChartConfigurationPanel", () => {
         });
 
         it("should render configuration panel with enabled X axis name section and disabled Y axis name section in single axis chart", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",
@@ -188,15 +182,13 @@ describe("BaseChartConfigurationPanel", () => {
         });
 
         it("should render configuration panel with disabled X axis name section and disabled Y axis name section in group-category chart", () => {
-            const insight: IInsight = {
+            const insight: IInsightDefinition = {
                 insight: {
                     title: "My Insight",
                     sorts: [],
                     filters: [],
                     visualizationUrl: "vc",
                     properties: {},
-                    identifier: "id",
-                    uri: "test",
                     buckets: [
                         {
                             localIdentifier: "measures",

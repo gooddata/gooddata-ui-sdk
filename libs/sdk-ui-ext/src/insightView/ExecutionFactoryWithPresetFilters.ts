@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     AttributeOrMeasure,
     IBucket,
     IFilter,
-    IInsight,
+    IInsightDefinition,
     defWithFilters,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
@@ -24,7 +24,7 @@ export class ExecutionFactoryWithPresetFilters implements IExecutionFactory {
     public forBuckets = (buckets: IBucket[], filters: IFilter[] = []): IPreparedExecution => {
         return this.factory.forBuckets(buckets, [...this.presetFilters, ...filters]);
     };
-    public forInsight = (insight: IInsight, filters: IFilter[] = []): IPreparedExecution => {
+    public forInsight = (insight: IInsightDefinition, filters: IFilter[] = []): IPreparedExecution => {
         return this.factory.forInsight(insight, [...this.presetFilters, ...filters]);
     };
     public forInsightByRef = (uri: string, filters: IFilter[] = []): Promise<IPreparedExecution> => {

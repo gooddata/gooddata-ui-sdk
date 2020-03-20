@@ -855,10 +855,10 @@ export type InsightModifications = (builder: InsightDefinitionBuilder) => Insigh
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
 
 // @public
-export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
+export function insightSetProperties<T extends IInsightDefinition>(insight: T, properties?: VisualizationProperties): T;
 
 // @public
-export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
+export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts?: SortItem[]): T;
 
 // @public
 export function insightSorts(insight: IInsightDefinition): SortItem[];
@@ -1367,7 +1367,7 @@ export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModi
 export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefForInsight(workspace: string, insight: IInsight, filters?: IFilter[]): IExecutionDefinition;
+export function newDefForInsight(workspace: string, insight: IInsightDefinition, filters?: IFilter[]): IExecutionDefinition;
 
 // @public
 export function newDefForItems(workspace: string, items: AttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;

@@ -10,7 +10,7 @@ import {
 import {
     bucketsFind,
     IBucket,
-    IInsight,
+    IInsightDefinition,
     insightBucket,
     insightBuckets,
     ITotal,
@@ -19,8 +19,9 @@ import {
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-const singleMeasureInsight = ReferenceRecordings.Insights.Headline.SingleMeasure.obj as IInsight;
-const singleAttributeInsight = ReferenceRecordings.Insights.PivotTable.SingleAttribute.obj as IInsight;
+const singleMeasureInsight = ReferenceRecordings.Insights.Headline.SingleMeasure.obj as IInsightDefinition;
+const singleAttributeInsight = ReferenceRecordings.Insights.PivotTable.SingleAttribute
+    .obj as IInsightDefinition;
 const insightWithProperties = insightSetProperties(singleMeasureInsight, {
     controls: { xaxis: { visible: true } },
 });
@@ -32,7 +33,7 @@ const insightWithProperties = insightSetProperties(singleMeasureInsight, {
  * different recorded insights and verifying dimensionality.
  */
 
-function getVisualizationBucket(newVis: IInsight, bucketName: string): IBucket {
+function getVisualizationBucket(newVis: IInsightDefinition, bucketName: string): IBucket {
     const buckets = insightBuckets(newVis);
     let bucket = bucketsFind(buckets, bucketName);
 
@@ -44,7 +45,7 @@ function getVisualizationBucket(newVis: IInsight, bucketName: string): IBucket {
     return bucket;
 }
 
-function addMeasure(visualization: IInsight, index: number): IInsight {
+function addMeasure(visualization: IInsightDefinition, index: number): IInsightDefinition {
     const newVis = cloneDeep(visualization);
     const measure = {
         measure: {
@@ -66,7 +67,11 @@ function addMeasure(visualization: IInsight, index: number): IInsight {
     return newVis;
 }
 
-function addAttribute(visualization: IInsight, index: number, bucketName: string): IInsight {
+function addAttribute(
+    visualization: IInsightDefinition,
+    index: number,
+    bucketName: string,
+): IInsightDefinition {
     const newVis = cloneDeep(visualization);
     const attribute = {
         attribute: {
@@ -83,7 +88,11 @@ function addAttribute(visualization: IInsight, index: number, bucketName: string
     return newVis;
 }
 
-function addTotals(visualization: IInsight, bucketName: string, newTotals: ITotal[]): IInsight {
+function addTotals(
+    visualization: IInsightDefinition,
+    bucketName: string,
+    newTotals: ITotal[],
+): IInsightDefinition {
     const newVis = cloneDeep(visualization);
 
     const bucket = getVisualizationBucket(newVis, bucketName);
@@ -99,11 +108,9 @@ function addTotals(visualization: IInsight, bucketName: string, newTotals: ITota
     return newVis;
 }
 
-function newInsight(buckets: IBucket[]): IInsight {
+function newInsight(buckets: IBucket[]): IInsightDefinition {
     return {
         insight: {
-            identifier: "test",
-            uri: "test",
             title: "no name",
             visualizationUrl: "classId",
             buckets,

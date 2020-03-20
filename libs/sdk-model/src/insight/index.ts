@@ -463,19 +463,19 @@ export function insightIsLocked(insight: IInsightDefinition): boolean {
  * @returns always new instance
  * @public
  */
-export function insightSetProperties(insight: IInsight, properties?: VisualizationProperties): IInsight;
-export function insightSetProperties(
-    insight: IInsightDefinition,
+export function insightSetProperties<T extends IInsightDefinition>(
+    insight: T,
     properties: VisualizationProperties = {},
-): IInsightDefinition {
+): T {
     invariant(insight, "insight must be specified");
 
+    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
             properties,
         },
-    };
+    } as T;
 }
 
 /**
@@ -487,16 +487,16 @@ export function insightSetProperties(
  * @returns always new instance
  * @public
  */
-export function insightSetSorts(insight: IInsight, sorts?: SortItem[]): IInsight;
-export function insightSetSorts(insight: IInsightDefinition, sorts: SortItem[] = []): IInsightDefinition {
+export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts: SortItem[] = []): T {
     invariant(insight, "insight must be specified");
 
+    // tslint:disable-next-line: no-object-literal-type-assertion
     return {
         insight: {
             ...insight.insight,
             sorts,
         },
-    };
+    } as T;
 }
 
 //

@@ -1,11 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import { bucketItems, IInsight, insightBucket } from "@gooddata/sdk-model";
+import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isScatterPlot, isBubbleChart } from "@gooddata/sdk-ui-charts";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import get = require("lodash/get");
 
-export function countBucketItems(insight: IInsight) {
+export function countBucketItems(insight: IInsightDefinition) {
     if (!insight) {
         return {
             viewByItemCount: 0,
@@ -25,7 +25,11 @@ export function countBucketItems(insight: IInsight) {
     };
 }
 
-export function countItemsOnAxes(type: string, controls: IVisualizationProperties, insight: IInsight) {
+export function countItemsOnAxes(
+    type: string,
+    controls: IVisualizationProperties,
+    insight: IInsightDefinition,
+) {
     const isBarChartType = isBarChart(type);
 
     const { viewByItemCount, measureItemCount, secondaryMeasureItemCount } = countBucketItems(insight);

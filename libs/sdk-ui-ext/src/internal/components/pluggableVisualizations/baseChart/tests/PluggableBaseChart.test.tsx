@@ -9,7 +9,7 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import BaseChartConfigurationPanel from "../../../configurationPanels/BaseChartConfigurationPanel";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IInsight, insightSetProperties } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import noop = require("lodash/noop");
 
 describe("PluggableBaseChart", () => {
@@ -40,7 +40,7 @@ describe("PluggableBaseChart", () => {
         return new PluggableBaseChart(props);
     }
 
-    function dummyConfigurationRenderer(insight: IInsight) {
+    function dummyConfigurationRenderer(insight: IInsightDefinition) {
         const properties = {};
 
         return (

@@ -5,7 +5,7 @@ import {
     attributeLocalId,
     bucketAttributes,
     IDimension,
-    IInsight,
+    IInsightDefinition,
     insightBucket,
     MeasureGroupIdentifier,
     newDimension,
@@ -89,7 +89,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
     protected renderVisualization(
         options: IVisProps,
-        insight: IInsight,
+        insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ) {
         const { locale, custom = {}, config } = options;
@@ -135,7 +135,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         }
     }
 
-    private getXirrDimensions(insight: IInsight): IDimension[] {
+    private getXirrDimensions(insight: IInsightDefinition): IDimension[] {
         const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
 
         if (attribute && attribute.items.length) {

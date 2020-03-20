@@ -1,14 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IInsight, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
+import { IInsightDefinition, IVisualizationClass, newAttribute } from "@gooddata/sdk-model";
 
 //
-// Test insights
+// Test insight definitions
 //
 
 export const EMPTY_TITLE = "empty_title";
 
-export const emptyInsight: IInsight = {
+export const emptyInsight: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [],
@@ -16,12 +16,10 @@ export const emptyInsight: IInsight = {
         sorts: [],
         properties: {},
         title: "Empty insight",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const dummyInsight: IInsight = {
+export const dummyInsight: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -34,12 +32,10 @@ export const dummyInsight: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single attribute",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithStacking: IInsight = {
+export const insightWithStacking: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -91,12 +87,10 @@ export const insightWithStacking: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single attribute",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasureAndTwoViewBy: IInsight = {
+export const insightWithSingleMeasureAndTwoViewBy: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -147,12 +141,10 @@ export const insightWithSingleMeasureAndTwoViewBy: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with two viewby attributes",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithTwoMeasuresAndViewBy: IInsight = {
+export const insightWithTwoMeasuresAndViewBy: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -207,12 +199,10 @@ export const insightWithTwoMeasuresAndViewBy: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with two viewby attributes",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithTwoMeasuresAndTwoViewBy: IInsight = {
+export const insightWithTwoMeasuresAndTwoViewBy: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -275,12 +265,10 @@ export const insightWithTwoMeasuresAndTwoViewBy: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with two viewby attributes",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasure: IInsight = {
+export const insightWithSingleMeasure: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -306,12 +294,10 @@ export const insightWithSingleMeasure: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleSecondaryMeasure: IInsight = {
+export const insightWithSingleSecondaryMeasure: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -337,12 +323,10 @@ export const insightWithSingleSecondaryMeasure: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasureAndViewBy: IInsight = {
+export const insightWithSingleMeasureAndViewBy: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -381,12 +365,10 @@ export const insightWithSingleMeasureAndViewBy: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasureAndViewByAndStack: IInsight = {
+export const insightWithSingleMeasureAndViewByAndStack: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -438,12 +420,10 @@ export const insightWithSingleMeasureAndViewByAndStack: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasureAndStack: IInsight = {
+export const insightWithSingleMeasureAndStack: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -482,12 +462,10 @@ export const insightWithSingleMeasureAndStack: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleAttribute: IInsight = {
+export const insightWithSingleAttribute: IInsightDefinition = {
     insight: {
         visualizationUrl: "column",
         buckets: [
@@ -509,12 +487,10 @@ export const insightWithSingleAttribute: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithNoMeasureAndOneAttribute: IInsight = {
+export const insightWithNoMeasureAndOneAttribute: IInsightDefinition = {
     insight: {
         visualizationUrl: "table",
         buckets: [
@@ -536,12 +512,10 @@ export const insightWithNoMeasureAndOneAttribute: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with no measure and one attribute",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithSingleMeasureAndOneAttribute: IInsight = {
+export const insightWithSingleMeasureAndOneAttribute: IInsightDefinition = {
     insight: {
         visualizationUrl: "table",
         buckets: [
@@ -580,12 +554,10 @@ export const insightWithSingleMeasureAndOneAttribute: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with single measure and one attribute",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 
-export const insightWithNoMeasureAndOneColumn: IInsight = {
+export const insightWithNoMeasureAndOneColumn: IInsightDefinition = {
     insight: {
         visualizationUrl: "table",
         buckets: [
@@ -607,8 +579,6 @@ export const insightWithNoMeasureAndOneColumn: IInsight = {
         sorts: [],
         properties: {},
         title: "Dummy insight with no measure and one column",
-        identifier: "myIdentifier",
-        uri: "/gdc/md/mockproject/obj/123",
     },
 };
 

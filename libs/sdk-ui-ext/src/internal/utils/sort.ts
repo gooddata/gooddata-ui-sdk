@@ -10,7 +10,7 @@ import {
     bucketAttributes,
     IAttributeSortItem,
     IBucket,
-    IInsight,
+    IInsightDefinition,
     IMeasure,
     insightBucket,
     insightMeasures,
@@ -54,7 +54,7 @@ export function getAttributeSortItem(
     return attributeSortItem;
 }
 
-function getDefaultTableSort(insight: IInsight): SortItem[] {
+function getDefaultTableSort(insight: IInsightDefinition): SortItem[] {
     const rowBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
     const rowAttributes = rowBucket ? bucketAttributes(rowBucket) : [];
 
@@ -74,7 +74,10 @@ function getDefaultTableSort(insight: IInsight): SortItem[] {
     return [];
 }
 
-function getDefaultBarChartSort(insight: IInsight, canSortStackTotalValue: boolean = false): SortItem[] {
+function getDefaultBarChartSort(
+    insight: IInsightDefinition,
+    canSortStackTotalValue: boolean = false,
+): SortItem[] {
     const measures = insightMeasures(insight);
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const stackBucket = insightBucket(insight, BucketNames.STACK);
@@ -121,7 +124,7 @@ export function getDefaultTreemapSortFromBuckets(
     return [];
 }
 
-export function getDefaultTreemapSort(insight: IInsight): SortItem[] {
+export function getDefaultTreemapSort(insight: IInsightDefinition): SortItem[] {
     return getDefaultTreemapSortFromBuckets(
         insightBucket(insight, BucketNames.VIEW),
         insightBucket(insight, BucketNames.SEGMENT),
@@ -129,10 +132,10 @@ export function getDefaultTreemapSort(insight: IInsight): SortItem[] {
     );
 }
 
-// Consider disolving this function into individual components
+// Consider dissolving this function into individual components
 export function createSorts(
     type: string,
-    insight: IInsight,
+    insight: IInsightDefinition,
     canSortStackTotalValue: boolean = false,
 ): SortItem[] {
     switch (type) {

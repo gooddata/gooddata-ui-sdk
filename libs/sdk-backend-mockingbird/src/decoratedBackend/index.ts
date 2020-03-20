@@ -33,7 +33,7 @@ import {
     IDimension,
     IExecutionDefinition,
     IFilter,
-    IInsight,
+    IInsightDefinition,
     SortItem,
 } from "@gooddata/sdk-model";
 
@@ -172,7 +172,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         return this.wrap(this.decorated.forBuckets(buckets, filters));
     }
 
-    public forInsight(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forInsight(insight, filters));
     }
 

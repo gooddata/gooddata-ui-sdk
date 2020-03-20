@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
+import { IColorPalette, IInsightDefinition, ITotal, VisualizationProperties } from "@gooddata/sdk-model";
 import {
     ChartType,
     IDrillableItem,
@@ -291,7 +291,7 @@ export interface IVisualization {
      * @param insight - new state of insight
      * @param executionFactory - execution factory to use when triggering calculation on backend
      */
-    update(props: IVisProps, insight: IInsight, executionFactory: IExecutionFactory): void;
+    update(props: IVisProps, insight: IInsightDefinition, executionFactory: IExecutionFactory): void;
 
     unmount(): void;
 
