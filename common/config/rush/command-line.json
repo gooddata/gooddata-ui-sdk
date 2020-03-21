@@ -60,6 +60,26 @@
     },
     {
       "commandKind": "bulk",
+      "name": "dep-cruiser",
+      "summary": "Run dependency cruiser in all projects",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "dep-cruiser-ci",
+      "summary": "Run dependency cruiser in all projects",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "validate",
       "summary": "Validates code in all projects",
       "safeForSimultaneousRushProcesses": true,

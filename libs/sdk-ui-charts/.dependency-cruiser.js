@@ -1,11 +1,11 @@
 const depRuiser = require("../../common/config/dep-cruiser/default.config");
 
-const options = {
+options = {
     forbidden: [
         ...depRuiser.DefaultRules,
         ...depRuiser.DefaultSdkRules,
-        depRuiser.isolatedSubmodule("base", "src/base"),
-        depRuiser.moduleWithDependencies("executions", "src/execution", ["src/base"]),
+        depRuiser.isolatedSubmodule("highcharts", "src/highcharts"),
+        depRuiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts"]),
     ],
     options: depRuiser.DefaultOptions,
 };

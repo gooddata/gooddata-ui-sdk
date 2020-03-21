@@ -22,7 +22,7 @@ The main constraints - hard rules - in the architecture are:
 
 ### Naming conventions
 
--   All platform-specific packages (clients, models and the like) start with `gd-` prefix => **Layer 1 packages**
+-   All platform-specific API client packages (clients, models and the like) start with `gd-` prefix => **Layer 1 packages**
 -   All SDK packages have `sdk-` prefix => **Layer 2 packages**
 -   All SDK packages which implement Analytical Backend SPI have `sdk-backend-` prefix => **Layer 2 packages**
 -   All SDK React packages have `sdk-ui-` prefix => **Layer 3 packages**

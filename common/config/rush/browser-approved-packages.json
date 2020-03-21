@@ -380,7 +380,7 @@
     },
     {
       "name": "dependency-cruiser",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "downshift",
