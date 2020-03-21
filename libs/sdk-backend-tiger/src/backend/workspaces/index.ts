@@ -60,24 +60,58 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
             next: () => Promise.resolve(emptyResult),
         };
 
-        const dummyWorkspaces: IWorkspace[] = [
+        /*
+         * Tiger has no service to obtain list of workspaces yet. Thus hardcoding all available workspaces
+         * it may support.
+         *
+         * List taken from NAS code: sqlexecutor/databaseaccess/DataSourceService.kt
+         */
+        const workspaces: IWorkspace[] = [
             {
-                title: "GoodSales",
+                title: "TPC-H - Postgres",
+                id: "tpch",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "GoodSales - Postgres",
                 id: "goodsales",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "UFO - Postgres",
+                id: "ufo",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "TPC-H - Redshift",
+                id: "tpch_rs",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "GoodSales - Redshift",
+                id: "goodsales_rs",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "UFO - Redshift",
+                id: "ufo_rs",
                 description: "",
                 isDemo: true,
             },
         ];
 
-        const dummyResult: IWorkspaceQueryResult = {
+        return {
             search,
-            items: dummyWorkspaces,
+            items: workspaces,
             limit,
             offset,
-            totalCount: dummyWorkspaces.length,
+            totalCount: workspaces.length,
             next: () => Promise.resolve(emptyResult),
         };
-
-        return dummyResult;
     }
 }
