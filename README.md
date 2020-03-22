@@ -11,6 +11,10 @@ This repo is currently in pre-release quality:
 
 Progress and tasks are tracked in RAIL-1791.
 
+## Getting Started
+
+TODO
+
 ## Contributing
 
 ### Getting started
@@ -32,12 +36,10 @@ Progress and tasks are tracked in RAIL-1791.
 ### After you pull latest changes
 
 Always run `rush install`; this will make sure all the dependencies from the shrinkwrap file will be installed in all
-the projects managed in the repository.
+the projects managed in the repository. After that run `rush build`.
 
-In case the pull brings in new projects use `rush link --force` to ensure symlinks between dependent projects are
-correctly created.
-
-After that run `rush build`.
+In case the pull brings in new projects or large bulk of changes, it is safer (albeit more time-consuming) to run
+`rush link --force && rush clean && rush rebuild`.
 
 ### Contributor manual / FAQ
 
@@ -73,6 +75,8 @@ Long story short here are facts and commands you need to know:
     the last build.
 
 -   `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository.
+    This is typically not needed as Rush will re-link during update. Use in case you encounter strange dependency
+    errors during build.
 
 -   `rush add` - adds a new dependency to a project.
 
@@ -80,35 +84,39 @@ Long story short here are facts and commands you need to know:
 
 On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):
 
-| Command               | Description                                                             |
-| --------------------- | ----------------------------------------------------------------------- |
-| `rush audit`          | Performs security audit of all packages listed in global lock file      |
-| `rush validate`       | Validates code in all projects.                                         |
-| `rush validate-ci`    | Validates code in all projects in CI mode.                              |
-| `rush test-once`      | Tests code in all projects.                                             |
-| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.          |
-| `rush prettier-check` | Verifies code formatting in all projects.                               |
-| `rush prettier-write` | Formats code in all projects.                                           |
-| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions. |
+| Command               | Description                                                                                                 |
+| --------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `rush audit`          | Performs security audit of all packages listed in global lock file                                          |
+| `rush clean`          | Cleans up artifacts created by build and tests. Cleans Jest caches. Full 'rebuild' required after cleaning. |
+| `rush validate`       | Validates code in all projects.                                                                             |
+| `rush validate-ci`    | Validates code in all projects in CI mode.                                                                  |
+| `rush test-once`      | Tests code in all projects.                                                                                 |
+| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                                              |
+| `rush dep-cruiser`    | Runs dependency-cruiser in all projects.                                                                    |
+| `rush dep-cruiser-ci` | Runs dependency-cruiser in CI mode in all projects. This creates HTML reports                               |
+| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                                              |
+| `rush prettier-check` | Verifies code formatting in all projects.                                                                   |
+| `rush prettier-write` | Formats code in all projects.                                                                               |
+| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                                     |
 
 #### How do I add new / update existing dependency in a project?
 
-You must use Rush to add a new dependency. Navigate to the subproject and invoke:
+You must use Rush to add a new dependency to a project and use the `make-consistent` parameter. This parameter
+will make Rush update all other projects that already use the package to also use the desired version.
+
+Navigate to the subproject and invoke:
 
 ```bash
-rush add -p <package> --caret --make-consistent
+rush add -p <package>@^<version> --make-consistent
 ```
 
-for production dependencies or
+to add a new production dependency. Add the `--dev` flag to add the package as dev dependency instead.
 
-```bash
-rush add -p <package> --caret --dev
-```
+With rare exceptions such as typescript package, all our dependencies use caret. Dependencies must be kept
+consistent across subprojects.
 
-for developer dependencies.
-
-With rare exceptions such as typescript package, all our dependencies use caret. Production dependencies must be kept
-consistent across subprojects. This is the default mode, if you run into technical issues with that, we may make exceptions.
+> Note: **never** add new packages by running package manager directly (e.g. `yarn add ...`).
+> This will break the node_modules.
 
 #### How do I remove dependencies from a project?
 
@@ -117,27 +125,26 @@ Remove the dependencies from package.json and then run `rush update`.
 #### How do I build stuff?
 
 To build everything, run `rush build`; this will trigger parallel execution of build scripts defined in each subproject's
-`package.json`. Rush will only build projects which have changed since the last build. Also, Rush honors the dependencies
-between projects and will build them in correct order.
+`package.json`, starting them in the correct order - honoring the inter-package dependencies.
+
+Rush build is incremental and will only build projects which have changed since the last build. This is
+safe and preferred way to build. In rare cases such as large refactorings or refactorings of SCSS styles you should
+perform clean & rebuild: `rush clean && rush rebuild`
 
 To build a single subproject with its dependencies:
 
 ```bash
-rush build -t @gooddata/react-components
+rush build -t @gooddata/sdk-ui
 ```
 
 If you want to build _just_ single subproject, you can navigate to the subproject directory and invoke build using
-`npm`:
-
-```bash
-npm run build
-```
-
-or rushx:
+`rushx`:
 
 ```bash
 rushx build
 ```
+
+> Hint: starting package.json **scripts** using npm/yarn/pnpm also works and there is nothing wrong with it.
 
 #### Where do I put my contributions?
 
