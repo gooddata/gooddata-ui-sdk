@@ -75,7 +75,7 @@
         "@types/react-dom": "^16.9.3",
         "@types/react-responsive": "^8.0.2",
         "@types/react-window": "^1.8.1",
-        "dependency-cruiser": "^6.0.0",
+        "dependency-cruiser": "^8.0.1",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
         "foundation-sites": "^5.5.3",

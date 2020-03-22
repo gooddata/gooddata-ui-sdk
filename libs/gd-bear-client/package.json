@@ -60,7 +60,7 @@
         "@types/uuid": "^3.4.5",
         "async": "^2.1.5",
         "awesome-typescript-loader": "^5.2.1",
-        "dependency-cruiser": "^6.0.0",
+        "dependency-cruiser": "^8.0.1",
         "fast-levenshtein": "^2.0.6",
         "fetch-mock": "^5.12.2",
         "jest": "^25.1.0",

@@ -72,7 +72,7 @@
         "@types/react-dom": "^16.9.3",
         "@types/react-measure": "2.0.5",
         "@types/uuid": "^3.4.5",
-        "dependency-cruiser": "^6.0.0",
+        "dependency-cruiser": "^8.0.1",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
         "foundation-sites": "^5.5.3",

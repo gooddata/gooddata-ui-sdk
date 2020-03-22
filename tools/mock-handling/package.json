@@ -59,7 +59,7 @@
         "@types/node": "^12.12.26",
         "@types/prettier": "~1.18.2",
         "@types/rimraf": "^2.0.2",
-        "dependency-cruiser": "^6.0.0",
+        "dependency-cruiser": "^8.0.1",
         "jest": "^25.1.0",
         "jest-junit": "^3.0.0",
         "ts-jest": "^25.2.0",
