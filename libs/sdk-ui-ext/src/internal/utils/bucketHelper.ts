@@ -21,28 +21,21 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
+    DATE_DATASET_ATTRIBUTE,
+    IAttributeFilter,
     IBucketFilter,
     IBucketItem,
     IBucketOfFun,
     IBucketsUiConfig,
     IBucketUiConfig,
+    IDateFilter,
     IExtendedReferencePoint,
     IFilters,
     IFiltersBucketItem,
-    isDateFilter,
+    IMeasureValueFilter,
     IUiConfig,
-    isAttributeFilter,
-    isMeasureValueFilter,
-    IDateFilter,
 } from "../interfaces/Visualization";
-import {
-    ATTRIBUTE,
-    BUCKETS,
-    DATE,
-    DATE_DATASET_ATTRIBUTE,
-    METRIC,
-    SHOW_ON_SECONDARY_AXIS,
-} from "../constants/bucket";
+import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
 import { UICONFIG } from "../constants/uiConfig";
 import { getTranslation } from "./translations";
 import {
@@ -55,6 +48,23 @@ import {
     isSimpleMeasure,
     ITotal,
 } from "@gooddata/sdk-model";
+
+export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
+    return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
+}
+
+export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFilter {
+    const filterAsAttributeFilter: IAttributeFilter = filter as IAttributeFilter;
+    return (
+        !!filter &&
+        filterAsAttributeFilter.attribute !== DATE_DATASET_ATTRIBUTE &&
+        filterAsAttributeFilter.attribute !== undefined
+    );
+}
+
+export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureValueFilter {
+    return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
+}
 
 export function sanitizeFilters(newReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);

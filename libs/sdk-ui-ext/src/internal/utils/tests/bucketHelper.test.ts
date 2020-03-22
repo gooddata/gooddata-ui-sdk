@@ -3,9 +3,10 @@ import cloneDeep = require("lodash/cloneDeep");
 import set = require("lodash/set");
 import { IBucket } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ATTRIBUTE, DATE_DATASET_ATTRIBUTE, METRIC } from "../../constants/bucket";
+import { ATTRIBUTE, METRIC } from "../../constants/bucket";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import {
+    DATE_DATASET_ATTRIBUTE,
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,

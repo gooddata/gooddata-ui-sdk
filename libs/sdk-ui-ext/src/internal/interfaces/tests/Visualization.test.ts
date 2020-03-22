@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { isDateFilter, isAttributeFilter, isMeasureValueFilter } from "../Visualization";
 import { dateFilter, attributeFilter, measureValueFilter } from "../../tests/mocks/referencePointMocks";
+import { isAttributeFilter, isDateFilter, isMeasureValueFilter } from "../../utils/bucketHelper";
 
 describe("Visualization typeguards", () => {
     describe("isDateFilter", () => {

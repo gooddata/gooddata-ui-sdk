@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IBucketOfFun } from "../interfaces/Visualization";
 
 // Buckets
@@ -14,7 +14,6 @@ export const GRANULARITY = {
     quarter: "GDC.time.quarter",
     year: "GDC.time.year",
 };
-export const DATE_DATASET_ATTRIBUTE = "attr.datedataset";
 export const ALL_TIME = "all_time";
 
 export const BUCKETS = "buckets";

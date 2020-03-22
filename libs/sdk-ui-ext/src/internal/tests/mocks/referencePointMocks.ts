@@ -7,9 +7,9 @@ import {
     IDateFilter,
     IMeasureValueFilter,
     IFiltersBucketItem,
+    DATE_DATASET_ATTRIBUTE,
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { DATE_DATASET_ATTRIBUTE } from "../../constants/bucket";
 
 export const masterMeasureItems: IBucketItem[] = [
     {
