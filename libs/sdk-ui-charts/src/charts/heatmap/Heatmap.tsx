@@ -2,7 +2,7 @@
 import { AttributeOrMeasure, IAttribute, IFilter, newBucket, SortItem } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { heatmapDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { CoreHeatmap } from "./CoreHeatmap";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";

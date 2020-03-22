@@ -10,7 +10,7 @@ import partial = require("lodash/partial");
 import throttle = require("lodash/throttle");
 import isNil = require("lodash/isNil");
 import * as cx from "classnames";
-import { OnLegendReady } from "../../charts/chartProps";
+import { OnLegendReady } from "../../interfaces";
 import { ILegendOptions } from "../typings/legend";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";

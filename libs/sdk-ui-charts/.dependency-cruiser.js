@@ -4,8 +4,8 @@ options = {
     forbidden: [
         ...depRuiser.DefaultRules,
         ...depRuiser.DefaultSdkRules,
-        depRuiser.isolatedSubmodule("highcharts", "src/highcharts"),
-        depRuiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts"]),
+        depRuiser.moduleWithDependencies("highcharts", "src/highcharts", ["src/interfaces"]),
+        depRuiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
     ],
     options: depRuiser.DefaultOptions,
 };

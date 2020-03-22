@@ -2,7 +2,7 @@
 import { AttributeOrMeasure, IAttribute, IFilter, SortItem, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { CorePieChart } from "./CorePieChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";

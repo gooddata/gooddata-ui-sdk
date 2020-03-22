@@ -9,7 +9,7 @@ import {
     OnFiredDrillEvent,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { OnLegendReady } from "../../charts/chartProps";
+import { OnLegendReady } from "../../interfaces";
 import { IChartConfig, IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";

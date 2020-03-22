@@ -7,9 +7,8 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";

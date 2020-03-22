@@ -21,7 +21,7 @@ import {
     VisType,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { ViewByAttributesLimit } from "../../charts/_commons/limits";
+import { ViewByAttributesLimit } from "../../interfaces";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,

@@ -12,7 +12,7 @@ import {
     bucketsAttributes,
 } from "@gooddata/sdk-model";
 import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
-import { ICoreChartProps, IBucketChartProps } from "../chartProps";
+import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
 import { CoreXirr } from "./CoreXirr";
 import omit = require("lodash/omit");
 

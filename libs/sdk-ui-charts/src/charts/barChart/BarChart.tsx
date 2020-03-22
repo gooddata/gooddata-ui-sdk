@@ -8,8 +8,7 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { ViewByAttributesLimit } from "../_commons/limits";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
 import { sanitizeConfig } from "../../highcharts";
 import { CoreBarChart } from "./CoreBarChart";

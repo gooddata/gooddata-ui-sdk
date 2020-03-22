@@ -11,7 +11,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
 import get = require("lodash/get");

@@ -10,7 +10,7 @@ import {
     IntlWrapper,
     ErrorCodes,
 } from "@gooddata/sdk-ui";
-import { ICommonChartProps, ICoreChartProps } from "../chartProps";
+import { ICommonChartProps, ICoreChartProps } from "../../interfaces";
 import HeadlineTransformation from "./internal/HeadlineTransformation";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
 

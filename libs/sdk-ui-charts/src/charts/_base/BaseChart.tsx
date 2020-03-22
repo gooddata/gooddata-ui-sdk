@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
-import { ICoreChartProps, OnLegendReady } from "../chartProps";
+import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { Visualization, getValidColorPalette } from "../../highcharts";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
 import noop = require("lodash/noop");

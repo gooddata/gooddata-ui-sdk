@@ -2,7 +2,7 @@
 import { AttributeOrMeasure, IAttribute, IFilter, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { treemapDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { CoreTreemap } from "./CoreTreemap";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";
