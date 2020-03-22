@@ -20,7 +20,7 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
-        "validate-ci": "npm run tslint-ci && npm run prettier-check"
+        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "config": {
         "tslint": "./src/{,**/}*.ts"
