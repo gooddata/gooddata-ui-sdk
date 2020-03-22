@@ -8,7 +8,7 @@ import { numberFormat } from "@gooddata/numberjs";
 import escape = require("lodash/escape");
 import unescape = require("lodash/unescape");
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartOptions, ISeriesItem } from "../Config";
+import { IChartOptions, ISeriesItem } from "../typings/unsafe";
 
 // lodash/fp does not provide typings
 // https://stackoverflow.com/questions/38020019/where-can-i-find-typescript-typings-for-lodash-fp

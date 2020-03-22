@@ -16,11 +16,10 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isBarChart } from "../../utils/common";
-import { ISeriesItem, ISeriesDataItem } from "../../Config";
 import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 import Highcharts from "./highchartsEntryPoint";
-import { UnsafeInternals } from "../../typings/unsafe";
+import { ISeriesDataItem, ISeriesItem, UnsafeInternals } from "../../typings/unsafe";
 
 export interface IRectByPoints {
     left: number;

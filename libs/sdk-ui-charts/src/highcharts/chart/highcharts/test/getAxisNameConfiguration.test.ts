@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
-import { IChartOptions } from "../../../Config";
+// (C) 2019-2020 GoodData Corporation
 import { getAxisNameConfiguration } from "../getAxisNameConfiguration";
+import { IChartOptions } from "../../../typings/unsafe";
 
 describe("getAxisNameConfiguration", () => {
     it("should return highchart axis config", () => {

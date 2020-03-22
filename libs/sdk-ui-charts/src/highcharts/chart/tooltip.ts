@@ -2,7 +2,7 @@
 import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
 import { customEscape, percentFormatter } from "../utils/common";
 import isNil = require("lodash/isNil");
-import { IPointData } from "../Config";
+import { IPointData } from "../typings/unsafe";
 
 export function formatValueForTooltip(
     val: string | number,

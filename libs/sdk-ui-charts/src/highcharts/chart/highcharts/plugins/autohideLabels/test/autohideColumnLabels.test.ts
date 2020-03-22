@@ -1,10 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
-import { ISeriesDataItem } from "../../../../../Config";
-import { IDataLabelsConfig } from "../../../../../../interfaces";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { UnsafeInternals } from "../../../../../typings/unsafe";
+import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../../typings/unsafe";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {
@@ -81,11 +79,11 @@ describe("isOverlappingWidth", () => {
 });
 
 describe("getLabelOrDataLabelForPoints", () => {
-    const label: IDataLabelsConfig = {
+    const label: IUnsafeDataLabels = {
         width: 98,
         padding: 1,
     };
-    const dataLabel: IDataLabelsConfig = {
+    const dataLabel: IUnsafeDataLabels = {
         width: 100,
         padding: 10,
     };
@@ -120,7 +118,7 @@ describe("getLabelOrDataLabelForPoints", () => {
         ],
     ])(
         "should return label/dataLabel of data points",
-        (visiblePoints: Highcharts.Point[], expected: IDataLabelsConfig[]) => {
+        (visiblePoints: Highcharts.Point[], expected: IUnsafeDataLabels[]) => {
             const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(
                 (visiblePoints as any) as Highcharts.Point[],
             );
@@ -224,16 +222,16 @@ describe("areNeighborsOverlapping", () => {
             },
         };
     }
-    const overlaplabels: IDataLabelsConfig[][] = [
+    const overlaplabels: IUnsafeDataLabels[][] = [
         [{ element: getElement(0) }, { element: getElement(1) }],
     ] as any[];
-    const withoutOverlapLabel: IDataLabelsConfig[][] = [
+    const withoutOverlapLabel: IUnsafeDataLabels[][] = [
         [{ element: getElement(1) }, { element: getElement(2) }],
     ] as any;
     it.each([
         [true, overlaplabels],
         [false, withoutOverlapLabel],
-    ])("should return overlap is %s", (isOverlap: boolean, labels: IDataLabelsConfig[][]) => {
+    ])("should return overlap is %s", (isOverlap: boolean, labels: IUnsafeDataLabels[][]) => {
         const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
         expect(areNeighborsOverlapping).toEqual(isOverlap);
     });

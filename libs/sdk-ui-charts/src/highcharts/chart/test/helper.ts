@@ -11,9 +11,9 @@ import {
 } from "../../constants/dimensions";
 
 import { IHeaderPredicate } from "@gooddata/sdk-ui";
-import { IChartOptions } from "../../Config";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { IChartOptions } from "../../typings/unsafe";
 
 const defaultDv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy);
 

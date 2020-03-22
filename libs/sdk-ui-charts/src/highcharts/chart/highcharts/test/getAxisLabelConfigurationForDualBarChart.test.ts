@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartOptions } from "../../../Config";
 import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart";
+import { IChartOptions } from "../../../typings/unsafe";
 
 describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty axis label config on single bar chart", () => {

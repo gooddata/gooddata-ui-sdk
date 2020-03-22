@@ -12,13 +12,13 @@ import {
     percentageDataLabelFormatter,
     getTooltipPositionInChartContainer,
 } from "../customConfiguration";
-import { IPointData, ISeriesDataItem } from "../../../Config";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { immutableSet } from "../../../utils/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
 } from "../../chartCapabilities";
+import { IPointData, ISeriesDataItem } from "../../../typings/unsafe";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {

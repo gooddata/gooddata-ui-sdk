@@ -5,8 +5,8 @@ import {
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISeriesItem, IChartOptions } from "../../../Config";
 import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { IChartOptions, ISeriesItem } from "../../../typings/unsafe";
 
 describe("getZeroAlignConfiguration", () => {
     const numberToYValue = (y: number | null) => ({ y });

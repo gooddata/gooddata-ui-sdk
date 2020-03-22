@@ -7,7 +7,6 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
 
-import { IChartOptions } from "../Config";
 import { IChartLimits, IChartConfig } from "../../interfaces";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
@@ -24,6 +23,7 @@ import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IChartOptions } from "../typings/unsafe";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,

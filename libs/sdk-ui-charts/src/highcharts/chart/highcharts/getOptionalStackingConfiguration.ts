@@ -6,14 +6,6 @@ import isNil = require("lodash/isNil");
 import set = require("lodash/set");
 import get = require("lodash/get");
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
-import {
-    IChartOptions,
-    ISeriesItem,
-    IStackMeasuresConfig,
-    IAxis,
-    IHighChartAxis,
-    IYAxisConfig,
-} from "../../Config";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
@@ -27,6 +19,14 @@ import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptio
 import { isPrimaryYAxis } from "../../utils/isPrimaryYAxis";
 import { supportedStackingAttributesChartTypes } from "../chartCapabilities";
 import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
+import {
+    IAxis,
+    IChartOptions,
+    IHighChartAxis,
+    ISeriesItem,
+    IStackMeasuresConfig,
+    IYAxisConfig,
+} from "../../typings/unsafe";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'

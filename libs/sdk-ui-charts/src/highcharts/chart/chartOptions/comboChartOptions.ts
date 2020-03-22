@@ -5,10 +5,10 @@ import cloneDeep = require("lodash/cloneDeep");
 import { DataViewFacade, IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IBucket, AttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISeriesItem } from "../../Config";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../../utils/common";
 import { NORMAL_STACK } from "../../constants/stacking";
+import { ISeriesItem } from "../../typings/unsafe";
 
 export const CHART_ORDER = {
     [VisualizationTypes.AREA]: 1,

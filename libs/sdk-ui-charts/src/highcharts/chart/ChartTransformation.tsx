@@ -10,7 +10,6 @@ import {
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../../interfaces";
-import { IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
 import { getChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
@@ -21,6 +20,7 @@ import HighChartsRenderer, {
 } from "./HighChartsRenderer";
 import getLegend from "./legend/legendBuilder";
 import noop = require("lodash/noop");
+import { IChartOptions } from "../typings/unsafe";
 
 export function renderHighCharts(props: IHighChartsRendererProps) {
     return <HighChartsRenderer {...props} />;

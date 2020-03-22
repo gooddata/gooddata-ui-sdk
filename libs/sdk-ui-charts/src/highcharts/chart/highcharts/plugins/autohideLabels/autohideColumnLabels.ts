@@ -32,8 +32,7 @@ import {
     showStackLabelInAxisRange,
 } from "../../dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IClientRect, IStackItem } from "../../../../Config";
-import { UnsafeInternals, IUnsafeDataLabels } from "../../../../typings/unsafe";
+import { UnsafeInternals, IUnsafeDataLabels, IClientRect, IStackItem } from "../../../../typings/unsafe";
 
 /*
  * Code in this file accesses Highchart.Axis and Highchart.Series properties that are not included in

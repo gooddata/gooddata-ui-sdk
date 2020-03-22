@@ -17,7 +17,6 @@ import * as cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartOptions, ISeriesItem, IPointData, IAxis } from "../../Config";
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
@@ -50,6 +49,7 @@ import { getAxisNameConfiguration } from "./getAxisNameConfiguration";
 import { getChartAlignmentConfiguration } from "./getChartAlignmentConfiguration";
 import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
 import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartCapabilities";
+import { IAxis, IChartOptions, IPointData, ISeriesItem } from "../../typings/unsafe";
 
 const { stripColors, numberFormat }: any = numberJS;
 

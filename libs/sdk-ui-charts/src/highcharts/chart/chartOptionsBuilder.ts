@@ -33,16 +33,6 @@ import { HEATMAP_DATA_POINTS_LIMIT, PIE_CHART_LIMIT } from "../constants/limits"
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { IUnwrappedAttributeHeadersWithItems } from "../utils/types";
 
-import {
-    ICategory,
-    IChartOptions,
-    IPatternObject,
-    IPointData,
-    ISeriesDataItem,
-    ISeriesItem,
-    ISeriesItemConfig,
-    IAxis,
-} from "../Config";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
@@ -95,6 +85,16 @@ import range = require("lodash/range");
 import without = require("lodash/without");
 import omit = require("lodash/omit");
 import { NORMAL_STACK, PERCENT_STACK } from "../constants/stacking";
+import {
+    IAxis,
+    ICategory,
+    IChartOptions,
+    IPatternObject,
+    IPointData,
+    ISeriesDataItem,
+    ISeriesItem,
+    ISeriesItemConfig,
+} from "../typings/unsafe";
 
 const TOOLTIP_PADDING = 10;
 

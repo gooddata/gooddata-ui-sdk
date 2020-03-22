@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { resetPointPaddingForTooSmallHeatmapCells } from "../heatmapConfiguration";
-import { IHighchartsSeriesExtend } from "../../../HighchartsExtend";
+import { IHighchartsSeriesExtend } from "../../../typings/extend";
 
 describe("Heatmap configuration", () => {
     it("should reset point padding for too small heatmap cells", () => {

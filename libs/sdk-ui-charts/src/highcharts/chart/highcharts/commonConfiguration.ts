@@ -5,7 +5,7 @@ import invoke = require("lodash/invoke");
 import isEmpty = require("lodash/isEmpty");
 import set = require("lodash/set");
 import { IDrillConfig } from "@gooddata/sdk-ui";
-import { IHighchartsAxisExtend } from "../../HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../typings/extend";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
 import { chartClick } from "../../utils/drilldownEventing";
