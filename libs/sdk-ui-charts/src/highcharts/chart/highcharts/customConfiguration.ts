@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import noop = require("lodash/noop");
 import isString = require("lodash/isString");
 import set = require("lodash/set");
@@ -16,7 +16,6 @@ import * as numberJS from "@gooddata/numberjs";
 import * as cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
-import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     IAxis,
@@ -56,6 +55,7 @@ import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptio
 import { getAxisNameConfiguration } from "./getAxisNameConfiguration";
 import { getChartAlignmentConfiguration } from "./getChartAlignmentConfiguration";
 import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
+import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartCapabilities";
 
 const { stripColors, numberFormat }: any = numberJS;
 

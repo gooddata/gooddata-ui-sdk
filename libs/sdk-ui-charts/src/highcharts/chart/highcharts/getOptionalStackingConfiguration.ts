@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import partial = require("lodash/partial");
 import merge = require("lodash/merge");
 import includes = require("lodash/includes");
@@ -8,14 +8,13 @@ import get = require("lodash/get");
 import {
     IAxis,
     IChartConfig,
-    ISeriesItem,
-    IDataLabelsVisible,
-    IStackMeasuresConfig,
-    IHighChartAxis,
-    IYAxisConfig,
     IChartOptions,
+    IDataLabelsVisible,
+    IHighChartAxis,
+    ISeriesItem,
+    IStackMeasuresConfig,
+    IYAxisConfig,
 } from "../../Config";
-import { supportedStackingAttributesChartTypes } from "../chartOptionsBuilder";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
@@ -27,9 +26,8 @@ import {
 import { IDrillConfig } from "@gooddata/sdk-ui";
 import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptions";
 import { isPrimaryYAxis } from "../../utils/isPrimaryYAxis";
-
-export const NORMAL_STACK = "normal";
-export const PERCENT_STACK = "percent";
+import { supportedStackingAttributesChartTypes } from "../chartCapabilities";
+import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'

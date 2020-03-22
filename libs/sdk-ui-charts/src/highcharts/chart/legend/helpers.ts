@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import range = require("lodash/range");
 import get = require("lodash/get");
 import head = require("lodash/head");
@@ -9,9 +9,9 @@ import inRange = require("lodash/inRange");
 import { IHeatmapLegendItem } from "../../typings/legend";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
 import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../../utils/common";
-import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { ISeriesItem } from "../../Config";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { supportedDualAxesChartTypes } from "../chartCapabilities";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;

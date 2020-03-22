@@ -1,8 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
-import { percentFormatter } from "../utils/common";
+import { customEscape, percentFormatter } from "../utils/common";
 import isNil = require("lodash/isNil");
-import { customEscape } from "./chartOptionsBuilder";
 import { IPointData } from "../Config";
 
 export function formatValueForTooltip(

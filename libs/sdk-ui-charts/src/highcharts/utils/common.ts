@@ -1,11 +1,12 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import clone = require("lodash/clone");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
 import setWith = require("lodash/setWith");
 import { numberFormat } from "@gooddata/numberjs";
-
+import escape = require("lodash/escape");
+import unescape = require("lodash/unescape");
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../Config";
 
@@ -152,3 +153,4 @@ export const isCssMultiLineTruncationSupported = (): boolean => {
     // support -webkit-line-clamp
     return "webkitLineClamp" in document.body.style;
 };
+export const customEscape = (str: string) => str && escape(unescape(str));

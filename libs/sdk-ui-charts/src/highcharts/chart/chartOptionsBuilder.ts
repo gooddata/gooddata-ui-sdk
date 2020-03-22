@@ -14,12 +14,12 @@ import * as invariant from "invariant";
 
 import {
     BucketNames,
-    VisType,
-    VisualizationTypes,
     getDrillIntersection,
-    isSomeHeaderPredicateMatched,
     IHeaderPredicate,
     IMappingHeader,
+    isSomeHeaderPredicateMatched,
+    VisType,
+    VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { ViewByAttributesLimit } from "../../charts/_commons/limits";
 import {
@@ -48,6 +48,7 @@ import {
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 
 import {
+    customEscape,
     isAreaChart,
     isBarChart,
     isBubbleChart,
@@ -78,14 +79,13 @@ import {
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
 } from "./highcharts/commonConfiguration";
-import { NORMAL_STACK, PERCENT_STACK } from "./highcharts/getOptionalStackingConfiguration";
 import { getChartProperties } from "./highcharts/helpers";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { isDataOfReasonableSize } from "./highChartsCreators";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
+import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import cloneDeep = require("lodash/cloneDeep");
 import compact = require("lodash/compact");
-import escape = require("lodash/escape");
 import get = require("lodash/get");
 import includes = require("lodash/includes");
 import isEmpty = require("lodash/isEmpty");
@@ -94,9 +94,9 @@ import isNil = require("lodash/isNil");
 import isUndefined = require("lodash/isUndefined");
 import last = require("lodash/last");
 import range = require("lodash/range");
-import unescape = require("lodash/unescape");
 import without = require("lodash/without");
 import omit = require("lodash/omit");
+import { NORMAL_STACK, PERCENT_STACK } from "../constants/stacking";
 
 const TOOLTIP_PADDING = 10;
 
@@ -148,30 +148,6 @@ const nullColor: IPatternObject = {
         height: 10,
     },
 };
-
-export const supportedDualAxesChartTypes = [
-    VisualizationTypes.COLUMN,
-    VisualizationTypes.BAR,
-    VisualizationTypes.LINE,
-    VisualizationTypes.AREA,
-    VisualizationTypes.COMBO,
-    VisualizationTypes.COMBO2,
-];
-
-export const supportedTooltipFollowPointerChartTypes = [
-    VisualizationTypes.COLUMN,
-    VisualizationTypes.BAR,
-    VisualizationTypes.COMBO,
-    VisualizationTypes.COMBO2,
-];
-
-export const supportedStackingAttributesChartTypes = [
-    VisualizationTypes.COLUMN,
-    VisualizationTypes.BAR,
-    VisualizationTypes.AREA,
-    VisualizationTypes.COMBO,
-    VisualizationTypes.COMBO2,
-];
 
 export interface IValidationResult {
     dataTooLarge: boolean;
@@ -668,8 +644,6 @@ export function getSeries(
         };
     });
 }
-
-export const customEscape = (str: string) => str && escape(unescape(str));
 
 const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number): string => {
     const maxItemWidth = maxTooltipContentWidth - TOOLTIP_PADDING * 2;

@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ISeriesItem } from "../../../Config";
-import { NORMAL_STACK, PERCENT_STACK } from "../../highcharts/getOptionalStackingConfiguration";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
 
 const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;
 

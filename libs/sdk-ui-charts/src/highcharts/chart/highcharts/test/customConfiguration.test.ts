@@ -18,7 +18,7 @@ import { immutableSet } from "../../../utils/common";
 import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
-} from "../../chartOptionsBuilder";
+} from "../../chartCapabilities";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {
