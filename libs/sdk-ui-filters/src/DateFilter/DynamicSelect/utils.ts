@@ -1,11 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import range = require("lodash/range");
 import { ExtendedDateFilters } from "../interfaces/ExtendedDateFilters";
 import { IMessageTranslator } from "../utils/Translations/Translators";
 import { granularityIntlCodes } from "../constants/i18n";
-import { DynamicSelectItem, DynamicSelectOption } from "./DynamicSelect";
 
 import { getSelectableItems } from "../Select/utils";
+import { DynamicSelectItem, DynamicSelectOption } from "./types";
 
 export const DAY: ExtendedDateFilters.DateFilterGranularity = "GDC.time.date";
 export const WEEK_US: ExtendedDateFilters.DateFilterGranularity = "GDC.time.week_us";
