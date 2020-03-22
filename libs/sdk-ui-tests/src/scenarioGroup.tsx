@@ -10,8 +10,8 @@ import {
     TestTypes,
     UnboundVisProps,
     VisProps,
+    ScenarioTestInput,
 } from "./scenario";
-import { ScenarioTestInput } from "./scenarioTestInput";
 import intersection = require("lodash/intersection");
 import identity = require("lodash/identity");
 

@@ -2,4 +2,3 @@
 
 export * from "./scenarioGroup";
 export * from "./scenario";
-export * from "./scenarioTestInput";
