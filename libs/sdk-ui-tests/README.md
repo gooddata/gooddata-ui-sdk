@@ -207,9 +207,19 @@ Additional BackstopJS modes are also available:
 -   `npm run backstop-reference-nobuild` - take reference screenshots for all new scenarios for existing stories
 -   `npm run backstop-approve` - update screenshots that differ from reference
 
-Note: the 'backstop' commands do not trigger `build-storybook` script except for `npm run backstop-reference`.
-Also remember: backstop can run in incremental mode and can filter test scenarios to exercise. To run specific
-scenarios, pass a `--filter=<scenarioLabelRegex>` argument (case sensitive).
+> Note: the 'backstop' commands do not trigger `build-storybook` script except for `npm run backstop-reference`.
+> Also remember: backstop can run in incremental mode and can filter test scenarios to exercise. To run specific
+> scenarios, pass a `--filter=<scenarioLabelRegex>` argument (case sensitive).
+
+It is possible to override default Backstop concurrency settings using environment variables:
+
+-   `BACKSTOP_CAPTURE_LIMIT` - will be used to set Backstop's asyncCaptureLimit option; default is 6.
+    When tweaking this, we have found that setting the value to number of (CPU threads - 1 or 2) leads to
+    saturation of cores without flaky-ness.
+-   `BACKSTOP_COMPARE_LIMIT` - will be used to set Backstop's asyncCompareLimit option; default is 50
+    When tweaking this, we have found that setting the value to number > 50 makes backstop crash badly at
+    the very end. Since the comparison is done at the end and is pretty fast anyway, tweaking this option
+    is usually not needed.
 
 ## Technical Funny Stuff
 
