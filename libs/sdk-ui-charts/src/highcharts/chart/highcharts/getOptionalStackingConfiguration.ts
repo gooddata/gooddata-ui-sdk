@@ -5,8 +5,15 @@ import includes = require("lodash/includes");
 import isNil = require("lodash/isNil");
 import set = require("lodash/set");
 import get = require("lodash/get");
-import { IAxis, IChartConfig, IDataLabelsVisible, IHighChartAxis, IYAxisConfig } from "../../../interfaces";
-import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../Config";
+import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
+import {
+    IChartOptions,
+    ISeriesItem,
+    IStackMeasuresConfig,
+    IAxis,
+    IHighChartAxis,
+    IYAxisConfig,
+} from "../../Config";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,

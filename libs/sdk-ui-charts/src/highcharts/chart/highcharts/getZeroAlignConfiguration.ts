@@ -17,8 +17,7 @@ import zip = require("lodash/zip");
 import sum = require("lodash/sum");
 import compact = require("lodash/compact");
 
-import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../Config";
-import { IHighChartAxis } from "../../../interfaces";
+import { IChartOptions, ISeriesDataItem, ISeriesItem, IHighChartAxis } from "../../Config";
 import { isComboChart, isLineChart } from "../../utils/common";
 import { PERCENT_STACK } from "../../constants/stacking";
 

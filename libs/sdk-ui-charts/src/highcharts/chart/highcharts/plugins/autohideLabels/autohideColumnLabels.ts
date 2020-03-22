@@ -9,31 +9,47 @@ import isEmpty = require("lodash/isEmpty");
 import Highcharts from "../../highchartsEntryPoint";
 
 import {
-    isStacked,
-    toNeighbors,
-    isIntersecting,
-    getShapeAttributes,
     getAxisRangeForAxes,
     getDataPointsOfVisibleSeries,
+    getShapeAttributes,
     IAxisRangeForAxes,
     IRectBySize,
+    isIntersecting,
+    isStacked,
+    toNeighbors,
 } from "../../helpers";
 
 import {
     areLabelsStacked,
     getDataLabelAttributes,
+    getShapeVisiblePart,
     hasDataLabel,
-    hideDataLabels,
+    hasLabelInside,
+    hasShape,
     hideDataLabel,
+    hideDataLabels,
     showDataLabelInAxisRange,
     showStackLabelInAxisRange,
-    getShapeVisiblePart,
-    hasShape,
-    hasLabelInside,
 } from "../../dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IPointData, ISeriesItem, IStackItem, IClientRect } from "../../../../Config";
-import { IAxisConfig, IDataLabelsConfig } from "../../../../../interfaces";
+import { IClientRect, IStackItem } from "../../../../Config";
+import { UnsafeInternals, IUnsafeDataLabels } from "../../../../typings/unsafe";
+
+/*
+ * Code in this file accesses Highchart.Axis and Highchart.Series properties that are not included in
+ * the official typings:
+ *
+ * -  Axis.stacks
+ * -  Axis.stackTotalGroup
+ * -  Series.dataLabelsGroup
+ *
+ * For some time, we included the 'extra' stuff in our own types (IAxisConfig). This type was in return
+ * used in IChartConfig. The chart config should not be riddled with highchart internals - so that went away
+ * and code here started to use Highchart types instead.
+ *
+ * By using the public Highchart types, the use of undocumented fields became more apparent. Instead of creating
+ * types for these internals that we misuse (?), I have opted to casting as UnsafeInternals and accessing
+ */
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,
@@ -71,7 +87,7 @@ const toggleNonStackedChartLabels = (
     }
 };
 
-const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRangeForAxes) => {
+const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeForAxes: IAxisRangeForAxes) => {
     const toggleLabel = (point: any) => {
         const {
             dataLabel,
@@ -98,8 +114,8 @@ const toggleStackedChartLabels = (visiblePoints: any, axisRangeForAxes: IAxisRan
     }
 };
 
-export function isOverlappingWidth(visiblePoints: IPointData[]) {
-    return visiblePoints.filter(hasDataLabel).some((point: IPointData) => {
+export function isOverlappingWidth(visiblePoints: Highcharts.Point[]) {
+    return visiblePoints.filter(hasDataLabel).some((point: Highcharts.Point) => {
         const { dataLabel, shapeArgs } = point;
 
         if (dataLabel && shapeArgs) {
@@ -110,9 +126,9 @@ export function isOverlappingWidth(visiblePoints: IPointData[]) {
     });
 }
 
-export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]): boolean {
+export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boolean {
     return neighbors.some(labelsPair => {
-        const [firstLabel, nextLabel]: IDataLabelsConfig[] = labelsPair || [];
+        const [firstLabel, nextLabel]: IUnsafeDataLabels[] = labelsPair || [];
 
         if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
             const firstClientRect: IClientRect = firstLabel.element.getBoundingClientRect();
@@ -129,8 +145,11 @@ export function areNeighborsOverlapping(neighbors: IDataLabelsConfig[][]): boole
 }
 
 // Check if Total label overlapping other columns
-export function areLabelsOverlappingColumns(labels: IPointData[], visiblePoints: IPointData[]): boolean {
-    return labels.some((label: IPointData) => {
+export function areLabelsOverlappingColumns(
+    labels: Highcharts.Point[],
+    visiblePoints: Highcharts.Point[],
+): boolean {
+    return labels.some((label: Highcharts.Point) => {
         if (isEmpty(label)) {
             return false;
         }
@@ -143,7 +162,7 @@ export function areLabelsOverlappingColumns(labels: IPointData[], visiblePoints:
             height,
         };
 
-        return visiblePoints.some((point: IPointData) => {
+        return visiblePoints.some((point: Highcharts.Point) => {
             const seriesType: string = get(point, "series.options.type");
             if (
                 isEmpty(point) ||
@@ -180,7 +199,7 @@ function findColumnKey(key: string): boolean {
  * @param stacks
  * @return [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
-export function getStackLabelPointsForDualAxis(stacks: any[]) {
+export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Highcharts.Point[] {
     return flatten(
         // 'column0' is primary axis and 'column1' is secondary axis
         zip(
@@ -192,13 +211,13 @@ export function getStackLabelPointsForDualAxis(stacks: any[]) {
     ).filter(identity);
 }
 
-export function getStackTotalGroups(yAxis: IAxisConfig[]): Highcharts.SVGAttributes[] {
+export function getStackTotalGroups(yAxis: Highcharts.Axis[]): Highcharts.SVGAttributes[] {
     return flatten(
-        yAxis.map((axis: IAxisConfig) => {
-            if (!isEmpty(axis.stacks)) {
-                return axis.stackTotalGroup;
+        yAxis.map((axis: Highcharts.Axis) => {
+            if (!isEmpty((axis as UnsafeInternals).stacks)) {
+                return (axis as UnsafeInternals).stackTotalGroup;
             }
-            return axis.series.map((serie: ISeriesItem) => serie.dataLabelsGroup);
+            return axis.series.map((serie: Highcharts.Series) => (serie as UnsafeInternals).dataLabelsGroup);
         }),
     ).filter(identity);
 }
@@ -231,7 +250,7 @@ function toggleStackedLabelsForDualAxis() {
 
 function toggleStackedLabelsForSingleAxis() {
     const { yAxis } = this;
-    const { stackTotalGroup, stacks }: any = yAxis[0] || {};
+    const { stackTotalGroup, stacks }: UnsafeInternals = yAxis[0] || {};
 
     if (stacks && stackTotalGroup) {
         const columnKey = Object.keys(stacks).find(findColumnKey);
@@ -264,7 +283,7 @@ function toggleStackedLabels() {
     return toggleStackedLabelsForSingleAxis.call(this);
 }
 
-export const autohideColumnLabels = (chart: any) => {
+export const autohideColumnLabels = (chart: Highcharts.Chart) => {
     const isStackedChart = isStacked(chart);
     const hasLabelsStacked = areLabelsStacked(chart);
 
@@ -284,7 +303,7 @@ export const autohideColumnLabels = (chart: any) => {
     }
 };
 
-export const handleColumnLabelsOutsideChart = (chart: any) => {
+export const handleColumnLabelsOutsideChart = (chart: Highcharts.Chart) => {
     const visiblePoints = getDataPointsOfVisibleSeries(chart);
     const axisRangeForAxes: IAxisRangeForAxes = getAxisRangeForAxes(chart);
 
@@ -298,22 +317,22 @@ export const handleColumnLabelsOutsideChart = (chart: any) => {
     });
 };
 
-export function getLabelOrDataLabelForPoints(points: IPointData[]): IPointData[] {
+export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highcharts.Point[] {
     return points
-        .map((point: IPointData) => {
+        .map((point: Highcharts.Point) => {
             return point.label || point.dataLabel;
         })
         .filter(identity);
 }
 
-export function getStackItems(yAxis: IAxisConfig[]): IStackItem[] {
+export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {
     return flatten(
-        yAxis.map((axis: IAxisConfig) => {
-            if (!isEmpty(axis.stacks)) {
-                return axis.stacks;
+        yAxis.map((axis: Highcharts.Axis) => {
+            if (!isEmpty((axis as UnsafeInternals).stacks)) {
+                return (axis as UnsafeInternals).stacks;
             }
             const series = axis.series;
-            const dataLabels: IStackItem[] = series.map((serie: ISeriesItem) => {
+            const dataLabels: IStackItem[] = series.map((serie: Highcharts.Series) => {
                 return {
                     column: { ...serie.data },
                 };

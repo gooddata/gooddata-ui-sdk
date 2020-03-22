@@ -21,7 +21,7 @@ import {
     VisType,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IAxis, IChartConfig, IChartLimits, ViewByAttributesLimit } from "../../interfaces";
+import { IChartConfig, IChartLimits, ViewByAttributesLimit } from "../../interfaces";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
@@ -41,6 +41,7 @@ import {
     ISeriesDataItem,
     ISeriesItem,
     ISeriesItemConfig,
+    IAxis,
 } from "../Config";
 import { getLighterColor, GRAY, TRANSPARENT, WHITE } from "../utils/color";
 

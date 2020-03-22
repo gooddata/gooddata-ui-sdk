@@ -30,11 +30,12 @@ export function isLabelOverlappingItsShape(point: any) {
 export const getDataLabelsGdcVisible = (chart: any): boolean | string =>
     get(chart, "options.plotOptions.gdcOptions.dataLabels.visible", "auto");
 
-const isLabelsStackedFromYAxis = (chart: any) =>
+const isLabelsStackedFromYAxis = (chart: Highcharts.Chart) =>
     get(chart, "userOptions.yAxis.0.stackLabels.enabled", false) ||
     get(chart, "userOptions.yAxis.1.stackLabels.enabled", false);
 
-export const areLabelsStacked = (chart: any) => isLabelsStackedFromYAxis(chart) && isStacked(chart);
+export const areLabelsStacked = (chart: Highcharts.Chart) =>
+    isLabelsStackedFromYAxis(chart) && isStacked(chart);
 
 export const hasDataLabel = (point: any) => point.dataLabel;
 export const hasShape = (point: any) => point.shapeArgs;

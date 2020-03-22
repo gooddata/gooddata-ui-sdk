@@ -8,10 +8,38 @@ import {
 } from "./chart/highcharts/highchartsEntryPoint";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { IHighChartAxis } from "../interfaces";
 
 /**
- * TODO: SDK8: add docs
+ * @internal
+ */
+export interface IStackLabels {
+    enabled?: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IHighChartAxis {
+    AXIS_LINE_COLOR: string;
+    categories: string[];
+    opposite: boolean;
+    stackLabels: IStackLabels;
+    defaultFormat?: string;
+    gridLineColor?: string;
+    gridLineWidth?: number;
+    min?: number;
+    max?: number;
+    visible?: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IYAxisConfig {
+    yAxis?: IHighChartAxis[];
+}
+
+/**
  * @internal
  */
 export interface IStackMeasuresConfig {
@@ -24,7 +52,7 @@ export interface IStackMeasuresConfig {
  */
 export interface ISeriesDataItem {
     x?: number;
-    y: number;
+    y?: number;
     value?: number;
     name?: string;
 }
@@ -168,4 +196,14 @@ export interface IClientRect {
     right?: number;
     x?: number;
     y?: number;
+}
+
+/**
+ * @internal
+ */
+export interface IAxis {
+    label: string;
+    format?: string;
+    opposite?: boolean;
+    seriesIndices?: number[];
 }

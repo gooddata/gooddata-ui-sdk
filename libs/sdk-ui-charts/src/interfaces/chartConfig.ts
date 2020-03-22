@@ -2,26 +2,19 @@
 import { ISeparators } from "@gooddata/numberjs";
 import { IColor, IColorPalette } from "@gooddata/sdk-model";
 import { IHeaderPredicate, VisType } from "@gooddata/sdk-ui";
-import {
-    HTMLDOMElement,
-    SVGAttributes,
-    SVGDOMElement,
-} from "../highcharts/chart/highcharts/highchartsEntryPoint";
-import { ISeriesItem, IStackItem } from "../highcharts/Config";
 
 /**
  * TODO: SDK8: add docs
  * @public
  */
-export interface IChartConfig extends IMeasuresStackConfig {
+export interface IChartConfig {
+    type?: VisType;
     colors?: string[];
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
-    type?: VisType;
     legend?: ILegendConfig;
     legendLayout?: string;
     limits?: IChartLimits;
-    stacking?: boolean;
     grid?: any;
     yFormat?: string;
     yLabel?: string;
@@ -39,6 +32,9 @@ export interface IChartConfig extends IMeasuresStackConfig {
     secondaryChartType?: string;
     forceDisableDrillOnAxes?: boolean;
     disableDrillUnderline?: boolean;
+    stacking?: boolean;
+    stackMeasures?: boolean;
+    stackMeasuresToPercent?: boolean;
 }
 
 /**
@@ -65,9 +61,6 @@ export type ChartAlignTypes = "top" | "bottom" | "middle";
  */
 export interface IDataLabelsConfig {
     visible?: IDataLabelsVisible;
-    width?: number;
-    padding?: number;
-    element?: HTMLDOMElement | SVGDOMElement;
 }
 
 /**
@@ -94,53 +87,13 @@ export interface IChartLimits {
  * TODO: SDK8: add docs
  * @public
  */
-export interface IMeasuresStackConfig {
-    stackMeasures?: boolean;
-    stackMeasuresToPercent?: boolean;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
 export interface IColorMapping {
     // sent to SDK
     predicate: IHeaderPredicate;
     color: IColor;
 }
 
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IStackLabels {
-    enabled?: boolean;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IHighChartAxis {
-    AXIS_LINE_COLOR: string;
-    categories: string[];
-    opposite: boolean;
-    stackLabels: IStackLabels;
-    defaultFormat?: string;
-    gridLineColor?: string;
-    gridLineWidth?: number;
-    min?: number;
-    max?: number;
-    visible?: boolean;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IYAxisConfig {
-    yAxis?: IHighChartAxis[];
-}
+export type AxisNamePosition = "high" | "low" | "middle";
 
 /**
  * TODO: SDK8: add docs
@@ -148,7 +101,7 @@ export interface IYAxisConfig {
  */
 export interface IAxisNameConfig {
     visible?: boolean;
-    position?: Highcharts.AxisTitleAlignValue;
+    position?: AxisNamePosition;
 }
 
 /**
@@ -162,19 +115,5 @@ export interface IAxisConfig {
     min?: string;
     max?: string;
     measures?: string[];
-    stacks?: IStackItem;
-    series?: ISeriesItem[];
-    stackTotalGroup?: SVGAttributes;
     name?: IAxisNameConfig;
-}
-
-/**
- * TODO: SDK8: add docs
- * @public
- */
-export interface IAxis {
-    label: string;
-    format?: string;
-    opposite?: boolean;
-    seriesIndices?: number[];
 }

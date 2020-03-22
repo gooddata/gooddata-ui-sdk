@@ -10,12 +10,8 @@ export {
     IAxisNameConfig,
     ChartAlignTypes,
     IColorMapping,
-    IAxis,
     IDataLabelsVisible,
-    IHighChartAxis,
-    IMeasuresStackConfig,
-    IStackLabels,
-    IYAxisConfig,
+    AxisNamePosition,
 } from "./chartConfig";
 
 export {
