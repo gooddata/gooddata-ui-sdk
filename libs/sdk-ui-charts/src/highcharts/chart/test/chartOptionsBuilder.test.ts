@@ -35,7 +35,8 @@ import {
     MeasureColorStrategy,
     TreemapColorStrategy,
 } from "../colorFactory";
-import { IChartConfig, IChartOptions, IPointData } from "../../Config";
+import { IChartOptions, IPointData } from "../../Config";
+import { IChartConfig } from "../../../interfaces";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";

@@ -3,7 +3,7 @@ import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
 import { AreaChart } from "../AreaChart";
-import { IChartConfig } from "../../../highcharts";
+import { IChartConfig } from "../../../interfaces";
 import { AttributeOrMeasure } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";

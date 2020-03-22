@@ -10,14 +10,13 @@ import partial = require("lodash/partial");
 import throttle = require("lodash/throttle");
 import isNil = require("lodash/isNil");
 import * as cx from "classnames";
-import { OnLegendReady } from "../../interfaces";
+import { IChartConfig, OnLegendReady } from "../../interfaces";
 import { ILegendOptions } from "../typings/legend";
 import Chart, { IChartProps } from "./Chart";
 import Legend, { ILegendProps } from "./legend/Legend";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./legend/PositionTypes";
 import { isPieOrDonutChart, isOneOfTypes } from "../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../Config";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 import { alignChart } from "./highcharts/helpers";
 

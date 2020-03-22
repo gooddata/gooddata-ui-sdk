@@ -11,7 +11,7 @@ import {
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../../Config";
+import { IChartConfig } from "../../interfaces";
 
 function isMeasureArray(obj: any): obj is IMeasure[] {
     return !isEmpty(obj) && isMeasure(obj[0]);

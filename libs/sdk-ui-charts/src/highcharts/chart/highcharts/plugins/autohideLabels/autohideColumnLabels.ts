@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
 import map = require("lodash/map");
 import zip = require("lodash/zip");
@@ -32,14 +32,8 @@ import {
     hasLabelInside,
 } from "../../dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    IPointData,
-    IAxisConfig,
-    ISeriesItem,
-    IStackItem,
-    IClientRect,
-    IDataLabelsConfig,
-} from "../../../../Config";
+import { IPointData, ISeriesItem, IStackItem, IClientRect } from "../../../../Config";
+import { IAxisConfig, IDataLabelsConfig } from "../../../../../interfaces";
 
 const toggleNonStackedChartLabels = (
     visiblePoints: any,

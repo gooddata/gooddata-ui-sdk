@@ -21,7 +21,7 @@ import {
     VisType,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { ViewByAttributesLimit } from "../../interfaces";
+import { IAxis, IChartConfig, IChartLimits, ViewByAttributesLimit } from "../../interfaces";
 import {
     PARENT_ATTRIBUTE_INDEX,
     PRIMARY_ATTRIBUTE_INDEX,
@@ -34,10 +34,7 @@ import { findAttributeInDimension, findMeasureGroupInDimensions } from "../utils
 import { IUnwrappedAttributeHeadersWithItems } from "../utils/types";
 
 import {
-    IAxis,
     ICategory,
-    IChartConfig,
-    IChartLimits,
     IChartOptions,
     IPatternObject,
     IPointData,

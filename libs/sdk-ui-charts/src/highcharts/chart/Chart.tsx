@@ -3,7 +3,7 @@ import isEqual = require("lodash/isEqual");
 import noop = require("lodash/noop");
 import * as React from "react";
 import { initChartPlugins } from "./highcharts/chartPlugins";
-import { IChartConfig } from "../Config";
+import { IChartConfig } from "../../interfaces";
 import Highcharts from "./highcharts/highchartsEntryPoint";
 
 const HighchartsMore = require("highcharts/highcharts-more"); // tslint:disable-line

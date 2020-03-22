@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { setMeasuresToSecondaryAxis } from "../dualAxis";
-import { IChartConfig } from "../../Config";
+import { IChartConfig } from "../../../interfaces";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 

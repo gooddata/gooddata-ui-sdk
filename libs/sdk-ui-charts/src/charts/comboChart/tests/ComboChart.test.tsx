@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount } from "enzyme";
 import { ComboChart } from "../ComboChart";
-import { IChartConfig } from "../../../highcharts";
+import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { CoreComboChart } from "../CoreComboChart";

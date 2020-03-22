@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import {
@@ -14,7 +14,7 @@ import {
     IVisualizationCallbacks,
     IVisualizationProps,
 } from "@gooddata/sdk-ui";
-import { IChartConfig } from "../highcharts";
+import { IChartConfig } from "./chartConfig";
 
 /**
  * Props applicable for all charts

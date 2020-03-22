@@ -13,7 +13,7 @@ import {
     alignChart,
 } from "../helpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ChartAlignTypes, IChartConfig } from "../../../Config";
+import { ChartAlignTypes, IChartConfig } from "../../../../interfaces";
 import { BOTTOM, TOP } from "../../../constants/alignments";
 
 describe("helpers", () => {

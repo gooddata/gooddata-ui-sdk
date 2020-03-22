@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import flatMap = require("lodash/flatMap");
 import get = require("lodash/get");
 import Highcharts from "./highchartsEntryPoint";
@@ -12,7 +12,7 @@ import {
     IAxisRangeForAxes,
 } from "./helpers";
 import { isAreaChart, isOneOfTypes } from "../../utils/common";
-import { IDataLabelsVisible } from "../../Config";
+import { IDataLabelsVisible } from "../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
 
 export function isLabelOverlappingItsShape(point: any) {

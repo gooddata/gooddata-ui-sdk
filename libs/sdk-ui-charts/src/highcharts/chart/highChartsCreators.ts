@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
 import merge = require("lodash/merge");
 import * as invariant from "invariant";
@@ -7,7 +7,8 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
 
-import { IChartLimits, IChartOptions, IChartConfig } from "../Config";
+import { IChartOptions } from "../Config";
+import { IChartLimits, IChartConfig } from "../../interfaces";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";

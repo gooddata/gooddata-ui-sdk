@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { IChartConfig, IColorMapping } from "../Config";
+import { IChartConfig, IColorMapping } from "../../interfaces";
 import {
     getMappingHeaderLocalIdentifier,
     IMappingHeader,

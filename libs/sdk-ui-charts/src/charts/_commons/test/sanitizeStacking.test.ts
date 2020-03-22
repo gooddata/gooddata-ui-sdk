@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-import { IChartConfig } from "../../../Config";
-import { getSanitizedStackingConfig, sanitizeConfig } from "../common";
+import { IChartConfig } from "../../../interfaces";
+import { getSanitizedStackingConfig, sanitizeConfig } from "../sanitizeStacking";
 import { IMeasure, newMeasure } from "@gooddata/sdk-model";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

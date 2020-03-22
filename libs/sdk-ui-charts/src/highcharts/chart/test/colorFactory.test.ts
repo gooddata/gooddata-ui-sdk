@@ -17,7 +17,7 @@ import { getMVS } from "./helper";
 import { getRgbString, HEATMAP_BLUE_COLOR_PALETTE } from "../../utils/color";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IColor, IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
-import { IColorMapping } from "../../Config";
+import { IColorMapping } from "../../../interfaces";
 import { CUSTOM_COLOR_PALETTE } from "./colorPalette.fixture";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceData, ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";

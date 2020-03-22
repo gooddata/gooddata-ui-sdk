@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import flatten = require("lodash/flatten");
 import get = require("lodash/get");
 import pick = require("lodash/pick");
@@ -16,7 +16,8 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isBarChart } from "../../utils/common";
-import { ISeriesItem, ISeriesDataItem, IChartConfig, ChartAlignTypes } from "../../Config";
+import { ISeriesItem, ISeriesDataItem } from "../../Config";
+import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 
 export interface IRectByPoints {

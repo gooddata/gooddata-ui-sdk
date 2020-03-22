@@ -9,10 +9,9 @@ import {
     OnFiredDrillEvent,
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
-import { OnLegendReady } from "../../interfaces";
-import { IChartConfig, IChartOptions } from "../Config";
+import { IChartConfig, OnLegendReady } from "../../interfaces";
+import { IChartOptions } from "../Config";
 import { ILegendOptions } from "../typings/legend";
-import { getSanitizedStackingConfig } from "../utils/optionalStacking/common";
 import { getChartOptions, validateData } from "./chartOptionsBuilder";
 import { getHighchartsOptions } from "./highChartsCreators";
 import HighChartsRenderer, {
@@ -80,12 +79,9 @@ export default class ChartTransformation extends React.Component<
 
     public getRendererProps() {
         const { chartOptions, legendOptions } = this;
-        const { dataView, height, width, afterRender, onDrill, onLegendReady, locale } = this.props;
-
-        const chartConfig = this.getChartConfig(this.props);
-
+        const { dataView, height, width, afterRender, onDrill, onLegendReady, locale, config } = this.props;
         const drillConfig = { dataView, onDrill };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, chartConfig, dataView.definition);
+        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config, dataView.definition);
 
         return {
             chartOptions,
@@ -100,13 +96,11 @@ export default class ChartTransformation extends React.Component<
     }
 
     public assignChartOptions(props: IChartTransformationProps) {
-        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData } = props;
-
-        const chartConfig = this.getChartConfig(props);
+        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData, config } = props;
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
-        this.chartOptions = getChartOptions(dataView, chartConfig, drillablePredicates);
-        const validationResult = validateData(chartConfig.limits, this.chartOptions);
+        this.chartOptions = getChartOptions(dataView, config, drillablePredicates);
+        const validationResult = validateData(config.limits, this.chartOptions);
 
         if (validationResult.dataTooLarge) {
             // always force onDataTooLarge error handling
@@ -123,7 +117,7 @@ export default class ChartTransformation extends React.Component<
             onNegativeValues(this.chartOptions);
         }
 
-        this.legendOptions = getLegend(chartConfig.legend, this.chartOptions);
+        this.legendOptions = getLegend(config.legend, this.chartOptions);
 
         pushData({
             propertiesMeta: {
@@ -145,11 +139,5 @@ export default class ChartTransformation extends React.Component<
             return null;
         }
         return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
-    }
-
-    private getChartConfig(props: IChartTransformationProps): IChartConfig {
-        const { dataView, config } = props;
-
-        return getSanitizedStackingConfig(dataView.definition, config);
     }
 }

@@ -10,11 +10,11 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
-import { sanitizeConfig } from "../../highcharts";
 import { CoreBarChart } from "./CoreBarChart";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";
+import { sanitizeConfig } from "../_commons/sanitizeStacking";
 
 //
 // Internals

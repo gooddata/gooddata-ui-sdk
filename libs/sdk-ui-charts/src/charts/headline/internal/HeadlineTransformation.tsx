@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import * as React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { IChartConfig } from "../../../highcharts";
+import { IChartConfig } from "../../../interfaces";
 import {
     IHeaderPredicate,
     IDrillableItem,

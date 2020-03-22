@@ -9,14 +9,14 @@ import {
     SortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IChartConfig, sanitizeConfig } from "../../highcharts";
 import { defaultDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../../interfaces";
+import { IChartConfig, IBucketChartProps } from "../../interfaces";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
 import get = require("lodash/get");
 import isArray = require("lodash/isArray");
 import { withChart } from "../_base/withChart";
+import { sanitizeConfig } from "../_commons/sanitizeStacking";
 
 //
 // Internals

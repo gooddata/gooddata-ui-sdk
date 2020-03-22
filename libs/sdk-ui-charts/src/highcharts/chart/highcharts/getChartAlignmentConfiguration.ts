@@ -1,5 +1,6 @@
-// (C) 2019 GoodData Corporation
-import { IChartConfig, IChartOptions } from "../../Config";
+// (C) 2019-2020 GoodData Corporation
+import { IChartOptions } from "../../Config";
+import { IChartConfig } from "../../../interfaces";
 
 export function getChartAlignmentConfiguration(
     _chartOptions: IChartOptions,

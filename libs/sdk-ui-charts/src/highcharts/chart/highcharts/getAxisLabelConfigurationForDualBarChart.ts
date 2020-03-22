@@ -1,5 +1,6 @@
-// (C) 2019 GoodData Corporation
-import { IAxisConfig, IChartOptions } from "../../Config";
+// (C) 2019-2020 GoodData Corporation
+import { IChartOptions } from "../../Config";
+import { IAxisConfig } from "../../../interfaces";
 import { isBarChart } from "../../utils/common";
 import {
     ALIGN_LEFT,

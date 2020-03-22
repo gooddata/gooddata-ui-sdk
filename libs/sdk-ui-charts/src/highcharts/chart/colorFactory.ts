@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IRgbColorValue,
     IColor,
@@ -10,9 +10,9 @@ import {
     IColorPaletteItem,
 } from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { VisualizationTypes, IMappingHeader, IColorAssignment } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IMappingHeader, IColorAssignment, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../utils/executionResultHelper";
-import { DefaultColorPalette, IColorMapping } from "../Config";
+import { IColorMapping } from "../../interfaces";
 
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,
