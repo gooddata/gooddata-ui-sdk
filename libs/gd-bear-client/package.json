@@ -17,6 +17,7 @@
         "tslint": "./{src}/**/*.ts"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "npm run build:lib && npm run build:dist",
         "build:lib": "rm -rf lib && tsc -p tsconfig.build.json",

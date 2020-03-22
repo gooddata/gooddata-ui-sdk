@@ -16,6 +16,7 @@
         "tslint": "./{src,test}/**/*.ts"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc --watch",
         "copy-data": "cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts dist/recordings/dataSample.ts",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",

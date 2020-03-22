@@ -13,6 +13,15 @@
   "commands": [
     {
       "commandKind": "bulk",
+      "name": "clean",
+      "summary": "Cleans all projects. This removes all artifacts created by build and test, including Jest caches. You must run rush rebuild after the cleanup.",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true,
+    },
+    {
+      "commandKind": "bulk",
       "name": "prettier-check",
       "summary": "Verifies code formatting in all projects.",
       "safeForSimultaneousRushProcesses": true,

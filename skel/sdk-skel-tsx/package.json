@@ -15,6 +15,7 @@
         "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "build": "bash scripts/build.sh && npm run api-extractor",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build-dev": "bash scripts/build.sh --dev",

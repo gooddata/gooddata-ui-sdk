@@ -16,6 +16,7 @@
         "tslint": "./{src,test}/**/*.ts"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
         "openapi-spec-dump": "curl $OPEN_API_SPEC_URL > src/generated/openapi-spec.json",

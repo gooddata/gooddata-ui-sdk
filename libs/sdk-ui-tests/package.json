@@ -15,6 +15,7 @@
         "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "test": "jest --watch",

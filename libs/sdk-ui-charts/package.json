@@ -16,6 +16,7 @@
         "tslint": "./{__mocks__,src}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log styles/css && jest --clearCache",
         "prepublishOnly": "npm run build",
         "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",

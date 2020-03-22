@@ -5,6 +5,7 @@
     "typings": "dist/index.d.ts",
     "main": "dist/index.js",
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
         "prepublish": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
