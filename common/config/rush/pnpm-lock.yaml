@@ -23,7 +23,6 @@ dependencies:
   '@rush-temp/mock-handling': 'file:projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:projects/reference-workspace.tgz'
   '@rush-temp/reference-workspace-mgmt': 'file:projects/reference-workspace-mgmt.tgz'
-  '@rush-temp/schema-gen': 'file:projects/schema-gen.tgz'
   '@rush-temp/sdk-backend-base': 'file:projects/sdk-backend-base.tgz'
   '@rush-temp/sdk-backend-bear': 'file:projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:projects/sdk-backend-mockingbird.tgz'
@@ -138,7 +137,6 @@ dependencies:
   tslint: 5.20.1_typescript@3.8.3
   tslint-config-prettier: 1.18.0
   typescript: 3.8.3
-  typescript-json-schema: 0.40.0
   url: 0.11.0
   uuid: 3.4.0
   webpack: 4.42.0_webpack@4.42.0
@@ -2755,10 +2753,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-QDDY2uNAhCV7TMCITrxz+MRk1EizcsevzfeS6LykIlq2V1E5oO4wXG8V2ZEd9w7Snxeeagk46YbMgZ8ESHx3sw==
-  /@types/json-schema/7.0.4:
-    dev: false
-    resolution:
-      integrity: sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
   /@types/json-stable-stringify/1.0.32:
     dev: false
     resolution:
@@ -14069,17 +14063,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript-json-schema/0.40.0:
-    dependencies:
-      '@types/json-schema': 7.0.4
-      glob: 7.1.6
-      json-stable-stringify: 1.0.1
-      typescript: 3.8.3
-      yargs: 14.2.3
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha512-C8D3Ca6+1x3caWOR+u45Shn3KqkRZi5M3+E8ePpEmYMqOh3xhhLdq+39pqT0Bf8+fCgAmpTFSJMT6Xwqbm0Tkw==
   /typescript/3.6.4:
     dev: false
     engines:
@@ -14873,13 +14856,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==
-  /yargs-parser/15.0.1:
-    dependencies:
-      camelcase: 5.3.1
-      decamelize: 1.2.0
-    dev: false
-    resolution:
-      integrity: sha512-0OAMV2mAZQrs3FkNpDQcBk1x5HXb8X4twADss4S0Iuk+2dGnLOE/fRHrsYm542GduMveyA77OF4wrNJuanRCWw==
   /yargs-parser/16.1.0:
     dependencies:
       camelcase: 5.3.1
@@ -14935,22 +14911,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-HG/DWAJa1PAnHT9JAhNa8AbAv3FPaiLzioSjCcmuXXhP8MlpHO5vwls4g4j6n30Z74GVQj8Xa62dWVx1QCGklg==
-  /yargs/14.2.3:
-    dependencies:
-      cliui: 5.0.0
-      decamelize: 1.2.0
-      find-up: 3.0.0
-      get-caller-file: 2.0.5
-      require-directory: 2.1.1
-      require-main-filename: 2.0.0
-      set-blocking: 2.0.0
-      string-width: 3.1.0
-      which-module: 2.0.0
-      y18n: 4.0.0
-      yargs-parser: 15.0.1
-    dev: false
-    resolution:
-      integrity: sha512-ZbotRWhF+lkjijC/VhmOT9wSgyBQ7+zr13+YLkhfsSiTriYsMzkTUFP18pFhWwBeMa5gUc1MzbhrO6/VB7c9Xg==
   /yargs/15.3.1:
     dependencies:
       cliui: 6.0.0
@@ -15199,28 +15159,6 @@ packages:
     resolution:
       integrity: sha512-iY04Ti8GRmQ4FYEqpYa4bXeSoKjQ6a75tVsyColaCGzBdswC2bxQCkPEwWlAOuUX9JQ5cp09uFsCvqk3j4L5cA==
       tarball: 'file:projects/reference-workspace.tgz'
-    version: 0.0.0
-  'file:projects/schema-gen.tgz':
-    dependencies:
-      '@gooddata/tslint-config': 1.0.0_typescript@3.8.3
-      '@types/jest': 25.1.4
-      '@types/lodash': 4.14.149
-      '@types/node': 12.12.30
-      jest: 25.1.0
-      jest-junit: 3.7.0
-      lodash: 4.17.15
-      prettier: 1.19.1
-      ts-jest: 25.2.1_jest@25.1.0
-      ts-node: 8.6.2_typescript@3.8.3
-      tslint: 5.20.1_typescript@3.8.3
-      tslint-config-prettier: 1.18.0
-      typescript: 3.8.3
-      typescript-json-schema: 0.40.0
-    dev: false
-    name: '@rush-temp/schema-gen'
-    resolution:
-      integrity: sha512-B5Qefg9pYFME0Uz0OT7iy6243uAVByZyKAgdyeRBNSGigWtYlv3y0Op6iM/6F1tt0zYWC7YJDFSTYXSAFF+CBg==
-      tarball: 'file:projects/schema-gen.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz':
     dependencies:
@@ -15763,7 +15701,6 @@ specifiers:
   '@rush-temp/mock-handling': 'file:./projects/mock-handling.tgz'
   '@rush-temp/reference-workspace': 'file:./projects/reference-workspace.tgz'
   '@rush-temp/reference-workspace-mgmt': 'file:./projects/reference-workspace-mgmt.tgz'
-  '@rush-temp/schema-gen': 'file:./projects/schema-gen.tgz'
   '@rush-temp/sdk-backend-base': 'file:./projects/sdk-backend-base.tgz'
   '@rush-temp/sdk-backend-bear': 'file:./projects/sdk-backend-bear.tgz'
   '@rush-temp/sdk-backend-mockingbird': 'file:./projects/sdk-backend-mockingbird.tgz'
@@ -15878,7 +15815,6 @@ specifiers:
   tslint: ^5.14.0
   tslint-config-prettier: ^1.18.0
   typescript: 3.8.3
-  typescript-json-schema: ^0.40.0
   url: ^0.11.0
   uuid: ^3.3.3
   webpack: ^4.39.2

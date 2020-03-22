@@ -362,12 +362,6 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/schema-gen",
-            "projectFolder": "tools/schema-gen",
-            "reviewCategory": "tools",
-            "shouldPublish": false
-        },
-        {
             "packageName": "@gooddata/mock-handling",
             "projectFolder": "tools/mock-handling",
             "reviewCategory": "tools",
