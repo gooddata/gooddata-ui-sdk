@@ -1509,7 +1509,7 @@ export type VisualizationProperties = {
 };
 
 // @public
-export type WorkspacePermission = "canAccessWorkbench" | "canCreateVisualization" | "canManageAnalyticalDashboard" | "canUploadNonProductionCSV" | "canCreateReport" | "canExecuteRaw" | "canExportReport";
+export type WorkspacePermission = "canAccessWorkbench" | "canCreateVisualization" | "canManageAnalyticalDashboard" | "canUploadNonProductionCSV" | "canCreateReport" | "canExecuteRaw" | "canExportReport" | "canManageProject";
 
 
 // (No @packageDocumentation comment for this package)

@@ -26,7 +26,8 @@ export type WorkspacePermission =
     | "canUploadNonProductionCSV"
     | "canCreateReport"
     | "canExecuteRaw"
-    | "canExportReport";
+    | "canExportReport"
+    | "canManageProject";
 
 /**
  * Dictionary of workspace permissions

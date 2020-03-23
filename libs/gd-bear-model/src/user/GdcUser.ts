@@ -203,7 +203,7 @@ export namespace GdcUser {
 
     export interface IProjectPermissions {
         permissions: {
-            [permission in ProjectPermission]: BooleanAsString;
+            [permission in ProjectPermission]?: BooleanAsString;
         };
         links?: {
             project: Uri;

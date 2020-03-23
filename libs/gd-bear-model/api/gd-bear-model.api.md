@@ -1621,7 +1621,7 @@ export namespace GdcUser {
         };
         // (undocumented)
         permissions: {
-            [permission in ProjectPermission]: BooleanAsString;
+            [permission in ProjectPermission]?: BooleanAsString;
         };
     }
     // (undocumented)
