@@ -80,7 +80,7 @@
     {
       "commandKind": "bulk",
       "name": "dep-cruiser-ci",
-      "summary": "Run dependency cruiser in all projects",
+      "summary": "Run dependency cruiser in all projects; output lands in ci/results in HTML format",
       "safeForSimultaneousRushProcesses": true,
       "enableParallelism": true,
       "ignoreDependencyOrder": true,

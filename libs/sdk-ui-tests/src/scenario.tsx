@@ -173,6 +173,7 @@ export type ScenarioModification<T extends VisProps> = (m: ScenarioBuilder<T>) =
  * Second element: react component type
  * Third element: factory to create props for the react component
  * Fourth element: scenario tags
+ * Fifth element: identifier of the insight which persists this test scenario (buckets, properties and all)
  *
  * Having this as array is essential for parameterized jest tests in order for jest to correctly name the
  * test suite / test case.

@@ -94,7 +94,6 @@ On top of Rush built-in commands, we have added our own custom commands (see [co
 | `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                                              |
 | `rush dep-cruiser`    | Runs dependency-cruiser in all projects.                                                                    |
 | `rush dep-cruiser-ci` | Runs dependency-cruiser in CI mode in all projects. This creates HTML reports                               |
-| `rush test-ci`        | Tests code in all projects in CI mode with coverage reporting.                                              |
 | `rush prettier-check` | Verifies code formatting in all projects.                                                                   |
 | `rush prettier-write` | Formats code in all projects.                                                                               |
 | `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                                     |
