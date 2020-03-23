@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket } from "@gooddata/sdk-model";
 import omit = require("lodash/omit");
 
-import { ICoreChartProps, IBucketChartProps } from "../chartProps";
+import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
 
 /**
  * Specifies props that are on bucket chart props but not on core chart props - these must not be passed

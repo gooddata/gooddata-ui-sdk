@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable-line
 /* *
  * (c) 2010-2019 Torstein Honsi
@@ -11,7 +12,7 @@
  */
 import isNil = require("lodash/isNil");
 import Highcharts from "../highchartsEntryPoint";
-import { IHighchartsAxisExtend } from "../../../HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../../typings/extend";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
     dataMin?: number;

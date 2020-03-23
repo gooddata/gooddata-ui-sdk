@@ -1,12 +1,12 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import {
     convertNumberToPercent,
     getMinMaxInfo,
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration";
-import { NORMAL_STACK, PERCENT_STACK } from "../getOptionalStackingConfiguration";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISeriesItem, IChartOptions } from "../../../Config";
+import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { IChartOptions, ISeriesItem } from "../../../typings/unsafe";
 
 describe("getZeroAlignConfiguration", () => {
     const numberToYValue = (y: number | null) => ({ y });

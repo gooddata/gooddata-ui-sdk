@@ -19,6 +19,7 @@ import { EditModeMessage } from "./EditModeMessage";
 import { DateFilterHeader } from "./DateFilterHeader";
 import { DateFilterBodyButton } from "./DateFilterBodyButton";
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems";
+import { DateFilterRoute } from "./types";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component
@@ -48,7 +49,7 @@ export interface IDateFilterBodyProps {
 }
 
 export interface IDateFilterBodyState {
-    route: "absoluteForm" | "relativeForm" | null;
+    route: DateFilterRoute;
 }
 
 export const isFilterOptionSelected = (

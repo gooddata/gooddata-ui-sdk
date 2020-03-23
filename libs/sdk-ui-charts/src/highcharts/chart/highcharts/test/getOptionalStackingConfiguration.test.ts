@@ -9,12 +9,12 @@ import getOptionalStackingConfiguration, {
     getStackMeasuresConfiguration,
     getYAxisConfiguration,
     setDrillConfigToXAxis,
-    PERCENT_STACK,
-    NORMAL_STACK,
 } from "../getOptionalStackingConfiguration";
 import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig, ISeriesItem, IChartOptions } from "../../../Config";
+import { IChartConfig } from "../../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label";
+import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { IChartOptions, ISeriesItem } from "../../../typings/unsafe";
 
 describe("getOptionalStackingConfiguration", () => {
     it("should return empty configuration to not supported chart type", () => {

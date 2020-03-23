@@ -7,15 +7,14 @@ import {
     newBucket,
     SortItem,
 } from "@gooddata/sdk-model";
-import { ViewByAttributesLimit } from "../_commons/limits";
 import { truncate } from "../_commons/truncate";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { sanitizeConfig } from "../../highcharts";
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { CoreColumnChart } from "./CoreColumnChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";
+import { sanitizeConfig } from "../_commons/sanitizeStacking";
 
 //
 // Internals

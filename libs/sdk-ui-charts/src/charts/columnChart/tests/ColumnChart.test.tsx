@@ -2,7 +2,7 @@
 import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
-import { IChartConfig } from "../../../highcharts";
+import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import {
     AttributeOrMeasure,

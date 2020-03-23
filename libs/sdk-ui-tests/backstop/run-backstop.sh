@@ -37,6 +37,8 @@ docker network create ${NETWORK} || { echo "Network creation failed" && exit 1 ;
 
     {
         docker run --rm \
+            --env BACKSTOP_CAPTURE_LIMIT \
+            --env BACKSTOP_COMPARE_LIMIT \
             --user $UID:$GID \
             --net ${NETWORK} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:4.5.0 \

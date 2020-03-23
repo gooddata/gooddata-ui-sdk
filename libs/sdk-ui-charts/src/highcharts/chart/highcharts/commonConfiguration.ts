@@ -1,17 +1,17 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import invoke = require("lodash/invoke");
 import isEmpty = require("lodash/isEmpty");
 import set = require("lodash/set");
 import { IDrillConfig } from "@gooddata/sdk-ui";
-import { IHighchartsAxisExtend } from "../../HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../typings/extend";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
 import { chartClick } from "../../utils/drilldownEventing";
-import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { setupDrilldown } from "../events/setupDrilldownToParentAttribute";
 import Highcharts from "./highchartsEntryPoint";
+import { supportedDualAxesChartTypes } from "../chartCapabilities";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;

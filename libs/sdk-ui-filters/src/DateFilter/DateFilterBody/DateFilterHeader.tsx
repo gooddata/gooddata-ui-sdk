@@ -1,11 +1,10 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-
-import { IDateFilterBodyState } from "./DateFilterBody";
+import { DateFilterRoute } from "./types";
 
 export const DateFilterHeader: React.FC<{
     children: any;
-    changeRoute: (route: IDateFilterBodyState["route"]) => void;
+    changeRoute: (route: DateFilterRoute) => void;
 }> = ({ children, changeRoute, ...otherProps }) => {
     return (
         <button

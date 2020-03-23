@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import { IAttribute, IFilter, IMeasure, newBucket, SortItem } from "@gooddata/sdk-model";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { CoreBubbleChart } from "./CoreBubbleChart";

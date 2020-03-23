@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import pick = require("lodash/pick");
 import set = require("lodash/set");
 import get = require("lodash/get");
@@ -14,8 +14,8 @@ import {
 } from "../../utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ILegendOptions, LegendOptionsItemType, DEFAULT_LEGEND_CONFIG } from "../../typings/legend";
-import { supportedDualAxesChartTypes } from "../chartOptionsBuilder";
 import { isStackedChart } from "./helpers";
+import { supportedDualAxesChartTypes } from "../chartCapabilities";
 
 function isHeatmapWithMultipleValues(chartOptions: any) {
     const { type } = chartOptions;

@@ -1,3 +1,11 @@
+Copyright (c) 2017 - 2020, GoodData Corporation
+
+All rights reserved.
+
+Each package within this repository is built into a separate publishable artifact with its own LICENSE.
+
+The repository code outside separately licensed package subdirectories has BSD license:
+
 BSD 3-Clause License
 
 Copyright (c) 2017, GoodData Corporation

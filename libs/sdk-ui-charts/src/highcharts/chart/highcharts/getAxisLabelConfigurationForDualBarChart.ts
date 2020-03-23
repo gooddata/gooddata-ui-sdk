@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import { IAxisConfig, IChartOptions } from "../../Config";
+// (C) 2019-2020 GoodData Corporation
+import { IAxisConfig } from "../../../interfaces";
 import { isBarChart } from "../../utils/common";
 import {
     ALIGN_LEFT,
@@ -10,6 +10,7 @@ import {
     ROTATE_NEGATIVE_60_DEGREES,
     ROTATE_NEGATIVE_90_DEGREES,
 } from "../../constants/axisLabel";
+import { IChartOptions } from "../../typings/unsafe";
 
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
     const isOppositeAxis: boolean = index === 1;

@@ -3,21 +3,18 @@
 // tslint:disable member-ordering
 
 import * as React from "react";
-import noop = require("lodash/noop");
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
-import { itemToString, getSelectableItems } from "../Select/utils";
+import { getSelectableItems, itemToString } from "../Select/utils";
 import {
-    VirtualizedSelectMenu,
-    getMedianIndex,
     defaultVisibleItemsRange,
+    getMedianIndex,
+    VirtualizedSelectMenu,
 } from "../Select/VirtualizedSelectMenu";
-import { ISelectItemOption, ISelectItem } from "../Select/types";
 
 import { findRelativeDateFilterOptionByValue } from "./utils";
-
-export type DynamicSelectItem = ISelectItem<number>;
-export type DynamicSelectOption = ISelectItemOption<number>;
+import { DynamicSelectItem, DynamicSelectOption } from "./types";
+import noop = require("lodash/noop");
 
 export interface IDynamicSelectProps {
     getItems: (inputValue: string) => DynamicSelectItem[];

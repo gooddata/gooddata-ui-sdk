@@ -2,7 +2,7 @@
 import * as React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop = require("lodash/noop");
-import { IChartConfig } from "../../../highcharts";
+import { IChartConfig } from "../../../interfaces";
 import {
     IDrillableItem,
     IDrillEventCallback,

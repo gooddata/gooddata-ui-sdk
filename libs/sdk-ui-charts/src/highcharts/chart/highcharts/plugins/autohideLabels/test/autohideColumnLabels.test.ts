@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import Highcharts from "../../../highchartsEntryPoint";
 import * as autohideColumnLabels from "../autohideColumnLabels";
-import { IPointData, IDataLabelsConfig, IAxisConfig, ISeriesDataItem } from "../../../../../Config";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../../typings/unsafe";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {
@@ -37,7 +37,7 @@ describe("getStackLabelPointsForDualAxis", () => {
 });
 
 describe("isOverlappingWidth", () => {
-    const visiblePointsWithoutShape: IPointData[] = [
+    const visiblePointsWithoutShape: Highcharts.Point[] = [
         {
             x: 0,
             dataLabel: {
@@ -45,10 +45,10 @@ describe("isOverlappingWidth", () => {
                 padding: 2,
             },
         },
-    ];
+    ] as any;
 
     it("should return true when point has datalabel width greater than shape width", () => {
-        const visiblePointsWithShape: IPointData[] = [
+        const visiblePointsWithShape = [
             {
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {
@@ -56,18 +56,20 @@ describe("isOverlappingWidth", () => {
                 },
             },
         ];
-        expect(autohideColumnLabels.isOverlappingWidth(visiblePointsWithShape)).toEqual(true);
+        expect(
+            autohideColumnLabels.isOverlappingWidth((visiblePointsWithShape as any) as Highcharts.Point[]),
+        ).toEqual(true);
     });
 
     it("should return false when point has datalabel width less than shape width", () => {
-        const visiblePointsWithShape: IPointData[] = [
+        const visiblePointsWithShape: Highcharts.Point[] = [
             {
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {
                     width: 105,
                 },
             },
-        ];
+        ] as any;
         expect(autohideColumnLabels.isOverlappingWidth(visiblePointsWithShape)).toEqual(false);
     });
 
@@ -77,15 +79,15 @@ describe("isOverlappingWidth", () => {
 });
 
 describe("getLabelOrDataLabelForPoints", () => {
-    const label: IDataLabelsConfig = {
+    const label: IUnsafeDataLabels = {
         width: 98,
         padding: 1,
     };
-    const dataLabel: IDataLabelsConfig = {
+    const dataLabel: IUnsafeDataLabels = {
         width: 100,
         padding: 10,
     };
-    const visiblePoints: IPointData[] = [
+    const visiblePoints: Highcharts.Point[] = [
         {
             x: 0,
             y: 1,
@@ -100,7 +102,7 @@ describe("getLabelOrDataLabelForPoints", () => {
             y: 3,
             dataLabel,
         },
-    ];
+    ] as any;
 
     it.each([
         [visiblePoints, [label, dataLabel]],
@@ -116,8 +118,10 @@ describe("getLabelOrDataLabelForPoints", () => {
         ],
     ])(
         "should return label/dataLabel of data points",
-        (visiblePoints: IPointData[], expected: IDataLabelsConfig[]) => {
-            const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(visiblePoints);
+        (visiblePoints: Highcharts.Point[], expected: IUnsafeDataLabels[]) => {
+            const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(
+                (visiblePoints as any) as Highcharts.Point[],
+            );
             expect(labels).toEqual(expected);
         },
     );
@@ -130,7 +134,7 @@ describe("getStackTotalGroups", () => {
             translateY: 20,
             zIndex: 6,
         };
-        const yAxis: IAxisConfig[] = [
+        const yAxis: Highcharts.Axis[] = [
             {
                 stacks: {
                     column0: [
@@ -152,12 +156,12 @@ describe("getStackTotalGroups", () => {
             translateY: 20,
             zIndex: 6,
         };
-        const yAxis: IAxisConfig[] = [
+        const yAxis: Highcharts.Axis[] = [
             {
                 stacks: {},
                 series: [{ dataLabelsGroup }],
             },
-        ];
+        ] as any;
         const stackLabels = autohideColumnLabels.getStackTotalGroups(yAxis);
 
         expect(stackLabels).toEqual([dataLabelsGroup]);
@@ -166,7 +170,7 @@ describe("getStackTotalGroups", () => {
 
 describe("getStackItems", () => {
     it("should return stack items", () => {
-        const yAxis: IAxisConfig[] = [
+        const yAxis: Highcharts.Axis[] = [
             {
                 stacks: {
                     column0: [
@@ -178,7 +182,7 @@ describe("getStackItems", () => {
         ] as any[];
         const stackItems = autohideColumnLabels.getStackItems(yAxis);
 
-        expect(stackItems).toEqual([yAxis[0].stacks]);
+        expect(stackItems).toEqual([(yAxis[0] as UnsafeInternals).stacks]);
     });
 
     it("should return data label items", () => {
@@ -186,12 +190,12 @@ describe("getStackItems", () => {
             { x: 6, y: 7 },
             { x: 8, y: 9 },
         ];
-        const yAxis: IAxisConfig[] = [
+        const yAxis: Highcharts.Axis[] = [
             {
                 stacks: {},
                 series: [{ data, type: VisualizationTypes.COLUMN }],
             },
-        ];
+        ] as any;
         const stackItems = autohideColumnLabels.getStackItems(yAxis);
 
         expect(stackItems).toEqual([
@@ -218,16 +222,16 @@ describe("areNeighborsOverlapping", () => {
             },
         };
     }
-    const overlaplabels: IDataLabelsConfig[][] = [
+    const overlaplabels: IUnsafeDataLabels[][] = [
         [{ element: getElement(0) }, { element: getElement(1) }],
     ] as any[];
-    const withoutOverlapLabel: IDataLabelsConfig[][] = [
+    const withoutOverlapLabel: IUnsafeDataLabels[][] = [
         [{ element: getElement(1) }, { element: getElement(2) }],
     ] as any;
     it.each([
         [true, overlaplabels],
         [false, withoutOverlapLabel],
-    ])("should return overlap is %s", (isOverlap: boolean, labels: IDataLabelsConfig[][]) => {
+    ])("should return overlap is %s", (isOverlap: boolean, labels: IUnsafeDataLabels[][]) => {
         const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
         expect(areNeighborsOverlapping).toEqual(isOverlap);
     });
@@ -261,30 +265,33 @@ describe("areLabelsOverlappingColumns", () => {
     }
 
     const series = { options: { type: VisualizationTypes.COLUMN } };
-    const labelsWithOverlapColumns: IPointData[] = [
+    const labelsWithOverlapColumns: Highcharts.Point[] = [
         {
             element: getElementForLabel(0),
         },
-    ];
-    const pointsWithOverlapColumns: any[] = [0, 1, 2].map((value: number) => ({
+    ] as any;
+    const pointsWithOverlapColumns: Highcharts.Point[] = [0, 1, 2].map((value: number) => ({
         graphic: getGraphicForPoint(value),
         series,
-    }));
+    })) as any;
 
-    const labelsWithoutOverlapColumns: IPointData[] = [
+    const labelsWithoutOverlapColumns: Highcharts.Point[] = [
         {
             element: getElementForLabel(1),
         },
-    ];
-    const pointsWithoutOverlapColumns: any[] = [3, 4, 5].map((value: number) => ({
+    ] as any;
+    const pointsWithoutOverlapColumns: Highcharts.Point[] = [3, 4, 5].map((value: number) => ({
         graphic: getGraphicForPoint(value),
         series,
-    }));
+    })) as any;
     it.each([
         [true, labelsWithOverlapColumns, pointsWithOverlapColumns],
         [false, labelsWithoutOverlapColumns, pointsWithoutOverlapColumns],
-    ])("should return overlap is %s", (isOverlap: boolean, labels: IPointData[], points: IPointData[]) => {
-        const areOverlappingColumns = autohideColumnLabels.areLabelsOverlappingColumns(labels, points);
-        expect(areOverlappingColumns).toEqual(isOverlap);
-    });
+    ])(
+        "should return overlap is %s",
+        (isOverlap: boolean, labels: Highcharts.Point[], points: Highcharts.Point[]) => {
+            const areOverlappingColumns = autohideColumnLabels.areLabelsOverlappingColumns(labels, points);
+            expect(areOverlappingColumns).toEqual(isOverlap);
+        },
+    );
 });

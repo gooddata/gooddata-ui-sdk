@@ -5,6 +5,7 @@
     "typings": "dist/index.d.ts",
     "main": "dist/index.js",
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
         "prepublish": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
@@ -16,8 +17,10 @@
         "tslint-ci": "mkdir -p ./ci/results && tslint -p . -t checkstyle -o ./ci/results/tslint-results.xml $npm_package_config_tslint",
         "prettier-check": "prettier --check 'src/**/*.ts'",
         "prettier-write": "prettier --write 'src/**/*.ts'",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint",
-        "validate-ci": "npm run tslint-ci && npm run prettier-check"
+        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "config": {
         "tslint": "./src/{,**/}*.ts"
@@ -47,6 +50,7 @@
         "@microsoft/api-extractor": "^7.3.8",
         "@types/jest": "^25.1.2",
         "@types/lodash": "^4.14.123",
+        "dependency-cruiser": "^8.0.1",
         "jest": "^25.1.0",
         "jest-junit": "^3.0.0",
         "prettier": "~1.19.1",

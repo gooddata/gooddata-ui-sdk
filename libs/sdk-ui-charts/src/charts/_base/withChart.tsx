@@ -2,7 +2,7 @@
 import * as React from "react";
 import compose = require("lodash/flowRight");
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
-import { IBucketChartProps, ICoreChartProps } from "../chartProps";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
 
 /**

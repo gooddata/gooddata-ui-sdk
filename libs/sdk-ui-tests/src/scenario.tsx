@@ -7,7 +7,6 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { IInsight } from "@gooddata/sdk-model";
-import { ScenarioTestInput } from "./scenarioTestInput";
 
 export type VisProps = IPivotTableProps | IBucketChartProps;
 export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
@@ -166,3 +165,34 @@ export class ScenarioBuilder<T extends VisProps> {
 }
 
 export type ScenarioModification<T extends VisProps> = (m: ScenarioBuilder<T>) => ScenarioBuilder<T>;
+
+/**
+ * View on test scenario that can be used as input to parameterized tests.
+ *
+ * First element: name of the test scenario
+ * Second element: react component type
+ * Third element: factory to create props for the react component
+ * Fourth element: scenario tags
+ * Fifth element: identifier of the insight which persists this test scenario (buckets, properties and all)
+ *
+ * Having this as array is essential for parameterized jest tests in order for jest to correctly name the
+ * test suite / test case.
+ */
+export type ScenarioTestInput<T extends VisProps> = [
+    string,
+    React.ComponentType<T>,
+    PropsFactory<T>,
+    ScenarioTag[],
+    string,
+];
+
+/**
+ * Enum with indexes into scenario test input array.
+ */
+export enum ScenarioTestMembers {
+    ScenarioName = 0,
+    Component = 1,
+    PropsFactory = 2,
+    Tags = 3,
+    InsightId = 4,
+}

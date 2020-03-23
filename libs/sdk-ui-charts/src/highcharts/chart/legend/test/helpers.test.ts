@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,
@@ -17,7 +17,7 @@ import {
     groupSeriesItemsByType,
 } from "../helpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { ISeriesItem } from "../../../Config";
+import { ISeriesItem } from "../../../typings/unsafe";
 
 describe("helpers", () => {
     describe("calculateFluidLegend", () => {

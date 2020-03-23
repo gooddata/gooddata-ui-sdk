@@ -1,7 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import get = require("lodash/get");
 import { XAxisTitleOptions, YAxisTitleOptions } from "highcharts";
-import { IAxis, IChartOptions, IAxisNameConfig } from "../../Config";
+import { IAxisNameConfig } from "../../../interfaces";
+import { IAxis, IChartOptions } from "../../typings/unsafe";
 
 type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
 

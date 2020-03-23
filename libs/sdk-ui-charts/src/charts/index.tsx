@@ -1,7 +1,4 @@
 // (C) 2019 GoodData Corporation
-export { IBucketChartProps, IChartCallbacks, ICommonChartProps, ICoreChartProps } from "./chartProps";
-
-export { ViewByAttributesLimit } from "./_commons/limits";
 export { BaseChart, IBaseChartProps } from "./_base/BaseChart";
 
 export { AreaChart, IAreaChartProps } from "./areaChart/AreaChart";
@@ -19,6 +16,7 @@ export { DonutChart, IDonutChartProps } from "./donutChart/DonutChart";
 export { FunnelChart, IFunnelChartProps } from "./funnelChart/FunnelChart";
 
 export { Headline, IHeadlineProps } from "./headline/Headline";
+
 export { CoreHeadline } from "./headline/CoreHeadline";
 
 export { Heatmap, IHeatmapProps } from "./heatmap/Heatmap";

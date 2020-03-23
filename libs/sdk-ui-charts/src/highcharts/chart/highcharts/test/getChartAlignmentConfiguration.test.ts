@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { getChartAlignmentConfiguration } from "../getChartAlignmentConfiguration";
 import { TOP } from "../../../constants/alignments";
-import { IChartConfig } from "../../../Config";
+import { IChartConfig } from "../../../../interfaces";
 
 describe("getChartAlignmentConfiguration", () => {
     it("should return chart alignment", () => {

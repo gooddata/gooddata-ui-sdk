@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
 import merge = require("lodash/merge");
 import * as invariant from "invariant";
@@ -7,7 +7,7 @@ import { getCommonConfiguration } from "./highcharts/commonConfiguration";
 
 import { stringifyChartTypes } from "../utils/common";
 
-import { IChartLimits, IChartOptions, IChartConfig } from "../Config";
+import { IChartLimits, IChartConfig } from "../../interfaces";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";
@@ -23,6 +23,7 @@ import { getFunnelConfiguration } from "./highcharts/funnelConfiguration";
 import { getHeatmapConfiguration } from "./highcharts/heatmapConfiguration";
 import { getBubbleConfiguration } from "./highcharts/bubbleConfiguration";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IChartOptions } from "../typings/unsafe";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,

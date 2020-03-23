@@ -15,6 +15,7 @@
         "tslint": "./{__mocks__,src,stories}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "test": "jest --watch",
@@ -26,8 +27,10 @@
         "story-extractor": "jest --config \"story-extractor.config.js\" --watchAll=false",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "npm run tslint-ci && npm run prettier-check",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "validate": "npm run dep-cruiser && npm run tslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check",
         "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
         "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
         "backstop-test": "npm run story-extractor && bash backstop/run-backstop.sh test",
@@ -93,6 +96,7 @@
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.3",
         "@types/spark-md5": "^3.0.1",
+        "dependency-cruiser": "^8.0.1",
         "prettier": "~1.19.1",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",

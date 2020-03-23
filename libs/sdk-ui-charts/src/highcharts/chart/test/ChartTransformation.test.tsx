@@ -6,7 +6,7 @@ import get = require("lodash/get");
 
 import ChartTransformation from "../ChartTransformation";
 import HighChartsRenderer from "../HighChartsRenderer";
-import { IChartConfig } from "../../Config";
+import { IChartConfig } from "../../../interfaces";
 import { getRgbString } from "../../utils/color";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import Chart from "../Chart";
@@ -22,11 +22,6 @@ const BarChartMultipleMeasures = recordedDataView(ReferenceRecordings.Scenarios.
 const BarChartTwoMeasures = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
 const BarChartViewAndStack = recordedDataView(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
-);
-const AreaChartMultiMeasures = recordedDataView(ReferenceRecordings.Scenarios.AreaChart.ArithmeticMeasures);
-const ColumnChartViewBy = recordedDataView(ReferenceRecordings.Scenarios.ColumnChart.SingleMeasureWithViewBy);
-const ColumnChartWithRatioAndViewBy = recordedDataView(
-    ReferenceRecordings.Scenarios.ColumnChart.SingleRatioMeasureWithViewBy,
 );
 const PieChartSingleMeasure = recordedDataView(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
 
@@ -92,73 +87,6 @@ describe("ChartTransformation", () => {
         expect(colors).toEqual(
             customColorPalette.map((colorPaletteItem: IColorPaletteItem) => getRgbString(colorPaletteItem)),
         );
-    });
-
-    describe("Stacking config", () => {
-        const defaultConfig = {
-            type: "area",
-        };
-
-        function createChartRendererProps(
-            executionData = AreaChartMultiMeasures.dataView,
-            config: IChartConfig = {},
-        ) {
-            const renderer = jest.fn().mockReturnValue(<div />);
-            mount(
-                createComponent({
-                    renderer,
-                    dataView: executionData,
-                    config: {
-                        ...config,
-                        type: config.type || defaultConfig.type,
-                    },
-                }),
-            );
-            return renderer.mock.calls[0][0];
-        }
-
-        it("should be enabled by default for area chart", () => {
-            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView);
-            expect(passedProps.chartOptions.stacking).toEqual("normal");
-        });
-
-        it("should be enabled by configuration", () => {
-            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
-                stacking: true,
-            });
-            expect(passedProps.chartOptions.stacking).toEqual("normal");
-        });
-
-        it("should be disabled by configuration", () => {
-            const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
-                stacking: false,
-            });
-            expect(passedProps.chartOptions.stacking).toBeNull();
-        });
-
-        describe("getChartConfig", () => {
-            it("should keep stack measures configuration", () => {
-                const passedProps = createChartRendererProps(AreaChartMultiMeasures.dataView, {
-                    stackMeasures: true,
-                    stackMeasuresToPercent: true,
-                });
-                expect(passedProps.chartOptions.stacking).toEqual("percent");
-            });
-            it("should keep stack measures configuration without stackBy", () => {
-                const passedProps = createChartRendererProps(ColumnChartViewBy.dataView, {
-                    stackMeasures: true,
-                    stackMeasuresToPercent: true,
-                });
-                expect(passedProps.chartOptions.stacking).toEqual("percent");
-            });
-            it("should sanitized stack measures configuration with computeRatio", () => {
-                const passedProps = createChartRendererProps(ColumnChartWithRatioAndViewBy.dataView, {
-                    stackMeasures: true,
-                    stackMeasuresToPercent: true,
-                });
-                expect(passedProps.chartOptions.stacking).toBeNull();
-            });
-        });
     });
 
     describe("Legend config", () => {

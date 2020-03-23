@@ -10,7 +10,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { stackedChartDimensions } from "../_commons/dimensions";
-import { IBucketChartProps } from "../chartProps";
+import { IBucketChartProps } from "../../interfaces";
 import { CoreLineChart } from "./CoreLineChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { withChart } from "../_base/withChart";

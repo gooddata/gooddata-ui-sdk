@@ -16,6 +16,7 @@
         "tslint": "./{__mocks__,src}/{,**/}*.{ts,tsx}"
     },
     "scripts": {
+        "clean": "rm -rf ci dist coverage *.log styles/css && jest --clearCache",
         "prepublishOnly": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh && npm run api-extractor",
@@ -29,9 +30,9 @@
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
-        "validate": "tsc -p tsconfig.build.json --noEmit && npm run tslint && npm run prettier-check",
-        "validate-ci": "npm run tslint-ci && npm run prettier-check"
+        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.js --output-type err-html src/ >./ci/results/dep-cruiser.html",
+        "validate": "npm run dep-cruiser && npm run tslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
@@ -75,7 +76,7 @@
         "@types/react-dom": "^16.9.3",
         "@types/react-responsive": "^8.0.2",
         "@types/react-window": "^1.8.1",
-        "dependency-cruiser": "^6.0.0",
+        "dependency-cruiser": "^8.0.1",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",
         "foundation-sites": "^5.5.3",

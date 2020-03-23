@@ -1,9 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 
-import { DATE, DATE_DATASET_ATTRIBUTE, GRANULARITY } from "../../constants/bucket";
+import { DATE, GRANULARITY } from "../../constants/bucket";
 import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../../constants/uiConfig";
-import { IExtendedReferencePoint, IFiltersBucketItem } from "../../interfaces/Visualization";
+import {
+    DATE_DATASET_ATTRIBUTE,
+    IExtendedReferencePoint,
+    IFiltersBucketItem,
+} from "../../interfaces/Visualization";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
 import { configurePercent, configureOverTimeComparison } from "../bucketConfig";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";

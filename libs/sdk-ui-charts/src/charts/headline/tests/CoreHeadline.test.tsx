@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { testUtils } from "@gooddata/js-utils";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
-import { ICoreChartProps } from "../../chartProps";
+import { ICoreChartProps } from "../../../interfaces/chartProps";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 

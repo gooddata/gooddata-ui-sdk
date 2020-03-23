@@ -2,6 +2,11 @@
 
 const scenarios = require("./scenarios.config");
 
+const asyncCaptureLimit = parseInt(process.env.BACKSTOP_CAPTURE_LIMIT) || 6;
+const asyncCompareLimit = parseInt(process.env.BACKSTOP_COMPARE_LIMIT) || 50;
+
+console.log(`Backstop concurrency settings = capture: ${asyncCaptureLimit}, compare: ${asyncCompareLimit} `);
+
 const backstopConfig = {
     id: "storybook",
     viewports: [
@@ -52,9 +57,9 @@ const backstopConfig = {
         ],
     },
     report: ["CI"],
-    asyncCaptureLimit: 6,
+    asyncCaptureLimit,
     resembleOutputOptions: { ignoreAntialiasing: true },
-    asyncCompareLimit: 50,
+    asyncCompareLimit,
 };
 
 module.exports = backstopConfig;

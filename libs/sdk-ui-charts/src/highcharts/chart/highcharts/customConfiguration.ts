@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import noop = require("lodash/noop");
 import isString = require("lodash/isString");
 import set = require("lodash/set");
@@ -16,16 +16,8 @@ import * as numberJS from "@gooddata/numberjs";
 import * as cx from "classnames";
 
 import { styleVariables } from "../../styles/variables";
-import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartOptionsBuilder";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    IAxis,
-    IChartConfig,
-    IChartOptions,
-    IDataLabelsVisible,
-    ISeriesItem,
-    IPointData,
-} from "../../Config";
+import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { AXIS_LINE_COLOR, getLighterColor } from "../../utils/color";
@@ -56,6 +48,8 @@ import { canComboChartBeStackedInPercent } from "../chartOptions/comboChartOptio
 import { getAxisNameConfiguration } from "./getAxisNameConfiguration";
 import { getChartAlignmentConfiguration } from "./getChartAlignmentConfiguration";
 import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart";
+import { supportedDualAxesChartTypes, supportedTooltipFollowPointerChartTypes } from "../chartCapabilities";
+import { IAxis, IChartOptions, IPointData, ISeriesItem } from "../../typings/unsafe";
 
 const { stripColors, numberFormat }: any = numberJS;
 

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import last = require("lodash/last");
 import Highcharts from "./highchartsEntryPoint";
@@ -6,7 +6,7 @@ import {
     IHighchartsAxisExtend,
     IHighchartsSeriesExtend,
     IHighchartsSeriesOptionsType,
-} from "../../HighchartsExtend";
+} from "../../typings/extend";
 
 function between(x: number, lowerLimit: number, higherLimit: number): number {
     return Math.min(Math.max(lowerLimit, x), higherLimit);

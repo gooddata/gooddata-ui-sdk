@@ -3,7 +3,7 @@ import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IFilter, IMeasure, newBucket } from "@gooddata/sdk-model";
 import * as React from "react";
 import { BucketNames, withContexts, Subtract } from "@gooddata/sdk-ui";
-import { ICoreChartProps, IBucketChartProps } from "../chartProps";
+import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
 import { CoreHeadline } from "./CoreHeadline";
 import omit = require("lodash/omit");
 

@@ -41,7 +41,6 @@ import {
     IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
-    isAttributeFilter,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
@@ -53,6 +52,7 @@ import {
     getAllItemsByType,
     getItemsFromBuckets,
     getTotalsFromBucket,
+    isAttributeFilter,
     removeDuplicateBucketItems,
     sanitizeFilters,
 } from "../../../utils/bucketHelper";

@@ -11,7 +11,6 @@ import {
     OverTimeComparisonType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
-import { DATE_DATASET_ATTRIBUTE } from "../constants/bucket";
 
 export interface IFeatureFlags {
     [property: string]: string | boolean | number;
@@ -109,6 +108,7 @@ export interface IAttributeFilter {
     }>;
 }
 
+export const DATE_DATASET_ATTRIBUTE = "attr.datedataset";
 export interface IDateFilter {
     attribute: "attr.datedataset";
     overTimeComparisonType: OverTimeComparisonType;
@@ -126,23 +126,6 @@ export interface IMeasureValueFilter {
 }
 
 export type IBucketFilter = IAttributeFilter | IDateFilter | IMeasureValueFilter;
-
-export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
-    return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
-}
-
-export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFilter {
-    const filterAsAttributeFilter: IAttributeFilter = filter as IAttributeFilter;
-    return (
-        !!filter &&
-        filterAsAttributeFilter.attribute !== DATE_DATASET_ATTRIBUTE &&
-        filterAsAttributeFilter.attribute !== undefined
-    );
-}
-
-export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureValueFilter {
-    return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
-}
 
 export interface ISort {
     direction: "asc" | "desc";

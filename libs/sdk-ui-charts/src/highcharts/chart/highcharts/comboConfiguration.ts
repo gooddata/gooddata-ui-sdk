@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { MAX_POINT_WIDTH } from "./commonConfiguration";
 import { LINE_WIDTH } from "./lineConfiguration";
-import { IChartConfig } from "../../Config";
+import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../../utils/common";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";

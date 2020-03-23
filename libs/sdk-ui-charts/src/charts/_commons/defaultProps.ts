@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import noop = require("lodash/noop");
 import { ErrorComponent, LoadingComponent, defaultErrorHandler } from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../chartProps";
+import { ICoreChartProps } from "../../interfaces";
 
 export const defaultCoreChartProps: Partial<ICoreChartProps> = {
     execution: undefined,

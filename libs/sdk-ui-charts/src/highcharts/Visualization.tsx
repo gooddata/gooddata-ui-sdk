@@ -5,7 +5,7 @@ import * as React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
 import ChartTransformation, { renderHighCharts } from "./chart/ChartTransformation";
 import Highcharts from "./chart/highcharts/highchartsEntryPoint";
-import { IChartConfig } from "./Config";
+import { IChartConfig } from "../interfaces";
 
 import { isChartSupported, stringifyChartTypes } from "./utils/common";
 import isEqual = require("lodash/isEqual");

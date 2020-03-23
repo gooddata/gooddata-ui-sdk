@@ -10,7 +10,6 @@ import {
     buildTooltipFactory,
     buildTooltipForTwoAttributesFactory,
     buildTooltipTreemapFactory,
-    customEscape,
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
     getDrillableSeries,
@@ -36,11 +35,13 @@ import {
     MeasureColorStrategy,
     TreemapColorStrategy,
 } from "../colorFactory";
-import { IChartConfig, IChartOptions, IPointData } from "../../Config";
-import { NORMAL_STACK, PERCENT_STACK } from "../highcharts/getOptionalStackingConfiguration";
+import { IChartConfig } from "../../../interfaces";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { customEscape } from "../../utils/common";
+import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
+import { IChartOptions, IPointData } from "../../typings/unsafe";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import flatten = require("lodash/flatten");
 import get = require("lodash/get");
 import pick = require("lodash/pick");
@@ -16,8 +16,10 @@ import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isBarChart } from "../../utils/common";
-import { ISeriesItem, ISeriesDataItem, IChartConfig, ChartAlignTypes } from "../../Config";
+import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
+import Highcharts from "./highchartsEntryPoint";
+import { ISeriesDataItem, ISeriesItem, UnsafeInternals } from "../../typings/unsafe";
 
 export interface IRectByPoints {
     left: number;
@@ -46,14 +48,19 @@ export const isIntersecting = (r1: IRectBySize, r2: IRectBySize) =>
     r1.x < r2.x + r2.width && r1.x + r1.width > r2.x && r1.y < r2.y + r2.height && r1.y + r1.height > r2.y;
 
 export const toNeighbors = (array: any) => zip(initial(array), tail(array));
-export const getVisibleSeries = (chart: any) => chart.series && chart.series.filter((s: any) => s.visible);
-export const getHiddenSeries = (chart: any) => chart.series && chart.series.filter((s: any) => !s.visible);
-export const getDataPoints = (series: ISeriesItem[]) => flatten(unzip(map(series, (s: any) => s.points)));
-export const getDataPointsOfVisibleSeries = (chart: any) => getDataPoints(getVisibleSeries(chart));
+export const getVisibleSeries = (chart: Highcharts.Chart) =>
+    chart.series && chart.series.filter((s: Highcharts.Series) => s.visible);
+export const getHiddenSeries = (chart: Highcharts.Chart) =>
+    chart.series && chart.series.filter((s: Highcharts.Series) => !s.visible);
+export const getDataPoints = (series: Highcharts.Series[]) =>
+    flatten(unzip(map(series, (s: Highcharts.Series) => s.points)));
+export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart) =>
+    getDataPoints(getVisibleSeries(chart));
 
-export const getChartType = (chart: any): string => get(chart, "options.chart.type");
-export const isStacked = (chart: any) => {
+export const getChartType = (chart: Highcharts.Chart): string | undefined => chart.options.chart?.type;
+export const isStacked = (chart: Highcharts.Chart) => {
     const chartType = getChartType(chart);
+
     if (
         get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
         chart.axes.some((axis: any) => !isEmpty(axis.stacks))
@@ -356,10 +363,12 @@ export interface IAxisRangeForAxes {
     second?: IAxisRange;
 }
 
-export function getAxisRangeForAxes(chart: any): IAxisRangeForAxes {
-    const yAxis: any = get(chart, "yAxis", []);
+export function getAxisRangeForAxes(chart: Highcharts.Chart): IAxisRangeForAxes {
+    const yAxis: Highcharts.Axis[] = chart.yAxis;
+
+    // note: accessing 'opposite' prop which is not part of the public API; min & max is
     return yAxis
-        .map((axis: any) => pick(axis, ["opposite", "min", "max"]))
+        .map((axis: UnsafeInternals) => pick(axis, ["opposite", "min", "max"]))
         .map(({ opposite, min, max }: any) => ({ axis: opposite ? "second" : "first", min, max }))
         .reduce((result: IAxisRangeForAxes, { axis, min, max }: any) => {
             result[axis] = {

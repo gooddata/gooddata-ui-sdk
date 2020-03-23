@@ -21,7 +21,7 @@ import {
     GoodDataSdkError,
     IntlWrapper,
 } from "@gooddata/sdk-ui";
-import { ICoreChartProps } from "../chartProps";
+import { ICoreChartProps } from "../../interfaces";
 import noop = require("lodash/noop");
 import omit = require("lodash/omit");
 

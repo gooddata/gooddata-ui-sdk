@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
 import { ILoadingInjectedProps, withEntireDataView } from "./NewLoadingHOC";
-import { ICoreChartProps, OnLegendReady } from "../chartProps";
+import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { Visualization, getValidColorPalette } from "../../highcharts";
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems";
 import noop = require("lodash/noop");
@@ -17,6 +17,7 @@ import {
     IntlTranslationsProvider,
     ITranslationsComponentProps,
 } from "@gooddata/sdk-ui";
+import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
@@ -73,6 +74,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
         const { afterRender, height, locale, config, type, dataView, onDataTooLarge, pushData } = this.props;
         const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
+        const sanitizedConfig = getSanitizedStackingConfig(dataView.definition, fullConfig);
 
         return (
             <IntlWrapper locale={locale}>
@@ -86,7 +88,7 @@ class StatelessBaseChart extends React.Component<Props, {}> {
                                 locale={locale}
                                 dataView={dataView}
                                 height={height}
-                                config={fullConfig}
+                                config={sanitizedConfig}
                                 numericSymbols={translationProps.numericSymbols}
                                 drillableItems={this.props.drillableItems}
                                 afterRender={afterRender}

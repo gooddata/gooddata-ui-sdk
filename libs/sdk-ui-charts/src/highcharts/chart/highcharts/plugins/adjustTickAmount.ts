@@ -1,3 +1,4 @@
+// (C) 2020 GoodData Corporation
 // tslint:disable-line
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
@@ -10,7 +11,7 @@
 import isNil = require("lodash/isNil");
 import get = require("lodash/get");
 import Highcharts from "../highchartsEntryPoint";
-import { IHighchartsAxisExtend } from "../../../HighchartsExtend";
+import { IHighchartsAxisExtend } from "../../../typings/extend";
 import { isLineChart } from "../../../utils/common";
 
 interface IBaseAndAlignedAxes {
