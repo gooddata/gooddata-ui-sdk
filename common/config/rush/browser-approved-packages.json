@@ -219,6 +219,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@types/lru-cache",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/md5",
       "allowedCategories": [ "production" ]
     },
@@ -508,6 +512,10 @@
     },
     {
       "name": "lodash-webpack-plugin",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "lru-cache",
       "allowedCategories": [ "production" ]
     },
     {

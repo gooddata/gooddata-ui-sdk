@@ -20,8 +20,8 @@ import { LabelsResourceReference, LabelsResourceSchema } from "@gooddata/gd-tige
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
-        private readonly workspace: string,
-        private readonly options: IWorkspaceCatalogFactoryOptions = {
+        public readonly workspace: string,
+        public readonly options: IWorkspaceCatalogFactoryOptions = {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],

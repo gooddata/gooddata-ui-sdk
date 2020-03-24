@@ -15,19 +15,22 @@ import {
     IExportResult,
     IPreparedExecution,
     IResultHeader,
+    IUserService,
+    IWorkspaceCatalog,
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogFactoryOptions,
+    IWorkspaceDatasetsService,
+    IWorkspaceInsights,
     IWorkspaceMetadata,
+    IWorkspacePermissionsFactory,
+    IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NoDataError,
     NotSupported,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
-    IWorkspaceQueryFactory,
-    IWorkspacePermissionsFactory,
-    IUserService,
-    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
+    CatalogItemType,
     defFingerprint,
     defWithDimensions,
     defWithSorting,
@@ -35,6 +38,7 @@ import {
     IDimension,
     IExecutionDefinition,
     IFilter,
+    ObjRef,
     SortItem,
 } from "@gooddata/sdk-model";
 
@@ -186,6 +190,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         execution(): IExecutionFactory {
             return new DummyExecutionFactory(config, workspace);
         },
+        catalog(): IWorkspaceCatalogFactory {
+            return new DummyWorkspaceCatalogFactory(workspace);
+        },
         elements(): IElementQueryFactory {
             throw new NotSupported("not supported");
         },
@@ -199,9 +206,6 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {
-            throw new NotSupported("not supported");
-        },
-        catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");
         },
         dataSets(): IWorkspaceDatasetsService {
@@ -293,4 +297,52 @@ function dummyPreparedExecution(
             return fp === other.fingerprint();
         },
     };
+}
+
+class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
+    constructor(
+        public readonly workspace: string,
+        public readonly options: IWorkspaceCatalogFactoryOptions = {
+            types: ["attribute", "measure", "fact", "dateDataset"],
+            excludeTags: [],
+            includeTags: [],
+            production: true,
+        },
+    ) {}
+
+    public withOptions(options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory {
+        const newOptions = {
+            ...this.options,
+            ...options,
+        };
+        return new DummyWorkspaceCatalogFactory(this.workspace, newOptions);
+    }
+
+    public forDataset(dataset: ObjRef): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            dataset,
+        });
+    }
+
+    public forTypes(types: CatalogItemType[]): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            types,
+        });
+    }
+
+    public includeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            includeTags: tags,
+        });
+    }
+
+    public excludeTags(tags: ObjRef[]): IWorkspaceCatalogFactory {
+        return this.withOptions({
+            excludeTags: tags,
+        });
+    }
+
+    public load(): Promise<IWorkspaceCatalog> {
+        return Promise.resolve("draw the rest of the owl" as any);
+    }
 }

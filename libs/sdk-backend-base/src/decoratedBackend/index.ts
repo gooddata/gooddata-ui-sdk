@@ -9,33 +9,16 @@ import {
     IAuthenticationProvider,
     IElementQueryFactory,
     IExecutionFactory,
-    IExecutionResult,
-    IPreparedExecution,
-    IWorkspaceMetadata,
-    IWorkspaceSettingsService,
-    IWorkspaceStylingService,
-    IDimensionDescriptor,
-    IExportResult,
-    IExportConfig,
-    IDataView,
-    IWorkspaceQueryFactory,
+    IUserService,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
-    IWorkspacePermissionsFactory,
-    IUserService,
     IWorkspaceInsights,
+    IWorkspaceMetadata,
+    IWorkspacePermissionsFactory,
+    IWorkspaceQueryFactory,
+    IWorkspaceSettingsService,
+    IWorkspaceStylingService,
 } from "@gooddata/sdk-backend-spi";
-import {
-    AttributeOrMeasure,
-    DimensionGenerator,
-    IBucket,
-    IDimension,
-    IExecutionDefinition,
-    IFilter,
-    IInsightDefinition,
-    SortItem,
-} from "@gooddata/sdk-model";
-
 import isEmpty = require("lodash/isEmpty");
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
@@ -116,6 +99,16 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.execution();
     }
 
+    public catalog(): IWorkspaceCatalogFactory {
+        const { catalog } = this.factories;
+
+        if (catalog) {
+            return catalog(this.decorated.catalog());
+        }
+
+        return this.decorated.catalog();
+    }
+
     public metadata(): IWorkspaceMetadata {
         return this.decorated.metadata();
     }
@@ -132,10 +125,6 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.styling();
     }
 
-    public catalog(): IWorkspaceCatalogFactory {
-        return this.decorated.catalog();
-    }
-
     public dataSets(): IWorkspaceDatasetsService {
         return this.decorated.dataSets();
     }
@@ -145,138 +134,8 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 }
 
-/**
- * @alpha
- */
-export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
-
-/**
- * Base class for execution factory decorators. Implements all delegates.
- *
- * There is an opt-in functionality to decorate the prepared executions - which is a typical use case for
- * factory decorators.
- *
- * @alpha
- */
-export class DecoratedExecutionFactory implements IExecutionFactory {
-    constructor(
-        private readonly decorated: IExecutionFactory,
-        private readonly wrapper?: PreparedExecutionWrapper,
-    ) {}
-
-    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return this.wrap(this.decorated.forDefinition(def));
-    }
-
-    public forItems(items: AttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forItems(items, filters));
-    }
-
-    public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forBuckets(buckets, filters));
-    }
-
-    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forInsight(insight, filters));
-    }
-
-    public forInsightByRef(uri: string, filters?: IFilter[]): Promise<IPreparedExecution> {
-        return this.decorated.forInsightByRef(uri, filters).then(this.wrap);
-    }
-
-    private wrap = (execution: IPreparedExecution) => {
-        return this.wrapper ? this.wrapper(execution) : execution;
-    };
-}
-
-/**
- * Abstract base class for prepared execution decorators. Implements delegates to decorated execution. Concrete
- * implementations can override just the functions they are interested in.
- *
- * @alpha
- */
-export abstract class DecoratedPreparedExecution implements IPreparedExecution {
-    public readonly definition: IExecutionDefinition;
-
-    protected constructor(private readonly decorated: IPreparedExecution) {
-        this.definition = decorated.definition;
-    }
-
-    public equals(other: IPreparedExecution): boolean {
-        return this.decorated.equals(other);
-    }
-
-    public execute(): Promise<IExecutionResult> {
-        return this.decorated.execute();
-    }
-
-    public fingerprint(): string {
-        return this.decorated.fingerprint();
-    }
-
-    public withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.createNew(this.decorated.withDimensions(...dim));
-    }
-
-    public withSorting(...items: SortItem[]): IPreparedExecution {
-        return this.createNew(this.decorated.withSorting(...items));
-    }
-
-    /**
-     * Methods that create new instances of prepared executions (withDimensions, withSorting) will
-     * call out to this method to create decorated execution. This is essential to maintain the decoration
-     * during immutable operations where decorated implementation creates new instances.
-     *
-     * @param decorated - instance to decorate
-     */
-    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
-}
-
-/**
- * Abstract base class for execution result decorators. Implements delegates to decorated execution. Concrete
- * implementations can override just the functions they are interested in.
- *
- * The prepared execution wrap is needed here because of the transform function which normally creates new
- * instances of prepared execution - and so the decoration needs to be maintained.
- *
- * @alpha
- */
-export abstract class DecoratedExecutionResult implements IExecutionResult {
-    public readonly definition: IExecutionDefinition;
-    public readonly dimensions: IDimensionDescriptor[];
-
-    constructor(
-        private readonly decorated: IExecutionResult,
-        private readonly wrapper: PreparedExecutionWrapper,
-    ) {
-        this.definition = decorated.definition;
-        this.dimensions = decorated.dimensions;
-    }
-
-    public export(options: IExportConfig): Promise<IExportResult> {
-        return this.decorated.export(options);
-    }
-
-    public readAll(): Promise<IDataView> {
-        return this.decorated.readAll();
-    }
-
-    public readWindow(offset: number[], size: number[]): Promise<IDataView> {
-        return this.decorated.readWindow(offset, size);
-    }
-
-    public transform(): IPreparedExecution {
-        return this.wrapper(this.decorated.transform());
-    }
-
-    public equals(other: IExecutionResult): boolean {
-        return this.decorated.equals(other);
-    }
-
-    public fingerprint(): string {
-        return this.decorated.fingerprint();
-    }
-}
+export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
+export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWorkspaceCatalogFactory;
 
 /**
  * Provides factory functions for the different decorators (currently only supports execution
@@ -286,7 +145,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
  * @alpha
  */
 export type DecoratorFactories = {
-    execution?: (executionFactory: IExecutionFactory) => IExecutionFactory;
+    execution?: ExecutionDecoratorFactory;
+    catalog?: CatalogDecoratorFactory;
 };
 
 /**

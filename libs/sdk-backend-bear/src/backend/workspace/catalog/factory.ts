@@ -94,8 +94,8 @@ const createLookups = (
 export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
         private readonly authCall: BearAuthenticatedCallGuard,
-        private readonly workspace: string,
-        private readonly options: IWorkspaceCatalogFactoryOptions = {
+        public readonly workspace: string,
+        public readonly options: IWorkspaceCatalogFactoryOptions = {
             types: ["attribute", "measure", "fact", "dateDataset"],
             excludeTags: [],
             includeTags: [],
