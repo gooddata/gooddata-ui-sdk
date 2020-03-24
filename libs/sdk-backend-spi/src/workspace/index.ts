@@ -21,10 +21,9 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 
     /**
-     * Returns execution factory - which is an entry point to triggering executions and thus obtaining
-     * analytics from the workspace.
+     * Returns service that can be used to query workspace catalog items - attributes, measures, facts and date data sets
      */
-    execution(): IExecutionFactory;
+    catalog(): IWorkspaceCatalogFactory;
 
     /**
      * Returns service that can be used to query and update insights
@@ -37,10 +36,15 @@ export interface IAnalyticalWorkspace {
     metadata(): IWorkspaceMetadata;
 
     /**
-     * Returns service that can be used to obtain workspace styling settings. These settings specify for instance
-     * what colors should be used in the charts.
+     * Returns service that can be used to query data sets defined in this workspace.
      */
-    styling(): IWorkspaceStylingService;
+    dataSets(): IWorkspaceDatasetsService;
+
+    /**
+     * Returns execution factory - which is an entry point to triggering executions and thus obtaining
+     * analytics from the workspace.
+     */
+    execution(): IExecutionFactory;
 
     /**
      * Returns service that can be used to query attribute elements for attributes defined in this workspace. For
@@ -50,24 +54,20 @@ export interface IAnalyticalWorkspace {
     elements(): IElementQueryFactory;
 
     /**
+     * Returns service that can be used to query workspace permissions
+     */
+    permissions(): IWorkspacePermissionsFactory;
+
+    /**
      * Returns service that can be used to obtain settings that are currently in effect for the workspace.
      */
     settings(): IWorkspaceSettingsService;
 
     /**
-     * Returns service that can be used to query workspace catalog items - attributes, measures, facts and date data sets
+     * Returns service that can be used to obtain workspace styling settings. These settings specify for instance
+     * what colors should be used in the charts.
      */
-    catalog(): IWorkspaceCatalogFactory;
-
-    /**
-     * Returns service that can be used to query data sets defined in this workspace.
-     */
-    dataSets(): IWorkspaceDatasetsService;
-
-    /**
-     * Returns service that can be used to query workspace permissions
-     */
-    permissions(): IWorkspacePermissionsFactory;
+    styling(): IWorkspaceStylingService;
 }
 
 /**
