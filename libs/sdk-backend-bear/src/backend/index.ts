@@ -38,6 +38,8 @@ const CAPABILITIES: BackendCapabilities = {
     maxDimensions: 2,
     supportsElementUris: true,
     supportsObjectUris: true,
+    supportsCsvUploader: true,
+    supportsLegacyReports: true,
 };
 
 /**

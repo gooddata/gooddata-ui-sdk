@@ -34,6 +34,7 @@ const CAPABILITIES: BackendCapabilities = {
     maxDimensions: 2,
     supportsElementUris: false,
     supportsObjectUris: false,
+    supportsCsvUploader: false,
 };
 
 /**
@@ -59,7 +60,7 @@ type TelemetryData = {
 };
 
 /**
- * This implementation of analytical backend uses the goodata-js API client to realize the SPI.
+ * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
  *
  * The only thing worth noting about this impl is the handling of SDK instance creation and authentication:
  *
@@ -71,7 +72,7 @@ type TelemetryData = {
  *
  * - Authentication is done at construction time; the constructor MAY receive an instance of deferred authentication -
  *   this is to cater for cases when withCredentials is called, new instance of backend is returned and then
- *   someone calls withTelementry on this instance => in that case there is no need to reinitiate login.
+ *   someone calls withTelemetry on this instance => in that case there is no need to re-initiate login.
  *
  */
 export class TigerBackend implements IAnalyticalBackend {

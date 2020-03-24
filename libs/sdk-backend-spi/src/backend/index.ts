@@ -171,7 +171,7 @@ export type BackendCapabilities = {
     canExportCsv?: boolean;
 
     /**
-     * Indicates whether backend can export data to Excel
+     * Indicates whether backend can export data to Excel.
      */
     canExportXlsx?: boolean;
 
@@ -184,6 +184,11 @@ export type BackendCapabilities = {
      * Indicates whether backend can execute an existing, persistent insight by reference.
      */
     canExecuteByReference?: boolean;
+
+    /**
+     * Indicates whether backend supports adding CSV datasets and switching between them.
+     */
+    supportsCsvUploader?: boolean;
 
     /**
      * Catchall for additional capabilities
