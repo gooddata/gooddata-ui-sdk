@@ -128,6 +128,7 @@ export type BackendCapabilities = {
     canExportXlsx?: boolean;
     canTransformExistingResult?: boolean;
     canExecuteByReference?: boolean;
+    supportsCsvUploader?: boolean;
     [key: string]: undefined | boolean | number | string;
 };
 
