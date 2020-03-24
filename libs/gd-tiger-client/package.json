@@ -17,7 +17,7 @@
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
-        "dev": "tsc --watch",
+        "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
         "openapi-spec-dump": "curl $OPEN_API_SPEC_URL > src/generated/openapi-spec.json",
         "openapi-generator": "openapi-generator generate -i src/generated/openapi-spec.json -g typescript-axios -o src/generated -t openapi-generator -p withInterfaces=true",
