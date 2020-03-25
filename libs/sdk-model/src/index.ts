@@ -8,6 +8,8 @@ export {
     builderFactory,
 } from "./base/builder";
 
+export { IDrillingActivationPostMessageData } from "./embedding/postMessage";
+
 export {
     IAttribute,
     isAttribute,

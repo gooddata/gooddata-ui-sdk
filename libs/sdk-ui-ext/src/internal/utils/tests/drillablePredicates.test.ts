@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
-import { IPostMessageData, convertPostMessageToDrillablePredicates } from "../drillablePredicates";
+import { convertPostMessageToDrillablePredicates } from "../drillablePredicates";
 import SpyInstance = jest.SpyInstance;
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
+import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 
 describe("convertPostMessageToDrillablePredicates", () => {
     let uriMatchSpy: SpyInstance;
@@ -31,7 +32,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return predicates for combination of uris and identifiers", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             uris: ["/foo", "/measure"],
             identifiers: ["bar", "baz"],
         };
@@ -49,7 +50,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return deduplicated predicates", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             uris: ["/common", "/common"],
             identifiers: ["common", "common"],
         };
@@ -63,7 +64,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return no predicates when no identifiers and uris provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             uris: [],
             identifiers: [],
         };
@@ -95,7 +96,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return composedFromUri predicates when composed uri provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             identifiers: [],
             uris: [],
             composedFrom: {
@@ -111,7 +112,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return composedFromUri predicate even when composed unresolvable uri provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             identifiers: [],
             uris: [],
             composedFrom: {
@@ -128,7 +129,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return composedFromIdentifier predicates when composed identifiers provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             identifiers: [],
             uris: [],
             composedFrom: {
@@ -144,7 +145,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return predicates when composed uri and identifiers provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             identifiers: [],
             uris: [],
             composedFrom: {
@@ -165,7 +166,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
 
     // tslint:disable-next-line:max-line-length
     it("should return deduplicated predicates when composed uris and identifiers provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             identifiers: [],
             uris: [],
             composedFrom: {
@@ -187,7 +188,7 @@ describe("convertPostMessageToDrillablePredicates", () => {
     });
 
     it("should return deduplicated predicates when all input uris and identifiers provided", async () => {
-        const data: IPostMessageData = {
+        const data: IDrillingActivationPostMessageData = {
             uris: ["/foo", "/common", "/common"],
             identifiers: ["bar", "baz", "common", "common"],
             composedFrom: {

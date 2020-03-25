@@ -18,7 +18,7 @@ import {
     NoopAuthProvider,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import defaultTo = require("lodash/defaultTo");
 import isEmpty = require("lodash/isEmpty");
@@ -28,6 +28,7 @@ import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { GdcUser } from "@gooddata/gd-bear-model";
+import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -72,6 +73,10 @@ type BearLegacyFunctions = {
     ajaxSetup?(setup: any): void;
     log?(uri: string, logMessages: string[]): Promise<any>;
     updateProfileCurrentWorkspace?(workspace: string, profileSetting: GdcUser.IProfileSetting): Promise<void>;
+    sanitizeDrillingActivationPostMessageData?(
+        workspace: string,
+        postMessageData: IDrillingActivationPostMessageData,
+    ): Promise<IDrillingActivationPostMessageData>;
 };
 
 /**
@@ -126,28 +131,24 @@ export class BearBackend implements IAnalyticalBackend {
 
         if (this.implConfig.onLegacyCallbacksReady) {
             const legacyFunctions: BearLegacyFunctions = {
-                openAsReport: (workspace: string, insight: IInsight) => {
+                openAsReport: (workspace, insight) => {
                     const visualizationObject = convertInsight(insight);
                     return this.authApiCall(sdk =>
                         sdk.md.openVisualizationAsReport(workspace, { visualizationObject }),
                     );
                 },
-                getBootstrapResource: (options: {
-                    projectId?: string;
-                    productId?: string;
-                    clientId?: string;
-                }) => {
+
+                getBootstrapResource: options => {
                     return this.authApiCall(sdk => sdk.user.getBootstrapResource(options));
                 },
-                ajaxSetup: (settings: any) => {
+
+                ajaxSetup: settings => {
                     this.sdk.xhr.ajaxSetup(settings);
                 },
-                log: (uri: string, logMessages: string[]) =>
-                    this.sdk.xhr.post(uri, { data: JSON.stringify({ logMessages }) }),
-                updateProfileCurrentWorkspace: async (
-                    workspace: string,
-                    profileSetting: GdcUser.IProfileSetting,
-                ): Promise<void> => {
+
+                log: (uri, logMessages) => this.sdk.xhr.post(uri, { data: JSON.stringify({ logMessages }) }),
+
+                updateProfileCurrentWorkspace: async (workspace, profileSetting): Promise<void> => {
                     const userId = profileSetting.links?.profile?.split("/").pop();
                     invariant(userId, "Cannot obtain userId from IProfileSetting");
 
@@ -160,6 +161,14 @@ export class BearBackend implements IAnalyticalBackend {
                         sdk.user.updateProfileSettings(userId!, { profileSetting: newProfileSetting }),
                     );
                 },
+
+                sanitizeDrillingActivationPostMessageData: (workspace, postMessageData) =>
+                    sanitizeDrillingActivationPostMessageData(
+                        workspace,
+                        postMessageData,
+                        (workspace, identifiers) =>
+                            this.authApiCall(sdk => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
+                    ),
             };
 
             this.implConfig.onLegacyCallbacksReady(legacyFunctions);
