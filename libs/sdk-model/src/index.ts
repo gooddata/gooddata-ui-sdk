@@ -8,6 +8,8 @@ export {
     builderFactory,
 } from "./base/builder";
 
+export { IPostMessageData, ISimplePostMessageData, isPostMessageData } from "./embedding/postMessage";
+
 export {
     IAttribute,
     isAttribute,

@@ -1,37 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { IHeaderPredicate, HeaderPredicates } from "@gooddata/sdk-ui";
+import { IPostMessageData, isPostMessageData } from "@gooddata/sdk-model";
 import isArray = require("lodash/isArray");
 import uniq = require("lodash/uniq");
-
-/**
- * @public
- */
-export interface ISimplePostMessageData {
-    /**
-     * URI of attribute or measure that should be drillable.
-     */
-    uris?: string[];
-
-    /**
-     * Identifier of attribute or measure that should be drillable.
-     */
-    identifiers?: string[];
-}
-
-/**
- * @public
- */
-export interface IPostMessageData extends ISimplePostMessageData {
-    /**
-     * Optionally specifies drilling on measures that are composed from other measures - by listing uris or
-     * identifiers of components.
-     */
-    composedFrom?: ISimplePostMessageData;
-}
-
-function isPostMessageData(item: IPostMessageData): item is IPostMessageData {
-    return (item as IPostMessageData).composedFrom !== undefined;
-}
 
 /**
  * Converts post message with drilling specification into header predicates. Given the message with
