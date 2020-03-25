@@ -3,22 +3,21 @@ import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
-import first from "lodash/fp/first";
 import invariant from "ts-invariant";
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/gd-bear-model";
 import {
     IAttributeDisplayFormMetadataObject,
     IMeasureExpressionToken,
-    ObjRef,
-    newAttributeDisplayFormMetadataObject,
-    uriRef,
     IMetadataObject,
+    newAttributeDisplayFormMetadataObject,
+    ObjRef,
+    uriRef,
 } from "@gooddata/sdk-model";
-import { tokenizeExpression, getTokenValuesOfType } from "./measureExpressionTokens";
+import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 import { objRefToUri } from "../../../fromObjRef/api";
 import { BearAuthenticatedCallGuard } from "../../../types";
-import { convertMetadataObject } from "../../../toSdkModel/MetaConverter";
+import { convertMetadataObject, convertMetadataObjectXrefEntry } from "../../../toSdkModel/MetaConverter";
 import { getObjectIdFromUri } from "../../../utils/api";
 
 export class BearWorkspaceMetadata implements IWorkspaceMetadata {
@@ -145,15 +144,13 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const objectId = getObjectIdFromUri(uri);
 
         return this.authCall(async sdk => {
-            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObject[] }>(
+            const usedBy = await sdk.xhr.getParsed<{ entries: GdcMetadata.IObjectXrefEntry[] }>(
                 `/gdc/md/${this.workspace}/usedby2/${objectId}?types=dataSet`,
             );
 
-            const dataset = flow(first, convertMetadataObject)(usedBy.entries);
+            invariant(usedBy.entries.length > 0, "Fact must have a dataset associated to it.");
 
-            invariant(dataset, "Fact must have a dataset associated to it.");
-
-            return dataset;
+            return convertMetadataObjectXrefEntry("dataSet", usedBy.entries[0]);
         });
     }
 }

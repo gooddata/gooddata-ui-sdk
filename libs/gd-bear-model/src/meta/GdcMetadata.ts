@@ -165,6 +165,74 @@ export namespace GdcMetadata {
         };
     }
 
+    /**
+     * XREF entry is returned by using2 and usedBy2 resources. These contain limited subset of
+     * fields.
+     */
+    export interface IObjectXrefEntry {
+        /*
+         * Type of object
+         */
+        category: string;
+
+        /**
+         * Link to profile of user who created the object
+         */
+        author: string;
+
+        /**
+         * Link to profile of user who last updated the object
+         */
+        contributor: string;
+
+        /**
+         * Date and time of creation (YYYY-MM-DD H:M:S)
+         */
+        created: string;
+
+        /**
+         * Deprecation indicator.
+         *
+         * String value containing 0 or 1.
+         */
+        deprecated: string;
+
+        /**
+         * Metadata object identifier
+         */
+        identifier: string;
+
+        /**
+         * Link to metadata object - objects URI
+         */
+        link: string;
+
+        /**
+         * Lock indicator. 0 if not locked, 1 if locked
+         */
+        locked: 0 | 1;
+
+        /**
+         * Metadata object description. May be empty string if no description
+         */
+        summary: string;
+
+        /**
+         * Metadata object title - human readable name.
+         */
+        title: string;
+
+        /**
+         * Indicates whether object is publicly listed or not.
+         */
+        unlisted: 0 | 1;
+
+        /**
+         * Date and time of last update (YYYY-MM-DD H:M:S)
+         */
+        updated: string;
+    }
+
     export function isAttribute(obj: any): obj is IAttribute {
         return !isEmpty(obj) && (obj as IAttribute).meta.category === "attribute";
     }
