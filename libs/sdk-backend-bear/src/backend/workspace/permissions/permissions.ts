@@ -4,6 +4,8 @@ import { IWorkspacePermissions, WorkspacePermission } from "@gooddata/sdk-model"
 import { BearAuthenticatedCallGuard } from "../../../types";
 import { convertPermissions } from "../../../fromSdkModel/WorkspaceConverter";
 
+const emptyPermissions = { permissions: {} };
+
 export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsFactory {
     constructor(public readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -12,7 +14,7 @@ export class BearWorkspacePermissionsFactory implements IWorkspacePermissionsFac
             sdk.user.getBootstrapResource({ projectId: this.workspace }),
         );
         const permissions = convertPermissions(
-            bootstrapResource.bootstrapResource.current!.projectPermissions!,
+            bootstrapResource.bootstrapResource.current?.projectPermissions || emptyPermissions,
         );
         return new BearWorkspaceUserPermissions(permissions);
     }

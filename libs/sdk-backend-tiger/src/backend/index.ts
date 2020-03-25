@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { AxiosInstance } from "axios";
+import invariant from "ts-invariant";
 import {
     AnalyticalBackendConfig,
     BackendCapabilities,
@@ -18,6 +19,7 @@ import {
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/gd-tiger-client";
 import isEmpty = require("lodash/isEmpty");
 import defaultTo = require("lodash/defaultTo");
+import isString = require("lodash/isString");
 
 import { convertApiError } from "../errors/errorHandling";
 
@@ -122,6 +124,7 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public workspace(id: string): IAnalyticalWorkspace {
+        invariant(isString(id), `Invalid workspaceId: ${id}`);
         return new TigerWorkspace(this.authApiCall, id);
     }
 
