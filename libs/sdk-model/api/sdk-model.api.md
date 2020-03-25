@@ -633,6 +633,13 @@ export const idMatchMeasure: (id: string) => MeasurePredicate;
 export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
+export interface IDrillingActivationPostMessageData {
+    composedFrom?: IDrillingActivationPostMessageData;
+    identifiers?: string[];
+    uris?: string[];
+}
+
+// @public
 export interface IExecutionDefinition {
     // (undocumented)
     readonly attributes: IAttribute[];
@@ -903,11 +910,6 @@ export interface IPositiveAttributeFilter {
     };
 }
 
-// @public (undocumented)
-export interface IPostMessageData extends ISimplePostMessageData {
-    composedFrom?: ISimplePostMessageData;
-}
-
 // @public
 export interface IPreviousPeriodDateDataSet {
     // (undocumented)
@@ -1042,12 +1044,6 @@ export function isDimension(obj: any): obj is IDimension;
 // @public
 export function isIdentifierRef(obj: any): obj is IdentifierRef;
 
-// @public (undocumented)
-export interface ISimplePostMessageData {
-    identifiers?: string[];
-    uris?: string[];
-}
-
 // @public
 export function isInsight(obj: any): obj is IInsight;
 
@@ -1083,9 +1079,6 @@ export function isPoPMeasureDefinition(obj: any): obj is IPoPMeasureDefinition;
 
 // @public
 export function isPositiveAttributeFilter(obj: any): obj is IPositiveAttributeFilter;
-
-// @public (undocumented)
-export function isPostMessageData(item: any): item is IPostMessageData;
 
 // @public
 export function isPreviousPeriodMeasure(obj: any): obj is IMeasure<IPreviousPeriodMeasureDefinition>;

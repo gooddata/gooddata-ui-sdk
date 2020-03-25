@@ -18,7 +18,7 @@ import {
     NoopAuthProvider,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
-import { IInsight, IPostMessageData } from "@gooddata/sdk-model";
+import { IInsight, IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import defaultTo = require("lodash/defaultTo");
 import isEmpty = require("lodash/isEmpty");
@@ -28,7 +28,7 @@ import { BearWorkspaceQueryFactory } from "./workspaces";
 import { BearUserService } from "./user";
 import { convertInsight } from "../fromSdkModel/InsightConverter";
 import { GdcUser } from "@gooddata/gd-bear-model";
-import { sanitizeDrillingPostMessageData } from "./drillingPostMessageData";
+import { sanitizeDrillingActivationPostMessageData } from "./drillingPostMessageData";
 
 const CAPABILITIES: BackendCapabilities = {
     canCalculateTotals: true,
@@ -73,10 +73,10 @@ type BearLegacyFunctions = {
     ajaxSetup?(setup: any): void;
     log?(uri: string, logMessages: string[]): Promise<any>;
     updateProfileCurrentWorkspace?(workspace: string, profileSetting: GdcUser.IProfileSetting): Promise<void>;
-    sanitizeDrillingPostMessageData?(
+    sanitizeDrillingActivationPostMessageData?(
         workspace: string,
-        postMessageData: IPostMessageData,
-    ): Promise<IPostMessageData>;
+        postMessageData: IDrillingActivationPostMessageData,
+    ): Promise<IDrillingActivationPostMessageData>;
 };
 
 /**
@@ -162,9 +162,12 @@ export class BearBackend implements IAnalyticalBackend {
                     );
                 },
 
-                sanitizeDrillingPostMessageData: (workspace, postMessageData) =>
-                    sanitizeDrillingPostMessageData(workspace, postMessageData, (workspace, identifiers) =>
-                        this.authApiCall(sdk => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
+                sanitizeDrillingActivationPostMessageData: (workspace, postMessageData) =>
+                    sanitizeDrillingActivationPostMessageData(
+                        workspace,
+                        postMessageData,
+                        (workspace, identifiers) =>
+                            this.authApiCall(sdk => sdk.md.getUrisFromIdentifiers(workspace, identifiers)),
                     ),
             };
 

@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { IUriIdentifierPair } from "@gooddata/gd-bear-client/lib/metadata";
-import { sanitizeDrillingPostMessageData } from "..";
-import { IPostMessageData } from "@gooddata/sdk-model";
+import { sanitizeDrillingActivationPostMessageData } from "..";
+import { IDrillingActivationPostMessageData } from "@gooddata/sdk-model";
 
 describe("sanitizeDrillingPostMessageData", () => {
     const mockIdToUriConverter = async (
@@ -15,7 +15,11 @@ describe("sanitizeDrillingPostMessageData", () => {
             }),
         );
 
-    const testCases: Array<[string, IPostMessageData, IPostMessageData]> = [
+    const testCases: Array<[
+        string,
+        IDrillingActivationPostMessageData,
+        IDrillingActivationPostMessageData,
+    ]> = [
         [
             "not convert uris",
             {
@@ -124,7 +128,7 @@ describe("sanitizeDrillingPostMessageData", () => {
         ],
     ];
     it.each(testCases)("should %s", async (_, input, expected) => {
-        const actual = await sanitizeDrillingPostMessageData("", input, mockIdToUriConverter);
+        const actual = await sanitizeDrillingActivationPostMessageData("", input, mockIdToUriConverter);
         expect(actual).toEqual(expected);
     });
 });
