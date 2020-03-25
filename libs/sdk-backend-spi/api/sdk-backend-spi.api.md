@@ -534,6 +534,8 @@ export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalo
 // @public
 export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions> {
     load(): Promise<IWorkspaceCatalog>;
+    readonly options: IWorkspaceCatalogFactoryOptions;
+    readonly workspace: string;
 }
 
 // @public

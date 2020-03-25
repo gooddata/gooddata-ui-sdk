@@ -1,12 +1,21 @@
 // (C) 2019-2020 GoodData Corporation
 
-export {
-    decoratedBackend,
-    DecoratorFactories,
-    DecoratedExecutionFactory,
-    DecoratedExecutionResult,
-    DecoratedPreparedExecution,
-    PreparedExecutionWrapper,
-} from "./decoratedBackend";
-export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export { dummyBackend, dummyBackendEmptyData, dummyDataView, dummyDataFacade } from "./dummyBackend";
+
+export { decoratedBackend, DecoratorFactories } from "./decoratedBackend";
+
+export {
+    DecoratedExecutionFactory,
+    PreparedExecutionWrapper,
+    DecoratedPreparedExecution,
+    DecoratedExecutionResult,
+} from "./decoratedBackend/execution";
+
+export {
+    DecoratedWorkspaceCatalogFactory,
+    DecoratedWorkspaceCatalog,
+    WorkspaceCatalogWrapper,
+} from "./decoratedBackend/catalog";
+
+export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
+export { withCaching, CachingConfiguration, DefaultCachingConfiguration } from "./cachingBackend";

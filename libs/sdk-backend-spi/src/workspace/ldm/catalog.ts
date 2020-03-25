@@ -75,6 +75,16 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 export interface IWorkspaceCatalogFactory
     extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions> {
     /**
+     * Workspace whose catalog is being loaded.
+     */
+    readonly workspace: string;
+
+    /**
+     * Options set for the loader so far.
+     */
+    readonly options: IWorkspaceCatalogFactoryOptions;
+
+    /**
      * Get catalog items for the current configuration
      *
      * @returns promise of catalog with loaded items

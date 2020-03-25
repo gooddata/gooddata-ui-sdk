@@ -6,10 +6,17 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-model';
+import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
@@ -21,6 +28,11 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
+import { ObjRef } from '@gooddata/sdk-model';
 import { SortItem } from '@gooddata/sdk-model';
 
 // @beta
@@ -33,12 +45,20 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadWindow?: (offset: number[], size: number[], error: any) => void;
 };
 
+// @beta
+export type CachingConfiguration = {
+    maxExecutions: number | undefined;
+    maxResultWindows: number | undefined;
+    maxCatalogs: number | undefined;
+    maxCatalogOptions: number | undefined;
+};
+
 // @alpha
 export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories): IAnalyticalBackend;
 
 // @alpha
 export class DecoratedExecutionFactory implements IExecutionFactory {
-    constructor(decorated: IExecutionFactory, wrapper?: PreparedExecutionWrapper | undefined);
+    constructor(decorated: IExecutionFactory, wrapper?: PreparedExecutionWrapper);
     // (undocumented)
     forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
     // (undocumented)
@@ -53,7 +73,7 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    constructor(decorated: IExecutionResult, wrapper: PreparedExecutionWrapper);
+    protected constructor(decorated: IExecutionResult, wrapper: PreparedExecutionWrapper);
     // (undocumented)
     readonly definition: IExecutionDefinition;
     // (undocumented)
@@ -90,10 +110,57 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     withSorting(...items: SortItem[]): IPreparedExecution;
 }
 
+// @alpha (undocumented)
+export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
+    protected constructor(decorated: IWorkspaceCatalog);
+    // (undocumented)
+    availableItems(): IWorkspaceCatalogAvailableItemsFactory;
+    // (undocumented)
+    getAttributes(): ICatalogAttribute[];
+    // (undocumented)
+    getDateDatasets(): ICatalogDateDataset[];
+    // (undocumented)
+    getFacts(): ICatalogFact[];
+    // (undocumented)
+    getGroups(): ICatalogGroup[];
+    // (undocumented)
+    getItems(): CatalogItem[];
+    // (undocumented)
+    getMeasures(): ICatalogMeasure[];
+}
+
+// @alpha (undocumented)
+export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
+    protected constructor(decorated: IWorkspaceCatalogFactory, wrapper?: WorkspaceCatalogWrapper);
+    protected abstract createNew(decorated: IWorkspaceCatalogFactory): IWorkspaceCatalogFactory;
+    // (undocumented)
+    excludeTags(tags: ObjRef[]): IWorkspaceCatalogFactory;
+    // (undocumented)
+    forDataset(dataset: ObjRef): IWorkspaceCatalogFactory;
+    // (undocumented)
+    forTypes(types: CatalogItemType[]): IWorkspaceCatalogFactory;
+    // (undocumented)
+    includeTags(tags: ObjRef[]): IWorkspaceCatalogFactory;
+    // (undocumented)
+    load(): Promise<IWorkspaceCatalog>;
+    // (undocumented)
+    options: IWorkspaceCatalogFactoryOptions;
+    // (undocumented)
+    withOptions(options: IWorkspaceCatalogFactoryOptions): IWorkspaceCatalogFactory;
+    // (undocumented)
+    workspace: string;
+    // (undocumented)
+    protected readonly wrapper: WorkspaceCatalogWrapper;
+}
+
 // @alpha
 export type DecoratorFactories = {
-    execution?: (executionFactory: IExecutionFactory) => IExecutionFactory;
+    execution?: ExecutionDecoratorFactory;
+    catalog?: CatalogDecoratorFactory;
 };
+
+// @beta (undocumented)
+export const DefaultCachingConfiguration: CachingConfiguration;
 
 // Warning: (ae-forgotten-export) The symbol "DummyBackendConfig" needs to be exported by the entry point index.d.ts
 // Warning: (ae-internal-missing-underscore) The name "dummyBackend" should be prefixed with an underscore because the declaration is marked as @internal
@@ -120,8 +187,19 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
 // @beta
+export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;
+
+// @beta
 export function withEventing(realBackend: IAnalyticalBackend, callbacks: AnalyticalBackendCallbacks): IAnalyticalBackend;
 
+// @alpha (undocumented)
+export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
+
+
+// Warnings were encountered during analysis:
+//
+// dist/decoratedBackend/index.d.ts:12:5 - (ae-forgotten-export) The symbol "ExecutionDecoratorFactory" needs to be exported by the entry point index.d.ts
+// dist/decoratedBackend/index.d.ts:13:5 - (ae-forgotten-export) The symbol "CatalogDecoratorFactory" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

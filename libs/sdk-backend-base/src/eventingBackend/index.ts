@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDataView,
@@ -6,14 +6,14 @@ import {
     IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { decoratedBackend } from "../decoratedBackend";
+import isEmpty = require("lodash/isEmpty");
 import {
-    decoratedBackend,
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
-} from "../decoratedBackend";
-import isEmpty = require("lodash/isEmpty");
+} from "../decoratedBackend/execution";
 
 class WithExecutionEventing extends DecoratedPreparedExecution {
     constructor(decorated: IPreparedExecution, private readonly callbacks: AnalyticalBackendCallbacks) {
