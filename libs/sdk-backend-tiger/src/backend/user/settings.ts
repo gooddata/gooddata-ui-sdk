@@ -9,6 +9,22 @@ export class TigerUserSettingsService implements IUserSettingsService {
         return this.authCall(async () => {
             return {
                 userId: "dummy",
+
+                activeFiltersByDefault: true,
+                enableActiveFilterContext: true,
+                cellMergedByDefault: true,
+                enableMetricDateFilter: true,
+                enableAnalyticalDesignerExport: true,
+                enableComboChart: true,
+                enableNewADFilterBar: true,
+                enableMeasureValueFilters: true,
+                enablePushpinGeoChart: true,
+                hidePixelPerfectExperience: false,
+                enableBulletChart: true,
+                enableCsvUploader: true,
+                platformEdition: "enterprise",
+                portalLogoPage: false,
+                analyticalDesigner: true,
             };
         });
     }
