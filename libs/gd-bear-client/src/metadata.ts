@@ -708,6 +708,10 @@ export class MetadataModule {
      * @return {Array} array of identifier + uri pairs
      */
     public getUrisFromIdentifiers(projectId: string, identifiers: string[]) {
+        if (!identifiers.length) {
+            return Promise.resolve([]);
+        }
+
         return this.xhr
             .post(`/gdc/md/${projectId}/identifiers`, {
                 body: {

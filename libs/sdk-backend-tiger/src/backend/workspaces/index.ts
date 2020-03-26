@@ -86,6 +86,12 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
                 isDemo: true,
             },
             {
+                title: "COVID-19 - Postgres",
+                id: "covid",
+                description: "",
+                isDemo: true,
+            },
+            {
                 title: "TPC-H - Redshift",
                 id: "tpch_rs",
                 description: "",
@@ -100,6 +106,12 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
             {
                 title: "UFO - Redshift",
                 id: "ufo_rs",
+                description: "",
+                isDemo: true,
+            },
+            {
+                title: "COVID-19 - Redshift",
+                id: "covid_rs",
                 description: "",
                 isDemo: true,
             },

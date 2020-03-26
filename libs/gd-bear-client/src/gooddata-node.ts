@@ -1,10 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
+
 const fetchCookie = require("fetch-cookie"); // tslint:disable-line:no-var-requires
 import nodeFetch from "node-fetch";
 
 import { factory, SDK } from "./gooddata";
-import { ApiResponse, ApiResponseError, ApiNetworkError } from "./xhr";
-import { ApiExecutionResponseError } from "./execution/execute-afm";
 
 const factoryNode = factory(fetchCookie(nodeFetch as any));
 
@@ -14,9 +13,6 @@ const factoryNode = factory(fetchCookie(nodeFetch as any));
 // immediately.
 export { factoryNode as factory, SDK };
 
-export { ApiResponse, ApiResponseError, ApiNetworkError, ApiExecutionResponseError };
-export { isUri } from "./util";
-
-export * from "./interfaces";
+export * from "./api";
 
 export default factoryNode();
