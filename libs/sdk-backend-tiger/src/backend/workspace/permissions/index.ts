@@ -17,6 +17,10 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsFa
                 canManageAnalyticalDashboard: true,
                 canUploadNonProductionCSV: true,
                 canManageProject: true,
+                canCreateAnalyticalDashboard: true,
+                canInitData: true,
+                canManageMetric: true,
+                canManageReport: true,
             };
             return result;
         });

@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@gooddata/gd-bear-client": "file:../../libs/gd-bear-client",
-        "@gooddata/goodstrap": "^66.0.0",
+        "@gooddata/goodstrap": "^68.2.2",
         "@gooddata/sdk-backend-bear": "file:../../libs/sdk-backend-bear",
         "@gooddata/sdk-backend-spi": "file:../../libs/sdk-backend-spi",
         "@gooddata/sdk-model": "file:../../libs/sdk-model",

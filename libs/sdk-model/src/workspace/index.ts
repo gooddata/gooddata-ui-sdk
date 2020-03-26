@@ -20,13 +20,17 @@ export interface IWorkspace {
  * @public
  */
 export type WorkspacePermission =
-    | "canAccessWorkbench"
-    | "canCreateVisualization"
-    | "canManageAnalyticalDashboard"
+    | "canInitData"
     | "canUploadNonProductionCSV"
-    | "canCreateReport"
     | "canExecuteRaw"
     | "canExportReport"
+    | "canAccessWorkbench"
+    | "canCreateReport"
+    | "canCreateVisualization"
+    | "canCreateAnalyticalDashboard"
+    | "canManageMetric"
+    | "canManageReport"
+    | "canManageAnalyticalDashboard"
     | "canManageProject";
 
 /**
