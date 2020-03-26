@@ -1269,6 +1269,21 @@ export namespace GdcMetadata {
         // (undocumented)
         uri: string;
     }
+    export interface IObjectXrefEntry {
+        author: string;
+        // (undocumented)
+        category: string;
+        contributor: string;
+        created: string;
+        deprecated: string;
+        identifier: string;
+        link: string;
+        locked: 0 | 1;
+        summary: string;
+        title: string;
+        unlisted: 0 | 1;
+        updated: string;
+    }
     // (undocumented)
     export function isAttribute(obj: any): obj is IAttribute;
     // (undocumented)
