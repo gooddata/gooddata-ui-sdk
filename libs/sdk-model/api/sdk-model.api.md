@@ -1516,7 +1516,7 @@ export type VisualizationProperties = {
 };
 
 // @public
-export type WorkspacePermission = "canAccessWorkbench" | "canCreateVisualization" | "canManageAnalyticalDashboard" | "canUploadNonProductionCSV" | "canCreateReport" | "canExecuteRaw" | "canExportReport" | "canManageProject";
+export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject";
 
 
 // (No @packageDocumentation comment for this package)
