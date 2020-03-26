@@ -47,7 +47,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public styling(): IWorkspaceStylingService {
-        throw new TigerWorkspaceStyling(this.authCall, this.workspace);
+        return new TigerWorkspaceStyling(this.authCall, this.workspace);
     }
 
     public catalog(): IWorkspaceCatalogFactory {
@@ -59,6 +59,6 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public permissions(): IWorkspacePermissionsFactory {
-        throw new TigerWorkspacePermissionsFactory(this.authCall, this.workspace);
+        return new TigerWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 }
