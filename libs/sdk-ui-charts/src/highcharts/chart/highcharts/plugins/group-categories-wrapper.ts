@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
-import { isBarChart } from "../../../utils/common";
+import { isInvertedChartType } from "../../../utils/common";
 
 export function groupCategoriesWrapper(Highcharts: any) {
     const wrap = Highcharts.wrap;
@@ -43,7 +43,7 @@ export function groupCategoriesWrapper(Highcharts: any) {
         const hasParent = !isEmpty(parent);
         const hasOneICategory = categories.length === 1;
         const shouldAlignMiddle =
-            isBarChart(type) && isXAxis && hasParent && this.isNewLabel && hasOneICategory;
+            isInvertedChartType(type) && isXAxis && hasParent && this.isNewLabel && hasOneICategory;
 
         // for xAxis of bar chart, must update vertical align in the middle
         // of datalabel for parent category when filtering one value

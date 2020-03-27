@@ -11,6 +11,7 @@ import { IChartLimits, IChartConfig } from "../../interfaces";
 
 import { getLineConfiguration } from "./highcharts/lineConfiguration";
 import { getBarConfiguration } from "./highcharts/barConfiguration";
+import { getBulletConfiguration } from "./highcharts/bulletConfiguration";
 import { getColumnConfiguration } from "./highcharts/columnConfiguration";
 import { getCustomizedConfiguration } from "./highcharts/customConfiguration";
 import { getPieConfiguration } from "./highcharts/pieConfiguration";
@@ -28,6 +29,7 @@ import { IChartOptions } from "../typings/unsafe";
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
     [VisualizationTypes.BAR]: getBarConfiguration,
+    [VisualizationTypes.BULLET]: getBulletConfiguration,
     [VisualizationTypes.COLUMN]: getColumnConfiguration,
     [VisualizationTypes.PIE]: getPieConfiguration,
     [VisualizationTypes.AREA]: getAreaConfiguration,

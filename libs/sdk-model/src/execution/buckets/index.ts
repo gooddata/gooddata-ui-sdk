@@ -340,7 +340,14 @@ export function applyRatioRule<T extends AttributeOrMeasure>(
     return items;
 }
 
-function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
+/**
+ * Disables compute ratio if set on a simple measure. Does not do anything for other measures.
+ *
+ * @param item - maybe a simple measure where compute ratio should be disabled
+ * @returns an instance of measure with compute ratio disabled
+ * @public
+ */
+export function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T {
     if (isSimpleMeasure(item)) {
         return modifySimpleMeasure(item, m => m.noRatio()) as T;
     }

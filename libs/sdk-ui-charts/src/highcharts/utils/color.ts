@@ -34,6 +34,12 @@ export const DEFAULT_HEATMAP_BLUE_COLOR: IRgbColorValue = {
     b: 145,
 };
 
+export const DEFAULT_BULLET_GRAY_COLOR: IRgbColorValue = {
+    r: 217,
+    g: 220,
+    b: 226,
+};
+
 function lighter(color: number, percent: number) {
     const t = percent < 0 ? 0 : 255;
     const p = Math.abs(percent);

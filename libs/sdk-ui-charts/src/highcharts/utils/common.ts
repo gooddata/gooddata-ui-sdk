@@ -47,6 +47,11 @@ export const isBarChart = isEqual(VisualizationTypes.BAR);
 /**
  * @internal
  */
+export const isBulletChart = isEqual(VisualizationTypes.BULLET);
+
+/**
+ * @internal
+ */
 export const isLineChart = isEqual(VisualizationTypes.LINE);
 
 /**
@@ -95,6 +100,11 @@ export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
  */
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
 
+/**
+ * @internal
+ * @param type
+ */
+export const isInvertedChartType = (type: string) => isBarChart(type) || isBulletChart(type);
 export const isChartSupported = (type: string) => includes(VisualizationTypes, type);
 export const isOneOfTypes = (type: string, types: string[]) => includes(types, type);
 export const stringifyChartTypes = () =>

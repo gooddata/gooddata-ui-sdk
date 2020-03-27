@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getBulletChartSeries should return expected bullet chart series 1`] = `
+Array [
+  Object {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,0,0)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 100,
+    "name": "Won",
+    "pointPadding": 0.1,
+    "zIndex": 1,
+  },
+]
+`;
+
+exports[`getBulletChartSeries should return expected bullet chart series 2`] = `
+Array [
+  Object {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(0,0,255)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "zIndex": 1,
+  },
+  Object {
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(217,220,226)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "y": 116625456.54,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "zIndex": 0,
+  },
+]
+`;
+
+exports[`getBulletChartSeries should return expected bullet chart series 3`] = `
+Array [
+  Object {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(255,0,0)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "zIndex": 1,
+  },
+  Object {
+    "bulletChartMeasureType": "target",
+    "color": "rgb(179,0,0)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "targetOptions": Object {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+]
+`;
+
+exports[`getBulletChartSeries should return expected bullet chart series 4`] = `
+Array [
+  Object {
+    "bulletChartMeasureType": "primary",
+    "color": "rgb(0,0,255)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Won",
+        "y": 38310753.45,
+      },
+    ],
+    "legendIndex": 0,
+    "maxPointWidth": 75,
+    "name": "Won",
+    "pointPadding": 0.2,
+    "zIndex": 1,
+  },
+  Object {
+    "bulletChartMeasureType": "target",
+    "color": "rgb(0,0,179)",
+    "data": Array [
+      Object {
+        "format": "$#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Amount",
+        "target": 116625456.54,
+        "y": 0,
+      },
+    ],
+    "legendIndex": 1,
+    "name": "Amount",
+    "pointPadding": 0,
+    "targetOptions": Object {
+      "width": "100%",
+    },
+    "type": "bullet",
+    "zIndex": 2,
+  },
+  Object {
+    "bulletChartMeasureType": "comparative",
+    "color": "rgb(217,220,226)",
+    "data": Array [
+      Object {
+        "format": "#,##0.00",
+        "marker": Object {
+          "enabled": true,
+        },
+        "name": "Calculated 'Lost' measure",
+        "y": 78314703.09,
+      },
+    ],
+    "legendIndex": 2,
+    "name": "Calculated 'Lost' measure",
+    "pointPadding": 0,
+    "zIndex": 0,
+  },
+]
+`;

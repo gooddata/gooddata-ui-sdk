@@ -1,16 +1,16 @@
 // (C) 2007-2020 GoodData Corporation
 import {
-    IRgbColorValue,
     IColor,
     IColorFromPalette,
-    RgbType,
-    isColorFromPalette,
-    isRgbColor,
     IColorPalette,
     IColorPaletteItem,
+    IRgbColorValue,
+    isColorFromPalette,
+    isRgbColor,
+    RgbType,
 } from "@gooddata/sdk-model";
 import { DataViewFacade, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { VisualizationTypes, IMappingHeader, IColorAssignment, DefaultColorPalette } from "@gooddata/sdk-ui";
+import { DefaultColorPalette, IColorAssignment, IMappingHeader, VisualizationTypes } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../utils/executionResultHelper";
 import { IColorMapping } from "../../interfaces";
 
@@ -23,7 +23,16 @@ import {
     HEATMAP_BLUE_COLOR_PALETTE,
     isCustomPalette,
 } from "../utils/color";
-import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap } from "../utils/common";
+import {
+    isBubbleChart,
+    isBulletChart,
+    isHeatmap,
+    isOneOfTypes,
+    isScatterPlot,
+    isTreemap,
+} from "../utils/common";
+import BulletChartColorStrategy from "./colorStrategies/bulletChart";
+import { ColorStrategy } from "./colorStrategies/base";
 import isEqual = require("lodash/isEqual");
 import range = require("lodash/range");
 import uniqBy = require("lodash/uniqBy");
@@ -47,71 +56,6 @@ export const attributeChartSupportedTypes = [
     VisualizationTypes.SCATTER,
     VisualizationTypes.BUBBLE,
 ];
-
-export abstract class ColorStrategy implements IColorStrategy {
-    protected palette: string[];
-    protected fullColorAssignment: IColorAssignment[];
-    protected outputColorAssignment: IColorAssignment[];
-
-    constructor(
-        colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
-        viewByAttribute: any,
-        stackByAttribute: any,
-        dv: DataViewFacade,
-    ) {
-        const { fullColorAssignment, outputColorAssignment } = this.createColorAssignment(
-            colorPalette,
-            colorMapping,
-            viewByAttribute,
-            stackByAttribute,
-            dv,
-        );
-        this.fullColorAssignment = fullColorAssignment;
-        this.outputColorAssignment = outputColorAssignment ? outputColorAssignment : fullColorAssignment;
-
-        this.palette = this.createPalette(
-            colorPalette,
-            this.fullColorAssignment,
-            viewByAttribute,
-            stackByAttribute,
-        );
-    }
-
-    public getColorByIndex(index: number): string {
-        return this.palette[index];
-    }
-
-    public getColorAssignment() {
-        return this.outputColorAssignment;
-    }
-
-    public getFullColorAssignment() {
-        return this.fullColorAssignment;
-    }
-
-    protected createPalette(
-        colorPalette: IColorPalette,
-        colorAssignment: IColorAssignment[],
-        _viewByAttribute: any,
-        _stackByAttribute: any,
-    ): string[] {
-        return colorAssignment.map((map, index: number) => {
-            const color = isColorFromPalette(map.color)
-                ? getColorByGuid(colorPalette, map.color.value, index)
-                : map.color.value;
-            return getRgbStringFromRGB(color);
-        });
-    }
-
-    protected abstract createColorAssignment(
-        colorPalette: IColorPalette,
-        colorMapping: IColorMapping[],
-        viewByAttribute: any,
-        stackByAttribute: any,
-        dv: DataViewFacade,
-    ): ICreateColorAssignmentReturnValue;
-}
 
 const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };
 
@@ -587,6 +531,16 @@ export class ColorFactory {
 
         if (isBubbleChart(type)) {
             return new BubbleChartColorStrategy(
+                colorPalette,
+                colorMapping,
+                viewByAttribute,
+                stackByAttribute,
+                dv,
+            );
+        }
+
+        if (isBulletChart(type)) {
+            return new BulletChartColorStrategy(
                 colorPalette,
                 colorMapping,
                 viewByAttribute,

@@ -15,7 +15,7 @@ import max = require("lodash/max");
 import isNil = require("lodash/isNil");
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
-import { isBarChart } from "../../utils/common";
+import { isInvertedChartType } from "../../utils/common";
 import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
 import Highcharts from "./highchartsEntryPoint";
@@ -79,14 +79,18 @@ export const isStacked = (chart: Highcharts.Chart) => {
 };
 
 export function getChartProperties(config: IChartConfig, type: VisType) {
-    const isBarType = isBarChart(type);
+    const isInvertedType = isInvertedChartType(type);
     const chartProps: any = {
-        xAxisProps: isBarType ? { ...config.yaxis } : { ...config.xaxis },
-        yAxisProps: isBarType ? { ...config.xaxis } : { ...config.yaxis },
+        xAxisProps: isInvertedType ? { ...config.yaxis } : { ...config.xaxis },
+        yAxisProps: isInvertedType ? { ...config.xaxis } : { ...config.yaxis },
     };
 
-    const secondaryXAxisProps = isBarType ? { ...config.secondary_yaxis } : { ...config.secondary_xaxis };
-    const secondaryYAxisProps = isBarType ? { ...config.secondary_xaxis } : { ...config.secondary_yaxis };
+    const secondaryXAxisProps = isInvertedType
+        ? { ...config.secondary_yaxis }
+        : { ...config.secondary_xaxis };
+    const secondaryYAxisProps = isInvertedType
+        ? { ...config.secondary_xaxis }
+        : { ...config.secondary_yaxis };
 
     if (!isEmpty(secondaryXAxisProps)) {
         chartProps.secondary_xAxisProps = secondaryXAxisProps;

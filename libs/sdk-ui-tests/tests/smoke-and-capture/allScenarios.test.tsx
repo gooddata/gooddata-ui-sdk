@@ -273,11 +273,14 @@ describe("all scenarios", () => {
             return;
         }
 
-        const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
+        if (vis === "BulletChart") {
+            storeScenarioDefinition(scenario, interactions);
+        } else {
+            const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
+            const plugVizInteractions = await mountInsight(insight);
 
-        const plugVizInteractions = await mountInsight(insight);
-
-        storeScenarioDefinition(scenario, interactions, plugVizInteractions);
-        storeInsight(scenario, insight);
+            storeScenarioDefinition(scenario, interactions, plugVizInteractions);
+            storeInsight(scenario, insight);
+        }
     });
 });

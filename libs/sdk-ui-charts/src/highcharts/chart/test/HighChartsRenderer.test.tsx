@@ -267,27 +267,28 @@ describe("HighChartsRenderer", () => {
         expect(doMount).not.toThrow();
     });
 
-    it("should toggle legend when onLegendItemClick is called", () => {
-        const wrapper: any = shallow(
-            createComponent({
-                legend: {
-                    enabled: true,
-                    items: [
-                        {
-                            legendIndex: 0,
-                            name: "test",
-                            color: "rgb(0, 0, 0)",
-                        },
-                    ],
-                    position: LEFT,
-                    onItemClick: noop,
+    describe("legend toggling", () => {
+        const legend = {
+            enabled: true,
+            items: [
+                {
+                    legendIndex: 0,
+                    name: "test",
+                    color: "rgb(0, 0, 0)",
                 },
-            }),
-        );
-        wrapper.instance().onLegendItemClick({ legendIndex: 0 });
-        expect(wrapper.instance().state.legendItemsEnabled).toEqual([false]);
-        wrapper.instance().onLegendItemClick({ legendIndex: 0 });
-        expect(wrapper.instance().state.legendItemsEnabled).toEqual([true]);
+            ],
+            position: LEFT,
+            onItemClick: noop,
+        };
+
+        it("should toggle when onLegendItemClick is called", () => {
+            const wrapper: any = shallow(createComponent({ legend }));
+
+            wrapper.instance().onLegendItemClick({ legendIndex: 0 });
+            expect(wrapper.instance().state.legendItemsEnabled).toEqual([false]);
+            wrapper.instance().onLegendItemClick({ legendIndex: 0 });
+            expect(wrapper.instance().state.legendItemsEnabled).toEqual([true]);
+        });
     });
 
     describe("render", () => {

@@ -26,6 +26,7 @@ export {
     isScatterPlot,
     isPieChart,
     isPieOrDonutChart,
+    isBulletChart,
 } from "./utils/common";
 
 export { getValidColorPalette } from "./utils/color";

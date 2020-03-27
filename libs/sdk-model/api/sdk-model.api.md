@@ -312,6 +312,9 @@ export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInD
 export function dimensionTotals(dim: IDimension): ITotal[];
 
 // @public
+export function disableComputeRatio<T extends AttributeOrMeasure>(item: T): T;
+
+// @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
