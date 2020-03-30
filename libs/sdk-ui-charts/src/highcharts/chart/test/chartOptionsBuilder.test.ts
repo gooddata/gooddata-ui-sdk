@@ -28,13 +28,6 @@ import * as fixtures from "../../../../__mocks__/fixtures";
 import { PIE_CHART_LIMIT } from "../../constants/limits";
 import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
-import {
-    AttributeColorStrategy,
-    HeatmapColorStrategy,
-    IColorStrategy,
-    MeasureColorStrategy,
-    TreemapColorStrategy,
-} from "../colorFactory";
 import { IChartConfig } from "../../../interfaces";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
@@ -42,6 +35,11 @@ import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { customEscape } from "../../utils/common";
 import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
 import { IChartOptions, IPointData } from "../../typings/unsafe";
+import { MeasureColorStrategy } from "../colorStrategies/measure";
+import { AttributeColorStrategy } from "../colorStrategies/attribute";
+import { HeatmapColorStrategy } from "../colorStrategies/heatmap";
+import { TreemapColorStrategy } from "../colorStrategies/treemap";
+import { IColorStrategy } from "../colorStrategies/base";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

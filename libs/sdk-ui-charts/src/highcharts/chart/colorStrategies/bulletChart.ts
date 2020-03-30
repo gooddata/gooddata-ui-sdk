@@ -7,7 +7,6 @@ import {
     getLighterColorFromRGB,
     getRgbStringFromRGB,
 } from "../../utils/color";
-import { ICreateColorAssignmentReturnValue, isValidMappedColor } from "../colorFactory";
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
@@ -19,7 +18,7 @@ import { IColorMapping } from "../../../interfaces";
 import { DataViewFacade, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { IColorAssignment } from "@gooddata/sdk-ui";
-import { ColorStrategy } from "./base";
+import { ColorStrategy, ICreateColorAssignmentReturnValue, isValidMappedColor } from "./base";
 
 class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

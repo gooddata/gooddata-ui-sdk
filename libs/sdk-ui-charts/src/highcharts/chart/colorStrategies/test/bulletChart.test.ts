@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import range = require("lodash/range");
-import { ColorFactory, IColorStrategy } from "../../colorFactory";
+import { ColorFactory } from "../../colorFactory";
 import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
@@ -8,6 +8,7 @@ import { IColorMapping } from "../../../../interfaces";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { IColorStrategy } from "../base";
 
 const defaultColorMapping: IColorMapping[] = [
     {

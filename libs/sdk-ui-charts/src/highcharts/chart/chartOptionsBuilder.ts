@@ -61,7 +61,7 @@ import {
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
 
-import { ColorFactory, IColorStrategy } from "./colorFactory";
+import { ColorFactory } from "./colorFactory";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -97,6 +97,7 @@ import {
     ISeriesItemConfig,
 } from "../typings/unsafe";
 import { getBulletChartSeries } from "./chartOptions/bulletChartOptions";
+import { IColorStrategy } from "./colorStrategies/base";
 
 const TOOLTIP_PADDING = 10;
 

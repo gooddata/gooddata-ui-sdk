@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
 import { parseValue, unwrap } from "../../utils/common";
-import { IColorStrategy } from "../colorFactory";
 import { MAX_POINT_WIDTH } from "../highcharts/commonConfiguration";
 import { bucketIsEmpty, IBucket, Identifier } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IPointData } from "../../typings/unsafe";
 import { DataValue, DataViewFacade, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
+import { IColorStrategy } from "../colorStrategies/base";
 
 const SUPPORTED_MEASURE_BUCKETS: ReadonlyArray<Identifier> = [
     BucketNames.MEASURES,
