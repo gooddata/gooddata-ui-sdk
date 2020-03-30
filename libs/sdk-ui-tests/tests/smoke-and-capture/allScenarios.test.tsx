@@ -249,6 +249,8 @@ function storeInsight(scenario: IScenario<any>, def: IInsightDefinition) {
     return;
 }
 
+const PlugVisUnsupported: string[] = [];
+
 describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = flatMap(allScenarios, (s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
@@ -273,9 +275,17 @@ describe("all scenarios", () => {
             return;
         }
 
-        if (vis === "BulletChart") {
+        if (PlugVisUnsupported.indexOf(vis) >= 0) {
+            /*
+             * Some visualizations may not support plug vis yet. For those, just store scenario
+             * definition and halt.
+             */
             storeScenarioDefinition(scenario, interactions);
         } else {
+            /*
+             * For others, create insight object, try to mount pluggable visualization for
+             * the respective visualization, capture execution definition and store everything.
+             */
             const insight = createInsightDefinitionForChart(vis, scenarioName, interactions);
             const plugVizInteractions = await mountInsight(insight);
 

@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bulletChartUiConfigHelper getBulletChartUiConfig should return bullet chart ui config 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Measure",
+      },
+      "secondary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Measure",
+      },
+      "tertiary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Measure",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;

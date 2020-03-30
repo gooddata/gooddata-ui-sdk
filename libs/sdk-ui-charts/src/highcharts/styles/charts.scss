@@ -67,5 +67,9 @@ $paging-button-small-size: 22px;
     // stylelint-enable
 }
 
+.hidden-empty-series {
+    display: none;
+}
+
 @import "legend";
 @import "tooltip";

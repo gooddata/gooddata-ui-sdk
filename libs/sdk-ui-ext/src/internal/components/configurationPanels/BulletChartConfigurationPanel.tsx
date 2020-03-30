@@ -1,16 +1,14 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import * as classNames from "classnames";
-import NameSubsection from "../configurationControls/axis/NameSubsection";
-import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import LabelSubsection from "../configurationControls/axis/LabelSubsection";
+import NameSubsection from "../configurationControls/axis/NameSubsection";
 import ConfigSection from "../configurationControls/ConfigSection";
-import DataLabelsControl from "../configurationControls/DataLabelsControl";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import MinMaxControl from "../configurationControls//MinMaxControl";
 import {
@@ -19,23 +17,23 @@ import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
-import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
-export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
+export default class BulletChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
-        const controls: IChartConfig = properties && properties.controls;
 
-        const xAxisVisible = controls?.xaxis?.visible ?? true;
-        const yAxisVisible = controls?.yaxis?.visible ?? true;
-        const gridEnabled = controls?.grid?.enabled ?? true;
+        const controls = (properties && properties.controls) || {};
+
+        const { xaxis, yaxis, grid } = controls;
+        const xAxisVisible = xaxis && typeof xaxis.visible !== "undefined" ? xaxis.visible : true;
+        const yAxisVisible = yaxis && typeof yaxis.visible !== "undefined" ? yaxis.visible : true;
+        const gridEnabled = grid && typeof grid.enabled !== "undefined" ? grid.enabled : true;
 
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
-        const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
+        const yAxisConfigurationDisabled = controlsDisabled || itemsOnYAxis === 0;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
 
         return (
@@ -62,7 +60,6 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                                 pushData={pushData}
                             />
                         )}
-
                         <LabelSubsection
                             disabled={controlsDisabled}
                             configPanelDisabled={controlsDisabled}
@@ -85,22 +82,20 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                     >
                         {isNameSubsectionVisible && (
                             <NameSubsection
-                                disabled={yAxisNameSectionDisabled}
+                                disabled={yAxisConfigurationDisabled}
                                 configPanelDisabled={controlsDisabled}
                                 axis={"yaxis"}
                                 properties={properties}
                                 pushData={pushData}
                             />
                         )}
-
                         <LabelSubsection
-                            disabled={controlsDisabled}
+                            disabled={yAxisConfigurationDisabled}
                             configPanelDisabled={controlsDisabled}
                             axis={"yaxis"}
                             properties={properties}
                             pushData={pushData}
                         />
-                        {this.renderMinMax("yaxis")}
                     </ConfigSection>
                     {this.renderLegendSection()}
                     <ConfigSection
@@ -110,13 +105,6 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         properties={properties}
                         pushData={pushData}
                     >
-                        <DataLabelsControl
-                            pushData={pushData}
-                            properties={properties}
-                            isDisabled={this.areDataLabelsDisabled()}
-                            defaultValue={false}
-                            showDisabledMessage={this.isDataLabelsWarningShown()}
-                        />
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"
@@ -151,23 +139,9 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
         );
     }
 
-    private areDataLabelsDisabled() {
-        const isDisabled = super.isControlDisabled();
-        return isDisabled || !hasTertiaryMeasures(this.props.insight);
-    }
-
-    private isDataLabelsWarningShown() {
-        const isDisabled = super.isControlDisabled();
-        return !isDisabled && !hasTertiaryMeasures(this.props.insight);
-    }
-
     private getBubbleClassNames() {
         return classNames("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
     }
-}
-
-function hasTertiaryMeasures(insight: IInsightDefinition): boolean {
-    return !bucketsIsEmpty(insightBuckets(insight, BucketNames.TERTIARY_MEASURES));
 }

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
 /**
  * @internal
@@ -57,7 +57,15 @@ export type XirrType = "xirr";
 export type TableType = "table";
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
-export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell"; // 'cell' for heatmap
+export type ChartElementType =
+    | "slice"
+    | "bar"
+    | "point"
+    | "label"
+    | "cell" // 'cell' for heatmap
+    | "target"
+    | "primary"
+    | "comparative";
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 export type TableElementType = "cell";
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType;

@@ -1561,5 +1561,35 @@
         "visName": "PivotTable",
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
+    },
+    "BulletChart.432f8090bd7bc3fbab4e3c40f662010e": {
+        "visName": "BulletChart",
+        "scenarioName": "primary measure",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary measure."
+    },
+    "BulletChart.47ecae931a11dd8769416e910da205d2": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and target measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and target measures."
+    },
+    "BulletChart.e4e06a9111687ee95c40d77786bf915a": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and comparative measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and comparative measures."
+    },
+    "BulletChart.d4456426793753885bc22aad3b79f378": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures."
+    },
+    "BulletChart.8924530cffc78cab4db5f6044cefb52d": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and target measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and target measures with viewBy."
+    },
+    "BulletChart.a826c918af7059aa1b8bc0a28c87d9c3": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures with viewBy."
     }
 }

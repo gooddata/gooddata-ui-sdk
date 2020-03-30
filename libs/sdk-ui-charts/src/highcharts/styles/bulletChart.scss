@@ -1,0 +1,12 @@
+// (C) 2020 GoodData Corporation
+.highcharts-container {
+    // documented in https://www.highcharts.com/docs/chart-design-and-style/style-by-css
+    .highcharts-bullet-series {
+        .highcharts-point {
+            visibility: hidden;
+        }
+        .highcharts-bullet-target {
+            visibility: visible;
+        }
+    }
+}

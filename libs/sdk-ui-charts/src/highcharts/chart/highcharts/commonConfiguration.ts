@@ -4,7 +4,7 @@ import get = require("lodash/get");
 import invoke = require("lodash/invoke");
 import isEmpty = require("lodash/isEmpty");
 import set = require("lodash/set");
-import { IDrillConfig } from "@gooddata/sdk-ui";
+import { IDrillConfig, ChartType } from "@gooddata/sdk-ui";
 import { IHighchartsAxisExtend } from "../../typings/extend";
 import { styleVariables } from "../../styles/variables";
 import { isOneOfTypes } from "../../utils/common";
@@ -143,8 +143,10 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
     return configuration;
 }
 
-export function handleChartLoad(): void {
-    setupDrilldown(this);
+export function handleChartLoad(chartType: ChartType) {
+    return function() {
+        setupDrilldown(this, chartType);
+    };
 }
 
 function registerRenderHandler(configuration: any, chartOptions: any) {

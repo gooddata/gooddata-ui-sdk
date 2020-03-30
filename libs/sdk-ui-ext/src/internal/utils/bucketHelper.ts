@@ -267,6 +267,11 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
     if (visualizationType === VisualizationTypes.COMBO) {
         return bucketLocalIdentifier !== BucketNames.VIEW;
     }
+
+    if (visualizationType === VisualizationTypes.BULLET) {
+        return bucketLocalIdentifier !== BucketNames.VIEW;
+    }
+
     return false;
 }
 

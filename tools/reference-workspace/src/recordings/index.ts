@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-03-30T13:27:27.591Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-03-30T18:56:57.995Z; */
 
 const fp_04938271f1ee4e3845b40f5b91ad3224 = {
     definition: require("./uiTestScenarios/executions/04938271f1ee4e3845b40f5b91ad3224/definition.json"),
@@ -2277,6 +2277,24 @@ const i_PivotTable_7128c90aa452a118bfec78f9b62b4c65 = {
 const i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4 = {
     obj: require("./uiTestScenarios/insights/PivotTable.0e469fed5a845bbdffa1aa67b30a16f4/obj.json"),
 };
+const i_BulletChart_432f8090bd7bc3fbab4e3c40f662010e = {
+    obj: require("./uiTestScenarios/insights/BulletChart.432f8090bd7bc3fbab4e3c40f662010e/obj.json"),
+};
+const i_BulletChart_47ecae931a11dd8769416e910da205d2 = {
+    obj: require("./uiTestScenarios/insights/BulletChart.47ecae931a11dd8769416e910da205d2/obj.json"),
+};
+const i_BulletChart_e4e06a9111687ee95c40d77786bf915a = {
+    obj: require("./uiTestScenarios/insights/BulletChart.e4e06a9111687ee95c40d77786bf915a/obj.json"),
+};
+const i_BulletChart_d4456426793753885bc22aad3b79f378 = {
+    obj: require("./uiTestScenarios/insights/BulletChart.d4456426793753885bc22aad3b79f378/obj.json"),
+};
+const i_BulletChart_8924530cffc78cab4db5f6044cefb52d = {
+    obj: require("./uiTestScenarios/insights/BulletChart.8924530cffc78cab4db5f6044cefb52d/obj.json"),
+};
+const i_BulletChart_a826c918af7059aa1b8bc0a28c87d9c3 = {
+    obj: require("./uiTestScenarios/insights/BulletChart.a826c918af7059aa1b8bc0a28c87d9c3/obj.json"),
+};
 export const Insights = {
     AreaChart: {
         SingleMeasure: i_AreaChart_8ef289b689ae537d4e12f480fc195396,
@@ -2436,6 +2454,14 @@ export const Insights = {
         TwoMeasuresAndMultipleGrandTotalsForEach: i_PivotTable_99c3b8468ddb0897fcbc45a32216b432,
         TwoMeasuresAndMultipleSubtotals: i_PivotTable_7128c90aa452a118bfec78f9b62b4c65,
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4,
+    },
+    BulletChart: {
+        PrimaryMeasure: i_BulletChart_432f8090bd7bc3fbab4e3c40f662010e,
+        PrimaryAndTargetMeasures: i_BulletChart_47ecae931a11dd8769416e910da205d2,
+        PrimaryAndComparativeMeasures: i_BulletChart_e4e06a9111687ee95c40d77786bf915a,
+        PrimaryTargetAndComparativeMeasures: i_BulletChart_d4456426793753885bc22aad3b79f378,
+        PrimaryAndTargetMeasuresWithViewBy: i_BulletChart_8924530cffc78cab4db5f6044cefb52d,
+        PrimaryTargetAndComparativeMeasuresWithViewBy: i_BulletChart_a826c918af7059aa1b8bc0a28c87d9c3,
     },
 };
 export const Recordings = {
@@ -2990,6 +3016,12 @@ export const Recordings = {
             i_PivotTable_99c3b8468ddb0897fcbc45a32216b432,
             i_PivotTable_7128c90aa452a118bfec78f9b62b4c65,
             i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4,
+            i_BulletChart_432f8090bd7bc3fbab4e3c40f662010e,
+            i_BulletChart_47ecae931a11dd8769416e910da205d2,
+            i_BulletChart_e4e06a9111687ee95c40d77786bf915a,
+            i_BulletChart_d4456426793753885bc22aad3b79f378,
+            i_BulletChart_8924530cffc78cab4db5f6044cefb52d,
+            i_BulletChart_a826c918af7059aa1b8bc0a28c87d9c3,
         },
     },
 };

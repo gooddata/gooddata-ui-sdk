@@ -119,6 +119,7 @@ export default function getLegend(legendConfig: any = {}, chartOptions: any): IL
     const defaultTopLegendCharts = [
         VisualizationTypes.COLUMN,
         VisualizationTypes.BAR,
+        VisualizationTypes.BULLET,
         VisualizationTypes.LINE,
         VisualizationTypes.AREA,
         VisualizationTypes.PIE,

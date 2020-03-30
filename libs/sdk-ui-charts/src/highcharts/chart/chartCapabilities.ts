@@ -4,6 +4,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 export const supportedDualAxesChartTypes = [
     VisualizationTypes.COLUMN,
     VisualizationTypes.BAR,
+    VisualizationTypes.BULLET,
     VisualizationTypes.LINE,
     VisualizationTypes.AREA,
     VisualizationTypes.COMBO,

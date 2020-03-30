@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { isBarChart, isScatterPlot, isBubbleChart } from "@gooddata/sdk-ui-charts";
+import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 import get = require("lodash/get");
 
@@ -30,17 +30,17 @@ export function countItemsOnAxes(
     controls: IVisualizationProperties,
     insight: IInsightDefinition,
 ) {
-    const isBarChartType = isBarChart(type);
+    const isBarFamilyChartType = isBarChart(type) || isBulletChart(type);
 
     const { viewByItemCount, measureItemCount, secondaryMeasureItemCount } = countBucketItems(insight);
     const totalMeasureItemCount = measureItemCount + secondaryMeasureItemCount;
 
-    const secondaryMeasureCountInConfig = (isBarChartType
+    const secondaryMeasureCountInConfig = (isBarFamilyChartType
         ? get(controls, "secondary_xaxis.measures", [])
         : get(controls, "secondary_yaxis.measures", [])
     ).length;
 
-    if (isBarChartType) {
+    if (isBarFamilyChartType) {
         return {
             yaxis: viewByItemCount,
             xaxis: totalMeasureItemCount - secondaryMeasureCountInConfig,

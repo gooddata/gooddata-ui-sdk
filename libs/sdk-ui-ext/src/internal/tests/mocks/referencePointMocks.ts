@@ -160,6 +160,16 @@ export const arithmeticMeasureItems: IBucketItem[] = [
         operator: "sum",
         operandLocalIdentifiers: ["m2_pop", "m1"],
     },
+    {
+        localIdentifier: "am7",
+        type: "metric",
+        aggregation: null,
+        attribute: null,
+        showInPercent: null,
+        showOnSecondaryAxis: null,
+        operator: "sum",
+        operandLocalIdentifiers: ["m1", "m3"],
+    },
 ];
 
 export const masterMeasuresWithPercentage: IBucketItem[] = masterMeasureItems.map((measure: IBucketItem) => ({
@@ -1353,6 +1363,31 @@ export const twoMeasureBucketsReferencePoint: IReferencePoint = {
         {
             localIdentifier: "secondary_measures",
             items: masterMeasureItems.slice(2),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const threeMeasuresBucketsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: masterMeasureItems.slice(2, 3),
         },
         {
             localIdentifier: "view",
