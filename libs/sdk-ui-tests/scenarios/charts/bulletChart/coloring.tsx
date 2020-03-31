@@ -1,0 +1,39 @@
+// (C) 2007-2019 GoodData Corporation
+import { scenariosFor } from "../../../src";
+import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
+import { coloringCustomizer } from "../_infra/coloringVariants";
+import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors";
+import { replaceMappingPredicates } from "../_infra/insightConverters";
+import { BulletChartWithAllMeasuresAndViewBy } from "./base";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
+
+const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withVisualTestConfig({ groupUnder: "coloring" })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("coloring", BulletChartWithAllMeasuresAndViewBy, coloringCustomizer);
+
+const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario(
+        "assign color to attribute bubbles",
+        {
+            ...BulletChartWithAllMeasuresAndViewBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Won),
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceLdm.Amount),
+                        color: RedColor,
+                    },
+                ],
+            },
+        },
+        m => m.withInsightConverter(replaceMappingPredicates(ReferenceLdm.Won, ReferenceLdm.Amount)),
+    );
+
+export default [colorsAndPalette, colorAssignment];

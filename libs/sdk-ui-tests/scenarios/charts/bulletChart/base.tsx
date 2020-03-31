@@ -2,6 +2,21 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
+import { newAttributeSort } from "@gooddata/sdk-model";
+
+export const BulletChartWithAllMeasuresAndViewBy = {
+    primaryMeasure: ReferenceLdm.Won,
+    targetMeasure: ReferenceLdm.Amount,
+    comparativeMeasure: ReferenceLdmExt.CalculatedLost,
+    viewBy: [ReferenceLdm.Product.Name],
+};
+
+export const BulletChartWithAllMeasuresAndTwoViewBy = {
+    primaryMeasure: ReferenceLdm.Won,
+    targetMeasure: ReferenceLdm.Amount,
+    comparativeMeasure: ReferenceLdmExt.CalculatedLost,
+    viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Region],
+};
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .addScenario("primary measure", {
@@ -25,9 +40,12 @@ export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
         targetMeasure: ReferenceLdm.Amount,
         viewBy: [ReferenceLdm.Product.Name],
     })
-    .addScenario("primary, target and comparative measures with viewBy", {
-        primaryMeasure: ReferenceLdm.Won,
-        targetMeasure: ReferenceLdm.Amount,
-        comparativeMeasure: ReferenceLdmExt.CalculatedLost,
-        viewBy: [ReferenceLdm.Product.Name],
-    });
+    .addScenario("primary, target and comparative measures with viewBy", BulletChartWithAllMeasuresAndViewBy)
+    .addScenario("primary, target and comparative measures with viewBy and sort", {
+        ...BulletChartWithAllMeasuresAndViewBy,
+        sortBy: [newAttributeSort(ReferenceLdm.Product.Name)],
+    })
+    .addScenario(
+        "primary, target and comparative measures with two viewBy",
+        BulletChartWithAllMeasuresAndTwoViewBy,
+    );
