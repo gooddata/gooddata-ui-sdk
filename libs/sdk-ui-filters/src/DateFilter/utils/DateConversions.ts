@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import * as moment from "moment";
 import isString = require("lodash/isString");
 import isDate = require("lodash/isDate");
@@ -25,11 +25,16 @@ export const convertPlatformDateStringToDate = (
      *   local time is "2019-11-28T06:00:00 GTM+0600"
      *   after converting the local time will be "2019-11-28T00:00:00 GTM+0600"
      */
-    const localTimeOffsetValue = getTimeOffsetInMilliseconds();
-    const localTimeValue = new Date(platformDate).getTime() + localTimeOffsetValue;
+    const convertedDate = new Date(platformDate);
+    const localTimeOffsetValue = getTimeOffsetInMilliseconds(convertedDate);
+    const localTimeValue = convertedDate.getTime() + localTimeOffsetValue;
 
     return new Date(localTimeValue);
 };
 
-export const getTimeOffsetInMilliseconds = (): number =>
-    new Date().getTimezoneOffset() * NUM_OF_MILISECONDS_IN_MINUTE;
+/**
+ * Returns the timezone offset in milliseconds for the given date.
+ * @param when when to return the offset for. This is important because of DST - the offset changes during the year.
+ */
+const getTimeOffsetInMilliseconds = (when: Date): number =>
+    when.getTimezoneOffset() * NUM_OF_MILISECONDS_IN_MINUTE;
