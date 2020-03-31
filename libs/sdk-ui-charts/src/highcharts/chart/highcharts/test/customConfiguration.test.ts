@@ -18,7 +18,7 @@ import {
     supportedStackingAttributesChartTypes,
     supportedTooltipFollowPointerChartTypes,
 } from "../../chartCapabilities";
-import { IPointData, ISeriesDataItem } from "../../../typings/unsafe";
+import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe";
 
 function getData(dataValues: ISeriesDataItem[]) {
     return {
@@ -827,13 +827,71 @@ describe("getCustomizedConfiguration", () => {
         };
 
         it.each(chartTypes)('should set "drillConfig" to xAxis to %s chart', (chartType: string) => {
-            const result = getCustomizedConfiguration({ type: chartType }, {}, drillConfig);
+            const result = getCustomizedConfiguration(
+                { type: chartType, data: { series: [] } },
+                {},
+                drillConfig,
+            );
+
             expect(result.xAxis[0].drillConfig).toEqual(drillConfig);
         });
 
         it('should not set "drillConfig" to unsupported chart type', () => {
             const result = getCustomizedConfiguration({ type: VisualizationTypes.LINE }, {}, drillConfig);
             expect(result.xAxis[0].drillConfig).toBeFalsy();
+        });
+    });
+
+    describe("get target cursor for bullet chart", () => {
+        const chartOptionsWithDrillableTarget: IChartOptions = {
+            type: "bullet",
+            data: {
+                series: [
+                    {
+                        data: [],
+                        isDrillable: false,
+                    },
+                    {
+                        data: [],
+                        isDrillable: true,
+                    },
+                    {
+                        type: "bullet",
+                        data: [],
+                        isDrillable: true,
+                    },
+                ],
+            },
+        };
+        const chartOptionsWithNonDrillableTarget: IChartOptions = {
+            type: "bullet",
+            data: {
+                series: [
+                    {
+                        data: [],
+                        isDrillable: false,
+                    },
+                    {
+                        data: [],
+                        isDrillable: true,
+                    },
+                    {
+                        type: "bullet",
+                        data: [],
+                        isDrillable: false,
+                    },
+                ],
+            },
+        };
+
+        it("should set the target cursor to pointer if the target is drillable", () => {
+            const result = getCustomizedConfiguration(chartOptionsWithDrillableTarget);
+            expect(result.plotOptions.bullet.cursor).toBe("pointer");
+        });
+
+        it("should not set the target cursor to pointer if the target is not drillable", () => {
+            const result = getCustomizedConfiguration(chartOptionsWithNonDrillableTarget);
+            expect(result.plotOptions.bullet).toBe(undefined);
         });
     });
 });

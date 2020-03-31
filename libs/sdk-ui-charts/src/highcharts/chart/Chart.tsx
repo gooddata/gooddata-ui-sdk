@@ -9,6 +9,7 @@ import Highcharts from "./highcharts/highchartsEntryPoint";
 const HighchartsMore = require("highcharts/highcharts-more"); // tslint:disable-line
 const drillmodule = require("highcharts/modules/drilldown"); // tslint:disable-line
 const treemapModule = require("highcharts/modules/treemap"); // tslint:disable-line
+const bulletModule = require("highcharts/modules/bullet"); // tslint:disable-line
 const funnelModule = require("highcharts/modules/funnel"); // tslint:disable-line
 const heatmap = require("highcharts/modules/heatmap"); // tslint:disable-line
 const patternFill = require("highcharts/modules/pattern-fill"); // tslint:disable-line
@@ -16,6 +17,7 @@ const groupedCategories = require("highcharts-grouped-categories"); // tslint:di
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
+bulletModule(Highcharts);
 funnelModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);

@@ -174,7 +174,8 @@ describe("AttributeDropdown", () => {
         wrapper.find(DropdownButton).simulate("click");
 
         await waitForAsync();
-        await waitForAsync(); // There have to be two of those for some reason :-/
+        await waitForAsync();
+        await waitForAsync(); // There have to be three of those for some reason :-/
         wrapper.update();
 
         wrapper

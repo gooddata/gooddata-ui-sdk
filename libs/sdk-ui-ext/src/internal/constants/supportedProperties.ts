@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import { AXIS } from "./axis";
 
 const BASE_PROPERTIES = ["dataLabels.visible", "grid", "legend", "colorMapping"];
@@ -191,5 +191,25 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "xaxis.visible",
     "xaxis.name.visible",
     "xaxis.name.position",
+    "colorMapping",
+];
+
+export const BULLET_CHART_SUPPORTED_PROPERTIES = [
+    "grid",
+    "xaxis.rotation",
+    "xaxis.labelsEnabled",
+    "xaxis.visible",
+    "xaxis.min",
+    "xaxis.max",
+    "xaxis.name.visible",
+    "xaxis.name.position",
+
+    "yaxis.rotation",
+    "yaxis.labelsEnabled",
+    "yaxis.visible",
+    "yaxis.name.visible",
+    "yaxis.name.position",
+
+    "legend",
     "colorMapping",
 ];

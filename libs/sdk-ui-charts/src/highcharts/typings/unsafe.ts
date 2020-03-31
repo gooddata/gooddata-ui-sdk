@@ -173,6 +173,7 @@ export interface ISeriesItemConfig {
     name?: string;
     yAxis?: number;
     xAxis?: number;
+    type?: string;
 }
 
 export interface IClientRect {

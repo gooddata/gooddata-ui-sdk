@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import debounce = require("lodash/debounce");
 import get = require("lodash/get");
 import * as CustomEvent from "custom-event";
@@ -18,7 +18,7 @@ import {
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import Highcharts from "../chart/highcharts/highchartsEntryPoint";
-import { isComboChart, isHeatmap, isTreemap } from "./common";
+import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "./common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
@@ -57,19 +57,37 @@ function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
     }
 }
 
+const getElementChartType = (chartType: ChartType, point: IHighchartsPointObject): ChartType => {
+    return get(point, "series.type", chartType);
+};
+
+const getDrillPointCustomProps = (
+    point: IHighchartsPointObject,
+    chartType: ChartType,
+): Partial<IDrillPoint> => {
+    if (isComboChart(chartType)) {
+        return { type: get(point, "series.type") };
+    }
+
+    if (isBulletChart(chartType)) {
+        return { type: get(point, "series.userOptions.bulletChartMeasureType") };
+    }
+
+    return {};
+};
+
 function composeDrillContextGroup(
     points: IHighchartsPointObject[],
     chartType: ChartType,
 ): IDrillEventContextGroup {
     const sanitizedPoints = sanitizeContextPoints(chartType, points);
     const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
-        const customProps: Partial<IDrillPoint> = isComboChart(chartType)
-            ? { type: get(point, "series.type") }
-            : {};
+        const elementChartType = getElementChartType(chartType, point);
+        const customProps = getDrillPointCustomProps(point, chartType);
 
         return {
             x: point.x,
-            y: point.y,
+            y: elementChartType === "bullet" ? point.target : point.y,
             intersection: point.drillIntersection,
             ...customProps,
         };
@@ -80,6 +98,10 @@ function composeDrillContextGroup(
         element: "label",
         points: contextPoints,
     };
+}
+
+function getClickableElementNameForBulletChart(point: any) {
+    return point.series.userOptions.bulletChartMeasureType;
 }
 
 function composeDrillContextPoint(
@@ -93,14 +115,15 @@ function composeDrillContextPoint(
                   value: point.value ? point.value.toString() : "",
               }
             : {};
+
+    const elementChartType = getElementChartType(chartType, point);
     const xyProp = isTreemap(chartType)
         ? {}
         : {
               x: point.x,
-              y: point.y,
+              y: elementChartType === "bullet" ? point.target : point.y,
           };
 
-    const elementChartType: ChartType = get(point, "series.type", chartType);
     const customProp: Partial<IDrillEventContextPoint> = isComboChart(chartType)
         ? {
               elementChartType,
@@ -109,7 +132,9 @@ function composeDrillContextPoint(
 
     return {
         type: chartType,
-        element: getClickableElementNameByChartType(elementChartType),
+        element: isBulletChart(chartType)
+            ? getClickableElementNameForBulletChart(point)
+            : getClickableElementNameByChartType(elementChartType),
         intersection: point.drillIntersection,
         ...xyProp,
         ...zProp,
@@ -164,11 +189,18 @@ const tickLabelClickDebounce = debounce(
     ): void => {
         const { dataView, onDrill } = drillConfig;
         const sanitizedPoints = sanitizeContextPoints(chartType, points);
-        const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => ({
-            x: point.x,
-            y: point.y,
-            intersection: point.drillIntersection,
-        }));
+        const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
+            const customProps = isBulletChart(chartType)
+                ? { type: get(point, "series.userOptions.bulletChartMeasureType") }
+                : {};
+
+            return {
+                x: point.x,
+                y: point.y,
+                intersection: point.drillIntersection,
+                ...customProps,
+            };
+        });
         const drillContext: IDrillEventContext = {
             type: chartType,
             element: "label",

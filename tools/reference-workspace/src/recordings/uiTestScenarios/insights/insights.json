@@ -416,6 +416,76 @@
     "BubbleChart.7a58e4d0caf0ad13518609485152ad4f": {
         "comment": "Auto-generated insight for test scenario BubbleChart - data labels - forced hidden."
     },
+    "BulletChart.432f8090bd7bc3fbab4e3c40f662010e": {
+        "visName": "BulletChart",
+        "scenarioName": "primary measure",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary measure."
+    },
+    "BulletChart.47ecae931a11dd8769416e910da205d2": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and target measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and target measures."
+    },
+    "BulletChart.e4e06a9111687ee95c40d77786bf915a": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and comparative measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and comparative measures."
+    },
+    "BulletChart.d4456426793753885bc22aad3b79f378": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures."
+    },
+    "BulletChart.8924530cffc78cab4db5f6044cefb52d": {
+        "visName": "BulletChart",
+        "scenarioName": "primary and target measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary and target measures with viewBy."
+    },
+    "BulletChart.a826c918af7059aa1b8bc0a28c87d9c3": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures with viewBy",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures with viewBy."
+    },
+    "BulletChart.6ec327b08f61f21043fff3832d516511": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures with viewBy and sort",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures with viewBy and sort."
+    },
+    "BulletChart.4ab916e6bf1cc63d859efe33aa6dddfe": {
+        "visName": "BulletChart",
+        "scenarioName": "primary, target and comparative measures with two viewBy",
+        "comment": "Auto-generated insight for test scenario BulletChart - primary, target and comparative measures with two viewBy."
+    },
+    "BulletChart.bbb607434db20df6d945549e6a8d179f": {
+        "comment": "Auto-generated insight for test scenario BulletChart - coloring - custom palette."
+    },
+    "BulletChart.fb08d26638573a25adf208466a9b385a": {
+        "comment": "Auto-generated insight for test scenario BulletChart - assign color to attribute bubbles."
+    },
+    "BulletChart.3ed42f4308cb67a949e8dcfc9cdbdeed": {
+        "comment": "Auto-generated insight for test scenario BulletChart - X axis min/max configuration."
+    },
+    "BulletChart.cd40cd25766821c328bcfb85bc780625": {
+        "comment": "Auto-generated insight for test scenario BulletChart - X axis max only configuration."
+    },
+    "BulletChart.a51aee71a590be3c9de1f304fd210c74": {
+        "comment": "Auto-generated insight for test scenario BulletChart - X axis hidden."
+    },
+    "BulletChart.8ff97e1e5e3031bedffe54e841c75d1a": {
+        "comment": "Auto-generated insight for test scenario BulletChart - Y axis hidden."
+    },
+    "BulletChart.a1b8dd53c0753b4fd7722957ff57bc54": {
+        "comment": "Auto-generated insight for test scenario BulletChart - axis name customization - low."
+    },
+    "BulletChart.442af756726595ce8eb58ee8d8572876": {
+        "comment": "Auto-generated insight for test scenario BulletChart - axis name customization - middle."
+    },
+    "BulletChart.12c084fa9e89c5f52b657e9b585aa2b7": {
+        "comment": "Auto-generated insight for test scenario BulletChart - axis name customization - high."
+    },
+    "BulletChart.808f6b96cba0385d5b1964a71e6c4144": {
+        "comment": "Auto-generated insight for test scenario BulletChart - axis name customization - invisible."
+    },
     "ColumnChart.8ef289b689ae537d4e12f480fc195396": {
         "visName": "ColumnChart",
         "scenarioName": "single measure",
@@ -1561,5 +1631,44 @@
         "visName": "PivotTable",
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "comment": "Auto-generated insight for test scenario PivotTable - two measures and grand totals and multiple subtotals."
+    },
+    "BulletChart.906a11baa5260d55cdac1f7cc74cd9e8": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - auto legend."
+    },
+    "BulletChart.a57d3579f0acbf05ac1549a0ba49733b": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - legend on left."
+    },
+    "BulletChart.93ff9e8457b570cfbd4a98a9041b7f73": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - legend on right."
+    },
+    "BulletChart.d2f4b69bc2278e975fc7c5a3a246080f": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - legend on top."
+    },
+    "BulletChart.9a6f609f7240f0674e6d51d3790cbf25": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - legend at bottom."
+    },
+    "BulletChart.3af1e5c2471ed2829663589ba5115211": {
+        "comment": "Auto-generated insight for test scenario BulletChart - legend position - disabled."
+    },
+    "BulletChart.4e5edb2ede2173b504a92a86bc3cd2f9": {
+        "comment": "Auto-generated insight for test scenario BulletChart - data labels - default."
+    },
+    "BulletChart.3bc075ca4f92da3e2a23ef22779d1986": {
+        "comment": "Auto-generated insight for test scenario BulletChart - data labels - auto visibility."
+    },
+    "BulletChart.45047857a1f322446299d792a2901a85": {
+        "comment": "Auto-generated insight for test scenario BulletChart - data labels - forced visible."
+    },
+    "BulletChart.99a4456e9cfbbf19743d98a391cd58fb": {
+        "comment": "Auto-generated insight for test scenario BulletChart - data labels - forced visible and german separators."
+    },
+    "BulletChart.7a58e4d0caf0ad13518609485152ad4f": {
+        "comment": "Auto-generated insight for test scenario BulletChart - data labels - forced hidden."
+    },
+    "BulletChart.e5a1cb3e45f6f8906cb6b1d11f1e8ed6": {
+        "comment": "Auto-generated insight for test scenario BulletChart - Y axis rotation."
+    },
+    "BulletChart.7a98e86906a59b823ede003a321249f5": {
+        "comment": "Auto-generated insight for test scenario BulletChart - X axis rotation."
     }
 }

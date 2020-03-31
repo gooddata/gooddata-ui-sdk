@@ -20,9 +20,10 @@ export function getFormattedValueForTooltip(
     separators?: ISeparators,
     percentageValue?: number,
 ): string {
+    const { target, y, format } = point;
     const isNotStackToPercent =
         stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
     return isNotStackToPercent
-        ? formatValueForTooltip(point.y, point.format, separators)
+        ? formatValueForTooltip(target ?? y, format, separators)
         : percentFormatter(percentageValue);
 }

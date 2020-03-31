@@ -2,7 +2,7 @@
 import { IUiConfig } from "../interfaces/Visualization";
 
 import { METRIC, FACT, ATTRIBUTE, DATE } from "./bucket";
-import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const MAX_METRICS_COUNT = 20;
 export const DEFAULT_PIE_METRICS_COUNT = 1;
@@ -538,4 +538,46 @@ export const DEFAULT_XIRR_UICONFIG: IUiConfig = {
     },
     ...defaultRootUiConfigProperties,
     ...disabledExportConfig,
+};
+
+export const DEFAULT_BULLET_CHART_CONFIG: IUiConfig = {
+    buckets: {
+        [BucketNames.MEASURES]: {
+            ...measuresBase,
+            isShowOnSecondaryAxisVisible: false,
+            isShowInPercentVisible: false,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        [BucketNames.SECONDARY_MEASURES]: {
+            ...measuresBase,
+            isShowOnSecondaryAxisVisible: false,
+            isShowInPercentVisible: false,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        [BucketNames.TERTIARY_MEASURES]: {
+            ...measuresBase,
+            isShowOnSecondaryAxisVisible: false,
+            isShowInPercentVisible: false,
+            allowsReordering: false,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        [BucketNames.VIEW]: {
+            ...viewBase,
+            allowsReordering: true,
+            allowsSwapping: true,
+            canAddItems: true,
+            itemsLimit: 2,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    supportedOverTimeComparisonTypes: [
+        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+        OverTimeComparisonTypes.PREVIOUS_PERIOD,
+    ],
 };

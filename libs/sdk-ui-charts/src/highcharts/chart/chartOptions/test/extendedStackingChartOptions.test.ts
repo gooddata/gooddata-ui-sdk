@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../../utils/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
-import { MeasureColorStrategy } from "../../colorFactory";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
 import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
@@ -9,6 +8,7 @@ import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { MeasureColorStrategy } from "../../colorStrategies/measure";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {

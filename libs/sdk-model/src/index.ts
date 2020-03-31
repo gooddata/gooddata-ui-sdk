@@ -210,6 +210,7 @@ export {
     BucketPredicate,
     applyRatioRule,
     ComputeRatioRule,
+    disableComputeRatio,
 } from "./execution/buckets";
 
 export {

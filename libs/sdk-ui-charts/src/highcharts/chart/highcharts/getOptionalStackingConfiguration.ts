@@ -9,7 +9,7 @@ import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
-    isBarChart,
+    isInvertedChartType,
     isColumnChart,
     isComboChart,
     isLineChart,
@@ -255,7 +255,7 @@ export function getParentAttributeConfiguration(chartOptions: IChartOptions, con
         fontWeight: "bold",
     });
 
-    if (isBarChart(type)) {
+    if (isInvertedChartType(type)) {
         // distance more 5px for two groups of attributes for bar chart
         set(parentAttributeOptions, "x", -5);
     }

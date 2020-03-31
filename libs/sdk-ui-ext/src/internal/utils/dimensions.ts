@@ -275,6 +275,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
         }
 
         case VisualizationTypes.BAR:
+        case VisualizationTypes.BULLET:
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COMBO2:
         case VisualizationTypes.COLUMN: {

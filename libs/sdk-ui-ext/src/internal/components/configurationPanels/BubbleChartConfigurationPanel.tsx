@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import * as React from "react";
-import get = require("lodash/get");
 import { FormattedMessage } from "react-intl";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
@@ -22,13 +21,17 @@ import {
 } from "../../constants/bubble";
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel() {
-        const { xAxisVisible, yAxisVisible, gridEnabled } = this.getControlProperties();
-
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
-        const controls = properties && properties.controls;
+        const controls: IChartConfig = properties && properties.controls;
+
+        const xAxisVisible = controls?.xaxis?.visible ?? true;
+        const yAxisVisible = controls?.yaxis?.visible ?? true;
+        const gridEnabled = controls?.grid?.enabled ?? true;
+
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
@@ -162,18 +165,6 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
         return classNames("bubble-primary", {
             invisible: !this.isControlDisabled(),
         });
-    }
-
-    private getControlProperties() {
-        const xAxisVisible = get(this.props, "properties.controls.xaxis.visible", true);
-        const yAxisVisible = get(this.props, "properties.controls.yaxis.visible", true);
-        const gridEnabled = get(this.props, "properties.controls.grid.enabled", true);
-
-        return {
-            xAxisVisible,
-            gridEnabled,
-            yAxisVisible,
-        };
     }
 }
 

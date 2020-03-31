@@ -62,7 +62,7 @@ export function configureOverTimeComparison(
             newItems = keepOnlyMasterAndDerivedMeasuresOfType(newItems, derivedOfTypeToKeep);
         }
 
-        bucket.items.splice(0, bucket.items.length, ...newItems);
+        bucket.items = newItems;
     });
 
     return extendedReferencePoint;

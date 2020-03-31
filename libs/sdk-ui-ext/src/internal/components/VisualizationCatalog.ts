@@ -6,6 +6,7 @@ import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
 import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";
 import { PluggableBubbleChart } from "./pluggableVisualizations/bubbleChart/PluggableBubbleChart";
+import { PluggableBulletChart } from "./pluggableVisualizations/bulletChart/PluggableBulletChart";
 import { PluggableColumnChart } from "./pluggableVisualizations/columnChart/PluggableColumnChart";
 import { PluggableComboChart } from "./pluggableVisualizations/comboChart/PluggableComboChart";
 import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
@@ -92,6 +93,7 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
  */
 const DefaultVisualizations = {
     bar: PluggableBarChart,
+    bullet: PluggableBulletChart,
     column: PluggableColumnChart,
     line: PluggableLineChart,
     area: PluggableAreaChart,

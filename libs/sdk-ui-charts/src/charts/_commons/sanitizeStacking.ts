@@ -1,31 +1,34 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import isEmpty = require("lodash/isEmpty");
 import {
     AttributeOrMeasure,
-    bucketMeasures,
+    bucketItems,
     bucketsFind,
     IBucket,
-    IMeasure,
+    IExecutionDefinition,
+    isAttribute,
     isMeasure,
     measureDoesComputeRatio,
-    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../interfaces";
 
-function isMeasureArray(obj: any): obj is IMeasure[] {
-    return !isEmpty(obj) && isMeasure(obj[0]);
+function isItemsArray(obj: any): obj is AttributeOrMeasure[] {
+    return !isEmpty(obj) && (isMeasure(obj[0]) || isAttribute(obj));
 }
 
-export function sanitizeConfig(input: IMeasure[] | IBucket[] = [], config: IChartConfig = {}): IChartConfig {
+export function sanitizeConfig(
+    input: AttributeOrMeasure[] | IBucket[] = [],
+    config: IChartConfig = {},
+): IChartConfig {
     if (!input.length) {
         return config;
     }
 
-    const measures = isMeasureArray(input) ? input : bucketMeasures(bucketsFind(input, BucketNames.MEASURES));
+    const items = isItemsArray(input) ? input : bucketItems(bucketsFind(input, BucketNames.MEASURES));
 
-    if (measures) {
-        const isComputeRatio = isComputeRatioMeasure(measures[0]);
+    if (items) {
+        const isComputeRatio = isComputeRatioMeasure(items[0]);
         const { stackMeasures, stackMeasuresToPercent } = config;
 
         return {

@@ -7,6 +7,8 @@ export { BarChart, IBarChartProps } from "./barChart/BarChart";
 
 export { BubbleChart, IBubbleChartProps } from "./bubbleChart/BubbleChart";
 
+export { BulletChart, IBulletChartProps } from "./bulletChart/BulletChart";
+
 export { ColumnChart, IColumnChartProps } from "./columnChart/ColumnChart";
 
 export { ComboChart, IComboChartProps } from "./comboChart/ComboChart";

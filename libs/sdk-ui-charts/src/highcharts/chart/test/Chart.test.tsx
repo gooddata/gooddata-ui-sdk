@@ -21,6 +21,10 @@ jest.mock("highcharts/modules/treemap", () => {
     return (H: any) => H;
 });
 
+jest.mock("highcharts/modules/bullet", () => {
+    return (H: any) => H;
+});
+
 jest.mock("highcharts/modules/heatmap", () => {
     return (H: any) => H;
 });

@@ -25,9 +25,11 @@ import {
     isAreaChart,
     isBarChart,
     isBubbleChart,
+    isBulletChart,
     isColumnChart,
     isComboChart,
     isHeatmap,
+    isInvertedChartType,
     isOneOfTypes,
     isRotationInRange,
     isScatterPlot,
@@ -61,7 +63,7 @@ const ALIGN_CENTER = "center";
 
 const TOOLTIP_ARROW_OFFSET = 23;
 const TOOLTIP_MAX_WIDTH = 320;
-const TOOLTIP_BAR_CHART_VERTICAL_OFFSET = 5;
+const TOOLTIP_INVERTED_CHART_VERTICAL_OFFSET = 5;
 const TOOLTIP_VERTICAL_OFFSET = 14;
 const BAR_COLUMN_TOOLTIP_TOP_OFFSET = 8;
 const BAR_COLUMN_TOOLTIP_LEFT_OFFSET = 5;
@@ -134,8 +136,10 @@ export function formatOverlapping() {
 function hideOverlappedLabels(chartOptions: IChartOptions) {
     const rotation = Number(get(chartOptions, "xAxisProps.rotation", "0"));
 
-    // Set only for bar chart and labels are rotated by 90
-    if (isBarChart(chartOptions.type) && isRotationInRange(rotation, 75, 105)) {
+    // rotate labels for charts that are horizontal (bar, bullet)
+    const isInvertedChart = isInvertedChartType(chartOptions.type);
+
+    if (isInvertedChart && isRotationInRange(rotation, 75, 105)) {
         const { xAxes = [], isViewByTwoAttributes } = chartOptions;
 
         return {
@@ -234,8 +238,8 @@ function getTooltipVerticalOffset(chartType: any, stacking: any, point: any) {
         return 0;
     }
 
-    if (isBarChart(chartType)) {
-        return TOOLTIP_BAR_CHART_VERTICAL_OFFSET;
+    if (isInvertedChartType(chartType)) {
+        return TOOLTIP_INVERTED_CHART_VERTICAL_OFFSET;
     }
 
     return TOOLTIP_VERTICAL_OFFSET;
@@ -269,14 +273,24 @@ export function getTooltipPositionInChartContainer(
 }
 
 function getHighchartTooltipTopOffset(chartType: string): number {
-    if (isBarChart(chartType) || isColumnChart(chartType) || isComboChart(chartType)) {
+    if (
+        isBarChart(chartType) ||
+        isBulletChart(chartType) ||
+        isColumnChart(chartType) ||
+        isComboChart(chartType)
+    ) {
         return BAR_COLUMN_TOOLTIP_TOP_OFFSET;
     }
     return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
 }
 
 function getHighchartTooltipLeftOffset(chartType: string): number {
-    if (isBarChart(chartType) || isColumnChart(chartType) || isComboChart(chartType)) {
+    if (
+        isBarChart(chartType) ||
+        isBulletChart(chartType) ||
+        isColumnChart(chartType) ||
+        isComboChart(chartType)
+    ) {
         return BAR_COLUMN_TOOLTIP_LEFT_OFFSET;
     }
     return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
@@ -793,6 +807,7 @@ function getHoverStyles({ type }: any, config: any) {
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.COLUMN:
+        case VisualizationTypes.BULLET:
         case VisualizationTypes.FUNNEL:
             seriesMapFn = barSeriesMapFn;
             break;
@@ -1112,6 +1127,20 @@ function getAxesConfiguration(chartOptions: IChartOptions) {
     };
 }
 
+function getTargetCursorConfigurationForBulletChart(chartOptions: IChartOptions) {
+    const { type, data } = chartOptions;
+
+    if (!isBulletChart(type)) {
+        return {};
+    }
+
+    const isTargetDrillable = data.series.some(
+        (series: ISeriesItem) => series.type === "bullet" && series.isDrillable,
+    );
+
+    return isTargetDrillable ? { plotOptions: { bullet: { cursor: "pointer" } } } : {};
+}
+
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
@@ -1135,6 +1164,7 @@ export function getCustomizedConfiguration(
         getAxisNameConfiguration,
         getChartAlignmentConfiguration,
         getAxisLabelConfigurationForDualBarChart,
+        getTargetCursorConfigurationForBulletChart,
     ];
 
     const commonData = configurators.reduce((config: any, configurator: any) => {

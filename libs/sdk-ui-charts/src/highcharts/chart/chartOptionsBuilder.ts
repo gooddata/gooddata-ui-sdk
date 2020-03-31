@@ -50,6 +50,7 @@ import {
     parseValue,
     stringifyChartTypes,
     unwrap,
+    isBulletChart,
 } from "../utils/common";
 import { setMeasuresToSecondaryAxis } from "../utils/dualAxis";
 import {
@@ -60,7 +61,7 @@ import {
 
 import { getCategoriesForTwoAttributes } from "./chartOptions/extendedStackingChartOptions";
 
-import { ColorFactory, IColorStrategy } from "./colorFactory";
+import { ColorFactory } from "./colorFactory";
 
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -95,6 +96,8 @@ import {
     ISeriesItem,
     ISeriesItemConfig,
 } from "../typings/unsafe";
+import { getBulletChartSeries } from "./chartOptions/bulletChartOptions";
+import { IColorStrategy } from "./colorStrategies/base";
 
 const TOOLTIP_PADDING = 10;
 
@@ -599,6 +602,8 @@ export function getSeries(
         return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy);
     } else if (isTreemap(type) && stackByAttribute) {
         return getTreemapStackedSeries(dv, measureGroup, viewByAttribute, stackByAttribute, colorStrategy);
+    } else if (isBulletChart(type)) {
+        return getBulletChartSeries(dv, measureGroup, colorStrategy);
     }
 
     return dv.twoDimData().map((seriesItem: string[], seriesIndex: number) => {

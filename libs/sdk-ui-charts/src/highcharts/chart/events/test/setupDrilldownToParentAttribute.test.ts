@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import get = require("lodash/get");
-import { setupDrilldown } from "../setupDrilldownToParentAttribute";
+import { getDDPointsInParentTick, setupDrilldown } from "../setupDrilldownToParentAttribute";
 import { styleVariables } from "../../../styles/variables";
 import { IHighchartsPointObject } from "../../../utils/isGroupHighchartsDrillEvent";
 
@@ -43,14 +43,14 @@ describe("setupDrilldown", () => {
         const highchartObject: any = {
             xAxis: [],
         };
-        expect(setupDrilldown(highchartObject)).toBeFalsy();
+        expect(setupDrilldown(highchartObject, "column")).toBeFalsy();
     });
 
     it("should not setup drill without chart type", () => {
         const highchartObject: any = {
             xAxis: [{}],
         };
-        expect(setupDrilldown(highchartObject)).toBeFalsy();
+        expect(setupDrilldown(highchartObject, null)).toBeFalsy();
     });
 
     it("should set parent item drillable", () => {
@@ -82,7 +82,7 @@ describe("setupDrilldown", () => {
             },
         };
 
-        setupDrilldown(highchartObject);
+        setupDrilldown(highchartObject, "column");
 
         const label = get(highchartObject, "xAxis.0.categoriesTree.0.tick.label", null);
         expect(label.hasClass("highcharts-drilldown-axis-label")).toBeTruthy();
@@ -122,11 +122,113 @@ describe("setupDrilldown", () => {
             },
         };
 
-        setupDrilldown(highchartObject);
+        setupDrilldown(highchartObject, "column");
 
         const label = get(highchartObject, "xAxis.0.categoriesTree.0.tick.label", null);
         expect(label.hasClass("highcharts-drilldown-axis-label")).toBeFalsy();
         expect(label.hasEvent("click")).toBeFalsy();
         expect(label.getCss()).toEqual({ cursor: "default" });
+    });
+});
+
+describe("getDDPointsInParentTick", () => {
+    it("should return the right drilldown points for bullet chart", () => {
+        const ddPointsForBulletChart = [
+            [
+                {
+                    series: {
+                        userOptions: {
+                            bulletChartMeasureType: "primary",
+                        },
+                    },
+                    x: 0,
+                    y: 200,
+                },
+                {
+                    series: {
+                        userOptions: {
+                            bulletChartMeasureType: "target",
+                        },
+                    },
+                    x: 0,
+                    y: 0,
+                    target: 300,
+                },
+                {
+                    series: {
+                        userOptions: {
+                            bulletChartMeasureType: "comparative",
+                        },
+                    },
+                    x: 0,
+                    y: 400,
+                },
+            ],
+            [
+                {
+                    series: {
+                        userOptions: {
+                            bulletChartMeasureType: "target",
+                        },
+                    },
+                    x: 0,
+                    y: 0,
+                    target: 500,
+                },
+            ],
+        ];
+
+        const axis = {
+            getDDPoints: (i: number) => ddPointsForBulletChart[i] || [],
+        };
+
+        const tick = {
+            startAt: 0,
+            leaves: 3,
+            label: new MockHighChartsLabel(),
+        };
+
+        const expectedDDPoints = [
+            {
+                series: {
+                    userOptions: {
+                        bulletChartMeasureType: "primary",
+                    },
+                },
+                x: 0,
+                y: 200,
+            },
+            {
+                series: {
+                    userOptions: {
+                        bulletChartMeasureType: "target",
+                    },
+                },
+                x: 0,
+                y: 300,
+                target: 300,
+            },
+            {
+                series: {
+                    userOptions: {
+                        bulletChartMeasureType: "comparative",
+                    },
+                },
+                x: 0,
+                y: 400,
+            },
+            {
+                series: {
+                    userOptions: {
+                        bulletChartMeasureType: "target",
+                    },
+                },
+                x: 0,
+                y: 500,
+                target: 500,
+            },
+        ];
+
+        expect(getDDPointsInParentTick(axis, tick)).toEqual(expectedDDPoints);
     });
 });
