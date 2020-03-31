@@ -11,6 +11,8 @@ import {
     getTooltipPositionInViewPort,
     percentageDataLabelFormatter,
     getTooltipPositionInChartContainer,
+    TOOLTIP_VIEWPORT_MARGIN_TOP,
+    TOOLTIP_PADDING,
 } from "../customConfiguration";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { immutableSet } from "../../../utils/common";
@@ -661,6 +663,36 @@ describe("getCustomizedConfiguration", () => {
             expect(position).toEqual({
                 x: 4, // 0 + 20 - 16
                 y: -6 + relativePosition.y, // 0 + 10 - 16 + 26
+            });
+        });
+
+        it("should limit top position of tooltip to keep tooltip in viewport", () => {
+            const highchartContext: any = {
+                chart: {
+                    plotLeft: 0,
+                    plotTop: 0,
+                    container: {
+                        getBoundingClientRect: jest.fn().mockReturnValue({
+                            top: 0,
+                            left: 0,
+                        }),
+                    },
+                },
+            };
+            const mockDataPoint: IPointData = {
+                negative: false,
+                plotX: 0,
+                plotY: 0,
+                h: 10,
+            };
+            // array: [chartType, stacking, labelWidth, labelHeight, point]
+            const mockChartParameters = ["bar", false, 100, 100, mockDataPoint];
+
+            // use .apply function here to mock for tooltip callback from highchart
+            const position = getTooltipPositionInViewPort.apply(highchartContext, mockChartParameters);
+
+            expect(position).toMatchObject({
+                y: TOOLTIP_VIEWPORT_MARGIN_TOP - TOOLTIP_PADDING,
             });
         });
     });

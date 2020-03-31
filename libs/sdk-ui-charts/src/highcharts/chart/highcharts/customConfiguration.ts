@@ -72,6 +72,9 @@ const HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET = 16;
 // in viewport <= 480, tooltip width is equal to chart container width
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
+export const TOOLTIP_PADDING = 24; // padding of tooltip container - defined by CSS
+export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
+
 const escapeAngleBrackets = (str: any) => str && str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function getTitleConfiguration(chartOptions: IChartOptions) {
@@ -314,9 +317,15 @@ export function getTooltipPositionInViewPort(
     const leftOffset = pageXOffset + containerLeft - getHighchartTooltipLeftOffset(chartType);
     const topOffset = pageYOffset + containerTop - getHighchartTooltipTopOffset(chartType);
 
+    const posX = isTooltipShownInFullScreen() ? leftOffset : leftOffset + x;
+    const posY = topOffset + y;
+
+    const minPosY = TOOLTIP_VIEWPORT_MARGIN_TOP - TOOLTIP_PADDING + pageYOffset;
+    const posYLimited = posY < minPosY ? minPosY : posY;
+
     return {
-        x: isTooltipShownInFullScreen() ? leftOffset : leftOffset + x,
-        y: topOffset + y,
+        x: posX,
+        y: posYLimited,
     };
 }
 
