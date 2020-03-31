@@ -151,7 +151,7 @@ export function handleChartLoad(chartType: ChartType) {
 
 function registerRenderHandler(configuration: any, chartOptions: any) {
     if (isOneOfTypes(chartOptions.type, supportedDualAxesChartTypes)) {
-        set(configuration, "chart.events.render", handleChartLoad);
+        set(configuration, "chart.events.render", handleChartLoad(chartOptions.type));
     }
     return configuration;
 }
