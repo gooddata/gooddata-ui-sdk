@@ -5,6 +5,17 @@ import { BackstopConfig, IBackstopScenarioConfig } from "./backstopScenario";
 const SCREENSHOT_WRAPPER_CLASS = "screenshot-wrapper";
 
 /**
+ * Short post interaction wait timeout - use when component renders fast, almost instantly in your browser.
+ */
+export const ShortPostInteractionTimeout = 1000;
+
+/**
+ * Long post interaction wait timeout - use when component renders slow - up to one second before it renders
+ * in your browser.
+ */
+export const LongPostInteractionTimeout = 5000;
+
+/**
  * Wraps component in a BackstopJS screenshot wrapper. This will result in creation of BackstopJS test scenario
  * for the story.
  *
