@@ -6,6 +6,9 @@ import { mountChartAndCapture } from "../../_infra/render";
 import { cleanupCoreChartProps } from "../../_infra/utils";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import flatMap = require("lodash/flatMap");
+import { createInsightDefinitionForChart } from "../../_infra/insightFactory";
+import { mountInsight } from "../../_infra/renderPlugVis";
+import { defSetSorts } from "@gooddata/sdk-model";
 
 const Chart = "BulletChart";
 
@@ -33,7 +36,6 @@ describe(Chart, () => {
             expect(cleanupCoreChartProps(interactions.effectiveProps)).toMatchSnapshot();
         });
 
-        /*
         it("should lead to same execution when rendered as insight via plug viz", async () => {
             const interactions = await promisedInteractions;
 
@@ -48,6 +50,5 @@ describe(Chart, () => {
 
             expect(executionWithoutSorts).toEqual(originalExecutionWithoutSorts);
         });
-         */
     });
 });

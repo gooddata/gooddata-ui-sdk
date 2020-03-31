@@ -24,6 +24,6 @@ export function getFormattedValueForTooltip(
     const isNotStackToPercent =
         stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
     return isNotStackToPercent
-        ? formatValueForTooltip(target ? target : y, format, separators)
+        ? formatValueForTooltip(target ?? y, format, separators)
         : percentFormatter(percentageValue);
 }
