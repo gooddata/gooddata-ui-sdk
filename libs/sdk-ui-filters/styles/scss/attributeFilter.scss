@@ -38,3 +38,8 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
         margin-top: 8px;
     }
 }
+
+/* hide IE10+ eraser */
+::-ms-clear {
+    display: none;
+}
