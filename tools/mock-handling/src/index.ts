@@ -16,13 +16,13 @@ import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
 import { generateAllFiles } from "./codegen";
-import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { IRecording } from "./recordings/common";
+import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
 import { discoverInsightRecordings } from "./recordings/insightsRepository";
-import getBackend, { initBackend } from "./backend";
+import { discoverCatalogRecordings } from "./recordings/catalogRepository";
+import { getOrInitBackend } from "./backend";
 
 program
     .version(pkg.version)
@@ -50,8 +50,12 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         password = password || (await promptPassword());
 
         logInSpinner.start("Logging in...");
-        initBackend(username, password, hostname || DEFAULT_HOSTNAME, backend || DEFAULT_BACKEND);
-        await getBackend().authenticate();
+        await getOrInitBackend(
+            username,
+            password,
+            hostname || DEFAULT_HOSTNAME,
+            backend || DEFAULT_BACKEND,
+        ).authenticate();
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -153,7 +157,9 @@ async function run() {
         ...(await discoverExecutionRecordings(absoluteRecordingDir)),
         ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
         ...(await discoverInsightRecordings(absoluteRecordingDir)),
+        ...(await discoverCatalogRecordings(absoluteRecordingDir)),
     ];
+
     const incompleteRecordings = recordings.filter(e => !e.isComplete());
 
     logInfo(
@@ -173,8 +179,11 @@ async function run() {
          * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
          * run.
          */
-        const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
-            new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
+        const backend = getOrInitBackend(
+            fullConfig.username!,
+            fullConfig.password!,
+            program.hostname || DEFAULT_HOSTNAME,
+            program.backend || DEFAULT_BACKEND,
         );
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);

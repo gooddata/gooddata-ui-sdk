@@ -16,6 +16,7 @@ export enum RecordingType {
     Execution = "execution",
     DisplayForms = "displayForms",
     Insights = "insights",
+    Catalog = "catalog",
 }
 
 /**

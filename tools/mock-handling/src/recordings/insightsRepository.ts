@@ -30,5 +30,5 @@ function loadRecordings(recordingDefinition: string): IRecording[] {
 }
 
 export async function discoverInsightRecordings(recordingDir: string): Promise<IRecording[]> {
-    return flatMap(await findFiles(recordingDir, InsightsDefinition), loadRecordings);
+    return flatMap(findFiles(recordingDir, InsightsDefinition), loadRecordings);
 }

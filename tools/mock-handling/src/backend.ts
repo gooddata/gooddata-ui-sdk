@@ -6,12 +6,17 @@ import { BackendType } from "./base/types";
 
 let backend: IAnalyticalBackend | null = null;
 
-export const initBackend = (
+export const getOrInitBackend = (
     username: string,
     password: string,
     hostname: string,
     backendType: BackendType,
-): void => {
+): IAnalyticalBackend => {
+    // return the current backend if we have one
+    if (backend) {
+        return backend;
+    }
+
     if (backendType === "tiger") {
         throw new NotSupported("Tiger backend does not support auth yet");
     }
@@ -19,6 +24,8 @@ export const initBackend = (
     backend = bearFactory({ hostname }).withAuthentication(
         new FixedLoginAndPasswordAuthProvider(username, password),
     );
+
+    return backend;
 };
 
 const getBackend = () => {

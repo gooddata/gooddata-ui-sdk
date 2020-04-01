@@ -14,10 +14,12 @@ import { IRecording, RecordingType } from "../recordings/common";
 import { DisplayFormRecording } from "../recordings/displayForms";
 import { ExecutionRecording } from "../recordings/execution";
 import { InsightRecording } from "../recordings/insights";
+import { CatalogRecording } from "../recordings/catalog";
 import { generateConstantsForDisplayForms } from "./displayForm";
 import { generateConstantsForDataSamples } from "./dataSample";
 import { generateConstantsForExecutions } from "./execution";
 import { generateConstantsForInsights } from "./insight";
+import { generateConstantsForCatalog } from "./catalog";
 import groupBy = require("lodash/groupBy");
 
 const FILE_DIRECTIVES = [
@@ -66,9 +68,13 @@ function generateIndexConst(input: IndexGeneratorInput): OptionalKind<VariableSt
         .map(e => e.getRecordingName())
         .join(",")}}`;
 
-    const metadataInit = `metadata: { displayForms: {${recNameList(
-        input.displayForms(),
-    )}}, insights: { ${recNameList(input.insights())} } }`;
+    const metadataInit = `
+        metadata: {
+            catalog,
+            displayForms: { ${recNameList(input.displayForms())} },
+            insights: { ${recNameList(input.insights())} }
+        }
+    `;
 
     return {
         declarationKind: VariableDeclarationKind.Const,
@@ -96,6 +102,7 @@ function transformToTypescript(
         sourceFile.addVariableStatements(generateConstantsForExecutions(input.executions(), targetDir));
         sourceFile.addVariableStatements(generateConstantsForDisplayForms(input.displayForms(), targetDir));
         sourceFile.addVariableStatements(generateConstantsForInsights(input.insights(), targetDir));
+        sourceFile.addVariableStatements(generateConstantsForCatalog(input.catalog(), targetDir));
         sourceFile.addVariableStatement(generateIndexConst(input));
     }
 
@@ -109,6 +116,7 @@ type IndexGeneratorInput = {
     executions: () => ExecutionRecording[];
     displayForms: () => DisplayFormRecording[];
     insights: () => InsightRecording[];
+    catalog: () => CatalogRecording | null;
 };
 
 function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
@@ -124,6 +132,7 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
         insights: () => {
             return (categorized[RecordingType.Insights] as InsightRecording[]) || [];
         },
+        catalog: () => (categorized[RecordingType.Catalog][0] as CatalogRecording) || null,
     };
 }
 
