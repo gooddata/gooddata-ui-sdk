@@ -3,8 +3,13 @@ import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import noop from "lodash/noop";
 import range from "lodash/range";
-import { ProjectModule, IProjectConfigSettingItem, IProjectConfigResponse } from "../project";
-import { XhrModule } from "../xhr";
+import {
+    ProjectModule,
+    IProjectConfigSettingItem,
+    IProjectConfigResponse,
+    DEFAULT_PALETTE,
+} from "../project";
+import { ApiError, XhrModule } from "../xhr";
 import { mockPollingRequest } from "./utils/polling";
 import { IColorPalette, IFeatureFlags } from "../interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "../apiResponsesInterfaces";
@@ -112,7 +117,7 @@ describe("project", () => {
                 fetchMock.mock("/gdc/projects/myFakeProjectId/styleSettings", 400);
                 return createProject()
                     .getColorPalette("myFakeProjectId")
-                    .then(null, (err: any) => expect(err).toBeInstanceOf(Error));
+                    .then(null, (err: any) => expect(err).toBeInstanceOf(ApiError));
             });
             it("should return an array of color objects in the right order", () => {
                 fetchMock.mock("/gdc/projects/myFakeProjectId/styleSettings", {
@@ -132,6 +137,16 @@ describe("project", () => {
                         expect(result.length).toBe(2);
                         expect(result[0].r).toBe(1);
                         expect(result[1].r).toBe(2);
+                    });
+            });
+            it("should return something when no response from styleSettings", () => {
+                fetchMock.mock("/gdc/projects/myFakeProjectId/styleSettings", {
+                    status: 200,
+                });
+                return createProject()
+                    .getColorPalette("myFakeProjectId")
+                    .then((result: any) => {
+                        expect(result.length).toBe(DEFAULT_PALETTE.length);
                     });
             });
         });
@@ -172,7 +187,9 @@ describe("project", () => {
                     });
             });
             it("should return undefined when resource is empty", () => {
-                fetchMock.mock("/gdc/projects/myFakeProjectId/styleSettings", {});
+                fetchMock.mock("/gdc/projects/myFakeProjectId/styleSettings", {
+                    status: 200,
+                });
 
                 return createProject()
                     .getColorPaletteWithGuids("myFakeProjectId")
