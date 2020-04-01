@@ -1,8 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
-import { DataRecorderConfig } from "./types";
+// (C) 2007-2020 GoodData Corporation
+import { DataRecorderConfig, BackendType } from "./types";
 
 export const DEFAULT_HOSTNAME = "https://secure.gooddata.com";
 export const DEFAULT_CONFIG_FILE_NAME = ".gdmockrc";
+export const DEFAULT_BACKEND: BackendType = "bear";
 
 export const DEFAULT_CONFIG: DataRecorderConfig = {
     hostname: null,
@@ -10,4 +11,5 @@ export const DEFAULT_CONFIG: DataRecorderConfig = {
     username: null,
     password: null,
     recordingDir: null,
+    backend: null,
 };

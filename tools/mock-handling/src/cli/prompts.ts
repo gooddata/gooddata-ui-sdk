@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
-import gooddata from "@gooddata/gd-bear-client";
+import getBackend from "../backend";
 
 export async function promptUsername(): Promise<string> {
     const usernameQuestion: DistinctQuestion = {
@@ -25,14 +25,15 @@ export async function promptPassword(): Promise<string> {
 }
 
 export async function promptProjectId(): Promise<string> {
-    const metadataResponse = await gooddata.xhr.get("/gdc/md");
-    const metadata = metadataResponse.getData();
-    const projectChoices = metadata.about.links.map((link: any) => {
-        return {
-            name: link.title,
-            value: link.identifier,
-        };
-    });
+    const projects = await getBackend()
+        .workspaces()
+        .forCurrentUser()
+        .query();
+
+    const projectChoices = projects.items.map(project => ({
+        name: project.title,
+        value: project.id,
+    }));
 
     const projectQuestion: DistinctQuestion = {
         type: "list",

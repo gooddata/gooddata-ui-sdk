@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { isEmpty } from "lodash";
 
 /**
@@ -13,6 +13,8 @@ export class DataRecorderError extends Error {
         super(message);
     }
 }
+
+export type BackendType = "bear" | "tiger";
 
 /*
  * Defines types used across catalog exporter
@@ -46,6 +48,11 @@ export type DataRecorderConfig = {
      * Directory with recordings inputs & outputs.
      */
     recordingDir: string | null;
+
+    /**
+     * Backend type: bear or tiger.
+     */
+    backend: BackendType | null;
 };
 
 export function isDataRecorderError(obj: any): obj is DataRecorderError {
