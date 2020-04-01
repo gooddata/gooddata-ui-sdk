@@ -25,9 +25,11 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
         const displayFormUri = await objRefToUri(ref, this.workspace, this.authCall);
-        const displayFormDetails: GdcMetadata.IAttributeDisplayForm = await this.authCall(sdk =>
+        const wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm = await this.authCall(sdk =>
             sdk.md.getObjectDetails(displayFormUri),
         );
+        const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
+
         const attrRef = uriRef(displayFormDetails.content.formOf);
 
         return newAttributeDisplayFormMetadataObject(ref, df =>
