@@ -90,6 +90,8 @@ export function originPackageHeaders({ name, version }: IPackageHeaders) {
 export class ApiError extends Error {
     constructor(message: string, public cause: any) {
         super(message);
+
+        Object.setPrototypeOf(this, new.target.prototype);
     }
 }
 
@@ -110,19 +112,19 @@ export class ApiResponse<T = any> {
         this.responseBody = responseBody;
     }
 
-    get data() {
+    get data(): T {
         try {
             return JSON.parse(this.responseBody) as T;
         } catch (error) {
-            throw new Error("Cannot parse responseBody!");
+            throw new Error("Cannot parse responseBody.");
         }
     }
 
-    public getData() {
+    public getData(): T {
         try {
             return JSON.parse(this.responseBody) as T;
         } catch (error) {
-            throw new Error("Cannot parse responseBody!");
+            throw new Error("Cannot parse responseBody.");
         }
     }
 

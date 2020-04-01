@@ -2,11 +2,11 @@
 import { getIn, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue } from "./util";
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
-import { XhrModule, ApiResponse } from "./xhr";
+import { XhrModule, ApiResponse, ApiError } from "./xhr";
 import { GdcProject } from "@gooddata/gd-bear-model";
 import { stringify } from "./utils/queryString";
 
-const DEFAULT_PALETTE = [
+export const DEFAULT_PALETTE = [
     { r: 0x2b, g: 0x6b, b: 0xae },
     { r: 0x69, g: 0xaa, b: 0x51 },
     { r: 0xee, g: 0xb1, b: 0x4c },
@@ -149,25 +149,31 @@ export class ProjectModule {
     public getColorPalette(projectId: string) {
         return this.xhr
             .get(`/gdc/projects/${projectId}/styleSettings`)
-            .then(r => r.getData())
             .then(
-                (result: any) => {
-                    return result.styleSettings.chartPalette.map((c: any) => {
-                        return {
-                            r: c.fill.r,
-                            g: c.fill.g,
-                            b: c.fill.b,
-                        };
-                    });
+                (apiResponse: ApiResponse): IStyleSettingsResponse => {
+                    return apiResponse.getData();
                 },
-                err => {
-                    if (err.status === 200) {
-                        return DEFAULT_PALETTE;
-                    }
+            )
+            .then((result: IStyleSettingsResponse) => {
+                if (!result) {
+                    return DEFAULT_PALETTE;
+                }
 
-                    throw new Error(err.statusText);
-                },
-            );
+                return result.styleSettings.chartPalette.map((c: any) => {
+                    return {
+                        r: c.fill.r,
+                        g: c.fill.g,
+                        b: c.fill.b,
+                    };
+                });
+            })
+            .catch(e => {
+                if (!(e instanceof ApiError)) {
+                    return DEFAULT_PALETTE;
+                }
+
+                throw e;
+            });
     }
 
     /**
@@ -182,15 +188,24 @@ export class ProjectModule {
     public getColorPaletteWithGuids(projectId: string): Promise<IColorPalette | undefined> {
         return this.xhr
             .get(`/gdc/projects/${projectId}/styleSettings`)
-            .then((apiResponse: ApiResponse) => {
-                return apiResponse.getData();
-            })
+            .then(
+                (apiResponse: ApiResponse): IStyleSettingsResponse => {
+                    return apiResponse.getData();
+                },
+            )
             .then((result: IStyleSettingsResponse) => {
                 if (result && result.styleSettings) {
                     return result.styleSettings.chartPalette;
                 } else {
                     return undefined;
                 }
+            })
+            .catch(e => {
+                if (!(e instanceof ApiError)) {
+                    return undefined;
+                }
+
+                throw e;
             });
     }
 
