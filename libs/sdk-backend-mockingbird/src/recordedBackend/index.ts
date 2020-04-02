@@ -17,8 +17,9 @@ import {
     IWorkspaceStylingService,
     NotSupported,
     IUserService,
-    NotImplemented,
     IWorkspaceInsights,
+    IUserSettingsService,
+    IWorkspaceUserPermissions,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedElementQueryFactory } from "./elements";
@@ -31,6 +32,8 @@ import { RecordedCatalogFactory } from "./catalog";
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
 };
+
+const USER_ID = "recordedUser";
 
 /**
  * Creates new backend that will be providing recorded results to the caller. The recorded results are provided
@@ -62,9 +65,8 @@ export function recordedBackend(
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
         },
-
         currentUser(): IUserService {
-            throw new NotImplemented("currentUser is not yet implemented");
+            return recordedUserService(config);
         },
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index, config);
@@ -73,13 +75,13 @@ export function recordedBackend(
             throw new NotSupported("not supported");
         },
         authenticate(): Promise<AuthenticatedPrincipal> {
-            return Promise.resolve({ userId: "recordedUser" });
+            return Promise.resolve({ userId: USER_ID });
         },
         deauthenticate(): Promise<void> {
             return Promise.resolve();
         },
         isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
-            return Promise.resolve({ userId: "recordedUser" });
+            return Promise.resolve({ userId: USER_ID });
         },
     };
 
@@ -129,7 +131,44 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         permissions(): IWorkspacePermissionsFactory {
-            throw new NotSupported("not supported");
+            return recordedPermissionsFactory();
         },
+    };
+}
+
+// returns the same settings as the global ones
+function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
+    return {
+        settings(): IUserSettingsService {
+            return {
+                query: async () => ({
+                    userId: USER_ID,
+                    ...(implConfig.globalSettings ?? {}),
+                }),
+            };
+        },
+    };
+}
+
+// return true for all
+function recordedPermissionsFactory(): IWorkspacePermissionsFactory {
+    return {
+        forCurrentUser: async (): Promise<IWorkspaceUserPermissions> => ({
+            allPermissions: () => ({
+                canAccessWorkbench: true,
+                canCreateAnalyticalDashboard: true,
+                canCreateReport: true,
+                canCreateVisualization: true,
+                canExecuteRaw: true,
+                canExportReport: true,
+                canInitData: true,
+                canManageAnalyticalDashboard: true,
+                canManageMetric: true,
+                canManageProject: true,
+                canManageReport: true,
+                canUploadNonProductionCSV: true,
+            }),
+            hasPermission: _ => true,
+        }),
     };
 }
