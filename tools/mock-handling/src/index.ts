@@ -21,6 +21,7 @@ import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
 import { discoverInsightRecordings } from "./recordings/insightsRepository";
 import { discoverCatalogRecordings } from "./recordings/catalogRepository";
+import { discoverVisClassesRecordings } from "./recordings/visClassesRepository";
 import { getOrInitBackend } from "./backend";
 
 program
@@ -157,6 +158,7 @@ async function run() {
         ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
         ...(await discoverInsightRecordings(absoluteRecordingDir)),
         ...(await discoverCatalogRecordings(absoluteRecordingDir)),
+        ...(await discoverVisClassesRecordings(absoluteRecordingDir)),
     ];
 
     const incompleteRecordings = recordings.filter(e => !e.isComplete());

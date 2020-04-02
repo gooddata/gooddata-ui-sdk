@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-02T12:13:41.523Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-02T13:18:35.903Z; */
 
 const fp_04938271f1ee4e3845b40f5b91ad3224 = {
     definition: require("./uiTestScenarios/executions/04938271f1ee4e3845b40f5b91ad3224/definition.json"),
@@ -2565,6 +2565,7 @@ const catalog = {
     items: require("./metadata/catalog/items.json"),
     groups: require("./metadata/catalog/groups.json"),
 };
+const visClasses = { items: require("./metadata/visClasses/items.json") };
 export const Recordings = {
     executions: {
         fp_04938271f1ee4e3845b40f5b91ad3224,
@@ -2683,6 +2684,7 @@ export const Recordings = {
     },
     metadata: {
         catalog,
+        visClasses,
         displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
         insights: {
             i_AreaChart_8ef289b689ae537d4e12f480fc195396,
