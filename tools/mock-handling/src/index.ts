@@ -4,7 +4,6 @@
 import program from "commander";
 import ora from "ora";
 import chalk from "chalk";
-import gooddata from "@gooddata/gd-bear-client";
 import * as pkg from "../package.json";
 import * as process from "process";
 import * as path from "path";
@@ -13,15 +12,17 @@ import { log, logError, logInfo, logSuccess } from "./cli/loggers";
 import { clearLine, clearTerminal } from "./cli/clear";
 import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants";
+import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types";
 import { generateAllFiles } from "./codegen";
-import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { IRecording } from "./recordings/common";
+import { discoverExecutionRecordings } from "./recordings/executionRepository";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository";
 import { discoverInsightRecordings } from "./recordings/insightsRepository";
+import { discoverCatalogRecordings } from "./recordings/catalogRepository";
+import { discoverVisClassesRecordings } from "./recordings/visClassesRepository";
+import { getOrInitBackend } from "./backend";
 
 program
     .version(pkg.version)
@@ -30,15 +31,13 @@ program
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
+    .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
 async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataRecorderConfig> {
-    const { hostname } = config;
+    const { hostname, backend } = config;
     let { projectId, username, password } = config;
-
-    gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
-    gooddata.config.setJsPackage(pkg.name, pkg.version);
 
     const logInSpinner = ora();
     try {
@@ -51,13 +50,18 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         password = password || (await promptPassword());
 
         logInSpinner.start("Logging in...");
-        await gooddata.user.login(username, password);
-        logInSpinner.stop();
+        await getOrInitBackend(
+            username,
+            password,
+            hostname || DEFAULT_HOSTNAME,
+            backend || DEFAULT_BACKEND,
+        ).authenticate();
+        logInSpinner.succeed();
         clearLine();
     } catch (err) {
-        logInSpinner.stop();
+        logInSpinner.fail();
         clearLine();
-        logError("Unable to log in to platform");
+        logError(`Unable to log in to platform\n${err}`);
 
         throw new DataRecorderError("Authentication failed", 1);
     }
@@ -153,7 +157,10 @@ async function run() {
         ...(await discoverExecutionRecordings(absoluteRecordingDir)),
         ...(await discoverDisplayFormRecordings(absoluteRecordingDir)),
         ...(await discoverInsightRecordings(absoluteRecordingDir)),
+        ...(await discoverCatalogRecordings(absoluteRecordingDir)),
+        ...(await discoverVisClassesRecordings(absoluteRecordingDir)),
     ];
+
     const incompleteRecordings = recordings.filter(e => !e.isComplete());
 
     logInfo(
@@ -173,8 +180,11 @@ async function run() {
          * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
          * run.
          */
-        const backend = bearFactory({ hostname: program.hostname || DEFAULT_HOSTNAME }).withAuthentication(
-            new FixedLoginAndPasswordAuthProvider(fullConfig.username!, fullConfig.password!),
+        const backend = getOrInitBackend(
+            fullConfig.username!,
+            fullConfig.password!,
+            program.hostname || DEFAULT_HOSTNAME,
+            program.backend || DEFAULT_BACKEND,
         );
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);

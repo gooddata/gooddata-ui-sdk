@@ -6,7 +6,6 @@ import {
     InsightOrdering,
     UnexpectedResponseError,
     IWorkspaceInsights,
-    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -16,6 +15,9 @@ import {
     isIdentifierRef,
     ObjRef,
     IVisualizationClass,
+    isUriRef,
+    visClassId,
+    visClassUri,
 } from "@gooddata/sdk-model";
 import { InsightRecording, RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
@@ -33,9 +35,11 @@ let adHocInsightCounter = 1;
  */
 export class RecordedInsights implements IWorkspaceInsights {
     private readonly insights: { [id: string]: InsightRecording };
+    private readonly visClasses: IVisualizationClass[];
 
     constructor(recordings: RecordingIndex = {}) {
         this.insights = recordings.metadata?.insights ?? {};
+        this.visClasses = recordings.metadata?.visClasses?.items ?? [];
     }
 
     public async createInsight(def: IInsightDefinition): Promise<IInsight> {
@@ -111,16 +115,34 @@ export class RecordedInsights implements IWorkspaceInsights {
         return;
     }
 
-    //
-    //  not implemented down from here
-    //
-
-    public getVisualizationClass(_: ObjRef): Promise<IVisualizationClass> {
-        throw new NotSupported("not supported");
+    public async getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass> {
+        return isUriRef(ref)
+            ? this.getVisualizationClassByUri(ref.uri)
+            : this.getVisualizationClassById(ref.identifier);
     }
 
-    public getVisualizationClasses(): Promise<IVisualizationClass[]> {
-        throw new NotSupported("not supported");
+    public async getVisualizationClasses(): Promise<IVisualizationClass[]> {
+        return this.visClasses;
+    }
+
+    private async getVisualizationClassByUri(uri: string): Promise<IVisualizationClass> {
+        const result = this.visClasses.find(visClass => visClassUri(visClass) === uri);
+
+        if (!result) {
+            throw new UnexpectedResponseError(`No visClass with URI: ${uri}`, 404, {});
+        }
+
+        return result;
+    }
+
+    private async getVisualizationClassById(id: string): Promise<IVisualizationClass> {
+        const result = this.visClasses.find(visClass => visClassId(visClass) === id);
+
+        if (!result) {
+            throw new UnexpectedResponseError(`No visClass with ID: ${id}`, 404, {});
+        }
+
+        return result;
     }
 }
 

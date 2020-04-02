@@ -515,3 +515,29 @@ export function visClassUrl(vc: IVisualizationClass): string {
 
     return vc.visualizationClass.url;
 }
+
+/**
+ * For given visualization class, return its URI.
+ *
+ * @param vc - visualization class
+ * @returns never null, never empty
+ * @public
+ */
+export function visClassUri(vc: IVisualizationClass): string {
+    invariant(vc, "vis class to get URI from must be defined");
+
+    return vc.visualizationClass.uri;
+}
+
+/**
+ * For given visualization class, return its identifier.
+ *
+ * @param vc - visualization class
+ * @returns never null, never empty
+ * @public
+ */
+export function visClassId(vc: IVisualizationClass): string {
+    invariant(vc, "vis class to get URI from must be defined");
+
+    return vc.visualizationClass.identifier;
+}

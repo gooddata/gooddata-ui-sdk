@@ -1511,6 +1511,12 @@ export type UriRef = {
 export function uriRef(uri: Uri): UriRef;
 
 // @public
+export function visClassId(vc: IVisualizationClass): string;
+
+// @public
+export function visClassUri(vc: IVisualizationClass): string;
+
+// @public
 export function visClassUrl(vc: IVisualizationClass): string;
 
 // @public

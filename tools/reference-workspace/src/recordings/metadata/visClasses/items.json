@@ -1,0 +1,182 @@
+[
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:scatter",
+            "orderIndex": 7,
+            "iconSelected": "local:scatter.selected",
+            "url": "local:scatter",
+            "identifier": "gdc.visualization.scatter",
+            "title": "Scatter plot",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:donut",
+            "orderIndex": 10,
+            "iconSelected": "local:donut.selected",
+            "url": "local:donut",
+            "identifier": "gdc.visualization.donut",
+            "title": "Donut chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/2"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:area",
+            "orderIndex": 4,
+            "iconSelected": "local:area.selected",
+            "url": "local:area",
+            "identifier": "gdc.visualization.area",
+            "title": "Stacked Area chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/3"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:table",
+            "orderIndex": 0,
+            "iconSelected": "local:table.selected",
+            "url": "local:table",
+            "identifier": "gdc.visualization.table",
+            "title": "Table",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/4"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:headline",
+            "orderIndex": 6,
+            "iconSelected": "local:headline.selected",
+            "url": "local:headline",
+            "identifier": "gdc.visualization.headline",
+            "title": "Headline",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/5"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:column",
+            "orderIndex": 1,
+            "iconSelected": "local:column.selected",
+            "url": "local:column",
+            "identifier": "gdc.visualization.column",
+            "title": "Column chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/6"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:line",
+            "orderIndex": 3,
+            "iconSelected": "local:line.selected",
+            "url": "local:line",
+            "identifier": "gdc.visualization.line",
+            "title": "Line chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/7"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:treemap",
+            "orderIndex": 12,
+            "iconSelected": "local:treemap.selected",
+            "url": "local:treemap",
+            "identifier": "gdc.visualization.treemap",
+            "title": "Treemap",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/8"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:combo",
+            "orderIndex": 5,
+            "iconSelected": "local:combo.selected",
+            "url": "local:combo2",
+            "identifier": "gdc.visualization.combo",
+            "title": "Combo",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/9"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:heatmap",
+            "orderIndex": 13,
+            "iconSelected": "local:heatmap.selected",
+            "url": "local:heatmap",
+            "identifier": "gdc.visualization.heatmap",
+            "title": "Heatmap",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/10"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:bubble",
+            "orderIndex": 8,
+            "iconSelected": "local:bubble.selected",
+            "url": "local:bubble",
+            "identifier": "gdc.visualization.bubble",
+            "title": "Bubble chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/11"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:pie",
+            "orderIndex": 9,
+            "iconSelected": "local:pie.selected",
+            "url": "local:pie",
+            "identifier": "gdc.visualization.pie",
+            "title": "Pie chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/13"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:bar",
+            "orderIndex": 2,
+            "iconSelected": "local:bar.selected",
+            "url": "local:bar",
+            "identifier": "gdc.visualization.bar",
+            "title": "Bar chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/14"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:bullet",
+            "orderIndex": 14,
+            "iconSelected": "local:bullet.selected",
+            "url": "local:bullet",
+            "identifier": "gdc.visualization.bullet",
+            "title": "Bullet chart",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1294"
+        }
+    },
+    {
+        "visualizationClass": {
+            "checksum": "local",
+            "icon": "local:pushpin",
+            "orderIndex": 15,
+            "iconSelected": "local:pushpin.selected",
+            "url": "local:pushpin",
+            "identifier": "gdc.visualization.pushpin",
+            "title": "Geo chart (pushpins)",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1296"
+        }
+    }
+]

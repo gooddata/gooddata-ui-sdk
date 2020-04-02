@@ -35,7 +35,6 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run tslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/gd-bear-client": "^8.0.0-alpha.52",
         "@gooddata/gd-bear-model": "^8.0.0-alpha.52",
         "@gooddata/sdk-backend-bear": "^8.0.0-alpha.52",
         "@gooddata/sdk-backend-spi": "^8.0.0-alpha.52",

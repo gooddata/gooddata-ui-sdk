@@ -17,6 +17,8 @@ export {
     DisplayFormRecording,
     ScenarioRecording,
     RecordedBackendConfig,
+    CatalogRecording,
+    VisClassesRecording,
 } from "./recordedBackend/types";
 
 export {

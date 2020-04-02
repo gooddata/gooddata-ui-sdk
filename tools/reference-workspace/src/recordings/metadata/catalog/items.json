@@ -1,0 +1,1481 @@
+[
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267"
+            },
+            "id": "abxgDICQav2J",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
+            "title": "_Snapshot [EOP]",
+            "description": "",
+            "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]\n",
+            "format": "#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266"
+            },
+            "id": "abYgDBRagANw",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
+            "title": "_Timeline [EOP]",
+            "description": "",
+            "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
+            "format": "#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268"
+            },
+            "id": "abQgDWx4gOUu",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
+            "title": "# Of Opportunities",
+            "description": "",
+            "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+            "format": "#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269"
+            },
+            "id": "aa4gLlQhcmLO",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
+            "title": "# Of Opportunities Won",
+            "description": "",
+            "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+            "format": "#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+            },
+            "id": "attr.account.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057",
+            "title": "Account",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058"
+            },
+            "id": "label.account.id.name",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+            "title": "Name",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070"
+            },
+            "id": "attr.activity.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070",
+            "title": "Activity",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071"
+            },
+            "id": "label.activity.id.subject",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+            "title": "Subject",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110"
+            },
+            "id": "dt.activity.activity",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110",
+            "title": "Activity (Date)",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081"
+            },
+            "id": "attr.activity.activitytype",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081",
+            "title": "Activity Type",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082"
+            },
+            "id": "label.activity.activitytype",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+            "title": "Activity Type",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+            },
+            "id": "fact.opportunitysnapshot.amount",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
+            "title": "Amount",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+            },
+            "id": "aangOxLSeztu",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
+            "title": "Amount",
+            "description": "",
+            "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+            "format": "$#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104"
+            },
+            "id": "fact.opportunitysnapshot.daystoclose",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104",
+            "title": "Days to Close",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088"
+            },
+            "id": "attr.owner.department",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088",
+            "title": "Department",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089"
+            },
+            "id": "label.owner.department",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+            "title": "Department",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107"
+            },
+            "id": "fact.stagehistory.duration",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107",
+            "title": "Duration",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062"
+            },
+            "id": "attr.opportunitysnapshot.forecastcategory",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062",
+            "title": "Forecast Category",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063"
+            },
+            "id": "label.opportunitysnapshot.forecastcategory",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+            "title": "Forecast Category",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098"
+            },
+            "id": "attr.stage.isactive",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098",
+            "title": "Is Active?",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099"
+            },
+            "id": "label.stage.isactive",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+            "title": "Is Active?",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073"
+            },
+            "id": "attr.activity.isclosed",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073",
+            "title": "Is Closed?",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074"
+            },
+            "id": "label.activity.isclosed",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+            "title": "Is Closed?",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094"
+            },
+            "id": "attr.stage.isclosed",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094",
+            "title": "Is Closed?",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095"
+            },
+            "id": "label.stage.isclosed",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+            "title": "Is Closed?",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075"
+            },
+            "id": "attr.activity.istask",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075",
+            "title": "Is Task?",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076"
+            },
+            "id": "label.activity.istask",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+            "title": "Is Task?",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096"
+            },
+            "id": "attr.stage.iswon",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096",
+            "title": "Is Won?",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097"
+            },
+            "id": "label.stage.iswon",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+            "title": "Is Won?",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106"
+            },
+            "id": "dt.opportunitysnapshot.closedate",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106",
+            "title": "Opp. Close (Date)",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109"
+            },
+            "id": "dt.opportunity.oppcreated",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109",
+            "title": "Opp. Created (Date)",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060"
+            },
+            "id": "attr.opportunitysnapshot.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
+            "title": "Opp. Snapshot",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061"
+            },
+            "id": "label.opportunitysnapshot.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+            "title": "Opp. Snapshot",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+            },
+            "id": "dt.opportunitysnapshot.snapshotdate",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
+            "title": "Opp. Snapshot (Date)",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066"
+            },
+            "id": "attr.opportunity.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
+            "title": "Opportunity",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067"
+            },
+            "id": "label.opportunity.id.name",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+            "title": "Opportunity Name",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079"
+            },
+            "id": "attr.activity.priority",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079",
+            "title": "Priority",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080"
+            },
+            "id": "label.activity.priority",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+            "title": "Priority",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103"
+            },
+            "id": "fact.opportunitysnapshot.probability",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
+            "title": "Probability",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273"
+            },
+            "id": "abEgMnq5hyJQ",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
+            "title": "Probability",
+            "description": "",
+            "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+            "format": "#,##0.0%"
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054"
+            },
+            "id": "attr.product.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054",
+            "title": "Product",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055"
+            },
+            "id": "label.product.id.name",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+            "title": "Product Name",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086"
+            },
+            "id": "attr.owner.region",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086",
+            "title": "Region",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087"
+            },
+            "id": "label.owner.region",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+            "title": "Region",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083"
+            },
+            "id": "attr.owner.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083",
+            "title": "Sales Rep",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084"
+            },
+            "id": "label.owner.id.name",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+            "title": "Owner Name",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274"
+            },
+            "id": "aadpHDMBecIy",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",
+            "title": "Sample XIRR",
+            "description": "",
+            "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
+            "format": "#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064"
+            },
+            "id": "attr.stagehistory.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064",
+            "title": "Stage History",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065"
+            },
+            "id": "label.stagehistory.id",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+            "title": "Stage History",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091"
+            },
+            "id": "attr.stage.name",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091",
+            "title": "Stage Name",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092"
+            },
+            "id": "label.stage.name.stagename",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+            "title": "Stage Name",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077"
+            },
+            "id": "attr.activity.status",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077",
+            "title": "Status",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078"
+            },
+            "id": "label.activity.status",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+            "title": "Status",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "attribute",
+        "attribute": {
+            "type": "attribute",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100"
+            },
+            "id": "attr.stage.status",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
+            "title": "Status",
+            "description": ""
+        },
+        "defaultDisplayForm": {
+            "type": "displayForm",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101"
+            },
+            "id": "label.stage.status",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+            "title": "Status",
+            "description": "",
+            "attribute": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100"
+            }
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111"
+            },
+            "id": "dt.timeline.timeline",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
+            "title": "Timeline (Date)",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "fact",
+        "fact": {
+            "type": "fact",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108"
+            },
+            "id": "fact.stagehistory.velocity",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108",
+            "title": "Velocity",
+            "description": ""
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270"
+            },
+            "id": "abZgFKGPaGYM",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
+            "title": "Win Rate",
+            "description": "",
+            "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
+            "format": "#,##0.0%"
+        },
+        "groups": []
+    },
+    {
+        "type": "measure",
+        "measure": {
+            "type": "measure",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+            },
+            "id": "acugFHNJgsBy",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
+            "title": "Won",
+            "description": "",
+            "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+            "format": "$#,##0.00"
+        },
+        "groups": []
+    },
+    {
+        "type": "dateDataset",
+        "dataSet": {
+            "type": "dataSet",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887"
+            },
+            "id": "activity.dataset.dt",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/887",
+            "title": "Date (Activity)",
+            "description": "DataSet Date"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827"
+                    },
+                    "id": "activity.year",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/827",
+                    "title": "Year (Activity)",
+                    "description": "Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845"
+                    },
+                    "id": "activity.aag81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/845",
+                    "title": "Year (Activity)",
+                    "description": "DisplayForm Year."
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829"
+                    },
+                    "id": "activity.week",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/829",
+                    "title": "Week (Sun-Sat)/Year (Activity)",
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851"
+                    },
+                    "id": "activity.aaA81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/851",
+                    "title": "Week #/Year (W1/2010) (Activity)",
+                    "description": "DisplayForm Week #/Year (W1/2010)."
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842"
+                    },
+                    "id": "activity.quarter",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/842",
+                    "title": "Quarter/Year (Activity)",
+                    "description": "Quarter and Year (Q1/2010)"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877"
+                    },
+                    "id": "activity.aci81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/877",
+                    "title": "US Short (Activity)",
+                    "description": "DisplayForm US Short."
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843"
+                    },
+                    "id": "activity.month",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/843",
+                    "title": "Month/Year (Activity)",
+                    "description": "Month and Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878"
+                    },
+                    "id": "activity.act81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/878",
+                    "title": "Short (Jan 2010) (Activity)",
+                    "description": "DisplayForm Short (Jan 2010)."
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844"
+                    },
+                    "id": "activity.date",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/844",
+                    "title": "Date (Activity)",
+                    "description": "Date"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883"
+                    },
+                    "id": "activity.date.mmddyyyy",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/883",
+                    "title": "mm/dd/yyyy (Activity)",
+                    "description": "DisplayForm mm/dd/yyyy."
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0
+    },
+    {
+        "type": "dateDataset",
+        "dataSet": {
+            "type": "dataSet",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557"
+            },
+            "id": "closed.dataset.dt",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/557",
+            "title": "Date (Closed)",
+            "description": "DataSet Date"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497"
+                    },
+                    "id": "closed.year",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497",
+                    "title": "Year (Closed)",
+                    "description": "Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515"
+                    },
+                    "id": "closed.aag81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/515",
+                    "title": "Year (Closed)",
+                    "description": "DisplayForm Year."
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499"
+                    },
+                    "id": "closed.week",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/499",
+                    "title": "Week (Sun-Sat)/Year (Closed)",
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521"
+                    },
+                    "id": "closed.aaA81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/521",
+                    "title": "Week #/Year (W1/2010) (Closed)",
+                    "description": "DisplayForm Week #/Year (W1/2010)."
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512"
+                    },
+                    "id": "closed.quarter",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/512",
+                    "title": "Quarter/Year (Closed)",
+                    "description": "Quarter and Year (Q1/2010)"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547"
+                    },
+                    "id": "closed.aci81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/547",
+                    "title": "US Short (Closed)",
+                    "description": "DisplayForm US Short."
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513"
+                    },
+                    "id": "closed.month",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/513",
+                    "title": "Month/Year (Closed)",
+                    "description": "Month and Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548"
+                    },
+                    "id": "closed.act81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/548",
+                    "title": "Short (Jan 2010) (Closed)",
+                    "description": "DisplayForm Short (Jan 2010)."
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514"
+                    },
+                    "id": "closed.date",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/514",
+                    "title": "Date (Closed)",
+                    "description": "Date"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553"
+                    },
+                    "id": "closed.date.mmddyyyy",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/553",
+                    "title": "mm/dd/yyyy (Closed)",
+                    "description": "DisplayForm mm/dd/yyyy."
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0
+    },
+    {
+        "type": "dateDataset",
+        "dataSet": {
+            "type": "dataSet",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/392"
+            },
+            "id": "created.dataset.dt",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/392",
+            "title": "Date (Created)",
+            "description": "DataSet Date"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332"
+                    },
+                    "id": "created.year",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/332",
+                    "title": "Year (Created)",
+                    "description": "Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350"
+                    },
+                    "id": "created.aag81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/350",
+                    "title": "Year (Created)",
+                    "description": "DisplayForm Year."
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334"
+                    },
+                    "id": "created.week",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/334",
+                    "title": "Week (Sun-Sat)/Year (Created)",
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356"
+                    },
+                    "id": "created.aaA81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/356",
+                    "title": "Week #/Year (W1/2010) (Created)",
+                    "description": "DisplayForm Week #/Year (W1/2010)."
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347"
+                    },
+                    "id": "created.quarter",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/347",
+                    "title": "Quarter/Year (Created)",
+                    "description": "Quarter and Year (Q1/2010)"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382"
+                    },
+                    "id": "created.aci81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/382",
+                    "title": "US Short (Created)",
+                    "description": "DisplayForm US Short."
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348"
+                    },
+                    "id": "created.month",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/348",
+                    "title": "Month/Year (Created)",
+                    "description": "Month and Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383"
+                    },
+                    "id": "created.act81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/383",
+                    "title": "Short (Jan 2010) (Created)",
+                    "description": "DisplayForm Short (Jan 2010)."
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349"
+                    },
+                    "id": "created.date",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/349",
+                    "title": "Date (Created)",
+                    "description": "Date"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388"
+                    },
+                    "id": "created.date.mmddyyyy",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/388",
+                    "title": "mm/dd/yyyy (Created)",
+                    "description": "DisplayForm mm/dd/yyyy."
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0
+    },
+    {
+        "type": "dateDataset",
+        "dataSet": {
+            "type": "dataSet",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/722"
+            },
+            "id": "snapshot.dataset.dt",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/722",
+            "title": "Date (Snapshot)",
+            "description": "DataSet Date"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662"
+                    },
+                    "id": "snapshot.year",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/662",
+                    "title": "Year (Snapshot)",
+                    "description": "Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680"
+                    },
+                    "id": "snapshot.aag81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/680",
+                    "title": "Year (Snapshot)",
+                    "description": "DisplayForm Year."
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664"
+                    },
+                    "id": "snapshot.week",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/664",
+                    "title": "Week (Sun-Sat)/Year (Snapshot)",
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686"
+                    },
+                    "id": "snapshot.aaA81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/686",
+                    "title": "Week #/Year (W1/2010) (Snapshot)",
+                    "description": "DisplayForm Week #/Year (W1/2010)."
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677"
+                    },
+                    "id": "snapshot.quarter",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/677",
+                    "title": "Quarter/Year (Snapshot)",
+                    "description": "Quarter and Year (Q1/2010)"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712"
+                    },
+                    "id": "snapshot.aci81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/712",
+                    "title": "US Short (Snapshot)",
+                    "description": "DisplayForm US Short."
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678"
+                    },
+                    "id": "snapshot.month",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/678",
+                    "title": "Month/Year (Snapshot)",
+                    "description": "Month and Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713"
+                    },
+                    "id": "snapshot.act81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/713",
+                    "title": "Short (Jan 2010) (Snapshot)",
+                    "description": "DisplayForm Short (Jan 2010)."
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679"
+                    },
+                    "id": "snapshot.date",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
+                    "title": "Date (Snapshot)",
+                    "description": "Date"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718"
+                    },
+                    "id": "snapshot.date.mmddyyyy",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/718",
+                    "title": "mm/dd/yyyy (Snapshot)",
+                    "description": "DisplayForm mm/dd/yyyy."
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0
+    },
+    {
+        "type": "dateDataset",
+        "dataSet": {
+            "type": "dataSet",
+            "ref": {
+                "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1052"
+            },
+            "id": "timeline.dataset.dt",
+            "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1052",
+            "title": "Date (Timeline)",
+            "description": "DataSet Date"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992"
+                    },
+                    "id": "timeline.year",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
+                    "title": "Year (Timeline)",
+                    "description": "Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010"
+                    },
+                    "id": "timeline.aag81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1010",
+                    "title": "Year (Timeline)",
+                    "description": "DisplayForm Year."
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994"
+                    },
+                    "id": "timeline.week",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/994",
+                    "title": "Week (Sun-Sat)/Year (Timeline)",
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010)."
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016"
+                    },
+                    "id": "timeline.aaA81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1016",
+                    "title": "Week #/Year (W1/2010) (Timeline)",
+                    "description": "DisplayForm Week #/Year (W1/2010)."
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007"
+                    },
+                    "id": "timeline.quarter",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1007",
+                    "title": "Quarter/Year (Timeline)",
+                    "description": "Quarter and Year (Q1/2010)"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042"
+                    },
+                    "id": "timeline.aci81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1042",
+                    "title": "US Short (Timeline)",
+                    "description": "DisplayForm US Short."
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008"
+                    },
+                    "id": "timeline.month",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1008",
+                    "title": "Month/Year (Timeline)",
+                    "description": "Month and Year"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043"
+                    },
+                    "id": "timeline.act81lMifn6q",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1043",
+                    "title": "Short (Jan 2010) (Timeline)",
+                    "description": "DisplayForm Short (Jan 2010)."
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "type": "attribute",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009"
+                    },
+                    "id": "timeline.date",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
+                    "title": "Date (Timeline)",
+                    "description": "Date"
+                },
+                "defaultDisplayForm": {
+                    "type": "displayForm",
+                    "ref": {
+                        "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048"
+                    },
+                    "id": "timeline.date.mmddyyyy",
+                    "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1048",
+                    "title": "mm/dd/yyyy (Timeline)",
+                    "description": "DisplayForm mm/dd/yyyy."
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0
+    }
+]
