@@ -2,7 +2,7 @@
 /* tslint:disable:file-header */
 /* tslint:disable:variable-name */
 /* tslint:disable:no-var-requires */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-03-31T10:02:10.798Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-02T12:13:41.523Z; */
 
 const fp_04938271f1ee4e3845b40f5b91ad3224 = {
     definition: require("./uiTestScenarios/executions/04938271f1ee4e3845b40f5b91ad3224/definition.json"),
@@ -2561,6 +2561,10 @@ export const Insights = {
         TwoMeasuresAndGrandTotalsAndMultipleSubtotals: i_PivotTable_0e469fed5a845bbdffa1aa67b30a16f4,
     },
 };
+const catalog = {
+    items: require("./metadata/catalog/items.json"),
+    groups: require("./metadata/catalog/groups.json"),
+};
 export const Recordings = {
     executions: {
         fp_04938271f1ee4e3845b40f5b91ad3224,
@@ -2678,6 +2682,7 @@ export const Recordings = {
         fp_ff5156936750ccf35ec9eb7f1dd14d9e,
     },
     metadata: {
+        catalog,
         displayForms: { df_label_product_id_name, df_label_owner_department, df_label_owner_region },
         insights: {
             i_AreaChart_8ef289b689ae537d4e12f480fc195396,

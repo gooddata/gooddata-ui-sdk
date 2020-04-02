@@ -6,6 +6,8 @@ import {
     IAttributeElement,
     IInsight,
     IColorPalette,
+    CatalogItem,
+    ICatalogGroup,
 } from "@gooddata/sdk-model";
 
 /**
@@ -33,6 +35,7 @@ export type RecordingIndex = {
         [fp: string]: ExecutionRecording;
     };
     metadata?: {
+        catalog?: CatalogRecording;
         displayForms?: { [id: string]: DisplayFormRecording };
         insights?: { [id: string]: InsightRecording };
     };
@@ -69,4 +72,12 @@ export type DisplayFormRecording = {
  */
 export type InsightRecording = {
     obj: IInsight;
+};
+
+/**
+ * @internal
+ */
+export type CatalogRecording = {
+    items: CatalogItem[];
+    groups: ICatalogGroup[];
 };

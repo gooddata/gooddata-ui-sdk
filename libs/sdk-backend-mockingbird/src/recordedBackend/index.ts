@@ -26,6 +26,7 @@ import { RecordedExecutionFactory } from "./execution";
 import { RecordedMetadata } from "./metadata";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedInsights } from "./insights";
+import { RecordedCatalogFactory } from "./catalog";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -122,7 +123,7 @@ function recordedWorkspace(
             };
         },
         catalog(): IWorkspaceCatalogFactory {
-            throw new NotSupported("not supported");
+            return new RecordedCatalogFactory(workspace, recordings);
         },
         dataSets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");

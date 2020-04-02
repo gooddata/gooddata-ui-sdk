@@ -5,6 +5,7 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { CatalogItem } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
@@ -13,10 +14,19 @@ import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+
+// Warning: (ae-internal-missing-underscore) The name "CatalogRecording" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CatalogRecording = {
+    items: CatalogItem[];
+    groups: ICatalogGroup[];
+};
 
 // Warning: (ae-internal-missing-underscore) The name "DataViewAll" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -112,6 +122,7 @@ export type RecordingIndex = {
         [fp: string]: ExecutionRecording;
     };
     metadata?: {
+        catalog?: CatalogRecording;
         displayForms?: {
             [id: string]: DisplayFormRecording;
         };
@@ -128,7 +139,6 @@ export type ScenarioRecording = {
     execution: ExecutionRecording;
     scenarioIndex: number;
 };
-
 
 // (No @packageDocumentation comment for this package)
 
