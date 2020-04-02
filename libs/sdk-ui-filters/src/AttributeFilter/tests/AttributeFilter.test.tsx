@@ -21,19 +21,6 @@ describe("AttributeFilter", () => {
     const backend = recordedBackend(ReferenceRecordings.Recordings);
     const workspace = "testWorkspace";
 
-    it("should be in loading state until attribute display form title is loaded", async () => {
-        const rendered = mount(
-            <AttributeFilter
-                filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
-                backend={backend}
-                onApply={noop}
-                workspace={workspace}
-            />,
-        );
-
-        expect(rendered.exists(".s-button-loading")).toEqual(true);
-    });
-
     it("should download attribute display form title", async () => {
         const rendered = mount(
             <AttributeFilter

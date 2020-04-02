@@ -50,14 +50,12 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
     // (undocumented)
     static defaultProps: {
         locale: string;
-        FilterLoading: React.FC<import("react-intl").WithIntlProps<import("react-intl").WrappedComponentProps<any>>> & {
-            WrappedComponent: React.ComponentType<import("react-intl").WrappedComponentProps<any>>;
-        };
         FilterError: React.FC<import("react-intl").WithIntlProps<import("react-intl").WrappedComponentProps<any>>> & {
             WrappedComponent: React.ComponentType<import("react-intl").WrappedComponentProps<any>>;
         };
         fullscreenOnMobile: boolean;
         onError: typeof defaultErrorHandler;
+        titleWithSelection: boolean;
     };
     // (undocumented)
     render(): JSX.Element;

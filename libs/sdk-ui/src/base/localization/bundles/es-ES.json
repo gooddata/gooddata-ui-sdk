@@ -167,5 +167,7 @@
     "mvf.operator.between": "entre",
     "mvf.operator.notBetween": "no entre",
     "mvf.operator.between.tooltip.bubble": "Se incluyen los valores de inicio y fin.",
-    "mvf.operator.notBetween.tooltip.bubble": "No se incluyen los valores de inicio y fin."
+    "mvf.operator.notBetween.tooltip.bubble": "No se incluyen los valores de inicio y fin.",
+    "attrf.all": "Todo",
+    "attrf.all_except": "Todo excepto"
 }

@@ -9,7 +9,7 @@ import { FilterStories } from "../../_infra/storyGroups";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk-model";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
 const backend = recordedBackend(ReferenceRecordings.Recordings);
@@ -82,6 +82,71 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 },
                 clear: {
                     clickSelectors: [".s-product_name", ".s-clear"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        );
+    })
+
+    .add("title with pre-selected elements - positive AttributeFilter", () => {
+        return withMultipleScreenshots(
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilter
+                    backend={backend}
+                    workspace={workspace}
+                    filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [
+                        "WonderKid",
+                        "Explorer",
+                        "TouchAll",
+                    ])}
+                    onApply={action("on-apply")}
+                    titleWithSelection={true}
+                />
+            </div>,
+            {
+                closed: {},
+                opened: {
+                    clickSelector: ".s-product_name__wonderkid__explorer_______3_",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                "select-all": {
+                    clickSelectors: [".s-product_name__wonderkid__explorer_______3_", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                clear: {
+                    clickSelectors: [".s-product_name__wonderkid__explorer_______3_", ".s-clear"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        );
+    })
+    .add("title with pre-selected elements - negative AttributeFilter", () => {
+        return withMultipleScreenshots(
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilter
+                    backend={backend}
+                    workspace={workspace}
+                    filter={newNegativeAttributeFilter(ReferenceLdm.Product.Name, [
+                        "WonderKid",
+                        "Explorer",
+                        "TouchAll",
+                    ])}
+                    onApply={action("on-apply")}
+                    titleWithSelection={true}
+                />
+            </div>,
+            {
+                closed: {},
+                opened: {
+                    clickSelector: ".s-product_name__all_except_wonderkid______3_",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                "select-all": {
+                    clickSelectors: [".s-product_name__all_except_wonderkid______3_", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                clear: {
+                    clickSelectors: [".s-product_name__all_except_wonderkid______3_", ".s-clear"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },

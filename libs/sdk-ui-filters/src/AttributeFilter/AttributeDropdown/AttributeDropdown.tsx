@@ -1,5 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import * as React from "react";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAttributeElement, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { string as stringUtils } from "@gooddata/js-utils";
@@ -18,9 +19,20 @@ import {
     isNonEmptyListItem,
 } from "./types";
 
+import isEmpty = require("lodash/isEmpty");
+import isEqual = require("lodash/isEqual");
+
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
-export interface IAttributeDropdownProps {
+const DefaultFilterLoading = injectIntl(({ intl }) => {
+    return (
+        <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
+            {intl.formatMessage({ id: "gs.filter.loading" })}
+        </button>
+    );
+});
+
+export interface IAttributeDropdownOwnProps {
     title: string;
 
     backend: IAnalyticalBackend;
@@ -32,7 +44,12 @@ export interface IAttributeDropdownProps {
 
     onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
+    titleWithSelection?: boolean;
+    FilterLoading?: React.ComponentType;
+    isLoading?: boolean;
 }
+
+type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProps;
 
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResultWithEmptyItems;
@@ -51,11 +68,19 @@ export interface IAttributeDropdownState {
     offset: number;
     limit: number;
     totalCount?: string;
+
+    items: AttributeListItem[];
 }
 
-export class AttributeDropdown extends React.PureComponent<IAttributeDropdownProps, IAttributeDropdownState> {
+export class AttributeDropdownCore extends React.PureComponent<
+    IAttributeDropdownProps,
+    IAttributeDropdownState
+> {
     public static defaultProps = {
         fullscreenOnMobile: false,
+        titleWithSelection: false,
+        FilterLoading: DefaultFilterLoading,
+        isLoading: false,
     };
 
     private dropdownRef = React.createRef<Dropdown>();
@@ -89,9 +114,17 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
             limit: LIMIT,
             offset: 0,
             searchString: "",
+
+            items: [],
         };
 
         this.createMediaQuery(props.fullscreenOnMobile);
+    }
+
+    public componentDidMount(): void {
+        if (this.props.displayForm && this.props.titleWithSelection) {
+            this.getElements();
+        }
     }
 
     public componentDidUpdate(prevProps: IAttributeDropdownProps, prevState: IAttributeDropdownState): void {
@@ -194,20 +227,69 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
                 prevSelectedItems: updatedPrevSelectedItems,
                 isLoading: false,
                 validElements: mergedValidElements,
+                items,
             };
         });
     };
 
+    private truncateTitle = (title: string, length?: number, ending?: string) => {
+        const titleLength = length ? length : 35;
+        const endingStr = ending ? ending : "...";
+
+        if (title.length > titleLength) {
+            return title.slice(0, titleLength) + endingStr;
+        }
+
+        return title;
+    };
+
+    private getAllTitleIntl = (isInverted: boolean, empty: boolean, equal: boolean) => {
+        if ((isInverted && empty) || (!isInverted && equal)) {
+            return this.props.intl.formatMessage({ id: "attrf.all" });
+        }
+        return this.props.intl.formatMessage({ id: "attrf.all_except" });
+    };
+
+    private getTitle = () => {
+        const { items, isInverted, isLoading, selectedItems } = this.state;
+        const { title, displayForm, titleWithSelection } = this.props;
+
+        if (!isLoading && titleWithSelection && displayForm) {
+            const empty = isEmpty(selectedItems);
+            const equal = isEqual(items.length, selectedItems.length);
+            const getAllPartIntl = this.getAllTitleIntl(isInverted, empty, equal);
+
+            if (empty) {
+                return isInverted ? `${title}: ${getAllPartIntl}` : title;
+            }
+            if (equal) {
+                return isInverted ? title : `${title}: ${getAllPartIntl}`;
+            }
+
+            const itemTitlesToString = selectedItems.map(selectedItem => selectedItem.title).join(", ");
+            const fullTitle = isInverted
+                ? `${title}: ${getAllPartIntl} ${itemTitlesToString}`
+                : `${title}: ${itemTitlesToString}`;
+
+            return `${this.truncateTitle(fullTitle)} (${selectedItems.length})`;
+        }
+
+        return title;
+    };
+
     public render() {
-        const { title } = this.props;
+        const { FilterLoading, titleWithSelection } = this.props;
+        const customizedTitle = this.getTitle();
         const classes = classNames(
             "gd-attribute-filter",
-            title ? `gd-id-${stringUtils.simplifyText(title)}` : "",
+            customizedTitle ? `gd-id-${stringUtils.simplifyText(customizedTitle)}` : "",
         );
 
-        return (
+        return (titleWithSelection && this.state.isLoading) || this.props.isLoading ? (
+            <FilterLoading />
+        ) : (
             <Dropdown
-                button={<DropdownButton value={title} />}
+                button={<DropdownButton value={customizedTitle} />}
                 ref={this.dropdownRef}
                 body={this.renderDropdownBody()}
                 className={classes}
@@ -302,3 +384,5 @@ export class AttributeDropdown extends React.PureComponent<IAttributeDropdownPro
         );
     }
 }
+
+export const AttributeDropdown = injectIntl(AttributeDropdownCore);
