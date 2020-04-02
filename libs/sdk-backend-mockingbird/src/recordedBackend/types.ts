@@ -8,6 +8,7 @@ import {
     IColorPalette,
     CatalogItem,
     ICatalogGroup,
+    IVisualizationClass,
 } from "@gooddata/sdk-model";
 
 /**
@@ -38,6 +39,7 @@ export type RecordingIndex = {
         catalog?: CatalogRecording;
         displayForms?: { [id: string]: DisplayFormRecording };
         insights?: { [id: string]: InsightRecording };
+        visClasses?: VisClassesRecording;
     };
 };
 
@@ -80,4 +82,11 @@ export type InsightRecording = {
 export type CatalogRecording = {
     items: CatalogItem[];
     groups: ICatalogGroup[];
+};
+
+/**
+ * @internal
+ */
+export type VisClassesRecording = {
+    items: IVisualizationClass[];
 };

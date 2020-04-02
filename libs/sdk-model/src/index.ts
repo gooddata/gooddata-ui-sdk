@@ -285,6 +285,8 @@ export {
     insightSetProperties,
     insightSetSorts,
     visClassUrl,
+    visClassId,
+    visClassUri,
 } from "./insight";
 
 export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";

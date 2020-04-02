@@ -19,6 +19,7 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { IVisualizationClass } from '@gooddata/sdk-model';
 
 // Warning: (ae-internal-missing-underscore) The name "CatalogRecording" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -129,6 +130,7 @@ export type RecordingIndex = {
         insights?: {
             [id: string]: InsightRecording;
         };
+        visClasses?: VisClassesRecording;
     };
 };
 
@@ -138,6 +140,13 @@ export type RecordingIndex = {
 export type ScenarioRecording = {
     execution: ExecutionRecording;
     scenarioIndex: number;
+};
+
+// Warning: (ae-internal-missing-underscore) The name "VisClassesRecording" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type VisClassesRecording = {
+    items: IVisualizationClass[];
 };
 
 // (No @packageDocumentation comment for this package)
