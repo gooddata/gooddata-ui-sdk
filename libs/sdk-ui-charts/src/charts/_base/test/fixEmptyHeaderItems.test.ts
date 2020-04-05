@@ -8,7 +8,7 @@ const EmptyHeaderString = "EmptyHeader";
 const TestInput = recordedDataView(
     ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals,
     DataViewFirstPage,
-).dataView;
+);
 
 describe("fixEmptyHeaderItems", () => {
     it("should replace empty values in all types of headerItems", () => {

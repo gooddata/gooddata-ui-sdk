@@ -6,9 +6,9 @@ import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeIdentifier, measureIdentifier } from "@gooddata/sdk-model";
 import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { MeasureColorStrategy } from "../../colorStrategies/measure";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {
@@ -192,7 +192,7 @@ describe("getCategoriesForTwoAttributes", () => {
 });
 
 describe("getDrillableSeriesWithParentAttribute", () => {
-    const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy);
+    const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy);
     const {
         measureGroup,
         viewByAttribute,

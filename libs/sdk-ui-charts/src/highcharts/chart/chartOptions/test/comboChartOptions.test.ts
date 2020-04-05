@@ -1,14 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
 import { ISeriesItem } from "../../../typings/unsafe";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;
 
-const ComboChart = recordedDataView(
+const ComboChart = recordedDataFacade(
     ReferenceRecordings.Scenarios.ComboChart.OnePrimaryAndSecondaryMeasureWithViewBy,
 );
 const ComboMeasureGroup = ComboChart.measureGroupDescriptor();

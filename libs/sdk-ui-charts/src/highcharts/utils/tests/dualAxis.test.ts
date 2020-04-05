@@ -1,11 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import { setMeasuresToSecondaryAxis } from "../dualAxis";
 import { IChartConfig } from "../../../interfaces";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../../__mocks__/recordings";
 
 describe("setMeasuresToSecondaryAxis", () => {
-    const ComboChart = recordedDataView(
+    const ComboChart = recordedDataFacade(
         ReferenceRecordings.Scenarios.ComboChart.OnePrimaryAndSecondaryMeasureWithViewBySortedByAttr,
     );
     const dualAxisConfig = { secondary_yaxis: { rotation: "90" } };

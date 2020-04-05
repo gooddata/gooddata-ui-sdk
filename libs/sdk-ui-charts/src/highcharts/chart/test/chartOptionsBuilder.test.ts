@@ -31,7 +31,6 @@ import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/co
 import { IChartConfig } from "../../../interfaces";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
-import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
 import { customEscape } from "../../utils/common";
 import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
 import { IChartOptions, IPointData } from "../../typings/unsafe";
@@ -40,6 +39,7 @@ import { AttributeColorStrategy } from "../colorStrategies/attribute";
 import { HeatmapColorStrategy } from "../colorStrategies/heatmap";
 import { TreemapColorStrategy } from "../colorStrategies/treemap";
 import { IColorStrategy } from "../colorStrategies/base";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -61,6 +61,8 @@ function getSeriesItemDataParameters(dv: DataViewFacade, seriesIndex: any) {
     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
     return [seriesItem, seriesIndex, measureGroup, viewByAttribute, stackByAttribute];
 }
+
+const emptyDataView = new DataViewFacade(dummyDataView(emptyDef("testWorkspace")));
 
 describe("chartOptionsBuilder", () => {
     const DEFAULT_TOOLTIP_CONTENT_WIDTH = 320;
@@ -2712,7 +2714,6 @@ describe("chartOptionsBuilder", () => {
 
     describe("getChartOptions", () => {
         const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
-        const emptyDataView = dummyDataFacade(emptyDef("testWorkspace"));
         const chartOptionsWithCustomOptions = generateChartOptions(dataSet, {
             xLabel: "xLabel",
             yLabel: "yLabel",
@@ -3444,8 +3445,6 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("getHeatmapDataClasses", () => {
-                    const emptyDataView = dummyDataFacade(emptyDef("testWorkspace"));
-
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: Highcharts.ColorAxisDataClassesOptions[] = [];

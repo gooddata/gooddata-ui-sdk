@@ -6,16 +6,15 @@
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
-import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
-import { dummyDataFacade } from '@gooddata/sdk-backend-base';
 import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
@@ -56,8 +55,6 @@ export { dummyBackend }
 
 export { dummyBackendEmptyData }
 
-export { dummyDataFacade }
-
 export { dummyDataView }
 
 // Warning: (ae-internal-missing-underscore) The name "ExecutionRecording" should be prefixed with an underscore because the declaration is marked as @internal
@@ -92,10 +89,10 @@ export type LegacyExecutionRecording = {
 // @internal @deprecated
 export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
 
-// Warning: (ae-internal-missing-underscore) The name "legacyRecordedDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
+// Warning: (ae-internal-missing-underscore) The name "legacyRecordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal @deprecated
-export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade;
+export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
 
 // Warning: (ae-internal-missing-underscore) The name "recordedBackend" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -113,7 +110,7 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
 // Warning: (ae-internal-missing-underscore) The name "recordedDataView" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): DataViewFacade;
+export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): IDataView;
 
 // Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -148,6 +145,7 @@ export type ScenarioRecording = {
 export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
+
 
 // (No @packageDocumentation comment for this package)
 

@@ -2,10 +2,10 @@
 
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
 import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../../__mocks__/recordings";
 
-const TestRecording = recordedDataView(
+const TestRecording = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
 );
 

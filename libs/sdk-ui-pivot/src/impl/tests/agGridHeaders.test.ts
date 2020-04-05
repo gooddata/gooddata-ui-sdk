@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
-import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import {
     DataViewFacade,
     IAttributeDescriptor,
@@ -24,8 +24,9 @@ import {
     mergeHeaderEndIndex,
     shouldMergeHeaders,
 } from "../agGridHeaders";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
-const fixture = recordedDataView(
+const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
     DataViewFirstPage,
 );
@@ -84,21 +85,21 @@ describe("getFields", () => {
     const Fixtures: Array<[string, DataViewFacade]> = [
         [
             "single measure, single column",
-            recordedDataView(
+            recordedDataFacade(
                 ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
                 DataViewFirstPage,
             ),
         ],
         [
             "single measure, multiple columns",
-            recordedDataView(
+            recordedDataFacade(
                 ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndTwoColumnAttributes,
                 DataViewFirstPage,
             ),
         ],
         [
             "two measures, single columns",
-            recordedDataView(
+            recordedDataFacade(
                 ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithRowAndColumnAttributes,
                 DataViewFirstPage,
             ),
@@ -122,11 +123,11 @@ describe("assortDimensionDescriptors", () => {
 });
 
 describe("getMinimalRowData", () => {
-    const NoMeasureData = recordedDataView(
+    const NoMeasureData = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleAttribute,
         DataViewFirstPage,
     );
-    const WithMeasureData = recordedDataView(
+    const WithMeasureData = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute,
         DataViewFirstPage,
     );

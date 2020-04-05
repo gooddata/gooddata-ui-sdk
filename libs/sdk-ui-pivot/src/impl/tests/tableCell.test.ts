@@ -7,10 +7,11 @@ import {
 } from "../tableCell";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
-const fixtures = recordedDataView(
+const fixtures = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
     DataViewFirstPage,
 );

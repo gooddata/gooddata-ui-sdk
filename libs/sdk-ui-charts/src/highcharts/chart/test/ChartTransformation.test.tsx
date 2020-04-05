@@ -12,18 +12,20 @@ import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
 import Chart from "../Chart";
 import { VisualizationTypes, IntlWrapper } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../../constants/alignments";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import * as fixtures from "../../../../__mocks__/fixtures";
+import { recordedDataFacade } from "../../../../__mocks__/recordings";
 
-const BarChartNoAttributes = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
-const BarChartView = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
-const BarChartMultipleMeasures = recordedDataView(ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures);
-const BarChartTwoMeasures = recordedDataView(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
-const BarChartViewAndStack = recordedDataView(
+const BarChartNoAttributes = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
+const BarChartView = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
+const BarChartMultipleMeasures = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BarChart.ArithmeticMeasures,
+);
+const BarChartTwoMeasures = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy);
+const BarChartViewAndStack = recordedDataFacade(
     ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
 );
-const PieChartSingleMeasure = recordedDataView(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
+const PieChartSingleMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.PieChart.SingleMeasure);
 
 describe("ChartTransformation", () => {
     const defaultProps = {

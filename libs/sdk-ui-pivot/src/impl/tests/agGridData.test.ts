@@ -3,14 +3,15 @@
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { createTableHeaders } from "../agGridHeaders";
 import { getRow, getRowTotals } from "../agGridData";
-import { recordedDataView, DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
 const intl = createIntlMock();
 
 describe("getRowTotals", () => {
     it("should return total rows", () => {
-        const fixture = recordedDataView(
+        const fixture = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureAndMultipleGrandTotals,
             DataViewFirstPage,
         );
@@ -21,7 +22,7 @@ describe("getRowTotals", () => {
         ).toMatchSnapshot();
     });
     it("should return null when no totals are defined", () => {
-        const fixture = recordedDataView(
+        const fixture = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
         );
@@ -35,7 +36,7 @@ describe("getRowTotals", () => {
 
 describe("getRow", () => {
     it("should return a grid row", () => {
-        const dv = recordedDataView(
+        const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
             DataViewFirstPage,
         );
@@ -56,7 +57,7 @@ describe("getRow", () => {
         ).toMatchSnapshot();
     });
     it("should return subtotal row", () => {
-        const dv = recordedDataView(
+        const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresAndMultipleSubtotals,
             DataViewFirstPage,
         );

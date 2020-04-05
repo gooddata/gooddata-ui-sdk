@@ -5,10 +5,10 @@ import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { IColorMapping } from "../../../../interfaces";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "../base";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 const defaultColorMapping: IColorMapping[] = [
     {
@@ -34,11 +34,13 @@ const getBulletColorStrategy = (props: {
     return ColorFactory.getColorStrategy(palette, colorMapping, undefined, undefined, dv, "bullet");
 };
 
-const PrimaryAndComparative = recordedDataView(
+const PrimaryAndComparative = recordedDataFacade(
     ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures,
 );
-const PrimaryAndTarget = recordedDataView(ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures);
-const AllMeasures = recordedDataView(
+const PrimaryAndTarget = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures,
+);
+const AllMeasures = recordedDataFacade(
     ReferenceRecordings.Scenarios.BulletChart.PrimaryTargetAndComparativeMeasures,
 );
 

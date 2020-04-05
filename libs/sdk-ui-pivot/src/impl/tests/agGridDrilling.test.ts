@@ -7,10 +7,11 @@ import { getTreeLeaves } from "../agGridUtils";
 import { IDimensionItemDescriptor, IResultMeasureHeader } from "@gooddata/sdk-backend-spi";
 import { createTableHeaders } from "../agGridHeaders";
 import { createRowData } from "../agGridData";
-import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
-const pivotTableWithColumnAndRowAttributes = recordedDataView(
+const pivotTableWithColumnAndRowAttributes = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
     DataViewFirstPage,
 );

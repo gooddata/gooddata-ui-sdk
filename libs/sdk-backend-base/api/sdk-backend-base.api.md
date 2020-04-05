@@ -8,7 +8,6 @@ import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
-import { DataViewFacade } from '@gooddata/sdk-backend-spi';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
@@ -172,11 +171,6 @@ export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 //
 // @internal
 export function dummyBackendEmptyData(): IAnalyticalBackend;
-
-// Warning: (ae-internal-missing-underscore) The name "dummyDataFacade" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade;
 
 // Warning: (ae-internal-missing-underscore) The name "dummyDataView" should be prefixed with an underscore because the declaration is marked as @internal
 //

@@ -4,10 +4,11 @@ import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures";
 import { IMappingHeader } from "../MappingHeader";
 import { IHeaderPredicate } from "../HeaderPredicate";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling";
-import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForBuckets } from "@gooddata/sdk-model";
+import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 
-const emptyFacade = dummyDataFacade(newDefForBuckets("testWorkspace", []));
+const emptyFacade = new DataViewFacade(dummyDataView(newDefForBuckets("testWorkspace", [])));
 
 describe("isSomeHeaderPredicateMatched", () => {
     it("should return true when some of predicates match header", () => {

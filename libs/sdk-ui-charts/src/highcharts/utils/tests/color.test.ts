@@ -7,9 +7,9 @@ import {
     getValidColorPalette,
     normalizeColorToRGB,
 } from "../color";
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { dummyDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFacade, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { emptyDef } from "@gooddata/sdk-model";
+import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 
 describe("Transformation", () => {
     describe("Lighten color", () => {
@@ -120,7 +120,7 @@ describe("getColorMappingPredicate", () => {
         },
     };
 
-    const context = { dv: dummyDataFacade(emptyDef("testWorkspace")) };
+    const context = { dv: new DataViewFacade(dummyDataView(emptyDef("testWorkspace"))) };
 
     describe("no references provided", () => {
         it("should match predicate when measure local identifier matches", () => {
