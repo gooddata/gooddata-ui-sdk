@@ -1,12 +1,13 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import isEmpty = require("lodash/isEmpty");
 import * as invariant from "invariant";
-import { IDataView, DataViewFacade, IMeasureDescriptor, DataValue } from "@gooddata/sdk-backend-spi";
+import { IDataView, IMeasureDescriptor, DataValue } from "@gooddata/sdk-backend-spi";
 import { Identifier } from "@gooddata/sdk-model";
 
 import { calculateXirr } from "./calculateXirr";
 import {
+    DataViewFacade,
     VisualizationTypes,
     HeadlineElementType,
     IDrillEvent,

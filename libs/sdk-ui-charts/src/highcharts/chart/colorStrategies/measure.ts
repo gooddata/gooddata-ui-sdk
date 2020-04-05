@@ -3,8 +3,8 @@
 import { ColorStrategy, ICreateColorAssignmentReturnValue, isValidMappedColor } from "./base";
 import { IColor, IColorFromPalette, IColorPalette, isColorFromPalette, RgbType } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { IColorAssignment } from "@gooddata/sdk-ui";
+import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { getColorByGuid, getColorFromMapping, getLighterColorFromRGB } from "../../utils/color";
 

@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "../../base/results/facade";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { shallow } from "enzyme";
 import * as React from "react";

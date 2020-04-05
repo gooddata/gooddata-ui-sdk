@@ -2,8 +2,7 @@
 import { MeasureColorStrategy } from "./measure";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IColorAssignment } from "@gooddata/sdk-ui";
+import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { getAtributeColorAssignment, ICreateColorAssignmentReturnValue } from "./base";
 
 export class TreemapColorStrategy extends MeasureColorStrategy {

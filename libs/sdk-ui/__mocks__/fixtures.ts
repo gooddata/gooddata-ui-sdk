@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "../src/base/results/facade";
 
 export const testWorkspace = "testWorkspace";
 

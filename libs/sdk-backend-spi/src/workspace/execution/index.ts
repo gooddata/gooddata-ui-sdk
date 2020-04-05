@@ -295,7 +295,7 @@ export interface IExecutionResult {
  *
  * @remarks
  *
- * See also the {@link DataViewFacade}. This wrapper on top of this raw IDataView can be used to work
+ * See also the `DataViewFacade`. This wrapper on top of this raw IDataView can be used to work
  * with the data in a way more convenient fashion.
  *
  * @public

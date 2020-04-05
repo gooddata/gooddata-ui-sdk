@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
+import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../interfaces";
 import {
     isBubbleChart,

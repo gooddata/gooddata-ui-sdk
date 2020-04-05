@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { getChartOptions } from "../chartOptionsBuilder";
 
@@ -10,7 +10,6 @@ import {
     PRIMARY_ATTRIBUTE_INDEX,
 } from "../../constants/dimensions";
 
-import { IHeaderPredicate } from "@gooddata/sdk-ui";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IChartOptions } from "../../typings/unsafe";
 import { recordedDataFacade } from "../../../../__mocks__/recordings";

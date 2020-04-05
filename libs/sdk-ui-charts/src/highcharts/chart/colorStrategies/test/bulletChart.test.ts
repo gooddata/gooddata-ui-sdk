@@ -3,10 +3,9 @@ import range = require("lodash/range");
 import { ColorFactory } from "../../colorFactory";
 import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../../interfaces";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "../base";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 

@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IHeaderPredicate, DefaultColorPalette } from "@gooddata/sdk-ui";
+import { IHeaderPredicate, DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
     getColorPaletteFromColors,
@@ -7,7 +7,7 @@ import {
     getValidColorPalette,
     normalizeColorToRGB,
 } from "../color";
-import { DataViewFacade, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { emptyDef } from "@gooddata/sdk-model";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 

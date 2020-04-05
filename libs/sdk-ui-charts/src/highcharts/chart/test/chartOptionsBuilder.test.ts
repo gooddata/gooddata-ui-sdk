@@ -3,7 +3,7 @@ import range = require("lodash/range");
 import set = require("lodash/set");
 import isNil = require("lodash/isNil");
 import cloneDeep = require("lodash/cloneDeep");
-import { DefaultColorPalette, VisualizationTypes, HeaderPredicates } from "@gooddata/sdk-ui";
+import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
 import Highcharts from "../highcharts/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import {
@@ -29,7 +29,6 @@ import { PIE_CHART_LIMIT } from "../../constants/limits";
 import { getLighterColor, getRgbString, GRAY, TRANSPARENT } from "../../utils/color";
 
 import { IChartConfig } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
 import { customEscape } from "../../utils/common";
 import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";

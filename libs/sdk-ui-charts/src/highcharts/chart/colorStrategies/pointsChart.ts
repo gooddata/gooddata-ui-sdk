@@ -2,8 +2,7 @@
 import { AttributeColorStrategy } from "./attribute";
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IColorAssignment } from "@gooddata/sdk-ui";
+import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "../../utils/color";
 import { isValidMappedColor } from "./base";

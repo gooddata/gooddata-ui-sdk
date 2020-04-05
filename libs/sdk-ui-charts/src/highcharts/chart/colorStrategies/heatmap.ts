@@ -2,8 +2,7 @@
 import { ColorStrategy, ICreateColorAssignmentReturnValue } from "./base";
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
+import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
 import {
     DEFAULT_HEATMAP_BLUE_COLOR,

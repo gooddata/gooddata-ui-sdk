@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { IntlShape } from "react-intl";
 
-import { IMappingHeader } from "@gooddata/sdk-ui";
+import { IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { getIdsFromUri, getSubtotalStyles, getTreeLeaves } from "./agGridUtils";
 import {
     FIELD_SEPARATOR,
@@ -21,7 +21,6 @@ import {
 } from "./agGridTypes";
 import {
     DataValue,
-    DataViewFacade,
     IAttributeDescriptor,
     IDimensionItemDescriptor,
     IResultHeader,

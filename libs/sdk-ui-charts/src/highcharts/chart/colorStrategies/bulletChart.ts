@@ -15,9 +15,9 @@ import {
 } from "../chartOptions/bulletChartOptions";
 import { IColorPalette, Identifier, isColorFromPalette, isRgbColor, IColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { findMeasureGroupInDimensions } from "../../utils/executionResultHelper";
-import { IColorAssignment } from "@gooddata/sdk-ui";
+import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { ColorStrategy, ICreateColorAssignmentReturnValue, isValidMappedColor } from "./base";
 
 class BulletChartColorStrategy extends ColorStrategy {

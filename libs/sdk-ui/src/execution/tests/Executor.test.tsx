@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { Executor, IExecutorProps } from "../Executor";
 import { createDummyPromise } from "../../base/react/tests/toolkit";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "../../base/results/facade";
 
 const makeChild = () => jest.fn(_ => <div />);
 const renderDummyExecutor = (

@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../interfaces";
-import { BucketNames, VisType } from "@gooddata/sdk-ui";
+import { BucketNames, VisType, DataViewFacade } from "@gooddata/sdk-ui";
 import { isComboChart } from "./common";
 import get = require("lodash/get");
 

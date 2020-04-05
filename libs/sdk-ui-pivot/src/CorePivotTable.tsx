@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    DataViewFacade,
     IAttributeDescriptor,
     IExecutionResult,
     IExportResult,
@@ -28,6 +27,7 @@ import { injectIntl } from "react-intl";
 
 import "../styles/css/pivotTable.css";
 import {
+    DataViewFacade,
     convertDrillableItemsToPredicates,
     convertError,
     ErrorCodes,

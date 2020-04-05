@@ -2,9 +2,9 @@
 import { parseValue, unwrap } from "../../utils/common";
 import { MAX_POINT_WIDTH } from "../highcharts/commonConfiguration";
 import { bucketIsEmpty, IBucket, Identifier } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IPointData } from "../../typings/unsafe";
-import { DataValue, DataViewFacade, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import isEmpty = require("lodash/isEmpty");
 import { IColorStrategy } from "../colorStrategies/base";
 

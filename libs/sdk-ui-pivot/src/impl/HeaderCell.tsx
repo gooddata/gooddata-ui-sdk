@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 import * as React from "react";
 import { IntlShape } from "react-intl";
 import * as classNames from "classnames";

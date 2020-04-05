@@ -3,7 +3,6 @@
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import {
-    DataViewFacade,
     IAttributeDescriptor,
     IResultHeader,
     isAttributeDescriptor,
@@ -25,6 +24,7 @@ import {
     shouldMergeHeaders,
 } from "../agGridHeaders";
 import { recordedDataFacade } from "../../../__mocks__/recordings";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 
 const fixture = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,

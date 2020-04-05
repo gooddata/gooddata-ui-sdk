@@ -6,7 +6,7 @@ import { IHeaderPredicate } from "../HeaderPredicate";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForBuckets } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "../../results/facade";
 
 const emptyFacade = new DataViewFacade(dummyDataView(newDefForBuckets("testWorkspace", [])));
 
