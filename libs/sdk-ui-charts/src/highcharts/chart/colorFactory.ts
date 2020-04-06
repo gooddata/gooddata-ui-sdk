@@ -29,7 +29,7 @@ const attributeChartSupportedTypes = [
 
 function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttribute: any) {
     const attributeChartSupported = isOneOfTypes(type, attributeChartSupportedTypes);
-    return stackByAttribute || (attributeChartSupported && dv.hasAttributes());
+    return stackByAttribute || (attributeChartSupported && dv.def().hasAttributes());
 }
 
 export class ColorFactory {

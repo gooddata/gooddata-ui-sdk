@@ -11,7 +11,7 @@ const { COLUMN, LINE, AREA, BAR } = VisualizationTypes;
 const ComboChart = recordedDataFacade(
     ReferenceRecordings.Scenarios.ComboChart.OnePrimaryAndSecondaryMeasureWithViewBy,
 );
-const ComboMeasureGroup = ComboChart.measureGroupDescriptor();
+const ComboMeasureGroup = ComboChart.meta().measureGroupDescriptor();
 
 describe("getComboChartSeries", () => {
     const series: ISeriesItem[] = [{}, {}];

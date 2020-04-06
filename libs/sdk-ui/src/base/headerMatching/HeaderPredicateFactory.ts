@@ -25,8 +25,8 @@ function arithmeticMeasureLocalIdentifierDeepMatch(
     predicate: IHeaderPredicate,
     context: IHeaderPredicateContext,
 ): boolean {
-    const operand: IMeasure = dv.measure(operandLocalIdentifier);
-    const operandDescriptor: IMeasureDescriptor = dv.measureDescriptor(operandLocalIdentifier);
+    const operand: IMeasure = dv.def().measure(operandLocalIdentifier);
+    const operandDescriptor: IMeasureDescriptor = dv.meta().measureDescriptor(operandLocalIdentifier);
 
     if (isArithmeticMeasure(operand)) {
         const operands = measureArithmeticOperands(operand);
@@ -50,7 +50,7 @@ function getDerivedMeasureMasterMeasureOperandIdentifiers(measure: IMeasure, dv:
         return null;
     }
 
-    const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
+    const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
 
     return getMasterMeasureOperandIdentifiers(masterMeasure);
 }
@@ -63,7 +63,7 @@ function composedFromQualifier(predicate: IHeaderPredicate): IHeaderPredicate {
 
         const { dv } = context;
         const measureLocalIdentifier = getMappingHeaderLocalIdentifier(header);
-        const measure = dv.measure(measureLocalIdentifier);
+        const measure = dv.def().measure(measureLocalIdentifier);
 
         if (!measure) {
             return false;
@@ -113,13 +113,13 @@ function matchDerivedMeasureByMasterUri(
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = dv.measureDescriptor(masterMeasureLocalIdentifier);
+        const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier);
 
         if (matchHeaderUri(uri, masterMeasureHeader)) {
             return true;
         }
 
-        const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
+        const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
 
         return matchUri(uri, masterMeasure);
     }
@@ -136,13 +136,13 @@ function matchDerivedMeasureByMasterIdentifier(
     const isDerived = !!masterMeasureLocalIdentifier;
 
     if (isDerived) {
-        const masterMeasureHeader = dv.measureDescriptor(masterMeasureLocalIdentifier);
+        const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier);
 
         if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
             return true;
         }
 
-        const masterMeasure = dv.measure(masterMeasureLocalIdentifier);
+        const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier);
 
         return matchMeasureIdentifier(identifier, masterMeasure);
     }
@@ -161,7 +161,7 @@ export function uriMatch(uri: string): IHeaderPredicate {
             return false;
         }
 
-        const measure = dv.measure(getMappingHeaderLocalIdentifier(header));
+        const measure = dv.def().measure(getMappingHeaderLocalIdentifier(header));
         if (!measure) {
             return false;
         }
@@ -194,7 +194,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        const measure = dv.measure(getMappingHeaderLocalIdentifier(header));
+        const measure = dv.def().measure(getMappingHeaderLocalIdentifier(header));
 
         if (!measure) {
             return false;

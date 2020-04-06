@@ -31,7 +31,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
     ): ICreateColorAssignmentReturnValue {
         let mappedColor;
         let colorAssignment: IColorAssignment[];
-        const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+        const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
         const headerItem = measureGroup && measureGroup.items[0];
         if (colorMapping) {
             mappedColor = getColorFromMapping(headerItem, colorMapping, dv);

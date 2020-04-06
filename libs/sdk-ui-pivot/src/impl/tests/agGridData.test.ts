@@ -41,12 +41,12 @@ describe("getRow", () => {
             DataViewFirstPage,
         );
 
-        const headerItems = dv.allHeaders();
+        const headerItems = dv.meta().allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
             getRow(
-                dv.twoDimData()[0],
+                dv.rawData().twoDimData()[0],
                 0,
                 tableHeaders.colFields,
                 tableHeaders.rowHeaders,
@@ -62,12 +62,12 @@ describe("getRow", () => {
             DataViewFirstPage,
         );
 
-        const headerItems = dv.allHeaders();
+        const headerItems = dv.meta().allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
             getRow(
-                dv.twoDimData()[0],
+                dv.rawData().twoDimData()[0],
                 3,
                 tableHeaders.colFields,
                 tableHeaders.rowHeaders,

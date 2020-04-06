@@ -73,8 +73,8 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
 }
 
 function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
-    const headerItems = dv.measureDescriptors();
-    const data = dv.singleDimData();
+    const headerItems = dv.meta().measureDescriptors();
+    const data = dv.rawData().singleDimData();
 
     return headerItems.map((item, index) => {
         const value = data[index];
@@ -97,7 +97,7 @@ function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
  * @returns {*}
  */
 export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadlineData {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const executionData = getExecutionData(dv);
 
     const primaryItem = createHeadlineDataItem(executionData[0]);
@@ -129,10 +129,10 @@ export function applyDrillableItems(
     drillableItems: IHeaderPredicate[],
     dataView: IDataView,
 ): IHeadlineData {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const data = cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
-    const [primaryItemHeader, secondaryItemHeader] = dv.measureDescriptors();
+    const [primaryItemHeader, secondaryItemHeader] = dv.meta().measureDescriptors();
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
@@ -157,8 +157,8 @@ export function buildDrillEventData(
     itemContext: IHeadlineDrillItemContext,
     dataView: IDataView,
 ): IDrillEvent {
-    const dv = new DataViewFacade(dataView);
-    const measureHeaderItem: IMeasureDescriptor = dv.measureDescriptor(itemContext.localIdentifier);
+    const dv = DataViewFacade.for(dataView);
+    const measureHeaderItem: IMeasureDescriptor = dv.meta().measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

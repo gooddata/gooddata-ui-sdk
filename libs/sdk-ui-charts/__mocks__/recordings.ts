@@ -4,5 +4,5 @@ import { DataViewFacade } from "@gooddata/sdk-ui";
 import { ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 
 export function recordedDataFacade(rec: ScenarioRecording): DataViewFacade {
-    return new DataViewFacade(recordedDataView(rec));
+    return DataViewFacade.for(recordedDataView(rec));
 }

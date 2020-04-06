@@ -84,7 +84,7 @@ const getCell = (
     );
 };
 
-export const getRow = (
+export function getRow(
     cellData: DataValue[],
     rowIndex: number,
     columnFields: string[],
@@ -92,7 +92,7 @@ export const getRow = (
     rowHeaderData: IResultHeader[][],
     subtotalStyles: string[],
     intl: IntlShape,
-): IGridRow => {
+): IGridRow {
     const row: IGridRow = {
         headerItemMap: {},
     };
@@ -124,16 +124,19 @@ export const getRow = (
         }
     });
     return row;
-};
+}
 
 export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: IntlShape): IGridTotalsRow[] => {
-    if (!dv.hasTotals()) {
+    if (!dv.rawData().hasTotals()) {
         return null;
     }
 
-    const totals = dv.totals();
-    const headers = dv.dimensions()[0].headers;
-    const measureIds = dv.measureDescriptors().map(m => m.measureHeaderItem.localIdentifier);
+    const totals = dv.rawData().totals();
+    const headers = dv.meta().dimensions()[0].headers;
+    const measureIds = dv
+        .meta()
+        .measureDescriptors()
+        .map(m => m.measureHeaderItem.localIdentifier);
     const totalDefs = dv.definition.dimensions[0].totals;
 
     return totals[0].map((totalRow: string[], totalIndex: number) => {
@@ -197,7 +200,7 @@ export function createRowData(
     options: IGridAdapterOptions = {},
 ): IAgGridPage {
     const { addLoadingRenderer = null } = options;
-    const headerItems = dv.allHeaders();
+    const headerItems = dv.meta().allHeaders();
     const dimensions = dv.definition.dimensions;
 
     const { rowHeaders, rowFields, colFields, allHeaders } = headers;

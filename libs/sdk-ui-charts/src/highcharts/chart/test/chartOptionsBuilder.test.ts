@@ -44,7 +44,7 @@ const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
 
 function getMVSTreemap(dv: DataViewFacade) {
-    const dimensions = dv.dimensions();
+    const dimensions = dv.meta().dimensions();
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const { viewByAttribute, stackByAttribute } = getTreemapAttributes(dv);
 
@@ -56,12 +56,12 @@ function getMVSTreemap(dv: DataViewFacade) {
 }
 
 function getSeriesItemDataParameters(dv: DataViewFacade, seriesIndex: any) {
-    const seriesItem = dv.dataAt(seriesIndex);
+    const seriesItem = dv.rawData().dataAt(seriesIndex);
     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
     return [seriesItem, seriesIndex, measureGroup, viewByAttribute, stackByAttribute];
 }
 
-const emptyDataView = new DataViewFacade(dummyDataView(emptyDef("testWorkspace")));
+const emptyDataView = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 
 describe("chartOptionsBuilder", () => {
     const DEFAULT_TOOLTIP_CONTENT_WIDTH = 320;

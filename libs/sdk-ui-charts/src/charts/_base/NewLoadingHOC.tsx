@@ -176,13 +176,16 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
-            return dv.measureDescriptors().map(
-                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                    type: "measure",
-                    localIdentifier: measure.measureHeaderItem.localIdentifier,
-                    title: measure.measureHeaderItem.name,
-                }),
-            );
+            return dv
+                .meta()
+                .measureDescriptors()
+                .map(
+                    (measure: IMeasureDescriptor): IDrillableItemPushData => ({
+                        type: "measure",
+                        localIdentifier: measure.measureHeaderItem.localIdentifier,
+                        title: measure.measureHeaderItem.name,
+                    }),
+                );
         }
 
         private async initDataLoading(execution: IPreparedExecution) {
@@ -212,7 +215,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
                 if (pushData) {
                     const supportedDrillableItems = this.getSupportedDrillableItems(
-                        new DataViewFacade(dataView),
+                        DataViewFacade.for(dataView),
                     );
 
                     pushData({ dataView, supportedDrillableItems });
@@ -228,7 +231,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
                  */
                 if (isNoDataError(error) && error.dataView && pushData) {
                     const supportedDrillableItems = this.getSupportedDrillableItems(
-                        new DataViewFacade(error.dataView),
+                        DataViewFacade.for(error.dataView),
                     );
 
                     pushData({ supportedDrillableItems });

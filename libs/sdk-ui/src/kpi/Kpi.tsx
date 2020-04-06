@@ -78,7 +78,7 @@ const CoreKpi: React.StatelessComponent<IKpiProps & WrappedComponentProps> = pro
 };
 
 const getMeasureData = (result: DataViewFacade) => {
-    const data = result.data();
+    const data = result.rawData().data();
     const measure = get(data, [0, 0]);
 
     if (isNil(measure)) {
@@ -89,7 +89,7 @@ const getMeasureData = (result: DataViewFacade) => {
 };
 
 const getMeasureFormat = (result: DataViewFacade) => {
-    const headerItems = result.measureDescriptors();
+    const headerItems = result.meta().measureDescriptors();
     const format = get(headerItems, [0, "measureHeaderItem", "format"]);
 
     return format;

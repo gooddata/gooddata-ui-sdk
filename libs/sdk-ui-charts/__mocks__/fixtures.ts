@@ -5,7 +5,7 @@ import * as rec from "./recordings/playlist";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
 function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
-    return new DataViewFacade(legacyRecordedDataView(rec));
+    return DataViewFacade.for(legacyRecordedDataView(rec));
 }
 
 //

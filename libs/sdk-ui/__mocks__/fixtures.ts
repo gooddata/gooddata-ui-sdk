@@ -6,7 +6,7 @@ import { DataViewFacade } from "../src/base/results/facade";
 export const testWorkspace = "testWorkspace";
 
 function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
-    return new DataViewFacade(legacyRecordedDataView(rec));
+    return DataViewFacade.for(legacyRecordedDataView(rec));
 }
 
 const BarChartForDrillTests = {

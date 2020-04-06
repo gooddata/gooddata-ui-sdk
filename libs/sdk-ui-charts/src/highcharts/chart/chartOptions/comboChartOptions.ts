@@ -53,10 +53,12 @@ export function getComboChartSeries(
         get(item, ["measureHeaderItem", "localIdentifier"], ""),
     );
 
-    dv.buckets().forEach((bucket: IBucket) => {
-        const bucketItems = bucket.items || [];
-        measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
-    });
+    dv.def()
+        .buckets()
+        .forEach((bucket: IBucket) => {
+            const bucketItems = bucket.items || [];
+            measureBuckets[bucket.localIdentifier] = getMeasureIndices(bucketItems, measureGroupIdentifiers);
+        });
 
     [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES].forEach((name: string, index: number) => {
         (measureBuckets[name] || []).forEach((measureIndex: number) => {

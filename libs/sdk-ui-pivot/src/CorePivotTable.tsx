@@ -196,13 +196,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
-        return dv.measureDescriptors().map(
-            (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                type: "measure",
-                localIdentifier: measure.measureHeaderItem.localIdentifier,
-                title: measure.measureHeaderItem.name,
-            }),
-        );
+        return dv
+            .meta()
+            .measureDescriptors()
+            .map(
+                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
+                    type: "measure",
+                    localIdentifier: measure.measureHeaderItem.localIdentifier,
+                    title: measure.measureHeaderItem.name,
+                }),
+            );
     }
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
@@ -230,7 +233,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                         this.tableHeaders = createTableHeaders(dataView);
                         this.currentResult = result;
-                        this.visibleData = new DataViewFacade(dataView);
+                        this.visibleData = DataViewFacade.for(dataView);
                         this.currentFingerprint = defFingerprint(this.currentResult.definition);
 
                         this.agGridDataSource = createAgGridDatasource(
@@ -264,7 +267,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                          */
                         if (isNoDataError(error) && error.dataView) {
                             const supportedDrillableItems = this.getSupportedDrillableItems(
-                                new DataViewFacade(error.dataView),
+                                DataViewFacade.for(error.dataView),
                             );
 
                             this.props.pushData({ supportedDrillableItems });
@@ -694,7 +697,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private createGridOptions = (): ICustomGridOptions => {
         const tableHeaders = this.tableHeaders;
         const { pageSize } = this.props;
-        const totalRowCount = this.visibleData.firstDimSize();
+        const totalRowCount = this.visibleData.rawData().firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
 
         /*
@@ -954,8 +957,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private getTotalBodyHeight(dv: DataViewFacade): number {
-        const aggregationCount = sumBy(dv.totals(), total => total.length);
-        const rowCount = dv.firstDimSize();
+        const aggregationCount = sumBy(dv.rawData().totals(), total => total.length);
+        const rowCount = dv.rawData().firstDimSize();
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
 

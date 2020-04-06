@@ -120,7 +120,7 @@ export class AgGridDatasource implements IDatasource {
                     .readWindow([startRow, 0], [endRow - startRow, undefined])
                     .then(data => {
                         this.gridApiProvider().setInfiniteRowCount(data.totalCount[0]);
-                        this.processData(new DataViewFacade(data), params);
+                        this.processData(DataViewFacade.for(data), params);
                     })
                     .catch(err => {
                         // tslint:disable-next-line:no-console
@@ -183,7 +183,7 @@ export class AgGridDatasource implements IDatasource {
             result
                 .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                 .then(data => {
-                    this.processData(new DataViewFacade(data), params);
+                    this.processData(DataViewFacade.for(data), params);
                 })
                 .catch(err => {
                     // tslint:disable-next-line:no-console
