@@ -147,8 +147,8 @@ export function getBulletChartSeries(
 }
 
 export function getOccupiedMeasureBucketsLocalIdentifiers(dv: DataViewFacade): Identifier[] {
-    const buckets: IBucket[] = dv.buckets();
-    const executionResultData: DataValue[][] = dv.twoDimData();
+    const buckets: IBucket[] = dv.def().buckets();
+    const executionResultData: DataValue[][] = dv.rawData().twoDimData();
 
     const availableMeasureBucketsLocalIdentifiers = SUPPORTED_MEASURE_BUCKETS;
     const notEmptyMeasureBucketsLocalIdentifiers = buckets

@@ -216,8 +216,8 @@ describe("getDrillableSeriesWithParentAttribute", () => {
         metricColorStrategy,
     );
 
-    const attributes = dv.attributes();
-    const measures = dv.measures();
+    const attributes = dv.def().attributes();
+    const measures = dv.def().measures();
 
     const a0id = attributeIdentifier(attributes[0]);
     const a1id = attributeIdentifier(attributes[1]);

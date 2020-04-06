@@ -101,13 +101,15 @@ export class MeasureColorStrategy extends ColorStrategy {
                 return mapItem;
             }
 
-            const masterMeasure = dv.masterMeasureForDerived(
-                measureGroup.items[measureItemIndex].measureHeaderItem.localIdentifier,
-            );
+            const masterMeasure = dv
+                .def()
+                .masterMeasureForDerived(
+                    measureGroup.items[measureItemIndex].measureHeaderItem.localIdentifier,
+                );
             if (!masterMeasure) {
                 return mapItem;
             }
-            const parentMeasureIndex = dv.measureIndex(masterMeasure.measure.localIdentifier);
+            const parentMeasureIndex = dv.def().measureIndex(masterMeasure.measure.localIdentifier);
             if (parentMeasureIndex > -1) {
                 const sourceMeasureColor = measuresColorAssignment[parentMeasureIndex].color;
                 return this.getDerivedMeasureColorAssignment(

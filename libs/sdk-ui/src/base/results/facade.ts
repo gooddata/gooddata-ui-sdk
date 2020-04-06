@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IAttribute, IBucket, IExecutionDefinition, IMeasure } from "@gooddata/sdk-model";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 import {
     DataValue,
     IDataView,
@@ -32,7 +32,7 @@ import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataM
  * TODO: move more added-value functions here, clean up, consolidate, modularize
  * @alpha
  */
-export class DataViewFacade implements IExecutionDefinitionMethods, IResultMetaMethods, IResultDataMethods {
+export class DataViewFacade implements IResultMetaMethods, IResultDataMethods {
     public readonly definition: IExecutionDefinition;
 
     private readonly definitionMethods: IExecutionDefinitionMethods;
@@ -89,58 +89,6 @@ export class DataViewFacade implements IExecutionDefinitionMethods, IResultMetaM
      */
     public rawData(): IResultDataMethods {
         return this.resultDataMethods;
-    }
-
-    //
-    // IExecutionDefinitonMethods delegates
-    //
-
-    public attributes(): IAttribute[] {
-        return this.definitionMethods.attributes();
-    }
-
-    public measures(): IMeasure[] {
-        return this.definitionMethods.measures();
-    }
-
-    public buckets(): IBucket[] {
-        return this.definitionMethods.buckets();
-    }
-
-    public bucket(localId: string): IBucket | undefined {
-        return this.definitionMethods.bucket(localId);
-    }
-
-    public bucketCount(): number {
-        return this.definitionMethods.bucketCount();
-    }
-
-    public hasBuckets(): boolean {
-        return this.definitionMethods.hasBuckets();
-    }
-
-    public isBucketEmpty(localId: string): boolean {
-        return this.definitionMethods.isBucketEmpty(localId);
-    }
-
-    public bucketMeasures(localId: string): IMeasure[] {
-        return this.definitionMethods.bucketMeasures(localId);
-    }
-
-    public measure(localId: string): IMeasure | undefined {
-        return this.definitionMethods.measure(localId);
-    }
-
-    public measureIndex(localId: string): number {
-        return this.definitionMethods.measureIndex(localId);
-    }
-
-    public masterMeasureForDerived(localId: string): IMeasure | undefined {
-        return this.definitionMethods.masterMeasureForDerived(localId);
-    }
-
-    public hasAttributes(): boolean {
-        return this.definitionMethods.hasAttributes();
     }
 
     //
