@@ -97,7 +97,7 @@ function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
  * @returns {*}
  */
 export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadlineData {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const executionData = getExecutionData(dv);
 
     const primaryItem = createHeadlineDataItem(executionData[0]);
@@ -129,7 +129,7 @@ export function applyDrillableItems(
     drillableItems: IHeaderPredicate[],
     dataView: IDataView,
 ): IHeadlineData {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const data = cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
     const [primaryItemHeader, secondaryItemHeader] = dv.measureDescriptors();
@@ -157,7 +157,7 @@ export function buildDrillEventData(
     itemContext: IHeadlineDrillItemContext,
     dataView: IDataView,
 ): IDrillEvent {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const measureHeaderItem: IMeasureDescriptor = dv.measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");

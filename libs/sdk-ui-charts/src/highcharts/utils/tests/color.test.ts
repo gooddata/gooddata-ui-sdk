@@ -120,7 +120,7 @@ describe("getColorMappingPredicate", () => {
         },
     };
 
-    const context = { dv: new DataViewFacade(dummyDataView(emptyDef("testWorkspace"))) };
+    const context = { dv: DataViewFacade.for(dummyDataView(emptyDef("testWorkspace"))) };
 
     describe("no references provided", () => {
         it("should match predicate when measure local identifier matches", () => {

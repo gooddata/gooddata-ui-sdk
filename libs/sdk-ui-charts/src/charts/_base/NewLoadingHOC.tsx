@@ -212,7 +212,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
 
                 if (pushData) {
                     const supportedDrillableItems = this.getSupportedDrillableItems(
-                        new DataViewFacade(dataView),
+                        DataViewFacade.for(dataView),
                     );
 
                     pushData({ dataView, supportedDrillableItems });
@@ -228,7 +228,7 @@ export function withEntireDataView<T extends ICoreChartProps>(
                  */
                 if (isNoDataError(error) && error.dataView && pushData) {
                     const supportedDrillableItems = this.getSupportedDrillableItems(
-                        new DataViewFacade(error.dataView),
+                        DataViewFacade.for(error.dataView),
                     );
 
                     pushData({ supportedDrillableItems });

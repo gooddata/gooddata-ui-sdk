@@ -1505,7 +1505,7 @@ export function getChartOptions(
     chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate[],
 ): IChartOptions {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
 
     const dimensions = dv.dimensions();
     const attributeHeaderItems = dv.attributeHeaders();

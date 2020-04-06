@@ -8,7 +8,7 @@ import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForBuckets } from "@gooddata/sdk-model";
 import { DataViewFacade } from "../../results/facade";
 
-const emptyFacade = new DataViewFacade(dummyDataView(newDefForBuckets("testWorkspace", [])));
+const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));
 
 describe("isSomeHeaderPredicateMatched", () => {
     it("should return true when some of predicates match header", () => {

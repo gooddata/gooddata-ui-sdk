@@ -283,7 +283,7 @@ export const getMeasureSortItemFieldAndDirection = (
 };
 
 export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {
-    const dv = new DataViewFacade(dataView);
+    const dv = DataViewFacade.for(dataView);
     const dimensions = dv.dimensions();
     const headerItems = dv.allHeaders();
     const { columnDefOptions, makeRowGroups = false } = options;

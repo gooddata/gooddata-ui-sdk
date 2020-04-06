@@ -39,7 +39,7 @@ export class DataViewFacade implements IExecutionDefinitionMethods, IResultMetaM
     private readonly resultMetaMethods: IResultMetaMethods;
     private readonly resultDataMethods: IResultDataMethods;
 
-    constructor(public readonly dataView: IDataView) {
+    protected constructor(public readonly dataView: IDataView) {
         this.definition = dataView.definition;
 
         this.definitionMethods = newExecutionDefinitonMethods(dataView.definition);
@@ -50,6 +50,10 @@ export class DataViewFacade implements IExecutionDefinitionMethods, IResultMetaM
     //
     // Own methods
     //
+
+    public static for(dataView: IDataView): DataViewFacade {
+        return new DataViewFacade(dataView);
+    }
 
     /**
      * @returns result of execution which returned this data view
@@ -64,6 +68,27 @@ export class DataViewFacade implements IExecutionDefinitionMethods, IResultMetaM
      */
     public fingerprint(): string {
         return this.dataView.fingerprint();
+    }
+
+    /**
+     * @returns methods to work with execution definition
+     */
+    public def(): IExecutionDefinitionMethods {
+        return this.definitionMethods;
+    }
+
+    /**
+     * @returns methods to work with result metadata
+     */
+    public meta(): IResultMetaMethods {
+        return this.resultMetaMethods;
+    }
+
+    /**
+     * @returns methods to work with the raw data included in the result
+     */
+    public rawData(): IResultDataMethods {
+        return this.resultDataMethods;
     }
 
     //

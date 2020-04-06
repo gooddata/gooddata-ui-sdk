@@ -61,7 +61,7 @@ function getSeriesItemDataParameters(dv: DataViewFacade, seriesIndex: any) {
     return [seriesItem, seriesIndex, measureGroup, viewByAttribute, stackByAttribute];
 }
 
-const emptyDataView = new DataViewFacade(dummyDataView(emptyDef("testWorkspace")));
+const emptyDataView = DataViewFacade.for(dummyDataView(emptyDef("testWorkspace")));
 
 describe("chartOptionsBuilder", () => {
     const DEFAULT_TOOLTIP_CONTENT_WIDTH = 320;

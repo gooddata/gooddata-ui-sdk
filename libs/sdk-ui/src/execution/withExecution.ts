@@ -38,7 +38,7 @@ export function withExecution<T, R extends object>({
 
                 const executionResult = await _execution.execute();
                 const dataView = await executionResult.readAll();
-                const dataViewFacade = new DataViewFacade(dataView);
+                const dataViewFacade = DataViewFacade.for(dataView);
 
                 return dataViewFacade;
             },

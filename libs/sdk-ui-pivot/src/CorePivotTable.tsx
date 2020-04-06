@@ -230,7 +230,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                         this.tableHeaders = createTableHeaders(dataView);
                         this.currentResult = result;
-                        this.visibleData = new DataViewFacade(dataView);
+                        this.visibleData = DataViewFacade.for(dataView);
                         this.currentFingerprint = defFingerprint(this.currentResult.definition);
 
                         this.agGridDataSource = createAgGridDatasource(
@@ -264,7 +264,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                          */
                         if (isNoDataError(error) && error.dataView) {
                             const supportedDrillableItems = this.getSupportedDrillableItems(
-                                new DataViewFacade(error.dataView),
+                                DataViewFacade.for(error.dataView),
                             );
 
                             this.props.pushData({ supportedDrillableItems });
