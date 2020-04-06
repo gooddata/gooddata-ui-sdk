@@ -84,7 +84,7 @@ const getCell = (
     );
 };
 
-export const getRow = (
+export function getRow(
     cellData: DataValue[],
     rowIndex: number,
     columnFields: string[],
@@ -92,7 +92,7 @@ export const getRow = (
     rowHeaderData: IResultHeader[][],
     subtotalStyles: string[],
     intl: IntlShape,
-): IGridRow => {
+): IGridRow {
     const row: IGridRow = {
         headerItemMap: {},
     };
@@ -124,7 +124,7 @@ export const getRow = (
         }
     });
     return row;
-};
+}
 
 export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: IntlShape): IGridTotalsRow[] => {
     if (!dv.hasTotals()) {

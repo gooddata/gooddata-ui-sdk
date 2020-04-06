@@ -215,7 +215,7 @@ export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) =
     };
 };
 
-export const getMinimalRowData = (dv: DataViewFacade) => {
+export function getMinimalRowData(dv: DataViewFacade) {
     const data = dv.twoDimData();
     const rowHeaders = dv.allHeaders()[0];
     const numberOfRowHeaderItems = (rowHeaders[0] || []).length;
@@ -225,7 +225,7 @@ export const getMinimalRowData = (dv: DataViewFacade) => {
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
           (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
-};
+}
 
 const assignSorting = (colDef: ColDef, sortingMap: { [key: string]: string }): void => {
     const direction = sortingMap[colDef.field];
