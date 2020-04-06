@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { IRgbColorValue, IColor, IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import { DataViewFacade, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IChartConfig, IColorMapping } from "../../interfaces";
 import {
     getMappingHeaderLocalIdentifier,
@@ -8,6 +8,7 @@ import {
     DefaultColorPalette,
     IHeaderPredicate,
     IHeaderPredicateContext,
+    DataViewFacade,
 } from "@gooddata/sdk-ui";
 import isEmpty = require("lodash/isEmpty");
 import isEqual = require("lodash/isEqual");

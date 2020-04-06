@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
-import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { withLoading, WithLoadingResult, IWithLoadingEvents } from "../base";
+// (C) 2019-2020 GoodData Corporation
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { withLoading, WithLoadingResult, IWithLoadingEvents, DataViewFacade } from "../base";
 
 /**
  * TODO: SDK8: add docs

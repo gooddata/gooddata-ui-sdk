@@ -4,11 +4,11 @@ import { generateChartOptions } from "../../test/helper";
 import getLegend, { getLegendItems, shouldLegendBeEnabled } from "../legendBuilder";
 import { DEFAULT_LEGEND_CONFIG } from "../../../typings/legend";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
-const rec = recordedDataView;
+const rec = recordedDataFacade;
 
 describe("shouldLegendBeEnabled", () => {
     it("should return false by default", () => {

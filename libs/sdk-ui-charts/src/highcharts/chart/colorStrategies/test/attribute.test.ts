@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getMVS } from "../../test/helper";
 import { IColorPalette, IColorPaletteItem, RgbType } from "@gooddata/sdk-model";
 import { ColorFactory } from "../../colorFactory";
@@ -12,10 +11,13 @@ import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { ReferenceData, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { getColorsFromStrategy } from "./helper";
 import { RgbPalette } from "./color.fixture";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("AttributeColorStrategy", () => {
     it("should return AttributeColorStrategy with two colors from default color palette", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bar";
         const colorPalette: IColorPalette = undefined;
@@ -40,7 +42,9 @@ describe("AttributeColorStrategy", () => {
     });
 
     it("should return AttributeColorStrategy with two colors from custom color palette", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bar";
 
@@ -64,7 +68,9 @@ describe("AttributeColorStrategy", () => {
     });
 
     it("should return AttributeColorStrategy with properly applied mapping", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewByAndStackBy,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bar";
         const colorMapping: IColorMapping[] = [

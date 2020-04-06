@@ -2,8 +2,7 @@
 import { PointsChartColorStrategy } from "./pointsChart";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { IColorAssignment } from "@gooddata/sdk-ui";
+import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { ICreateColorAssignmentReturnValue } from "./base";
 
 export class BubbleChartColorStrategy extends PointsChartColorStrategy {

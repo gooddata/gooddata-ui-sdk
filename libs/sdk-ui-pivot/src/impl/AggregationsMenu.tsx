@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
-import { attributeDescriptorLocalId, DataViewFacade, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { attributeDescriptorLocalId, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
     isMeasureValueFilter,
@@ -23,6 +23,7 @@ import AggregationsSubMenu from "./AggregationsSubMenu";
 import { AVAILABLE_TOTALS, FIELD_TYPE_ATTRIBUTE } from "./agGridConst";
 import { getParsedFields } from "./agGridUtils";
 import { IColumnTotal } from "./aggregationsMenuTypes";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level

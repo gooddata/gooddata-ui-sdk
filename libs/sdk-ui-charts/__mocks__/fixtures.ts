@@ -1,7 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { legacyRecordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
 
 import * as rec from "./recordings/playlist";
+import { DataViewFacade } from "@gooddata/sdk-ui";
+
+function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
+    return new DataViewFacade(legacyRecordedDataView(rec));
+}
 
 //
 // new fixtures

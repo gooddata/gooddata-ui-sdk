@@ -1,8 +1,13 @@
 // (C) 2007-2019 GoodData Corporation
-import { legacyRecordedDataFacade } from "@gooddata/sdk-backend-mockingbird";
+import { LegacyExecutionRecording, legacyRecordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight } from "@gooddata/sdk-model";
+import { DataViewFacade } from "../src/base/results/facade";
 
 export const testWorkspace = "testWorkspace";
+
+function legacyRecordedDataFacade(rec: LegacyExecutionRecording): DataViewFacade {
+    return new DataViewFacade(legacyRecordedDataView(rec));
+}
 
 const BarChartForDrillTests = {
     definition: require("./recordings/bar_chart_for_drill_tests/definition.json"),

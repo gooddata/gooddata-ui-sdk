@@ -15,13 +15,14 @@ import {
     idRef,
     newMeasureValueFilter,
 } from "@gooddata/sdk-model";
-import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
 describe("AggregationsMenu", () => {
     const intlMock = createIntlMock();
     const attributeColumnId = "a_6_2-m_0";
-    const fixture = recordedDataView(
+    const fixture = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithTwoRowAndOneColumnAttributes,
         DataViewFirstPage,
     );
@@ -118,7 +119,7 @@ describe("AggregationsMenu", () => {
     });
 
     it("should not render any submenu when there is no row attribute", () => {
-        const fixture = recordedDataView(
+        const fixture = recordedDataFacade(
             ReferenceRecordings.Scenarios.PivotTable.TwoMeasuresWithColumnAttribute,
             DataViewFirstPage,
         );

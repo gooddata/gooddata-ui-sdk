@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getMVS } from "../../test/helper";
 import { IColorStrategy } from "../base";
 import { ColorFactory } from "../../colorFactory";
@@ -11,10 +10,11 @@ import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import range = require("lodash/range");
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("HeatmapColorStrategy", () => {
     it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "heatmap";
 
@@ -37,7 +37,7 @@ describe("HeatmapColorStrategy", () => {
         "should return HeatmapColorStrategy strategy with 7 colors" +
             " based on the first color from custom palette",
         () => {
-            const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -70,7 +70,7 @@ describe("HeatmapColorStrategy", () => {
         "should return HeatmapColorStrategy strategy with 7 colors" +
             " based on the first color from custom palette when color mapping given but not applicable",
         () => {
-            const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+            const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
             const { viewByAttribute, stackByAttribute } = getMVS(dv);
             const type = "heatmap";
 
@@ -110,7 +110,7 @@ describe("HeatmapColorStrategy", () => {
     );
 
     it("should return HeatmapColorStrategy with properly applied mapping", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
+        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Heatmap.MeasureRowsAndColumns);
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "heatmap";
 

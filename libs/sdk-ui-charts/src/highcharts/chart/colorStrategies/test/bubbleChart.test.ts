@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getMVS } from "../../test/helper";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
@@ -8,10 +7,11 @@ import { ColorFactory } from "../../colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { BubbleChartColorStrategy } from "../bubbleChart";
 import { ReferenceRecordings, ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("BubbleChartStrategy", () => {
     it("should create palette with color from first measure", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure);
+        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BubbleChart.XAxisMeasure);
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "bubble";
 
@@ -45,7 +45,7 @@ describe("BubbleChartStrategy", () => {
     });
 
     it("should create palette with color for each attribute element", () => {
-        const dv = recordedDataView(
+        const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.BubbleChart.XAndYAxisAndSizeMeasuresWithViewBy,
         );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);

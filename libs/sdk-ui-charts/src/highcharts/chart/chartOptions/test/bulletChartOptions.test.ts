@@ -2,10 +2,10 @@
 import { getBulletChartSeries } from "../bulletChartOptions";
 import { IColorPalette } from "@gooddata/sdk-model";
 import BulletChartColorStrategy from "../../colorStrategies/bulletChart";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import cloneDeep = require("lodash/cloneDeep");
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 
 const getColorStrategy = (colorPalette: IColorPalette, dv: DataViewFacade) =>
     new BulletChartColorStrategy(colorPalette, undefined, undefined, undefined, dv);
@@ -32,12 +32,14 @@ const colorPaletteBlue: IColorPalette = [
     },
 ];
 
-const PrimaryMeasure = recordedDataView(ReferenceRecordings.Scenarios.BulletChart.PrimaryMeasure);
-const PrimaryAndComparative = recordedDataView(
+const PrimaryMeasure = recordedDataFacade(ReferenceRecordings.Scenarios.BulletChart.PrimaryMeasure);
+const PrimaryAndComparative = recordedDataFacade(
     ReferenceRecordings.Scenarios.BulletChart.PrimaryAndComparativeMeasures,
 );
-const PrimaryAndTarget = recordedDataView(ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures);
-const AllMeasures = recordedDataView(
+const PrimaryAndTarget = recordedDataFacade(
+    ReferenceRecordings.Scenarios.BulletChart.PrimaryAndTargetMeasures,
+);
+const AllMeasures = recordedDataFacade(
     ReferenceRecordings.Scenarios.BulletChart.PrimaryTargetAndComparativeMeasures,
 );
 
@@ -60,7 +62,7 @@ describe("getBulletChartSeries", () => {
         );
         HackedUpNullValue.execution.dataView_all.data[1][0] = null;
 
-        const dv = recordedDataView(HackedUpNullValue);
+        const dv = recordedDataFacade(HackedUpNullValue);
         const measureGroup = dv.measureGroupDescriptor().measureGroupHeader;
 
         const colorStrategy = getColorStrategy(colorPaletteRed, dv);

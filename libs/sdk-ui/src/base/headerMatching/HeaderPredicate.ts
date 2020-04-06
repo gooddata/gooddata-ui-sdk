@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2020 GoodData Corporation
 import { IMappingHeader } from "./MappingHeader";
+import { DataViewFacade } from "../results/facade";
 
 /**
  * @public

@@ -2,7 +2,7 @@
 import { ColorStrategy, getAtributeColorAssignment, ICreateColorAssignmentReturnValue } from "./base";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
-import { DataViewFacade } from "@gooddata/sdk-backend-spi";
+import { DataViewFacade } from "@gooddata/sdk-ui";
 
 export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(

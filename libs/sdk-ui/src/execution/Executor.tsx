@@ -1,8 +1,8 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { DataViewFacade, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult } from "../base";
+import { WithLoadingResult, DataViewFacade } from "../base";
 
 /**
  * TODO: SDK8: add docs

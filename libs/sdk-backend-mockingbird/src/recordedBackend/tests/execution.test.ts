@@ -8,9 +8,8 @@ describe("recordedDataView", () => {
         const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasure);
 
         expect(dv).toBeDefined();
-        expect(dv.data()).toBeDefined();
-        expect(dv.allHeaders()).toBeDefined();
-        expect(dv.result()).toBeDefined();
+        expect(dv.data).toBeDefined();
+        expect(dv.result).toBeDefined();
     });
 
     it("should load data view with one page of data", () => {
@@ -20,8 +19,7 @@ describe("recordedDataView", () => {
         );
 
         expect(dv).toBeDefined();
-        expect(dv.data()).toBeDefined();
-        expect(dv.allHeaders()).toBeDefined();
-        expect(dv.result()).toBeDefined();
+        expect(dv.data).toBeDefined();
+        expect(dv.result).toBeDefined();
     });
 });

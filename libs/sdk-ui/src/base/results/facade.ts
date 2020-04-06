@@ -11,8 +11,9 @@ import {
     measureMasterIdentifier,
     idMatchMeasure,
 } from "@gooddata/sdk-model";
-import { IDataView, IExecutionResult } from "./index";
 import {
+    IDataView,
+    IExecutionResult,
     DataValue,
     IDimensionItemDescriptor,
     IMeasureGroupDescriptor,
@@ -22,7 +23,7 @@ import {
     IResultHeader,
     isMeasureGroupDescriptor,
     isResultAttributeHeader,
-} from "./results";
+} from "@gooddata/sdk-backend-spi";
 import isArray = require("lodash/isArray");
 import invariant from "ts-invariant";
 

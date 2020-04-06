@@ -1,6 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import {
-    DataViewFacade,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
@@ -18,6 +17,7 @@ import {
 } from "./DrillEvents";
 import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
+import { DataViewFacade } from "../results/facade";
 
 export function isSomeHeaderPredicateMatched(
     drillablePredicates: IHeaderPredicate[],

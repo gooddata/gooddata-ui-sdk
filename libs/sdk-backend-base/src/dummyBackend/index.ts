@@ -3,7 +3,6 @@ import {
     AbstractExecutionFactory,
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
-    DataViewFacade,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
@@ -125,16 +124,6 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
  */
 export function dummyBackendEmptyData(): IAnalyticalBackend {
     return dummyBackend({ hostname: "test", raiseNoDataExceptions: false });
-}
-
-/**
- * Creates a new, empty data view facade for the provided execution definition. The definition will be
- * retained as-is. The data will be empty.
- * @param definition - execution definition
- * @internal
- */
-export function dummyDataFacade(definition: IExecutionDefinition): DataViewFacade {
-    return new DataViewFacade(dummyDataView(definition));
 }
 
 /**

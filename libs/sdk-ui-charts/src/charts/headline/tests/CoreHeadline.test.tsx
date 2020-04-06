@@ -5,8 +5,8 @@ import { testUtils } from "@gooddata/js-utils";
 import { CoreHeadline } from "../CoreHeadline";
 import HeadlineTransformation from "../internal/HeadlineTransformation";
 import { ICoreChartProps } from "../../../interfaces/chartProps";
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../../__mocks__/recordings";
 
 describe("Headline", () => {
     function createComponent(props: ICoreChartProps) {
@@ -15,8 +15,8 @@ describe("Headline", () => {
         );
     }
 
-    const singleMeasureHeadline = recordedDataView(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
-    const twoMeasureHeadline = recordedDataView(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
+    const singleMeasureHeadline = recordedDataFacade(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
+    const twoMeasureHeadline = recordedDataFacade(ReferenceRecordings.Scenarios.Headline.SingleMeasure);
 
     const singleMeasureExec = singleMeasureHeadline.result().transform();
     const twoMeasureExec = twoMeasureHeadline.result().transform();

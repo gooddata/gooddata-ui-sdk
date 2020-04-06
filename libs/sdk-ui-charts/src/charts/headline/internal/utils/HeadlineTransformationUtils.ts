@@ -1,12 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import cloneDeep = require("lodash/cloneDeep");
 import get = require("lodash/get");
 import isEmpty = require("lodash/isEmpty");
 import isNumber = require("lodash/isNumber");
-import { DataValue, DataViewFacade, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { DataValue, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import * as invariant from "invariant";
 import { IntlShape } from "react-intl";
 import {
+    DataViewFacade,
     IDrillEvent,
     IDrillEventContextHeadline,
     IDrillEventIntersectionElement,

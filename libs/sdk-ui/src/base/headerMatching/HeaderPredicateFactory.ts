@@ -7,12 +7,7 @@ import {
     hasMappingHeaderLocalIdentifier,
     IMappingHeader,
 } from "./MappingHeader";
-import {
-    DataViewFacade,
-    IMeasureDescriptor,
-    isMeasureDescriptor,
-    isResultAttributeHeader,
-} from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     isArithmeticMeasure,
@@ -22,6 +17,7 @@ import {
     measureMasterIdentifier,
     measureUri,
 } from "@gooddata/sdk-model";
+import { DataViewFacade } from "../results/facade";
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
     dv: DataViewFacade,

@@ -33,8 +33,6 @@ export {
     IDataView,
 } from "./workspace/execution";
 
-export { DataViewFacade } from "./workspace/execution/facade";
-
 export {
     DataValue,
     IMeasureDescriptor,

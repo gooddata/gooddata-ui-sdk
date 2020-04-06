@@ -4,7 +4,6 @@ import {
     AbstractExecutionFactory,
     AnalyticalBackendConfig,
     AuthenticatedPrincipal,
-    DataViewFacade,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
@@ -15,16 +14,16 @@ import {
     IExportConfig,
     IExportResult,
     IPreparedExecution,
+    IUserService,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
+    IWorkspaceInsights,
     IWorkspaceMetadata,
     IWorkspacePermissionsFactory,
     IWorkspaceQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
-    IUserService,
-    IWorkspaceInsights,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -133,16 +132,12 @@ export function legacyRecordedBackend(
  * @internal
  * @deprecated this implementation is deprecated, use non-legacy recorded backend
  */
-export function legacyRecordedDataFacade(recording: LegacyExecutionRecording): DataViewFacade {
+export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView {
     const definition = recording.definition;
     const executionFactory = new RecordedExecutionFactory({}, recording.definition.workspace);
 
-    // this result can readAll() and promise data view from recorded afm result
     const result = recordedExecutionResult(definition, executionFactory, recording);
-    // the facade needs the data view right now, no promises; so create that too
-    const dataView = recordedDataView(definition, result, recording);
-
-    return new DataViewFacade(dataView);
+    return recordedDataView(definition, result, recording);
 }
 
 //

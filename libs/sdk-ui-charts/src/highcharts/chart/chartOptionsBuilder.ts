@@ -2,7 +2,6 @@
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import {
     DataValue,
-    DataViewFacade,
     IAttributeDescriptor,
     IDataView,
     IMeasureDescriptor,
@@ -13,6 +12,7 @@ import * as cx from "classnames";
 import * as invariant from "invariant";
 
 import {
+    DataViewFacade,
     BucketNames,
     getDrillIntersection,
     IHeaderPredicate,

@@ -142,3 +142,5 @@ export {
 export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
 export { CatalogHelper } from "./helpers/CatalogHelper";
+
+export { DataViewFacade } from "./results/facade";

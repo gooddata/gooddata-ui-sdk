@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getMVS } from "../../test/helper";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
@@ -10,10 +9,13 @@ import { CUSTOM_COLOR_PALETTE } from "../../test/colorPalette.fixture";
 import { ScatterPlotColorStrategy } from "../scatterPlot";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import range = require("lodash/range");
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("ScatterPlotColorStrategy", () => {
     it("should create palette with same color from first measure for all attribute elements", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute);
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute,
+        );
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "scatter";
 

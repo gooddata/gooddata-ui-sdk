@@ -8,7 +8,6 @@ import { AttributeOrMeasure } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
-import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
@@ -24,7 +23,6 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
@@ -139,60 +137,6 @@ export class DataTooLargeError extends AnalyticalBackendError {
 
 // @public
 export type DataValue = null | string | number;
-
-// @alpha
-export class DataViewFacade {
-    constructor(dataView: IDataView);
-    // (undocumented)
-    allHeaders(): IResultHeader[][][];
-    // (undocumented)
-    attributeHeaders(): IResultAttributeHeader[][][];
-    // (undocumented)
-    attributes(): IAttribute[];
-    bucket(localId: string): IBucket | undefined;
-    // (undocumented)
-    bucketCount(): number;
-    bucketMeasures(localId: string): IMeasure[];
-    // (undocumented)
-    buckets(): IBucket[];
-    // (undocumented)
-    data(): DataValue[][] | DataValue[];
-    // (undocumented)
-    dataAt(index: number): DataValue | DataValue[];
-    // (undocumented)
-    readonly dataView: IDataView;
-    // (undocumented)
-    readonly definition: IExecutionDefinition;
-    // (undocumented)
-    dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[];
-    // (undocumented)
-    dimensions(): IDimensionDescriptor[];
-    // (undocumented)
-    fingerprint(): () => string;
-    // (undocumented)
-    firstDimSize(): number;
-    // (undocumented)
-    hasAttributes(): boolean;
-    hasBuckets(): boolean;
-    hasTotals(): boolean;
-    isBucketEmpty(localId: string): boolean;
-    isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean;
-    masterMeasureForDerived(localId: string): IMeasure | undefined;
-    measure(localId: string): IMeasure | undefined;
-    measureDescriptor(localId: string): IMeasureDescriptor | undefined;
-    measureDescriptors(): IMeasureDescriptor[];
-    // (undocumented)
-    measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
-    measureIndex(localId: string): number;
-    // (undocumented)
-    measures(): IMeasure[];
-    // (undocumented)
-    result(): IExecutionResult;
-    singleDimData(): DataValue[];
-    // (undocumented)
-    totals(): DataValue[][][] | undefined;
-    twoDimData(): DataValue[][];
-}
 
 // @public
 export type ErrorConverter = (e: any) => AnalyticalBackendError;

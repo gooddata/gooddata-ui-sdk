@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-import { recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getMVS } from "../../test/helper";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { ColorFactory } from "../../colorFactory";
@@ -11,10 +10,11 @@ import { IColorMapping } from "../../../../interfaces";
 import { getColorsFromStrategy } from "./helper";
 import { TwoColorPalette } from "./color.fixture";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
 describe("TreemapColorStrategy", () => {
     it("should return TreemapColorStrategy strategy with two colors from default color palette", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
+        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "treemap";
         const colorPalette: IColorPalette = undefined;
@@ -39,7 +39,7 @@ describe("TreemapColorStrategy", () => {
     });
 
     it("should return TreemapColorStrategy with properly applied mapping", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
+        const dv = recordedDataFacade(ReferenceRecordings.Scenarios.Treemap.SingleMeasureViewByAndSegment);
         const { viewByAttribute, stackByAttribute } = getMVS(dv);
         const type = "treemap";
 

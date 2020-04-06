@@ -1,11 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { getSortItemByColId, getSortsFromModel } from "../agGridSorting";
-import { DataViewFirstPage, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
+import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
+import { recordedDataFacade } from "../../../__mocks__/recordings";
 
 describe("getSortItemByColId", () => {
-    const fixture = recordedDataView(
+    const fixture = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
         DataViewFirstPage,
     );
@@ -19,7 +20,7 @@ describe("getSortItemByColId", () => {
 });
 
 describe("getSortsFromModel", () => {
-    const fixture = recordedDataView(
+    const fixture = recordedDataFacade(
         ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
         DataViewFirstPage,
     );

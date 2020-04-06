@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 
-import { getMappingHeaderName, IMappingHeader } from "@gooddata/sdk-ui";
+import { getMappingHeaderName, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { getIdsFromUri, getTreeLeaves } from "./agGridUtils";
 import {
     COLUMN_GROUPING_DELIMITER,
@@ -12,7 +12,6 @@ import { assignDrillItemsAndType } from "./agGridDrilling";
 import { IColumnDefOptions, IGridAdapterOptions, IGridHeader, TableHeaders } from "./agGridTypes";
 import {
     DataValue,
-    DataViewFacade,
     IAttributeDescriptor,
     IDataView,
     IDimensionItemDescriptor,

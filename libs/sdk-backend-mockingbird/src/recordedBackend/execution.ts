@@ -3,7 +3,6 @@
 import {
     AbstractExecutionFactory,
     DataValue,
-    DataViewFacade,
     IDataView,
     IDimensionDescriptor,
     IExecutionFactory,
@@ -221,10 +220,7 @@ class RecordedDataView implements IDataView {
  * @param dataViewId - optionally identifier of the data view; defaults to view with all data
  * @internal
  */
-export function recordedDataView(
-    recording: ScenarioRecording,
-    dataViewId: string = DataViewAll,
-): DataViewFacade {
+export function recordedDataView(recording: ScenarioRecording, dataViewId: string = DataViewAll): IDataView {
     const { execution, scenarioIndex } = recording;
     const scenario = execution.scenarios?.[scenarioIndex];
 
@@ -250,7 +246,5 @@ export function recordedDataView(
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 
-    const dataView = new RecordedDataView(result, definition, data);
-
-    return new DataViewFacade(dataView);
+    return new RecordedDataView(result, definition, data);
 }

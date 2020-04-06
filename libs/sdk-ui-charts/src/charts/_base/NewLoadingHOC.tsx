@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 
 import {
-    DataViewFacade,
     IDataView,
     IExecutionResult,
     IExportResult,
@@ -12,6 +11,7 @@ import {
 import * as React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import {
+    DataViewFacade,
     ILoadingState,
     IExportFunction,
     IExtendedExportConfig,
