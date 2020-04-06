@@ -1,6 +1,20 @@
 // (C) 2019-2020 GoodData Corporation
-import { IAttribute, IBucket, IMeasure } from "@gooddata/sdk-model";
+import {
+    bucketIsEmpty,
+    IAttribute,
+    IBucket,
+    idMatchMeasure,
+    IExecutionDefinition,
+    IMeasure,
+    measureMasterIdentifier,
+    bucketMeasures,
+} from "@gooddata/sdk-model";
 
+/**
+ * Methods to work with execution definition.
+ *
+ * @internal
+ */
 export interface IExecutionDefinitionMethods {
     /**
      * @returns attributes which were specified in execution definition that resulted in this data view
@@ -93,4 +107,114 @@ export interface IExecutionDefinitionMethods {
      * @returns true if execution definition that resulted in this data view has any attributes
      */
     hasAttributes(): boolean;
+}
+
+//
+// Default implementation
+//
+
+type BucketIndex = {
+    [key: string]: IBucket;
+};
+
+function buildBucketIndex(definition: IExecutionDefinition): BucketIndex {
+    return definition.buckets.reduce((acc: BucketIndex, val) => {
+        const id = val.localIdentifier ? val.localIdentifier : "unknown";
+        acc[id] = val;
+        return acc;
+    }, {});
+}
+
+class ExecutionDefinitonMethods implements IExecutionDefinitionMethods {
+    /*
+     * Derived property; bucket id => bucket
+     */
+    private readonly _bucketByLocalId: BucketIndex;
+
+    constructor(private readonly definition: IExecutionDefinition) {
+        this._bucketByLocalId = buildBucketIndex(definition);
+    }
+
+    public attributes(): IAttribute[] {
+        return this.definition.attributes;
+    }
+
+    public measures(): IMeasure[] {
+        return this.definition.measures;
+    }
+
+    public buckets(): IBucket[] {
+        return this.definition.buckets;
+    }
+
+    public bucket(localId: string): IBucket | undefined {
+        if (!localId) {
+            return undefined;
+        }
+
+        return this._bucketByLocalId[localId];
+    }
+
+    public bucketCount(): number {
+        return this.definition.buckets.length;
+    }
+
+    public hasBuckets(): boolean {
+        return this.bucketCount() > 0;
+    }
+
+    public isBucketEmpty(localId: string): boolean {
+        const bucket = this._bucketByLocalId[localId];
+
+        if (!bucket) {
+            return true;
+        }
+
+        return bucketIsEmpty(this._bucketByLocalId[localId]);
+    }
+
+    public bucketMeasures(localId: string): IMeasure[] {
+        const bucket = this._bucketByLocalId[localId];
+
+        if (!bucket) {
+            return [];
+        }
+
+        return bucketMeasures(this._bucketByLocalId[localId]);
+    }
+
+    public measure(localId: string): IMeasure | undefined {
+        return this.definition.measures.find(idMatchMeasure(localId));
+    }
+
+    public measureIndex(localId: string): number {
+        return this.definition.measures.findIndex(idMatchMeasure(localId));
+    }
+
+    public masterMeasureForDerived(localId: string): IMeasure | undefined {
+        const measure = this.measure(localId);
+
+        if (!measure) {
+            return;
+        }
+
+        const masterMeasureId = measureMasterIdentifier(measure);
+
+        if (!masterMeasureId) {
+            // TODO: revisit; this is weird but existing callers used to rely on the behavior;
+            //  perhaps rename method?
+
+            return measure;
+        }
+
+        return this.measure(masterMeasureId);
+    }
+
+    public hasAttributes(): boolean {
+        return this.definition.attributes.length > 0;
+    }
+}
+
+export function newExecutionDefinitonMethods(definition: IExecutionDefinition): IExecutionDefinitionMethods {
+    return new ExecutionDefinitonMethods(definition);
 }

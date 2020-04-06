@@ -1,7 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
-import { DataValue, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { DataValue, IDataView } from "@gooddata/sdk-backend-spi";
+import invariant from "ts-invariant";
+import isArray from "lodash/isArray";
 
-export interface IDataViewMethods {
+/**
+ * Methods to access data and totals in a result.
+ *
+ * @internal
+ */
+export interface IResultDataMethods {
     /**
      * @returns size for first dimension of the data view
      */
@@ -51,15 +58,65 @@ export interface IDataViewMethods {
      * @returns true if grand totals present, false if not
      */
     hasTotals(): boolean;
+}
 
-    /**
-     * @returns result of execution which returned this data view
-     */
-    result(): IExecutionResult;
+class ResultDataMethods implements IResultDataMethods {
+    constructor(private readonly dataView: IDataView) {}
 
-    /**
-     * @remarks see {@link IDataView.fingerprint} for more contractual information
-     * @returns fingerprint of the data view
-     */
-    fingerprint(): any;
+    public firstDimSize(): number {
+        return this.dataView.totalCount[0];
+    }
+
+    public dataAt(index: number): DataValue | DataValue[] {
+        return this.dataView.data[index];
+    }
+
+    public data(): DataValue[][] | DataValue[] {
+        return this.dataView.data;
+    }
+
+    public singleDimData(): DataValue[] {
+        const d = this.dataView.data;
+
+        if (d === null) {
+            return [];
+        }
+
+        const e = d[0];
+
+        invariant(
+            !isArray(e),
+            "trying to work with single-dim data while the underlying data view has two dims",
+        );
+
+        return d as DataValue[];
+    }
+
+    public twoDimData(): DataValue[][] {
+        const d = this.dataView.data;
+
+        if (d === null) {
+            return [];
+        }
+
+        const e = d[0];
+
+        if (e === null || !e) {
+            return [];
+        }
+
+        return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
+    }
+
+    public totals(): DataValue[][][] | undefined {
+        return this.dataView.totals;
+    }
+
+    public hasTotals(): boolean {
+        return this.dataView.totals !== undefined;
+    }
+}
+
+export function newResultDataMethods(dataView: IDataView): IResultDataMethods {
+    return new ResultDataMethods(dataView);
 }
