@@ -1198,6 +1198,18 @@ export namespace GdcMetadata {
         content: any;
     }
     // (undocumented)
+    export interface IKpiAlert extends IMetadataObject {
+        // (undocumented)
+        content: {
+            kpi: Uri;
+            dashboard: Uri;
+            threshold: number;
+            isTriggered: boolean;
+            whenTriggered: "underThreshold" | "aboveThreshold";
+            filterContext?: Uri;
+        };
+    }
+    // (undocumented)
     export interface IMaqlAstPosition {
         // (undocumented)
         column: number;
@@ -1231,7 +1243,7 @@ export namespace GdcMetadata {
         };
     }
     // (undocumented)
-    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm;
+    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm | IKpiAlert;
     // (undocumented)
     export interface IObjectMeta {
         // (undocumented)
@@ -1291,6 +1303,8 @@ export namespace GdcMetadata {
     // (undocumented)
     export function isFact(obj: any): obj is IFact;
     // (undocumented)
+    export function isKpiAlert(obj: any): obj is IKpiAlert;
+    // (undocumented)
     export function isMetric(obj: any): obj is IMetric;
     // (undocumented)
     export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute;
@@ -1298,6 +1312,8 @@ export namespace GdcMetadata {
     export function isWrappedAttributeDisplayForm(object: WrappedObject): object is IWrappedAttributeDisplayForm;
     // (undocumented)
     export function isWrappedFact(object: WrappedObject): object is IWrappedFact;
+    // (undocumented)
+    export function isWrappedKpiAlert(object: WrappedObject): object is IWrappedKpiAlert;
     // (undocumented)
     export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric;
     // (undocumented)
@@ -1340,6 +1356,11 @@ export namespace GdcMetadata {
         fact: IFact;
     }
     // (undocumented)
+    export interface IWrappedKpiAlert {
+        // (undocumented)
+        kpiAlert: IKpiAlert;
+    }
+    // (undocumented)
     export interface IWrappedMetric {
         // (undocumented)
         metric: IMetric;
@@ -1349,7 +1370,7 @@ export namespace GdcMetadata {
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = IWrappedAttribute | IWrappedMetric | IWrappedFact | IWrappedAttributeDisplayForm;
+    export type WrappedObject = IWrappedAttribute | IWrappedMetric | IWrappedFact | IWrappedAttributeDisplayForm | IWrappedKpiAlert;
 }
 
 // @public

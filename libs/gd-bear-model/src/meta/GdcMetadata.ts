@@ -113,7 +113,22 @@ export namespace GdcMetadata {
         };
     }
 
-    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm;
+    export interface IKpiAlert extends IMetadataObject {
+        content: {
+            kpi: Uri;
+            /**
+             * KPI can be on more dashboards - we need to distinguish
+             * which dashboard can be used as link in dashboard alerting email
+             */
+            dashboard: Uri;
+            threshold: number;
+            isTriggered: boolean;
+            whenTriggered: "underThreshold" | "aboveThreshold";
+            filterContext?: Uri;
+        };
+    }
+
+    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm | IKpiAlert;
 
     export interface IWrappedAttribute {
         attribute: IAttribute;
@@ -131,11 +146,16 @@ export namespace GdcMetadata {
         attributeDisplayForm: IAttributeDisplayForm;
     }
 
+    export interface IWrappedKpiAlert {
+        kpiAlert: IKpiAlert;
+    }
+
     export type WrappedObject =
         | IWrappedAttribute
         | IWrappedMetric
         | IWrappedFact
-        | IWrappedAttributeDisplayForm;
+        | IWrappedAttributeDisplayForm
+        | IWrappedKpiAlert;
 
     export interface IAttributeElement {
         uri: string;
@@ -265,6 +285,14 @@ export namespace GdcMetadata {
 
     export function isFact(obj: any): obj is IFact {
         return !isEmpty(obj) && (obj as IFact).meta.category === "fact";
+    }
+
+    export function isKpiAlert(obj: any): obj is IKpiAlert {
+        return !isEmpty(obj) && (obj as IAttribute).meta.category === "kpiAlert";
+    }
+
+    export function isWrappedKpiAlert(object: WrappedObject): object is IWrappedKpiAlert {
+        return object.hasOwnProperty("kpiAlert");
     }
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
