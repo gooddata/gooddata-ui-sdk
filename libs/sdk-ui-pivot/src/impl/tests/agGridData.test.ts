@@ -46,7 +46,7 @@ describe("getRow", () => {
 
         expect(
             getRow(
-                dv.twoDimData()[0],
+                dv.rawData().twoDimData()[0],
                 0,
                 tableHeaders.colFields,
                 tableHeaders.rowHeaders,
@@ -67,7 +67,7 @@ describe("getRow", () => {
 
         expect(
             getRow(
-                dv.twoDimData()[0],
+                dv.rawData().twoDimData()[0],
                 3,
                 tableHeaders.colFields,
                 tableHeaders.rowHeaders,

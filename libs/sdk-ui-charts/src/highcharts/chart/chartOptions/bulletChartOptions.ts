@@ -125,7 +125,7 @@ export function getBulletChartSeries(
     colorStrategy: IColorStrategy,
 ) {
     const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
-    const executionResultData = dv.twoDimData();
+    const executionResultData = dv.rawData().twoDimData();
 
     return executionResultData.map((seriesItem: string[], seriesIndex: number) => {
         const seriesItemData = getSeriesItemData(

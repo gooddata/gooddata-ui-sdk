@@ -697,7 +697,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private createGridOptions = (): ICustomGridOptions => {
         const tableHeaders = this.tableHeaders;
         const { pageSize } = this.props;
-        const totalRowCount = this.visibleData.firstDimSize();
+        const totalRowCount = this.visibleData.rawData().firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
 
         /*
@@ -957,8 +957,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private getTotalBodyHeight(dv: DataViewFacade): number {
-        const aggregationCount = sumBy(dv.totals(), total => total.length);
-        const rowCount = dv.firstDimSize();
+        const aggregationCount = sumBy(dv.rawData().totals(), total => total.length);
+        const rowCount = dv.rawData().firstDimSize();
 
         const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi);
 

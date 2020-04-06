@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { DataValue, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";
 import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods";
@@ -22,7 +22,7 @@ import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataM
  * TODO: move more added-value functions here, clean up, consolidate, modularize
  * @alpha
  */
-export class DataViewFacade implements IResultDataMethods {
+export class DataViewFacade {
     public readonly definition: IExecutionDefinition;
 
     private readonly definitionMethods: IExecutionDefinitionMethods;
@@ -79,37 +79,5 @@ export class DataViewFacade implements IResultDataMethods {
      */
     public rawData(): IResultDataMethods {
         return this.resultDataMethods;
-    }
-
-    //
-    // IResultDataMethods delegates
-    //
-
-    public firstDimSize(): number {
-        return this.resultDataMethods.firstDimSize();
-    }
-
-    public dataAt(index: number): DataValue | DataValue[] {
-        return this.resultDataMethods.dataAt(index);
-    }
-
-    public data(): DataValue[][] | DataValue[] {
-        return this.resultDataMethods.data();
-    }
-
-    public singleDimData(): DataValue[] {
-        return this.resultDataMethods.singleDimData();
-    }
-
-    public twoDimData(): DataValue[][] {
-        return this.resultDataMethods.twoDimData();
-    }
-
-    public totals(): DataValue[][][] | undefined {
-        return this.resultDataMethods.totals();
-    }
-
-    public hasTotals(): boolean {
-        return this.resultDataMethods.hasTotals();
     }
 }

@@ -56,7 +56,7 @@ function getMVSTreemap(dv: DataViewFacade) {
 }
 
 function getSeriesItemDataParameters(dv: DataViewFacade, seriesIndex: any) {
-    const seriesItem = dv.dataAt(seriesIndex);
+    const seriesItem = dv.rawData().dataAt(seriesIndex);
     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
     return [seriesItem, seriesIndex, measureGroup, viewByAttribute, stackByAttribute];
 }

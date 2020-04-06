@@ -74,7 +74,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
 
 function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
     const headerItems = dv.meta().measureDescriptors();
-    const data = dv.singleDimData();
+    const data = dv.rawData().singleDimData();
 
     return headerItems.map((item, index) => {
         const value = data[index];

@@ -51,7 +51,7 @@ const computeXirr = (executionData: IXirrExecutionData[]): number => {
 
 function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
     const headerItems = dv.meta().attributeHeaders()[0][0]; // TODO: is there a better way to do this?
-    const data = dv.singleDimData();
+    const data = dv.rawData().singleDimData();
 
     return headerItems
         ? headerItems.map(

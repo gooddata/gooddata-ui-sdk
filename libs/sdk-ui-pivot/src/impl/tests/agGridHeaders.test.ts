@@ -142,10 +142,10 @@ describe("getMinimalRowData", () => {
 
     it("should return a identical data if measure data is available", () => {
         const result = getMinimalRowData(WithMeasureData);
-        const expectedLength = WithMeasureData.twoDimData().length;
+        const expectedLength = WithMeasureData.rawData().twoDimData().length;
 
         expect(result.length).toEqual(expectedLength);
-        expect(result).toEqual(WithMeasureData.twoDimData());
+        expect(result).toEqual(WithMeasureData.rawData().twoDimData());
     });
 });
 

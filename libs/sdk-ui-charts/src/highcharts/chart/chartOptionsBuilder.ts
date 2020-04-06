@@ -297,31 +297,33 @@ export function getHeatmapSeries(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
 ) {
     const data: IPointData[] = [];
-    dv.twoDimData().forEach((rowItem: DataValue[], rowItemIndex: number) => {
-        rowItem.forEach((columnItem: DataValue, columnItemIndex: number) => {
-            const value: number = parseValue(String(columnItem));
-            const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
-            if (isNil(value)) {
-                data.push({
-                    ...pointData,
-                    borderWidth: 1,
-                    borderColor: GRAY,
-                    color: TRANSPARENT,
-                });
-                data.push({
-                    ...pointData,
-                    borderWidth: 0,
-                    pointPadding: 2,
-                    color: nullColor,
-                    // ignoredInDrillEventContext flag is used internally, not related to Highchart
-                    // to check and remove this null-value point in drill message
-                    ignoredInDrillEventContext: true,
-                });
-            } else {
-                data.push(pointData);
-            }
+    dv.rawData()
+        .twoDimData()
+        .forEach((rowItem: DataValue[], rowItemIndex: number) => {
+            rowItem.forEach((columnItem: DataValue, columnItemIndex: number) => {
+                const value: number = parseValue(String(columnItem));
+                const pointData: IPointData = { x: columnItemIndex, y: rowItemIndex, value };
+                if (isNil(value)) {
+                    data.push({
+                        ...pointData,
+                        borderWidth: 1,
+                        borderColor: GRAY,
+                        color: TRANSPARENT,
+                    });
+                    data.push({
+                        ...pointData,
+                        borderWidth: 0,
+                        pointPadding: 2,
+                        color: nullColor,
+                        // ignoredInDrillEventContext flag is used internally, not related to Highchart
+                        // to check and remove this null-value point in drill message
+                        ignoredInDrillEventContext: true,
+                    });
+                } else {
+                    data.push(pointData);
+                }
+            });
         });
-    });
 
     return [
         {
@@ -345,17 +347,20 @@ export function getScatterPlotSeries(
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
-    const data: ISeriesDataItem[] = dv.twoDimData().map((seriesItem: string[], seriesIndex: number) => {
-        const values = seriesItem.map((value: string) => {
-            return parseValue(value);
-        });
+    const data: ISeriesDataItem[] = dv
+        .rawData()
+        .twoDimData()
+        .map((seriesItem: string[], seriesIndex: number) => {
+            const values = seriesItem.map((value: string) => {
+                return parseValue(value);
+            });
 
-        return {
-            x: !primaryMeasuresBucketEmpty ? values[0] : 0,
-            y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
-            name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : "",
-        };
-    });
+            return {
+                x: !primaryMeasuresBucketEmpty ? values[0] : 0,
+                y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
+                name: stackByAttribute ? stackByAttribute.items[seriesIndex].attributeHeaderItem.name : "",
+            };
+        });
 
     return [
         {
@@ -380,30 +385,33 @@ export function getBubbleChartSeries(
     const primaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.MEASURES);
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
 
-    return dv.twoDimData().map((resData: any, index: number) => {
-        let data: any = [];
-        if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
-            const emptyBucketsCount = getCountOfEmptyBuckets([
-                primaryMeasuresBucketEmpty,
-                secondaryMeasuresBucketEmpty,
-            ]);
-            data = [
-                {
-                    x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
-                    y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
-                    // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
-                    z: parseFloat(resData[2 - emptyBucketsCount]),
-                    format: unwrap(last(measureGroup.items)).format, // only for dataLabel format
-                },
-            ];
-        }
-        return {
-            name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : "",
-            color: colorStrategy.getColorByIndex(index),
-            legendIndex: index,
-            data,
-        };
-    });
+    return dv
+        .rawData()
+        .twoDimData()
+        .map((resData: any, index: number) => {
+            let data: any = [];
+            if (resData[0] !== null && resData[1] !== null && resData[2] !== null) {
+                const emptyBucketsCount = getCountOfEmptyBuckets([
+                    primaryMeasuresBucketEmpty,
+                    secondaryMeasuresBucketEmpty,
+                ]);
+                data = [
+                    {
+                        x: !primaryMeasuresBucketEmpty ? parseValue(resData[0]) : 0,
+                        y: !secondaryMeasuresBucketEmpty ? parseValue(resData[1 - emptyBucketsCount]) : 0,
+                        // we want to allow NaN on z to be able show bubble of default size when Size bucket is empty
+                        z: parseFloat(resData[2 - emptyBucketsCount]),
+                        format: unwrap(last(measureGroup.items)).format, // only for dataLabel format
+                    },
+                ];
+            }
+            return {
+                name: stackByAttribute ? stackByAttribute.items[index].attributeHeaderItem.name : "",
+                color: colorStrategy.getColorByIndex(index),
+                legendIndex: index,
+                data,
+            };
+        });
 }
 
 function getColorStep(valuesCount: number): number {
@@ -467,7 +475,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     let uncoloredLeafs: any = [];
     let lastRoot: IResultAttributeHeader["attributeHeaderItem"] = null;
 
-    const executionResultData = dv.twoDimData();
+    const executionResultData = dv.rawData().twoDimData();
     const dataLength = executionResultData.length;
     const format = unwrap(measureGroup.items[0]).format; // this configuration has only one measure
 
@@ -518,33 +526,35 @@ export function getTreemapStackedSeriesDataWithMeasures(
         return data;
     }, data);
 
-    dv.twoDimData().forEach((seriesItems: string[], seriesIndex: number) => {
-        const colorChange = getColorStep(seriesItems.length);
-        const unsortedLeafs: any[] = [];
-        seriesItems.forEach((seriesItem: string, seriesItemIndex: number) => {
-            unsortedLeafs.push({
-                name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
-                parent: `${seriesIndex}`,
-                format: unwrap(measureGroup.items[seriesIndex]).format,
-                value: parseValue(seriesItem),
-                x: seriesIndex,
-                y: seriesItemIndex,
-                showInLegend: false,
+    dv.rawData()
+        .twoDimData()
+        .forEach((seriesItems: string[], seriesIndex: number) => {
+            const colorChange = getColorStep(seriesItems.length);
+            const unsortedLeafs: any[] = [];
+            seriesItems.forEach((seriesItem: string, seriesItemIndex: number) => {
+                unsortedLeafs.push({
+                    name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
+                    parent: `${seriesIndex}`,
+                    format: unwrap(measureGroup.items[seriesIndex]).format,
+                    value: parseValue(seriesItem),
+                    x: seriesIndex,
+                    y: seriesItemIndex,
+                    showInLegend: false,
+                });
             });
-        });
-        const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
+            const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
 
-        data = [
-            ...data,
-            ...sortedLeafs.map((leaf: IPointData, seriesItemIndex: number) => ({
-                ...leaf,
-                color: getLighterColor(
-                    colorStrategy.getColorByIndex(seriesIndex),
-                    colorChange * seriesItemIndex,
-                ),
-            })),
-        ];
-    });
+            data = [
+                ...data,
+                ...sortedLeafs.map((leaf: IPointData, seriesItemIndex: number) => ({
+                    ...leaf,
+                    color: getLighterColor(
+                        colorStrategy.getColorByIndex(seriesIndex),
+                        colorChange * seriesItemIndex,
+                    ),
+                })),
+            ];
+        });
 
     return data;
 }
@@ -606,46 +616,49 @@ export function getSeries(
         return getBulletChartSeries(dv, measureGroup, colorStrategy);
     }
 
-    return dv.twoDimData().map((seriesItem: string[], seriesIndex: number) => {
-        const seriesItemData = getSeriesItemData(
-            seriesItem,
-            seriesIndex,
-            measureGroup,
-            viewByAttribute,
-            stackByAttribute,
-            type,
-            colorStrategy,
-        );
+    return dv
+        .rawData()
+        .twoDimData()
+        .map((seriesItem: string[], seriesIndex: number) => {
+            const seriesItemData = getSeriesItemData(
+                seriesItem,
+                seriesIndex,
+                measureGroup,
+                viewByAttribute,
+                stackByAttribute,
+                type,
+                colorStrategy,
+            );
 
-        const seriesItemConfig: ISeriesItemConfig = {
-            color: colorStrategy.getColorByIndex(seriesIndex),
-            legendIndex: seriesIndex,
-            data: seriesItemData,
-        };
+            const seriesItemConfig: ISeriesItemConfig = {
+                color: colorStrategy.getColorByIndex(seriesIndex),
+                legendIndex: seriesIndex,
+                data: seriesItemData,
+            };
 
-        if (stackByAttribute) {
-            // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
-            // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
-            seriesItemConfig.name = stackByAttribute.items[seriesIndex].attributeHeaderItem.name;
-        } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
-            // Pie charts with measures only have a single series which name would is ambiguous
-            seriesItemConfig.name = measureGroup.items
-                .map((wrappedMeasure: IMeasureDescriptor) => {
-                    return unwrap(wrappedMeasure).name;
-                })
-                .join(", ");
-        } else {
-            // otherwise seriesName is a measure name of index seriesIndex
-            seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
-        }
+            if (stackByAttribute) {
+                // if stackBy attribute is available, seriesName is a stackBy attribute value of index seriesIndex
+                // this is a limitiation of highcharts and a reason why you can not have multi-measure stacked charts
+                seriesItemConfig.name = stackByAttribute.items[seriesIndex].attributeHeaderItem.name;
+            } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByAttribute) {
+                // Pie charts with measures only have a single series which name would is ambiguous
+                seriesItemConfig.name = measureGroup.items
+                    .map((wrappedMeasure: IMeasureDescriptor) => {
+                        return unwrap(wrappedMeasure).name;
+                    })
+                    .join(", ");
+            } else {
+                // otherwise seriesName is a measure name of index seriesIndex
+                seriesItemConfig.name = measureGroup.items[seriesIndex].measureHeaderItem.name;
+            }
 
-        const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
+            const turboThresholdProp = isTreemap(type) ? { turboThreshold: 0 } : {};
 
-        return {
-            ...seriesItemConfig,
-            ...turboThresholdProp,
-        };
-    });
+            return {
+                ...seriesItemConfig,
+                ...turboThresholdProp,
+            };
+        });
 }
 
 const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number): string => {

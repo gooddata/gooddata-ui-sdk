@@ -127,11 +127,11 @@ export function getRow(
 }
 
 export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: IntlShape): IGridTotalsRow[] => {
-    if (!dv.hasTotals()) {
+    if (!dv.rawData().hasTotals()) {
         return null;
     }
 
-    const totals = dv.totals();
+    const totals = dv.rawData().totals();
     const headers = dv.meta().dimensions()[0].headers;
     const measureIds = dv
         .meta()
