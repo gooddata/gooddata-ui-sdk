@@ -5,30 +5,15 @@ import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
-import { GdcExecuteAFM, GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcVisualizationObject, GdcMetadata } from "@gooddata/gd-bear-model";
 import { getIn, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import {
     IGetObjectsByQueryOptions,
     IGetObjectUsingOptions,
-    SortDirection,
     IGetObjectsByQueryWithPagingResponse,
 } from "./interfaces";
 import { stringify } from "./utils/queryString";
-
-export interface IValidElementsOptions {
-    limit?: number;
-    offset?: number;
-    order?: SortDirection;
-    filter?: string;
-    prompt?: string;
-    uris?: string[];
-    complement?: boolean;
-    includeTotalCountWithoutFilters?: boolean;
-    restrictiveDefinition?: string;
-    restrictiveDefinitionContent?: object;
-    afm?: GdcExecuteAFM.IAfm;
-}
 
 export interface IUriIdentifierPair {
     uri: string;
@@ -797,7 +782,7 @@ export class MetadataModule {
      *      - paging {Object}
      *      - elementsMeta {Object}
      */
-    public getValidElements(projectId: string, id: string, options: IValidElementsOptions = {}) {
+    public getValidElements(projectId: string, id: string, options: GdcMetadata.IValidElementsParams = {}) {
         const query = pickBy(
             pick(options, ["limit", "offset", "order", "filter", "prompt"]),
             val => val !== undefined,
@@ -830,13 +815,14 @@ export class MetadataModule {
         const getOptions = afm ? getRequestBodyWithReportDefinition : () => Promise.resolve(pickedOptions);
 
         return getOptions().then(requestBody =>
-            this.xhr
-                .post(`/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ""), {
+            this.xhr.postParsed<GdcMetadata.IValidElementsResponse>(
+                `/gdc/md/${projectId}/obj/${id}/validElements${queryParams}`.replace(/\?$/, ""),
+                {
                     body: {
                         validElementsRequest: requestBody,
                     },
-                })
-                .then(response => response.getData()),
+                },
+            ),
         );
     }
 

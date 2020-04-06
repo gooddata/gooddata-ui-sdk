@@ -4,6 +4,7 @@ import values from "lodash/fp/values";
 import first from "lodash/first";
 import flow from "lodash/flow";
 import { Timestamp, MaqlExpression, Uri, NumberAsString } from "../aliases";
+import { GdcExecuteAFM } from "../executeAfm/GdcExecuteAFM";
 
 /**
  * @public
@@ -150,6 +151,10 @@ export namespace GdcMetadata {
         kpiAlert: IKpiAlert;
     }
 
+    export interface IWrappedAttributeElement {
+        element: IAttributeElement;
+    }
+
     export type WrappedObject =
         | IWrappedAttribute
         | IWrappedMetric
@@ -251,6 +256,61 @@ export namespace GdcMetadata {
          * Date and time of last update (YYYY-MM-DD H:M:S)
          */
         updated: string;
+    }
+
+    export type SortDirection = "asc" | "desc";
+
+    /**
+     * Request params for POST /gdc/md/\{projectId\}/obj/\{attributeDisplayFormMetadataObjectId\}/validElements\{params\}
+     */
+    export interface IValidElementsParams {
+        limit?: number;
+        offset?: number;
+        order?: SortDirection;
+        filter?: string;
+        prompt?: string;
+        uris?: string[];
+        complement?: boolean;
+        includeTotalCountWithoutFilters?: boolean;
+        restrictiveDefinition?: string;
+        restrictiveDefinitionContent?: object;
+        afm?: GdcExecuteAFM.IAfm;
+    }
+    /**
+     * Response for POST /gdc/md/\{projectId\}/obj/\{attributeDisplayFormMetadataObjectId\}/validElements\{params\}
+     */
+    export interface IValidElementsResponse {
+        validElements: {
+            items: IWrappedAttributeElement[];
+            paging: {
+                /**
+                 * Total amount of existing elements for a given attributeDisplayForm (which match filter and request uris)
+                 */
+                total: NumberAsString;
+                /**
+                 * Amount of returned elements
+                 */
+                count: number;
+                /**
+                 * Offset of first item, starts from 0
+                 */
+                offset: NumberAsString;
+            };
+            /**
+             * Total count of elements (ignoring any filter or request uris)
+             * Number represented as a string
+             */
+            totalCountWithoutFilters?: string;
+            elementsMeta: {
+                attribute: Uri;
+                attributeDisplayForm: Uri;
+                /**
+                 * we search only for substring of filter ie *filter*
+                 */
+                filter: string;
+                order: SortDirection;
+            };
+        };
     }
 
     export function isAttribute(obj: any): obj is IAttribute {
