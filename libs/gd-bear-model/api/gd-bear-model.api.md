@@ -1316,6 +1316,48 @@ export namespace GdcMetadata {
     export function isWrappedKpiAlert(object: WrappedObject): object is IWrappedKpiAlert;
     // (undocumented)
     export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric;
+    export interface IValidElementsParams {
+        // (undocumented)
+        afm?: GdcExecuteAFM.IAfm;
+        // (undocumented)
+        complement?: boolean;
+        // (undocumented)
+        filter?: string;
+        // (undocumented)
+        includeTotalCountWithoutFilters?: boolean;
+        // (undocumented)
+        limit?: number;
+        // (undocumented)
+        offset?: number;
+        // (undocumented)
+        order?: SortDirection;
+        // (undocumented)
+        prompt?: string;
+        // (undocumented)
+        restrictiveDefinition?: string;
+        // (undocumented)
+        restrictiveDefinitionContent?: object;
+        // (undocumented)
+        uris?: string[];
+    }
+    export interface IValidElementsResponse {
+        // (undocumented)
+        validElements: {
+            items: IWrappedAttributeElement[];
+            paging: {
+                total: NumberAsString;
+                count: number;
+                offset: NumberAsString;
+            };
+            totalCountWithoutFilters?: string;
+            elementsMeta: {
+                attribute: Uri;
+                attributeDisplayForm: Uri;
+                filter: string;
+                order: SortDirection;
+            };
+        };
+    }
     // (undocumented)
     export interface IWrappedAttribute {
         // (undocumented)
@@ -1325,6 +1367,11 @@ export namespace GdcMetadata {
     export interface IWrappedAttributeDisplayForm {
         // (undocumented)
         attributeDisplayForm: IAttributeDisplayForm;
+    }
+    // (undocumented)
+    export interface IWrappedAttributeElement {
+        // (undocumented)
+        element: IAttributeElement;
     }
     // (undocumented)
     export interface IWrappedAttributeElements {
@@ -1367,6 +1414,8 @@ export namespace GdcMetadata {
     }
     // (undocumented)
     export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget";
+    // (undocumented)
+    export type SortDirection = "asc" | "desc";
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)

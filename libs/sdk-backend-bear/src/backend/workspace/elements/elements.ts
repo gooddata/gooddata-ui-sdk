@@ -66,7 +66,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     }
 
     private async queryWorker(
-        offset: number | undefined,
+        offset: number | undefined = 0,
         limit: number | undefined,
         options: IElementQueryOptions | undefined,
     ): Promise<IElementQueryResult> {
