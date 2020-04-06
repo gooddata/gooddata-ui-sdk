@@ -33,33 +33,33 @@ const fixture = recordedDataFacade(
 
 describe("identifyHeader", () => {
     it("should return correct field key for an attribute header", () => {
-        expect(identifyHeader(fixture.allHeaders()[0][0][0])).toMatchSnapshot();
+        expect(identifyHeader(fixture.meta().allHeaders()[0][0][0])).toMatchSnapshot();
     });
 
     it("should return correct field key for a measure header", () => {
-        expect(identifyHeader(fixture.allHeaders()[1][1][0])).toMatchSnapshot();
+        expect(identifyHeader(fixture.meta().allHeaders()[1][1][0])).toMatchSnapshot();
     });
 });
 describe("identifyResponseHeader", () => {
     it("should return correct field key for an attribute response header", () => {
-        expect(identifyResponseHeader(fixture.dimensionItemDescriptors(0)[0])).toMatchSnapshot();
+        expect(identifyResponseHeader(fixture.meta().dimensionItemDescriptors(0)[0])).toMatchSnapshot();
     });
 });
 
 describe("headerToGrid", () => {
     it("should return correct grid header for an attribute header with correct prefix", () => {
-        expect(headerToGrid(fixture.allHeaders()[0][0][0], "prefix_")).toMatchSnapshot();
+        expect(headerToGrid(fixture.meta().allHeaders()[0][0][0], "prefix_")).toMatchSnapshot();
     });
 
     it("should return correct grid header for a measure header with correct prefix", () => {
-        expect(headerToGrid(fixture.allHeaders()[1][1][0], "prefix_")).toMatchSnapshot();
+        expect(headerToGrid(fixture.meta().allHeaders()[1][1][0], "prefix_")).toMatchSnapshot();
     });
 });
 
 describe("getColumnHeaders", () => {
     it("should return hierarchical column headers", () => {
         expect(
-            getColumnHeaders(fixture.allHeaders()[1], fixture.dimensionItemDescriptors(1)),
+            getColumnHeaders(fixture.meta().allHeaders()[1], fixture.meta().dimensionItemDescriptors(1)),
         ).toMatchSnapshot();
     });
 });
@@ -67,13 +67,13 @@ describe("getColumnHeaders", () => {
 describe("getRowHeaders", () => {
     it("should return an array of grid headers", () => {
         expect(
-            getRowHeaders(fixture.dimensionItemDescriptors(0) as IAttributeDescriptor[], {}, false),
+            getRowHeaders(fixture.meta().dimensionItemDescriptors(0) as IAttributeDescriptor[], {}, false),
         ).toMatchSnapshot();
     });
     it("should return an array of grid headers with row group settings and extended by custom options", () => {
         expect(
             getRowHeaders(
-                fixture.dimensionItemDescriptors(0) as IAttributeDescriptor[],
+                fixture.meta().dimensionItemDescriptors(0) as IAttributeDescriptor[],
                 { type: "custom" },
                 true,
             ),
@@ -107,13 +107,13 @@ describe("getFields", () => {
     ];
 
     it.each(Fixtures)("should correctly obtain column fields for %s", (_desc, facade) => {
-        expect(getFields(facade.allHeaders()[1])).toMatchSnapshot();
+        expect(getFields(facade.meta().allHeaders()[1])).toMatchSnapshot();
     });
 });
 
 describe("assortDimensionDescriptors", () => {
     it("should return attribute and measure dimension headers", () => {
-        const dimensions = fixture.dimensions();
+        const dimensions = fixture.meta().dimensions();
         const { attributeDescriptors, measureDescriptors } = assortDimensionDescriptors(dimensions);
         expect(attributeDescriptors).toHaveLength(2);
         expect(attributeDescriptors.filter(header => isAttributeDescriptor(header))).toHaveLength(2);
@@ -134,7 +134,7 @@ describe("getMinimalRowData", () => {
 
     it("should return a two-dimensional array of empty values when no measure data are available", () => {
         const result = getMinimalRowData(NoMeasureData);
-        const expectedLength = NoMeasureData.allHeaders()[0][0].length;
+        const expectedLength = NoMeasureData.meta().allHeaders()[0][0].length;
 
         expect(result.length).toEqual(expectedLength);
         expect(result.filter(e => e[0] === null).length).toEqual(expectedLength);
@@ -220,7 +220,7 @@ describe("conversion from header matrix to hierarchy", () => {
 });
 
 describe("getAttributeSortItemFieldAndDirection", () => {
-    const dimensions = fixture.dimensions();
+    const dimensions = fixture.meta().dimensions();
     const { attributeDescriptors } = assortDimensionDescriptors(dimensions);
     const attributeSortItem: IAttributeSortItem = {
         attributeSortItem: {
@@ -237,7 +237,7 @@ describe("getAttributeSortItemFieldAndDirection", () => {
 });
 
 describe("getMeasureSortItemFieldAndDirection", () => {
-    const dimensions = fixture.dimensions();
+    const dimensions = fixture.meta().dimensions();
     const { measureDescriptors } = assortDimensionDescriptors(dimensions);
     const measureSortItem: IMeasureSortItem = {
         measureSortItem: {

@@ -30,8 +30,8 @@ export function generateChartOptions(
 }
 
 export function getMVS(dv: DataViewFacade) {
-    const dimensions = dv.dimensions();
-    const headerItems = dv.allHeaders();
+    const dimensions = dv.meta().dimensions();
+    const headerItems = dv.meta().allHeaders();
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const viewByAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],
@@ -51,8 +51,8 @@ export function getMVS(dv: DataViewFacade) {
 export function getMVSForViewByTwoAttributes(dv: DataViewFacade) {
     const mvs = getMVS(dv);
 
-    const dimensions = dv.dimensions();
-    const headerItems = dv.allHeaders();
+    const dimensions = dv.meta().dimensions();
+    const headerItems = dv.meta().allHeaders();
 
     const viewByParentAttribute = findAttributeInDimension(
         dimensions[VIEW_BY_DIMENSION_INDEX],

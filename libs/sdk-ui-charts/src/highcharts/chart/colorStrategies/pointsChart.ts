@@ -13,7 +13,7 @@ export class PointsChartColorStrategy extends AttributeColorStrategy {
         colorMapping: IColorMapping[],
         dv: DataViewFacade,
     ): IColorAssignment[] {
-        const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+        const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
         const measureHeaderItem = measureGroup.items[0];
         const measureColorMapping = getColorFromMapping(measureHeaderItem, colorMapping, dv);
         const color: IColor = isValidMappedColor(measureColorMapping, colorPalette)

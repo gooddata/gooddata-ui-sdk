@@ -50,7 +50,7 @@ const computeXirr = (executionData: IXirrExecutionData[]): number => {
 };
 
 function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
-    const headerItems = dv.attributeHeaders()[0][0]; // TODO: is there a better way to do this?
+    const headerItems = dv.meta().attributeHeaders()[0][0]; // TODO: is there a better way to do this?
     const data = dv.singleDimData();
 
     return headerItems
@@ -79,7 +79,7 @@ function getExecutionData(dv: DataViewFacade): IXirrExecutionData[] {
  */
 export function getHeadlineData(dataView: IDataView): IHeadlineData {
     const dv = DataViewFacade.for(dataView);
-    const measure = dv.measureDescriptors()[0];
+    const measure = dv.meta().measureDescriptors()[0];
 
     const executionData = getExecutionData(dv);
     const value = computeXirr(executionData);
@@ -112,7 +112,7 @@ export function applyDrillableItems(
     const dv = DataViewFacade.for(dataView);
     const data = cloneDeep(headlineData);
     const { primaryItem } = data;
-    const [primaryItemHeader] = dv.measureDescriptors();
+    const [primaryItemHeader] = dv.meta().measureDescriptors();
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
@@ -131,7 +131,7 @@ export function applyDrillableItems(
  */
 export function buildDrillEventData(itemContext: IXirrDrillItemContext, dataView: IDataView): IDrillEvent {
     const dv = DataViewFacade.for(dataView);
-    const measureHeaderItem: IMeasureDescriptor = dv.measureDescriptor(itemContext.localIdentifier);
+    const measureHeaderItem: IMeasureDescriptor = dv.meta().measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

@@ -132,8 +132,11 @@ export const getRowTotals = (dv: DataViewFacade, columnKeys: string[], intl: Int
     }
 
     const totals = dv.totals();
-    const headers = dv.dimensions()[0].headers;
-    const measureIds = dv.measureDescriptors().map(m => m.measureHeaderItem.localIdentifier);
+    const headers = dv.meta().dimensions()[0].headers;
+    const measureIds = dv
+        .meta()
+        .measureDescriptors()
+        .map(m => m.measureHeaderItem.localIdentifier);
     const totalDefs = dv.definition.dimensions[0].totals;
 
     return totals[0].map((totalRow: string[], totalIndex: number) => {
@@ -197,7 +200,7 @@ export function createRowData(
     options: IGridAdapterOptions = {},
 ): IAgGridPage {
     const { addLoadingRenderer = null } = options;
-    const headerItems = dv.allHeaders();
+    const headerItems = dv.meta().allHeaders();
     const dimensions = dv.definition.dimensions;
 
     const { rowHeaders, rowFields, colFields, allHeaders } = headers;

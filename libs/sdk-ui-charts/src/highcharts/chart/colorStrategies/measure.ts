@@ -38,9 +38,9 @@ export class MeasureColorStrategy extends ColorStrategy {
         let currentColorPaletteIndex = 0;
 
         const nonDerivedMeasuresAssignment: IColorAssignment[] = [];
-        const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+        const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
         const allMeasuresAssignment = measureGroup.items.map((headerItem, index) => {
-            if (dv.isDerivedMeasure(measureGroup.items[index])) {
+            if (dv.meta().isDerivedMeasure(measureGroup.items[index])) {
                 return {
                     headerItem,
                     color: emptyColorPaletteItem,
@@ -95,9 +95,9 @@ export class MeasureColorStrategy extends ColorStrategy {
         colorPalette: IColorPalette,
     ): IColorAssignment[] {
         return measuresColorAssignment.map((mapItem, measureItemIndex) => {
-            const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+            const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
 
-            if (!dv.isDerivedMeasure(measureGroup.items[measureItemIndex])) {
+            if (!dv.meta().isDerivedMeasure(measureGroup.items[measureItemIndex])) {
                 return mapItem;
             }
 

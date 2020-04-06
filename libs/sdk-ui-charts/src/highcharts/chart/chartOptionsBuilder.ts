@@ -943,7 +943,7 @@ export function getDrillableSeries(
 
     const isMultiMeasureWithOnlyMeasures =
         isOneOfTypes(type, multiMeasuresAlternatingTypes) && !viewByChildAttribute;
-    const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+    const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
 
     return series.map((seriesItem: any, seriesIndex: number) => {
         let isSeriesDrillable = false;
@@ -1404,8 +1404,8 @@ export function getHeatmapDataClasses(
 }
 
 export function getDefaultTreemapAttributes(dv: DataViewFacade): any {
-    const dimensions = dv.dimensions();
-    const attributeHeaderItems = dv.attributeHeaders();
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
 
     let viewByAttribute = findAttributeInDimension(
         dimensions[STACK_BY_DIMENSION_INDEX],
@@ -1434,8 +1434,8 @@ export function getTreemapAttributes(dv: DataViewFacade): any {
         return getDefaultTreemapAttributes(dv);
     }
 
-    const dimensions = dv.dimensions();
-    const attributeHeaderItems = dv.attributeHeaders();
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
 
     if (dv.def().isBucketEmpty(BucketNames.SEGMENT)) {
         if (dv.def().isBucketEmpty(BucketNames.VIEW)) {
@@ -1507,8 +1507,8 @@ export function getChartOptions(
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
 
-    const dimensions = dv.dimensions();
-    const attributeHeaderItems = dv.attributeHeaders();
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
 
     const config = setMeasuresToSecondaryAxis(chartConfig, dv);
 

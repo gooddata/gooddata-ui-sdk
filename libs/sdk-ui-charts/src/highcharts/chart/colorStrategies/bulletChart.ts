@@ -29,7 +29,7 @@ class BulletChartColorStrategy extends ColorStrategy {
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
         const occupiedMeasureBucketsLocalIdentifiers = getOccupiedMeasureBucketsLocalIdentifiers(dv);
-        const measureGroup = findMeasureGroupInDimensions(dv.dimensions());
+        const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
 
         const defaultColorsAssignment = this.getDefaultColorAssignment(
             colorPalette,

@@ -196,13 +196,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
-        return dv.measureDescriptors().map(
-            (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                type: "measure",
-                localIdentifier: measure.measureHeaderItem.localIdentifier,
-                title: measure.measureHeaderItem.name,
-            }),
-        );
+        return dv
+            .meta()
+            .measureDescriptors()
+            .map(
+                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
+                    type: "measure",
+                    localIdentifier: measure.measureHeaderItem.localIdentifier,
+                    title: measure.measureHeaderItem.name,
+                }),
+            );
     }
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {

@@ -10,7 +10,7 @@ const TestRecording = recordedDataFacade(
 );
 
 describe("findMeasureGroupInDimensions", () => {
-    const sampleDimensions = TestRecording.dimensions();
+    const sampleDimensions = TestRecording.meta().dimensions();
 
     it("should return the measure group header", () => {
         const returnValue = findMeasureGroupInDimensions(sampleDimensions);
@@ -30,8 +30,8 @@ describe("findMeasureGroupInDimensions", () => {
 });
 
 describe("findAttributeInDimension", () => {
-    const dimensions = TestRecording.dimensions();
-    const headerItems = TestRecording.allHeaders();
+    const dimensions = TestRecording.meta().dimensions();
+    const headerItems = TestRecording.meta().allHeaders();
     it("should return the view by attribute header with header items", () => {
         const returnValue = findAttributeInDimension(dimensions[1], headerItems[1]);
         const expectedValue = {

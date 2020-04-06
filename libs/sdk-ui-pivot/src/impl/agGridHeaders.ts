@@ -217,7 +217,7 @@ export const assortDimensionDescriptors = (dimensions: IDimensionDescriptor[]) =
 
 export function getMinimalRowData(dv: DataViewFacade) {
     const data = dv.twoDimData();
-    const rowHeaders = dv.allHeaders()[0];
+    const rowHeaders = dv.meta().allHeaders()[0];
     const numberOfRowHeaderItems = (rowHeaders[0] || []).length;
 
     return data.length > 0
@@ -284,8 +284,8 @@ export const getMeasureSortItemFieldAndDirection = (
 
 export function createTableHeaders(dataView: IDataView, options: IGridAdapterOptions = {}): TableHeaders {
     const dv = DataViewFacade.for(dataView);
-    const dimensions = dv.dimensions();
-    const headerItems = dv.allHeaders();
+    const dimensions = dv.meta().dimensions();
+    const headerItems = dv.meta().allHeaders();
     const { columnDefOptions, makeRowGroups = false } = options;
 
     const sorting = dv.definition.sortBy;

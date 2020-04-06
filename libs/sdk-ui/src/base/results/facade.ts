@@ -1,16 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import {
-    DataValue,
-    IDataView,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IExecutionResult,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultHeader,
-} from "@gooddata/sdk-backend-spi";
+import { DataValue, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";
 import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods";
@@ -32,7 +22,7 @@ import { IResultDataMethods, newResultDataMethods } from "./internal/resultDataM
  * TODO: move more added-value functions here, clean up, consolidate, modularize
  * @alpha
  */
-export class DataViewFacade implements IResultMetaMethods, IResultDataMethods {
+export class DataViewFacade implements IResultDataMethods {
     public readonly definition: IExecutionDefinition;
 
     private readonly definitionMethods: IExecutionDefinitionMethods;
@@ -89,42 +79,6 @@ export class DataViewFacade implements IResultMetaMethods, IResultDataMethods {
      */
     public rawData(): IResultDataMethods {
         return this.resultDataMethods;
-    }
-
-    //
-    // IResultMetaMethods implementation
-    //
-
-    public dimensions(): IDimensionDescriptor[] {
-        return this.resultMetaMethods.dimensions();
-    }
-
-    public dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[] {
-        return this.resultMetaMethods.dimensionItemDescriptors(dimIdx);
-    }
-
-    public measureGroupDescriptor(): IMeasureGroupDescriptor | undefined {
-        return this.resultMetaMethods.measureGroupDescriptor();
-    }
-
-    public measureDescriptors(): IMeasureDescriptor[] {
-        return this.resultMetaMethods.measureDescriptors();
-    }
-
-    public measureDescriptor(localId: string): IMeasureDescriptor | undefined {
-        return this.resultMetaMethods.measureDescriptor(localId);
-    }
-
-    public allHeaders(): IResultHeader[][][] {
-        return this.resultMetaMethods.allHeaders();
-    }
-
-    public attributeHeaders(): IResultAttributeHeader[][][] {
-        return this.resultMetaMethods.attributeHeaders();
-    }
-
-    public isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean {
-        return this.resultMetaMethods.isDerivedMeasure(measureDescriptor);
     }
 
     //

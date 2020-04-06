@@ -21,9 +21,9 @@ const intl = createIntlMock();
 
 describe("getMeasureDrillItem", () => {
     it("should return measure drill item based on response headers", () => {
-        const responseHeaders: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
-            1,
-        );
+        const responseHeaders: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes
+            .meta()
+            .dimensionItemDescriptors(1);
         const header: IResultMeasureHeader = {
             measureHeaderItem: {
                 name: "not important",
@@ -34,12 +34,12 @@ describe("getMeasureDrillItem", () => {
         expect(getMeasureDrillItem(responseHeaders, header)).toMatchSnapshot();
     });
     it("should return null if the header cannot be found", () => {
-        const responseHeaders1: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
-            0,
-        );
-        const responseHeaders2: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(
-            1,
-        );
+        const responseHeaders1: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes
+            .meta()
+            .dimensionItemDescriptors(0);
+        const responseHeaders2: IDimensionItemDescriptor[] = pivotTableWithColumnAndRowAttributes
+            .meta()
+            .dimensionItemDescriptors(1);
         const header: IResultMeasureHeader = {
             measureHeaderItem: {
                 name: "not important",
@@ -58,8 +58,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader = pivotTableWithColumnAndRowAttributes.allHeaders()[1][1][0];
-        const responseHeaders = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(1);
+        const currentHeader = pivotTableWithColumnAndRowAttributes.meta().allHeaders()[1][1][0];
+        const responseHeaders = pivotTableWithColumnAndRowAttributes.meta().dimensionItemDescriptors(1);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);
@@ -71,8 +71,8 @@ describe("assignDrillItemsAndType", () => {
             headerName: "test",
             drillItems: [],
         };
-        const currentHeader = pivotTableWithColumnAndRowAttributes.allHeaders()[0][0][0];
-        const responseHeaders = pivotTableWithColumnAndRowAttributes.dimensionItemDescriptors(0);
+        const currentHeader = pivotTableWithColumnAndRowAttributes.meta().allHeaders()[0][0][0];
+        const responseHeaders = pivotTableWithColumnAndRowAttributes.meta().dimensionItemDescriptors(0);
         const headerIndex = 0;
         const drillItems: IMappingHeader[] = [];
         assignDrillItemsAndType(header, currentHeader, responseHeaders, headerIndex, drillItems);

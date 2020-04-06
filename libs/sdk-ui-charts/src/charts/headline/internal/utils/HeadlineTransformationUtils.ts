@@ -73,7 +73,7 @@ function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlS
 }
 
 function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
-    const headerItems = dv.measureDescriptors();
+    const headerItems = dv.meta().measureDescriptors();
     const data = dv.singleDimData();
 
     return headerItems.map((item, index) => {
@@ -132,7 +132,7 @@ export function applyDrillableItems(
     const dv = DataViewFacade.for(dataView);
     const data = cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
-    const [primaryItemHeader, secondaryItemHeader] = dv.measureDescriptors();
+    const [primaryItemHeader, secondaryItemHeader] = dv.meta().measureDescriptors();
 
     if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
@@ -158,7 +158,7 @@ export function buildDrillEventData(
     dataView: IDataView,
 ): IDrillEvent {
     const dv = DataViewFacade.for(dataView);
-    const measureHeaderItem: IMeasureDescriptor = dv.measureDescriptor(itemContext.localIdentifier);
+    const measureHeaderItem: IMeasureDescriptor = dv.meta().measureDescriptor(itemContext.localIdentifier);
     if (!measureHeaderItem) {
         throw new Error("The metric uri has not been found in execution response!");
     }

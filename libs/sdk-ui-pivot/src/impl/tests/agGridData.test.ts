@@ -41,7 +41,7 @@ describe("getRow", () => {
             DataViewFirstPage,
         );
 
-        const headerItems = dv.allHeaders();
+        const headerItems = dv.meta().allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(
@@ -62,7 +62,7 @@ describe("getRow", () => {
             DataViewFirstPage,
         );
 
-        const headerItems = dv.allHeaders();
+        const headerItems = dv.meta().allHeaders();
         const tableHeaders = createTableHeaders(dv.dataView, { makeRowGroups: false });
 
         expect(

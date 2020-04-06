@@ -176,13 +176,16 @@ export function withEntireDataView<T extends ICoreChartProps>(
         }
 
         private getSupportedDrillableItems(dv: DataViewFacade): IDrillableItemPushData[] {
-            return dv.measureDescriptors().map(
-                (measure: IMeasureDescriptor): IDrillableItemPushData => ({
-                    type: "measure",
-                    localIdentifier: measure.measureHeaderItem.localIdentifier,
-                    title: measure.measureHeaderItem.name,
-                }),
-            );
+            return dv
+                .meta()
+                .measureDescriptors()
+                .map(
+                    (measure: IMeasureDescriptor): IDrillableItemPushData => ({
+                        type: "measure",
+                        localIdentifier: measure.measureHeaderItem.localIdentifier,
+                        title: measure.measureHeaderItem.name,
+                    }),
+                );
         }
 
         private async initDataLoading(execution: IPreparedExecution) {

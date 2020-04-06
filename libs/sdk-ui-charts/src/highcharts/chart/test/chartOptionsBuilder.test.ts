@@ -44,7 +44,7 @@ const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
 
 function getMVSTreemap(dv: DataViewFacade) {
-    const dimensions = dv.dimensions();
+    const dimensions = dv.meta().dimensions();
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const { viewByAttribute, stackByAttribute } = getTreemapAttributes(dv);
 

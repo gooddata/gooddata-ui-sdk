@@ -15,8 +15,8 @@ const fixtures = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAndColumnAttributes,
     DataViewFirstPage,
 );
-const rowHeaders = fixtures.dimensionItemDescriptors(0);
-const measureHeaders = fixtures.measureDescriptors();
+const rowHeaders = fixtures.meta().dimensionItemDescriptors(0);
+const measureHeaders = fixtures.meta().measureDescriptors();
 
 //
 // Cell formatting is done based on attribute or measure headers
