@@ -1,9 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
-    attributeLocalId,
     DateGranularity,
-    defFingerprint,
     defSetDimensions,
     defSetSorts,
     defTotals,
@@ -12,8 +10,6 @@ import {
     MeasureGroupIdentifier,
     newAbsoluteDateFilter,
     newAttributeSort,
-    newBucket,
-    newDefForBuckets,
     newDefForItems,
     newDimension,
     newMeasureSort,
@@ -132,38 +128,5 @@ describe("defTotals", () => {
 
     it.each(Scenarios)("should return %s", (_desc, defArg, dimArg, expectedResult) => {
         expect(defTotals(defArg, dimArg)).toEqual(expectedResult);
-    });
-});
-
-describe("defFingerprint", () => {
-    const DefWithAttr = newDefForItems(Workspace, [Account.Name]);
-    const DefWithAttrAndMeasure = newDefForItems(Workspace, [Account.Name, Won]);
-    const DefWithAttrAndMeasureAndSorts = defSetSorts(DefWithAttrAndMeasure, [
-        newAttributeSort(Account.Name, "desc"),
-    ]);
-    const DefWithAttrAndMeasureAndFilter = defWithFilters(DefWithAttrAndMeasure, [PositiveFilter]);
-    const DefWithAttrAndMeasureAndDims = defSetDimensions(
-        DefWithAttrAndMeasure,
-        newTwoDimensional([attributeLocalId(Account.Name)], [MeasureGroupIdentifier]),
-    );
-
-    const DefWithAttrFromBuckets = newDefForBuckets(Workspace, [newBucket("attr", Account.Name)]);
-
-    const Scenarios: Array<[boolean, string, any, any]> = [
-        [true, "empty defs on same workspace", emptyDef("test1"), emptyDef("test1")],
-        [false, "empty defs on diff workspace", emptyDef("test1"), emptyDef("test2")],
-        [false, "def with added measure", DefWithAttr, DefWithAttrAndMeasure],
-        [false, "def with added sorts", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndSorts],
-        [false, "def with added dimensions", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndDims],
-        [false, "def with added filters", DefWithAttrAndMeasure, DefWithAttrAndMeasureAndFilter],
-        // bucket is just metadata for the execution; it has no impact on what the backend does
-        [true, "def regardless of buckets presence", DefWithAttr, DefWithAttrFromBuckets],
-    ];
-
-    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, lhs, rhs) => {
-        const leftFingerprint = defFingerprint(lhs);
-        const rightFingerprint = defFingerprint(rhs);
-
-        expect(leftFingerprint === rightFingerprint).toBe(expectedResult);
     });
 });

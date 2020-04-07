@@ -25,7 +25,7 @@ import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
 
 /**
- * Simplified Previous Period Data DataSet specification
+ * Simplified Previous Period Date DataSet specification
  * @public
  */
 export interface IPreviousPeriodDateDataSetSimple {
