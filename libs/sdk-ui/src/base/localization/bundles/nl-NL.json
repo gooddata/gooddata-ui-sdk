@@ -167,5 +167,7 @@
     "mvf.operator.between": "tussen",
     "mvf.operator.notBetween": "niet tussen",
     "mvf.operator.between.tooltip.bubble": "Begin- en eindwaarden zijn inbegrepen.",
-    "mvf.operator.notBetween.tooltip.bubble": "Begin- en eindwaarden zijn niet inbegrepen."
+    "mvf.operator.notBetween.tooltip.bubble": "Begin- en eindwaarden zijn niet inbegrepen.",
+    "attrf.all": "Alles",
+    "attrf.all_except": "Alles behalve"
 }

@@ -717,12 +717,6 @@
         "comment": "In '{n, plural, =1 {NEXT YEAR} other {# YEARS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
-
-    "filters.allTime.title": {
-        "value": "All time",
-        "comment": "",
-        "limit": 0
-    },
     "filters.allTime.excludeCurrentPeriod": {
         "value": "Exclude open period",
         "comment": "",
@@ -847,6 +841,16 @@
     },
     "mvf.operator.notBetween.tooltip.bubble": {
         "value": "Start and end values are not included.",
+        "comment": "",
+        "limit": 0
+    },
+    "attrf.all": {
+        "value": "All",
+        "comment": "",
+        "limit": 0
+    },
+    "attrf.all_except": {
+        "value": "All except",
         "comment": "",
         "limit": 0
     }

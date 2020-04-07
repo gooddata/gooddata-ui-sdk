@@ -32,6 +32,7 @@ interface IAttributeFilterProps {
 
     onApply: (filter: IAttributeFilter) => void;
     fullscreenOnMobile?: boolean;
+    titleWithSelection?: boolean;
     locale?: string;
     FilterLoading?: React.ComponentType;
     FilterError?: React.ComponentType<{ error?: any }>;
@@ -44,14 +45,6 @@ interface IAttributeFilterState {
     isLoading: boolean;
     error?: any;
 }
-
-const DefaultFilterLoading = injectIntl(({ intl }) => {
-    return (
-        <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
-            {intl.formatMessage({ id: "gs.filter.loading" })}
-        </button>
-    );
-});
 
 const DefaultFilterError = injectIntl(({ intl }) => {
     const text = intl.formatMessage({ id: "gs.filter.error" });
@@ -67,10 +60,10 @@ const DefaultFilterError = injectIntl(({ intl }) => {
 export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, IAttributeFilterState> {
     public static defaultProps = {
         locale: "en-US",
-        FilterLoading: DefaultFilterLoading,
         FilterError: DefaultFilterError,
         fullscreenOnMobile: false,
         onError: defaultErrorHandler,
+        titleWithSelection: false,
     };
 
     public state: IAttributeFilterState = {
@@ -185,19 +178,17 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
     };
 
     public render() {
-        const { locale, workspace, backend, FilterError, FilterLoading } = this.props;
+        const { locale, workspace, backend, FilterError, titleWithSelection } = this.props;
         const { error, isLoading } = this.state;
-
         const { isInverted, selectedItems } = this.getInitialDropdownSelection();
 
         return (
             <IntlWrapper locale={locale}>
-                {isLoading ? (
-                    <FilterLoading />
-                ) : error ? (
+                {error ? (
                     <FilterError error={error} />
                 ) : (
                     <AttributeDropdown
+                        titleWithSelection={titleWithSelection}
                         displayForm={this.getObjRef()}
                         backend={backend}
                         workspace={workspace}
@@ -205,6 +196,7 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                         title={this.props.title || this.state.title}
                         isInverted={isInverted}
                         selectedItems={selectedItems}
+                        isLoading={isLoading}
                     />
                 )}
             </IntlWrapper>

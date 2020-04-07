@@ -197,4 +197,47 @@ describe("AttributeDropdown", () => {
         wrapper.update();
         expect(wrapper.find("InvertableList").prop("searchString")).toBe("");
     });
+
+    it("should be in loading state until items are loaded", () => {
+        const wrapper = renderComponent({
+            displayForm: testAttributeRef,
+            titleWithSelection: true,
+        });
+
+        expect(wrapper.exists(".s-button-loading")).toEqual(true);
+    });
+
+    it("should render dropdown button customized title with selected items and count", async () => {
+        const onApply = jest.fn();
+        const wrapper = renderComponent({
+            displayForm: testAttributeRef,
+            titleWithSelection: true,
+            title: "Foo",
+            onApply,
+        });
+
+        await waitForAsync();
+        wrapper.update();
+
+        expect(wrapper.find(".gd-attribute-filter .gd-button-text").text()).toBe("Foo: All");
+
+        wrapper.find(DropdownButton).simulate("click");
+
+        await waitForAsync();
+        wrapper.update();
+
+        wrapper
+            .find(AttributeFilterItem)
+            .first()
+            .simulate("click");
+
+        wrapper.find("button.s-apply").simulate("click");
+
+        await waitForAsync();
+        wrapper.update();
+
+        expect(wrapper.find(".gd-attribute-filter .gd-button-text").text()).toBe(
+            "Foo: All except CompuSci (1)",
+        );
+    });
 });
