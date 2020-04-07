@@ -20,7 +20,13 @@ import {
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
-import { defaultErrorHandler, OnError, IntlWrapper } from "@gooddata/sdk-ui";
+import {
+    defaultErrorHandler,
+    OnError,
+    IntlWrapper,
+    IntlTranslationsProvider,
+    ITranslationsComponentProps,
+} from "@gooddata/sdk-ui";
 
 interface IAttributeFilterProps {
     backend: IAnalyticalBackend;
@@ -187,17 +193,24 @@ export class AttributeFilter extends React.PureComponent<IAttributeFilterProps, 
                 {error ? (
                     <FilterError error={error} />
                 ) : (
-                    <AttributeDropdown
-                        titleWithSelection={titleWithSelection}
-                        displayForm={this.getObjRef()}
-                        backend={backend}
-                        workspace={workspace}
-                        onApply={this.onApply}
-                        title={this.props.title || this.state.title}
-                        isInverted={isInverted}
-                        selectedItems={selectedItems}
-                        isLoading={isLoading}
-                    />
+                    <IntlTranslationsProvider>
+                        {(translationProps: ITranslationsComponentProps) => {
+                            return (
+                                <AttributeDropdown
+                                    titleWithSelection={titleWithSelection}
+                                    displayForm={this.getObjRef()}
+                                    backend={backend}
+                                    workspace={workspace}
+                                    onApply={this.onApply}
+                                    title={this.props.title || this.state.title}
+                                    isInverted={isInverted}
+                                    selectedItems={selectedItems}
+                                    isLoading={isLoading}
+                                    translationProps={translationProps}
+                                />
+                            );
+                        }}
+                    </IntlTranslationsProvider>
                 )}
             </IntlWrapper>
         );
