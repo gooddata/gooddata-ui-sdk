@@ -112,6 +112,12 @@ export type RecordedBackendConfig = AnalyticalBackendConfig & {
 // @internal
 export function recordedDataView(recording: ScenarioRecording, dataViewId?: string): IDataView;
 
+// Warning: (ae-forgotten-export) The symbol "NamedDataView" needs to be exported by the entry point index.d.ts
+// Warning: (ae-internal-missing-underscore) The name "recordedDataViews" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function recordedDataViews(recordings: RecordingIndex): NamedDataView[];
+
 // Warning: (ae-internal-missing-underscore) The name "RecordingIndex" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)

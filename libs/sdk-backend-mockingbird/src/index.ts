@@ -18,6 +18,7 @@ export {
 
 export {
     recordedDataView,
+    recordedDataViews,
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,
