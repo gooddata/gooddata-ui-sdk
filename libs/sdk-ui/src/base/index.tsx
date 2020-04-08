@@ -144,3 +144,16 @@ export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/Ov
 export { CatalogHelper } from "./helpers/CatalogHelper";
 
 export { DataViewFacade } from "./results/facade";
+export {
+    DataPoint,
+    DataSliceDescriptor,
+    IDataSlice,
+    DataSeriesDescriptor,
+    IDataSeries,
+    IDataSliceCollection,
+    IDataSeriesCollection,
+    IDataAccessMethods,
+    DataSeriesHeaders,
+    DataSliceHeaders,
+    DataPointCoordinates,
+} from "./results/dataAccess";

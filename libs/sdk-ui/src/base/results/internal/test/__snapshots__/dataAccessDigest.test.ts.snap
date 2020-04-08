@@ -1,0 +1,1036 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - single measure with two viewBy 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - single measure with viewBy and stackBy 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - two measures with undefined values 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - two measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - two measures with viewBy sorted by attribute 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: AreaChart - two measures with viewBy sorted by measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - four measures and PoP 1`] = `
+Object {
+  "seriesCount": 5,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - single measure with two viewBy and stack 1`] = `
+Object {
+  "seriesCount": 12,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - single measure with viewBy and stackBy 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with two viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 12,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with two viewBy, filtered to single value 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 1,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with viewBy sorted by attribute 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with viewBy sorted by measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BarChart - viewBy date and PoP measure 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - arithmetic measure 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x and y axis and size measures with viewBy 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x and y axis and size measures with viewBy and sorted by attr 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x and y axis and size measures with viewBy with nulls in data 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 7,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x and y axis measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x axis and size measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x axis measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - x axis measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - y axis and size measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary and comparative measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary and target measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary and target measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary, target and comparative measures 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary, target and comparative measures with two viewBy 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 12,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary, target and comparative measures with viewBy 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BulletChart - primary, target and comparative measures with viewBy and sort 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure with two viewBy and stack 1`] = `
+Object {
+  "seriesCount": 12,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure with viewBy and stackBy 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure with viewBy and stackBy filtered to single stack 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 1,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single ratio measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - two measures with two viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 12,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - two measures with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - two measures with viewBy sorted by attribute 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - two measures with viewBy sorted by measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - viewBy date and PoP measure 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - multiple measures and no viewBy 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - multiple primary and secondary measures with viewBy 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary and secondary measure no viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary and secondary measure with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary and secondary measure with viewBy sorted by attr 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary and secondary measure with viewBy sorted by primary measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary and secondary measure with viewBy sorted by secondary measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one primary measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - one secondary measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ComboChart - two secondary measure with viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: DonutChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: DonutChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: DonutChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: DonutChart - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - single measure with viewBy sorted by attribute 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Headline - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Headline - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Headline - two measures one PoP 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Headline - two measures with german separators 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - measure and columns 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - measure and rows 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - measure only 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - measure, rows and columns 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - measure, rows and columns with null data points 1`] = `
+Object {
+  "seriesCount": 7,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - single measure with % and trendBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - single measure with trendBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - single measure with trendBy and segmentBy 1`] = `
+Object {
+  "seriesCount": 18,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - two measures with trendBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - two measures with trendBy and sort by attribute 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - two measures with trendBy and sort by measure 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PieChart - arithmetic measures 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PieChart - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PieChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PieChart - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PivotTable - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PivotTable - single measure with row and column attributes 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PivotTable - single measure with row attribute 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: PivotTable - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - x and y axis measures and attribute 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - x and y axis measures and attribute with attr sorting 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - x and y axis measures and attribute with nulls in data 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 7,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - x axis measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - x axis measure and attribute 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - y axis measure and attribute 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - arithmetic measures and segment 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - single measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - single measure and segment 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 2,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - single measure and viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - single measure and viewBy filtered to one element 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 1,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - single measure, viewBy and segment 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 12,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - two measures 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - two measures and segmentBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Treemap - two measures and viewBy 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Xirr - correct config 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Xirr - only measure 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Xirr - semantically wrong measure 1`] = `
+Object {
+  "seriesCount": 21,
+  "seriesIdx": 0,
+  "slicesCount": undefined,
+  "slicesIdx": undefined,
+}
+`;
