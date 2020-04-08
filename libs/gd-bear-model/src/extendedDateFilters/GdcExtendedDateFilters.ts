@@ -181,6 +181,10 @@ export namespace GdcExtendedDateFilters {
         content: IDateFilterConfigContent;
     }
 
+    export interface IWrappedDateFilterConfig {
+        dateFilterConfig: IDateFilterConfig;
+    }
+
     export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
     export interface IDashboardAddedPresets {

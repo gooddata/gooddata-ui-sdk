@@ -371,4 +371,17 @@ export namespace GdcUser {
             };
         };
     }
+
+    export type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
+
+    export interface IUserListItem {
+        uri: Uri;
+        login: Email;
+        email: Email;
+        firstName?: string | null;
+        lastName?: string | null;
+        roles?: Uri[];
+        state?: UserListItemState;
+        hasRequestedPermissions?: boolean;
+    }
 }

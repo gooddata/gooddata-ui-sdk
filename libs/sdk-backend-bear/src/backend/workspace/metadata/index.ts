@@ -5,7 +5,7 @@ import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
 import invariant from "ts-invariant";
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
-import { GdcMetadata } from "@gooddata/gd-bear-model";
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/gd-bear-model";
 import {
     IAttributeDisplayFormMetadataObject,
     IMeasureExpressionToken,
@@ -63,7 +63,9 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
-        const metricMetadata = await this.authCall(sdk => sdk.xhr.getParsed<GdcMetadata.WrappedObject>(uri));
+        const metricMetadata = await this.authCall(sdk =>
+            sdk.xhr.getParsed<GdcMetadataObject.WrappedObject>(uri),
+        );
 
         if (!GdcMetadata.isWrappedMetric(metricMetadata)) {
             throw new Error(
@@ -91,22 +93,25 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
         const allExpressionWrappedObjects = await this.authCall(sdk =>
             sdk.md.getObjects(this.workspace, allExpressionUris),
         );
-        const allExpressionObjects = allExpressionWrappedObjects.map(GdcMetadata.unwrapMetadataObject);
+        const allExpressionObjects = allExpressionWrappedObjects.map(GdcMetadataObject.unwrapMetadataObject);
         const allExpressionElements = await Promise.all(
             expressionElementUris.map(elementUri =>
                 this.authCall(sdk => sdk.md.getAttributeElementDefaultDisplayFormValue(elementUri)),
             ),
         );
 
-        const objectByUri = allExpressionObjects.reduce((acc: { [key: string]: GdcMetadata.IObject }, el) => {
-            return {
-                ...acc,
-                [el.meta.uri]: el,
-            };
-        }, {});
+        const objectByUri = allExpressionObjects.reduce(
+            (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
+                return {
+                    ...acc,
+                    [el.meta.uri]: el,
+                };
+            },
+            {},
+        );
 
         const objectByIdentifier = allExpressionObjects.reduce(
-            (acc: { [key: string]: GdcMetadata.IObject }, el) => {
+            (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
                 return {
                     ...acc,
                     [el.meta.identifier]: el,

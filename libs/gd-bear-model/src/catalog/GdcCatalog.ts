@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
 
 /**
  *
@@ -118,5 +119,17 @@ export namespace GdcCatalog {
             // uris of available items
             items: string[];
         };
+    }
+
+    export interface ILoadDateDataSetsParams {
+        bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
+        excludeObjectsWithTags?: string[];
+        includeObjectsWithTags?: string[];
+        dataSetIdentifier?: string;
+        includeAvailableDateAttributes?: boolean;
+        includeUnavailableDateDataSetsCount?: boolean;
+        returnAllDateDataSets?: boolean;
+        returnAllRelatedDateDataSets?: boolean;
+        attributesMap?: object;
     }
 }

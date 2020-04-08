@@ -132,6 +132,27 @@ export namespace GdcCatalog {
         };
     }
     // (undocumented)
+    export interface ILoadDateDataSetsParams {
+        // (undocumented)
+        attributesMap?: object;
+        // (undocumented)
+        bucketItems?: GdcVisualizationObject.IVisualizationObjectContent;
+        // (undocumented)
+        dataSetIdentifier?: string;
+        // (undocumented)
+        excludeObjectsWithTags?: string[];
+        // (undocumented)
+        includeAvailableDateAttributes?: boolean;
+        // (undocumented)
+        includeObjectsWithTags?: string[];
+        // (undocumented)
+        includeUnavailableDateDataSetsCount?: boolean;
+        // (undocumented)
+        returnAllDateDataSets?: boolean;
+        // (undocumented)
+        returnAllRelatedDateDataSets?: boolean;
+    }
+    // (undocumented)
     export function isCatalogAttribute(obj: any): obj is ICatalogAttribute;
     // (undocumented)
     export function isCatalogFact(obj: any): obj is ICatalogFact;
@@ -165,6 +186,11 @@ export namespace GdcDashboard {
         layout?: GdcDashboardLayout.Layout;
         // (undocumented)
         widgets: string[];
+    }
+    // (undocumented)
+    export interface IWrappedAnalyticalDashboard {
+        // (undocumented)
+        analyticalDashboard: IAnalyticalDashboard;
     }
 }
 
@@ -201,7 +227,7 @@ export namespace GdcDashboardExport {
     export interface IFilterContext {
         // (undocumented)
         content: {
-            filters: FilterContextItem;
+            filters: FilterContextItem[];
         };
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
@@ -210,6 +236,15 @@ export namespace GdcDashboardExport {
     export function isAttributeFilter(filter: FilterContextItem): filter is IAttributeFilter;
     // (undocumented)
     export function isDateFilter(filter: FilterContextItem): filter is IDateFilter;
+    // (undocumented)
+    export function isFilterContext(obj: any): obj is IFilterContext;
+    // (undocumented)
+    export function isWrappedFilterContext(obj: any): obj is IWrappedFilterContext;
+    // (undocumented)
+    export interface IWrappedFilterContext {
+        // (undocumented)
+        filterContext: IFilterContext;
+    }
     // (undocumented)
     export type RelativeType = "relative";
 }
@@ -1098,6 +1133,11 @@ export namespace GdcExtendedDateFilters {
         granularity: Key;
     }
     // (undocumented)
+    export interface IWrappedDateFilterConfig {
+        // (undocumented)
+        dateFilterConfig: IDateFilterConfig;
+    }
+    // (undocumented)
     export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
     // (undocumented)
     export type RelativeDateFilterOption = IRelativeDateFilterForm | IRelativeDateFilterPreset;
@@ -1198,6 +1238,18 @@ export namespace GdcMetadata {
         content: any;
     }
     // (undocumented)
+    export interface IGetObjectUsing {
+        // (undocumented)
+        entries: IObjectLink[];
+    }
+    // (undocumented)
+    export interface IGetObjectUsingManyEntry {
+        // (undocumented)
+        entries: IObjectLink[];
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
     export interface IKpiAlert extends IMetadataObject {
         // (undocumented)
         content: {
@@ -1243,7 +1295,44 @@ export namespace GdcMetadata {
         };
     }
     // (undocumented)
-    export type IObject = IAttribute | IMetric | IFact | IAttributeDisplayForm | IKpiAlert;
+    export interface IObjectLink {
+        // (undocumented)
+        author?: Uri;
+        // (undocumented)
+        category?: ObjectCategory;
+        // (undocumented)
+        contributor?: Uri;
+        // (undocumented)
+        created?: Timestamp;
+        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        deprecated?: BooleanAsString;
+        // (undocumented)
+        help?: Uri;
+        // (undocumented)
+        identifier?: string;
+        // (undocumented)
+        isProduction?: boolean;
+        // (undocumented)
+        link: Uri;
+        // (undocumented)
+        locked?: boolean;
+        // (undocumented)
+        projectTemplate?: string;
+        // (undocumented)
+        sharedWithSomeone?: boolean;
+        // (undocumented)
+        summary?: string;
+        // (undocumented)
+        tags?: string;
+        // (undocumented)
+        title?: string;
+        // (undocumented)
+        unlisted?: boolean;
+        // (undocumented)
+        updated?: Timestamp;
+    }
     // (undocumented)
     export interface IObjectMeta {
         // (undocumented)
@@ -1307,15 +1396,15 @@ export namespace GdcMetadata {
     // (undocumented)
     export function isMetric(obj: any): obj is IMetric;
     // (undocumented)
-    export function isWrappedAttribute(object: WrappedObject): object is IWrappedAttribute;
+    export function isWrappedAttribute(obj: any): obj is IWrappedAttribute;
     // (undocumented)
-    export function isWrappedAttributeDisplayForm(object: WrappedObject): object is IWrappedAttributeDisplayForm;
+    export function isWrappedAttributeDisplayForm(obj: any): obj is IWrappedAttributeDisplayForm;
     // (undocumented)
-    export function isWrappedFact(object: WrappedObject): object is IWrappedFact;
+    export function isWrappedFact(obj: any): obj is IWrappedFact;
     // (undocumented)
-    export function isWrappedKpiAlert(object: WrappedObject): object is IWrappedKpiAlert;
+    export function isWrappedKpiAlert(obj: any): obj is IWrappedKpiAlert;
     // (undocumented)
-    export function isWrappedMetric(object: WrappedObject): object is IWrappedMetric;
+    export function isWrappedMetric(obj: any): obj is IWrappedMetric;
     export interface IValidElementsParams {
         // (undocumented)
         afm?: GdcExecuteAFM.IAfm;
@@ -1416,10 +1505,16 @@ export namespace GdcMetadata {
     export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget";
     // (undocumented)
     export type SortDirection = "asc" | "desc";
+}
+
+// @public (undocumented)
+export namespace GdcMetadataObject {
+    // (undocumented)
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcDashboard.IAnalyticalDashboard | GdcDashboardExport.IFilterContext | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = IWrappedAttribute | IWrappedMetric | IWrappedFact | IWrappedAttributeDisplayForm | IWrappedKpiAlert;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcDashboard.IWrappedAnalyticalDashboard | GdcDashboardExport.IWrappedFilterContext | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualizationObjectResponse;
 }
 
 // @public
@@ -1484,6 +1579,113 @@ export namespace GdcProject {
 }
 
 // @public (undocumented)
+export namespace GdcProjectDashboard {
+    // (undocumented)
+    export interface IProjectDashboard {
+        // (undocumented)
+        content: {
+            tabs: Array<{
+                title: string;
+                identifier: string;
+            }>;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IWrappedProjectDashboard {
+        // (undocumented)
+        projectDashboard: IProjectDashboard;
+    }
+}
+
+// @public (undocumented)
+export namespace GdcScheduledMail {
+    // (undocumented)
+    export type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
+    // (undocumented)
+    export interface IDashboardAttachment {
+        // (undocumented)
+        allTabs?: boolean;
+        // (undocumented)
+        executionContext?: Uri;
+        // (undocumented)
+        tabs: string[];
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
+    export interface IKpiDashboardAttachment {
+        // (undocumented)
+        filterContext?: Uri;
+        // (undocumented)
+        format: "pdf";
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
+    export interface IReportAttachment {
+        // (undocumented)
+        exportOptions?: IReportExportOptions;
+        // (undocumented)
+        formats: ExportFormat[];
+        // (undocumented)
+        uri?: Uri;
+    }
+    // (undocumented)
+    export interface IReportExportOptions {
+        // (undocumented)
+        includeFilterContext?: "no" | "yes";
+        // (undocumented)
+        mergeHeaders?: "no" | "yes";
+        // (undocumented)
+        optimalColumnWidth?: "no" | "yes";
+        // (undocumented)
+        pageOrientation?: "portrait" | "landscape";
+        // (undocumented)
+        scaling?: {
+            pageScalePercentage?: number;
+            scaleToPages?: number;
+            scaleToPagesX?: number;
+            scaleToPagesY?: number;
+        };
+        // (undocumented)
+        urlParams: Array<{
+            name: string;
+            value: string;
+        }>;
+    }
+    // (undocumented)
+    export interface IScheduledMail {
+        // (undocumented)
+        content: {
+            when: {
+                recurrency: string;
+                startDate: DateString;
+                timeZone: string;
+                endDate?: DateString;
+            };
+            to: Email[];
+            bcc?: Email[];
+            unsubscribed?: Email[];
+            subject: string;
+            body: string;
+            attachments: ScheduledMailAttachment;
+            lastSuccessfull?: Timestamp;
+        };
+        // (undocumented)
+        meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IWrappedScheduledMail {
+        // (undocumented)
+        scheduledMail: IScheduledMail;
+    }
+    // (undocumented)
+    export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment;
+}
+
+// @public (undocumented)
 export namespace GdcUser {
     // (undocumented)
     export type DataUploadStatus = "PREPARED" | "RUNNING" | "OK" | "ERROR" | "WARNING";
@@ -1509,8 +1711,6 @@ export namespace GdcUser {
         language?: string;
         // (undocumented)
         lastName: string;
-        // Warning: (ae-forgotten-export) The symbol "BooleanAsString" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         licence?: BooleanAsString;
         // (undocumented)
@@ -1520,8 +1720,6 @@ export namespace GdcUser {
             domain?: Uri;
             auditEvents?: Uri;
         };
-        // Warning: (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
-        //
         // (undocumented)
         login?: Email | null;
         // (undocumented)
@@ -1841,6 +2039,25 @@ export namespace GdcUser {
         walkMeEnvironment?: string;
     }
     // (undocumented)
+    export interface IUserListItem {
+        // (undocumented)
+        email: Email;
+        // (undocumented)
+        firstName?: string | null;
+        // (undocumented)
+        hasRequestedPermissions?: boolean;
+        // (undocumented)
+        lastName?: string | null;
+        // (undocumented)
+        login: Email;
+        // (undocumented)
+        roles?: Uri[];
+        // (undocumented)
+        state?: UserListItemState;
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
     export interface IZendesk4Integration {
         // (undocumented)
         active: boolean;
@@ -1863,6 +2080,8 @@ export namespace GdcUser {
     }
     // (undocumented)
     export type ProjectPermission = "canAccessIntegration" | "canAccessWorkbench" | "canAssignUserWithRole" | "canCreateAnalyticalDashboard" | "canCreateAttribute" | "canCreateAttributeGroup" | "canCreateAttributeLabel" | "canCreateColumn" | "canCreateComment" | "canCreateDataSet" | "canCreateDomain" | "canCreateETLFile" | "canCreateExecutionContext" | "canCreateFact" | "canCreateFilterSettings" | "canCreateFolder" | "canCreateHelp" | "canCreateMetric" | "canCreateProjectDashboard" | "canCreateProjectTemplates" | "canCreatePrompt" | "canCreateReport" | "canCreateReportDefinition" | "canCreateRole" | "canCreateScheduledMail" | "canCreateTable" | "canCreateTableDataLoad" | "canCreateVisualization" | "canCreateVisualizationClass" | "canEnrichData" | "canExecute" | "canExecuteRaw" | "canExportDashboard" | "canExportReport" | "canInitData" | "canInviteUserToProject" | "canListInvitationsInProject" | "canListUsersInProject" | "canMaintainProject" | "canMaintainUserFilter" | "canMaintainUserFilterRelation" | "canManageACL" | "canManageAnalyticalDashboard" | "canManageAttribute" | "canManageAttributeGroup" | "canManageAttributeLabel" | "canManageColumn" | "canManageComment" | "canManageDataSet" | "canManageDomain" | "canManageETLFile" | "canManageExecutionContext" | "canManageFact" | "canManageFilterSettings" | "canManageFolder" | "canManageHelp" | "canManageIntegration" | "canManageIsProduction" | "canManageMetric" | "canManageProject" | "canManageProjectDashboard" | "canManagePrompt" | "canManagePublicAccessCode" | "canManageReport" | "canManageReportDefinition" | "canManageScheduledMail" | "canManageTable" | "canManageTableDataLoad" | "canManageTranslations" | "canManageVisualization" | "canRefreshData" | "canSeeOtherUserDetails" | "canSeePublicAccessCode" | "canSetLocale" | "canSetProjectVariables" | "canSetStyle" | "canSetUserVariables" | "canSuspendUserFromProject" | "canUploadNonProductionCSV" | "canValidateProject";
+    // (undocumented)
+    export type UserListItemState = "ACTIVE" | "INACTIVE" | "PENDING";
 }
 
 // @public (undocumented)
@@ -2133,7 +2352,7 @@ export namespace GdcVisualizationObject {
         // (undocumented)
         content: IVisualizationObjectContent;
         // (undocumented)
-        meta: Partial<GdcMetadata.IObjectMeta>;
+        meta: GdcMetadata.IObjectMeta;
     }
     // (undocumented)
     export interface IVisualizationObjectContent {
@@ -2183,6 +2402,10 @@ export namespace GdcVisualizationWidget {
         toVisualization: GdcVisualizationObject.IObjUriQualifier;
     }
     // (undocumented)
+    export function isVisualizationWidget(obj: any): obj is IVisualizationWidget;
+    // (undocumented)
+    export function isWrappedVisualizationWidget(obj: any): obj is IWrappedVisualizationWidget;
+    // (undocumented)
     export interface IVisualizationWidget {
         // (undocumented)
         content: {
@@ -2193,6 +2416,11 @@ export namespace GdcVisualizationWidget {
         };
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IWrappedVisualizationWidget {
+        // (undocumented)
+        visualizationWidget: IVisualizationWidget;
     }
 }
 
@@ -2217,7 +2445,8 @@ export type Uri = string;
 
 // Warnings were encountered during analysis:
 //
-// dist/user/GdcUser.d.ts:250:21 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
+// dist/scheduledMail/GdcScheduledMail.d.ts:12:17 - (ae-forgotten-export) The symbol "DateString" needs to be exported by the entry point index.d.ts
+// dist/scheduledMail/GdcScheduledMail.d.ts:16:13 - (ae-forgotten-export) The symbol "Email" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

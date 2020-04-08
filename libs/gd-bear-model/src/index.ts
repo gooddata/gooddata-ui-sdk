@@ -16,7 +16,9 @@ export { GdcDatasets } from "./datasets/GdcDatasets";
 export { GdcDateDataSets } from "./dateDataSets/GdcDateDataSets";
 export { GdcProject } from "./project/GdcProject";
 export { GdcUser } from "./user/GdcUser";
-
+export { GdcMetadataObject } from "./meta/GdcMetadataObject";
+export { GdcScheduledMail } from "./scheduledMail/GdcScheduledMail";
+export { GdcProjectDashboard } from "./projectDashboard/GdcProjectDashboard";
 export { GdcPaging } from "./base/GdcPaging";
 export { MaqlExpression, NumberAsString, Timestamp, Uri } from "./aliases";
 
