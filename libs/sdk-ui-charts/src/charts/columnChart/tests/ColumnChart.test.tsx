@@ -34,7 +34,7 @@ describe("ColumnChart", () => {
                 measures={[ReferenceLdm.Amount]}
                 viewBy={ReferenceLdm.Product.Name}
                 stackBy={ReferenceLdm.Region}
-                sortBy={[newMeasureSort(ReferenceLdm.Won, "asc")]}
+                sortBy={[newMeasureSort(ReferenceLdm.Amount, "asc")]}
             />,
         );
 
