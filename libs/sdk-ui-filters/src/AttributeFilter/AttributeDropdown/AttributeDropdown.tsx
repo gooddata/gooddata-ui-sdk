@@ -251,10 +251,10 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     private getTitle = () => {
-        const { items, isInverted, isLoading, selectedItems } = this.state;
+        const { items, isInverted, selectedItems } = this.state;
         const { title, displayForm, titleWithSelection } = this.props;
 
-        if (!isLoading && titleWithSelection && displayForm) {
+        if (items && titleWithSelection && displayForm) {
             const empty = isEmpty(selectedItems);
             const equal = isEqual(items.length, selectedItems.length);
             const getAllPartIntl = this.getAllTitleIntl(isInverted, empty, equal);
@@ -279,13 +279,15 @@ export class AttributeDropdownCore extends React.PureComponent<
 
     public render() {
         const { FilterLoading, titleWithSelection } = this.props;
+        const { searchString } = this.state;
         const customizedTitle = this.getTitle();
         const classes = classNames(
             "gd-attribute-filter",
             customizedTitle ? `gd-id-${stringUtils.simplifyText(customizedTitle)}` : "",
         );
 
-        return (titleWithSelection && this.state.isLoading) || this.props.isLoading ? (
+        return (titleWithSelection && this.state.isLoading && isEmpty(searchString)) ||
+            this.props.isLoading ? (
             <FilterLoading />
         ) : (
             <Dropdown
